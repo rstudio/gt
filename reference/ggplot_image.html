@@ -152,18 +152,18 @@ ggplot_image() within the html() helper function." />
 
     <div class="ref-description">
     <p>We can add a <strong>ggplot2</strong> plot inside of a table with the help of the
-<code>ggplot_image()</code> function. The function provides a convenient way to generate
+<code><a href='https://rdrr.io/pkg/gt/man/ggplot_image.html'>ggplot_image()</a></code> function. The function provides a convenient way to generate
 an HTML fragment with a <code>ggplot</code> object. Because this function is currently
 HTML-based, it is only useful for HTML table output. To use this function
-inside of data cells, it is recommended that the <code><a href='text_transform.html'>text_transform()</a></code> function
+inside of data cells, it is recommended that the <code><a href='https://rdrr.io/pkg/gt/man/text_transform.html'>text_transform()</a></code> function
 is used. With that function, we can specify which data cells to target and
-then include a call to <code>ggplot_image()</code> within the required user-defined
+then include a call to <code><a href='https://rdrr.io/pkg/gt/man/ggplot_image.html'>ggplot_image()</a></code> within the required user-defined
 function (for the <code>fn</code> argument). If we want to include a plot in other
 places (e.g., in the header, within footnote text, etc.) we need to use
-<code>ggplot_image()</code> within the <code><a href='html.html'>html()</a></code> helper function.</p>
+<code><a href='https://rdrr.io/pkg/gt/man/ggplot_image.html'>ggplot_image()</a></code> within the <code><a href='https://rdrr.io/pkg/gt/man/html.html'>html()</a></code> helper function.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ggplot_image</span>(<span class='no'>plot_object</span>, <span class='kw'>height</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>aspect_ratio</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/ggplot_image.html'>ggplot_image</a></span>(<span class='kw'>plot_object</span>, height = <span class='fl'>100</span>, aspect_ratio = <span class='fl'>1</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -214,21 +214,21 @@ elongating any given plot to fit better within the table construct.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Image Addition Functions: 
-<code><a href='local_image.html'>local_image</a>()</code>,
-<code><a href='test_image.html'>test_image</a>()</code>,
-<code><a href='web_image.html'>web_image</a>()</code></p></div>
+<code><a href='https://rdrr.io/pkg/gt/man/local_image.html'>local_image</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/test_image.html'>test_image</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/web_image.html'>web_image</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span>)
 
 <span class='co'># Create a ggplot plot</span>
-<span class='no'>plot_object</span> <span class='kw'>&lt;-</span>
+<span class='kw'>plot_object</span> <span class='op'>&lt;-</span>
   <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(
-    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>gtcars</span>,
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>hp</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>trq</span>,
-        <span class='kw'>size</span> <span class='kw'>=</span> <span class='no'>msrp</span>)) +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span>(<span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"blue"</span>) +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span>(<span class='kw'>legend.position</span> <span class='kw'>=</span> <span class='st'>"none"</span>)
+    data = <span class='kw'>gtcars</span>,
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(x = <span class='kw'>hp</span>, y = <span class='kw'>trq</span>,
+        size = <span class='kw'>msrp</span>)) <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span>(color = <span class='st'>"blue"</span>) <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span>(legend.position = <span class='st'>"none"</span>)
 
 <span class='co'># Create a tibble that contains two</span>
 <span class='co'># cells (where one is a placeholder for</span>
@@ -237,19 +237,20 @@ elongating any given plot to fit better within the table construct.</p>
 <span class='co'># to insert the plot using by calling</span>
 <span class='co'># `ggplot_object()` within the user-</span>
 <span class='co'># defined function</span>
-<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>tibble</a></span>(
-    <span class='kw'>text</span> <span class='kw'>=</span> <span class='st'>"Here is a ggplot:"</span>,
-    <span class='kw'>ggplot</span> <span class='kw'>=</span> <span class='fl'>NA</span>
-  ) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='text_transform.html'>text_transform</a></span>(
-    <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='cells_body.html'>cells_body</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>ggplot</span>)),
-    <span class='kw'>fn</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) {
-      <span class='no'>plot_object</span> <span class='kw'>%&gt;%</span>
-        <span class='fu'>ggplot_image</span>(<span class='kw'>height</span> <span class='kw'>=</span> <span class='fu'><a href='px.html'>px</a></span>(<span class='fl'>200</span>))
+<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span>(
+    text = <span class='st'>"Here is a ggplot:"</span>,
+    ggplot = <span class='fl'>NA</span>
+  ) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/text_transform.html'>text_transform</a></span>(
+    locations = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/cells_body.html'>cells_body</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>ggplot</span>)),
+    fn = <span class='fu'>function</span>(<span class='kw'>x</span>) {
+      <span class='kw'>plot_object</span> <span class='op'>%&gt;%</span>
+        <span class='fu'><a href='https://rdrr.io/pkg/gt/man/ggplot_image.html'>ggplot_image</a></span>(height = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/px.html'>px</a></span>(<span class='fl'>200</span>))
     }
-  )</div></pre>
+  )
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

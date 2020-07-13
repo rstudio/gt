@@ -155,7 +155,7 @@ aren't provided." />
     </div>
 
     <div class="ref-description">
-    <p>The <code>fmt()</code> function provides greater control in formatting raw data values
+    <p>The <code><a href='https://rdrr.io/pkg/gt/man/fmt.html'>fmt()</a></code> function provides greater control in formatting raw data values
 than any of the specialized <code>fmt_*()</code> functions that are available in
 <strong>gt</strong>. Along with the <code>columns</code> and <code>rows</code> arguments that provide some
 precision in targeting data cells, the <code>fns</code> argument allows you to define
@@ -171,14 +171,14 @@ we recommended including the <code>default</code> function as a fallback if all 
 aren't provided.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>fmt</span>(<span class='no'>data</span>, <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>rows</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>fns</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/fmt.html'>fmt</a></span>(<span class='kw'>data</span>, columns = <span class='kw'>NULL</span>, rows = <span class='kw'>NULL</span>, <span class='kw'>fns</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
+      <td><p>A table object that is created using the <code><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt()</a></code> function.</p></td>
     </tr>
     <tr>
       <th>columns</th>
@@ -227,34 +227,35 @@ more information on this.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Format Data: 
-<code><a href='data_color.html'>data_color</a>()</code>,
-<code><a href='fmt_currency.html'>fmt_currency</a>()</code>,
-<code><a href='fmt_datetime.html'>fmt_datetime</a>()</code>,
-<code><a href='fmt_date.html'>fmt_date</a>()</code>,
-<code><a href='fmt_markdown.html'>fmt_markdown</a>()</code>,
-<code><a href='fmt_missing.html'>fmt_missing</a>()</code>,
-<code><a href='fmt_number.html'>fmt_number</a>()</code>,
-<code><a href='fmt_passthrough.html'>fmt_passthrough</a>()</code>,
-<code><a href='fmt_percent.html'>fmt_percent</a>()</code>,
-<code><a href='fmt_scientific.html'>fmt_scientific</a>()</code>,
-<code><a href='fmt_time.html'>fmt_time</a>()</code>,
-<code><a href='text_transform.html'>text_transform</a>()</code></p></div>
+<code><a href='https://rdrr.io/pkg/gt/man/data_color.html'>data_color</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/fmt_currency.html'>fmt_currency</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/fmt_datetime.html'>fmt_datetime</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/fmt_date.html'>fmt_date</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/fmt_markdown.html'>fmt_markdown</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/fmt_missing.html'>fmt_missing</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/fmt_number.html'>fmt_number</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/fmt_passthrough.html'>fmt_passthrough</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/fmt_percent.html'>fmt_percent</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/fmt_scientific.html'>fmt_scientific</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/fmt_time.html'>fmt_time</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/text_transform.html'>text_transform</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Use `exibble` to create a gt table;</span>
 <span class='co'># format the numeric values in the `num`</span>
 <span class='co'># column with a function supplied to</span>
 <span class='co'># the `fns` argument</span>
-<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
-  <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='no'>row</span>, -<span class='no'>group</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'>fmt</span>(
-    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>),
-    <span class='kw'>fns</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) {
-      <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"'"</span>, <span class='no'>x</span> * <span class='fl'>1000</span>, <span class='st'>"'"</span>)
+<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='kw'>exibble</span> <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='op'>-</span><span class='kw'>row</span>, <span class='op'>-</span><span class='kw'>group</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/fmt.html'>fmt</a></span>(
+    columns = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>num</span>),
+    fns = <span class='fu'>function</span>(<span class='kw'>x</span>) {
+      <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"'"</span>, <span class='kw'>x</span> <span class='op'>*</span> <span class='fl'>1000</span>, <span class='st'>"'"</span>)
     }
-  )</div></pre>
+  )
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

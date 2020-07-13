@@ -149,14 +149,14 @@ the rows to be included, either by supplying row labels, row indices, or
 through use of a select helper function like <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with()</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tab_row_group</span>(<span class='no'>data</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>rows</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>others</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_row_group.html'>tab_row_group</a></span>(<span class='kw'>data</span>, group = <span class='kw'>NULL</span>, rows = <span class='kw'>NULL</span>, others = <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
+      <td><p>A table object that is created using the <code><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt()</a></code> function.</p></td>
     </tr>
     <tr>
       <th>group</th>
@@ -175,7 +175,7 @@ helper function focused on selections. The select helper functions are:
       <th>others</th>
       <td><p>An option to set a default row group label for any rows not
 formally placed in a row group named by <code>group</code> in any call of
-<code>tab_row_group()</code>. A separate call to <code>tab_row_group()</code> with only a value
+<code><a href='https://rdrr.io/pkg/gt/man/tab_row_group.html'>tab_row_group()</a></code>. A separate call to <code><a href='https://rdrr.io/pkg/gt/man/tab_row_group.html'>tab_row_group()</a></code> with only a value
 to <code>others</code> is possible and makes explicit that the call is meant to
 provide a default row group label. If this is not set and there are rows
 that haven't been placed into a row group (where one or more row groups
@@ -201,28 +201,28 @@ without a label.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Create or Modify Parts: 
-<code><a href='tab_footnote.html'>tab_footnote</a>()</code>,
-<code><a href='tab_header.html'>tab_header</a>()</code>,
-<code><a href='tab_options.html'>tab_options</a>()</code>,
-<code><a href='tab_source_note.html'>tab_source_note</a>()</code>,
-<code><a href='tab_spanner_delim.html'>tab_spanner_delim</a>()</code>,
-<code><a href='tab_spanner.html'>tab_spanner</a>()</code>,
-<code><a href='tab_stubhead.html'>tab_stubhead</a>()</code>,
-<code><a href='tab_style.html'>tab_style</a>()</code></p></div>
+<code><a href='https://rdrr.io/pkg/gt/man/tab_footnote.html'>tab_footnote</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/tab_header.html'>tab_header</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/tab_options.html'>tab_options</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/tab_source_note.html'>tab_source_note</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/tab_spanner_delim.html'>tab_spanner_delim</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/tab_spanner.html'>tab_spanner</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/tab_stubhead.html'>tab_stubhead</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/tab_style.html'>tab_style</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Use `gtcars` to create a gt table and</span>
 <span class='co'># add two row groups with the labels:</span>
 <span class='co'># `numbered` and `NA` (a group without</span>
 <span class='co'># a title, or, the rest)</span>
-<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
-  <span class='no'>gtcars</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>model</span>, <span class='no'>year</span>, <span class='no'>hp</span>, <span class='no'>trq</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>8</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='kw'>rowname_col</span> <span class='kw'>=</span> <span class='st'>"model"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>tab_row_group</span>(
-    <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"numbered"</span>,
-    <span class='kw'>rows</span> <span class='kw'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches</a></span>(<span class='st'>"^[0-9]"</span>)
+<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='kw'>gtcars</span> <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>model</span>, <span class='kw'>year</span>, <span class='kw'>hp</span>, <span class='kw'>trq</span>) <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>8</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>(rowname_col = <span class='st'>"model"</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_row_group.html'>tab_row_group</a></span>(
+    group = <span class='st'>"numbered"</span>,
+    rows = <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches</a></span>(<span class='st'>"^[0-9]"</span>)
   )
 
 <span class='co'># Use `gtcars` to create a gt table;</span>
@@ -230,19 +230,20 @@ without a label.</p></td>
 <span class='co'># `powerful` and `super powerful`: the</span>
 <span class='co'># distinction being `hp` lesser or</span>
 <span class='co'># greater than `600`</span>
-<span class='no'>tab_2</span> <span class='kw'>&lt;-</span>
-  <span class='no'>gtcars</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>model</span>, <span class='no'>year</span>, <span class='no'>hp</span>, <span class='no'>trq</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>8</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='kw'>rowname_col</span> <span class='kw'>=</span> <span class='st'>"model"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>tab_row_group</span>(
-    <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"powerful"</span>,
-    <span class='kw'>rows</span> <span class='kw'>=</span> <span class='no'>hp</span> <span class='kw'>&lt;=</span> <span class='fl'>600</span>
-  ) <span class='kw'>%&gt;%</span>
-  <span class='fu'>tab_row_group</span>(
-    <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"super powerful"</span>,
-    <span class='kw'>rows</span> <span class='kw'>=</span> <span class='no'>hp</span> <span class='kw'>&gt;</span> <span class='fl'>600</span>
-  )</div></pre>
+<span class='kw'>tab_2</span> <span class='op'>&lt;-</span>
+  <span class='kw'>gtcars</span> <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>model</span>, <span class='kw'>year</span>, <span class='kw'>hp</span>, <span class='kw'>trq</span>) <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>8</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>(rowname_col = <span class='st'>"model"</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_row_group.html'>tab_row_group</a></span>(
+    group = <span class='st'>"powerful"</span>,
+    rows = <span class='kw'>hp</span> <span class='op'>&lt;=</span> <span class='fl'>600</span>
+  ) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_row_group.html'>tab_row_group</a></span>(
+    group = <span class='st'>"super powerful"</span>,
+    rows = <span class='kw'>hp</span> <span class='op'>&gt;</span> <span class='fl'>600</span>
+  )
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -148,12 +148,12 @@ get to use Markdown plus any HTML fragments at the same time)." />
     <div class="ref-description">
     <p>Markdown! It's a wonderful thing. We can use it in certain places (e.g.,
 footnotes, source notes, the table title, etc.) and expect it to render to
-HTML as Markdown does. There is the <code><a href='html.html'>html()</a></code> helper that allows you to ferry
-in HTML but this function <code>md()</code>... it's almost like a two-for-one deal (you
+HTML as Markdown does. There is the <code><a href='https://rdrr.io/pkg/gt/man/html.html'>html()</a></code> helper that allows you to ferry
+in HTML but this function <code><a href='https://rdrr.io/pkg/gt/man/md.html'>md()</a></code>... it's almost like a two-for-one deal (you
 get to use Markdown plus any HTML fragments <em>at the same time</em>).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>md</span>(<span class='no'>text</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/md.html'>md</a></span>(<span class='kw'>text</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -181,37 +181,40 @@ Markdown text and it will undergo conversion to HTML.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Helper Functions: 
-<code><a href='adjust_luminance.html'>adjust_luminance</a>()</code>,
-<code><a href='cell_borders.html'>cell_borders</a>()</code>,
-<code><a href='cell_fill.html'>cell_fill</a>()</code>,
-<code><a href='cell_text.html'>cell_text</a>()</code>,
-<code><a href='cells_body.html'>cells_body</a>()</code>,
-<code><a href='cells_column_labels.html'>cells_column_labels</a>()</code>,
-<code><a href='cells_column_spanners.html'>cells_column_spanners</a>()</code>,
-<code><a href='cells_grand_summary.html'>cells_grand_summary</a>()</code>,
-<code><a href='cells_row_groups.html'>cells_row_groups</a>()</code>,
-<code><a href='cells_stubhead.html'>cells_stubhead</a>()</code>,
-<code><a href='cells_stub.html'>cells_stub</a>()</code>,
-<code><a href='cells_summary.html'>cells_summary</a>()</code>,
-<code><a href='cells_title.html'>cells_title</a>()</code>,
-<code><a href='currency.html'>currency</a>()</code>,
-<code><a href='escape_latex.html'>escape_latex</a>()</code>,
-<code><a href='gt_latex_dependencies.html'>gt_latex_dependencies</a>()</code>,
-<code><a href='html.html'>html</a>()</code>,
-<code><a href='pct.html'>pct</a>()</code>,
-<code><a href='px.html'>px</a>()</code>,
-<code><a href='random_id.html'>random_id</a>()</code></p></div>
+<code><a href='https://rdrr.io/pkg/gt/man/adjust_luminance.html'>adjust_luminance</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cell_borders.html'>cell_borders</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cell_fill.html'>cell_fill</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cell_text.html'>cell_text</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_body.html'>cells_body</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_column_labels.html'>cells_column_labels</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_column_spanners.html'>cells_column_spanners</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_grand_summary.html'>cells_grand_summary</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_row_groups.html'>cells_row_groups</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_stubhead.html'>cells_stubhead</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_stub.html'>cells_stub</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_summary.html'>cells_summary</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_title.html'>cells_title</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/currency.html'>currency</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/default_fonts.html'>default_fonts</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/escape_latex.html'>escape_latex</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/google_font.html'>google_font</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/gt_latex_dependencies.html'>gt_latex_dependencies</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/html.html'>html</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/pct.html'>pct</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/px.html'>px</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/random_id.html'>random_id</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Use `exibble` to create a gt table;</span>
 <span class='co'># when adding a title, use the `md()`</span>
 <span class='co'># helper to use Markdown formatting</span>
-<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
-  <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>currency</span>, <span class='no'>char</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='tab_header.html'>tab_header</a></span>(
-    <span class='kw'>title</span> <span class='kw'>=</span> <span class='fu'>md</span>(<span class='st'>"Using *Markdown*"</span>))</div></pre>
+<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='kw'>exibble</span> <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>currency</span>, <span class='kw'>char</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_header.html'>tab_header</a></span>(
+    title = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/md.html'>md</a></span>(<span class='st'>"Using *Markdown*"</span>))
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

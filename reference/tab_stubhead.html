@@ -155,19 +155,19 @@ Markdown formatting for the stubhead label. Furthermore, if the table is
 intended for HTML output, we can use HTML for the stubhead label.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tab_stubhead</span>(<span class='no'>data</span>, <span class='no'>label</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_stubhead.html'>tab_stubhead</a></span>(<span class='kw'>data</span>, <span class='kw'>label</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
+      <td><p>A table object that is created using the <code><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt()</a></code> function.</p></td>
     </tr>
     <tr>
       <th>label</th>
       <td><p>The text to be used as the stubhead label We can optionally use
-the <code><a href='md.html'>md()</a></code> and <code><a href='html.html'>html()</a></code> functions to style the text as Markdown or to
+the <code><a href='https://rdrr.io/pkg/gt/man/md.html'>md()</a></code> and <code><a href='https://rdrr.io/pkg/gt/man/html.html'>html()</a></code> functions to style the text as Markdown or to
 retain HTML elements in the text.</p></td>
     </tr>
     </table>
@@ -188,25 +188,26 @@ retain HTML elements in the text.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Create or Modify Parts: 
-<code><a href='tab_footnote.html'>tab_footnote</a>()</code>,
-<code><a href='tab_header.html'>tab_header</a>()</code>,
-<code><a href='tab_options.html'>tab_options</a>()</code>,
-<code><a href='tab_row_group.html'>tab_row_group</a>()</code>,
-<code><a href='tab_source_note.html'>tab_source_note</a>()</code>,
-<code><a href='tab_spanner_delim.html'>tab_spanner_delim</a>()</code>,
-<code><a href='tab_spanner.html'>tab_spanner</a>()</code>,
-<code><a href='tab_style.html'>tab_style</a>()</code></p></div>
+<code><a href='https://rdrr.io/pkg/gt/man/tab_footnote.html'>tab_footnote</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/tab_header.html'>tab_header</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/tab_options.html'>tab_options</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/tab_row_group.html'>tab_row_group</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/tab_source_note.html'>tab_source_note</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/tab_spanner_delim.html'>tab_spanner_delim</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/tab_spanner.html'>tab_spanner</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/tab_style.html'>tab_style</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Use `gtcars` to create a gt table; add</span>
 <span class='co'># a stubhead label to describe what is</span>
 <span class='co'># in the stub</span>
-<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
-  <span class='no'>gtcars</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>model</span>, <span class='no'>year</span>, <span class='no'>hp</span>, <span class='no'>trq</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='kw'>rowname_col</span> <span class='kw'>=</span> <span class='st'>"model"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>tab_stubhead</span>(<span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"car"</span>)</div></pre>
+<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='kw'>gtcars</span> <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>model</span>, <span class='kw'>year</span>, <span class='kw'>hp</span>, <span class='kw'>trq</span>) <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>(rowname_col = <span class='st'>"model"</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_stubhead.html'>tab_stubhead</a></span>(label = <span class='st'>"car"</span>)
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

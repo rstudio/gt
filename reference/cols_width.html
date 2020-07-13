@@ -48,11 +48,12 @@
 
 <meta property="og:title" content="Set the widths of columns — cols_width" />
 <meta property="og:description" content="Manual specifications of column widths can be performed using the
-cols_width() function. We choose which columns get specific widths (in
-pixels, usually by use of the px() helper function). Width assignments are
-supplied in ... through two-sided formulas, where the left-hand side
-defines the target columns and the right-hand side is a single width value in
-pixels." />
+cols_width() function. We choose which columns get specific widths. This
+can be in units of pixels (easily set by use of the px() helper function),
+or, as percentages (where the pct() helper function is useful). Width
+assignments are supplied in ... through two-sided formulas, where the
+left-hand side defines the target columns and the right-hand side is a single
+dimension." />
 <meta property="og:image" content="https://gt.rstudio.com/logo.svg" />
 
 
@@ -148,21 +149,22 @@ pixels." />
 
     <div class="ref-description">
     <p>Manual specifications of column widths can be performed using the
-<code>cols_width()</code> function. We choose which columns get specific widths (in
-pixels, usually by use of the <code><a href='px.html'>px()</a></code> helper function). Width assignments are
-supplied in <code>...</code> through two-sided formulas, where the left-hand side
-defines the target columns and the right-hand side is a single width value in
-pixels.</p>
+<code><a href='https://rdrr.io/pkg/gt/man/cols_width.html'>cols_width()</a></code> function. We choose which columns get specific widths. This
+can be in units of pixels (easily set by use of the <code><a href='https://rdrr.io/pkg/gt/man/px.html'>px()</a></code> helper function),
+or, as percentages (where the <code><a href='https://rdrr.io/pkg/gt/man/pct.html'>pct()</a></code> helper function is useful). Width
+assignments are supplied in <code>...</code> through two-sided formulas, where the
+left-hand side defines the target columns and the right-hand side is a single
+dimension.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cols_width</span>(<span class='no'>data</span>, <span class='no'>...</span>, <span class='kw'>.list</span> <span class='kw'>=</span> <span class='fu'>list2</span>(<span class='no'>...</span>))</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/cols_width.html'>cols_width</a></span>(<span class='kw'>data</span>, <span class='kw'>...</span>, .list = <span class='fu'>list2</span>(<span class='kw'>...</span>))</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
+      <td><p>A table object that is created using the <code><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt()</a></code> function.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -170,12 +172,12 @@ pixels.</p>
 columns in <code>data</code>. Two-sided formulas (e.g, <code>&lt;LHS&gt; ~ &lt;RHS&gt;</code>) can be used,
 where the left-hand side corresponds to selections of columns and the
 right-hand side evaluates to single-length character values in the form
-<code>{##}px</code> (i.e., pixel dimensions); the <code><a href='px.html'>px()</a></code> helper function is best used
+<code>{##}px</code> (i.e., pixel dimensions); the <code><a href='https://rdrr.io/pkg/gt/man/px.html'>px()</a></code> helper function is best used
 for this purpose. Column names should be enclosed in <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code>. The
 column-based select helpers <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains()</a></code>,
 <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/one_of.html'>one_of()</a></code>, and <code><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything()</a></code> can be used in the LHS.
 Subsequent expressions that operate on the columns assigned previously will
-result in overwriting column width values (both in the same <code>cols_width()</code>
+result in overwriting column width values (both in the same <code><a href='https://rdrr.io/pkg/gt/man/cols_width.html'>cols_width()</a></code>
 call and across separate calls). All other columns can be assigned a
 default width value by using <code>TRUE</code> or <code><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything()</a></code> on the left-hand
 side.</p></td>
@@ -191,11 +193,13 @@ side.</p></td>
     <p>An object of class <code>gt_tbl</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Normally, column widths are automatically set to span across the width of the
-container (both table and container widths can be individually modified with
-the <code>table.width</code> and <code>container.width</code> options within <code><a href='tab_options.html'>tab_options()</a></code>). When
-using <code>cols_width()</code> though, the <code>table.width</code> option is disregarded in
-favor of the pixel values set for each column.</p>
+    <p>Column widths can be set as absolute or relative values (with px and
+percentage values). Those columns not specified are treated as having
+variable width. The sizing behavior for column widths depends on the
+combination of value types, and, whether a table width has been set (which
+could, itself, be expressed as an absolute or relative value). Widths for the
+table and its container can be individually modified with the <code>table.width</code>
+and <code>container.width</code> arguments within <code><a href='https://rdrr.io/pkg/gt/man/tab_options.html'>tab_options()</a></code>).</p>
     <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
 
     
@@ -209,15 +213,15 @@ favor of the pixel values set for each column.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Modify Columns: 
-<code><a href='cols_align.html'>cols_align</a>()</code>,
-<code><a href='cols_hide.html'>cols_hide</a>()</code>,
-<code><a href='cols_label.html'>cols_label</a>()</code>,
-<code><a href='cols_merge_range.html'>cols_merge_range</a>()</code>,
-<code><a href='cols_merge_uncert.html'>cols_merge_uncert</a>()</code>,
-<code><a href='cols_merge.html'>cols_merge</a>()</code>,
-<code><a href='cols_move_to_end.html'>cols_move_to_end</a>()</code>,
-<code><a href='cols_move_to_start.html'>cols_move_to_start</a>()</code>,
-<code><a href='cols_move.html'>cols_move</a>()</code></p></div>
+<code><a href='https://rdrr.io/pkg/gt/man/cols_align.html'>cols_align</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cols_hide.html'>cols_hide</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cols_label.html'>cols_label</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cols_merge_range.html'>cols_merge_range</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cols_merge_uncert.html'>cols_merge_uncert</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cols_merge.html'>cols_merge</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cols_move_to_end.html'>cols_move_to_end</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cols_move_to_start.html'>cols_move_to_start</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cols_move.html'>cols_move</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Use `exibble` to create a gt table;</span>
@@ -226,19 +230,20 @@ favor of the pixel values set for each column.</p>
 <span class='co'># table columns (using `everything()`</span>
 <span class='co'># or `TRUE` at the end will capture</span>
 <span class='co'># all remaining columns)</span>
-<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
-  <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(
-    <span class='no'>num</span>, <span class='no'>char</span>, <span class='no'>date</span>,
-    <span class='no'>datetime</span>, <span class='no'>row</span>
-  ) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'>cols_width</span>(
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>) ~ <span class='fu'><a href='px.html'>px</a></span>(<span class='fl'>150</span>),
-    <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with</a></span>(<span class='st'>"r"</span>) ~ <span class='fu'><a href='px.html'>px</a></span>(<span class='fl'>100</span>),
-    <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span>(<span class='st'>"date"</span>) ~ <span class='fu'><a href='px.html'>px</a></span>(<span class='fl'>200</span>),
-    <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>() ~ <span class='fu'><a href='px.html'>px</a></span>(<span class='fl'>60</span>)
-  )</div></pre>
+<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='kw'>exibble</span> <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(
+    <span class='kw'>num</span>, <span class='kw'>char</span>, <span class='kw'>date</span>,
+    <span class='kw'>datetime</span>, <span class='kw'>row</span>
+  ) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/cols_width.html'>cols_width</a></span>(
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>num</span>) <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/pkg/gt/man/px.html'>px</a></span>(<span class='fl'>150</span>),
+    <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with</a></span>(<span class='st'>"r"</span>) <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/pkg/gt/man/px.html'>px</a></span>(<span class='fl'>100</span>),
+    <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span>(<span class='st'>"date"</span>) <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/pkg/gt/man/px.html'>px</a></span>(<span class='fl'>200</span>),
+    <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>() <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/pkg/gt/man/px.html'>px</a></span>(<span class='fl'>60</span>)
+  )
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

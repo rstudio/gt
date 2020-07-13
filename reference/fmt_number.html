@@ -177,19 +177,21 @@ formatting specific to the chosen locale</p></li>
 
     </div>
 
-    <pre class="usage"><span class='fu'>fmt_number</span>(
-  <span class='no'>data</span>,
-  <span class='no'>columns</span>,
-  <span class='kw'>rows</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>drop_trailing_zeros</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>use_seps</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>scale_by</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>suffixing</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"{x}"</span>,
-  <span class='kw'>sep_mark</span> <span class='kw'>=</span> <span class='st'>","</span>,
-  <span class='kw'>dec_mark</span> <span class='kw'>=</span> <span class='st'>"."</span>,
-  <span class='kw'>locale</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/fmt_number.html'>fmt_number</a></span>(
+  <span class='kw'>data</span>,
+  <span class='kw'>columns</span>,
+  rows = <span class='kw'>NULL</span>,
+  decimals = <span class='fl'>2</span>,
+  n_sigfig = <span class='kw'>NULL</span>,
+  drop_trailing_zeros = <span class='fl'>FALSE</span>,
+  drop_trailing_dec_mark = <span class='fl'>TRUE</span>,
+  use_seps = <span class='fl'>TRUE</span>,
+  scale_by = <span class='fl'>1</span>,
+  suffixing = <span class='fl'>FALSE</span>,
+  pattern = <span class='st'>"{x}"</span>,
+  sep_mark = <span class='st'>","</span>,
+  dec_mark = <span class='st'>"."</span>,
+  locale = <span class='kw'>NULL</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -197,7 +199,7 @@ formatting specific to the chosen locale</p></li>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
+      <td><p>A table object that is created using the <code><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt()</a></code> function.</p></td>
     </tr>
     <tr>
       <th>columns</th>
@@ -222,9 +224,25 @@ We can also use expressions to filter down to the rows we need (e.g.,
 use. The default number of decimal places is <code>2</code>.</p></td>
     </tr>
     <tr>
+      <th>n_sigfig</th>
+      <td><p>A option to format numbers to <em>n</em> significant figures. By
+default, this is <code>NULL</code> and thus number values will be formatted according
+to the number of decimal places set via <code>decimals</code>. If opting to format
+according to the rules of significant figures, <code>n_sigfig</code> must be a number
+greater than or equal to <code>1</code>. Any values passed to the <code>decimals</code> and
+<code>drop_trailing_zeros</code> arguments will be ignored.</p></td>
+    </tr>
+    <tr>
       <th>drop_trailing_zeros</th>
       <td><p>A logical value that allows for removal of
 trailing zeros (those redundant zeros after the decimal mark).</p></td>
+    </tr>
+    <tr>
+      <th>drop_trailing_dec_mark</th>
+      <td><p>A logical value that determines whether decimal
+marks should always appear even if there are no decimal digits to display
+after formatting (e.g, <code>23</code> becomes <code>23.</code>). The default for this is <code>TRUE</code>,
+which means that trailing decimal marks are not shown.</p></td>
     </tr>
     <tr>
       <th>use_seps</th>
@@ -278,7 +296,7 @@ of <code>1,000</code>).</p></td>
 according the locale's rules. Examples include <code>"en_US"</code> for English
 (United States) and <code>"fr_FR"</code> for French (France). The use of a valid
 locale ID will override any values provided in <code>sep_mark</code> and <code>dec_mark</code>.
-We can use the <code><a href='info_locales.html'>info_locales()</a></code> function as a useful reference for all of
+We can use the <code><a href='https://rdrr.io/pkg/gt/man/info_locales.html'>info_locales()</a></code> function as a useful reference for all of
 the locales that are supported.</p></td>
     </tr>
     </table>
@@ -307,54 +325,55 @@ argument. See the Arguments section for more information on this.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Format Data: 
-<code><a href='data_color.html'>data_color</a>()</code>,
-<code><a href='fmt_currency.html'>fmt_currency</a>()</code>,
-<code><a href='fmt_datetime.html'>fmt_datetime</a>()</code>,
-<code><a href='fmt_date.html'>fmt_date</a>()</code>,
-<code><a href='fmt_markdown.html'>fmt_markdown</a>()</code>,
-<code><a href='fmt_missing.html'>fmt_missing</a>()</code>,
-<code><a href='fmt_passthrough.html'>fmt_passthrough</a>()</code>,
-<code><a href='fmt_percent.html'>fmt_percent</a>()</code>,
-<code><a href='fmt_scientific.html'>fmt_scientific</a>()</code>,
-<code><a href='fmt_time.html'>fmt_time</a>()</code>,
-<code><a href='fmt.html'>fmt</a>()</code>,
-<code><a href='text_transform.html'>text_transform</a>()</code></p></div>
+<code><a href='https://rdrr.io/pkg/gt/man/data_color.html'>data_color</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/fmt_currency.html'>fmt_currency</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/fmt_datetime.html'>fmt_datetime</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/fmt_date.html'>fmt_date</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/fmt_markdown.html'>fmt_markdown</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/fmt_missing.html'>fmt_missing</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/fmt_passthrough.html'>fmt_passthrough</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/fmt_percent.html'>fmt_percent</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/fmt_scientific.html'>fmt_scientific</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/fmt_time.html'>fmt_time</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/fmt.html'>fmt</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/text_transform.html'>text_transform</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>tidyr</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://tidyr.tidyverse.org'>tidyr</a></span>)
 
 <span class='co'># Use `exibble` to create a gt table;</span>
 <span class='co'># format the `num` column as numeric</span>
 <span class='co'># with three decimal places and with no</span>
 <span class='co'># use of digit separators</span>
-<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
-  <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'>fmt_number</span>(
-    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>),
-    <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='fl'>3</span>,
-    <span class='kw'>use_seps</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='kw'>exibble</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/fmt_number.html'>fmt_number</a></span>(
+    columns = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>num</span>),
+    decimals = <span class='fl'>3</span>,
+    use_seps = <span class='fl'>FALSE</span>
   )
 
 <span class='co'># Use `countrypops` to create a gt</span>
 <span class='co'># table; format all numeric columns</span>
 <span class='co'># to use large-number suffixing</span>
-<span class='no'>tab_2</span> <span class='kw'>&lt;-</span>
-  <span class='no'>countrypops</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>country_code_3</span>, <span class='no'>year</span>, <span class='no'>population</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
-    <span class='no'>country_code_3</span> <span class='kw'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(
+<span class='kw'>tab_2</span> <span class='op'>&lt;-</span>
+  <span class='kw'>countrypops</span> <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>country_code_3</span>, <span class='kw'>year</span>, <span class='kw'>population</span>) <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
+    <span class='kw'>country_code_3</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(
       <span class='st'>"CHN"</span>, <span class='st'>"IND"</span>, <span class='st'>"USA"</span>, <span class='st'>"PAK"</span>, <span class='st'>"IDN"</span>)
-  ) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>year</span> <span class='kw'>&gt;</span> <span class='fl'>1975</span> <span class='kw'>&amp;</span> <span class='no'>year</span> <span class='kw'>%%</span> <span class='fl'>5</span> <span class='kw'>==</span> <span class='fl'>0</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>tidyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://tidyr.tidyverse.org/reference/spread.html'>spread</a></span>(<span class='no'>year</span>, <span class='no'>population</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='fu'>desc</span>(<span class='no'>`2015`</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='kw'>rowname_col</span> <span class='kw'>=</span> <span class='st'>"country_code_3"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>fmt_number</span>(
-    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fl'>2</span>:<span class='fl'>9</span>,
-    <span class='kw'>decimals</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-    <span class='kw'>suffixing</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-  )</div></pre>
+  ) <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='kw'>year</span> <span class='op'>&gt;</span> <span class='fl'>1975</span> <span class='op'>&amp;</span> <span class='kw'>year</span> <span class='op'>%%</span> <span class='fl'>5</span> <span class='op'>==</span> <span class='fl'>0</span>) <span class='op'>%&gt;%</span>
+  <span class='kw'>tidyr</span>::<span class='fu'><a href='https://tidyr.tidyverse.org/reference/spread.html'>spread</a></span>(<span class='kw'>year</span>, <span class='kw'>population</span>) <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='fu'>desc</span>(<span class='kw'>`2015`</span>)) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>(rowname_col = <span class='st'>"country_code_3"</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/fmt_number.html'>fmt_number</a></span>(
+    columns = <span class='fl'>2</span><span class='op'>:</span><span class='fl'>9</span>,
+    decimals = <span class='fl'>2</span>,
+    suffixing = <span class='fl'>TRUE</span>
+  )
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

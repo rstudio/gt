@@ -147,22 +147,22 @@ the output table." />
     </div>
 
     <div class="ref-description">
-    <p>The <code>cols_merge_range()</code> function is a specialized variant of the
-<code><a href='cols_merge.html'>cols_merge()</a></code> function. It operates by taking a two columns that constitute
+    <p>The <code><a href='https://rdrr.io/pkg/gt/man/cols_merge_range.html'>cols_merge_range()</a></code> function is a specialized variant of the
+<code><a href='https://rdrr.io/pkg/gt/man/cols_merge.html'>cols_merge()</a></code> function. It operates by taking a two columns that constitute
 a range of values (<code>col_begin</code> and <code>col_end</code>) and merges them into a single
 column. What results is a column containing both values separated by a long
 dash (e.g., <code>12.0 — 20.0</code>). The column specified in <code>col_end</code> is dropped from
 the output table.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cols_merge_range</span>(<span class='no'>data</span>, <span class='no'>col_begin</span>, <span class='no'>col_end</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"--"</span>, <span class='kw'>autohide</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/cols_merge_range.html'>cols_merge_range</a></span>(<span class='kw'>data</span>, <span class='kw'>col_begin</span>, <span class='kw'>col_end</span>, sep = <span class='st'>"--"</span>, autohide = <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
+      <td><p>A table object that is created using the <code><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt()</a></code> function.</p></td>
     </tr>
     <tr>
       <th>col_begin</th>
@@ -193,8 +193,8 @@ the same as before, they just won't be displayed in the finalized table.</p></td
     <p>An object of class <code>gt_tbl</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function could be somewhat replicated using <code><a href='cols_merge.html'>cols_merge()</a></code>, however,
-<code>cols_merge_range()</code> employs the following specialized operations for <code>NA</code>
+    <p>This function could be somewhat replicated using <code><a href='https://rdrr.io/pkg/gt/man/cols_merge.html'>cols_merge()</a></code>, however,
+<code><a href='https://rdrr.io/pkg/gt/man/cols_merge_range.html'>cols_merge_range()</a></code> employs the following specialized operations for <code>NA</code>
 handling:</p>
 <ol>
 <li><p><code>NA</code>s in <code>col_begin</code> (but not <code>col_end</code>) result in a display of only</p></li>
@@ -206,12 +206,12 @@ the merged column</p></li>
 </ol>
 
 <p>Any resulting <code>NA</code> values in the <code>col_begin</code> column following the merge
-operation can be easily formatted using the <code><a href='fmt_missing.html'>fmt_missing()</a></code> function.
-Separate calls of <code><a href='fmt_missing.html'>fmt_missing()</a></code> can be used for the <code>col_begin</code> and
+operation can be easily formatted using the <code><a href='https://rdrr.io/pkg/gt/man/fmt_missing.html'>fmt_missing()</a></code> function.
+Separate calls of <code><a href='https://rdrr.io/pkg/gt/man/fmt_missing.html'>fmt_missing()</a></code> can be used for the <code>col_begin</code> and
 <code>col_end</code> columns for finer control of the replacement values.</p>
 <p>This function is part of a set of three column-merging functions. The other
-two are the general <code><a href='cols_merge.html'>cols_merge()</a></code> function and the specialized
-<code><a href='cols_merge_uncert.html'>cols_merge_uncert()</a></code> function. These functions operate similarly, where the
+two are the general <code><a href='https://rdrr.io/pkg/gt/man/cols_merge.html'>cols_merge()</a></code> function and the specialized
+<code><a href='https://rdrr.io/pkg/gt/man/cols_merge_uncert.html'>cols_merge_uncert()</a></code> function. These functions operate similarly, where the
 non-target columns can be optionally hidden from the output table through the
 <code>hide_columns</code> or <code>autohide</code> options.</p>
     <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
@@ -227,15 +227,15 @@ non-target columns can be optionally hidden from the output table through the
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Modify Columns: 
-<code><a href='cols_align.html'>cols_align</a>()</code>,
-<code><a href='cols_hide.html'>cols_hide</a>()</code>,
-<code><a href='cols_label.html'>cols_label</a>()</code>,
-<code><a href='cols_merge_uncert.html'>cols_merge_uncert</a>()</code>,
-<code><a href='cols_merge.html'>cols_merge</a>()</code>,
-<code><a href='cols_move_to_end.html'>cols_move_to_end</a>()</code>,
-<code><a href='cols_move_to_start.html'>cols_move_to_start</a>()</code>,
-<code><a href='cols_move.html'>cols_move</a>()</code>,
-<code><a href='cols_width.html'>cols_width</a>()</code></p></div>
+<code><a href='https://rdrr.io/pkg/gt/man/cols_align.html'>cols_align</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cols_hide.html'>cols_hide</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cols_label.html'>cols_label</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cols_merge_uncert.html'>cols_merge_uncert</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cols_merge.html'>cols_merge</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cols_move_to_end.html'>cols_move_to_end</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cols_move_to_start.html'>cols_move_to_start</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cols_move.html'>cols_move</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cols_width.html'>cols_width</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Use `gtcars` to create a gt table,</span>
@@ -244,18 +244,19 @@ non-target columns can be optionally hidden from the output table through the
 <span class='co'># columns together as a single range</span>
 <span class='co'># column (which is labeled as MPG,</span>
 <span class='co'># in italics)</span>
-<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
-  <span class='no'>gtcars</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>model</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span>(<span class='st'>"mpg"</span>)) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>8</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'>cols_merge_range</span>(
-    <span class='kw'>col_begin</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>mpg_c</span>),
-    <span class='kw'>col_end</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>mpg_h</span>)
-  ) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='cols_label.html'>cols_label</a></span>(
-    <span class='kw'>mpg_c</span> <span class='kw'>=</span> <span class='fu'><a href='md.html'>md</a></span>(<span class='st'>"*MPG*"</span>)
-  )</div></pre>
+<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='kw'>gtcars</span> <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>model</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span>(<span class='st'>"mpg"</span>)) <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>8</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/cols_merge_range.html'>cols_merge_range</a></span>(
+    col_begin = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>mpg_c</span>),
+    col_end = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>mpg_h</span>)
+  ) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/cols_label.html'>cols_label</a></span>(
+    mpg_c = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/md.html'>md</a></span>(<span class='st'>"*MPG*"</span>)
+  )
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

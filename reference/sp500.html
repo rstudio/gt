@@ -149,7 +149,7 @@ beginning of 1950 to the end of 2015. The index includes 500 leading
 companies and captures about 80\<!-- % coverage of available market capitalization. --></p>
     </div>
 
-    <pre class="usage"><span class='no'>sp500</span></pre>
+    <pre class="usage"><span class='kw'>sp500</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
@@ -171,16 +171,16 @@ prices in USD; the <code>close</code> price is adjusted for splits</p></dd>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Datasets: 
-<code><a href='countrypops.html'>countrypops</a></code>,
-<code><a href='exibble.html'>exibble</a></code>,
-<code><a href='gtcars.html'>gtcars</a></code>,
-<code><a href='pizzaplace.html'>pizzaplace</a></code>,
-<code><a href='sza.html'>sza</a></code></p></div>
+<code><a href='https://rdrr.io/pkg/gt/man/countrypops.html'>countrypops</a></code>,
+<code><a href='https://rdrr.io/pkg/gt/man/exibble.html'>exibble</a></code>,
+<code><a href='https://rdrr.io/pkg/gt/man/gtcars.html'>gtcars</a></code>,
+<code><a href='https://rdrr.io/pkg/gt/man/pizzaplace.html'>pizzaplace</a></code>,
+<code><a href='https://rdrr.io/pkg/gt/man/sza.html'>sza</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Here is a glimpse at the data</span>
 <span class='co'># available in `sp500`</span>
-<span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>glimpse</a></span>(<span class='no'>sp500</span>)</div><div class='output co'>#&gt; Rows: 16,607
+<span class='kw'>dplyr</span>::<span class='fu'><a href='https://tibble.tidyverse.org/reference/glimpse.html'>glimpse</a></span>(<span class='kw'>sp500</span>)</div><div class='output co'>#&gt; Rows: 16,607
 #&gt; Columns: 7
 #&gt; $ date      <span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span> 2015-12-31, 2015-12-30, 2015-12-29, 2015-12-28, 2015-12-24…
 #&gt; $ open      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> 2060.59, 2077.34, 2060.54, 2057.77, 2063.52, 2042.20, 2023.…
@@ -188,8 +188,7 @@ prices in USD; the <code>close</code> price is adjusted for splits</p></dd>
 #&gt; $ low       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> 2043.62, 2061.97, 2060.54, 2044.20, 2058.73, 2042.20, 2020.…
 #&gt; $ close     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> 2043.94, 2063.36, 2078.36, 2056.50, 2060.99, 2064.29, 2038.…
 #&gt; $ volume    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> 2655330000, 2367430000, 2542000000, 2492510000, 1411860000,…
-#&gt; $ adj_close </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> 2043.94, 2063.36, 2078.36, 2056.50, 2060.99, 2064.29, 2038.…</div><div class='input'>
-</div></span></pre>
+#&gt; $ adj_close </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> 2043.94, 2063.36, 2078.36, 2056.50, 2060.99, 2064.29, 2038.…</div><div class='input'></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

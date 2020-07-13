@@ -150,7 +150,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-create-table" class="hasAnchor"><a href="#section-create-table" class="anchor"></a>Create Table</h2>
-          <p class="section-desc"><p>All <strong>gt</strong> tables begin with a call to <code><a href="../reference/gt.html">gt()</a></code>, where we would supply the input data table (data frame or tibble) and some basic options for creating a stub (<code>rowname_col</code>) and row groups (<code>groupname_col</code>). We can also introduce a grouped tibble (via <strong>dplyr</strong>’s <code>group_by()</code>) for more precise divisions of rows into row groups. The <code><a href="../reference/gt_preview.html">gt_preview()</a></code> function is great for getting a nicely-formatted preview of a data table (defaulting to the first 5 rows and the last row).</p></p>
+          <p class="section-desc"><p>All <strong>gt</strong> tables begin with a call to <code><a href="https://rdrr.io/pkg/gt/man/gt.html">gt()</a></code>, where we would supply the input data table (data frame or tibble) and some basic options for creating a stub (<code>rowname_col</code>) and row groups (<code>groupname_col</code>). We can also introduce a grouped tibble (via <strong>dplyr</strong>’s <code>group_by()</code>) for more precise divisions of rows into row groups. The <code><a href="https://rdrr.io/pkg/gt/man/gt_preview.html">gt_preview()</a></code> function is great for getting a nicely-formatted preview of a data table (defaulting to the first 5 rows and the last row).</p></p>
         </th>
       </tr>
       
@@ -175,7 +175,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-create-or-modify-parts" class="hasAnchor"><a href="#section-create-or-modify-parts" class="anchor"></a>Create or Modify Parts</h2>
-          <p class="section-desc"><p>A <strong>gt</strong> table can contain a few useful parts for conveying additional information. These include a header (with a titles and subtitle), a footer (with footnotes and source notes), and additional areas for labels (row group labels, column spanner labels, the stubhead label). We can modify the look of table parts more generally with <code><a href="../reference/tab_options.html">tab_options()</a></code> and perform styling on targeted table locations with <code><a href="../reference/tab_style.html">tab_style()</a></code>.</p></p>
+          <p class="section-desc"><p>A <strong>gt</strong> table can contain a few useful parts for conveying additional information. These include a header (with a titles and subtitle), a footer (with footnotes and source notes), and additional areas for labels (row group labels, column spanner labels, the stubhead label). We can modify the look of table parts more generally with <code><a href="https://rdrr.io/pkg/gt/man/tab_options.html">tab_options()</a></code> and perform styling on targeted table locations with <code><a href="https://rdrr.io/pkg/gt/man/tab_style.html">tab_style()</a></code>.</p></p>
         </th>
       </tr>
       
@@ -242,7 +242,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-format-data" class="hasAnchor"><a href="#section-format-data" class="anchor"></a>Format Data</h2>
-          <p class="section-desc"><p>Columns of data can be formatted with the <code>fmt_*()</code> functions. We can specify the rows of these columns quite precisely with the <code>rows</code> argument. We get to apply these functions exactly once to each data cell (last call wins). Need to do custom formatting? Use the <code><a href="../reference/fmt.html">fmt()</a></code> function and define your own formatter within (or, create a wrapper with <code><a href="../reference/fmt.html">fmt()</a></code> if you prefer). The <code><a href="../reference/text_transform.html">text_transform()</a></code> function allows for post-processing of any data, and we provide a function for that transformation.</p></p>
+          <p class="section-desc"><p>Columns of data can be formatted with the <code>fmt_*()</code> functions. We can specify the rows of these columns quite precisely with the <code>rows</code> argument. We get to apply these functions exactly once to each data cell (last call wins). Need to do custom formatting? Use the <code><a href="https://rdrr.io/pkg/gt/man/fmt.html">fmt()</a></code> function and define your own formatter within (or, create a wrapper with <code><a href="https://rdrr.io/pkg/gt/man/fmt.html">fmt()</a></code> if you prefer). The <code><a href="https://rdrr.io/pkg/gt/man/text_transform.html">text_transform()</a></code> function allows for post-processing of any data, and we provide a function for that transformation.</p></p>
         </th>
       </tr>
       
@@ -333,7 +333,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-modify-columns" class="hasAnchor"><a href="#section-modify-columns" class="anchor"></a>Modify Columns</h2>
-          <p class="section-desc"><p>The <code>cols_*()</code> functions allow for modifications that act on entire columns. This includes alignment of the data in columns (<code><a href="../reference/cols_align.html">cols_align()</a></code>), hiding columns from view (<code><a href="../reference/cols_hide.html">cols_hide()</a></code>), re-labeling the column labels (<code><a href="../reference/cols_label.html">cols_label()</a></code>), merging two columns together (<code>cols_merge*()</code>), moving columns around (<code>cols_move*()</code>)</p></p>
+          <p class="section-desc"><p>The <code>cols_*()</code> functions allow for modifications that act on entire columns. This includes alignment of the data in columns (<code><a href="https://rdrr.io/pkg/gt/man/cols_align.html">cols_align()</a></code>), hiding columns from view (<code><a href="https://rdrr.io/pkg/gt/man/cols_hide.html">cols_hide()</a></code>), re-labeling the column labels (<code><a href="https://rdrr.io/pkg/gt/man/cols_label.html">cols_label()</a></code>), merging two columns together (<code>cols_merge*()</code>), moving columns around (<code>cols_move*()</code>)</p></p>
         </th>
       </tr>
       
@@ -406,7 +406,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-modify-rows" class="hasAnchor"><a href="#section-modify-rows" class="anchor"></a>Modify Rows</h2>
-          <p class="section-desc"><p>The only function currently that modifies entire rows is the <code><a href="../reference/row_group_order.html">row_group_order()</a></code> function. It lets us modify the ordering of any row groups in the table.</p></p>
+          <p class="section-desc"><p>The only function currently that modifies entire rows is the <code><a href="https://rdrr.io/pkg/gt/man/row_group_order.html">row_group_order()</a></code> function. It lets us modify the ordering of any row groups in the table.</p></p>
         </th>
       </tr>
       
@@ -425,7 +425,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-add-rows" class="hasAnchor"><a href="#section-add-rows" class="anchor"></a>Add Rows</h2>
-          <p class="section-desc"><p>There are two functions that will add rows to a <strong>gt</strong> table: <code><a href="../reference/summary_rows.html">summary_rows()</a></code> and <code><a href="../reference/grand_summary_rows.html">grand_summary_rows()</a></code>. These functions will both add summary rows but one will do it in a groupwise fashion while the other will create grand summary rows.</p></p>
+          <p class="section-desc"><p>There are two functions that will add rows to a <strong>gt</strong> table: <code><a href="https://rdrr.io/pkg/gt/man/summary_rows.html">summary_rows()</a></code> and <code><a href="https://rdrr.io/pkg/gt/man/grand_summary_rows.html">grand_summary_rows()</a></code>. These functions will both add summary rows but one will do it in a groupwise fashion while the other will create grand summary rows.</p></p>
         </th>
       </tr>
       
@@ -450,7 +450,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-helper-functions" class="hasAnchor"><a href="#section-helper-functions" class="anchor"></a>Helper Functions</h2>
-          <p class="section-desc"><p>A small assortment of helper functions is available in the <strong>gt</strong> package. The various <code>cells_*()</code> functions are used for targeting cells with the <code>locations</code> argument in the <code><a href="../reference/tab_footnote.html">tab_footnote()</a></code>, <code><a href="../reference/tab_style.html">tab_style()</a></code>, and <code><a href="../reference/text_transform.html">text_transform()</a></code> functions. The <code>cells_styles()</code> function is used exclusively with <code><a href="../reference/tab_style.html">tab_style()</a></code>’s <code>style</code> argument (and the <code><a href="../reference/px.html">px()</a></code> &amp; <code><a href="../reference/pct.html">pct()</a></code> functions may be useful there for specifying units in pixels or percentages). The <code><a href="../reference/md.html">md()</a></code> and <code><a href="../reference/html.html">html()</a></code> helpers can used be during label creation with the <code><a href="../reference/tab_header.html">tab_header()</a></code>, <code><a href="../reference/tab_footnote.html">tab_footnote()</a></code>, <code><a href="../reference/tab_spanner.html">tab_spanner()</a></code>, <code>tab_stubhead_label()</code>, and <code><a href="../reference/tab_source_note.html">tab_source_note()</a></code> functions.</p></p>
+          <p class="section-desc"><p>A small assortment of helper functions is available in the <strong>gt</strong> package. The various <code>cells_*()</code> functions are used for targeting cells with the <code>locations</code> argument in the <code><a href="https://rdrr.io/pkg/gt/man/tab_footnote.html">tab_footnote()</a></code>, <code><a href="https://rdrr.io/pkg/gt/man/tab_style.html">tab_style()</a></code>, and <code><a href="https://rdrr.io/pkg/gt/man/text_transform.html">text_transform()</a></code> functions. The <code>cells_styles()</code> function is used exclusively with <code><a href="https://rdrr.io/pkg/gt/man/tab_style.html">tab_style()</a></code>’s <code>style</code> argument (and the <code><a href="https://rdrr.io/pkg/gt/man/px.html">px()</a></code> &amp; <code><a href="https://rdrr.io/pkg/gt/man/pct.html">pct()</a></code> functions may be useful there for specifying units in pixels or percentages). The <code><a href="https://rdrr.io/pkg/gt/man/md.html">md()</a></code> and <code><a href="https://rdrr.io/pkg/gt/man/html.html">html()</a></code> helpers can used be during label creation with the <code><a href="https://rdrr.io/pkg/gt/man/tab_header.html">tab_header()</a></code>, <code><a href="https://rdrr.io/pkg/gt/man/tab_footnote.html">tab_footnote()</a></code>, <code><a href="https://rdrr.io/pkg/gt/man/tab_spanner.html">tab_spanner()</a></code>, <code>tab_stubhead_label()</code>, and <code><a href="https://rdrr.io/pkg/gt/man/tab_source_note.html">tab_source_note()</a></code> functions.</p></p>
         </th>
       </tr>
       
@@ -584,12 +584,24 @@
           <p><code><a href="gt_latex_dependencies.html">gt_latex_dependencies()</a></code> </p>
         </td>
         <td><p>Get the LaTeX dependencies required for a <strong>gt</strong> table</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="default_fonts.html">default_fonts()</a></code> </p>
+        </td>
+        <td><p>A vector of default fonts for use with <strong>gt</strong> tables</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="google_font.html">google_font()</a></code> </p>
+        </td>
+        <td><p>Helper function for specifying a font from the Google Fonts service</p></td>
       </tr>
     </tbody><tbody>
       <tr>
         <th colspan="2">
           <h2 id="section-image-addition-functions" class="hasAnchor"><a href="#section-image-addition-functions" class="anchor"></a>Image Addition Functions</h2>
-          <p class="section-desc"><p>We can add images into a <strong>gt</strong> table with the help of the <code>*_image()</code> functions. Two common ways to do this: (1) use <code><a href="../reference/text_transform.html">text_transform()</a></code> to insert images into data cells, (2) use any function that creates new labels (e.g., <code><a href="../reference/tab_header.html">tab_header()</a></code>) and use a <code>*_image()</code> function within the <code><a href="../reference/html.html">html()</a></code> helper.</p></p>
+          <p class="section-desc"><p>We can add images into a <strong>gt</strong> table with the help of the <code>*_image()</code> functions. Two common ways to do this: (1) use <code><a href="https://rdrr.io/pkg/gt/man/text_transform.html">text_transform()</a></code> to insert images into data cells, (2) use any function that creates new labels (e.g., <code><a href="https://rdrr.io/pkg/gt/man/tab_header.html">tab_header()</a></code>) and use a <code>*_image()</code> function within the <code><a href="https://rdrr.io/pkg/gt/man/html.html">html()</a></code> helper.</p></p>
         </th>
       </tr>
       
@@ -626,7 +638,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-table-option-functions" class="hasAnchor"><a href="#section-table-option-functions" class="anchor"></a>Table Option Functions</h2>
-          <p class="section-desc"><p>With the <code>opt_*()</code> functions, we have an easy way to set commonly-used table options without having to use <code><a href="../reference/tab_options.html">tab_options()</a></code> directly. For instance, we can modify the set of marks to use with footnotes, turn on row striping, change the alignment of the table header, and much more.</p></p>
+          <p class="section-desc"><p>With the <code>opt_*()</code> functions, we have an easy way to set commonly-used table options without having to use <code><a href="https://rdrr.io/pkg/gt/man/tab_options.html">tab_options()</a></code> directly. For instance, we can modify the set of marks to use with footnotes, turn on row striping, change the alignment of the table header, and much more.</p></p>
         </th>
       </tr>
       
@@ -675,7 +687,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-information-functions" class="hasAnchor"><a href="#section-information-functions" class="anchor"></a>Information Functions</h2>
-          <p class="section-desc"><p>These <code>info_*()</code> functions present us with <strong>gt</strong> tables containing useful information. So far, we can get reference information on date styles (<code><a href="../reference/info_date_style.html">info_date_style()</a></code>), on time styles (<code><a href="../reference/info_time_style.html">info_time_style()</a></code>), on a huge number of color palettes (<code><a href="../reference/info_paletteer.html">info_paletteer()</a></code>), on currencies (<code><a href="../reference/info_currencies.html">info_currencies()</a></code>), and, on all of the different locales supported in the formatter functions (<code><a href="../reference/info_locales.html">info_locales()</a></code>).</p></p>
+          <p class="section-desc"><p>These <code>info_*()</code> functions present us with <strong>gt</strong> tables containing useful information. So far, we can get reference information on date styles (<code><a href="https://rdrr.io/pkg/gt/man/info_date_style.html">info_date_style()</a></code>), on time styles (<code><a href="https://rdrr.io/pkg/gt/man/info_time_style.html">info_time_style()</a></code>), on a huge number of color palettes (<code><a href="https://rdrr.io/pkg/gt/man/info_paletteer.html">info_paletteer()</a></code>), on currencies (<code><a href="https://rdrr.io/pkg/gt/man/info_currencies.html">info_currencies()</a></code>), on all of the different locales supported in the formatter functions (<code><a href="https://rdrr.io/pkg/gt/man/info_locales.html">info_locales()</a></code>), and on our recommendations for which Google Fonts to try in your tables.</p></p>
         </th>
       </tr>
       
@@ -713,6 +725,12 @@
           <p><code><a href="info_paletteer.html">info_paletteer()</a></code> </p>
         </td>
         <td><p>View a table with info on color palettes</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="info_google_fonts.html">info_google_fonts()</a></code> </p>
+        </td>
+        <td><p>View a table on recommended Google Fonts</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -767,7 +785,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-shiny-functions" class="hasAnchor"><a href="#section-shiny-functions" class="anchor"></a>Shiny Functions</h2>
-          <p class="section-desc"><p>Shiny is great for building interactive web apps with R. There’s really nothing quite like it. The <strong>gt</strong> package includes two functions that work nicely with Shiny: a table render function <code><a href="../reference/render_gt.html">render_gt()</a></code> (for the <code>server</code>) and a table output element <code><a href="../reference/gt_output.html">gt_output()</a></code> (for the <code>ui</code>).</p></p>
+          <p class="section-desc"><p>Shiny is great for building interactive web apps with R. There’s really nothing quite like it. The <strong>gt</strong> package includes two functions that work nicely with Shiny: a table render function <code><a href="https://rdrr.io/pkg/gt/man/render_gt.html">render_gt()</a></code> (for the <code>server</code>) and a table output element <code><a href="https://rdrr.io/pkg/gt/man/gt_output.html">gt_output()</a></code> (for the <code>ui</code>).</p></p>
         </th>
       </tr>
       
@@ -792,7 +810,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-export-functions" class="hasAnchor"><a href="#section-export-functions" class="anchor"></a>Export Functions</h2>
-          <p class="section-desc"><p>There may come a day when you need to export a <strong>gt</strong> table to some specific format. A great function for that is <code><a href="../reference/gtsave.html">gtsave()</a></code>, which allows us to save as an HTML file or an image file. Some other functions give us table code as a character vector (e.g., <code><a href="../reference/as_raw_html.html">as_raw_html()</a></code>). Did you use the <code><a href="../reference/summary_rows.html">summary_rows()</a></code> function and wish you had that summary data in a tibble? You can get it out with <code><a href="../reference/extract_summary.html">extract_summary()</a></code>.</p></p>
+          <p class="section-desc"><p>There may come a day when you need to export a <strong>gt</strong> table to some specific format. A great function for that is <code><a href="https://rdrr.io/pkg/gt/man/gtsave.html">gtsave()</a></code>, which allows us to save as an HTML file or an image file. Some other functions give us table code as a character vector (e.g., <code><a href="https://rdrr.io/pkg/gt/man/as_raw_html.html">as_raw_html()</a></code>). Did you use the <code><a href="https://rdrr.io/pkg/gt/man/summary_rows.html">summary_rows()</a></code> function and wish you had that summary data in a tibble? You can get it out with <code><a href="https://rdrr.io/pkg/gt/man/extract_summary.html">extract_summary()</a></code>.</p></p>
         </th>
       </tr>
       

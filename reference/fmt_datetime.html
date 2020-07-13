@@ -200,19 +200,19 @@ portion (all using the input time of <code>14:35:00</code> in the example output
 <li><p>hms_p: <code>2:35:00 PM</code></p></li>
 <li><p>hm_p: <code>2:35 PM</code></p></li>
 <li><p>h_p: <code>2 PM</code></p></li>
-</ol><p>We can use the <code><a href='info_date_style.html'>info_date_style()</a></code> and <code><a href='info_time_style.html'>info_time_style()</a></code> functions as
+</ol><p>We can use the <code><a href='https://rdrr.io/pkg/gt/man/info_date_style.html'>info_date_style()</a></code> and <code><a href='https://rdrr.io/pkg/gt/man/info_time_style.html'>info_time_style()</a></code> functions as
 useful references for all of the possible inputs to <code>date_style</code> and
 <code>time_style</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>fmt_datetime</span>(<span class='no'>data</span>, <span class='no'>columns</span>, <span class='kw'>rows</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>date_style</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>time_style</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/fmt_datetime.html'>fmt_datetime</a></span>(<span class='kw'>data</span>, <span class='kw'>columns</span>, rows = <span class='kw'>NULL</span>, date_style = <span class='fl'>2</span>, time_style = <span class='fl'>2</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
+      <td><p>A table object that is created using the <code><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt()</a></code> function.</p></td>
     </tr>
     <tr>
       <th>columns</th>
@@ -234,13 +234,13 @@ We can also use expressions to filter down to the rows we need (e.g.,
     <tr>
       <th>date_style</th>
       <td><p>The date style to use. Supply a number (from <code>1</code> to <code>14</code>)
-that corresponds to the preferred date style. Use <code><a href='info_date_style.html'>info_date_style()</a></code> to
+that corresponds to the preferred date style. Use <code><a href='https://rdrr.io/pkg/gt/man/info_date_style.html'>info_date_style()</a></code> to
 see the different numbered and named date presets.</p></td>
     </tr>
     <tr>
       <th>time_style</th>
       <td><p>The time style to use. Supply a number (from <code>1</code> to <code>5</code>)
-that corresponds to the preferred time style. Use <code><a href='info_time_style.html'>info_time_style()</a></code> to
+that corresponds to the preferred time style. Use <code><a href='https://rdrr.io/pkg/gt/man/info_time_style.html'>info_time_style()</a></code> to
 see the different numbered and named time presets.</p></td>
     </tr>
     </table>
@@ -268,18 +268,18 @@ argument. See the Arguments section for more information on this.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Format Data: 
-<code><a href='data_color.html'>data_color</a>()</code>,
-<code><a href='fmt_currency.html'>fmt_currency</a>()</code>,
-<code><a href='fmt_date.html'>fmt_date</a>()</code>,
-<code><a href='fmt_markdown.html'>fmt_markdown</a>()</code>,
-<code><a href='fmt_missing.html'>fmt_missing</a>()</code>,
-<code><a href='fmt_number.html'>fmt_number</a>()</code>,
-<code><a href='fmt_passthrough.html'>fmt_passthrough</a>()</code>,
-<code><a href='fmt_percent.html'>fmt_percent</a>()</code>,
-<code><a href='fmt_scientific.html'>fmt_scientific</a>()</code>,
-<code><a href='fmt_time.html'>fmt_time</a>()</code>,
-<code><a href='fmt.html'>fmt</a>()</code>,
-<code><a href='text_transform.html'>text_transform</a>()</code></p></div>
+<code><a href='https://rdrr.io/pkg/gt/man/data_color.html'>data_color</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/fmt_currency.html'>fmt_currency</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/fmt_date.html'>fmt_date</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/fmt_markdown.html'>fmt_markdown</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/fmt_missing.html'>fmt_missing</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/fmt_number.html'>fmt_number</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/fmt_passthrough.html'>fmt_passthrough</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/fmt_percent.html'>fmt_percent</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/fmt_scientific.html'>fmt_scientific</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/fmt_time.html'>fmt_time</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/fmt.html'>fmt</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/text_transform.html'>text_transform</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Use `exibble` to create a gt table;</span>
@@ -287,15 +287,16 @@ argument. See the Arguments section for more information on this.</p>
 <span class='co'># format the column to have dates</span>
 <span class='co'># formatted as `month_day_year` and</span>
 <span class='co'># times to be `hms_p`</span>
-<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
-  <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>datetime</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'>fmt_datetime</span>(
-    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>datetime</span>),
-    <span class='kw'>date_style</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-    <span class='kw'>time_style</span> <span class='kw'>=</span> <span class='fl'>3</span>
-  )</div></pre>
+<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='kw'>exibble</span> <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>datetime</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/fmt_datetime.html'>fmt_datetime</a></span>(
+    columns = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>datetime</span>),
+    date_style = <span class='fl'>5</span>,
+    time_style = <span class='fl'>3</span>
+  )
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

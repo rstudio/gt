@@ -153,7 +153,7 @@ apply greater darkening or lightening for those colors in the midrange
 compared to any very dark or very light colors in the input palette.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>adjust_luminance</span>(<span class='no'>colors</span>, <span class='no'>steps</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/adjust_luminance.html'>adjust_luminance</a></span>(<span class='kw'>colors</span>, <span class='kw'>steps</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -177,7 +177,7 @@ adjusted. Must be a number between <code>-2.0</code> and <code>2.0</code>.</p></
     <p>A vector of color values.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function can be useful when combined with the <code><a href='data_color.html'>data_color()</a></code> function's
+    <p>This function can be useful when combined with the <code><a href='https://rdrr.io/pkg/gt/man/data_color.html'>data_color()</a></code> function's
 <code>palette</code> argument, which can use a vector of colors or any of the <code>col_*</code>
 functions from the <strong>scales</strong> package (all of which have a <code>palette</code>
 argument).</p>
@@ -190,70 +190,73 @@ argument).</p>
 
     
 
-<p>7-18</p>
+<p>7-20</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Helper Functions: 
-<code><a href='cell_borders.html'>cell_borders</a>()</code>,
-<code><a href='cell_fill.html'>cell_fill</a>()</code>,
-<code><a href='cell_text.html'>cell_text</a>()</code>,
-<code><a href='cells_body.html'>cells_body</a>()</code>,
-<code><a href='cells_column_labels.html'>cells_column_labels</a>()</code>,
-<code><a href='cells_column_spanners.html'>cells_column_spanners</a>()</code>,
-<code><a href='cells_grand_summary.html'>cells_grand_summary</a>()</code>,
-<code><a href='cells_row_groups.html'>cells_row_groups</a>()</code>,
-<code><a href='cells_stubhead.html'>cells_stubhead</a>()</code>,
-<code><a href='cells_stub.html'>cells_stub</a>()</code>,
-<code><a href='cells_summary.html'>cells_summary</a>()</code>,
-<code><a href='cells_title.html'>cells_title</a>()</code>,
-<code><a href='currency.html'>currency</a>()</code>,
-<code><a href='escape_latex.html'>escape_latex</a>()</code>,
-<code><a href='gt_latex_dependencies.html'>gt_latex_dependencies</a>()</code>,
-<code><a href='html.html'>html</a>()</code>,
-<code><a href='md.html'>md</a>()</code>,
-<code><a href='pct.html'>pct</a>()</code>,
-<code><a href='px.html'>px</a>()</code>,
-<code><a href='random_id.html'>random_id</a>()</code></p></div>
+<code><a href='https://rdrr.io/pkg/gt/man/cell_borders.html'>cell_borders</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cell_fill.html'>cell_fill</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cell_text.html'>cell_text</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_body.html'>cells_body</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_column_labels.html'>cells_column_labels</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_column_spanners.html'>cells_column_spanners</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_grand_summary.html'>cells_grand_summary</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_row_groups.html'>cells_row_groups</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_stubhead.html'>cells_stubhead</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_stub.html'>cells_stub</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_summary.html'>cells_summary</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_title.html'>cells_title</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/currency.html'>currency</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/default_fonts.html'>default_fonts</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/escape_latex.html'>escape_latex</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/google_font.html'>google_font</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/gt_latex_dependencies.html'>gt_latex_dependencies</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/html.html'>html</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/md.html'>md</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/pct.html'>pct</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/px.html'>px</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/random_id.html'>random_id</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Get a palette of 8 pastel colors from</span>
 <span class='co'># the RColorBrewer package</span>
-<span class='no'>pal</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>RColorBrewer</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html'>brewer.pal</a></span>(<span class='fl'>8</span>, <span class='st'>"Pastel2"</span>)
+<span class='kw'>pal</span> <span class='op'>&lt;-</span> <span class='kw'>RColorBrewer</span>::<span class='fu'><a href='https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html'>brewer.pal</a></span>(<span class='fl'>8</span>, <span class='st'>"Pastel2"</span>)
 
 <span class='co'># Create lighter and darker variants</span>
 <span class='co'># of the base palette (one step lower, one</span>
 <span class='co'># step higher)</span>
-<span class='no'>pal_darker</span>  <span class='kw'>&lt;-</span> <span class='no'>pal</span> <span class='kw'>%&gt;%</span> <span class='fu'>adjust_luminance</span>(-<span class='fl'>1.0</span>)
-<span class='no'>pal_lighter</span> <span class='kw'>&lt;-</span> <span class='no'>pal</span> <span class='kw'>%&gt;%</span> <span class='fu'>adjust_luminance</span>(+<span class='fl'>1.0</span>)
+<span class='kw'>pal_darker</span>  <span class='op'>&lt;-</span> <span class='kw'>pal</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/pkg/gt/man/adjust_luminance.html'>adjust_luminance</a></span>(<span class='op'>-</span><span class='fl'>1.0</span>)
+<span class='kw'>pal_lighter</span> <span class='op'>&lt;-</span> <span class='kw'>pal</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/pkg/gt/man/adjust_luminance.html'>adjust_luminance</a></span>(<span class='op'>+</span><span class='fl'>1.0</span>)
 
 <span class='co'># Create a tibble and make a gt table</span>
 <span class='co'># from it; color each column in order of</span>
 <span class='co'># increasingly darker palettes (with</span>
 <span class='co'># `data_color()`)</span>
-<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>tibble</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>8</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>8</span>, <span class='kw'>c</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>8</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='data_color.html'>data_color</a></span>(
-    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>a</span>),
-    <span class='kw'>colors</span> <span class='kw'>=</span> <span class='kw pkg'>scales</span><span class='kw ns'>::</span><span class='fu'><a href='https://scales.r-lib.org//reference/col_numeric.html'>col_numeric</a></span>(
-      <span class='kw'>palette</span> <span class='kw'>=</span> <span class='no'>pal_lighter</span>,
-      <span class='kw'>domain</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>8</span>)
+<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span>(a = <span class='fl'>1</span><span class='op'>:</span><span class='fl'>8</span>, b = <span class='fl'>1</span><span class='op'>:</span><span class='fl'>8</span>, c = <span class='fl'>1</span><span class='op'>:</span><span class='fl'>8</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/data_color.html'>data_color</a></span>(
+    columns = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>a</span>),
+    colors = <span class='kw'>scales</span>::<span class='fu'><a href='https://scales.r-lib.org//reference/col_numeric.html'>col_numeric</a></span>(
+      palette = <span class='kw'>pal_lighter</span>,
+      domain = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>8</span>)
     )
-  ) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='data_color.html'>data_color</a></span>(
-    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>b</span>),
-    <span class='kw'>colors</span> <span class='kw'>=</span> <span class='kw pkg'>scales</span><span class='kw ns'>::</span><span class='fu'><a href='https://scales.r-lib.org//reference/col_numeric.html'>col_numeric</a></span>(
-      <span class='kw'>palette</span> <span class='kw'>=</span> <span class='no'>pal</span>,
-      <span class='kw'>domain</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>8</span>)
+  ) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/data_color.html'>data_color</a></span>(
+    columns = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>b</span>),
+    colors = <span class='kw'>scales</span>::<span class='fu'><a href='https://scales.r-lib.org//reference/col_numeric.html'>col_numeric</a></span>(
+      palette = <span class='kw'>pal</span>,
+      domain = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>8</span>)
     )
-  ) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='data_color.html'>data_color</a></span>(
-    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>c</span>),
-    <span class='kw'>colors</span> <span class='kw'>=</span> <span class='kw pkg'>scales</span><span class='kw ns'>::</span><span class='fu'><a href='https://scales.r-lib.org//reference/col_numeric.html'>col_numeric</a></span>(
-      <span class='kw'>palette</span> <span class='kw'>=</span> <span class='no'>pal_darker</span>,
-      <span class='kw'>domain</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>8</span>)
+  ) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/data_color.html'>data_color</a></span>(
+    columns = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>c</span>),
+    colors = <span class='kw'>scales</span>::<span class='fu'><a href='https://scales.r-lib.org//reference/col_numeric.html'>col_numeric</a></span>(
+      palette = <span class='kw'>pal_darker</span>,
+      domain = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>8</span>)
     )
-  )</div></pre>
+  )
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

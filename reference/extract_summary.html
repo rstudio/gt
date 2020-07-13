@@ -146,19 +146,19 @@ descriptive stub labels for the summary rows." />
 
     <div class="ref-description">
     <p>Get a list of summary row data frames from a <code>gt_tbl</code> object where summary
-rows were added via the <code><a href='summary_rows.html'>summary_rows()</a></code> function. The output data frames
+rows were added via the <code><a href='https://rdrr.io/pkg/gt/man/summary_rows.html'>summary_rows()</a></code> function. The output data frames
 contain the <code>groupname</code> and <code>rowname</code> columns, whereby <code>rowname</code> contains
 descriptive stub labels for the summary rows.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>extract_summary</span>(<span class='no'>data</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/extract_summary.html'>extract_summary</a></span>(<span class='kw'>data</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
+      <td><p>A table object that is created using the <code><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt()</a></code> function.</p></td>
     </tr>
     </table>
 
@@ -178,10 +178,10 @@ descriptive stub labels for the summary rows.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Export Functions: 
-<code><a href='as_latex.html'>as_latex</a>()</code>,
-<code><a href='as_raw_html.html'>as_raw_html</a>()</code>,
-<code><a href='as_rtf.html'>as_rtf</a>()</code>,
-<code><a href='gtsave.html'>gtsave</a>()</code></p></div>
+<code><a href='https://rdrr.io/pkg/gt/man/as_latex.html'>as_latex</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/as_raw_html.html'>as_raw_html</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/as_rtf.html'>as_rtf</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/gtsave.html'>gtsave</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Use `sp500` to create a gt table with</span>
@@ -189,33 +189,33 @@ descriptive stub labels for the summary rows.</p>
 <span class='co'># group (`min`, `max`, `avg`) and then</span>
 <span class='co'># extract the summary rows as a list</span>
 <span class='co'># object</span>
-<span class='no'>summary_extracted</span> <span class='kw'>&lt;-</span>
-  <span class='no'>sp500</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
-    <span class='no'>date</span> <span class='kw'>&gt;=</span> <span class='st'>"2015-01-05"</span> <span class='kw'>&amp;</span>
-      <span class='no'>date</span> <span class='kw'>&lt;=</span><span class='st'>"2015-01-30"</span>
-  ) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='no'>date</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(
-    <span class='kw'>week</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(
-      <span class='st'>"W"</span>, <span class='fu'><a href='https://rdrr.io/r/base/strptime.html'>strftime</a></span>(<span class='no'>date</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"%V"</span>))
-  ) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='no'>adj_close</span>, -<span class='no'>volume</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(
-    <span class='kw'>rowname_col</span> <span class='kw'>=</span> <span class='st'>"date"</span>,
-    <span class='kw'>groupname_col</span> <span class='kw'>=</span> <span class='st'>"week"</span>
-  ) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='summary_rows.html'>summary_rows</a></span>(
-    <span class='kw'>groups</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>open</span>, <span class='no'>high</span>, <span class='no'>low</span>, <span class='no'>close</span>),
-    <span class='kw'>fns</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-      <span class='kw'>min</span> <span class='kw'>=</span> ~<span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span>(<span class='no'>.</span>),
-      <span class='kw'>max</span> <span class='kw'>=</span> ~<span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span>(<span class='no'>.</span>),
-      <span class='kw'>avg</span> <span class='kw'>=</span> ~<span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>.</span>)),
-    <span class='kw'>formatter</span> <span class='kw'>=</span> <span class='no'>fmt_number</span>,
-    <span class='kw'>use_seps</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-  ) <span class='kw'>%&gt;%</span>
-  <span class='fu'>extract_summary</span>()
+<span class='kw'>summary_extracted</span> <span class='op'>&lt;-</span>
+  <span class='kw'>sp500</span> <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
+    <span class='kw'>date</span> <span class='op'>&gt;=</span> <span class='st'>"2015-01-05"</span> <span class='op'>&amp;</span>
+      <span class='kw'>date</span> <span class='op'>&lt;=</span><span class='st'>"2015-01-30"</span>
+  ) <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='kw'>date</span>) <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(
+    week = <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(
+      <span class='st'>"W"</span>, <span class='fu'><a href='https://rdrr.io/r/base/strptime.html'>strftime</a></span>(<span class='kw'>date</span>, format = <span class='st'>"%V"</span>))
+  ) <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='op'>-</span><span class='kw'>adj_close</span>, <span class='op'>-</span><span class='kw'>volume</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>(
+    rowname_col = <span class='st'>"date"</span>,
+    groupname_col = <span class='st'>"week"</span>
+  ) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/summary_rows.html'>summary_rows</a></span>(
+    groups = <span class='fl'>TRUE</span>,
+    columns = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>open</span>, <span class='kw'>high</span>, <span class='kw'>low</span>, <span class='kw'>close</span>),
+    fns = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
+      min = <span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span>(<span class='kw'>.</span>),
+      max = <span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span>(<span class='kw'>.</span>),
+      avg = <span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='kw'>.</span>)),
+    formatter = <span class='kw'>fmt_number</span>,
+    use_seps = <span class='fl'>FALSE</span>
+  ) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/extract_summary.html'>extract_summary</a></span>()
 
 <span class='co'># Use the summary list to make a new</span>
 <span class='co'># gt table; the key thing is to use</span>
@@ -223,11 +223,12 @@ descriptive stub labels for the summary rows.</p>
 <span class='co'># tibble to `gt()` (the `groupname` and</span>
 <span class='co'># `rowname` magic column names create</span>
 <span class='co'># row groups and a stub)</span>
-<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
-  <span class='no'>summary_extracted</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span>(<span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>()</div></pre>
+<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='kw'>summary_extracted</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span>(recursive = <span class='fl'>FALSE</span>) <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>()
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

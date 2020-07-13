@@ -149,24 +149,24 @@ tab_options() function)." />
     </div>
 
     <div class="ref-description">
-    <p>With <code>render_gt()</code> we can create a reactive <strong>gt</strong> table that works
-wonderfully once assigned to an output slot (with <code><a href='gt_output.html'>gt_output()</a></code>). This
+    <p>With <code><a href='https://rdrr.io/pkg/gt/man/render_gt.html'>render_gt()</a></code> we can create a reactive <strong>gt</strong> table that works
+wonderfully once assigned to an output slot (with <code><a href='https://rdrr.io/pkg/gt/man/gt_output.html'>gt_output()</a></code>). This
 function is to be used within Shiny's <code>server()</code> component. We have some
 options for controlling the size of the container holding the <strong>gt</strong> table.
 The <code>width</code> and <code>height</code> arguments allow for sizing the container, and the
 <code>align</code> argument allows us to align the table within the container (some
 other fine-grained options for positioning are available in the
-<code><a href='tab_options.html'>tab_options()</a></code> function).</p>
+<code><a href='https://rdrr.io/pkg/gt/man/tab_options.html'>tab_options()</a></code> function).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>render_gt</span>(
-  <span class='no'>expr</span>,
-  <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>height</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>align</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>env</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span>(),
-  <span class='kw'>quoted</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>outputArgs</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/render_gt.html'>render_gt</a></span>(
+  <span class='kw'>expr</span>,
+  width = <span class='kw'>NULL</span>,
+  height = <span class='kw'>NULL</span>,
+  align = <span class='kw'>NULL</span>,
+  env = <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span>(),
+  quoted = <span class='fl'>FALSE</span>,
+  outputArgs = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -176,14 +176,14 @@ other fine-grained options for positioning are available in the
       <th>expr</th>
       <td><p>An expression that creates a <strong>gt</strong> table object. For sake of
 convenience, a data frame or tibble can be used here (it will be
-automatically introduced to <code><a href='gt.html'>gt()</a></code> with its default options).</p></td>
+automatically introduced to <code><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt()</a></code> with its default options).</p></td>
     </tr>
     <tr>
       <th>width, height</th>
       <td><p>The width and height of the table's container. Either can
 be specified as a single-length character with units of pixels or as a
 percentage. If provided as a single-length numeric vector, it is assumed
-that the value is given in units of pixels. The <code><a href='px.html'>px()</a></code> and <code><a href='pct.html'>pct()</a></code> helper
+that the value is given in units of pixels. The <code><a href='https://rdrr.io/pkg/gt/man/px.html'>px()</a></code> and <code><a href='https://rdrr.io/pkg/gt/man/pct.html'>pct()</a></code> helper
 functions can also be used to pass in numeric values and obtain values as
 pixel or percent units.</p></td>
     </tr>
@@ -204,7 +204,7 @@ if you want to save an expression in a variable.</p></td>
     <tr>
       <th>outputArgs</th>
       <td><p>A list of arguments to be passed through to the implicit
-call to <code><a href='gt_output.html'>gt_output()</a></code> when <code>render_gt</code> is used in an interactive R Markdown
+call to <code><a href='https://rdrr.io/pkg/gt/man/gt_output.html'>gt_output()</a></code> when <code>render_gt</code> is used in an interactive R Markdown
 document.</p></td>
     </tr>
     </table>
@@ -222,10 +222,10 @@ Shiny apps can be found at the <a href='https://shiny.rstudio.com'>Shiny Site</a
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Shiny functions: 
-<code><a href='gt_output.html'>gt_output</a>()</code></p></div>
+<code><a href='https://rdrr.io/pkg/gt/man/gt_output.html'>gt_output</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>shiny</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://shiny.rstudio.com'>shiny</a></span>)
 
 <span class='co'># Here is a Shiny app (contained within</span>
 <span class='co'># a single file) that (1) prepares a</span>
@@ -235,31 +235,32 @@ Shiny apps can be found at the <a href='https://shiny.rstudio.com'>Shiny Site</a
 <span class='co'># uses the `gt_tbl` object as the input</span>
 <span class='co'># expression</span>
 
-<span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span>
-  <span class='no'>gtcars</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='cols_hide.html'>cols_hide</a></span>(<span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span>(<span class='st'>"_"</span>))
+<span class='kw'>gt_tbl</span> <span class='op'>&lt;-</span>
+  <span class='kw'>gtcars</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/cols_hide.html'>cols_hide</a></span>(<span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span>(<span class='st'>"_"</span>))
 
-<span class='no'>ui</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/fluidPage.html'>fluidPage</a></span>(
+<span class='kw'>ui</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/fluidPage.html'>fluidPage</a></span>(
 
-  <span class='fu'><a href='gt_output.html'>gt_output</a></span>(<span class='kw'>outputId</span> <span class='kw'>=</span> <span class='st'>"table"</span>)
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt_output.html'>gt_output</a></span>(outputId = <span class='st'>"table"</span>)
 )
 
-<span class='no'>server</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>input</span>,
-                   <span class='no'>output</span>,
-                   <span class='no'>session</span>) {
+<span class='kw'>server</span> <span class='op'>&lt;-</span> <span class='fu'>function</span>(<span class='kw'>input</span>,
+                   <span class='kw'>output</span>,
+                   <span class='kw'>session</span>) {
 
-  <span class='no'>output</span>$<span class='no'>table</span> <span class='kw'>&lt;-</span>
-    <span class='fu'>render_gt</span>(
-      <span class='kw'>expr</span> <span class='kw'>=</span> <span class='no'>gt_tbl</span>,
-      <span class='kw'>height</span> <span class='kw'>=</span> <span class='fu'><a href='px.html'>px</a></span>(<span class='fl'>600</span>),
-      <span class='kw'>width</span> <span class='kw'>=</span> <span class='fu'><a href='px.html'>px</a></span>(<span class='fl'>600</span>)
+  <span class='kw'>output</span><span class='op'>$</span><span class='kw'>table</span> <span class='op'>&lt;-</span>
+    <span class='fu'><a href='https://rdrr.io/pkg/gt/man/render_gt.html'>render_gt</a></span>(
+      expr = <span class='kw'>gt_tbl</span>,
+      height = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/px.html'>px</a></span>(<span class='fl'>600</span>),
+      width = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/px.html'>px</a></span>(<span class='fl'>600</span>)
     )
 }
 
-<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()) {
-  <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/shinyApp.html'>shinyApp</a></span>(<span class='no'>ui</span>, <span class='no'>server</span>)
-}</div></pre>
+<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()) {
+  <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/shinyApp.html'>shinyApp</a></span>(<span class='kw'>ui</span>, <span class='kw'>server</span>)
+}
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

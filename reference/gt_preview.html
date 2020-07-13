@@ -148,14 +148,14 @@ object to gt_preview()." />
 
     <div class="ref-description">
     <p>Sometimes you may want to see just a small portion of your input data. We can
-use <code>gt_preview()</code> in place of <code><a href='gt.html'>gt()</a></code> to get the first x rows of data and the
+use <code><a href='https://rdrr.io/pkg/gt/man/gt_preview.html'>gt_preview()</a></code> in place of <code><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt()</a></code> to get the first x rows of data and the
 last y rows of data (which can be set by the <code>top_n</code> and <code>bottom_n</code>
 arguments). It's not advised to use additional <strong>gt</strong> functions to further
-modify the output of <code>gt_preview()</code>. Furthermore, you cannot pass a <strong>gt</strong>
-object to <code>gt_preview()</code>.</p>
+modify the output of <code><a href='https://rdrr.io/pkg/gt/man/gt_preview.html'>gt_preview()</a></code>. Furthermore, you cannot pass a <strong>gt</strong>
+object to <code><a href='https://rdrr.io/pkg/gt/man/gt_preview.html'>gt_preview()</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>gt_preview</span>(<span class='no'>data</span>, <span class='kw'>top_n</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>bottom_n</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>incl_rownums</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt_preview.html'>gt_preview</a></span>(<span class='kw'>data</span>, top_n = <span class='fl'>5</span>, bottom_n = <span class='fl'>1</span>, incl_rownums = <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -189,7 +189,7 @@ table stub. By default, this is <code>TRUE</code>.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Any grouped data or magic columns such as <code>rowname</code> and <code>groupname</code> will be
-ignored by <code>gt_preview()</code> and, as such, one cannot add a stub or group rows
+ignored by <code><a href='https://rdrr.io/pkg/gt/man/gt_preview.html'>gt_preview()</a></code> and, as such, one cannot add a stub or group rows
 in the output table. By default, the output table will include row numbers in
 a stub (including a range of row numbers for the omitted rows). This row
 numbering option can be deactivated by setting <code>incl_rownums</code> to <code>FALSE</code>.</p>
@@ -206,17 +206,18 @@ numbering option can be deactivated by setting <code>incl_rownums</code> to <cod
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Create Table: 
-<code><a href='gt.html'>gt</a>()</code></p></div>
+<code><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Use `gtcars` to create a gt table</span>
 <span class='co'># preview (with only a few of its</span>
 <span class='co'># columns); you'll see the first five</span>
 <span class='co'># rows and the last row</span>
-<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
-  <span class='no'>gtcars</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mfr</span>, <span class='no'>model</span>, <span class='no'>year</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>gt_preview</span>()</div></pre>
+<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='kw'>gtcars</span> <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>mfr</span>, <span class='kw'>model</span>, <span class='kw'>year</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt_preview.html'>gt_preview</a></span>()
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -148,16 +148,16 @@ borders can then be modified." />
     </div>
 
     <div class="ref-description">
-    <p>The <code>cell_borders()</code> helper function is to be used with the <code><a href='tab_style.html'>tab_style()</a></code>
+    <p>The <code><a href='https://rdrr.io/pkg/gt/man/cell_borders.html'>cell_borders()</a></code> helper function is to be used with the <code><a href='https://rdrr.io/pkg/gt/man/tab_style.html'>tab_style()</a></code>
 function, which itself allows for the setting of custom styles to one or more
-cells. Specifically, the call to <code>cell_borders()</code> should be bound to the
-<code>styles</code> argument of <code><a href='tab_style.html'>tab_style()</a></code>. The <code>selection</code> argument is where we
+cells. Specifically, the call to <code><a href='https://rdrr.io/pkg/gt/man/cell_borders.html'>cell_borders()</a></code> should be bound to the
+<code>styles</code> argument of <code><a href='https://rdrr.io/pkg/gt/man/tab_style.html'>tab_style()</a></code>. The <code>selection</code> argument is where we
 define which borders should be modified (e.g., <code>"left"</code>, <code>"right"</code>, etc.).
 With that selection, the <code>color</code>, <code>style</code>, and <code>weight</code> of the selected
 borders can then be modified.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cell_borders</span>(<span class='kw'>sides</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"#000000"</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='st'>"solid"</span>, <span class='kw'>weight</span> <span class='kw'>=</span> <span class='fu'><a href='px.html'>px</a></span>(<span class='fl'>1</span>))</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/cell_borders.html'>cell_borders</a></span>(sides = <span class='st'>"all"</span>, color = <span class='st'>"#000000"</span>, style = <span class='st'>"solid"</span>, weight = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/px.html'>px</a></span>(<span class='fl'>1</span>))</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -174,7 +174,7 @@ selected cells, we can use the <code>"all"</code> option.</p></td>
 can be defined with a color name or with a hexadecimal color code. The
 default <code>color</code> value is <code>"#000000"</code> (black). The <code>style</code> can be one of
 either <code>"solid"</code> (the default), <code>"dashed"</code>, or <code>"dotted"</code>. The <code>weight</code> of
-the border lines is to be given in pixel values (the <code><a href='px.html'>px()</a></code> helper function
+the border lines is to be given in pixel values (the <code><a href='https://rdrr.io/pkg/gt/man/px.html'>px()</a></code> helper function
 is useful for this. The default value for <code>weight</code> is <code>"1px"</code>. Borders for
 any defined <code>sides</code> can be removed by supplying <code>NULL</code> to any of <code>color</code>,
 <code>style</code>, or <code>weight</code>.</p></td>
@@ -198,44 +198,46 @@ any defined <code>sides</code> can be removed by supplying <code>NULL</code> to 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Helper Functions: 
-<code><a href='adjust_luminance.html'>adjust_luminance</a>()</code>,
-<code><a href='cell_fill.html'>cell_fill</a>()</code>,
-<code><a href='cell_text.html'>cell_text</a>()</code>,
-<code><a href='cells_body.html'>cells_body</a>()</code>,
-<code><a href='cells_column_labels.html'>cells_column_labels</a>()</code>,
-<code><a href='cells_column_spanners.html'>cells_column_spanners</a>()</code>,
-<code><a href='cells_grand_summary.html'>cells_grand_summary</a>()</code>,
-<code><a href='cells_row_groups.html'>cells_row_groups</a>()</code>,
-<code><a href='cells_stubhead.html'>cells_stubhead</a>()</code>,
-<code><a href='cells_stub.html'>cells_stub</a>()</code>,
-<code><a href='cells_summary.html'>cells_summary</a>()</code>,
-<code><a href='cells_title.html'>cells_title</a>()</code>,
-<code><a href='currency.html'>currency</a>()</code>,
-<code><a href='escape_latex.html'>escape_latex</a>()</code>,
-<code><a href='gt_latex_dependencies.html'>gt_latex_dependencies</a>()</code>,
-<code><a href='html.html'>html</a>()</code>,
-<code><a href='md.html'>md</a>()</code>,
-<code><a href='pct.html'>pct</a>()</code>,
-<code><a href='px.html'>px</a>()</code>,
-<code><a href='random_id.html'>random_id</a>()</code></p></div>
+<code><a href='https://rdrr.io/pkg/gt/man/adjust_luminance.html'>adjust_luminance</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cell_fill.html'>cell_fill</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cell_text.html'>cell_text</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_body.html'>cells_body</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_column_labels.html'>cells_column_labels</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_column_spanners.html'>cells_column_spanners</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_grand_summary.html'>cells_grand_summary</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_row_groups.html'>cells_row_groups</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_stubhead.html'>cells_stubhead</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_stub.html'>cells_stub</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_summary.html'>cells_summary</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_title.html'>cells_title</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/currency.html'>currency</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/default_fonts.html'>default_fonts</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/escape_latex.html'>escape_latex</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/google_font.html'>google_font</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/gt_latex_dependencies.html'>gt_latex_dependencies</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/html.html'>html</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/md.html'>md</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/pct.html'>pct</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/px.html'>px</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/random_id.html'>random_id</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Add horizontal border lines for</span>
 <span class='co'># all table body rows in `exibble`</span>
-<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
-  <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='tab_options.html'>tab_options</a></span>(<span class='kw'>row.striping.include_table_body</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='tab_style.html'>tab_style</a></span>(
-      <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'>cell_borders</span>(
-        <span class='kw'>sides</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"top"</span>, <span class='st'>"bottom"</span>),
-        <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"#BBBBBB"</span>,
-        <span class='kw'>weight</span> <span class='kw'>=</span> <span class='fu'><a href='px.html'>px</a></span>(<span class='fl'>1.5</span>),
-        <span class='kw'>style</span> <span class='kw'>=</span> <span class='st'>"solid"</span>
+<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='kw'>exibble</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>() <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_options.html'>tab_options</a></span>(row.striping.include_table_body = <span class='fl'>FALSE</span>) <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_style.html'>tab_style</a></span>(
+      style = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/cell_borders.html'>cell_borders</a></span>(
+        sides = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"top"</span>, <span class='st'>"bottom"</span>),
+        color = <span class='st'>"#BBBBBB"</span>,
+        weight = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/px.html'>px</a></span>(<span class='fl'>1.5</span>),
+        style = <span class='st'>"solid"</span>
       ),
-      <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='cells_body.html'>cells_body</a></span>(
-        <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>(),
-        <span class='kw'>rows</span> <span class='kw'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>()
+      locations = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/cells_body.html'>cells_body</a></span>(
+        columns = <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>(),
+        rows = <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>()
       )
     )
 
@@ -243,33 +245,34 @@ any defined <code>sides</code> can be removed by supplying <code>NULL</code> to 
 <span class='co'># vertical borders at several locations;</span>
 <span class='co'># this uses multiple `cell_borders()` and</span>
 <span class='co'># `cells_body()` calls within `list()`s</span>
-<span class='no'>tab_2</span> <span class='kw'>&lt;-</span>
-  <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='tab_style.html'>tab_style</a></span>(
-      <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-        <span class='fu'>cell_borders</span>(
-          <span class='kw'>sides</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"top"</span>, <span class='st'>"bottom"</span>),
-          <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"#FF0000"</span>,
-          <span class='kw'>weight</span> <span class='kw'>=</span> <span class='fu'><a href='px.html'>px</a></span>(<span class='fl'>2</span>)
+<span class='kw'>tab_2</span> <span class='op'>&lt;-</span>
+  <span class='kw'>exibble</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>() <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_style.html'>tab_style</a></span>(
+      style = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
+        <span class='fu'><a href='https://rdrr.io/pkg/gt/man/cell_borders.html'>cell_borders</a></span>(
+          sides = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"top"</span>, <span class='st'>"bottom"</span>),
+          color = <span class='st'>"#FF0000"</span>,
+          weight = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/px.html'>px</a></span>(<span class='fl'>2</span>)
         ),
-        <span class='fu'>cell_borders</span>(
-          <span class='kw'>sides</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"left"</span>, <span class='st'>"right"</span>),
-          <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"#0000FF"</span>,
-          <span class='kw'>weight</span> <span class='kw'>=</span> <span class='fu'><a href='px.html'>px</a></span>(<span class='fl'>2</span>)
+        <span class='fu'><a href='https://rdrr.io/pkg/gt/man/cell_borders.html'>cell_borders</a></span>(
+          sides = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"left"</span>, <span class='st'>"right"</span>),
+          color = <span class='st'>"#0000FF"</span>,
+          weight = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/px.html'>px</a></span>(<span class='fl'>2</span>)
         )
       ),
-      <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-        <span class='fu'><a href='cells_body.html'>cells_body</a></span>(
-          <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>),
-          <span class='kw'>rows</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>num</span>)
+      locations = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
+        <span class='fu'><a href='https://rdrr.io/pkg/gt/man/cells_body.html'>cells_body</a></span>(
+          columns = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>num</span>),
+          rows = <span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='kw'>num</span>)
         ),
-        <span class='fu'><a href='cells_body.html'>cells_body</a></span>(
-          <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>currency</span>),
-          <span class='kw'>rows</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>currency</span>)
+        <span class='fu'><a href='https://rdrr.io/pkg/gt/man/cells_body.html'>cells_body</a></span>(
+          columns = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>currency</span>),
+          rows = <span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='kw'>currency</span>)
         )
       )
-    )</div></pre>
+    )
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -100,6 +100,9 @@
     <loc>https://gt.rstudio.com/reference/data_color.html</loc>
   </url>
   <url>
+    <loc>https://gt.rstudio.com/reference/default_fonts.html</loc>
+  </url>
+  <url>
     <loc>https://gt.rstudio.com/reference/escape_latex.html</loc>
   </url>
   <url>
@@ -145,6 +148,9 @@
     <loc>https://gt.rstudio.com/reference/ggplot_image.html</loc>
   </url>
   <url>
+    <loc>https://gt.rstudio.com/reference/google_font.html</loc>
+  </url>
+  <url>
     <loc>https://gt.rstudio.com/reference/grand_summary_rows.html</loc>
   </url>
   <url>
@@ -181,6 +187,9 @@
     <loc>https://gt.rstudio.com/reference/info_date_style.html</loc>
   </url>
   <url>
+    <loc>https://gt.rstudio.com/reference/info_google_fonts.html</loc>
+  </url>
+  <url>
     <loc>https://gt.rstudio.com/reference/info_locales.html</loc>
   </url>
   <url>
@@ -202,10 +211,16 @@
     <loc>https://gt.rstudio.com/reference/opt_all_caps.html</loc>
   </url>
   <url>
+    <loc>https://gt.rstudio.com/reference/opt_css.html</loc>
+  </url>
+  <url>
     <loc>https://gt.rstudio.com/reference/opt_footnote_marks.html</loc>
   </url>
   <url>
     <loc>https://gt.rstudio.com/reference/opt_row_striping.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/reference/opt_table_font.html</loc>
   </url>
   <url>
     <loc>https://gt.rstudio.com/reference/opt_table_lines.html</loc>

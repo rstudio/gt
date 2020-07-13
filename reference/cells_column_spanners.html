@@ -145,13 +145,13 @@ is expressly used in each of those functions' locations argument." />
     </div>
 
     <div class="ref-description">
-    <p>The <code>cells_column_spanners()</code> function is used to target the cells that
+    <p>The <code><a href='https://rdrr.io/pkg/gt/man/cells_column_spanners.html'>cells_column_spanners()</a></code> function is used to target the cells that
 contain the table column spanners. This is useful when applying a footnote
-with <code><a href='tab_footnote.html'>tab_footnote()</a></code> or adding custom style with <code><a href='tab_style.html'>tab_style()</a></code>. The function
+with <code><a href='https://rdrr.io/pkg/gt/man/tab_footnote.html'>tab_footnote()</a></code> or adding custom style with <code><a href='https://rdrr.io/pkg/gt/man/tab_style.html'>tab_style()</a></code>. The function
 is expressly used in each of those functions' <code>locations</code> argument.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cells_column_spanners</span>(<span class='no'>spanners</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/cells_column_spanners.html'>cells_column_spanners</a></span>(<span class='kw'>spanners</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -173,24 +173,24 @@ that has a <code>locations</code> argument, multiple locations can be targeted b
 enclosing several <code>cells_*()</code> helper functions in a <code><a href='https://rdrr.io/r/base/list.html'>list()</a></code>. The following
 helper functions can be used to target cells (roughly in order from the top
 to the bottom of a table):</p><ul>
-<li><p><code><a href='cells_title.html'>cells_title()</a></code>: targets the table title or the table subtitle
+<li><p><code><a href='https://rdrr.io/pkg/gt/man/cells_title.html'>cells_title()</a></code>: targets the table title or the table subtitle
 depending on the value given to the <code>groups</code> argument (<code>"title"</code> or
 <code>"subtitle"</code>).</p></li>
-<li><p><code><a href='cells_stubhead.html'>cells_stubhead()</a></code>: targets the stubhead location, a cell of which is
+<li><p><code><a href='https://rdrr.io/pkg/gt/man/cells_stubhead.html'>cells_stubhead()</a></code>: targets the stubhead location, a cell of which is
 only available when there is a stub; a label in that location can be created
-by using the <code><a href='tab_stubhead.html'>tab_stubhead()</a></code> function.</p></li>
-<li><p><code>cells_column_spanners()</code>: targets the spanner column labels, which
+by using the <code><a href='https://rdrr.io/pkg/gt/man/tab_stubhead.html'>tab_stubhead()</a></code> function.</p></li>
+<li><p><code><a href='https://rdrr.io/pkg/gt/man/cells_column_spanners.html'>cells_column_spanners()</a></code>: targets the spanner column labels, which
 appear above the column labels.</p></li>
-<li><p><code><a href='cells_column_labels.html'>cells_column_labels()</a></code>: targets the column labels.</p></li>
-<li><p><code><a href='cells_row_groups.html'>cells_row_groups()</a></code>: targets the row group labels in any available row
+<li><p><code><a href='https://rdrr.io/pkg/gt/man/cells_column_labels.html'>cells_column_labels()</a></code>: targets the column labels.</p></li>
+<li><p><code><a href='https://rdrr.io/pkg/gt/man/cells_row_groups.html'>cells_row_groups()</a></code>: targets the row group labels in any available row
 groups using the <code>groups</code> argument.</p></li>
-<li><p><code><a href='cells_stub.html'>cells_stub()</a></code>: targets row labels in the table stub using the <code>rows</code>
+<li><p><code><a href='https://rdrr.io/pkg/gt/man/cells_stub.html'>cells_stub()</a></code>: targets row labels in the table stub using the <code>rows</code>
 argument.</p></li>
-<li><p><code><a href='cells_body.html'>cells_body()</a></code>: targets data cells in the table body using
+<li><p><code><a href='https://rdrr.io/pkg/gt/man/cells_body.html'>cells_body()</a></code>: targets data cells in the table body using
 intersections of <code>columns</code> and <code>rows</code>.</p></li>
-<li><p><code><a href='cells_summary.html'>cells_summary()</a></code>: targets summary cells in the table body using the
+<li><p><code><a href='https://rdrr.io/pkg/gt/man/cells_summary.html'>cells_summary()</a></code>: targets summary cells in the table body using the
 <code>groups</code> argument and intersections of <code>columns</code> and <code>rows</code>.</p></li>
-<li><p><code><a href='cells_grand_summary.html'>cells_grand_summary()</a></code>: targets cells of the table's grand summary
+<li><p><code><a href='https://rdrr.io/pkg/gt/man/cells_grand_summary.html'>cells_grand_summary()</a></code>: targets cells of the table's grand summary
 using intersections of <code>columns</code> and <code>rows</code></p></li>
 </ul>
 
@@ -207,44 +207,47 @@ using intersections of <code>columns</code> and <code>rows</code></p></li>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Helper Functions: 
-<code><a href='adjust_luminance.html'>adjust_luminance</a>()</code>,
-<code><a href='cell_borders.html'>cell_borders</a>()</code>,
-<code><a href='cell_fill.html'>cell_fill</a>()</code>,
-<code><a href='cell_text.html'>cell_text</a>()</code>,
-<code><a href='cells_body.html'>cells_body</a>()</code>,
-<code><a href='cells_column_labels.html'>cells_column_labels</a>()</code>,
-<code><a href='cells_grand_summary.html'>cells_grand_summary</a>()</code>,
-<code><a href='cells_row_groups.html'>cells_row_groups</a>()</code>,
-<code><a href='cells_stubhead.html'>cells_stubhead</a>()</code>,
-<code><a href='cells_stub.html'>cells_stub</a>()</code>,
-<code><a href='cells_summary.html'>cells_summary</a>()</code>,
-<code><a href='cells_title.html'>cells_title</a>()</code>,
-<code><a href='currency.html'>currency</a>()</code>,
-<code><a href='escape_latex.html'>escape_latex</a>()</code>,
-<code><a href='gt_latex_dependencies.html'>gt_latex_dependencies</a>()</code>,
-<code><a href='html.html'>html</a>()</code>,
-<code><a href='md.html'>md</a>()</code>,
-<code><a href='pct.html'>pct</a>()</code>,
-<code><a href='px.html'>px</a>()</code>,
-<code><a href='random_id.html'>random_id</a>()</code></p></div>
+<code><a href='https://rdrr.io/pkg/gt/man/adjust_luminance.html'>adjust_luminance</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cell_borders.html'>cell_borders</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cell_fill.html'>cell_fill</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cell_text.html'>cell_text</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_body.html'>cells_body</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_column_labels.html'>cells_column_labels</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_grand_summary.html'>cells_grand_summary</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_row_groups.html'>cells_row_groups</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_stubhead.html'>cells_stubhead</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_stub.html'>cells_stub</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_summary.html'>cells_summary</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/cells_title.html'>cells_title</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/currency.html'>currency</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/default_fonts.html'>default_fonts</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/escape_latex.html'>escape_latex</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/google_font.html'>google_font</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/gt_latex_dependencies.html'>gt_latex_dependencies</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/html.html'>html</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/md.html'>md</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/pct.html'>pct</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/px.html'>px</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/random_id.html'>random_id</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Use `exibble` to create a gt table; add a</span>
 <span class='co'># spanner column label over three column</span>
 <span class='co'># labels and then use `tab_style()` to make</span>
 <span class='co'># the spanner label text bold</span>
-<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
-  <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='no'>fctr</span>, -<span class='no'>currency</span>, -<span class='no'>group</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='kw'>rowname_col</span> <span class='kw'>=</span> <span class='st'>"row"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='tab_spanner.html'>tab_spanner</a></span>(
-    <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"dates and times"</span>,
-    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>date</span>, <span class='no'>time</span>, <span class='no'>datetime</span>)
-  ) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='tab_style.html'>tab_style</a></span>(
-    <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='cell_text.html'>cell_text</a></span>(<span class='kw'>weight</span> <span class='kw'>=</span> <span class='st'>"bold"</span>),
-    <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'>cells_column_spanners</span>(<span class='kw'>spanners</span> <span class='kw'>=</span> <span class='st'>"dates and times"</span>)
-  )</div></pre>
+<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='kw'>exibble</span> <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='op'>-</span><span class='kw'>fctr</span>, <span class='op'>-</span><span class='kw'>currency</span>, <span class='op'>-</span><span class='kw'>group</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>(rowname_col = <span class='st'>"row"</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_spanner.html'>tab_spanner</a></span>(
+    label = <span class='st'>"dates and times"</span>,
+    columns = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>date</span>, <span class='kw'>time</span>, <span class='kw'>datetime</span>)
+  ) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_style.html'>tab_style</a></span>(
+    style = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/cell_text.html'>cell_text</a></span>(weight = <span class='st'>"bold"</span>),
+    locations = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/cells_column_spanners.html'>cells_column_spanners</a></span>(spanners = <span class='st'>"dates and times"</span>)
+  )
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -148,17 +148,17 @@ serves as a shortcut for using tab_options(footnotes.marks = {marks})" />
     <p>Alter the footnote marks for any footnotes that may be present in the table.
 Either a vector of marks can be provided (including Unicode characters), or,
 a specific keyword could be used to signify a preset sequence. This function
-serves as a shortcut for using <code><a href='tab_options.html'>tab_options(footnotes.marks = {marks})</a></code></p>
+serves as a shortcut for using <code><a href='https://rdrr.io/pkg/gt/man/tab_options.html'>tab_options(footnotes.marks = {marks})</a></code></p>
     </div>
 
-    <pre class="usage"><span class='fu'>opt_footnote_marks</span>(<span class='no'>data</span>, <span class='no'>marks</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/opt_footnote_marks.html'>opt_footnote_marks</a></span>(<span class='kw'>data</span>, <span class='kw'>marks</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
+      <td><p>A table object that is created using the <code><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt()</a></code> function.</p></td>
     </tr>
     <tr>
       <th>marks</th>
@@ -179,7 +179,7 @@ sequence of marks. The valid keywords are: <code>"numbers"</code> (for numeric m
     <p>We can supply a vector of that will represent the series of marks.
 The series of footnote marks is recycled when its usage goes beyond the
 length of the set. At each cycle, the marks are simply doubled, tripled, and
-so on (e.g., <code>*</code> -&gt; <code>**</code> -&gt; <code>***</code>). The option exists for providing keywords
+so on (e.g., <code><a href='https://rdrr.io/r/base/Arithmetic.html'>*</a></code> -&gt; <code>**</code> -&gt; <code>***</code>). The option exists for providing keywords
 for certain types of footnote marks. The keywords are:</p>
 <ul>
 <li><p><code>"numbers"</code>: numeric marks, they begin from 1 and these marks are not
@@ -207,48 +207,49 @@ more symbols, making six</p></li>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Table Option Functions: 
-<code><a href='opt_align_table_header.html'>opt_align_table_header</a>()</code>,
-<code><a href='opt_all_caps.html'>opt_all_caps</a>()</code>,
-<code><a href='opt_row_striping.html'>opt_row_striping</a>()</code>,
-<code><a href='opt_table_lines.html'>opt_table_lines</a>()</code>,
-<code><a href='opt_table_outline.html'>opt_table_outline</a>()</code></p></div>
+<code><a href='https://rdrr.io/pkg/gt/man/opt_align_table_header.html'>opt_align_table_header</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/opt_all_caps.html'>opt_all_caps</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/opt_css.html'>opt_css</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/opt_row_striping.html'>opt_row_striping</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/opt_table_font.html'>opt_table_font</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/opt_table_lines.html'>opt_table_lines</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/opt_table_outline.html'>opt_table_outline</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Use `sza` to create a gt table,</span>
 <span class='co'># adding three footnotes; call</span>
 <span class='co'># `opt_footnote_marks()` to specify</span>
 <span class='co'># which footnote marks to use</span>
-<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
-  <span class='no'>sza</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>latitude</span>, <span class='no'>tst</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span>(
-    <span class='kw'>SZA.Max</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span>(<span class='no'>sza</span>),
-    <span class='kw'>SZA.Min</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span>(<span class='no'>sza</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-  ) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>ungroup</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>latitude</span> <span class='kw'>==</span> <span class='fl'>30</span>, !<span class='fu'><a href='https://rdrr.io/r/base/is.finite.html'>is.infinite</a></span>(<span class='no'>SZA.Min</span>)) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='no'>latitude</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='kw'>rowname_col</span> <span class='kw'>=</span> <span class='st'>"tst"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='tab_spanner_delim.html'>tab_spanner_delim</a></span>(<span class='kw'>delim</span> <span class='kw'>=</span> <span class='st'>"."</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='fmt_missing.html'>fmt_missing</a></span>(
-    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>(),
-    <span class='kw'>missing_text</span> <span class='kw'>=</span> <span class='st'>"90+"</span>
-  ) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='tab_stubhead.html'>tab_stubhead</a></span>(<span class='st'>"TST"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='tab_footnote.html'>tab_footnote</a></span>(
-    <span class='kw'>footnote</span> <span class='kw'>=</span> <span class='st'>"True solar time."</span>,
-    <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='cells_stubhead.html'>cells_stubhead</a></span>()
-  ) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='tab_footnote.html'>tab_footnote</a></span>(
-    <span class='kw'>footnote</span> <span class='kw'>=</span> <span class='st'>"Solar zenith angle."</span>,
-    <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='cells_column_spanners.html'>cells_column_spanners</a></span>(<span class='kw'>spanners</span> <span class='kw'>=</span> <span class='st'>"SZA"</span>)
-  ) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='tab_footnote.html'>tab_footnote</a></span>(
-    <span class='kw'>footnote</span> <span class='kw'>=</span> <span class='st'>"The Lowest SZA."</span>,
-    <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='cells_stub.html'>cells_stub</a></span>(<span class='kw'>rows</span> <span class='kw'>=</span> <span class='st'>"1200"</span>)
-  ) <span class='kw'>%&gt;%</span>
-  <span class='fu'>opt_footnote_marks</span>(<span class='kw'>marks</span> <span class='kw'>=</span> <span class='st'>"standard"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: no non-missing arguments to min; returning Inf</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no non-missing arguments to min; returning Inf</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no non-missing arguments to min; returning Inf</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no non-missing arguments to min; returning Inf</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no non-missing arguments to min; returning Inf</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no non-missing arguments to min; returning Inf</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no non-missing arguments to min; returning Inf</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no non-missing arguments to min; returning Inf</span></div><div class='output co'>#&gt; <span class='message'>`summarise()` regrouping output by 'latitude' (override with `.groups` argument)</span></div><div class='input'>
-</div></pre>
+<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='kw'>sza</span> <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>latitude</span>, <span class='kw'>tst</span>) <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span>(
+    SZA.Max = <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span>(<span class='kw'>sza</span>),
+    SZA.Min = <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span>(<span class='kw'>sza</span>, na.rm = <span class='fl'>TRUE</span>)
+  ) <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>ungroup</a></span>() <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='kw'>latitude</span> <span class='op'>==</span> <span class='fl'>30</span>, <span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/is.finite.html'>is.infinite</a></span>(<span class='kw'>SZA.Min</span>)) <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='op'>-</span><span class='kw'>latitude</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>(rowname_col = <span class='st'>"tst"</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_spanner_delim.html'>tab_spanner_delim</a></span>(delim = <span class='st'>"."</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/fmt_missing.html'>fmt_missing</a></span>(
+    columns = <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span>(),
+    missing_text = <span class='st'>"90+"</span>
+  ) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_stubhead.html'>tab_stubhead</a></span>(<span class='st'>"TST"</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_footnote.html'>tab_footnote</a></span>(
+    footnote = <span class='st'>"True solar time."</span>,
+    locations = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/cells_stubhead.html'>cells_stubhead</a></span>()
+  ) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_footnote.html'>tab_footnote</a></span>(
+    footnote = <span class='st'>"Solar zenith angle."</span>,
+    locations = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/cells_column_spanners.html'>cells_column_spanners</a></span>(spanners = <span class='st'>"SZA"</span>)
+  ) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_footnote.html'>tab_footnote</a></span>(
+    footnote = <span class='st'>"The Lowest SZA."</span>,
+    locations = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/cells_stub.html'>cells_stub</a></span>(rows = <span class='st'>"1200"</span>)
+  ) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/opt_footnote_marks.html'>opt_footnote_marks</a></span>(marks = <span class='st'>"standard"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: no non-missing arguments to min; returning Inf</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no non-missing arguments to min; returning Inf</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no non-missing arguments to min; returning Inf</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no non-missing arguments to min; returning Inf</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no non-missing arguments to min; returning Inf</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no non-missing arguments to min; returning Inf</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no non-missing arguments to min; returning Inf</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no non-missing arguments to min; returning Inf</span></div><div class='output co'>#&gt; <span class='message'>`summarise()` regrouping output by 'latitude' (override with `.groups` argument)</span></div><div class='input'></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

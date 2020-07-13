@@ -114,36 +114,38 @@
 <p><img src="reference/figures/gt_workflow_diagram.svg" width="800px"></p>
 
 <p>The <strong>gt</strong> package is designed to be both straightforward yet powerful. The emphasis is on simple functions for the everyday display table needs. Here is a brief example of how to use <strong>gt</strong> to create a table from the included <code>sp500</code> dataset:</p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">gt</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyverse</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">glue</span>)
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/rstudio/gt">gt</a></span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">tidyverse</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/tidyverse/glue">glue</a></span>)
 
 <span class="co"># Define the start and end dates for the data range</span>
-<span class="no">start_date</span> <span class="kw">&lt;-</span> <span class="st">"2010-06-07"</span>
-<span class="no">end_date</span> <span class="kw">&lt;-</span> <span class="st">"2010-06-14"</span>
+<span class="kw">start_date</span> <span class="op">&lt;-</span> <span class="st">"2010-06-07"</span>
+<span class="kw">end_date</span> <span class="op">&lt;-</span> <span class="st">"2010-06-14"</span>
 
 <span class="co"># Create a gt table based on preprocessed</span>
 <span class="co"># `sp500` table data</span>
-<span class="no">sp500</span> <span class="kw">%&gt;%</span>
-  <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">date</span> <span class="kw">&gt;=</span> <span class="no">start_date</span> <span class="kw">&amp;</span> <span class="no">date</span> <span class="kw">&lt;=</span> <span class="no">end_date</span>) <span class="kw">%&gt;%</span>
-  <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(-<span class="no">adj_close</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="reference/gt.html">gt</a></span>() <span class="kw">%&gt;%</span>
+<span class="kw">sp500</span> <span class="op">%&gt;%</span>
+  <span class="kw">dplyr</span>::<span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw">date</span> <span class="op">&gt;=</span> <span class="kw">start_date</span> <span class="op">&amp;</span> <span class="kw">date</span> <span class="op">&lt;=</span> <span class="kw">end_date</span>) <span class="op">%&gt;%</span>
+  <span class="kw">dplyr</span>::<span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span><span class="kw">adj_close</span>) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/gt.html">gt</a></span>() <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/tab_header.html">tab_header</a></span>(
-    <span class="kw">title</span> <span class="kw">=</span> <span class="st">"S&amp;P 500"</span>,
-    <span class="kw">subtitle</span> <span class="kw">=</span> <span class="kw pkg">glue</span><span class="kw ns">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html">glue</a></span>(<span class="st">"{start_date} to {end_date}"</span>)
-  ) <span class="kw">%&gt;%</span>
+    title = <span class="st">"S&amp;P 500"</span>,
+    subtitle = <span class="kw">glue</span>::<span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html">glue</a></span>(<span class="st">"{start_date} to {end_date}"</span>)
+  ) <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/fmt_date.html">fmt_date</a></span>(
-    <span class="kw">columns</span> <span class="kw">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">date</span>),
-    <span class="kw">date_style</span> <span class="kw">=</span> <span class="fl">3</span>
-  ) <span class="kw">%&gt;%</span>
+    columns = <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">date</span>),
+    date_style = <span class="fl">3</span>
+  ) <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/fmt_currency.html">fmt_currency</a></span>(
-    <span class="kw">columns</span> <span class="kw">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">open</span>, <span class="no">high</span>, <span class="no">low</span>, <span class="no">close</span>),
-    <span class="kw">currency</span> <span class="kw">=</span> <span class="st">"USD"</span>
-  ) <span class="kw">%&gt;%</span>
+    columns = <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">open</span>, <span class="kw">high</span>, <span class="kw">low</span>, <span class="kw">close</span>),
+    currency = <span class="st">"USD"</span>
+  ) <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/fmt_number.html">fmt_number</a></span>(
-    <span class="kw">columns</span> <span class="kw">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">volume</span>),
-    <span class="kw">suffixing</span> <span class="kw">=</span> <span class="fl">TRUE</span>
-  )</pre></div>
+    columns = <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">volume</span>),
+    suffixing = <span class="fl">TRUE</span>
+  )
+</pre></div>
 <p align="center">
 </p>
 <p><img src="reference/figures/gt_sp500_table.svg" width="1200px"></p>
@@ -156,9 +158,13 @@
 <p><a href="https://rstudio.cloud/project/779965"> <img src="reference/figures/gt-test-drive.svg" alt="RStudio Cloud Example" height="80px"></a></p>
 
 <p>The <strong>gt</strong> package can be installed from <strong>CRAN</strong> with:</p>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"gt"</span>)</pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"gt"</span>)
+</pre></div>
 <p>You can also choose to install the development version of <strong>gt</strong> from <strong>GitHub</strong>:</p>
-<div class="sourceCode" id="cb3"><pre class="r"><span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu">install_github</span>(<span class="st">"rstudio/gt"</span>)</pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="kw">devtools</span>::<span class="fu">install_github</span>(<span class="st">"rstudio/gt"</span>)
+</pre></div>
 <p>If you encounter a bug, have usage questions, or want to share ideas to make this package better, please feel free to file an <a href="https://github.com/rstudio/gt/issues">issue</a>.</p>
 <hr>
 <div id="how-gt-fits-in-with-other-packages-that-generate-display-tables" class="section level4">

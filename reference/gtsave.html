@@ -144,19 +144,19 @@ filename, producing either an HTML, PDF, PNG, LaTeX, or RTF file." />
     </div>
 
     <div class="ref-description">
-    <p>The <code>gtsave()</code> function makes it easy to save a <strong>gt</strong> table to a file. The
+    <p>The <code><a href='https://rdrr.io/pkg/gt/man/gtsave.html'>gtsave()</a></code> function makes it easy to save a <strong>gt</strong> table to a file. The
 function guesses the file type by the extension provided in the output
 filename, producing either an HTML, PDF, PNG, LaTeX, or RTF file.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>gtsave</span>(<span class='no'>data</span>, <span class='no'>filename</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/gtsave.html'>gtsave</a></span>(<span class='kw'>data</span>, <span class='kw'>filename</span>, path = <span class='kw'>NULL</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
+      <td><p>A table object that is created using the <code><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt()</a></code> function.</p></td>
     </tr>
     <tr>
       <th>filename</th>
@@ -183,7 +183,7 @@ function.</p></td>
 HTML document. In this case, we can pass a <code>TRUE</code> or <code>FALSE</code> value to the
 <code>inline_css</code> option to obtain an HTML document with inlined CSS styles (the
 default is <code>FALSE</code>). More details on CSS inlining are available at
-<code><a href='as_raw_html.html'>as_raw_html()</a></code>. We can pass values to arguments in <code><a href='https://rdrr.io/pkg/htmltools/man/save_html.html'>htmltools::save_html()</a></code>
+<code><a href='https://rdrr.io/pkg/gt/man/as_raw_html.html'>as_raw_html()</a></code>. We can pass values to arguments in <code><a href='https://rdrr.io/pkg/htmltools/man/save_html.html'>htmltools::save_html()</a></code>
 through the <code>...</code>. Those arguments are either <code>background</code> or <code>libdir</code>,
 please refer to the <strong>htmltools</strong> documentation for more details on the use
 of these arguments.</p>
@@ -210,55 +210,55 @@ to <code>...</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Export Functions: 
-<code><a href='as_latex.html'>as_latex</a>()</code>,
-<code><a href='as_raw_html.html'>as_raw_html</a>()</code>,
-<code><a href='as_rtf.html'>as_rtf</a>()</code>,
-<code><a href='extract_summary.html'>extract_summary</a>()</code></p></div>
+<code><a href='https://rdrr.io/pkg/gt/man/as_latex.html'>as_latex</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/as_raw_html.html'>as_raw_html</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/as_rtf.html'>as_rtf</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/extract_summary.html'>extract_summary</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()) {
+    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()) {
 
 <span class='co'># Use `gtcars` to create a gt table; add</span>
 <span class='co'># a stubhead label to describe what is</span>
 <span class='co'># in the stub</span>
-<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
-  <span class='no'>gtcars</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>model</span>, <span class='no'>year</span>, <span class='no'>hp</span>, <span class='no'>trq</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(<span class='kw'>rowname_col</span> <span class='kw'>=</span> <span class='st'>"model"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='tab_stubhead.html'>tab_stubhead</a></span>(<span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"car"</span>)
+<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='kw'>gtcars</span> <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>model</span>, <span class='kw'>year</span>, <span class='kw'>hp</span>, <span class='kw'>trq</span>) <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>(rowname_col = <span class='st'>"model"</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_stubhead.html'>tab_stubhead</a></span>(label = <span class='st'>"car"</span>)
 
 <span class='co'># Get an HTML file with inlined CSS</span>
 <span class='co'># (which is necessary for including the</span>
 <span class='co'># table as part of an HTML email)</span>
-<span class='no'>tab_1</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>gtsave</span>(
-    <span class='st'>"tab_1.html"</span>, <span class='kw'>inline_css</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-    <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>()
+<span class='kw'>tab_1</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gtsave.html'>gtsave</a></span>(
+    <span class='st'>"tab_1.html"</span>, inline_css = <span class='fl'>TRUE</span>,
+    path = <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>()
   )
 
 <span class='co'># By leaving out the `inline_css` option,</span>
 <span class='co'># we get a more conventional HTML file</span>
 <span class='co'># with embedded CSS styles</span>
-<span class='no'>tab_1</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>gtsave</span>(<span class='st'>"tab_1.html"</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>())
+<span class='kw'>tab_1</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gtsave.html'>gtsave</a></span>(<span class='st'>"tab_1.html"</span>, path = <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>())
 
 <span class='co'># Saving as PNG file results in a cropped</span>
 <span class='co'># image of an HTML table; the amount of</span>
 <span class='co'># whitespace can be set</span>
-<span class='no'>tab_1</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>gtsave</span>(
-    <span class='st'>"tab_1.png"</span>, <span class='kw'>expand</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-    <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>()
+<span class='kw'>tab_1</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gtsave.html'>gtsave</a></span>(
+    <span class='st'>"tab_1.png"</span>, expand = <span class='fl'>10</span>,
+    path = <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>()
   )
 
 <span class='co'># Any use of the `.tex`, `.ltx`, or `.rnw`</span>
 <span class='co'># will result in the output of a LaTeX</span>
 <span class='co'># document</span>
-<span class='no'>tab_1</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>gtsave</span>(<span class='st'>"tab_1.tex"</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>())
-
-}</div></pre>
+<span class='kw'>tab_1</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gtsave.html'>gtsave</a></span>(<span class='st'>"tab_1.tex"</span>, path = <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>())
+}
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

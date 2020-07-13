@@ -149,7 +149,7 @@ remaining row groups will follow in their original ordering." />
 
     <div class="ref-description">
     <p>We can modify the display order of any row groups in a <strong>gt</strong> object with
-the <code>row_group_order()</code> function. The <code>groups</code> argument can either take a
+the <code><a href='https://rdrr.io/pkg/gt/man/row_group_order.html'>row_group_order()</a></code> function. The <code>groups</code> argument can either take a
 vector of row group names or a numeric vector of row group indices; whichever
 is provided, the row groups will adhere to this revised ordering. It isn't
 necessary to provide all row group names in <code>groups</code>, rather, what is
@@ -157,14 +157,14 @@ provided will assume the specified ordering at the top of the table and the
 remaining row groups will follow in their original ordering.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>row_group_order</span>(<span class='no'>data</span>, <span class='no'>groups</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/row_group_order.html'>row_group_order</a></span>(<span class='kw'>data</span>, <span class='kw'>groups</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
+      <td><p>A table object that is created using the <code><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt()</a></code> function.</p></td>
     </tr>
     <tr>
       <th>groups</th>
@@ -197,16 +197,17 @@ preserving the original ordering.</p></td>
 <span class='co'># modify the order of the row groups</span>
 <span class='co'># with `row_group_order()`, specifying</span>
 <span class='co'># the new ordering in `groups`</span>
-<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
-  <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>char</span>, <span class='no'>currency</span>, <span class='no'>row</span>, <span class='no'>group</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='gt.html'>gt</a></span>(
-      <span class='kw'>rowname_col</span> <span class='kw'>=</span> <span class='st'>"row"</span>,
-      <span class='kw'>groupname_col</span> <span class='kw'>=</span> <span class='st'>"group"</span>
-    ) <span class='kw'>%&gt;%</span>
-    <span class='fu'>row_group_order</span>(
-      <span class='kw'>groups</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"grp_b"</span>, <span class='st'>"grp_a"</span>)
-    )</div></pre>
+<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='kw'>exibble</span> <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>char</span>, <span class='kw'>currency</span>, <span class='kw'>row</span>, <span class='kw'>group</span>) <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>(
+      rowname_col = <span class='st'>"row"</span>,
+      groupname_col = <span class='st'>"group"</span>
+    ) <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://rdrr.io/pkg/gt/man/row_group_order.html'>row_group_order</a></span>(
+      groups = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"grp_b"</span>, <span class='st'>"grp_a"</span>)
+    )
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

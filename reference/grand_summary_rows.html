@@ -153,13 +153,13 @@ groups. You choose how to format the values in the resulting summary cells by
 use of a <code>formatter</code> function (e.g, <code>fmt_number</code>) and any relevant options.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>grand_summary_rows</span>(
-  <span class='no'>data</span>,
-  <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>fns</span>,
-  <span class='kw'>missing_text</span> <span class='kw'>=</span> <span class='st'>"---"</span>,
-  <span class='kw'>formatter</span> <span class='kw'>=</span> <span class='no'>fmt_number</span>,
-  <span class='no'>...</span>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/grand_summary_rows.html'>grand_summary_rows</a></span>(
+  <span class='kw'>data</span>,
+  columns = <span class='fl'>TRUE</span>,
+  <span class='kw'>fns</span>,
+  missing_text = <span class='st'>"---"</span>,
+  formatter = <span class='kw'>fmt_number</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -167,7 +167,7 @@ use of a <code>formatter</code> function (e.g, <code>fmt_number</code>) and any 
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
+      <td><p>A table object that is created using the <code><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt()</a></code> function.</p></td>
     </tr>
     <tr>
       <th>columns</th>
@@ -180,7 +180,7 @@ like <code>mean</code>, <code>min</code>, <code>max</code>, <code>median</code>,
 user-defined aggregation function. The function(s) should be supplied
 within a <code><a href='https://rdrr.io/r/base/list.html'>list()</a></code>. Within that list, we can specify the functions by use of
 function names in quotes (e.g., <code>"sum"</code>), as bare functions (e.g., <code>sum</code>),
-or as one-sided R formulas using a leading <code>~</code>. In the formula
+or as one-sided R formulas using a leading <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code>. In the formula
 representation, a <code>.</code> serves as the data to be summarized (e.g., <code><a href='https://rdrr.io/r/base/sum.html'>sum(., na.rm = TRUE)</a></code>). The use of named arguments is recommended as the names
 will serve as summary row labels for the corresponding summary rows data
 (the labels can derived from the function names but only when not providing
@@ -194,15 +194,15 @@ cells with no data outputs.</p></td>
     <tr>
       <th>formatter</th>
       <td><p>A formatter function name. These can be any of the <code>fmt_*()</code>
-functions available in the package (e.g., <code><a href='fmt_number.html'>fmt_number()</a></code>, <code><a href='fmt_percent.html'>fmt_percent()</a></code>,
-etc.), or a custom function using <code><a href='fmt.html'>fmt()</a></code>. The default function is
-<code><a href='fmt_number.html'>fmt_number()</a></code> and its options can be accessed through <code>...</code>.</p></td>
+functions available in the package (e.g., <code><a href='https://rdrr.io/pkg/gt/man/fmt_number.html'>fmt_number()</a></code>, <code><a href='https://rdrr.io/pkg/gt/man/fmt_percent.html'>fmt_percent()</a></code>,
+etc.), or a custom function using <code><a href='https://rdrr.io/pkg/gt/man/fmt.html'>fmt()</a></code>. The default function is
+<code><a href='https://rdrr.io/pkg/gt/man/fmt_number.html'>fmt_number()</a></code> and its options can be accessed through <code>...</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>Values passed to the <code>formatter</code> function, where the provided
 values are to be in the form of named vectors. For example, when using the
-default <code>formatter</code> function, <code><a href='fmt_number.html'>fmt_number()</a></code>, options such as <code>decimals</code>,
+default <code>formatter</code> function, <code><a href='https://rdrr.io/pkg/gt/man/fmt_number.html'>fmt_number()</a></code>, options such as <code>decimals</code>,
 <code>use_seps</code>, and <code>locale</code> can be used.</p></td>
     </tr>
     </table>
@@ -213,8 +213,8 @@ default <code>formatter</code> function, <code><a href='fmt_number.html'>fmt_num
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Should we need to obtain the summary data for external purposes, the
-<code><a href='extract_summary.html'>extract_summary()</a></code> function can be used with a <code>gt_tbl</code> object where grand
-summary rows were added via <code>grand_summary_rows()</code>.</p>
+<code><a href='https://rdrr.io/pkg/gt/man/extract_summary.html'>extract_summary()</a></code> function can be used with a <code>gt_tbl</code> object where grand
+summary rows were added via <code><a href='https://rdrr.io/pkg/gt/man/grand_summary_rows.html'>grand_summary_rows()</a></code>.</p>
     <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
 
     
@@ -228,37 +228,38 @@ summary rows were added via <code>grand_summary_rows()</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Add Rows: 
-<code><a href='summary_rows.html'>summary_rows</a>()</code></p></div>
+<code><a href='https://rdrr.io/pkg/gt/man/summary_rows.html'>summary_rows</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Use `sp500` to create a gt table with</span>
 <span class='co'># row groups; create grand summary rows</span>
 <span class='co'># (`min`, `max`, `avg`) for the table</span>
-<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
-  <span class='no'>sp500</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
-    <span class='no'>date</span> <span class='kw'>&gt;=</span> <span class='st'>"2015-01-05"</span> <span class='kw'>&amp;</span>
-      <span class='no'>date</span> <span class='kw'>&lt;=</span><span class='st'>"2015-01-16"</span>
-  ) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='no'>date</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(
-    <span class='kw'>week</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(
-      <span class='st'>"W"</span>, <span class='fu'><a href='https://rdrr.io/r/base/strptime.html'>strftime</a></span>(<span class='no'>date</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"%V"</span>))
-  ) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(-<span class='no'>adj_close</span>, -<span class='no'>volume</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(
-    <span class='kw'>rowname_col</span> <span class='kw'>=</span> <span class='st'>"date"</span>,
-    <span class='kw'>groupname_col</span> <span class='kw'>=</span> <span class='st'>"week"</span>
-  ) <span class='kw'>%&gt;%</span>
-  <span class='fu'>grand_summary_rows</span>(
-    <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>open</span>, <span class='no'>high</span>, <span class='no'>low</span>, <span class='no'>close</span>),
-    <span class='kw'>fns</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-      <span class='kw'>min</span> <span class='kw'>=</span> ~<span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span>(<span class='no'>.</span>),
-      <span class='kw'>max</span> <span class='kw'>=</span> ~<span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span>(<span class='no'>.</span>),
-      <span class='kw'>avg</span> <span class='kw'>=</span> ~<span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>.</span>)),
-    <span class='kw'>formatter</span> <span class='kw'>=</span> <span class='no'>fmt_number</span>,
-    <span class='kw'>use_seps</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-  )</div></pre>
+<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='kw'>sp500</span> <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
+    <span class='kw'>date</span> <span class='op'>&gt;=</span> <span class='st'>"2015-01-05"</span> <span class='op'>&amp;</span>
+      <span class='kw'>date</span> <span class='op'>&lt;=</span><span class='st'>"2015-01-16"</span>
+  ) <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='kw'>date</span>) <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(
+    week = <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(
+      <span class='st'>"W"</span>, <span class='fu'><a href='https://rdrr.io/r/base/strptime.html'>strftime</a></span>(<span class='kw'>date</span>, format = <span class='st'>"%V"</span>))
+  ) <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='op'>-</span><span class='kw'>adj_close</span>, <span class='op'>-</span><span class='kw'>volume</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>(
+    rowname_col = <span class='st'>"date"</span>,
+    groupname_col = <span class='st'>"week"</span>
+  ) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/grand_summary_rows.html'>grand_summary_rows</a></span>(
+    columns = <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>open</span>, <span class='kw'>high</span>, <span class='kw'>low</span>, <span class='kw'>close</span>),
+    fns = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
+      min = <span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span>(<span class='kw'>.</span>),
+      max = <span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span>(<span class='kw'>.</span>),
+      avg = <span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='kw'>.</span>)),
+    formatter = <span class='kw'>fmt_number</span>,
+    use_seps = <span class='fl'>FALSE</span>
+  )
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

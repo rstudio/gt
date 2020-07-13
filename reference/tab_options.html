@@ -147,133 +147,138 @@ components, the subcomponents, and the element that can adjusted." />
 components, the subcomponents, and the element that can adjusted.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tab_options</span>(
-  <span class='no'>data</span>,
-  <span class='kw'>container.width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>container.height</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>container.overflow.x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>container.overflow.y</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>table.width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>table.align</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>table.margin.left</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>table.margin.right</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>table.background.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>table.font.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>table.font.color.light</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>table.font.size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>table.border.top.style</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>table.border.top.width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>table.border.top.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>table.border.right.style</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>table.border.right.width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>table.border.right.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>table.border.bottom.style</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>table.border.bottom.width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>table.border.bottom.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>table.border.left.style</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>table.border.left.width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>table.border.left.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>heading.background.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>heading.align</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>heading.title.font.size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>heading.title.font.weight</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>heading.subtitle.font.size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>heading.subtitle.font.weight</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>heading.border.bottom.style</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>heading.border.bottom.width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>heading.border.bottom.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>heading.border.lr.style</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>heading.border.lr.width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>heading.border.lr.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>column_labels.background.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>column_labels.font.size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>column_labels.font.weight</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>column_labels.text_transform</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>column_labels.vlines.style</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>column_labels.vlines.width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>column_labels.vlines.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>column_labels.border.top.style</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>column_labels.border.top.width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>column_labels.border.top.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>column_labels.border.bottom.style</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>column_labels.border.bottom.width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>column_labels.border.bottom.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>column_labels.border.lr.style</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>column_labels.border.lr.width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>column_labels.border.lr.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>column_labels.hidden</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>row_group.background.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>row_group.font.size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>row_group.font.weight</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>row_group.text_transform</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>row_group.padding</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>row_group.border.top.style</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>row_group.border.top.width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>row_group.border.top.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>row_group.border.bottom.style</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>row_group.border.bottom.width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>row_group.border.bottom.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>row_group.border.left.style</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>row_group.border.left.width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>row_group.border.left.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>row_group.border.right.style</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>row_group.border.right.width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>row_group.border.right.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>table_body.hlines.style</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>table_body.hlines.width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>table_body.hlines.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>table_body.vlines.style</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>table_body.vlines.width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>table_body.vlines.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>table_body.border.top.style</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>table_body.border.top.width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>table_body.border.top.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>table_body.border.bottom.style</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>table_body.border.bottom.width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>table_body.border.bottom.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>stub.background.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>stub.font.size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>stub.font.weight</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>stub.text_transform</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>stub.border.style</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>stub.border.width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>stub.border.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>data_row.padding</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>summary_row.background.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>summary_row.text_transform</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>summary_row.padding</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>summary_row.border.style</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>summary_row.border.width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>summary_row.border.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>grand_summary_row.background.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>grand_summary_row.text_transform</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>grand_summary_row.padding</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>grand_summary_row.border.style</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>grand_summary_row.border.width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>grand_summary_row.border.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>footnotes.background.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>footnotes.font.size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>footnotes.padding</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>footnotes.border.bottom.style</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>footnotes.border.bottom.width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>footnotes.border.bottom.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>footnotes.border.lr.style</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>footnotes.border.lr.width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>footnotes.border.lr.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>footnotes.sep</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>footnotes.marks</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>source_notes.background.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>source_notes.font.size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>source_notes.padding</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>source_notes.border.bottom.style</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>source_notes.border.bottom.width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>source_notes.border.bottom.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>source_notes.border.lr.style</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>source_notes.border.lr.width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>source_notes.border.lr.color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>row.striping.background_color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>row.striping.include_stub</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>row.striping.include_table_body</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_options.html'>tab_options</a></span>(
+  <span class='kw'>data</span>,
+  container.width = <span class='kw'>NULL</span>,
+  container.height = <span class='kw'>NULL</span>,
+  container.overflow.x = <span class='kw'>NULL</span>,
+  container.overflow.y = <span class='kw'>NULL</span>,
+  table.width = <span class='kw'>NULL</span>,
+  table.layout = <span class='kw'>NULL</span>,
+  table.align = <span class='kw'>NULL</span>,
+  table.margin.left = <span class='kw'>NULL</span>,
+  table.margin.right = <span class='kw'>NULL</span>,
+  table.background.color = <span class='kw'>NULL</span>,
+  table.additional_css = <span class='kw'>NULL</span>,
+  table.font.names = <span class='kw'>NULL</span>,
+  table.font.size = <span class='kw'>NULL</span>,
+  table.font.weight = <span class='kw'>NULL</span>,
+  table.font.style = <span class='kw'>NULL</span>,
+  table.font.color = <span class='kw'>NULL</span>,
+  table.font.color.light = <span class='kw'>NULL</span>,
+  table.border.top.style = <span class='kw'>NULL</span>,
+  table.border.top.width = <span class='kw'>NULL</span>,
+  table.border.top.color = <span class='kw'>NULL</span>,
+  table.border.right.style = <span class='kw'>NULL</span>,
+  table.border.right.width = <span class='kw'>NULL</span>,
+  table.border.right.color = <span class='kw'>NULL</span>,
+  table.border.bottom.style = <span class='kw'>NULL</span>,
+  table.border.bottom.width = <span class='kw'>NULL</span>,
+  table.border.bottom.color = <span class='kw'>NULL</span>,
+  table.border.left.style = <span class='kw'>NULL</span>,
+  table.border.left.width = <span class='kw'>NULL</span>,
+  table.border.left.color = <span class='kw'>NULL</span>,
+  heading.background.color = <span class='kw'>NULL</span>,
+  heading.align = <span class='kw'>NULL</span>,
+  heading.title.font.size = <span class='kw'>NULL</span>,
+  heading.title.font.weight = <span class='kw'>NULL</span>,
+  heading.subtitle.font.size = <span class='kw'>NULL</span>,
+  heading.subtitle.font.weight = <span class='kw'>NULL</span>,
+  heading.border.bottom.style = <span class='kw'>NULL</span>,
+  heading.border.bottom.width = <span class='kw'>NULL</span>,
+  heading.border.bottom.color = <span class='kw'>NULL</span>,
+  heading.border.lr.style = <span class='kw'>NULL</span>,
+  heading.border.lr.width = <span class='kw'>NULL</span>,
+  heading.border.lr.color = <span class='kw'>NULL</span>,
+  column_labels.background.color = <span class='kw'>NULL</span>,
+  column_labels.font.size = <span class='kw'>NULL</span>,
+  column_labels.font.weight = <span class='kw'>NULL</span>,
+  column_labels.text_transform = <span class='kw'>NULL</span>,
+  column_labels.vlines.style = <span class='kw'>NULL</span>,
+  column_labels.vlines.width = <span class='kw'>NULL</span>,
+  column_labels.vlines.color = <span class='kw'>NULL</span>,
+  column_labels.border.top.style = <span class='kw'>NULL</span>,
+  column_labels.border.top.width = <span class='kw'>NULL</span>,
+  column_labels.border.top.color = <span class='kw'>NULL</span>,
+  column_labels.border.bottom.style = <span class='kw'>NULL</span>,
+  column_labels.border.bottom.width = <span class='kw'>NULL</span>,
+  column_labels.border.bottom.color = <span class='kw'>NULL</span>,
+  column_labels.border.lr.style = <span class='kw'>NULL</span>,
+  column_labels.border.lr.width = <span class='kw'>NULL</span>,
+  column_labels.border.lr.color = <span class='kw'>NULL</span>,
+  column_labels.hidden = <span class='kw'>NULL</span>,
+  row_group.background.color = <span class='kw'>NULL</span>,
+  row_group.font.size = <span class='kw'>NULL</span>,
+  row_group.font.weight = <span class='kw'>NULL</span>,
+  row_group.text_transform = <span class='kw'>NULL</span>,
+  row_group.padding = <span class='kw'>NULL</span>,
+  row_group.border.top.style = <span class='kw'>NULL</span>,
+  row_group.border.top.width = <span class='kw'>NULL</span>,
+  row_group.border.top.color = <span class='kw'>NULL</span>,
+  row_group.border.bottom.style = <span class='kw'>NULL</span>,
+  row_group.border.bottom.width = <span class='kw'>NULL</span>,
+  row_group.border.bottom.color = <span class='kw'>NULL</span>,
+  row_group.border.left.style = <span class='kw'>NULL</span>,
+  row_group.border.left.width = <span class='kw'>NULL</span>,
+  row_group.border.left.color = <span class='kw'>NULL</span>,
+  row_group.border.right.style = <span class='kw'>NULL</span>,
+  row_group.border.right.width = <span class='kw'>NULL</span>,
+  row_group.border.right.color = <span class='kw'>NULL</span>,
+  table_body.hlines.style = <span class='kw'>NULL</span>,
+  table_body.hlines.width = <span class='kw'>NULL</span>,
+  table_body.hlines.color = <span class='kw'>NULL</span>,
+  table_body.vlines.style = <span class='kw'>NULL</span>,
+  table_body.vlines.width = <span class='kw'>NULL</span>,
+  table_body.vlines.color = <span class='kw'>NULL</span>,
+  table_body.border.top.style = <span class='kw'>NULL</span>,
+  table_body.border.top.width = <span class='kw'>NULL</span>,
+  table_body.border.top.color = <span class='kw'>NULL</span>,
+  table_body.border.bottom.style = <span class='kw'>NULL</span>,
+  table_body.border.bottom.width = <span class='kw'>NULL</span>,
+  table_body.border.bottom.color = <span class='kw'>NULL</span>,
+  stub.background.color = <span class='kw'>NULL</span>,
+  stub.font.size = <span class='kw'>NULL</span>,
+  stub.font.weight = <span class='kw'>NULL</span>,
+  stub.text_transform = <span class='kw'>NULL</span>,
+  stub.border.style = <span class='kw'>NULL</span>,
+  stub.border.width = <span class='kw'>NULL</span>,
+  stub.border.color = <span class='kw'>NULL</span>,
+  data_row.padding = <span class='kw'>NULL</span>,
+  summary_row.background.color = <span class='kw'>NULL</span>,
+  summary_row.text_transform = <span class='kw'>NULL</span>,
+  summary_row.padding = <span class='kw'>NULL</span>,
+  summary_row.border.style = <span class='kw'>NULL</span>,
+  summary_row.border.width = <span class='kw'>NULL</span>,
+  summary_row.border.color = <span class='kw'>NULL</span>,
+  grand_summary_row.background.color = <span class='kw'>NULL</span>,
+  grand_summary_row.text_transform = <span class='kw'>NULL</span>,
+  grand_summary_row.padding = <span class='kw'>NULL</span>,
+  grand_summary_row.border.style = <span class='kw'>NULL</span>,
+  grand_summary_row.border.width = <span class='kw'>NULL</span>,
+  grand_summary_row.border.color = <span class='kw'>NULL</span>,
+  footnotes.background.color = <span class='kw'>NULL</span>,
+  footnotes.font.size = <span class='kw'>NULL</span>,
+  footnotes.padding = <span class='kw'>NULL</span>,
+  footnotes.border.bottom.style = <span class='kw'>NULL</span>,
+  footnotes.border.bottom.width = <span class='kw'>NULL</span>,
+  footnotes.border.bottom.color = <span class='kw'>NULL</span>,
+  footnotes.border.lr.style = <span class='kw'>NULL</span>,
+  footnotes.border.lr.width = <span class='kw'>NULL</span>,
+  footnotes.border.lr.color = <span class='kw'>NULL</span>,
+  footnotes.sep = <span class='kw'>NULL</span>,
+  footnotes.marks = <span class='kw'>NULL</span>,
+  source_notes.background.color = <span class='kw'>NULL</span>,
+  source_notes.font.size = <span class='kw'>NULL</span>,
+  source_notes.padding = <span class='kw'>NULL</span>,
+  source_notes.border.bottom.style = <span class='kw'>NULL</span>,
+  source_notes.border.bottom.width = <span class='kw'>NULL</span>,
+  source_notes.border.bottom.color = <span class='kw'>NULL</span>,
+  source_notes.border.lr.style = <span class='kw'>NULL</span>,
+  source_notes.border.lr.width = <span class='kw'>NULL</span>,
+  source_notes.border.lr.color = <span class='kw'>NULL</span>,
+  row.striping.background_color = <span class='kw'>NULL</span>,
+  row.striping.include_stub = <span class='kw'>NULL</span>,
+  row.striping.include_table_body = <span class='kw'>NULL</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -281,15 +286,15 @@ components, the subcomponents, and the element that can adjusted.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
+      <td><p>A table object that is created using the <code><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt()</a></code> function.</p></td>
     </tr>
     <tr>
       <th>container.width, container.height</th>
       <td><p>The width and height of the table's
 container. Can be specified as a single-length character with units of
 pixels or as a percentage. If provided as a single-length numeric vector,
-it is assumed that the value is given in units of pixels. The <code><a href='px.html'>px()</a></code> and
-<code><a href='pct.html'>pct()</a></code> helper functions can also be used to pass in numeric values and
+it is assumed that the value is given in units of pixels. The <code><a href='https://rdrr.io/pkg/gt/man/px.html'>px()</a></code> and
+<code><a href='https://rdrr.io/pkg/gt/man/pct.html'>pct()</a></code> helper functions can also be used to pass in numeric values and
 obtain values as pixel or percent units.</p></td>
     </tr>
     <tr>
@@ -306,9 +311,15 @@ or height exceeds the <code>container.width</code> or <code>container.height</co
       <td><p>The width of the table. Can be specified as a
 single-length character with units of pixels or as a percentage. If
 provided as a single-length numeric vector, it is assumed that the value is
-given in units of pixels. The <code><a href='px.html'>px()</a></code> and <code><a href='pct.html'>pct()</a></code> helper functions can also
+given in units of pixels. The <code><a href='https://rdrr.io/pkg/gt/man/px.html'>px()</a></code> and <code><a href='https://rdrr.io/pkg/gt/man/pct.html'>pct()</a></code> helper functions can also
 be used to pass in numeric values and obtain values as pixel or percent
 units.</p></td>
+    </tr>
+    <tr>
+      <th>table.layout</th>
+      <td><p>The value for the <code>table-layout</code> CSS style in the HTML
+output context. By default, this is <code>"fixed"</code> but another valid option is
+<code>"auto"</code>.</p></td>
     </tr>
     <tr>
       <th>table.align</th>
@@ -323,7 +334,7 @@ appropriate values.</p></td>
 left and right of the table within the container. Can be specified as a
 single-length character with units of pixels or as a percentage. If
 provided as a single-length numeric vector, it is assumed that the value is
-given in units of pixels. The <code><a href='px.html'>px()</a></code> and <code><a href='pct.html'>pct()</a></code> helper functions can also
+given in units of pixels. The <code><a href='https://rdrr.io/pkg/gt/man/px.html'>px()</a></code> and <code><a href='https://rdrr.io/pkg/gt/man/pct.html'>pct()</a></code> helper functions can also
 be used to pass in numeric values and obtain values as pixel or percent
 units. Using <code>table.margin.left</code> or <code>table.margin.right</code> will overwrite any
 values set by <code>table.align</code>.</p></td>
@@ -336,12 +347,16 @@ elements: <code>heading</code>, <code>column_labels</code>, <code>row_group</cod
 hexadecimal color code should be provided.</p></td>
     </tr>
     <tr>
-      <th>table.font.color, table.font.color.light</th>
-      <td><p>The text color used throughout the table. There are two variants:
-<code>table.font.color</code> is for text overlaid on lighter background colors, and
-<code>table.font.color.light</code> is automatically used when text needs to be
-overlaid on darker background colors. A color name or a hexadecimal color
-code should be provided.</p></td>
+      <th>table.additional_css</th>
+      <td><p>This option can be used to supply an additional
+block of CSS rules to be applied after the automatically generated table
+CSS.</p></td>
+    </tr>
+    <tr>
+      <th>table.font.names</th>
+      <td><p>The names of the fonts used for the table. This is
+a vector of several font names. If the first font isn't available, then
+the next font is tried (and so on).</p></td>
     </tr>
     <tr>
       <th>table.font.size, heading.title.font.size, heading.subtitle.font.size, column_labels.font.size, row_group.font.size, stub.font.size, footnotes.font.size, source_notes.font.size</th>
@@ -350,9 +365,30 @@ elements: <code>heading.title</code>, <code>heading.subtitle</code>, <code>colum
 <code>row_group</code>, <code>footnotes</code>, and <code>source_notes</code>. Can be specified as a
 single-length character vector with units of pixels (e.g., <code>12px</code>) or as a
 percentage (e.g., <code>80\%</code>). If provided as a single-length numeric vector,
-it is assumed that the value is given in units of pixels. The <code><a href='px.html'>px()</a></code> and
-<code><a href='pct.html'>pct()</a></code> helper functions can also be used to pass in numeric values and
+it is assumed that the value is given in units of pixels. The <code><a href='https://rdrr.io/pkg/gt/man/px.html'>px()</a></code> and
+<code><a href='https://rdrr.io/pkg/gt/man/pct.html'>pct()</a></code> helper functions can also be used to pass in numeric values and
 obtain values as pixel or percentage units.</p></td>
+    </tr>
+    <tr>
+      <th>table.font.weight, heading.title.font.weight, heading.subtitle.font.weight, column_labels.font.weight, row_group.font.weight, stub.font.weight</th>
+      <td><p>The font weights of the table, <code>heading.title</code>, <code>heading.subtitle</code>,
+<code>column_labels</code>, <code>row_group</code>, and <code>stub</code> text elements. Can be a text-based
+keyword such as <code>"normal"</code>, <code>"bold"</code>, <code>"lighter"</code>, <code>"bolder"</code>, or, a
+numeric value between <code>1</code> and <code>1000</code>, inclusive. Note that only variable
+fonts may support the numeric mapping of weight.</p></td>
+    </tr>
+    <tr>
+      <th>table.font.style</th>
+      <td><p>The font style for the table. Can be one of either
+<code>"normal"</code>, <code>"italic"</code>, or <code>"oblique"</code>.</p></td>
+    </tr>
+    <tr>
+      <th>table.font.color, table.font.color.light</th>
+      <td><p>The text color used throughout the table. There are two variants:
+<code>table.font.color</code> is for text overlaid on lighter background colors, and
+<code>table.font.color.light</code> is automatically used when text needs to be
+overlaid on darker background colors. A color name or a hexadecimal color
+code should be provided.</p></td>
     </tr>
     <tr>
       <th>table.border.top.style, table.border.top.width, table.border.top.color, table.border.right.style, table.border.right.width, table.border.right.color, table.border.bottom.style, table.border.bottom.width, table.border.bottom.color, table.border.left.style, table.border.left.width, table.border.left.color</th>
@@ -363,14 +399,6 @@ absolute bottom borders.</p></td>
       <th>heading.align</th>
       <td><p>Controls the horizontal alignment of the heading title
 and subtitle. We can either use <code>"center"</code>, <code>"left"</code>, or <code>"right"</code>.</p></td>
-    </tr>
-    <tr>
-      <th>heading.title.font.weight, heading.subtitle.font.weight, column_labels.font.weight, row_group.font.weight, stub.font.weight</th>
-      <td><p>The font weights of the <code>heading.title</code>, <code>heading.subtitle</code>,
-<code>column_labels</code>, <code>row_group</code>, and <code>stub</code> text elements. Can be a text-based
-keyword such as <code>"normal"</code>, <code>"bold"</code>, <code>"lighter"</code>, <code>"bolder"</code>, or, a
-numeric value between <code>1</code> and <code>1000</code>, inclusive. Note that only variable
-fonts may support the numeric mapping of weight.</p></td>
     </tr>
     <tr>
       <th>heading.border.bottom.style, heading.border.bottom.width, heading.border.bottom.color</th>
@@ -471,10 +499,10 @@ the footnotes section. The default value produces a linebreak.</p></td>
     <tr>
       <th>footnotes.marks</th>
       <td><p>The set of sequential marks used to reference and
-identify each of the footnotes (same input as the <code><a href='opt_footnote_marks.html'>opt_footnote_marks()</a></code>
+identify each of the footnotes (same input as the <code><a href='https://rdrr.io/pkg/gt/man/opt_footnote_marks.html'>opt_footnote_marks()</a></code>
 function. We can supply a vector that represents the series of footnote
 marks. This vector is recycled when its usage goes beyond the length of the
-set. At each cycle, the marks are simply combined (e.g., <code>*</code> -&gt; <code>**</code> -&gt;
+set. At each cycle, the marks are simply combined (e.g., <code><a href='https://rdrr.io/r/base/Arithmetic.html'>*</a></code> -&gt; <code>**</code> -&gt;
 <code>***</code>). The option exists for providing keywords for certain types of
 footnote marks. The keyword <code>"numbers"</code> (the default, indicating that we
 want to use numeric marks). We can use lowercase <code>"letters"</code> or uppercase
@@ -530,93 +558,94 @@ table body when striping rows.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Create or Modify Parts: 
-<code><a href='tab_footnote.html'>tab_footnote</a>()</code>,
-<code><a href='tab_header.html'>tab_header</a>()</code>,
-<code><a href='tab_row_group.html'>tab_row_group</a>()</code>,
-<code><a href='tab_source_note.html'>tab_source_note</a>()</code>,
-<code><a href='tab_spanner_delim.html'>tab_spanner_delim</a>()</code>,
-<code><a href='tab_spanner.html'>tab_spanner</a>()</code>,
-<code><a href='tab_stubhead.html'>tab_stubhead</a>()</code>,
-<code><a href='tab_style.html'>tab_style</a>()</code></p></div>
+<code><a href='https://rdrr.io/pkg/gt/man/tab_footnote.html'>tab_footnote</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/tab_header.html'>tab_header</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/tab_row_group.html'>tab_row_group</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/tab_source_note.html'>tab_source_note</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/tab_spanner_delim.html'>tab_spanner_delim</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/tab_spanner.html'>tab_spanner</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/tab_stubhead.html'>tab_stubhead</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/tab_style.html'>tab_style</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Use `exibble` to create a gt table with</span>
 <span class='co'># all the main parts added; we can use this</span>
 <span class='co'># going forward to demo some `tab_options()`</span>
-<span class='no'>tab_1</span> <span class='kw'>&lt;-</span>
-  <span class='no'>exibble</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(
-    -<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>fctr</span>, <span class='no'>date</span>, <span class='no'>time</span>, <span class='no'>datetime</span>)
-  ) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>(
-    <span class='kw'>rowname_col</span> <span class='kw'>=</span> <span class='st'>"row"</span>,
-    <span class='kw'>groupname_col</span> <span class='kw'>=</span> <span class='st'>"group"</span>
-  ) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='tab_header.html'>tab_header</a></span>(
-    <span class='kw'>title</span> <span class='kw'>=</span> <span class='fu'><a href='md.html'>md</a></span>(<span class='st'>"Data listing from **exibble**"</span>),
-    <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='fu'><a href='md.html'>md</a></span>(<span class='st'>"`exibble` is an R dataset"</span>)
-  ) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='fmt_number.html'>fmt_number</a></span>(<span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='fmt_currency.html'>fmt_currency</a></span>(<span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>currency</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='tab_footnote.html'>tab_footnote</a></span>(
-    <span class='kw'>footnote</span> <span class='kw'>=</span> <span class='st'>"Using commas for separators."</span>,
-    <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='cells_body.html'>cells_body</a></span>(
-      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>num</span>),
-      <span class='kw'>rows</span> <span class='kw'>=</span> <span class='no'>num</span> <span class='kw'>&gt;</span> <span class='fl'>1000</span>)
-  ) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='tab_footnote.html'>tab_footnote</a></span>(
-    <span class='kw'>footnote</span> <span class='kw'>=</span> <span class='st'>"Using commas for separators."</span>,
-    <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='cells_body.html'>cells_body</a></span>(
-      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>currency</span>),
-      <span class='kw'>rows</span> <span class='kw'>=</span> <span class='no'>currency</span> <span class='kw'>&gt;</span> <span class='fl'>1000</span>)
-  ) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='tab_footnote.html'>tab_footnote</a></span>(
-    <span class='kw'>footnote</span> <span class='kw'>=</span> <span class='st'>"Alphabetical fruit."</span>,
-    <span class='kw'>locations</span> <span class='kw'>=</span> <span class='fu'><a href='cells_column_labels.html'>cells_column_labels</a></span>(
-      <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>char</span>))
+<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='kw'>exibble</span> <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(
+    <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>fctr</span>, <span class='kw'>date</span>, <span class='kw'>time</span>, <span class='kw'>datetime</span>)
+  ) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>(
+    rowname_col = <span class='st'>"row"</span>,
+    groupname_col = <span class='st'>"group"</span>
+  ) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_header.html'>tab_header</a></span>(
+    title = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/md.html'>md</a></span>(<span class='st'>"Data listing from **exibble**"</span>),
+    subtitle = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/md.html'>md</a></span>(<span class='st'>"`exibble` is an R dataset"</span>)
+  ) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/fmt_number.html'>fmt_number</a></span>(columns = <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>num</span>)) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/fmt_currency.html'>fmt_currency</a></span>(columns = <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>currency</span>)) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_footnote.html'>tab_footnote</a></span>(
+    footnote = <span class='st'>"Using commas for separators."</span>,
+    locations = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/cells_body.html'>cells_body</a></span>(
+      columns = <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>num</span>),
+      rows = <span class='kw'>num</span> <span class='op'>&gt;</span> <span class='fl'>1000</span>)
+  ) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_footnote.html'>tab_footnote</a></span>(
+    footnote = <span class='st'>"Using commas for separators."</span>,
+    locations = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/cells_body.html'>cells_body</a></span>(
+      columns = <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>currency</span>),
+      rows = <span class='kw'>currency</span> <span class='op'>&gt;</span> <span class='fl'>1000</span>)
+  ) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_footnote.html'>tab_footnote</a></span>(
+    footnote = <span class='st'>"Alphabetical fruit."</span>,
+    locations = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/cells_column_labels.html'>cells_column_labels</a></span>(
+      columns = <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>char</span>))
   )
 
 <span class='co'># Modify the table width to 100% (which</span>
 <span class='co'># spans the entire content width area)</span>
-<span class='no'>tab_2</span> <span class='kw'>&lt;-</span>
-  <span class='no'>tab_1</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>tab_options</span>(
-    <span class='kw'>table.width</span> <span class='kw'>=</span> <span class='fu'><a href='pct.html'>pct</a></span>(<span class='fl'>100</span>)
+<span class='kw'>tab_2</span> <span class='op'>&lt;-</span>
+  <span class='kw'>tab_1</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_options.html'>tab_options</a></span>(
+    table.width = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/pct.html'>pct</a></span>(<span class='fl'>100</span>)
   )
 
 <span class='co'># Modify the table's background color</span>
 <span class='co'># to be "lightcyan"</span>
-<span class='no'>tab_3</span> <span class='kw'>&lt;-</span>
-  <span class='no'>tab_1</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>tab_options</span>(
-    <span class='kw'>table.background.color</span> <span class='kw'>=</span> <span class='st'>"lightcyan"</span>
+<span class='kw'>tab_3</span> <span class='op'>&lt;-</span>
+  <span class='kw'>tab_1</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_options.html'>tab_options</a></span>(
+    table.background.color = <span class='st'>"lightcyan"</span>
   )
 
 <span class='co'># Use letters as the marks for footnote</span>
 <span class='co'># references; also, separate footnotes in</span>
 <span class='co'># the footer by spaces instead of newlines</span>
-<span class='no'>tab_4</span> <span class='kw'>&lt;-</span>
-  <span class='no'>tab_1</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>tab_options</span>(
-    <span class='kw'>footnotes.sep</span> <span class='kw'>=</span> <span class='st'>" "</span>,
-    <span class='kw'>footnotes.marks</span> <span class='kw'>=</span> <span class='no'>letters</span>
+<span class='kw'>tab_4</span> <span class='op'>&lt;-</span>
+  <span class='kw'>tab_1</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_options.html'>tab_options</a></span>(
+    footnotes.sep = <span class='st'>" "</span>,
+    footnotes.marks = <span class='kw'>letters</span>
   )
 
 <span class='co'># Change the padding of data rows to 5px</span>
-<span class='no'>tab_5</span> <span class='kw'>&lt;-</span>
-  <span class='no'>tab_1</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>tab_options</span>(
-    <span class='kw'>data_row.padding</span> <span class='kw'>=</span> <span class='fu'><a href='px.html'>px</a></span>(<span class='fl'>5</span>)
+<span class='kw'>tab_5</span> <span class='op'>&lt;-</span>
+  <span class='kw'>tab_1</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_options.html'>tab_options</a></span>(
+    data_row.padding = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/px.html'>px</a></span>(<span class='fl'>5</span>)
   )
 
 <span class='co'># Reduce the size of the title and the</span>
 <span class='co'># subtitle text</span>
-<span class='no'>tab_6</span> <span class='kw'>&lt;-</span>
-  <span class='no'>tab_1</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>tab_options</span>(
-    <span class='kw'>heading.title.font.size</span> <span class='kw'>=</span> <span class='st'>"small"</span>,
-    <span class='kw'>heading.subtitle.font.size</span> <span class='kw'>=</span> <span class='st'>"small"</span>
-  )</div></pre>
+<span class='kw'>tab_6</span> <span class='op'>&lt;-</span>
+  <span class='kw'>tab_1</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_options.html'>tab_options</a></span>(
+    heading.title.font.size = <span class='st'>"small"</span>,
+    heading.subtitle.font.size = <span class='st'>"small"</span>
+  )
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

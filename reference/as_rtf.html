@@ -149,14 +149,14 @@ vector. This object can be used with <code><a href='https://rdrr.io/r/base/write
 file that can be opened by RTF readers.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>as_rtf</span>(<span class='no'>data</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/as_rtf.html'>as_rtf</a></span>(<span class='kw'>data</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>a table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
+      <td><p>a table object that is created using the <code><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt()</a></code> function.</p></td>
     </tr>
     </table>
 
@@ -168,25 +168,26 @@ file that can be opened by RTF readers.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Export Functions: 
-<code><a href='as_latex.html'>as_latex</a>()</code>,
-<code><a href='as_raw_html.html'>as_raw_html</a>()</code>,
-<code><a href='extract_summary.html'>extract_summary</a>()</code>,
-<code><a href='gtsave.html'>gtsave</a>()</code></p></div>
+<code><a href='https://rdrr.io/pkg/gt/man/as_latex.html'>as_latex</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/as_raw_html.html'>as_raw_html</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/extract_summary.html'>extract_summary</a>()</code>,
+<code><a href='https://rdrr.io/pkg/gt/man/gtsave.html'>gtsave</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Use `gtcars` to create a gt table;</span>
 <span class='co'># add a header and then export as</span>
 <span class='co'># RTF code</span>
-<span class='no'>tab_rtf</span> <span class='kw'>&lt;-</span>
-  <span class='no'>gtcars</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mfr</span>, <span class='no'>model</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>2</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='tab_header.html'>tab_header</a></span>(
-    <span class='kw'>title</span> <span class='kw'>=</span> <span class='fu'><a href='md.html'>md</a></span>(<span class='st'>"Data listing from **gtcars**"</span>),
-    <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='fu'><a href='md.html'>md</a></span>(<span class='st'>"`gtcars` is an R dataset"</span>)
-  ) <span class='kw'>%&gt;%</span>
-  <span class='fu'>as_rtf</span>()</div></pre>
+<span class='kw'>tab_rtf</span> <span class='op'>&lt;-</span>
+  <span class='kw'>gtcars</span> <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>mfr</span>, <span class='kw'>model</span>) <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_header.html'>tab_header</a></span>(
+    title = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/md.html'>md</a></span>(<span class='st'>"Data listing from **gtcars**"</span>),
+    subtitle = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/md.html'>md</a></span>(<span class='st'>"`gtcars` is an R dataset"</span>)
+  ) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/as_rtf.html'>as_rtf</a></span>()
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
