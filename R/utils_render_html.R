@@ -9,12 +9,32 @@ footnote_mark_to_html <- function(mark) {
 
 styles_to_html <- function(styles) {
 
-  style_list <-
-    lapply(styles, function(x) cell_style_to_html(x)) %>%
-    unname() %>%
-    unlist(recursive = FALSE)
+  vapply(
+    styles,
+    FUN.VALUE = character(1), USE.NAMES = FALSE,
+    FUN = function(x) {
 
-  paste0(names(style_list), ": ", style_list, ";", collapse = " ")
+      if (any(is.null(names(x)))) {
+
+        style <- gsub(":", ": ", x, fixed = TRUE)
+
+      } else if (all(names(x) != "")) {
+
+        x <- cell_style_to_html(x)
+
+        style <-
+          paste0(names(x), ": ", x, ";", collapse = " ") %>%
+          tidy_gsub(";;", ";")
+
+      } else {
+        style <- as.character(x)
+      }
+
+      style
+    }
+  ) %>%
+    paste(collapse = " ") %>%
+    tidy_gsub("\n", " ")
 }
 
 cell_style_to_html <- function(style) {
@@ -1107,4 +1127,16 @@ build_row_styles <- function(styles_resolved_row,
   }
 
   row_styles
+}
+
+as_css_font_family_attr <- function(font_vec, value_only = FALSE) {
+
+  fonts_spaces <- grepl(" ", font_vec)
+  font_vec[fonts_spaces] <- paste_between(x = font_vec[fonts_spaces], x_2 = c("'", "'"))
+
+  value <- paste(font_vec, collapse = ", ")
+
+  if (value_only) return(value)
+
+  paste_between(value, x_2 = c("font-family: ", ";"))
 }

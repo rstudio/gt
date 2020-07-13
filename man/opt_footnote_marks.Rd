@@ -96,7 +96,9 @@ tab_1 <-
 Other Table Option Functions: 
 \code{\link{opt_align_table_header}()},
 \code{\link{opt_all_caps}()},
+\code{\link{opt_css}()},
 \code{\link{opt_row_striping}()},
+\code{\link{opt_table_font}()},
 \code{\link{opt_table_lines}()},
 \code{\link{opt_table_outline}()}
 }

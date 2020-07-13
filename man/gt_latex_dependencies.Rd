@@ -47,7 +47,7 @@ exibble %>% gt()
 }
 \section{Function ID}{
 
-7-21
+7-23
 }
 
 \seealso{
@@ -66,7 +66,9 @@ Other Helper Functions:
 \code{\link{cells_summary}()},
 \code{\link{cells_title}()},
 \code{\link{currency}()},
+\code{\link{default_fonts}()},
 \code{\link{escape_latex}()},
+\code{\link{google_font}()},
 \code{\link{html}()},
 \code{\link{md}()},
 \code{\link{pct}()},

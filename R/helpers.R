@@ -1128,8 +1128,8 @@ currency <- function(...,
 #'   function. We can also use one of the following absolute size keywords:
 #'   `"xx-small"`, `"x-small"`, `"small"`, `"medium"`, `"large"`, `"x-large"`,
 #'   or `"xx-large"`.
-#' @param style The text style. Can be one of either `"center"`, `"normal"`,
-#'   `"italic"`, or `"oblique"`.
+#' @param style The text style. Can be one of either `"normal"`, `"italic"`, or
+#'   `"oblique"`.
 #' @param weight The weight of the font. Can be a text-based keyword such as
 #'   `"normal"`, `"bold"`, `"lighter"`, `"bolder"`, or, a numeric value between
 #'   `1` and `1000`, inclusive. Note that only variable fonts may support the
@@ -1219,43 +1219,52 @@ cell_text <- function(color = NULL,
   #
 
   validate_style_in(
-    style_vals, style_names, "align",
-    c("center", "left", "right", "justify")
+    style_vals, style_names,
+    arg_name = "align",
+    in_vector = c("center", "left", "right", "justify")
   )
 
   validate_style_in(
-    style_vals, style_names, "v_align",
-    c("middle", "top", "bottom")
+    style_vals, style_names,
+    arg_name = "v_align",
+    in_vector = c("middle", "top", "bottom")
   )
 
   validate_style_in(
-    style_vals, style_names, "style",
-    c("normal", "italic", "oblique")
+    style_vals, style_names,
+    arg_name = "style",
+    in_vector = c("normal", "italic", "oblique")
   )
 
   validate_style_in(
-    style_vals, style_names, "weight",
-    c("normal", "bold", "lighter", "bolder")
+    style_vals, style_names,
+    arg_name = "weight",
+    in_vector = c("normal", "bold", "lighter", "bolder"),
+    with_pattern = "[1-9][0-9][0-9]"
   )
 
   validate_style_in(
-    style_vals, style_names, "stretch",
-    c("ultra-condensed", "extra-condensed", "condensed",
+    style_vals, style_names, arg_name = "stretch",
+    in_vector = c(
+      "ultra-condensed", "extra-condensed", "condensed",
       "semi-condensed", "normal", "semi-expanded", "expanded",
-      "extra-expanded", "ultra-expanded")
+      "extra-expanded", "ultra-expanded"
+    )
   )
 
   validate_style_in(
-    style_vals, style_names, "decorate",
-    c("overline", "line-through", "underline", "underline overline")
+    style_vals, style_names,
+    arg_name = "decorate",
+    in_vector = c("overline", "line-through", "underline", "underline overline")
   )
 
   validate_style_in(
-    style_vals, style_names, "transform",
-    c("uppercase", "lowercase", "capitalize")
+    style_vals, style_names,
+    arg_name = "transform",
+    in_vector = c("uppercase", "lowercase", "capitalize")
   )
 
-  cell_style_structure("cell_text", style_vals)
+  cell_style_structure(name = "cell_text", obj = style_vals)
 }
 
 cell_style_to_html.cell_text <- function(style) {
@@ -1544,6 +1553,155 @@ cell_style_structure <- function(name, obj, subclass = name) {
   style_obj
 }
 
+#' Helper function for specifying a font from the Google Fonts service
+#'
+#' The `google_font()` helper function can be used wherever a font name should
+#' be specified. There are two instances where this helper can be used: the
+#' `name` argument in [opt_table_font()] (for setting a table font) and in that
+#' of [cell_text()] (used with [tab_style()]). To get a helpful listing of fonts
+#' that work well in tables, use the [info_google_fonts()] function.
+#'
+#' @param name The complete name of a font available in Google Fonts.
+#'
+#' @return An object of class `font_css`.
+#'
+#' @examples
+#' if (interactive()) {
+#'
+#' # Use `exibble` to create a gt table of
+#' # eight rows, replace missing values with
+#' # em dashes; for text in the `time` column,
+#' # we use the Google font 'IBM Plex Mono'
+#' # and set up the `default_fonts()` as
+#' # fallbacks (just in case the webfont is
+#' # not accessible)
+#' tab_1 <-
+#'   exibble %>%
+#'   dplyr::select(char, time) %>%
+#'   gt() %>%
+#'   fmt_missing(columns = everything()) %>%
+#'   tab_style(
+#'     style = cell_text(
+#'       font = c(
+#'         google_font(name = "IBM Plex Mono"),
+#'         default_fonts()
+#'       )
+#'     ),
+#'     locations = cells_body(columns = vars(time))
+#'   )
+#'
+#' # Use `sp500` to create a small gt table,
+#' # using `fmt_currency()` to provide a
+#' # dollar sign for the first row of monetary
+#' # values; then, set a larger font size for
+#' # the table and use the 'Merriweather' font
+#' # using the `google_font()` function (with
+#' # two font fallbacks: 'Cochin' and the
+#' # catchall 'Serif' group)
+#' tab_2 <-
+#'   sp500 %>%
+#'   dplyr::slice(1:10) %>%
+#'   dplyr::select(-volume, -adj_close) %>%
+#'   gt() %>%
+#'   fmt_currency(
+#'     columns = 2:5,
+#'     rows = 1,
+#'     currency = "USD",
+#'     use_seps = FALSE
+#'   ) %>%
+#'   tab_options(table.font.size = px(20)) %>%
+#'   opt_table_font(
+#'     font = list(
+#'       google_font(name = "Merriweather"),
+#'       "Cochin", "Serif"
+#'     )
+#'   )
+#' }
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_google_font_1.png}{options: width=100\%}}
+#'
+#' \if{html}{\figure{man_google_font_2.png}{options: width=100\%}}
+#'
+#' @family Helper Functions
+#' @section Function ID:
+#' 7-18
+#'
+#' @export
+google_font <- function(name) {
+
+  import_stmt <-
+    name %>% tidy_gsub(" ", "+") %>%
+    paste_between(
+      c(
+        "@import url('https://fonts.googleapis.com/css2?family=",
+        ":ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');"
+      )
+    )
+
+  font_list <-
+    list(
+      name = name,
+      import_stmt = import_stmt
+    )
+
+  class(font_list) <- "font_css"
+  font_list
+}
+
+#' A vector of default fonts for use with **gt** tables
+#'
+#' The vector of fonts given by `default_fonts()` should be used with a **gt**
+#' table that is rendered to HTML. We can specify additional fonts to use but
+#' this default set should be placed after that to act as fallbacks. This is
+#' useful when specifying `font` values in the [cell_text()] function (itself
+#' used in the [tab_style()] function). If using [opt_table_font()] (which also
+#' has a `font` argument) we probably don't need to specify this vector of fonts
+#' since it is handled by its `add` option (which is `TRUE` by default).
+#'
+#' @return A character vector of font names.
+#'
+#' @examples
+#' # Use `exibble` to create a gt table;
+#' # attempting to modify the fonts used
+#' # for the `time` column is much safer
+#' # if `default_fonts()` is appended to
+#' # the end of the `font` listing in the
+#' # `cell_text()` call (the "Comic Sansa"
+#' # and "Menloa" fonts don't exist, but,
+#' # we'll get the first available font
+#' # from the `default_fonts()` set)
+#' tab_1 <-
+#'   exibble %>%
+#'   dplyr::select(char, time) %>%
+#'   gt() %>%
+#'   tab_style(
+#'     style = cell_text(
+#'       font = c(
+#'         "Comic Sansa", "Menloa",
+#'         default_fonts()
+#'       )
+#'     ),
+#'     locations = cells_body(columns = vars(time))
+#'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_default_fonts_1.png}{options: width=100\%}}
+#'
+#' @family Helper Functions
+#'
+#' @section Function ID:
+#' 7-19
+#'
+#' @export
+default_fonts <- function() {
+  c(
+    "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Helvetica Neue", "Fira Sans",
+    "Droid Sans", "Arial", "sans-serif"
+  )
+}
+
 #' Adjust the luminance for a palette of colors
 #'
 #' This function can brighten or darken a palette of colors by an arbitrary
@@ -1611,7 +1769,7 @@ cell_style_structure <- function(name, obj, subclass = name) {
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-18
+#' 7-20
 #'
 #' @export
 adjust_luminance <- function(colors,
@@ -1664,7 +1822,7 @@ adjust_luminance <- function(colors,
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-19
+#' 7-21
 #'
 #' @export
 random_id <- function(n = 10) {
@@ -1685,7 +1843,7 @@ random_id <- function(n = 10) {
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-20
+#' 7-22
 #'
 #' @export
 escape_latex <- function(text) {
@@ -1737,7 +1895,7 @@ escape_latex <- function(text) {
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-21
+#' 7-23
 #'
 #' @export
 gt_latex_dependencies <- function() {

@@ -25,3 +25,7 @@ tidyselect::one_of
 #' @importFrom tidyselect everything
 #' @export
 tidyselect::everything
+
+#' @importFrom htmltools css
+#' @export
+htmltools::css

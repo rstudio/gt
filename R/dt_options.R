@@ -36,6 +36,13 @@ dt_options_get_value <- function(data, option) {
   dt_options$value[[which(dt_options$parameter == option)]]
 }
 
+default_fonts_vec <-
+  c(
+    "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Helvetica Neue", "Fira Sans",
+    "Droid Sans", "Arial", "sans-serif"
+  )
+
 dt_options_tbl <-
   dplyr::tribble(
     ~parameter,                          ~scss,  ~category,          ~type,     ~value,
@@ -50,9 +57,13 @@ dt_options_tbl <-
     "table_margin_left",                  TRUE,  "table",            "px",      "auto",
     "table_margin_right",                 TRUE,  "table",            "px",      "auto",
     "table_background_color",             TRUE,  "table",            "value",   "#FFFFFF",
+    "table_additional_css",              FALSE,  "table",            "values",  character(0),
+    "table_font_names",                  FALSE,  "table",            "values",  default_fonts_vec,
+    "table_font_size",                    TRUE,  "table",            "px",      "16px",
+    "table_font_weight",                  TRUE,  "table",            "value",   "normal",
+    "table_font_style",                   TRUE,   "table",           "value",   "normal",
     "table_font_color",                   TRUE,  "table",            "value",   "#333333",
     "table_font_color_light",             TRUE,  "table",            "value",   "#FFFFFF",
-    "table_font_size",                    TRUE,  "table",            "px",      "16px",
     "table_border_top_include",          FALSE,  "table",            "logical", TRUE,
     "table_border_top_style",             TRUE,  "table",            "value",   "solid",
     "table_border_top_width",             TRUE,  "table",            "px",      "2px",

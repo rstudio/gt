@@ -20,7 +20,7 @@ LaTeX tables.
 }
 \section{Function ID}{
 
-7-20
+7-22
 }
 
 \seealso{
@@ -39,6 +39,8 @@ Other Helper Functions:
 \code{\link{cells_summary}()},
 \code{\link{cells_title}()},
 \code{\link{currency}()},
+\code{\link{default_fonts}()},
+\code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
 \code{\link{md}()},
