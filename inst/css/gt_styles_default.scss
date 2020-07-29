@@ -3,6 +3,7 @@
   .gt_table {
     display: table;
     border-collapse: collapse;
+    max-width: 100%;
     margin-left: $table_margin_left; // table.margin.left
     margin-right: $table_margin_right; // table.margin.right
     color: font-color($table_background_color);
@@ -171,6 +172,12 @@
 
   .gt_from_md > :last-child {
     margin-bottom: 0;
+  }
+
+  .gt_from_md p {
+    line-height: 1em;
+    margin-bottom: 0em;
+    margin-top: 0em;
   }
 
   .gt_row {
