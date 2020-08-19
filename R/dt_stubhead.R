@@ -40,5 +40,5 @@ dt_stubhead_has_label <- function(data) {
 
   stubhead <- dt_stubhead_get(data = data)
 
-  length(stubhead) > 0 && !is.null(stubhead$label)
+  length(stubhead$label) > 0 && !is.null(stubhead$label)
 }
