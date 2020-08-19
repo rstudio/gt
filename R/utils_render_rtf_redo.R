@@ -772,7 +772,7 @@ create_heading_component_rtf <- function(data) {
 create_columns_component_rtf <- function(data) {
 
   # Get table components and metadata using the `data`
-  boxh <- gt:::dt_boxhead_get(data)
+  boxh <- dt_boxhead_get(data)
   spanners_present <- dt_spanners_exists(data)
   column_labels_hidden <- dt_options_get_value(data, option = "column_labels_hidden")
   headings_labels <- dt_boxhead_get_vars_labels_default(data = data)
@@ -880,26 +880,26 @@ create_columns_component_rtf <- function(data) {
 create_body_component_rtf <- function(data) {
 
   # Get table components and metadata using the `data`
-  body <- gt:::dt_body_get(data)
-  boxh <- gt:::dt_boxhead_get(data)
-  stubh <- gt:::dt_stubhead_get(data)
-  opts_df <- gt:::dt_options_get(data)
-  stub_available <- gt:::dt_stub_df_exists(data)
-  stub_df <- gt:::dt_stub_df_get(data)
-  groups_rows <- gt:::dt_groups_rows_get(data)
+  body <- dt_body_get(data)
+  boxh <- dt_boxhead_get(data)
+  stubh <- dt_stubhead_get(data)
+  opts_df <- dt_options_get(data)
+  stub_available <- dt_stub_df_exists(data)
+  stub_df <- dt_stub_df_get(data)
+  groups_rows <- dt_groups_rows_get(data)
   summaries_present <- dt_summary_exists(data = data)
   list_of_summaries <- dt_summary_df_get(data = data)
   groups_rows_df <- dt_groups_rows_get(data = data)
   stub_components <- dt_stub_components(data = data)
 
   # Get table options
-  row_group_border_top_color <- gt:::dt_options_get_value(data = data, option = "row_group_border_top_color")
-  row_group_border_bottom_color <- gt:::dt_options_get_value(data = data, option = "row_group_border_bottom_color")
-  row_group_border_left_color <- gt:::dt_options_get_value(data = data, option = "row_group_border_left_color")
-  row_group_border_right_color <- gt:::dt_options_get_value(data = data, option = "row_group_border_right_color")
-  table_body_hlines_color <- gt:::dt_options_get_value(data = data, option = "table_body_hlines_color")
-  table_body_vlines_color <- gt:::dt_options_get_value(data = data, option = "table_body_vlines_color")
-  table_border_bottom_color <- gt:::dt_options_get_value(data, option = "table_border_bottom_color")
+  row_group_border_top_color <- dt_options_get_value(data = data, option = "row_group_border_top_color")
+  row_group_border_bottom_color <- dt_options_get_value(data = data, option = "row_group_border_bottom_color")
+  row_group_border_left_color <- dt_options_get_value(data = data, option = "row_group_border_left_color")
+  row_group_border_right_color <- dt_options_get_value(data = data, option = "row_group_border_right_color")
+  table_body_hlines_color <- dt_options_get_value(data = data, option = "table_body_hlines_color")
+  table_body_vlines_color <- dt_options_get_value(data = data, option = "table_body_vlines_color")
+  table_border_bottom_color <- dt_options_get_value(data, option = "table_border_bottom_color")
 
 
   headings_vars <- boxh %>% dplyr::filter(type == "default") %>% dplyr::pull(var)
@@ -1126,8 +1126,8 @@ create_footnotes_component_rtf <- function(data) {
   # # Convert common HTML tags/entities to plaintext
   # separator <-
   #   separator %>%
-  #   gt:::tidy_gsub("<br\\s*?(/|)>", "\n") %>%
-  #   gt:::tidy_gsub("&nbsp;", " ")
+  #   tidy_gsub("<br\\s*?(/|)>", "\n") %>%
+  #   tidy_gsub("&nbsp;", " ")
 
   # row_list_footnotes <- list()
   #
