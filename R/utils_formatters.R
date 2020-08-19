@@ -329,27 +329,39 @@ context_missing_text <- function(missing_text,
 
   missing_text <- process_text(missing_text, context)
 
-  switch(context,
-         html =
-           {
-             if (!inherits(missing_text, "AsIs") && missing_text == "---") {
-               "&mdash;"
-             } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
-               "&ndash;"
-             } else {
-               missing_text
-             }
-           },
-         latex =
-           {
-             if (!inherits(missing_text, "AsIs") && missing_text == "---") {
-               "\u2014"
-             } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
-               "\u2013"
-             } else {
-               missing_text
-             }
-           })
+  switch(
+    context,
+    html =
+      {
+        if (!inherits(missing_text, "AsIs") && missing_text == "---") {
+          "&mdash;"
+        } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
+          "&ndash;"
+        } else {
+          missing_text
+        }
+      },
+    latex =
+      {
+        if (!inherits(missing_text, "AsIs") && missing_text == "---") {
+          "\u2014"
+        } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
+          "\u2013"
+        } else {
+          missing_text
+        }
+      },
+    rtf =
+      {
+        if (!inherits(missing_text, "AsIs") && missing_text == "---") {
+          "\u2014"
+        } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
+          "\u2013"
+        } else {
+          missing_text
+        }
+      }
+  )
 }
 context_dash_mark <- context_missing_text
 
