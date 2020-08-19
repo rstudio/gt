@@ -521,7 +521,7 @@ append_text_list <- function(x, value, after = length(x)) {
 
   value_class <- class(value)
 
-  text_list_appended <- append(x, value = value, after = after)
+  text_list_appended <- append(x, values = value, after = after)
 
   class(text_list_appended[[after + 1]]) <- value_class
 
