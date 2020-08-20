@@ -242,6 +242,33 @@ process_text <- function(text,
 
       return(text)
     }
+  } else if (context == "rtf") {
+
+    # Text processing for LaTeX output
+
+    if (inherits(text, "from_markdown")) {
+
+      text <-
+        text %>%
+        as.character() %>%
+        vapply(commonmark::markdown_html, character(1)) %>%
+        stringr::str_replace_all(c("^<p>" = "", "</p>\n$" = "")) %>%
+        stringr::str_replace_all("<br />\\n|<br />", "<br>")
+
+      return(text)
+
+    } else if (is_html(text)) {
+
+      text <- text %>% as.character()
+
+      return(text)
+
+    } else {
+
+      text <- text
+
+      return(text)
+    }
   } else {
 
     # Text processing in the default case
