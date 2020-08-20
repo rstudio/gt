@@ -436,6 +436,7 @@ context_exp_marks <- function(context) {
   switch(context,
          html = c(" &times; 10<sup class='gt_super'>", "</sup>"),
          latex = c(" \\times 10^{", "}"),
+         rtf = c(" \u00D7 10<sup>", "</sup>"),
          c(" x 10(", ")"))
 }
 
