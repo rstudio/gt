@@ -543,7 +543,31 @@ rtf_text <- function(text,
       text,
       FUN = function(x) {
         if (!inherits(x, "rtf_text")) {
+
           x <- rtf_escape(x)
+
+          if (grepl("<sup>.*?</sup>", x)) {
+            x <-
+              x %>%
+              gsub("<sup>", "{\\super ", ., fixed = TRUE) %>%
+              gsub("</sup>", "}", ., fixed = TRUE)
+          }
+
+          if (grepl("<sub>.*?</sub>", x)) {
+            x <-
+              x %>%
+              gsub("<sub>", "{\\sub ", ., fixed = TRUE) %>%
+              gsub("</sub>", "}", ., fixed = TRUE)
+          }
+
+          x <-
+            x %>%
+            tidy_gsub("<strong>", "\\b ", fixed = TRUE) %>%
+            tidy_gsub("</strong>", "\\b0 ", fixed = TRUE) %>%
+            tidy_gsub("<em>", "\\i ", fixed = TRUE) %>%
+            tidy_gsub("</em>", "\\i0 ", fixed = TRUE) %>%
+            tidy_gsub("<br>", "\\line ", fixed = TRUE) %>%
+            tidy_gsub("<.+?>|\n", "")
 
           if (!is.null(separate_with_newlines) && separate_with_newlines) {
             x <- paste0(x, new_line())
