@@ -717,6 +717,11 @@ standard_width_twips <- 9468L
 #
 create_heading_component_rtf <- function(data) {
 
+  if (!dt_heading_has_title(data = data) &&
+      !dt_heading_has_subtitle(data = data)) {
+    return(list())
+  }
+
   # Get table components and metadata using the `data`
   heading <- dt_heading_get(data)
   footnotes_tbl <- dt_footnotes_get(data)
@@ -739,12 +744,6 @@ create_heading_component_rtf <- function(data) {
   } else {
     footnote_subtitle_marks <- ""
   }
-
-  if (footnote_title_marks == "" && footnote_subtitle_marks == "") {
-    row_list_header <- list()
-    return(row_list_header)
-  }
-
 
   list(
     rtf_tbl_row(
