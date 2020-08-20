@@ -1511,6 +1511,20 @@ fmt_missing <- function(data,
         # value, if it exists, should be inherited)
         ifelse(is.na(x), missing_text, NA_character_)
       },
+      rtf = function(x) {
+        missing_text <-
+          context_missing_text(
+            missing_text = missing_text,
+            context = "rtf"
+          )
+
+        # Any values of `x` that are `NA` get
+        # `missing_text` as output; any values that
+        # are not missing get `NA` as their output
+        # (meaning, the existing output for that
+        # value, if it exists, should be inherited)
+        ifelse(is.na(x), missing_text, NA_character_)
+      },
       default = function(x) {
 
         # Any values of `x` that are `NA` get
