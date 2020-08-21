@@ -879,8 +879,8 @@ create_columns_component_rtf <- function(data) {
           rtf_text(headings_labels[x], font_size = 10),
           h_align = col_alignment[x],
           borders = list(
-            rtf_border("top", color = column_labels_border_top_color),
-            rtf_border("bottom", color = column_labels_border_bottom_color),
+            rtf_border("top", color = column_labels_border_top_color, width = 40),
+            rtf_border("bottom", color = column_labels_border_bottom_color, width = 40),
             rtf_border("left", color = column_labels_vlines_color),
             rtf_border("right", color = column_labels_vlines_color)
           )
@@ -924,7 +924,6 @@ create_body_component_rtf <- function(data) {
   table_body_vlines_color <- dt_options_get_value(data = data, option = "table_body_vlines_color")
   table_border_bottom_color <- dt_options_get_value(data, option = "table_border_bottom_color")
 
-
   headings_vars <- boxh %>% dplyr::filter(type == "default") %>% dplyr::pull(var)
   row_groups_present <- nrow(groups_rows) > 0
   row_group_rows <- groups_rows$row
@@ -964,8 +963,8 @@ create_body_component_rtf <- function(data) {
                 font_size = 10,
                 h_align = "left",
                 borders = list(
-                  rtf_border("top", color = row_group_border_top_color),
-                  rtf_border("bottom", color = row_group_border_bottom_color),
+                  rtf_border("top", color = row_group_border_top_color, width = 40),
+                  rtf_border("bottom", color = row_group_border_bottom_color, width = 40),
                   rtf_border("left", color = row_group_border_left_color),
                   rtf_border("right", color = row_group_border_right_color)
                 )
