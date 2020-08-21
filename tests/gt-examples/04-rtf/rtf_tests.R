@@ -1,4 +1,5 @@
 library(gt)
+library(tidyverse)
 
 # Create a display table based on `iris`
 iris_tbl <-
@@ -224,3 +225,66 @@ sh_caption_tbl <-
 
 sh_caption_tbl %>% gtsave("tests/gt-examples/rtf_output/sh_caption.rtf")
 
+
+# Create a table with footnotes in various cell types
+tbl <-
+  dplyr::tribble(
+    ~date,        ~rowname,  ~value_1,  ~value_2,
+    "2018-02-10", "1",       20.4,      361.1,
+    "2018-02-10", "2",       10.9,      743.3,
+    "2018-02-10", "3",       34.6,      344.7,
+    "2018-02-10", "4",        8.3,      342.3,
+    "2018-02-11", "5",       28.3,      234.9,
+    "2018-02-11", "6",       75.5,      190.9,
+    "2018-02-11", "7",       63.1,        2.3,
+    "2018-02-11", "8",       25.8,      184.3,
+    "2018-02-11", "9",        5.2,      197.2,
+    "2018-02-11", "10",      55.3,      284.6
+  )
+
+# Create a display table
+footnotes_tbl <-
+  gt(data = tbl, groupname_col = "date") %>%
+  tab_header(title = "The Table Title", subtitle = "The subtitle.") %>%
+  tab_spanner(
+    label = "values",
+    columns = starts_with("value")
+  ) %>%
+  tab_footnote(
+    footnote = "This is an even smaller number.",
+    locations = cells_body(columns = vars(value_1), rows = 9)
+  ) %>%
+  tab_footnote(
+    footnote = "This is a small number.",
+    locations = cells_body(columns = vars(value_1), rows = 4)
+  ) %>%
+  tab_footnote(
+    footnote = "First data cell.",
+    locations = cells_body(columns = "value_1", rows = 1)
+  ) %>%
+  tab_footnote(
+    footnote = "The first row group",
+    locations = cells_row_groups(groups = ends_with("10"))
+  ) %>%
+  tab_footnote(
+    footnote = "Two sets of values",
+    locations = cells_column_spanners(spanners = starts_with("val"))
+  ) %>%
+  tab_footnote(
+    footnote = "A stub cell.",
+    locations = cells_stub(rows = 1)
+  ) %>%
+  tab_footnote(
+    footnote = md("`value_1` is the first column of values."),
+    locations = cells_column_labels(columns = vars(value_1))
+  ) %>%
+  tab_footnote(
+    footnote = md("The `title` can get a footnote."),
+    locations = cells_title(groups = "title")
+  ) %>%
+  tab_footnote(
+    footnote = md("The `subtitle` can likewise get a footnote."),
+    locations = cells_title(groups = "subtitle")
+  )
+
+footnotes_tbl %>% gtsave("tests/gt-examples/rtf_output/footnotes.rtf")
