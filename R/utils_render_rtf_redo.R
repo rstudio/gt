@@ -970,7 +970,7 @@ create_body_component_rtf <- function(data) {
                 )
               )
             ),
-            .height = 300
+            .height = 0
           )
         )
     }
@@ -1013,18 +1013,20 @@ create_body_component_rtf <- function(data) {
           cell_list,
           borders = list(
             rtf_border(direction = "top", color = column_labels_border_bottom_color)
-          )
+          ),
+          .height = 0
         )
     } else if (i == n_rows) {
       body_row <-
         rtf_tbl_row(
           cell_list,
           borders = list(
-            rtf_border(direction = "bottom", color = table_border_bottom_color)
-          )
+            rtf_border(direction = "bottom", color = table_border_bottom_color, width = 40)
+          ),
+          .height = 0
         )
     } else {
-      body_row <- rtf_tbl_row(cell_list)
+      body_row <- rtf_tbl_row(cell_list, .height = 0)
     }
 
     row_list_body <- c(row_list_body, body_row)
@@ -1102,7 +1104,8 @@ create_body_component_rtf <- function(data) {
                 cell_list,
                 borders = list(
                   rtf_border(direction = "bottom", color = table_border_bottom_color)
-                )
+                ),
+                .height = 0
               )
             )
         }
@@ -1182,7 +1185,7 @@ create_footnotes_component_rtf <- function(data) {
       )
   }
 
-  rtf_tbl_row(list(rtf_tbl_cell(rtf_text(text_list_footnotes))))
+  rtf_tbl_row(list(rtf_tbl_cell(rtf_text(text_list_footnotes))), .height = 0)
 }
 
 #
@@ -1214,5 +1217,5 @@ create_source_notes_component_rtf <- function(data) {
       )
   }
 
-  rtf_tbl_row(list(rtf_tbl_cell(rtf_text(text_list))))
+  rtf_tbl_row(list(rtf_tbl_cell(rtf_text(text_list))), .height = 0)
 }
