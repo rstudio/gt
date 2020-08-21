@@ -36,7 +36,7 @@ pressure_tbl <-
   fmt_scientific(
     columns = vars(pressure),
     decimals = 2
-  ) # Fix the scientific notation superscripts for RTF
+  )
 
 pressure_tbl %>% gtsave("tests/gt-examples/rtf_output/pressure.rtf")
 
@@ -47,7 +47,7 @@ sleep_tbl <-
   tab_footnote(
     footnote = "This is a footnote",
     locations = cells_body(columns = 1, rows = c(2, 3, 4))
-  ) # Fix the scientific notation superscripts for RTF
+  )
 
 sleep_tbl %>% gtsave("tests/gt-examples/rtf_output/sleep.rtf")
 
@@ -55,16 +55,17 @@ sleep_tbl %>% gtsave("tests/gt-examples/rtf_output/sleep.rtf")
 airquality_tbl <-
   gt(data = airquality) %>%
   cols_move_to_start(columns = vars(Month, Day)) %>%
-  cols_label(Solar.R = html("Solar<br>Radiation")) %>% # Need to substitute <br> for RTF newline
+  cols_label(Solar.R = md("Solar  \nRadiation")) %>%
   fmt_number(
     columns = vars(Wind),
     decimals = 2
   ) %>%
+  cols_label(Month = md("**Month**")) %>%
   tab_spanner(
     label = "Measurement Period",
     columns = vars(Month, Day)
   ) %>%
-  fmt_missing(columns = vars(Ozone, Solar.R, Wind, Temp)) # Need to use an em dash for missing values
+  fmt_missing(columns = vars(Ozone, Solar.R, Wind, Temp))
 
 airquality_tbl %>% gtsave("tests/gt-examples/rtf_output/airquality.rtf")
 
@@ -92,8 +93,6 @@ sp500_tbl <-
   )
 
 sp500_tbl %>% gtsave("tests/gt-examples/rtf_output/sp500.rtf")
-
-
 
 # Create a table that creates a stub and
 # row groups based on magic column names
@@ -144,3 +143,84 @@ summary_tbl <-
   )
 
 summary_tbl %>% gtsave("tests/gt-examples/rtf_output/summary.rtf")
+
+# Create a table with values and uncertainties
+tbl <-
+  dplyr::tribble(
+    ~value_1, ~uncertainty, ~value_2, ~uncertainty_2,
+    0.352,    0.10,         0.32,     NA_real_,
+    0.983,    0.13,         NA_real_, NA_real_,
+    0.639,    NA_real_,     0.21,     0.10,
+    NA_real_, 0.17,         0.74,     0.15
+  )
+
+# Create a display table with uncertainties
+uncert_tbl <-
+  gt(data = tbl) %>%
+  cols_merge_uncert(
+    col_val = vars(value_1),
+    col_uncert = vars(uncertainty)
+  ) %>%
+  cols_merge_uncert(
+    col_val = vars(value_2),
+    col_uncert = vars(uncertainty_2)
+  ) %>%
+  fmt_number(
+    columns = vars(value_1, value_2),
+    decimals = 2
+  ) %>%
+  fmt_missing(columns = vars(value_1, value_2))
+
+uncert_tbl %>% gtsave("tests/gt-examples/rtf_output/uncert.rtf")
+
+# Create a table where rows are formatted conditionally
+conditional_tbl <-
+  readr::read_csv(
+    system.file("extdata", "sp500.csv", package = "gt"),
+    col_types = "cddddd"
+  ) %>%
+  gt() %>%
+  fmt_number(
+    columns = vars(Open),
+    rows = Open > 1900,
+    decimals = 3,
+    scale_by = 1/1000,
+    pattern = "{x}K"
+  ) %>%
+  fmt_number(
+    columns = vars(Close),
+    rows = High < 1940 & Low > 1915,
+    decimals = 3
+  ) %>%
+  fmt_currency(
+    columns = vars(High, Low, Close),
+    rows = Date > "2016-02-20",
+    currency = "USD"
+  )
+
+conditional_tbl %>% gtsave("tests/gt-examples/rtf_output/conditional.rtf")
+
+# Create a table that has a stubhead label
+tbl <-
+  dplyr::tribble(
+    ~groups, ~rowname, ~value_1, ~value_2,
+    "A",        "1",      361.1,    260.1,
+    "A",        "2",      184.3,    84.4,
+    "A",        "3",      342.3,    126.3,
+    "A",        "4",      234.9,    37.1,
+    "B",        "1",      190.9,    832.5,
+    "B",        "2",      743.3,    281.2,
+    "B",        "3",      252.3,    732.5,
+    "B",        "4",      344.7,    281.2,
+    "C",        "1",      197.2,    818.0,
+    "C",        "2",      284.6,    394.4
+  )
+
+# Create a display table
+sh_caption_tbl <-
+  tbl %>%
+  gt(groupname_col = "groups") %>%
+  tab_stubhead(label = "groups")
+
+sh_caption_tbl %>% gtsave("tests/gt-examples/rtf_output/sh_caption.rtf")
+
