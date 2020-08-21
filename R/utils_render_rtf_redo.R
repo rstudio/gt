@@ -962,7 +962,15 @@ create_body_component_rtf <- function(data) {
   body <- body %>% dplyr::select(dplyr::all_of(headings_vars))
 
   if (stub_available) {
-    body <- dplyr::bind_cols(stub_df[, "rowname"], body)
+
+    stub_var <- dt_boxhead_get_var_stub(data = data)
+
+    body <-
+      dplyr::bind_cols(
+        dt_body_get(data) %>% dplyr::select(dplyr::one_of(stub_var)),
+        body
+      )
+
     col_alignment <- c("left", col_alignment)
   }
 
