@@ -244,7 +244,8 @@ rtf_table <- function(rows) {
 rtf_tbl_row <- function(cells,
                         .widths = NULL,
                         .height = NULL,
-                        borders = NULL) {
+                        borders = NULL,
+                        repeat_header = FALSE) {
 
   cell_list <- cells
 
@@ -324,7 +325,8 @@ rtf_tbl_row <- function(cells,
   row_settings <-
     paste0(
       rtf_key("trowd"),
-      rtf_key("trrh", height)
+      rtf_key("trrh", height),
+      if (repeat_header) rtf_key("trhdr")
     )
 
   # Combine all row components
@@ -781,10 +783,12 @@ create_heading_component_rtf <- function(data) {
             rtf_text(footnote_subtitle_marks, italic = TRUE, super_sub = "super", font_size = 8)
           ),
           h_align = "center",
-          borders = if (table_border_top_include) list(rtf_border("top", color = table_border_top_color)) else NULL,
+          borders = if (table_border_top_include) list(rtf_border("top", color = table_border_top_color, width = 40)) else NULL,
           font_color = table_font_color
         )
-      )
+      ),
+      .height = 0,
+      repeat_header = TRUE
     )
   )
 }
@@ -860,7 +864,7 @@ create_columns_component_rtf <- function(data) {
             h_align = "center",
             h_merge = merge_keys[x],
             borders = list(
-              rtf_border("top", color = column_labels_border_top_color),
+              rtf_border("top", color = column_labels_border_top_color, width = 40),
               rtf_border("bottom", color = column_labels_border_bottom_color),
               rtf_border("left", color = column_labels_vlines_color),
               rtf_border("right", color = column_labels_vlines_color)
@@ -889,9 +893,14 @@ create_columns_component_rtf <- function(data) {
     )
 
   if (isTRUE(spanners_present)) {
-    row_list_column_labels <- list(rtf_tbl_row(spanners_list), rtf_tbl_row(cell_list))
+    row_list_column_labels <-
+      list(
+        rtf_tbl_row(spanners_list, .height = 0, repeat_header = TRUE),
+        rtf_tbl_row(cell_list, .height = 0, repeat_header = TRUE)
+      )
   } else {
-    row_list_column_labels <- list(rtf_tbl_row(cell_list))
+    row_list_column_labels <-
+      list(rtf_tbl_row(cell_list, .height = 0, repeat_header = TRUE))
   }
 
   row_list_column_labels
