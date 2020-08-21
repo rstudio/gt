@@ -472,7 +472,11 @@ rtf_tbl_cell <- function(...,
       bold = bold,
       italic = italic,
       super_sub = super_sub
-    ) %>% unlist() %>% unname()
+    ) %>%
+    unlist() %>%
+    unname() %>%
+    tidy_gsub("\\\\super", "\\super", fixed = TRUE) %>%
+    tidy_gsub("\\\\i", "\\i", fixed = TRUE)
 
   # Combine all cell settings
   cell_settings <-
@@ -548,27 +552,35 @@ rtf_text <- function(text,
 
           x <- rtf_escape(x)
 
-          if (grepl("<sup>.*?</sup>", x)) {
-            x <-
-              x %>%
-              gsub("<sup>", "{\\super ", ., fixed = TRUE) %>%
-              gsub("</sup>", "}", ., fixed = TRUE)
+          if (grepl("<sup.*?>.*?</sup>", x)) {
+
+            if (grepl("<sup class=\"gt_footnote_marks\">.*?</sup>", x)) {
+              x <-
+                x %>%
+                tidy_gsub("<sup.*?>", "{\\\\super \\\\i ") %>%
+                tidy_gsub("</sup>", "}", fixed = TRUE)
+            } else {
+              x <-
+                x %>%
+                tidy_gsub("<sup.*?>", "{\\\\super ") %>%
+                tidy_gsub("</sup>", "}", fixed = TRUE)
+            }
           }
 
-          if (grepl("<sub>.*?</sub>", x)) {
+          if (grepl("<sub.*?>.*?</sub>", x)) {
             x <-
               x %>%
-              gsub("<sub>", "{\\sub ", ., fixed = TRUE) %>%
-              gsub("</sub>", "}", ., fixed = TRUE)
+              tidy_gsub("<sub.*?>", "{\\\\sub ") %>%
+              tidy_gsub("</sub>", "}", fixed = TRUE)
           }
 
           x <-
             x %>%
-            tidy_gsub("<strong>", "\\b ", fixed = TRUE) %>%
+            tidy_gsub("<strong.*?>", "\\\\b ") %>%
             tidy_gsub("</strong>", "\\b0 ", fixed = TRUE) %>%
-            tidy_gsub("<em>", "\\i ", fixed = TRUE) %>%
+            tidy_gsub("<em.*?>", "\\\\i ") %>%
             tidy_gsub("</em>", "\\i0 ", fixed = TRUE) %>%
-            tidy_gsub("<br>", "\\line ", fixed = TRUE) %>%
+            tidy_gsub("<br.*?>", "\\\\line ") %>%
             tidy_gsub("<.+?>|\n", "")
 
           if (!is.null(separate_with_newlines) && separate_with_newlines) {
@@ -759,14 +771,14 @@ create_heading_component_rtf <- function(data) {
 
   if ("title" %in% footnotes_tbl$locname) {
     footnote_title_marks <- footnotes_tbl %>% coalesce_marks(locname = "title")
-    footnote_title_marks <- footnote_mark_to_rtf(footnote_title_marks$fs_id_c)
+    footnote_title_marks <- footnote_title_marks$fs_id_c
   } else {
     footnote_title_marks <- ""
   }
 
   if ("subtitle" %in% footnotes_tbl$locname) {
     footnote_subtitle_marks <- footnotes_tbl %>% coalesce_marks(locname = "subtitle")
-    footnote_subtitle_marks <- footnote_mark_to_rtf(footnote_subtitle_marks$fs_id_c)
+    footnote_subtitle_marks <- footnote_subtitle_marks$fs_id_c
   } else {
     footnote_subtitle_marks <- ""
   }
@@ -776,10 +788,10 @@ create_heading_component_rtf <- function(data) {
       list(
         rtf_tbl_cell(
           text_list(
-            rtf_text(remove_html(heading$title), font_size = 14),
+            rtf_text(heading$title, font_size = 14),
             rtf_text(footnote_title_marks, italic = TRUE, super_sub = "super", font_size = 14),
             new_line(),
-            rtf_text(remove_html(heading$subtitle), font_size = 8),
+            rtf_text(heading$subtitle, font_size = 8),
             rtf_text(footnote_subtitle_marks, italic = TRUE, super_sub = "super", font_size = 8)
           ),
           h_align = "center",
@@ -962,6 +974,7 @@ create_body_component_rtf <- function(data) {
 
     # Add group rows where necessary
     if (row_groups_present && i %in% row_group_rows) {
+
       row_list_body <-
         c(
           row_list_body,
@@ -988,52 +1001,37 @@ create_body_component_rtf <- function(data) {
       lapply(
         seq_len(n_cols), FUN = function(x) {
 
-          if (grepl("{\\super \\i ", body[[i, x]], fixed = TRUE)) {
-
-            text <- gsub("\\{\\\\super \\\\i.*",  "", body[[i, x]])
-            footnotes <- gsub(".*?\\{\\\\super \\\\i |\\}$",  "", body[[i, x]])
-            rtf_tbl_cell(
-              rtf_text(text, font_size = 10),
-              rtf_text(footnotes, font_size = 10, italic = TRUE, super_sub = "super"),
-              h_align = col_alignment[x],
-              borders = list(
-                rtf_border("bottom", color = table_body_hlines_color, width = 10),
-                rtf_border("left", color = table_body_vlines_color, width = 10),
-                rtf_border("right", color = table_body_vlines_color, width = 10)
-              )
+          rtf_tbl_cell(
+            rtf_text(body[[i, x]], font_size = 10),
+            h_align = col_alignment[x],
+            borders = list(
+              rtf_border("bottom", color = table_body_hlines_color, width = 10),
+              rtf_border("left", color = table_body_vlines_color, width = 10),
+              rtf_border("right", color = table_body_vlines_color, width = 10)
             )
-          } else {
-            rtf_tbl_cell(
-              rtf_text(body[[i, x]], font_size = 10),
-              h_align = col_alignment[x],
-              borders = list(
-                rtf_border("bottom", color = table_body_hlines_color, width = 10),
-                rtf_border("left", color = table_body_vlines_color, width = 10),
-                rtf_border("right", color = table_body_vlines_color, width = 10)
-              )
-            )
-          }
+          )
         }
       )
 
     if (i == 1 && row_groups_present && !(i %in% row_group_rows)) {
+
       body_row <-
         rtf_tbl_row(
           cell_list,
           borders = list(
-            rtf_border(direction = "top", color = column_labels_border_bottom_color)
+            rtf_border(direction = "top", color = table_body_hlines_color)
           ),
           .height = 0
         )
-    } else if (i == n_rows) {
-      body_row <-
-        rtf_tbl_row(
-          cell_list,
-          borders = list(
-            rtf_border(direction = "bottom", color = table_border_bottom_color, width = 40)
-          ),
-          .height = 0
-        )
+    # } else if (i == n_rows) {
+    #   body_row <-
+    #     rtf_tbl_row(
+    #       cell_list,
+    #       borders = list(
+    #         rtf_border(direction = "bottom", color = table_body_hlines_color, width = 40)
+    #       ),
+    #       .height = 0
+    #     )
     } else {
       body_row <- rtf_tbl_row(cell_list, .height = 0)
     }
@@ -1078,31 +1076,16 @@ create_body_component_rtf <- function(data) {
             lapply(
               seq_len(n_cols), FUN = function(x) {
 
-                if (grepl("{\\super \\i ", summary_df[[j, x]], fixed = TRUE)) {
-
-                  text <- gsub("\\{\\\\super \\\\i.*",  "", summary_df[[j, x]])
-                  footnotes <- gsub(".*?\\{\\\\super \\\\i |\\}$",  "", summary_df[[j, x]])
-                  rtf_tbl_cell(
-                    rtf_text(text, font_size = 10),
-                    rtf_text(footnotes, font_size = 10, italic = TRUE, super_sub = "super"),
-                    h_align = col_alignment[x],
-                    borders = list(
-                      rtf_border("bottom", color = table_body_hlines_color, width = 10),
-                      rtf_border("left", color = table_body_vlines_color, width = 10),
-                      rtf_border("right", color = table_body_vlines_color, width = 10)
-                    )
+                rtf_tbl_cell(
+                  rtf_text(summary_df[[j, x]], font_size = 10),
+                  h_align = col_alignment[x],
+                  borders = list(
+                    rtf_border("top", color = table_body_hlines_color, width = 10),
+                    rtf_border("bottom", color = table_body_hlines_color, width = 10),
+                    rtf_border("left", color = table_body_vlines_color, width = 10),
+                    rtf_border("right", color = table_body_vlines_color, width = 10)
                   )
-                } else {
-                  rtf_tbl_cell(
-                    rtf_text(summary_df[[j, x]], font_size = 10),
-                    h_align = col_alignment[x],
-                    borders = list(
-                      rtf_border("bottom", color = table_body_hlines_color, width = 10),
-                      rtf_border("left", color = table_body_vlines_color, width = 10),
-                      rtf_border("right", color = table_body_vlines_color, width = 10)
-                    )
-                  )
-                }
+                )
               }
             )
 
@@ -1112,7 +1095,8 @@ create_body_component_rtf <- function(data) {
               rtf_tbl_row(
                 cell_list,
                 borders = list(
-                  rtf_border(direction = "bottom", color = table_border_bottom_color)
+                  rtf_border("top", color = table_body_hlines_color, width = 10),
+                  rtf_border("bottom", color = table_body_hlines_color, width = 10)
                 ),
                 .height = 0
               )
@@ -1147,7 +1131,7 @@ create_footnotes_component_rtf <- function(data) {
 
   n_footnotes <- nrow(footnotes_tbl)
 
-  footnote_text <- remove_html(footnotes_tbl$footnotes)
+  footnote_text <- footnotes_tbl$footnotes
   footnote_mark <- footnotes_tbl[["fs_id"]]
 
   # # Get the separator option from `opts_df`
