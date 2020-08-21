@@ -372,25 +372,36 @@ context_dash_mark <- context_missing_text
 context_plusminus_mark <- function(plusminus_mark,
                                    context) {
 
-  switch(context,
-         html =
-           {
-             if (!inherits(plusminus_mark, "AsIs") &&
-                 plusminus_mark == " +/- ") {
-               " &plusmn; "
-             } else {
-               plusminus_mark
-             }
-           },
-         latex =
-         {
-           if (!inherits(plusminus_mark, "AsIs") &&
-               plusminus_mark == " +/- ") {
-             " \u00B1 "
-           } else {
-             plusminus_mark
-           }
-         })
+  switch(
+    context,
+    html =
+      {
+        if (!inherits(plusminus_mark, "AsIs") &&
+            plusminus_mark == " +/- ") {
+          " &plusmn; "
+        } else {
+          plusminus_mark
+        }
+      },
+    latex =
+      {
+        if (!inherits(plusminus_mark, "AsIs") &&
+            plusminus_mark == " +/- ") {
+          " \u00B1 "
+        } else {
+          plusminus_mark
+        }
+      },
+    rtf =
+      {
+        if (!inherits(plusminus_mark, "AsIs") &&
+            plusminus_mark == " +/- ") {
+          " \u00B1 "
+        } else {
+          plusminus_mark
+        }
+      }
+  )
 }
 
 #' Obtain the contextually correct minus mark
