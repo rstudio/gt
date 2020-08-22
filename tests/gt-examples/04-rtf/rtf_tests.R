@@ -288,3 +288,65 @@ footnotes_tbl <-
   )
 
 footnotes_tbl %>% gtsave("tests/gt-examples/rtf_output/footnotes.rtf")
+
+# Create a table with spanner column labels
+tbl <-
+  dplyr::tribble(
+    ~v_1, ~v_2, ~v_3, ~v_4, ~v_5,
+    20.4, 36.1, 34.2, 21.6, 23.1,
+    25.8, 14.3, 13.7, 12.9, 75.9,
+    16.3, 34.3, 15.1, 93.2, 12.1
+  )
+
+# Create a display table
+spanner_tbl <-
+  gt(data = tbl) %>%
+  tab_spanner(
+    label = "v_1_2",
+    columns =  c("v_1", "v_2")
+  ) %>%
+  tab_spanner(
+    label = "v_4_5",
+    columns = c("v_4", "v_5")
+  ) %>%
+  cols_move_to_start(columns = "v_3")
+
+spanner_tbl %>% gtsave("tests/gt-examples/rtf_output/spanner.rtf")
+
+# Create a display table where individual table cells are styled
+tbl <-
+  dplyr::tribble(
+    ~rowname, ~value,  ~value_2,
+    "1",      361.1,   260.1,
+    "2",      184.3,   84.4,
+    "3",      342.3,   126.3,
+    "4",      234.9,   37.1,
+    "1",      190.9,   832.5,
+    "2",      743.3,   281.2,
+    "3",      252.3,   732.5,
+    "4",      344.7,   281.2
+  )
+
+# Create a display table
+cell_styles_tbl <-
+  gt(tbl) %>%
+  tab_style(
+    style = cell_text(size = px(28)),
+    locations = cells_column_labels(
+      columns = c("value", "value_2"))
+  ) %>%
+  tab_style(
+    style = list(
+      cell_fill(color = "orange"),
+      cell_text(color = "white")
+    ),
+    locations = cells_body(
+      columns = vars(value, value_2),
+      rows = 1
+    )
+  )
+
+cell_styles_tbl %>% gtsave("tests/gt-examples/rtf_output/cell_styles.rtf")
+
+
+
