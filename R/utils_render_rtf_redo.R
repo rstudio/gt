@@ -1031,15 +1031,6 @@ create_body_component_rtf <- function(data) {
           ),
           .height = 0
         )
-    # } else if (i == n_rows) {
-    #   body_row <-
-    #     rtf_tbl_row(
-    #       cell_list,
-    #       borders = list(
-    #         rtf_border(direction = "bottom", color = table_body_hlines_color, width = 40)
-    #       ),
-    #       .height = 0
-    #     )
     } else {
       body_row <- rtf_tbl_row(cell_list, .height = 0)
     }
@@ -1053,12 +1044,10 @@ create_body_component_rtf <- function(data) {
     if (stub_available && summaries_present &&
         i %in% groups_rows_df$row_end) {
 
-
       group <-
         groups_rows_df %>%
         dplyr::filter(row_end == i) %>%
         dplyr::pull(group)
-
 
       if (group %in% names(list_of_summaries$summary_df_display_list)) {
 
@@ -1067,16 +1056,6 @@ create_body_component_rtf <- function(data) {
             which(names(list_of_summaries$summary_df_display_list) == group)]] %>%
           as.data.frame(stringsAsFactors = FALSE) %>%
           dplyr::select(-groups)
-
-        # body_content_summary <-
-        #   as.vector(t(summary_df)) #%>%
-        #   #tidy_gsub("\u2014", "-")
-
-        # row_splits_summary <-
-        #   split_body_content(
-        #     body_content = body_content_summary,
-        #     n_cols = n_cols
-        #   )
 
         for (j in seq_len(nrow(summary_df))) {
 
@@ -1088,7 +1067,12 @@ create_body_component_rtf <- function(data) {
                   rtf_text(summary_df[[j, x]], font_size = 10),
                   h_align = col_alignment[x],
                   borders = list(
-                    rtf_border("top", color = table_body_hlines_color, width = 10),
+                    rtf_border(
+                      "top",
+                      style = ifelse(j == 1, "db", "s"),
+                      color = table_body_hlines_color,
+                      width = ifelse(j == 1, 20, 10)
+                    ),
                     rtf_border("bottom", color = table_body_hlines_color, width = 10),
                     rtf_border("left", color = table_body_vlines_color, width = 10),
                     rtf_border("right", color = table_body_vlines_color, width = 10)
@@ -1102,15 +1086,68 @@ create_body_component_rtf <- function(data) {
               row_list_body,
               rtf_tbl_row(
                 cell_list,
-                borders = list(
-                  rtf_border("top", color = table_body_hlines_color, width = 10),
-                  rtf_border("bottom", color = table_body_hlines_color, width = 10)
-                ),
+                # borders = list(
+                #   rtf_border("top", color = table_body_hlines_color, width = 10),
+                #   rtf_border("bottom", color = table_body_hlines_color, width = 10)
+                # ),
                 .height = 0
               )
             )
         }
       }
+    }
+  }
+
+  #
+  # Add grand summary rows
+  #
+
+  if (summaries_present &&
+      grand_summary_col %in% names(list_of_summaries$summary_df_display_list)) {
+
+    summary_df <-
+      list_of_summaries$summary_df_display_list[["::GRAND_SUMMARY"]] %>%
+      as.data.frame(stringsAsFactors = FALSE) %>%
+      dplyr::select(-groups)
+
+    for (j in seq_len(nrow(summary_df))) {
+
+      cell_list <-
+        lapply(
+          seq_len(n_cols), FUN = function(x) {
+
+            rtf_tbl_cell(
+              rtf_text(summary_df[[j, x]], font_size = 10),
+              h_align = col_alignment[x],
+              borders = list(
+                rtf_border(
+                  "bottom",
+                  color = table_body_hlines_color,
+                  width = ifelse(j == nrow(summary_df), 50, 10)
+                  ),
+                rtf_border("left", color = table_body_vlines_color, width = 10),
+                rtf_border("right", color = table_body_vlines_color, width = 10)
+              )
+            )
+          }
+        )
+
+      row_list_body <-
+        c(
+          row_list_body,
+          rtf_tbl_row(
+            cell_list,
+            .height = 0,
+            borders = list(
+              rtf_border(
+                "top",
+                style = ifelse(j == 1, "db", "s"),
+                color = table_body_hlines_color,
+                width = ifelse(j == 1, 50, 10)
+              )
+            ),
+          )
+        )
     }
   }
 
