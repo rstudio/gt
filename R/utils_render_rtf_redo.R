@@ -1084,14 +1084,7 @@ create_body_component_rtf <- function(data) {
           row_list_body <-
             c(
               row_list_body,
-              rtf_tbl_row(
-                cell_list,
-                # borders = list(
-                #   rtf_border("top", color = table_body_hlines_color, width = 10),
-                #   rtf_border("bottom", color = table_body_hlines_color, width = 10)
-                # ),
-                .height = 0
-              )
+              rtf_tbl_row(cell_list, .height = 0)
             )
         }
       }
