@@ -95,9 +95,6 @@ sp500_tbl <-
 
 sp500_tbl %>% gtsave("tests/gt-examples/rtf_output/sp500.rtf")
 
-# Create a table that creates a stub and
-# row groups based on magic column names
-
 # Input table
 tbl <-
   dplyr::tribble(
