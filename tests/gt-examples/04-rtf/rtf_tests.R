@@ -11,12 +11,13 @@ iris_tbl <-
     decimals = 1
   ) %>%
   tab_header(
-    title = md("The **iris** dataset"),
+    title = md("The **iris** dataset <strong>and</strong> stuff"),
     subtitle = md("[All about *Iris setosa*, *versicolor*, and *virginica*]")
   ) %>%
   tab_source_note(
     source_note = md("The data were collected by *Anderson* (1935).")
-  )
+  ) %>%
+  tab_footnote("Hello!", cells_title("title"))
 
 iris_tbl %>% gtsave("tests/gt-examples/rtf_output/iris.rtf")
 

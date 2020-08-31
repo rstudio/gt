@@ -248,16 +248,9 @@ process_text <- function(text,
 
     if (inherits(text, "from_markdown")) {
 
-      text <-
-        text %>%
-        as.character() %>%
-        vapply(commonmark::markdown_html, character(1)) %>%
-        stringr::str_replace_all(c("^<p>" = "", "</p>\n$" = "")) %>%
-        stringr::str_replace_all("<br />\\n|<br />", "<br>")
+      return(markdown_to_rtf(text))
 
-      return(text)
-
-    } else if (is_html(text)) {
+    } else if (inherits(text, "rtf_text")) {
 
       text <- text %>% as.character()
 
@@ -355,6 +348,79 @@ markdown_to_latex <- function(text) {
   }) %>%
     unlist() %>%
     unname()
+}
+
+markdown_to_rtf <- function(text) {
+  text <-
+    text %>%
+    as.character() %>%
+    vapply(commonmark::markdown_xml, character(1)) %>%
+    vapply(character(1), FUN = function(cmark) {
+      # cat(cmark)
+      x <- xml2::read_xml(cmark)
+
+      if (!identical(xml2::xml_name(x), "document")) {
+        stop("Unexpected result from markdown parsing: `document` element not found")
+      }
+
+      children <- xml2::xml_children(x)
+      if (xml2::xml_length(children) == 1 &&
+          xml2::xml_type(children[[1]]) == "element" &&
+          xml2::xml_name(children[[1]]) == "paragraph") {
+        children <- xml2::xml_children(children[[1]])
+      }
+
+      rules <- list(
+        strong = "b",
+        emph = "i",
+        text = function(x, process) {
+          rtf_escape(xml2::xml_text(x))
+        }
+      )
+
+      apply_rules <- function(x) {
+        if (inherits(x, "xml_nodeset")) {
+          len <- length(x)
+          results <- character(len) # preallocate vector
+          for (i in seq_len(len)) {
+            results[[i]] <- apply_rules(x[[i]])
+          }
+          results
+        } else {
+          output <- if (xml2::xml_type(x) == "element") {
+            rule <- rules[[xml2::xml_name(x)]]
+            if (is.null(rule)) {
+              rlang::warn(
+                paste0("Unknown commonmark element encountered: ", xml2::xml_name(x)),
+                .frequency = "once",
+                .frequency_id = "gt_commonmark_unknown_element"
+              )
+              apply_rules(xml2::xml_contents(x))
+            } else if (is.character(rule)) {
+              rtf_wrap(rule, x, apply_rules)
+            } else if (is.function(rule)) {
+              rule(x, apply_rules)
+            }
+          }
+          # TODO: is collapse = "" correct?
+          paste0("", output, collapse = "")
+        }
+      }
+
+      apply_rules(children)
+    })
+
+  return(rtf_raw(text))
+}
+
+rtf_wrap <- function(control, x, process) {
+  content <- paste0("", process(xml2::xml_contents(x))) # coerce even NULL to string
+  paste0("\\", control,
+    if (nchar(content) > 0) " ",
+    content,
+    " ",
+    "\\", control, "0"
+  )
 }
 
 #' Transform Markdown text to plain text

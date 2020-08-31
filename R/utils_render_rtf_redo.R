@@ -612,6 +612,14 @@ rtf_text <- function(text,
   rtf_text
 }
 
+# Mark the given text as being RTF, meaning, it should not be escaped if passed
+# to rtf_text
+rtf_raw <- function(text) {
+  text <- as.character(text)
+  class(text) <- "rtf_text"
+  text
+}
+
 # Transform a footnote mark to an RTF representation as a superscript
 footnote_mark_to_rtf <- function(mark) {
 
