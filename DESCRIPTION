@@ -27,6 +27,7 @@ RoxygenNote: 7.1.1
 Depends:
     R (>= 3.2.0)
 Imports: 
+    bitops (>= 1.0.6),
     checkmate (>= 2.0.0),
     commonmark (>= 1.7),
     dplyr (>= 0.8.5),

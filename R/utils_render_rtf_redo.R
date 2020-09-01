@@ -606,10 +606,18 @@ rtf_text <- function(text,
     )
 
   rtf_text <-
-    list(rtf_text = paste0("{", font_styles, " ", rtf_text_decimal_utf8(text), "}"))
+    list(rtf_text = paste0("{", font_styles, " ", text, "}"))
 
   class(rtf_text) <- "rtf_text"
   rtf_text
+}
+
+# jcheng 2020/09/01: I would like rtf_text to be renamed rtf_span, and for this
+# to be renamed rtf_text. But not doing it as part of this commit.
+rtf_text2 <- function(text) {
+  paste(text, collapse = "\n") %>%
+    rtf_escape() %>%
+    structure(class = "rtf_text")
 }
 
 # Mark the given text as being RTF, meaning, it should not be escaped if passed
@@ -627,7 +635,34 @@ footnote_mark_to_rtf <- function(mark) {
 }
 
 rtf_escape <- function(x) {
-  gsub("\\", "\\\\", x, fixed = TRUE)
+  x <- gsub("\\", "\\'5c ", x, fixed = TRUE)
+  x <- gsub("{", "\\'7b ", x, fixed = TRUE)
+  x <- gsub("}", "\\'7c ", x, fixed = TRUE)
+  x <- rtf_escape_unicode(x)
+  x
+}
+
+rtf_escape_unicode <- function(x) {
+
+  # Ensure that we encode non-UTF-8 strings to UTF-8 in a
+  # two-step process: (1) to native encoding, and then
+  # (2) to UTF-8
+  if (Encoding(x) != 'UTF-8') {
+    x <- enc2utf8(x)
+  }
+
+  chars <- unlist(strsplit(x, ""))
+  codepoints <- utf8ToInt(x)
+  needs_escape <- codepoints > 127
+  codepoints_subset <- codepoints[needs_escape]
+  # RTF wants the code points as signed 16 bit integers
+  codepoints_subset_signed <- ifelse(
+    codepoints_subset > 2^15-1,
+    -(bitops::bitFlip(codepoints_subset, 16) + 1), # twos complement
+    codepoints_subset)
+
+  chars[needs_escape] <- paste0("\\u", codepoints_subset_signed, " ")
+  paste(chars, collapse = "")
 }
 
 rtf_font_styling <- function(font = NULL,
@@ -716,30 +751,6 @@ rtf_border <- function(direction,
 
   class(rtf_border) <- "rtf_border"
   rtf_border
-}
-
-rtf_text_decimal_utf8 <- function(x) {
-
-  # Ensure that we encode non-UTF-8 strings to UTF-8 in a
-  # two-step process: (1) to native encoding, and then
-  # (2) to UTF-8
-  if (Encoding(x) != 'UTF-8') {
-    x <- enc2utf8(x)
-  }
-
-  chars <- unlist(strsplit(x, ""))
-  chars_utf8_int <- utf8ToInt(x)
-
-  chars[chars_utf8_int > 127] <-
-    vapply(
-      chars_utf8_int[chars_utf8_int > 127],
-      FUN.VALUE = character(1),
-      FUN = function(x) {
-        rtf_key("u", paste0(as.character(x), " "))
-      }
-    )
-
-  paste(chars, collapse = "")
 }
 
 as_rtf_string <- function(x) {

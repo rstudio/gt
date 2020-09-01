@@ -350,6 +350,20 @@ markdown_to_latex <- function(text) {
     unname()
 }
 
+cmark_rules <- list(
+  softbreak = function(x, process) {
+    rtf_raw("\n ")
+  },
+  linebreak = function(x, process) {
+    rtf_raw("\\line ")
+  },
+  strong = "b",
+  emph = "i",
+  text = function(x, process) {
+    rtf_text2(xml2::xml_text(x))
+  }
+)
+
 markdown_to_rtf <- function(text) {
   text <-
     text %>%
@@ -358,25 +372,16 @@ markdown_to_rtf <- function(text) {
     vapply(character(1), FUN = function(cmark) {
       # cat(cmark)
       x <- xml2::read_xml(cmark)
-
       if (!identical(xml2::xml_name(x), "document")) {
         stop("Unexpected result from markdown parsing: `document` element not found")
       }
 
       children <- xml2::xml_children(x)
-      if (xml2::xml_length(children) == 1 &&
+      if (length(children) == 1 &&
           xml2::xml_type(children[[1]]) == "element" &&
           xml2::xml_name(children[[1]]) == "paragraph") {
         children <- xml2::xml_children(children[[1]])
       }
-
-      rules <- list(
-        strong = "b",
-        emph = "i",
-        text = function(x, process) {
-          rtf_escape(xml2::xml_text(x))
-        }
-      )
 
       apply_rules <- function(x) {
         if (inherits(x, "xml_nodeset")) {
@@ -385,10 +390,11 @@ markdown_to_rtf <- function(text) {
           for (i in seq_len(len)) {
             results[[i]] <- apply_rules(x[[i]])
           }
-          results
+          # TODO: is collapse = "" correct?
+          paste0("", results, collapse = "")
         } else {
           output <- if (xml2::xml_type(x) == "element") {
-            rule <- rules[[xml2::xml_name(x)]]
+            rule <- cmark_rules[[xml2::xml_name(x)]]
             if (is.null(rule)) {
               rlang::warn(
                 paste0("Unknown commonmark element encountered: ", xml2::xml_name(x)),
