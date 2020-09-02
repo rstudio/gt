@@ -1,9 +1,9 @@
 md_rtf <- function(md, rtf) {
-  expect_identical(markdown_to_rtf(md), rtf_raw(rtf))
+  expect_equal(unclass(markdown_to_rtf(md)), unclass(rtf_raw(rtf)))
 }
 
 rtf_with <- function(open, text, close = paste0(open, "0")) {
-  paste0("\\", open, " ", text, " \\", close)
+  paste0("\\", open, " ", text, "\\", close, " ")
 }
 
 test_that("basic markdown_to_rtf works", {
@@ -16,6 +16,15 @@ test_that("basic markdown_to_rtf works", {
   # custom_block
   # paragraph
   # heading
+  md_rtf("# test", "{\\pard \\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs36 test \\par}")
+  md_rtf("## test", "{\\pard \\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs32 test \\par}")
+  md_rtf("### test", "{\\pard \\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs28 test \\par}")
+  md_rtf("#### test", "{\\pard \\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs24 test \\par}")
+  md_rtf("##### test", "{\\pard \\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs20 test \\par}")
+  md_rtf("###### test", "{\\pard \\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs16 test \\par}")
+
+  md_rtf("# te*s*t", "{\\pard \\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs36 te\\i s\\i0 t \\par}")
+
   # thematic_break
   # text
   md_rtf("test &amp; &#x21e8;&#x9034;", "test & \\u8680 \\u-28620 ")
@@ -27,6 +36,10 @@ test_that("basic markdown_to_rtf works", {
   md_rtf("test  \ntest", "test\\line test")
 
   # code
+  md_rtf("`test`", "{\\f1 test}")
+  md_rtf("`te**s**t`", "{\\f1 te**s**t}")
+  md_rtf("`test \\`", "{\\f1 test \\'5c }")
+
   # html_inline
   # custom_inline
 

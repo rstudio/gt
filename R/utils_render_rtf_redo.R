@@ -622,8 +622,8 @@ rtf_text2 <- function(text) {
 
 # Mark the given text as being RTF, meaning, it should not be escaped if passed
 # to rtf_text
-rtf_raw <- function(text) {
-  text <- as.character(text)
+rtf_raw <- function(...) {
+  text <- paste0(..., collapse = "")
   class(text) <- "rtf_text"
   text
 }

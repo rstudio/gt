@@ -350,12 +350,22 @@ markdown_to_latex <- function(text) {
     unname()
 }
 
+heading_sizes <- c(36, 32, 28, 24, 20, 16)
+
 cmark_rules <- list(
+
+  heading = function(x, process) {
+    fs <- heading_sizes[as.numeric(xml2::xml_attr(x, attr = "level"))]
+    rtf_raw("{\\pard \\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs", fs, " ", process(xml2::xml_children(x))," \\par}")
+  },
   softbreak = function(x, process) {
     rtf_raw("\n ")
   },
   linebreak = function(x, process) {
     rtf_raw("\\line ")
+  },
+  code = function(x, process) {
+    rtf_raw("{\\f1 ", rtf_text2(xml2::xml_text(x)), "}")
   },
   strong = "b",
   emph = "i",
@@ -421,12 +431,7 @@ markdown_to_rtf <- function(text) {
 
 rtf_wrap <- function(control, x, process) {
   content <- paste0("", process(xml2::xml_contents(x))) # coerce even NULL to string
-  paste0("\\", control,
-    if (nchar(content) > 0) " ",
-    content,
-    " ",
-    "\\", control, "0"
-  )
+  paste0("\\", control, " ", content, "\\", control, "0 ")
 }
 
 #' Transform Markdown text to plain text
