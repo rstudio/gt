@@ -23,7 +23,7 @@ test_that("basic markdown_to_rtf works", {
   md_rtf("##### test", "{\\pard \\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs20 test \\par}")
   md_rtf("###### test", "{\\pard \\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs16 test \\par}")
 
-  md_rtf("# te*s*t", "{\\pard \\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs36 te\\i s\\i0 t \\par}")
+  md_rtf("# te*s*t", "{\\pard \\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs36 te{\\i s}t \\par}")
 
   # thematic_break
   # text
@@ -44,16 +44,19 @@ test_that("basic markdown_to_rtf works", {
   # custom_inline
 
   # emph
-  md_rtf("_test_", rtf_with("i", "test"))
+  md_rtf("_test_", "{\\i test}")
 
   # strong
-  md_rtf("**test**", rtf_with("b", "test"))
+  md_rtf("**test**", "{\\b test}")
 
   # link
   # image
 
   # Multiple
-  md_rtf("**_this &amp; that_**", rtf_with("b", rtf_with("i", "this & that")))
+  md_rtf("**_this &amp; that_**", "{\\b {\\i this & that}}")
+
+  # Overlapping
+  md_rtf("**_this &amp;** that_", "{\\b _this &} that_")
 })
 
 test_that("markdown_to_rtf escaping", {

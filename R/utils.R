@@ -367,8 +367,12 @@ cmark_rules <- list(
   code = function(x, process) {
     rtf_raw("{\\f1 ", rtf_text2(xml2::xml_text(x)), "}")
   },
-  strong = "b",
-  emph = "i",
+  strong = function(x, process) {
+    rtf_raw("{\\b ", process(xml2::xml_children(x)), "}")
+  },
+  emph = function(x, process) {
+    rtf_raw("{\\i ", process(xml2::xml_children(x)), "}")
+  },
   text = function(x, process) {
     rtf_text2(xml2::xml_text(x))
   }
