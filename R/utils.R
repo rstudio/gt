@@ -358,6 +358,13 @@ cmark_rules <- list(
     fs <- heading_sizes[as.numeric(xml2::xml_attr(x, attr = "level"))]
     rtf_raw("{\\pard \\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs", fs, " ", process(xml2::xml_children(x))," \\par}")
   },
+  link = function(x, process) {
+    # NOTE: RTF doesn't handle the `title` attr (Pandoc also ignores)
+    destination <- xml2::xml_attr(x, attr = "destination")
+    text <- process(xml2::xml_children(x))
+    if (text == "") text <- destination
+    rtf_raw("{\\field{\\*\\fldinst{HYPERLINK \"", destination, "\"}}{\\fldrslt{\\ul ", text, "}}}")
+  },
   softbreak = function(x, process) {
     rtf_raw("\n ")
   },

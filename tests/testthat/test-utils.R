@@ -15,6 +15,7 @@ test_that("basic markdown_to_rtf works", {
   # html_block
   # custom_block
   # paragraph
+
   # heading
   md_rtf("# test", "{\\pard \\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs36 test \\par}")
   md_rtf("## test", "{\\pard \\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs32 test \\par}")
@@ -26,6 +27,7 @@ test_that("basic markdown_to_rtf works", {
   md_rtf("# te*s*t", "{\\pard \\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs36 te{\\i s}t \\par}")
 
   # thematic_break
+
   # text
   md_rtf("test &amp; &#x21e8;&#x9034;", "test & \\u8680 \\u-28620 ")
 
@@ -50,10 +52,22 @@ test_that("basic markdown_to_rtf works", {
   md_rtf("**test**", "{\\b test}")
 
   # link
+  md_rtf("[link](google.com)", "{\\field{\\*\\fldinst{HYPERLINK \"google.com\"}}{\\fldrslt{\\ul link}}}")
+  md_rtf("[](google.com)", "{\\field{\\*\\fldinst{HYPERLINK \"google.com\"}}{\\fldrslt{\\ul google.com}}}")
+  md_rtf("[link](google.com \"A search engine.\")", "{\\field{\\*\\fldinst{HYPERLINK \"google.com\"}}{\\fldrslt{\\ul link}}}")
+  md_rtf("[](google.com \"A search engine.\")", "{\\field{\\*\\fldinst{HYPERLINK \"google.com\"}}{\\fldrslt{\\ul google.com}}}")
+
   # image
+
+  #
+  ## Combined tests
+  #
 
   # Multiple
   md_rtf("**_this &amp; that_**", "{\\b {\\i this & that}}")
+  md_rtf("***this &amp; that***", "{\\i {\\b this & that}}")
+  md_rtf("_**this &amp; that**_", "{\\i {\\b this & that}}")
+  md_rtf("___this &amp; that___", "{\\i {\\b this & that}}")
 
   # Overlapping
   md_rtf("**_this &amp;** that_", "{\\b _this &} that_")
