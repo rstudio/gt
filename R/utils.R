@@ -365,6 +365,35 @@ cmark_rules <- list(
     if (text == "") text <- destination
     rtf_raw("{\\field{\\*\\fldinst{HYPERLINK \"", destination, "\"}}{\\fldrslt{\\ul ", text, "}}}")
   },
+  list = function(x, process) {
+    type <- xml2::xml_attr(x, attr = "type")
+    n_items <- length(xml2::xml_children(x))
+    # NOTE: `start`, `delim`, and `tight` attrs are ignored; we also
+    # assume there is only `type` values of "ordered" and "bullet" (unordered)
+    rtf_raw(
+      paste(
+        vapply(
+          seq_len(n_items),
+          FUN.VALUE = character(1),
+          USE.NAMES = FALSE,
+          FUN = function(n) {
+
+            paste0(
+              "{\\line \\ql \\f0 \\sa0 \\li360 \\fi-360 ",
+              ifelse(type == "bullet", "\\bullet ", paste0(n, ".")),
+              "\\tx360\\tab ",
+              process(xml2::xml_children(x)[n]),
+              ifelse(n == n_items, "\\sa180", ""),
+              "}"
+            )
+          }
+        ),
+        collapse = "")
+    )
+  },
+  item = function(x, process) {
+    rtf_text2(xml2::xml_text(x))
+  },
   softbreak = function(x, process) {
     rtf_raw("\n ")
   },
@@ -415,6 +444,7 @@ markdown_to_rtf <- function(text) {
           paste0("", results, collapse = "")
         } else {
           output <- if (xml2::xml_type(x) == "element") {
+
             rule <- cmark_rules[[xml2::xml_name(x)]]
             if (is.null(rule)) {
               rlang::warn(

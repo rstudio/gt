@@ -9,8 +9,49 @@ rtf_with <- function(open, text, close = paste0(open, "0")) {
 test_that("basic markdown_to_rtf works", {
 
   # block_quote
+
   # list
+  md_rtf(
+    "1. First item\n2. Second item\n3. Third item",
+    paste0(
+        "{\\line \\ql \\f0 \\sa0 \\li360 \\fi-360 1.\\tx360\\tab First item}",
+        "{\\line \\ql \\f0 \\sa0 \\li360 \\fi-360 2.\\tx360\\tab Second item}",
+        "{\\line \\ql \\f0 \\sa0 \\li360 \\fi-360 3.\\tx360\\tab Third item\\sa180}"
+    )
+  )
+  md_rtf(
+    "- First item\n- Second item\n- Third item",
+    paste0(
+      "{\\line \\ql \\f0 \\sa0 \\li360 \\fi-360 \\bullet \\tx360\\tab First item}",
+      "{\\line \\ql \\f0 \\sa0 \\li360 \\fi-360 \\bullet \\tx360\\tab Second item}",
+      "{\\line \\ql \\f0 \\sa0 \\li360 \\fi-360 \\bullet \\tx360\\tab Third item\\sa180}"
+    )
+  )
+
+  # md_rtf(
+  #   "1. First item\n2. Second item\n3. Third item\n    - indented item",
+  #   paste0(
+  #     "{\\line \\ql \\f0 \\sa0 \\li360 \\fi-360 \\bullet \\tx360\\tab First item}",
+  #     "{\\line \\ql \\f0 \\sa0 \\li360 \\fi-360 \\bullet \\tx360\\tab Second item}",
+  #     "{\\line \\ql \\f0 \\sa0 \\li360 \\fi-360 \\bullet \\tx360\\tab Third item}",
+  #     "{\\line \\ql \\f0 \\sa0 \\li720 \\fi-360 \\endash \\tx360\\tab indented item\\sa180\\sa180}"
+  #   )
+  # )
+  #
+  # md_rtf(
+  #   "1. First item\n2. Second item\n3. Third item\n    - indented item\n        - indented item",
+  #   paste0(
+  #     "{\\line \\ql \\f0 \\sa0 \\li360 \\fi-360 \\bullet \\tx360\\tab First item}",
+  #     "{\\line \\ql \\f0 \\sa0 \\li360 \\fi-360 \\bullet \\tx360\\tab Second item}",
+  #     "{\\line \\ql \\f0 \\sa0 \\li360 \\fi-360 \\bullet \\tx360\\tab Third item}",
+  #     "{\\line \\ql \\f0 \\sa0 \\li720 \\fi-360 \\endash \\tx360\\tab indented item}",
+  #     "{\\line \\ql \\f0 \\sa0 \\li1080 \\fi-360 \\bullet \\tx360\\tab indented item\\sa180\\sa180\\sa180}"
+  #   )
+  # )
+
   # item
+  md_rtf("test &amp; &#x21e8;&#x9034;", "test & \\u8680 \\u-28620 ")
+
   # code_block
   # html_block
   # custom_block
