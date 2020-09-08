@@ -356,10 +356,10 @@ cmark_rules <- list(
 
   heading = function(x, process) {
     fs <- heading_sizes[as.numeric(xml2::xml_attr(x, attr = "level"))]
-    rtf_raw("{\\pard \\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs", fs, " ", process(xml2::xml_children(x))," \\par}")
+    rtf_raw("{\\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs", fs, " ", process(xml2::xml_children(x)),"}")
   },
   thematic_break = function(x, process) {
-    rtf_raw("{\\pard \\qc \\f0 \\sa180 \\li0 \\fi0 \\emdash\\emdash\\emdash\\emdash\\emdash\\par}")
+    rtf_raw("{\\qc \\f0 \\sa180 \\li0 \\fi0 \\emdash\\emdash\\emdash\\emdash\\emdash}")
   },
   link = function(x, process) {
     # NOTE: RTF doesn't handle the `title` attr (Pandoc also ignores)
@@ -369,6 +369,7 @@ cmark_rules <- list(
     rtf_raw("{\\field{\\*\\fldinst{HYPERLINK \"", destination, "\"}}{\\fldrslt{\\ul ", text, "}}}")
   },
   list = function(x, process) {
+    browser()
     type <- xml2::xml_attr(x, attr = "type")
     n_items <- length(xml2::xml_children(x))
     # NOTE: `start`, `delim`, and `tight` attrs are ignored; we also
