@@ -369,34 +369,44 @@ cmark_rules <- list(
     rtf_raw("{\\field{\\*\\fldinst{HYPERLINK \"", destination, "\"}}{\\fldrslt{\\ul ", text, "}}}")
   },
   list = function(x, process) {
-    browser()
+
     type <- xml2::xml_attr(x, attr = "type")
     n_items <- length(xml2::xml_children(x))
+
     # NOTE: `start`, `delim`, and `tight` attrs are ignored; we also
     # assume there is only `type` values of "ordered" and "bullet" (unordered)
     rtf_raw(
       paste(
-        vapply(
-          seq_len(n_items),
-          FUN.VALUE = character(1),
-          USE.NAMES = FALSE,
-          FUN = function(n) {
+        "\\pard\\intbl\\itap1\\tx220\\tx720\\tx1133\\tx1700\\tx2267\\tx2834\\tx3401\\tx3968\\tx4535\\tx5102\\tx5669\\tx6236\\tx6803\\li720\\fi-720",
+        paste(
+          vapply(
+            seq_len(n_items),
+            FUN.VALUE = character(1),
+            USE.NAMES = FALSE,
+            FUN = function(n) {
 
-            paste0(
-              "{\\line \\ql \\f0 \\sa0 \\li360 \\fi-360 ",
-              ifelse(type == "bullet", "\\bullet ", paste0(n, ".")),
-              "\\tx360\\tab ",
-              process(xml2::xml_children(x)[n]),
-              ifelse(n == n_items, "\\sa180", ""),
-              "}"
-            )
-          }
+              paste0(
+                ifelse(n == 1, "\\ls2\\ilvl0\\cf0 \n", ""),
+                "{\\listtext  ",
+                ifelse(type == "bullet", "\\bullet ", paste0(n, ". ")),
+                " }", process(xml2::xml_children(x)[n]), "\\ \n"
+              )
+            }
+          ),
+          collapse = ""
         ),
-        collapse = "")
+        collapse = ""
+      )
     )
   },
   item = function(x, process) {
     rtf_text2(xml2::xml_text(x))
+  },
+  html_inline = function(x, process) {
+
+    tag <- xml2::as_list(x) %>% unlist()
+    if (tag == "<code>") return(rtf_raw("{\\f1 "))
+    if (tag == "</code>") return(rtf_raw("}"))
   },
   softbreak = function(x, process) {
     rtf_raw("\n ")
@@ -415,6 +425,9 @@ cmark_rules <- list(
   },
   text = function(x, process) {
     rtf_text2(xml2::xml_text(x))
+  },
+  paragraph = function(x, process) {
+    rtf_raw(process(xml2::xml_children(x)))
   }
 )
 

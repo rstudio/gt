@@ -354,9 +354,9 @@ context_missing_text <- function(missing_text,
     rtf =
       {
         if (!inherits(missing_text, "AsIs") && missing_text == "---") {
-          "\u2014"
+          "\\'97"
         } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
-          "\u2013"
+          "\\'96"
         } else {
           missing_text
         }
@@ -396,7 +396,7 @@ context_plusminus_mark <- function(plusminus_mark,
       {
         if (!inherits(plusminus_mark, "AsIs") &&
             plusminus_mark == " +/- ") {
-          " \u00B1 "
+          " \\'b1 "
         } else {
           plusminus_mark
         }
@@ -447,7 +447,7 @@ context_exp_marks <- function(context) {
   switch(context,
          html = c(" &times; 10<sup class='gt_super'>", "</sup>"),
          latex = c(" \\times 10^{", "}"),
-         rtf = c(" \u00D7 10<sup>", "</sup>"),
+         rtf = c(" \\'d7 10{\\super ", "}"),
          c(" x 10(", ")"))
 }
 

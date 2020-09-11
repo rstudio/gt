@@ -1300,6 +1300,9 @@ fmt_markdown <- function(data,
       latex = function(x) {
         markdown_to_latex(x)
       },
+      rtf = function(x) {
+        markdown_to_rtf(x)
+      },
       default = function(x) {
         vapply(x, commonmark::markdown_text, character(1), USE.NAMES = FALSE) %>%
           stringr::str_replace("\n$", "")
@@ -1413,7 +1416,7 @@ fmt_passthrough <- function(data,
         }
 
         x_str
-      },
+      }, # TODO: add rtf formatter
       default = function(x) {
 
         # Create `x_str` with same length as `x`

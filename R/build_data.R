@@ -4,7 +4,6 @@
 build_data <- function(data, context) {
 
   checkmate::assert_class(data, "gt_tbl")
-
   # Create `body` with rendered values; move
   # input data cells to `body` that didn't have
   # any rendering applied during `render_formats()`;

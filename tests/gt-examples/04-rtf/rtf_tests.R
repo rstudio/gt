@@ -1,5 +1,34 @@
 library(gt)
 library(tidyverse)
+library(readr)
+
+# Create a display table that uses markdown
+"- item 1\n- item 2\n\n" -> markdown_text
+"**bold** text<sup>2</sup>" -> markdown_text
+
+commonmark::markdown_xml(markdown_text) %>% cat()
+gt:::markdown_to_rtf(markdown_text) %>% cat()
+
+md_tbl <-
+  dplyr::tibble(markdown = markdown_text) %>%
+  gt() %>%
+  fmt_markdown(vars(markdown)) %>%
+  tab_options(
+    table.width = pct(100)
+  )
+
+out_path <- "tests/gt-examples/rtf_output/md.rtf"
+
+md_tbl %>% gtsave(out_path)
+
+readr::read_file(out_path) %>% cat()
+
+
+unicode_tbl <-
+  dplyr::tibble(a = "a\u2014b") %>%
+  gt()
+
+unicode_tbl %>% gtsave("tests/gt-examples/rtf_output/unicode.rtf")
 
 # Create a display table based on `iris`
 iris_tbl <-
@@ -11,11 +40,11 @@ iris_tbl <-
     decimals = 1
   ) %>%
   tab_header(
-    title = md("The **iris** dataset <strong>and</strong> stuff"),
+    title = md("The **iris** dataset <strong>and</strong> stuff\n"),
     subtitle = md("[All about *Iris setosa*, *versicolor*, and *virginica*]")
   ) %>%
   tab_source_note(
-    source_note = md("The data were collected by *Anderson* (1935).")
+    source_note = "The data were collected by Anderson (1935)."
   ) %>%
   tab_footnote("Hello!", cells_title("title"))
 
@@ -251,7 +280,7 @@ tbl <-
 # Create a display table
 footnotes_tbl <-
   gt(data = tbl, groupname_col = "date") %>%
-  tab_header(title = "The Table Title", subtitle = "The subtitle.") %>%
+  tab_header(title = md("The Table `Title`"), subtitle = "The subtitle.") %>%
   tab_spanner(
     label = "values",
     columns = starts_with("value")
