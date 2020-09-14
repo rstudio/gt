@@ -354,9 +354,9 @@ context_missing_text <- function(missing_text,
     rtf =
       {
         if (!inherits(missing_text, "AsIs") && missing_text == "---") {
-          "\\'97"
+          "\u2014"
         } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
-          "\\'96"
+          "\u2013"
         } else {
           missing_text
         }
