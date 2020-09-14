@@ -285,12 +285,12 @@ rtf_tbl_row <- function(x,
           if (is.numeric(x$color)) {
             border_color_value <- x$color
           } else {
-            border_color_value <- paste0("<<", x$color, ">>")
+            border_color_value <- rtf_paste0("<<", rtf_raw(x$color), ">>")
           }
 
           if (x$direction %in% c("top", "bottom")) {
 
-            paste0(
+            rtf_paste0(
               rtf_key("clbrdr", substr(x$direction, 1, 1)),
               rtf_key("brdr", x$style),
               rtf_key("brdrw", x$width),
@@ -310,12 +310,12 @@ rtf_tbl_row <- function(x,
           if (is.numeric(x$color)) {
             border_color_value <- x$color
           } else {
-            border_color_value <- paste0("<<", x$color, ">>")
+            border_color_value <- rtf_paste0("<<", rtf_raw(x$color), ">>")
           }
 
           if (x$direction %in% c("left", "right")) {
 
-            paste0(
+            rtf_paste0(
               rtf_key("clbrdr", substr(x$direction, 1, 1)),
               rtf_key("brdr", x$style),
               rtf_key("brdrw", x$width),
@@ -334,7 +334,7 @@ rtf_tbl_row <- function(x,
 
   # Combine all row settings
   row_settings <-
-    paste0(
+    rtf_paste0(
       rtf_key("trowd"),
       rtf_key("trrh", height),
       if (repeat_header) rtf_key("trhdr")
@@ -356,21 +356,19 @@ rtf_tbl_row <- function(x,
     )
 
   for (i in seq_along(row_components)) {
-    x[[i]][1] <- paste0(x[[i]][1], row_components[i])
+    x[[i]][1] <- rtf_paste0(rtf_raw(x[[i]][1]), rtf_raw(row_components[i]))
   }
 
   x <- lapply(x, FUN = function(x) paste(x, collapse = "\n")) %>% unlist()
 
   # Return a complete row of RTF table cells (marked as `rtf_text`)
-  rtf_raw(
-    paste0(
-      row_settings,
-      "\n\n",
-      paste(x, collapse = "\n\n"),
-      "\n\n",
-      rtf_key("row"),
-      "\n\n"
-    )
+  rtf_paste0(
+    row_settings,
+    "\n\n",
+    rtf_raw(paste0(x, collapse = "\n\n")),
+    "\n\n",
+    rtf_key("row"),
+    "\n\n"
   )
 }
 
@@ -428,10 +426,10 @@ rtf_tbl_cell <- function(x,
           if (is.numeric(x$color)) {
             border_color_value <- x$color
           } else {
-            border_color_value <- paste0("<<", x$color, ">>")
+            border_color_value <- rtf_raw(paste0("<<", x$color, ">>"))
           }
 
-          paste0(
+          rtf_paste0(
             rtf_key("clbrdr", substr(x$direction, 1, 1)),
             rtf_key("brdr", x$style),
             rtf_key("brdrw", x$width),
@@ -482,19 +480,21 @@ rtf_tbl_cell <- function(x,
 
   # Combine all cell settings
   cell_settings <-
-    paste0(
+    rtf_paste0(
       rtf_key("pard"),
       rtf_key("plain"),
       rtf_key("uc", 0),
       rtf_key("q", h_align),
       rtf_key("clvertal", v_align),
-      cell_padding, cell_borders, cell_background_color,#, font_styles
-      cell_merging
+      rtf_raw(cell_padding),
+      rtf_raw(cell_borders),
+      rtf_raw(cell_background_color),
+      rtf_raw(cell_merging)
     )
 
   # Combine all cell content
   cell_content <-
-    paste0(
+    rtf_paste0(
       rtf_key("intbl"),
       " ",
       cell_text,
@@ -504,15 +504,7 @@ rtf_tbl_cell <- function(x,
     )
 
   # Return a complete RTF table cell (marked as `rtf_text`)
-  rtf_raw(paste(cell_settings, "\n", cell_content))
-}
-
-new_line <- function() {
-
-  rtf_text <- list(rtf_text = rtf_key("line"))
-
-  class(rtf_text) <- "rtf_text"
-  rtf_text
+  rtf_paste0(cell_settings, "\n", cell_content)
 }
 
 # TODO: the `text_list` shouldn't be used
@@ -543,12 +535,6 @@ rtf_text <- function(x,
                      italic = FALSE,
                      super_sub = NULL,
                      separate_with_newlines = NULL) {
-
-  # TODO: - should have a character vector (length = 1) coming in as x
-  #       - leaving, this should be classed with "rtf_text"
-  #       - an incoming character vector with "rtf_text" should be only have
-  #       - styles applied
-
 
   if (!is_rtf(x)) {
     x <- rtf_escape(x)
@@ -587,10 +573,7 @@ rtf_text <- function(x,
       super_sub = super_sub
     )
 
-  rtf_text <- paste0("{", font_styles, " ", x, "}")
-
-  class(rtf_text) <- "rtf_text"
-  rtf_text
+  rtf_paste0(rtf_raw("{"), rtf_raw(font_styles), " ", x, rtf_raw("}"))
 }
 
 # jcheng 2020/09/01: I would like rtf_text to be renamed rtf_span, and for this
@@ -613,7 +596,7 @@ rtf_raw <- function(...) {
 # Transform a footnote mark to an RTF representation as a superscript
 footnote_mark_to_rtf <- function(mark) {
 
-  paste0("{\\super \\i ", mark, "}")
+  rtf_paste0(rtf_raw("{\\super \\i "), mark, rtf_raw("}"))
 }
 
 rtf_escape <- function(x) {
@@ -659,7 +642,7 @@ rtf_font_styling <- function(font = NULL,
 
   # Set font for text
   if (!is.null(font)) {
-    cell_font <- rtf_key("f", paste0("<<FONT:", font, ">>"))
+    cell_font <- rtf_key("f", rtf_paste0(rtf_raw("<<FONT:"), font, rtf_raw(">>")))
   } else {
     cell_font <- rtf_key("f", 0)
   }
@@ -673,7 +656,7 @@ rtf_font_styling <- function(font = NULL,
 
   # Set font color
   if (!is.null(font_color)) {
-    cell_font_color <- rtf_key("cf", paste0("<<", font_color, ">>"))
+    cell_font_color <- rtf_key("cf", rtf_paste0(rtf_raw("<<"), font_color, rtf_raw(">>")))
   } else {
     cell_font_color <- ""
   }
@@ -705,7 +688,14 @@ rtf_font_styling <- function(font = NULL,
     cell_super_sub <- ""
   }
 
-  paste0(cell_font, cell_font_size, cell_font_color, cell_bold, cell_italic, cell_super_sub)
+  rtf_paste0(
+    cell_font,
+    cell_font_size,
+    cell_font_color,
+    cell_bold,
+    cell_italic,
+    cell_super_sub
+  )
 }
 
 rtf_border <- function(direction,
@@ -740,19 +730,18 @@ rtf_border <- function(direction,
 
 as_rtf_string <- function(x) {
 
-  paste0(
-    "{",
-    as.character(x$header),
+  rtf_paste0(
+    rtf_raw("{"),
+    rtf_raw(as.character(x$header)),
     "\n",
-    as.character(x$document),
-    "}"
+    rtf_raw(as.character(x$document)),
+    rtf_raw("}")
   )
 }
 
 # This is the assumed width of the area within page
 # margins in a default Word document
 standard_width_twips <- 9468L
-
 
 #
 # Table Header
@@ -791,7 +780,7 @@ create_heading_component_rtf <- function(data) {
       c(
         rtf_text(rtf_raw(heading$title), font_size = 14),
         rtf_text(rtf_raw(footnote_title_marks), italic = TRUE, super_sub = "super", font_size = 14),
-        new_line(),
+        rtf_key("line"),
         rtf_text(rtf_raw(heading$subtitle), font_size = 8),
         rtf_text(rtf_raw(footnote_subtitle_marks), italic = TRUE, super_sub = "super", font_size = 8)
       ),
