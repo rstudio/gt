@@ -1063,7 +1063,7 @@ create_body_component_rtf <- function(data) {
               seq_len(n_cols), FUN = function(x) {
 
                 rtf_tbl_cell(
-                  rtf_text(summary_df[[j, x]], font_size = 10),
+                  rtf_text(rtf_raw(summary_df[[j, x]]), font_size = 10),
                   h_align = col_alignment[x],
                   borders = list(
                     rtf_border(
@@ -1109,7 +1109,7 @@ create_body_component_rtf <- function(data) {
           seq_len(n_cols), FUN = function(x) {
 
             rtf_tbl_cell(
-              rtf_text(summary_df[[j, x]], font_size = 10),
+              rtf_text(rtf_raw(summary_df[[j, x]]), font_size = 10),
               h_align = col_alignment[x],
               borders = list(
                 rtf_border(
