@@ -244,7 +244,7 @@ process_text <- function(text,
     }
   } else if (context == "rtf") {
 
-    # Text processing for LaTeX output
+    # Text processing for RTF output
 
     if (inherits(text, "from_markdown")) {
 
@@ -258,7 +258,7 @@ process_text <- function(text,
 
     } else {
 
-      text <- text
+      text <- text %>% vapply(FUN.VALUE = character(1), USE.NAMES = FALSE, rtf_escape)
 
       return(text)
     }
