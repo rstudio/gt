@@ -258,7 +258,7 @@ process_text <- function(text,
 
     } else {
 
-      text <- text %>% vapply(FUN.VALUE = character(1), USE.NAMES = FALSE, rtf_escape)
+      text <- rtf_escape(text)
 
       return(text)
     }

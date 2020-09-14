@@ -1,9 +1,16 @@
-rtf_key <- function(word, val = NULL) {
-  paste0("\\", word, val %||% "")
+rtf_paste0 <- function(..., collapse = NULL) {
+  args <- lapply(list(..., collapse = collapse), function(x) {
+    if (is.null(x) || is_rtf(x)) {
+      x
+    } else {
+      rtf_escape(as.character(x))
+    }
+  })
+  rtf_raw(do.call(paste0, args))
 }
 
-rtf_group <- function(...) {
-  paste("{", ..., "}")
+rtf_key <- function(word, val = NULL, space = FALSE) {
+  rtf_raw(paste0("\\", word, val %||% "", if (space) " "))
 }
 
 rtf_fonttbl <- function(...,
@@ -616,7 +623,7 @@ rtf_escape <- function(x) {
   x <- gsub("\\", "\\'5c", x, fixed = TRUE)
   x <- gsub("{", "\\'7b", x, fixed = TRUE)
   x <- gsub("}", "\\'7d", x, fixed = TRUE)
-  x <- rtf_escape_unicode(x)
+  x <- vapply(x, FUN.VALUE = character(1), FUN = rtf_escape_unicode, USE.NAMES = FALSE)
   x
 }
 
