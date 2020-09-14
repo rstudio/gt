@@ -23,10 +23,13 @@ md_tbl %>% gtsave(out_path)
 
 readr::read_file(out_path) %>% cat()
 
-
 unicode_tbl <-
-  dplyr::tibble(a = "a\u2014b") %>%
-  gt()
+  dplyr::tibble(a = "a\u2014b", b = "**bold** \u2014") %>%
+  gt() %>%
+  fmt_markdown(columns = vars(b)) %>%
+  tab_header(title = "title a\u2014b", subtitle = "subtitle a\u2014b") %>%
+  tab_source_note("source note a\u2014b") %>%
+  tab_footnote("footnote a\u2014b", locations = cells_body(1, 1))
 
 unicode_tbl %>% gtsave("tests/gt-examples/rtf_output/unicode.rtf")
 
