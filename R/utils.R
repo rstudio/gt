@@ -387,7 +387,7 @@ cmark_rules <- list(
               paste0(
                 ifelse(n == 1, "\\ls1\\ilvl0\\cf0 \n", ""),
                 "{\\listtext\t}",
-                ifelse(type == "bullet", "\\u8226  "),
+                ifelse(type == "bullet", "\\u8226  ", ""),
                 process(xml2::xml_children(x)[n]),
                 "\\",
                 "\n"
