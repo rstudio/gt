@@ -13,41 +13,12 @@ test_that("basic markdown_to_rtf works", {
   # list
   md_rtf(
     "1. First item\n2. Second item\n3. Third item",
-    paste0(
-        "{\\line \\ql \\f0 \\sa0 \\li360 \\fi-360 1.\\tx360\\tab First item}",
-        "{\\line \\ql \\f0 \\sa0 \\li360 \\fi-360 2.\\tx360\\tab Second item}",
-        "{\\line \\ql \\f0 \\sa0 \\li360 \\fi-360 3.\\tx360\\tab Third item\\sa180}"
-    )
+    "\\pard\\intbl\\itap1\\tx220\\tx720\\tx1133\\tx1700\\tx2267\\tx2834\\tx3401\\tx3968\\tx4535\\tx5102\\tx5669\\tx6236\\tx6803\\li720\\fi-720 \\ls1\\ilvl0\\cf0 \n{\\listtext\t}First item\\\n{\\listtext\t}Second item\\\n{\\listtext\t}Third item\\\n"
   )
   md_rtf(
     "- First item\n- Second item\n- Third item",
-    paste0(
-      "{\\line \\ql \\f0 \\sa0 \\li360 \\fi-360 \\bullet \\tx360\\tab First item}",
-      "{\\line \\ql \\f0 \\sa0 \\li360 \\fi-360 \\bullet \\tx360\\tab Second item}",
-      "{\\line \\ql \\f0 \\sa0 \\li360 \\fi-360 \\bullet \\tx360\\tab Third item\\sa180}"
-    )
+    "\\pard\\intbl\\itap1\\tx220\\tx720\\tx1133\\tx1700\\tx2267\\tx2834\\tx3401\\tx3968\\tx4535\\tx5102\\tx5669\\tx6236\\tx6803\\li720\\fi-720 \\ls1\\ilvl0\\cf0 \n{\\listtext\t}\\u8226  First item\\\n{\\listtext\t}\\u8226  Second item\\\n{\\listtext\t}\\u8226  Third item\\\n"
   )
-
-  # md_rtf(
-  #   "1. First item\n2. Second item\n3. Third item\n    - indented item",
-  #   paste0(
-  #     "{\\line \\ql \\f0 \\sa0 \\li360 \\fi-360 \\bullet \\tx360\\tab First item}",
-  #     "{\\line \\ql \\f0 \\sa0 \\li360 \\fi-360 \\bullet \\tx360\\tab Second item}",
-  #     "{\\line \\ql \\f0 \\sa0 \\li360 \\fi-360 \\bullet \\tx360\\tab Third item}",
-  #     "{\\line \\ql \\f0 \\sa0 \\li720 \\fi-360 \\endash \\tx360\\tab indented item\\sa180\\sa180}"
-  #   )
-  # )
-  #
-  # md_rtf(
-  #   "1. First item\n2. Second item\n3. Third item\n    - indented item\n        - indented item",
-  #   paste0(
-  #     "{\\line \\ql \\f0 \\sa0 \\li360 \\fi-360 \\bullet \\tx360\\tab First item}",
-  #     "{\\line \\ql \\f0 \\sa0 \\li360 \\fi-360 \\bullet \\tx360\\tab Second item}",
-  #     "{\\line \\ql \\f0 \\sa0 \\li360 \\fi-360 \\bullet \\tx360\\tab Third item}",
-  #     "{\\line \\ql \\f0 \\sa0 \\li720 \\fi-360 \\endash \\tx360\\tab indented item}",
-  #     "{\\line \\ql \\f0 \\sa0 \\li1080 \\fi-360 \\bullet \\tx360\\tab indented item\\sa180\\sa180\\sa180}"
-  #   )
-  # )
 
   # item
   md_rtf("test &amp; &#x21e8;&#x9034;", "test & \\u8680 \\u-28620 ")
@@ -58,23 +29,22 @@ test_that("basic markdown_to_rtf works", {
   # paragraph
 
   # heading
-  md_rtf("# test", "{\\pard \\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs36 test \\par}")
-  md_rtf("## test", "{\\pard \\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs32 test \\par}")
-  md_rtf("### test", "{\\pard \\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs28 test \\par}")
-  md_rtf("#### test", "{\\pard \\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs24 test \\par}")
-  md_rtf("##### test", "{\\pard \\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs20 test \\par}")
-  md_rtf("###### test", "{\\pard \\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs16 test \\par}")
-
-  md_rtf("# te*s*t", "{\\pard \\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs36 te{\\i s}t \\par}")
+  md_rtf("# test", "{\\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs36 test}")
+  md_rtf("## test", "{\\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs32 test}")
+  md_rtf("### test", "{\\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs28 test}")
+  md_rtf("#### test", "{\\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs24 test}")
+  md_rtf("##### test", "{\\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs20 test}")
+  md_rtf("###### test", "{\\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs16 test}")
+  md_rtf("# te*s*t", "{\\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs36 te{\\i s}t}")
 
   # thematic_break
-  md_rtf("***", "{\\pard \\qc \\f0 \\sa180 \\li0 \\fi0 \\emdash\\emdash\\emdash\\emdash\\emdash\\par}")
-  md_rtf("---", "{\\pard \\qc \\f0 \\sa180 \\li0 \\fi0 \\emdash\\emdash\\emdash\\emdash\\emdash\\par}")
-  md_rtf("___", "{\\pard \\qc \\f0 \\sa180 \\li0 \\fi0 \\emdash\\emdash\\emdash\\emdash\\emdash\\par}")
-  md_rtf(" ___", "{\\pard \\qc \\f0 \\sa180 \\li0 \\fi0 \\emdash\\emdash\\emdash\\emdash\\emdash\\par}")
-  md_rtf("  ___", "{\\pard \\qc \\f0 \\sa180 \\li0 \\fi0 \\emdash\\emdash\\emdash\\emdash\\emdash\\par}")
-  md_rtf("   ___", "{\\pard \\qc \\f0 \\sa180 \\li0 \\fi0 \\emdash\\emdash\\emdash\\emdash\\emdash\\par}")
-  md_rtf("   ___________________", "{\\pard \\qc \\f0 \\sa180 \\li0 \\fi0 \\emdash\\emdash\\emdash\\emdash\\emdash\\par}")
+  md_rtf("***", "{\\qc \\f0 \\sa180 \\li0 \\fi0 \\emdash\\emdash\\emdash\\emdash\\emdash}")
+  md_rtf("---", "{\\qc \\f0 \\sa180 \\li0 \\fi0 \\emdash\\emdash\\emdash\\emdash\\emdash}")
+  md_rtf("___", "{\\qc \\f0 \\sa180 \\li0 \\fi0 \\emdash\\emdash\\emdash\\emdash\\emdash}")
+  md_rtf(" ___", "{\\qc \\f0 \\sa180 \\li0 \\fi0 \\emdash\\emdash\\emdash\\emdash\\emdash}")
+  md_rtf("  ___", "{\\qc \\f0 \\sa180 \\li0 \\fi0 \\emdash\\emdash\\emdash\\emdash\\emdash}")
+  md_rtf("   ___", "{\\qc \\f0 \\sa180 \\li0 \\fi0 \\emdash\\emdash\\emdash\\emdash\\emdash}")
+  md_rtf("   ___________________", "{\\qc \\f0 \\sa180 \\li0 \\fi0 \\emdash\\emdash\\emdash\\emdash\\emdash}")
 
   # text
   md_rtf("test &amp; &#x21e8;&#x9034;", "test & \\u8680 \\u-28620 ")
@@ -88,9 +58,26 @@ test_that("basic markdown_to_rtf works", {
   # code
   md_rtf("`test`", "{\\f1 test}")
   md_rtf("`te**s**t`", "{\\f1 te**s**t}")
-  md_rtf("`test \\`", "{\\f1 test \\'5c }")
+  md_rtf("`test \\`", "{\\f1 test \\'5c}")
 
   # html_inline
+  markdown_to_rtf("Line 1.<br>Line 2.")
+  md_rtf("R<sup>2</sup>", "R{\\super 2}")
+  md_rtf("C<sub>6</sub>H<sub>6</sub>", "C{\\sub 6}H{\\sub 6}")
+  md_rtf("Text can get <strong>bolder</strong>", "Text can get {\\b bolder}")
+  md_rtf("Text can get <b>bolder</b>", "Text can get {\\b bolder}")
+  md_rtf("Use <em>emphasis</em> occasionally", "Use {\\i emphasis} occasionally")
+  md_rtf("Use <i>emphasis</i> occasionally", "Use {\\i emphasis} occasionally")
+  md_rtf("It's <em><strong>important</strong></em>.", "It's {\\i {\\b important}}.")
+  md_rtf("This is <code>code</code>.", "This is {\\f1 code}.")
+  md_rtf("Line 1.<br>Line 2.", "Line 1.\\line Line 2.")
+  md_rtf("Line 1.<br />Line 2.", "Line 1.\\line Line 2.")
+  md_rtf("Line 1.<br/>Line 2.", "Line 1.\\line Line 2.")
+  md_rtf("It's *<strong>important</strong>*.", "It's {\\i {\\b important}}.")
+  md_rtf("It's _<strong>important</strong>_.", "It's {\\i {\\b important}}.")
+  md_rtf("It's <em>**important**</em>.", "It's {\\i {\\b important}}.")
+  md_rtf("It's <em>__important__</em>.", "It's {\\i {\\b important}}.")
+
   # custom_inline
 
   # emph
@@ -122,6 +109,6 @@ test_that("basic markdown_to_rtf works", {
 })
 
 test_that("markdown_to_rtf escaping", {
-  md_rtf("\\b{}", "\\'5c b\\'7b \\'7c ")
+  md_rtf("\\b{}", "\\'5cb\\'7b\\'7d")
   md_rtf("&lt;&amp;", "<&")
 })
