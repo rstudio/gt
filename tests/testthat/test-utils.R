@@ -91,6 +91,7 @@ test_that("basic markdown_to_rtf works", {
   md_rtf("[](google.com)", "{\\field{\\*\\fldinst{HYPERLINK \"google.com\"}}{\\fldrslt{\\ul google.com}}}")
   md_rtf("[link](google.com \"A search engine.\")", "{\\field{\\*\\fldinst{HYPERLINK \"google.com\"}}{\\fldrslt{\\ul link}}}")
   md_rtf("[](google.com \"A search engine.\")", "{\\field{\\*\\fldinst{HYPERLINK \"google.com\"}}{\\fldrslt{\\ul google.com}}}")
+  md_rtf("<http://example.com?find=\\*>", "{\\field{\\*\\fldinst{HYPERLINK \"http://example.com?find=\\*\"}}{\\fldrslt{\\ul http://example.com?find=\\'5c*}}}")
 
   # image
 
@@ -103,6 +104,21 @@ test_that("basic markdown_to_rtf works", {
   md_rtf("***this &amp; that***", "{\\i {\\b this & that}}")
   md_rtf("_**this &amp; that**_", "{\\i {\\b this & that}}")
   md_rtf("___this &amp; that___", "{\\i {\\b this & that}}")
+  md_rtf("\\\\*emphasis*", "\\'5c{\\i emphasis}")
+  md_rtf("Foo\nbar\n\\---\nbaz\n", "Foo\n bar\n ---\n baz")
+
+  # Backslash escapes
+  md_rtf("`` \\[\\` ``", "{\\f1 \\'5c[\\'5c`}")
+  md_rtf("foo\\\nbar\n", "foo\\line bar")
+  md_rtf("\\\\*emphasis*", "\\'5c{\\i emphasis}")
+  md_rtf(
+    "\\!\\\"\\#\\$\\%\\&\\'\\(\\)\\*\\+\\,\\-\\.\\/\\:\\;\\<\\=\\>\\?\\@\\[\\\\\\]\\^\\_\\`\\{\\|\\}\\~\n",
+    "!\"#$%&'()*+,-./:;<=>?@[\\'5c]^_`\\'7b|\\'7d~"
+  )
+  md_rtf(
+    "\\*not emphasized*\n\\<br/> not a tag\n\\[not a link](/foo)\n\\`not code`\n1\\. not a list\n\\* not a list\n\\# not a heading\n\\[foo]: /url \"not a reference\"\n\\&ouml; not a character entity",
+    "*not emphasized*\n <br/> not a tag\n [not a link](/foo)\n `not code`\n 1. not a list\n * not a list\n # not a heading\n [foo]: /url \"not a reference\"\n &ouml; not a character entity"
+  )
 
   # Overlapping
   md_rtf("**_this &amp;** that_", "{\\b _this &} that_")
