@@ -350,11 +350,10 @@ markdown_to_latex <- function(text) {
     unname()
 }
 
-heading_sizes <- c(36, 32, 28, 24, 20, 16)
-
 cmark_rules <- list(
 
   heading = function(x, process) {
+    heading_sizes <- c(36, 32, 28, 24, 20, 16)
     fs <- heading_sizes[as.numeric(xml2::xml_attr(x, attr = "level"))]
     rtf_raw("{\\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs", fs, " ", process(xml2::xml_children(x)),"}")
   },
@@ -386,10 +385,12 @@ cmark_rules <- list(
             FUN = function(n) {
 
               paste0(
-                ifelse(n == 1, "\\ls2\\ilvl0\\cf0 \n", ""),
-                "{\\listtext  ",
-                ifelse(type == "bullet", "\\bullet ", paste0(n, ". ")),
-                " }", process(xml2::xml_children(x)[n]), "\\ \n"
+                ifelse(n == 1, "\\ls1\\ilvl0\\cf0 \n", ""),
+                "{\\listtext\t}",
+                ifelse(type == "bullet", "\\u8226  "),
+                process(xml2::xml_children(x)[n]),
+                "\\",
+                "\n"
               )
             }
           ),
@@ -405,8 +406,39 @@ cmark_rules <- list(
   html_inline = function(x, process) {
 
     tag <- xml2::as_list(x) %>% unlist()
-    if (tag == "<code>") return(rtf_raw("{\\f1 "))
-    if (tag == "</code>") return(rtf_raw("}"))
+
+    if (grepl("^<br(/| /|)>$", tag)) {
+      return(
+        rtf_key("line", space = TRUE)
+      )
+    }
+
+    if (grepl("^<[^/].*?>$", tag)) {
+
+      tag_name <- gsub("^<|>$", "", tag)
+
+      return(
+        rtf_paste0(
+          rtf_raw("{"),
+          switch(
+            tag_name,
+            sup = rtf_key("super", space = TRUE),
+            sub = rtf_key("sub", space = TRUE),
+            strong = ,
+            b = rtf_key("b", space = TRUE),
+            em = ,
+            i = rtf_key("i", space = TRUE),
+            code = rtf_key("f1", space = TRUE)
+          )
+        )
+      )
+    }
+
+    if (grepl("^</.*?>$", tag)) {
+      return(
+        rtf_raw("}")
+      )
+    }
   },
   softbreak = function(x, process) {
     rtf_raw("\n ")
