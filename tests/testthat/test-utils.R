@@ -9,6 +9,10 @@ rtf_with <- function(open, text, close = paste0(open, "0")) {
 test_that("basic markdown_to_rtf works", {
 
   # block_quote
+  md_rtf(
+    "> # Foo\n> bar\n> baz\n",
+    "{\\f1   {\\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs36 Foo}bar\n baz}"
+  )
 
   # list
   md_rtf(
@@ -45,6 +49,8 @@ test_that("basic markdown_to_rtf works", {
   md_rtf("  ___", "{\\qc \\f0 \\sa180 \\li0 \\fi0 \\emdash\\emdash\\emdash\\emdash\\emdash}")
   md_rtf("   ___", "{\\qc \\f0 \\sa180 \\li0 \\fi0 \\emdash\\emdash\\emdash\\emdash\\emdash}")
   md_rtf("   ___________________", "{\\qc \\f0 \\sa180 \\li0 \\fi0 \\emdash\\emdash\\emdash\\emdash\\emdash}")
+  md_rtf("- - - -    \n", "{\\qc \\f0 \\sa180 \\li0 \\fi0 \\emdash\\emdash\\emdash\\emdash\\emdash}")
+  md_rtf("*\t*\t*\t\n", "{\\qc \\f0 \\sa180 \\li0 \\fi0 \\emdash\\emdash\\emdash\\emdash\\emdash}")
 
   # text
   md_rtf("test &amp; &#x21e8;&#x9034;", "test & \\u8680 \\u-28620 ")
