@@ -446,6 +446,9 @@ cmark_rules <- list(
   linebreak = function(x, process) {
     rtf_raw("\\line ")
   },
+  block_quote = function(x, process) {
+    rtf_raw("{\\f1   ", process(xml2::xml_children(x)), "}")
+  },
   code = function(x, process) {
     rtf_raw("{\\f1 ", rtf_text2(xml2::xml_text(x)), "}")
   },
