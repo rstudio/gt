@@ -43,7 +43,7 @@ iris_tbl <-
     decimals = 1
   ) %>%
   tab_header(
-    title = md("The **iris** dataset <strong>and</strong> stuff\n"),
+    title = md("The **iris** dataset"),
     subtitle = md("[All about *Iris setosa*, *versicolor*, and *virginica*]")
   ) %>%
   tab_source_note(

@@ -20,14 +20,14 @@ rtf_fonttbl <- function(...,
   fonts <- list(...)
 
   if (!is.null(.font_names)) {
-    fonts <- lapply(.font_names, FUN = function(x) rtf_font(x))
+    fonts <- lapply(.font_names, FUN = function(x) rtf_font_def(x))
   }
 
   if (length(fonts) < 1) {
     fonts <-
       list(
-        rtf_font(font = "Calibri", family = "roman"),
-        rtf_font(font = "Courier", family = "roman")
+        rtf_font_def(font = "Calibri", family = "roman"),
+        rtf_font_def(font = "Courier", family = "roman")
       )
   }
 
@@ -52,11 +52,11 @@ rtf_fonttbl <- function(...,
   rtf_fonttbl
 }
 
-rtf_font <- function(font,
-                     family = NULL,
-                     number = NULL,
-                     charset = NULL,
-                     pitch = NULL) {
+rtf_font_def <- function(font,
+                         family = NULL,
+                         number = NULL,
+                         charset = NULL,
+                         pitch = NULL) {
 
   font_family_name <- family %||% "nil"
   font_charset <- charset %||% 0
@@ -462,9 +462,9 @@ rtf_tbl_cell <- function(x,
     cell_merging <- NULL
   }
 
-  # Pass all text fragments and options though `rtf_text()`
+  # Pass all text fragments and options though `rtf_font()`
   cell_text <-
-    rtf_text(
+    rtf_font(
       rtf_raw(x),
       font = font,
       font_size = font_size,
@@ -527,7 +527,7 @@ append_text_list <- function(x, value, after = length(x)) {
   text_list_appended
 }
 
-rtf_text <- function(x,
+rtf_font <- function(x,
                      font = NULL,
                      font_size = NULL,
                      font_color = NULL,
@@ -536,9 +536,11 @@ rtf_text <- function(x,
                      super_sub = NULL,
                      separate_with_newlines = NULL) {
 
-  if (!is_rtf(x)) {
-    x <- rtf_escape(x)
-  }
+  # TODO: Replace `x` with `...` (in signature and in final function call) once
+  # the issue with superscripts below is resolved
+
+  # TODO: Remove this once the hardcoded HTML footnotes in summary cells
+  # is corrected (e.g., look at the `summary` example for this)
 
   if (grepl("<sup.*?>.*?</sup>", x)) {
 
@@ -555,13 +557,6 @@ rtf_text <- function(x,
     }
   }
 
-  if (grepl("<sub.*?>.*?</sub>", x)) {
-    x <-
-      x %>%
-      tidy_gsub("<sub.*?>", "{\\\\sub ") %>%
-      tidy_gsub("</sub>", "}", fixed = TRUE)
-  }
-
   # Obtain font-specific settings
   font_styles <-
     rtf_font_styling(
@@ -576,15 +571,6 @@ rtf_text <- function(x,
   rtf_paste0(rtf_raw("{"), rtf_raw(font_styles), " ", x, rtf_raw("}"))
 }
 
-# jcheng 2020/09/01: I would like rtf_text to be renamed rtf_span, and for this
-# to be renamed rtf_text. But not doing it as part of this commit.
-rtf_text2 <- function(text) {
-
-  paste(text, collapse = "\n") %>%
-    rtf_escape() %>%
-    structure(class = "rtf_text")
-}
-
 # Mark the given text as being RTF, meaning, it should not be escaped if passed
 # to rtf_text
 rtf_raw <- function(...) {
@@ -595,7 +581,6 @@ rtf_raw <- function(...) {
 
 # Transform a footnote mark to an RTF representation as a superscript
 footnote_mark_to_rtf <- function(mark) {
-
   rtf_paste0(rtf_raw("{\\super \\i "), mark, rtf_raw("}"))
 }
 
@@ -607,6 +592,7 @@ rtf_escape <- function(x) {
   x <- gsub("{", "\\'7b", x, fixed = TRUE)
   x <- gsub("}", "\\'7d", x, fixed = TRUE)
   x <- vapply(x, FUN.VALUE = character(1), FUN = rtf_escape_unicode, USE.NAMES = FALSE)
+  class(x) <- "rtf_text"
   x
 }
 
@@ -623,6 +609,7 @@ rtf_escape_unicode <- function(x) {
   codepoints <- utf8ToInt(x)
   needs_escape <- codepoints > 127
   codepoints_subset <- codepoints[needs_escape]
+
   # RTF wants the code points as signed 16 bit integers
   codepoints_subset_signed <- ifelse(
     codepoints_subset > 2^15-1,
@@ -778,11 +765,11 @@ create_heading_component_rtf <- function(data) {
   tbl_cell <-
     rtf_tbl_cell(
       c(
-        rtf_text(rtf_raw(heading$title), font_size = 14),
-        rtf_text(rtf_raw(footnote_title_marks), italic = TRUE, super_sub = "super", font_size = 14),
+        rtf_font(rtf_raw(heading$title), font_size = 14),
+        rtf_font(rtf_raw(footnote_title_marks), italic = TRUE, super_sub = "super", font_size = 14),
         rtf_key("line"),
-        rtf_text(rtf_raw(heading$subtitle), font_size = 8),
-        rtf_text(rtf_raw(footnote_subtitle_marks), italic = TRUE, super_sub = "super", font_size = 8)
+        rtf_font(rtf_raw(heading$subtitle), font_size = 8),
+        rtf_font(rtf_raw(footnote_subtitle_marks), italic = TRUE, super_sub = "super", font_size = 8)
       ),
       h_align = "center",
       borders = if (table_border_top_include) list(rtf_border("top", color = table_border_top_color, width = 40)) else NULL,
@@ -866,7 +853,7 @@ create_columns_component_rtf <- function(data) {
       lapply(
         seq_along(spanners), FUN = function(x) {
           rtf_tbl_cell(
-            rtf_text(rtf_raw(spanners[x]), font_size = 10),
+            rtf_font(rtf_raw(spanners[x]), font_size = 10),
             h_align = "center",
             h_merge = merge_keys[x],
             borders = list(
@@ -886,7 +873,7 @@ create_columns_component_rtf <- function(data) {
     lapply(
       seq_along(headings_labels), FUN = function(x) {
         rtf_tbl_cell(
-          rtf_text(rtf_raw(headings_labels[x]), font_size = 10),
+          rtf_font(rtf_raw(headings_labels[x]), font_size = 10),
           h_align = col_alignment[x],
           borders = list(
             rtf_border("top", color = column_labels_border_top_color, width = 40),
@@ -1005,7 +992,7 @@ create_body_component_rtf <- function(data) {
         seq_len(n_cols), FUN = function(x) {
 
           rtf_tbl_cell(
-            rtf_text(rtf_raw(body[[i, x]]), font_size = 10),
+            rtf_font(rtf_raw(body[[i, x]]), font_size = 10),
             h_align = col_alignment[x],
             borders = list(
               rtf_border("bottom", color = table_body_hlines_color, width = 10),
@@ -1059,7 +1046,7 @@ create_body_component_rtf <- function(data) {
               seq_len(n_cols), FUN = function(x) {
 
                 rtf_tbl_cell(
-                  rtf_text(rtf_raw(summary_df[[j, x]]), font_size = 10),
+                  rtf_font(rtf_raw(summary_df[[j, x]]), font_size = 10),
                   h_align = col_alignment[x],
                   borders = list(
                     rtf_border(
@@ -1105,7 +1092,7 @@ create_body_component_rtf <- function(data) {
           seq_len(n_cols), FUN = function(x) {
 
             rtf_tbl_cell(
-              rtf_text(rtf_raw(summary_df[[j, x]]), font_size = 10),
+              rtf_font(rtf_raw(summary_df[[j, x]]), font_size = 10),
               h_align = col_alignment[x],
               borders = list(
                 rtf_border(
@@ -1194,8 +1181,8 @@ create_footnotes_component_rtf <- function(data) {
   #   cell_list <-
   #     list(
   #       rtf_tbl_cell(
-  #         rtf_text(footnote_mark[i], italic = TRUE, super_sub = "super", font_size = 10),
-  #         rtf_text(footnote_text[i], font_size = 10)
+  #         rtf_font(footnote_mark[i], italic = TRUE, super_sub = "super", font_size = 10),
+  #         rtf_font(footnote_text[i], font_size = 10)
   #         )
   #     )
   #
@@ -1211,10 +1198,10 @@ create_footnotes_component_rtf <- function(data) {
     text_list_footnotes <-
       text_list_footnotes %>%
       append_text_list(
-        rtf_text(rtf_raw(footnote_mark[i]), italic = TRUE, super_sub = "super", font_size = 10)
+        rtf_font(rtf_raw(footnote_mark[i]), italic = TRUE, super_sub = "super", font_size = 10)
       ) %>%
       append_text_list(
-        rtf_text(rtf_raw(footnote_text[i]), font_size = 10, separate_with_newlines = use_newline)
+        rtf_font(rtf_raw(footnote_text[i]), font_size = 10, separate_with_newlines = use_newline)
       )
   }
 
@@ -1245,7 +1232,7 @@ create_source_notes_component_rtf <- function(data) {
   for (i in seq_len(n_source_notes)) {
     text_list <-
       append_text_list(
-        text_list, rtf_text(
+        text_list, rtf_font(
           rtf_raw(source_notes[i]), font_size = 10,
           separate_with_newlines = TRUE)
       )

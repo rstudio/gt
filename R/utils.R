@@ -401,44 +401,63 @@ cmark_rules <- list(
     )
   },
   item = function(x, process) {
-    rtf_text2(xml2::xml_text(x))
+    # TODO: probably needs something like process_children()
+    rtf_escape(xml2::xml_text(x))
   },
   html_inline = function(x, process) {
 
-    tag <- xml2::as_list(x) %>% unlist()
+    tag <- xml2::xml_text(x)
 
-    if (grepl("^<br(/| /|)>$", tag)) {
-      return(
-        rtf_key("line", space = TRUE)
-      )
-    }
+    match <- stringr::str_match(tag, pattern = "^<(/?)([a-zA-Z0-9\\-]+)")
 
-    if (grepl("^<[^/].*?>$", tag)) {
+    if (!is.na(match[1, 1])) {
 
-      tag_name <- gsub("^<|>$", "", tag)
-
-      return(
-        rtf_paste0(
-          rtf_raw("{"),
-          switch(
-            tag_name,
-            sup = rtf_key("super", space = TRUE),
-            sub = rtf_key("sub", space = TRUE),
-            strong = ,
-            b = rtf_key("b", space = TRUE),
-            em = ,
-            i = rtf_key("i", space = TRUE),
-            code = rtf_key("f1", space = TRUE)
-          )
+      span_map <-
+        c(
+          sup = "super",
+          sub = "sub",
+          strong = "b",
+          b = "b",
+          em = "i",
+          i = "i",
+          code = "f1"
         )
-      )
+
+      key_map <-
+        c(br = "line")
+
+      is_closing <- match[1, 2] == "/"
+      tag_name <- match[1, 3]
+
+      if (!is_closing) {
+
+        if (tag_name %in% names(key_map)) {
+
+          return(rtf_key(key_map[tag_name], space = TRUE))
+
+        } else if (tag_name %in% names(span_map)) {
+
+          return(
+            rtf_paste0(
+              rtf_raw("{"),
+              rtf_key(span_map[tag_name], space = TRUE)
+            )
+          )
+        }
+
+      } else {
+
+        if (tag_name %in% names(span_map)) {
+
+          return(rtf_raw("}"))
+
+        }
+
+      }
     }
 
-    if (grepl("^</.*?>$", tag)) {
-      return(
-        rtf_raw("}")
-      )
-    }
+    # Any unrecognized HTML tags are stripped, returning nothing
+    return(rtf_raw(""))
   },
   softbreak = function(x, process) {
     rtf_raw("\n ")
@@ -447,10 +466,11 @@ cmark_rules <- list(
     rtf_raw("\\line ")
   },
   block_quote = function(x, process) {
+    # TODO: Requires a paragraph with a directive for indentation
     rtf_raw("{\\f1   ", process(xml2::xml_children(x)), "}")
   },
   code = function(x, process) {
-    rtf_raw("{\\f1 ", rtf_text2(xml2::xml_text(x)), "}")
+    rtf_paste0(rtf_raw("{\\f1 "), xml2::xml_text(x), rtf_raw("}"))
   },
   strong = function(x, process) {
     rtf_raw("{\\b ", process(xml2::xml_children(x)), "}")
@@ -459,7 +479,7 @@ cmark_rules <- list(
     rtf_raw("{\\i ", process(xml2::xml_children(x)), "}")
   },
   text = function(x, process) {
-    rtf_text2(xml2::xml_text(x))
+    rtf_escape(xml2::xml_text(x))
   },
   paragraph = function(x, process) {
     rtf_raw(process(xml2::xml_children(x)))
@@ -493,7 +513,7 @@ markdown_to_rtf <- function(text) {
             results[[i]] <- apply_rules(x[[i]])
           }
           # TODO: is collapse = "" correct?
-          paste0("", results, collapse = "")
+          rtf_raw(paste0("", results, collapse = ""))
         } else {
           output <- if (xml2::xml_type(x) == "element") {
 
@@ -511,8 +531,11 @@ markdown_to_rtf <- function(text) {
               rule(x, apply_rules)
             }
           }
+          if (!is_rtf(output)) {
+            warning("Rule for ", xml2::xml_name(x), " did not return RTF")
+          }
           # TODO: is collapse = "" correct?
-          paste0("", output, collapse = "")
+          rtf_raw(paste0("", output, collapse = ""))
         }
       }
 

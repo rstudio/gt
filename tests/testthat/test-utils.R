@@ -67,7 +67,7 @@ test_that("basic markdown_to_rtf works", {
   md_rtf("`test \\`", "{\\f1 test \\'5c}")
 
   # html_inline
-  markdown_to_rtf("Line 1.<br>Line 2.")
+  md_rtf("Line 1.<br>Line 2.", "Line 1.\\line Line 2.")
   md_rtf("R<sup>2</sup>", "R{\\super 2}")
   md_rtf("C<sub>6</sub>H<sub>6</sub>", "C{\\sub 6}H{\\sub 6}")
   md_rtf("Text can get <strong>bolder</strong>", "Text can get {\\b bolder}")
@@ -83,6 +83,11 @@ test_that("basic markdown_to_rtf works", {
   md_rtf("It's _<strong>important</strong>_.", "It's {\\i {\\b important}}.")
   md_rtf("It's <em>**important**</em>.", "It's {\\i {\\b important}}.")
   md_rtf("It's <em>__important__</em>.", "It's {\\i {\\b important}}.")
+  md_rtf(
+    "&nbsp; &amp; &copy; &AElig; &Dcaron;\n&frac34; &HilbertSpace; &DifferentialD;\n&ClockwiseContourIntegral; &ngE;",
+    "\\u160  & \\u169  \\u198  \\u270 \n \\u190  \\u8459  \\u8518 \n \\u8754  \\u8807 \\u824 "
+  )
+  # TODO: <pre>, <blockquote>
 
   # custom_inline
 
