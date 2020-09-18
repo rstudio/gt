@@ -57,7 +57,7 @@ build_data <- function(data, context) {
 
   # Add footnote marks to the `summary` cells
   # TODO: `context` is missing in `apply_footnotes_to_summary()`
-  data <- apply_footnotes_to_summary(data = data)
+  data <- apply_footnotes_to_summary(data = data, context = context)
 
   data <- dt_has_built_set(data = data, value = TRUE)
 
