@@ -355,7 +355,14 @@ cmark_rules <- list(
   heading = function(x, process) {
     heading_sizes <- c(36, 32, 28, 24, 20, 16)
     fs <- heading_sizes[as.numeric(xml2::xml_attr(x, attr = "level"))]
-    rtf_raw("{\\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs", fs, " ", process(xml2::xml_children(x)),"}")
+
+    rtf_paste0(
+      rtf_raw("{\\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs"),
+      rtf_raw(fs),
+      rtf_raw(" "),
+      process(xml2::xml_children(x)),
+      rtf_raw("}")
+    )
   },
   thematic_break = function(x, process) {
     rtf_raw("{\\qc \\f0 \\sa180 \\li0 \\fi0 \\emdash\\emdash\\emdash\\emdash\\emdash}")
@@ -423,8 +430,7 @@ cmark_rules <- list(
           code = "f1"
         )
 
-      key_map <-
-        c(br = "line")
+      key_map <- c(br = "line")
 
       is_closing <- match[1, 2] == "/"
       tag_name <- match[1, 3]
@@ -448,11 +454,8 @@ cmark_rules <- list(
       } else {
 
         if (tag_name %in% names(span_map)) {
-
           return(rtf_raw("}"))
-
         }
-
       }
     }
 
@@ -466,27 +469,45 @@ cmark_rules <- list(
     rtf_raw("\\line ")
   },
   block_quote = function(x, process) {
-    # TODO: Requires a paragraph with a directive for indentation
-    rtf_raw("{\\f1   ", process(xml2::xml_children(x)), "}")
+    rtf_paste0(
+      rtf_raw(
+        "{\\pard\\intbl\\itap1\\tx220\\tx720\\tx1133\\tx1700\\tx2267\\tx2834\\tx3401\\tx3968\\tx4535\\tx5102\\tx5669\\tx6236\\tx6803\\li720\\fi-720\\ls1\\ilvl0\\cf0 \n"
+      ),
+      rtf_raw("{\\listtext\t }"),
+      rtf_raw(" "),
+      process(xml2::xml_children(x)),
+      rtf_raw("}")
+    )
   },
   code = function(x, process) {
     rtf_paste0(rtf_raw("{\\f1 "), xml2::xml_text(x), rtf_raw("}"))
   },
   strong = function(x, process) {
-    rtf_raw("{\\b ", process(xml2::xml_children(x)), "}")
+    rtf_raw("{\\b ", process(xml2::xml_children(x)), rtf_raw("}"))
   },
   emph = function(x, process) {
-    rtf_raw("{\\i ", process(xml2::xml_children(x)), "}")
+    rtf_raw("{\\i ", process(xml2::xml_children(x)), rtf_raw("}"))
   },
   text = function(x, process) {
     rtf_escape(xml2::xml_text(x))
   },
   paragraph = function(x, process) {
-    rtf_raw(process(xml2::xml_children(x)))
+
+    children <- xml2::xml_parent(x) %>% xml2::xml_children()
+    last <- children[[xml2::xml_length(xml2::xml_parent(x))]]
+    is_last <- identical(last, x)
+
+    rtf_paste0(
+      rtf_raw("{"),
+      process(xml2::xml_children(x)),
+      if (!is_last) rtf_raw("\\par"),
+      rtf_raw("}")
+    )
   }
 )
 
 markdown_to_rtf <- function(text) {
+
   text <-
     text %>%
     as.character() %>%
@@ -506,6 +527,7 @@ markdown_to_rtf <- function(text) {
       }
 
       apply_rules <- function(x) {
+
         if (inherits(x, "xml_nodeset")) {
           len <- length(x)
           results <- character(len) # preallocate vector
@@ -542,7 +564,7 @@ markdown_to_rtf <- function(text) {
       apply_rules(children)
     })
 
-  return(rtf_raw(text))
+  text
 }
 
 rtf_wrap <- function(control, x, process) {
