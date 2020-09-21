@@ -53,6 +53,15 @@ iris_tbl <-
 
 iris_tbl %>% gtsave("tests/gt-examples/rtf_output/iris.rtf")
 
+# Create a display table based on `exibble`
+exibble_tbl <-
+  exibble %>%
+  dplyr::mutate(char = paste(">", char)) %>%
+  gt() %>%
+  fmt_markdown(vars(char))
+
+exibble_tbl %>%  gtsave("tests/gt-examples/rtf_output/exibble.rtf")
+
 # Create a display table based on `morley`
 morley_tbl <-
   gt(data = morley) %>%
