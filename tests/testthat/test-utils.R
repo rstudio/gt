@@ -11,12 +11,8 @@ test_that("basic markdown_to_rtf works", {
   # block_quote
   md_rtf(
     "> # Foo\n> bar\n> baz\n",
-    paste("{\pard\intbl\itap1\tx220\tx720\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\li720\fi-720\ls1\ilvl0\cf0 ",
-          "{\listtext	 } {\ql \f0 \sa180 \li0 \fi0 \b \fs36 Foo}}{\pard\intbl\itap1\tx220\tx720\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\li720\fi-720\ls1\ilvl0\cf0 ",
-          "{\listtext	 } {bar}}{\pard\intbl\itap1\tx220\tx720\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\li720\fi-720\ls1\ilvl0\cf0 ",
-          "{\listtext	 } {baz}}", sep = "\n"
-    )
-    )
+    "{\\pard\\intbl\\itap1\\tx220\\tx720\\tx1133\\tx1700\\tx2267\\tx2834\\tx3401\\tx3968\\tx4535\\tx5102\\tx5669\\tx6236\\tx6803\\li720\\fi-720\\ls1\\ilvl0\\cf0 \n{\\listtext\t } {\\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs36 Foo}{bar\n baz}}"
+  )
 
   # list
   md_rtf(
@@ -32,9 +28,23 @@ test_that("basic markdown_to_rtf works", {
   md_rtf("test &amp; &#x21e8;&#x9034;", "test & \\u8680 \\u-28620 ")
 
   # code_block
+  md_rtf("    aaa\nbbb\n", "{\\f1 aaa\n}{bbb}")
+  md_rtf("        foo\n    bar\n", "{\\f1     foo\nbar\n}")
+  md_rtf("```\n<\n >\n```\n", "{\\f1 <\n >\n}")
+  md_rtf("```\naaa\n~~~\n```\n", "{\\f1 aaa\n~~~\n}")
+  md_rtf("```r\nSys.Date()\n```\n", "{\\f1 Sys.Date()\n}")
+
   # html_block
   # custom_block
+
   # paragraph
+  md_rtf("aaa\n\nbbb\n", "{aaa\\par}{bbb}")
+  md_rtf("   aaa\nbbb\n", "aaa\n bbb")
+  md_rtf("aaa\nbbb\n\nccc\nddd\n", "{aaa\n bbb\\par}{ccc\n ddd}")
+  md_rtf(
+    "aaa\n             bbb\n                                       ccc\n",
+    "aaa\n bbb\n ccc"
+  )
 
   # heading
   md_rtf("# test", "{\\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs36 test}")
