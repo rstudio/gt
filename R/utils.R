@@ -514,58 +514,66 @@ markdown_to_rtf <- function(text) {
   text <-
     text %>%
     as.character() %>%
-    vapply(commonmark::markdown_xml, character(1)) %>%
-    vapply(character(1), FUN = function(cmark) {
-      # cat(cmark)
-      x <- xml2::read_xml(cmark)
-      if (!identical(xml2::xml_name(x), "document")) {
-        stop("Unexpected result from markdown parsing: `document` element not found")
-      }
-
-      children <- xml2::xml_children(x)
-      if (length(children) == 1 &&
-          xml2::xml_type(children[[1]]) == "element" &&
-          xml2::xml_name(children[[1]]) == "paragraph") {
-        children <- xml2::xml_children(children[[1]])
-      }
-
-      apply_rules <- function(x) {
-
-        if (inherits(x, "xml_nodeset")) {
-          len <- length(x)
-          results <- character(len) # preallocate vector
-          for (i in seq_len(len)) {
-            results[[i]] <- apply_rules(x[[i]])
-          }
-          # TODO: is collapse = "" correct?
-          rtf_raw(paste0("", results, collapse = ""))
-        } else {
-          output <- if (xml2::xml_type(x) == "element") {
-
-            rule <- cmark_rules[[xml2::xml_name(x)]]
-            if (is.null(rule)) {
-              rlang::warn(
-                paste0("Unknown commonmark element encountered: ", xml2::xml_name(x)),
-                .frequency = "once",
-                .frequency_id = "gt_commonmark_unknown_element"
-              )
-              apply_rules(xml2::xml_contents(x))
-            } else if (is.character(rule)) {
-              rtf_wrap(rule, x, apply_rules)
-            } else if (is.function(rule)) {
-              rule(x, apply_rules)
-            }
-          }
-          if (!is_rtf(output)) {
-            warning("Rule for ", xml2::xml_name(x), " did not return RTF")
-          }
-          # TODO: is collapse = "" correct?
-          rtf_raw(paste0("", output, collapse = ""))
+    vapply(
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
+      FUN = commonmark::markdown_xml
+    ) %>%
+    vapply(
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
+      FUN = function(cmark) {
+        # cat(cmark)
+        x <- xml2::read_xml(cmark)
+        if (!identical(xml2::xml_name(x), "document")) {
+          stop("Unexpected result from markdown parsing: `document` element not found")
         }
-      }
 
-      apply_rules(children)
-    })
+        children <- xml2::xml_children(x)
+        if (length(children) == 1 &&
+            xml2::xml_type(children[[1]]) == "element" &&
+            xml2::xml_name(children[[1]]) == "paragraph") {
+          children <- xml2::xml_children(children[[1]])
+        }
+
+        apply_rules <- function(x) {
+
+          if (inherits(x, "xml_nodeset")) {
+            len <- length(x)
+            results <- character(len) # preallocate vector
+            for (i in seq_len(len)) {
+              results[[i]] <- apply_rules(x[[i]])
+            }
+            # TODO: is collapse = "" correct?
+            rtf_raw(paste0("", results, collapse = ""))
+          } else {
+            output <- if (xml2::xml_type(x) == "element") {
+
+              rule <- cmark_rules[[xml2::xml_name(x)]]
+              if (is.null(rule)) {
+                rlang::warn(
+                  paste0("Unknown commonmark element encountered: ", xml2::xml_name(x)),
+                  .frequency = "once",
+                  .frequency_id = "gt_commonmark_unknown_element"
+                )
+                apply_rules(xml2::xml_contents(x))
+              } else if (is.character(rule)) {
+                rtf_wrap(rule, x, apply_rules)
+              } else if (is.function(rule)) {
+                rule(x, apply_rules)
+              }
+            }
+            if (!is_rtf(output)) {
+              warning("Rule for ", xml2::xml_name(x), " did not return RTF")
+            }
+            # TODO: is collapse = "" correct?
+            rtf_raw(paste0("", output, collapse = ""))
+          }
+        }
+
+        apply_rules(children)
+      }
+    )
 
   text
 }
