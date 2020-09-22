@@ -11,8 +11,12 @@ test_that("basic markdown_to_rtf works", {
   # block_quote
   md_rtf(
     "> # Foo\n> bar\n> baz\n",
-    "{\\f1   {\\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs36 Foo}bar\n baz}"
-  )
+    paste("{\pard\intbl\itap1\tx220\tx720\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\li720\fi-720\ls1\ilvl0\cf0 ",
+          "{\listtext	 } {\ql \f0 \sa180 \li0 \fi0 \b \fs36 Foo}}{\pard\intbl\itap1\tx220\tx720\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\li720\fi-720\ls1\ilvl0\cf0 ",
+          "{\listtext	 } {bar}}{\pard\intbl\itap1\tx220\tx720\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\li720\fi-720\ls1\ilvl0\cf0 ",
+          "{\listtext	 } {baz}}", sep = "\n"
+    )
+    )
 
   # list
   md_rtf(
