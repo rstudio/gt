@@ -411,6 +411,9 @@ cmark_rules <- list(
     # TODO: probably needs something like process_children()
     rtf_escape(xml2::xml_text(x))
   },
+  code_block = function(x, process) {
+    rtf_paste0(rtf_raw("{\\f1 "), xml2::xml_text(x), rtf_raw("}"))
+  },
   html_inline = function(x, process) {
 
     tag <- xml2::xml_text(x)
