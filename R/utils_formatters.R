@@ -327,8 +327,6 @@ to_latex_math_mode <- function(x,
 context_missing_text <- function(missing_text,
                                  context) {
 
-  missing_text <- process_text(missing_text, context)
-
   switch(
     context,
     html =
@@ -338,7 +336,7 @@ context_missing_text <- function(missing_text,
         } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
           "&ndash;"
         } else {
-          missing_text
+          process_text(missing_text, context)
         }
       },
     latex =
@@ -348,7 +346,7 @@ context_missing_text <- function(missing_text,
         } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
           "\u2013"
         } else {
-          missing_text
+          process_text(missing_text, context)
         }
       },
     rtf =
@@ -358,7 +356,7 @@ context_missing_text <- function(missing_text,
         } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
           "\\'96"
         } else {
-          missing_text
+          process_text(missing_text, context)
         }
       }
   )

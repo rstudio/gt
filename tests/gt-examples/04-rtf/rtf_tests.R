@@ -115,7 +115,8 @@ airquality_tbl <-
     label = "Measurement Period",
     columns = vars(Month, Day)
   ) %>%
-  fmt_missing(columns = vars(Ozone, Solar.R, Wind, Temp))
+  fmt_missing(columns = vars(Solar.R, Wind, Temp)) %>%
+  fmt_missing(columns = vars(Ozone), missing_text = I("---"))
 
 airquality_tbl %>% gtsave("tests/gt-examples/rtf_output/airquality.rtf")
 
