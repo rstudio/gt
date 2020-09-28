@@ -345,16 +345,7 @@ rtf_tbl_row <- function(x,
   x <- strsplit(x, "\n")
 
   # Combine additional row components to the first element
-  row_components <-
-    paste0(
-      tb_borders,
-      vapply(
-        widths_twips,
-        FUN.VALUE = character(1),
-        USE.NAMES = FALSE,
-        FUN = function(x) rtf_key("cellx", floor(x))
-      )
-    )
+  row_components <- paste0(tb_borders, paste0("\\cellx", floor(widths_twips)))
 
   for (i in seq_along(row_components)) {
     x[[i]][1] <- rtf_paste0(rtf_raw(x[[i]][1]), rtf_raw(row_components[i]))
