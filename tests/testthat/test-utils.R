@@ -11,7 +11,7 @@ test_that("basic markdown_to_rtf works", {
   # block_quote
   md_rtf(
     "> # Foo\n> bar\n> baz\n",
-    "{\\pard\\intbl\\itap1\\tx220\\tx720\\tx1133\\tx1700\\tx2267\\tx2834\\tx3401\\tx3968\\tx4535\\tx5102\\tx5669\\tx6236\\tx6803\\li720\\fi-720\\ls1\\ilvl0\\cf0 \n{\\listtext\t } {\\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs36 Foo}{bar\n baz}}"
+    "{\\pard\\intbl\\itap1\\tx220\\tx720\\tx1133\\tx1700\\tx2267\\tx2834\\tx3401\\tx3968\\tx4535\\tx5102\\tx5669\\tx6236\\tx6803\\ls1\\ilvl0\\cf0 \n{\\listtext\t } {\\ql \\f0 \\sa180 \\b \\fs36 Foo}{bar\n baz}}"
   )
 
   # list
@@ -38,33 +38,33 @@ test_that("basic markdown_to_rtf works", {
   # custom_block
 
   # paragraph
-  md_rtf("aaa\n\nbbb\n", "{aaa\\par}{bbb}")
+  md_rtf("aaa\n\nbbb\n", "{aaa}{bbb}")
   md_rtf("   aaa\nbbb\n", "aaa\n bbb")
-  md_rtf("aaa\nbbb\n\nccc\nddd\n", "{aaa\n bbb\\par}{ccc\n ddd}")
+  md_rtf("aaa\nbbb\n\nccc\nddd\n", "{aaa\n bbb}{ccc\n ddd}")
   md_rtf(
     "aaa\n             bbb\n                                       ccc\n",
     "aaa\n bbb\n ccc"
   )
 
   # heading
-  md_rtf("# test", "{\\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs36 test}")
-  md_rtf("## test", "{\\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs32 test}")
-  md_rtf("### test", "{\\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs28 test}")
-  md_rtf("#### test", "{\\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs24 test}")
-  md_rtf("##### test", "{\\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs20 test}")
-  md_rtf("###### test", "{\\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs16 test}")
-  md_rtf("# te*s*t", "{\\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs36 te{\\i s}t}")
+  md_rtf("# test", "{\\ql \\f0 \\sa180 \\b \\fs36 test}")
+  md_rtf("## test", "{\\ql \\f0 \\sa180 \\b \\fs32 test}")
+  md_rtf("### test", "{\\ql \\f0 \\sa180 \\b \\fs28 test}")
+  md_rtf("#### test", "{\\ql \\f0 \\sa180 \\b \\fs24 test}")
+  md_rtf("##### test", "{\\ql \\f0 \\sa180 \\b \\fs20 test}")
+  md_rtf("###### test", "{\\ql \\f0 \\sa180 \\b \\fs16 test}")
+  md_rtf("# te*s*t", "{\\ql \\f0 \\sa180 \\b \\fs36 te{\\i s}t}")
 
   # thematic_break
-  md_rtf("***", "{\\qc \\f0 \\sa180 \\li0 \\fi0 \\emdash\\emdash\\emdash\\emdash\\emdash}")
-  md_rtf("---", "{\\qc \\f0 \\sa180 \\li0 \\fi0 \\emdash\\emdash\\emdash\\emdash\\emdash}")
-  md_rtf("___", "{\\qc \\f0 \\sa180 \\li0 \\fi0 \\emdash\\emdash\\emdash\\emdash\\emdash}")
-  md_rtf(" ___", "{\\qc \\f0 \\sa180 \\li0 \\fi0 \\emdash\\emdash\\emdash\\emdash\\emdash}")
-  md_rtf("  ___", "{\\qc \\f0 \\sa180 \\li0 \\fi0 \\emdash\\emdash\\emdash\\emdash\\emdash}")
-  md_rtf("   ___", "{\\qc \\f0 \\sa180 \\li0 \\fi0 \\emdash\\emdash\\emdash\\emdash\\emdash}")
-  md_rtf("   ___________________", "{\\qc \\f0 \\sa180 \\li0 \\fi0 \\emdash\\emdash\\emdash\\emdash\\emdash}")
-  md_rtf("- - - -    \n", "{\\qc \\f0 \\sa180 \\li0 \\fi0 \\emdash\\emdash\\emdash\\emdash\\emdash}")
-  md_rtf("*\t*\t*\t\n", "{\\qc \\f0 \\sa180 \\li0 \\fi0 \\emdash\\emdash\\emdash\\emdash\\emdash}")
+  md_rtf("***", "{\\qc \\f0 \\sa180 \\emdash\\emdash\\emdash\\emdash\\emdash}")
+  md_rtf("---", "{\\qc \\f0 \\sa180 \\emdash\\emdash\\emdash\\emdash\\emdash}")
+  md_rtf("___", "{\\qc \\f0 \\sa180 \\emdash\\emdash\\emdash\\emdash\\emdash}")
+  md_rtf(" ___", "{\\qc \\f0 \\sa180 \\emdash\\emdash\\emdash\\emdash\\emdash}")
+  md_rtf("  ___", "{\\qc \\f0 \\sa180 \\emdash\\emdash\\emdash\\emdash\\emdash}")
+  md_rtf("   ___", "{\\qc \\f0 \\sa180 \\emdash\\emdash\\emdash\\emdash\\emdash}")
+  md_rtf("   ___________________", "{\\qc \\f0 \\sa180 \\emdash\\emdash\\emdash\\emdash\\emdash}")
+  md_rtf("- - - -    \n", "{\\qc \\f0 \\sa180 \\emdash\\emdash\\emdash\\emdash\\emdash}")
+  md_rtf("*\t*\t*\t\n", "{\\qc \\f0 \\sa180 \\emdash\\emdash\\emdash\\emdash\\emdash}")
 
   # text
   md_rtf("test &amp; &#x21e8;&#x9034;", "test & \\u8680 \\u-28620 ")
