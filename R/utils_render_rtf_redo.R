@@ -181,14 +181,6 @@ rtf_header <- function(..., .charset = "ansi", .ansi_code_page = 1252) {
   rtf_header
 }
 
-rtf_document <- function(.file, ...) {
-
-  rtf_document <- list(...)
-
-  class(rtf_document) <- c("rtf_document", "rtf")
-  rtf_document
-}
-
 rtf_file <- function(header = NULL, document = NULL) {
 
   if (is.null(header) && is.null(document)) {
