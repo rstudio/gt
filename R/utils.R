@@ -357,7 +357,7 @@ cmark_rules <- list(
     fs <- heading_sizes[as.numeric(xml2::xml_attr(x, attr = "level"))]
 
     rtf_paste0(
-      rtf_raw("{\\ql \\f0 \\sa180 \\li0 \\fi0 \\b \\fs"),
+      rtf_raw("{\\ql \\f0 \\sa180 \\b \\fs"),
       rtf_raw(fs),
       rtf_raw(" "),
       process(xml2::xml_children(x)),
@@ -365,7 +365,7 @@ cmark_rules <- list(
     )
   },
   thematic_break = function(x, process) {
-    rtf_raw("{\\qc \\f0 \\sa180 \\li0 \\fi0 \\emdash\\emdash\\emdash\\emdash\\emdash}")
+    rtf_raw("{\\qc \\f0 \\sa180 \\emdash\\emdash\\emdash\\emdash\\emdash}")
   },
   link = function(x, process) {
     # NOTE: RTF doesn't handle the `title` attr (Pandoc also ignores)
