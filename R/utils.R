@@ -472,15 +472,23 @@ cmark_rules <- list(
     rtf_raw("\\line ")
   },
   block_quote = function(x, process) {
+
     rtf_paste0(
       rtf_raw(
-        "{\\pard\\intbl\\itap1\\tx220\\tx720\\tx1133\\tx1700\\tx2267\\tx2834\\tx3401\\tx3968\\tx4535\\tx5102\\tx5669\\tx6236\\tx6803\\li720\\fi-720\\ls1\\ilvl0\\cf0 \n"
+        "{\\pard\\intbl\\itap1\\tx220\\tx720\\tx1133\\tx1700\\tx2267\\tx2834\\tx3401\\tx3968\\tx4535\\tx5102\\tx5669\\tx6236\\tx6803\\ls1\\ilvl0\\cf0 \n"
       ),
       rtf_raw("{\\listtext\t }"),
       rtf_raw(" "),
       process(xml2::xml_children(x)),
       rtf_raw("}")
     )
+
+    # rtf_paste0(
+    #   rtf_raw("\\li360 "),
+    #   process(xml2::xml_children(x)),
+    #   if (!is_last(x)) rtf_raw("\\par"),
+    #   rtf_raw("\\li0 "),
+    # )
   },
   code = function(x, process) {
     rtf_paste0(rtf_raw("{\\f1 "), xml2::xml_text(x), rtf_raw("}"))
@@ -496,18 +504,20 @@ cmark_rules <- list(
   },
   paragraph = function(x, process) {
 
-    children <- xml2::xml_parent(x) %>% xml2::xml_children()
-    last <- children[[xml2::xml_length(xml2::xml_parent(x))]]
-    is_last <- identical(last, x)
-
     rtf_paste0(
       rtf_raw("{"),
       process(xml2::xml_children(x)),
-      if (!is_last) rtf_raw("\\par"),
+      #if (!is_last(x)) rtf_raw("\\par"),
       rtf_raw("}")
     )
   }
 )
+
+is_last <- function(x) {
+  children <- xml2::xml_parent(x) %>% xml2::xml_children()
+  last <- children[[xml2::xml_length(xml2::xml_parent(x))]]
+  identical(last, x)
+}
 
 markdown_to_rtf <- function(text) {
 
