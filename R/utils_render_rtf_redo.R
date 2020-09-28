@@ -741,6 +741,25 @@ create_heading_component_rtf <- function(data) {
     footnote_subtitle_marks <- ""
   }
 
+  if (dt_heading_has_subtitle(data = data)) {
+    subtitle_component <-
+      c(
+        rtf_key("line"),
+        rtf_font(
+          font_size = 8,
+          rtf_raw(heading$subtitle)
+        ),
+        rtf_font(
+          italic = TRUE,
+          super_sub = "super",
+          font_size = 8,
+          rtf_raw(footnote_subtitle_marks)
+        )
+      )
+  } else {
+    subtitle_component <- NULL
+  }
+
   tbl_cell <-
     rtf_tbl_cell(
       c(
@@ -754,17 +773,7 @@ create_heading_component_rtf <- function(data) {
           font_size = 14,
           rtf_raw(footnote_title_marks)
         ),
-        rtf_key("line"),
-        rtf_font(
-          font_size = 8,
-          rtf_raw(heading$subtitle)
-        ),
-        rtf_font(
-          italic = TRUE,
-          super_sub = "super",
-          font_size = 8,
-          rtf_raw(footnote_subtitle_marks)
-        )
+        subtitle_component
       ),
       h_align = "center",
       borders = if (table_border_top_include) list(rtf_border("top", color = table_border_top_color, width = 40)) else NULL,
