@@ -201,15 +201,15 @@ rtf_file <- function(header = NULL, document = NULL) {
     # Scan for hexadecimal colors in the document; generate
     # a <colortbl> object
     matched_colors <-
-      unique(unlist(stringr::str_extract_all(document, "<<#[0-9a-fA-F]{6}>>")))
+      unique(unlist(stringr::str_extract_all(document, "<<COLOR:#[0-9a-fA-F]{6}>>")))
 
     if (length(matched_colors) > 0) {
 
       colortbl <-
-        rtf_colortbl(.hexadecimal_colors = gsub("<<|>>", "", matched_colors))
+        rtf_colortbl(.hexadecimal_colors = gsub("<<COLOR:|>>", "", matched_colors))
 
       for (i in seq_along(matched_colors)) {
-        document <- gsub(matched_colors[i], as.character(i), document)
+        document <- gsub(matched_colors[i], as.character(i), document, fixed = TRUE)
       }
     } else {
       colortbl <- rtf_colortbl(.hexadecimal_colors = "#FFFFFF")
@@ -226,7 +226,7 @@ rtf_file <- function(header = NULL, document = NULL) {
         rtf_fonttbl(.font_names = c("Calibri", gsub("<<FONT:|>>", "", matched_fonts)), .default_n = 1)
 
       for (i in seq_along(matched_fonts)) {
-        document <- gsub(matched_fonts[i], as.character(i), document)
+        document <- gsub(matched_fonts[i], as.character(i), document, fixed = TRUE)
       }
     } else {
       fonttbl <- rtf_fonttbl()
@@ -286,7 +286,7 @@ rtf_tbl_row <- function(x,
           if (is.numeric(x$color)) {
             border_color_value <- x$color
           } else {
-            border_color_value <- rtf_paste0("<<", rtf_raw(x$color), ">>")
+            border_color_value <- rtf_paste0("<<COLOR:", rtf_raw(x$color), ">>")
           }
 
           if (x$direction %in% c("top", "bottom")) {
@@ -311,7 +311,7 @@ rtf_tbl_row <- function(x,
           if (is.numeric(x$color)) {
             border_color_value <- x$color
           } else {
-            border_color_value <- rtf_paste0("<<", rtf_raw(x$color), ">>")
+            border_color_value <- rtf_paste0("<<COLOR:", rtf_raw(x$color), ">>")
           }
 
           if (x$direction %in% c("left", "right")) {
@@ -418,7 +418,7 @@ rtf_tbl_cell <- function(x,
           if (is.numeric(x$color)) {
             border_color_value <- x$color
           } else {
-            border_color_value <- rtf_raw(paste0("<<", x$color, ">>"))
+            border_color_value <- rtf_raw(paste0("<<COLOR:", x$color, ">>"))
           }
 
           rtf_paste0(
@@ -436,7 +436,7 @@ rtf_tbl_cell <- function(x,
 
   # Set background color
   if (!is.null(cell_background_color)) {
-    cell_background_color <- rtf_key("clcbpat", paste0("<<", cell_background_color, ">>"))
+    cell_background_color <- rtf_key("clcbpat", paste0("<<COLOR:", cell_background_color, ">>"))
   } else {
     cell_background_color <- ""
   }
@@ -594,7 +594,7 @@ rtf_font_styling <- function(font = NULL,
 
   # Set font color
   if (!is.null(font_color)) {
-    cell_font_color <- rtf_key("cf", rtf_paste0(rtf_raw("<<"), font_color, rtf_raw(">>")))
+    cell_font_color <- rtf_key("cf", rtf_paste0(rtf_raw("<<COLOR:"), font_color, rtf_raw(">>")))
   } else {
     cell_font_color <- ""
   }
