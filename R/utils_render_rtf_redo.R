@@ -579,8 +579,8 @@ rtf_escape <- function(x) {
 rtf_escape_unicode <- function(x) {
 
   # Ensure that we encode non-UTF-8 strings to UTF-8 in a
-  # two-step process: (1) to native encoding, and then
-  # (2) to UTF-8
+  # two-step process: (1) to UTF-8, (2) to RTF's weird signed
+  # 16 bit integer encoding
   if (Encoding(x) != 'UTF-8') {
     x <- enc2utf8(x)
   }
