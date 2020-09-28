@@ -1,11 +1,12 @@
 rtf_paste0 <- function(..., collapse = NULL) {
-  args <- lapply(list(..., collapse = collapse), function(x) {
+  args <- lapply(list(...), function(x) {
     if (is.null(x) || is_rtf(x)) {
       x
     } else {
       rtf_escape(as.character(x))
     }
   })
+  args$collapse <- collapse
   rtf_raw(do.call(paste0, args))
 }
 
