@@ -508,26 +508,6 @@ rtf_tbl_cell <- function(x,
   rtf_paste0(cell_settings, "\n", cell_content)
 }
 
-# TODO: the `text_list` shouldn't be used
-text_list <- function(...) {
-  text_list <- list(...)
-
-  class(text_list) <- "text_list"
-  text_list
-}
-
-append_text_list <- function(x, value, after = length(x)) {
-
-  value_class <- class(value)
-
-  text_list_appended <- append(x, values = value, after = after)
-
-  class(text_list_appended[[after + 1]]) <- value_class
-
-  class(text_list_appended) <- "text_list"
-  text_list_appended
-}
-
 rtf_font <- function(...,
                      font = NULL,
                      font_size = NULL,
@@ -1217,33 +1197,31 @@ create_footnotes_component_rtf <- function(data) {
   #   row_list_footnotes <- c(row_list_footnotes, rtf_tbl_row(cell_list))
   # }
 
-  text_list_footnotes <- text_list()
+  cell_list <- ""
 
   for (i in seq_len(n_footnotes)) {
 
     use_newline <- i != n_footnotes
 
-    text_list_footnotes <-
-      text_list_footnotes %>%
-      append_text_list(
+    cell_list <-
+      rtf_paste0(
+        cell_list,
         rtf_font(
           italic = TRUE,
           super_sub = "super",
           font_size = 10,
           rtf_raw(footnote_mark[i])
-        )
-      ) %>%
-      append_text_list(
+        ),
         rtf_font(
           font_size = 10,
           separate_with_newlines = use_newline,
-          rtf_raw(footnote_text[i])
+          rtf_raw(footnote_text[i], " ")
         )
       )
   }
 
   # Return a list of RTF table rows (a single row) for the footnotes section
-  rtf_tbl_row(list(rtf_tbl_cell(text_list_footnotes)), height = 0)
+  rtf_tbl_row(list(rtf_tbl_cell(cell_list)), height = 0)
 }
 
 #
@@ -1264,12 +1242,13 @@ create_source_notes_component_rtf <- function(data) {
   n_source_notes <- length(source_notes)
   row_list_source_notes <- list()
 
-  text_list <- text_list()
+  cell_list <- ""
 
   for (i in seq_len(n_source_notes)) {
-    text_list <-
-      append_text_list(
-        text_list,
+
+    cell_list <-
+      rtf_paste0(
+        cell_list,
         rtf_font(
           font_size = 10,
           separate_with_newlines = TRUE,
@@ -1279,5 +1258,5 @@ create_source_notes_component_rtf <- function(data) {
   }
 
   # Return a list of RTF table rows (a single row) for the source notes section
-  rtf_tbl_row(list(rtf_tbl_cell(text_list)), height = 0)
+  rtf_tbl_row(list(rtf_tbl_cell(cell_list)), height = 0)
 }
