@@ -53,7 +53,7 @@ iris_tbl <-
 
 iris_tbl %>% gtsave("tests/gt-examples/rtf_output/iris.rtf")
 
-# Create a display table based on `exibble`
+# Create two display tables based on `exibble`
 exibble_tbl <-
   exibble %>%
   dplyr::mutate(char = paste(">", char)) %>%
@@ -61,6 +61,13 @@ exibble_tbl <-
   fmt_markdown(vars(char))
 
 exibble_tbl %>%  gtsave("tests/gt-examples/rtf_output/exibble.rtf")
+
+passthrough_tbl <-
+  exibble %>%
+  gt() %>%
+  fmt_passthrough(columns = vars(char), pattern = "1 {x} 2")
+
+passthrough_tbl %>%  gtsave("tests/gt-examples/rtf_output/passthrough.rtf")
 
 # Create a display table based on `morley`
 morley_tbl <-

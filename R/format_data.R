@@ -1416,7 +1416,25 @@ fmt_passthrough <- function(data,
         }
 
         x_str
-      }, # TODO: add rtf formatter
+      },
+      latex = function(x) {
+
+        # Create `x_str` with same length as `x`
+        x_str <- rep(NA_character_, length(x))
+
+        # Handle formatting of pattern
+        x_str <-
+          apply_pattern_fmt_x(
+            pattern,
+            values = x
+          )
+
+        if (escape) {
+          x_str <- x_str %>% process_text(context = "rtf")
+        }
+
+        x_str
+      },
       default = function(x) {
 
         # Create `x_str` with same length as `x`
