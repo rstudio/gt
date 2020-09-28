@@ -245,12 +245,7 @@ rtf_file <- function(header = NULL, document = NULL) {
 
 rtf_table <- function(rows) {
 
-  rtf_table_parts <- rows
-
-  structure(
-    paste(unlist(rtf_table_parts), collapse = ""),
-    class = c("rtf_table", "rtf")
-  )
+  rtf_raw(paste(unlist(rows), collapse = ""))
 }
 
 rtf_tbl_row <- function(x,
