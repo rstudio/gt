@@ -1041,7 +1041,7 @@ create_body_component_rtf <- function(data) {
           list_of_summaries$summary_df_display_list[[
             which(names(list_of_summaries$summary_df_display_list) == group)]] %>%
           as.data.frame(stringsAsFactors = FALSE) %>%
-          dplyr::select(-groups)
+          dplyr::select(-matches("^group[s]?$"))
 
         for (j in seq_len(nrow(summary_df))) {
 
@@ -1090,7 +1090,7 @@ create_body_component_rtf <- function(data) {
     summary_df <-
       list_of_summaries$summary_df_display_list[["::GRAND_SUMMARY"]] %>%
       as.data.frame(stringsAsFactors = FALSE) %>%
-      dplyr::select(-groups)
+      dplyr::select(-matches("^group[s]?$"))
 
     for (j in seq_len(nrow(summary_df))) {
 
