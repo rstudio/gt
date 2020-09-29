@@ -475,7 +475,7 @@ cmark_rules <- list(
 
     rtf_paste0(
       rtf_raw(
-        "{\\pard\\intbl\\itap1\\tx220\\tx720\\tx1133\\tx1700\\tx2267\\tx2834\\tx3401\\tx3968\\tx4535\\tx5102\\tx5669\\tx6236\\tx6803\\ls1\\ilvl0\\cf0 \n"
+        "{\\pard\\intbl\\itap1\\ls1\\ilvl0\\cf0 \n"
       ),
       rtf_raw("{\\listtext\t }"),
       rtf_raw(" "),
