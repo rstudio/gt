@@ -472,23 +472,8 @@ cmark_rules <- list(
     rtf_raw("\\line ")
   },
   block_quote = function(x, process) {
-
-    rtf_paste0(
-      rtf_raw(
-        "{\\pard\\intbl\\itap1\\ls1\\ilvl0\\cf0 \n"
-      ),
-      rtf_raw("{\\listtext\t }"),
-      rtf_raw(" "),
-      process(xml2::xml_children(x)),
-      rtf_raw("}")
-    )
-
-    # rtf_paste0(
-    #   rtf_raw("\\li360 "),
-    #   process(xml2::xml_children(x)),
-    #   if (!is_last(x)) rtf_raw("\\par"),
-    #   rtf_raw("\\li0 "),
-    # )
+    # TODO: Implement
+    process(xml2::xml_children(x))
   },
   code = function(x, process) {
     rtf_paste0(rtf_raw("{\\f1 "), xml2::xml_text(x), rtf_raw("}"))
