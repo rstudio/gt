@@ -492,8 +492,7 @@ rtf_font <- function(...,
                      font_color = NULL,
                      bold = FALSE,
                      italic = FALSE,
-                     super_sub = NULL,
-                     separate_with_newlines = NULL) {
+                     super_sub = NULL) {
 
   # Obtain font-specific settings
   font_styles <-
@@ -1139,42 +1138,6 @@ create_footnotes_component_rtf <- function(data) {
       FUN = markdown_to_rtf
     )
 
-  # # Get the separator option from `opts_df`
-  # separator <-
-  #   opts_df %>%
-  #   dplyr::filter(parameter == "footnotes_sep") %>%
-  #   dplyr::pull(value) %>%
-  #   unlist()
-  #
-  # # Convert common HTML tags/entities to plaintext
-  # separator <-
-  #   separator %>%
-  #   tidy_gsub("<br\\s*?(/|)>", "\n") %>%
-  #   tidy_gsub("&nbsp;", " ")
-
-  # row_list_footnotes <- list()
-  #
-  # for (i in seq_len(n_footnotes)) {
-  #
-  #   cell_list <-
-  #     list(
-  #       rtf_tbl_cell(
-  #         rtf_font(
-  #           italic = TRUE,
-  #           super_sub = "super",
-  #           font_size = 10,
-  #           footnote_mark[i]
-  #         ),
-  #         rtf_font(
-  #           font_size = 10,
-  #           footnote_text[i]
-  #         )
-  #       )
-  #     )
-  #
-  #   row_list_footnotes <- c(row_list_footnotes, rtf_tbl_row(cell_list))
-  # }
-
   cell_list <- ""
 
   for (i in seq_len(n_footnotes)) {
@@ -1192,7 +1155,6 @@ create_footnotes_component_rtf <- function(data) {
         ),
         rtf_font(
           font_size = 10,
-          separate_with_newlines = use_newline,
           rtf_raw(footnote_text[i], " ")
         )
       )
@@ -1211,7 +1173,6 @@ create_source_notes_component_rtf <- function(data) {
   source_notes <- dt_source_notes_get(data)
 
   # If there are no source notes then return an empty list
-  # rows, then return an empty source notes component
   if (length(source_notes) == 0) {
     row_list_source_notes <- list()
     return(row_list_source_notes)
@@ -1229,7 +1190,6 @@ create_source_notes_component_rtf <- function(data) {
         cell_list,
         rtf_font(
           font_size = 10,
-          separate_with_newlines = TRUE,
           rtf_raw(source_notes[i])
         )
       )
