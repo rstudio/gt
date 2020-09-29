@@ -54,6 +54,7 @@ globalVariables(
     "g",
     "green",
     "group_label",
+    "groups",
     "grpname",
     "grprow",
     "integrate_summary_lines",

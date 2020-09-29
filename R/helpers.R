@@ -86,6 +86,13 @@ is_html <- function(x) {
   inherits(x, "html") && isTRUE(attr(x, "html"))
 }
 
+#' Does an object have the `rtf_text` class?
+#'
+#' @noRd
+is_rtf <- function(x) {
+  inherits(x, "rtf_text")
+}
+
 #' Helper for providing a numeric value as pixels value
 #'
 #' For certain parameters, a length value is required. Examples include the

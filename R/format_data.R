@@ -1300,6 +1300,9 @@ fmt_markdown <- function(data,
       latex = function(x) {
         markdown_to_latex(x)
       },
+      rtf = function(x) {
+        markdown_to_rtf(x)
+      },
       default = function(x) {
         vapply(x, commonmark::markdown_text, character(1), USE.NAMES = FALSE) %>%
           stringr::str_replace("\n$", "")
@@ -1414,6 +1417,24 @@ fmt_passthrough <- function(data,
 
         x_str
       },
+      latex = function(x) {
+
+        # Create `x_str` with same length as `x`
+        x_str <- rep(NA_character_, length(x))
+
+        # Handle formatting of pattern
+        x_str <-
+          apply_pattern_fmt_x(
+            pattern,
+            values = x
+          )
+
+        if (escape) {
+          x_str <- x_str %>% process_text(context = "rtf")
+        }
+
+        x_str
+      },
       default = function(x) {
 
         # Create `x_str` with same length as `x`
@@ -1502,6 +1523,20 @@ fmt_missing <- function(data,
           context_missing_text(
             missing_text = missing_text,
             context = "html"
+          )
+
+        # Any values of `x` that are `NA` get
+        # `missing_text` as output; any values that
+        # are not missing get `NA` as their output
+        # (meaning, the existing output for that
+        # value, if it exists, should be inherited)
+        ifelse(is.na(x), missing_text, NA_character_)
+      },
+      rtf = function(x) {
+        missing_text <-
+          context_missing_text(
+            missing_text = missing_text,
+            context = "rtf"
           )
 
         # Any values of `x` that are `NA` get

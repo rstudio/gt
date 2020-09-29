@@ -327,29 +327,39 @@ to_latex_math_mode <- function(x,
 context_missing_text <- function(missing_text,
                                  context) {
 
-  missing_text <- process_text(missing_text, context)
-
-  switch(context,
-         html =
-           {
-             if (!inherits(missing_text, "AsIs") && missing_text == "---") {
-               "&mdash;"
-             } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
-               "&ndash;"
-             } else {
-               missing_text
-             }
-           },
-         latex =
-           {
-             if (!inherits(missing_text, "AsIs") && missing_text == "---") {
-               "\u2014"
-             } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
-               "\u2013"
-             } else {
-               missing_text
-             }
-           })
+  switch(
+    context,
+    html =
+      {
+        if (!inherits(missing_text, "AsIs") && missing_text == "---") {
+          "&mdash;"
+        } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
+          "&ndash;"
+        } else {
+          process_text(missing_text, context)
+        }
+      },
+    latex =
+      {
+        if (!inherits(missing_text, "AsIs") && missing_text == "---") {
+          "\u2014"
+        } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
+          "\u2013"
+        } else {
+          process_text(missing_text, context)
+        }
+      },
+    rtf =
+      {
+        if (!inherits(missing_text, "AsIs") && missing_text == "---") {
+          "\\'97"
+        } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
+          "\\'96"
+        } else {
+          process_text(missing_text, context)
+        }
+      }
+  )
 }
 context_dash_mark <- context_missing_text
 
@@ -360,25 +370,36 @@ context_dash_mark <- context_missing_text
 context_plusminus_mark <- function(plusminus_mark,
                                    context) {
 
-  switch(context,
-         html =
-           {
-             if (!inherits(plusminus_mark, "AsIs") &&
-                 plusminus_mark == " +/- ") {
-               " &plusmn; "
-             } else {
-               plusminus_mark
-             }
-           },
-         latex =
-         {
-           if (!inherits(plusminus_mark, "AsIs") &&
-               plusminus_mark == " +/- ") {
-             " \u00B1 "
-           } else {
-             plusminus_mark
-           }
-         })
+  switch(
+    context,
+    html =
+      {
+        if (!inherits(plusminus_mark, "AsIs") &&
+            plusminus_mark == " +/- ") {
+          " &plusmn; "
+        } else {
+          plusminus_mark
+        }
+      },
+    latex =
+      {
+        if (!inherits(plusminus_mark, "AsIs") &&
+            plusminus_mark == " +/- ") {
+          " \u00B1 "
+        } else {
+          plusminus_mark
+        }
+      },
+    rtf =
+      {
+        if (!inherits(plusminus_mark, "AsIs") &&
+            plusminus_mark == " +/- ") {
+          " \\'b1 "
+        } else {
+          plusminus_mark
+        }
+      }
+  )
 }
 
 #' Obtain the contextually correct minus mark
@@ -424,6 +445,7 @@ context_exp_marks <- function(context) {
   switch(context,
          html = c(" &times; 10<sup class='gt_super'>", "</sup>"),
          latex = c(" \\times 10^{", "}"),
+         rtf = c(" \\'d7 10{\\super ", "}"),
          c(" x 10(", ")"))
 }
 

@@ -150,6 +150,10 @@ get_table_defs <- function(data) {
 create_heading_component <- function(data,
                                      context = "html") {
 
+  # TODO: This should probably become `create_heading_component_h()`;
+  # The other 'part creation' functions follow this convention and this
+  # one is the last holdout (there is now a `create_heading_component_rtf()`)
+
   heading <- dt_heading_get(data = data)
 
   # If there is no heading component, then return an empty string
@@ -320,26 +324,26 @@ create_heading_component <- function(data,
       paste_between(x_2 = c("\\caption*{\n", "} \\\\ \n"))
   }
 
-  if (context == "rtf") {
-
-    if (subtitle_defined) {
-
-      heading_component <-
-        rtf_title_subtitle(
-          title = paste0(remove_html(heading$title), footnote_title_marks),
-          subtitle = paste0(remove_html(heading$subtitle), footnote_subtitle_marks),
-          n_cols = n_cols
-        )
-
-    } else {
-
-      heading_component <-
-        rtf_title(
-          title = paste0(remove_html(heading$heading), footnote_title_marks),
-          n_cols = n_cols
-        )
-    }
-  }
+  # if (context == "rtf") {
+  #
+  #   if (subtitle_defined) {
+  #
+  #     heading_component <-
+  #       rtf_title_subtitle(
+  #         title = paste0(remove_html(heading$title), footnote_title_marks),
+  #         subtitle = paste0(remove_html(heading$subtitle), footnote_subtitle_marks),
+  #         n_cols = n_cols
+  #       )
+  #
+  #   } else {
+  #
+  #     heading_component <-
+  #       rtf_title(
+  #         title = paste0(remove_html(heading$heading), footnote_title_marks),
+  #         n_cols = n_cols
+  #       )
+  #   }
+  # }
 
   heading_component
 }

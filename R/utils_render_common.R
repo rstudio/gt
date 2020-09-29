@@ -369,6 +369,21 @@ create_data_rows <- function(n_rows,
     unname()
 }
 
+#' Split the body content vector into a list structure
+#'
+#' Taking the `body_content` vector, split into list components with one item
+#' per row in the output table
+#' @noRd
+split_body_content <- function(body_content,
+                               n_cols) {
+
+  if (length(body_content) == 0) {
+    return(list(rep("", n_cols)))
+  }
+
+  split(body_content, ceiling(seq_along(body_content) / n_cols))
+}
+
 # Function to build a vector of `summary` rows in the table body
 create_summary_rows <- function(n_rows,
                                 n_cols,
