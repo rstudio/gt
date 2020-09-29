@@ -383,7 +383,7 @@ cmark_rules <- list(
     # assume there is only `type` values of "ordered" and "bullet" (unordered)
     rtf_raw(
       paste(
-        "\\pard\\intbl\\itap1\\tx220\\tx720\\tx1133\\tx1700\\tx2267\\tx2834\\tx3401\\tx3968\\tx4535\\tx5102\\tx5669\\tx6236\\tx6803\\li720\\fi-720",
+        "\\pard\\intbl\\itap1\\li300\\fi-300",
         paste(
           vapply(
             seq_len(n_items),
