@@ -11,7 +11,7 @@ test_that("basic markdown_to_rtf works", {
   # block_quote
   md_rtf(
     "> # Foo\n> bar\n> baz\n",
-    "{\\pard\\intbl\\itap1\\tx220\\tx720\\tx1133\\tx1700\\tx2267\\tx2834\\tx3401\\tx3968\\tx4535\\tx5102\\tx5669\\tx6236\\tx6803\\ls1\\ilvl0\\cf0 \n{\\listtext\t } {\\ql \\f0 \\sa180 \\b \\fs36 Foo}{bar\n baz}}"
+    "{\\pard\\intbl\\itap1\\ls1\\ilvl0\\cf0 \n{\\listtext\t } {\\ql \\f0 \\sa180 \\b \\fs36 Foo}{bar\n baz}}"
   )
 
   # list
