@@ -17,11 +17,11 @@ test_that("basic markdown_to_rtf works", {
   # list
   md_rtf(
     "1. First item\n2. Second item\n3. Third item",
-    "\\pard\\intbl\\itap1\\tx220\\tx720\\tx1133\\tx1700\\tx2267\\tx2834\\tx3401\\tx3968\\tx4535\\tx5102\\tx5669\\tx6236\\tx6803\\li720\\fi-720 \\ls1\\ilvl0\\cf0 \n{\\listtext\t}First item\\\n{\\listtext\t}Second item\\\n{\\listtext\t}Third item\\\n"
+    "\\pard\\intbl\\itap1\\li300\\fi-300 \\ls1\\ilvl0\\cf0 \n{\\listtext\t}First item\\\n{\\listtext\t}Second item\\\n{\\listtext\t}Third item\\\n"
   )
   md_rtf(
     "- First item\n- Second item\n- Third item",
-    "\\pard\\intbl\\itap1\\tx220\\tx720\\tx1133\\tx1700\\tx2267\\tx2834\\tx3401\\tx3968\\tx4535\\tx5102\\tx5669\\tx6236\\tx6803\\li720\\fi-720 \\ls1\\ilvl0\\cf0 \n{\\listtext\t}\\u8226  First item\\\n{\\listtext\t}\\u8226  Second item\\\n{\\listtext\t}\\u8226  Third item\\\n"
+    "\\pard\\intbl\\itap1\\li300\\fi-300 \\ls1\\ilvl0\\cf0 \n{\\listtext\t}\\u8226  First item\\\n{\\listtext\t}\\u8226  Second item\\\n{\\listtext\t}\\u8226  Third item\\\n"
   )
 
   # item
