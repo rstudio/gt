@@ -8,12 +8,6 @@ rtf_with <- function(open, text, close = paste0(open, "0")) {
 
 test_that("basic markdown_to_rtf works", {
 
-  # block_quote
-  md_rtf(
-    "> # Foo\n> bar\n> baz\n",
-    "{\\pard\\intbl\\itap1\\ls1\\ilvl0\\cf0 \n{\\listtext\t } {\\ql \\f0 \\sa180 \\b \\fs36 Foo}{bar\n baz}}"
-  )
-
   # list
   md_rtf(
     "1. First item\n2. Second item\n3. Third item",
