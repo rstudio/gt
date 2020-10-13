@@ -242,6 +242,26 @@ process_text <- function(text,
 
       return(text)
     }
+  } else if (context == "rtf") {
+
+    # Text processing for RTF output
+
+    if (inherits(text, "from_markdown")) {
+
+      return(markdown_to_rtf(text))
+
+    } else if (inherits(text, "rtf_text")) {
+
+      text <- text %>% as.character()
+
+      return(text)
+
+    } else {
+
+      text <- rtf_escape(text)
+
+      return(text)
+    }
   } else {
 
     # Text processing in the default case
@@ -328,6 +348,234 @@ markdown_to_latex <- function(text) {
   }) %>%
     unlist() %>%
     unname()
+}
+
+cmark_rules <- list(
+
+  heading = function(x, process) {
+    heading_sizes <- c(36, 32, 28, 24, 20, 16)
+    fs <- heading_sizes[as.numeric(xml2::xml_attr(x, attr = "level"))]
+
+    rtf_paste0(
+      rtf_raw("{\\ql \\f0 \\sa180 \\b \\fs"),
+      rtf_raw(fs),
+      rtf_raw(" "),
+      process(xml2::xml_children(x)),
+      rtf_raw("}")
+    )
+  },
+  thematic_break = function(x, process) {
+    rtf_raw("{\\qc \\f0 \\sa180 \\emdash\\emdash\\emdash\\emdash\\emdash}")
+  },
+  link = function(x, process) {
+    # NOTE: RTF doesn't handle the `title` attr (Pandoc also ignores)
+    destination <- xml2::xml_attr(x, attr = "destination")
+    text <- process(xml2::xml_children(x))
+    if (text == "") text <- destination
+    rtf_raw("{\\field{\\*\\fldinst{HYPERLINK \"", destination, "\"}}{\\fldrslt{\\ul ", text, "}}}")
+  },
+  list = function(x, process) {
+
+    type <- xml2::xml_attr(x, attr = "type")
+    n_items <- length(xml2::xml_children(x))
+
+    # NOTE: `start`, `delim`, and `tight` attrs are ignored; we also
+    # assume there is only `type` values of "ordered" and "bullet" (unordered)
+    rtf_raw(
+      paste(
+        "\\pard\\intbl\\itap1\\li300\\fi-300",
+        paste(
+          vapply(
+            seq_len(n_items),
+            FUN.VALUE = character(1),
+            USE.NAMES = FALSE,
+            FUN = function(n) {
+
+              paste0(
+                ifelse(n == 1, "\\ls1\\ilvl0\\cf0 \n", ""),
+                "{\\listtext\t}",
+                ifelse(type == "bullet", "\\u8226  ", ""),
+                process(xml2::xml_children(x)[n]),
+                "\\",
+                "\n"
+              )
+            }
+          ),
+          collapse = ""
+        ),
+        collapse = ""
+      )
+    )
+  },
+  item = function(x, process) {
+    # TODO: probably needs something like process_children()
+    rtf_escape(xml2::xml_text(x))
+  },
+  code_block = function(x, process) {
+    rtf_paste0(rtf_raw("{\\f1 "), xml2::xml_text(x), rtf_raw("}"))
+  },
+  html_inline = function(x, process) {
+
+    tag <- xml2::xml_text(x)
+
+    match <- stringr::str_match(tag, pattern = "^<(/?)([a-zA-Z0-9\\-]+)")
+
+    if (!is.na(match[1, 1])) {
+
+      span_map <-
+        c(
+          sup = "super",
+          sub = "sub",
+          strong = "b",
+          b = "b",
+          em = "i",
+          i = "i",
+          code = "f1"
+        )
+
+      key_map <- c(br = "line")
+
+      is_closing <- match[1, 2] == "/"
+      tag_name <- match[1, 3]
+
+      if (!is_closing) {
+
+        if (tag_name %in% names(key_map)) {
+
+          return(rtf_key(key_map[tag_name], space = TRUE))
+
+        } else if (tag_name %in% names(span_map)) {
+
+          return(
+            rtf_paste0(
+              rtf_raw("{"),
+              rtf_key(span_map[tag_name], space = TRUE)
+            )
+          )
+        }
+
+      } else {
+
+        if (tag_name %in% names(span_map)) {
+          return(rtf_raw("}"))
+        }
+      }
+    }
+
+    # Any unrecognized HTML tags are stripped, returning nothing
+    return(rtf_raw(""))
+  },
+  softbreak = function(x, process) {
+    rtf_raw("\n ")
+  },
+  linebreak = function(x, process) {
+    rtf_raw("\\line ")
+  },
+  block_quote = function(x, process) {
+    # TODO: Implement
+    process(xml2::xml_children(x))
+  },
+  code = function(x, process) {
+    rtf_paste0(rtf_raw("{\\f1 "), xml2::xml_text(x), rtf_raw("}"))
+  },
+  strong = function(x, process) {
+    rtf_raw("{\\b ", process(xml2::xml_children(x)), rtf_raw("}"))
+  },
+  emph = function(x, process) {
+    rtf_raw("{\\i ", process(xml2::xml_children(x)), rtf_raw("}"))
+  },
+  text = function(x, process) {
+    rtf_escape(xml2::xml_text(x))
+  },
+  paragraph = function(x, process) {
+
+    rtf_paste0(
+      rtf_raw("{"),
+      process(xml2::xml_children(x)),
+      #if (!is_last(x)) rtf_raw("\\par"),
+      rtf_raw("}")
+    )
+  }
+)
+
+is_last <- function(x) {
+  children <- xml2::xml_parent(x) %>% xml2::xml_children()
+  last <- children[[xml2::xml_length(xml2::xml_parent(x))]]
+  identical(last, x)
+}
+
+markdown_to_rtf <- function(text) {
+
+  text <-
+    text %>%
+    as.character() %>%
+    vapply(
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
+      FUN = commonmark::markdown_xml
+    ) %>%
+    vapply(
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
+      FUN = function(cmark) {
+        # cat(cmark)
+        x <- xml2::read_xml(cmark)
+        if (!identical(xml2::xml_name(x), "document")) {
+          stop("Unexpected result from markdown parsing: `document` element not found")
+        }
+
+        children <- xml2::xml_children(x)
+        if (length(children) == 1 &&
+            xml2::xml_type(children[[1]]) == "element" &&
+            xml2::xml_name(children[[1]]) == "paragraph") {
+          children <- xml2::xml_children(children[[1]])
+        }
+
+        apply_rules <- function(x) {
+
+          if (inherits(x, "xml_nodeset")) {
+            len <- length(x)
+            results <- character(len) # preallocate vector
+            for (i in seq_len(len)) {
+              results[[i]] <- apply_rules(x[[i]])
+            }
+            # TODO: is collapse = "" correct?
+            rtf_raw(paste0("", results, collapse = ""))
+          } else {
+            output <- if (xml2::xml_type(x) == "element") {
+
+              rule <- cmark_rules[[xml2::xml_name(x)]]
+              if (is.null(rule)) {
+                rlang::warn(
+                  paste0("Unknown commonmark element encountered: ", xml2::xml_name(x)),
+                  .frequency = "once",
+                  .frequency_id = "gt_commonmark_unknown_element"
+                )
+                apply_rules(xml2::xml_contents(x))
+              } else if (is.character(rule)) {
+                rtf_wrap(rule, x, apply_rules)
+              } else if (is.function(rule)) {
+                rule(x, apply_rules)
+              }
+            }
+            if (!is_rtf(output)) {
+              warning("Rule for ", xml2::xml_name(x), " did not return RTF")
+            }
+            # TODO: is collapse = "" correct?
+            rtf_raw(paste0("", output, collapse = ""))
+          }
+        }
+
+        apply_rules(children)
+      }
+    )
+
+  text
+}
+
+rtf_wrap <- function(control, x, process) {
+  content <- paste0("", process(xml2::xml_contents(x))) # coerce even NULL to string
+  paste0("\\", control, " ", content, "\\", control, "0 ")
 }
 
 #' Transform Markdown text to plain text
@@ -957,11 +1205,21 @@ validate_marks <- function(marks) {
   }
 }
 
-validate_style_in <- function(style_vals, style_names, arg_name, in_vector) {
+validate_style_in <- function(style_vals,
+                              style_names,
+                              arg_name,
+                              in_vector,
+                              with_pattern = NULL) {
 
   if (arg_name %in% style_names) {
 
     arg_value <- style_vals[[arg_name]]
+
+    # There is positive validation if a regex pattern is specified
+    # in `with_pattern` and the pattern matches
+    if (!is.null(with_pattern) && grepl(with_pattern, arg_value)) {
+        return()
+    }
 
     if (!(arg_value %in% in_vector)) {
       stop("The provided `", arg_name, "` value cannot be `",
@@ -1017,6 +1275,42 @@ validate_table_id <- function(id) {
   if (!is.character(id)) {
     stop("Any input for `id` must be of the `character` class", call. = FALSE)
   }
+}
+
+validate_n_sigfig <- function(n_sigfig) {
+
+  if (length(n_sigfig) != 1) {
+    stop("The length of `n_sigfig` must be 1.", call. = FALSE)
+  }
+  if (is.na(n_sigfig)) {
+    stop("The value for `n_sigfig` must not be `NA`.", call. = FALSE)
+  }
+  if (!is.numeric(n_sigfig)) {
+    stop("Any input for `n_sigfig` must be numeric.", call. = FALSE)
+  }
+  if (n_sigfig < 1) {
+    stop("The value for `n_sigfig` must be greater than or equal to 1.", call. = FALSE)
+  }
+}
+
+validate_css_lengths <- function(x) {
+
+  # Don't include empty strings in the validation; these lengths
+  # should be handled downstream (i.e., using `htmltools::css()`,
+  # where empty strings and NULL values don't create rules at all)
+  x_units_non_empty <- x[!(x == "")]
+
+  # While this returns a vector of corrected CSS units, we
+  # primarily want to verify that the vector of provided values
+  # don't contain any invalid suffixes; this throws if that's the
+  # case and returns `TRUE` otherwise
+  vapply(
+    x_units_non_empty,
+    FUN = htmltools::validateCssUnit,
+    FUN.VALUE = character(1),
+    USE.NAMES = FALSE
+  ) %>%
+    is.character()
 }
 
 column_classes_are_valid <- function(data, columns, valid_classes) {

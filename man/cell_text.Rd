@@ -36,8 +36,8 @@ or \code{"xx-large"}.}
 \item{v_align}{The vertical alignment of the text in the cell. Options are
 \code{"middle"}, \code{"top"}, or \code{"bottom"}.}
 
-\item{style}{The text style. Can be one of either \code{"center"}, \code{"normal"},
-\code{"italic"}, or \code{"oblique"}.}
+\item{style}{The text style. Can be one of either \code{"normal"}, \code{"italic"}, or
+\code{"oblique"}.}
 
 \item{weight}{The weight of the font. Can be a text-based keyword such as
 \code{"normal"}, \code{"bold"}, \code{"lighter"}, \code{"bolder"}, or, a numeric value between
@@ -124,7 +124,9 @@ Other Helper Functions:
 \code{\link{cells_summary}()},
 \code{\link{cells_title}()},
 \code{\link{currency}()},
+\code{\link{default_fonts}()},
 \code{\link{escape_latex}()},
+\code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
 \code{\link{md}()},

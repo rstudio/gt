@@ -38,8 +38,18 @@
 #'   `[colname_1] > 100 & [colname_2] < 50`).
 #' @param decimals An option to specify the exact number of decimal places to
 #'   use. The default number of decimal places is `2`.
+#' @param n_sigfig A option to format numbers to *n* significant figures. By
+#'   default, this is `NULL` and thus number values will be formatted according
+#'   to the number of decimal places set via `decimals`. If opting to format
+#'   according to the rules of significant figures, `n_sigfig` must be a number
+#'   greater than or equal to `1`. Any values passed to the `decimals` and
+#'   `drop_trailing_zeros` arguments will be ignored.
 #' @param drop_trailing_zeros A logical value that allows for removal of
 #'   trailing zeros (those redundant zeros after the decimal mark).
+#' @param drop_trailing_dec_mark A logical value that determines whether decimal
+#'   marks should always appear even if there are no decimal digits to display
+#'   after formatting (e.g, `23` becomes `23.`). The default for this is `TRUE`,
+#'   which means that trailing decimal marks are not shown.
 #' @param use_seps An option to use digit group separators. The type of digit
 #'   group separator is set by `sep_mark` and overridden if a locale ID is
 #'   provided to `locale`. This setting is `TRUE` by default.
@@ -132,7 +142,9 @@ fmt_number <- function(data,
                        columns,
                        rows = NULL,
                        decimals = 2,
+                       n_sigfig = NULL,
                        drop_trailing_zeros = FALSE,
+                       drop_trailing_dec_mark = TRUE,
                        use_seps = TRUE,
                        scale_by = 1.0,
                        suffixing = FALSE,
@@ -166,6 +178,18 @@ fmt_number <- function(data,
          call. = FALSE)
   }
 
+  # Set the `formatC_format` option according to whether number
+  # formatting with significant figures is to be performed
+  if (!is.null(n_sigfig)) {
+
+    # Stop function if `n_sigfig` does not have a valid value
+    validate_n_sigfig(n_sigfig)
+
+    formatC_format <- "fg"
+  } else {
+    formatC_format <- "f"
+  }
+
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(
@@ -184,8 +208,11 @@ fmt_number <- function(data,
           scale_x_values(suffix_df$scale_by) %>%
           # Format numeric values to character-based numbers
           format_num_to_str(
-            context = context, decimals = decimals, sep_mark = sep_mark,
-            dec_mark = dec_mark, drop_trailing_zeros = drop_trailing_zeros
+            context = context, decimals = decimals, n_sigfig = n_sigfig,
+            sep_mark = sep_mark, dec_mark = dec_mark,
+            drop_trailing_zeros = drop_trailing_zeros,
+            drop_trailing_dec_mark = drop_trailing_dec_mark,
+            format = formatC_format
           ) %>%
           # With large-number suffixing support, we paste the
           # vector of suffixes to the right of the values
@@ -317,11 +344,13 @@ fmt_scientific <- function(data,
 
         x_str <-
           x %>%
-          # Format numeric values to character-based numbers
           format_num_to_str(
-            context = context, decimals = decimals, sep_mark = sep_mark,
-            dec_mark = dec_mark, drop_trailing_zeros = drop_trailing_zeros,
-            format = "e", replace_minus_mark = FALSE
+            context = context, decimals = decimals, n_sigfig = NULL,
+            sep_mark = sep_mark, dec_mark = dec_mark,
+            drop_trailing_zeros = drop_trailing_zeros,
+            drop_trailing_dec_mark = FALSE,
+            format = "e",
+            replace_minus_mark = FALSE
           )
 
         # # Determine which values don't require the (x 10^n)
@@ -365,6 +394,7 @@ fmt_symbol <- function(data,
                        accounting = FALSE,
                        decimals = NULL,
                        drop_trailing_zeros = FALSE,
+                       drop_trailing_dec_mark = TRUE,
                        use_seps = TRUE,
                        scale_by = 1.0,
                        suffixing = FALSE,
@@ -419,7 +449,8 @@ fmt_symbol <- function(data,
             # Format numeric values to character-based numbers
             format_num_to_str_c(
               context = context, decimals = decimals, sep_mark = sep_mark,
-              dec_mark = dec_mark, drop_trailing_zeros = drop_trailing_zeros
+              dec_mark = dec_mark, drop_trailing_zeros = drop_trailing_zeros,
+              drop_trailing_dec_mark = drop_trailing_dec_mark
             )
         }
 
@@ -433,7 +464,8 @@ fmt_symbol <- function(data,
             # Format numeric values to character-based numbers
             format_num_to_str_c(
               context = context, decimals = decimals, sep_mark = sep_mark,
-              dec_mark = dec_mark, drop_trailing_zeros = drop_trailing_zeros
+              dec_mark = dec_mark, drop_trailing_zeros = drop_trailing_zeros,
+              drop_trailing_dec_mark = drop_trailing_dec_mark
             )
         }
 
@@ -461,10 +493,11 @@ fmt_symbol <- function(data,
 #' Format values as a percentage
 #'
 #' With numeric values in a **gt** table, we can perform percentage-based
-#' formatting. It is assumed the input numeric values are in a fractional format
-#' since the numbers will be automatically multiplied by `100` before decorating
-#' with a percent sign. For more control over percentage formatting, we can use
-#' the following options:
+#' formatting. It is assumed the input numeric values are proportional values
+#' and, in this case, the values will be automatically multiplied by `100`
+#' before decorating with a percent sign (the other case is accommodated though
+#' setting the `scale_values` to `FALSE`) For more control over percentage
+#' formatting, we can use the following options:
 #' \itemize{
 #' \item percent sign placement: the percent sign can be placed after or
 #' before the values and a space can be inserted between the symbol and the
@@ -486,6 +519,10 @@ fmt_symbol <- function(data,
 #' argument. See the Arguments section for more information on this.
 #'
 #' @inheritParams fmt_number
+#' @param scale_values Should the values be scaled through multiplication by
+#'   100? By default this is `TRUE` since the expectation is that normally
+#'   values are proportions. Setting to `FALSE` signifies that the values are
+#'   already scaled and require only the percent sign when formatted.
 #' @param incl_space An option for whether to include a space between the value
 #'   and the percent sign. The default is to not introduce a space character.
 #' @param placement The placement of the percent sign. This can be either be
@@ -524,6 +561,8 @@ fmt_percent <- function(data,
                         rows = NULL,
                         decimals = 2,
                         drop_trailing_zeros = FALSE,
+                        drop_trailing_dec_mark = TRUE,
+                        scale_values = TRUE,
                         use_seps = TRUE,
                         pattern = "{x}",
                         sep_mark = ",",
@@ -546,6 +585,12 @@ fmt_percent <- function(data,
          call. = FALSE)
   }
 
+  if (scale_values) {
+    scale_by <- 100
+  } else {
+    scale_by <- 1.0
+  }
+
   fmt_symbol(
     data = data,
     columns = !!columns,
@@ -554,8 +599,9 @@ fmt_percent <- function(data,
     accounting = FALSE,
     decimals = decimals,
     drop_trailing_zeros = drop_trailing_zeros,
+    drop_trailing_dec_mark = drop_trailing_dec_mark,
     use_seps = use_seps,
-    scale_by = 100,
+    scale_by = scale_by,
     suffixing = FALSE,
     pattern = pattern,
     sep_mark = sep_mark,
@@ -684,6 +730,7 @@ fmt_currency <- function(data,
                          use_subunits = TRUE,
                          accounting = FALSE,
                          decimals = NULL,
+                         drop_trailing_dec_mark = TRUE,
                          use_seps = TRUE,
                          scale_by = 1.0,
                          suffixing = FALSE,
@@ -727,6 +774,7 @@ fmt_currency <- function(data,
     accounting = accounting,
     decimals = decimals,
     drop_trailing_zeros = FALSE,
+    drop_trailing_dec_mark = drop_trailing_dec_mark,
     use_seps = use_seps,
     scale_by = scale_by,
     suffixing = suffixing,
@@ -1252,6 +1300,9 @@ fmt_markdown <- function(data,
       latex = function(x) {
         markdown_to_latex(x)
       },
+      rtf = function(x) {
+        markdown_to_rtf(x)
+      },
       default = function(x) {
         vapply(x, commonmark::markdown_text, character(1), USE.NAMES = FALSE) %>%
           stringr::str_replace("\n$", "")
@@ -1366,6 +1417,24 @@ fmt_passthrough <- function(data,
 
         x_str
       },
+      latex = function(x) {
+
+        # Create `x_str` with same length as `x`
+        x_str <- rep(NA_character_, length(x))
+
+        # Handle formatting of pattern
+        x_str <-
+          apply_pattern_fmt_x(
+            pattern,
+            values = x
+          )
+
+        if (escape) {
+          x_str <- x_str %>% process_text(context = "rtf")
+        }
+
+        x_str
+      },
       default = function(x) {
 
         # Create `x_str` with same length as `x`
@@ -1454,6 +1523,20 @@ fmt_missing <- function(data,
           context_missing_text(
             missing_text = missing_text,
             context = "html"
+          )
+
+        # Any values of `x` that are `NA` get
+        # `missing_text` as output; any values that
+        # are not missing get `NA` as their output
+        # (meaning, the existing output for that
+        # value, if it exists, should be inherited)
+        ifelse(is.na(x), missing_text, NA_character_)
+      },
+      rtf = function(x) {
+        missing_text <-
+          context_missing_text(
+            missing_text = missing_text,
+            context = "rtf"
           )
 
         # Any values of `x` that are `NA` get

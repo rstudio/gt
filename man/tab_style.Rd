@@ -11,8 +11,9 @@ tab_style(data, style, locations)
 
 \item{style}{a vector of styles to use. The \code{\link[=cell_text]{cell_text()}}, \code{\link[=cell_fill]{cell_fill()}}, and
 \code{\link[=cell_borders]{cell_borders()}} helper functions can be used here to more easily generate
-valid styles. If using more than one helper function to define styles, all
-calls must be enclosed in a \code{\link[=list]{list()}}.}
+valid styles.  If using more than one helper function to define styles, all
+calls must be enclosed in a \code{\link[=list]{list()}}. Custom CSS declarations can be used
+for HTML output by including a \code{\link[=css]{css()}}-based statement as a list item.}
 
 \item{locations}{the cell or set of cells to be associated with the style.
 Supplying any of the \verb{cells_*()} helper functions is a useful way to target
@@ -52,6 +53,8 @@ bold text (the degree of choice is greater with variable fonts)
 \if{html}{\figure{man_tab_style_1.png}{options: width=100\%}}
 
 \if{html}{\figure{man_tab_style_2.png}{options: width=100\%}}
+
+\if{html}{\figure{man_tab_style_3.png}{options: width=100\%}}
 }
 
 \section{Function ID}{
@@ -114,6 +117,25 @@ tab_2 <-
       ),
     locations = cells_body(
       rows = open > close)
+  )
+
+# Use `exibble` to create a gt table;
+# replace missing values with the
+# `fmt_missing()` function and then
+# add styling to the `char` column
+# with `cell_fill()` and with a
+# CSS style declaration
+tab_3 <-
+  exibble \%>\%
+  dplyr::select(char, fctr) \%>\%
+  gt() \%>\%
+  fmt_missing(everything()) \%>\%
+  tab_style(
+    style = list(
+      cell_fill(color = "lightcyan"),
+      "font-variant: small-caps;"
+    ),
+    locations = cells_body(columns = vars(char))
   )
 
 }

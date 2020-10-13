@@ -61,7 +61,7 @@ many_options_tbl <-
   tab_source_note("A source note for the table.") %>%
   tab_options(
     table.font.size = px(14),            # Entire table's font size
-    table.background.color = NULL,       # Entire table's background color
+    table.background.color = "aliceblue",# Entire table's background color
     table.width = px(360),               # Entire table's width
     table.border.top.style = "solid",    # Top line of table - style
     table.border.top.width = px(3),      # Top line of table - width
@@ -86,7 +86,7 @@ many_options_tbl <-
     row_group.border.bottom.color = "orange",    # Bottom line of row group - color
     table_body.border.top.style = "solid",          # Top line of table body - style
     table_body.border.top.width = px(5),            # Top line of table body - width
-    table_body.border.top.color = "indianred",      # Top line of table body - color
+    table_body.border.top.color = "chocolate1",     # Top line of table body - color
     table_body.border.bottom.style = "solid",       # Bottom line of table body - style
     table_body.border.bottom.width = px(5),         # Bottom line of table body - width
     table_body.border.bottom.color = "turquoise",   # Bottom line of table body - color

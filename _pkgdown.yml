@@ -133,6 +133,8 @@ reference:
     - random_id
     - escape_latex
     - gt_latex_dependencies
+    - default_fonts
+    - google_font
 
   - title: Image Addition Functions
     desc: >
@@ -167,15 +169,17 @@ reference:
       useful information. So far, we can get reference information on
       date styles (`info_date_style()`), on time styles
       (`info_time_style()`), on a huge number of color palettes
-      (`info_paletteer()`), on currencies (`info_currencies()`), and, on
+      (`info_paletteer()`), on currencies (`info_currencies()`), on
       all of the different locales supported in the formatter functions
-      (`info_locales()`).
+      (`info_locales()`), and on our recommendations for which Google Fonts
+      to try in your tables.
     contents:
     - info_date_style
     - info_time_style
     - info_currencies
     - info_locales
     - info_paletteer
+    - info_google_fonts
 
   - title: Datasets
     desc: >

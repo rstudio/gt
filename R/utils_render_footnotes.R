@@ -607,7 +607,7 @@ apply_footnotes_to_output <- function(data,
 
 #' @noRd
 set_footnote_marks_row_groups <- function(data,
-                                           context = "html") {
+                                          context = "html") {
 
   groups_rows_df <- dt_groups_rows_get(data = data)
   footnotes_tbl <- dt_footnotes_get(data = data)
@@ -673,9 +673,8 @@ set_footnote_marks_row_groups <- function(data,
 #' Apply footnotes to the summary rows
 #'
 #' @noRd
-apply_footnotes_to_summary <- function(data) {
-
-  # TODO: `context` is missing in this function
+apply_footnotes_to_summary <- function(data,
+                                       context = "html") {
 
   list_of_summaries <- dt_summary_df_get(data = data)
   footnotes_tbl <- dt_footnotes_get(data = data)
@@ -708,8 +707,21 @@ apply_footnotes_to_summary <- function(data) {
         summary_df_list[[footnotes_data_marks[i, ][["grpname"]]]][[
           footnotes_data_marks$row[i], footnotes_data_marks$colname[i]]]
 
-      text <-
-        paste0(text, footnote_mark_to_html(footnotes_data_marks$fs_id_coalesced[i]))
+      if (context == "html") {
+
+        text <-
+          paste0(text, footnote_mark_to_html(footnotes_data_marks$fs_id_coalesced[i]))
+
+      } else if (context == "rtf") {
+
+        text <-
+          paste0(text, footnote_mark_to_rtf(footnotes_data_marks$fs_id_coalesced[i]))
+
+      } else if (context == "latex") {
+
+        text <-
+          paste0(text, footnote_mark_to_latex(footnotes_data_marks$fs_id_coalesced[i]))
+      }
 
       summary_df_list[[footnotes_data_marks[i, ][["grpname"]]]][[
         footnotes_data_marks$row[i], footnotes_data_marks$colname[i]]] <- text
@@ -738,8 +750,21 @@ apply_footnotes_to_summary <- function(data) {
         summary_df_list[[grand_summary_col]][[
           footnotes_data_marks$rownum[i], footnotes_data_marks$colname[i]]]
 
-      text <-
-        paste0(text, footnote_mark_to_html(footnotes_data_marks$fs_id_coalesced[i]))
+      if (context == "html") {
+
+        text <-
+          paste0(text, footnote_mark_to_html(footnotes_data_marks$fs_id_coalesced[i]))
+
+      } else if (context == "rtf") {
+
+        text <-
+          paste0(text, footnote_mark_to_rtf(footnotes_data_marks$fs_id_coalesced[i]))
+
+      } else if (context == "latex") {
+
+        text <-
+          paste0(text, footnote_mark_to_latex(footnotes_data_marks$fs_id_coalesced[i]))
+      }
 
       summary_df_list[[grand_summary_col]][[
         footnotes_data_marks$rownum[i], footnotes_data_marks$colname[i]]] <- text
@@ -750,6 +775,5 @@ apply_footnotes_to_summary <- function(data) {
   }
 
   data <- dt_summary_data_set(data = data, summary = list_of_summaries)
-
   data
 }

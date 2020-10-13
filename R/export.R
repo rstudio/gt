@@ -82,7 +82,6 @@
 #' # document
 #' tab_1 %>%
 #'   gtsave("tab_1.tex", path = tempdir())
-#'
 #' }
 #'
 #' @family Export Functions
@@ -461,39 +460,36 @@ as_rtf <- function(data) {
 
   # Composition of RTF ------------------------------------------------------
 
-  # Create a RTF fragment for the start of the table
-  table_start <- rtf_head()
-
   # Create the heading component
-  heading_component <- create_heading_component(data = data, context = "rtf")
+  heading_component <- create_heading_component_rtf(data = data)
 
   # Create the columns component
-  columns_component <- create_columns_component_r(data = data)
+  columns_component <- create_columns_component_rtf(data = data)
 
   # Create the body component
-  body_component <- create_body_component_r(data = data)
+  body_component <- create_body_component_rtf(data = data)
 
   # Create the footnotes component
-  footnotes_component <- create_footnotes_component_r(data = data)
+  footnotes_component <- create_footnotes_component_rtf(data = data)
 
   # Create the source notes component
-  source_notes_component <- create_source_notes_component_r(data = data)
-
-  # Create a fragment for the ending tabular statement
-  table_end <- "}\n"
+  source_notes_component <- create_source_notes_component_rtf(data = data)
 
   # Compose the RTF table
   rtf_table <-
-    paste0(
-      table_start,
-      heading_component,
-      columns_component,
-      body_component,
-      footnotes_component,
-      source_notes_component,
-      table_end,
-      collapse = ""
-    )
+    rtf_file(
+      document = {
+        rtf_table(
+          rows = c(
+            heading_component,
+            columns_component,
+            body_component,
+            footnotes_component,
+            source_notes_component
+          )
+        )
+      }) %>%
+    as_rtf_string()
 
   if (isTRUE(getOption('knitr.in.progress'))) {
     rtf_table <- rtf_table %>% knitr::raw_output()
@@ -501,6 +497,7 @@ as_rtf <- function(data) {
 
   rtf_table
 }
+
 
 #' Extract a summary list from a **gt** object
 #'
