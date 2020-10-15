@@ -28,8 +28,8 @@ test_that("the `row_group_order()` function works correctly", {
   # Expect a characteristic pattern
   grepl(
     paste0(
-      ".*multicolumn\\{1\\}\\{l\\}\\{2018-02-11\\}",
-      ".*multicolumn\\{1\\}\\{l\\}\\{2018-02-10\\}.*"),
+      ".*multicolumn\\{5\\}\\{l\\}\\{2018-02-11\\}",
+      ".*multicolumn\\{5\\}\\{l\\}\\{2018-02-10\\}.*"),
     tbl_latex %>%
       as_latex() %>% as.character()) %>%
     expect_true()
@@ -44,8 +44,8 @@ test_that("the `row_group_order()` function works correctly", {
   # Expect a characteristic pattern
   grepl(
     paste0(
-      ".*multicolumn\\{1\\}\\{l\\}\\{2018-02-11\\}",
-      ".*multicolumn\\{1\\}\\{l\\}\\{2018-02-10\\}.*"),
+      ".*multicolumn\\{5\\}\\{l\\}\\{2018-02-11\\}",
+      ".*multicolumn\\{5\\}\\{l\\}\\{2018-02-10\\}.*"),
     tbl_latex %>%
       as_latex() %>% as.character()) %>%
     expect_true()
