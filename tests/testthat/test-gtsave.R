@@ -53,13 +53,13 @@ test_that("the `gtsave()` function creates an HTML file based on the extension",
   expect_true(file.exists(path_2))
 
   # Expect that the content of the file is HTML
-  (path_1 %>%
+  (path_2 %>%
       readLines()) %>% paste(collapse = "\n") %>%
     tidy_grepl("<!DOCTYPE html>") %>%
     expect_true()
 
   # Expect that CSS styles are not inlined
-  (path_1 %>%
+  (path_2 %>%
       readLines()) %>% paste(collapse = "\n") %>%
     tidy_grepl("<style>html \\{") %>%
     expect_true()
@@ -81,15 +81,47 @@ test_that("the `gtsave()` function creates an HTML file based on the extension",
     gtsave(filename = path_3, inline_css = TRUE)
 
   # Expect that the content of the file is HTML
-  (path_1 %>%
+  (path_3 %>%
       readLines()) %>% paste(collapse = "\n") %>%
     tidy_grepl("<!DOCTYPE html>") %>%
     expect_true()
 
-  # Expect that CSS styles are not inlined
-  (path_1 %>%
+  # Expect that CSS styles are inlined
+  (path_3 %>%
       readLines()) %>% paste(collapse = "\n") %>%
-    tidy_grepl("<style>html \\{") %>%
+    tidy_grepl("<style>body\\{") %>%
+    expect_true()
+
+  # Create a filename with path, having the
+  # .html extension
+  path_4 <- tempfile(fileext = ".html")
+  on.exit(unlink(path_4))
+
+  # Expect that a file does not yet exist
+  # on that path
+  expect_false(file.exists(path_4))
+
+  # Save a gt table based on the exibble dataset
+  # as an HTML file to the `path_4`; use the
+  # basename and dirname with `gtsave()`
+  exibble %>%
+    gt() %>%
+    gtsave(
+      filename = basename(path_4),
+      path = dirname(path_4),
+      inline_css = TRUE
+    )
+
+  # Expect that the content of the file is HTML
+  (path_4 %>%
+      readLines()) %>% paste(collapse = "\n") %>%
+    tidy_grepl("<!DOCTYPE html>") %>%
+    expect_true()
+
+  # Expect that CSS styles are inlined
+  (path_4 %>%
+      readLines()) %>% paste(collapse = "\n") %>%
+    tidy_grepl("<style>body\\{") %>%
     expect_true()
 })
 
