@@ -251,14 +251,18 @@ gtsave_file_ext <- function(filename) {
 #' @noRd
 gtsave_filename <- function(path, filename) {
 
-  if (!is.null(path)) {
-    filename <- file.path(path, filename)
-  }
+  if (is.null(path)) path <- "."
 
-  # The additional use of `fs_path_abs()` works around
+  # The use of `fs::path_abs()` works around
   # the saving code in `htmltools::save_html()`
   # See htmltools Issue #165 for more details
-  filename %>% path_expand() %>% fs::path_abs()
+
+  fs::path_abs(
+    path = filename,
+    start = path
+  ) %>%
+    fs::path_expand() %>%
+    as.character()
 }
 
 #' Get the HTML content of a **gt** table
