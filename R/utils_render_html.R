@@ -682,13 +682,15 @@ create_body_component_h <- function(data) {
   # of the `stub_components`
   stub_available <- dt_stub_components_has_rowname(stub_components)
 
+  default_vars <- dt_boxhead_get_vars_default(data = data)
+
+  all_default_vals <- body[, default_vars]
+
   # Define function to get a character vector of formatted cell
   # data (this includes the stub, if it is present)
   output_df_row_as_vec <- function(i) {
 
-    default_vars <- dt_boxhead_get_vars_default(data = data)
-
-    default_vals <- body[i, default_vars] %>% unlist() %>% unname()
+    default_vals <- unlist(all_default_vals[i,])
 
     if (stub_available) {
 
@@ -804,9 +806,11 @@ create_body_component_h <- function(data) {
           extra_classes <- rep_len(list(striped_class_val), n_data_cols)
         }
 
+        # styles_row <-
+        #   styles_tbl %>%
+        #   dplyr::filter(rownum == i, locname %in% c("stub", "data"))
         styles_row <-
-          styles_tbl %>%
-          dplyr::filter(rownum == i, locname %in% c("stub", "data"))
+          styles_tbl[styles_tbl$rownum == i & styles_tbl$locname %in% c("stub", "data"),]
 
         row_styles <-
           build_row_styles(
@@ -817,7 +821,7 @@ create_body_component_h <- function(data) {
 
         body_row <-
           htmltools::tags$tr(
-            mapply(
+            htmltools::HTML(paste0(collapse = "\n", mapply(
               SIMPLIFY = FALSE,
               USE.NAMES = FALSE,
               output_df_row_as_vec(i),
@@ -825,16 +829,14 @@ create_body_component_h <- function(data) {
               extra_classes,
               row_styles,
               FUN = function(x, alignment_class, extra_class, cell_style) {
-
-                htmltools::tags$td(
-                  class = paste(
-                    c("gt_row", alignment_class, extra_class),
+                sprintf("<td class='%s' style='%s'>%s</td>",
+                  paste(c("gt_row", alignment_class, htmltools::htmlEscape(extra_class)),
                     collapse = " "),
-                  style = cell_style,
-                  htmltools::HTML(x)
+                  if (is.null(cell_style)) "" else htmltools::htmlEscape(cell_style),
+                  as.character(x)
                 )
               }
-            )
+            )))
           )
 
         body_section <- append(body_section, list(body_row))
