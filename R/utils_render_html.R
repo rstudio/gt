@@ -539,10 +539,17 @@ create_columns_component_h <- function(data) {
             NULL
           }
 
+        first_set_alignment <-
+          dt_boxhead_get_alignment_by_var(data = data, headings_vars[i])
+
         first_set[[length(first_set) + 1]] <-
           htmltools::tags$th(
             class = paste(
-              c("gt_col_heading", "gt_center", "gt_columns_bottom_border"),
+              c(
+                "gt_col_heading",
+                paste0("gt_", first_set_alignment),
+                "gt_columns_bottom_border"
+              ),
               collapse = " "),
             rowspan = 2,
             colspan = 1,
@@ -620,10 +627,16 @@ create_columns_component_h <- function(data) {
             NULL
           }
 
+        remaining_alignment <-
+          dt_boxhead_get_alignment_by_var(data = data, remaining_headings[j])
+
         second_set[[length(second_set) + 1]] <-
           htmltools::tags$th(
             class = paste(
-              c("gt_col_heading", "gt_columns_bottom_border", "gt_center"),
+              c(
+                "gt_col_heading", "gt_columns_bottom_border",
+                paste0("gt_", remaining_alignment)
+              ),
               collapse = " "
             ),
             rowspan = 1, colspan = 1,
