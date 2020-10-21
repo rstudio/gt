@@ -105,6 +105,12 @@ tab_spanner <- function(data,
   # Get the columns supplied in `columns` as a character vector
   column_names <- resolve_vars(var_expr = !!columns, data = data)
 
+  # If `column_names` evaluates to an empty vector or is NULL,
+  # return the data unchanged
+  if (length(column_names) < 1) {
+    return(data)
+  }
+
   data <-
     dt_spanners_add(
       data = data,
