@@ -4,7 +4,7 @@
 \alias{tab_spanner}
 \title{Add a spanner column label}
 \usage{
-tab_spanner(data, label, columns, gather = TRUE)
+tab_spanner(data, label, id = NULL, columns = NULL, gather = TRUE)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}

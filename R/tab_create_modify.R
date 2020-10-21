@@ -91,14 +91,20 @@ tab_header <- function(data,
 #' @export
 tab_spanner <- function(data,
                         label,
-                        columns,
+                        id = NULL,
+                        columns = NULL,
                         gather = TRUE) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
   checkmate::assert_character(
-    label, len = 1, any.missing = FALSE, null.ok = FALSE)
+    label, len = 1, any.missing = FALSE, null.ok = FALSE
+  )
+
+  checkmate::assert_character(
+    id, len = 1, any.missing = FALSE, null.ok = TRUE
+  )
 
   columns <- enquo(columns)
 
@@ -111,11 +117,27 @@ tab_spanner <- function(data,
     return(data)
   }
 
+  # Generate an `id` value if one isn't provided
+  if (is.null(id)) {
+    id <- generate_id_from_label(label = label)
+  }
+
+  # Check `id` against existing `id` values and modify if necessary;
+  # a message will be emitted if a duplicate `id` was found (and
+  # then corrected)
+  id <-
+    ensure_id_unique(
+      id = id,
+      existing_ids = dt_spanners_get_ids(data = data),
+      label = label
+    )
+
   data <-
     dt_spanners_add(
       data = data,
       vars = column_names,
       spanner_label = label,
+      spanner_id = id,
       gather = gather
     )
 
@@ -238,11 +260,25 @@ tab_spanner_delim <- function(data,
 
     for (spanner_label in names(spanner_var_list)) {
 
+      # Generate an `id` value from the `spanner_label`
+      id <- generate_id_from_label(label = spanner_label)
+
+      # Check `id` against existing `id` values and modify if necessary;
+      # a message will be emitted if a duplicate `id` was found (and
+      # then corrected)
+      id <-
+        ensure_id_unique(
+          id = id,
+          existing_ids = dt_spanners_get_ids(data = data),
+          label = label
+        )
+
       data <-
         data %>%
         dt_spanners_add(
           vars = spanner_var_list[[spanner_label]],
           spanner_label = spanner_label,
+          spanner_id = id,
           gather = gather
         )
     }

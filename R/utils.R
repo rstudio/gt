@@ -1230,6 +1230,40 @@ validate_style_in <- function(style_vals,
   }
 }
 
+generate_id_from_label <- function(label) {
+
+  label %>%
+    tidy_gsub("<.+?>", "") %>%
+    tidy_gsub("[^a-zA-Z0-9 ]", "") %>%
+    abbreviate(minlength = 5, named = FALSE)
+}
+
+ensure_id_unique <- function(id,
+                             existing_ids,
+                             label) {
+
+  if (!(id %in% existing_ids)) {
+    return(id)
+  }
+
+  id_i <- id
+
+  while (id %in% existing_ids) {
+
+    id <- paste0(gsub(" ", "", id), random_id(1))
+
+    if (!(id %in% existing_ids)) break
+  }
+
+  message(
+    "The `id` value of `\"", id_i,
+    "\"` was changed to `\"", id, "\"` to enforce uniqueness:\n",
+    "* this pertains to the label: `\"", label, "\"`"
+  )
+
+  id
+}
+
 flatten_list <- function(x) {
   x %>% unlist(recursive = FALSE)
 }
