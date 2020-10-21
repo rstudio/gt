@@ -491,8 +491,11 @@ create_columns_component_h <- function(data) {
       first_set[[length(first_set) + 1]] <-
         htmltools::tags$th(
           class = paste(
-            c("gt_col_heading", "gt_columns_bottom_border",
-              paste0("gt_", stubhead_label_alignment)),
+            c(
+              "gt_col_heading",
+              "gt_columns_bottom_border",
+              paste0("gt_", stubhead_label_alignment)
+            ),
             collapse = " "),
           rowspan = 2,
           colspan = 1,
@@ -547,8 +550,8 @@ create_columns_component_h <- function(data) {
             class = paste(
               c(
                 "gt_col_heading",
-                paste0("gt_", first_set_alignment),
-                "gt_columns_bottom_border"
+                "gt_columns_bottom_border",
+                paste0("gt_", first_set_alignment)
               ),
               collapse = " "),
             rowspan = 2,
@@ -578,7 +581,11 @@ create_columns_component_h <- function(data) {
           first_set[[length(first_set) + 1]] <-
             htmltools::tags$th(
               class = paste(
-                c("gt_center", "gt_columns_top_border", "gt_column_spanner_outer"),
+                c(
+                  "gt_center",
+                  "gt_columns_top_border",
+                  "gt_column_spanner_outer"
+                ),
                 collapse = " "
               ),
               rowspan = 1,
@@ -634,7 +641,8 @@ create_columns_component_h <- function(data) {
           htmltools::tags$th(
             class = paste(
               c(
-                "gt_col_heading", "gt_columns_bottom_border",
+                "gt_col_heading",
+                "gt_columns_bottom_border",
                 paste0("gt_", remaining_alignment)
               ),
               collapse = " "
@@ -643,7 +651,6 @@ create_columns_component_h <- function(data) {
             style = remaining_style,
             htmltools::HTML(remaining_headings_labels[j])
           )
-
       }
 
       table_col_headings <-
