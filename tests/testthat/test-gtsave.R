@@ -1,5 +1,3 @@
-context("Ensuring that the `gtsave()` function works as expected")
-
 test_that("the `gtsave()` function creates an HTML file based on the extension", {
 
   # Create a filename with path, having the
@@ -123,6 +121,294 @@ test_that("the `gtsave()` function creates an HTML file based on the extension",
       readLines()) %>% paste(collapse = "\n") %>%
     tidy_grepl("<style>body\\{") %>%
     expect_true()
+})
+
+test_that("HTML saving with `gtsave()` is succesful with different path defs", {
+
+  skip_on_cran()
+  skip_on_ci()
+  skip_on_covr()
+
+  #
+  # [#1] Relative filename, default path
+  #
+
+  # Form final path, check for non-existence
+  path_1 <- tempfile(fileext = ".html")
+  on.exit(unlink(path_1))
+  expect_false(file.exists(path_1))
+
+  # Get initial working directory
+  wd_i <- getwd()
+
+  # Split path and get total number of path components
+  split_path <- fs::path_split(path_1) %>% unlist()
+  path_n <- length(split_path)
+
+  # Set working directory
+  setwd(file.path(paste0("/", paste(split_path[2:3], collapse = "/"))))
+
+  # Write the file
+  exibble %>%
+    gt() %>%
+    gtsave(filename = file.path(paste(split_path[4:path_n], collapse = "/")))
+
+  # Check for existence
+  expect_true(file.exists(path_1))
+  expect_true(
+    path_1 %>% readLines() %>% paste(collapse = "\n") %>%
+      tidy_grepl("<!DOCTYPE html>")
+  )
+
+  # Reset to initial working directory
+  setwd(wd_i)
+
+  #
+  # [#2] Relative filename, relative path
+  #
+
+  # Form final path, check for non-existence
+  path_2 <- tempfile(fileext = ".html")
+  on.exit(unlink(path_2))
+  expect_false(file.exists(path_2))
+
+  # Get initial working directory
+  wd_i <- getwd()
+
+  # Split path and get total number of path components
+  split_path <- fs::path_split(path_2) %>% unlist()
+  path_n <- length(split_path)
+
+  # Set working directory
+  setwd(file.path(paste0("/", paste(split_path[2:3], collapse = "/"))))
+
+  # Write the file
+  exibble %>%
+    gt() %>%
+    gtsave(
+      filename = file.path(paste(split_path[7:path_n], collapse = "/")),
+      path =  file.path(paste(split_path[4:6], collapse = "/"))
+    )
+
+  # Check for existence
+  expect_true(file.exists(path_2))
+  expect_true(
+    path_2 %>% readLines() %>% paste(collapse = "\n") %>%
+      tidy_grepl("<!DOCTYPE html>")
+  )
+
+  # Reset to initial working directory
+  setwd(wd_i)
+
+  # [#3] Absolute filename, absolute path (expect that `path` is ignored)
+
+  # Form final path, check for non-existence
+  path_3 <- tempfile(fileext = ".html")
+  on.exit(unlink(path_3))
+  expect_false(file.exists(path_3))
+
+  # Write the file
+  exibble %>%
+    gt() %>%
+    gtsave(
+      filename = path_3,
+      path = "/this/path/is/not/real"
+    )
+
+  # Check for existence
+  expect_true(file.exists(path_3))
+  expect_true(
+    path_3 %>% readLines() %>% paste(collapse = "\n") %>%
+      tidy_grepl("<!DOCTYPE html>")
+  )
+
+  # [#4] Filename starting with ~/, absolute path (expect that path is ignored)
+
+  # Form final path, check for non-existence
+  path_4 <- tempfile(tmpdir = "~", fileext = ".html")
+  on.exit(unlink(path_4))
+  expect_false(file.exists(path_4))
+
+  # Write the file
+  exibble %>%
+    gt() %>%
+    gtsave(
+      filename = path_4,
+      path = "/this/path/is/not/real"
+    )
+
+  # Check for existence
+  expect_true(file.exists(path_4))
+  expect_true(
+    path_4 %>% readLines() %>% paste(collapse = "\n") %>%
+      tidy_grepl("<!DOCTYPE html>")
+  )
+
+  # [#5] Using ~
+
+  # Form final path, check for non-existence
+  path_5 <- tempfile(tmpdir = "~", fileext = ".html")
+  on.exit(unlink(path_5))
+  expect_false(file.exists(path_5))
+
+  # Write the file
+  exibble %>%
+    gt() %>%
+    gtsave(
+      filename = basename(path_5),
+      path = "~"
+    )
+
+  # Check for existence
+  expect_true(file.exists(path_5))
+  expect_true(
+    path_5 %>% readLines() %>% paste(collapse = "\n") %>%
+      tidy_grepl("<!DOCTYPE html>")
+  )
+})
+
+test_that("HTML saving with `gt_save_html()` with different path defs works", {
+
+  skip_on_cran()
+  skip_on_ci()
+  skip_on_covr()
+
+  #
+  # [#1] Relative filename, default path
+  #
+
+  # Form final path, check for non-existence
+  path_1 <- tempfile(fileext = ".html")
+  on.exit(unlink(path_1))
+  expect_false(file.exists(path_1))
+
+  # Get initial working directory
+  wd_i <- getwd()
+
+  # Split path and get total number of path components
+  split_path <- fs::path_split(path_1) %>% unlist()
+  path_n <- length(split_path)
+
+  # Set working directory
+  setwd(file.path(paste0("/", paste(split_path[2:3], collapse = "/"))))
+
+  # Write the file
+  exibble %>%
+    gt() %>%
+    gt_save_html(filename = file.path(paste(split_path[4:path_n], collapse = "/")))
+
+  # Check for existence
+  expect_true(file.exists(path_1))
+  expect_true(
+    path_1 %>% readLines() %>% paste(collapse = "\n") %>%
+      tidy_grepl("<!DOCTYPE html>")
+  )
+
+  # Reset to initial working directory
+  setwd(wd_i)
+
+  #
+  # [#2] Relative filename, relative path
+  #
+
+  # Form final path, check for non-existence
+  path_2 <- tempfile(fileext = ".html")
+  on.exit(unlink(path_2))
+  expect_false(file.exists(path_2))
+
+  # Get initial working directory
+  wd_i <- getwd()
+
+  # Split path and get total number of path components
+  split_path <- fs::path_split(path_2) %>% unlist()
+  path_n <- length(split_path)
+
+  # Set working directory
+  setwd(file.path(paste0("/", paste(split_path[2:3], collapse = "/"))))
+
+  # Write the file
+  exibble %>%
+    gt() %>%
+    gt_save_html(
+      filename = file.path(paste(split_path[7:path_n], collapse = "/")),
+      path =  file.path(paste(split_path[4:6], collapse = "/"))
+    )
+
+  # Check for existence
+  expect_true(file.exists(path_2))
+  expect_true(
+    path_2 %>% readLines() %>% paste(collapse = "\n") %>%
+      tidy_grepl("<!DOCTYPE html>")
+  )
+
+  # Reset to initial working directory
+  setwd(wd_i)
+
+  # [#3] Absolute filename, absolute path (expect that `path` is ignored)
+
+  # Form final path, check for non-existence
+  path_3 <- tempfile(fileext = ".html")
+  on.exit(unlink(path_3))
+  expect_false(file.exists(path_3))
+
+  # Write the file
+  exibble %>%
+    gt() %>%
+    gt_save_html(
+      filename = path_3,
+      path = "/this/path/is/not/real"
+    )
+
+  # Check for existence
+  expect_true(file.exists(path_3))
+  expect_true(
+    path_3 %>% readLines() %>% paste(collapse = "\n") %>%
+      tidy_grepl("<!DOCTYPE html>")
+  )
+
+  # [#4] Filename starting with ~/, absolute path (expect that path is ignored)
+
+  # Form final path, check for non-existence
+  path_4 <- tempfile(tmpdir = "~", fileext = ".html")
+  on.exit(unlink(path_4))
+  expect_false(file.exists(path_4))
+
+  # Write the file
+  exibble %>%
+    gt() %>%
+    gt_save_html(
+      filename = path_4,
+      path = "/this/path/is/not/real"
+    )
+
+  # Check for existence
+  expect_true(file.exists(path_4))
+  expect_true(
+    path_4 %>% readLines() %>% paste(collapse = "\n") %>%
+      tidy_grepl("<!DOCTYPE html>")
+  )
+
+  # [#5] Using ~
+
+  # Form final path, check for non-existence
+  path_5 <- tempfile(tmpdir = "~", fileext = ".html")
+  on.exit(unlink(path_5))
+  expect_false(file.exists(path_5))
+
+  # Write the file
+  exibble %>%
+    gt() %>%
+    gt_save_html(
+      filename = basename(path_5),
+      path = "~"
+    )
+
+  # Check for existence
+  expect_true(file.exists(path_5))
+  expect_true(
+    path_5 %>% readLines() %>% paste(collapse = "\n") %>%
+      tidy_grepl("<!DOCTYPE html>")
+  )
 })
 
 # test_that("the `gtsave()` function creates a LaTeX file based on the extension", {
