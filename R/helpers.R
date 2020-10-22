@@ -391,11 +391,12 @@ cells_stubhead <- function() {
 #'   gt(rowname_col = "row") %>%
 #'   tab_spanner(
 #'     label = "dates and times",
+#'     id = "dt",
 #'     columns = vars(date, time, datetime)
 #'   ) %>%
 #'   tab_style(
 #'     style = cell_text(weight = "bold"),
-#'     locations = cells_column_spanners(spanners = "dates and times")
+#'     locations = cells_column_spanners(spanners = "dt")
 #'   )
 #'
 #' @section Figures:
