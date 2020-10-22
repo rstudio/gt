@@ -11,6 +11,17 @@ tab_spanner(data, label, id = NULL, columns = NULL, gather = TRUE)
 
 \item{label}{The text to use for the spanner column label.}
 
+\item{id}{An optional, but strongly recommended, input for an ID. When
+accessing a spanner column label through \code{\link[=cells_column_spanners]{cells_column_spanners()}} (when
+using \code{\link[=tab_style]{tab_style()}} or \code{\link[=tab_footnote]{tab_footnote()}}), it occurs through the \code{id} value
+(and not the \code{label}). If an \code{id} is not provided here, it will be
+generated from the label, stripping any tags and special characters, and
+limiting the generated string to 10 characters. Although a message will be
+provided in this case, it is advisable to set an explicit \code{id} value if you
+plan to access this cell in a later function call. Also, when providing an
+\code{id}, please ensure that it is unique across all ID values set for column
+spanner labels.}
+
 \item{columns}{The columns to be components of the spanner heading.}
 
 \item{gather}{An option to move the specified \code{columns} such that they are

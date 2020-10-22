@@ -54,6 +54,16 @@ tab_header <- function(data,
 #'
 #' @inheritParams fmt_number
 #' @param label The text to use for the spanner column label.
+#' @param id An optional, but strongly recommended, input for an ID. When
+#'   accessing a spanner column label through [cells_column_spanners()] (when
+#'   using [tab_style()] or [tab_footnote()]), it occurs through the `id` value
+#'   (and not the `label`). If an `id` is not provided here, it will be
+#'   generated from the label, stripping any tags and special characters, and
+#'   limiting the generated string to 10 characters. Although a message will be
+#'   provided in this case, it is advisable to set an explicit `id` value if you
+#'   plan to access this cell in a later function call. Also, when providing an
+#'   `id`, please ensure that it is unique across all ID values set for column
+#'   spanner labels.
 #' @param columns The columns to be components of the spanner heading.
 #' @param gather An option to move the specified `columns` such that they are
 #'   unified under the spanner column label. Ordering of the moved-into-place

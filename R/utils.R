@@ -1234,8 +1234,8 @@ generate_id_from_label <- function(label) {
 
   label %>%
     tidy_gsub("<.+?>", "") %>%
-    tidy_gsub("[^a-zA-Z0-9 ]", "") %>%
-    abbreviate(minlength = 5, named = FALSE)
+    tidy_gsub("[^a-zA-Z0-9_ ]", "") %>%
+    abbreviate(minlength = 10, named = FALSE)
 }
 
 ensure_id_unique <- function(id,

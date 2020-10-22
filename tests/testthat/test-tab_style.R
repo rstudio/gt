@@ -20,6 +20,7 @@ data <-
   ) %>%
   tab_spanner(
     label = "gear_carb_cyl",
+    id = "gcc",
     columns = vars(gear, carb, cyl)
   ) %>%
   row_group_order(groups = c("Mazdas", "Mercs")) %>%
@@ -289,7 +290,7 @@ test_that("a gt table can store the correct style statements", {
     data %>%
     tab_style(
       style = cell_fill(color = "lightgreen"),
-      locations = cells_column_spanners(spanners = "gear_carb_cyl")
+      locations = cells_column_spanners(spanners = "gcc")
     )
 
   # Expect that the internal `styles_df` data frame will have

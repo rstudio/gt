@@ -378,6 +378,7 @@ test_that("a gt table contains custom styles at the correct locations", {
     ) %>%
     tab_spanner(
       label = "gear_carb_cyl",
+      id = "gcc",
       columns = vars(gear, carb, cyl)
     ) %>%
     row_group_order(groups = c("Mazdas", "Mercs")) %>%
@@ -442,7 +443,7 @@ test_that("a gt table contains custom styles at the correct locations", {
     ) %>%
     tab_style(
       style = cell_fill(color = "lightgreen"),
-      locations = cells_column_spanners(spanners = "gear_carb_cyl")
+      locations = cells_column_spanners(spanners = "gcc")
     ) %>%
     tab_style(
       style = cell_fill(color = "turquoise"),
