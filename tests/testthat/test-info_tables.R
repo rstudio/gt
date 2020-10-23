@@ -48,5 +48,5 @@ test_that("the `info_google_fonts()` function works correctly", {
     info_google_fonts() %>%
       dt_data_get() %>%
       dim(),
-    c(37, 4))
+    c(38, 4))
 })
