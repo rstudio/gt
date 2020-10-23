@@ -39,6 +39,10 @@
 #' @param row_group.sep The separator to use between consecutive group names (a
 #'   possibility when providing `data` as a `grouped_df` with multiple groups)
 #'   in the displayed stub row group label.
+#' @param row_limit A row limit for rendering a **gt** table in an interactive
+#'   session Tables meeting or exceeding `row_limit` won't be rendered when
+#'   interactively using the **gt** API. To effectively disable this limit,
+#'   `Inf` can be used here.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -85,11 +89,21 @@ gt <- function(data,
                rownames_to_stub = FALSE,
                auto_align = TRUE,
                id = NULL,
-               row_group.sep = getOption("gt.row_group.sep", " - ")) {
+               row_group.sep = getOption("gt.row_group.sep", " - "),
+               row_limit = 1000) {
 
   # Stop function if the supplied `id` doesn't conform
   # to character(1) input or isn't NULL
-  validate_table_id(id)
+  validate_table_id(id = id)
+
+  # Stop function if the row count of `data` exceeds `row_limit`
+  # in the an interactive session
+  if (interactive() && nrow(data) >= row_limit) {
+    stop("The `data` provided has a row count that exceeds `row_limit`:\n",
+         "* Make `row_limit` higher than `nrow(data)` to render, or\n",
+         "* Use `row_limit = Inf` to completely disregard this limit check",
+         call. = FALSE)
+  }
 
   if (rownames_to_stub) {
     # Just a column name that's unlikely to collide with user data

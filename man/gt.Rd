@@ -11,7 +11,8 @@ gt(
   rownames_to_stub = FALSE,
   auto_align = TRUE,
   id = NULL,
-  row_group.sep = getOption("gt.row_group.sep", " - ")
+  row_group.sep = getOption("gt.row_group.sep", " - "),
+  row_limit = 1000
 )
 }
 \arguments{
@@ -41,6 +42,11 @@ table ID can be used with any single-length character vector.}
 \item{row_group.sep}{The separator to use between consecutive group names (a
 possibility when providing \code{data} as a \code{grouped_df} with multiple groups)
 in the displayed stub row group label.}
+
+\item{row_limit}{A row limit for rendering a \strong{gt} table in an interactive
+session Tables meeting or exceeding \code{row_limit} won't be rendered when
+interactively using the \strong{gt} API. To effectively disable this limit,
+\code{Inf} can be used here.}
 }
 \value{
 An object of class \code{gt_tbl}.

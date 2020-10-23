@@ -1,5 +1,3 @@
-context("Ensuring that the `gt()` function works as expected")
-
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
@@ -668,5 +666,16 @@ test_that("Any shared names in `rowname_col` and `groupname_col` will be disallo
     exibble %>%
       dplyr::group_by(date, row) %>%
       gt(rowname_col = "row")
+  )
+})
+
+test_that("A gt table won't be interactively generated past a row limit", {
+
+  # Don't expect an error with row limits when the
+  # gt table is generated non-interactively (as is the
+  # case in testthat tests)
+  expect_error(
+    regexp = NA,
+    exibble %>% gt(row_limit = 5)
   )
 })
