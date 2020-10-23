@@ -548,48 +548,44 @@ info_google_fonts <- function() {
   # Recommended Fonts
   recommended <-
     c(
-      "Space Mono",
-      "Work Sans",
-      "Inter",
-      "Rubik",
-      "Libre Franklin",
-      "Comorant",
-      "Fira Sans",
-      "Fira Code",
-      "Eczar",
-      "Chivo",
-      "Inknut",
-      "Source Sans Pro",
-      "Source Serif Pro",
-      "Roboto",
-      "Roboto Slab",
-      "BioRhyme",
-      "Poppins",
+      "Anonymous Pro",
       "Archivo Narrow",
-      "Libre Baskerville",
-      "Playfair Display",
-      "Karla",
-      "Encode Sans",
-      "Lora",
-      "Proza Libre",
-      "Spectral",
-      "IBM Plex Sans",
-      "IBM Plex Mono",
+      "Bio Rhyme",
+      "Cabin",
+      "Cardo",
+      "Chivo",
       "Crimson Text",
+      "Encode Sans",
+      "Exo 2",
+      "Fira Code",
+      "Fira Sans",
+      "IBM Plex Mono",
+      "IBM Plex Sans",
+      "Inconsolata",
+      "Inter",
+      "Karla",
+      "Lato",
+      "Libre Baskerville",
+      "Libre Franklin",
+      "Lora",
+      "Merriweather",
       "Montserrat",
+      "Mulish",
+      "Open Sans",
+      "Playfair Display",
+      "Poppins",
+      "Proza Libre",
       "PT Sans",
       "PT Serif",
-      "Lato",
-      "Cardo",
-      "Open Sans",
-      "Inconsolata",
-      "Cabin",
-      "Raleway",
-      "Anonymous Pro",
-      "Merriweather",
-      "Exo 2",
       "Public Sans",
-      "Muli"
+      "Raleway",
+      "Roboto",
+      "Rubik",
+      "Source Sans Pro",
+      "Source Serif Pro",
+      "Space Mono",
+      "Spectral",
+      "Work Sans"
     )
 
   styles_summary <-
@@ -597,7 +593,7 @@ info_google_fonts <- function() {
     dplyr::mutate(weight = as.integer(weight)) %>%
     dplyr::filter(name %in% recommended) %>%
     dplyr::group_by(name, style) %>%
-    dplyr::summarize(min_weight = min(weight), max_weight = max(weight)) %>%
+    dplyr::summarize(min_weight = min(weight), max_weight = max(weight), .groups = "keep") %>%
     dplyr::ungroup() %>%
     dplyr::arrange(name, dplyr::desc(style)) %>%
     dplyr::mutate(weight_range = dplyr::case_when(
@@ -607,7 +603,7 @@ info_google_fonts <- function() {
       style == "italic" & min_weight == max_weight ~ paste0("*i*&nbsp;", min_weight)
     )) %>%
     dplyr::group_by(name) %>%
-    dplyr::summarize(weight_ranges = paste(weight_range, collapse = "<br>"))
+    dplyr::summarize(weight_ranges = paste(weight_range, collapse = "<br>"), .groups = "keep")
 
   source_notes <-
     google_styles_tbl %>%
