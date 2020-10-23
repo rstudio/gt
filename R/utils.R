@@ -1232,10 +1232,21 @@ validate_style_in <- function(style_vals,
 
 generate_id_from_label <- function(label) {
 
-  label %>%
+  if (label == "") {
+    stop("The provided `label` must have at least one character.",
+         call. = FALSE)
+  }
+
+  label <-
+    label %>%
     tidy_gsub("<.+?>", "") %>%
-    tidy_gsub("[^a-zA-Z0-9_ ]", "") %>%
-    abbreviate(minlength = 10, named = FALSE)
+    tidy_gsub("[^a-zA-Z0-9_ ]", "")
+
+  if (nchar(label) < 1) {
+    label <- random_id(n = 5)
+  }
+
+  abbreviate(label, minlength = 15, named = FALSE)
 }
 
 ensure_id_unique <- function(id,
