@@ -1526,7 +1526,7 @@ cell_borders <- function(sides = "all",
 
     validate_style_in(
       style_vals, names(style_vals), "style",
-      c("solid", "dashed", "dotted")
+      c("solid", "dashed", "dotted", "hidden")
     )
 
     cell_style_structure(paste0("cell_border_", side), style_vals, "cell_border")
