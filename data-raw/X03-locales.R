@@ -1,3 +1,3 @@
 library(tidyverse)
 
-locales <- readr::read_rds(path = "data-raw/locales.RDS")
+locales <- readr::read_rds(file = "data-raw/locales.RDS")
