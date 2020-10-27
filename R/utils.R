@@ -1136,7 +1136,6 @@ process_footnote_marks <- function(x,
     unname()
 }
 
-
 #' Determine whether an object is a `gt_tbl`
 #'
 #' @param data A table object that is created using the [gt()] function.
@@ -1230,49 +1229,16 @@ validate_style_in <- function(style_vals,
   }
 }
 
-generate_id_from_label <- function(label) {
+check_spanner_id_unique <- function(data,
+                                    spanner_id) {
 
-  if (label == "") {
-    stop("The provided `label` must have at least one character.",
+  existing_ids <- dt_spanners_get_ids(data = data)
+
+  if (spanner_id %in% existing_ids) {
+    stop("The `id` provided (`\"", spanner_id, "\"`) is not unique:\n",
+         "* provide a unique ID value for this spanner",
          call. = FALSE)
   }
-
-  label <-
-    label %>%
-    tidy_gsub("<.+?>", "") %>%
-    tidy_gsub("[^a-zA-Z0-9_ ]", "")
-
-  if (nchar(label) < 1) {
-    label <- random_id(n = 5)
-  }
-
-  abbreviate(label, minlength = 15, named = FALSE)
-}
-
-ensure_id_unique <- function(id,
-                             existing_ids,
-                             label) {
-
-  if (!(id %in% existing_ids)) {
-    return(id)
-  }
-
-  id_i <- id
-
-  while (id %in% existing_ids) {
-
-    id <- paste0(gsub(" ", "", id), random_id(1))
-
-    if (!(id %in% existing_ids)) break
-  }
-
-  message(
-    "The `id` value of `\"", id_i,
-    "\"` was changed to `\"", id, "\"` to enforce uniqueness:\n",
-    "* this pertains to the label: `\"", label, "\"`"
-  )
-
-  id
 }
 
 flatten_list <- function(x) {
