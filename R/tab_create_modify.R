@@ -101,7 +101,7 @@ tab_header <- function(data,
 #' @export
 tab_spanner <- function(data,
                         label,
-                        id = NULL,
+                        id = label,
                         columns = NULL,
                         gather = TRUE) {
 
@@ -113,7 +113,7 @@ tab_spanner <- function(data,
   )
 
   checkmate::assert_character(
-    id, len = 1, any.missing = FALSE, null.ok = TRUE
+    id, len = 1, any.missing = FALSE, null.ok = FALSE
   )
 
   columns <- enquo(columns)
@@ -127,21 +127,10 @@ tab_spanner <- function(data,
     return(data)
   }
 
-  # Generate an `id` value if one isn't provided
-  if (is.null(id)) {
-    id <- generate_id_from_label(label = label)
-  }
+  # Check `id` against existing `id` values and stop if necessary
+  check_spanner_id_unique(data = data, spanner_id = id)
 
-  # Check `id` against existing `id` values and modify if necessary;
-  # a message will be emitted if a duplicate `id` was found (and
-  # then corrected)
-  id <-
-    ensure_id_unique(
-      id = id,
-      existing_ids = dt_spanners_get_ids(data = data),
-      label = label
-    )
-
+  # Add the spanner to the `_spanners` table
   data <-
     dt_spanners_add(
       data = data,
@@ -251,46 +240,30 @@ tab_spanner_delim <- function(data,
 
     spanners <- vapply(split_colnames, `[[`, character(1), 1)
 
+    spanner_var_list <- split(colnames_with_delim, spanners)
+
+    for (label in names(spanner_var_list)) {
+
+      data <-
+        tab_spanner(
+          data = data, label = label,
+          columns = spanner_var_list[[label]],
+          gather = gather
+        )
+    }
+
     new_labels <-
       lapply(split_colnames, `[[`, -1) %>%
       vapply(paste0, FUN.VALUE = character(1), collapse = delim)
 
     for (i in seq_along(split_colnames)) {
 
-      spanners_i <- spanners[i]
       new_labels_i <- new_labels[i]
       var_i <- colnames_with_delim[i]
 
       data <-
         data %>%
         dt_boxhead_edit(var = var_i, column_label = new_labels_i)
-    }
-
-    spanner_var_list <- split(colnames_with_delim, spanners)
-
-    for (spanner_label in names(spanner_var_list)) {
-
-      # Generate an `id` value from the `spanner_label`
-      id <- generate_id_from_label(label = spanner_label)
-
-      # Check `id` against existing `id` values and modify if necessary;
-      # a message will be emitted if a duplicate `id` was found (and
-      # then corrected)
-      id <-
-        ensure_id_unique(
-          id = id,
-          existing_ids = dt_spanners_get_ids(data = data),
-          label = label
-        )
-
-      data <-
-        data %>%
-        dt_spanners_add(
-          vars = spanner_var_list[[spanner_label]],
-          spanner_label = spanner_label,
-          spanner_id = id,
-          gather = gather
-        )
     }
   }
 
