@@ -606,112 +606,24 @@ test_that("the `glue_gt()` function works in a safe manner", {
   expect_identical(glue_gt(list(), "a", "b") %>% as.character(), "ab")
 })
 
-test_that("The `generate_id_from_label()` function works properly", {
+test_that("The `check_spanner_id_unique()` function works properly", {
 
-  # Expect that `label` values with 15 characters or less
-  # (after removal of tags and any chars not in [a-zA-Z0-9_ ])
-  # won't be abbreviated through `abbreviate()`
-  expect_equal(
-    generate_id_from_label(label = "label"),
-    "label"
-  )
-  expect_equal(
-    generate_id_from_label(label = "A Spanner Label"),
-    "A Spanner Label"
-  )
-  expect_equal(
-    generate_id_from_label(label = "**A Spanner Label**"),
-    "A Spanner Label"
-  )
-  expect_equal(
-    generate_id_from_label(label = "<strong>A Spanner Label</strong>"),
-    "A Spanner Label"
+  gt_tbl_1 <- gt(exibble)
+
+  gt_tbl_2 <-
+    gt(exibble) %>%
+    tab_spanner(label = "a", columns = vars(num))
+
+  # Don't expect an error when checking for unique spanner IDs
+  # in a gt table with no spanner column labels
+  expect_error(
+    regexp = NA,
+    check_spanner_id_unique(data = gt_tbl_1, spanner_id = "a")
   )
 
-  # For long labels, abbreviate is used after tag removal and deletion
-  # of chars in [a-zA-Z0-9_ ]
-  expect_equal(
-    generate_id_from_label(label = "A Very Long Spanner Label"),
-    "AVryLngSpnnrLbl"
-  )
-  expect_equal(
-    generate_id_from_label(label = "//A Very Long Spanner Label//"),
-    "AVryLngSpnnrLbl"
-  )
-  expect_equal(
-    generate_id_from_label(label = "A Very Long Spanner Label."),
-    "AVryLngSpnnrLbl"
-  )
-  expect_equal(
-    generate_id_from_label(label = "<strong>A Very Long Spanner Label</strong>"),
-    "AVryLngSpnnrLbl"
-  )
-
-  # For tag/character removal that results in an empty
-  # string, a random five-letter label is generated
-  expect_match(
-    generate_id_from_label(label = "<strong>...</strong>"),
-    "^[a-z]{5}$"
-  )
-
-  # Expect an error if the input value for `label` is an empty string
-  expect_error(generate_id_from_label(label = ""))
-})
-
-test_that("The `ensure_id_unique()` function works properly", {
-
-  # If an `id` is unique across `existing_ids` then it is
-  # returned unchanged
-  expect_equal(
-    ensure_id_unique(
-      id = "unique_id",
-      existing_ids = c("id_1", "id_2"),
-      label = "label"
-    ),
-    "unique_id"
-  )
-
-  # If an `id` is not unique, then a random lowercase letter
-  # is appended
-  suppressMessages(
-    expect_match(
-      ensure_id_unique(
-        id = "id_1",
-        existing_ids = c("id_1", "id_2"),
-        label = "label"
-      ),
-      "^id_1[a-z]$"
-    )
-  )
-
-  # Expect a message to be emitted when `id` is not unique
-  expect_message(
-    ensure_id_unique(
-      id = "id_1",
-      existing_ids = c("id_1", "id_2"),
-      label = "label"
-    )
-  )
-
-  # Expect multiple lowercase letters to be appended until
-  # uniqueness is attained
-  suppressMessages(
-    expect_match(
-      ensure_id_unique(
-        id = "id",
-        existing_ids = c("id", paste0("id", letters)),
-        label = "label"
-      ),
-      "^id[a-z]{2}$"
-    )
-  )
-
-  # Expect a single message to be emitted when `id` is not unique
-  expect_message(
-    ensure_id_unique(
-      id = "id",
-      existing_ids = c("id", paste0("id", letters)),
-      label = "label"
-    )
+  # Expect an error when reusing a spanner ID value (the `label` value
+  # is used as the `id` value)
+  expect_error(
+    check_spanner_id_unique(data = gt_tbl_2, spanner_id = "a")
   )
 })

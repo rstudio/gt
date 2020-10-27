@@ -178,6 +178,13 @@ test_that("a gt table contains the expected spanner column labels", {
         label = "perimeter",
         columns = vars(peris, shapes))
   )
+
+  # Expect an error when using an ID twice
+  expect_error(
+    gt(exibble) %>%
+      tab_spanner(label = "a", columns = vars(num)) %>%
+      tab_spanner(label = "b", id = "a", columns = vars(char))
+  )
 })
 
 test_that("`tab_spanner()` doesn't adversely affect column alignment", {
