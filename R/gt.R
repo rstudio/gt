@@ -113,35 +113,38 @@ gt <- function(data,
 
   # Initialize the main objects
   data <-
-    list() %>%
     dt_data_init(
+      data = list(),
       data_tbl = data,
       rownames_to_column = if (rownames_to_stub) rowname_col else NA_character_
-    ) %>%
-    dt_boxhead_init() %>%
+    )
+
+  data <- dt_boxhead_init(data = data)
+  data <-
     dt_stub_df_init(
+      data = data,
       rowname_col = rowname_col,
       groupname_col = groupname_col,
       row_group.sep = row_group.sep
-    ) %>%
-    dt_row_groups_init() %>%
-    dt_stub_others_init() %>%
-    dt_heading_init() %>%
-    dt_spanners_init() %>%
-    dt_stubhead_init() %>%
-    dt_footnotes_init() %>%
-    dt_source_notes_init() %>%
-    dt_formats_init() %>%
-    dt_styles_init() %>%
-    dt_summary_init() %>%
-    dt_options_init() %>%
-    dt_transforms_init() %>%
-    dt_has_built_init()
+    )
+  data <- dt_row_groups_init(data = data)
+  data <- dt_stub_others_init(data = data)
+  data <- dt_heading_init(data = data)
+  data <- dt_spanners_init(data = data)
+  data <- dt_stubhead_init(data = data)
+  data <- dt_footnotes_init(data = data)
+  data <- dt_source_notes_init(data = data)
+  data <- dt_formats_init(data = data)
+  data <- dt_styles_init(data = data)
+  data <- dt_summary_init(data = data)
+  data <- dt_options_init(data = data)
+  data <- dt_transforms_init(data = data)
+  data <- dt_has_built_init(data = data)
 
   # Add any user-defined table ID to the `table_id` parameter
   # (if NULL, the default setting will generate a random ID)
   if (!is.null(id)) {
-    data <- data %>% dt_options_set_value(option = "table_id", value = id)
+    data <- dt_options_set_value(data = data, option = "table_id", value = id)
   }
 
   # Apply the `gt_tbl` class to the object while
@@ -150,8 +153,8 @@ gt <- function(data,
 
   # If automatic alignment of values is to be done, call
   # the `cols_align()` function on data
-  if (isTRUE(auto_align)) {
-    data <- data %>% cols_align(align = "auto")
+  if (auto_align) {
+    data <- cols_align(data = data, align = "auto")
   }
 
   data

@@ -43,7 +43,11 @@ tab_header <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  data %>% dt_heading_title_subtitle(title = title, subtitle = subtitle)
+  dt_heading_title_subtitle(
+    data = data,
+    title = title,
+    subtitle = subtitle
+  )
 }
 
 #' Add a spanner column label
@@ -355,12 +359,13 @@ tab_row_group <- function(data,
       data <-
         dt_row_groups_set(
           data = data,
-          row_groups = c(
-            process_text(group[1]),
-            arrange_groups_vars,
-            NA_character_
-          ) %>%
-            unique()
+          row_groups = unique(
+            c(
+              process_text(group[1]),
+              arrange_groups_vars,
+              NA_character_
+            )
+          )
         )
 
     } else {
@@ -368,11 +373,12 @@ tab_row_group <- function(data,
       data <-
         dt_row_groups_set(
           data = data,
-          row_groups = c(
-            process_text(group[1]),
-            arrange_groups_vars
-          ) %>%
-            unique()
+          row_groups = unique(
+            c(
+              process_text(group[1]),
+              arrange_groups_vars
+            )
+          )
         )
     }
   }
@@ -383,7 +389,7 @@ tab_row_group <- function(data,
     data <-
       dt_stub_others_set(
         data = data,
-        stub_others = others[1] %>% process_text()
+        stub_others = process_text(others[1])
       )
   }
 
@@ -431,7 +437,7 @@ tab_stubhead <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  data %>% dt_stubhead_label(label = label)
+  dt_stubhead_label(data = data, label = label)
 }
 
 #' Add a table footnote
@@ -524,7 +530,12 @@ tab_footnote <- function(data,
   # Resolve the locations of the targeted data cells and append
   # the footnotes
   for (loc in locations) {
-    data <- set_footnote(loc = loc, data = data, footnote = process_text(footnote))
+    data <-
+      set_footnote(
+        loc = loc,
+        data = data,
+        footnote = process_text(footnote)
+      )
   }
 
   data
@@ -757,7 +768,10 @@ tab_source_note <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  data %>% dt_source_notes_add(source_note = source_note)
+  dt_source_notes_add(
+    data = data,
+    source_note = source_note
+  )
 }
 
 #' Add custom styles to one or more cells
@@ -906,15 +920,27 @@ tab_style <- function(data,
       font <- style[["cell_text"]][["font"]]
       font <- normalize_font_input(font_input = font)
 
-      existing_additional_css <- dt_options_get_value(data = data, option = "table_additional_css")
+      existing_additional_css <-
+        dt_options_get_value(
+          data = data,
+          option = "table_additional_css"
+        )
+
       additional_css <- c(font$import_stmt, existing_additional_css)
 
-      data <- tab_options(data = data, table.additional_css = additional_css)
+      data <-
+        tab_options(
+          data = data,
+          table.additional_css = additional_css
+        )
 
       font_names <- font$name
 
       style[["cell_text"]][["font"]] <-
-        as_css_font_family_attr(font_vec = font_names, value_only = TRUE)
+        as_css_font_family_attr(
+          font_vec = font_names,
+          value_only = TRUE
+        )
     }
   }
 
@@ -926,6 +952,7 @@ tab_style <- function(data,
   # Resolve the locations of the targeted data cells and append
   # the format directives
   for (loc in locations) {
+
     data <-
       set_style(
         loc = loc,

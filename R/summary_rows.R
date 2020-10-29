@@ -119,8 +119,8 @@ summary_rows <- function(data,
   if (!stub_available && is.null(groups)) {
 
     data <-
-      data %>%
       dt_boxhead_add_var(
+        data = data,
         var = "rowname",
         type = "stub",
         column_label = list("rowname"),

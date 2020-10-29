@@ -76,7 +76,7 @@ md <- function(text) {
 #' @export
 html <- function(text, ...) {
 
-  htmltools::HTML(text, ...)
+  gt_HTML(text, ...)
 }
 
 #' Does an object have the `html` class?

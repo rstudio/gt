@@ -153,7 +153,7 @@ gt_save_html <- function(data,
 
     data %>%
       as_raw_html(inline_css = inline_css) %>%
-      htmltools::HTML() %>%
+      gt_HTML() %>%
       htmltools::save_html(filename, ...)
 
   } else {
@@ -185,7 +185,11 @@ gt_save_webshot <- function(data,
     tidy_gsub("\\\\", "/")
 
   # Save gt table as HTML using the `gt_save_html()` function
-  data %>% gt_save_html(filename = tempfile_, path = NULL)
+  gt_save_html(
+    data = data,
+    filename = tempfile_,
+    path = NULL
+  )
 
   # Saving an image requires the webshot package; if it's
   # not present, stop with a message
@@ -218,9 +222,7 @@ gt_save_latex <- function(data,
 
   filename <- gtsave_filename(path = path, filename = filename)
 
-  data %>%
-    as_latex() %>%
-    writeLines(con = filename)
+  writeLines(text = as_latex(data = data), con = filename)
 }
 
 #' Saving function for an RTF file
@@ -319,7 +321,7 @@ as_raw_html <- function(data,
       inline_html_styles(css_tbl = get_css_tbl(data))
   }
 
-  htmltools::HTML(html_table)
+  gt_HTML(html_table)
 }
 
 #' Output a gt object as LaTeX
