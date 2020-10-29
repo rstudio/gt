@@ -1316,9 +1316,9 @@ column_classes_are_valid <- function(data, columns, valid_classes) {
     all()
 }
 
-gt_HTML <- function(text) {
+gt_HTML <- function(text, ...) {
 
-  htmlText <- paste(text, collapse = " ")
+  htmlText <- paste(text, ..., collapse = " ")
   attr(htmlText, "html") <- TRUE
   class(htmlText) <- c("html", "character")
   htmlText
