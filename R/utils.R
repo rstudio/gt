@@ -1235,7 +1235,7 @@ check_spanner_id_unique <- function(data,
   existing_ids <- dt_spanners_get_ids(data = data)
 
   if (spanner_id %in% existing_ids) {
-    stop("The `id` provided (`\"", spanner_id, "\"`) is not unique:\n",
+    stop("The spanner `id` provided (`\"", spanner_id, "\"`) is not unique:\n",
          "* provide a unique ID value for this spanner",
          call. = FALSE)
   }
