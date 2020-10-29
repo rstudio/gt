@@ -54,6 +54,7 @@ tab_header <- function(data,
 #'
 #' @inheritParams fmt_number
 #' @param label The text to use for the spanner column label.
+#' @param columns The columns to be components of the spanner heading.
 #' @param id An optional, but strongly recommended, input for an ID. When
 #'   accessing a spanner column label through [cells_column_spanners()] (when
 #'   using [tab_style()] or [tab_footnote()]), it occurs through the `id` value
@@ -64,7 +65,6 @@ tab_header <- function(data,
 #'   plan to access this cell in a later function call. Also, when providing an
 #'   `id`, please ensure that it is unique across all ID values set for column
 #'   spanner labels.
-#' @param columns The columns to be components of the spanner heading.
 #' @param gather An option to move the specified `columns` such that they are
 #'   unified under the spanner column label. Ordering of the moved-into-place
 #'   columns will be preserved in all cases.
@@ -101,8 +101,8 @@ tab_header <- function(data,
 #' @export
 tab_spanner <- function(data,
                         label,
+                        columns,
                         id = label,
-                        columns = NULL,
                         gather = TRUE) {
 
   # Perform input object validation
@@ -246,7 +246,8 @@ tab_spanner_delim <- function(data,
 
       data <-
         tab_spanner(
-          data = data, label = label,
+          data = data,
+          label = label,
           columns = spanner_var_list[[label]],
           gather = gather
         )

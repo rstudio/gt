@@ -4,12 +4,14 @@
 \alias{tab_spanner}
 \title{Add a spanner column label}
 \usage{
-tab_spanner(data, label, id = label, columns = NULL, gather = TRUE)
+tab_spanner(data, label, columns, id = label, gather = TRUE)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{label}{The text to use for the spanner column label.}
+
+\item{columns}{The columns to be components of the spanner heading.}
 
 \item{id}{An optional, but strongly recommended, input for an ID. When
 accessing a spanner column label through \code{\link[=cells_column_spanners]{cells_column_spanners()}} (when
@@ -21,8 +23,6 @@ provided in this case, it is advisable to set an explicit \code{id} value if you
 plan to access this cell in a later function call. Also, when providing an
 \code{id}, please ensure that it is unique across all ID values set for column
 spanner labels.}
-
-\item{columns}{The columns to be components of the spanner heading.}
 
 \item{gather}{An option to move the specified \code{columns} such that they are
 unified under the spanner column label. Ordering of the moved-into-place
