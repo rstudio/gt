@@ -477,7 +477,7 @@ test_that("the `tab_footnote()` function works correctly", {
     unlist() %>%
     unname() %>%
     expect_equal(
-      c("columns_groups", "gear_carb_cyl", NA_character_, "3", NA_character_,
+      c("columns_groups", "gcc", NA_character_, "3", NA_character_,
         NA_character_, "Column group footnote.")
     )
 

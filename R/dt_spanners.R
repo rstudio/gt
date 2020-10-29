@@ -20,7 +20,7 @@ dt_spanners_init <- function(data) {
     # The spanner label
     spanner_label = list(),
     # The spanner id
-    spanner_id = list(),
+    spanner_id = character(0),
     # Should be columns be gathered under a single spanner label?
     gather = logical(0),
     built = NA_character_
@@ -40,7 +40,7 @@ dt_spanners_add <- function(data,
       dplyr::tibble(
         vars = list(vars),
         spanner_label = list(spanner_label),
-        spanner_id = list(spanner_id),
+        spanner_id = as.character(spanner_id),
         gather = gather,
         built = NA_character_
       )
@@ -75,10 +75,10 @@ dt_spanners_get_ids <- function(data) {
 
   spanners <- dt_spanners_get(data = data)
 
-  unlist(spanners$spanner_id)
+  spanners$spanner_id
 }
 
-dt_spanners_print <- function(data, include_hidden = TRUE) {
+dt_spanners_print <- function(data, include_hidden = TRUE, ids = FALSE) {
 
   spanners <- dt_spanners_get(data = data)
 
@@ -91,7 +91,12 @@ dt_spanners_print <- function(data, include_hidden = TRUE) {
   vars_list <- rep(NA_character_, length(vars)) %>% magrittr::set_names(vars)
 
   for (i in seq_len(nrow(spanners))) {
-    vars_list[spanners$vars[[i]]] <- spanners$built[[i]]
+
+    if (ids) {
+      vars_list[spanners$vars[[i]]] <- spanners$spanner_id[i]
+    } else {
+      vars_list[spanners$vars[[i]]] <- spanners$built[[i]]
+    }
   }
 
   unname(vars_list[names(vars_list) %in% vars])

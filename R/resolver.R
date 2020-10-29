@@ -140,9 +140,7 @@ resolve_cells_column_spanners <- function(data,
   spanner_ids <-
     dt_spanners_get(data = data) %>%
     .$spanner_id %>%
-    unlist() %>%
-    .[!is.na(.)] %>%
-    unique()
+    .[!is.na(.)]
 
   resolved_spanners_idx <-
     resolve_data_vals_idx(
@@ -151,7 +149,7 @@ resolve_cells_column_spanners <- function(data,
       vals = spanner_ids
     )
 
-  resolved_spanners <- spanner_labels[resolved_spanners_idx]
+  resolved_spanners <- spanner_ids[resolved_spanners_idx]
 
   # Create a list object
   cells_resolved <- list(spanners = resolved_spanners)

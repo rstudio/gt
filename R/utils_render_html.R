@@ -387,7 +387,7 @@ create_columns_component_h <- function(data) {
     styles_tbl %>%
     dplyr::filter(locname == "columns_groups")
 
-  # Get the style attrs for the spanner column headings
+  # Get the style attrs for the column labels
   column_style_attrs <-
     styles_tbl %>%
     dplyr::filter(locname == "columns_columns")
@@ -469,6 +469,7 @@ create_columns_component_h <- function(data) {
   if (isTRUE(spanners_present)) {
 
     spanners <- dt_spanners_print(data = data, include_hidden = FALSE)
+    spanner_ids <- dt_spanners_print(data = data, include_hidden = FALSE, ids = TRUE)
 
     # A list of <th> elements that will go in the top row. This includes
     # spanner labels and column labels for solo columns (don't have spanner
@@ -526,7 +527,7 @@ create_columns_component_h <- function(data) {
 
     for (i in seq(headings_vars)) {
 
-      if (is.na(spanners[i])) {
+      if (is.na(spanner_ids[i])) {
 
         styles_heading <-
           styles_tbl %>%
@@ -560,7 +561,7 @@ create_columns_component_h <- function(data) {
             htmltools::HTML(headings_labels[i])
           )
 
-      } else if (!is.na(spanners[i])) {
+      } else if (!is.na(spanner_ids[i])) {
 
         # If colspans[i] == 0, it means that a previous cell's colspan
         # will cover us.
@@ -569,7 +570,7 @@ create_columns_component_h <- function(data) {
 
           styles_spanners <-
             spanner_style_attrs %>%
-            dplyr::filter(locname == "columns_groups", grpname == spanners[i])
+            dplyr::filter(locname == "columns_groups", grpname == spanner_ids[i])
 
           spanner_style <-
             if (nrow(styles_spanners) > 0) {
@@ -600,7 +601,7 @@ create_columns_component_h <- function(data) {
       }
     }
 
-    solo_headings <- headings_vars[is.na(spanners)]
+    solo_headings <- headings_vars[is.na(spanner_ids)]
     remaining_headings <- headings_vars[!(headings_vars %in% solo_headings)]
 
     remaining_headings_indices <- which(remaining_headings %in% headings_vars)
