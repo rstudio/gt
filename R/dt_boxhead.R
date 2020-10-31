@@ -137,48 +137,51 @@ dt_boxhead_set_row_group <- function(data, vars) {
 
 dt_boxhead_edit_column_label <- function(data, var, column_label) {
 
-  dt_boxhead_edit(data, var, column_label = column_label)
+  dt_boxhead_edit(
+    data = data,
+    var = var,
+    column_label = column_label
+  )
 }
 
 dt_boxhead_get_vars <- function(data) {
 
-  data %>%
-    dt_boxhead_get() %>%
+  dt_boxhead_get(data = data) %>%
     magrittr::extract2("var")
 }
 
 dt_boxhead_get_vars_default <- function(data) {
 
-  data %>%
-    dt_boxhead_get() %>%
+  dt_boxhead_get(data = data) %>%
     dplyr::filter(type == "default") %>%
     magrittr::extract2("var")
 }
 
 dt_boxhead_get_var_stub <- function(data) {
-  res <- dt_boxhead_get_var_by_type(data, "stub")
-  if (length(res) == 0)
+
+  res <- dt_boxhead_get_var_by_type(data = data, "stub")
+
+  if (length(res) == 0) {
     NA_character_
-  else
+  } else {
     res
+  }
 }
 
 dt_boxhead_get_vars_groups <- function(data) {
-  dt_boxhead_get_var_by_type(data, "row_group")
+  dt_boxhead_get_var_by_type(data = data, "row_group")
 }
 
 dt_boxhead_get_var_by_type <- function(data, type) {
 
-  data %>%
-    dt_boxhead_get() %>%
+  dt_boxhead_get(data = data) %>%
     dplyr::filter(type == !!type) %>%
     magrittr::extract2("var")
 }
 
 dt_boxhead_get_vars_labels_default <- function(data) {
 
-  data %>%
-    dt_boxhead_get() %>%
+  dt_boxhead_get(data = data) %>%
     dplyr::filter(type == "default") %>%
     magrittr::extract2("column_label") %>%
     unlist()
@@ -204,7 +207,7 @@ check_vars_dt_boxhead <- function(var, dt_boxhead) {
 
 dt_boxhead_build <- function(data, context) {
 
-  boxh <- dt_boxhead_get(data)
+  boxh <- dt_boxhead_get(data = data)
 
   boxh$column_label <-
     lapply(boxh$column_label, function(label) process_text(label, context))
@@ -216,7 +219,7 @@ dt_boxhead_build <- function(data, context) {
 
 dt_boxhead_set_var_order <- function(data, vars) {
 
-  boxh <- dt_boxhead_get(data)
+  boxh <- dt_boxhead_get(data = data)
 
   if (length(vars) != nrow(boxh) ||
       length(unique(vars)) != nrow(boxh) ||

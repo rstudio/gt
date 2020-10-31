@@ -690,26 +690,27 @@ create_body_component_h <- function(data) {
 
   default_vars <- dt_boxhead_get_vars_default(data = data)
 
-  all_default_vals <- body[, default_vars]
+  all_default_vals <- unname(as.matrix(body[, default_vars]))
 
   # Define function to get a character vector of formatted cell
   # data (this includes the stub, if it is present)
   output_df_row_as_vec <- function(i) {
 
-    default_vals <- unlist(all_default_vals[i,])
+    default_vals <- all_default_vals[i, ]
 
     if (stub_available) {
-
-      stub_var <- dt_boxhead_get_var_stub(data = data)
-
-      default_vals <- c(body[[i, stub_var]], default_vals)
+      default_vals <- c(all_stub_vals[i], default_vals)
     }
 
     default_vals
   }
 
+  alignment_classes <- paste0("gt_", col_alignment)
   if (stub_available) {
     n_cols <- n_data_cols + 1
+    alignment_classes <- c("gt_left", alignment_classes)
+    stub_var <- dt_boxhead_get_var_stub(data = data)
+    all_stub_vals <- as.matrix(body)[, stub_var]
   } else {
     n_cols <- n_data_cols
   }
@@ -740,6 +741,23 @@ create_body_component_h <- function(data) {
       data = data,
       option = "row_striping_include_table_body"
     )
+
+  if (stub_available) {
+    extra_classes_1 <- rep_len(list(NULL), n_cols)
+    extra_classes_2 <-
+      rep_len(list(if (table_body_striped) "gt_striped" else NULL), n_cols)
+
+    if (table_stub_striped) {
+      extra_classes_1[[1]] <- c("gt_stub", extra_classes_1[[1]])
+      extra_classes_2[[1]] <- c("gt_stub", if (table_stub_striped) "gt_striped" else NULL)
+    } else {
+      extra_classes_1[[1]] <- "gt_stub"
+      extra_classes_2[[1]] <- "gt_stub"
+    }
+  } else {
+    extra_classes_1 <- rep_len(list(NULL), n_data_cols)
+    extra_classes_2 <- rep_len(list(if (table_body_striped) "gt_striped" else NULL), n_data_cols)
+  }
 
   has_tbl_body_styles <- any(c("stub", "data") %in% styles_tbl$locname)
   has_row_group_styles <- "row_groups" %in% styles_tbl$locname
@@ -811,29 +829,7 @@ create_body_component_h <- function(data) {
         # Create a body row
         #
 
-        alignment_classes <- paste0("gt_", col_alignment)
-
-        # Handle striping in rows in both the stub and the body
-        striped_class_val <-
-          if (table_body_striped && (i %% 2 == 0)) {
-            "gt_striped"
-          } else {
-            NULL
-          }
-
-        if (stub_available) {
-
-          alignment_classes <- c("gt_left", alignment_classes)
-          extra_classes <- rep_len(list(striped_class_val), n_cols)
-
-          if (table_stub_striped) {
-            extra_classes[[1]] <- c("gt_stub", extra_classes[[1]])
-          } else {
-            extra_classes[[1]] <- "gt_stub"
-          }
-        } else {
-          extra_classes <- rep_len(list(striped_class_val), n_data_cols)
-        }
+        extra_classes <- if (i %% 2 == 0) extra_classes_2 else extra_classes_1
 
         if (has_tbl_body_styles) {
 
