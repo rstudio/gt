@@ -128,7 +128,7 @@ create_columns_component_l <- function(data) {
     multicol <- c()
     cmidrule <- c()
 
-    for (i in seq(spanners_lengths$lengths)) {
+    for (i in seq_along(spanners_lengths$lengths)) {
 
       if (spanners_lengths$lengths[i] > 1) {
 
