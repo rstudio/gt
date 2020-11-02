@@ -88,8 +88,9 @@ cols_align <- function(data,
           "factor" = "center",
           "list" = "center",
           "numeric" = "right",
-          "integer" = "center",
-          "center")
+          "integer" = "right",
+          "center"
+        )
       )
 
   } else {

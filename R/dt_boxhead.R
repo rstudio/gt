@@ -183,6 +183,14 @@ dt_boxhead_get_vars_labels_default <- function(data) {
   )
 }
 
+dt_boxhead_get_alignment_by_var <- function(data, var) {
+
+  data %>%
+    dt_boxhead_get() %>%
+    dplyr::filter(var == !!var) %>%
+    magrittr::extract2("column_align")
+}
+
 check_names_dt_boxhead_expr <- function(expr) {
 
   if (!all(names(expr) %in% c(

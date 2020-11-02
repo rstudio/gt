@@ -14,12 +14,16 @@ downloader::download(
 )
 utils::untar(file.path(work_dir, "google_fonts.tar.gz"), exdir = work_dir)
 
-# Get the directory names for each of the OFL fonts
+# Get the directory names for each of the fonts
 file_list <- fs::dir_ls(path = fs::path_expand(work_dir)) %>% as.character()
 ofl_dirs <- fs::dir_ls(file.path(file_list[!grepl("tar.gz", file_list)], "ofl"))
+apache_dirs <- fs::dir_ls(file.path(file_list[!grepl("tar.gz", file_list)], "apache"))
+ufl_dirs <- fs::dir_ls(file.path(file_list[!grepl("tar.gz", file_list)], "apache"))
+
+all_dirs <- c(ofl_dirs, apache_dirs, ufl_dirs)
 
 # Copy all .pb files to the root of the work directory
-for (dr in ofl_dirs) {
+for (dr in all_dirs) {
 
   font_name <- dr %>% fs::path_split() %>% unlist() %>% rev() %>% .[1]
 
@@ -27,7 +31,8 @@ for (dr in ofl_dirs) {
 
     fs::file_copy(
       path = file.path(dr, "METADATA.pb"),
-      new_path = file.path(work_dir, paste0(font_name, "__METADATA.pb"))
+      new_path = file.path(work_dir, paste0(font_name, "__METADATA.pb")),
+      overwrite = TRUE
     )
   }
 
@@ -35,7 +40,7 @@ for (dr in ofl_dirs) {
 }
 
 # Get paths for all .pb files in the work directory
-ofl_files <- fs::dir_ls(work_dir, glob = "*.pb")
+all_files <- fs::dir_ls(work_dir, glob = "*.pb")
 
 # Initialize tibbles
 google_font_tbl <-
@@ -57,7 +62,7 @@ google_axes_tbl <-
 
 # For every font file, read the `.pb` metadata file and extract
 # font metrics and other items of information
-for (file in ofl_files) {
+for (file in all_files) {
 
   pb <-
     readr::read_file(file) %>%
@@ -132,8 +137,11 @@ rm(file_list)
 rm(font_info)
 rm(font_name)
 rm(i)
+rm(all_dirs)
 rm(ofl_dirs)
-rm(ofl_files)
+rm(apache_dirs)
+rm(ufl_dirs)
+rm(all_files)
 rm(pb)
 rm(work_dir)
 rm(font_variants)
