@@ -1223,7 +1223,7 @@ validate_style_in <- function(style_vals,
 }
 
 flatten_list <- function(x) {
-  x %>% unlist(recursive = FALSE)
+  unlist(x, recursive = FALSE)
 }
 
 #' Prepend a vector
@@ -1314,14 +1314,6 @@ column_classes_are_valid <- function(data, columns, valid_classes) {
       FUN = function(x) any(class(x) %in% valid_classes)
     ) %>%
     all()
-}
-
-gt_HTML <- function(text, ...) {
-
-  htmlText <- paste(text, ..., collapse = " ")
-  attr(htmlText, "html") <- TRUE
-  class(htmlText) <- c("html", "character")
-  htmlText
 }
 
 # print8 <- function(x) {

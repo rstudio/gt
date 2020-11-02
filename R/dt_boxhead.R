@@ -146,15 +146,12 @@ dt_boxhead_edit_column_label <- function(data, var, column_label) {
 
 dt_boxhead_get_vars <- function(data) {
 
-  dt_boxhead_get(data = data) %>%
-    magrittr::extract2("var")
+  dplyr::pull(dt_boxhead_get(data = data), var)
 }
 
 dt_boxhead_get_vars_default <- function(data) {
 
-  dt_boxhead_get(data = data) %>%
-    dplyr::filter(type == "default") %>%
-    magrittr::extract2("var")
+  dplyr::pull(subset(dt_boxhead_get(data = data), type == "default"), var)
 }
 
 dt_boxhead_get_var_stub <- function(data) {
@@ -174,17 +171,16 @@ dt_boxhead_get_vars_groups <- function(data) {
 
 dt_boxhead_get_var_by_type <- function(data, type) {
 
-  dt_boxhead_get(data = data) %>%
-    dplyr::filter(type == !!type) %>%
+  dplyr::filter(dt_boxhead_get(data = data), type == !!type) %>%
     magrittr::extract2("var")
 }
 
 dt_boxhead_get_vars_labels_default <- function(data) {
 
-  dt_boxhead_get(data = data) %>%
-    dplyr::filter(type == "default") %>%
-    magrittr::extract2("column_label") %>%
-    unlist()
+  unlist(
+    subset(dt_boxhead_get(data = data), type == "default") %>%
+      magrittr::extract2("column_label")
+  )
 }
 
 check_names_dt_boxhead_expr <- function(expr) {

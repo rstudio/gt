@@ -48,8 +48,7 @@ dt_groups_rows_build <- function(data, context) {
   }
 
   groups_rows <-
-    groups_rows %>%
-    dplyr::mutate(group_label = process_text(group_label, context))
+    dplyr::mutate(groups_rows, group_label = process_text(group_label, context))
 
   if (nrow(groups_rows) > 0) {
 

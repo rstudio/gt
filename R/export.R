@@ -153,7 +153,7 @@ gt_save_html <- function(data,
 
     data %>%
       as_raw_html(inline_css = inline_css) %>%
-      gt_HTML() %>%
+      htmltools::HTML() %>%
       htmltools::save_html(filename, ...)
 
   } else {
@@ -321,7 +321,7 @@ as_raw_html <- function(data,
       inline_html_styles(css_tbl = get_css_tbl(data))
   }
 
-  gt_HTML(html_table)
+  htmltools::HTML(html_table)
 }
 
 #' Output a gt object as LaTeX

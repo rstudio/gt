@@ -3,8 +3,9 @@
 #' @noRd
 footnote_mark_to_html <- function(mark) {
 
-  htmltools::tagList(htmltools::tags$sup(class = "gt_footnote_marks", mark)) %>%
-    as.character()
+  as.character(
+    htmltools::tagList(htmltools::tags$sup(class = "gt_footnote_marks", mark))
+  )
 }
 
 styles_to_html <- function(styles) {
@@ -55,8 +56,8 @@ add_css_styles <- function(data) {
 
   if (nrow(styles_tbl) > 0) {
     styles_tbl <-
-      styles_tbl %>%
       dplyr::mutate(
+        styles_tbl,
         html_style = vapply(
           styles, function(x) styles_to_html(x), character(1))
       )
@@ -195,8 +196,10 @@ create_heading_component <- function(data,
   if ("title" %in% footnotes_tbl$locname) {
 
     footnote_title_marks <-
-      footnotes_tbl %>%
-      coalesce_marks(locname = "title")
+      coalesce_marks(
+        fn_tbl = footnotes_tbl,
+        locname = "title"
+      )
 
     footnote_title_marks <-
       switch(context,
@@ -279,7 +282,7 @@ create_heading_component <- function(data,
           colspan = n_cols,
           class = paste(title_classes, collapse = " "),
           style = title_styles,
-          gt_HTML(
+          htmltools::HTML(
             heading$title %>% paste_right(footnote_title_marks)
           )
         )
@@ -293,7 +296,7 @@ create_heading_component <- function(data,
             colspan = n_cols,
             class = paste(subtitle_classes, collapse = " "),
             style = subtitle_styles,
-            gt_HTML(
+            htmltools::HTML(
               heading$subtitle %>% paste_right(footnote_subtitle_marks)
             )
           )
@@ -370,13 +373,11 @@ create_columns_component_h <- function(data) {
   stub_available <- dt_stub_df_exists(data = data)
   spanners_present <- dt_spanners_exists(data = data)
 
-  col_alignment <-
-    boxh %>%
-    dplyr::filter(type == "default") %>%
-    dplyr::pull(column_align)
+  # Get the column alignments for all visible columns
+  col_alignment <- dplyr::pull(subset(boxh, type == "default"), column_align)
 
   # Get the column headings
-  headings_vars <- dplyr::filter(boxh, type == "default") %>% dplyr::pull(var)
+  headings_vars <- dplyr::pull(subset(boxh, type == "default"), var)
   headings_labels <- dt_boxhead_get_vars_labels_default(data = data)
 
   # Should the column labels be hidden?
@@ -391,13 +392,13 @@ create_columns_component_h <- function(data) {
   }
 
   # Get the style attrs for the stubhead label
-  stubhead_style_attrs <- dplyr::filter(styles_tbl, locname == "stubhead")
+  stubhead_style_attrs <- subset(styles_tbl, locname == "stubhead")
 
   # Get the style attrs for the spanner column headings
-  spanner_style_attrs <- dplyr::filter(styles_tbl, locname == "columns_groups")
+  spanner_style_attrs <- subset(styles_tbl, locname == "columns_groups")
 
   # Get the style attrs for the spanner column headings
-  column_style_attrs <- dplyr::filter(styles_tbl, locname == "columns_columns")
+  column_style_attrs <- subset(styles_tbl, locname == "columns_columns")
 
   # If `stub_available` == TRUE, then replace with a set stubhead
   # label or nothing
@@ -437,7 +438,7 @@ create_columns_component_h <- function(data) {
           rowspan = 1,
           colspan = 1,
           style = stubhead_style,
-          gt_HTML(headings_labels[1])
+          htmltools::HTML(headings_labels[1])
         )
 
       headings_vars <- headings_vars[-1]
@@ -446,7 +447,7 @@ create_columns_component_h <- function(data) {
 
     for (i in seq(headings_vars)) {
 
-      styles_column <- dplyr::filter(column_style_attrs, colnum == i)
+      styles_column <- subset(column_style_attrs, colnum == i)
 
       column_style <-
         if (nrow(styles_column) > 0) {
@@ -464,7 +465,7 @@ create_columns_component_h <- function(data) {
           rowspan = 1,
           colspan = 1,
           style = column_style,
-          gt_HTML(headings_labels[i])
+          htmltools::HTML(headings_labels[i])
         )
     }
 
@@ -502,7 +503,7 @@ create_columns_component_h <- function(data) {
           rowspan = 2,
           colspan = 1,
           style = stubhead_style,
-          gt_HTML(headings_labels[1])
+          htmltools::HTML(headings_labels[1])
         )
 
       headings_vars <- headings_vars[-1]
@@ -552,7 +553,7 @@ create_columns_component_h <- function(data) {
             rowspan = 2,
             colspan = 1,
             style = heading_style,
-            gt_HTML(headings_labels[i])
+            htmltools::HTML(headings_labels[i])
           )
 
       } else if (!is.na(spanners[i])) {
@@ -587,7 +588,7 @@ create_columns_component_h <- function(data) {
               style = spanner_style,
               htmltools::tags$span(
                 class = "gt_column_spanner",
-                gt_HTML(spanners[i])
+                htmltools::HTML(spanners[i])
               )
             )
         }
@@ -636,7 +637,7 @@ create_columns_component_h <- function(data) {
             ),
             rowspan = 1, colspan = 1,
             style = remaining_style,
-            gt_HTML(remaining_headings_labels[j])
+            htmltools::HTML(remaining_headings_labels[j])
           )
 
       }
@@ -818,7 +819,7 @@ create_body_component_h <- function(data) {
                 colspan = n_cols,
                 class = group_class,
                 style = row_style,
-                gt_HTML(group_label)
+                htmltools::HTML(group_label)
               )
             )
 
@@ -846,7 +847,7 @@ create_body_component_h <- function(data) {
 
         body_row <-
           htmltools::tags$tr(
-            gt_HTML(paste0(collapse = "\n", mapply(
+            htmltools::HTML(paste0(collapse = "\n", mapply(
               SIMPLIFY = FALSE,
               USE.NAMES = FALSE,
               output_df_row_as_vec(i),
@@ -899,7 +900,9 @@ create_body_component_h <- function(data) {
 
         body_section
       }
-    ) %>% flatten_list()
+    )
+
+  body_rows <- flatten_list(body_rows)
 
   #
   # Add grand summary rows
@@ -964,7 +967,7 @@ create_source_notes_component_h <- function(data) {
           htmltools::tags$td(
             class = "gt_sourcenote",
             colspan = n_cols,
-            gt_HTML(x)
+            htmltools::HTML(x)
           )
         )
       }
@@ -1032,8 +1035,8 @@ create_footnotes_component_h <- function(data) {
                 )
               ),
               " ",
-              gt_HTML(footnote_text),
-              gt_HTML(separator)
+              htmltools::HTML(footnote_text),
+              htmltools::HTML(separator)
             )
           }
         )
@@ -1127,7 +1130,7 @@ summary_row_tags <- function(group_id,
                   c("gt_row", stub_class, alignment_class, summary_row_class),
                   collapse = " "),
                 style = cell_style,
-                gt_HTML(x)
+                htmltools::HTML(x)
               )
             }
           )
