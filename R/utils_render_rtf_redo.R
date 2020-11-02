@@ -786,28 +786,24 @@ create_columns_component_rtf <- function(data) {
 
   if (stubh_available) headings_labels[1] <- dt_stubhead_get(data = data) %>% .$label
 
-  if (isTRUE(spanners_present)) {
+  if (spanners_present) {
 
     spanners <- dt_spanners_print(data = data, include_hidden = FALSE)
+    spanner_ids <- dt_spanners_print(data = data, include_hidden = FALSE, ids = TRUE)
+
     spanners[is.na(spanners)] <- ""
 
     if (stub_available) {
       spanners <- c("", spanners)
     }
-
-    # TODO: add vertical lines separating adjacent spanner
-
-    # TODO: Need to differentiate between (1) non-merging spanners, (2) first
-    # instance of multi-column spanner, and (3) continuation of multi-column spanner
-
-    spanners_rle <- rle(spanners)$lengths
+    spanners_lengths <- unclass(rle(spanner_ids))
 
     merge_keys <- c()
-    for (i in seq(spanners_rle)) {
-      if (spanners_rle[i] == 1) {
+    for (i in seq_along(spanners_lengths$lengths)) {
+      if (spanners_lengths$lengths[i] == 1) {
         merge_keys <- c(merge_keys, 0)
       } else {
-        merge_keys <- c(merge_keys, 1, rep(2, spanners_rle[i] - 1))
+        merge_keys <- c(merge_keys, 1, rep(2, spanners_lengths$lengths[i] - 1))
       }
     }
 
