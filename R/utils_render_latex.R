@@ -125,8 +125,6 @@ create_columns_component_l <- function(data) {
     }
     spanners_lengths <- unclass(rle(spanner_ids))
 
-    spanners_lengths[["values"]]
-
     multicol <- c()
     cmidrule <- c()
 
