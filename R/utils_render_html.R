@@ -718,7 +718,7 @@ create_body_component_h <- function(data) {
     n_cols <- n_data_cols + 1
     alignment_classes <- c("gt_left", alignment_classes)
     stub_var <- dt_boxhead_get_var_stub(data = data)
-    all_stub_vals <- as.matrix(body)[, stub_var]
+    all_stub_vals <- as.matrix(body[, stub_var])
   } else {
     n_cols <- n_data_cols
   }
