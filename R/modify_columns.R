@@ -70,31 +70,40 @@ cols_align <- function(data,
     # Obtain a vector of column classes for each of the column
     # names
     col_classes <-
-      lapply(
-        data_tbl[column_names], class) %>%
-      lapply(`[[`, 1) %>%
-      unlist()
+      unlist(
+        lapply(
+          data_tbl[column_names], class) %>%
+          lapply(`[[`, 1)
+      )
 
     # Get a vector of `align` values based on the column classes
-    align <- sapply(
-      col_classes, switch,
-      "character" = "left",
-      "Date" = "left",
-      "POSIXct" = "left",
-      "logical" = "center",
-      "factor" = "center",
-      "list" = "center",
-      "numeric" = "right",
-      "integer" = "right",
-      "center") %>%
-      unname()
-  } else {
+    align <-
+      unname(
+        sapply(
+          col_classes, switch,
+          "character" = "left",
+          "Date" = "left",
+          "POSIXct" = "left",
+          "logical" = "center",
+          "factor" = "center",
+          "list" = "center",
+          "numeric" = "right",
+          "integer" = "right",
+          "center"
+        )
+      )
 
+  } else {
     align <- rep(align, length(column_names))
   }
 
   for (i in seq(column_names)) {
-    data <- data %>% dt_boxhead_edit(var = column_names[i], column_align = align[i])
+    data <-
+      dt_boxhead_edit(
+        data = data,
+        var = column_names[i],
+        column_align = align[i]
+      )
   }
 
   data
@@ -223,24 +232,33 @@ cols_width <- function(data,
     if (is.numeric(width)) width <- paste_right(as.character(width), "px")
 
     for (column in columns) {
-      data <- data %>% dt_boxhead_edit(var = column, column_width = list(width))
+      data <-
+        dt_boxhead_edit(
+          data = data,
+          var = column,
+          column_width = list(width)
+        )
     }
   }
 
   unset_widths <-
-    data %>%
-    dt_boxhead_get() %>%
+    dt_boxhead_get(data = data) %>%
     .$column_width %>%
     lapply(is.null) %>%
     unlist()
 
   if (any(unset_widths)) {
 
-    columns_unset <- (data %>% dt_boxhead_get_vars())[unset_widths]
+    columns_unset <- dt_boxhead_get_vars(data = data)[unset_widths]
 
     for (column in columns_unset) {
 
-      data <- data %>% dt_boxhead_edit(var = column, column_width = list(""))
+      data <-
+        dt_boxhead_edit(
+          data = data,
+          var = column,
+          column_width = list("")
+        )
     }
   }
 
@@ -462,7 +480,7 @@ cols_move_to_start <- function(data,
 
   new_vars <- append(other_columns, columns, after = 0)
 
-  data <- dt_boxhead_set_var_order(data, vars = new_vars)
+  data <- dt_boxhead_set_var_order(data = data, vars = new_vars)
 
   data
 }
@@ -555,7 +573,7 @@ cols_move_to_end <- function(data,
 
   new_vars <- append(other_columns, columns)
 
-  data <- dt_boxhead_set_var_order(data, vars = new_vars)
+  data <- dt_boxhead_set_var_order(data = data, vars = new_vars)
 
   data
 }
@@ -661,7 +679,7 @@ cols_move <- function(data,
 
   new_vars <- append(other_columns, moving_columns, after = after_index)
 
-  data <- dt_boxhead_set_var_order(data, vars = new_vars)
+  data <- dt_boxhead_set_var_order(data = data, vars = new_vars)
 
   data
 }
@@ -759,7 +777,9 @@ cols_hide <- function(data,
   }
 
   # Set the `"hidden"` type for the `columns` in `_dt_boxhead`
-  data %>% dt_boxhead_set_hidden(vars = columns)
+  data <- dt_boxhead_set_hidden(data = data, vars = columns)
+
+  data
 }
 
 #' Merge two columns to a value & uncertainty column
@@ -875,7 +895,7 @@ cols_merge_uncert <- function(data,
     )
 
   if (isTRUE(autohide)) {
-    data <- data %>% cols_hide(columns = col_uncert)
+    data <- cols_hide(data = data, columns = col_uncert)
   }
 
   data
@@ -988,7 +1008,7 @@ cols_merge_range <- function(data,
     )
 
   if (isTRUE(autohide)) {
-    data <- data %>% cols_hide(columns = col_end)
+    data <- cols_hide(data = data, columns = col_end)
   }
 
   data
@@ -1112,7 +1132,7 @@ cols_merge <- function(data,
               call. = FALSE)
     }
 
-    data <- data %>% cols_hide(columns = hide_columns_from_supplied)
+    data <- cols_hide(data = data, columns = hide_columns_from_supplied)
   }
 
   # Create an entry and add it to the `_col_merge` attribute
