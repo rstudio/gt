@@ -763,21 +763,13 @@ create_body_component_h <- function(data) {
       option = "row_striping_include_table_body"
     )
 
-  if (stub_available) {
-    extra_classes_1 <- rep_len(list(NULL), n_cols)
-    extra_classes_2 <-
-      rep_len(list(if (table_body_striped) "gt_striped" else NULL), n_cols)
 
-    if (table_stub_striped) {
-      extra_classes_1[[1]] <- c("gt_stub", extra_classes_1[[1]])
-      extra_classes_2[[1]] <- c("gt_stub", if (table_stub_striped) "gt_striped" else NULL)
-    } else {
-      extra_classes_1[[1]] <- "gt_stub"
-      extra_classes_2[[1]] <- "gt_stub"
-    }
-  } else {
-    extra_classes_1 <- rep_len(list(NULL), n_data_cols)
-    extra_classes_2 <- rep_len(list(if (table_body_striped) "gt_striped" else NULL), n_data_cols)
+  extra_classes_1 <- rep_len(list(NULL), n_cols)
+  extra_classes_2 <-
+    rep_len(list(if (table_body_striped) "gt_striped" else NULL), n_cols)
+  if (stub_available) {
+    extra_classes_1[[1]] <- "gt_stub"
+    extra_classes_2[[1]] <- c("gt_stub", if (table_stub_striped) "gt_striped" else NULL)
   }
 
   has_tbl_body_styles <- any(c("stub", "data") %in% styles_tbl$locname)
