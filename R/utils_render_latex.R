@@ -113,8 +113,8 @@ create_columns_component_l <- function(data) {
 
   if (spanners_present) {
 
-    # Get vector of group labels (spanners)
     spanners <- dt_spanners_print(data = data, include_hidden = FALSE)
+    spanner_ids <- dt_spanners_print(data = data, include_hidden = FALSE, ids = TRUE)
 
     # Promote column labels to the group level wherever the
     # spanner label is NA
@@ -123,8 +123,9 @@ create_columns_component_l <- function(data) {
     if (stub_available) {
       spanners <- c(NA_character_, spanners)
     }
+    spanners_lengths <- unclass(rle(spanner_ids))
 
-    spanners_lengths <- rle(spanners)
+    spanners_lengths[["values"]]
 
     multicol <- c()
     cmidrule <- c()
@@ -143,7 +144,7 @@ create_columns_component_l <- function(data) {
             paste0(
               "\\multicolumn{", spanners_lengths$lengths[i],
               "}{c}{",
-              spanners_lengths$values[i],
+              spanners[i],
               "} "))
 
         cmidrule <-
