@@ -29,9 +29,7 @@ dt_options_set_value <- function(data, option, value) {
 
 dt_options_get_value <- function(data, option) {
 
-  dt_options <-
-    data %>%
-    dt_options_get()
+  dt_options <- dt_options_get(data = data)
 
   dt_options$value[[which(dt_options$parameter == option)]]
 }

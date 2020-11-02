@@ -1394,7 +1394,7 @@ fmt_passthrough <- function(data,
           )
 
         if (escape) {
-          x_str <- x_str %>% process_text(context = "html")
+          x_str <- process_text(text = x_str, context = "html")
         }
 
         x_str
@@ -1412,7 +1412,7 @@ fmt_passthrough <- function(data,
           )
 
         if (escape) {
-          x_str <- x_str %>% process_text(context = "latex")
+          x_str <- process_text(text = x_str, context = "latex")
         }
 
         x_str
@@ -1430,7 +1430,7 @@ fmt_passthrough <- function(data,
           )
 
         if (escape) {
-          x_str <- x_str %>% process_text(context = "rtf")
+          x_str <- process_text(text = x_str, context = "rtf")
         }
 
         x_str

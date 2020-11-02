@@ -164,7 +164,7 @@ get_currency_exponent <- function(currency) {
   if (is.na(exponent)) {
     return(0L)
   } else {
-    return(exponent %>% as.integer())
+    return(as.integer(exponent))
   }
 }
 
@@ -187,7 +187,7 @@ process_text <- function(text,
 
   if (is.list(text)) {
     if (context %in% names(text)) {
-     return(process_text(text[[context]], context))
+     return(process_text(text = text[[context]], context = context))
     }
   }
 
@@ -198,8 +198,7 @@ process_text <- function(text,
     if (inherits(text, "from_markdown")) {
 
       text <-
-        text %>%
-        as.character() %>%
+        as.character(text) %>%
         vapply(commonmark::markdown_html, character(1)) %>%
         stringr::str_replace_all(c("^<p>" = "", "</p>\n$" = ""))
 
@@ -207,16 +206,13 @@ process_text <- function(text,
 
     } else if (is_html(text)) {
 
-      text <- text %>% as.character()
+      text <- as.character(text)
 
       return(text)
 
     } else {
 
-      text <-
-        text %>%
-        as.character() %>%
-        htmltools::htmlEscape()
+      text <- htmltools::htmlEscape(as.character(text))
 
       return(text)
     }
@@ -226,19 +222,19 @@ process_text <- function(text,
 
     if (inherits(text, "from_markdown")) {
 
-      text <- text %>% markdown_to_latex()
+      text <- markdown_to_latex(text = text)
 
       return(text)
 
     } else if (is_html(text)) {
 
-      text <- text %>% as.character()
+      text <- as.character(text)
 
       return(text)
 
     } else {
 
-      text <- text %>% escape_latex()
+      text <- escape_latex(text = text)
 
       return(text)
     }
@@ -252,7 +248,7 @@ process_text <- function(text,
 
     } else if (inherits(text, "rtf_text")) {
 
-      text <- text %>% as.character()
+      text <- as.character(text)
 
       return(text)
 
@@ -268,22 +264,19 @@ process_text <- function(text,
 
     if (inherits(text, "from_markdown")) {
 
-      text <- text %>% markdown_to_text()
+      text <- markdown_to_text(text = text)
 
       return(text)
 
     } else if (is_html(text)) {
 
-      text <- text %>% as.character()
+      text <- as.character(text)
 
       return(text)
 
     } else {
 
-      text <-
-        text %>%
-        as.character() %>%
-        htmltools::htmlEscape()
+      text <- htmltools::htmlEscape(as.character(text))
 
       return(text)
     }
@@ -860,11 +853,10 @@ derive_summary_label <- function(fn) {
 
   } else if (inherits(fn, "formula")) {
 
-    (fn %>% rlang::f_rhs())[[1]] %>%
-      as.character()
+    as.character(rlang::f_rhs(fn)[[1]])
 
   } else {
-    fn %>% as.character()
+    as.character(fn)
   }
 }
 
@@ -1231,7 +1223,7 @@ validate_style_in <- function(style_vals,
 }
 
 flatten_list <- function(x) {
-  x %>% unlist(recursive = FALSE)
+  unlist(x, recursive = FALSE)
 }
 
 #' Prepend a vector
