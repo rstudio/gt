@@ -787,7 +787,6 @@ create_columns_component_rtf <- function(data) {
   if (stubh_available) headings_labels[1] <- dt_stubhead_get(data = data) %>% .$label
 
   if (spanners_present) {
-
     spanners <- dt_spanners_print(data = data, include_hidden = FALSE)
     spanner_ids <- dt_spanners_print(data = data, include_hidden = FALSE, ids = TRUE)
 
@@ -795,6 +794,7 @@ create_columns_component_rtf <- function(data) {
 
     if (stub_available) {
       spanners <- c("", spanners)
+      spanner_ids <- c("", spanner_ids)
     }
     spanners_lengths <- unclass(rle(spanner_ids))
 
@@ -809,7 +809,8 @@ create_columns_component_rtf <- function(data) {
 
     spanners_list <-
       lapply(
-        seq_along(spanners), FUN = function(x) {
+        seq_along(spanner_ids),
+        FUN = function(x) {
           rtf_tbl_cell(
             rtf_font(
               font_size = 10,
@@ -832,7 +833,8 @@ create_columns_component_rtf <- function(data) {
 
   cell_list <-
     lapply(
-      seq_along(headings_labels), FUN = function(x) {
+      seq_along(headings_labels),
+      FUN = function(x) {
         rtf_tbl_cell(
           rtf_font(
             font_size = 10,
@@ -849,7 +851,7 @@ create_columns_component_rtf <- function(data) {
       }
     )
 
-  if (isTRUE(spanners_present)) {
+  if (spanners_present) {
     row_list_column_labels <-
       list(
         rtf_tbl_row(spanners_list, height = 0, repeat_header = TRUE),
