@@ -713,6 +713,16 @@ create_body_component_h <- function(data) {
 
   all_default_vals <- unname(as.matrix(body[, default_vars]))
 
+  alignment_classes <- paste0("gt_", col_alignment)
+  if (stub_available) {
+    n_cols <- n_data_cols + 1
+    alignment_classes <- c("gt_left", alignment_classes)
+    stub_var <- dt_boxhead_get_var_stub(data = data)
+    all_stub_vals <- as.matrix(body)[, stub_var]
+  } else {
+    n_cols <- n_data_cols
+  }
+
   # Define function to get a character vector of formatted cell
   # data (this includes the stub, if it is present)
   output_df_row_as_vec <- function(i) {
@@ -724,16 +734,6 @@ create_body_component_h <- function(data) {
     }
 
     default_vals
-  }
-
-  alignment_classes <- paste0("gt_", col_alignment)
-  if (stub_available) {
-    n_cols <- n_data_cols + 1
-    alignment_classes <- c("gt_left", alignment_classes)
-    stub_var <- dt_boxhead_get_var_stub(data = data)
-    all_stub_vals <- as.matrix(body)[, stub_var]
-  } else {
-    n_cols <- n_data_cols
   }
 
   # Get the sequence of column numbers in the table body (these
