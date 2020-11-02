@@ -466,7 +466,7 @@ create_columns_component_h <- function(data) {
     table_col_headings <- htmltools::tags$tr(table_col_headings)
   }
 
-  if (isTRUE(spanners_present)) {
+  if (spanners_present) {
 
     spanners <- dt_spanners_print(data = data, include_hidden = FALSE)
     spanner_ids <- dt_spanners_print(data = data, include_hidden = FALSE, ids = TRUE)
@@ -480,7 +480,7 @@ create_columns_component_h <- function(data) {
     second_set <- list()
 
     # Create the cell for the stubhead label
-    if (isTRUE(stub_available)) {
+    if (stub_available) {
 
       stubhead_style <-
         if (nrow(stubhead_style_attrs) > 0) {
