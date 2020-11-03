@@ -69,3 +69,8 @@ get_d_palettes <- function(color_packages = c(
 }
 
 palettes_strips <- get_d_palettes()
+
+rm(get_d_palettes)
+rm(make_color_strip_svg)
+rm(make_rects)
+

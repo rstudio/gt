@@ -13,7 +13,8 @@ tbl <-
     349.7,  307.1,  566.7,  542.9,
     63.7,  504.3,  152.0,  724.5,
     105.4,  729.8,  962.4,  336.4,
-    924.2,  424.6,  740.8,  104.2)
+    924.2,  424.6,  740.8,  104.2
+  )
 
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
@@ -39,6 +40,11 @@ selection_text <- function(html, selection) {
     rvest::html_text()
 }
 
+# Helper function to compare a contiguous set of HTML fragments with raw html
+html_fragment_within <- function(raw_html, ...) {
+  grepl(paste0("\\Q", c(...), "\\E", "[\\n\\s]*?", collapse = ""), raw_html, perl = TRUE)
+}
+
 test_that("the function `cols_width()` works correctly", {
 
   # Check that specific suggested packages are available
@@ -56,14 +62,14 @@ test_that("the function `cols_width()` works correctly", {
     )
 
   # Expect that the all column widths are set to `100px`
-  tbl_html %>%
-    render_as_html() %>%
-    tidy_grepl(
-      paste0(
-      "<colgroup>\n\\s*?<col style=\"width: 100px\"/>\n\\s*?",
-      "<col style=\"width: 100px\"/>\n\\s*?<col style",
-      "=\"width: 100px\"/>\\s*?<col style=\"width: 100px\"/>\\s*?",
-      "</colgroup>")
+  tbl_html %>% render_as_html() %>%
+    html_fragment_within(
+      "<colgroup>",
+      "<col style=\"width:100px;\"/>",
+      "<col style=\"width:100px;\"/>",
+      "<col style=\"width:100px;\"/>",
+      "<col style=\"width:100px;\"/>",
+      "</colgroup>"
     ) %>%
     expect_true()
 
@@ -80,42 +86,86 @@ test_that("the function `cols_width()` works correctly", {
 
   # Expect that the first two column widths are
   # set to `100px`, and the rest are `70px`
-  tbl_html %>%
-    render_as_html() %>%
-    tidy_grepl(
-      paste0(
-        "<colgroup>\n\\s*?<col style=\"width: 100px\"/>\n\\s*?",
-        "<col style=\"width: 100px\"/>\n\\s*?<col style",
-        "=\"width: 70px\"/>\\s*?<col style=\"width: 70px\"/>\\s*?",
-        "</colgroup>")
+  tbl_html %>% render_as_html() %>%
+    html_fragment_within(
+      "<colgroup>",
+      "<col style=\"width:100px;\"/>",
+      "<col style=\"width:100px;\"/>",
+      "<col style=\"width:70px;\"/>",
+      "<col style=\"width:70px;\"/>",
+      "</colgroup>"
+    ) %>%
+    expect_true()
+
+  # Create a `tbl_html` object with `gt()` and make
+  # every column variable width
+  tbl_html <-
+    gt(tbl) %>%
+    cols_width(
+      vars(col_1) ~ "",
+      vars(col_2) ~ "",
+      vars(col_3) ~ "",
+      vars(col_4) ~ ""
+    )
+
+  # Expect that the all column widths are unset
+  tbl_html %>% render_as_html() %>%
+    html_fragment_within(
+      "<colgroup>",
+      "<col/>",
+      "<col/>",
+      "<col/>",
+      "<col/>",
+      "</colgroup>"
+    ) %>%
+    expect_true()
+
+  # Create a `tbl_html` object with `gt()` and a
+  # combination of different, allowable length
+  # dimensions
+  tbl_html <-
+    gt(tbl) %>%
+    cols_width(
+      vars(col_1) ~ px(100),
+      vars(col_2) ~ 200,
+      vars(col_3) ~ pct(20),
+      vars(col_4) ~ ""
+    )
+
+  # Expect that the first three column widths are
+  # all set and the fourth is not
+  tbl_html %>% render_as_html() %>%
+    html_fragment_within(
+      "<colgroup>",
+      "<col style=\"width:100px;\"/>",
+      "<col style=\"width:200px;\"/>",
+      "<col style=\"width:20%;\"/>",
+      "<col/>",
+      "</colgroup>"
     ) %>%
     expect_true()
 
   # Create a `tbl_html` object with `gt()` and size the
-  # first two columns to `100px`; the uncaptured columns
-  # will get default width of `100px` (a warning will be
-  # given)
+  # first two columns to `100px`; the unset columns
+  # will be variable widths
   tbl_html <-
-    suppressWarnings(
-      gt(tbl) %>%
-        cols_width(
-          vars(col_1) ~ px(150),
-          vars(col_2) ~ px(150)
-        )
+    gt(tbl) %>%
+    cols_width(
+      vars(col_1) ~ px(150),
+      vars(col_2) ~ px(150)
     )
 
   # Expect that the first two column widths are
-  # set to `150px`, and the rest are `100px`
-  suppressWarnings(
-    tbl_html %>%
-      render_as_html() %>%
-      tidy_grepl(
-        paste0(
-          "<colgroup>\n\\s*?<col style=\"width: 150px\"/>\n\\s*?",
-          "<col style=\"width: 150px\"/>\n\\s*?<col style",
-          "=\"width: 100px\"/>\\s*?<col style=\"width: 100px\"/>\\s*?",
-          "</colgroup>")
-      )) %>%
+  # set to `150px`, and the rest are blank (variable width)
+  tbl_html %>% render_as_html() %>%
+    html_fragment_within(
+      "<colgroup>",
+      "<col style=\"width:150px;\"/>",
+      "<col style=\"width:150px;\"/>",
+      "<col/>",
+      "<col/>",
+      "</colgroup>"
+    ) %>%
     expect_true()
 
   # Create a `tbl_html` object with `gt()` and assign
@@ -128,14 +178,14 @@ test_that("the function `cols_width()` works correctly", {
     )
 
   # Expect that the all column widths are set to `150px`
-  tbl_html %>%
-    render_as_html() %>%
-    tidy_grepl(
-      paste0(
-        "<colgroup>\n\\s*?<col style=\"width: 150px\"/>\n\\s*?",
-        "<col style=\"width: 150px\"/>\n\\s*?<col style",
-        "=\"width: 150px\"/>\\s*?<col style=\"width: 150px\"/>\\s*?",
-        "</colgroup>")
+  tbl_html %>% render_as_html() %>%
+    html_fragment_within(
+      "<colgroup>",
+      "<col style=\"width:150px;\"/>",
+      "<col style=\"width:150px;\"/>",
+      "<col style=\"width:150px;\"/>",
+      "<col style=\"width:150px;\"/>",
+      "</colgroup>"
     ) %>%
     expect_true()
 
@@ -149,14 +199,14 @@ test_that("the function `cols_width()` works correctly", {
     )
 
   # Expect that the all column widths are set to `150px`
-  tbl_html %>%
-    render_as_html() %>%
-    tidy_grepl(
-      paste0(
-        "<colgroup>\n\\s*?<col style=\"width: 150px\"/>\n\\s*?",
-        "<col style=\"width: 150px\"/>\n\\s*?<col style",
-        "=\"width: 150px\"/>\\s*?<col style=\"width: 150px\"/>\\s*?",
-        "</colgroup>")
+  tbl_html %>% render_as_html() %>%
+    html_fragment_within(
+      "<colgroup>",
+      "<col style=\"width:150px;\"/>",
+      "<col style=\"width:150px;\"/>",
+      "<col style=\"width:150px;\"/>",
+      "<col style=\"width:150px;\"/>",
+      "</colgroup>"
     ) %>%
     expect_true()
 
@@ -172,14 +222,14 @@ test_that("the function `cols_width()` works correctly", {
 
   # Expect that the first column width is set to
   # `150px`, and the rest are `100px`
-  tbl_html %>%
-    render_as_html() %>%
-    tidy_grepl(
-      paste0(
-        "<colgroup>\n\\s*?<col style=\"width: 150px\"/>\n\\s*?",
-        "<col style=\"width: 100px\"/>\n\\s*?<col style",
-        "=\"width: 100px\"/>\\s*?<col style=\"width: 100px\"/>\\s*?",
-        "</colgroup>")
+  tbl_html %>% render_as_html() %>%
+    html_fragment_within(
+      "<colgroup>",
+      "<col style=\"width:150px;\"/>",
+      "<col style=\"width:100px;\"/>",
+      "<col style=\"width:100px;\"/>",
+      "<col style=\"width:100px;\"/>",
+      "</colgroup>"
     ) %>%
     expect_true()
 
@@ -193,14 +243,14 @@ test_that("the function `cols_width()` works correctly", {
     )
 
   # Expect that the all column widths are set to `150px`
-  tbl_html %>%
-    render_as_html() %>%
-    tidy_grepl(
-      paste0(
-        "<colgroup>\n\\s*?<col style=\"width: 150px\"/>\n\\s*?",
-        "<col style=\"width: 150px\"/>\n\\s*?<col style",
-        "=\"width: 150px\"/>\\s*?<col style=\"width: 150px\"/>\\s*?",
-        "</colgroup>")
+  tbl_html %>% render_as_html() %>%
+    html_fragment_within(
+      "<colgroup>",
+      "<col style=\"width:150px;\"/>",
+      "<col style=\"width:150px;\"/>",
+      "<col style=\"width:150px;\"/>",
+      "<col style=\"width:150px;\"/>",
+      "</colgroup>"
     ) %>%
     expect_true()
 
@@ -214,14 +264,14 @@ test_that("the function `cols_width()` works correctly", {
     )
 
   # Expect that the all column widths are set to `150px`
-  tbl_html %>%
-    render_as_html() %>%
-    tidy_grepl(
-      paste0(
-        "<colgroup>\n\\s*?<col style=\"width: 150px\"/>\n\\s*?",
-        "<col style=\"width: 150px\"/>\n\\s*?<col style",
-        "=\"width: 150px\"/>\\s*?<col style=\"width: 150px\"/>\\s*?",
-        "</colgroup>")
+  tbl_html %>% render_as_html() %>%
+    html_fragment_within(
+      "<colgroup>",
+      "<col style=\"width:150px;\"/>",
+      "<col style=\"width:150px;\"/>",
+      "<col style=\"width:150px;\"/>",
+      "<col style=\"width:150px;\"/>",
+      "</colgroup>"
     ) %>%
     expect_true()
 
@@ -237,14 +287,14 @@ test_that("the function `cols_width()` works correctly", {
 
   # Expect that the first two column widths are set to
   # `150px`, and the rest are `100px`
-  tbl_html %>%
-    render_as_html() %>%
-    tidy_grepl(
-      paste0(
-        "<colgroup>\n\\s*?<col style=\"width: 150px\"/>\n\\s*?",
-        "<col style=\"width: 150px\"/>\n\\s*?<col style",
-        "=\"width: 100px\"/>\\s*?<col style=\"width: 100px\"/>\\s*?",
-        "</colgroup>")
+  tbl_html %>% render_as_html() %>%
+    html_fragment_within(
+      "<colgroup>",
+      "<col style=\"width:150px;\"/>",
+      "<col style=\"width:150px;\"/>",
+      "<col style=\"width:100px;\"/>",
+      "<col style=\"width:100px;\"/>",
+      "</colgroup>"
     ) %>%
     expect_true()
 
@@ -264,14 +314,14 @@ test_that("the function `cols_width()` works correctly", {
 
   # Expect that the first column width is set to
   # `175px`, and the rest are `75px`
-  tbl_html %>%
-    render_as_html() %>%
-    tidy_grepl(
-      paste0(
-        "<colgroup>\n\\s*?<col style=\"width: 175px\"/>\n\\s*?",
-        "<col style=\"width: 75px\"/>\n\\s*?<col style",
-        "=\"width: 75px\"/>\\s*?<col style=\"width: 75px\"/>\\s*?",
-        "</colgroup>")
+  tbl_html %>% render_as_html() %>%
+    html_fragment_within(
+      "<colgroup>",
+      "<col style=\"width:175px;\"/>",
+      "<col style=\"width:75px;\"/>",
+      "<col style=\"width:75px;\"/>",
+      "<col style=\"width:75px;\"/>",
+      "</colgroup>"
     ) %>%
     expect_true()
 
@@ -293,14 +343,14 @@ test_that("the function `cols_width()` works correctly", {
 
   # Expect that the first column width is set to
   # `250px`, and the rest are `75px`
-  tbl_html %>%
-    render_as_html() %>%
-    tidy_grepl(
-      paste0(
-        "<colgroup>\n\\s*?<col style=\"width: 250px\"/>\n\\s*?",
-        "<col style=\"width: 75px\"/>\n\\s*?<col style",
-        "=\"width: 75px\"/>\\s*?<col style=\"width: 75px\"/>\\s*?",
-        "</colgroup>")
+  tbl_html %>% render_as_html() %>%
+    html_fragment_within(
+      "<colgroup>",
+      "<col style=\"width:250px;\"/>",
+      "<col style=\"width:75px;\"/>",
+      "<col style=\"width:75px;\"/>",
+      "<col style=\"width:75px;\"/>",
+      "</colgroup>"
     ) %>%
     expect_true()
 
@@ -318,5 +368,11 @@ test_that("the function `cols_width()` works correctly", {
   expect_error(
     gt(tbl) %>%
       cols_width()
+  )
+
+  # Expect an error if an incorrect unit is present
+  # in any vector element of CSS length values
+  expect_error(
+    validate_css_lengths(c("", "3", "3em", "3rem", "3dem"))
   )
 })

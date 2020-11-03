@@ -216,4 +216,15 @@ test_that("the `fmt_percent()` function works correctly", {
       "64.300,00&percnt;", "21.223,20&percnt;", "0,00&percnt;",
       "&minus;2.324,00&percnt;")
   )
+
+  # Format the `num_2` column to 2 decimal places, expect that these
+  # values are prescaled and just require a percent mark; extract
+  # `output_df` and compare to expected values
+  expect_equal(
+    (tab %>%
+       fmt_percent(columns = "num_2", decimals = 2, scale_values = FALSE) %>%
+       render_formats_test("html"))[["num_2"]],
+    c("34.00&percnt;", "74.00&percnt;", "23.00&percnt;", "93.00&percnt;",
+      "35.00&percnt;", "76.00&percnt;", "57.00&percnt;")
+  )
 })

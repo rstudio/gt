@@ -70,31 +70,40 @@ cols_align <- function(data,
     # Obtain a vector of column classes for each of the column
     # names
     col_classes <-
-      lapply(
-        data_tbl[column_names], class) %>%
-      lapply(`[[`, 1) %>%
-      unlist()
+      unlist(
+        lapply(
+          data_tbl[column_names], class) %>%
+          lapply(`[[`, 1)
+      )
 
     # Get a vector of `align` values based on the column classes
-    align <- sapply(
-      col_classes, switch,
-      "character" = "left",
-      "Date" = "left",
-      "POSIXct" = "left",
-      "logical" = "center",
-      "factor" = "center",
-      "list" = "center",
-      "numeric" = "right",
-      "integer" = "center",
-      "center") %>%
-      unname()
-  } else {
+    align <-
+      unname(
+        sapply(
+          col_classes, switch,
+          "character" = "left",
+          "Date" = "left",
+          "POSIXct" = "left",
+          "logical" = "center",
+          "factor" = "center",
+          "list" = "center",
+          "numeric" = "right",
+          "integer" = "right",
+          "center"
+        )
+      )
 
+  } else {
     align <- rep(align, length(column_names))
   }
 
   for (i in seq(column_names)) {
-    data <- data %>% dt_boxhead_edit(var = column_names[i], column_align = align[i])
+    data <-
+      dt_boxhead_edit(
+        data = data,
+        var = column_names[i],
+        column_align = align[i]
+      )
   }
 
   data
@@ -103,17 +112,20 @@ cols_align <- function(data,
 #' Set the widths of columns
 #'
 #' Manual specifications of column widths can be performed using the
-#' `cols_width()` function. We choose which columns get specific widths (in
-#' pixels, usually by use of the [px()] helper function). Width assignments are
-#' supplied in `...` through two-sided formulas, where the left-hand side
-#' defines the target columns and the right-hand side is a single width value in
-#' pixels.
+#' `cols_width()` function. We choose which columns get specific widths. This
+#' can be in units of pixels (easily set by use of the [px()] helper function),
+#' or, as percentages (where the [pct()] helper function is useful). Width
+#' assignments are supplied in `...` through two-sided formulas, where the
+#' left-hand side defines the target columns and the right-hand side is a single
+#' dimension.
 #'
-#' Normally, column widths are automatically set to span across the width of the
-#' container (both table and container widths can be individually modified with
-#' the `table.width` and `container.width` options within [tab_options()]). When
-#' using `cols_width()` though, the `table.width` option is disregarded in
-#' favor of the pixel values set for each column.
+#' Column widths can be set as absolute or relative values (with px and
+#' percentage values). Those columns not specified are treated as having
+#' variable width. The sizing behavior for column widths depends on the
+#' combination of value types, and, whether a table width has been set (which
+#' could, itself, be expressed as an absolute or relative value). Widths for the
+#' table and its container can be individually modified with the `table.width`
+#' and `container.width` arguments within [tab_options()]).
 #'
 #' @inheritParams cols_align
 #' @param ... Expressions for the assignment of column widths for the table
@@ -200,10 +212,13 @@ cols_width <- function(data,
     cols <- width_item %>% rlang::f_lhs()
 
     columns <-
-      resolve_vars(
-        var_expr = !!cols,
-        data = data
-      ) %>%
+      dt_boxhead_get_vars(data)[
+        resolve_data_vals_idx(
+          var_expr = !!cols,
+          data_tbl = NULL,
+          vals = dt_boxhead_get_vars(data)
+        )
+      ] %>%
       base::setdiff(columns_used)
 
     columns_used <- c(columns_used, columns)
@@ -213,31 +228,37 @@ cols_width <- function(data,
       rlang::f_rhs() %>%
       rlang::eval_tidy()
 
+    # If a bare numeric value is provided, give that the `px` dimension
+    if (is.numeric(width)) width <- paste_right(as.character(width), "px")
+
     for (column in columns) {
-      data <- data %>% dt_boxhead_edit(var = column, column_width = list(width))
+      data <-
+        dt_boxhead_edit(
+          data = data,
+          var = column,
+          column_width = list(width)
+        )
     }
   }
 
   unset_widths <-
-    data %>%
-    dt_boxhead_get() %>%
+    dt_boxhead_get(data = data) %>%
     .$column_width %>%
     lapply(is.null) %>%
     unlist()
 
   if (any(unset_widths)) {
 
-    columns_unset <- (data %>% dt_boxhead_get_vars())[unset_widths]
-
-    warning("Unset column widths found, setting them to `100px`:\n",
-            " * columns: ",
-            str_catalog(columns_unset),
-            ".\n",
-            " * Set any remaining column widths in `cols_width()` with `everything() ~ px(100)`.",
-            call. = FALSE)
+    columns_unset <- dt_boxhead_get_vars(data = data)[unset_widths]
 
     for (column in columns_unset) {
-      data <- data %>% dt_boxhead_edit(var = column, column_width = list("100px"))
+
+      data <-
+        dt_boxhead_edit(
+          data = data,
+          var = column,
+          column_width = list("")
+        )
     }
   }
 
@@ -459,7 +480,7 @@ cols_move_to_start <- function(data,
 
   new_vars <- append(other_columns, columns, after = 0)
 
-  data <- dt_boxhead_set_var_order(data, vars = new_vars)
+  data <- dt_boxhead_set_var_order(data = data, vars = new_vars)
 
   data
 }
@@ -552,7 +573,7 @@ cols_move_to_end <- function(data,
 
   new_vars <- append(other_columns, columns)
 
-  data <- dt_boxhead_set_var_order(data, vars = new_vars)
+  data <- dt_boxhead_set_var_order(data = data, vars = new_vars)
 
   data
 }
@@ -658,7 +679,7 @@ cols_move <- function(data,
 
   new_vars <- append(other_columns, moving_columns, after = after_index)
 
-  data <- dt_boxhead_set_var_order(data, vars = new_vars)
+  data <- dt_boxhead_set_var_order(data = data, vars = new_vars)
 
   data
 }
@@ -756,7 +777,9 @@ cols_hide <- function(data,
   }
 
   # Set the `"hidden"` type for the `columns` in `_dt_boxhead`
-  data %>% dt_boxhead_set_hidden(vars = columns)
+  data <- dt_boxhead_set_hidden(data = data, vars = columns)
+
+  data
 }
 
 #' Merge two columns to a value & uncertainty column
@@ -872,7 +895,7 @@ cols_merge_uncert <- function(data,
     )
 
   if (isTRUE(autohide)) {
-    data <- data %>% cols_hide(columns = col_uncert)
+    data <- cols_hide(data = data, columns = col_uncert)
   }
 
   data
@@ -985,7 +1008,7 @@ cols_merge_range <- function(data,
     )
 
   if (isTRUE(autohide)) {
-    data <- data %>% cols_hide(columns = col_end)
+    data <- cols_hide(data = data, columns = col_end)
   }
 
   data
@@ -1109,7 +1132,7 @@ cols_merge <- function(data,
               call. = FALSE)
     }
 
-    data <- data %>% cols_hide(columns = hide_columns_from_supplied)
+    data <- cols_hide(data = data, columns = hide_columns_from_supplied)
   }
 
   # Create an entry and add it to the `_col_merge` attribute

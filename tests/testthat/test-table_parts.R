@@ -42,7 +42,7 @@ test_that("a gt table contains the expected heading components", {
 
   # Expect that the `table_heading` content is 'test heading'
   tbl_html %>%
-    selection_text("[class='gt_heading gt_title gt_font_normal']") %>%
+    selection_text("[class='gt_heading gt_title gt_font_normal gt_bottom_border']") %>%
     expect_equal("test heading")
 
   # Expect that the number of rows with `class='gt_row gt_right'` is `5`
@@ -178,6 +178,29 @@ test_that("a gt table contains the expected spanner column labels", {
         label = "perimeter",
         columns = vars(peris, shapes))
   )
+})
+
+test_that("`tab_spanner()` doesn't adversely affect column alignment", {
+
+  tbl_html <-
+    gt(data = airquality) %>%
+    cols_move_to_start(columns = vars(Month, Day)) %>%
+    cols_label(Solar.R = html("Solar<br>Radiation")) %>%
+    tab_spanner(
+      label = "Measurement Period",
+      columns = vars(Month, Day)
+    ) %>%
+    render_as_html()
+
+  # Expect that all column labels (which are originally of the numeric
+  # and integer classes) are aligned to the right (i.e., all have the
+  # `gt_right` CSS class) even though a spanner is present above the
+  # `Month` and `Day` columns
+  tbl_html %>%
+    xml2::read_html() %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_right']") %>%
+    rvest::html_text() %>%
+    expect_equal(c("Ozone", "SolarRadiation", "Wind", "Temp", "Month", "Day"))
 })
 
 test_that("`tab_spanner()` works even when columns are forcibly moved", {

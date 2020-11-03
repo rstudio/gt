@@ -9,7 +9,7 @@
 #' @noRd
 render_as_html <- function(data) {
 
-  data <- data %>% build_data(context = "html")
+  data <- build_data(data = data, context = "html")
 
   # Composition of HTML -----------------------------------------------------
 
@@ -35,16 +35,16 @@ render_as_html <- function(data) {
   table_defs <- get_table_defs(data = data)
 
   # Compose the HTML table
-  htmltools::tags$table(
-    class = "gt_table",
-    style = table_defs$table_style,
-    table_defs$table_colgroups,
-    heading_component,
-    columns_component,
-    body_component,
-    source_notes_component,
-    footnotes_component
-  ) %>%
-    as.character()
-
+  as.character(
+    htmltools::tags$table(
+      class = "gt_table",
+      style = table_defs$table_style,
+      table_defs$table_colgroups,
+      heading_component,
+      columns_component,
+      body_component,
+      source_notes_component,
+      footnotes_component
+    )
+  )
 }

@@ -398,6 +398,256 @@ test_that("the `fmt_number()` function can scale/suffix larger numbers", {
     "999.99990")
 })
 
+test_that("the `fmt_number()` function format to specified significant figures", {
+
+  # These numbers will be used in tests of formatting
+  # correctly to n significant figures
+  numbers <-
+    c(
+      50000.01,        #1
+      1000.001,        #2
+      10.00001,        #3
+      12345,           #4
+      1234.5,          #5
+      123.45,          #6
+      1.2345,          #7
+      0.12345,         #8
+      0.0000123456,    #9
+      -50000.01,      #10
+      -1000.001,      #11
+      -10.00001,      #12
+      -12345,         #13
+      -1234.5,        #14
+      -123.45,        #15
+      -1.2345,        #16
+      -0.12345,       #17
+      -0.0000123456   #18
+    )
+
+  # Create a single-column tibble with these values in `num`
+  numbers_tbl <- dplyr::tibble(num = numbers)
+
+  # Create a `gt_tbl` object with `gt()` and the
+  # `numbers_tbl` dataset
+  tab <- gt(data = numbers_tbl)
+
+  # Format the `num` column to 5 significant figures
+  expect_equal(
+    (tab %>%
+       fmt_number(columns = "num", n_sigfig = 5) %>%
+       render_formats_test(context = "html"))[["num"]],
+    c("50,000", "1,000.0", "10.000", "12,345", "1,234.5", "123.45",
+      "1.2345", "0.12345", "0.000012346", "&minus;50,000", "&minus;1,000.0",
+      "&minus;10.000", "&minus;12,345", "&minus;1,234.5", "&minus;123.45",
+      "&minus;1.2345", "&minus;0.12345", "&minus;0.000012346"
+    )
+  )
+
+  # Format the `num` column to 4 significant figures
+  expect_equal(
+    (tab %>%
+       fmt_number(columns = "num", n_sigfig = 4) %>%
+       render_formats_test(context = "html"))[["num"]],
+    c("50,000", "1,000", "10.00", "12,340", "1,234", "123.4", "1.234",
+      "0.1234", "0.00001235", "&minus;50,000", "&minus;1,000", "&minus;10.00",
+      "&minus;12,340", "&minus;1,234", "&minus;123.4", "&minus;1.234",
+      "&minus;0.1234", "&minus;0.00001235"
+    )
+  )
+
+  # Format the `num` column to 3 significant figures
+  expect_equal(
+    (tab %>%
+       fmt_number(columns = "num", n_sigfig = 3) %>%
+       render_formats_test(context = "html"))[["num"]],
+    c("50,000", "1,000", "10.0", "12,300", "1,230", "123", "1.23",
+      "0.123", "0.0000123", "&minus;50,000", "&minus;1,000", "&minus;10.0",
+      "&minus;12,300", "&minus;1,230", "&minus;123", "&minus;1.23",
+      "&minus;0.123", "&minus;0.0000123"
+    )
+  )
+
+  # Format the `num` column to 2 significant figures
+  expect_equal(
+    (tab %>%
+       fmt_number(columns = "num", n_sigfig = 2) %>%
+       render_formats_test(context = "html"))[["num"]],
+    c("50,000", "1,000", "10", "12,000", "1,200", "120", "1.2", "0.12",
+      "0.000012", "&minus;50,000", "&minus;1,000", "&minus;10", "&minus;12,000",
+      "&minus;1,200", "&minus;120", "&minus;1.2", "&minus;0.12", "&minus;0.000012"
+    )
+  )
+
+  # Format the `num` column to 1 significant figure
+  expect_equal(
+    (tab %>%
+       fmt_number(columns = "num", n_sigfig = 1) %>%
+       render_formats_test(context = "html"))[["num"]],
+    c("50,000", "1,000", "10", "10,000", "1,000", "100", "1", "0.1",
+      "0.00001", "&minus;50,000", "&minus;1,000", "&minus;10", "&minus;10,000",
+      "&minus;1,000", "&minus;100", "&minus;1", "&minus;0.1", "&minus;0.00001"
+    )
+  )
+
+  # Expect an error if the length of `n_sigfig` is not 1
+  expect_error(fmt_number(columns = "num", n_sigfig = c(1, 2)))
+
+  # Expect an error if `n_sigfig` is NA
+  expect_error(tab %>% fmt_number(columns = "num", n_sigfig = NA))
+  expect_error(tab %>% fmt_number(columns = "num", n_sigfig = NA_integer_))
+  expect_error(tab %>% fmt_number(columns = "num", n_sigfig = NA_real_))
+  expect_error(tab %>% fmt_number(columns = "num", n_sigfig = NA_integer_))
+
+  # Expect an error if `n_sigfig` is not numeric
+  expect_error(tab %>% fmt_number(columns = "num", n_sigfig = "3"))
+  expect_error(tab %>% fmt_number(columns = "num", n_sigfig = TRUE))
+  expect_error(tab %>% fmt_number(columns = "num", n_sigfig = factor(3)))
+
+  # Don't expect errors when using integers or doubles
+  expect_error(regexp = NA, tab %>% fmt_number(columns = "num", n_sigfig = 2L))
+  expect_error(regexp = NA, tab %>% fmt_number(columns = "num", n_sigfig = 2))
+
+  # Expect an error if `n_sigfig` is less than 1
+  expect_error(tab %>% fmt_number(columns = "num", n_sigfig = 0L))
+  expect_error(tab %>% fmt_number(columns = "num", n_sigfig = -1L))
+})
+
+
+test_that("the `drop_trailing_dec_mark` option works in select `fmt_*()` functions", {
+
+  # These numbers will be used in tests with `drop_trailing_dec_mark = FALSE`
+  numbers <- c(0.001, 0.01, 0.1, 0, 1, 1.1, 1.12, 50000, -1.5, -5, -500.1)
+
+  # Create a single-column tibble with these values in `num`
+  numbers_tbl <- dplyr::tibble(num = numbers)
+
+  # Create a `gt_tbl` object with `gt()` and the
+  # `numbers_tbl` dataset
+  tab <- gt(data = numbers_tbl)
+
+  # Format the `num` column using `fmt_number()` with default options
+  expect_equal(
+    (tab %>%
+       fmt_number(columns = "num", drop_trailing_dec_mark = TRUE) %>%
+       render_formats_test(context = "html"))[["num"]],
+    c(
+      "0.00", "0.01", "0.10", "0.00", "1.00", "1.10", "1.12", "50,000.00",
+      "&minus;1.50", "&minus;5.00", "&minus;500.10"
+    )
+  )
+
+  # Format the `num` column using `fmt_number()` with `decimals = 0`
+  expect_equal(
+    (tab %>%
+       fmt_number(columns = "num", decimals = 0) %>%
+       render_formats_test(context = "html"))[["num"]],
+    c(
+      "0", "0", "0", "0", "1", "1", "1", "50,000", "&minus;2", "&minus;5",
+      "&minus;500"
+    )
+  )
+
+  # Format the `num` column using `fmt_number()` with `decimals = 0` and
+  # `drop_trailing_dec_mark = FALSE`
+  expect_equal(
+    (tab %>%
+       fmt_number(columns = "num", decimals = 0, drop_trailing_dec_mark = FALSE) %>%
+       render_formats_test(context = "html"))[["num"]],
+    c(
+      "0.", "0.", "0.", "0.", "1.", "1.", "1.", "50,000.", "&minus;2.",
+      "&minus;5.", "&minus;500."
+    )
+  )
+
+  # Format the `num` column using `fmt_percent()` with default options
+  expect_equal(
+    (tab %>%
+       fmt_percent(columns = "num", drop_trailing_dec_mark = TRUE) %>%
+       render_formats_test(context = "html"))[["num"]],
+    c(
+      "0.10&percnt;", "1.00&percnt;", "10.00&percnt;", "0.00&percnt;",
+      "100.00&percnt;", "110.00&percnt;", "112.00&percnt;", "5,000,000.00&percnt;",
+      "&minus;150.00&percnt;", "&minus;500.00&percnt;", "&minus;50,010.00&percnt;"
+    )
+  )
+
+  # Format the `num` column using `fmt_percent()` with `decimals = 0`
+  expect_equal(
+    (tab %>%
+       fmt_percent(columns = "num", decimals = 0) %>%
+       render_formats_test(context = "html"))[["num"]],
+    c(
+      "0&percnt;", "1&percnt;", "10&percnt;", "0&percnt;", "100&percnt;",
+      "110&percnt;", "112&percnt;", "5,000,000&percnt;", "&minus;150&percnt;",
+      "&minus;500&percnt;", "&minus;50,010&percnt;"
+    )
+  )
+
+  # Format the `num` column using `fmt_percent()` with `decimals = 0` and
+  # `drop_trailing_dec_mark = FALSE`
+  expect_equal(
+    (tab %>%
+       fmt_percent(columns = "num", decimals = 0, drop_trailing_dec_mark = FALSE) %>%
+       render_formats_test(context = "html"))[["num"]],
+    c(
+      "0.&percnt;", "1.&percnt;", "10.&percnt;", "0.&percnt;", "100.&percnt;",
+      "110.&percnt;", "112.&percnt;", "5,000,000.&percnt;", "&minus;150.&percnt;",
+      "&minus;500.&percnt;", "&minus;50,010.&percnt;"
+    )
+  )
+
+  # Format the `num` column using `fmt_currency()` with default options
+  expect_equal(
+    (tab %>%
+       fmt_currency(columns = "num", drop_trailing_dec_mark = TRUE) %>%
+       render_formats_test(context = "html"))[["num"]],
+    c(
+      "$0.00", "$0.01", "$0.10", "$0.00", "$1.00", "$1.10", "$1.12",
+      "$50,000.00", "&minus;$1.50", "&minus;$5.00", "&minus;$500.10"
+    )
+  )
+
+  # Format the `num` column using `fmt_currency()` with `decimals = 0`
+  expect_equal(
+    (tab %>%
+       fmt_currency(columns = "num", decimals = 0) %>%
+       render_formats_test(context = "html"))[["num"]],
+    c(
+      "$0", "$0", "$0", "$0", "$1", "$1", "$1", "$50,000", "&minus;$2",
+      "&minus;$5", "&minus;$500"
+    )
+  )
+
+  # Format the `num` column using `fmt_currency()` with `decimals = 0` and
+  # `drop_trailing_dec_mark = FALSE`
+  expect_equal(
+    (tab %>%
+       fmt_currency(columns = "num", decimals = 0, drop_trailing_dec_mark = FALSE) %>%
+       render_formats_test(context = "html"))[["num"]],
+    c(
+      "$0.", "$0.", "$0.", "$0.", "$1.", "$1.", "$1.", "$50,000.",
+      "&minus;$2.", "&minus;$5.", "&minus;$500."
+    )
+  )
+
+  # Format the `num` column using `fmt_currency()` with `decimals = 0`,
+  # `drop_trailing_dec_mark = FALSE`, and placement of the currency
+  # symbol ("EUR") to the right-hand side of the figure
+  expect_equal(
+    (tab %>%
+       fmt_currency(
+         columns = "num", currency = "EUR", decimals = 0,
+         placement = "right", drop_trailing_dec_mark = FALSE
+       ) %>%
+       render_formats_test(context = "html"))[["num"]],
+    c(
+      "0.&#8364;", "0.&#8364;", "0.&#8364;", "0.&#8364;", "1.&#8364;",
+      "1.&#8364;", "1.&#8364;", "50,000.&#8364;", "&minus;2.&#8364;",
+      "&minus;5.&#8364;", "&minus;500.&#8364;"
+    )
+  )
+})
+
 test_that("`fmt_number()` with `suffixing = TRUE` works with small numbers", {
 
   # Create an input data frame with a single column

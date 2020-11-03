@@ -43,7 +43,11 @@ tab_header <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  data %>% dt_heading_title_subtitle(title = title, subtitle = subtitle)
+  dt_heading_title_subtitle(
+    data = data,
+    title = title,
+    subtitle = subtitle
+  )
 }
 
 #' Add a spanner column label
@@ -355,12 +359,13 @@ tab_row_group <- function(data,
       data <-
         dt_row_groups_set(
           data = data,
-          row_groups = c(
-            process_text(group[1]),
-            arrange_groups_vars,
-            NA_character_
-          ) %>%
-            unique()
+          row_groups = unique(
+            c(
+              process_text(group[1]),
+              arrange_groups_vars,
+              NA_character_
+            )
+          )
         )
 
     } else {
@@ -368,11 +373,12 @@ tab_row_group <- function(data,
       data <-
         dt_row_groups_set(
           data = data,
-          row_groups = c(
-            process_text(group[1]),
-            arrange_groups_vars
-          ) %>%
-            unique()
+          row_groups = unique(
+            c(
+              process_text(group[1]),
+              arrange_groups_vars
+            )
+          )
         )
     }
   }
@@ -383,7 +389,7 @@ tab_row_group <- function(data,
     data <-
       dt_stub_others_set(
         data = data,
-        stub_others = others[1] %>% process_text()
+        stub_others = process_text(others[1])
       )
   }
 
@@ -431,7 +437,7 @@ tab_stubhead <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  data %>% dt_stubhead_label(label = label)
+  dt_stubhead_label(data = data, label = label)
 }
 
 #' Add a table footnote
@@ -524,7 +530,12 @@ tab_footnote <- function(data,
   # Resolve the locations of the targeted data cells and append
   # the footnotes
   for (loc in locations) {
-    data <- set_footnote(loc = loc, data = data, footnote = process_text(footnote))
+    data <-
+      set_footnote(
+        loc = loc,
+        data = data,
+        footnote = process_text(footnote)
+      )
   }
 
   data
@@ -757,7 +768,10 @@ tab_source_note <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  data %>% dt_source_notes_add(source_note = source_note)
+  dt_source_notes_add(
+    data = data,
+    source_note = source_note
+  )
 }
 
 #' Add custom styles to one or more cells
@@ -784,8 +798,9 @@ tab_source_note <- function(data,
 #' @inheritParams fmt_number
 #' @param style a vector of styles to use. The [cell_text()], [cell_fill()], and
 #'   [cell_borders()] helper functions can be used here to more easily generate
-#'   valid styles. If using more than one helper function to define styles, all
-#'   calls must be enclosed in a [list()].
+#'   valid styles.  If using more than one helper function to define styles, all
+#'   calls must be enclosed in a [list()]. Custom CSS declarations can be used
+#'   for HTML output by including a [css()]-based statement as a list item.
 #' @param locations the cell or set of cells to be associated with the style.
 #'   Supplying any of the `cells_*()` helper functions is a useful way to target
 #'   the location cells that are associated with the styling. These helper
@@ -855,10 +870,31 @@ tab_source_note <- function(data,
 #'       rows = open > close)
 #'   )
 #'
+#' # Use `exibble` to create a gt table;
+#' # replace missing values with the
+#' # `fmt_missing()` function and then
+#' # add styling to the `char` column
+#' # with `cell_fill()` and with a
+#' # CSS style declaration
+#' tab_3 <-
+#'   exibble %>%
+#'   dplyr::select(char, fctr) %>%
+#'   gt() %>%
+#'   fmt_missing(everything()) %>%
+#'   tab_style(
+#'     style = list(
+#'       cell_fill(color = "lightcyan"),
+#'       "font-variant: small-caps;"
+#'     ),
+#'     locations = cells_body(columns = vars(char))
+#'   )
+#'
 #' @section Figures:
 #' \if{html}{\figure{man_tab_style_1.png}{options: width=100\%}}
 #'
 #' \if{html}{\figure{man_tab_style_2.png}{options: width=100\%}}
+#'
+#' \if{html}{\figure{man_tab_style_3.png}{options: width=100\%}}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
@@ -876,14 +912,47 @@ tab_style <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
+  # Intercept font styles that require registration
+  if ("cell_text" %in% names(style)) {
+
+    if ("font" %in% names(style[["cell_text"]])) {
+
+      font <- style[["cell_text"]][["font"]]
+      font <- normalize_font_input(font_input = font)
+
+      existing_additional_css <-
+        dt_options_get_value(
+          data = data,
+          option = "table_additional_css"
+        )
+
+      additional_css <- c(font$import_stmt, existing_additional_css)
+
+      data <-
+        tab_options(
+          data = data,
+          table.additional_css = additional_css
+        )
+
+      font_names <- font$name
+
+      style[["cell_text"]][["font"]] <-
+        as_css_font_family_attr(
+          font_vec = font_names,
+          value_only = TRUE
+        )
+    }
+  }
+
   # Resolve into a list of locations
   locations <- as_locations(locations)
 
-  style <- as_style(style)
+  style <- as_style(style = style)
 
   # Resolve the locations of the targeted data cells and append
   # the format directives
   for (loc in locations) {
+
     data <-
       set_style(
         loc = loc,
@@ -901,14 +970,14 @@ as_style <- function(style) {
   # components together
   if (!inherits(style, "cell_styles")) {
 
-    if (!inherits(style, "list")) {
-      stop("Styles should be provided exclusively by the stylizing ",
-           "helper functions:",
-           " * `cell_text()\n",
-           " * `cell_fill()\n",
-           " * `cell_borders()`",
-           call. = FALSE)
-    }
+    # if (!inherits(style, "list")) {
+    #   stop("Styles should be provided exclusively by the stylizing ",
+    #        "helper functions:\n",
+    #        " * `cell_text()\n",
+    #        " * `cell_fill()\n",
+    #        " * `cell_borders()`",
+    #        call. = FALSE)
+    # }
 
     # Initialize an empty list that will be
     # populated with normalized style declarations
@@ -918,7 +987,11 @@ as_style <- function(style) {
 
       style_item <- style[[i]]
 
-      if (!inherits(style_item, "cell_styles")) {
+      if (inherits(style_item, "character")) {
+
+        style_item <- list(cell_style = style_item)
+
+      } else if (!inherits(style_item, "cell_styles")) {
 
         stop("All provided styles should be generated by stylizing ",
              "helper functions. Style with index `", i, "` is invalid.",
@@ -932,9 +1005,6 @@ as_style <- function(style) {
 
     style <- final_style
   }
-
-  # Check for class of `cell_style` in upgraded `style` list
-  lapply(style, function(x) checkmate::assert_class(x = x, classes = "cell_style"))
 
   style
 }
@@ -1148,6 +1218,9 @@ set_style.cells_grand_summary <- function(loc, data, style) {
 #'   given in units of pixels. The [px()] and [pct()] helper functions can also
 #'   be used to pass in numeric values and obtain values as pixel or percent
 #'   units.
+#' @param table.layout The value for the `table-layout` CSS style in the HTML
+#'   output context. By default, this is `"fixed"` but another valid option is
+#'   `"auto"`.
 #' @param table.align The horizontal alignment of the table in its container. By
 #'   default, this is `"center"`. Other options are `"left"` and `"right"`. This
 #'   will automatically set `table.margin.left` and `table.margin.right` to the
@@ -1165,6 +1238,14 @@ set_style.cells_grand_summary <- function(loc, data, style) {
 #'   elements: `heading`, `column_labels`, `row_group`, `stub`, `summary_row`,
 #'   `grand_summary_row`, `footnotes`, and `source_notes`. A color name or a
 #'   hexadecimal color code should be provided.
+#' @param table.additional_css This option can be used to supply an additional
+#'   block of CSS rules to be applied after the automatically generated table
+#'   CSS.
+#' @param table.font.names The names of the fonts used for the table. This is
+#'   a vector of several font names. If the first font isn't available, then
+#'   the next font is tried (and so on).
+#' @param table.font.style The font style for the table. Can be one of either
+#'   `"normal"`, `"italic"`, or `"oblique"`.
 #' @param table.font.color,table.font.color.light
 #'   The text color used throughout the table. There are two variants:
 #'   `table.font.color` is for text overlaid on lighter background colors, and
@@ -1182,8 +1263,8 @@ set_style.cells_grand_summary <- function(loc, data, style) {
 #'   obtain values as pixel or percentage units.
 #' @param heading.align Controls the horizontal alignment of the heading title
 #'   and subtitle. We can either use `"center"`, `"left"`, or `"right"`.
-#' @param heading.title.font.weight,heading.subtitle.font.weight,column_labels.font.weight,row_group.font.weight,stub.font.weight
-#'   The font weights of the `heading.title`, `heading.subtitle`,
+#' @param table.font.weight,heading.title.font.weight,heading.subtitle.font.weight,column_labels.font.weight,row_group.font.weight,stub.font.weight
+#'   The font weights of the table, `heading.title`, `heading.subtitle`,
 #'   `column_labels`, `row_group`, and `stub` text elements. Can be a text-based
 #'   keyword such as `"normal"`, `"bold"`, `"lighter"`, `"bolder"`, or, a
 #'   numeric value between `1` and `1000`, inclusive. Note that only variable
@@ -1378,13 +1459,18 @@ tab_options <- function(data,
                         container.overflow.x = NULL,
                         container.overflow.y = NULL,
                         table.width = NULL,
+                        table.layout = NULL,
                         table.align = NULL,
                         table.margin.left = NULL,
                         table.margin.right = NULL,
                         table.background.color = NULL,
+                        table.additional_css = NULL,
+                        table.font.names = NULL,
+                        table.font.size = NULL,
+                        table.font.weight = NULL,
+                        table.font.style = NULL,
                         table.font.color = NULL,
                         table.font.color.light = NULL,
-                        table.font.size = NULL,
                         table.border.top.style = NULL,
                         table.border.top.width = NULL,
                         table.border.top.color = NULL,

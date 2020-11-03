@@ -185,7 +185,11 @@ gt_save_webshot <- function(data,
     tidy_gsub("\\\\", "/")
 
   # Save gt table as HTML using the `gt_save_html()` function
-  data %>% gt_save_html(filename = tempfile_, path = NULL)
+  gt_save_html(
+    data = data,
+    filename = tempfile_,
+    path = NULL
+  )
 
   # Saving an image requires the webshot package; if it's
   # not present, stop with a message
@@ -218,9 +222,7 @@ gt_save_latex <- function(data,
 
   filename <- gtsave_filename(path = path, filename = filename)
 
-  data %>%
-    as_latex() %>%
-    writeLines(con = filename)
+  writeLines(text = as_latex(data = data), con = filename)
 }
 
 #' Saving function for an RTF file
@@ -251,11 +253,18 @@ gtsave_file_ext <- function(filename) {
 #' @noRd
 gtsave_filename <- function(path, filename) {
 
-  if (!is.null(path)) {
-    filename <- file.path(path, filename)
-  }
+  if (is.null(path)) path <- "."
 
-  filename %>% path_expand()
+  # The use of `fs::path_abs()` works around
+  # the saving code in `htmltools::save_html()`
+  # See htmltools Issue #165 for more details
+
+  fs::path_abs(
+    path = filename,
+    start = path
+  ) %>%
+    fs::path_expand() %>%
+    as.character()
 }
 
 #' Get the HTML content of a **gt** table
@@ -457,39 +466,36 @@ as_rtf <- function(data) {
 
   # Composition of RTF ------------------------------------------------------
 
-  # Create a RTF fragment for the start of the table
-  table_start <- rtf_head()
-
   # Create the heading component
-  heading_component <- create_heading_component(data = data, context = "rtf")
+  heading_component <- create_heading_component_rtf(data = data)
 
   # Create the columns component
-  columns_component <- create_columns_component_r(data = data)
+  columns_component <- create_columns_component_rtf(data = data)
 
   # Create the body component
-  body_component <- create_body_component_r(data = data)
+  body_component <- create_body_component_rtf(data = data)
 
   # Create the footnotes component
-  footnotes_component <- create_footnotes_component_r(data = data)
+  footnotes_component <- create_footnotes_component_rtf(data = data)
 
   # Create the source notes component
-  source_notes_component <- create_source_notes_component_r(data = data)
-
-  # Create a fragment for the ending tabular statement
-  table_end <- "}\n"
+  source_notes_component <- create_source_notes_component_rtf(data = data)
 
   # Compose the RTF table
   rtf_table <-
-    paste0(
-      table_start,
-      heading_component,
-      columns_component,
-      body_component,
-      footnotes_component,
-      source_notes_component,
-      table_end,
-      collapse = ""
-    )
+    rtf_file(
+      document = {
+        rtf_table(
+          rows = c(
+            heading_component,
+            columns_component,
+            body_component,
+            footnotes_component,
+            source_notes_component
+          )
+        )
+      }) %>%
+    as_rtf_string()
 
   if (isTRUE(getOption('knitr.in.progress'))) {
     rtf_table <- rtf_table %>% knitr::raw_output()
@@ -497,6 +503,7 @@ as_rtf <- function(data) {
 
   rtf_table
 }
+
 
 #' Extract a summary list from a **gt** object
 #'

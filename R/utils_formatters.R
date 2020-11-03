@@ -225,23 +225,55 @@ scale_x_values <- function(x,
 format_num_to_str <- function(x,
                               context,
                               decimals,
+                              n_sigfig,
                               sep_mark,
                               dec_mark,
                               drop_trailing_zeros,
+                              drop_trailing_dec_mark,
                               format = "f",
                               replace_minus_mark = TRUE) {
+
+  if (format == "fg") {
+    x <- signif(x, digits = n_sigfig)
+    mode <- NULL
+    digits <- n_sigfig
+    flag <- "#"
+    drop0trailing <- FALSE
+  } else if (format == "f") {
+    mode <- "double"
+    digits <- decimals
+    flag <- ""
+    drop0trailing <- drop_trailing_zeros
+  } else if (format == "e") {
+    mode <- "double"
+    digits <- decimals
+    flag <- ""
+    drop0trailing <- drop_trailing_zeros
+  } else {
+    stop("The format provided isn't recognized.")
+  }
 
   x_str <-
     formatC(
       x = x,
-      digits = decimals,
-      mode = "double",
-      big.mark = sep_mark,
-      decimal.mark = dec_mark,
       format = format,
-      drop0trailing = drop_trailing_zeros
+      mode = mode,
+      digits = digits,
+      flag = flag,
+      drop0trailing = drop0trailing,
+      big.mark = sep_mark,
+      decimal.mark = dec_mark
     )
 
+  # If a trailing decimal mark is to be retained (not the
+  # default option but sometimes desirable), affix the `dec_mark`
+  # to the right of those figures that are missing this mark
+  if (!drop_trailing_dec_mark) {
+    x_str_no_dec <- !grepl(dec_mark, x_str, fixed = TRUE)
+    x_str[x_str_no_dec] <- paste_right(x_str[x_str_no_dec], dec_mark)
+  }
+
+  # Replace the minus mark (a hyphen) with a context-specific minus sign
   if (replace_minus_mark) {
     x_str <- format_minus(x_str = x_str, x = x, context = context)
   }
@@ -258,7 +290,8 @@ format_num_to_str_c <- function(x,
                                 decimals,
                                 sep_mark,
                                 dec_mark,
-                                drop_trailing_zeros = FALSE) {
+                                drop_trailing_zeros = FALSE,
+                                drop_trailing_dec_mark) {
 
   format_num_to_str(
     x = x,
@@ -267,6 +300,7 @@ format_num_to_str_c <- function(x,
     sep_mark = sep_mark,
     dec_mark = dec_mark,
     drop_trailing_zeros = drop_trailing_zeros,
+    drop_trailing_dec_mark = drop_trailing_dec_mark,
     format = "f"
   )
 }
@@ -293,29 +327,39 @@ to_latex_math_mode <- function(x,
 context_missing_text <- function(missing_text,
                                  context) {
 
-  missing_text <- process_text(missing_text, context)
-
-  switch(context,
-         html =
-           {
-             if (!inherits(missing_text, "AsIs") && missing_text == "---") {
-               "&mdash;"
-             } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
-               "&ndash;"
-             } else {
-               missing_text
-             }
-           },
-         latex =
-           {
-             if (!inherits(missing_text, "AsIs") && missing_text == "---") {
-               "\u2014"
-             } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
-               "\u2013"
-             } else {
-               missing_text
-             }
-           })
+  switch(
+    context,
+    html =
+      {
+        if (!inherits(missing_text, "AsIs") && missing_text == "---") {
+          "&mdash;"
+        } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
+          "&ndash;"
+        } else {
+          process_text(missing_text, context)
+        }
+      },
+    latex =
+      {
+        if (!inherits(missing_text, "AsIs") && missing_text == "---") {
+          "\u2014"
+        } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
+          "\u2013"
+        } else {
+          process_text(missing_text, context)
+        }
+      },
+    rtf =
+      {
+        if (!inherits(missing_text, "AsIs") && missing_text == "---") {
+          "\\'97"
+        } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
+          "\\'96"
+        } else {
+          process_text(missing_text, context)
+        }
+      }
+  )
 }
 context_dash_mark <- context_missing_text
 
@@ -326,25 +370,36 @@ context_dash_mark <- context_missing_text
 context_plusminus_mark <- function(plusminus_mark,
                                    context) {
 
-  switch(context,
-         html =
-           {
-             if (!inherits(plusminus_mark, "AsIs") &&
-                 plusminus_mark == " +/- ") {
-               " &plusmn; "
-             } else {
-               plusminus_mark
-             }
-           },
-         latex =
-         {
-           if (!inherits(plusminus_mark, "AsIs") &&
-               plusminus_mark == " +/- ") {
-             " \u00B1 "
-           } else {
-             plusminus_mark
-           }
-         })
+  switch(
+    context,
+    html =
+      {
+        if (!inherits(plusminus_mark, "AsIs") &&
+            plusminus_mark == " +/- ") {
+          " &plusmn; "
+        } else {
+          plusminus_mark
+        }
+      },
+    latex =
+      {
+        if (!inherits(plusminus_mark, "AsIs") &&
+            plusminus_mark == " +/- ") {
+          " \u00B1 "
+        } else {
+          plusminus_mark
+        }
+      },
+    rtf =
+      {
+        if (!inherits(plusminus_mark, "AsIs") &&
+            plusminus_mark == " +/- ") {
+          " \\'b1 "
+        } else {
+          plusminus_mark
+        }
+      }
+  )
 }
 
 #' Obtain the contextually correct minus mark
@@ -404,6 +459,7 @@ context_exp_marks <- function(context) {
   switch(context,
          html = c(" &times; 10<sup class='gt_super'>", "</sup>"),
          latex = c(" \\times 10^{", "}"),
+         rtf = c(" \\'d7 10{\\super ", "}"),
          c(" x 10(", ")"))
 }
 

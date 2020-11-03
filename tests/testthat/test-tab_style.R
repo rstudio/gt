@@ -430,3 +430,43 @@ test_that("a gt table can store the correct style statements", {
       "data", NA_character_, "hp", "5", "1", NA_character_, "#FFFF00")
     )
 })
+
+test_that("using fonts in `cell_text()` works", {
+
+  # Prepare a small gt table for all tests
+  tbl <- exibble %>% dplyr::select(char, time) %>% gt()
+
+  # Expect that system fonts can be combined with default fonts
+  # and set at a specific location
+  tbl %>%
+    tab_style(
+      style = cell_text(font = c("Comic Sans MS", "Menlo", default_fonts())),
+      locations = cells_body(columns = vars(time), rows = 1)
+    ) %>%
+    as_raw_html() %>%
+    expect_match(
+      "<td style=\"padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; text-align: left; font-family: 'Comic Sans MS', Menlo, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;\">13:35</td>"
+    )
+
+  # Expect that a Google Fonts and system fonts can be combined
+  # (using a list or `c()`) with default fonts and set at a specific location
+  tbl %>%
+    tab_style(
+      style = cell_text(font = c(google_font(name = "Dancing Script"), default_fonts())),
+      locations = cells_body(columns = vars(time), rows = 1)
+    ) %>%
+    as_raw_html() %>%
+    expect_match(
+      "<td style=\"padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; text-align: left; font-family: 'Dancing Script', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;\">13:35</td>"
+    )
+
+  tbl %>%
+    tab_style(
+      style = cell_text(font = list(google_font(name = "Dancing Script"), default_fonts())),
+      locations = cells_body(columns = vars(time), rows = 1)
+    ) %>%
+    as_raw_html() %>%
+    expect_match(
+      "<td style=\"padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; text-align: left; font-family: 'Dancing Script', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;\">13:35</td>"
+    )
+})

@@ -7,6 +7,8 @@
     margin-right: $table_margin_right; // table.margin.right
     color: font-color($table_background_color);
     font-size: $table_font_size; // table.font.size
+    font-weight: $table_font_weight; // table.font.weight
+    font-style: $table_font_style; // table.font.style
     background-color: $table_background_color; // table.background.color
     width: $table_width; // table.width
     border-top-style: $table_border_top_style; // table.border.top.style
@@ -163,10 +165,6 @@
     vertical-align: middle;
   }
 
-  .gt_striped {
-     background-color: $row_striping_background_color; // row.striping.background_color
-  }
-
   .gt_from_md > :first-child {
     margin-top: 0;
   }
@@ -244,6 +242,10 @@
     border-top-style: $grand_summary_row_border_style; // grand_summary_row.border.style
     border-top-width: $grand_summary_row_border_width; // grand_summary_row.border.width
     border-top-color: $grand_summary_row_border_color; // grand_summary_row.border.color
+  }
+
+  .gt_striped {
+     background-color: $row_striping_background_color; // row.striping.background_color
   }
 
   .gt_table_body {
