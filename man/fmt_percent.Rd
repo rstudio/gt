@@ -9,6 +9,7 @@ fmt_percent(
   columns,
   rows = NULL,
   decimals = 2,
+  accounting = FALSE,
   drop_trailing_zeros = FALSE,
   drop_trailing_dec_mark = TRUE,
   scale_values = TRUE,
@@ -39,6 +40,10 @@ We can also use expressions to filter down to the rows we need (e.g.,
 
 \item{decimals}{An option to specify the exact number of decimal places to
 use. The default number of decimal places is \code{2}.}
+
+\item{accounting}{An option to use accounting style for negative values. With
+\code{FALSE} (the default), negative values will be shown with a minus sign.
+Using \code{accounting = TRUE} will put negative values in parentheses.}
 
 \item{drop_trailing_zeros}{A logical value that allows for removal of
 trailing zeros (those redundant zeros after the decimal mark).}
@@ -96,6 +101,8 @@ before the values and a space can be inserted between the symbol and the
 value.
 \item decimals: choice of the number of decimal places, option to drop
 trailing zeros, and a choice of the decimal symbol
+\item negative values: choice of a negative sign or parentheses for values
+less than zero
 \item digit grouping separators: options to enable/disable digit separators
 and provide a choice of separator symbol
 \item pattern: option to use a text pattern for decoration of the formatted
