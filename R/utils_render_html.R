@@ -516,7 +516,7 @@ create_columns_component_h <- function(data) {
 
     # NOTE: rle treats NA values as distinct from each other; in other words,
     # each NA value starts a new run of length 1.
-    spanners_rle <- rle(spanners)
+    spanners_rle <- rle(spanner_ids)
     # sig_cells contains the indices of spanners' elements where the value is
     # either NA, or, is different than the previous value. (Because NAs are
     # distinct, every NA element will be present sig_cells.)
@@ -527,7 +527,7 @@ create_columns_component_h <- function(data) {
     colspans <- ifelse(
       seq_along(spanners) %in% sig_cells,
       # Index back into the rle result, working backward through sig_cells
-      spanners_rle$lengths[match(seq_along(spanners), sig_cells)],
+      spanners_rle$lengths[match(seq_along(spanner_ids), sig_cells)],
       0
     )
 
