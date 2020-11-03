@@ -15,16 +15,18 @@ tab_spanner(data, label, columns, id = label, gather = TRUE)
 
 \item{id}{The ID for the spanner column label. When accessing a spanner
 column label through \code{\link[=cells_column_spanners]{cells_column_spanners()}} (when using \code{\link[=tab_style]{tab_style()}} or
-\code{\link[=tab_footnote]{tab_footnote()}}), it occurs through the \code{id} value (and not the \code{label}).
-If an \code{id} is not provided here, it will be taken from the label. It is
-advisable to set an explicit \code{id} value if you plan to access this cell in
-a later function call and the label value is complicated (e.g., contains
-markup, is lengthy, or both). Also, when providing an \code{id} value ensure
-that it is unique across all ID values set for column spanner labels.}
+\code{\link[=tab_footnote]{tab_footnote()}}) the \code{id} value is used as the reference (and not the
+\code{label}). If an \code{id} is not explicitly provided here, it will be taken from
+the \code{label} value. It is advisable to set an explicit \code{id} value if you
+plan to access this cell in a later function call and the label text is
+complicated (e.g., contains markup, is lengthy, or both). Finally, when
+providing an \code{id} value you must ensure that it is unique across all ID
+values set for column spanner labels (the function will stop if \code{id} isn't
+unique).}
 
 \item{gather}{An option to move the specified \code{columns} such that they are
 unified under the spanner column label. Ordering of the moved-into-place
-columns will be preserved in all cases.}
+columns will be preserved in all cases. By default, this is set to \code{TRUE}.}
 }
 \value{
 An object of class \code{gt_tbl}.

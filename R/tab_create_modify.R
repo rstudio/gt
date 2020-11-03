@@ -61,15 +61,17 @@ tab_header <- function(data,
 #' @param columns The columns to be components of the spanner heading.
 #' @param id The ID for the spanner column label. When accessing a spanner
 #'   column label through [cells_column_spanners()] (when using [tab_style()] or
-#'   [tab_footnote()]), it occurs through the `id` value (and not the `label`).
-#'   If an `id` is not provided here, it will be taken from the label. It is
-#'   advisable to set an explicit `id` value if you plan to access this cell in
-#'   a later function call and the label value is complicated (e.g., contains
-#'   markup, is lengthy, or both). Also, when providing an `id` value ensure
-#'   that it is unique across all ID values set for column spanner labels.
+#'   [tab_footnote()]) the `id` value is used as the reference (and not the
+#'   `label`). If an `id` is not explicitly provided here, it will be taken from
+#'   the `label` value. It is advisable to set an explicit `id` value if you
+#'   plan to access this cell in a later function call and the label text is
+#'   complicated (e.g., contains markup, is lengthy, or both). Finally, when
+#'   providing an `id` value you must ensure that it is unique across all ID
+#'   values set for column spanner labels (the function will stop if `id` isn't
+#'   unique).
 #' @param gather An option to move the specified `columns` such that they are
 #'   unified under the spanner column label. Ordering of the moved-into-place
-#'   columns will be preserved in all cases.
+#'   columns will be preserved in all cases. By default, this is set to `TRUE`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -179,8 +181,9 @@ tab_spanner <- function(data,
 #' @inheritParams tab_spanner
 #' @param delim The delimiter to use to split an input column name. The
 #'   delimiter supplied will be autoescaped for the internal splitting
-#'   procedure. The first component of the split will become the group name and
-#'   the second component will be the column label.
+#'   procedure. The first component of the split will become the spanner column
+#'   label (and its ID value, used for styling or for the addition of footnotes
+#'   in those locations) and the second component will be the column label.
 #' @param columns An optional vector of column names that this operation should
 #'   be limited to. The default is to consider all columns in the table.
 #'

@@ -11,15 +11,16 @@ tab_spanner_delim(data, delim, columns = NULL, gather = TRUE)
 
 \item{delim}{The delimiter to use to split an input column name. The
 delimiter supplied will be autoescaped for the internal splitting
-procedure. The first component of the split will become the group name and
-the second component will be the column label.}
+procedure. The first component of the split will become the spanner column
+label (and its ID value, used for styling or for the addition of footnotes
+in those locations) and the second component will be the column label.}
 
 \item{columns}{An optional vector of column names that this operation should
 be limited to. The default is to consider all columns in the table.}
 
 \item{gather}{An option to move the specified \code{columns} such that they are
 unified under the spanner column label. Ordering of the moved-into-place
-columns will be preserved in all cases.}
+columns will be preserved in all cases. By default, this is set to \code{TRUE}.}
 }
 \value{
 An object of class \code{gt_tbl}.
