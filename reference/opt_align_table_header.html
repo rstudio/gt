@@ -84,7 +84,7 @@ convenient shortcut for &amp;lt;gt_tbl&amp;gt; %&amp;gt;% tab_options(heading.al
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -153,14 +153,14 @@ or right by using the <code>"align"</code> argument. This function serves as a
 convenient shortcut for <code>&lt;gt_tbl&gt; %&gt;% tab_options(heading.align = &lt;align&gt;)</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/opt_align_table_header.html'>opt_align_table_header</a></span>(<span class='kw'>data</span>, align = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"left"</span>, <span class='st'>"center"</span>, <span class='st'>"right"</span>))</pre>
+    <pre class="usage"><span class='fu'>opt_align_table_header</span><span class='op'>(</span><span class='va'>data</span>, align <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"center"</span>, <span class='st'>"right"</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A table object that is created using the <code><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt()</a></code> function.</p></td>
+      <td><p>A table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
     </tr>
     <tr>
       <th>align</th>
@@ -185,13 +185,13 @@ header. Options are <code>"left"</code> (the default), <code>"center"</code>, or
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Table Option Functions: 
-<code><a href='https://rdrr.io/pkg/gt/man/opt_all_caps.html'>opt_all_caps</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/opt_css.html'>opt_css</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/opt_footnote_marks.html'>opt_footnote_marks</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/opt_row_striping.html'>opt_row_striping</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/opt_table_font.html'>opt_table_font</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/opt_table_lines.html'>opt_table_lines</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/opt_table_outline.html'>opt_table_outline</a>()</code></p></div>
+<code><a href='opt_all_caps.html'>opt_all_caps</a>()</code>,
+<code><a href='opt_css.html'>opt_css</a>()</code>,
+<code><a href='opt_footnote_marks.html'>opt_footnote_marks</a>()</code>,
+<code><a href='opt_row_striping.html'>opt_row_striping</a>()</code>,
+<code><a href='opt_table_font.html'>opt_table_font</a>()</code>,
+<code><a href='opt_table_lines.html'>opt_table_lines</a>()</code>,
+<code><a href='opt_table_outline.html'>opt_table_outline</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Use `exibble` to create a gt table with</span>
@@ -199,31 +199,32 @@ header. Options are <code>"left"</code> (the default), <code>"center"</code>, or
 <span class='co'># (consisting of the title and the subtitle)</span>
 <span class='co'># are to be aligned to the left with the</span>
 <span class='co'># `opt_align_table_header()` function</span>
-<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
-  <span class='kw'>exibble</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>(rowname_col = <span class='st'>"row"</span>, groupname_col = <span class='st'>"group"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/summary_rows.html'>summary_rows</a></span>(
-    groups = <span class='st'>"grp_a"</span>,
-    columns = <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>num</span>, <span class='kw'>currency</span>),
-    fns = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-      min = <span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span>(<span class='kw'>.</span>, na.rm = <span class='fl'>TRUE</span>),
-      max = <span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span>(<span class='kw'>.</span>, na.rm = <span class='fl'>TRUE</span>)
-    )) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/grand_summary_rows.html'>grand_summary_rows</a></span>(
-    columns = <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>currency</span>),
-    fns = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-      total = <span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='kw'>.</span>, na.rm = <span class='fl'>TRUE</span>)
-    )) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_source_note.html'>tab_source_note</a></span>(source_note = <span class='st'>"This is a source note."</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_footnote.html'>tab_footnote</a></span>(
-    footnote = <span class='st'>"This is a footnote."</span>,
-    locations = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/cells_body.html'>cells_body</a></span>(columns = <span class='fl'>1</span>, rows = <span class='fl'>1</span>)
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_header.html'>tab_header</a></span>(
-    title = <span class='st'>"The title of the table"</span>,
-    subtitle = <span class='st'>"The table's subtitle"</span>
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/opt_align_table_header.html'>opt_align_table_header</a></span>(align = <span class='st'>"left"</span>)
+<span class='va'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='va'>exibble</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span>rowname_col <span class='op'>=</span> <span class='st'>"row"</span>, groupname_col <span class='op'>=</span> <span class='st'>"group"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='summary_rows.html'>summary_rows</a></span><span class='op'>(</span>
+    groups <span class='op'>=</span> <span class='st'>"grp_a"</span>,
+    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>num</span>, <span class='va'>currency</span><span class='op'>)</span>,
+    fns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+      min <span class='op'>=</span> <span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>.</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
+      max <span class='op'>=</span> <span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>.</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+    <span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='grand_summary_rows.html'>grand_summary_rows</a></span><span class='op'>(</span>
+    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>currency</span><span class='op'>)</span>,
+    fns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+      total <span class='op'>=</span> <span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>.</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+    <span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='tab_source_note.html'>tab_source_note</a></span><span class='op'>(</span>source_note <span class='op'>=</span> <span class='st'>"This is a source note."</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='tab_footnote.html'>tab_footnote</a></span><span class='op'>(</span>
+    footnote <span class='op'>=</span> <span class='st'>"This is a footnote."</span>,
+    locations <span class='op'>=</span> <span class='fu'><a href='cells_body.html'>cells_body</a></span><span class='op'>(</span>columns <span class='op'>=</span> <span class='fl'>1</span>, rows <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='tab_header.html'>tab_header</a></span><span class='op'>(</span>
+    title <span class='op'>=</span> <span class='st'>"The title of the table"</span>,
+    subtitle <span class='op'>=</span> <span class='st'>"The table's subtitle"</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>opt_align_table_header</span><span class='op'>(</span>align <span class='op'>=</span> <span class='st'>"left"</span><span class='op'>)</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -240,7 +241,7 @@ header. Options are <code>"left"</code> (the default), <code>"center"</code>, or
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

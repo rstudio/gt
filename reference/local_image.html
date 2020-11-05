@@ -89,7 +89,7 @@ need to use local_image() within the html() helper function." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -152,18 +152,18 @@ need to use local_image() within the html() helper function." />
 
     <div class="ref-description">
     <p>We can flexibly add a local image (i.e., an image residing on disk) inside of
-a table with <code><a href='https://rdrr.io/pkg/gt/man/local_image.html'>local_image()</a></code> function. The function provides a convenient way
+a table with <code>local_image()</code> function. The function provides a convenient way
 to generate an HTML fragment using an on-disk PNG or SVG. Because this
 function is currently HTML-based, it is only useful for HTML table output. To
 use this function inside of data cells, it is recommended that the
-<code><a href='https://rdrr.io/pkg/gt/man/text_transform.html'>text_transform()</a></code> function is used. With that function, we can specify which
-data cells to target and then include a <code><a href='https://rdrr.io/pkg/gt/man/local_image.html'>local_image()</a></code> call within the
+<code><a href='text_transform.html'>text_transform()</a></code> function is used. With that function, we can specify which
+data cells to target and then include a <code>local_image()</code> call within the
 required user-defined function (for the <code>fn</code> argument). If we want to include
 an image in other places (e.g., in the header, within footnote text, etc.) we
-need to use <code><a href='https://rdrr.io/pkg/gt/man/local_image.html'>local_image()</a></code> within the <code><a href='https://rdrr.io/pkg/gt/man/html.html'>html()</a></code> helper function.</p>
+need to use <code>local_image()</code> within the <code><a href='html.html'>html()</a></code> helper function.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/local_image.html'>local_image</a></span>(<span class='kw'>filename</span>, height = <span class='fl'>30</span>)</pre>
+    <pre class="usage"><span class='fu'>local_image</span><span class='op'>(</span><span class='va'>filename</span>, height <span class='op'>=</span> <span class='fl'>30</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -186,8 +186,8 @@ a cell.</p>
 
     <p>By itself, the function creates an HTML image tag with an image URI embedded
 within. We can easily experiment with a local PNG or SVG image that's
-available in the <strong>gt</strong> package using the <code><a href='https://rdrr.io/pkg/gt/man/test_image.html'>test_image()</a></code> function. Using
-that, the call <code><a href='https://rdrr.io/pkg/gt/man/local_image.html'>local_image(file = test_image(type = "png"))</a></code> evaluates to:</p>
+available in the <strong>gt</strong> package using the <code><a href='test_image.html'>test_image()</a></code> function. Using
+that, the call <code>local_image(file = test_image(type = "png"))</code> evaluates to:</p>
 <p><code>&lt;img cid=&lt;random CID&gt; src=&lt;data URI&gt; style=\"height:30px;\"&gt;</code></p>
 <p>where a height of <code>30px</code> is a default height chosen to work well within the
 heights of most table rows.</p>
@@ -204,9 +204,9 @@ heights of most table rows.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Image Addition Functions: 
-<code><a href='https://rdrr.io/pkg/gt/man/ggplot_image.html'>ggplot_image</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/test_image.html'>test_image</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/web_image.html'>web_image</a>()</code></p></div>
+<code><a href='ggplot_image.html'>ggplot_image</a>()</code>,
+<code><a href='test_image.html'>test_image</a>()</code>,
+<code><a href='web_image.html'>web_image</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Create a tibble that contains heights</span>
@@ -216,21 +216,22 @@ heights of most table rows.</p>
 <span class='co'># `text_transform()` function to insert</span>
 <span class='co'># a local test image (PNG) image with the</span>
 <span class='co'># various sizes</span>
-<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span>(
-    pixels = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/px.html'>px</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>10</span>, <span class='fl'>35</span>, <span class='fl'>5</span>)),
-    image = <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>10</span>, <span class='fl'>35</span>, <span class='fl'>5</span>)
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/text_transform.html'>text_transform</a></span>(
-    locations = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/cells_body.html'>cells_body</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>image</span>)),
-    fn = <span class='fu'>function</span>(<span class='kw'>x</span>) {
-      <span class='fu'><a href='https://rdrr.io/pkg/gt/man/local_image.html'>local_image</a></span>(
-        filename = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/test_image.html'>test_image</a></span>(type = <span class='st'>"png"</span>),
-        height = <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='kw'>x</span>)
-      )
-    }
-  )
+<span class='va'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>
+    pixels <span class='op'>=</span> <span class='fu'><a href='px.html'>px</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>35</span>, <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>,
+    image <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>35</span>, <span class='fl'>5</span><span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='text_transform.html'>text_transform</a></span><span class='op'>(</span>
+    locations <span class='op'>=</span> <span class='fu'><a href='cells_body.html'>cells_body</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>image</span><span class='op'>)</span><span class='op'>)</span>,
+    fn <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>{</span>
+      <span class='fu'>local_image</span><span class='op'>(</span>
+        filename <span class='op'>=</span> <span class='fu'><a href='test_image.html'>test_image</a></span><span class='op'>(</span>type <span class='op'>=</span> <span class='st'>"png"</span><span class='op'>)</span>,
+        height <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+      <span class='op'>)</span>
+    <span class='op'>}</span>
+  <span class='op'>)</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -247,7 +248,7 @@ heights of most table rows.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

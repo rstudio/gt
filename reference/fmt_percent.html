@@ -98,7 +98,7 @@ formatting specific to the chosen locale
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -181,29 +181,29 @@ formatting specific to the chosen locale</p></li>
 
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/fmt_percent.html'>fmt_percent</a></span>(
-  <span class='kw'>data</span>,
-  <span class='kw'>columns</span>,
-  rows = <span class='kw'>NULL</span>,
-  decimals = <span class='fl'>2</span>,
-  drop_trailing_zeros = <span class='fl'>FALSE</span>,
-  drop_trailing_dec_mark = <span class='fl'>TRUE</span>,
-  scale_values = <span class='fl'>TRUE</span>,
-  use_seps = <span class='fl'>TRUE</span>,
-  pattern = <span class='st'>"{x}"</span>,
-  sep_mark = <span class='st'>","</span>,
-  dec_mark = <span class='st'>"."</span>,
-  incl_space = <span class='fl'>FALSE</span>,
-  placement = <span class='st'>"right"</span>,
-  locale = <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>fmt_percent</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  <span class='va'>columns</span>,
+  rows <span class='op'>=</span> <span class='cn'>NULL</span>,
+  decimals <span class='op'>=</span> <span class='fl'>2</span>,
+  drop_trailing_zeros <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  drop_trailing_dec_mark <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  scale_values <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  use_seps <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  pattern <span class='op'>=</span> <span class='st'>"{x}"</span>,
+  sep_mark <span class='op'>=</span> <span class='st'>","</span>,
+  dec_mark <span class='op'>=</span> <span class='st'>"."</span>,
+  incl_space <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  placement <span class='op'>=</span> <span class='st'>"right"</span>,
+  locale <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A table object that is created using the <code><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt()</a></code> function.</p></td>
+      <td><p>A table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
     </tr>
     <tr>
       <th>columns</th>
@@ -284,7 +284,7 @@ and the percent sign. The default is to not introduce a space character.</p></td
 according the locale's rules. Examples include <code>"en_US"</code> for English
 (United States) and <code>"fr_FR"</code> for French (France). The use of a valid
 locale ID will override any values provided in <code>sep_mark</code> and <code>dec_mark</code>.
-We can use the <code><a href='https://rdrr.io/pkg/gt/man/info_locales.html'>info_locales()</a></code> function as a useful reference for all of
+We can use the <code><a href='info_locales.html'>info_locales()</a></code> function as a useful reference for all of
 the locales that are supported.</p></td>
     </tr>
     </table>
@@ -312,35 +312,37 @@ argument. See the Arguments section for more information on this.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Format Data: 
-<code><a href='https://rdrr.io/pkg/gt/man/data_color.html'>data_color</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_currency.html'>fmt_currency</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_datetime.html'>fmt_datetime</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_date.html'>fmt_date</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_markdown.html'>fmt_markdown</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_missing.html'>fmt_missing</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_number.html'>fmt_number</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_passthrough.html'>fmt_passthrough</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_scientific.html'>fmt_scientific</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_time.html'>fmt_time</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt.html'>fmt</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/text_transform.html'>text_transform</a>()</code></p></div>
+<code><a href='data_color.html'>data_color</a>()</code>,
+<code><a href='fmt_currency.html'>fmt_currency</a>()</code>,
+<code><a href='fmt_datetime.html'>fmt_datetime</a>()</code>,
+<code><a href='fmt_date.html'>fmt_date</a>()</code>,
+<code><a href='fmt_markdown.html'>fmt_markdown</a>()</code>,
+<code><a href='fmt_missing.html'>fmt_missing</a>()</code>,
+<code><a href='fmt_number.html'>fmt_number</a>()</code>,
+<code><a href='fmt_passthrough.html'>fmt_passthrough</a>()</code>,
+<code><a href='fmt_scientific.html'>fmt_scientific</a>()</code>,
+<code><a href='fmt_time.html'>fmt_time</a>()</code>,
+<code><a href='fmt.html'>fmt</a>()</code>,
+<code><a href='text_transform.html'>text_transform</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Use `pizzaplace` to create a gt table;</span>
 <span class='co'># format the `frac_of_quota` column to</span>
 <span class='co'># display values as percentages</span>
-<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
-  <span class='kw'>pizzaplace</span> <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(month = <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/substr.html'>substr</a></span>(<span class='kw'>date</span>, <span class='fl'>6</span>, <span class='fl'>7</span>))) <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>month</span>) <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span>(pizzas_sold = <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span>()) <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>ungroup</a></span>() <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(frac_of_quota = <span class='kw'>pizzas_sold</span> <span class='op'>/</span> <span class='fl'>4000</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>(rowname_col = <span class='st'>"month"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/fmt_percent.html'>fmt_percent</a></span>(
-    columns = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>frac_of_quota</span>),
-    decimals = <span class='fl'>1</span>
-  )</div><div class='output co'>#&gt; <span class='message'>`summarise()` ungrouping output (override with `.groups` argument)</span></div><div class='input'></div></pre>
+<span class='va'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='va'>pizzaplace</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>month <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/substr.html'>substr</a></span><span class='op'>(</span><span class='va'>date</span>, <span class='fl'>6</span>, <span class='fl'>7</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>month</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>pizzas_sold <span class='op'>=</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>ungroup</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>frac_of_quota <span class='op'>=</span> <span class='va'>pizzas_sold</span> <span class='op'>/</span> <span class='fl'>4000</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span>rowname_col <span class='op'>=</span> <span class='st'>"month"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>fmt_percent</span><span class='op'>(</span>
+    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>frac_of_quota</span><span class='op'>)</span>,
+    decimals <span class='op'>=</span> <span class='fl'>1</span>
+  <span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>`summarise()` ungrouping output (override with `.groups` argument)</span></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -356,7 +358,7 @@ argument. See the Arguments section for more information on this.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

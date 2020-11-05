@@ -84,7 +84,7 @@ is also given." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -153,7 +153,7 @@ characteristics are provided. The country of origin for the car manufacturer
 is also given.</p>
     </div>
 
-    <pre class="usage"><span class='kw'>gtcars</span></pre>
+    <pre class="usage"><span class='va'>gtcars</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
@@ -197,16 +197,17 @@ safety.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Datasets: 
-<code><a href='https://rdrr.io/pkg/gt/man/countrypops.html'>countrypops</a></code>,
-<code><a href='https://rdrr.io/pkg/gt/man/exibble.html'>exibble</a></code>,
-<code><a href='https://rdrr.io/pkg/gt/man/pizzaplace.html'>pizzaplace</a></code>,
-<code><a href='https://rdrr.io/pkg/gt/man/sp500.html'>sp500</a></code>,
-<code><a href='https://rdrr.io/pkg/gt/man/sza.html'>sza</a></code></p></div>
+<code><a href='countrypops.html'>countrypops</a></code>,
+<code><a href='exibble.html'>exibble</a></code>,
+<code><a href='pizzaplace.html'>pizzaplace</a></code>,
+<code><a href='sp500.html'>sp500</a></code>,
+<code><a href='sza.html'>sza</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Here is a glimpse at the data</span>
 <span class='co'># available in `gtcars`</span>
-<span class='kw'>dplyr</span>::<span class='fu'><a href='https://tibble.tidyverse.org/reference/glimpse.html'>glimpse</a></span>(<span class='kw'>gtcars</span>)</div><div class='output co'>#&gt; Rows: 47
+<span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/glimpse.html'>glimpse</a></span><span class='op'>(</span><span class='va'>gtcars</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Rows: 47
 #&gt; Columns: 15
 #&gt; $ mfr         <span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> "Ford", "Ferrari", "Ferrari", "Ferrari", "Ferrari", "Ferr…
 #&gt; $ model       </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> "GT", "458 Speciale", "458 Spider", "458 Italia", "488 GT…
@@ -222,7 +223,8 @@ safety.</p>
 #&gt; $ drivetrain  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> "rwd", "rwd", "rwd", "rwd", "rwd", "rwd", "awd", "awd", "…
 #&gt; $ trsmn       </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> "7a", "7a", "7a", "7a", "7a", "7a", "7a", "7a", "7a", "7a…
 #&gt; $ ctry_origin </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> "United States", "Italy", "Italy", "Italy", "Italy", "Ita…
-#&gt; $ msrp        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> 447000, 291744, 263553, 233509, 245400, 198973, 298000, 2…</div><div class='input'></div></span></pre>
+#&gt; $ msrp        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> 447000, 291744, 263553, 233509, 245400, 198973, 298000, 2…</div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -238,7 +240,7 @@ safety.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

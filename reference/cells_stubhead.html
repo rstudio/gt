@@ -83,7 +83,7 @@ locations argument." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -145,13 +145,13 @@ locations argument." />
     </div>
 
     <div class="ref-description">
-    <p>The <code><a href='https://rdrr.io/pkg/gt/man/cells_stubhead.html'>cells_stubhead()</a></code> function is used to target the table stubhead location
-when applying a footnote with <code><a href='https://rdrr.io/pkg/gt/man/tab_footnote.html'>tab_footnote()</a></code> or adding custom style with
-<code><a href='https://rdrr.io/pkg/gt/man/tab_style.html'>tab_style()</a></code>. The function is expressly used in each of those functions'
+    <p>The <code>cells_stubhead()</code> function is used to target the table stubhead location
+when applying a footnote with <code><a href='tab_footnote.html'>tab_footnote()</a></code> or adding custom style with
+<code><a href='tab_style.html'>tab_style()</a></code>. The function is expressly used in each of those functions'
 <code>locations</code> argument.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/cells_stubhead.html'>cells_stubhead</a></span>()</pre>
+    <pre class="usage"><span class='fu'>cells_stubhead</span><span class='op'>(</span><span class='op'>)</span></pre>
 
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -164,24 +164,24 @@ that has a <code>locations</code> argument, multiple locations can be targeted b
 enclosing several <code>cells_*()</code> helper functions in a <code><a href='https://rdrr.io/r/base/list.html'>list()</a></code>. The following
 helper functions can be used to target cells (roughly in order from the top
 to the bottom of a table):</p><ul>
-<li><p><code><a href='https://rdrr.io/pkg/gt/man/cells_title.html'>cells_title()</a></code>: targets the table title or the table subtitle
+<li><p><code><a href='cells_title.html'>cells_title()</a></code>: targets the table title or the table subtitle
 depending on the value given to the <code>groups</code> argument (<code>"title"</code> or
 <code>"subtitle"</code>).</p></li>
-<li><p><code><a href='https://rdrr.io/pkg/gt/man/cells_stubhead.html'>cells_stubhead()</a></code>: targets the stubhead location, a cell of which is
+<li><p><code>cells_stubhead()</code>: targets the stubhead location, a cell of which is
 only available when there is a stub; a label in that location can be created
-by using the <code><a href='https://rdrr.io/pkg/gt/man/tab_stubhead.html'>tab_stubhead()</a></code> function.</p></li>
-<li><p><code><a href='https://rdrr.io/pkg/gt/man/cells_column_spanners.html'>cells_column_spanners()</a></code>: targets the spanner column labels, which
+by using the <code><a href='tab_stubhead.html'>tab_stubhead()</a></code> function.</p></li>
+<li><p><code><a href='cells_column_spanners.html'>cells_column_spanners()</a></code>: targets the spanner column labels, which
 appear above the column labels.</p></li>
-<li><p><code><a href='https://rdrr.io/pkg/gt/man/cells_column_labels.html'>cells_column_labels()</a></code>: targets the column labels.</p></li>
-<li><p><code><a href='https://rdrr.io/pkg/gt/man/cells_row_groups.html'>cells_row_groups()</a></code>: targets the row group labels in any available row
+<li><p><code><a href='cells_column_labels.html'>cells_column_labels()</a></code>: targets the column labels.</p></li>
+<li><p><code><a href='cells_row_groups.html'>cells_row_groups()</a></code>: targets the row group labels in any available row
 groups using the <code>groups</code> argument.</p></li>
-<li><p><code><a href='https://rdrr.io/pkg/gt/man/cells_stub.html'>cells_stub()</a></code>: targets row labels in the table stub using the <code>rows</code>
+<li><p><code><a href='cells_stub.html'>cells_stub()</a></code>: targets row labels in the table stub using the <code>rows</code>
 argument.</p></li>
-<li><p><code><a href='https://rdrr.io/pkg/gt/man/cells_body.html'>cells_body()</a></code>: targets data cells in the table body using
+<li><p><code><a href='cells_body.html'>cells_body()</a></code>: targets data cells in the table body using
 intersections of <code>columns</code> and <code>rows</code>.</p></li>
-<li><p><code><a href='https://rdrr.io/pkg/gt/man/cells_summary.html'>cells_summary()</a></code>: targets summary cells in the table body using the
+<li><p><code><a href='cells_summary.html'>cells_summary()</a></code>: targets summary cells in the table body using the
 <code>groups</code> argument and intersections of <code>columns</code> and <code>rows</code>.</p></li>
-<li><p><code><a href='https://rdrr.io/pkg/gt/man/cells_grand_summary.html'>cells_grand_summary()</a></code>: targets cells of the table's grand summary
+<li><p><code><a href='cells_grand_summary.html'>cells_grand_summary()</a></code>: targets cells of the table's grand summary
 using intersections of <code>columns</code> and <code>rows</code></p></li>
 </ul>
 
@@ -198,46 +198,48 @@ using intersections of <code>columns</code> and <code>rows</code></p></li>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Helper Functions: 
-<code><a href='https://rdrr.io/pkg/gt/man/adjust_luminance.html'>adjust_luminance</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cell_borders.html'>cell_borders</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cell_fill.html'>cell_fill</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cell_text.html'>cell_text</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cells_body.html'>cells_body</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cells_column_labels.html'>cells_column_labels</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cells_column_spanners.html'>cells_column_spanners</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cells_grand_summary.html'>cells_grand_summary</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cells_row_groups.html'>cells_row_groups</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cells_stub.html'>cells_stub</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cells_summary.html'>cells_summary</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cells_title.html'>cells_title</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/currency.html'>currency</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/default_fonts.html'>default_fonts</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/escape_latex.html'>escape_latex</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/google_font.html'>google_font</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/gt_latex_dependencies.html'>gt_latex_dependencies</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/html.html'>html</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/md.html'>md</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/pct.html'>pct</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/px.html'>px</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/random_id.html'>random_id</a>()</code></p></div>
+<code><a href='adjust_luminance.html'>adjust_luminance</a>()</code>,
+<code><a href='cell_borders.html'>cell_borders</a>()</code>,
+<code><a href='cell_fill.html'>cell_fill</a>()</code>,
+<code><a href='cell_text.html'>cell_text</a>()</code>,
+<code><a href='cells_body.html'>cells_body</a>()</code>,
+<code><a href='cells_column_labels.html'>cells_column_labels</a>()</code>,
+<code><a href='cells_column_spanners.html'>cells_column_spanners</a>()</code>,
+<code><a href='cells_grand_summary.html'>cells_grand_summary</a>()</code>,
+<code><a href='cells_row_groups.html'>cells_row_groups</a>()</code>,
+<code><a href='cells_stub.html'>cells_stub</a>()</code>,
+<code><a href='cells_summary.html'>cells_summary</a>()</code>,
+<code><a href='cells_title.html'>cells_title</a>()</code>,
+<code><a href='currency.html'>currency</a>()</code>,
+<code><a href='default_fonts.html'>default_fonts</a>()</code>,
+<code><a href='escape_latex.html'>escape_latex</a>()</code>,
+<code><a href='google_font.html'>google_font</a>()</code>,
+<code><a href='gt_latex_dependencies.html'>gt_latex_dependencies</a>()</code>,
+<code><a href='html.html'>html</a>()</code>,
+<code><a href='md.html'>md</a>()</code>,
+<code><a href='pct.html'>pct</a>()</code>,
+<code><a href='px.html'>px</a>()</code>,
+<code><a href='random_id.html'>random_id</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Use `pizzaplace` to create a gt table;</span>
 <span class='co'># add a stubhead label and then style it</span>
 <span class='co'># with `tab_style()` and `cells_stubhead()`</span>
-<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
-  <span class='kw'>pizzaplace</span> <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(month = <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/substr.html'>substr</a></span>(<span class='kw'>date</span>, <span class='fl'>6</span>, <span class='fl'>7</span>))) <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>month</span>, <span class='kw'>type</span>) <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span>(sold = <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span>()) <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>ungroup</a></span>() <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='kw'>month</span> <span class='op'>%in%</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>(rowname_col = <span class='st'>"type"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_stubhead.html'>tab_stubhead</a></span>(label = <span class='st'>"type"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_style.html'>tab_style</a></span>(
-    style = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/cell_fill.html'>cell_fill</a></span>(color = <span class='st'>"lightblue"</span>),
-    locations = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/cells_stubhead.html'>cells_stubhead</a></span>()
-  )</div><div class='output co'>#&gt; <span class='message'>`summarise()` regrouping output by 'month' (override with `.groups` argument)</span></div><div class='input'></div></pre>
+<span class='va'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='va'>pizzaplace</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>month <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/substr.html'>substr</a></span><span class='op'>(</span><span class='va'>date</span>, <span class='fl'>6</span>, <span class='fl'>7</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>month</span>, <span class='va'>type</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>sold <span class='op'>=</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>ungroup</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>month</span> <span class='op'>%in%</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span>rowname_col <span class='op'>=</span> <span class='st'>"type"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='tab_stubhead.html'>tab_stubhead</a></span><span class='op'>(</span>label <span class='op'>=</span> <span class='st'>"type"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='tab_style.html'>tab_style</a></span><span class='op'>(</span>
+    style <span class='op'>=</span> <span class='fu'><a href='cell_fill.html'>cell_fill</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"lightblue"</span><span class='op'>)</span>,
+    locations <span class='op'>=</span> <span class='fu'>cells_stubhead</span><span class='op'>(</span><span class='op'>)</span>
+  <span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>`summarise()` regrouping output by 'month' (override with `.groups` argument)</span></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -253,7 +255,7 @@ using intersections of <code>columns</code> and <code>rows</code></p></li>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

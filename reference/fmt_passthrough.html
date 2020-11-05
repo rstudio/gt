@@ -86,7 +86,7 @@ be text or useful as is." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -153,18 +153,18 @@ coercing to <code>character</code> (as all the <code>fmt_*()</code> functions do
 text via the <code>pattern</code> argument (the default is to apply nothing). All of
 this is useful when don't want to modify the input data other than to
 decorate it within a pattern. Also, this function is useful when used as the
-<code>formatter</code> function in the <code><a href='https://rdrr.io/pkg/gt/man/summary_rows.html'>summary_rows()</a></code> function, where the output may
+<code>formatter</code> function in the <code><a href='summary_rows.html'>summary_rows()</a></code> function, where the output may
 be text or useful as is.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/fmt_passthrough.html'>fmt_passthrough</a></span>(<span class='kw'>data</span>, <span class='kw'>columns</span>, rows = <span class='kw'>NULL</span>, escape = <span class='fl'>TRUE</span>, pattern = <span class='st'>"{x}"</span>)</pre>
+    <pre class="usage"><span class='fu'>fmt_passthrough</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>columns</span>, rows <span class='op'>=</span> <span class='cn'>NULL</span>, escape <span class='op'>=</span> <span class='cn'>TRUE</span>, pattern <span class='op'>=</span> <span class='st'>"{x}"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A table object that is created using the <code><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt()</a></code> function.</p></td>
+      <td><p>A table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
     </tr>
     <tr>
       <th>columns</th>
@@ -222,18 +222,18 @@ argument. See the Arguments section for more information on this.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Format Data: 
-<code><a href='https://rdrr.io/pkg/gt/man/data_color.html'>data_color</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_currency.html'>fmt_currency</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_datetime.html'>fmt_datetime</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_date.html'>fmt_date</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_markdown.html'>fmt_markdown</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_missing.html'>fmt_missing</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_number.html'>fmt_number</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_percent.html'>fmt_percent</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_scientific.html'>fmt_scientific</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_time.html'>fmt_time</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt.html'>fmt</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/text_transform.html'>text_transform</a>()</code></p></div>
+<code><a href='data_color.html'>data_color</a>()</code>,
+<code><a href='fmt_currency.html'>fmt_currency</a>()</code>,
+<code><a href='fmt_datetime.html'>fmt_datetime</a>()</code>,
+<code><a href='fmt_date.html'>fmt_date</a>()</code>,
+<code><a href='fmt_markdown.html'>fmt_markdown</a>()</code>,
+<code><a href='fmt_missing.html'>fmt_missing</a>()</code>,
+<code><a href='fmt_number.html'>fmt_number</a>()</code>,
+<code><a href='fmt_percent.html'>fmt_percent</a>()</code>,
+<code><a href='fmt_scientific.html'>fmt_scientific</a>()</code>,
+<code><a href='fmt_time.html'>fmt_time</a>()</code>,
+<code><a href='fmt.html'>fmt</a>()</code>,
+<code><a href='text_transform.html'>text_transform</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Use `exibble` to create a gt table;</span>
@@ -241,15 +241,16 @@ argument. See the Arguments section for more information on this.</p>
 <span class='co'># pass the data in that column through</span>
 <span class='co'># but apply a simple pattern that adds</span>
 <span class='co'># an 's' to the non-NA values</span>
-<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
-  <span class='kw'>exibble</span> <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>char</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/fmt_passthrough.html'>fmt_passthrough</a></span>(
-    columns = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>char</span>),
-    rows = <span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='kw'>char</span>),
-    pattern = <span class='st'>"{x}s"</span>
-  )
+<span class='va'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='va'>exibble</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>char</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>fmt_passthrough</span><span class='op'>(</span>
+    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>char</span><span class='op'>)</span>,
+    rows <span class='op'>=</span> <span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>char</span><span class='op'>)</span>,
+    pattern <span class='op'>=</span> <span class='st'>"{x}s"</span>
+  <span class='op'>)</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -266,7 +267,7 @@ argument. See the Arguments section for more information on this.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

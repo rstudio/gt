@@ -87,7 +87,7 @@ color palettes available in paletteer." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -149,17 +149,17 @@ color palettes available in paletteer." />
     </div>
 
     <div class="ref-description">
-    <p>While the <code><a href='https://rdrr.io/pkg/gt/man/data_color.html'>data_color()</a></code> function allows us to flexibly color data cells in
+    <p>While the <code><a href='data_color.html'>data_color()</a></code> function allows us to flexibly color data cells in
 our <strong>gt</strong> table, the harder part of this process is discovering and
 choosing color palettes that are suitable for the table output. We can make
 this process much easier in two ways: (1) by using the <strong>paletteer</strong>
 package, which makes a wide range of palettes from various R packages readily
-available, and (2) calling the <code><a href='https://rdrr.io/pkg/gt/man/info_paletteer.html'>info_paletteer()</a></code> function to give us an
+available, and (2) calling the <code>info_paletteer()</code> function to give us an
 information table that serves as a quick reference for all of the discrete
 color palettes available in <strong>paletteer</strong>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/info_paletteer.html'>info_paletteer</a></span>(color_pkgs = <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>info_paletteer</span><span class='op'>(</span>color_pkgs <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -186,7 +186,7 @@ familiar with the names of the color palette packages (e.g.,
 the content of this information table by supplying a vector of such package
 names to <code>color_pkgs</code>.</p>
 <p>Colors from the following color packages (all supported by <strong>paletteer</strong>)
-are shown by default with <code><a href='https://rdrr.io/pkg/gt/man/info_paletteer.html'>info_paletteer()</a></code>:</p><ul>
+are shown by default with <code>info_paletteer()</code>:</p><ul>
 <li><p><strong>awtools</strong>, 5 palettes</p></li>
 <li><p><strong>dichromat</strong>, 17 palettes</p></li>
 <li><p><strong>dutchmasters</strong>, 6 palettes</p></li>
@@ -224,19 +224,20 @@ are shown by default with <code><a href='https://rdrr.io/pkg/gt/man/info_palette
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Information Functions: 
-<code><a href='https://rdrr.io/pkg/gt/man/info_currencies.html'>info_currencies</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/info_date_style.html'>info_date_style</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/info_google_fonts.html'>info_google_fonts</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/info_locales.html'>info_locales</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/info_time_style.html'>info_time_style</a>()</code></p></div>
+<code><a href='info_currencies.html'>info_currencies</a>()</code>,
+<code><a href='info_date_style.html'>info_date_style</a>()</code>,
+<code><a href='info_google_fonts.html'>info_google_fonts</a>()</code>,
+<code><a href='info_locales.html'>info_locales</a>()</code>,
+<code><a href='info_time_style.html'>info_time_style</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Get a table of info on just the</span>
 <span class='co'># `ggthemes` color palette (easily</span>
 <span class='co'># accessible from the paletteer pkg)</span>
-<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/info_paletteer.html'>info_paletteer</a></span>(
-    color_pkgs = <span class='st'>"ggthemes"</span>)
+<span class='va'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='fu'>info_paletteer</span><span class='op'>(</span>
+    color_pkgs <span class='op'>=</span> <span class='st'>"ggthemes"</span><span class='op'>)</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -253,7 +254,7 @@ are shown by default with <code><a href='https://rdrr.io/pkg/gt/man/info_palette
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get the LaTeX dependencies required for a <strong>gt</strong> table — gt_latex_dependencies • gt</title>
+<title>Get the LaTeX dependencies required for a gt table — gt_latex_dependencies • gt</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,7 @@
 
 
 
-<meta property="og:title" content="Get the LaTeX dependencies required for a <strong>gt</strong> table — gt_latex_dependencies" />
+<meta property="og:title" content="Get the LaTeX dependencies required for a gt table — gt_latex_dependencies" />
 <meta property="og:description" content="When working with Rnw (Sweave) files or otherwise writing LaTeX code,
 including a gt table can be problematic if we don't have knowledge
 of the LaTeX dependencies. For the most part, these dependencies are the
@@ -86,7 +86,7 @@ and not yield errors due to missing packages." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -152,12 +152,12 @@ and not yield errors due to missing packages." />
 including a <strong>gt</strong> table can be problematic if we don't have knowledge
 of the LaTeX dependencies. For the most part, these dependencies are the
 LaTeX packages that are required for rendering a <strong>gt</strong> table. The
-<code><a href='https://rdrr.io/pkg/gt/man/gt_latex_dependencies.html'>gt_latex_dependencies()</a></code> function provides an object that can be
+<code>gt_latex_dependencies()</code> function provides an object that can be
 used to provide the LaTeX in an Rnw file, allowing <strong>gt</strong> tables to work
 and not yield errors due to missing packages.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt_latex_dependencies.html'>gt_latex_dependencies</a></span>()</pre>
+    <pre class="usage"><span class='fu'>gt_latex_dependencies</span><span class='op'>(</span><span class='op'>)</span></pre>
 
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -166,7 +166,7 @@ and not yield errors due to missing packages.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Here is an example Rnw document that shows how the
-<code><a href='https://rdrr.io/pkg/gt/man/gt_latex_dependencies.html'>gt_latex_dependencies()</a></code> can be used in conjunction with a <strong>gt</strong>
+<code>gt_latex_dependencies()</code> can be used in conjunction with a <strong>gt</strong>
 table:</p>
 <pre>
 %!sweave=knitr
@@ -198,28 +198,28 @@ exibble &lt;!-- %&gt;% gt() --&gt;
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Helper Functions: 
-<code><a href='https://rdrr.io/pkg/gt/man/adjust_luminance.html'>adjust_luminance</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cell_borders.html'>cell_borders</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cell_fill.html'>cell_fill</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cell_text.html'>cell_text</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cells_body.html'>cells_body</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cells_column_labels.html'>cells_column_labels</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cells_column_spanners.html'>cells_column_spanners</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cells_grand_summary.html'>cells_grand_summary</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cells_row_groups.html'>cells_row_groups</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cells_stubhead.html'>cells_stubhead</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cells_stub.html'>cells_stub</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cells_summary.html'>cells_summary</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cells_title.html'>cells_title</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/currency.html'>currency</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/default_fonts.html'>default_fonts</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/escape_latex.html'>escape_latex</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/google_font.html'>google_font</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/html.html'>html</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/md.html'>md</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/pct.html'>pct</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/px.html'>px</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/random_id.html'>random_id</a>()</code></p></div>
+<code><a href='adjust_luminance.html'>adjust_luminance</a>()</code>,
+<code><a href='cell_borders.html'>cell_borders</a>()</code>,
+<code><a href='cell_fill.html'>cell_fill</a>()</code>,
+<code><a href='cell_text.html'>cell_text</a>()</code>,
+<code><a href='cells_body.html'>cells_body</a>()</code>,
+<code><a href='cells_column_labels.html'>cells_column_labels</a>()</code>,
+<code><a href='cells_column_spanners.html'>cells_column_spanners</a>()</code>,
+<code><a href='cells_grand_summary.html'>cells_grand_summary</a>()</code>,
+<code><a href='cells_row_groups.html'>cells_row_groups</a>()</code>,
+<code><a href='cells_stubhead.html'>cells_stubhead</a>()</code>,
+<code><a href='cells_stub.html'>cells_stub</a>()</code>,
+<code><a href='cells_summary.html'>cells_summary</a>()</code>,
+<code><a href='cells_title.html'>cells_title</a>()</code>,
+<code><a href='currency.html'>currency</a>()</code>,
+<code><a href='default_fonts.html'>default_fonts</a>()</code>,
+<code><a href='escape_latex.html'>escape_latex</a>()</code>,
+<code><a href='google_font.html'>google_font</a>()</code>,
+<code><a href='html.html'>html</a>()</code>,
+<code><a href='md.html'>md</a>()</code>,
+<code><a href='pct.html'>pct</a>()</code>,
+<code><a href='px.html'>px</a>()</code>,
+<code><a href='random_id.html'>random_id</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -236,7 +236,7 @@ exibble &lt;!-- %&gt;% gt() --&gt;
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

@@ -84,7 +84,7 @@ or, if the table is intended for HTML output, we can include HTML formatting." /
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -148,24 +148,24 @@ or, if the table is intended for HTML output, we can include HTML formatting." /
     <div class="ref-description">
     <p>Add a source note to the footer part of the <strong>gt</strong> table. A source note is
 useful for citing the data included in the table. Several can be added to the
-footer, simply use multiple calls of <code><a href='https://rdrr.io/pkg/gt/man/tab_source_note.html'>tab_source_note()</a></code> and they will be
+footer, simply use multiple calls of <code>tab_source_note()</code> and they will be
 inserted in the order provided. We can use Markdown formatting for the note,
 or, if the table is intended for HTML output, we can include HTML formatting.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_source_note.html'>tab_source_note</a></span>(<span class='kw'>data</span>, <span class='kw'>source_note</span>)</pre>
+    <pre class="usage"><span class='fu'>tab_source_note</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>source_note</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A table object that is created using the <code><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt()</a></code> function.</p></td>
+      <td><p>A table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
     </tr>
     <tr>
       <th>source_note</th>
       <td><p>Text to be used in the source note. We can optionally use
-the <code><a href='https://rdrr.io/pkg/gt/man/md.html'>md()</a></code> and <code><a href='https://rdrr.io/pkg/gt/man/html.html'>html()</a></code> functions to style the text as Markdown or to
+the <code><a href='md.html'>md()</a></code> and <code><a href='html.html'>html()</a></code> functions to style the text as Markdown or to
 retain HTML elements in the text.</p></td>
     </tr>
     </table>
@@ -186,27 +186,28 @@ retain HTML elements in the text.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Create or Modify Parts: 
-<code><a href='https://rdrr.io/pkg/gt/man/tab_footnote.html'>tab_footnote</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/tab_header.html'>tab_header</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/tab_options.html'>tab_options</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/tab_row_group.html'>tab_row_group</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/tab_spanner_delim.html'>tab_spanner_delim</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/tab_spanner.html'>tab_spanner</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/tab_stubhead.html'>tab_stubhead</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/tab_style.html'>tab_style</a>()</code></p></div>
+<code><a href='tab_footnote.html'>tab_footnote</a>()</code>,
+<code><a href='tab_header.html'>tab_header</a>()</code>,
+<code><a href='tab_options.html'>tab_options</a>()</code>,
+<code><a href='tab_row_group.html'>tab_row_group</a>()</code>,
+<code><a href='tab_spanner_delim.html'>tab_spanner_delim</a>()</code>,
+<code><a href='tab_spanner.html'>tab_spanner</a>()</code>,
+<code><a href='tab_stubhead.html'>tab_stubhead</a>()</code>,
+<code><a href='tab_style.html'>tab_style</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Use `gtcars` to create a gt table;</span>
 <span class='co'># add a source note to the table</span>
 <span class='co'># footer that cites the data source</span>
-<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
-  <span class='kw'>gtcars</span> <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>mfr</span>, <span class='kw'>model</span>, <span class='kw'>msrp</span>) <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_source_note.html'>tab_source_note</a></span>(
-    source_note = <span class='st'>"From edmunds.com"</span>
-  )
+<span class='va'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='va'>gtcars</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>mfr</span>, <span class='va'>model</span>, <span class='va'>msrp</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>tab_source_note</span><span class='op'>(</span>
+    source_note <span class='op'>=</span> <span class='st'>"From edmunds.com"</span>
+  <span class='op'>)</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -223,7 +224,7 @@ retain HTML elements in the text.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

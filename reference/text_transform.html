@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -145,20 +145,20 @@
     <p>Perform targeted text transformation with a function</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/text_transform.html'>text_transform</a></span>(<span class='kw'>data</span>, <span class='kw'>locations</span>, <span class='kw'>fn</span>)</pre>
+    <pre class="usage"><span class='fu'>text_transform</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>locations</span>, <span class='va'>fn</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A table object that is created using the <code><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt()</a></code> function.</p></td>
+      <td><p>A table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
     </tr>
     <tr>
       <th>locations</th>
       <td><p>The cell or set of cells to be associated with the text
-transformation. Only the <code><a href='https://rdrr.io/pkg/gt/man/cells_body.html'>cells_body()</a></code>, <code><a href='https://rdrr.io/pkg/gt/man/cells_stub.html'>cells_stub()</a></code>, and
-<code><a href='https://rdrr.io/pkg/gt/man/cells_column_labels.html'>cells_column_labels()</a></code> helper functions can be used here. We can enclose
+transformation. Only the <code><a href='cells_body.html'>cells_body()</a></code>, <code><a href='cells_stub.html'>cells_stub()</a></code>, and
+<code><a href='cells_column_labels.html'>cells_column_labels()</a></code> helper functions can be used here. We can enclose
 several of these calls within a <code><a href='https://rdrr.io/r/base/list.html'>list()</a></code> if we wish to make the
 transformation happen at different locations.</p></td>
     </tr>
@@ -184,18 +184,18 @@ transformation happen at different locations.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Format Data: 
-<code><a href='https://rdrr.io/pkg/gt/man/data_color.html'>data_color</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_currency.html'>fmt_currency</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_datetime.html'>fmt_datetime</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_date.html'>fmt_date</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_markdown.html'>fmt_markdown</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_missing.html'>fmt_missing</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_number.html'>fmt_number</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_passthrough.html'>fmt_passthrough</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_percent.html'>fmt_percent</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_scientific.html'>fmt_scientific</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_time.html'>fmt_time</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt.html'>fmt</a>()</code></p></div>
+<code><a href='data_color.html'>data_color</a>()</code>,
+<code><a href='fmt_currency.html'>fmt_currency</a>()</code>,
+<code><a href='fmt_datetime.html'>fmt_datetime</a>()</code>,
+<code><a href='fmt_date.html'>fmt_date</a>()</code>,
+<code><a href='fmt_markdown.html'>fmt_markdown</a>()</code>,
+<code><a href='fmt_missing.html'>fmt_missing</a>()</code>,
+<code><a href='fmt_number.html'>fmt_number</a>()</code>,
+<code><a href='fmt_passthrough.html'>fmt_passthrough</a>()</code>,
+<code><a href='fmt_percent.html'>fmt_percent</a>()</code>,
+<code><a href='fmt_scientific.html'>fmt_scientific</a>()</code>,
+<code><a href='fmt_time.html'>fmt_time</a>()</code>,
+<code><a href='fmt.html'>fmt</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Use `exibble` to create a gt table;</span>
@@ -204,25 +204,26 @@ transformation happen at different locations.</p></td>
 <span class='co'># a function within `text_transform()`,</span>
 <span class='co'># where `x` is a formatted vector of</span>
 <span class='co'># column values</span>
-<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
-  <span class='kw'>exibble</span> <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>num</span>, <span class='kw'>char</span>, <span class='kw'>currency</span>) <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/fmt_number.html'>fmt_number</a></span>(columns = <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>num</span>)) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/fmt_currency.html'>fmt_currency</a></span>(columns = <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>currency</span>)) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/text_transform.html'>text_transform</a></span>(
-    locations = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/cells_body.html'>cells_body</a></span>(
-      columns = <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>num</span>)),
-    fn = <span class='fu'>function</span>(<span class='kw'>x</span>) {
-      <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(
-        <span class='kw'>x</span>, <span class='st'>" ("</span>,
-        <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span>(
-          <span class='kw'>x</span> <span class='op'>&gt;</span> <span class='fl'>20</span>   <span class='op'>~</span> <span class='st'>"large"</span>,
-          <span class='kw'>x</span> <span class='op'>&lt;=</span> <span class='fl'>20</span>  <span class='op'>~</span> <span class='st'>"small"</span>),
-        <span class='st'>")"</span>)
-    }
-  )
+<span class='va'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='va'>exibble</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>num</span>, <span class='va'>char</span>, <span class='va'>currency</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='fmt_number.html'>fmt_number</a></span><span class='op'>(</span>columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>num</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='fmt_currency.html'>fmt_currency</a></span><span class='op'>(</span>columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>currency</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>text_transform</span><span class='op'>(</span>
+    locations <span class='op'>=</span> <span class='fu'><a href='cells_body.html'>cells_body</a></span><span class='op'>(</span>
+      columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>num</span><span class='op'>)</span><span class='op'>)</span>,
+    fn <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>{</span>
+      <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span>
+        <span class='va'>x</span>, <span class='st'>" ("</span>,
+        <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span><span class='op'>(</span>
+          <span class='va'>x</span> <span class='op'>&gt;</span> <span class='fl'>20</span>   <span class='op'>~</span> <span class='st'>"large"</span>,
+          <span class='va'>x</span> <span class='op'>&lt;=</span> <span class='fl'>20</span>  <span class='op'>~</span> <span class='st'>"small"</span><span class='op'>)</span>,
+        <span class='st'>")"</span><span class='op'>)</span>
+    <span class='op'>}</span>
+  <span class='op'>)</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -239,7 +240,7 @@ transformation happen at different locations.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

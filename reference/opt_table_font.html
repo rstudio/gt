@@ -87,7 +87,7 @@ helper function." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -149,29 +149,29 @@ helper function." />
     </div>
 
     <div class="ref-description">
-    <p>The <code><a href='https://rdrr.io/pkg/gt/man/opt_table_font.html'>opt_table_font()</a></code> function makes it possible to define a custom font for
+    <p>The <code>opt_table_font()</code> function makes it possible to define a custom font for
 the entire <strong>gt</strong> table. The standard fallback fonts are still set by default
 but the font defined here will take precedence. You could still have
 different fonts in select locations in the table, and for that you would need
-to use <code><a href='https://rdrr.io/pkg/gt/man/tab_style.html'>tab_style()</a></code> in conjunction with the <code><a href='https://rdrr.io/pkg/gt/man/cell_text.html'>cell_text()</a></code> helper function.</p>
+to use <code><a href='tab_style.html'>tab_style()</a></code> in conjunction with the <code><a href='cell_text.html'>cell_text()</a></code> helper function.</p>
 <p>We have the option to supply either a system font for the <code>font_name</code>, or, a
-font available at the Google Fonts service by use of the <code><a href='https://rdrr.io/pkg/gt/man/google_font.html'>google_font()</a></code>
+font available at the Google Fonts service by use of the <code><a href='google_font.html'>google_font()</a></code>
 helper function.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/opt_table_font.html'>opt_table_font</a></span>(<span class='kw'>data</span>, <span class='kw'>font</span>, weight = <span class='kw'>NULL</span>, style = <span class='kw'>NULL</span>, add = <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>opt_table_font</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>font</span>, weight <span class='op'>=</span> <span class='cn'>NULL</span>, style <span class='op'>=</span> <span class='cn'>NULL</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A table object that is created using the <code><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt()</a></code> function.</p></td>
+      <td><p>A table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
     </tr>
     <tr>
       <th>font</th>
       <td><p>Either the name of a font available in the user system or a call
-to <code><a href='https://rdrr.io/pkg/gt/man/google_font.html'>google_font()</a></code>, which has a large selection of typefaces.</p></td>
+to <code><a href='google_font.html'>google_font()</a></code>, which has a large selection of typefaces.</p></td>
     </tr>
     <tr>
       <th>weight</th>
@@ -210,16 +210,16 @@ the list serves as fallbacks when certain fonts are not available.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Table Option Functions: 
-<code><a href='https://rdrr.io/pkg/gt/man/opt_align_table_header.html'>opt_align_table_header</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/opt_all_caps.html'>opt_all_caps</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/opt_css.html'>opt_css</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/opt_footnote_marks.html'>opt_footnote_marks</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/opt_row_striping.html'>opt_row_striping</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/opt_table_lines.html'>opt_table_lines</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/opt_table_outline.html'>opt_table_outline</a>()</code></p></div>
+<code><a href='opt_align_table_header.html'>opt_align_table_header</a>()</code>,
+<code><a href='opt_all_caps.html'>opt_all_caps</a>()</code>,
+<code><a href='opt_css.html'>opt_css</a>()</code>,
+<code><a href='opt_footnote_marks.html'>opt_footnote_marks</a>()</code>,
+<code><a href='opt_row_striping.html'>opt_row_striping</a>()</code>,
+<code><a href='opt_table_lines.html'>opt_table_lines</a>()</code>,
+<code><a href='opt_table_outline.html'>opt_table_outline</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
 
 <span class='co'># Use `sp500` to create a small gt table,</span>
 <span class='co'># using `fmt_currency()` to provide a</span>
@@ -229,24 +229,24 @@ the list serves as fallbacks when certain fonts are not available.</p></td>
 <span class='co'># (from Google Fonts, via `google_font()`)</span>
 <span class='co'># with two font fallbacks ('Cochin' and the</span>
 <span class='co'># catchall 'Serif' group)</span>
-<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
-  <span class='kw'>sp500</span> <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>) <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='op'>-</span><span class='kw'>volume</span>, <span class='op'>-</span><span class='kw'>adj_close</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/fmt_currency.html'>fmt_currency</a></span>(
-    columns = <span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span>,
-    rows = <span class='fl'>1</span>,
-    currency = <span class='st'>"USD"</span>,
-    use_seps = <span class='fl'>FALSE</span>
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_options.html'>tab_options</a></span>(table.font.size = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/px.html'>px</a></span>(<span class='fl'>18</span>)) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/opt_table_font.html'>opt_table_font</a></span>(
-    font = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-      <span class='fu'><a href='https://rdrr.io/pkg/gt/man/google_font.html'>google_font</a></span>(name = <span class='st'>"Merriweather"</span>),
+<span class='va'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='va'>sp500</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>volume</span>, <span class='op'>-</span><span class='va'>adj_close</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='fmt_currency.html'>fmt_currency</a></span><span class='op'>(</span>
+    columns <span class='op'>=</span> <span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span>,
+    rows <span class='op'>=</span> <span class='fl'>1</span>,
+    currency <span class='op'>=</span> <span class='st'>"USD"</span>,
+    use_seps <span class='op'>=</span> <span class='cn'>FALSE</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='tab_options.html'>tab_options</a></span><span class='op'>(</span>table.font.size <span class='op'>=</span> <span class='fu'><a href='px.html'>px</a></span><span class='op'>(</span><span class='fl'>18</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>opt_table_font</span><span class='op'>(</span>
+    font <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+      <span class='fu'><a href='google_font.html'>google_font</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"Merriweather"</span><span class='op'>)</span>,
       <span class='st'>"Cochin"</span>, <span class='st'>"Serif"</span>
-    )
-  )
+    <span class='op'>)</span>
+  <span class='op'>)</span>
 
 <span class='co'># Use `sza` to create an eleven-row table;</span>
 <span class='co'># within `opt_table_font()`, set up a</span>
@@ -255,24 +255,25 @@ the list serves as fallbacks when certain fonts are not available.</p></td>
 <span class='co'># part of the `default_fonts()` vector as</span>
 <span class='co'># a fallback)</span>
 <span class='co'># and Windows 10</span>
-<span class='kw'>tab_2</span> <span class='op'>&lt;-</span>
-  <span class='kw'>sza</span> <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
-    <span class='kw'>latitude</span> <span class='op'>==</span> <span class='fl'>20</span> <span class='op'>&amp;</span>
-      <span class='kw'>month</span> <span class='op'>==</span> <span class='st'>"jan"</span> <span class='op'>&amp;</span>
-      <span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='kw'>sza</span>)
-  ) <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='op'>-</span><span class='kw'>latitude</span>, <span class='op'>-</span><span class='kw'>month</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/opt_table_font.html'>opt_table_font</a></span>(
-    font = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(
+<span class='va'>tab_2</span> <span class='op'>&lt;-</span>
+  <span class='va'>sza</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span>
+    <span class='va'>latitude</span> <span class='op'>==</span> <span class='fl'>20</span> <span class='op'>&amp;</span>
+      <span class='va'>month</span> <span class='op'>==</span> <span class='st'>"jan"</span> <span class='op'>&amp;</span>
+      <span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>sza</span><span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>latitude</span>, <span class='op'>-</span><span class='va'>month</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>opt_table_font</span><span class='op'>(</span>
+    font <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
       <span class='st'>"Helvetica Neue"</span>, <span class='st'>"Segoe UI"</span>,
-      <span class='fu'><a href='https://rdrr.io/pkg/gt/man/default_fonts.html'>default_fonts</a></span>()[<span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>)]
-    )
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/opt_all_caps.html'>opt_all_caps</a></span>()
+      <span class='fu'><a href='default_fonts.html'>default_fonts</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>[</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span><span class='op'>]</span>
+    <span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='opt_all_caps.html'>opt_all_caps</a></span><span class='op'>(</span><span class='op'>)</span>
 
-}
+<span class='op'>}</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -289,7 +290,7 @@ the list serves as fallbacks when certain fonts are not available.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

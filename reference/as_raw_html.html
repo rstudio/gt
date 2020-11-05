@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get the HTML content of a <strong>gt</strong> table — as_raw_html • gt</title>
+<title>Get the HTML content of a gt table — as_raw_html • gt</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,7 @@
 
 
 
-<meta property="og:title" content="Get the HTML content of a <strong>gt</strong> table — as_raw_html" />
+<meta property="og:title" content="Get the HTML content of a gt table — as_raw_html" />
 <meta property="og:description" content="Get the HTML content from a gt_tbl object as a single-element character
 vector. By default, the generated HTML will have inlined styles, where CSS
 styles (that were previously contained in CSS rule sets external to the
@@ -85,7 +85,7 @@ emailing context." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -155,14 +155,14 @@ tags. This option is preferable when using the output HTML table in an
 emailing context.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/as_raw_html.html'>as_raw_html</a></span>(<span class='kw'>data</span>, inline_css = <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>as_raw_html</span><span class='op'>(</span><span class='va'>data</span>, inline_css <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A table object that is created using the <code><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt()</a></code> function.</p></td>
+      <td><p>A table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
     </tr>
     <tr>
       <th>inline_css</th>
@@ -181,35 +181,37 @@ clients over using CSS in a <code>&lt;style&gt;</code> block.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Export Functions: 
-<code><a href='https://rdrr.io/pkg/gt/man/as_latex.html'>as_latex</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/as_rtf.html'>as_rtf</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/extract_summary.html'>extract_summary</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/gtsave.html'>gtsave</a>()</code></p></div>
+<code><a href='as_latex.html'>as_latex</a>()</code>,
+<code><a href='as_rtf.html'>as_rtf</a>()</code>,
+<code><a href='extract_summary.html'>extract_summary</a>()</code>,
+<code><a href='gtsave.html'>gtsave</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Use `gtcars` to create a gt table;</span>
 <span class='co'># add a header and then export as</span>
 <span class='co'># HTML code with CSS inlined</span>
-<span class='kw'>tab_html</span> <span class='op'>&lt;-</span>
-  <span class='kw'>gtcars</span> <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>mfr</span>, <span class='kw'>model</span>, <span class='kw'>msrp</span>) <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_header.html'>tab_header</a></span>(
-    title = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/md.html'>md</a></span>(<span class='st'>"Data listing from **gtcars**"</span>),
-    subtitle = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/md.html'>md</a></span>(<span class='st'>"`gtcars` is an R dataset"</span>)
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/as_raw_html.html'>as_raw_html</a></span>()
+<span class='va'>tab_html</span> <span class='op'>&lt;-</span>
+  <span class='va'>gtcars</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>mfr</span>, <span class='va'>model</span>, <span class='va'>msrp</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='tab_header.html'>tab_header</a></span><span class='op'>(</span>
+    title <span class='op'>=</span> <span class='fu'><a href='md.html'>md</a></span><span class='op'>(</span><span class='st'>"Data listing from **gtcars**"</span><span class='op'>)</span>,
+    subtitle <span class='op'>=</span> <span class='fu'><a href='md.html'>md</a></span><span class='op'>(</span><span class='st'>"`gtcars` is an R dataset"</span><span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>as_raw_html</span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'># `tab_html` is a single-element vector</span>
 <span class='co'># containing inlined HTML for the table;</span>
 <span class='co'># it has only the `&lt;table&gt;...&lt;/table&gt;` part</span>
 <span class='co'># so it's not a complete HTML document but</span>
 <span class='co'># rather an HTML fragment</span>
-<span class='kw'>tab_html</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/substr.html'>substr</a></span>(<span class='fl'>1</span>, <span class='fl'>700</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span>()</div><div class='output co'>#&gt; &lt;table style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif; display: table; border-collapse: collapse; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3;"&gt;
-#&gt;   &lt;thead styl</div><div class='input'></div></pre>
+<span class='va'>tab_html</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/substr.html'>substr</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>700</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; &lt;table style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif; display: table; border-collapse: collapse; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3;"&gt;
+#&gt;   &lt;thead styl</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -225,7 +227,7 @@ clients over using CSS in a <code>&lt;style&gt;</code> block.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

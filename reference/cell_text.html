@@ -83,7 +83,7 @@ tab_style() will reliably apply those styles to the targeted element." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -145,25 +145,25 @@ tab_style() will reliably apply those styles to the targeted element." />
     </div>
 
     <div class="ref-description">
-    <p>This helper function is to be used with the <code><a href='https://rdrr.io/pkg/gt/man/tab_style.html'>tab_style()</a></code> function, which
+    <p>This helper function is to be used with the <code><a href='tab_style.html'>tab_style()</a></code> function, which
 itself allows for the setting of custom styles to one or more cells. We can
-also define several styles within a single call of <code><a href='https://rdrr.io/pkg/gt/man/cell_text.html'>cell_text()</a></code> and
-<code><a href='https://rdrr.io/pkg/gt/man/tab_style.html'>tab_style()</a></code> will reliably apply those styles to the targeted element.</p>
+also define several styles within a single call of <code>cell_text()</code> and
+<code><a href='tab_style.html'>tab_style()</a></code> will reliably apply those styles to the targeted element.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/cell_text.html'>cell_text</a></span>(
-  color = <span class='kw'>NULL</span>,
-  font = <span class='kw'>NULL</span>,
-  size = <span class='kw'>NULL</span>,
-  align = <span class='kw'>NULL</span>,
-  v_align = <span class='kw'>NULL</span>,
-  style = <span class='kw'>NULL</span>,
-  weight = <span class='kw'>NULL</span>,
-  stretch = <span class='kw'>NULL</span>,
-  indent = <span class='kw'>NULL</span>,
-  decorate = <span class='kw'>NULL</span>,
-  transform = <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>cell_text</span><span class='op'>(</span>
+  color <span class='op'>=</span> <span class='cn'>NULL</span>,
+  font <span class='op'>=</span> <span class='cn'>NULL</span>,
+  size <span class='op'>=</span> <span class='cn'>NULL</span>,
+  align <span class='op'>=</span> <span class='cn'>NULL</span>,
+  v_align <span class='op'>=</span> <span class='cn'>NULL</span>,
+  style <span class='op'>=</span> <span class='cn'>NULL</span>,
+  weight <span class='op'>=</span> <span class='cn'>NULL</span>,
+  stretch <span class='op'>=</span> <span class='cn'>NULL</span>,
+  indent <span class='op'>=</span> <span class='cn'>NULL</span>,
+  decorate <span class='op'>=</span> <span class='cn'>NULL</span>,
+  transform <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -180,7 +180,7 @@ as fallbacks.</p></td>
     <tr>
       <th>size</th>
       <td><p>The size of the font. Can be provided as a number that is assumed
-to represent <code>px</code> values (or could be wrapped in the <code><a href='https://rdrr.io/pkg/gt/man/px.html'>px()</a></code>) helper
+to represent <code>px</code> values (or could be wrapped in the <code><a href='px.html'>px()</a></code>) helper
 function. We can also use one of the following absolute size keywords:
 <code>"xx-small"</code>, <code>"x-small"</code>, <code>"small"</code>, <code>"medium"</code>, <code>"large"</code>, <code>"x-large"</code>,
 or <code>"xx-large"</code>.</p></td>
@@ -220,9 +220,9 @@ percentage values are not allowed.</p></td>
     <tr>
       <th>indent</th>
       <td><p>The indentation of the text. Can be provided as a number that
-is assumed to represent <code>px</code> values (or could be wrapped in the <code><a href='https://rdrr.io/pkg/gt/man/px.html'>px()</a></code>)
+is assumed to represent <code>px</code> values (or could be wrapped in the <code><a href='px.html'>px()</a></code>)
 helper function. Alternatively, this can be given as a percentage (easily
-constructed with <code><a href='https://rdrr.io/pkg/gt/man/pct.html'>pct()</a></code>).</p></td>
+constructed with <code><a href='pct.html'>pct()</a></code>).</p></td>
     </tr>
     <tr>
       <th>decorate</th>
@@ -252,54 +252,55 @@ use <code>"overline"</code>, <code>"line-through"</code>, or <code>"underline"</
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Helper Functions: 
-<code><a href='https://rdrr.io/pkg/gt/man/adjust_luminance.html'>adjust_luminance</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cell_borders.html'>cell_borders</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cell_fill.html'>cell_fill</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cells_body.html'>cells_body</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cells_column_labels.html'>cells_column_labels</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cells_column_spanners.html'>cells_column_spanners</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cells_grand_summary.html'>cells_grand_summary</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cells_row_groups.html'>cells_row_groups</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cells_stubhead.html'>cells_stubhead</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cells_stub.html'>cells_stub</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cells_summary.html'>cells_summary</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/cells_title.html'>cells_title</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/currency.html'>currency</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/default_fonts.html'>default_fonts</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/escape_latex.html'>escape_latex</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/google_font.html'>google_font</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/gt_latex_dependencies.html'>gt_latex_dependencies</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/html.html'>html</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/md.html'>md</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/pct.html'>pct</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/px.html'>px</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/random_id.html'>random_id</a>()</code></p></div>
+<code><a href='adjust_luminance.html'>adjust_luminance</a>()</code>,
+<code><a href='cell_borders.html'>cell_borders</a>()</code>,
+<code><a href='cell_fill.html'>cell_fill</a>()</code>,
+<code><a href='cells_body.html'>cells_body</a>()</code>,
+<code><a href='cells_column_labels.html'>cells_column_labels</a>()</code>,
+<code><a href='cells_column_spanners.html'>cells_column_spanners</a>()</code>,
+<code><a href='cells_grand_summary.html'>cells_grand_summary</a>()</code>,
+<code><a href='cells_row_groups.html'>cells_row_groups</a>()</code>,
+<code><a href='cells_stubhead.html'>cells_stubhead</a>()</code>,
+<code><a href='cells_stub.html'>cells_stub</a>()</code>,
+<code><a href='cells_summary.html'>cells_summary</a>()</code>,
+<code><a href='cells_title.html'>cells_title</a>()</code>,
+<code><a href='currency.html'>currency</a>()</code>,
+<code><a href='default_fonts.html'>default_fonts</a>()</code>,
+<code><a href='escape_latex.html'>escape_latex</a>()</code>,
+<code><a href='google_font.html'>google_font</a>()</code>,
+<code><a href='gt_latex_dependencies.html'>gt_latex_dependencies</a>()</code>,
+<code><a href='html.html'>html</a>()</code>,
+<code><a href='md.html'>md</a>()</code>,
+<code><a href='pct.html'>pct</a>()</code>,
+<code><a href='px.html'>px</a>()</code>,
+<code><a href='random_id.html'>random_id</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Use `exibble` to create a gt table;</span>
 <span class='co'># add styles with `tab_style()` and</span>
 <span class='co'># the `cell_text()` helper function</span>
-<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
-  <span class='kw'>exibble</span> <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>num</span>, <span class='kw'>currency</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/fmt_number.html'>fmt_number</a></span>(
-    columns = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>num</span>, <span class='kw'>currency</span>),
-    decimals = <span class='fl'>1</span>
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_style.html'>tab_style</a></span>(
-    style = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/cell_text.html'>cell_text</a></span>(weight = <span class='st'>"bold"</span>),
-    locations = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/cells_body.html'>cells_body</a></span>(
-      columns = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>num</span>),
-      rows = <span class='kw'>num</span> <span class='op'>&gt;=</span> <span class='fl'>5000</span>)
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_style.html'>tab_style</a></span>(
-    style = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/cell_text.html'>cell_text</a></span>(style = <span class='st'>"italic"</span>),
-    locations = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/cells_body.html'>cells_body</a></span>(
-      columns = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>currency</span>),
-      rows = <span class='kw'>currency</span> <span class='op'>&lt;</span> <span class='fl'>100</span>
-    )
-  )
+<span class='va'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='va'>exibble</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>num</span>, <span class='va'>currency</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='fmt_number.html'>fmt_number</a></span><span class='op'>(</span>
+    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>num</span>, <span class='va'>currency</span><span class='op'>)</span>,
+    decimals <span class='op'>=</span> <span class='fl'>1</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='tab_style.html'>tab_style</a></span><span class='op'>(</span>
+    style <span class='op'>=</span> <span class='fu'>cell_text</span><span class='op'>(</span>weight <span class='op'>=</span> <span class='st'>"bold"</span><span class='op'>)</span>,
+    locations <span class='op'>=</span> <span class='fu'><a href='cells_body.html'>cells_body</a></span><span class='op'>(</span>
+      columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>num</span><span class='op'>)</span>,
+      rows <span class='op'>=</span> <span class='va'>num</span> <span class='op'>&gt;=</span> <span class='fl'>5000</span><span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='tab_style.html'>tab_style</a></span><span class='op'>(</span>
+    style <span class='op'>=</span> <span class='fu'>cell_text</span><span class='op'>(</span>style <span class='op'>=</span> <span class='st'>"italic"</span><span class='op'>)</span>,
+    locations <span class='op'>=</span> <span class='fu'><a href='cells_body.html'>cells_body</a></span><span class='op'>(</span>
+      columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>currency</span><span class='op'>)</span>,
+      rows <span class='op'>=</span> <span class='va'>currency</span> <span class='op'>&lt;</span> <span class='fl'>100</span>
+    <span class='op'>)</span>
+  <span class='op'>)</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -316,7 +317,7 @@ use <code>"overline"</code>, <code>"line-through"</code>, or <code>"underline"</
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

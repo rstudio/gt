@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a <strong>gt</strong> display table output element for Shiny — gt_output • gt</title>
+<title>Create a gt display table output element for Shiny — gt_output • gt</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,7 @@
 
 
 
-<meta property="og:title" content="Create a <strong>gt</strong> display table output element for Shiny — gt_output" />
+<meta property="og:title" content="Create a gt display table output element for Shiny — gt_output" />
 <meta property="og:description" content="Using gt_output() we can render a reactive gt table, a process
 initiated by using the render_gt() function in the server component of a
 Shiny app. The gt_output() call is to be used in the Shiny ui component,
@@ -87,7 +87,7 @@ gt_output(outputId = &quot;&amp;lt;id&amp;gt;&quot;)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -149,17 +149,17 @@ gt_output(outputId = &quot;&amp;lt;id&amp;gt;&quot;)." />
     </div>
 
     <div class="ref-description">
-    <p>Using <code><a href='https://rdrr.io/pkg/gt/man/gt_output.html'>gt_output()</a></code> we can render a reactive <strong>gt</strong> table, a process
-initiated by using the <code><a href='https://rdrr.io/pkg/gt/man/render_gt.html'>render_gt()</a></code> function in the <code>server</code> component of a
-Shiny app. The <code><a href='https://rdrr.io/pkg/gt/man/gt_output.html'>gt_output()</a></code> call is to be used in the Shiny <code>ui</code> component,
+    <p>Using <code>gt_output()</code> we can render a reactive <strong>gt</strong> table, a process
+initiated by using the <code><a href='render_gt.html'>render_gt()</a></code> function in the <code>server</code> component of a
+Shiny app. The <code>gt_output()</code> call is to be used in the Shiny <code>ui</code> component,
 the position and context wherein this call is made determines the where the
 <strong>gt</strong> table is rendered on the app page. It's important to note that the
-ID given during the <code><a href='https://rdrr.io/pkg/gt/man/render_gt.html'>render_gt()</a></code> call is needed as the <code>outputId</code> in
-<code><a href='https://rdrr.io/pkg/gt/man/gt_output.html'>gt_output()</a></code> (e.g., <strong>server</strong>: <code>output$&lt;id&gt; &lt;- render_gt(...)</code>; <strong>ui</strong>:
+ID given during the <code><a href='render_gt.html'>render_gt()</a></code> call is needed as the <code>outputId</code> in
+<code>gt_output()</code> (e.g., <strong>server</strong>: <code>output$&lt;id&gt; &lt;- render_gt(...)</code>; <strong>ui</strong>:
 <code>gt_output(outputId = "&lt;id&gt;"</code>).</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt_output.html'>gt_output</a></span>(<span class='kw'>outputId</span>)</pre>
+    <pre class="usage"><span class='fu'>gt_output</span><span class='op'>(</span><span class='va'>outputId</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -183,10 +183,10 @@ Shiny apps can be found at the <a href='https://shiny.rstudio.com'>Shiny Site</a
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Shiny functions: 
-<code><a href='https://rdrr.io/pkg/gt/man/render_gt.html'>render_gt</a>()</code></p></div>
+<code><a href='render_gt.html'>render_gt</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://shiny.rstudio.com'>shiny</a></span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://shiny.rstudio.com'>shiny</a></span><span class='op'>)</span>
 
 <span class='co'># Here is a Shiny app (contained within</span>
 <span class='co'># a single file) that (1) prepares a</span>
@@ -196,31 +196,32 @@ Shiny apps can be found at the <a href='https://shiny.rstudio.com'>Shiny Site</a
 <span class='co'># uses the `gt_tbl` object as the input</span>
 <span class='co'># expression</span>
 
-<span class='kw'>gt_tbl</span> <span class='op'>&lt;-</span>
-  <span class='kw'>gtcars</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/cols_hide.html'>cols_hide</a></span>(<span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span>(<span class='st'>"_"</span>))
+<span class='va'>gt_tbl</span> <span class='op'>&lt;-</span>
+  <span class='va'>gtcars</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='cols_hide.html'>cols_hide</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span><span class='op'>(</span><span class='st'>"_"</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='kw'>ui</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/fluidPage.html'>fluidPage</a></span>(
+<span class='va'>ui</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/fluidPage.html'>fluidPage</a></span><span class='op'>(</span>
 
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt_output.html'>gt_output</a></span>(outputId = <span class='st'>"table"</span>)
-)
+  <span class='fu'>gt_output</span><span class='op'>(</span>outputId <span class='op'>=</span> <span class='st'>"table"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='kw'>server</span> <span class='op'>&lt;-</span> <span class='fu'>function</span>(<span class='kw'>input</span>,
-                   <span class='kw'>output</span>,
-                   <span class='kw'>session</span>) {
+<span class='va'>server</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>input</span>,
+                   <span class='va'>output</span>,
+                   <span class='va'>session</span><span class='op'>)</span> <span class='op'>{</span>
 
-  <span class='kw'>output</span><span class='op'>$</span><span class='kw'>table</span> <span class='op'>&lt;-</span>
-    <span class='fu'><a href='https://rdrr.io/pkg/gt/man/render_gt.html'>render_gt</a></span>(
-      expr = <span class='kw'>gt_tbl</span>,
-      height = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/px.html'>px</a></span>(<span class='fl'>600</span>),
-      width = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/px.html'>px</a></span>(<span class='fl'>600</span>)
-    )
-}
+  <span class='va'>output</span><span class='op'>$</span><span class='va'>table</span> <span class='op'>&lt;-</span>
+    <span class='fu'><a href='render_gt.html'>render_gt</a></span><span class='op'>(</span>
+      expr <span class='op'>=</span> <span class='va'>gt_tbl</span>,
+      height <span class='op'>=</span> <span class='fu'><a href='px.html'>px</a></span><span class='op'>(</span><span class='fl'>600</span><span class='op'>)</span>,
+      width <span class='op'>=</span> <span class='fu'><a href='px.html'>px</a></span><span class='op'>(</span><span class='fl'>600</span><span class='op'>)</span>
+    <span class='op'>)</span>
+<span class='op'>}</span>
 
-<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()) {
-  <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/shinyApp.html'>shinyApp</a></span>(<span class='kw'>ui</span>, <span class='kw'>server</span>)
-}
+<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/shinyApp.html'>shinyApp</a></span><span class='op'>(</span><span class='va'>ui</span>, <span class='va'>server</span><span class='op'>)</span>
+<span class='op'>}</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -237,7 +238,7 @@ Shiny apps can be found at the <a href='https://shiny.rstudio.com'>Shiny Site</a
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

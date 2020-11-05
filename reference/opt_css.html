@@ -83,7 +83,7 @@ as a vector of lines or as a single string." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -145,20 +145,20 @@ as a vector of lines or as a single string." />
     </div>
 
     <div class="ref-description">
-    <p>The <code><a href='https://rdrr.io/pkg/gt/man/opt_css.html'>opt_css()</a></code> function makes it possible to add CSS to a <strong>gt</strong> table. This
+    <p>The <code>opt_css()</code> function makes it possible to add CSS to a <strong>gt</strong> table. This
 CSS will be added after the compiled CSS that <strong>gt</strong> generates automatically
 when the object is transformed to an HTML output table. You can supply <code>css</code>
 as a vector of lines or as a single string.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/opt_css.html'>opt_css</a></span>(<span class='kw'>data</span>, <span class='kw'>css</span>, add = <span class='fl'>TRUE</span>, allow_duplicates = <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>opt_css</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>css</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span>, allow_duplicates <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A table object that is created using the <code><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt()</a></code> function.</p></td>
+      <td><p>A table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
     </tr>
     <tr>
       <th>css</th>
@@ -168,8 +168,8 @@ element.</p></td>
     <tr>
       <th>add</th>
       <td><p>If <code>TRUE</code>, the default, the CSS is added to any already-defined
-CSS (typically from previous calls of <code><a href='https://rdrr.io/pkg/gt/man/opt_table_font.html'>opt_table_font()</a></code>, <code><a href='https://rdrr.io/pkg/gt/man/opt_css.html'>opt_css()</a></code>, or,
-directly setting CSS the <code>table.additional_css</code> value in <code><a href='https://rdrr.io/pkg/gt/man/tab_options.html'>tab_options()</a></code>).
+CSS (typically from previous calls of <code><a href='opt_table_font.html'>opt_table_font()</a></code>, <code>opt_css()</code>, or,
+directly setting CSS the <code>table.additional_css</code> value in <code><a href='tab_options.html'>tab_options()</a></code>).
 If this is set to <code>FALSE</code>, the CSS provided here will replace any
 previously-stored CSS.</p></td>
     </tr>
@@ -197,13 +197,13 @@ already-defined CSS.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Table Option Functions: 
-<code><a href='https://rdrr.io/pkg/gt/man/opt_align_table_header.html'>opt_align_table_header</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/opt_all_caps.html'>opt_all_caps</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/opt_footnote_marks.html'>opt_footnote_marks</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/opt_row_striping.html'>opt_row_striping</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/opt_table_font.html'>opt_table_font</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/opt_table_lines.html'>opt_table_lines</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/opt_table_outline.html'>opt_table_outline</a>()</code></p></div>
+<code><a href='opt_align_table_header.html'>opt_align_table_header</a>()</code>,
+<code><a href='opt_all_caps.html'>opt_all_caps</a>()</code>,
+<code><a href='opt_footnote_marks.html'>opt_footnote_marks</a>()</code>,
+<code><a href='opt_row_striping.html'>opt_row_striping</a>()</code>,
+<code><a href='opt_table_font.html'>opt_table_font</a>()</code>,
+<code><a href='opt_table_lines.html'>opt_table_lines</a>()</code>,
+<code><a href='opt_table_outline.html'>opt_table_outline</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Use `exibble` to create a gt table and</span>
@@ -211,19 +211,19 @@ already-defined CSS.</p></td>
 <span class='co'># `opt_css()` insert CSS rulesets as</span>
 <span class='co'># as string and be sure to set the table</span>
 <span class='co'># ID explicitly (here as "one")</span>
-<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
-  <span class='kw'>exibble</span> <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>num</span>, <span class='kw'>currency</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>(id = <span class='st'>"one"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/fmt_currency.html'>fmt_currency</a></span>(
-    columns = <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>currency</span>),
-    currency = <span class='st'>"HKD"</span>
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/fmt_scientific.html'>fmt_scientific</a></span>(
-    columns = <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>num</span>)
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/opt_css.html'>opt_css</a></span>(
-    css = <span class='st'>"
+<span class='va'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='va'>exibble</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>num</span>, <span class='va'>currency</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span>id <span class='op'>=</span> <span class='st'>"one"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='fmt_currency.html'>fmt_currency</a></span><span class='op'>(</span>
+    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>currency</span><span class='op'>)</span>,
+    currency <span class='op'>=</span> <span class='st'>"HKD"</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='fmt_scientific.html'>fmt_scientific</a></span><span class='op'>(</span>
+    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>num</span><span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>opt_css</span><span class='op'>(</span>
+    css <span class='op'>=</span> <span class='st'>"
     #one .gt_table {
       background-color: skyblue;
     }
@@ -233,18 +233,9 @@ already-defined CSS.</p></td>
     #one .gt_col_heading {
       text-align: center !important;
     }
-    "</span>ss = "
-    #one .gt_table {
-      background-color: skyblue;
-    }
-    #one .gt_row {
-      padding: 20px 30px;
-    }
-    #one .gt_col_heading {
-      text-align: center !important;
-    }
-    "
-  )
+    "</span>
+  <span class='op'>)</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -261,7 +252,7 @@ already-defined CSS.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

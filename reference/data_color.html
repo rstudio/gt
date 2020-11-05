@@ -89,7 +89,7 @@ colors to either the cell background or the cell text." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -152,7 +152,7 @@ colors to either the cell background or the cell text." />
 
     <div class="ref-description">
     <p>It's possible to add color to data cells according to their values. The
-<code><a href='https://rdrr.io/pkg/gt/man/data_color.html'>data_color()</a></code> function colors all rows of any <code>columns</code> supplied. There are
+<code>data_color()</code> function colors all rows of any <code>columns</code> supplied. There are
 two ways to define how cells are colored: (1) through the use of a supplied
 color palette, and (2) through use of a color mapping function available from
 the <strong>scales</strong> package. The first method colorizes cell data according to
@@ -163,21 +163,21 @@ numeric domain. Finally, we can choose whether to apply the cell-specific
 colors to either the cell background or the cell text.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/data_color.html'>data_color</a></span>(
-  <span class='kw'>data</span>,
-  <span class='kw'>columns</span>,
-  <span class='kw'>colors</span>,
-  alpha = <span class='kw'>NULL</span>,
-  apply_to = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fill"</span>, <span class='st'>"text"</span>),
-  autocolor_text = <span class='fl'>TRUE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>data_color</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  <span class='va'>columns</span>,
+  <span class='va'>colors</span>,
+  alpha <span class='op'>=</span> <span class='cn'>NULL</span>,
+  apply_to <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"fill"</span>, <span class='st'>"text"</span><span class='op'>)</span>,
+  autocolor_text <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A table object that is created using the <code><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt()</a></code> function.</p></td>
+      <td><p>A table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
     </tr>
     <tr>
       <th>columns</th>
@@ -243,7 +243,7 @@ setting <code>autocolor_text</code> to <code>FALSE</code>.</p>
 hard to discover suitable palettes and then obtain the vector of colors. To
 make this process easier we can elect to use the <strong>paletteer</strong> package,
 which makes a wide range of palettes from various R packages readily
-available. The <code><a href='https://rdrr.io/pkg/gt/man/info_paletteer.html'>info_paletteer()</a></code> information table allows us to easily
+available. The <code><a href='info_paletteer.html'>info_paletteer()</a></code> information table allows us to easily
 inspect all of the discrete color palettes available in <strong>paletteer</strong>. We
 only then need to specify the <code>package</code> and <code>palette</code> when calling the
 <code><a href='https://rdrr.io/pkg/paletteer/man/paletteer_d.html'>paletteer::paletteer_d()</a></code> function, and, we get the palette as a vector of
@@ -262,18 +262,18 @@ hexadecimal colors.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Format Data: 
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_currency.html'>fmt_currency</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_datetime.html'>fmt_datetime</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_date.html'>fmt_date</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_markdown.html'>fmt_markdown</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_missing.html'>fmt_missing</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_number.html'>fmt_number</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_passthrough.html'>fmt_passthrough</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_percent.html'>fmt_percent</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_scientific.html'>fmt_scientific</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_time.html'>fmt_time</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt.html'>fmt</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/text_transform.html'>text_transform</a>()</code></p></div>
+<code><a href='fmt_currency.html'>fmt_currency</a>()</code>,
+<code><a href='fmt_datetime.html'>fmt_datetime</a>()</code>,
+<code><a href='fmt_date.html'>fmt_date</a>()</code>,
+<code><a href='fmt_markdown.html'>fmt_markdown</a>()</code>,
+<code><a href='fmt_missing.html'>fmt_missing</a>()</code>,
+<code><a href='fmt_number.html'>fmt_number</a>()</code>,
+<code><a href='fmt_passthrough.html'>fmt_passthrough</a>()</code>,
+<code><a href='fmt_percent.html'>fmt_percent</a>()</code>,
+<code><a href='fmt_scientific.html'>fmt_scientific</a>()</code>,
+<code><a href='fmt_time.html'>fmt_time</a>()</code>,
+<code><a href='fmt.html'>fmt</a>()</code>,
+<code><a href='text_transform.html'>text_transform</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># library(paletteer)</span>
@@ -282,19 +282,19 @@ hexadecimal colors.</p>
 <span class='co'># Apply a color scale to the `population`</span>
 <span class='co'># column with `scales::col_numeric`,</span>
 <span class='co'># four supplied colors, and a domain</span>
-<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
-  <span class='kw'>countrypops</span> <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='kw'>country_name</span> <span class='op'>==</span> <span class='st'>"Mongolia"</span>) <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='op'>-</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span>(<span class='st'>"code"</span>)) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>tail</a></span>(<span class='fl'>10</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/data_color.html'>data_color</a></span>(
-    columns = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>population</span>),
-    colors = <span class='kw'>scales</span>::<span class='fu'><a href='https://scales.r-lib.org//reference/col_numeric.html'>col_numeric</a></span>(
-      palette = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(
-        <span class='st'>"red"</span>, <span class='st'>"orange"</span>, <span class='st'>"green"</span>, <span class='st'>"blue"</span>),
-      domain = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.2E7</span>, <span class='fl'>0.4E7</span>))
-  )
+<span class='va'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='va'>countrypops</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>country_name</span> <span class='op'>==</span> <span class='st'>"Mongolia"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span><span class='op'>(</span><span class='st'>"code"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>tail</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>data_color</span><span class='op'>(</span>
+    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>population</span><span class='op'>)</span>,
+    colors <span class='op'>=</span> <span class='fu'>scales</span><span class='fu'>::</span><span class='fu'><a href='https://scales.r-lib.org//reference/col_numeric.html'>col_numeric</a></span><span class='op'>(</span>
+      palette <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+        <span class='st'>"red"</span>, <span class='st'>"orange"</span>, <span class='st'>"green"</span>, <span class='st'>"blue"</span><span class='op'>)</span>,
+      domain <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.2E7</span>, <span class='fl'>0.4E7</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='op'>)</span>
 
 <span class='co'># Use `pizzaplace` to create a gt table;</span>
 <span class='co'># Apply colors from the `red_material`</span>
@@ -305,25 +305,27 @@ hexadecimal colors.</p>
 <span class='co'># the `domain` of `scales::col_numeric()`</span>
 <span class='co'># to `NULL` will use the bounds of the</span>
 <span class='co'># available data as the domain</span>
-<span class='kw'>tab_2</span> <span class='op'>&lt;-</span>
-  <span class='kw'>pizzaplace</span> <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
-    <span class='kw'>type</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"chicken"</span>, <span class='st'>"supreme"</span>)) <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>type</span>, <span class='kw'>size</span>) <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span>(
-    sold = <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span>(),
-    income = <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='kw'>price</span>)
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>(rowname_col = <span class='st'>"size"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/data_color.html'>data_color</a></span>(
-    columns = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>sold</span>, <span class='kw'>income</span>),
-    colors = <span class='kw'>scales</span>::<span class='fu'><a href='https://scales.r-lib.org//reference/col_numeric.html'>col_numeric</a></span>(
-      palette = <span class='kw'>paletteer</span>::<span class='fu'><a href='https://rdrr.io/pkg/paletteer/man/paletteer_d.html'>paletteer_d</a></span>(
-        palette = <span class='st'>"ggsci::red_material"</span>
-        ) <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span>(),
-      domain = <span class='kw'>NULL</span>
-      )
-  )</div><div class='output co'>#&gt; <span class='message'>`summarise()` regrouping output by 'type' (override with `.groups` argument)</span></div><div class='input'></div></pre>
+<span class='va'>tab_2</span> <span class='op'>&lt;-</span>
+  <span class='va'>pizzaplace</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span>
+    <span class='va'>type</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"chicken"</span>, <span class='st'>"supreme"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>type</span>, <span class='va'>size</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>
+    sold <span class='op'>=</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span>,
+    income <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>price</span><span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span>rowname_col <span class='op'>=</span> <span class='st'>"size"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>data_color</span><span class='op'>(</span>
+    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>sold</span>, <span class='va'>income</span><span class='op'>)</span>,
+    colors <span class='op'>=</span> <span class='fu'>scales</span><span class='fu'>::</span><span class='fu'><a href='https://scales.r-lib.org//reference/col_numeric.html'>col_numeric</a></span><span class='op'>(</span>
+      palette <span class='op'>=</span> <span class='fu'>paletteer</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/paletteer/man/paletteer_d.html'>paletteer_d</a></span><span class='op'>(</span>
+        palette <span class='op'>=</span> <span class='st'>"ggsci::red_material"</span>
+        <span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='op'>)</span>,
+      domain <span class='op'>=</span> <span class='cn'>NULL</span>
+      <span class='op'>)</span>
+  <span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>`summarise()` regrouping output by 'type' (override with `.groups` argument)</span></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -339,7 +341,7 @@ hexadecimal colors.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

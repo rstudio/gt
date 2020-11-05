@@ -81,7 +81,7 @@ appropriate output type during render when using fmt_markdown()." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -144,17 +144,17 @@ appropriate output type during render when using fmt_markdown()." />
 
     <div class="ref-description">
     <p>Any Markdown-formatted text in the incoming cells will be transformed to the
-appropriate output type during render when using <code><a href='https://rdrr.io/pkg/gt/man/fmt_markdown.html'>fmt_markdown()</a></code>.</p>
+appropriate output type during render when using <code>fmt_markdown()</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/fmt_markdown.html'>fmt_markdown</a></span>(<span class='kw'>data</span>, <span class='kw'>columns</span>, rows = <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>fmt_markdown</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>columns</span>, rows <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A table object that is created using the <code><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt()</a></code> function.</p></td>
+      <td><p>A table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
     </tr>
     <tr>
       <th>columns</th>
@@ -198,23 +198,23 @@ argument. See the Arguments section for more information on this.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Format Data: 
-<code><a href='https://rdrr.io/pkg/gt/man/data_color.html'>data_color</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_currency.html'>fmt_currency</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_datetime.html'>fmt_datetime</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_date.html'>fmt_date</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_missing.html'>fmt_missing</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_number.html'>fmt_number</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_passthrough.html'>fmt_passthrough</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_percent.html'>fmt_percent</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_scientific.html'>fmt_scientific</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_time.html'>fmt_time</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt.html'>fmt</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/text_transform.html'>text_transform</a>()</code></p></div>
+<code><a href='data_color.html'>data_color</a>()</code>,
+<code><a href='fmt_currency.html'>fmt_currency</a>()</code>,
+<code><a href='fmt_datetime.html'>fmt_datetime</a>()</code>,
+<code><a href='fmt_date.html'>fmt_date</a>()</code>,
+<code><a href='fmt_missing.html'>fmt_missing</a>()</code>,
+<code><a href='fmt_number.html'>fmt_number</a>()</code>,
+<code><a href='fmt_passthrough.html'>fmt_passthrough</a>()</code>,
+<code><a href='fmt_percent.html'>fmt_percent</a>()</code>,
+<code><a href='fmt_scientific.html'>fmt_scientific</a>()</code>,
+<code><a href='fmt_time.html'>fmt_time</a>()</code>,
+<code><a href='fmt.html'>fmt</a>()</code>,
+<code><a href='text_transform.html'>text_transform</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Create a few Markdown-based</span>
 <span class='co'># text snippets</span>
-<span class='kw'>text_1a</span> <span class='op'>&lt;-</span> <span class='st'>"
+<span class='va'>text_1a</span> <span class='op'>&lt;-</span> <span class='st'>"
 ### This is Markdown.
 
 Markdown’s syntax is comprised entirely of
@@ -222,25 +222,14 @@ punctuation characters, which punctuation
 characters have been carefully chosen so as
 to look like what they mean... assuming
 you’ve ever used email.
-"</span>ext_1a <- "
-### This is Markdown.
+"</span>
 
-Markdown’s syntax is comprised entirely of
-punctuation characters, which punctuation
-characters have been carefully chosen so as
-to look like what they mean... assuming
-you’ve ever used email.
-"
-
-<span class='kw'>text_1b</span> <span class='op'>&lt;-</span> <span class='st'>"
+<span class='va'>text_1b</span> <span class='op'>&lt;-</span> <span class='st'>"
 Info on Markdown syntax can be found
 [here](https://daringfireball.net/projects/markdown/).
-"</span>ext_1b <- "
-Info on Markdown syntax can be found
-[here](https://daringfireball.net/projects/markdown/).
-"
+"</span>
 
-<span class='kw'>text_2a</span> <span class='op'>&lt;-</span> <span class='st'>"
+<span class='va'>text_2a</span> <span class='op'>&lt;-</span> <span class='st'>"
 The **gt** package has these datasets:
 
  - `countrypops`
@@ -249,36 +238,26 @@ The **gt** package has these datasets:
  - `sp500`
  - `pizzaplace`
  - `exibble`
-"</span>ext_2a <- "
-The **gt** package has these datasets:
+"</span>
 
- - `countrypops`
- - `sza`
- - `gtcars`
- - `sp500`
- - `pizzaplace`
- - `exibble`
-"
-
-<span class='kw'>text_2b</span> <span class='op'>&lt;-</span> <span class='st'>"
+<span class='va'>text_2b</span> <span class='op'>&lt;-</span> <span class='st'>"
 There's a quick reference [here](https://commonmark.org/help/).
-"</span>ext_2b <- "
-There's a quick reference [here](https://commonmark.org/help/).
-"
+"</span>
 
 <span class='co'># Arrange the text snippets as a tibble</span>
 <span class='co'># using the `dplyr::tribble()` function;</span>
 <span class='co'># then, create a gt table and format</span>
 <span class='co'># all columns with `fmt_markdown()`</span>
-<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://tibble.tidyverse.org/reference/tribble.html'>tribble</a></span>(
-    <span class='op'>~</span><span class='kw'>Markdown</span>, <span class='op'>~</span><span class='kw'>md</span>,
-    <span class='kw'>text_1a</span>,   <span class='kw'>text_2a</span>,
-    <span class='kw'>text_1b</span>,   <span class='kw'>text_2b</span>,
-  ) <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>() <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://rdrr.io/pkg/gt/man/fmt_markdown.html'>fmt_markdown</a></span>(columns = <span class='fl'>TRUE</span>) <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://rdrr.io/pkg/gt/man/tab_options.html'>tab_options</a></span>(table.width = <span class='fu'><a href='https://rdrr.io/pkg/gt/man/px.html'>px</a></span>(<span class='fl'>400</span>))
+<span class='va'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tribble.html'>tribble</a></span><span class='op'>(</span>
+    <span class='op'>~</span><span class='va'>Markdown</span>, <span class='op'>~</span><span class='va'>md</span>,
+    <span class='va'>text_1a</span>,   <span class='va'>text_2a</span>,
+    <span class='va'>text_1b</span>,   <span class='va'>text_2b</span>,
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>fmt_markdown</span><span class='op'>(</span>columns <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='tab_options.html'>tab_options</a></span><span class='op'>(</span>table.width <span class='op'>=</span> <span class='fu'><a href='px.html'>px</a></span><span class='op'>(</span><span class='fl'>400</span><span class='op'>)</span><span class='op'>)</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -295,7 +274,7 @@ There's a quick reference [here](https://commonmark.org/help/).
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

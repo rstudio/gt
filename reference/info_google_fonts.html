@@ -89,7 +89,7 @@ font features all make for high legibility at smaller sizes." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -151,19 +151,19 @@ font features all make for high legibility at smaller sizes." />
     </div>
 
     <div class="ref-description">
-    <p>The <code><a href='https://rdrr.io/pkg/gt/man/google_font.html'>google_font()</a></code> helper function can be used wherever a font name should
+    <p>The <code><a href='google_font.html'>google_font()</a></code> helper function can be used wherever a font name should
 be specified. There are two instances where this helper can be used: the
-<code>name</code> argument in <code><a href='https://rdrr.io/pkg/gt/man/opt_table_font.html'>opt_table_font()</a></code> (for setting a table font) and in that
-of <code><a href='https://rdrr.io/pkg/gt/man/cell_text.html'>cell_text()</a></code> (used with <code><a href='https://rdrr.io/pkg/gt/man/tab_style.html'>tab_style()</a></code>). Because there is an overwhelming
+<code>name</code> argument in <code><a href='opt_table_font.html'>opt_table_font()</a></code> (for setting a table font) and in that
+of <code><a href='cell_text.html'>cell_text()</a></code> (used with <code><a href='tab_style.html'>tab_style()</a></code>). Because there is an overwhelming
 number of fonts available in the <em>Google Fonts</em> catalog, the
-<code><a href='https://rdrr.io/pkg/gt/man/info_google_fonts.html'>info_google_fonts()</a></code> provides a table with a set of helpful font
+<code>info_google_fonts()</code> provides a table with a set of helpful font
 recommendations. These fonts look great in the different parts of a <strong>gt</strong>
 table. Why? For the most part they are suitable for body text, having large
 counters, large x-height, reasonably low contrast, and open apertures. These
 font features all make for high legibility at smaller sizes.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/info_google_fonts.html'>info_google_fonts</a></span>()</pre>
+    <pre class="usage"><span class='fu'>info_google_fonts</span><span class='op'>(</span><span class='op'>)</span></pre>
 
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -177,16 +177,17 @@ font features all make for high legibility at smaller sizes.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Information Functions: 
-<code><a href='https://rdrr.io/pkg/gt/man/info_currencies.html'>info_currencies</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/info_date_style.html'>info_date_style</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/info_locales.html'>info_locales</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/info_paletteer.html'>info_paletteer</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/info_time_style.html'>info_time_style</a>()</code></p></div>
+<code><a href='info_currencies.html'>info_currencies</a>()</code>,
+<code><a href='info_date_style.html'>info_date_style</a>()</code>,
+<code><a href='info_locales.html'>info_locales</a>()</code>,
+<code><a href='info_paletteer.html'>info_paletteer</a>()</code>,
+<code><a href='info_time_style.html'>info_time_style</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Get a table of info on some of the</span>
 <span class='co'># recommended Google Fonts for tables</span>
-<span class='kw'>tab_1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/gt/man/info_google_fonts.html'>info_google_fonts</a></span>()
+<span class='va'>tab_1</span> <span class='op'>&lt;-</span> <span class='fu'>info_google_fonts</span><span class='op'>(</span><span class='op'>)</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -203,7 +204,7 @@ font features all make for high legibility at smaller sizes.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

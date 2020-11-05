@@ -107,7 +107,7 @@ the possible inputs to the currency argument." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -172,13 +172,13 @@ the possible inputs to the currency argument." />
     <p>With numeric values in a <strong>gt</strong> table, we can perform currency-based
 formatting. This function supports both automatic formatting with a
 three-letter or numeric currency code. We can also specify a custom currency
-that is formatted according to the output context with the <code><a href='https://rdrr.io/pkg/gt/man/currency.html'>currency()</a></code>
+that is formatted according to the output context with the <code><a href='currency.html'>currency()</a></code>
 helper function. Numeric formatting facilitated through the use of a locale
 ID. We have fine control over the conversion from numeric values to currency
 values, where we could take advantage of the following options:</p><ul>
 <li><p>the currency: providing a currency code or common currency name will
 procure the correct currency symbol and number of currency subunits; we could
-also use the <code><a href='https://rdrr.io/pkg/gt/man/currency.html'>currency()</a></code> helper function to specify a custom currency</p></li>
+also use the <code><a href='currency.html'>currency()</a></code> helper function to specify a custom currency</p></li>
 <li><p>currency symbol placement: the currency symbol can be placed before
 or after the values</p></li>
 <li><p>decimals/subunits: choice of the number of decimal places, and a
@@ -195,36 +195,36 @@ be autoscaled and decorated with the appropriate suffixes</p></li>
 currency values</p></li>
 <li><p>locale-based formatting: providing a locale ID will result in
 currency formatting specific to the chosen locale</p></li>
-</ul><p>We can use the <code><a href='https://rdrr.io/pkg/gt/man/info_currencies.html'>info_currencies()</a></code> function for a useful reference on all of
+</ul><p>We can use the <code><a href='info_currencies.html'>info_currencies()</a></code> function for a useful reference on all of
 the possible inputs to the <code>currency</code> argument.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/gt/man/fmt_currency.html'>fmt_currency</a></span>(
-  <span class='kw'>data</span>,
-  <span class='kw'>columns</span>,
-  rows = <span class='kw'>NULL</span>,
-  currency = <span class='st'>"USD"</span>,
-  use_subunits = <span class='fl'>TRUE</span>,
-  accounting = <span class='fl'>FALSE</span>,
-  decimals = <span class='kw'>NULL</span>,
-  drop_trailing_dec_mark = <span class='fl'>TRUE</span>,
-  use_seps = <span class='fl'>TRUE</span>,
-  scale_by = <span class='fl'>1</span>,
-  suffixing = <span class='fl'>FALSE</span>,
-  pattern = <span class='st'>"{x}"</span>,
-  sep_mark = <span class='st'>","</span>,
-  dec_mark = <span class='st'>"."</span>,
-  placement = <span class='st'>"left"</span>,
-  incl_space = <span class='fl'>FALSE</span>,
-  locale = <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>fmt_currency</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  <span class='va'>columns</span>,
+  rows <span class='op'>=</span> <span class='cn'>NULL</span>,
+  currency <span class='op'>=</span> <span class='st'>"USD"</span>,
+  use_subunits <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  accounting <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  decimals <span class='op'>=</span> <span class='cn'>NULL</span>,
+  drop_trailing_dec_mark <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  use_seps <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  scale_by <span class='op'>=</span> <span class='fl'>1</span>,
+  suffixing <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  pattern <span class='op'>=</span> <span class='st'>"{x}"</span>,
+  sep_mark <span class='op'>=</span> <span class='st'>","</span>,
+  dec_mark <span class='op'>=</span> <span class='st'>"."</span>,
+  placement <span class='op'>=</span> <span class='st'>"left"</span>,
+  incl_space <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  locale <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A table object that is created using the <code><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt()</a></code> function.</p></td>
+      <td><p>A table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
     </tr>
     <tr>
       <th>columns</th>
@@ -247,19 +247,19 @@ We can also use expressions to filter down to the rows we need (e.g.,
       <th>currency</th>
       <td><p>The currency to use for the numeric value. This input can be
 supplied as a 3-letter currency code (e.g., <code>"USD"</code> for U.S. Dollars,
-<code>"EUR"</code> for the Euro currency). Use <code><a href='https://rdrr.io/pkg/gt/man/info_currencies.html'>info_currencies()</a></code> to get an
+<code>"EUR"</code> for the Euro currency). Use <code><a href='info_currencies.html'>info_currencies()</a></code> to get an
 information table with all of the valid currency codes and examples of
 each. Alternatively, we can provide a common currency name (e.g.,
 <code>"dollar"</code>, <code>"pound"</code>, <code>"yen"</code>, etc.) to simplify the process. Use
-<code><a href='https://rdrr.io/pkg/gt/man/info_currencies.html'>info_currencies()</a></code> with the <code>type == "symbol"</code> option to view an
+<code><a href='info_currencies.html'>info_currencies()</a></code> with the <code>type == "symbol"</code> option to view an
 information table with all of the supported currency symbol names along
 with examples.</p>
-<p>We can also use the <code><a href='https://rdrr.io/pkg/gt/man/currency.html'>currency()</a></code> helper function to specify a custom
+<p>We can also use the <code><a href='currency.html'>currency()</a></code> helper function to specify a custom
 currency, where the string could vary across output contexts. For example,
-using <code><a href='https://rdrr.io/pkg/gt/man/currency.html'>currency(html = "&amp;fnof;", default = "f")</a></code> would give us a suitable
+using <code><a href='currency.html'>currency(html = "&amp;fnof;", default = "f")</a></code> would give us a suitable
 glyph for the Dutch guilder in an HTML output table, and it would simply be
 the letter "f" in all other output contexts). Please note that <code>decimals</code>
-will default to <code>2</code> when using the <code><a href='https://rdrr.io/pkg/gt/man/currency.html'>currency()</a></code> helper function.</p>
+will default to <code>2</code> when using the <code><a href='currency.html'>currency()</a></code> helper function.</p>
 <p>If nothing is provided to <code>currency</code> then <code>"USD"</code> (U.S. dollars) will be
 used.</p></td>
     </tr>
@@ -348,7 +348,7 @@ and the currency symbol. The default is to not introduce a space character.</p><
 according the locale's rules. Examples include <code>"en_US"</code> for English
 (United States) and <code>"fr_FR"</code> for French (France). The use of a valid
 locale ID will override any values provided in <code>sep_mark</code> and <code>dec_mark</code>.
-We can use the <code><a href='https://rdrr.io/pkg/gt/man/info_locales.html'>info_locales()</a></code> function as a useful reference for all of
+We can use the <code><a href='info_locales.html'>info_locales()</a></code> function as a useful reference for all of
 the locales that are supported.</p></td>
     </tr>
     </table>
@@ -377,47 +377,48 @@ argument. See the Arguments section for more information on this.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Format Data: 
-<code><a href='https://rdrr.io/pkg/gt/man/data_color.html'>data_color</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_datetime.html'>fmt_datetime</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_date.html'>fmt_date</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_markdown.html'>fmt_markdown</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_missing.html'>fmt_missing</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_number.html'>fmt_number</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_passthrough.html'>fmt_passthrough</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_percent.html'>fmt_percent</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_scientific.html'>fmt_scientific</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt_time.html'>fmt_time</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/fmt.html'>fmt</a>()</code>,
-<code><a href='https://rdrr.io/pkg/gt/man/text_transform.html'>text_transform</a>()</code></p></div>
+<code><a href='data_color.html'>data_color</a>()</code>,
+<code><a href='fmt_datetime.html'>fmt_datetime</a>()</code>,
+<code><a href='fmt_date.html'>fmt_date</a>()</code>,
+<code><a href='fmt_markdown.html'>fmt_markdown</a>()</code>,
+<code><a href='fmt_missing.html'>fmt_missing</a>()</code>,
+<code><a href='fmt_number.html'>fmt_number</a>()</code>,
+<code><a href='fmt_passthrough.html'>fmt_passthrough</a>()</code>,
+<code><a href='fmt_percent.html'>fmt_percent</a>()</code>,
+<code><a href='fmt_scientific.html'>fmt_scientific</a>()</code>,
+<code><a href='fmt_time.html'>fmt_time</a>()</code>,
+<code><a href='fmt.html'>fmt</a>()</code>,
+<code><a href='text_transform.html'>text_transform</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Use `exibble` to create a gt table;</span>
 <span class='co'># format the `currency` column to have</span>
 <span class='co'># currency values in euros (EUR)</span>
-<span class='kw'>tab_1</span> <span class='op'>&lt;-</span>
-  <span class='kw'>exibble</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/fmt_currency.html'>fmt_currency</a></span>(
-    columns = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>currency</span>),
-    currency = <span class='st'>"EUR"</span>
-  )
+<span class='va'>tab_1</span> <span class='op'>&lt;-</span>
+  <span class='va'>exibble</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>fmt_currency</span><span class='op'>(</span>
+    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>currency</span><span class='op'>)</span>,
+    currency <span class='op'>=</span> <span class='st'>"EUR"</span>
+  <span class='op'>)</span>
 
 <span class='co'># Use `exibble` to create a gt table;</span>
 <span class='co'># Keep only the `num` and `currency`,</span>
 <span class='co'># columns, then, format those columns</span>
 <span class='co'># using the "CNY" and "GBP" currencies</span>
-<span class='kw'>tab_2</span> <span class='op'>&lt;-</span>
-  <span class='kw'>exibble</span> <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>num</span>, <span class='kw'>currency</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/fmt_currency.html'>fmt_currency</a></span>(
-    columns = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>num</span>),
-    currency = <span class='st'>"CNY"</span>
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/gt/man/fmt_currency.html'>fmt_currency</a></span>(
-    columns = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>currency</span>),
-    currency = <span class='st'>"GBP"</span>
-  )
+<span class='va'>tab_2</span> <span class='op'>&lt;-</span>
+  <span class='va'>exibble</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>num</span>, <span class='va'>currency</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>fmt_currency</span><span class='op'>(</span>
+    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>num</span><span class='op'>)</span>,
+    currency <span class='op'>=</span> <span class='st'>"CNY"</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>fmt_currency</span><span class='op'>(</span>
+    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>currency</span><span class='op'>)</span>,
+    currency <span class='op'>=</span> <span class='st'>"GBP"</span>
+  <span class='op'>)</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -434,7 +435,7 @@ argument. See the Arguments section for more information on this.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

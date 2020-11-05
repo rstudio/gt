@@ -88,7 +88,7 @@ groupname_col arguments." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -157,11 +157,11 @@ last 4 rows contain <code>NA</code> values in the majority of this tibble's colu
 missing value per column). The <code>date</code>, <code>time</code>, and <code>datetime</code> columns are
 character-based dates/times in the familiar ISO 8601 format. The <code>row</code> and
 <code>group</code> columns provide for unique rownames and two groups (<code>grp_a</code> and
-<code>grp_b</code>) for experimenting with the <code><a href='https://rdrr.io/pkg/gt/man/gt.html'>gt()</a></code> function's <code>rowname_col</code> and
+<code>grp_b</code>) for experimenting with the <code><a href='gt.html'>gt()</a></code> function's <code>rowname_col</code> and
 <code>groupname_col</code> arguments.</p>
     </div>
 
-    <pre class="usage"><span class='kw'>exibble</span></pre>
+    <pre class="usage"><span class='va'>exibble</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
@@ -191,16 +191,17 @@ row groups</p></dd>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Datasets: 
-<code><a href='https://rdrr.io/pkg/gt/man/countrypops.html'>countrypops</a></code>,
-<code><a href='https://rdrr.io/pkg/gt/man/gtcars.html'>gtcars</a></code>,
-<code><a href='https://rdrr.io/pkg/gt/man/pizzaplace.html'>pizzaplace</a></code>,
-<code><a href='https://rdrr.io/pkg/gt/man/sp500.html'>sp500</a></code>,
-<code><a href='https://rdrr.io/pkg/gt/man/sza.html'>sza</a></code></p></div>
+<code><a href='countrypops.html'>countrypops</a></code>,
+<code><a href='gtcars.html'>gtcars</a></code>,
+<code><a href='pizzaplace.html'>pizzaplace</a></code>,
+<code><a href='sp500.html'>sp500</a></code>,
+<code><a href='sza.html'>sza</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Here is a glimpse at the data</span>
 <span class='co'># available in `exibble`</span>
-<span class='kw'>dplyr</span>::<span class='fu'><a href='https://tibble.tidyverse.org/reference/glimpse.html'>glimpse</a></span>(<span class='kw'>exibble</span>)</div><div class='output co'>#&gt; Rows: 8
+<span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/glimpse.html'>glimpse</a></span><span class='op'>(</span><span class='va'>exibble</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Rows: 8
 #&gt; Columns: 9
 #&gt; $ num      <span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> 1.111e-01, 2.222e+00, 3.333e+01, 4.444e+02, 5.550e+03, NA, 7…
 #&gt; $ char     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> "apricot", "banana", "coconut", "durian", NA, "fig", "grapef…
@@ -210,7 +211,8 @@ row groups</p></dd>
 #&gt; $ datetime </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> "2018-01-01 02:22", "2018-02-02 14:33", "2018-03-03 03:44", …
 #&gt; $ currency </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> 49.950, 17.950, 1.390, 65100.000, 1325.810, 13.255, NA, 0.440
 #&gt; $ row      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> "row_1", "row_2", "row_3", "row_4", "row_5", "row_6", "row_7…
-#&gt; $ group    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> "grp_a", "grp_a", "grp_a", "grp_a", "grp_b", "grp_b", "grp_b…</div><div class='input'></div></span></pre>
+#&gt; $ group    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> "grp_a", "grp_a", "grp_a", "grp_a", "grp_b", "grp_b", "grp_b…</div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -226,7 +228,7 @@ row groups</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>
