@@ -111,62 +111,159 @@ create_columns_component_l <- function(data) {
   table_col_headings <-
     paste0(latex_heading_row(content = headings_labels), collapse = "")
 
+  # Recently updated but incorrect implementation
+  # if (spanners_present) {
+  #
+  #   spanners <- dt_spanners_print(data = data, include_hidden = FALSE)
+  #   spanner_ids <- dt_spanners_print(data = data, include_hidden = FALSE, ids = TRUE)
+  #
+  #   # Promote column labels to the group level wherever the
+  #   # spanner label is NA
+  #   spanners[is.na(spanners)] <- headings_vars[is.na(spanners)]
+  #
+  #   if (stub_available) {
+  #     spanners <- c(NA_character_, spanners)
+  #   }
+  #
+  #   # Use the `rle()` function to get a list of column span
+  #   # values for each of the spanner column labels (.$lengths)
+  #   # and the associated spanner ID values (.$values)
+  #   spanners_lengths <- unclass(rle(spanner_ids))
+  #
+  #   multicol <- c()
+  #   cmidrule <- c()
+  #
+  #   for (i in seq_along(spanners_lengths$lengths)) {
+  #
+  #     if (length(multicol) > 0) {
+  #       multicol <- c(multicol, "& ")
+  #     }
+  #
+  #     # If an NA is associated with spanner ID (these are
+  #     # in `spanners_lengths$values`) then do not create
+  #     # a spanner label or the associated line
+  #     if (is.na(spanners_lengths$values[i])) next
+  #
+  #     if (spanners_lengths$lengths[i] > 1) {
+  #
+  #       multicol <-
+  #         c(multicol,
+  #           paste0(
+  #             "\\multicolumn{", spanners_lengths$lengths[i],
+  #             "}{c}{",
+  #             spanners[i],
+  #             "} "))
+  #
+  #     } else {
+  #       multicol <- c(multicol, spanners[i], " ")
+  #     }
+  #
+  #     cmidrule <-
+  #       c(cmidrule,
+  #         paste0(
+  #           "\\cmidrule(lr){",
+  #           sum(spanners_lengths$lengths[seq_len(i-1)]) + 1,
+  #           "-",
+  #           sum(spanners_lengths$lengths[seq_len(i)]),
+  #           "}"))
+  #   }
+  #
+  #   multicol <- paste0(paste(multicol, collapse = ""), "\\\\ \n")
+  #
+  #   if (length(cmidrule > 0)) {
+  #     cmidrule <- paste0(paste(cmidrule, collapse = ""), "\n")
+  #   }
+  #
+  #   table_col_spanners <- paste(multicol, cmidrule, collapse = "")
+  #
+  # } else {
+  #
+  #   table_col_spanners <- ""
+  # }
+
   if (spanners_present) {
 
+    # Get vector of group labels (spanners)
     spanners <- dt_spanners_print(data = data, include_hidden = FALSE)
     spanner_ids <- dt_spanners_print(data = data, include_hidden = FALSE, ids = TRUE)
+
+    if (stub_available) {
+      spanners <- c(NA_character_, spanners)
+      spanner_ids <- c(NA_character_, spanner_ids)
+    }
 
     # Promote column labels to the group level wherever the
     # spanner label is NA
     spanners[is.na(spanners)] <- headings_vars[is.na(spanners)]
 
-    if (stub_available) {
-      spanners <- c(NA_character_, spanners)
-    }
-    spanners_lengths <- unclass(rle(spanner_ids))
+    spanners_rle <- unclass(rle(spanner_ids))
+
+    # We need a parallel vector of spanner labels and this could
+    # be part of the `spanners_rle` list
+    spanners_rle$labels <-
+      vapply(
+        spanners_rle$values,
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = function(x) {
+          if (is.na(x)) return(NA_character_)
+          stats::na.omit(unique(dt_spanners_print(data = data, include_hidden = FALSE)))[
+            stats::na.omit(unique(spanner_ids)) == x]
+        }
+      )
 
     multicol <- c()
     cmidrule <- c()
 
-    for (i in seq_along(spanners_lengths$lengths)) {
+    for (i in seq_along(spanners_rle$lengths)) {
 
-      if (spanners_lengths$lengths[i] > 1) {
-
-        if (length(multicol) > 0 &&
-            grepl("\\\\multicolumn", multicol[length(multicol)])) {
-          multicol <- c(multicol, "& ")
-        }
+      if (spanners_rle$lengths[i] > 1) {
 
         multicol <-
           c(multicol,
             paste0(
-              "\\multicolumn{", spanners_lengths$lengths[i],
+              "\\multicolumn{", spanners_rle$lengths[i],
               "}{c}{",
-              spanners[i],
-              "} "))
+              spanners_rle$labels[i],
+              "}"
+              )
+            )
 
         cmidrule <-
           c(cmidrule,
             paste0(
               "\\cmidrule(lr){",
-              sum(spanners_lengths$lengths[1:i]) - spanners_lengths$lengths[i] + 1,
+              sum(spanners_rle$lengths[1:i]) - spanners_rle$lengths[i] + 1,
               "-",
-              sum(spanners_lengths$lengths[1:i]),
-              "}"))
+              sum(spanners_rle$lengths[1:i]),
+              "}"
+              )
+            )
 
       } else {
-        multicol <- c(multicol, "& ")
-      }
 
+        if (is.na(spanners_rle$values[i])) {
+          multicol <- c(multicol, "")
+        }
+
+        if (!is.na(spanners_rle$values[i])) {
+
+          multicol <- c(multicol, spanners_rle$labels[i])
+
+          dist_out <- sum(spanners_rle$lengths[1:i])
+
+          cmidrule <-
+            c(cmidrule, paste0("\\cmidrule(lr){", dist_out, "-", dist_out, "}"))
+        }
+      }
     }
 
-    multicol <- paste0(paste(multicol, collapse = ""), "\\\\ \n")
-    cmidrule <- paste0(paste(cmidrule, collapse = ""), "\n")
+    multicol <- paste0(paste(multicol, collapse = " & "), " \\\\ \n")
+    cmidrule <- paste0(paste(cmidrule, collapse = " "), "\n")
 
     table_col_spanners <- paste(multicol, cmidrule, collapse = "")
 
   } else {
-
     table_col_spanners <- ""
   }
 
@@ -230,15 +327,16 @@ create_body_component_l <- function(data) {
   group_rows <- create_group_rows(n_rows, groups_rows_df, context = "latex")
 
   if (stub_available) {
+
     default_vars <- c("::rowname", default_vars)
 
     body <-
       dt_stub_df_get(data = data) %>%
       dplyr::select(rowname) %>%
+      dplyr::mutate(rowname = process_text(rowname, context = "latex")) %>%
       dplyr::rename(`::rowname` = rowname) %>%
       cbind(body)
   }
-
 
   # Split `body_content` by slices of rows and create data rows
   body_content <- as.vector(t(body[, default_vars]))

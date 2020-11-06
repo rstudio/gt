@@ -30,7 +30,8 @@ test_that("a gt table contains the expected heading components", {
     paste0(
       ".*.large test title",
       ".*.small test subtitle",
-      ".*"),
+      ".*"
+    ),
     tbl_latex %>% as_latex() %>% as.character()
   ) %>%
     expect_true()
@@ -49,8 +50,8 @@ test_that("a gt table contains the expected stubhead label", {
     paste0(
       ".*the mtcars & mpg & cyl & disp & hp & drat & wt & qsec & vs & am & gear & carb",
       ".*"),
-    tbl_latex %>%
-      as_latex() %>% as.character()) %>%
+    tbl_latex %>% as_latex() %>% as.character()
+  ) %>%
     expect_true()
 })
 
@@ -63,7 +64,8 @@ test_that("a gt table contains the expected column spanner labels", {
     gt(data = rock) %>%
     tab_spanner(
       label = "perimeter",
-      columns = c("peri", "shape"))
+      columns = c("peri", "shape")
+    )
 
   # Expect a characteristic pattern
   grepl(
@@ -72,8 +74,8 @@ test_that("a gt table contains the expected column spanner labels", {
       ".* .cmidrule\\(lr\\)\\{2-3\\}",
       ".*area & peri & shape & perm ",
       ".*"),
-    tbl_latex %>%
-      as_latex() %>% as.character()) %>%
+    tbl_latex %>% as_latex() %>% as.character()
+  ) %>%
     expect_true()
 
   # Create a `tbl_latex` object with `gt()`; this table
@@ -84,7 +86,8 @@ test_that("a gt table contains the expected column spanner labels", {
     gt(data = rock) %>%
     tab_spanner(
       label = "perimeter",
-      columns = vars(peri, shape))
+      columns = vars(peri, shape)
+    )
 
   # Expect a characteristic pattern
   grepl(
@@ -93,8 +96,8 @@ test_that("a gt table contains the expected column spanner labels", {
       ".* .cmidrule\\(lr\\)\\{2-3\\}",
       ".*area & peri & shape & perm ",
       ".*"),
-    tbl_latex %>%
-      as_latex() %>% as.character()) %>%
+    tbl_latex %>% as_latex() %>% as.character()
+  ) %>%
     expect_true()
 
   # Expect an error when using column labels
@@ -105,6 +108,101 @@ test_that("a gt table contains the expected column spanner labels", {
         label = "perimeter",
         columns = vars(peris, shapes))
   )
+
+  # TODO: This renders incorrectly, where the spanner column labels
+  # are off by 1 (shifted to the left)
+  # TODO: Add test for this
+  tbl_latex <-
+    dplyr::tribble(
+      ~v_1, ~v_2, ~v_3, ~v_4, ~v_5,
+      20.4, 36.1, 34.2, 21.6, 23.1,
+      25.8, 14.3, 13.7, 12.9, 75.9,
+      16.3, 34.3, 15.1, 93.2, 12.1
+    ) %>%
+    gt() %>%
+    tab_spanner(
+      label = "v_1_2",
+      columns =  c("v_1", "v_2")
+    ) %>%
+    tab_spanner(
+      label = "v_4_5",
+      columns = c("v_4", "v_5")
+    ) %>%
+    cols_move_to_start(columns = "v_3")
+
+  # Expect a characteristic pattern
+  # grepl(
+  #   paste0(
+  #
+  #   ),
+  #   tbl_latex %>% as_latex() %>% as.character()
+  # ) %>%
+  #   expect_true()
+
+  # Create a `tbl_latex` object that doesn't gather columns under their
+  # respective spanner column labels; also, while the labels are all the same
+  # the footnote (1) gets attached to the label in the first and third
+  # positions
+  tbl_latex <-
+    gt(dplyr::tibble(A_X = c(1), B_X = c(2), A_Y = c(3), B_Y = c(4))) %>%
+    tab_spanner(label = "A", id = "y", columns = starts_with("A"), gather = FALSE) %>%
+    tab_spanner(label = "A", id = "z", columns = starts_with("B"), gather = FALSE) %>%
+    tab_footnote(footnote = "note", locations = cells_column_spanners("y"))
+
+  # Expect a characteristic pattern
+  grepl(
+    paste0(
+      "A.textsuperscript\\{1\\} & A & A.textsuperscript\\{1\\} & A.*",
+      ".cmidrule\\(lr\\)\\{1-1\\} .cmidrule\\(lr\\)\\{2-2\\}.*",
+      ".cmidrule\\(lr\\)\\{3-3\\} .cmidrule\\(lr\\)\\{4-4\\}.*",
+      "A\\\\_X & B\\\\_X & A\\\\_Y & B\\\\_Y.*",
+      "1 & 2 & 3 & 4.*"
+    ),
+    tbl_latex %>% as_latex() %>% as.character()
+  ) %>%
+    expect_true()
+
+  # TODO: this is wrong, the superscript (1) is applied to the two *different*
+  # spanner labels (so, glyph attachment is occurring by label and not ID)
+  tbl_latex <-
+    gt(dplyr::tibble(A_X = c(1), B_X = c(2), A_Y = c(3), B_Y = c(4))) %>%
+    tab_spanner(label = "A", id = "y", columns = starts_with("A"), gather = TRUE) %>%
+    tab_spanner(label = "A", id = "z", columns = starts_with("B")) %>%
+    tab_footnote(footnote = "note", locations = cells_column_spanners("y"))
+
+  # Expect a characteristic pattern
+  grepl(
+    paste0(
+      ".multicolumn\\{2\\}\\{c\\}\\{A.textsuperscript\\{1\\}\\} &.*",
+      ".multicolumn\\{2\\}\\{c\\}\\{A}.*",
+      ".cmidrule\\(lr\\)\\{1-2\\} .cmidrule\\(lr\\)\\{3-4\\}.*",
+      "A\\\\_X & A\\\\_Y & B\\\\_X & B\\\\_Y.*",
+      "1 & 3 & 2 & 4.*"
+    ),
+    tbl_latex %>% as_latex() %>% as.character()
+  ) %>%
+    expect_true()
+
+  # Create a `tbl_latex` object that uses `tab_spanner_delim()`
+  # on a subset of columns; the single spanner column label is
+  # associated to the first two columns, all others have no spanners
+  tbl_latex <-
+    gt(iris[1, ]) %>%
+    tab_spanner_delim(
+      delim = ".",
+      columns = c("Sepal.Length", "Sepal.Width")
+    )
+
+  # Expect a characteristic pattern
+  grepl(
+    paste0(
+      ".multicolumn\\{2\\}\\{c\\}\\{Sepal\\}.*",
+      ".cmidrule\\(lr\\)\\{1-2\\}.*",
+      "Length & Width & Petal.Length & Petal.Width & Species.*"
+    ),
+    tbl_latex %>% as_latex() %>% as.character()
+  ) %>%
+    expect_true()
 })
 
 # test_that("a gt table contains the expected source note", {
@@ -114,18 +212,19 @@ test_that("a gt table contains the expected column spanner labels", {
   tbl_latex <-
     gt(mtcars_short) %>%
     tab_source_note(
-      source_note = md("*Henderson and Velleman* (1981)."))
+      source_note = md("*Henderson and Velleman* (1981).")
+    )
 
   # Expect a characteristic pattern
-  # grepl(
-  #   paste0(
-  #     ".*begin\\{minipage\\}",
-  #     ".*emph\\{Henderson and Velleman\\} \\(1981\\)\\.",
-  #     ".*end\\{minipage\\}",
-  #     ".*"),
-  #   tbl_latex %>%
-  #     as_latex() %>% as.character()) %>%
-  #   expect_true()
+  grepl(
+    paste0(
+      ".*begin\\{minipage\\}",
+      ".*emph\\{Henderson and Velleman\\} \\(1981\\)\\.",
+      ".*end\\{minipage\\}",
+      ".*"),
+    tbl_latex %>% as_latex() %>% as.character()
+  ) %>%
+    expect_true()
 
   # Add another source note to the `gt_tbl` object
   # Create a `tbl_latex` object with `gt()`; this table
@@ -133,9 +232,11 @@ test_that("a gt table contains the expected column spanner labels", {
   tbl_latex <-
     gt(mtcars_short) %>%
     tab_source_note(
-      source_note = md("*Henderson and Velleman* (1981).")) %>%
+      source_note = md("*Henderson and Velleman* (1981).")
+    ) %>%
     tab_source_note(
-      source_note = "This was in Motor Trend magazine, hence the `mt`.")
+      source_note = "This was in Motor Trend magazine, hence the `mt`."
+    )
 
   # Expect a characteristic pattern
   # grepl(
@@ -145,8 +246,8 @@ test_that("a gt table contains the expected column spanner labels", {
   #     ".*This was in Motor Trend magazine, hence the `mt`.",
   #     ".*end\\{minipage\\}",
   #     ".*"),
-  #   tbl_latex %>%
-  #     as_latex() %>% as.character()) %>%
+  #   tbl_latex %>% as_latex() %>% as.character()
+  # ) %>%
   #   expect_true()
 # })
 

@@ -14,12 +14,12 @@ test_that("the `tab_spanner_delim()` function works correctly", {
   # Expect a characteristic pattern
   grepl(
     paste0(
-      ".*multicolumn\\{2\\}\\{c\\}\\{Sepal\\}.*multicolumn\\{2\\}\\{c\\}\\{Sepal\\}",
+      ".*multicolumn\\{2\\}\\{c\\}\\{Sepal\\}.*multicolumn\\{2\\}\\{c\\}\\{Petal\\}",
       ".*cmidrule\\(lr\\)\\{1-2\\}.*cmidrule\\(lr\\)\\{3-4\\}",
       ".*Length & Width & Length & Width & Species.*"
       ),
-    tbl_latex %>%
-      as_latex() %>% as.character()) %>%
+    tbl_latex %>% as_latex() %>% as.character()
+  ) %>%
     expect_true()
 
   # Create a `tbl_latex` object with `gt()`; split the column
@@ -35,11 +35,11 @@ test_that("the `tab_spanner_delim()` function works correctly", {
   # Expect a characteristic pattern
   grepl(
     paste0(
-      ".*multicolumn\\{2\\}\\{c\\}\\{Sepal\\} & & &",
-      ".*cmidrule\\(lr\\)\\{1-2\\}",
-      ".*Length & Width & Petal.Length & Petal.Width & Species.*"),
-    tbl_latex %>%
-      as_latex() %>% as.character()) %>%
+      ".*multicolumn\\{2\\}\\{c\\}\\{Sepal\\} &  &  &  .*",
+      ".cmidrule\\(lr\\)\\{1-2\\}.*",
+      "Length & Width & Petal.Length & Petal.Width & Species.*"),
+    tbl_latex %>% as_latex() %>% as.character()
+  ) %>%
     expect_true()
 
   # Create a `tbl_latex` object with `gt()`; split the column
@@ -56,10 +56,10 @@ test_that("the `tab_spanner_delim()` function works correctly", {
   # Expect a characteristic pattern
   grepl(
     paste0(
-      ".*multicolumn\\{2\\}\\{c\\}\\{Sepal\\} & & &",
-      ".*cmidrule\\(lr\\)\\{1-2\\}",
-      ".*Length & Width & Petal.Length & Petal.Width & Species.*"),
-    tbl_latex %>%
-      as_latex() %>% as.character()) %>%
+      ".*multicolumn\\{2\\}\\{c\\}\\{Sepal\\} &  &  &  .*",
+      ".cmidrule\\(lr\\)\\{1-2\\}.*",
+      "Length & Width & Petal.Length & Petal.Width & Species.*"),
+    tbl_latex %>% as_latex() %>% as.character()
+  ) %>%
     expect_true()
 })
