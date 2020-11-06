@@ -12,12 +12,12 @@ test_that("a gt table contains the expected heading components", {
     tab_header(title = "test title")
 
   # Expect a characteristic pattern
-  # grepl(
-  #   "\\caption*{\n\\large test title\\\\ \n} \\\\ \n\\toprule",
-  #   tbl_latex %>% as_latex() %>% as.character(),
-  #   fixed = TRUE
-  # ) %>%
-  #   expect_true()
+  grepl(
+    "\\caption*{\n\\large test title\\\\ \n} \\\\ \n\\toprule",
+    tbl_latex %>% as_latex() %>% as.character(),
+    fixed = TRUE
+  ) %>%
+    expect_true()
 
   # Create a `tbl_latex` object with `gt()`; this table
   # contains a title and a subtitle
@@ -106,12 +106,12 @@ test_that("a gt table contains the expected column spanner labels", {
     gt(data = rock) %>%
       tab_spanner(
         label = "perimeter",
-        columns = vars(peris, shapes))
+        columns = vars(peris, shapes)
+      )
   )
 
-  # TODO: This renders incorrectly, where the spanner column labels
-  # are off by 1 (shifted to the left)
-  # TODO: Add test for this
+  # Create a `tbl_latex` object where the first column doesn't have a
+  # spanner but the two pairs of columns after that have a spanner each
   tbl_latex <-
     dplyr::tribble(
       ~v_1, ~v_2, ~v_3, ~v_4, ~v_5,
@@ -131,13 +131,15 @@ test_that("a gt table contains the expected column spanner labels", {
     cols_move_to_start(columns = "v_3")
 
   # Expect a characteristic pattern
-  # grepl(
-  #   paste0(
-  #
-  #   ),
-  #   tbl_latex %>% as_latex() %>% as.character()
-  # ) %>%
-  #   expect_true()
+  grepl(
+    paste0(
+      ".*& .multicolumn\\{2\\}\\{c\\}\\{v._1._2\\} & .multicolumn\\{2\\}\\{c\\}\\{v._4._5\\}.*",
+      ".cmidrule\\(lr\\)\\{2-3\\} .cmidrule\\(lr\\)\\{4-5\\}.*",
+      "v._3 & v._1 & v._2 & v._4 & v._5.*"
+    ),
+    tbl_latex %>% as_latex() %>% as.character()
+  ) %>%
+    expect_true()
 
   # Create a `tbl_latex` object that doesn't gather columns under their
   # respective spanner column labels; also, while the labels are all the same
@@ -162,8 +164,9 @@ test_that("a gt table contains the expected column spanner labels", {
   ) %>%
     expect_true()
 
-  # TODO: this is wrong, the superscript (1) is applied to the two *different*
-  # spanner labels (so, glyph attachment is occurring by label and not ID)
+  # Create a `tbl_latex` object with spanners with different IDs
+  # but the same label; the spanner with ID `y` gathers columns beginning
+  # with "A", and, that spanner gets a footnote as well
   tbl_latex <-
     gt(dplyr::tibble(A_X = c(1), B_X = c(2), A_Y = c(3), B_Y = c(4))) %>%
     tab_spanner(label = "A", id = "y", columns = starts_with("A"), gather = TRUE) %>%
@@ -277,8 +280,8 @@ test_that("a gt table contains the correct placement of row groups", {
       ".*.multicolumn\\{1\\}\\{l\\}\\{.vspace\\*\\{-5mm\\}\\}",
       ".*.midrule",
       ".*"),
-    tbl_latex %>%
-      as_latex() %>% as.character()) %>%
+    tbl_latex %>% as_latex() %>% as.character()
+  ) %>%
     expect_true()
 
   # Create a `tbl_latex` object with `gt()`; this table
@@ -310,7 +313,7 @@ test_that("a gt table contains the correct placement of row groups", {
       ".*.multicolumn\\{1\\}\\{l\\}\\{Mercs\\}",
       ".*.midrule",
       ".*"),
-    tbl_latex %>%
-      as_latex() %>% as.character()) %>%
+    tbl_latex %>% as_latex() %>% as.character()
+  ) %>%
     expect_true()
 })
