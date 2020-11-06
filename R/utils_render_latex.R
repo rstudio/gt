@@ -111,76 +111,6 @@ create_columns_component_l <- function(data) {
   table_col_headings <-
     paste0(latex_heading_row(content = headings_labels), collapse = "")
 
-  # Recently updated but incorrect implementation
-  # if (spanners_present) {
-  #
-  #   spanners <- dt_spanners_print(data = data, include_hidden = FALSE)
-  #   spanner_ids <- dt_spanners_print(data = data, include_hidden = FALSE, ids = TRUE)
-  #
-  #   # Promote column labels to the group level wherever the
-  #   # spanner label is NA
-  #   spanners[is.na(spanners)] <- headings_vars[is.na(spanners)]
-  #
-  #   if (stub_available) {
-  #     spanners <- c(NA_character_, spanners)
-  #   }
-  #
-  #   # Use the `rle()` function to get a list of column span
-  #   # values for each of the spanner column labels (.$lengths)
-  #   # and the associated spanner ID values (.$values)
-  #   spanners_lengths <- unclass(rle(spanner_ids))
-  #
-  #   multicol <- c()
-  #   cmidrule <- c()
-  #
-  #   for (i in seq_along(spanners_lengths$lengths)) {
-  #
-  #     if (length(multicol) > 0) {
-  #       multicol <- c(multicol, "& ")
-  #     }
-  #
-  #     # If an NA is associated with spanner ID (these are
-  #     # in `spanners_lengths$values`) then do not create
-  #     # a spanner label or the associated line
-  #     if (is.na(spanners_lengths$values[i])) next
-  #
-  #     if (spanners_lengths$lengths[i] > 1) {
-  #
-  #       multicol <-
-  #         c(multicol,
-  #           paste0(
-  #             "\\multicolumn{", spanners_lengths$lengths[i],
-  #             "}{c}{",
-  #             spanners[i],
-  #             "} "))
-  #
-  #     } else {
-  #       multicol <- c(multicol, spanners[i], " ")
-  #     }
-  #
-  #     cmidrule <-
-  #       c(cmidrule,
-  #         paste0(
-  #           "\\cmidrule(lr){",
-  #           sum(spanners_lengths$lengths[seq_len(i-1)]) + 1,
-  #           "-",
-  #           sum(spanners_lengths$lengths[seq_len(i)]),
-  #           "}"))
-  #   }
-  #
-  #   multicol <- paste0(paste(multicol, collapse = ""), "\\\\ \n")
-  #
-  #   if (length(cmidrule > 0)) {
-  #     cmidrule <- paste0(paste(cmidrule, collapse = ""), "\n")
-  #   }
-  #
-  #   table_col_spanners <- paste(multicol, cmidrule, collapse = "")
-  #
-  # } else {
-  #
-  #   table_col_spanners <- ""
-  # }
-
   if (spanners_present) {
 
     # Get vector of group labels (spanners)
@@ -198,51 +128,23 @@ create_columns_component_l <- function(data) {
     # be part of the `spanners_rle` list
     spanners_rle$labels <- spanners[cumsum(spanners_rle$lengths)]
 
-    multicol <- c()
-    cmidrule <- c()
+    begins <- (cumsum(head(c(0, spanners_rle$lengths), -1)) + 1)[!is.na(spanners_rle$values)]
+    ends <- cumsum(spanners_rle$lengths)[!is.na(spanners_rle$values)]
+    cmidrule <- paste0("\\cmidrule(lr){", begins, "-", ends, "}")
 
-    for (i in seq_along(spanners_rle$lengths)) {
+    is_spanner_na <- is.na(spanners_rle$values)
+    is_spanner_single <- spanners_rle$lengths == 1
 
-      if (spanners_rle$lengths[i] > 1) {
-
-        multicol <-
-          c(multicol,
-            paste0(
-              "\\multicolumn{", spanners_rle$lengths[i],
-              "}{c}{",
-              spanners_rle$labels[i],
-              "}"
-              )
-            )
-
-        cmidrule <-
-          c(cmidrule,
-            paste0(
-              "\\cmidrule(lr){",
-              sum(spanners_rle$lengths[1:i]) - spanners_rle$lengths[i] + 1,
-              "-",
-              sum(spanners_rle$lengths[1:i]),
-              "}"
-              )
-            )
-
-      } else {
-
-        if (is.na(spanners_rle$values[i])) {
-          multicol <- c(multicol, "")
-        }
-
-        if (!is.na(spanners_rle$values[i])) {
-
-          multicol <- c(multicol, spanners_rle$labels[i])
-
-          dist_out <- sum(spanners_rle$lengths[1:i])
-
-          cmidrule <-
-            c(cmidrule, paste0("\\cmidrule(lr){", dist_out, "-", dist_out, "}"))
-        }
-      }
-    }
+    multicol <-
+      ifelse(
+        is_spanner_na, "",
+        ifelse(
+          is_spanner_single, spanners_rle$labels,
+          sprintf(
+            "\\multicolumn{%d}{c}{%s}", spanners_rle$lengths, spanners_rle$labels
+          )
+        )
+      )
 
     multicol <- paste0(paste(multicol, collapse = " & "), " \\\\ \n")
     cmidrule <- paste0(paste(cmidrule, collapse = " "), "\n")
