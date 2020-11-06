@@ -1,5 +1,7 @@
 test_that("a gt table contains the expected column spanner labels", {
 
+  skip_on_ci()
+
   # Create a `tbl_rtf` object with `gt()`; this table
   # contains the spanner heading `perimeter` over the
   # `peri` and `shape` column labels
@@ -133,7 +135,7 @@ test_that("a gt table contains the expected column spanner labels", {
       ".intbl \\{.f0 \\{.f0.fs20 \\}\\}.cell.*",
       ".intbl \\{.f0 \\{.f0.fs20 \\}\\}.cell.*",
       ".row.*",
-      ".*Length.*Width.*Petal.Length.*Petal.Width.*Species",
+      ".*Length.*Width.*Petal.*Length.*Petal.*Width.*Species",
       ".*"
     ),
     tbl_rtf %>% as_rtf() %>% as.character()
