@@ -162,6 +162,8 @@ reference:
     - opt_all_caps
     - opt_table_lines
     - opt_table_outline
+    - opt_table_font
+    - opt_css
 
   - title: Information Functions
     desc: >

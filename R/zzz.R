@@ -113,6 +113,8 @@ globalVariables(
 #'   \item `gt.row_group.sep`: a separator between groups for the row group
 #'   label.
 #' }
+#'
+#' @keywords internal
 #' @name gt-options
 NULL
 

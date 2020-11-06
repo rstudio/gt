@@ -14,3 +14,4 @@ cells_data(columns = TRUE, rows = TRUE)
 \description{
 Location helper for targeting data cells in the table body (deprecated)
 }
+\keyword{internal}
