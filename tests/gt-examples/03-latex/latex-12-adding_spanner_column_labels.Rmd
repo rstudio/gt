@@ -26,6 +26,21 @@ tbl <-
 
 
 ```{r}
+tbl %>%
+  gt() %>%
+  tab_spanner(
+    label = "v_1_2",
+    columns =  c("v_1", "v_2")
+  ) %>%
+  tab_spanner(
+    label = "v_4_5",
+    columns = c("v_4", "v_5")
+  ) %>%
+  cols_move_to_start(columns = "v_3")
+```
+
+
+```{r}
 exibble %>%
   gt(groupname_col = "group", rowname_col = "row") %>%
   tab_spanner(label = "a", columns = 1) %>%
@@ -43,21 +58,6 @@ exibble %>%
   gt(groupname_col = "group", rowname_col = "row") %>%
   tab_spanner(label = "spanner_1", columns = vars(char, fctr, date)) %>%
   tab_spanner(label = "spanner_2", columns = vars(datetime))
-```
-
-
-```{r}
-tbl %>%
-  gt() %>%
-  tab_spanner(
-    label = "v_1_2",
-    columns =  c("v_1", "v_2")
-  ) %>%
-  tab_spanner(
-    label = "v_4_5",
-    columns = c("v_4", "v_5")
-  ) %>%
-  cols_move_to_start(columns = "v_3")
 ```
 
 
