@@ -192,25 +192,11 @@ create_columns_component_l <- function(data) {
       spanner_ids <- c(NA_character_, spanner_ids)
     }
 
-    # Promote column labels to the group level wherever the
-    # spanner label is NA
-    spanners[is.na(spanners)] <- headings_vars[is.na(spanners)]
-
     spanners_rle <- unclass(rle(spanner_ids))
 
     # We need a parallel vector of spanner labels and this could
     # be part of the `spanners_rle` list
-    spanners_rle$labels <-
-      vapply(
-        spanners_rle$values,
-        FUN.VALUE = character(1),
-        USE.NAMES = FALSE,
-        FUN = function(x) {
-          if (is.na(x)) return(NA_character_)
-          stats::na.omit(unique(dt_spanners_print(data = data, include_hidden = FALSE)))[
-            stats::na.omit(unique(spanner_ids)) == x]
-        }
-      )
+    spanners_rle$labels <- spanners[cumsum(spanners_rle$lengths)]
 
     multicol <- c()
     cmidrule <- c()
