@@ -159,6 +159,7 @@ pages:
 **huxtable** ([GITHUB](https://github.com/hughjonesd/huxtable), [WEBSITE](https://hughjonesd.github.io/huxtable/)) —
 **reactable** ([GITHUB](https://github.com/glin/reactable), [WEBSITE](https://glin.github.io/reactable/)) —
 **flextable** ([GITHUB](https://github.com/davidgohel/flextable), [WEBSITE](https://davidgohel.github.io/flextable/)) —
+**ftextra** ([GITHUB](https://github.com/atusy/ftExtra), [WEBSITE](https://ftextra.atusy.net/)) —
 **pixiedust** ([GITHUB](https://github.com/nutterb/pixiedust)) —
 **tangram** ([GITHUB](https://github.com/spgarbet/tangram)) —
 **ztable** ([GITHUB](https://github.com/cardiomoon/ztable)) —
