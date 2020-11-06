@@ -128,7 +128,7 @@ create_columns_component_l <- function(data) {
     # be part of the `spanners_rle` list
     spanners_rle$labels <- spanners[cumsum(spanners_rle$lengths)]
 
-    begins <- (cumsum(head(c(0, spanners_rle$lengths), -1)) + 1)[!is.na(spanners_rle$values)]
+    begins <- (cumsum(utils::head(c(0, spanners_rle$lengths), -1)) + 1)[!is.na(spanners_rle$values)]
     ends <- cumsum(spanners_rle$lengths)[!is.na(spanners_rle$values)]
     cmidrule <- paste0("\\cmidrule(lr){", begins, "-", ends, "}")
 
