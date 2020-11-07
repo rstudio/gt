@@ -12,3 +12,4 @@ cells_group(groups = TRUE)
 \description{
 Location helper for targeting row groups (deprecated)
 }
+\keyword{internal}

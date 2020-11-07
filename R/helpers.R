@@ -602,6 +602,7 @@ cells_row_groups <- function(groups = TRUE) {
 #'
 #' @inheritParams cells_row_groups
 #'
+#' @keywords internal
 #' @export
 cells_group <- function(groups = TRUE) {
 
@@ -792,6 +793,7 @@ cells_body <- function(columns = TRUE,
 #'
 #' @inheritParams cells_body
 #'
+#' @keywords internal
 #' @export
 cells_data <- function(columns = TRUE,
                        rows = TRUE) {
