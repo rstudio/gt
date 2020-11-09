@@ -58,6 +58,7 @@ globalVariables(
     "grpname",
     "grprow",
     "integrate_summary_lines",
+    "label",
     "locname",
     "locnum",
     "missing_text",

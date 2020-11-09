@@ -21,6 +21,7 @@ data <-
   ) %>%
   tab_spanner(
     label = "gear_carb_cyl",
+    id = "gcc",
     columns = vars(gear, carb, cyl)
   ) %>%
   row_group_order(groups = c("Mazdas", "Mercs")) %>%
@@ -57,8 +58,16 @@ data_2 <-
   dplyr::ungroup() %>%
   dplyr::select(mfr, model, drivetrain, msrp) %>%
   gt() %>%
-  tab_spanner(label = "make and model", columns = vars(mfr, model)) %>%
-  tab_spanner(label = "specs and pricing", columns = vars(drivetrain, msrp)) %>%
+  tab_spanner(
+    label = "make and model",
+    id = "mm",
+    columns = vars(mfr, model)
+  ) %>%
+  tab_spanner(
+    label = "specs and pricing",
+    id = "sp",
+    columns = vars(drivetrain, msrp)
+  ) %>%
   tab_footnote(
     footnote = "Prices in USD.",
     locations = cells_column_labels(columns = vars(msrp))
@@ -69,11 +78,11 @@ data_2 <-
   ) %>%
   tab_footnote(
     footnote = "The most important details.",
-    locations = cells_column_spanners(spanners = "specs and pricing")
+    locations = cells_column_spanners(spanners = "sp")
   ) %>%
   tab_footnote(
     footnote = "German cars only.",
-    locations = cells_column_spanners(spanners = "make and model")
+    locations = cells_column_spanners(spanners = "mm")
   )
 
 # Create a table from `gtcars` that has footnotes
@@ -453,7 +462,7 @@ test_that("the `tab_footnote()` function works correctly", {
     data %>%
     tab_footnote(
       footnote = "Column group footnote.",
-      locations = cells_column_spanners(spanners = "gear_carb_cyl")
+      locations = cells_column_spanners(spanners = "gcc")
     )
 
   # Expect that the internal `footnotes_df` data frame will have
@@ -468,7 +477,7 @@ test_that("the `tab_footnote()` function works correctly", {
     unlist() %>%
     unname() %>%
     expect_equal(
-      c("columns_groups", "gear_carb_cyl", NA_character_, "3", NA_character_,
+      c("columns_groups", "gcc", NA_character_, "3", NA_character_,
         NA_character_, "Column group footnote.")
     )
 

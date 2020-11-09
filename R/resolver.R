@@ -130,7 +130,6 @@ resolve_cells_column_spanners <- function(data,
   #
   # Resolution of spanners as column spanner names
   #
-
   spanner_labels <-
     dt_spanners_get(data = data) %>%
     .$spanner_label %>%
@@ -138,14 +137,19 @@ resolve_cells_column_spanners <- function(data,
     .[!is.na(.)] %>%
     unique()
 
+  spanner_ids <-
+    dt_spanners_get(data = data) %>%
+    .$spanner_id %>%
+    .[!is.na(.)]
+
   resolved_spanners_idx <-
     resolve_data_vals_idx(
       var_expr = !!object$spanners,
       data_tbl = NULL,
-      vals = spanner_labels
+      vals = spanner_ids
     )
 
-  resolved_spanners <- spanner_labels[resolved_spanners_idx]
+  resolved_spanners <- spanner_ids[resolved_spanners_idx]
 
   # Create a list object
   cells_resolved <- list(spanners = resolved_spanners)

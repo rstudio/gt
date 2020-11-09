@@ -78,7 +78,7 @@ expect_tab <- function(tab,
 
   dt_spanners_get(data = tab) %>%
     dim() %>%
-    expect_equal(c(0, 4))
+    expect_equal(c(0, 5))
 
   dt_stubhead_get(data = tab) %>%
     length() %>%

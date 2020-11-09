@@ -472,9 +472,10 @@ create_columns_component_h <- function(data) {
     table_col_headings <- htmltools::tags$tr(table_col_headings)
   }
 
-  if (isTRUE(spanners_present)) {
+  if (spanners_present) {
 
     spanners <- dt_spanners_print(data = data, include_hidden = FALSE)
+    spanner_ids <- dt_spanners_print(data = data, include_hidden = FALSE, ids = TRUE)
 
     # A list of <th> elements that will go in the top row. This includes
     # spanner labels and column labels for solo columns (don't have spanner
@@ -485,7 +486,7 @@ create_columns_component_h <- function(data) {
     second_set <- list()
 
     # Create the cell for the stubhead label
-    if (isTRUE(stub_available)) {
+    if (stub_available) {
 
       stubhead_style <-
         if (nrow(stubhead_style_attrs) > 0) {
@@ -515,7 +516,7 @@ create_columns_component_h <- function(data) {
 
     # NOTE: rle treats NA values as distinct from each other; in other words,
     # each NA value starts a new run of length 1.
-    spanners_rle <- rle(spanners)
+    spanners_rle <- rle(spanner_ids)
     # sig_cells contains the indices of spanners' elements where the value is
     # either NA, or, is different than the previous value. (Because NAs are
     # distinct, every NA element will be present sig_cells.)
@@ -526,13 +527,13 @@ create_columns_component_h <- function(data) {
     colspans <- ifelse(
       seq_along(spanners) %in% sig_cells,
       # Index back into the rle result, working backward through sig_cells
-      spanners_rle$lengths[match(seq_along(spanners), sig_cells)],
+      spanners_rle$lengths[match(seq_along(spanner_ids), sig_cells)],
       0
     )
 
     for (i in seq(headings_vars)) {
 
-      if (is.na(spanners[i])) {
+      if (is.na(spanner_ids[i])) {
 
         styles_heading <-
           dplyr::filter(
@@ -566,7 +567,7 @@ create_columns_component_h <- function(data) {
             htmltools::HTML(headings_labels[i])
           )
 
-      } else if (!is.na(spanners[i])) {
+      } else if (!is.na(spanner_ids[i])) {
 
         # If colspans[i] == 0, it means that a previous cell's colspan
         # will cover us.
@@ -577,7 +578,7 @@ create_columns_component_h <- function(data) {
             dplyr::filter(
               spanner_style_attrs,
               locname == "columns_groups",
-              grpname == spanners[i]
+              grpname == spanner_ids[i]
             )
 
           spanner_style <-
@@ -609,7 +610,7 @@ create_columns_component_h <- function(data) {
       }
     }
 
-    solo_headings <- headings_vars[is.na(spanners)]
+    solo_headings <- headings_vars[is.na(spanner_ids)]
     remaining_headings <- headings_vars[!(headings_vars %in% solo_headings)]
 
     remaining_headings_indices <- which(remaining_headings %in% headings_vars)
