@@ -166,8 +166,9 @@ input table data (which are unique by necessity).</p>
       <th>delim</th>
       <td><p>The delimiter to use to split an input column name. The
 delimiter supplied will be autoescaped for the internal splitting
-procedure. The first component of the split will become the group name and
-the second component will be the column label.</p></td>
+procedure. The first component of the split will become the spanner column
+label (and its ID value, used for styling or for the addition of footnotes
+in those locations) and the second component will be the column label.</p></td>
     </tr>
     <tr>
       <th>columns</th>
@@ -178,7 +179,7 @@ be limited to. The default is to consider all columns in the table.</p></td>
       <th>gather</th>
       <td><p>An option to move the specified <code>columns</code> such that they are
 unified under the spanner column label. Ordering of the moved-into-place
-columns will be preserved in all cases.</p></td>
+columns will be preserved in all cases. By default, this is set to <code>TRUE</code>.</p></td>
     </tr>
     </table>
 

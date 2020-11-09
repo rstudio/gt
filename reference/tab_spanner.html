@@ -149,7 +149,7 @@ This label is placed above one or more column labels, spanning the width of
 those columns and column labels.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tab_spanner</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>label</span>, <span class='va'>columns</span>, gather <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>tab_spanner</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>label</span>, <span class='va'>columns</span>, id <span class='op'>=</span> <span class='va'>label</span>, gather <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -167,10 +167,23 @@ those columns and column labels.</p>
       <td><p>The columns to be components of the spanner heading.</p></td>
     </tr>
     <tr>
+      <th>id</th>
+      <td><p>The ID for the spanner column label. When accessing a spanner
+column label through <code><a href='cells_column_spanners.html'>cells_column_spanners()</a></code> (when using <code><a href='tab_style.html'>tab_style()</a></code> or
+<code><a href='tab_footnote.html'>tab_footnote()</a></code>) the <code>id</code> value is used as the reference (and not the
+<code>label</code>). If an <code>id</code> is not explicitly provided here, it will be taken from
+the <code>label</code> value. It is advisable to set an explicit <code>id</code> value if you
+plan to access this cell in a later function call and the label text is
+complicated (e.g., contains markup, is lengthy, or both). Finally, when
+providing an <code>id</code> value you must ensure that it is unique across all ID
+values set for column spanner labels (the function will stop if <code>id</code> isn't
+unique).</p></td>
+    </tr>
+    <tr>
       <th>gather</th>
       <td><p>An option to move the specified <code>columns</code> such that they are
 unified under the spanner column label. Ordering of the moved-into-place
-columns will be preserved in all cases.</p></td>
+columns will be preserved in all cases. By default, this is set to <code>TRUE</code>.</p></td>
     </tr>
     </table>
 
