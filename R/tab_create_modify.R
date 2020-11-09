@@ -59,9 +59,19 @@ tab_header <- function(data,
 #' @inheritParams fmt_number
 #' @param label The text to use for the spanner column label.
 #' @param columns The columns to be components of the spanner heading.
+#' @param id The ID for the spanner column label. When accessing a spanner
+#'   column label through [cells_column_spanners()] (when using [tab_style()] or
+#'   [tab_footnote()]) the `id` value is used as the reference (and not the
+#'   `label`). If an `id` is not explicitly provided here, it will be taken from
+#'   the `label` value. It is advisable to set an explicit `id` value if you
+#'   plan to access this cell in a later function call and the label text is
+#'   complicated (e.g., contains markup, is lengthy, or both). Finally, when
+#'   providing an `id` value you must ensure that it is unique across all ID
+#'   values set for column spanner labels (the function will stop if `id` isn't
+#'   unique).
 #' @param gather An option to move the specified `columns` such that they are
 #'   unified under the spanner column label. Ordering of the moved-into-place
-#'   columns will be preserved in all cases.
+#'   columns will be preserved in all cases. By default, this is set to `TRUE`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -96,24 +106,41 @@ tab_header <- function(data,
 tab_spanner <- function(data,
                         label,
                         columns,
+                        id = label,
                         gather = TRUE) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
   checkmate::assert_character(
-    label, len = 1, any.missing = FALSE, null.ok = FALSE)
+    label, len = 1, any.missing = FALSE, null.ok = FALSE
+  )
+
+  checkmate::assert_character(
+    id, len = 1, any.missing = FALSE, null.ok = FALSE
+  )
 
   columns <- enquo(columns)
 
   # Get the columns supplied in `columns` as a character vector
   column_names <- resolve_vars(var_expr = !!columns, data = data)
 
+  # If `column_names` evaluates to an empty vector or is NULL,
+  # return the data unchanged
+  if (length(column_names) < 1) {
+    return(data)
+  }
+
+  # Check `id` against existing `id` values and stop if necessary
+  check_spanner_id_unique(data = data, spanner_id = id)
+
+  # Add the spanner to the `_spanners` table
   data <-
     dt_spanners_add(
       data = data,
       vars = column_names,
       spanner_label = label,
+      spanner_id = id,
       gather = gather
     )
 
@@ -154,8 +181,9 @@ tab_spanner <- function(data,
 #' @inheritParams tab_spanner
 #' @param delim The delimiter to use to split an input column name. The
 #'   delimiter supplied will be autoescaped for the internal splitting
-#'   procedure. The first component of the split will become the group name and
-#'   the second component will be the column label.
+#'   procedure. The first component of the split will become the spanner column
+#'   label (and its ID value, used for styling or for the addition of footnotes
+#'   in those locations) and the second component will be the column label.
 #' @param columns An optional vector of column names that this operation should
 #'   be limited to. The default is to consider all columns in the table.
 #'
@@ -217,32 +245,31 @@ tab_spanner_delim <- function(data,
 
     spanners <- vapply(split_colnames, `[[`, character(1), 1)
 
+    spanner_var_list <- split(colnames_with_delim, spanners)
+
+    for (label in names(spanner_var_list)) {
+
+      data <-
+        tab_spanner(
+          data = data,
+          label = label,
+          columns = spanner_var_list[[label]],
+          gather = gather
+        )
+    }
+
     new_labels <-
       lapply(split_colnames, `[[`, -1) %>%
       vapply(paste0, FUN.VALUE = character(1), collapse = delim)
 
     for (i in seq_along(split_colnames)) {
 
-      spanners_i <- spanners[i]
       new_labels_i <- new_labels[i]
       var_i <- colnames_with_delim[i]
 
       data <-
         data %>%
         dt_boxhead_edit(var = var_i, column_label = new_labels_i)
-    }
-
-    spanner_var_list <- split(colnames_with_delim, spanners)
-
-    for (spanner_label in names(spanner_var_list)) {
-
-      data <-
-        data %>%
-        dt_spanners_add(
-          vars = spanner_var_list[[spanner_label]],
-          spanner_label = spanner_label,
-          gather = gather
-        )
     }
   }
 

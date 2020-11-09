@@ -178,6 +178,97 @@ test_that("a gt table contains the expected spanner column labels", {
         label = "perimeter",
         columns = vars(peris, shapes))
   )
+
+  # Expect an error when using an ID twice
+  expect_error(
+    gt(exibble) %>%
+      tab_spanner(label = "a", columns = vars(num)) %>%
+      tab_spanner(label = "b", id = "a", columns = vars(char))
+  )
+})
+
+test_that("`tab_spanner()` exclusively uses IDs for arranging spanners", {
+
+  tbl_html_1 <-
+    dplyr::tibble(A_X = c(1), B_X = c(2), A_Y = c(3), B_Y = c(4)) %>%
+    gt() %>%
+    tab_spanner(label = "A", id = "a", columns = ends_with("X"), gather = FALSE) %>%
+    tab_spanner(label = "A", id = "b", columns = ends_with("Y"), gather = FALSE) %>%
+    tab_style(
+      style = cell_fill("green"),
+      locations = cells_column_spanners(spanners = "a")
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect that there are two spanners and both have the
+  # label `"A"`, span 2 columns each, with one background
+  # color set to green
+  tbl_html_1 %>%
+    selection_text("[class='gt_column_spanner']") %>%
+    expect_equal(c("A", "A"))
+
+  tbl_html_1 %>%
+    selection_value("colspan") %>%
+    expect_equal(c("2", "2", "1", "1", "1", "1"))
+
+  tbl_html_1 %>%
+    selection_value("style") %>%
+    expect_equal("background-color: #00FF00;")
+
+  tbl_html_2 <-
+    dplyr::tibble(A_X = c(1), B_X = c(2), A_Y = c(3), B_Y = c(4)) %>%
+    gt() %>%
+    tab_spanner(label = "Z", id = "a", columns = starts_with("A"), gather = FALSE) %>%
+    tab_spanner(label = "Z", id = "b", columns = starts_with("B"), gather = FALSE) %>%
+    tab_style(
+      style = cell_fill("green"),
+      locations = cells_column_spanners(spanners = "a")
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect that there are four spanners (with two IDs, both
+  # discontinguous) and both have the label `"Z"`, with one background
+  # color set to green (in the odd cells)
+  tbl_html_2 %>%
+    selection_text("[class='gt_column_spanner']") %>%
+    expect_equal(c("Z", "Z", "Z", "Z"))
+
+  tbl_html_2 %>%
+    selection_value("colspan") %>%
+    expect_equal(rep("1", 8))
+
+  tbl_html_2 %>%
+    selection_value("style") %>%
+    expect_equal(rep("background-color: #00FF00;", 2))
+
+  tbl_html_3 <-
+    dplyr::tibble(A_X = c(1), B_X = c(2), A_Y = c(3), B_Y = c(4)) %>%
+    gt() %>%
+    tab_spanner(label = "Z", id = "a", columns = starts_with("A"), gather = FALSE) %>%
+    tab_spanner(label = "Z", id = "b", columns = starts_with("B"), gather = FALSE) %>%
+    tab_style(
+      style = cell_fill("green"),
+      locations = cells_column_spanners(spanners = "b")
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect that there are four spanners (with two IDs, both
+  # discontinguous) and both have the label `"Z"`, with one background
+  # color set to green (in the even cells)
+  tbl_html_3 %>%
+    selection_text("[class='gt_column_spanner']") %>%
+    expect_equal(c("Z", "Z", "Z", "Z"))
+
+  tbl_html_3 %>%
+    selection_value("colspan") %>%
+    expect_equal(rep("1", 8))
+
+  tbl_html_3 %>%
+    selection_value("style") %>%
+    expect_equal(rep("background-color: #00FF00;", 2))
 })
 
 test_that("`tab_spanner()` doesn't adversely affect column alignment", {
@@ -401,6 +492,7 @@ test_that("a gt table contains custom styles at the correct locations", {
     ) %>%
     tab_spanner(
       label = "gear_carb_cyl",
+      id = "gcc",
       columns = vars(gear, carb, cyl)
     ) %>%
     row_group_order(groups = c("Mazdas", "Mercs")) %>%
@@ -465,7 +557,7 @@ test_that("a gt table contains custom styles at the correct locations", {
     ) %>%
     tab_style(
       style = cell_fill(color = "lightgreen"),
-      locations = cells_column_spanners(spanners = "gear_carb_cyl")
+      locations = cells_column_spanners(spanners = "gcc")
     ) %>%
     tab_style(
       style = cell_fill(color = "turquoise"),

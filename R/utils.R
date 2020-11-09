@@ -1128,7 +1128,6 @@ process_footnote_marks <- function(x,
     unname()
 }
 
-
 #' Determine whether an object is a `gt_tbl`
 #'
 #' @param data A table object that is created using the [gt()] function.
@@ -1219,6 +1218,18 @@ validate_style_in <- function(style_vals,
            " * ", str_catalog(in_vector, conj = "or"),
            call. = FALSE)
     }
+  }
+}
+
+check_spanner_id_unique <- function(data,
+                                    spanner_id) {
+
+  existing_ids <- dt_spanners_get_ids(data = data)
+
+  if (spanner_id %in% existing_ids) {
+    stop("The spanner `id` provided (`\"", spanner_id, "\"`) is not unique:\n",
+         "* provide a unique ID value for this spanner",
+         call. = FALSE)
   }
 }
 

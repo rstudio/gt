@@ -1,5 +1,3 @@
-context("Ensuring that the common utility functions work as expected")
-
 test_that("the `date_formats()` function works correctly", {
 
   # Expect that the `info_date_style()` function produces an
@@ -608,3 +606,24 @@ test_that("the `glue_gt()` function works in a safe manner", {
   expect_identical(glue_gt(list(), "a", "b") %>% as.character(), "ab")
 })
 
+test_that("The `check_spanner_id_unique()` function works properly", {
+
+  gt_tbl_1 <- gt(exibble)
+
+  gt_tbl_2 <-
+    gt(exibble) %>%
+    tab_spanner(label = "a", columns = vars(num))
+
+  # Don't expect an error when checking for unique spanner IDs
+  # in a gt table with no spanner column labels
+  expect_error(
+    regexp = NA,
+    check_spanner_id_unique(data = gt_tbl_1, spanner_id = "a")
+  )
+
+  # Expect an error when reusing a spanner ID value (the `label` value
+  # is used as the `id` value)
+  expect_error(
+    check_spanner_id_unique(data = gt_tbl_2, spanner_id = "a")
+  )
+})

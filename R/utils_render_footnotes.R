@@ -64,12 +64,12 @@ resolve_footnotes_styles <- function(data,
     # Filter by `grpname` in columns groups
     if ("columns_groups" %in% tbl[["locname"]]) { # remove conditional
 
-      spanner_labels <- unique(unlist(spanners$spanner_label))
+      spanner_ids <- unique(unlist(spanners$spanner_id))
 
       tbl <-
         dplyr::filter(
           tbl,
-          locname != "columns_groups" | grpname %in% spanner_labels
+          locname != "columns_groups" | grpname %in% spanner_ids
         )
     }
 
@@ -221,14 +221,19 @@ resolve_footnotes_styles <- function(data,
   # For the column spanner label cells, insert a
   # `colnum` based on `boxh_df`
   if ("columns_groups" %in% tbl[["locname"]]) {
-
     vars_default <- seq_along(dt_boxhead_get_vars_default(data = data))
-    spanners_labels <- dt_spanners_print(data = data, include_hidden = FALSE)
+
+    spanners_ids <-
+      dt_spanners_print(
+        data = data,
+        include_hidden = FALSE,
+        ids = TRUE
+      )
 
     group_label_df <-
       dplyr::tibble(
         colnum = seq(vars_default),
-        grpname = spanners_labels
+        grpname = spanners_ids
       ) %>%
       dplyr::group_by(grpname) %>%
       dplyr::summarize(colnum = min(colnum))
@@ -344,9 +349,10 @@ set_footnote_marks_columns <- function(data,
 
         spanners <- dt_spanners_get(data = data)
         spanner_labels <- dt_spanners_print(data = data)
+        spanner_ids <- dt_spanners_print(data = data, ids = TRUE)
 
         column_indices <-
-          which(spanner_labels == footnotes_columns_group_marks$grpname[i])
+          which(spanner_ids == footnotes_columns_group_marks$grpname[i])
 
         text <- unique(spanner_labels[column_indices])
 
@@ -380,7 +386,7 @@ set_footnote_marks_columns <- function(data,
 
         spanners_i <-
           which(
-            unlist(spanners$spanner_label) == footnotes_columns_group_marks$grpname[i]
+            unlist(spanners$spanner_id) == footnotes_columns_group_marks$grpname[i]
           )
 
         spanners[spanners_i, ][["built"]] <- text
