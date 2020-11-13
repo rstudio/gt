@@ -434,3 +434,60 @@ test_that("the `cols_merge_range()` function works correctly", {
     tbl_html_3 %>% as_raw_html()
   )
 })
+
+
+test_that("the `cols_merge_n_pct()` function works correctly", {
+
+  # Check that specific suggested packages are available
+  check_suggests()
+
+  tbl_n_pct <-
+    dplyr::tribble(
+      ~a, ~b,
+      1,  0.0714,
+      5,  0.3571,
+      0,  0.0,
+      2,  0.1429,
+      NA, NA,
+      6,  0.4286,
+      5, NA,
+      NA, 1000
+    )
+
+  # Create a `tbl_html` object with `gt()`; merge two columns
+  # with `cols_merge_uncert()`
+  tbl_html <-
+    tbl_n_pct %>%
+    gt() %>%
+    cols_merge_n_pct(col_n = vars(a), col_pct = vars(b)) %>%
+    fmt_percent(vars(b), decimals = 1)
+
+  # # Expect that merging statements are stored in `col_merge`
+  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$pattern %>%
+    expect_equal("{1}{sep}{2}")
+
+  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$vars %>%
+    expect_equal(c("a", "b"))
+
+  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$type %>%
+    expect_equal("merge_n_pct")
+
+  dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep %>%
+    expect_equal("")
+
+  expect_equal(
+    (tbl_html %>% render_formats_test("html"))[["a"]],
+    c(
+      "1 (7.1&percnt;)", "5 (35.7&percnt;)", "0", "2 (14.3&percnt;)",
+      "NA", "6 (42.9&percnt;)", "5", "NA"
+    )
+  )
+
+  expect_equal(
+    (tbl_html %>% render_formats_test("html"))[["b"]],
+    c(
+      "7.1&percnt;", "35.7&percnt;", "0.0&percnt;", "14.3&percnt;",
+      "NA", "42.9&percnt;", "NA", "100,000.0&percnt;"
+    )
+  )
+})
