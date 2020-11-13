@@ -317,16 +317,19 @@ perform_col_merge <- function(data,
       na_1_rows <- is.na(data_tbl[[mutated_column]])
       na_2_rows <- is.na(data_tbl[[second_column]])
       zero_rows <- data_tbl[[mutated_column]] == 0
+      zero_rows[is.na(zero_rows)] <- FALSE
+      zero_rows_idx <- which(zero_rows)
 
       # An `NA` value in either column should exclude that row from
       # processing via `glue_gt()`
-      rows_to_format <- which(!(na_1_rows | na_2_rows))
+      rows_to_format_idx <- which(!(na_1_rows | na_2_rows))
+      rows_to_format_idx <- setdiff(rows_to_format_idx, zero_rows_idx)
 
-      body[rows_to_format[!na.omit(zero_rows)], mutated_column] <-
+      body[rows_to_format_idx, mutated_column] <-
         glue_gt(
           list(
-            "1" = body[[mutated_column]][rows_to_format[!na.omit(zero_rows)]],
-            "2" = body[[second_column]][rows_to_format[!na.omit(zero_rows)]]
+            "1" = body[[mutated_column]][rows_to_format_idx],
+            "2" = body[[second_column]][rows_to_format_idx]
           ),
           pattern
         ) %>%
