@@ -79,6 +79,7 @@ reference:
     - cols_hide
     - cols_merge_range
     - cols_merge_uncert
+    - cols_merge_n_pct
     - cols_merge
 
   - title: Modify Rows
