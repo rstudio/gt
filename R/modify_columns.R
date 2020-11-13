@@ -1036,6 +1036,67 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
   )
 }
 
+
+#' Merge two columns to combine counts and percentages
+#'
+#' The `cols_merge_n_pct()` function is a specialized variant of the
+#' [cols_merge()] function. It operates by taking two columns that constitute
+#' both a count (`col_n`) and a fraction of the total population (`col_pct`) and
+#' merges them into a single column. What results is a column containing both
+#' counts and their associated percentages (e.g., `12 (23.2%)`). The column
+#' specified in `col_pct` is dropped from the output table.
+#'
+#' @inheritParams cols_align
+#' @param col_n A column that contains values for the count component.
+#' @param col_pct A column that contains fractional values for the percentage
+#'   component.
+#' @param autohide An option to automatically hide the column specified as
+#'   `col_pct`. Any columns with their state changed to hidden will behave
+#'   the same as before, they just won't be displayed in the finalized table.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @family Modify Columns
+#' @section Function ID:
+#' 4-10
+#'
+#' @import rlang
+#' @export
+cols_merge_n_pct <- function(data,
+                             col_n,
+                             col_pct,
+                             autohide = TRUE) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  resolved <-
+    cols_merge_resolver(
+      data = data,
+      col_begin = col_n,
+      col_end = col_pct,
+      sep = ""
+    )
+
+  # Create an entry and add it to the `_col_merge` attribute
+  data <-
+    dt_col_merge_add(
+      data = data,
+      col_merge = dt_col_merge_entry(
+        vars = resolved$columns,
+        type = "merge_n_pct",
+        pattern = resolved$pattern,
+        sep = ""
+      )
+    )
+
+  if (isTRUE(autohide)) {
+    data <- data %>% cols_hide(columns = col_pct)
+  }
+
+  data
+}
+
 #' Merge data from two or more columns to a single column
 #'
 #' This function takes input from two or more columns and allows the contents to
@@ -1100,7 +1161,7 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #'
 #' @family Modify Columns
 #' @section Function ID:
-#' 4-10
+#' 4-11
 #'
 #' @import rlang
 #' @export
