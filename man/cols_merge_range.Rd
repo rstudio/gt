@@ -53,11 +53,11 @@ operation can be easily formatted using the \code{\link[=fmt_missing]{fmt_missin
 Separate calls of \code{\link[=fmt_missing]{fmt_missing()}} can be used for the \code{col_begin} and
 \code{col_end} columns for finer control of the replacement values.
 
-This function is part of a set of three column-merging functions. The other
+This function is part of a set of four column-merging functions. The other
 two are the general \code{\link[=cols_merge]{cols_merge()}} function and the specialized
-\code{\link[=cols_merge_uncert]{cols_merge_uncert()}} function. These functions operate similarly, where the
-non-target columns can be optionally hidden from the output table through the
-\code{hide_columns} or \code{autohide} options.
+\code{\link[=cols_merge_uncert]{cols_merge_uncert()}} and \code{\link[=cols_merge_n_pct]{cols_merge_n_pct()}} functions. These functions
+operate similarly, where the non-target columns can be optionally hidden from
+the output table through the \code{hide_columns} or \code{autohide} options.
 }
 \section{Figures}{
 

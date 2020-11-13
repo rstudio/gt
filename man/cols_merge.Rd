@@ -43,11 +43,11 @@ There is the option to hide the non-target columns (i.e., second and
 subsequent columns given in \code{columns}).
 }
 \details{
-There are two other column-merging functions that offer specialized behavior
-that is optimized for common table tasks: \code{\link[=cols_merge_range]{cols_merge_range()}} and
-\code{\link[=cols_merge_uncert]{cols_merge_uncert()}}. These functions operate similarly, where the
-non-target columns can be optionally hidden from the output table through the
-\code{autohide} option.
+There are three other column-merging functions that offer specialized
+behavior that is optimized for common table tasks: \code{\link[=cols_merge_range]{cols_merge_range()}},
+\code{\link[=cols_merge_uncert]{cols_merge_uncert()}}, and \code{\link[=cols_merge_n_pct]{cols_merge_n_pct()}}. These functions operate
+similarly, where the non-target columns can be optionally hidden from the
+output table through the \code{autohide} option.
 }
 \section{Figures}{
 

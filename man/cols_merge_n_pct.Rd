@@ -29,6 +29,37 @@ merges them into a single column. What results is a column containing both
 counts and their associated percentages (e.g., \verb{12 (23.2\%)}). The column
 specified in \code{col_pct} is dropped from the output table.
 }
+\details{
+This function could be somewhat replicated using \code{\link[=cols_merge]{cols_merge()}}, however,
+\code{cols_merge_n_pct()} employs the following specialized semantics for \code{NA}
+and zero-value handling:
+
+\enumerate{
+\item \code{NA}s in \code{col_n} result in missing values for the merged
+column (e.g., \code{NA} + \verb{10.2\%} = \code{NA})
+\item \code{NA}s in \code{col_pct} (but not \code{col_n}) result in
+base values only for the merged column (e.g., \code{13} + \code{NA} = \code{13})
+\item \code{NA}s both \code{col_n} and \code{col_pct} result in
+missing values for the merged column (e.g., \code{NA} + \code{NA} = \code{NA})
+\item If a zero (\code{0}) value is in \code{col_n} then the formatted output will be
+\code{"0"} (i.e., no percentage will be shown)
+}
+
+Any resulting \code{NA} values in the \code{col_n} column following the merge
+operation can be easily formatted using the \code{\link[=fmt_missing]{fmt_missing()}} function.
+Separate calls of \code{\link[=fmt_missing]{fmt_missing()}} can be used for the \code{col_n} and
+\code{col_pct} columns for finer control of the replacement values. It is the
+responsibility of the user to ensure that values are correct in both the
+\code{col_n} and \code{col_pct} columns (this function neither generates nor
+recalculates values in either). Formatting of each column can be done
+independently in separate \code{\link[=fmt_number]{fmt_number()}} and \code{\link[=fmt_percent]{fmt_percent()}} calls.
+
+This function is part of a set of four column-merging functions. The other
+two are the general \code{\link[=cols_merge]{cols_merge()}} function and the specialized
+\code{\link[=cols_merge_uncert]{cols_merge_uncert()}} and \code{\link[=cols_merge_range]{cols_merge_range()}} functions. These functions
+operate similarly, where the non-target columns can be optionally hidden from
+the output table through the \code{hide_columns} or \code{autohide} options.
+}
 \section{Function ID}{
 
 4-10
