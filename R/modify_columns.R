@@ -809,11 +809,11 @@ cols_hide <- function(data,
 #' Any resulting `NA` values in the `col_val` column following the merge
 #' operation can be easily formatted using the [fmt_missing()] function.
 #'
-#' This function is part of a set of three column-merging functions. The other
+#' This function is part of a set of four column-merging functions. The other
 #' two are the general [cols_merge()] function and the specialized
-#' [cols_merge_range()] function. These functions operate similarly, where the
-#' non-target columns can be optionally hidden from the output table through the
-#' `hide_columns` or `autohide` options.
+#' [cols_merge_range()] and [cols_merge_n_pct()] functions. These functions
+#' operate similarly, where the non-target columns can be optionally hidden from
+#' the output table through the `hide_columns` or `autohide` options.
 #'
 #' @inheritParams cols_align
 #' @param col_val A single column name that contains the base values. This is
@@ -929,11 +929,11 @@ cols_merge_uncert <- function(data,
 #' Separate calls of [fmt_missing()] can be used for the `col_begin` and
 #' `col_end` columns for finer control of the replacement values.
 #'
-#' This function is part of a set of three column-merging functions. The other
+#' This function is part of a set of four column-merging functions. The other
 #' two are the general [cols_merge()] function and the specialized
-#' [cols_merge_uncert()] function. These functions operate similarly, where the
-#' non-target columns can be optionally hidden from the output table through the
-#' `hide_columns` or `autohide` options.
+#' [cols_merge_uncert()] and [cols_merge_n_pct()] functions. These functions
+#' operate similarly, where the non-target columns can be optionally hidden from
+#' the output table through the `hide_columns` or `autohide` options.
 #'
 #' @inheritParams cols_align
 #' @param col_begin A column that contains values for the start of the range.
@@ -1046,6 +1046,36 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #' counts and their associated percentages (e.g., `12 (23.2%)`). The column
 #' specified in `col_pct` is dropped from the output table.
 #'
+#' This function could be somewhat replicated using [cols_merge()], however,
+#' `cols_merge_n_pct()` employs the following specialized semantics for `NA`
+#' and zero-value handling:
+#'
+#' \enumerate{
+#' \item `NA`s in `col_n` result in missing values for the merged
+#' column (e.g., `NA` + `10.2%` = `NA`)
+#' \item `NA`s in `col_pct` (but not `col_n`) result in
+#' base values only for the merged column (e.g., `13` + `NA` = `13`)
+#' \item `NA`s both `col_n` and `col_pct` result in
+#' missing values for the merged column (e.g., `NA` + `NA` = `NA`)
+#' \item If a zero (`0`) value is in `col_n` then the formatted output will be
+#' `"0"` (i.e., no percentage will be shown)
+#' }
+#'
+#' Any resulting `NA` values in the `col_n` column following the merge
+#' operation can be easily formatted using the [fmt_missing()] function.
+#' Separate calls of [fmt_missing()] can be used for the `col_n` and
+#' `col_pct` columns for finer control of the replacement values. It is the
+#' responsibility of the user to ensure that values are correct in both the
+#' `col_n` and `col_pct` columns (this function neither generates nor
+#' recalculates values in either). Formatting of each column can be done
+#' independently in separate [fmt_number()] and [fmt_percent()] calls.
+#'
+#' This function is part of a set of four column-merging functions. The other
+#' two are the general [cols_merge()] function and the specialized
+#' [cols_merge_uncert()] and [cols_merge_range()] functions. These functions
+#' operate similarly, where the non-target columns can be optionally hidden from
+#' the output table through the `hide_columns` or `autohide` options.
+#'
 #' @inheritParams cols_align
 #' @param col_n A column that contains values for the count component.
 #' @param col_pct A column that contains fractional values for the percentage
@@ -1108,11 +1138,11 @@ cols_merge_n_pct <- function(data,
 #' There is the option to hide the non-target columns (i.e., second and
 #' subsequent columns given in `columns`).
 #'
-#' There are two other column-merging functions that offer specialized behavior
-#' that is optimized for common table tasks: [cols_merge_range()] and
-#' [cols_merge_uncert()]. These functions operate similarly, where the
-#' non-target columns can be optionally hidden from the output table through the
-#' `autohide` option.
+#' There are three other column-merging functions that offer specialized
+#' behavior that is optimized for common table tasks: [cols_merge_range()],
+#' [cols_merge_uncert()], and [cols_merge_n_pct()]. These functions operate
+#' similarly, where the non-target columns can be optionally hidden from the
+#' output table through the `autohide` option.
 #'
 #' @inheritParams cols_align
 #' @param columns The columns that will participate in the merging process. The
