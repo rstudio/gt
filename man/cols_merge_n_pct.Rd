@@ -11,8 +11,9 @@ cols_merge_n_pct(data, col_n, col_pct, autohide = TRUE)
 
 \item{col_n}{A column that contains values for the count component.}
 
-\item{col_pct}{A column that contains fractional values for the percentage
-component.}
+\item{col_pct}{A column that contains values for the percentage component.
+This column should be formatted such that percentages are displayed (e.g.,
+with \code{fmt_percent()}).}
 
 \item{autohide}{An option to automatically hide the column specified as
 \code{col_pct}. Any columns with their state changed to hidden will behave
@@ -60,11 +61,58 @@ two are the general \code{\link[=cols_merge]{cols_merge()}} function and the spe
 operate similarly, where the non-target columns can be optionally hidden from
 the output table through the \code{hide_columns} or \code{autohide} options.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_cols_merge_n_pct_1.png}{options: width=100\%}}
+}
+
 \section{Function ID}{
 
 4-10
 }
 
+\examples{
+# Use `pizzaplace` to create a gt table
+# that displays the counts and percentages
+# of the top 3 pizzas sold by pizza
+# category in 2015; the `cols_merge_n_pct()`
+# function is used to merge the `n` and
+# `frac` columns (and the `frac` column is
+# formatted using `fmt_percent()`)
+tab_1 <-
+  pizzaplace \%>\%
+  dplyr::group_by(name, type, price) \%>\%
+  dplyr::summarize(
+    n = n(),
+    frac = n/nrow(.),
+    .groups = "drop"
+  ) \%>\%
+  dplyr::arrange(type, desc(n)) \%>\%
+  dplyr::group_by(type) \%>\%
+  dplyr::slice_head(n = 3) \%>\%
+  gt(
+    rowname_col = "name",
+    groupname_col = "type"
+  ) \%>\%
+  fmt_currency(vars(price)) \%>\%
+  fmt_percent(vars(frac)) \%>\%
+  cols_merge_n_pct(
+    col_n = vars(n),
+    col_pct = vars(frac)
+  ) \%>\%
+  cols_label(
+    n = md("*N* (\%)"),
+    price = "Price"
+  ) \%>\%
+  tab_style(
+    style = cell_text(font = "monospace"),
+    locations = cells_stub()
+  ) \%>\%
+  tab_stubhead(md("Cat. and  \nPizza Code")) \%>\%
+  tab_header(title = "Top 3 Pizzas Sold by Category in 2015") \%>\%
+  tab_options(table.width = px(512))
+
+}
 \seealso{
 Other Modify Columns: 
 \code{\link{cols_align}()},
