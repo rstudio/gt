@@ -809,11 +809,11 @@ cols_hide <- function(data,
 #' Any resulting `NA` values in the `col_val` column following the merge
 #' operation can be easily formatted using the [fmt_missing()] function.
 #'
-#' This function is part of a set of three column-merging functions. The other
+#' This function is part of a set of four column-merging functions. The other
 #' two are the general [cols_merge()] function and the specialized
-#' [cols_merge_range()] function. These functions operate similarly, where the
-#' non-target columns can be optionally hidden from the output table through the
-#' `hide_columns` or `autohide` options.
+#' [cols_merge_range()] and [cols_merge_n_pct()] functions. These functions
+#' operate similarly, where the non-target columns can be optionally hidden from
+#' the output table through the `hide_columns` or `autohide` options.
 #'
 #' @inheritParams cols_align
 #' @param col_val A single column name that contains the base values. This is
@@ -929,11 +929,11 @@ cols_merge_uncert <- function(data,
 #' Separate calls of [fmt_missing()] can be used for the `col_begin` and
 #' `col_end` columns for finer control of the replacement values.
 #'
-#' This function is part of a set of three column-merging functions. The other
+#' This function is part of a set of four column-merging functions. The other
 #' two are the general [cols_merge()] function and the specialized
-#' [cols_merge_uncert()] function. These functions operate similarly, where the
-#' non-target columns can be optionally hidden from the output table through the
-#' `hide_columns` or `autohide` options.
+#' [cols_merge_uncert()] and [cols_merge_n_pct()] functions. These functions
+#' operate similarly, where the non-target columns can be optionally hidden from
+#' the output table through the `hide_columns` or `autohide` options.
 #'
 #' @inheritParams cols_align
 #' @param col_begin A column that contains values for the start of the range.
@@ -1036,6 +1036,142 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
   )
 }
 
+
+#' Merge two columns to combine counts and percentages
+#'
+#' The `cols_merge_n_pct()` function is a specialized variant of the
+#' [cols_merge()] function. It operates by taking two columns that constitute
+#' both a count (`col_n`) and a fraction of the total population (`col_pct`) and
+#' merges them into a single column. What results is a column containing both
+#' counts and their associated percentages (e.g., `12 (23.2%)`). The column
+#' specified in `col_pct` is dropped from the output table.
+#'
+#' This function could be somewhat replicated using [cols_merge()], however,
+#' `cols_merge_n_pct()` employs the following specialized semantics for `NA`
+#' and zero-value handling:
+#'
+#' \enumerate{
+#' \item `NA`s in `col_n` result in missing values for the merged
+#' column (e.g., `NA` + `10.2%` = `NA`)
+#' \item `NA`s in `col_pct` (but not `col_n`) result in
+#' base values only for the merged column (e.g., `13` + `NA` = `13`)
+#' \item `NA`s both `col_n` and `col_pct` result in
+#' missing values for the merged column (e.g., `NA` + `NA` = `NA`)
+#' \item If a zero (`0`) value is in `col_n` then the formatted output will be
+#' `"0"` (i.e., no percentage will be shown)
+#' }
+#'
+#' Any resulting `NA` values in the `col_n` column following the merge
+#' operation can be easily formatted using the [fmt_missing()] function.
+#' Separate calls of [fmt_missing()] can be used for the `col_n` and
+#' `col_pct` columns for finer control of the replacement values. It is the
+#' responsibility of the user to ensure that values are correct in both the
+#' `col_n` and `col_pct` columns (this function neither generates nor
+#' recalculates values in either). Formatting of each column can be done
+#' independently in separate [fmt_number()] and [fmt_percent()] calls.
+#'
+#' This function is part of a set of four column-merging functions. The other
+#' two are the general [cols_merge()] function and the specialized
+#' [cols_merge_uncert()] and [cols_merge_range()] functions. These functions
+#' operate similarly, where the non-target columns can be optionally hidden from
+#' the output table through the `hide_columns` or `autohide` options.
+#'
+#' @inheritParams cols_align
+#' @param col_n A column that contains values for the count component.
+#' @param col_pct A column that contains values for the percentage component.
+#'   This column should be formatted such that percentages are displayed (e.g.,
+#'   with `fmt_percent()`).
+#' @param autohide An option to automatically hide the column specified as
+#'   `col_pct`. Any columns with their state changed to hidden will behave
+#'   the same as before, they just won't be displayed in the finalized table.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @examples
+#' # Use `pizzaplace` to create a gt table
+#' # that displays the counts and percentages
+#' # of the top 3 pizzas sold by pizza
+#' # category in 2015; the `cols_merge_n_pct()`
+#' # function is used to merge the `n` and
+#' # `frac` columns (and the `frac` column is
+#' # formatted using `fmt_percent()`)
+#' tab_1 <-
+#'   pizzaplace %>%
+#'   dplyr::group_by(name, type, price) %>%
+#'   dplyr::summarize(
+#'     n = dplyr::n(),
+#'     frac = n/nrow(.),
+#'     .groups = "drop"
+#'   ) %>%
+#'   dplyr::arrange(type, dplyr::desc(n)) %>%
+#'   dplyr::group_by(type) %>%
+#'   dplyr::slice_head(n = 3) %>%
+#'   gt(
+#'     rowname_col = "name",
+#'     groupname_col = "type"
+#'   ) %>%
+#'   fmt_currency(vars(price)) %>%
+#'   fmt_percent(vars(frac)) %>%
+#'   cols_merge_n_pct(
+#'     col_n = vars(n),
+#'     col_pct = vars(frac)
+#'   ) %>%
+#'   cols_label(
+#'     n = md("*N* (%)"),
+#'     price = "Price"
+#'   ) %>%
+#'   tab_style(
+#'     style = cell_text(font = "monospace"),
+#'     locations = cells_stub()
+#'   ) %>%
+#'   tab_stubhead(md("Cat. and  \nPizza Code")) %>%
+#'   tab_header(title = "Top 3 Pizzas Sold by Category in 2015") %>%
+#'   tab_options(table.width = px(512))
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_cols_merge_n_pct_1.png}{options: width=100\%}}
+#'
+#' @family Modify Columns
+#' @section Function ID:
+#' 4-10
+#'
+#' @import rlang
+#' @export
+cols_merge_n_pct <- function(data,
+                             col_n,
+                             col_pct,
+                             autohide = TRUE) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  resolved <-
+    cols_merge_resolver(
+      data = data,
+      col_begin = col_n,
+      col_end = col_pct,
+      sep = ""
+    )
+
+  # Create an entry and add it to the `_col_merge` attribute
+  data <-
+    dt_col_merge_add(
+      data = data,
+      col_merge = dt_col_merge_entry(
+        vars = resolved$columns,
+        type = "merge_n_pct",
+        pattern = resolved$pattern,
+        sep = ""
+      )
+    )
+
+  if (isTRUE(autohide)) {
+    data <- data %>% cols_hide(columns = col_pct)
+  }
+
+  data
+}
+
 #' Merge data from two or more columns to a single column
 #'
 #' This function takes input from two or more columns and allows the contents to
@@ -1047,11 +1183,11 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #' There is the option to hide the non-target columns (i.e., second and
 #' subsequent columns given in `columns`).
 #'
-#' There are two other column-merging functions that offer specialized behavior
-#' that is optimized for common table tasks: [cols_merge_range()] and
-#' [cols_merge_uncert()]. These functions operate similarly, where the
-#' non-target columns can be optionally hidden from the output table through the
-#' `autohide` option.
+#' There are three other column-merging functions that offer specialized
+#' behavior that is optimized for common table tasks: [cols_merge_range()],
+#' [cols_merge_uncert()], and [cols_merge_n_pct()]. These functions operate
+#' similarly, where the non-target columns can be optionally hidden from the
+#' output table through the `autohide` option.
 #'
 #' @inheritParams cols_align
 #' @param columns The columns that will participate in the merging process. The
@@ -1100,7 +1236,7 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #'
 #' @family Modify Columns
 #' @section Function ID:
-#' 4-10
+#' 4-11
 #'
 #' @import rlang
 #' @export
