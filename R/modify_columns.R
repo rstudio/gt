@@ -1087,6 +1087,50 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @examples
+#' # Use `pizzaplace` to create a gt table
+#' # that displays the counts and percentages
+#' # of the top 3 pizzas sold by pizza
+#' # category in 2015; the `cols_merge_n_pct()`
+#' # function is used to merge the `n` and
+#' # `frac` columns (and the `frac` column is
+#' # formatted using `fmt_percent()`)
+#' tab_1 <-
+#'   pizzaplace %>%
+#'   dplyr::group_by(name, type, price) %>%
+#'   dplyr::summarize(
+#'     n = n(),
+#'     frac = n/nrow(.),
+#'     .groups = "drop"
+#'   ) %>%
+#'   dplyr::arrange(type, desc(n)) %>%
+#'   dplyr::group_by(type) %>%
+#'   dplyr::slice_head(n = 3) %>%
+#'   gt(
+#'     rowname_col = "name",
+#'     groupname_col = "type"
+#'   ) %>%
+#'   fmt_currency(vars(price)) %>%
+#'   fmt_percent(vars(frac)) %>%
+#'   cols_merge_n_pct(
+#'     col_n = vars(n),
+#'     col_pct = vars(frac)
+#'   ) %>%
+#'   cols_label(
+#'     n = md("*N* (%)"),
+#'     price = "Price"
+#'   ) %>%
+#'   tab_style(
+#'     style = cell_text(font = "monospace"),
+#'     locations = cells_stub()
+#'   ) %>%
+#'   tab_stubhead(md("Cat. and  \nPizza Code")) %>%
+#'   tab_header(title = "Top 3 Pizzas Sold by Category in 2015") %>%
+#'   tab_options(table.width = px(512))
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_cols_merge_n_pct_1.png}{options: width=100\%}}
+#'
 #' @family Modify Columns
 #' @section Function ID:
 #' 4-10
