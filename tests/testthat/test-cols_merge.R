@@ -451,7 +451,9 @@ test_that("the `cols_merge_n_pct()` function works correctly", {
       NA, NA,
       6,  0.4286,
       5, NA,
-      NA, 1000
+      NA, 1000,
+      0, NA,
+      NA, 0
     )
 
   # Create a `tbl_html` object with `gt()`; merge two columns
@@ -479,7 +481,7 @@ test_that("the `cols_merge_n_pct()` function works correctly", {
     (tbl_html %>% render_formats_test("html"))[["a"]],
     c(
       "1 (7.1&percnt;)", "5 (35.7&percnt;)", "0", "2 (14.3&percnt;)",
-      "NA", "6 (42.9&percnt;)", "5", "NA"
+      "NA", "6 (42.9&percnt;)", "5", "NA", "0", "NA"
     )
   )
 
@@ -487,7 +489,8 @@ test_that("the `cols_merge_n_pct()` function works correctly", {
     (tbl_html %>% render_formats_test("html"))[["b"]],
     c(
       "7.1&percnt;", "35.7&percnt;", "0.0&percnt;", "14.3&percnt;",
-      "NA", "42.9&percnt;", "NA", "100,000.0&percnt;"
+      "NA", "42.9&percnt;", "NA", "100,000.0&percnt;", "NA",
+      "0.0&percnt;"
     )
   )
 })
