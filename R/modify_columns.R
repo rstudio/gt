@@ -1078,8 +1078,9 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #'
 #' @inheritParams cols_align
 #' @param col_n A column that contains values for the count component.
-#' @param col_pct A column that contains fractional values for the percentage
-#'   component.
+#' @param col_pct A column that contains values for the percentage component.
+#'   This column should be formatted such that percentages are displayed (e.g.,
+#'   with `fmt_percent()`).
 #' @param autohide An option to automatically hide the column specified as
 #'   `col_pct`. Any columns with their state changed to hidden will behave
 #'   the same as before, they just won't be displayed in the finalized table.
