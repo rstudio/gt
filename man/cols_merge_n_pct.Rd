@@ -83,11 +83,11 @@ tab_1 <-
   pizzaplace \%>\%
   dplyr::group_by(name, type, price) \%>\%
   dplyr::summarize(
-    n = n(),
+    n = dplyr::n(),
     frac = n/nrow(.),
     .groups = "drop"
   ) \%>\%
-  dplyr::arrange(type, desc(n)) \%>\%
+  dplyr::arrange(type, dplyr::desc(n)) \%>\%
   dplyr::group_by(type) \%>\%
   dplyr::slice_head(n = 3) \%>\%
   gt(
