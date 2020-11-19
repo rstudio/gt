@@ -24,10 +24,37 @@ compile_scss <- function(data, id = NULL) {
     table_additional_css <- paste(additional_css, collapse = "\n") %>% paste_right("\n")
   }
 
+  # If a bslib theme is active, use it to provide defaults based on Bootstrap Sass variables
+  theme_vars <- list()
+  theme <- bs_current_theme()
+  if (length(theme)) {
+    gt_options_tbl <- dplyr::left_join(
+      gt_options_tbl,
+      dplyr::select(dt_options_tbl, parameter, default = value, bslib_value),
+      by = c("parameter", "bslib_value")
+    )
+    is_default <- as.logical(Map(identical, gt_options_tbl$value, gt_options_tbl$default))
+    gt_options_tbl <- dplyr::mutate(
+      gt_options_tbl,
+      value = ifelse(
+        is_default & !is.na(bslib_value), bslib_value, value
+      )
+    )
+    # Get at the value of bslib::bs_theme(bg, fg)
+    bfg <- bslib::bs_get_variables(theme, c("bg", "fg"))
+    theme <- bslib::bs_add_variables(theme, !!!as.list(bfg))
+    theme_vars <- sass::as_sass_layer(theme)
+    theme_vars$rules <- ""
+  }
+
   sass::sass(
     list(
       list(element_id = id),
-      as.list(stats::setNames(gt_options_tbl$value, gt_options_tbl$parameter)),
+      theme_vars,
+      as.list(stats::setNames(
+        gt_options_tbl$value,
+        gt_options_tbl$parameter
+      )),
       sass::sass_file(system_file(file = "css/gt_colors.scss")),
       sass::sass_file(system_file(file = "css/gt_styles_default.scss")),
       glue::glue(
@@ -45,4 +72,9 @@ compile_scss <- function(data, id = NULL) {
         ")
     )
   )
+}
+
+bs_current_theme <- function() {
+  if ("bslib" %in% loadedNamespaces())
+    bslib::bs_current_theme()
 }
