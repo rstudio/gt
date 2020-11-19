@@ -82,6 +82,7 @@
 gt <- function(data,
                rowname_col = "rowname",
                groupname_col = dplyr::group_vars(data),
+               caption = NULL,
                rownames_to_stub = FALSE,
                auto_align = TRUE,
                id = NULL,
