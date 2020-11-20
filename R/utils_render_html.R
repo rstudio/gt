@@ -159,10 +159,10 @@ create_caption_component_h <- function(data) {
   # Create the table caption if available
   table_caption <- dt_options_get_value(data = data, option = "table_caption")
 
-  if (!is.na(table_caption)) {
+  if (!is.null(table_caption)) {
     table_caption <- process_text(table_caption, context = "html")
     if (isTRUE(getOption("knitr.in.progress"))) {
-      table_caption <- knitr:::kable_caption(label = NULL, table_caption, "html")
+      table_caption <- kable_caption(label = NULL, table_caption, "html")
     }
     # <!--/html_preserve--> ... <!--html_preserve--> is because bookdown scans
     # the .md file, looking for references in the form of:

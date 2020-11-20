@@ -204,7 +204,7 @@ process_text <- function(text,
 
       return(text)
 
-    } else if (is_html(text)) {
+    } else if (is_html(text) || inherits(text, "shiny.tag") || inherits(text, "shiny.tag.list")) {
 
       text <- as.character(text)
 
