@@ -41,10 +41,9 @@ default_fonts_vec <-
     "Droid Sans", "Arial", "sans-serif"
   )
 
-# TODO: border widths?
 dt_options_tbl <-
   dplyr::tribble(
-    ~parameter,                          ~scss,  ~category,          ~type,     ~value,           ~bslib_value,
+    ~parameter,                          ~scss,  ~category,          ~type,     ~value,           ~bs_value,
     "empty",                             FALSE,  "empty",            "value",   list(),            NA_character_,
     "container_width",                   FALSE,  "container",        "px",      "auto",            NA_character_,
     "container_height",                  FALSE,  "container",        "px",      "auto",            NA_character_,
@@ -180,3 +179,70 @@ dt_options_tbl <-
     "row_striping_include_stub",         FALSE,  "row",              "logical", FALSE,             NA_character_,
     "row_striping_include_table_body",   FALSE,  "row",              "logical", FALSE,             NA_character_
   )[-1, ]
+
+
+# TODO: translate $headings-font-family to a new 'heading_title_font_family' option?
+# TODO: translate $table-caption-color for footnotes/source_notes?
+bslib_options_tbl <-
+  dplyr::tribble(
+    ~parameter,                         ~value,                                       ~value3,
+    "table_background_color",           "$body-bg",                                   "$body-bg",
+    "table_font_names",                 "$font-family-base",                          "$font-family-base",
+    "table_font_size",                  "$font-size-base",                            "$font-size-base",
+    "table_font_weight",                "$font-weight-base",                          NA_character_,
+    "table_border_top_width",           "$table-border-width",                        NA_character_,
+    "table_border_top_color",           "mix($table-color,$table-border-color,20%)",  "mix($bg, $fg, 66%)",
+    "table_border_right_width",         "$table-border-width",                        NA_character_,
+    "table_border_right_color",         "$table-border-color",                        "mix($bg, $fg, 83%)",
+    "table_border_bottom_width",        "$table-border-width",                        NA_character_,
+    "table_border_bottom_color",        "mix($table-color,$table-border-color,20%)",  "mix($bg, $fg, 66%)",
+    "table_border_left_width",          "$table-border-width",                        NA_character_,
+    "table_border_left_color",          "$table-border-color",                        "mix($bg, $fg, 83%)",
+    "heading_title_font_size",          "$font-size-lg",                              "$font-size-large",
+    "heading_title_font_weight",        "$table-th-font-weight",                      NA_character_,
+    "heading_subtitle_font_size",       "$font-size-sm",                              "$font-size-small",
+    "heading_border_bottom_width",      "$table-border-width",                        NA_character_,
+    "heading_border_bottom_color",      "$table-border-color",                        "mix($bg, $fg, 83%)",
+    "heading_border_lr_width",          "$table-border-width / 2",                    NA_character_,
+    "heading_border_lr_color",          "$table-border-color",                        "mix($bg, $fg, 83%)",
+    "column_labels_vlines_width",       "$table-border-width / 2",                    NA_character_,
+    "column_labels_vlines_color",       "$table-border-color",                        "mix($bg, $fg, 83%)",
+    "column_labels_border_top_width",   "$table-border-width",                        NA_character_,
+    "column_labels_border_top_color",   "$table-border-color",                        "mix($bg, $fg, 83%)",
+    "column_labels_border_bottom_width","$table-border-width",                        NA_character_,
+    "column_labels_border_bottom_color","$table-border-color",                        "mix($bg, $fg, 83%)",
+    "column_labels_border_lr_width",    "$table-border-width / 2",                    NA_character_,
+    "column_labels_border_lr_color",    "$table-border-color",                        "mix($bg, $fg, 83%)",
+    "row_group_border_top_width",       "$table-border-width",                        NA_character_,
+    "row_group_border_top_color",       "$table-border-color",                        "mix($bg, $fg, 83%)",
+    "row_group_border_right_width",     "$table-border-width / 2",                    NA_character_,
+    "row_group_border_right_color",     "$table-border-color",                        "mix($bg, $fg, 83%)",
+    "row_group_border_bottom_width",    "$table-border-width",                        NA_character_,
+    "row_group_border_bottom_color",    "$table-border-color",                        "mix($bg, $fg, 83%)",
+    "row_group_border_left_width",      "$table-border-width / 2",                    NA_character_,
+    "row_group_border_left_color",      "$table-border-color",                        "mix($bg, $fg, 83%)",
+    "table_body_hlines_width",          "$table-border-width / 2",                    NA_character_,
+    "table_body_hlines_color",          "$table-border-color",                        "mix($bg, $fg, 83%)",
+    "table_body_vlines_width",          "$table-border-width / 2",                    NA_character_,
+    "table_body_vlines_color",          "$table-border-color",                        "mix($bg, $fg, 83%)",
+    "table_body_border_top_width",      "$table-border-width",                        NA_character_,
+    "table_body_border_top_color",      "$table-border-color",                        "mix($bg, $fg, 83%)",
+    "table_body_border_bottom_width",   "$table-border-width",                        NA_character_,
+    "table_body_border_bottom_color",   "$table-border-color",                        "mix($bg, $fg, 83%)",
+    "data_row_padding",                 "$table-cell-padding",                        "$table-cell-padding",
+    "stub_border_width",                "$table-border-width",                        NA_character_,
+    "stub_border_color",                "$table-border-color",                        "mix($bg, $fg, 83%)",
+    "summary_row_border_width",         "$table-border-width",                        NA_character_,
+    "summary_row_border_color",         "$table-border-color",                        "mix($bg, $fg, 83%)",
+    "grand_summary_row_border_width",   "$table-border-width * 3",                    NA_character_,
+    "grand_summary_row_border_color",   "$table-border-color",                        "mix($bg, $fg, 83%)",
+    "footnotes_border_bottom_width",    "$table-border-width",                        NA_character_,
+    "footnotes_border_bottom_color",    "$table-border-color",                        "mix($bg, $fg, 83%)",
+    "footnotes_border_lr_width",        "$table-border-width",                        NA_character_,
+    "footnotes_border_lr_color",        "$table-border-color",                        "mix($bg, $fg, 83%)",
+    "source_notes_border_bottom_width", "$table-border-width",                        NA_character_,
+    "source_notes_border_bottom_color", "$table-border-color",                        "mix($bg, $fg, 83%)",
+    "source_notes_border_lr_width",     "$table-border-width",                        NA_character_,
+    "source_notes_border_lr_color",     "$table-border-color",                        "mix($bg, $fg, 83%)",
+    "row_striping_background_color",    "$table-accent-bg",                           "$table-bg-accent"
+  )

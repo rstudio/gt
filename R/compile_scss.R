@@ -28,19 +28,20 @@ compile_scss <- function(data, id = NULL) {
   theme_vars <- list()
   theme <- bs_current_theme()
   if (length(theme)) {
-    gt_options_tbl <- dplyr::left_join(
-      gt_options_tbl,
-      dplyr::select(dt_options_tbl, parameter, default = value, bslib_value),
-      by = c("parameter", "bslib_value")
-    )
-    is_default <- as.logical(Map(identical, gt_options_tbl$value, gt_options_tbl$default))
-    gt_options_tbl <- dplyr::mutate(
-      gt_options_tbl,
-      value = ifelse(
-        is_default & !is.na(bslib_value), bslib_value, value
+    # Replace default option values with bslib Sass defaults
+    bslib_col <- if ("3" %in% theme_version(theme)) "value3" else "value"
+    gt_options_tbl <- gt_options_tbl %>%
+      dplyr::left_join(
+        dplyr::select(dt_options_tbl, parameter, default = value), by = "parameter"
+      ) %>%
+      dplyr::left_join(
+        dplyr::select(bslib_options_tbl, parameter, bsvalue = !!rlang::sym(bslib_col)), by = "parameter"
+      ) %>%
+      dplyr::mutate(
+        is_default = as.logical(Map(identical, value, default)),
+        value = ifelse(is_default & !is.na(bsvalue), bsvalue, value)
       )
-    )
-    # Get at the value of bslib::bs_theme(bg, fg)
+    # Add values of bslib::bs_theme(bg, fg) as official Sass vars to the theme (since value3 uses them)
     bfg <- bslib::bs_get_variables(theme, c("bg", "fg"))
     theme <- bslib::bs_add_variables(theme, !!!as.list(bfg))
     theme_vars <- sass::as_sass_layer(theme)
@@ -52,7 +53,7 @@ compile_scss <- function(data, id = NULL) {
       list(element_id = id),
       theme_vars,
       as.list(stats::setNames(
-        gt_options_tbl$value,
+        paste(gt_options_tbl$value, "!default"),
         gt_options_tbl$parameter
       )),
       sass::sass_file(system_file(file = "css/gt_colors.scss")),
