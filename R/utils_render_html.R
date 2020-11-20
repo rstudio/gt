@@ -154,6 +154,27 @@ get_table_defs <- function(data) {
   )
 }
 
+create_caption_component_h <- function(data) {
+
+  # Create the table caption if available
+  table_caption <- dt_options_get_value(data = data, option = "table_caption")
+
+  if (!is.na(table_caption)) {
+    table_caption <- process_text(table_caption, context = "html")
+    if (isTRUE(getOption("knitr.in.progress"))) {
+      table_caption <- knitr:::kable_caption(label = NULL, table_caption, "html")
+      table_caption <- paste0(
+        "<!--/html_preserve-->",
+        table_caption,
+        "<!--html_preserve-->"
+      )
+    }
+    htmltools::tags$caption(htmltools::HTML(table_caption))
+  } else {
+    NULL
+  }
+}
+
 #' Create the heading component of a table
 #'
 #' The table heading component contains the title and possibly a subtitle; if
