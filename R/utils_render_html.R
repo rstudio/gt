@@ -163,13 +163,25 @@ create_caption_component_h <- function(data) {
     table_caption <- process_text(table_caption, context = "html")
     if (isTRUE(getOption("knitr.in.progress"))) {
       table_caption <- knitr:::kable_caption(label = NULL, table_caption, "html")
-      table_caption <- paste0(
-        "<!--/html_preserve-->",
-        table_caption,
-        "<!--html_preserve-->"
-      )
     }
-    htmltools::tags$caption(htmltools::HTML(table_caption))
+    # <!--/html_preserve--> ... <!--html_preserve--> is because bookdown scans
+    # the .md file, looking for references in the form of:
+    # <caption>(#tab:mytable)
+    # Ref:
+    # https://github.com/rstudio/bookdown/blob/00987215b7572def2f5cd73a623efc38f4f30ab7/R/html.R#L629
+    # https://github.com/rstudio/bookdown/blob/00987215b7572def2f5cd73a623efc38f4f30ab7/R/html.R#L667
+    #
+    # Normally, the gt table in its entirety is excluded from the .md, to
+    # prevent it from being corrupted by pandoc's md-to-html rendering. We do
+    # this by wrapping the whole table in htmltools::htmlPreserve (I think this
+    # actually happens in htmlwidgets). So the extra markup here is used to
+    # temporarily suspend that protection, emit the caption (including the HTML
+    # <caption> tag, which bookdown searches for), and then resume protection.
+    htmltools::HTML(paste0(
+      "<!--/html_preserve--><caption>",
+      table_caption,
+      "</caption><!--html_preserve-->"
+    ))
   } else {
     NULL
   }
