@@ -155,6 +155,7 @@ before rendering to a display table of various formats.</p>
   <span class='va'>data</span>,
   rowname_col <span class='op'>=</span> <span class='st'>"rowname"</span>,
   groupname_col <span class='op'>=</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_data.html'>group_vars</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span>,
+  caption <span class='op'>=</span> <span class='cn'>NULL</span>,
   rownames_to_stub <span class='op'>=</span> <span class='cn'>FALSE</span>,
   auto_align <span class='op'>=</span> <span class='cn'>TRUE</span>,
   id <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -181,6 +182,11 @@ ignored.</p></td>
 group labels for generation of stub row groups. If the input <code>data</code> table
 has the <code>grouped_df</code> class (through use of the <code><a href='https://dplyr.tidyverse.org/reference/group_by.html'>dplyr::group_by()</a></code> function
 or associated <code>group_by*()</code> functions) then any input here is ignored.</p></td>
+    </tr>
+    <tr>
+      <th>caption</th>
+      <td><p>An optional table caption to use for cross-referencing
+in R Markdown documents and <strong>bookdown</strong> book projects.</p></td>
     </tr>
     <tr>
       <th>rownames_to_stub</th>
