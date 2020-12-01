@@ -314,7 +314,7 @@ col_width_resolver_rtf <- function(table_width,
                                    n_cols) {
 
   if (table_width == "auto" && is.null(col_widths)) {
-    return(NULL)
+    return(rep(standard_width_twips / n_cols, n_cols))
   }
 
   table_width <- abs_len_to_twips(parse_length_str(table_width))
@@ -492,7 +492,6 @@ rtf_tbl_cell <- function(x,
                          bold = FALSE,
                          italic = FALSE,
                          super_sub = NULL) {
-
 
   x <- paste(x, collapse = " ")
 
@@ -1148,7 +1147,7 @@ create_body_component_rtf <- function(data) {
                 )
               )
             ),
-            widths = col_widths,
+            widths = sum(col_widths),
             height = 0
           )
         )
@@ -1181,7 +1180,7 @@ create_body_component_rtf <- function(data) {
           borders = list(
             rtf_border(direction = "top", color = table_body_hlines_color)
           ),
-          widths = NULL, # TODO: use overall table width here
+          widths = col_widths,
           height = 0
         )
     } else {
