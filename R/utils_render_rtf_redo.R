@@ -240,6 +240,134 @@ rtf_table <- function(rows) {
   rtf_raw(paste(unlist(rows), collapse = ""))
 }
 
+# This is the assumed width of the area within page
+# margins in a default Word document
+standard_width_twips <- 9468L
+
+twip_factors <-
+  c(
+    `in` = 1440, `pt` = 20, `px` = 15,
+    `cm` = 566.9291, `mm` = 56.69291, `tw` = 1
+  )
+
+parse_length_str <- function(lengths_vec) {
+
+  if (length(lengths_vec) == 1 && lengths_vec == "auto") {
+    lengths_vec <- paste0(standard_width_twips, "tw")
+  }
+
+  match <- regexec("^([0-9.-]+)(%|[a-z]+)$", lengths_vec)
+  match <- regmatches(lengths_vec, match)
+
+  vals <- vapply(match, function(m) {
+    if (length(m)) {
+      as.numeric(m[[2]])
+    } else {
+      NA_real_
+    }
+  }, numeric(1))
+
+  units <- vapply(match, function(m) {
+    if (length(m)) {
+      m[[3]]
+    } else {
+      NA_character_
+    }
+  }, character(1))
+
+  bad_values <- nzchar(lengths_vec) & is.na(vals)
+
+  if (any(bad_values)) {
+    stop(
+      "Some of the values supplied as absolute lengths cannot be interpreted:\n",
+      "* Use either of: `px`, `pt`, `in`, `cm`, `mm`, or `tw`.",
+      call. = FALSE
+    )
+  }
+
+  dplyr::tibble(value = vals, unit = units)
+}
+
+abs_len_to_twips <- function(lengths_df) {
+
+  lengths_df %>%
+    dplyr::left_join(
+      tibble::enframe(twip_factors, name = "unit", value = "conv"),
+      by = c("unit" = "unit")
+    ) %>%
+    dplyr::mutate(
+      value = ifelse(!is.na(conv), value * conv, value),
+      unit = ifelse(!is.na(conv), "tw", unit)
+    ) %>%
+    dplyr::select(value, unit)
+}
+
+# The `col_width_resolver_rtf()` function returns a vector of
+# RTF column widths in units of twips (numeric)
+#
+# `table_width` and `col_widths` should be character vectors with
+# a numeric portion followed by the unit; the first should be a
+# length-1 vector and the latter should be a vector with as many
+# elements as there are visible columns in the gt table
+col_width_resolver_rtf <- function(table_width,
+                                   col_widths,
+                                   n_cols) {
+
+  if (table_width == "auto" && is.null(col_widths)) {
+    return(NULL)
+  }
+
+  table_width <- abs_len_to_twips(parse_length_str(table_width))
+
+  # Should stop if row count of `table_width` isn't 1
+  stopifnot(nrow(table_width) == 1)
+
+  # For a table width set as a percentage, convert it to twips
+  # using the assumed width of a table set in a page
+  if (table_width$unit == "%") {
+
+    table_width$value <- (table_width$value / 100) * standard_width_twips
+    table_width$unit <- "tw"
+  }
+
+  # Ensure that the `table_width` unit is `"tw"`
+  stopifnot(isTRUE(table_width$unit == "tw"))
+
+  # If given a table width (i.e., not `"auto"`) without any specification
+  # of column widths, generate evenly spaced column widths based on the
+  # table width
+  if (is.null(col_widths)) {
+    col_widths <- paste0(rep(table_width$value / n_cols, n_cols), "tw")
+  }
+
+  col_widths <- abs_len_to_twips(parse_length_str(col_widths))
+
+  is_udf <- is.na(col_widths$value) & is.na(col_widths$unit)
+  is_abs <- !is_udf & col_widths$unit == "tw"
+  is_pct <- !is_udf & col_widths$unit == "%"
+
+  stopifnot(all(is_abs | is_pct | is_udf))
+
+  twips_used <- sum(col_widths$value[is_abs])
+  twips_remaining <- max(0, table_width$value - twips_used)
+
+  col_widths$value[is_pct] <- twips_remaining * col_widths$value[is_pct] / 100
+  col_widths$unit[is_pct] <- "tw"
+
+  twips_remaining <- max(0, table_width$value - sum(na.omit(col_widths$value)))
+
+  col_widths$value[is_udf] <- twips_remaining / sum(is_udf)
+  col_widths$unit[is_udf] <- "tw"
+
+  if (sum(col_widths$value) != table_width$value) {
+
+    col_widths$value <-
+      col_widths$value / (sum(col_widths$value) / table_width$value)
+  }
+
+  col_widths[["value"]]
+}
+
 rtf_tbl_row <- function(x,
                         widths = NULL,
                         height = NULL,
@@ -663,10 +791,6 @@ as_rtf_string <- function(x) {
   )
 }
 
-# This is the assumed width of the area within page
-# margins in a default Word document
-standard_width_twips <- 9468L
-
 #
 # Table Header
 #
@@ -681,10 +805,22 @@ create_heading_component_rtf <- function(data) {
   heading <- dt_heading_get(data)
   footnotes_tbl <- dt_footnotes_get(data)
 
+  # Get table width
+  table_width <- dt_options_get_value(data = data, option = "table_width")
+  col_widths <- table_width
+  table_width <-
+    col_width_resolver_rtf(
+      table_width = table_width,
+      col_widths = col_widths,
+      n_cols = 1
+    )
+
   # Get table options
   table_font_color <- dt_options_get_value(data, option = "table_font_color")
   table_border_top_include <- dt_options_get_value(data, option = "table_border_top_include")
   table_border_top_color <- dt_options_get_value(data, option = "table_border_top_color")
+
+
   if ("title" %in% footnotes_tbl$locname) {
     footnote_title_marks <- footnotes_tbl %>% coalesce_marks(locname = "title")
     footnote_title_marks <- footnote_title_marks$fs_id_c
@@ -742,6 +878,7 @@ create_heading_component_rtf <- function(data) {
   list(
     rtf_tbl_row(
       tbl_cell,
+      widths = table_width,
       height = 0,
       repeat_header = TRUE
     )
@@ -775,6 +912,14 @@ create_columns_component_rtf <- function(data) {
     dplyr::filter(type == "default") %>%
     dplyr::pull(column_align)
 
+  # Obtain widths for each visible column label
+  col_widths <-
+    boxh %>%
+    dplyr::filter(type %in% c("default", "stub")) %>%
+    dplyr::arrange(dplyr::desc(type)) %>%
+    dplyr::pull(column_width) %>%
+    unlist()
+
   if (column_labels_hidden) {
     return(list())
   }
@@ -784,9 +929,14 @@ create_columns_component_rtf <- function(data) {
     col_alignment <- c("left", col_alignment)
   }
 
-  if (stubh_available) headings_labels[1] <- dt_stubhead_get(data = data) %>% .$label
+  if (stubh_available) {
+    headings_labels[1] <-
+      dt_stubhead_get(data = data) %>%
+      .$label
+  }
 
   if (spanners_present) {
+
     spanners <- dt_spanners_print(data = data, include_hidden = FALSE)
     spanner_ids <- dt_spanners_print(data = data, include_hidden = FALSE, ids = TRUE)
 
@@ -831,6 +981,16 @@ create_columns_component_rtf <- function(data) {
     spanners_list <- list()
   }
 
+  table_width <- dt_options_get_value(data = data, option = "table_width")
+
+  col_widths <-
+    col_width_resolver_rtf(
+      table_width = table_width,
+      col_widths = col_widths,
+      n_cols = length(headings_labels)
+    )
+
+
   cell_list <-
     lapply(
       seq_along(headings_labels),
@@ -852,14 +1012,34 @@ create_columns_component_rtf <- function(data) {
     )
 
   if (spanners_present) {
+
     row_list_column_labels <-
       list(
-        rtf_tbl_row(spanners_list, height = 0, repeat_header = TRUE),
-        rtf_tbl_row(cell_list, height = 0, repeat_header = TRUE)
+        rtf_tbl_row(
+          spanners_list,
+          widths = col_widths,
+          height = 0,
+          repeat_header = TRUE
+        ),
+        rtf_tbl_row(
+          cell_list,
+          widths = col_widths,
+          height = 0,
+          repeat_header = TRUE
+        )
       )
+
   } else {
+
     row_list_column_labels <-
-      list(rtf_tbl_row(cell_list, height = 0, repeat_header = TRUE))
+      list(
+        rtf_tbl_row(
+          cell_list,
+          widths = col_widths,
+          height = 0,
+          repeat_header = TRUE
+        )
+      )
   }
 
   # Return a list of RTF table rows (either one or two rows)
@@ -884,6 +1064,9 @@ create_body_component_rtf <- function(data) {
   groups_rows_df <- dt_groups_rows_get(data = data)
   stub_components <- dt_stub_components(data = data)
 
+  # Get the table width
+  table_width <- dt_options_get_value(data = data, option = "table_width")
+
   # Get table options
   row_group_border_top_color <- dt_options_get_value(data = data, option = "row_group_border_top_color")
   row_group_border_bottom_color <- dt_options_get_value(data = data, option = "row_group_border_bottom_color")
@@ -899,15 +1082,18 @@ create_body_component_rtf <- function(data) {
   row_group_labels <- groups_rows$group_label
   row_group_labels[is.na(row_group_labels)] <- ""
 
+  # Ensure that the columns are only the visible ones, and,
+  # that they are in order
+  body <- body %>% dplyr::select(dplyr::all_of(headings_vars))
+
+  n_cols <- ncol(body)
+  n_rows <- nrow(body)
+
   # Obtain alignments for each values in each visible column label
   col_alignment <-
     boxh %>%
     dplyr::filter(type == "default") %>%
     dplyr::pull(column_align)
-
-  # Ensure that the columns are only the visible ones, and,
-  # that they are in order
-  body <- body %>% dplyr::select(dplyr::all_of(headings_vars))
 
   if (stub_available) {
 
@@ -920,10 +1106,24 @@ create_body_component_rtf <- function(data) {
       )
 
     col_alignment <- c("left", col_alignment)
+    n_cols <- n_cols + 1
   }
 
-  n_cols <- ncol(body)
-  n_rows <- nrow(body)
+  # Obtain widths for each visible column label
+  col_widths <-
+    boxh %>%
+    dplyr::filter(type %in% c("default", "stub")) %>%
+    dplyr::arrange(dplyr::desc(type)) %>%
+    dplyr::pull(column_width) %>%
+    unlist()
+
+  col_widths <-
+    col_width_resolver_rtf(
+      table_width = table_width,
+      col_widths = col_widths,
+      n_cols = length(col_alignment)
+    )
+
   row_list_body <- list()
 
   for (i in seq_len(n_rows)) {
@@ -948,6 +1148,7 @@ create_body_component_rtf <- function(data) {
                 )
               )
             ),
+            widths = col_widths,
             height = 0
           )
         )
@@ -980,10 +1181,17 @@ create_body_component_rtf <- function(data) {
           borders = list(
             rtf_border(direction = "top", color = table_body_hlines_color)
           ),
+          widths = NULL, # TODO: use overall table width here
           height = 0
         )
     } else {
-      body_row <- rtf_tbl_row(cell_list, height = 0)
+
+      body_row <-
+        rtf_tbl_row(
+          cell_list,
+          widths = col_widths,
+          height = 0
+        )
     }
 
     row_list_body <- c(row_list_body, body_row)
@@ -1038,7 +1246,11 @@ create_body_component_rtf <- function(data) {
           row_list_body <-
             c(
               row_list_body,
-              rtf_tbl_row(cell_list, height = 0)
+              rtf_tbl_row(
+                cell_list,
+                widths = col_widths,
+                height = 0
+              )
             )
         }
       }
@@ -1087,6 +1299,7 @@ create_body_component_rtf <- function(data) {
           row_list_body,
           rtf_tbl_row(
             cell_list,
+            widths = col_widths,
             height = 0,
             borders = list(
               rtf_border(
@@ -1119,6 +1332,16 @@ create_footnotes_component_rtf <- function(data) {
     row_list_footnotes <- list()
     return(row_list_footnotes)
   }
+
+  # Get table width
+  table_width <- dt_options_get_value(data = data, option = "table_width")
+  col_widths <- table_width
+  table_width <-
+    col_width_resolver_rtf(
+      table_width = table_width,
+      col_widths = col_widths,
+      n_cols = 1
+    )
 
   footnotes_tbl <-
     footnotes_tbl %>%
@@ -1159,7 +1382,11 @@ create_footnotes_component_rtf <- function(data) {
   }
 
   # Return a list of RTF table rows (a single row) for the footnotes section
-  rtf_tbl_row(list(rtf_tbl_cell(cell_list)), height = 0)
+  rtf_tbl_row(
+    list(rtf_tbl_cell(cell_list)),
+    widths = table_width,
+    height = 0
+  )
 }
 
 #
@@ -1175,6 +1402,16 @@ create_source_notes_component_rtf <- function(data) {
     row_list_source_notes <- list()
     return(row_list_source_notes)
   }
+
+  # Get table width
+  table_width <- dt_options_get_value(data = data, option = "table_width")
+  col_widths <- table_width
+  table_width <-
+    col_width_resolver_rtf(
+      table_width = table_width,
+      col_widths = col_widths,
+      n_cols = 1
+    )
 
   n_source_notes <- length(source_notes)
   row_list_source_notes <- list()
@@ -1194,5 +1431,9 @@ create_source_notes_component_rtf <- function(data) {
   }
 
   # Return a list of RTF table rows (a single row) for the source notes section
-  rtf_tbl_row(list(rtf_tbl_cell(cell_list)), height = 0)
+  rtf_tbl_row(
+    list(rtf_tbl_cell(cell_list)),
+    widths = table_width,
+    height = 0
+  )
 }
