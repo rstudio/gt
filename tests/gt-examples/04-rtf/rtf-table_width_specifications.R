@@ -22,13 +22,13 @@ gt_tbl <-
 # All columns are variable (equal widths unless
 # content in some columns causes width expansion)
 gt_tbl %>%
-  tab_options(table.width = px(600)) %>%
+  tab_options(table.width = px(400)) %>%
   gtsave("tests/gt-examples/rtf_output/col_widths_1_1.rtf")
 
 
 # (2) PX
 # Define all columns in terms of px values;
-# the overall table width of 600px is respected
+# the overall table width of 400px is respected
 # (of px values will act as proportions of width,
 # as long as their sum isn't greater than the
 # overall table width)
@@ -36,7 +36,7 @@ gt_tbl %>%
   cols_width(
     everything() ~ px(100)
   ) %>%
-  tab_options(table.width = px(600)) %>%
+  tab_options(table.width = px(400)) %>%
   gtsave("tests/gt-examples/rtf_output/col_widths_1_2.rtf")
 
 
@@ -49,7 +49,7 @@ gt_tbl %>%
     vars(num) ~ px(120),
     vars(char) ~ px(140)
   ) %>%
-  tab_options(table.width = px(600)) %>%
+  tab_options(table.width = px(400)) %>%
   gtsave("tests/gt-examples/rtf_output/col_widths_1_3.rtf")
 
 
@@ -61,7 +61,7 @@ gt_tbl %>%
   cols_width(
     everything() ~ pct(30)
   ) %>%
-  tab_options(table.width = px(600)) %>%
+  tab_options(table.width = px(400)) %>%
   gtsave("tests/gt-examples/rtf_output/col_widths_1_4.rtf")
 
 
@@ -74,7 +74,7 @@ gt_tbl %>%
     vars(row) ~ pct(5), # this is the stub column
     vars(char) ~ pct(10)
   ) %>%
-  tab_options(table.width = px(600)) %>%
+  tab_options(table.width = px(400)) %>%
   gtsave("tests/gt-examples/rtf_output/col_widths_1_5.rtf")
 
 
@@ -91,7 +91,7 @@ gt_tbl %>%
     vars(char) ~ pct(10),
     vars(datetime) ~ pct(10)
   ) %>%
-  tab_options(table.width = px(600)) %>%
+  tab_options(table.width = px(400)) %>%
   gtsave("tests/gt-examples/rtf_output/col_widths_1_6.rtf")
 
 
@@ -106,7 +106,7 @@ gt_tbl %>%
     vars(num) ~ px(100),
     vars(char) ~ pct(50)
   ) %>%
-  tab_options(table.width = px(600)) %>%
+  tab_options(table.width = px(400)) %>%
   gtsave("tests/gt-examples/rtf_output/col_widths_1_7.rtf")
 
 
@@ -133,14 +133,14 @@ gt_tbl %>%
 # (of px values will act as proportions of width,
 # as long as their sum isn't greater than the
 # overall table width)
-gt_tbl %>% # TODO: widths are not stretched to 600px
+gt_tbl %>%
   cols_width(
     everything() ~ px(120)
   ) %>%
   tab_options(table.width = pct(100)) %>%
   gtsave("tests/gt-examples/rtf_output/col_widths_2_2a.rtf")
 
-gt_tbl %>% # TODO: widths are not stretched to 600px
+gt_tbl %>%
   cols_width(
     everything() ~ px(120)
   ) %>%
