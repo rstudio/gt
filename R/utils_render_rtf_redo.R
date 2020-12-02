@@ -250,6 +250,10 @@ twip_factors <-
     `cm` = 566.9291, `mm` = 56.69291, `tw` = 1
   )
 
+# Input: character vector of any length. Valid values are numbers with
+# suffix of in, pt, px, cm, mm, tw; you can also include `""`.
+# Output: data frame with columns `value` and `unit`, with NA for both
+# if input element was `""`. Unparseable values throw errors.
 parse_length_str <- function(lengths_vec) {
 
   if (length(lengths_vec) == 1 && lengths_vec == "auto") {
