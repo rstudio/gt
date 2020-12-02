@@ -817,20 +817,40 @@ create_heading_component_rtf <- function(data) {
       !dt_heading_has_subtitle(data = data)) {
     return(list())
   }
-
   # Get table components and metadata using the `data`
+  boxh <- dt_boxhead_get(data)
   heading <- dt_heading_get(data)
   footnotes_tbl <- dt_footnotes_get(data)
 
   # Get table width
   table_width <- dt_options_get_value(data = data, option = "table_width")
-  col_widths <- table_width
-  table_width <-
+
+  # Obtain widths for each visible column label
+  col_widths <-
+    boxh %>%
+    dplyr::filter(type %in% c("default", "stub")) %>%
+    dplyr::arrange(dplyr::desc(type)) %>%
+    dplyr::pull(column_width) %>%
+    unlist()
+
+  if (is.null(col_widths)) {
+
+     n_cols <-
+       boxh %>%
+       dplyr::filter(type %in% c("default", "stub")) %>%
+       nrow()
+
+     col_widths <- rep("100%", n_cols)
+  }
+
+  col_widths <-
     col_width_resolver_rtf(
       table_width = table_width,
       col_widths = col_widths,
-      n_cols = 1
+      n_cols = length(col_widths)
     )
+
+  table_width <- sum(col_widths)
 
   # Get table options
   table_font_color <- dt_options_get_value(data, option = "table_font_color")
@@ -1340,6 +1360,8 @@ create_body_component_rtf <- function(data) {
 #
 create_footnotes_component_rtf <- function(data) {
 
+  boxh <- dt_boxhead_get(data)
+
   # Get table components and metadata using the `data`
   footnotes_tbl <- dt_footnotes_get(data)
 
@@ -1352,13 +1374,33 @@ create_footnotes_component_rtf <- function(data) {
 
   # Get table width
   table_width <- dt_options_get_value(data = data, option = "table_width")
-  col_widths <- table_width
-  table_width <-
+
+  # Obtain widths for each visible column label
+  col_widths <-
+    boxh %>%
+    dplyr::filter(type %in% c("default", "stub")) %>%
+    dplyr::arrange(dplyr::desc(type)) %>%
+    dplyr::pull(column_width) %>%
+    unlist()
+
+  if (is.null(col_widths)) {
+
+    n_cols <-
+      boxh %>%
+      dplyr::filter(type %in% c("default", "stub")) %>%
+      nrow()
+
+    col_widths <- rep("100%", n_cols)
+  }
+
+  col_widths <-
     col_width_resolver_rtf(
       table_width = table_width,
       col_widths = col_widths,
-      n_cols = 1
+      n_cols = length(col_widths)
     )
+
+  table_width <- sum(col_widths)
 
   footnotes_tbl <-
     footnotes_tbl %>%
@@ -1411,6 +1453,8 @@ create_footnotes_component_rtf <- function(data) {
 #
 create_source_notes_component_rtf <- function(data) {
 
+  boxh <- dt_boxhead_get(data)
+
   # Get table components and metadata using the `data`
   source_notes <- dt_source_notes_get(data)
 
@@ -1422,13 +1466,33 @@ create_source_notes_component_rtf <- function(data) {
 
   # Get table width
   table_width <- dt_options_get_value(data = data, option = "table_width")
-  col_widths <- table_width
-  table_width <-
+
+  # Obtain widths for each visible column label
+  col_widths <-
+    boxh %>%
+    dplyr::filter(type %in% c("default", "stub")) %>%
+    dplyr::arrange(dplyr::desc(type)) %>%
+    dplyr::pull(column_width) %>%
+    unlist()
+
+  if (is.null(col_widths)) {
+
+    n_cols <-
+      boxh %>%
+      dplyr::filter(type %in% c("default", "stub")) %>%
+      nrow()
+
+    col_widths <- rep("100%", n_cols)
+  }
+
+  col_widths <-
     col_width_resolver_rtf(
       table_width = table_width,
       col_widths = col_widths,
-      n_cols = 1
+      n_cols = length(col_widths)
     )
+
+  table_width <- sum(col_widths)
 
   n_source_notes <- length(source_notes)
   row_list_source_notes <- list()
