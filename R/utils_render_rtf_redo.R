@@ -254,7 +254,7 @@ twip_factors <-
 # suffix of in, pt, px, cm, mm, tw; you can also include `""`.
 # Output: data frame with columns `value` and `unit`, with NA for both
 # if input element was `""`. Unparseable values throw errors.
-parse_length_str <- function(lengths_vec) {
+parse_length_str <- function(lengths_vec, allow_negative = TRUE) {
 
   if (length(lengths_vec) == 1 && lengths_vec == "auto") {
     lengths_vec <- paste0(standard_width_twips, "tw")
@@ -278,6 +278,8 @@ parse_length_str <- function(lengths_vec) {
       NA_character_
     }
   }, character(1))
+
+  # TODO: check for negative values if !allow_negative
 
   bad_values <- nzchar(lengths_vec) & is.na(vals)
 
@@ -356,22 +358,32 @@ col_width_resolver_rtf <- function(table_width,
 
   twips_used <- sum(col_widths$value[is_abs])
   twips_remaining <- max(0, table_width$value - twips_used)
+  # 1 - [fraction used by absolute lengths]
+  fraction_remaining <- max(0, twips_remaining / table_width$value)
 
-  col_widths$value[is_pct] <- twips_remaining * col_widths$value[is_pct] / 100
-  col_widths$unit[is_pct] <- "tw"
+  # fraction_remaining -= [fraction used by explicit percentages]
+  fraction_remaining <- max(0, fraction_remaining - (sum(col_widths$value[is_pct]) / 100))
 
-  twips_remaining <- max(0, table_width$value - sum(na.omit(col_widths$value)))
+  # Distribute fraction_remaining among undefined-width cols
+  col_widths$value[is_udf] <- (fraction_remaining / sum(is_udf) * 100)
+  col_widths$unit[is_udf] <- "%"
+  is_pct <- is_pct | is_udf
+  is_udf <- is_udf & FALSE
 
-  col_widths$value[is_udf] <- twips_remaining / sum(is_udf)
-  col_widths$unit[is_udf] <- "tw"
-
-  if (sum(col_widths$value) != table_width$value) {
-
-    col_widths$value <-
-      col_widths$value / (sum(col_widths$value) / table_width$value)
+  pct_used <- sum(col_widths$value[is_pct])
+  # Avoid divide-by-zero
+  if (pct_used != 0) {
+    # Normalize pct to add up to 100
+    col_widths$value[is_pct] <- col_widths$value[is_pct] * (100 / pct_used)
   }
 
-  col_widths[["value"]]
+  # Convert % to tw
+  col_widths$value[is_pct] <- twips_remaining * col_widths$value[is_pct] / 100
+  col_widths$unit[is_pct] <- "tw"
+  is_abs <- is_abs | TRUE
+  is_pct <- is_pct & FALSE
+
+  round(col_widths[["value"]])
 }
 
 rtf_tbl_row <- function(x,
