@@ -312,15 +312,17 @@ abs_len_to_twips <- function(lengths_df) {
 col_width_resolver_rtf <- function(table_width,
                                    col_widths,
                                    n_cols) {
+  stopifnot(length(table_width) == 1)
 
-  if (table_width == "auto" && is.null(col_widths)) {
-    return(rep(standard_width_twips / n_cols, n_cols))
+  if (table_width == "auto") {
+    table_width <- paste0(standard_width_twips, "tw")
+  }
+
+  if (is.null(col_widths)) {
+    col_widths <- rep_len("", n_cols)
   }
 
   table_width <- abs_len_to_twips(parse_length_str(table_width))
-
-  # Should stop if row count of `table_width` isn't 1
-  stopifnot(nrow(table_width) == 1)
 
   # For a table width set as a percentage, convert it to twips
   # using the assumed width of a table set in a page
