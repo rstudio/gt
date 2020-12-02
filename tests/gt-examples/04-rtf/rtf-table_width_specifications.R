@@ -7,8 +7,8 @@ library(tidyverse)
 
 gt_tbl <-
   exibble %>%
-  dplyr::select(num, char, datetime, row) %>%
-  gt(rowname_col = "row") %>%
+  dplyr::select(num, char, datetime, row, group) %>%
+  gt(rowname_col = "row", groupname_col = "group") %>%
   tab_header(title = "Table Title", subtitle = "Table Subtitle") %>%
   tab_source_note(source_note = "Table Source Note") %>%
   tab_footnote(footnote = "Table Footnote", locations = cells_title("title"))
