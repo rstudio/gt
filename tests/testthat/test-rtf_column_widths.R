@@ -6,14 +6,21 @@ test_that("column widths are expressed correctly for RTF", {
     paste0(x, "tw")
   }
 
-  # col_width_resolver_rtf(
-  #   table_width,
-  #   col_widths,
-  #   n_cols
-  # )
+  expect_error(
+    col_width_resolver_rtf(
+      table_width = "-1tw",
+      col_widths = "1tw",
+      n_cols = 1
+    )
+  )
 
-  expect_error(col_width_resolver_rtf(table_width = "-1tw", col_widths = "1tw", n_cols = 1))
-  expect_error(col_width_resolver_rtf(table_width = "1tw", col_widths = "-1tw", n_cols = 1))
+  expect_error(
+    col_width_resolver_rtf(
+      table_width = "1tw",
+      col_widths = "-1tw",
+      n_cols = 1
+    )
+  )
 
   expect_identical(
     col_width_resolver_rtf(
@@ -24,7 +31,6 @@ test_that("column widths are expressed correctly for RTF", {
     c(3156, 3156, 3156)
   )
 
-  # rounding
   expect_identical(
     col_width_resolver_rtf(
       table_width = "1000tw",
