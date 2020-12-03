@@ -240,10 +240,7 @@ rtf_table <- function(rows) {
   rtf_raw(paste(unlist(rows), collapse = ""))
 }
 
-# This is the assumed width of the area within page
-# margins in a default Word document
-standard_width_twips <- 9468L
-
+# Conversion factors from absolute width units to twips (`tw`)
 twip_factors <-
   c(
     `in` = 1440, `pt` = 20, `px` = 15,
@@ -253,7 +250,7 @@ twip_factors <-
 # Input: character vector of any length. Valid values are numbers with
 # suffix of in, pt, px, cm, mm, tw; you can also include `""`.
 # Output: data frame with columns `value` and `unit`, with NA for both
-# if input element was `""`. Unparseable values throw errors.
+# if input element was `""`. Values that cannot be parsed will throw errors.
 parse_length_str <- function(lengths_vec,
                              allow_negative = FALSE) {
 
@@ -332,10 +329,12 @@ col_width_resolver_rtf <- function(table_width,
                                    col_widths,
                                    n_cols) {
 
+  rtf_page_width <- getOption("gt.rtf_page_width")
+
   stopifnot(length(table_width) == 1)
 
   if (table_width == "auto") {
-    table_width <- paste0(standard_width_twips, "tw")
+    table_width <- paste0(rtf_page_width, "tw")
   }
 
   if (is.null(col_widths)) {
@@ -348,7 +347,7 @@ col_width_resolver_rtf <- function(table_width,
   # using the assumed width of a table set in a page
   if (table_width$unit == "%") {
 
-    table_width$value <- (table_width$value / 100) * standard_width_twips
+    table_width$value <- (table_width$value / 100) * rtf_page_width
     table_width$unit <- "tw"
   }
 
@@ -406,6 +405,8 @@ rtf_tbl_row <- function(x,
                         borders = NULL,
                         repeat_header = FALSE) {
 
+  rtf_page_width <- getOption("gt.rtf_page_width")
+
   if (is.list(x)) x <- unlist(x)
 
   cell_count <- length(x)
@@ -413,7 +414,7 @@ rtf_tbl_row <- function(x,
   if (!is.null(widths)) {
     widths_twips <- cumsum(widths)
   } else {
-    widths_twips <- cumsum(rep(standard_width_twips / cell_count, cell_count))
+    widths_twips <- cumsum(rep(rtf_page_width / cell_count, cell_count))
   }
 
   if (is.null(height)) height <- 425
