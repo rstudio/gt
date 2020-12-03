@@ -254,11 +254,8 @@ twip_factors <-
 # suffix of in, pt, px, cm, mm, tw; you can also include `""`.
 # Output: data frame with columns `value` and `unit`, with NA for both
 # if input element was `""`. Unparseable values throw errors.
-parse_length_str <- function(lengths_vec, allow_negative = TRUE) {
-
-  if (length(lengths_vec) == 1 && lengths_vec == "auto") {
-    lengths_vec <- paste0(standard_width_twips, "tw")
-  }
+parse_length_str <- function(lengths_vec,
+                             allow_negative = FALSE) {
 
   match <- regexec("^([0-9.-]+)(%|[a-z]+)$", lengths_vec)
   match <- regmatches(lengths_vec, match)
@@ -279,14 +276,30 @@ parse_length_str <- function(lengths_vec, allow_negative = TRUE) {
     }
   }, character(1))
 
-  # TODO: check for negative values if !allow_negative
+  # Check for negative values and stop of `allow_negative = FALSE`
+  non_na_vals <- vals[!is.na(vals)]
+  if (!allow_negative &&
+      length(non_na_vals > 0) &&
+      any(!is.na(non_na_vals)) &&
+      is.numeric(non_na_vals) &&
+      any(non_na_vals < 0)) {
 
+    stop("Negative values supplied to widths cannot be used",
+         call. = FALSE)
+  }
+
+  # Check for bad values and stop if necessary
   bad_values <- nzchar(lengths_vec) & is.na(vals)
-
   if (any(bad_values)) {
+
+    bad_values <- lengths_vec[nzchar(lengths_vec) & is.na(vals)]
+
     stop(
-      "Some of the values supplied as absolute lengths cannot be interpreted:\n",
-      "* Use either of: `px`, `pt`, `in`, `cm`, `mm`, or `tw`.",
+      "Some of the values supplied cannot be interpreted:\n",
+      "* Problem values are: ",
+      str_catalog(bad_values, surround = c("\"")), "\n",
+      "* Use either of: `px`, `pt`, `in`, `cm`, `mm`, or `tw` ",
+      "(e.g., \"12px\")",
       call. = FALSE
     )
   }
@@ -318,6 +331,7 @@ abs_len_to_twips <- function(lengths_df) {
 col_width_resolver_rtf <- function(table_width,
                                    col_widths,
                                    n_cols) {
+
   stopifnot(length(table_width) == 1)
 
   if (table_width == "auto") {
