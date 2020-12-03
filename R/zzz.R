@@ -120,6 +120,7 @@ NULL
 
 gt_default_options <- list(
   gt.row_group.sep = " - ",
+  gt.rtf_page_width = 9468L,
   gt.html_tag_check = TRUE
 )
 
