@@ -281,7 +281,7 @@ parse_length_str <- function(lengths_vec,
       is.numeric(non_na_vals) &&
       any(non_na_vals < 0)) {
 
-    stop("Negative values supplied to widths cannot be used",
+    stop("Negative values supplied to widths cannot be used.",
          call. = FALSE)
   }
 
