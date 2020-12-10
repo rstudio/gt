@@ -16,6 +16,8 @@ render_as_html <- function(data) {
   # Upgrade `_styles` to gain a `html_style` column with CSS style rules
   data <- add_css_styles(data = data)
 
+  caption_component <- create_caption_component_h(data = data)
+
   # Create the heading component
   heading_component <- create_heading_component(data = data, context = "html")
 
@@ -39,6 +41,7 @@ render_as_html <- function(data) {
     htmltools::tags$table(
       class = "gt_table",
       style = table_defs$table_style,
+      caption_component,
       table_defs$table_colgroups,
       heading_component,
       columns_component,

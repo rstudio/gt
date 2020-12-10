@@ -88,6 +88,7 @@ tab_2 <-
 Other Modify Columns: 
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
+\code{\link{cols_merge_n_pct}()},
 \code{\link{cols_merge_range}()},
 \code{\link{cols_merge_uncert}()},
 \code{\link{cols_merge}()},

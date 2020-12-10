@@ -50,6 +50,7 @@ dt_options_tbl <-
     "container_overflow_x",              FALSE,  "container",        "overflow","auto",
     "container_overflow_y",              FALSE,  "container",        "overflow","auto",
     "table_id",                          FALSE,  "table",            "value",   NA_character_,
+    "table_caption",                     FALSE,  "table",            "value",   NULL,
     "table_width",                        TRUE,  "table",            "px",      "auto",
     "table_layout",                       TRUE,  "table",            "value",   "fixed",
     "table_margin_left",                  TRUE,  "table",            "px",      "auto",

@@ -90,6 +90,7 @@ Collate:
     'helpers.R'
     'image.R'
     'info_tables.R'
+    'knitr-utils.R'
     'location_methods.R'
     'modify_columns.R'
     'modify_rows.R'

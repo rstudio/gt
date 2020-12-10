@@ -56,11 +56,11 @@ missing values for the merged column (e.g., \code{NA} + \code{NA} =
 Any resulting \code{NA} values in the \code{col_val} column following the merge
 operation can be easily formatted using the \code{\link[=fmt_missing]{fmt_missing()}} function.
 
-This function is part of a set of three column-merging functions. The other
+This function is part of a set of four column-merging functions. The other
 two are the general \code{\link[=cols_merge]{cols_merge()}} function and the specialized
-\code{\link[=cols_merge_range]{cols_merge_range()}} function. These functions operate similarly, where the
-non-target columns can be optionally hidden from the output table through the
-\code{hide_columns} or \code{autohide} options.
+\code{\link[=cols_merge_range]{cols_merge_range()}} and \code{\link[=cols_merge_n_pct]{cols_merge_n_pct()}} functions. These functions
+operate similarly, where the non-target columns can be optionally hidden from
+the output table through the \code{hide_columns} or \code{autohide} options.
 }
 \section{Figures}{
 
@@ -102,6 +102,7 @@ Other Modify Columns:
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
 \code{\link{cols_label}()},
+\code{\link{cols_merge_n_pct}()},
 \code{\link{cols_merge_range}()},
 \code{\link{cols_merge}()},
 \code{\link{cols_move_to_end}()},
