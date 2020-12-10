@@ -280,16 +280,32 @@ tab_spanner_delim <- function(data,
 #'
 #' Create a row group with a collection of rows. This requires specification of
 #' the rows to be included, either by supplying row labels, row indices, or
-#' through use of a select helper function like `starts_with()`.
+#' through use of a select helper function like [starts_with()].
 #'
 #' @inheritParams fmt_number
-#' @param group The name of the row group. This text will also serve as the row
-#'   group label.
+#' @param label The text to use for the row group label.
 #' @param rows The rows to be made components of the row group. Can either be a
 #'   vector of row captions provided in `c()`, a vector of row indices, or a
 #'   helper function focused on selections. The select helper functions are:
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()], and
 #'   [everything()].
+#' @param id The ID for the row group. When accessing a row group through
+#'   [cells_row_groups()] (when using [tab_style()] or [tab_footnote()]) the
+#'   `id` value is used as the reference (and not the `label`). If an `id` is
+#'   not explicitly provided here, it will be taken from the `label` value. It
+#'   is advisable to set an explicit `id` value if you plan to access this cell
+#'   in a later function call and the label text is complicated (e.g., contains
+#'   markup, is lengthy, or both). Finally, when providing an `id` value you
+#'   must ensure that it is unique across all ID values set for row groups (the
+#'   function will stop if `id` isn't unique).
+#' @param others An option to set a default row group label for any rows not
+#'   formally placed in a row group named by `group` in any call of
+#'   `tab_row_group()`. A separate call to `tab_row_group()` with only a value
+#'   to `others` is possible and makes explicit that the call is meant to
+#'   provide a default row group label. If this is not set and there are rows
+#'   that haven't been placed into a row group (where one or more row groups
+#'   already exist), those rows will be automatically placed into a row group
+#'   without a label.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -304,7 +320,7 @@ tab_spanner_delim <- function(data,
 #'   dplyr::slice(1:8) %>%
 #'   gt(rowname_col = "model") %>%
 #'   tab_row_group(
-#'     group = "numbered",
+#'     label = "numbered",
 #'     rows = matches("^[0-9]")
 #'   )
 #'
@@ -319,11 +335,11 @@ tab_spanner_delim <- function(data,
 #'   dplyr::slice(1:8) %>%
 #'   gt(rowname_col = "model") %>%
 #'   tab_row_group(
-#'     group = "powerful",
+#'     label = "powerful",
 #'     rows = hp <= 600
 #'   ) %>%
 #'   tab_row_group(
-#'     group = "super powerful",
+#'     label = "super powerful",
 #'     rows = hp > 600
 #'   )
 #'
@@ -344,14 +360,12 @@ tab_row_group <- function(data,
                           id = label,
                           others = NULL) {
 
-  # TODO: add the function `others()` to be used in `rows`; the
-  # idea to create a formal group of rows with any rows that are
-  # not incorporated in other groups; I'm hoping this will be
+  # TODO: consider adding the function `others()` to be used in
+  # `rows`; the idea to create a formal group of rows with any rows
+  # that are not incorporated in other groups; I'm hoping this will be
   # less confusing than using the `others` argument here and that
   # this will have the effect of popularizing the use of the
   # `tab_row_group()` function
-  # - on the flipside, consider using the tidyselect function
-  #   `everything()` for this
 
   # Perform input object validation
   stop_if_not_gt(data = data)
