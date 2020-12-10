@@ -33,6 +33,28 @@ unicode_tbl <-
 
 unicode_tbl %>% gtsave("tests/gt-examples/rtf_output/unicode.rtf")
 
+
+# Create a display table based on `exibble` that verifies that
+# row groups can be generated via `tab_row_group()`
+tab_row_group_tbl <-
+  exibble %>%
+  gt() %>%
+  tab_row_group(
+    label = "The First Group",
+    rows = group == "grp_a",
+    id = "group_1"
+  ) %>%
+  tab_row_group(
+    label = "The Second Group",
+    rows = group != "grp_a",
+    id = "group_2"
+  ) %>%
+  row_group_order(
+    groups = c("group_1", "group_2")
+  )
+
+tab_row_group_tbl %>% gtsave("tests/gt-examples/rtf_output/tab_row_group_tbl.rtf")
+
 # Create a display table based on `iris`
 iris_tbl <-
   gt(data = iris) %>%

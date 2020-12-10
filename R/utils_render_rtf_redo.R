@@ -895,7 +895,7 @@ create_body_component_rtf <- function(data) {
 
   headings_vars <- boxh %>% dplyr::filter(type == "default") %>% dplyr::pull(var)
   row_groups_present <- nrow(groups_rows) > 0
-  row_group_rows <- groups_rows$row
+  row_group_rows <- groups_rows$row_start
   row_group_labels <- groups_rows$group_label
   row_group_labels[is.na(row_group_labels)] <- ""
 
