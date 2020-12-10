@@ -290,14 +290,6 @@ tab_spanner_delim <- function(data,
 #'   helper function focused on selections. The select helper functions are:
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()], and
 #'   [everything()].
-#' @param others An option to set a default row group label for any rows not
-#'   formally placed in a row group named by `group` in any call of
-#'   `tab_row_group()`. A separate call to `tab_row_group()` with only a value
-#'   to `others` is possible and makes explicit that the call is meant to
-#'   provide a default row group label. If this is not set and there are rows
-#'   that haven't been placed into a row group (where one or more row groups
-#'   already exist), those rows will be automatically placed into a row group
-#'   without a label.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -347,9 +339,19 @@ tab_spanner_delim <- function(data,
 #' @import rlang
 #' @export
 tab_row_group <- function(data,
-                          group = NULL,
+                          label = NULL,
                           rows = NULL,
+                          id = label,
                           others = NULL) {
+
+  # TODO: add the function `others()` to be used in `rows`; the
+  # idea to create a formal group of rows with any rows that are
+  # not incorporated in other groups; I'm hoping this will be
+  # less confusing than using the `others` argument here and that
+  # this will have the effect of popularizing the use of the
+  # `tab_row_group()` function
+  # - on the flipside, consider using the tidyselect function
+  #   `everything()` for this
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -359,8 +361,8 @@ tab_row_group <- function(data,
   # Capture the `rows` expression
   row_expr <- rlang::enquo(rows)
 
-  # Create a row group if a `group` is provided
-  if (!is.null(group)) {
+  # Create a row group if a `label` is provided
+  if (!is.null(label)) {
 
     # Get the `stub_df` data frame from `data`
     stub_df <- dt_stub_df_get(data = data)
@@ -374,21 +376,29 @@ tab_row_group <- function(data,
         vals = stub_df$rowname
       )
 
-    # Place the `group` label in the `groupname` column `stub_df`
     stub_df <- dt_stub_df_get(data = data)
 
-    stub_df[resolved_rows_idx, "groupname"] <- process_text(group[1])
+    # Place the `label` in the `groupname` column `stub_df`
+    stub_df[resolved_rows_idx, "group_label"] <- process_text(label[1])
+    stub_df[resolved_rows_idx, "groupname"] <- id
 
     data <- dt_stub_df_set(data = data, stub_df = stub_df)
 
+    # Set the `_row_groups` vector here with the group id; new groups will
+    # be placed at the front, pushing down `NA` (the 'Others' group)
     if (dt_stub_groupname_has_na(data = data)) {
 
+      # This is the case where there is at least one row not yet
+      # associated with a row group (even after the alteration to the `_stub_df`
+      # object above); we have to preserve an NA at the end of the
+      # `arrange_groups_vars` vector to indicate that there still is an
+      # 'Others' group (i.e., a group of rows with no formal group membership)
       data <-
         dt_row_groups_set(
           data = data,
           row_groups = unique(
             c(
-              process_text(group[1]),
+              id, # we are moving away from using the label
               arrange_groups_vars,
               NA_character_
             )
@@ -402,7 +412,7 @@ tab_row_group <- function(data,
           data = data,
           row_groups = unique(
             c(
-              process_text(group[1]),
+              id, # we are moving away from using the label
               arrange_groups_vars
             )
           )

@@ -388,7 +388,7 @@ test_that("a gt table contains the correct placement of row groups", {
   tbl_html <-
     gt(mtcars, rownames_to_stub = TRUE) %>%
     tab_row_group(
-      group = "Mazda",
+      label = "Mazda",
       rows = c("Mazda RX4", "Mazda RX4 Wag")
     ) %>%
     render_as_html() %>%
@@ -409,11 +409,11 @@ test_that("a gt table contains the correct placement of row groups", {
     mtcars %>%
     gt(rownames_to_stub = TRUE) %>%
     tab_row_group(
-      group = "Mercs",
+      label = "Mercs",
       rows = contains("Merc")
     ) %>%
     tab_row_group(
-      group = "Mazda",
+      label = "Mazda",
       rows = c("Mazda RX4", "Mazda RX4 Wag")
     ) %>%
     row_group_order(groups = c(NA, "Mazda", "Mercs")) %>%
@@ -483,11 +483,11 @@ test_that("a gt table contains custom styles at the correct locations", {
     cols_hide(columns = "mpg") %>%
     cols_hide(columns = "vs") %>%
     tab_row_group(
-      group = "Mercs",
+      label = "Mercs",
       rows = contains("Merc")
     ) %>%
     tab_row_group(
-      group = "Mazdas",
+      label = "Mazdas",
       rows = contains("Mazda")
     ) %>%
     tab_spanner(
@@ -598,7 +598,7 @@ test_that("a gt table contains custom styles at the correct locations", {
   # Expect that the stubhead label is styled
   tbl_html %>%
     rvest::html_nodes("[style='background-color: #0000FF; color: white;']") %>%
-    rvest::html_text("[class='gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left]") %>%
+    rvest::html_text("[class='gt_col_heading gt_columns_bottom_border gt_left]") %>%
     expect_equal("cars")
 
   # Expect that the data cell (`Mazda RX4`/`disp`) -> (1, 4) is styled
@@ -610,20 +610,19 @@ test_that("a gt table contains custom styles at the correct locations", {
   # Expect that the data cell (`Datsun 710`/`hp`) -> (1, 4) is styled
   tbl_html %>%
     rvest::html_nodes("[style='background-color: #D3D3D3; font-style: italic;']") %>%
-    rvest::html_text("[class='gt_row gt_center']") %>%
+    rvest::html_text("[class='gt_row gt_right']") %>%
     expect_equal("93")
 
   # Expect that the summary cell (`Mercs`::`sum`/`hp`) is styled
-  # TODO: this summary cell value is not correct (shows `885.00` instead of `943.00`)
-  # tbl_html %>%
-  #   rvest::html_nodes("[style='background-color: #00FF00FF; color: white;']") %>%
-  #   rvest::html_text("[class='gt_row gt_summary_row gt_center']") %>%
-  #   expect_equal("943.00")
+  tbl_html %>%
+    rvest::html_nodes("[style='background-color: #00FF00; color: white;']") %>%
+    rvest::html_text("[class='gt_row gt_right gt_summary_row']") %>%
+    expect_equal("943.00")
 
   # Expect that the grand summary cell (`sum`/`hp`) is styled
   tbl_html %>%
     rvest::html_nodes("[style='background-color: #A020F0; color: white;']") %>%
-    rvest::html_text("[class='gt_row gt_grand_summary_row gt_center']") %>%
+    rvest::html_text("[class='gt_row gt_grand_summary_row']") %>%
     expect_equal("4,694.00")
 
   # Expect that some column labels (e.g., `disp`, `wt`, etc.) are

@@ -3,35 +3,34 @@ library(gt)
 # Create a display table based on `mtcars`
 mtcars_tbl <-
   gt(mtcars, rownames_to_stub = TRUE) %>%
-  cols_align(
-    align = "right",
-    columns = vars(disp, vs)
-  ) %>%
   tab_spanner(
     label = md("*group_a*"),
-    columns = vars(mpg, cyl, disp, hp)
+    columns = vars(mpg, cyl, disp, hp),
+    id = "group_a"
   ) %>%
   tab_spanner(
     label = md("*group_b*"),
-    columns = vars(drat, wt, qsec, vs, am, gear, carb)
+    columns = vars(drat, wt, qsec, vs, am, gear, carb),
+    id = "group_b"
   ) %>%
   cols_move_to_start(columns = vars(hp)) %>%
   cols_move_to_end(columns = vars(am, gear)) %>%
   cols_hide(columns = vars(carb)) %>%
   cols_move(
     columns = vars(wt, qsec),
-    after = vars(gear)) %>%
+    after = vars(gear)
+  ) %>%
   tab_row_group(
-    group = "Mercs",
+    label = "Mercs",
     rows = c(
       "Merc 240D", "Merc 230", "Merc 280C", "Merc 280",
       "Merc 450SE", "Merc 450SL", "Merc 450SLC")
   ) %>%
   tab_row_group(
-    group = "Supercars",
+    label = "Supercars",
     rows = c("Ferrari Dino", "Maserati Bora", "Porsche 914-2", "Ford Pantera L")
   ) %>%
-  row_group_order(groups = c("Supercars", "Mercs")) %>%
+  row_group_order(groups = c("Mercs", "Supercars")) %>%
   fmt_number(
     columns = vars(disp, drat, wt),
     decimals = 2

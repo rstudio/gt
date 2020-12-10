@@ -742,7 +742,7 @@ create_body_component_h <- function(data) {
   column_series <- seq(n_cols)
 
   # Replace an NA group with an empty string
-  if (any(is.na(groups_rows_df$group))) {
+  if (any(is.na(groups_rows_df$group_label))) {
 
     groups_rows_df <-
       groups_rows_df %>%
@@ -796,16 +796,23 @@ create_body_component_h <- function(data) {
         #
         # Create a group heading row
         #
+        if (!is.null(groups_rows_df) && i %in% groups_rows_df$row_start) {
 
-        if (!is.null(groups_rows_df) && i %in% groups_rows_df$row) {
+          group_id <-
+            groups_rows_df[
+              which(groups_rows_df$row_start %in% i), "group_id"
+            ][[1]]
 
           group_label <-
-            groups_rows_df[which(groups_rows_df$row %in% i), "group_label"][[1]]
+            groups_rows_df[
+              which(groups_rows_df$row_start %in% i), "group_label"
+            ][[1]]
 
+          # TODO: Ensure that styling works on the basis of a `group_id`
           if (has_row_group_styles) {
 
             styles_row <-
-              styles_tbl_row_groups[styles_tbl_row_groups$grpname == group_label, ]
+              styles_tbl_row_groups[styles_tbl_row_groups$grpname == group_id, ]
 
             row_style <-
               if (nrow(styles_row) > 0) {
@@ -893,7 +900,10 @@ create_body_component_h <- function(data) {
             summaries_present &&
             i %in% groups_rows_df$row_end) {
 
-          group_id <- groups_rows_df[groups_rows_df$row_end == i, ][["group"]]
+          group_id <-
+            groups_rows_df[
+              groups_rows_df$row_end == i &
+                !is.na(groups_rows_df$row_end), ][["group_id"]]
 
           summary_section <-
             summary_row_tags(

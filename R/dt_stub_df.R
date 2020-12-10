@@ -22,7 +22,9 @@ dt_stub_df_init <- function(data,
     dplyr::tibble(
       rownum_i = seq_len(nrow(data_tbl)),
       groupname = rep(NA_character_, nrow(data_tbl)),
-      rowname = rep(NA_character_, nrow(data_tbl))
+      group_id = rep(NA_character_, nrow(data_tbl)),
+      rowname = rep(NA_character_, nrow(data_tbl)),
+      group_label = rep(NA_character_, nrow(data_tbl))
     )
 
   # If `rowname` is a column available in `data`,
@@ -43,18 +45,19 @@ dt_stub_df_init <- function(data,
       length(groupname_col) > 0 &&
       all(groupname_col %in% colnames(data_tbl))) {
 
-    row_group_labels <-
+    row_group_ids <-
       apply(
         data_tbl[, groupname_col],
         MARGIN = 1,
-        paste, collapse = row_group.sep
+        FUN = paste,
+        collapse = row_group.sep
       )
 
-    # Place the `group_labels` values into `stub_df$groupname`
-    stub_df[["groupname"]] <- row_group_labels
+    # Place the `group_labels` values into `stub_df$group_id`
+    stub_df[["groupname"]] <- row_group_ids
+    stub_df[["group_label"]] <- row_group_ids
 
     data <- data %>% dt_boxhead_set_row_group(vars = groupname_col)
-
   }
 
   # Stop if input `data` has no columns (after modifying

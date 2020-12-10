@@ -4,13 +4,10 @@
 \alias{tab_row_group}
 \title{Add a row group to a \strong{gt} table}
 \usage{
-tab_row_group(data, group = NULL, rows = NULL, others = NULL)
+tab_row_group(data, label = NULL, rows = NULL, id = label)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
-
-\item{group}{The name of the row group. This text will also serve as the row
-group label.}
 
 \item{rows}{The rows to be made components of the row group. Can either be a
 vector of row captions provided in \code{c()}, a vector of row indices, or a
@@ -18,14 +15,8 @@ helper function focused on selections. The select helper functions are:
 \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and
 \code{\link[=everything]{everything()}}.}
 
-\item{others}{An option to set a default row group label for any rows not
-formally placed in a row group named by \code{group} in any call of
-\code{tab_row_group()}. A separate call to \code{tab_row_group()} with only a value
-to \code{others} is possible and makes explicit that the call is meant to
-provide a default row group label. If this is not set and there are rows
-that haven't been placed into a row group (where one or more row groups
-already exist), those rows will be automatically placed into a row group
-without a label.}
+\item{group}{The name of the row group. This text will also serve as the row
+group label.}
 }
 \value{
 An object of class \code{gt_tbl}.

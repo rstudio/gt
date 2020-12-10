@@ -25,38 +25,53 @@ dt_groups_rows_build <- function(data, context) {
 
   groups_rows <-
     data.frame(
-      group = rep(NA_character_, length(ordering)),
-      group_label = rep(NA_character_, length(ordering)),
-      row = rep(NA_integer_, length(ordering)),
+      group_id = rep(NA_character_, length(ordering)),
+      row_start = rep(NA_integer_, length(ordering)),
       row_end = rep(NA_integer_, length(ordering)),
       stringsAsFactors = FALSE
     )
 
-  for (i in seq(ordering)) {
+  # Using the `ordering` vector (which contains `group_id`
+  # values), build the `groups_rows` table
+  for (i in seq_along(ordering)) {
 
-    if (!is.na(ordering[i])) {
+    if (!all(is.na(ordering[i]))) {
       rows_matched <- which(stub_df$groupname == ordering[i])
     } else {
       rows_matched <- which(is.na(stub_df$groupname))
     }
 
-    groups_rows[i, "group"] <- ordering[i]
-    groups_rows[i, "group_label"] <- ordering[i]
+    # If `rows_matched` is NA then go to next iteration
+    if (length(ordering[i]) < 1 ||
+        length(rows_matched) < 1) next
 
-    groups_rows[i, "row"] <- min(rows_matched)
+    groups_rows[i, "group_id"] <- ordering[i]
+    groups_rows[i, "row_start"] <- min(rows_matched)
     groups_rows[i, "row_end"] <- max(rows_matched)
   }
 
-  groups_rows <-
-    dplyr::mutate(groups_rows, group_label = process_text(group_label, context))
+  # Join `group_label` values to the `groups_rows` table and ensure that
+  # the `group_label` text is processed with `process_text()` in the
+  # current output `context`
 
   if (nrow(groups_rows) > 0) {
+
+    groups_rows <-
+      groups_rows %>%
+      dplyr::left_join(
+        stub_df %>%
+          dplyr::select(group_label, groupname) %>%
+          dplyr::distinct(),
+        by = c("group_id" = "groupname")
+      ) %>%
+      dplyr::select(group_id, group_label, dplyr::everything()) %>%
+      dplyr::mutate(group_label = process_text(group_label, context))
 
     others_group <- dt_stub_others_get(data = data) %||% NA_character_
 
     groups_rows[
-      is.na(groups_rows[, "group"]),
-      c("group", "group_label")] <- others_group
+      is.na(groups_rows[, "group_id"]),
+      c("group_id", "group_label")] <- others_group
   }
 
   data <- dt_groups_rows_set(data = data, groups_rows = groups_rows)

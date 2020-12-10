@@ -201,7 +201,7 @@ create_body_component_l <- function(data) {
   column_series <- seq(n_cols)
 
   # Replace an NA group with an empty string
-  if (any(is.na(groups_rows_df$group))) {
+  if (any(is.na(groups_rows_df$group_label))) {
 
     groups_rows_df <-
       groups_rows_df %>%

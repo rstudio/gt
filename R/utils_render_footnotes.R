@@ -81,7 +81,7 @@ resolve_footnotes_styles <- function(data,
           dplyr::filter(tbl, locname != "row_groups"),
           tbl %>%
             dplyr::filter(locname == "row_groups") %>%
-            dplyr::filter(grpname %in% groups_rows_df$group)
+            dplyr::filter(grpname %in% groups_rows_df$group_id)
         )
     }
 
@@ -139,11 +139,11 @@ resolve_footnotes_styles <- function(data,
       dplyr::filter(locname == "row_groups") %>%
       dplyr::inner_join(
         groups_rows_df %>% dplyr::select(-group_label),
-        by = c("grpname" = "group")
+        by = c("grpname" = "group_id")
       ) %>%
-      dplyr::mutate(rownum = row - 0.1) %>%
+      dplyr::mutate(rownum = row_start - 0.1) %>%
       dplyr::mutate(colnum = 1) %>%
-      dplyr::select(-row, -row_end)
+      dplyr::select(-row_start, -row_end)
 
     # Re-combine `tbl_not_row_groups`
     # with `tbl_row_groups`
@@ -161,10 +161,10 @@ resolve_footnotes_styles <- function(data,
       dplyr::filter(locname == "summary_cells") %>%
       dplyr::inner_join(
         groups_rows_df %>% dplyr::select(-group_label),
-        by = c("grpname" = "group")
+        by = c("grpname" = "group_id")
       ) %>%
       dplyr::mutate(rownum = (rownum / 100) + row_end) %>%
-      dplyr::select(-row, -row_end) %>%
+      dplyr::select(-row_start, -row_end) %>%
       dplyr::mutate(colnum = colname_to_colnum(data = data, colname = colname))
 
     # Re-combine `tbl_not_summary_cells`
@@ -597,7 +597,7 @@ set_footnote_marks_row_groups <- function(data,
     for (i in seq(nrow(footnotes_row_groups_marks))) {
 
       row_index <-
-        which(groups_rows_df[, "group"] == footnotes_row_groups_marks$grpname[i])
+        which(groups_rows_df[, "group_id"] == footnotes_row_groups_marks$grpname[i])
 
       text <- groups_rows_df[row_index, "group_label"]
 

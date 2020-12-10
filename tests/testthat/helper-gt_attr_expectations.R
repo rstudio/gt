@@ -70,7 +70,7 @@ expect_tab <- function(tab,
 
   dt_stub_df_get(data = tab) %>%
     dim() %>%
-    expect_equal(c(nrow(df), 3))
+    expect_equal(c(nrow(df), 5))
 
   dt_heading_get(data = tab) %>%
     length() %>%
@@ -125,7 +125,7 @@ expect_tab <- function(tab,
   # are `rownum_i`, `groupname`, and `rowname`
   expect_equal(
     colnames(dt_stub_df_get(data = tab)),
-    c("rownum_i", "groupname", "rowname")
+    c("rownum_i", "groupname", "group_id", "rowname", "group_label")
   )
 }
 
