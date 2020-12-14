@@ -31,7 +31,7 @@ add_summary_location_row <- function(loc,
 
   row_groups <-
     stub_df %>%
-    dplyr::pull(groupname) %>%
+    dplyr::pull(group_id) %>%
     unique()
 
   summary_data <- dt_summary_get(data = data)

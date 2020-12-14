@@ -203,7 +203,7 @@ get_row_reorder_df <- function(groups,
   }
 
   indices <-
-    lapply(stub_df$groupname, `%in%`, x = groups) %>%
+    lapply(stub_df$group_id, `%in%`, x = groups) %>%
     lapply(which) %>%
     unlist() %>%
     order()
@@ -521,7 +521,7 @@ replace_na_groups_df <- function(groups_df,
                                  others_group) {
 
   if (nrow(groups_df) > 0) {
-    groups_df[is.na(groups_df[, "groupname"]), "groupname"] <- others_group
+    groups_df[is.na(groups_df[, "group_id"]), "group_id"] <- others_group
   }
 
   groups_df

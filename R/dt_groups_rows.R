@@ -36,9 +36,9 @@ dt_groups_rows_build <- function(data, context) {
   for (i in seq_along(ordering)) {
 
     if (!all(is.na(ordering[i]))) {
-      rows_matched <- which(stub_df$groupname == ordering[i])
+      rows_matched <- which(stub_df$group_id == ordering[i])
     } else {
-      rows_matched <- which(is.na(stub_df$groupname))
+      rows_matched <- which(is.na(stub_df$group_id))
     }
 
     # If `rows_matched` is NA then go to next iteration
@@ -60,9 +60,9 @@ dt_groups_rows_build <- function(data, context) {
       groups_rows %>%
       dplyr::left_join(
         stub_df %>%
-          dplyr::select(group_label, groupname) %>%
+          dplyr::select(group_label, group_id) %>%
           dplyr::distinct(),
-        by = c("group_id" = "groupname")
+        by = "group_id"
       ) %>%
       dplyr::select(group_id, group_label, dplyr::everything()) %>%
       dplyr::mutate(group_label = process_text(group_label, context))

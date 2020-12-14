@@ -509,7 +509,7 @@ as_rtf <- function(data) {
 #'
 #' Get a list of summary row data frames from a `gt_tbl` object where summary
 #' rows were added via the [summary_rows()] function. The output data frames
-#' contain the `groupname` and `rowname` columns, whereby `rowname` contains
+#' contain the `group_id` and `rowname` columns, whereby `rowname` contains
 #' descriptive stub labels for the summary rows.
 #'
 #' @param data A table object that is created using the [gt()] function.
@@ -553,9 +553,7 @@ as_rtf <- function(data) {
 #' # Use the summary list to make a new
 #' # gt table; the key thing is to use
 #' # `dplyr::bind_rows()` and then pass the
-#' # tibble to `gt()` (the `groupname` and
-#' # `rowname` magic column names create
-#' # row groups and a stub)
+#' # tibble to `gt()`
 #' tab_1 <-
 #'   summary_extracted %>%
 #'   unlist(recursive = FALSE) %>%
