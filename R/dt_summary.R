@@ -173,8 +173,8 @@ dt_summary_build <- function(data,
 
       select_data_tbl <-
         dplyr::select(data_tbl, !!columns) %>%
-        dplyr::mutate(groupname = !!grand_summary_col) %>%
-        dplyr::select(groupname, !!columns) %>%
+        dplyr::mutate(group_id = !!grand_summary_col) %>%
+        dplyr::select(group_id, !!columns) %>%
         as.data.frame(stringsAsFactors = FALSE)
 
     } else {
@@ -191,7 +191,6 @@ dt_summary_build <- function(data,
 
     # Get the registered function calls
     agg_funs <- lapply(fns, rlang::as_closure)
-
     summary_dfs_data <-
       dplyr::bind_rows(
         lapply(
