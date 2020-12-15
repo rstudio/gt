@@ -30,20 +30,7 @@ test_that("the `row_group_order()` function works correctly", {
   dt_row_groups_get(data = html_tbl) %>%
     expect_equal(c("2018-02-11", "2018-02-10"))
 
-  # Create a `tbl_html` that arranges the groups by the
-  # latter calendar date first using group indices
-  html_tbl <-
-    tbl %>%
-    gt(rowname_col = "rows", groupname_col = "dates") %>%
-    row_group_order(groups = c(2, 1))
-
-  # Expect that the internal vector `arrange_groups` has the
-  # groups in the order specified
-  dt_row_groups_get(data = html_tbl) %>%
-    expect_equal(c("2018-02-11", "2018-02-10"))
-
-  # Expect an error if input for `groups` is not a character or
-  # numeric vector
+  # Expect an error if input for `groups` is not a character vector
   expect_error(
     tbl %>%
       gt(rowname_col = "rows", groupname_col = "dates") %>%

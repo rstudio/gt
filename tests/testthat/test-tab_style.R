@@ -16,7 +16,7 @@ data <-
     rows = contains("Mazda")
   ) %>%
   tab_row_group(
-    others = "Others"
+    others_label = "Others"
   ) %>%
   tab_spanner(
     label = "gear_carb_cyl",

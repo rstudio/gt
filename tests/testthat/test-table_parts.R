@@ -378,13 +378,19 @@ test_that("a gt table contains the expected source note", {
         "This was in Motor Trend magazine, hence the `mt`."))
 })
 
-test_that("a gt table contains the correct placement of row groups", {
+test_that("row groups can be successfully generated with `tab_row_group()", {
 
   # Check that specific suggested packages are available
   check_suggests()
 
+  get_row_group_text <- function(tbl_html) {
+    tbl_html %>%
+      selection_text("[class='gt_group_heading_row']") %>%
+      gsub("\n\\s+", "", .)
+  }
+
   # Create a `tbl_html` object with `gt()`; this table
-  # contains a row groups in a specified order
+  # contains a row groups in a specified order using `tab_row_group()`
   tbl_html <-
     gt(mtcars, rownames_to_stub = TRUE) %>%
     tab_row_group(
@@ -395,12 +401,11 @@ test_that("a gt table contains the correct placement of row groups", {
     xml2::read_html()
 
   # Expect that the inner HTML content for the two row groups
-  # is 'Mazda' and an empty string
-  c(tbl_html %>%
-      selection_text("[class='gt_group_heading']"),
-    tbl_html %>%
-      selection_text("[class='gt_empty_group_heading']")) %>%
-    expect_equal(c("Mazda", ""))
+  # is 'Mazda' and then an empty string
+  expect_equal(
+    get_row_group_text(tbl_html),
+    c("Mazda", "")
+  )
 
   # Create a `tbl_html` object with `gt()`; this table
   # contains a three row groups and the use of `row_group_order()`
@@ -422,11 +427,92 @@ test_that("a gt table contains the correct placement of row groups", {
 
   # Expect that the inner HTML content for the three row groups
   # is in the prescribed order
-  c(tbl_html %>%
-      selection_text("[class='gt_empty_group_heading']"),
-    tbl_html %>%
-      selection_text("[class='gt_group_heading']")) %>%
-    expect_equal(c("", "Mazda", "Mercs"))
+  expect_equal(
+    get_row_group_text(tbl_html),
+    c("", "Mazda", "Mercs")
+  )
+
+  # Create a variation on the above table where `row_group_order()`
+  # leaves out `NA` (it's put at the end)
+  tbl_html <-
+    mtcars %>%
+    gt(rownames_to_stub = TRUE) %>%
+    tab_row_group(
+      label = "Mercs",
+      rows = contains("Merc")
+    ) %>%
+    tab_row_group(
+      label = "Mazda",
+      rows = c("Mazda RX4", "Mazda RX4 Wag")
+    ) %>%
+    row_group_order(groups = c("Mazda", "Mercs")) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect that the inner HTML content for the three row groups
+  # is in the prescribed order
+  expect_equal(
+    get_row_group_text(tbl_html),
+    c("Mazda", "Mercs", "")
+  )
+
+  tbl_html <-
+    exibble %>%
+    gt() %>%
+    tab_row_group(
+      label = md("__*void*__"),
+      rows = group == "grp_a",
+      id = "group_a"
+    ) %>%
+    tab_row_group(
+      label = "void",
+      rows = group != "grp_a",
+      id = "group_void"
+    ) %>%
+    row_group_order(
+      groups = c("group_a", "group_void")
+    ) %>%
+    tab_spanner(
+      label = md("__*num_char*__"),
+      columns = vars(num, char),
+      id = "num_char"
+    ) %>%
+    tab_footnote(
+      footnote = "a footnote",
+      locations = cells_row_groups("group_a")
+    ) %>%
+    render_as_html()
+
+  # Expect to see the styled and unstyled variations of the `"void"`
+  # row group labels
+  expect_match(
+    tbl_html,
+    regexp = "<strong><em>void</em></strong><sup class=\"gt_footnote_marks\">1</sup>",
+    fixed = TRUE
+  )
+  expect_match(
+    tbl_html,
+    regexp = "<td colspan=\"9\" class=\"gt_group_heading\">void</td>",
+    fixed = TRUE
+  )
+
+  # Expect that the inner HTML content for the two row groups
+  # is in the prescribed order
+  expect_equal(
+    get_row_group_text(tbl_html %>% xml2::read_html()),
+    c("void1", "void")
+  )
+
+  # Expect an error if using `tab_row_group` without any value
+  # provided for `rows`
+  expect_error(
+    exibble %>%
+      gt() %>%
+      tab_row_group(
+        label = md("__*void*__"),
+        id = "group_a"
+      )
+  )
 })
 
 test_that("a gt table's row group labels are HTML escaped", {
