@@ -19,7 +19,18 @@ tbl <-
 
 # Create a display table
 footnotes_tbl <-
-  gt(data = tbl, groupname_col = "date") %>%
+  gt(data = tbl) %>%
+  tab_row_group(
+    label = md("**earlier date**"),
+    rows = date == "2018-02-10",
+    id = "earlier_date"
+  ) %>%
+  tab_row_group(
+    label = "2018-02-11",
+    rows = date == "2018-02-11",
+    id = "later_date"
+  ) %>%
+  row_group_order(groups = c("earlier_date", "later_date")) %>%
   tab_header(title = "The Table Title", subtitle = "The subtitle.") %>%
   tab_spanner(
     label = "values",
@@ -39,7 +50,7 @@ footnotes_tbl <-
   ) %>%
   tab_footnote(
     footnote = "The first row group",
-    locations = cells_row_groups(groups = ends_with("10"))
+    locations = cells_row_groups(groups = "earlier_date")
   ) %>%
   tab_footnote(
     footnote = "Two sets of values",
