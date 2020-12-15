@@ -4,7 +4,7 @@
 \alias{tab_row_group}
 \title{Add a row group to a \strong{gt} table}
 \usage{
-tab_row_group(data, label = NULL, rows = NULL, id = label, others = NULL)
+tab_row_group(data, label = NULL, rows = NULL, id = label, others_label = NULL)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -27,8 +27,8 @@ markup, is lengthy, or both). Finally, when providing an \code{id} value you
 must ensure that it is unique across all ID values set for row groups (the
 function will stop if \code{id} isn't unique).}
 
-\item{others}{An option to set a default row group label for any rows not
-formally placed in a row group named by \code{group} in any call of
+\item{others_label}{An option to set a default row group label for any rows
+not formally placed in a row group named by \code{group} in any call of
 \code{tab_row_group()}. A separate call to \code{tab_row_group()} with only a value
 to \code{others} is possible and makes explicit that the call is meant to
 provide a default row group label. If this is not set and there are rows
