@@ -26,6 +26,7 @@ build_data <- function(data, context) {
   data <- dt_spanners_build(data = data, context = context)
   data <- dt_heading_build(data = data, context = context)
   data <- dt_stubhead_build(data = data, context = context)
+  data <- dt_stub_df_build(data = data, context = context)
   data <- dt_source_notes_build(data = data, context = context)
   data <- dt_summary_build(data = data, context = context)
   data <- dt_groups_rows_build(data = data, context = context)

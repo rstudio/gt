@@ -50,22 +50,19 @@ dt_groups_rows_build <- function(data, context) {
     groups_rows[i, "row_end"] <- max(rows_matched)
   }
 
-  # Join `group_label` values to the `groups_rows` table and ensure that
-  # the `group_label` text is processed with `process_text()` in the
-  # current output `context`
-
+  # Join `built` values to the `groups_rows` table
   if (nrow(groups_rows) > 0) {
 
     groups_rows <-
       groups_rows %>%
       dplyr::left_join(
         stub_df %>%
-          dplyr::select(group_label, group_id) %>%
+          dplyr::select(built, group_id) %>%
           dplyr::distinct(),
         by = "group_id"
       ) %>%
-      dplyr::select(group_id, group_label, dplyr::everything()) %>%
-      dplyr::mutate(group_label = process_text(group_label, context))
+      dplyr::rename(group_label = built) %>%
+      dplyr::select(group_id, group_label, dplyr::everything())
 
     others_group <- dt_stub_others_get(data = data) %||% NA_character_
 

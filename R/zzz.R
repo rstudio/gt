@@ -30,6 +30,7 @@ globalVariables(
     "arrange_dfs",
     "b",
     "blue",
+    "built",
     "boxhead",
     "category",
     "colname",
