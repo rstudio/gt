@@ -394,7 +394,7 @@ tab_row_group <- function(data,
 
     # Place the `label` in the `groupname` column `stub_df`
     stub_df[resolved_rows_idx, "group_label"] <- list(list(label))
-    stub_df[resolved_rows_idx, "group_id"] <- id
+    stub_df[resolved_rows_idx, "group_id"] <- as.character(id)
 
     data <- dt_stub_df_set(data = data, stub_df = stub_df)
 
