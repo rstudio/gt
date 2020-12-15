@@ -420,7 +420,6 @@ create_data_rows <- function(n_rows,
       lapply(
         seq(n_rows),
         FUN = function(x) {
-
           if (context == "latex") {
             latex_body_row(content = row_splits[[x]], type = "row")
           }
@@ -466,7 +465,7 @@ create_summary_rows <- function(n_rows,
       group <-
         groups_rows_df %>%
         dplyr::filter(row_end == x) %>%
-        dplyr::pull(group)
+        dplyr::pull(group_id)
 
       if (!(group %in% names(list_of_summaries$summary_df_display_list))) {
         return("")
@@ -474,10 +473,10 @@ create_summary_rows <- function(n_rows,
 
       summary_df <-
         list_of_summaries$summary_df_display_list[[group]] %>%
+        dplyr::select(-groups) %>%
         as.data.frame(stringsAsFactors = FALSE)
 
       body_content_summary <- as.vector(t(summary_df))
-
       row_splits_summary <-
         split_body_content(
           body_content = body_content_summary,
