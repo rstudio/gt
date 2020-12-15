@@ -256,7 +256,7 @@ test_that("gt table can be made with grouped data -- one group", {
   built_tbl$`_row_groups` %>% expect_equal(c("grp_a", "grp_b"))
 
   built_tbl$`_groups_rows` %>%
-    expect_equal(
+    expect_equivalent(
       data.frame(
         group_id = c("grp_a", "grp_b"),
         group_label = c("grp_a", "grp_b"),
@@ -275,12 +275,13 @@ test_that("gt table can be made with grouped data -- one group", {
     )
 
   built_tbl$`_stub_df` %>%
-    expect_equal(
+    expect_equivalent(
       dplyr::tibble(
         rownum_i = 1:8,
         group_id = c(rep("grp_a", 4), rep("grp_b", 4)),
         rowname = NA_character_,
-        group_label = c(rep("grp_a", 4), rep("grp_b", 4))
+        group_label = c(rep("grp_a", 4), rep("grp_b", 4)),
+        built = c(rep("grp_a", 4), rep("grp_b", 4))
       )
     )
 
@@ -337,13 +338,12 @@ test_that("gt table can be made with grouped data - two groups", {
     expect_equal(table_groups)
 
   built_tbl$`_groups_rows` %>%
-    expect_equal(
-      data.frame(
+    expect_equivalent(
+      dplyr::tibble(
         group_id = table_groups,
         group_label = table_groups,
         row_start = c(1, 3, 5, 7),
-        row_end = c(2, 4, 6, 8),
-        stringsAsFactors = FALSE
+        row_end = c(2, 4, 6, 8)
       )
     )
 
@@ -359,12 +359,13 @@ test_that("gt table can be made with grouped data - two groups", {
     )
 
   built_tbl$`_stub_df` %>%
-    expect_equal(
+    expect_equivalent(
       dplyr::tibble(
         rownum_i = 1:8,
         group_id = rep(table_groups, 2) %>% sort(),
         rowname = NA_character_,
-        group_label = rep(table_groups, 2) %>% sort()
+        group_label = rep(table_groups, 2) %>% sort(),
+        built = rep(table_groups, 2) %>% sort()
       )
     )
 
@@ -428,7 +429,7 @@ test_that("The `gt()` groupname_col arg will override any grouped data", {
     )
 
   built_tbl$`_groups_rows` %>%
-    expect_equal(
+    expect_equivalent(
       data.frame(
         group_id = c(
           "2015-01-15", "2015-02-15", "2015-03-15", "2015-04-15",
@@ -451,7 +452,7 @@ test_that("The `gt()` groupname_col arg will override any grouped data", {
     )
 
   built_tbl$`_stub_df` %>%
-    expect_equal(
+    expect_equivalent(
       dplyr::tibble(
         rownum_i = 1:8,
         group_id = c(
@@ -460,6 +461,10 @@ test_that("The `gt()` groupname_col arg will override any grouped data", {
         ),
         rowname = NA_character_,
         group_label = c(
+          "2015-01-15", "2015-02-15", "2015-03-15", "2015-04-15",
+          "2015-05-15", "2015-06-15", "NA", "2015-08-15"
+        ),
+        built = c(
           "2015-01-15", "2015-02-15", "2015-03-15", "2015-04-15",
           "2015-05-15", "2015-06-15", "NA", "2015-08-15"
         )
@@ -541,12 +546,13 @@ test_that("The `gt()` `rowname_col` arg will be overridden by `rownames_to_stub 
     )
 
   built_tbl$`_stub_df` %>%
-    expect_equal(
+    expect_equivalent(
       dplyr::tibble(
         rownum_i = 1:10,
         group_id = NA_character_,
         rowname = rownames(mtcars)[1:10],
-        group_label = NA_character_,
+        group_label = list(NULL),
+        built = ""
       )
     )
 
@@ -610,12 +616,13 @@ test_that("The `rowname` column will be safely included when `rownames_to_stub =
     )
 
   built_tbl$`_stub_df` %>%
-    expect_equal(
+    expect_equivalent(
       dplyr::tibble(
         rownum_i = 1:8,
         group_id = NA_character_,
         rowname = as.character(1:8),
-        group_label = NA_character_
+        group_label = list(NULL),
+        built = ""
       )
     )
 
