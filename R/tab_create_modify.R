@@ -298,8 +298,8 @@ tab_spanner_delim <- function(data,
 #'   markup, is lengthy, or both). Finally, when providing an `id` value you
 #'   must ensure that it is unique across all ID values set for row groups (the
 #'   function will stop if `id` isn't unique).
-#' @param others An option to set a default row group label for any rows not
-#'   formally placed in a row group named by `group` in any call of
+#' @param others_label An option to set a default row group label for any rows
+#'   not formally placed in a row group named by `group` in any call of
 #'   `tab_row_group()`. A separate call to `tab_row_group()` with only a value
 #'   to `others` is possible and makes explicit that the call is meant to
 #'   provide a default row group label. If this is not set and there are rows
@@ -358,14 +358,14 @@ tab_row_group <- function(data,
                           label = NULL,
                           rows = NULL,
                           id = label,
-                          others = NULL) {
+                          others_label = NULL) {
 
   # TODO: consider adding the function `others()` to be used in
   # `rows`; the idea to create a formal group of rows with any rows
   # that are not incorporated in other groups; I'm hoping this will be
-  # less confusing than using the `others` argument here and that
-  # this will have the effect of popularizing the use of the
-  # `tab_row_group()` function
+  # less confusing than using the `others_label` argument here (with all
+  # of its shortcomings) and that this will have the effect of popularizing
+  # the use of the `tab_row_group()` function
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -375,8 +375,28 @@ tab_row_group <- function(data,
   # Capture the `rows` expression
   row_expr <- rlang::enquo(rows)
 
-  # Create a row group if a `label` is provided
-  if (!is.null(label)) {
+  if (rlang::as_label(row_expr) != "NULL" && is.null(label)) {
+
+    stop(
+      "If specifying a row group for declared `rows`, a `label` must ",
+      "be provided.",
+      call. = FALSE
+    )
+  }
+
+  # Stop function if nothing was provided for both `rows` and `others_label`
+  if (rlang::as_label(row_expr) == "NULL" && is.null(others_label))  {
+
+    stop(
+      "No value was provided for `rows`. Please use either of:\n",
+      "* A vector of row captions provided in `c()`\n",
+      "* A vector of row indices\n",
+      "* A helper function focused on selections (e.g., `starts_with()`)",
+      call. = FALSE
+    )
+  }
+
+  if (rlang::as_label(row_expr) != "NULL" && !is.null(label)) {
 
     # Get the `stub_df` data frame from `data`
     stub_df <- dt_stub_df_get(data = data)
@@ -434,13 +454,14 @@ tab_row_group <- function(data,
     }
   }
 
-  # Set a name for the `others` group if a
+  # Set a name for the `others_label` group if a
   # name is provided
-  if (!is.null(others)) {
+  if (!is.null(others_label)) {
+
     data <-
       dt_stub_others_set(
         data = data,
-        stub_others = process_text(others[1])
+        stub_others = others_label
       )
   }
 
