@@ -38,16 +38,10 @@ test_that("the `row_group_order()` function works correctly", {
   )
 
   # Expect that any value in `groups` that doesn't correspond
-  # to a group name or valid index will result in an error
+  # to a group name will result in an error
   expect_error(
     tbl %>%
       gt(rowname_col = "rows", groupname_col = "dates") %>%
       row_group_order(groups = c("2018-02-13", "2018-02-10"))
-  )
-
-  expect_error(
-    tbl %>%
-      gt(rowname_col = "rows", groupname_col = "dates") %>%
-      row_group_order(groups = c(3, 1))
   )
 })

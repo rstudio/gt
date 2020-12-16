@@ -27,6 +27,13 @@ selection_text <- function(html, selection) {
     rvest::html_text()
 }
 
+# Gets the text from a row group label
+get_row_group_text <- function(tbl_html) {
+  tbl_html %>%
+    selection_text("[class='gt_group_heading_row']") %>%
+    gsub("\n\\s+", "", .)
+}
+
 test_that("a gt table contains the expected heading components", {
 
   # Check that specific suggested packages are available
@@ -383,12 +390,6 @@ test_that("row groups can be successfully generated with `tab_row_group()", {
   # Check that specific suggested packages are available
   check_suggests()
 
-  get_row_group_text <- function(tbl_html) {
-    tbl_html %>%
-      selection_text("[class='gt_group_heading_row']") %>%
-      gsub("\n\\s+", "", .)
-  }
-
   # Create a `tbl_html` object with `gt()`; this table
   # contains a row groups in a specified order using `tab_row_group()`
   tbl_html <-
@@ -503,8 +504,18 @@ test_that("row groups can be successfully generated with `tab_row_group()", {
     c("void1", "void")
   )
 
-  # Expect an error if using `tab_row_group` without any value
-  # provided for `rows`
+  # Expect an error if not providing a `label` for `tab_row_group()`
+  # but there is a specification of rows
+  expect_error(
+    exibble %>%
+      gt() %>%
+      tab_row_group(
+        rows = group == "grp_a"
+      )
+  )
+
+  # Expect an error if using `tab_row_group()` without any value
+  # provided for `rows` or `others_label`
   expect_error(
     exibble %>%
       gt() %>%
@@ -512,6 +523,131 @@ test_that("row groups can be successfully generated with `tab_row_group()", {
         label = md("__*void*__"),
         id = "group_a"
       )
+  )
+})
+
+test_that("The `others_label` argument of `tab_row_group()` works properly", {
+
+  # Check that specific suggested packages are available
+  check_suggests()
+
+  tbl_html <- gt(exibble)
+
+  # Expect that applying an `others_label` with no defined will effectively
+  # make no change to the rendered table
+  expect_equal(
+    tbl_html %>%
+      tab_row_group(others_label = "The Others") %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      get_row_group_text(),
+    character(0)
+  )
+
+  # Having some defined group, on the other hand, makes the 'Others' group
+  # possible and so then that label is shown
+  expect_equal(
+    tbl_html %>%
+      tab_row_group(others_label = "The Others") %>%
+      tab_row_group(
+        label = md("__*void*__"),
+        rows = group == "grp_a",
+        id = "group_a"
+      ) %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      get_row_group_text(),
+    c("void", "The Others")
+  )
+
+  # The definition of both a row group and the 'Others' group can be done
+  # in a single call of `tab_row_group()`
+  expect_equal(
+    tbl_html %>%
+      tab_row_group(
+        label = md("__*void*__"),
+        rows = group == "grp_a",
+        id = "group_a",
+        others_label = "The Others"
+      ) %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      get_row_group_text(),
+    c("void", "The Others")
+  )
+
+  # The order of the two groups (one defined, one the 'Others') can
+  # be modified with `row_group_order()` by putting `NA` before `group_a`
+  expect_equal(
+    tbl_html %>%
+      tab_row_group(
+        label = md("__*void*__"),
+        rows = group == "grp_a",
+        id = "group_a",
+        others_label = "The Others"
+      ) %>%
+      row_group_order(groups = c(NA, "group_a")) %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      get_row_group_text(),
+    c("The Others", "void")
+  )
+
+  # The same thing can be done in `row_group_order()` by just putting
+  # `NA` first (but it has to be `NA_character_`)
+  expect_equal(
+    tbl_html %>%
+      tab_row_group(
+        label = md("__*void*__"),
+        rows = group == "grp_a",
+        id = "group_a",
+        others_label = "The Others"
+      ) %>%
+      row_group_order(groups = NA_character_) %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      get_row_group_text(),
+    c("The Others", "void")
+  )
+
+  # The label for the 'Others' can be overwritten with a subsequent
+  # call of `tab_row_group()`
+  expect_equal(
+    tbl_html %>%
+      tab_row_group(
+        label = md("__*void*__"),
+        rows = group == "grp_a",
+        id = "group_a",
+        others_label = "The Others"
+      ) %>%
+      tab_row_group(
+        others_label = "Other Group"
+      ) %>%
+      row_group_order(groups = NA_character_) %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      get_row_group_text(),
+    c("Other Group", "void")
+  )
+
+  # A previously defined label for the 'Others' can be reset to
+  # nothing by using `others_label = NA` in another call of the
+  # `tab_row_group()` function
+  expect_equal(
+    tbl_html %>%
+      tab_row_group(
+        label = md("__*void*__"),
+        rows = group == "grp_a",
+        id = "group_a",
+        others_label = "The Others"
+      ) %>%
+      tab_row_group(
+        others_label = NA
+      ) %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      get_row_group_text(),
+    c("void", "")
   )
 })
 
