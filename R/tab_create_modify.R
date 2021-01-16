@@ -186,6 +186,10 @@ tab_spanner <- function(data,
 #'   in those locations) and the second component will be the column label.
 #' @param columns An optional vector of column names that this operation should
 #'   be limited to. The default is to consider all columns in the table.
+#' @param split Should the delimiter splitting occur at the `"last"` instance of
+#'   `delim` or the `"first"`? By default column name splitting happens at the
+#'   last instance of the delimiter. This relevant only in the case that column
+#'   names included in `columns` have multiple instances of the `delim`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -212,12 +216,14 @@ tab_spanner <- function(data,
 tab_spanner_delim <- function(data,
                               delim,
                               columns = NULL,
+                              split = c("last", "first"),
                               gather = TRUE) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
   columns <- enquo(columns)
+  split <- match.arg(split)
 
   # Get all of the columns in the dataset
   all_cols <- data %>% dt_boxhead_get_vars()
@@ -243,7 +249,30 @@ tab_spanner_delim <- function(data,
 
     split_colnames <- strsplit(colnames_with_delim, delim, fixed = TRUE)
 
-    spanners <- vapply(split_colnames, `[[`, character(1), 1)
+    if (split == "first") {
+
+      split_colnames <-
+        lapply(
+          split_colnames,
+          FUN = function(x) {
+            x_len <- length(x)
+            c(x[1], paste(x[2:x_len], collapse = delim))
+          }
+        )
+
+    } else {
+
+      split_colnames <-
+        lapply(
+          split_colnames,
+          FUN = function(x) {
+            x_len <- length(x)
+            c(paste(x[1:(x_len - 1)], collapse = delim), x[x_len])
+          }
+        )
+    }
+
+    spanners <- vapply(split_colnames, FUN.VALUE = character(1), `[[`, 1)
 
     spanner_var_list <- split(colnames_with_delim, spanners)
 
