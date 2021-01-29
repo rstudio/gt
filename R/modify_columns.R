@@ -822,7 +822,7 @@ cols_hide <- function(data,
 #' # Use `countrypops` to create a gt table;
 #' # Hide the columns `country_code_2` and
 #' # `country_code_3`
-#' tbl_1 <-
+#' tab_1 <-
 #'   countrypops %>%
 #'   dplyr::filter(country_name == "Mongolia") %>%
 #'   tail(5) %>%
@@ -832,13 +832,13 @@ cols_hide <- function(data,
 #'       country_code_2, country_code_3)
 #'   )
 #'
-#' # If the `tbl_1` object is provided without
+#' # If the `tab_1` object is provided without
 #' # the code or source data to regenerate it, and,
 #' # the user wants to reveal otherwise hidden
 #' # columns then the `cols_unhide()` function
 #' # becomes useful
 #' tab_2 <-
-#'   tbl_1 %>%
+#'   tab_1 %>%
 #'   cols_unhide(columns = vars("country_code_2"))
 #'
 #' @section Figures:
