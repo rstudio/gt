@@ -68,7 +68,7 @@ the output table through the \code{hide_columns} or \code{autohide} options.
 
 \section{Function ID}{
 
-4-10
+4-11
 }
 
 \examples{
@@ -124,6 +124,7 @@ Other Modify Columns:
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
+\code{\link{cols_unhide}()},
 \code{\link{cols_width}()}
 }
 \concept{Modify Columns}

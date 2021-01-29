@@ -9,9 +9,8 @@ cols_hide(data, columns)
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{columns}{The column names to hide from the output display table. The
-order of the remaining columns will be preserved. Values provided that do
-not correspond to column names will be disregarded.}
+\item{columns}{The column names to hide from the output display table. Values
+provided that do not correspond to column names will be disregarded.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -31,7 +30,9 @@ to a \code{rows} argument. Furthermore, the \code{cols_hide()} function (as with
 \strong{gt} functions) can be placed anywhere in a pipeline of \strong{gt} function
 calls (acting as a promise to hide columns when the timing is right). However
 there's perhaps greater readability when placing this call closer to the end
-of such a pipeline.
+of such a pipeline. The \code{cols_hide()} function quietly changes the visible
+state of a column (much like the \code{\link[=cols_unhide]{cols_unhide()}} function) and doesn't yield
+warnings or messages when changing the state of already-invisible columns.
 }
 \section{Figures}{
 
@@ -82,6 +83,8 @@ tab_2 <-
 
 }
 \seealso{
+\code{\link[=cols_unhide]{cols_unhide()}} to perform the inverse operation.
+
 Other Modify Columns: 
 \code{\link{cols_align}()},
 \code{\link{cols_label}()},
@@ -92,6 +95,7 @@ Other Modify Columns:
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
+\code{\link{cols_unhide}()},
 \code{\link{cols_width}()}
 }
 \concept{Modify Columns}
