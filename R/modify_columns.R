@@ -794,6 +794,94 @@ cols_hide <- function(data,
   data
 }
 
+#' Unhide one or more columns
+#'
+#' The `cols_unhide()` function allows us to take one or more hidden columns
+#' (usually made so via the [cols_hide()] function) and make them visible
+#' in the final output table. This may be important in cases where the user
+#' obtains a `gt_tbl` object with hidden columns and there is motivation to
+#' reveal one or more of those.
+#'
+#' The hiding and unhiding of columns is internally a rendering directive, so,
+#' all columns that are 'hidden' are still accessible and useful in any
+#' expression provided to a `rows` argument. The `cols_unhide()` function
+#' quietly changes the visible state of a column (much like the [cols_hide()]
+#' function) and doesn't yield warnings or messages when changing the state of
+#' already-visible columns.
+#'
+#' @inheritParams cols_align
+#' @param columns The column names to unhide from the output display table.
+#'   Values provided that do not correspond to column names will be disregarded.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @examples
+#' # Use `countrypops` to create a gt table;
+#' # Hide the columns `country_code_2` and
+#' # `country_code_3`
+#' tbl_1 <-
+#'   countrypops %>%
+#'   dplyr::filter(country_name == "Mongolia") %>%
+#'   tail(5) %>%
+#'   gt() %>%
+#'   cols_hide(
+#'     columns = vars(
+#'       country_code_2, country_code_3)
+#'   )
+#'
+#' # If the `tbl_1` object is provided without
+#' # the code or source data to regenerate it, and,
+#' # the user wants to reveal otherwise hidden
+#' # columns then the `cols_unhide()` function
+#' # becomes useful
+#' tab_2 <-
+#'   tbl_1 %>%
+#'   cols_unhide(columns = vars("country_code_2"))
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_cols_unhide_1.png}{options: width=100\%}}
+#'
+#' \if{html}{\figure{man_cols_unhide_2.png}{options: width=100\%}}
+#'
+#' @family Modify Columns
+#' @section Function ID:
+#' 4-8
+#'
+#' @seealso [cols_hide()] to perform the inverse operation.
+#'
+#' @import rlang
+#' @export
+cols_unhide <- function(data,
+                        columns) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  columns <- enquo(columns)
+
+  # Get the columns supplied in `columns` as a character vector
+  columns <- resolve_vars(var_expr = !!columns, data = data)
+
+  vars <- dt_boxhead_get_vars(data = data)
+
+  # Stop function if no `columns` are provided
+  if (length(columns) == 0) {
+    stop("Columns must be provided.", call. = FALSE)
+  }
+
+  # Stop function if any of the `columns` don't exist in `vars`
+  if (!all(columns %in% vars)) {
+    stop("All `columns` must exist in the input `data` table.",
+         call. = FALSE)
+  }
+
+  # Set the `"visible"` type for the `columns` in `_dt_boxhead`
+  data <- dt_boxhead_set_not_hidden(data = data, vars = columns)
+
+  data
+}
+
+
 #' Merge two columns to a value & uncertainty column
 #'
 #' The `cols_merge_uncert()` function is a specialized variant of the
