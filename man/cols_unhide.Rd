@@ -42,6 +42,30 @@ already-visible columns.
 4-8
 }
 
+\examples{
+# Use `countrypops` to create a gt table;
+# Hide the columns `country_code_2` and
+# `country_code_3`
+tab_1 <-
+  countrypops \%>\%
+  dplyr::filter(country_name == "Mongolia") \%>\%
+  tail(5) \%>\%
+  gt() \%>\%
+  cols_hide(
+    columns = vars(
+      country_code_2, country_code_3)
+  )
+
+# If the `tab_1` object is provided without
+# the code or source data to regenerate it, and,
+# the user wants to reveal otherwise hidden
+# columns then the `cols_unhide()` function
+# becomes useful
+tab_2 <-
+  tab_1 \%>\%
+  cols_unhide(columns = vars("country_code_2"))
+
+}
 \seealso{
 \code{\link[=cols_hide]{cols_hide()}} to perform the inverse operation.
 
