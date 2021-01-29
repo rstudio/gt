@@ -699,12 +699,13 @@ cols_move <- function(data,
 #' **gt** functions) can be placed anywhere in a pipeline of **gt** function
 #' calls (acting as a promise to hide columns when the timing is right). However
 #' there's perhaps greater readability when placing this call closer to the end
-#' of such a pipeline.
+#' of such a pipeline. The `cols_hide()` function quietly changes the visible
+#' state of a column (much like the [cols_unhide()] function) and doesn't yield
+#' warnings or messages when changing the state of already-invisible columns.
 #'
 #' @inheritParams cols_align
-#' @param columns The column names to hide from the output display table. The
-#'   order of the remaining columns will be preserved. Values provided that do
-#'   not correspond to column names will be disregarded.
+#' @param columns The column names to hide from the output display table. Values
+#'   provided that do not correspond to column names will be disregarded.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -749,6 +750,8 @@ cols_move <- function(data,
 #' @family Modify Columns
 #' @section Function ID:
 #' 4-7
+#'
+#' @seealso [cols_unhide()] to perform the inverse operation.
 #'
 #' @import rlang
 #' @export
@@ -949,7 +952,7 @@ cols_unhide <- function(data,
 #'
 #' @family Modify Columns
 #' @section Function ID:
-#' 4-8
+#' 4-9
 #'
 #' @import rlang
 #' @export
@@ -1062,7 +1065,7 @@ cols_merge_uncert <- function(data,
 #'
 #' @family Modify Columns
 #' @section Function ID:
-#' 4-9
+#' 4-10
 #'
 #' @import rlang
 #' @export
@@ -1221,7 +1224,7 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #'
 #' @family Modify Columns
 #' @section Function ID:
-#' 4-10
+#' 4-11
 #'
 #' @import rlang
 #' @export
@@ -1324,7 +1327,7 @@ cols_merge_n_pct <- function(data,
 #'
 #' @family Modify Columns
 #' @section Function ID:
-#' 4-11
+#' 4-12
 #'
 #' @import rlang
 #' @export
