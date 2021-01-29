@@ -56,7 +56,7 @@ output table through the \code{autohide} option.
 
 \section{Function ID}{
 
-4-11
+4-12
 }
 
 \examples{
@@ -97,6 +97,7 @@ Other Modify Columns:
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
+\code{\link{cols_unhide}()},
 \code{\link{cols_width}()}
 }
 \concept{Modify Columns}
