@@ -692,3 +692,64 @@ test_that("a gt table contains custom styles at the correct locations", {
     rvest::html_text() %>%
     expect_equal("Subtitle")
 })
+
+test_that("columns can be hidden and then made visible", {
+
+  # Check that specific suggested packages are available
+  check_suggests()
+
+  # Create a `gt_tbl` object with the `gtcars` dataset
+  gt_tbl <- gt(gtcars)
+
+  # Expect all column names from the original dataset
+  # to be present
+  gt_tbl %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_left']") %>%
+    rvest::html_text() %>%
+    expect_equal(c("mfr", "model", "trim", "bdy_style", "drivetrain", "trsmn", "ctry_origin"))
+
+  # Hide the `mfr` and `drivetrain` columns from the
+  # table with `cols_hide()`
+  gt_tbl <-
+    gt_tbl %>%
+    cols_hide(vars(mfr, drivetrain))
+
+  # Expect the two hidden columns to not appear in the rendered table
+  gt_tbl %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_left']") %>%
+    rvest::html_text() %>%
+    expect_equal(c("model", "trim", "bdy_style", "trsmn", "ctry_origin"))
+
+  # Make the `mfr` column visible again with `cols_unhide()`
+  gt_tbl <-
+    gt_tbl %>%
+    cols_unhide(vars(mfr))
+
+  # Expect that only `drivetrain` is hidden now
+  gt_tbl %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_left']") %>%
+    rvest::html_text() %>%
+    expect_equal(c("mfr", "model", "trim", "bdy_style", "trsmn", "ctry_origin"))
+
+  # Move the drivetrain column to the beginning of the column
+  # series and unhide it
+  gt_tbl <-
+    gt_tbl %>%
+    cols_move_to_start(vars(drivetrain)) %>%
+    cols_unhide(vars(drivetrain))
+
+  # Expect all column names from the original dataset
+  # to be present in the revised order
+  gt_tbl %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_left']") %>%
+    rvest::html_text() %>%
+    expect_equal(c("drivetrain", "mfr", "model", "trim", "bdy_style", "trsmn", "ctry_origin"))
+})
