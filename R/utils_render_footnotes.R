@@ -294,7 +294,7 @@ resolve_footnotes_styles <- function(data,
 
       tbl <-
         tbl %>%
-        dplyr::group_by(locname, grpname, colname, locnum, rownum, colnum) %>%
+        dplyr::group_by_at(base::setdiff(colnames(.), c("styles", "text"))) %>%
         dplyr::summarize(styles = list(as_style(styles))) %>%
         dplyr::ungroup()
     }
