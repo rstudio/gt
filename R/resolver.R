@@ -214,20 +214,19 @@ resolve_data_vals_idx <- function(var_expr,
 
   if (!is.null(data_tbl)) {
     data_tbl <- as.data.frame(data_tbl)
+  } else {
+    # tidyselect::eval_select doesn't like an empty `data` argument
+    data_tbl <- data.frame()
   }
 
   # Translate variable expressions (e.g., logical
   # values, select helpers, expressions in `vars()`,
   # etc.) to the appropriate output
-  resolved <-
-    tidyselect::with_vars(
-      vals,
-      rlang::eval_tidy(
-        expr = var_expr,
-        data = data_tbl,
-        env = emptyenv()
-      )
-    )
+  newenv <- list2env(as.list(data_tbl), parent = .GlobalEnv)
+  tidyselect::eval_select(
+    rlang::expr({.__gt_resolved__ <- !!var_expr; NULL}), data = data_tbl, env = newenv
+  )
+  resolved <- newenv$.__gt_resolved__
 
   # With the `resolved` output, check types and
   # process inputs to reliably output as a vector

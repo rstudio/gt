@@ -593,3 +593,31 @@ test_that("the `resolve_vars()` function works correctly", {
       var_expr = last_col(offset = 1),
       data = tab), "row")
 })
+
+test_that("tidyselect `where()` works", {
+  expect_equal(
+    resolve_vars(
+      var_expr = where(is.numeric),
+      data = gt(exibble)
+    ),
+    colnames(exibble)
+  )
+
+  expect_equal(
+    resolve_data_vals_idx(
+      var_expr = wt > 4,
+      data_tbl = mtcars,
+      vals = row.names(mtcars)
+    ),
+    c(12, 15, 16, 17)
+  )
+
+  expect_equal(
+    resolve_data_vals_idx(
+      var_expr = row.names(mtcars)[wt > 4],
+      data_tbl = mtcars,
+      vals = row.names(mtcars)
+    ),
+    c(12, 15, 16, 17)
+  )
+})
