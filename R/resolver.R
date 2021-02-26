@@ -314,3 +314,68 @@ resolve_vars <- function(var_expr,
   # Translate the column indices to column names
   column_names[columns_idx]
 }
+
+#' @param var_expr An unquoted expression that follows tidyselect semantics
+#' @param data A gt object or data frame or tibble
+#' @return Character vector
+#' @noRd
+resolve_cols_c <- function(var_expr, data, strict = TRUE) {
+  names(resolve_cols_i({{var_expr}}, data = data, strict = strict))
+}
+
+#' @param expr An unquoted expression that follows tidyselect semantics
+#' @param data A gt object or data frame or tibble
+#' @return Named integer vector
+#' @noRd
+resolve_cols_i <- function(expr, data, strict = TRUE) {
+  quo <- rlang::enquo(expr)
+  if (inherits(data, "gt_tbl")) {
+    data <- dt_data_get(data = data)
+  }
+  stopifnot(is.data.frame(data))
+
+  quo <- translate_legacy_resolve_expr(quo, data)
+
+  # No env argument required, because var_expr is a quosure
+  tidyselect::eval_select(quo, data, strict = strict)
+}
+
+#' @param expr A quosure that might contain legacy gt column criteria
+translate_legacy_resolve_expr <- function(quo, data) {
+  expr <- rlang::quo_get_expr(quo)
+  if (identical(expr, FALSE)) {
+    warning("`columns = FALSE` is deprecated since gt 0.2.3; please use `columns = c()` instead", call. = FALSE)
+    quo_set_expr(quo, quote(NULL))
+  } else if (identical(expr, TRUE)) {
+    warning("`columns = TRUE` is deprecated since gt 0.2.3; please use `columns = everything()` instead", call. = FALSE)
+    quo_set_expr(quo, quote(everything()))
+  } else if (is.null(expr)) {
+    warning("`columns = NULL` is deprecated since gt 0.2.3; please use `columns = everything()` instead", call. = FALSE)
+    quo_set_expr(quo, quote(everything()))
+  } else if (quo_is_call(quo, "vars")) {
+    warning("`columns = vars(...)` is deprecated since gt 0.2.3; please use `columns = c(...)` instead", call. = FALSE)
+    quo_set_expr(quo,
+      rlang::call2(quote(c), !!!rlang::call_args(expr))
+    )
+  } else {
+    # No legacy expression detected
+    quo
+  }
+}
+
+# resolve_rows_l <- function(expr, data) {
+#   # TODO: Convert data to data frame
+#   quo <- rlang::enquo(expr)
+#   rlang::eval_tidy(quo, data)
+#   # TODO: Normalize results to logical
+#   # TODO: Ensure that results are plausible for data (!any(i > nrow(data)))
+# }
+#
+# resolve_rows_i <- function(expr, data) {
+#   # TODO: Convert data to data frame
+#   quo <- rlang::enquo(expr)
+#   rlang::eval_tidy(quo, data)
+#   # TODO: Normalize results to integer
+#   # TODO: Ensure that results are plausible for data (!any(i > nrow(data)))
+#
+# }
