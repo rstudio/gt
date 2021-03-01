@@ -38,4 +38,10 @@ test_that("resolve_cols", {
 test_that("resolve_rows", {
   # resolve_rows_i
   # resolve_rows_l
+  expect_identical(resolve_rows_l(1, mtcars), c(TRUE, rep_len(FALSE, nrow(mtcars) - 1)))
+  expect_identical(resolve_rows_l("Mazda RX4", mtcars), c(TRUE, rep_len(FALSE, nrow(mtcars) - 1)))
+  expect_identical(resolve_rows_l(NULL, mtcars), rep_len(TRUE, nrow(mtcars)))
+  expect_identical(resolve_rows_l(everything(), mtcars), rep_len(TRUE, nrow(mtcars)))
+  # TODO: More test cases
+  # TODO: Test with duplicate stub names
 })

@@ -329,7 +329,7 @@ resolve_cols_c <- function(var_expr, data, strict = TRUE) {
 #' @noRd
 resolve_cols_i <- function(expr, data, strict = TRUE) {
   quo <- rlang::enquo(expr)
-  if (inherits(data, "gt_tbl")) {
+  if (is_gt(data)) {
     data <- dt_data_get(data = data)
   }
   stopifnot(is.data.frame(data))
@@ -363,14 +363,72 @@ translate_legacy_resolve_expr <- function(quo, data) {
   }
 }
 
-# resolve_rows_l <- function(expr, data) {
-#   # TODO: Convert data to data frame
-#   quo <- rlang::enquo(expr)
-#   rlang::eval_tidy(quo, data)
-#   # TODO: Normalize results to logical
-#   # TODO: Ensure that results are plausible for data (!any(i > nrow(data)))
-# }
-#
+resolve_rows_l <- function(expr, data) {
+
+  if (is_gt(data)) {
+    row_names <- dt_stub_df_get(data) %>% dplyr::pull(rowname)
+    data <- dt_data_get(data = data)
+  } else {
+    row_names <- row.names(data)
+  }
+  stopifnot(is.data.frame(data))
+
+  quo <- rlang::enquo(expr)
+  resolved <- tidyselect::with_vars(row_names,
+    rlang::eval_tidy(quo, data)
+  )
+
+  # Optional rows to format. Not providing any value results in all
+  # rows in `columns` being formatted. Can either be a vector of row captions
+  # provided [c()], a vector of row indices, or a helper function focused on
+  # selections. The select helper functions are: [starts_with()],
+  # [ends_with()], [contains()], [matches()], [one_of()], and [everything()].
+  # We can also use expressions to filter down to the rows we need (e.g.,
+  # `[colname_1] > 100 & [colname_2] < 50`).
+
+  if (is.null(resolved)) {
+    # Maintained for backcompat
+    resolved <- rep_len(TRUE, nrow(data))
+
+  } else if (is.logical(resolved)) {
+
+    if (length(resolved) == 1) {
+      resolved <- rep_len(resolved, nrow(data))
+    } else if (length(resolved) == nrow(data)) {
+      # Do nothing
+    } else {
+      stop("The number of logical values must either be one or the total ",
+           "number of rows", call. = FALSE)
+    }
+
+  } else if (is.numeric(resolved)) {
+    # TODO: Ensure that all row numbers are plausible
+
+    resolved <- seq_len(nrow(data)) %in% resolved
+
+  } else if (is.character(resolved)) {
+
+    if (length(setdiff(resolved, row_names)) != 0) {
+      stop(
+        "The following rowname(s) do not exist in the data: ",
+        paste0(setdiff(resolved, row_names), collapse = ", "),
+        call. = FALSE
+      )
+    }
+
+    resolved <- row_names %in% resolved
+  } else {
+
+    stop(
+      "Don't know how to select rows using an object of class ", class(resolved)[1],
+      call. = FALSE
+      )
+  }
+
+  resolved
+}
+
+
 # resolve_rows_i <- function(expr, data) {
 #   # TODO: Convert data to data frame
 #   quo <- rlang::enquo(expr)
