@@ -328,35 +328,69 @@ resolve_cols_c <- function(var_expr, data, strict = TRUE) {
 #' @return Named integer vector
 #' @noRd
 resolve_cols_i <- function(expr, data, strict = TRUE) {
+
   quo <- rlang::enquo(expr)
+
   if (is_gt(data)) {
     data <- dt_data_get(data = data)
   }
+
   stopifnot(is.data.frame(data))
 
-  quo <- translate_legacy_resolve_expr(quo, data)
+  quo <- translate_legacy_resolver_expr(quo)
 
-  # No env argument required, because var_expr is a quosure
-  tidyselect::eval_select(quo, data, strict = strict)
+  # No env argument required, because the expr is a quosure
+  tidyselect::eval_select(expr = quo, data = data, strict = strict)
 }
 
-#' @param expr A quosure that might contain legacy gt column criteria
-translate_legacy_resolve_expr <- function(quo, data) {
-  expr <- rlang::quo_get_expr(quo)
+#' @param quo A quosure that might contain legacy gt column criteria
+#' @noRd
+translate_legacy_resolver_expr <- function(quo) {
+
+  expr <- rlang::quo_get_expr(quo = quo)
+
   if (identical(expr, FALSE)) {
-    warning("`columns = FALSE` is deprecated since gt 0.2.3; please use `columns = c()` instead", call. = FALSE)
-    quo_set_expr(quo, quote(NULL))
-  } else if (identical(expr, TRUE)) {
-    warning("`columns = TRUE` is deprecated since gt 0.2.3; please use `columns = everything()` instead", call. = FALSE)
-    quo_set_expr(quo, quote(everything()))
-  } else if (is.null(expr)) {
-    warning("`columns = NULL` is deprecated since gt 0.2.3; please use `columns = everything()` instead", call. = FALSE)
-    quo_set_expr(quo, quote(everything()))
-  } else if (quo_is_call(quo, "vars")) {
-    warning("`columns = vars(...)` is deprecated since gt 0.2.3; please use `columns = c(...)` instead", call. = FALSE)
-    quo_set_expr(quo,
-      rlang::call2(quote(c), !!!rlang::call_args(expr))
+    warning(
+      "`columns = FALSE` is deprecated since gt 0.2.3:\n",
+      "* please use `columns = c()` instead",
+      call. = FALSE
     )
+
+    rlang::quo_set_expr(quo = quo, expr = quote(NULL))
+
+  } else if (identical(expr, TRUE)) {
+
+    warning(
+      "`columns = TRUE` is deprecated since gt 0.2.3:\n",
+      "* please use `columns = everything()` instead",
+      call. = FALSE
+    )
+
+    rlang::quo_set_expr(quo = quo, expr = quote(everything()))
+
+  } else if (is.null(expr)) {
+
+    warning(
+      "`columns = NULL` is deprecated since gt 0.2.3:\n",
+      "* please use `columns = everything()` instead",
+      call. = FALSE
+    )
+
+    rlang::quo_set_expr(quo = quo, expr = quote(everything()))
+
+  } else if (rlang::quo_is_call(quo = quo, name = "vars")) {
+
+    warning(
+      "`columns = vars(...)` is deprecated since gt 0.2.3:\n",
+      "* please use `columns = c(...)` instead",
+      call. = FALSE
+    )
+
+    rlang::quo_set_expr(
+      quo = quo,
+      expr = rlang::call2(quote(c), !!!rlang::call_args(expr))
+    )
+
   } else {
     # No legacy expression detected
     quo
@@ -366,27 +400,24 @@ translate_legacy_resolve_expr <- function(quo, data) {
 resolve_rows_l <- function(expr, data) {
 
   if (is_gt(data)) {
-    row_names <- dt_stub_df_get(data) %>% dplyr::pull(rowname)
+    row_names <- dplyr::pull(dt_stub_df_get(data), rowname)
     data <- dt_data_get(data = data)
   } else {
     row_names <- row.names(data)
   }
+
   stopifnot(is.data.frame(data))
 
   quo <- rlang::enquo(expr)
-  resolved <- tidyselect::with_vars(row_names,
-    rlang::eval_tidy(quo, data)
-  )
 
-  # Optional rows to format. Not providing any value results in all
-  # rows in `columns` being formatted. Can either be a vector of row captions
-  # provided [c()], a vector of row indices, or a helper function focused on
-  # selections. The select helper functions are: [starts_with()],
-  # [ends_with()], [contains()], [matches()], [one_of()], and [everything()].
-  # We can also use expressions to filter down to the rows we need (e.g.,
-  # `[colname_1] > 100 & [colname_2] < 50`).
+  resolved <-
+    tidyselect::with_vars(
+      vars = row_names,
+      expr = rlang::eval_tidy(expr = quo, data = data)
+    )
 
   if (is.null(resolved)) {
+
     # Maintained for backcompat
     resolved <- rep_len(TRUE, nrow(data))
 
@@ -397,12 +428,21 @@ resolve_rows_l <- function(expr, data) {
     } else if (length(resolved) == nrow(data)) {
       # Do nothing
     } else {
-      stop("The number of logical values must either be one or the total ",
-           "number of rows", call. = FALSE)
+      stop(
+        "The number of logical values must either be 1 or the number of rows",
+        call. = FALSE
+      )
     }
 
   } else if (is.numeric(resolved)) {
-    # TODO: Ensure that all row numbers are plausible
+
+    if (length(setdiff(resolved, seq_len(nrow(data)))) != 0) {
+      stop(
+        "The following rowname(s) do not exist in the data: ",
+        paste0(setdiff(resolved, seq_len(nrow(data))), collapse = ", "),
+        call. = FALSE
+      )
+    }
 
     resolved <- seq_len(nrow(data)) %in% resolved
 
@@ -417,23 +457,20 @@ resolve_rows_l <- function(expr, data) {
     }
 
     resolved <- row_names %in% resolved
+
   } else {
 
     stop(
-      "Don't know how to select rows using an object of class ", class(resolved)[1],
+      "Don't know how to select rows using an object of class ",
+      class(resolved)[1],
       call. = FALSE
-      )
+    )
   }
 
   resolved
 }
 
 
-# resolve_rows_i <- function(expr, data) {
-#   # TODO: Convert data to data frame
-#   quo <- rlang::enquo(expr)
-#   rlang::eval_tidy(quo, data)
-#   # TODO: Normalize results to integer
-#   # TODO: Ensure that results are plausible for data (!any(i > nrow(data)))
-#
-# }
+resolve_rows_i <- function(expr, data) {
+  which(resolve_rows_l(expr = expr, data = data))
+}
