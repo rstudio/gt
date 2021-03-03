@@ -449,10 +449,11 @@ resolve_rows_l <- function(expr, data) {
 
   } else if (is.character(resolved)) {
 
-    if (length(setdiff(resolved, row_names)) != 0) {
+    unknown_rownames <- setdiff(resolved, row_names)
+    if (length(unknown_rownames) != 0) {
       stop(
         "The following rowname(s) do not exist in the data: ",
-        paste0(setdiff(resolved, row_names), collapse = ", "),
+        paste0(unknown_rownames, collapse = ", "),
         call. = FALSE
       )
     }
