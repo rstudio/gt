@@ -315,12 +315,12 @@ resolve_vars <- function(var_expr,
   column_names[columns_idx]
 }
 
-#' @param var_expr An unquoted expression that follows tidyselect semantics
+#' @param expr An unquoted expression that follows tidyselect semantics
 #' @param data A gt object or data frame or tibble
 #' @return Character vector
 #' @noRd
-resolve_cols_c <- function(var_expr, data, strict = TRUE) {
-  names(resolve_cols_i({{var_expr}}, data = data, strict = strict))
+resolve_cols_c <- function(expr, data, strict = TRUE) {
+  names(resolve_cols_i({{expr}}, data = data, strict = strict))
 }
 
 #' @param expr An unquoted expression that follows tidyselect semantics
