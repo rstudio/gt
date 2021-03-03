@@ -472,5 +472,5 @@ resolve_rows_l <- function(expr, data) {
 
 
 resolve_rows_i <- function(expr, data) {
-  which(resolve_rows_l(expr = expr, data = data))
+  which(resolve_rows_l(expr = {{ expr }}, data = data))
 }
