@@ -436,10 +436,11 @@ resolve_rows_l <- function(expr, data) {
 
   } else if (is.numeric(resolved)) {
 
-    if (length(setdiff(resolved, seq_len(nrow(data)))) != 0) {
+    unknown_indices <- setdiff(resolved, seq_len(nrow(data)))
+    if (length(unknown_indices) != 0) {
       stop(
-        "The following rowname(s) do not exist in the data: ",
-        paste0(setdiff(resolved, seq_len(nrow(data))), collapse = ", "),
+        "The following row number(s) do not exist in the data: ",
+        paste0(unknown_indices, collapse = ", "),
         call. = FALSE
       )
     }
