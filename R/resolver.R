@@ -8,7 +8,6 @@
 resolve_cells_body <- function(data,
                                object) {
 
-
   # Get the `stub_df` data frame from `data`
   stub_df <- dt_stub_df_get(data = data)
   data_tbl <- dt_data_get(data = data)
@@ -327,11 +326,24 @@ resolve_cols_c <- function(expr, data, strict = TRUE) {
 #' @param data A gt object or data frame or tibble
 #' @return Named integer vector
 #' @noRd
-resolve_cols_i <- function(expr, data, strict = TRUE) {
+resolve_cols_i <- function(expr,
+                           data,
+                           strict = TRUE,
+                           body_only = TRUE) {
 
   quo <- rlang::enquo(expr)
+  cols_excl <- c()
 
   if (is_gt(data)) {
+
+    cols <- colnames(dt_data_get(data = data))
+
+    if (body_only) {
+      stub_var <- dt_boxhead_get_var_stub(data)
+      group_rows_vars <- dt_boxhead_get_vars_groups(data)
+
+      cols_excl <- c(stub_var, group_rows_vars)
+    }
     data <- dt_data_get(data = data)
   }
 
@@ -340,7 +352,10 @@ resolve_cols_i <- function(expr, data, strict = TRUE) {
   quo <- translate_legacy_resolver_expr(quo)
 
   # No env argument required, because the expr is a quosure
-  tidyselect::eval_select(expr = quo, data = data, strict = strict)
+  selected <- tidyselect::eval_select(expr = quo, data = data, strict = strict)
+
+  # Exclude certain columns (e.g., stub & group columns) if necessary
+  selected[!names(selected) %in% cols_excl]
 }
 
 #' @param quo A quosure that might contain legacy gt column criteria
