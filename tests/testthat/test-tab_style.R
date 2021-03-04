@@ -384,28 +384,19 @@ test_that("a gt table can store the correct style statements", {
       )
   )
 
-  # Apply a `yellow` background a single data cell; this time, use `vars()`
-  # to specify the `rows`
-  tbl_html <-
-    data %>%
-    tab_style(
-      style = cell_fill(color = "yellow"),
-      locations = cells_body(columns = "disp", rows = vars(`Mazda RX4`))
-    )
-
   # Expect that the internal `styles_df` data frame will have
   # a single row
   dt_styles_get(data = tbl_html) %>%
     nrow() %>%
     expect_equal(1)
 
-  # Apply a `yellow` background a single data cell; this time, use `vars()`
+  # Apply a `yellow` background a single data cell; this time, use `c()`
   # to specify the `columns`
   tbl_html <-
     data %>%
     tab_style(
       style = cell_fill(color = "yellow"),
-      locations = cells_body(columns = vars(disp, hp), rows = "Mazda RX4")
+      locations = cells_body(columns = c(disp, hp), rows = "Mazda RX4")
     )
 
   # Expect that the internal `styles_df` data frame will have two rows
@@ -442,7 +433,7 @@ test_that("using fonts in `cell_text()` works", {
   tbl %>%
     tab_style(
       style = cell_text(font = c("Comic Sans MS", "Menlo", default_fonts())),
-      locations = cells_body(columns = vars(time), rows = 1)
+      locations = cells_body(columns = time, rows = 1)
     ) %>%
     as_raw_html() %>%
     expect_match(
@@ -454,7 +445,7 @@ test_that("using fonts in `cell_text()` works", {
   tbl %>%
     tab_style(
       style = cell_text(font = c(google_font(name = "Dancing Script"), default_fonts())),
-      locations = cells_body(columns = vars(time), rows = 1)
+      locations = cells_body(columns = time, rows = 1)
     ) %>%
     as_raw_html() %>%
     expect_match(
@@ -464,7 +455,7 @@ test_that("using fonts in `cell_text()` works", {
   tbl %>%
     tab_style(
       style = cell_text(font = list(google_font(name = "Dancing Script"), default_fonts())),
-      locations = cells_body(columns = vars(time), rows = 1)
+      locations = cells_body(columns = time, rows = 1)
     ) %>%
     as_raw_html() %>%
     expect_match(
