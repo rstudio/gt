@@ -63,17 +63,14 @@ resolve_cells_body <- function(data,
 resolve_cells_stub <- function(data,
                                object) {
 
-  stub_df <- dt_stub_df_get(data = data)
-
   #
   # Resolution of rows as integer vectors
   # providing the positions of the matched variables
   #
   resolved_rows_idx <-
-    resolve_data_vals_idx(
-      var_expr = !!object$rows,
-      data_tbl = NULL,
-      vals = stub_df$rowname
+    resolve_rows_i(
+      expr = !!object$rows,
+      data = data
     )
 
   # Create a list object
