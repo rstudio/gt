@@ -549,13 +549,13 @@ test_that("the `tab_footnote()` function works correctly", {
         footnote = "Footnote error.",
         locations = cells_body(columns = "disp", rows = "Mazda RX7")))
 
-  # Apply a footnote to a single data cell; this time, use `vars()`
+  # Apply a footnote to a single data cell; this time, use `c()`
   # to specify the `rows`
   tab <-
     data %>%
     tab_footnote(
       footnote = "A footnote.",
-      locations = cells_body(columns = "disp", rows = vars(`Mazda RX4`)))
+      locations = cells_body(columns = "disp", rows = c("Mazda RX4")))
 
   # Expect that the internal `footnotes_df` data frame will have
   # a single row
@@ -571,13 +571,13 @@ test_that("the `tab_footnote()` function works correctly", {
     expect_equal(
     c("data", NA_character_, "disp", "5", "1", NA_character_, "A footnote."))
 
-  # Apply a footnote to a single data cell; this time, use `vars()`
+  # Apply a footnote to a single data cell; this time, use `c()`
   # to specify the `columns`
   tab <-
     data %>%
     tab_footnote(
       footnote = "A footnote.",
-      locations = cells_body(columns = vars(disp, hp), rows = "Mazda RX4"))
+      locations = cells_body(columns = c(disp, hp), rows = "Mazda RX4"))
 
   # Expect that the internal `footnotes_df` data frame will have two rows
   dt_footnotes_get(data = tab) %>%
