@@ -18,18 +18,18 @@ resolve_cells_body <- function(data,
   # providing the positions of the matched variables
   #
 
+  # Resolve columns as index values
   resolved_columns_idx <-
-    resolve_vars_idx(
-      var_expr = !!object$columns,
+    resolve_cols_i(
+      expr = !!object$columns,
       data = data
     )
 
-  # Get the resolved rows
+  # Resolve rows as index values
   resolved_rows_idx <-
-    resolve_data_vals_idx(
-      var_expr = !!object$rows,
-      data_tbl = data_tbl,
-      vals = stub_df$rowname
+    resolve_rows_i(
+      expr = !!object$rows,
+      data = data
     )
 
   # Get all possible combinations with `expand.grid()`
