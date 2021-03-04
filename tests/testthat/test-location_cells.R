@@ -510,14 +510,14 @@ test_that("styles are correctly applied to HTML output with location functions",
   gt_tbl_cells_column_labels <-
     tbl %>%
     gt(rowname_col = "row", groupname_col = "group") %>%
-    cols_move_to_end(columns = vars(value_1)) %>%
+    cols_move_to_end(columns = "value_1") %>%
     tab_style(
       style = list(
         cell_text(size = px(20), color = "white"),
         cell_fill(color = "#FFA500")
       ),
       locations = cells_column_labels(
-        columns = vars(value_1, value_3))
+        columns = c("value_1", "value_3"))
     )
 
   # Expect that the styling was applied to the correct column labels
