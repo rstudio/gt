@@ -151,3 +151,28 @@ test_that("`resolve_rows_l()` and `resolve_rows_i()` both work", {
   expect_identical(resolve_rows_i(fctr == "six", exibble_gt_1), 6L)
   expect_identical(resolve_rows_i(currency == 20, exibble_gt_1), integer(0))
 })
+
+
+test_that("`resolve_vector_l()` and `resolve_vector_i()` both work", {
+
+  vector_x <- c(colnames(exibble), NA_character_, "", colnames(exibble)[1:2])
+
+  expect_identical(resolve_vector_l(1, vector_x), c(TRUE, rep_len(FALSE, length(vector_x) - 1)))
+  expect_identical(resolve_vector_l("fctr", vector_x), c(FALSE, FALSE, TRUE, rep(FALSE, 10)))
+  expect_identical(resolve_vector_l(NULL, vector_x), rep_len(TRUE, length(vector_x)))
+
+  # Select helpers
+  expect_identical(resolve_vector_l(everything(), vector_x), rep_len(TRUE, nrow(mtcars)))
+  expect_identical(resolve_vector_l(starts_with("Merc"), vector_x), c(rep(FALSE, 7), rep(TRUE, 7), rep(FALSE, 18)))
+  expect_identical(resolve_vector_l(ends_with("SE", ignore.case = FALSE), mtcars), c(rep(FALSE, 11), TRUE, rep(FALSE, 20)))
+  expect_identical(resolve_vector_l(matches("RX4"), vector_x), c(rep(TRUE, 2), rep(FALSE, 30)))
+  expect_identical(resolve_vector_l(matches("RX[0-9]"), vector_x), c(rep(TRUE, 2), rep(FALSE, 30)))
+  expect_identical(resolve_vector_l(contains("RX4"), vector_x), c(rep(TRUE, 2), rep(FALSE, 30)))
+  expect_identical(resolve_vector_l(num_range(prefix = "", range = seq_len(nrow(iris))), iris), rep_len(TRUE, nrow(iris)))
+
+  expect_identical(resolve_vector_l(everything(), vector_x), rep_len(TRUE, length(vector_x)))
+  expect_identical(resolve_vector_l(starts_with("d"), vector_x), c(rep(FALSE, 3), TRUE, FALSE, TRUE, rep(FALSE, 7)))
+  expect_identical(resolve_vector_l(ends_with("time", ignore.case = FALSE), vector_x), c(rep(FALSE, 4), TRUE, TRUE, rep(FALSE, 7)))
+  expect_identical(resolve_vector_l(matches("im"), vector_x), c(rep(FALSE, 4), TRUE, TRUE, rep(FALSE, 7)))
+  expect_identical(resolve_vector_l(contains("o"), vector_x), c(rep(FALSE, 7), TRUE, TRUE,  rep(FALSE, 4)))
+})
