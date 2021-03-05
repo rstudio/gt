@@ -493,7 +493,78 @@ resolve_rows_l <- function(expr, data) {
   resolved
 }
 
-
 resolve_rows_i <- function(expr, data) {
   which(resolve_rows_l(expr = {{ expr }}, data = data))
+}
+
+resolve_vector_l <- function(expr, vector) {
+
+  quo <- rlang::enquo(expr)
+
+  resolved <-
+    tidyselect::with_vars(
+      vars = vector,
+      expr = rlang::eval_tidy(expr = quo, data = NULL)
+    )
+
+  if (is.null(resolved)) {
+
+    # Maintained for backcompat
+    resolved <- rep_len(TRUE, length(vector))
+
+  } else if (is.logical(resolved)) {
+
+    if (length(resolved) == 1) {
+      resolved <- rep_len(resolved, length(vector))
+    } else if (length(resolved) == length(vector)) {
+      # Do nothing
+    } else {
+      stop(
+        "The number of logical values must either be 1 or the number of items",
+        call. = FALSE
+      )
+    }
+
+  } else if (is.numeric(resolved)) {
+
+    unknown_indices <- setdiff(resolved, seq_along(vector))
+
+    if (length(unknown_indices) != 0) {
+      stop(
+        "The following item number(s) do not exist in the data: ",
+        paste0(unknown_indices, collapse = ", "),
+        call. = FALSE
+      )
+    }
+
+    resolved <- seq_along(vector) %in% resolved
+
+  } else if (is.character(resolved)) {
+
+    unknown_values <- setdiff(resolved, vector)
+
+    if (length(unknown_values) != 0) {
+      stop(
+        "The following item(s) do not exist in the data: ",
+        paste0(unknown_values, collapse = ", "),
+        call. = FALSE
+      )
+    }
+
+    resolved <- vector %in% resolved
+
+  } else {
+
+    stop(
+      "Don't know how to select items using an object of class ",
+      class(resolved)[1],
+      call. = FALSE
+    )
+  }
+
+  resolved
+}
+
+resolve_vector_i <- function(expr, vector) {
+  which(resolve_vector_l(expr = {{ expr }}, vector = vector))
 }
