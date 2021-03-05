@@ -495,7 +495,7 @@ cells_column_spanners <- function(spanners) {
 #'
 #' @import rlang
 #' @export
-cells_column_labels <- function(columns) {
+cells_column_labels <- function(columns = everything()) {
 
   # Capture expression for the `columns` argument
   columns_expr <- rlang::enquo(columns)
