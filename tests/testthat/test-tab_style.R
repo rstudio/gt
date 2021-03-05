@@ -83,7 +83,7 @@ test_that("a gt table can store the correct style statements", {
     tab_style(
       style = cell_fill(color = "lightgray"),
       locations = list(
-        cells_column_labels(columns = TRUE),
+        cells_column_labels(),
         cells_stub(rows = TRUE))
     )
 

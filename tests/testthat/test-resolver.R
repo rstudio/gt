@@ -149,8 +149,5 @@ test_that("`resolve_rows_l()` and `resolve_rows_i()` both work", {
   expect_identical(resolve_rows_i(is.na(char), exibble_gt_1), 5L)
   expect_identical(resolve_rows_i(num > 4, exibble_gt_1), c(3:5, 7:8))
   expect_identical(resolve_rows_i(fctr == "six", exibble_gt_1), 6L)
-  expect_identical(resolve_rows_i(currency < 5 && char == "grapefruit", exibble_gt_1), integer(0))
   expect_identical(resolve_rows_i(currency == 20, exibble_gt_1), integer(0))
-  expect_identical(resolve_rows_i(currency < 5 | char == "grapefruit", exibble_gt_1), c(3L, 7L, 8L))
-  expect_identical(resolve_rows_i(currency < 5 || char == "grapefruit", exibble_gt_1), integer(0))
 })

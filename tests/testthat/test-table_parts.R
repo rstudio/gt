@@ -522,7 +522,7 @@ test_that("a gt table contains custom styles at the correct locations", {
     tab_style(
       style = cell_fill(color = "lightgray"),
       locations = list(
-        cells_column_labels(columns = TRUE),
+        cells_column_labels(),
         cells_stub(rows = TRUE))
     ) %>%
     tab_style(
@@ -561,11 +561,11 @@ test_that("a gt table contains custom styles at the correct locations", {
     ) %>%
     tab_style(
       style = cell_fill(color = "turquoise"),
-      locations = cells_column_labels(columns = "gear")
+      locations = cells_column_labels(columns = gear)
     ) %>%
     tab_style(
       style = cell_fill(color = "pink"),
-      locations = cells_column_labels(columns = "hp")
+      locations = cells_column_labels(columns = hp)
     ) %>%
     tab_style(
       style = list(

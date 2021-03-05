@@ -70,11 +70,11 @@ data_2 <-
   ) %>%
   tab_footnote(
     footnote = "Prices in USD.",
-    locations = cells_column_labels(columns = vars(msrp))
+    locations = cells_column_labels(columns = msrp)
   ) %>%
   tab_footnote(
     footnote = "AWD = All Wheel Drive, RWD = Rear Wheel Drive.",
-    locations = cells_column_labels(columns = vars(drivetrain))
+    locations = cells_column_labels(columns = drivetrain)
   ) %>%
   tab_footnote(
     footnote = "The most important details.",
@@ -192,7 +192,7 @@ test_that("the `tab_footnote()` function works correctly", {
     tab_footnote(
       footnote = "Column labels and stub footnote.",
       locations = list(
-        cells_column_labels(columns = TRUE),
+        cells_column_labels(),
         cells_stub(rows = TRUE)
       )
     )
