@@ -790,22 +790,6 @@ cells_body <- function(columns = everything(),
   cells
 }
 
-#' Location helper for targeting data cells in the table body (deprecated)
-#'
-#' @inheritParams cells_body
-#'
-#' @keywords internal
-#' @export
-cells_data <- function(columns = TRUE,
-                       rows = TRUE) {
-
-  warning("The `cells_data()` function is deprecated and will soon be removed\n",
-          " * Use the `cells_body()` function instead",
-          call. = FALSE)
-
-  cells_body(columns = {{columns}}, rows = {{rows}})
-}
-
 #' Location helper for targeting group summary cells
 #'
 #' The `cells_summary()` function is used to target the cells in a group summary
