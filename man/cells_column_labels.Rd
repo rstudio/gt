@@ -4,7 +4,7 @@
 \alias{cells_column_labels}
 \title{Location helper for targeting the column labels}
 \usage{
-cells_column_labels(columns)
+cells_column_labels(columns = everything())
 }
 \arguments{
 \item{columns}{The names of the column labels that are to be targeted.}
