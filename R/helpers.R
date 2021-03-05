@@ -756,7 +756,7 @@ cells_stub <- function(rows = TRUE) {
 #'   tab_footnote(
 #'     footnote = "Highest horsepower.",
 #'     locations = cells_body(
-#'       columns = vars(hp),
+#'       columns = hp,
 #'       rows = hp == max(hp))
 #'   ) %>%
 #'   opt_footnote_marks(marks = c("*", "+"))
@@ -770,8 +770,8 @@ cells_stub <- function(rows = TRUE) {
 #'
 #' @import rlang
 #' @export
-cells_body <- function(columns = TRUE,
-                       rows = TRUE) {
+cells_body <- function(columns = everything(),
+                       rows = everything()) {
 
   # Capture expressions for the `columns` and `rows` arguments
   col_expr <- rlang::enquo(columns)
