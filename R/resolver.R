@@ -313,8 +313,19 @@ resolve_vars <- function(var_expr,
 #' @param data A gt object or data frame or tibble
 #' @return Character vector
 #' @noRd
-resolve_cols_c <- function(expr, data, strict = TRUE) {
-  names(resolve_cols_i({{expr}}, data = data, strict = strict))
+resolve_cols_c <- function(expr,
+                           data,
+                           strict = TRUE,
+                           body_only = TRUE) {
+
+  names(
+    resolve_cols_i(
+      expr = {{expr}},
+      data = data,
+      strict = strict,
+      body_only = body_only
+    )
+  )
 }
 
 #' @param expr An unquoted expression that follows tidyselect semantics
