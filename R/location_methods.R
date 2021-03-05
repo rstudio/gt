@@ -219,16 +219,15 @@ resolve_location.cells_body <- function(loc, data) {
   stub_df <- dt_stub_df_get(data = data)
 
   loc$colnames <-
-    resolve_vars(
-      var_expr = !!loc[["columns"]],
+    resolve_cols_c(
+      expr = !!loc[["columns"]],
       data = data
     )
 
   loc$rows <-
-    resolve_data_vals_idx(
-      var_expr = !!loc[["rows"]],
-      data_tbl = data_tbl,
-      vals = stub_df$rowname
+    resolve_rows_i(
+      expr = !!loc[["rows"]],
+      data = data
     )
 
   class(loc) <- c("resolved", class(loc))
@@ -237,14 +236,12 @@ resolve_location.cells_body <- function(loc, data) {
 
 resolve_location.cells_column_labels <- function(loc, data) {
 
-  data_tbl <- dt_data_get(data = data)
-
   if (!is.null(loc$columns)) {
 
     loc$colnames <-
-      resolve_vars(
-        var_expr = !!loc$columns,
-        data = data_tbl
+      resolve_cols_c(
+        expr = !!loc[["columns"]],
+        data = data
       )
   }
 
