@@ -55,6 +55,8 @@ companies and captures about 80\" />
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -66,9 +68,15 @@ companies and captures about 80\" />
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -121,7 +129,7 @@ companies and captures about 80\" />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/rstudio/gt">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -180,16 +188,16 @@ prices in USD; the <code>close</code> price is adjusted for splits</p></dd>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Here is a glimpse at the data</span>
 <span class='co'># available in `sp500`</span>
-<span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/glimpse.html'>glimpse</a></span><span class='op'>(</span><span class='va'>sp500</span><span class='op'>)</span>
+<span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://pillar.r-lib.org/reference/glimpse.html'>glimpse</a></span><span class='op'>(</span><span class='va'>sp500</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Rows: 16,607
 #&gt; Columns: 7
-#&gt; $ date      <span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span> 2015-12-31, 2015-12-30, 2015-12-29, 2015-12-28, 2015-12-24…
-#&gt; $ open      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> 2060.59, 2077.34, 2060.54, 2057.77, 2063.52, 2042.20, 2023.…
-#&gt; $ high      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> 2062.54, 2077.34, 2081.56, 2057.77, 2067.36, 2064.73, 2042.…
-#&gt; $ low       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> 2043.62, 2061.97, 2060.54, 2044.20, 2058.73, 2042.20, 2020.…
-#&gt; $ close     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> 2043.94, 2063.36, 2078.36, 2056.50, 2060.99, 2064.29, 2038.…
-#&gt; $ volume    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> 2655330000, 2367430000, 2542000000, 2492510000, 1411860000,…
-#&gt; $ adj_close </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> 2043.94, 2063.36, 2078.36, 2056.50, 2060.99, 2064.29, 2038.…</div><div class='input'>
+#&gt; $ date      <span style='color: #949494;font-style: italic;'>&lt;date&gt;</span><span> 2015-12-31, 2015-12-30, 2015-12-29, 2015-12-28, 2015-12-24,…
+#&gt; $ open      </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> 2060.59, 2077.34, 2060.54, 2057.77, 2063.52, 2042.20, 2023.1…
+#&gt; $ high      </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> 2062.54, 2077.34, 2081.56, 2057.77, 2067.36, 2064.73, 2042.7…
+#&gt; $ low       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> 2043.62, 2061.97, 2060.54, 2044.20, 2058.73, 2042.20, 2020.4…
+#&gt; $ close     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> 2043.94, 2063.36, 2078.36, 2056.50, 2060.99, 2064.29, 2038.9…
+#&gt; $ volume    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> 2655330000, 2367430000, 2542000000, 2492510000, 1411860000, …
+#&gt; $ adj_close </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> 2043.94, 2063.36, 2078.36, 2056.50, 2060.99, 2064.29, 2038.9…</div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -202,11 +210,11 @@ prices in USD; the <code>close</code> price is adjusted for splits</p></dd>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, <a href='https://www.rstudio.com'><img src='https://www.tidyverse.org/rstudio-logo.svg' alt='RStudio' height='24' /></a>.</p>
+  <p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, <a href="https://www.rstudio.com" class="external-link"><img src="https://www.tidyverse.org/rstudio-logo.svg" alt="RStudio" height="24"></a>.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p></p>
 </div>
 
       </footer>
@@ -214,6 +222,8 @@ prices in USD; the <code>close</code> price is adjusted for splits</p></dd>
 
   
 
+
+  
 
   </body>
 </html>

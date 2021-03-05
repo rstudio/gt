@@ -52,6 +52,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -63,9 +65,15 @@
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -118,7 +126,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/rstudio/gt">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -148,7 +156,7 @@
 <a href="#new-features" class="anchor"></a>New features</h2>
 <ul>
 <li><p>The new <code><a href="../reference/opt_table_font.html">opt_table_font()</a></code> function makes it possible to define a custom font for the entire <strong>gt</strong> table. The standard fallback fonts are still set by default but the font defined here will take precedence. You could still have different fonts in select locations in the table, and for that you would need to use <code><a href="../reference/tab_style.html">tab_style()</a></code> in conjunction with the <code><a href="../reference/cell_text.html">cell_text()</a></code> helper function. The new <code><a href="../reference/google_font.html">google_font()</a></code> helper function provides an option for supplying a font available at the Google Fonts service (this is in addition to using system fonts in the <code>font</code> argument). Using the <code><a href="../reference/info_google_fonts.html">info_google_fonts()</a></code> function will provide a table with a set of helpful font recommendations from the <em>Google Fonts</em> catalog. The new <code><a href="../reference/default_fonts.html">default_fonts()</a></code> functions provides a helpful vector of system fallback fonts which works well when defining a vector of fonts. (<a href='https://github.com/rstudio/gt/issues/591'>#591</a>)</p></li>
-<li><p>The new <code><a href="../reference/opt_css.html">opt_css()</a></code> function makes allows for the addition of custom CSS to a <strong>gt</strong> table. This CSS will be added after the compiled CSS that <strong>gt</strong> generates automatically when the <code>gt_tbl</code> object is transformed to an HTML output table. You can supply <code>css</code> as a vector of lines or as a single string. The <code><a href="https://rdrr.io/pkg/htmltools/man/css.html">css()</a></code> function has been re-exported from <strong>htmltools</strong> to make it easier to build CSS style declarations. (Also <a href='https://github.com/rstudio/gt/issues/591'>#591</a>)</p></li>
+<li><p>The new <code><a href="../reference/opt_css.html">opt_css()</a></code> function makes allows for the addition of custom CSS to a <strong>gt</strong> table. This CSS will be added after the compiled CSS that <strong>gt</strong> generates automatically when the <code>gt_tbl</code> object is transformed to an HTML output table. You can supply <code>css</code> as a vector of lines or as a single string. The <code><a href="https://rdrr.io/pkg/htmltools/man/css.html" class="external-link">css()</a></code> function has been re-exported from <strong>htmltools</strong> to make it easier to build CSS style declarations. (Also <a href='https://github.com/rstudio/gt/issues/591'>#591</a>)</p></li>
 <li><p>Setting the widths of table columns is now easier and more dependable with <code><a href="../reference/cols_width.html">cols_width()</a></code>. Widths can be expressed in units of pixels (easily set by use of the <code><a href="../reference/px.html">px()</a></code> helper function), as percentages (where the <code><a href="../reference/pct.html">pct()</a></code> helper function is useful), or a mixture of the two. The function takes into consideration whether an overall table width has been provided with <code><a href="../reference/tab_options.html">tab_options(table.width = ...)</a></code>. Providing pixel widths for all columns serves to override any table width defined (yielding columns with the exact widths specified). (<a href='https://github.com/rstudio/gt/issues/561'>#561</a>)</p></li>
 <li><p>There are new options for numeric formatting: (1) using significant figures (with <code>n_sigfig</code> in <code>fmt_number</code>), and (2) the ability to retain/drop trailing decimal marks (with <code>drop_trailing_dec_mark</code> in <code><a href="../reference/fmt_number.html">fmt_number()</a></code>, <code><a href="../reference/fmt_percent.html">fmt_percent()</a></code>, and <code><a href="../reference/fmt_currency.html">fmt_currency()</a></code>). Thank you <a href='https://github.com/drolejoel'>@drolejoel</a> for the suggestion in <a href='https://github.com/rstudio/gt/issues/535'>#535</a>! (<a href='https://github.com/rstudio/gt/issues/546'>#546</a>).</p></li>
 <li><p>The new <code>scale_values</code> argument for <code><a href="../reference/fmt_percent.html">fmt_percent()</a></code> makes it easy to use values that are already scaled (and just require the percent mark). Thank you <a href='https://github.com/djohn215'>@djohn215</a> for the suggestion in <a href='https://github.com/rstudio/gt/issues/559'>#559</a>. (<a href='https://github.com/rstudio/gt/issues/565'>#565</a>)</p></li>
@@ -200,11 +208,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, <a href='https://www.rstudio.com'><img src='https://www.tidyverse.org/rstudio-logo.svg' alt='RStudio' height='24' /></a>.</p>
+  <p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, <a href="https://www.rstudio.com" class="external-link"><img src="https://www.tidyverse.org/rstudio-logo.svg" alt="RStudio" height="24"></a>.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p></p>
 </div>
 
       </footer>
@@ -212,6 +220,8 @@
 
   
 
+
+  
 
   </body>
 </html>

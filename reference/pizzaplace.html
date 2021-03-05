@@ -62,6 +62,8 @@ Large Size!')." />
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -73,9 +75,15 @@ Large Size!')." />
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -128,7 +136,7 @@ Large Size!')." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/rstudio/gt">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -284,16 +292,16 @@ Tomatoes, Zucchini, Red Peppers, Garlic, Pesto Sauce)</p></li>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Here is a glimpse at the data</span>
 <span class='co'># available in `pizzaplace`</span>
-<span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/glimpse.html'>glimpse</a></span><span class='op'>(</span><span class='va'>pizzaplace</span><span class='op'>)</span>
+<span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://pillar.r-lib.org/reference/glimpse.html'>glimpse</a></span><span class='op'>(</span><span class='va'>pizzaplace</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Rows: 49,574
 #&gt; Columns: 7
-#&gt; $ id    <span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> "2015-000001", "2015-000002", "2015-000002", "2015-000002", "20…
-#&gt; $ date  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> "2015-01-01", "2015-01-01", "2015-01-01", "2015-01-01", "2015-0…
-#&gt; $ time  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> "11:38:36", "11:57:40", "11:57:40", "11:57:40", "11:57:40", "11…
-#&gt; $ name  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> "hawaiian", "classic_dlx", "mexicana", "thai_ckn", "five_cheese…
-#&gt; $ size  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> "M", "M", "M", "L", "L", "L", "L", "M", "M", "M", "S", "S", "S"…
-#&gt; $ type  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> "classic", "classic", "veggie", "chicken", "veggie", "supreme",…
-#&gt; $ price </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> 13.25, 16.00, 16.00, 20.75, 18.50, 20.75, 20.75, 16.50, 16.50, …</div><div class='input'>
+#&gt; $ id    <span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> "2015-000001", "2015-000002", "2015-000002", "2015-000002", "201…
+#&gt; $ date  </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> "2015-01-01", "2015-01-01", "2015-01-01", "2015-01-01", "2015-01…
+#&gt; $ time  </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> "11:38:36", "11:57:40", "11:57:40", "11:57:40", "11:57:40", "11:…
+#&gt; $ name  </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> "hawaiian", "classic_dlx", "mexicana", "thai_ckn", "five_cheese"…
+#&gt; $ size  </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> "M", "M", "M", "L", "L", "L", "L", "M", "M", "M", "S", "S", "S",…
+#&gt; $ type  </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> "classic", "classic", "veggie", "chicken", "veggie", "supreme", …
+#&gt; $ price </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> 13.25, 16.00, 16.00, 20.75, 18.50, 20.75, 20.75, 16.50, 16.50, 1…</div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -306,11 +314,11 @@ Tomatoes, Zucchini, Red Peppers, Garlic, Pesto Sauce)</p></li>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, <a href='https://www.rstudio.com'><img src='https://www.tidyverse.org/rstudio-logo.svg' alt='RStudio' height='24' /></a>.</p>
+  <p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, <a href="https://www.rstudio.com" class="external-link"><img src="https://www.tidyverse.org/rstudio-logo.svg" alt="RStudio" height="24"></a>.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p></p>
 </div>
 
       </footer>
@@ -318,6 +326,8 @@ Tomatoes, Zucchini, Red Peppers, Garlic, Pesto Sauce)</p></li>
 
   
 
+
+  
 
   </body>
 </html>
