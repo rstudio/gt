@@ -626,7 +626,7 @@ set_footnote.cells_column_labels <- function(loc, data, footnote) {
 
   cols <- resolved$columns
 
-  colnames <- dt_boxhead_get_vars_default(data = data)[cols]
+  colnames <- names(cols)
 
   data <-
     dt_footnotes_add(
@@ -1094,7 +1094,7 @@ set_style.cells_column_labels <- function(loc, data, style) {
 
   cols <- resolved$columns
 
-  colnames <- dt_boxhead_get_vars_default(data = data)[cols]
+  colnames <- names(cols)
 
   data <-
     dt_styles_add(

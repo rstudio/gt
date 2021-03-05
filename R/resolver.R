@@ -96,12 +96,10 @@ resolve_cells_column_labels <- function(data,
   # Resolution of columns as integer vectors
   # providing the positions of the matched variables
   #
-
   resolved_columns <-
-    resolve_data_vals_idx(
-      var_expr = !!object$columns,
-      data_tbl = NULL,
-      vals = dt_boxhead_get_vars_default(data = data)
+    resolve_cols_i(
+      expr = !!object$columns,
+      data = data
     )
 
   # Create a list object
