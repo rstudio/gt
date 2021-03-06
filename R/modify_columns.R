@@ -212,13 +212,12 @@ cols_width <- function(data,
     cols <- width_item %>% rlang::f_lhs()
 
     columns <-
-      dt_boxhead_get_vars(data)[
-        resolve_data_vals_idx(
-          var_expr = !!cols,
-          data_tbl = NULL,
-          vals = dt_boxhead_get_vars(data)
-        )
-      ] %>%
+      resolve_cols_c(
+        expr = !!cols,
+        data = data,
+        strict = TRUE,
+        body_only = TRUE
+      ) %>%
       base::setdiff(columns_used)
 
     columns_used <- c(columns_used, columns)
