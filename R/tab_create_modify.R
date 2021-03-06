@@ -667,10 +667,9 @@ set_footnote.cells_row_groups <- function(loc, data, footnote) {
 
   # Resolve row groups
   resolved_row_groups_idx <-
-    resolve_data_vals_idx(
-      var_expr = !!loc$groups,
-      data_tbl = NULL,
-      vals = row_groups
+    resolve_vector_i(
+      expr = !!loc$groups,
+      vector = row_groups
     )
 
   groups <- row_groups[resolved_row_groups_idx]
@@ -1135,10 +1134,9 @@ set_style.cells_row_groups <- function(loc, data, style) {
 
   # Resolve row groups
   resolved_row_groups_idx <-
-    resolve_data_vals_idx(
-      var_expr = !!loc$groups,
-      data_tbl = NULL,
-      vals = row_groups
+    resolve_vector_i(
+      expr = !!loc$groups,
+      vector = row_groups
     )
 
   groups <- row_groups[resolved_row_groups_idx]
