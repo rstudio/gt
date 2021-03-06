@@ -462,7 +462,7 @@ test_that("the `cols_merge_n_pct()` function works correctly", {
     tbl_n_pct %>%
     gt() %>%
     cols_merge_n_pct(col_n = vars(a), col_pct = vars(b)) %>%
-    fmt_percent(vars(b), decimals = 1)
+    fmt_percent(columns = b, decimals = 1)
 
   # # Expect that merging statements are stored in `col_merge`
   dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$pattern %>%

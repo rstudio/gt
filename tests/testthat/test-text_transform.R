@@ -101,7 +101,7 @@ test_that("the `text_transform()` function works correctly", {
     mtcars_short %>%
     gt() %>%
     fmt_number(
-      columns = vars(mpg),
+      columns = mpg,
       decimals = 4,
       pattern = "{x} miles") %>%
     text_transform(

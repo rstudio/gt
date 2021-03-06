@@ -93,10 +93,10 @@ test_that("the `fmt_missing()` function works correctly", {
   expect_equal(
     (tab %>%
        fmt_number(
-         columns = TRUE,
+         columns = everything(),
          decimals = 3
        ) %>%
-       fmt_missing(columns = TRUE) %>%
+       fmt_missing(columns = everything()) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c("&mdash;", "74.000", "&mdash;", "93.000", "&mdash;", "76.000", "&mdash;"))
 
@@ -104,9 +104,9 @@ test_that("the `fmt_missing()` function works correctly", {
   # then `fmt_number()`; expect the same output as before
   expect_equal(
     (tab %>%
-       fmt_missing(columns = TRUE) %>%
+       fmt_missing(columns = everything()) %>%
        fmt_number(
-         columns = TRUE,
+         columns = everything(),
          decimals = 3
        ) %>%
        render_formats_test(context = "html"))[["num_1"]],
