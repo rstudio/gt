@@ -1318,8 +1318,14 @@ validate_css_lengths <- function(x) {
 
 column_classes_are_valid <- function(data, columns, valid_classes) {
 
+  resolved <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data
+    )
+
   dt_data_get(data = data) %>%
-    dplyr::select(resolve_vars(var_expr = {{columns}}, data = data)) %>%
+    dplyr::select(resolved) %>%
     vapply(
       FUN.VALUE = logical(1), USE.NAMES = FALSE,
       FUN = function(x) any(class(x) %in% valid_classes)
