@@ -157,22 +157,49 @@ test_that("`resolve_vector_l()` and `resolve_vector_i()` both work", {
 
   vector_x <- c(colnames(exibble), NA_character_, "", colnames(exibble)[1:2])
 
+  #
+  # `resolve_vector_l()`
+  #
+
   expect_identical(resolve_vector_l(1, vector_x), c(TRUE, rep_len(FALSE, length(vector_x) - 1)))
   expect_identical(resolve_vector_l("fctr", vector_x), c(FALSE, FALSE, TRUE, rep(FALSE, 10)))
   expect_identical(resolve_vector_l(NULL, vector_x), rep_len(TRUE, length(vector_x)))
+  expect_identical(resolve_vector_l("", vector_x), c(rep(FALSE, 10), TRUE, FALSE, FALSE))
+  expect_identical(resolve_vector_l(NA_character_, vector_x), c(rep(FALSE, 9), TRUE, FALSE, FALSE, FALSE))
 
   # Select helpers
-  expect_identical(resolve_vector_l(everything(), vector_x), rep_len(TRUE, nrow(mtcars)))
-  expect_identical(resolve_vector_l(starts_with("Merc"), vector_x), c(rep(FALSE, 7), rep(TRUE, 7), rep(FALSE, 18)))
-  expect_identical(resolve_vector_l(ends_with("SE", ignore.case = FALSE), mtcars), c(rep(FALSE, 11), TRUE, rep(FALSE, 20)))
-  expect_identical(resolve_vector_l(matches("RX4"), vector_x), c(rep(TRUE, 2), rep(FALSE, 30)))
-  expect_identical(resolve_vector_l(matches("RX[0-9]"), vector_x), c(rep(TRUE, 2), rep(FALSE, 30)))
-  expect_identical(resolve_vector_l(contains("RX4"), vector_x), c(rep(TRUE, 2), rep(FALSE, 30)))
-  expect_identical(resolve_vector_l(num_range(prefix = "", range = seq_len(nrow(iris))), iris), rep_len(TRUE, nrow(iris)))
-
   expect_identical(resolve_vector_l(everything(), vector_x), rep_len(TRUE, length(vector_x)))
   expect_identical(resolve_vector_l(starts_with("d"), vector_x), c(rep(FALSE, 3), TRUE, FALSE, TRUE, rep(FALSE, 7)))
   expect_identical(resolve_vector_l(ends_with("time", ignore.case = FALSE), vector_x), c(rep(FALSE, 4), TRUE, TRUE, rep(FALSE, 7)))
   expect_identical(resolve_vector_l(matches("im"), vector_x), c(rep(FALSE, 4), TRUE, TRUE, rep(FALSE, 7)))
   expect_identical(resolve_vector_l(contains("o"), vector_x), c(rep(FALSE, 7), TRUE, TRUE,  rep(FALSE, 4)))
+
+  expect_error(resolve_vector_l(rep(TRUE, 6), vector_x))
+  expect_error(resolve_vector_l("not valid", vector_x))
+  expect_error(resolve_vector_l(c(90, 90, 1), vector_x))
+  expect_error(resolve_vector_l(c("not", "present"), vector_x))
+  expect_error(resolve_vector_l(dplyr::tibble(a = 2), vector_x))
+
+  #
+  # `resolve_vector_i()`
+  #
+
+  expect_identical(resolve_vector_i(1, vector_x), 1L)
+  expect_identical(resolve_vector_i("fctr", vector_x), 3L)
+  expect_identical(resolve_vector_i(NULL, vector_x), 1:13)
+  expect_identical(resolve_vector_i("", vector_x), 11L)
+  expect_identical(resolve_vector_i(NA_character_, vector_x), 10L)
+
+  # Select helpers
+  expect_identical(resolve_vector_i(everything(), vector_x), 1:13)
+  expect_identical(resolve_vector_i(starts_with("d"), vector_x), c(4L, 6L))
+  expect_identical(resolve_vector_i(ends_with("time", ignore.case = FALSE), vector_x), 5:6)
+  expect_identical(resolve_vector_i(matches("im"), vector_x), 5:6)
+  expect_identical(resolve_vector_i(contains("o"), vector_x), 8:9)
+
+  expect_error(resolve_vector_i(rep(TRUE, 6), vector_x))
+  expect_error(resolve_vector_i("not valid", vector_x))
+  expect_error(resolve_vector_i(c(90, 90, 1), vector_x))
+  expect_error(resolve_vector_i(c("not", "present"), vector_x))
+  expect_error(resolve_vector_i(dplyr::tibble(a = 2), vector_x))
 })
