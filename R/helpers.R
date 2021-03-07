@@ -1008,7 +1008,8 @@ cells_grand_summary <- function(columns = TRUE,
   cells <-
     list(
       columns = col_expr,
-      rows = row_expr)
+      rows = row_expr
+    )
 
   # Apply the `cells_grand_summary` and
   # `location_cells` classes
