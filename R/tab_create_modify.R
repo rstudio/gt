@@ -213,19 +213,21 @@ tab_spanner <- function(data,
 #' @export
 tab_spanner_delim <- function(data,
                               delim,
-                              columns = NULL,
+                              columns = everything(),
                               gather = TRUE) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  columns <- enquo(columns)
-
   # Get all of the columns in the dataset
   all_cols <- data %>% dt_boxhead_get_vars()
 
   # Get the columns supplied in `columns` as a character vector
-  columns <- resolve_vars(var_expr = !!columns, data = data)
+  columns <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data
+    )
 
   if (!is.null(columns)) {
     colnames <- base::intersect(all_cols, columns)
