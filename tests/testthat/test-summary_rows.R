@@ -39,7 +39,7 @@ test_that("the `summary_rows()` can make groupwise summaries", {
     tbl %>%
     summary_rows(
       groups = "W02",
-      columns = vars(open, high, low, close),
+      columns = c(open, high, low, close),
       fns = list(
         average = ~mean(., na.rm = TRUE),
         total = ~sum(., na.rm = TRUE),
@@ -109,7 +109,7 @@ test_that("the `summary_rows()` can make groupwise summaries", {
     tbl %>%
     summary_rows(
       groups = "W02",
-      columns = vars(open),
+      columns = open,
       fns = list(
         average = ~mean(., na.rm = TRUE),
         total = ~sum(., na.rm = TRUE),
@@ -164,7 +164,7 @@ test_that("the `summary_rows()` can make groupwise summaries", {
     tbl %>%
     summary_rows(
       groups = c("W02", "W03"),
-      columns = vars(open),
+      columns = open,
       fns = list(
         average = ~mean(., na.rm = TRUE),
         total = ~sum(., na.rm = TRUE),
@@ -220,7 +220,7 @@ test_that("the `summary_rows()` can make groupwise summaries", {
     tbl %>%
     summary_rows(
       groups = TRUE,
-      columns = vars(open),
+      columns = open,
       fns = list(
         average = ~mean(., na.rm = TRUE),
         total = ~sum(., na.rm = TRUE),
@@ -273,7 +273,7 @@ test_that("the `summary_rows()` can make groupwise summaries", {
     tbl %>%
     summary_rows(
       groups = TRUE,
-      columns = vars(open, high, low, close),
+      columns = c(open, high, low, close),
       fns = list(
         average = ~mean(., na.rm = TRUE),
         total = ~sum(., na.rm = TRUE),
@@ -282,7 +282,7 @@ test_that("the `summary_rows()` can make groupwise summaries", {
     ) %>%
     summary_rows(
       groups = TRUE,
-      columns = vars(open, high, low, close),
+      columns = c(open, high, low, close),
       fns = list(
         max = ~max(., na.rm = TRUE)
       )
@@ -377,7 +377,7 @@ test_that("the `summary_rows()` can make groupwise summaries", {
     tbl %>%
     summary_rows(
       groups = TRUE,
-      columns = vars(open, high),
+      columns = c(open, high),
       fns = list(
         average = ~mean(., na.rm = TRUE),
         total = ~sum(., na.rm = TRUE),
@@ -386,7 +386,7 @@ test_that("the `summary_rows()` can make groupwise summaries", {
     ) %>%
     summary_rows(
       groups = TRUE,
-      columns = vars(low, close),
+      columns = c(low, close),
       fns = list(
         average = ~mean(., na.rm = TRUE),
         total = ~sum(., na.rm = TRUE),
@@ -490,7 +490,7 @@ test_that("the `summary_rows()` can make grand summaries", {
     tbl %>%
     summary_rows(
       groups = NULL,
-      columns = vars(open, high, low, close),
+      columns = c(open, high, low, close),
       fns = list(
         average = ~mean(., na.rm = TRUE),
         total = ~sum(., na.rm = TRUE),
@@ -557,7 +557,7 @@ test_that("the `summary_rows()` can make grand summaries", {
     tbl %>%
     summary_rows(
       groups = NULL,
-      columns = vars(open, high),
+      columns = c(open, high),
       fns = list(
         average = ~mean(., na.rm = TRUE),
         total = ~sum(., na.rm = TRUE),
@@ -567,7 +567,7 @@ test_that("the `summary_rows()` can make grand summaries", {
     ) %>%
     summary_rows(
       groups = NULL,
-      columns = vars(low, close),
+      columns = c(low, close),
       fns = list(
         average = ~mean(., na.rm = TRUE),
         total = ~sum(., na.rm = TRUE),
@@ -695,7 +695,7 @@ test_that("the `summary_rows()` can make grand summaries", {
     tbl %>%
     summary_rows(
       groups = TRUE,
-      columns = vars(open, high, low, close),
+      columns = c(open, high, low, close),
       fns = list(
         average = ~mean(., na.rm = TRUE),
         total = ~sum(., na.rm = TRUE),
@@ -704,7 +704,7 @@ test_that("the `summary_rows()` can make grand summaries", {
     ) %>%
     summary_rows(
       groups = NULL,
-      columns = vars(open, high, low, close),
+      columns = c(open, high, low, close),
       fns = list(
         average = ~mean(., na.rm = TRUE),
         total = ~sum(., na.rm = TRUE),
@@ -851,22 +851,22 @@ test_that("the ordering of groups shouldn't affect group/grand summary calcs", {
     tbl_1 %>%
     dplyr::group_by(group) %>%
     gt(rowname_col = "id") %>%
-    summary_rows(groups = TRUE, columns = vars(value), fns = list("sum"))
+    summary_rows(groups = TRUE, columns = value, fns = list("sum"))
 
   gt_tbl_1b <-
     tbl_1 %>%
     gt(rowname_col = "id", groupname_col = "group") %>%
-    summary_rows(groups = TRUE, columns = vars(value), fns = list("sum"))
+    summary_rows(groups = TRUE, columns = value, fns = list("sum"))
 
   gt_tbl_2 <-
     tbl_2 %>%
     gt(rowname_col = "id", groupname_col = "group") %>%
-    summary_rows(groups = TRUE, columns = vars(value), fns = list("sum"))
+    summary_rows(groups = TRUE, columns = value, fns = list("sum"))
 
   gt_tbl_3 <-
     tbl_3 %>%
     gt(rowname_col = "id", groupname_col = "group") %>%
-    summary_rows(groups = TRUE, columns = vars(value), fns = list("sum"))
+    summary_rows(groups = TRUE, columns = value, fns = list("sum"))
 
   # Expect the correct values in summary rows of `gt_tbl`
   gt_tbl_1 %>% render_as_html() %>% xml2::read_html() %>%
@@ -895,22 +895,22 @@ test_that("the ordering of groups shouldn't affect group/grand summary calcs", {
     tbl_1 %>%
     dplyr::group_by(group) %>%
     gt(rowname_col = "id") %>%
-    grand_summary_rows(columns = vars(value), fns = list("sum"))
+    grand_summary_rows(columns = value, fns = list("sum"))
 
   gt_tbl_1b_gs <-
     tbl_1 %>%
     gt(rowname_col = "id", groupname_col = "group") %>%
-    grand_summary_rows(columns = vars(value), fns = list("sum"))
+    grand_summary_rows(columns = value, fns = list("sum"))
 
   gt_tbl_2_gs <-
     tbl_2 %>%
     gt(rowname_col = "id", groupname_col = "group") %>%
-    grand_summary_rows(columns = vars(value), fns = list("sum"))
+    grand_summary_rows(columns = value, fns = list("sum"))
 
   gt_tbl_3_gs <-
     tbl_3 %>%
     gt(rowname_col = "id", groupname_col = "group") %>%
-    grand_summary_rows(columns = vars(value), fns = list("sum"))
+    grand_summary_rows(columns = value, fns = list("sum"))
 
   # Expect the correct value in the grand summary row of `gt_tbl_gs`
   gt_tbl_1_gs %>% render_as_html() %>% xml2::read_html() %>%
@@ -946,8 +946,8 @@ test_that("the ordering of groups shouldn't affect group/grand summary calcs", {
     tbl_4 %>%
     dplyr::group_by(group) %>%
     gt(rowname_col = "id") %>%
-    summary_rows(groups = TRUE, columns = vars(value, columns), fns = list("sum")) %>%
-    grand_summary_rows(columns = vars(value, columns), fns = list("sum"))
+    summary_rows(groups = TRUE, columns = c(value, columns), fns = list("sum")) %>%
+    grand_summary_rows(columns = c(value, columns), fns = list("sum"))
 
   # Expect the correct values in summary rows of `gt_tbl_4`
   gt_tbl_4 %>% render_as_html() %>% xml2::read_html() %>%
@@ -964,8 +964,8 @@ test_that("the ordering of groups shouldn't affect group/grand summary calcs", {
     dplyr::rename(grand_summary_col = columns) %>%
     dplyr::group_by(group) %>%
     gt(rowname_col = "id") %>%
-    summary_rows(groups = TRUE, columns = vars(value, grand_summary_col), fns = list("sum")) %>%
-    grand_summary_rows(columns = vars(value, grand_summary_col), fns = list("sum"))
+    summary_rows(groups = TRUE, columns = c(value, grand_summary_col), fns = list("sum")) %>%
+    grand_summary_rows(columns = c(value, grand_summary_col), fns = list("sum"))
 
   # Expect the correct values in summary rows of `gt_tbl_4`
   gt_tbl_5 %>% render_as_html() %>% xml2::read_html() %>%
@@ -998,7 +998,7 @@ test_that("summary rows can be created when there is no stub", {
   gt_tbl <-
     tbl_2 %>%
     summary_rows(
-      columns = vars(open, high, low, close),
+      columns = c(open, high, low, close),
       fns = list(
         average = ~mean(., na.rm = TRUE),
         total = ~sum(., na.rm = TRUE),
@@ -1154,7 +1154,7 @@ test_that("extracting a summary from a gt table is possible", {
     tbl %>%
     summary_rows(
       groups = c("W02", "W03"),
-      columns = vars(open, high, low, close),
+      columns = c(open, high, low, close),
       fns = list(
         average = ~mean(., na.rm = TRUE),
         total = ~sum(., na.rm = TRUE),
@@ -1240,7 +1240,7 @@ test_that("extracting a summary from a gt table is possible", {
   gt_tbl_summary_grand <-
     tbl %>%
     summary_rows(
-      columns = vars(open, high, low, close),
+      columns = c(open, high, low, close),
       fns = list(
         average = ~mean(., na.rm = TRUE),
         total = ~sum(., na.rm = TRUE),

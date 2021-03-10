@@ -315,27 +315,27 @@ resolve_vars <- function(var_expr,
 #' @noRd
 resolve_cols_c <- function(expr,
                            data,
-                           strict = TRUE,
-                           body_only = TRUE) {
+                           strict = TRUE) {
 
   names(
     resolve_cols_i(
       expr = {{expr}},
       data = data,
-      strict = strict,
-      body_only = body_only
+      strict = strict
     )
   )
 }
 
 #' @param expr An unquoted expression that follows tidyselect semantics
 #' @param data A gt object or data frame or tibble
+#' @param strict If TRUE, out-of-bounds errors are thrown if `expr` attempts to
+#'   select a column that doesn't exist. If FALSE, failed selections are
+#'   ignored.
 #' @return Named integer vector
 #' @noRd
 resolve_cols_i <- function(expr,
                            data,
-                           strict = TRUE,
-                           body_only = TRUE) {
+                           strict = TRUE) {
 
   quo <- rlang::enquo(expr)
   cols_excl <- c()
@@ -344,12 +344,13 @@ resolve_cols_i <- function(expr,
 
     cols <- colnames(dt_data_get(data = data))
 
-    if (body_only) {
-      stub_var <- dt_boxhead_get_var_stub(data)
-      group_rows_vars <- dt_boxhead_get_vars_groups(data)
+    # Assumes that only the body of the data is considered (i.e., not the
+    # stub or group cols)
+    stub_var <- dt_boxhead_get_var_stub(data)
+    group_rows_vars <- dt_boxhead_get_vars_groups(data)
 
-      cols_excl <- c(stub_var, group_rows_vars)
-    }
+    cols_excl <- c(stub_var, group_rows_vars)
+
     data <- dt_data_get(data = data)
   }
 
@@ -421,7 +422,7 @@ translate_legacy_resolver_expr <- function(quo) {
 resolve_rows_l <- function(expr, data) {
 
   if (is_gt(data)) {
-    row_names <- dplyr::pull(dt_stub_df_get(data), rowname)
+    row_names <- dt_stub_df_get(data)$rowname
     data <- dt_data_get(data = data)
   } else {
     row_names <- row.names(data)

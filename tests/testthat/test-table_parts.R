@@ -508,13 +508,13 @@ test_that("a gt table contains custom styles at the correct locations", {
     cols_label(cyl = md("*cyls*")) %>%
     summary_rows(
       groups = c("Mazdas", "Mercs"),
-      columns = vars(hp, wt, qsec),
+      columns = c(hp, wt, qsec),
       fns = list(
         ~mean(., na.rm = TRUE),
         ~sum(., na.rm = TRUE))
     ) %>%
     summary_rows(
-      columns = vars(hp, wt, qsec),
+      columns = c(hp, wt, qsec),
       fns = list(
         ~mean(., na.rm = TRUE),
         ~sum(., na.rm = TRUE))

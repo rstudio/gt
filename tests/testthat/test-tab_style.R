@@ -35,13 +35,13 @@ data <-
   tab_source_note(source_note = "this is a source note") %>%
   summary_rows(
     groups = c("Mazdas", "Mercs"),
-    columns = vars(hp, wt, qsec),
+    columns = c(hp, wt, qsec),
     fns = list(
       ~mean(., na.rm = TRUE),
       ~sum(., na.rm = TRUE))
   ) %>%
   summary_rows(
-    columns = vars(hp, wt),
+    columns = c(hp, wt),
     fns = list(
       ~mean(., na.rm = TRUE),
       ~sum(., na.rm = TRUE))
@@ -208,7 +208,10 @@ test_that("a gt table can store the correct style statements", {
           cell_text(color = "white")
         ),
         locations = cells_summary(
-          groups = "Mercs", columns = starts_with("x"), rows = 2)
+          groups = "Mercs",
+          columns = starts_with("x"),
+          rows = 2
+        )
       )
   )
 
@@ -221,7 +224,10 @@ test_that("a gt table can store the correct style statements", {
           cell_text(color = "white")
         ),
         locations = cells_summary(
-          groups = "Mercs", columns = starts_with("m"), rows = starts_with("x"))
+          groups = "Mercs",
+          columns = starts_with("m"),
+          rows = starts_with("x")
+        )
       )
   )
 
@@ -235,7 +241,8 @@ test_that("a gt table can store the correct style statements", {
         cell_text(color = "white")
       ),
       locations = cells_grand_summary(
-        columns = "hp", rows = vars(sum))
+        columns = "hp", rows = "sum"
+      )
     )
 
   # Expect that the internal `styles_df` data frame will have

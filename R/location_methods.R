@@ -156,15 +156,10 @@ add_grand_summary_location_row <- function(loc,
   }
 
   rows <-
-    resolve_data_vals_idx(
-      var_expr = !!loc$rows,
-      data_tbl = NULL,
-      vals = grand_summary_labels
+    resolve_vector_i(
+      expr = !!loc$rows,
+      vector = grand_summary_labels
     )
-    # resolve_vector_i(
-    #   expr = !!loc$rows,
-    #   vector = grand_summary_labels
-    # )
 
   if (length(rows) == 0) {
     stop("The location requested could not be resolved:\n",

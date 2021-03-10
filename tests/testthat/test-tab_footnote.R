@@ -36,13 +36,13 @@ data <-
   tab_source_note(source_note = "this is a source note") %>%
   summary_rows(
     groups = c("Mazdas", "Mercs"),
-    columns = vars(hp, wt, qsec),
+    columns = c(hp, wt, qsec),
     fns = list(
       ~mean(., na.rm = TRUE),
       ~sum(., na.rm = TRUE))
   ) %>%
   summary_rows(
-    columns = vars(hp, wt),
+    columns = c(hp, wt),
     fns = list(
       ~mean(., na.rm = TRUE),
       ~sum(., na.rm = TRUE))
@@ -97,13 +97,13 @@ data_3 <-
   gt(rowname_col = "model", groupname_col = "mfr") %>%
   summary_rows(
     groups = c("BMW", "Audi"),
-    columns = vars(msrp),
+    columns = "msrp",
     fns = list(
       ~mean(., na.rm = TRUE),
       ~min(., na.rm = TRUE))
   ) %>%
   summary_rows(
-    columns = vars(msrp),
+    columns = "msrp",
     fns = list(
       ~min(., na.rm = TRUE),
       ~max(., na.rm = TRUE))
@@ -112,19 +112,19 @@ data_3 <-
     footnote = "Average price for BMW and Audi.",
     locations = cells_summary(
       groups = c("BMW", "Audi"),
-      columns = vars(msrp),
+      columns = "msrp",
       rows = starts_with("me"))
   ) %>%
   tab_footnote(
     footnote = "Maximum price across all cars.",
     locations = cells_grand_summary(
-      columns = vars(msrp),
+      columns = "msrp",
       rows = starts_with("ma"))
   ) %>%
   tab_footnote(
     footnote = "Minimum price across all cars.",
     locations = cells_grand_summary(
-      columns = vars(msrp),
+      columns = "msrp",
       rows = starts_with("mi"))
   )
 
@@ -360,7 +360,7 @@ test_that("the `tab_footnote()` function works correctly", {
     tab_footnote(
       footnote = "Grand summary cell footnote.",
       locations = cells_grand_summary(
-        columns = vars(wt), rows = starts_with("s")
+        columns = wt, rows = starts_with("s")
       )
     )
 
@@ -413,7 +413,7 @@ test_that("the `tab_footnote()` function works correctly", {
     tab_footnote(
       footnote = "Grand summary cell footnote.",
       locations = cells_grand_summary(
-        columns = vars(wt), rows = starts_with("s")
+        columns = wt, rows = starts_with("s")
       )
     )
 
@@ -737,13 +737,13 @@ test_that("the `list_of_summaries` table is structured correctly", {
     gt(rowname_col = "model", groupname_col = "mfr") %>%
     summary_rows(
       groups = c("BMW", "Audi"),
-      columns = vars(msrp),
+      columns = msrp,
       fns = list(
         ~mean(., na.rm = TRUE),
         ~min(., na.rm = TRUE))
     ) %>%
     summary_rows(
-      columns = vars(msrp),
+      columns = msrp,
       fns = list(
         ~min(., na.rm = TRUE),
         ~max(., na.rm = TRUE))
