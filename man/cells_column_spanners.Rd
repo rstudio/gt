@@ -4,7 +4,7 @@
 \alias{cells_column_spanners}
 \title{Location helper for targeting the column spanners}
 \usage{
-cells_column_spanners(spanners)
+cells_column_spanners(spanners = everything())
 }
 \arguments{
 \item{spanners}{The names of the spanners that are to be targeted.}

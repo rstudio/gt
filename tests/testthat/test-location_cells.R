@@ -480,7 +480,7 @@ test_that("styles are correctly applied to HTML output with location functions",
     tbl %>%
     gt(rowname_col = "row", groupname_col = "group") %>%
     cols_move_to_end(columns = vars(value_1)) %>%
-    tab_spanner(label = "spanner", columns = vars(value_1, value_3)) %>%
+    tab_spanner(label = "spanner", columns = c(value_1, value_3)) %>%
     tab_style(
       style = list(
         cell_text(size = px(20), color = "white"),

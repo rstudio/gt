@@ -22,7 +22,7 @@ data <-
   tab_spanner(
     label = "gear_carb_cyl",
     id = "gcc",
-    columns = vars(gear, carb, cyl)
+    columns = c(gear, carb, cyl)
   ) %>%
   row_group_order(groups = c("Mazdas", "Mercs")) %>%
   cols_merge_range(
@@ -61,12 +61,12 @@ data_2 <-
   tab_spanner(
     label = "make and model",
     id = "mm",
-    columns = vars(mfr, model)
+    columns = c(mfr, model)
   ) %>%
   tab_spanner(
     label = "specs and pricing",
     id = "sp",
-    columns = vars(drivetrain, msrp)
+    columns = c(drivetrain, msrp)
   ) %>%
   tab_footnote(
     footnote = "Prices in USD.",

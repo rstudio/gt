@@ -137,10 +137,9 @@ resolve_cells_column_spanners <- function(data,
     .[!is.na(.)]
 
   resolved_spanners_idx <-
-    resolve_data_vals_idx(
-      var_expr = !!object$spanners,
-      data_tbl = NULL,
-      vals = spanner_ids
+    resolve_vector_i(
+      expr = !!object$spanners,
+      vector = spanner_ids
     )
 
   resolved_spanners <- spanner_ids[resolved_spanners_idx]

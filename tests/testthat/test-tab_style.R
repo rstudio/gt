@@ -21,7 +21,7 @@ data <-
   tab_spanner(
     label = "gear_carb_cyl",
     id = "gcc",
-    columns = vars(gear, carb, cyl)
+    columns = c(gear, carb, cyl)
   ) %>%
   row_group_order(groups = c("Mazdas", "Mercs")) %>%
   cols_merge_range(

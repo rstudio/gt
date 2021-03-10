@@ -90,7 +90,7 @@ tab_header <- function(data,
 #'   gt(rowname_col = "model") %>%
 #'   tab_spanner(
 #'     label = "performance",
-#'     columns = vars(
+#'     columns = c(
 #'       hp, hp_rpm, trq, trq_rpm,
 #'       mpg_c, mpg_h)
 #'   )
@@ -120,10 +120,12 @@ tab_spanner <- function(data,
     id, len = 1, any.missing = FALSE, null.ok = FALSE
   )
 
-  columns <- enquo(columns)
-
   # Get the columns supplied in `columns` as a character vector
-  column_names <- resolve_vars(var_expr = !!columns, data = data)
+  column_names <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data
+    )
 
   # If `column_names` evaluates to an empty vector or is NULL,
   # return the data unchanged
@@ -1110,7 +1112,11 @@ set_style.cells_column_labels <- function(loc, data, style) {
 
 set_style.cells_column_spanners <- function(loc, data, style) {
 
-  resolved <- resolve_cells_column_spanners(data = data, object = loc)
+  resolved <-
+    resolve_cells_column_spanners(
+      data = data,
+      object = {{ loc }}
+    )
 
   groups <- resolved$spanners
 

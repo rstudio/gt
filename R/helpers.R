@@ -408,10 +408,9 @@ cells_stubhead <- function() {
 #'
 #' @import rlang
 #' @export
-cells_column_spanners <- function(spanners) {
+cells_column_spanners <- function(spanners = everything()) {
 
   # Capture expression for the `spanners` argument
-  col_expr <- NULL
   spanners_expr <- rlang::enquo(spanners)
 
   # Create the `cells_column_spanners` object

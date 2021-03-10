@@ -612,7 +612,7 @@ test_that("The `check_spanner_id_unique()` function works properly", {
 
   gt_tbl_2 <-
     gt(exibble) %>%
-    tab_spanner(label = "a", columns = vars(num))
+    tab_spanner(label = "a", columns = num)
 
   # Don't expect an error when checking for unique spanner IDs
   # in a gt table with no spanner column labels
