@@ -726,7 +726,7 @@ test_that("styles are correctly applied to HTML output with location functions",
     expect_true()
 
   #
-  # cells_group()
+  # cells_body()
   #
 
   # Expect that styling to all cells is performed

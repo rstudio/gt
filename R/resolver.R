@@ -45,7 +45,7 @@ resolve_cells_body <- function(data,
   cells_resolved <-
     list(
       columns = expansion[[1]],
-      colnames = resolve_vars(var_expr = expansion[[1]], data = data),
+      colnames = names(expansion[[1]]),
       rows = expansion[[2]]
     )
 
