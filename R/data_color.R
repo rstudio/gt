@@ -79,7 +79,7 @@
 #'   tail(10) %>%
 #'   gt() %>%
 #'   data_color(
-#'     columns = vars(population),
+#'     columns = population,
 #'     colors = scales::col_numeric(
 #'       palette = c(
 #'         "red", "orange", "green", "blue"),
@@ -106,7 +106,7 @@
 #'   ) %>%
 #'   gt(rowname_col = "size") %>%
 #'   data_color(
-#'     columns = vars(sold, income),
+#'     columns = c(sold, income),
 #'     colors = scales::col_numeric(
 #'       palette = paletteer::paletteer_d(
 #'         palette = "ggsci::red_material"
@@ -150,10 +150,11 @@ data_color <- function(data,
   # Collect the column names from `data_tbl`
   colnames <- names(data_tbl)
 
-  # Resolution of columns as integer vectors providing the
-  # positions of the matched variables
-  columns <- rlang::enquo(columns)
-  resolved_columns <- resolve_vars(var_expr = !!columns, data = data)
+  # Resolution of `columns` as column names in the table
+  #columns <- rlang::enquo(columns)
+  resolved_columns <-
+    resolve_cols_c(expr = {{ columns }}, data = data)
+    #resolve_vars(var_expr = !!columns, data = data)
 
   # Get the sequence of row indices for the table
   rows <- seq_len(nrow(data_tbl))
