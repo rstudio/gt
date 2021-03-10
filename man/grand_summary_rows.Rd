@@ -6,7 +6,7 @@
 \usage{
 grand_summary_rows(
   data,
-  columns = TRUE,
+  columns = everything(),
   fns,
   missing_text = "---",
   formatter = fmt_number,
@@ -88,7 +88,7 @@ tab_1 <-
     groupname_col = "week"
   ) \%>\%
   grand_summary_rows(
-    columns = vars(open, high, low, close),
+    columns = c(open, high, low, close),
     fns = list(
       min = ~min(.),
       max = ~max(.),

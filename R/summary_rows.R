@@ -64,7 +64,7 @@
 #'   ) %>%
 #'   summary_rows(
 #'     groups = TRUE,
-#'     columns = vars(open, high, low, close),
+#'     columns = c(open, high, low, close),
 #'     fns = list(
 #'       min = ~min(.),
 #'       max = ~max(.),
@@ -210,7 +210,7 @@ summary_rows <- function(data,
 #'     groupname_col = "week"
 #'   ) %>%
 #'   grand_summary_rows(
-#'     columns = vars(open, high, low, close),
+#'     columns = c(open, high, low, close),
 #'     fns = list(
 #'       min = ~min(.),
 #'       max = ~max(.),
