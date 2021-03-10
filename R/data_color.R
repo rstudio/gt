@@ -154,7 +154,6 @@ data_color <- function(data,
   #columns <- rlang::enquo(columns)
   resolved_columns <-
     resolve_cols_c(expr = {{ columns }}, data = data)
-    #resolve_vars(var_expr = !!columns, data = data)
 
   # Get the sequence of row indices for the table
   rows <- seq_len(nrow(data_tbl))
