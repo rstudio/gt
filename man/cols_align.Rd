@@ -4,7 +4,11 @@
 \alias{cols_align}
 \title{Set the alignment of columns}
 \usage{
-cols_align(data, align = c("auto", "left", "center", "right"), columns = TRUE)
+cols_align(
+  data,
+  align = c("auto", "left", "center", "right"),
+  columns = everything()
+)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -58,7 +62,7 @@ tab_1 <-
   gt() \%>\%
   cols_align(
     align = "left",
-    columns = vars(population)
+    columns = population
   )
 
 }

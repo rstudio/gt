@@ -78,15 +78,17 @@ tab_1 <-
   dplyr::select(-latitude, -month) \%>\%
   gt() \%>\%
   data_color(
-    columns = vars(sza),
+    columns = sza,
     colors = scales::col_numeric(
       palette = c("white", "yellow", "navyblue"),
-      domain = c(0, 90))
+      domain = c(0, 90)
+    )
   ) \%>\%
   tab_footnote(
     footnote = "Color indicates height of sun.",
     locations = cells_column_labels(
-      columns = vars(sza))
+      columns = sza
+    )
   )
 
 }

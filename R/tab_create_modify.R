@@ -528,15 +528,17 @@ tab_stubhead <- function(data,
 #'   dplyr::select(-latitude, -month) %>%
 #'   gt() %>%
 #'   data_color(
-#'     columns = vars(sza),
+#'     columns = sza,
 #'     colors = scales::col_numeric(
 #'       palette = c("white", "yellow", "navyblue"),
-#'       domain = c(0, 90))
+#'       domain = c(0, 90)
+#'     )
 #'   ) %>%
 #'   tab_footnote(
 #'     footnote = "Color indicates height of sun.",
 #'     locations = cells_column_labels(
-#'       columns = vars(sza))
+#'       columns = sza
+#'     )
 #'   )
 #'
 #' @section Figures:
@@ -852,7 +854,7 @@ tab_source_note <- function(data,
 #'   dplyr::select(num, currency) %>%
 #'   gt() %>%
 #'   fmt_number(
-#'     columns = vars(num, currency),
+#'     columns = c(num, currency),
 #'     decimals = 1
 #'   ) %>%
 #'   tab_style(
@@ -861,8 +863,9 @@ tab_source_note <- function(data,
 #'       cell_text(weight = "bold")
 #'       ),
 #'     locations = cells_body(
-#'       columns = vars(num),
-#'       rows = num >= 5000)
+#'       columns = num,
+#'       rows = num >= 5000
+#'     )
 #'   ) %>%
 #'   tab_style(
 #'     style = list(
@@ -870,8 +873,9 @@ tab_source_note <- function(data,
 #'       cell_text(style = "italic")
 #'       ),
 #'     locations = cells_body(
-#'       columns = vars(currency),
-#'       rows = currency < 100)
+#'       columns = currency,
+#'       rows = currency < 100
+#'     )
 #'   )
 #'
 #' # Use `sp500` to create a gt table;
@@ -915,7 +919,7 @@ tab_source_note <- function(data,
 #'       cell_fill(color = "lightcyan"),
 #'       "font-variant: small-caps;"
 #'     ),
-#'     locations = cells_body(columns = vars(char))
+#'     locations = cells_body(columns = char)
 #'   )
 #'
 #' @section Figures:
@@ -1405,24 +1409,27 @@ set_style.cells_grand_summary <- function(loc, data, style) {
 #'     title = md("Data listing from **exibble**"),
 #'     subtitle = md("`exibble` is an R dataset")
 #'   ) %>%
-#'   fmt_number(columns = vars(num)) %>%
-#'   fmt_currency(columns = vars(currency)) %>%
+#'   fmt_number(columns = num) %>%
+#'   fmt_currency(columns = currency) %>%
 #'   tab_footnote(
 #'     footnote = "Using commas for separators.",
 #'     locations = cells_body(
-#'       columns = vars(num),
-#'       rows = num > 1000)
+#'       columns = num,
+#'       rows = num > 1000
+#'     )
 #'   ) %>%
 #'   tab_footnote(
 #'     footnote = "Using commas for separators.",
 #'     locations = cells_body(
-#'       columns = vars(currency),
-#'       rows = currency > 1000)
+#'       columns = currency,
+#'       rows = currency > 1000
+#'     )
 #'   ) %>%
 #'   tab_footnote(
 #'     footnote = "Alphabetical fruit.",
 #'     locations = cells_column_labels(
-#'       columns = vars(char))
+#'       columns = char
+#'     )
 #'   )
 #'
 #' # Modify the table width to 100% (which

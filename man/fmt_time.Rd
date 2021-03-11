@@ -10,7 +10,7 @@ fmt_time(data, columns, rows = NULL, time_style = 2)
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{The columns to format. Can either be a series of column names
-provided in \code{\link[=vars]{vars()}}, a vector of column indices, or a helper function
+provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
 focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
 \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.}
 
@@ -76,7 +76,7 @@ tab_1 <-
   dplyr::select(date, time) \%>\%
   gt() \%>\%
   fmt_time(
-    columns = vars(time),
+    columns = time,
     time_style = 3
   )
 
@@ -90,13 +90,13 @@ tab_2 <-
   dplyr::select(date, time) \%>\%
   gt() \%>\%
   fmt_time(
-    columns = vars(time),
+    columns = time,
     rows =
       time > "16:00",
     time_style = 3
   ) \%>\%
   fmt_time(
-    columns = vars(time),
+    columns = time,
     rows =
       time <= "16:00",
     time_style = 4

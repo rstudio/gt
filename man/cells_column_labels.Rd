@@ -73,13 +73,13 @@ tab_1 <-
   tab_footnote(
     footnote = "True solar time.",
     locations = cells_column_labels(
-      columns = vars(tst)
+      columns = tst
     )
   ) \%>\%
   tab_footnote(
     footnote = "Solar zenith angle.",
     locations = cells_column_labels(
-      columns = vars(sza)
+      columns = sza
     )
   )
 

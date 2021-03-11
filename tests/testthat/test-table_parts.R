@@ -275,7 +275,7 @@ test_that("`tab_spanner()` doesn't adversely affect column alignment", {
 
   tbl_html <-
     gt(data = airquality) %>%
-    cols_move_to_start(columns = vars(Month, Day)) %>%
+    cols_move_to_start(columns = c(Month, Day)) %>%
     cols_label(Solar.R = html("Solar<br>Radiation")) %>%
     tab_spanner(
       label = "Measurement Period",
@@ -321,7 +321,7 @@ test_that("`tab_spanner()` works even when columns are forcibly moved", {
       label = md("*never*"),
       columns = ends_with("nothing")
     ) %>%
-    cols_move_to_start(columns = vars(carb)) %>%
+    cols_move_to_start(columns = carb) %>%
     render_as_html()
 
 

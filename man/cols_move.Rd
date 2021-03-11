@@ -57,8 +57,8 @@ tab_1 <-
   tail(5) \%>\%
   gt() \%>\%
   cols_move(
-    columns = vars(population),
-    after = vars(country_name)
+    columns = population,
+    after = country_name
   )
 
 }

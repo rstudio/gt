@@ -26,7 +26,7 @@
 #'
 #' @param data A table object that is created using the [gt()] function.
 #' @param columns The columns to format. Can either be a series of column names
-#'   provided in [vars()], a vector of column indices, or a helper function
+#'   provided in [c()], a vector of column indices, or a helper function
 #'   focused on selections. The select helper functions are: [starts_with()],
 #'   [ends_with()], [contains()], [matches()], [one_of()], and [everything()].
 #' @param rows Optional rows to format. Not providing any value results in all
@@ -102,7 +102,7 @@
 #'   exibble %>%
 #'   gt() %>%
 #'   fmt_number(
-#'     columns = vars(num),
+#'     columns = num,
 #'     decimals = 3,
 #'     use_seps = FALSE
 #'   )
@@ -252,14 +252,14 @@ fmt_number <- function(data,
 #'   exibble %>%
 #'   gt() %>%
 #'   fmt_number(
-#'     columns = vars(num),
+#'     columns = num,
 #'     rows = num > 500,
 #'     decimals = 1,
 #'     scale_by = 1/1000,
 #'     pattern = "{x}K"
 #'   ) %>%
 #'   fmt_scientific(
-#'     columns = vars(num),
+#'     columns = num,
 #'     rows = num <= 500,
 #'     decimals = 1
 #'   )
@@ -531,7 +531,7 @@ fmt_symbol <- function(data,
 #'   dplyr::mutate(frac_of_quota = pizzas_sold / 4000) %>%
 #'   gt(rowname_col = "month") %>%
 #'   fmt_percent(
-#'     columns = vars(frac_of_quota),
+#'     columns = frac_of_quota,
 #'     decimals = 1
 #'   )
 #'
@@ -675,7 +675,7 @@ fmt_percent <- function(data,
 #'   exibble %>%
 #'   gt() %>%
 #'   fmt_currency(
-#'     columns = vars(currency),
+#'     columns = currency,
 #'     currency = "EUR"
 #'   )
 #'
@@ -688,11 +688,11 @@ fmt_percent <- function(data,
 #'   dplyr::select(num, currency) %>%
 #'   gt() %>%
 #'   fmt_currency(
-#'     columns = vars(num),
+#'     columns = num,
 #'     currency = "CNY"
 #'   ) %>%
 #'   fmt_currency(
-#'     columns = vars(currency),
+#'     columns = currency,
 #'     currency = "GBP"
 #'   )
 #'
@@ -819,7 +819,7 @@ fmt_currency <- function(data,
 #'   dplyr::select(date, time) %>%
 #'   gt() %>%
 #'   fmt_date(
-#'     columns = vars(date),
+#'     columns = date,
 #'     date_style = 5
 #'   )
 #'
@@ -833,13 +833,13 @@ fmt_currency <- function(data,
 #'   dplyr::select(date, time) %>%
 #'   gt() %>%
 #'   fmt_date(
-#'     columns = vars(date),
+#'     columns = date,
 #'     rows =
 #'       as.Date(date) > as.Date("2015-04-01"),
 #'     date_style = 6
 #'   ) %>%
 #'   fmt_date(
-#'     columns = vars(date),
+#'     columns = date,
 #'     rows =
 #'       as.Date(date) <= as.Date("2015-04-01"),
 #'     date_style = 7
@@ -948,7 +948,7 @@ fmt_date <- function(data,
 #'   dplyr::select(date, time) %>%
 #'   gt() %>%
 #'   fmt_time(
-#'     columns = vars(time),
+#'     columns = time,
 #'     time_style = 3
 #'   )
 #'
@@ -962,13 +962,13 @@ fmt_date <- function(data,
 #'   dplyr::select(date, time) %>%
 #'   gt() %>%
 #'   fmt_time(
-#'     columns = vars(time),
+#'     columns = time,
 #'     rows =
 #'       time > "16:00",
 #'     time_style = 3
 #'   ) %>%
 #'   fmt_time(
-#'     columns = vars(time),
+#'     columns = time,
 #'     rows =
 #'       time <= "16:00",
 #'     time_style = 4
@@ -1090,7 +1090,7 @@ fmt_time <- function(data,
 #'   dplyr::select(datetime) %>%
 #'   gt() %>%
 #'   fmt_datetime(
-#'     columns = vars(datetime),
+#'     columns = datetime,
 #'     date_style = 5,
 #'     time_style = 3
 #'   )
@@ -1232,7 +1232,7 @@ fmt_datetime <- function(data,
 #'     text_1b,   text_2b,
 #'   ) %>%
 #'     gt() %>%
-#'     fmt_markdown(columns = TRUE) %>%
+#'     fmt_markdown(columns = everything()) %>%
 #'     tab_options(table.width = px(400))
 #'
 #' @section Figures:
@@ -1268,7 +1268,12 @@ fmt_markdown <- function(data,
         markdown_to_rtf(x)
       },
       default = function(x) {
-        vapply(x, commonmark::markdown_text, character(1), USE.NAMES = FALSE) %>%
+        vapply(
+          x,
+          FUN.VALUE = character(1),
+          USE.NAMES = FALSE,
+          commonmark::markdown_text
+        ) %>%
           stringr::str_replace("\n$", "")
       }
     )
@@ -1311,7 +1316,7 @@ fmt_markdown <- function(data,
 #'   dplyr::select(char) %>%
 #'   gt() %>%
 #'   fmt_passthrough(
-#'     columns = vars(char),
+#'     columns = char,
 #'     rows = !is.na(char),
 #'     pattern = "{x}s"
 #'   )
@@ -1555,7 +1560,7 @@ fmt_missing <- function(data,
 #'   dplyr::select(-row, -group) %>%
 #'   gt() %>%
 #'   fmt(
-#'     columns = vars(num),
+#'     columns = num,
 #'     fns = function(x) {
 #'       paste0("'", x * 1000, "'")
 #'     }

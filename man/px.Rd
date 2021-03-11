@@ -40,7 +40,7 @@ tab_1 <-
   gt() \%>\%
   tab_style(
     style = cell_text(size = px(20)),
-    locations = cells_column_labels(columns = TRUE)
+    locations = cells_column_labels()
   )
 
 }

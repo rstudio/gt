@@ -69,7 +69,7 @@ tab_1 <-
   tab_spanner(
     label = "dates and times",
     id = "dt",
-    columns = vars(date, time, datetime)
+    columns = c(date, time, datetime)
   ) \%>\%
   tab_style(
     style = cell_text(weight = "bold"),

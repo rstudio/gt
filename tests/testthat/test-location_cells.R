@@ -479,7 +479,7 @@ test_that("styles are correctly applied to HTML output with location functions",
   gt_tbl_cells_column_spanners <-
     tbl %>%
     gt(rowname_col = "row", groupname_col = "group") %>%
-    cols_move_to_end(columns = vars(value_1)) %>%
+    cols_move_to_end(columns = value_1) %>%
     tab_spanner(label = "spanner", columns = c(value_1, value_3)) %>%
     tab_style(
       style = list(
