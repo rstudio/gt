@@ -1290,3 +1290,126 @@ test_that("extracting a summary from a gt table is possible", {
     c(2023.06900, 20230.69000, 19.82022), tolerance = .002
   )
 })
+
+test_that("creating summary rows works for hidden columns", {
+
+  # Create a table based on `sp500`, with
+  # group names, rownames, and four
+  # columns of values; hide the 'open and
+  # 'low' columns
+  tbl <-
+    sp500 %>%
+    dplyr::filter(
+      date >= "2015-01-05" &
+        date <="2015-01-16"
+    ) %>%
+    dplyr::arrange(date) %>%
+    dplyr::mutate(
+      week = paste0(
+        "W", strftime(date, format = "%V"))
+    ) %>%
+    dplyr::select(-adj_close, -volume) %>%
+    gt(
+      rowname_col = "date",
+      groupname_col = "week"
+    ) %>%
+    cols_hide(columns = c(open, low))
+
+
+  # Extend the gt table with summary rows for
+  # the `W02` group, and, don't expect an error
+  # even though `summary_rows()` includes hidden
+  # columns
+  expect_error(
+    regexp = NA,
+    gt_tbl <-
+      tbl %>%
+      summary_rows(
+        groups = "W02",
+        columns = c(open, high, low, close),
+        fns = list(
+          average = ~mean(., na.rm = TRUE),
+          total = ~sum(., na.rm = TRUE),
+          `std dev` = ~sd(., na.rm = TRUE)
+        )
+      )
+  )
+
+  # Extract the internal `summary` object
+  summary <- dt_summary_get(data = gt_tbl)
+
+  # Expect that the internal `summary` list
+  # object has a length of `1` since there was
+  # only one call of `summary_rows()`
+  length(summary) %>%
+    expect_equal(1)
+
+  # For the single list component in `summary`, expect specific
+  # names within it
+  summary[[1]] %>%
+    names() %>%
+    expect_equal(
+      c("groups", "columns", "fns", "summary_labels",
+        "missing_text", "formatter", "formatter_options")
+    )
+
+  # Expect the `groups` provided in `summary[[1]]$groups`
+  summary[[1]]$groups %>%
+    expect_equal("W02")
+
+  # Expect the `columns` provided in `summary[[1]]$columns`
+  summary[[1]]$columns %>%
+    expect_equal(c("open", "high", "low", "close"))
+
+  # Expect that `summary[[1]]$fns` is a `list` object
+  summary[[1]]$fns %>%
+    expect_is("list")
+
+  # Expect that the components of `summary[[1]]$fns` are formulas
+  summary[[1]]$fns$average %>% expect_is("formula")
+  summary[[1]]$fns$total %>% expect_is("formula")
+  summary[[1]]$fns$`std dev` %>% expect_is("formula")
+
+  # Expect that `summary[[1]]$missing_text` has a specific value
+  summary[[1]]$missing_text %>%
+    expect_equal("---")
+
+  # Expect that `summary[[1]]$formatter` is a `function` object
+  summary[[1]]$formatter %>%
+    expect_is("function")
+
+  # Expect that `summary[[1]]$formatter_options` is a list
+  summary[[1]]$formatter_options %>%
+    expect_is("list")
+
+  # Expect that `summary[[1]]$formatter_options` is
+  # of length 0
+  summary[[1]]$formatter_options %>%
+    length() %>%
+    expect_equal(0)
+
+  # Extract the summary from `gt_tbl` and obtain the
+  # tibble containing the summary for the `W02` group
+  summary_extract <- gt::extract_summary(gt_tbl)
+  summary_w02 <- summary_extract$summary_df_data_list$W02
+
+  # Expect that all columns are present in `summary_w02`
+  expect_equal(
+    colnames(summary_w02),
+    c(
+      "groupname", "rowname", "date",
+      "open", "high", "low", "close", "week"
+    )
+  )
+
+  # Expect non-NA values in all columns that had
+  # summaries computed
+  expect_true(!any(is.na(summary_w02$open)))
+  expect_true(!any(is.na(summary_w02$high)))
+  expect_true(!any(is.na(summary_w02$low)))
+  expect_true(!any(is.na(summary_w02$close)))
+
+  # TODO: test gt table for values and expect that
+  # when `cols_unhide()`ing 'open' and 'low' their summary
+  # data will be displayed
+})
