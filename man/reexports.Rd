@@ -10,6 +10,7 @@
 \alias{matches}
 \alias{one_of}
 \alias{everything}
+\alias{num_range}
 \alias{css}
 \title{Objects exported from other packages}
 \keyword{internal}
@@ -22,6 +23,6 @@ below to see their documentation.
 
   \item{htmltools}{\code{\link[htmltools]{css}}}
 
-  \item{tidyselect}{\code{\link[tidyselect:starts_with]{contains}}, \code{\link[tidyselect:starts_with]{ends_with}}, \code{\link[tidyselect]{everything}}, \code{\link[tidyselect:starts_with]{matches}}, \code{\link[tidyselect]{one_of}}, \code{\link[tidyselect]{starts_with}}}
+  \item{tidyselect}{\code{\link[tidyselect:starts_with]{contains}}, \code{\link[tidyselect:starts_with]{ends_with}}, \code{\link[tidyselect]{everything}}, \code{\link[tidyselect:starts_with]{matches}}, \code{\link[tidyselect:starts_with]{num_range}}, \code{\link[tidyselect]{one_of}}, \code{\link[tidyselect]{starts_with}}}
 }}
 
