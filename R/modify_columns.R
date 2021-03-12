@@ -1289,6 +1289,12 @@ cols_merge <- function(data,
       data = data
     )
 
+  # NOTE: It's important that `hide_columns` NOT be evaluated until after the
+  # previous line has run. Otherwise, the default `hide_columns` value of
+  # columns[-1] may not evaluate to a sensible result.
+  # NOTE: It's also important that `pattern` not be evaluated, for much the same
+  # reason as above.
+
   # Get the columns supplied in `hide_columns` as a character vector
   suppressWarnings(
     hide_columns <-
