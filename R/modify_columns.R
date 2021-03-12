@@ -886,8 +886,6 @@ cols_merge_uncert <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  col_val <- rlang::enquo(col_val)
-  col_uncert <- rlang::enquo(col_uncert)
   resolved <-
     cols_merge_resolver(
       data = data,
@@ -1007,9 +1005,6 @@ cols_merge_range <- function(data,
 
   # Perform input object validation
   stop_if_not_gt(data = data)
-
-  col_begin <- rlang::enquo(col_begin)
-  col_end <- rlang::enquo(col_end)
 
   resolved <-
     cols_merge_resolver(
@@ -1177,9 +1172,6 @@ cols_merge_n_pct <- function(data,
 
   # Perform input object validation
   stop_if_not_gt(data = data)
-
-  col_n <- rlang::enquo(col_n)
-  col_pct <- rlang::enquo(col_pct)
 
   resolved <-
     cols_merge_resolver(
