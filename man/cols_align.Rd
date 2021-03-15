@@ -14,7 +14,7 @@ cols_align(
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{align}{The alignment type. This can be any of \code{"center"}, \code{"left"}, or
-\code{"right"} for center-, left-, or center-alignment. Alternatively, the
+\code{"right"} for center-, left-, or right-alignment. Alternatively, the
 \code{"auto"} option (the default), will automatically align values in columns
 according to the data type (see the Details section for specifics on which
 alignments are applied).}

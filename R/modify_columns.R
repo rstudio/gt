@@ -14,7 +14,7 @@
 #'
 #' @param data A table object that is created using the [gt()] function.
 #' @param align The alignment type. This can be any of `"center"`, `"left"`, or
-#'   `"right"` for center-, left-, or center-alignment. Alternatively, the
+#'   `"right"` for center-, left-, or right-alignment. Alternatively, the
 #'   `"auto"` option (the default), will automatically align values in columns
 #'   according to the data type (see the Details section for specifics on which
 #'   alignments are applied).
