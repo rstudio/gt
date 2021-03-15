@@ -28,13 +28,15 @@
 #' @param columns The columns to format. Can either be a series of column names
 #'   provided in [c()], a vector of column indices, or a helper function
 #'   focused on selections. The select helper functions are: [starts_with()],
-#'   [ends_with()], [contains()], [matches()], [one_of()], and [everything()].
-#' @param rows Optional rows to format. Not providing any value results in all
-#'   rows in `columns` being formatted. Can either be a vector of row captions
-#'   provided [c()], a vector of row indices, or a helper function focused on
-#'   selections. The select helper functions are: [starts_with()],
-#'   [ends_with()], [contains()], [matches()], [one_of()], and [everything()].
-#'   We can also use expressions to filter down to the rows we need (e.g.,
+#'   [ends_with()], [contains()], [matches()], [one_of()], [num_range()], and
+#'   [everything()].
+#' @param rows Optional rows to format. Providing either [everything()] (the
+#'   default) or `TRUE` results in all rows in `columns` being formatted. Can
+#'   either be a vector of row captions provided in [c()], a vector of row
+#'   indices, or a helper function focused on selections. The select helper
+#'   functions are: [starts_with()], [ends_with()], [contains()], [matches()],
+#'   [one_of()], [num_range()], and [everything()]. We can also use expressions
+#'   to filter down to the rows we need (e.g.,
 #'   `[colname_1] > 100 & [colname_2] < 50`).
 #' @param decimals An option to specify the exact number of decimal places to
 #'   use. The default number of decimal places is `2`.
@@ -140,7 +142,7 @@
 #' @export
 fmt_number <- function(data,
                        columns,
-                       rows = NULL,
+                       rows = everything(),
                        decimals = 2,
                        n_sigfig = NULL,
                        drop_trailing_zeros = FALSE,
@@ -275,7 +277,7 @@ fmt_number <- function(data,
 #' @export
 fmt_scientific <- function(data,
                            columns,
-                           rows = NULL,
+                           rows = everything(),
                            decimals = 2,
                            drop_trailing_zeros = FALSE,
                            scale_by = 1.0,
@@ -381,7 +383,7 @@ fmt_scientific <- function(data,
 #' @noRd
 fmt_symbol <- function(data,
                        columns,
-                       rows = NULL,
+                       rows,
                        symbol = "*",
                        accounting = FALSE,
                        decimals = NULL,
@@ -546,7 +548,7 @@ fmt_symbol <- function(data,
 #' @export
 fmt_percent <- function(data,
                         columns,
-                        rows = NULL,
+                        rows = everything(),
                         decimals = 2,
                         drop_trailing_zeros = FALSE,
                         drop_trailing_dec_mark = TRUE,
@@ -709,7 +711,7 @@ fmt_percent <- function(data,
 #' @export
 fmt_currency <- function(data,
                          columns,
-                         rows = NULL,
+                         rows = everything(),
                          currency = "USD",
                          use_subunits = TRUE,
                          accounting = FALSE,
@@ -858,7 +860,7 @@ fmt_currency <- function(data,
 #' @export
 fmt_date <- function(data,
                      columns,
-                     rows = NULL,
+                     rows = everything(),
                      date_style = 2) {
 
   # Perform input object validation
@@ -987,7 +989,7 @@ fmt_date <- function(data,
 #' @export
 fmt_time <- function(data,
                      columns,
-                     rows = NULL,
+                     rows = everything(),
                      time_style = 2) {
 
   # Perform input object validation
@@ -1106,7 +1108,7 @@ fmt_time <- function(data,
 #' @export
 fmt_datetime <- function(data,
                          columns,
-                         rows = NULL,
+                         rows = everything(),
                          date_style = 2,
                          time_style = 2) {
 
@@ -1246,7 +1248,7 @@ fmt_datetime <- function(data,
 #' @export
 fmt_markdown <- function(data,
                          columns,
-                         rows = NULL) {
+                         rows = everything()) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -1332,7 +1334,7 @@ fmt_markdown <- function(data,
 #' @export
 fmt_passthrough <- function(data,
                             columns,
-                            rows = NULL,
+                            rows = everything(),
                             escape = TRUE,
                             pattern = "{x}") {
 
@@ -1465,7 +1467,7 @@ fmt_passthrough <- function(data,
 #' @export
 fmt_missing <- function(data,
                         columns,
-                        rows = NULL,
+                        rows = everything(),
                         missing_text = "---") {
 
   # Perform input object validation
@@ -1576,8 +1578,8 @@ fmt_missing <- function(data,
 #' @import rlang
 #' @export
 fmt <- function(data,
-                columns = NULL,
-                rows = NULL,
+                columns = everything(),
+                rows = everything(),
                 fns) {
 
   # Perform input object validation
