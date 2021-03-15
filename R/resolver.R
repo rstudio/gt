@@ -283,13 +283,24 @@ resolve_rows_l <- function(expr, data) {
       expr = rlang::eval_tidy(expr = quo, data = data)
     )
 
-  item_label <- "row"
+  if (is.null(resolved)) {
+
+    warning(
+      "The use of `NULL` for rows is deprecated since gt 0.2.3:\n",
+      "* please use `everything()` instead",
+      call. = FALSE
+    )
+
+    # Modify the NULL value of `resolved` to `TRUE` (which is
+    # fully supported for selecting all rows)
+    resolved <- TRUE
+  }
 
   resolved <-
     normalize_resolved(
       resolved = resolved,
       item_names = row_names,
-      item_label = item_label
+      item_label = "row"
     )
 
   resolved
@@ -334,6 +345,15 @@ normalize_resolved <- function(resolved,
 
     # Maintained for backcompatability
     resolved <- rep_len(TRUE, item_count)
+
+    # TODO: this may not apply to all types of resolution so we may
+    # want to either make this warning conditional (after investigating which
+    # resolving contexts still allow `NULL`)
+    warning(
+      "The use of `NULL` for ", item_label , "s is deprecated since gt 0.2.3:\n",
+      "* please use `everything()` instead",
+      call. = FALSE
+    )
 
   } else if (is.logical(resolved)) {
 
