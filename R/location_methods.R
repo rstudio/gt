@@ -48,7 +48,8 @@ add_summary_location_row <- function(loc,
   resolved_row_groups_idx <-
     resolve_vector_i(
       expr = !!loc$groups,
-      vector = row_groups
+      vector = row_groups,
+      item = "row group"
     )
 
   groups <- row_groups[resolved_row_groups_idx]
@@ -86,7 +87,8 @@ add_summary_location_row <- function(loc,
     rows <-
       resolve_vector_i(
         expr= !!loc$rows,
-        vector = summary_labels
+        vector = summary_labels,
+        item = "summary row"
       )
 
     if (length(rows) == 0) {
@@ -158,7 +160,8 @@ add_grand_summary_location_row <- function(loc,
   rows <-
     resolve_vector_i(
       expr = !!loc$rows,
-      vector = grand_summary_labels
+      vector = grand_summary_labels,
+      item = "grand summary row"
     )
 
   if (length(rows) == 0) {

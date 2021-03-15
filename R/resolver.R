@@ -139,7 +139,8 @@ resolve_cells_column_spanners <- function(data,
   resolved_spanners_idx <-
     resolve_vector_i(
       expr = !!object$spanners,
-      vector = spanner_ids
+      vector = spanner_ids,
+      item = "spanner"
     )
 
   resolved_spanners <- spanner_ids[resolved_spanners_idx]
@@ -282,58 +283,20 @@ resolve_rows_l <- function(expr, data) {
       expr = rlang::eval_tidy(expr = quo, data = data)
     )
 
-  if (is.null(resolved)) {
+  item <- "row"
 
-    # Maintained for backcompat
-    resolved <- rep_len(TRUE, nrow(data))
+  item_names <- row_names
+  item_count <- nrow(data)
+  item_sequence <- seq_len(item_count)
 
-  } else if (is.logical(resolved)) {
-
-    if (length(resolved) == 1) {
-      resolved <- rep_len(resolved, nrow(data))
-    } else if (length(resolved) == nrow(data)) {
-      # Do nothing
-    } else {
-      stop(
-        "The number of logical values must either be 1 or the number of rows",
-        call. = FALSE
-      )
-    }
-
-  } else if (is.numeric(resolved)) {
-
-    unknown_indices <- setdiff(resolved, seq_len(nrow(data)))
-    if (length(unknown_indices) != 0) {
-      stop(
-        "The following row number(s) do not exist in the data: ",
-        paste0(unknown_indices, collapse = ", "),
-        call. = FALSE
-      )
-    }
-
-    resolved <- seq_len(nrow(data)) %in% resolved
-
-  } else if (is.character(resolved)) {
-
-    unknown_rownames <- setdiff(resolved, row_names)
-    if (length(unknown_rownames) != 0) {
-      stop(
-        "The following rowname(s) do not exist in the data: ",
-        paste0(unknown_rownames, collapse = ", "),
-        call. = FALSE
-      )
-    }
-
-    resolved <- row_names %in% resolved
-
-  } else {
-
-    stop(
-      "Don't know how to select rows using an object of class ",
-      class(resolved)[1],
-      call. = FALSE
+  resolved <-
+    perform_resolution(
+      resolved = resolved,
+      item = item,
+      item_count = item_count,
+      item_names = item_names,
+      item_sequence = item_sequence
     )
-  }
 
   resolved
 }
@@ -342,7 +305,7 @@ resolve_rows_i <- function(expr, data) {
   which(resolve_rows_l(expr = {{ expr }}, data = data))
 }
 
-resolve_vector_l <- function(expr, vector) {
+resolve_vector_l <- function(expr, vector, item = "item") {
 
   quo <- rlang::enquo(expr)
 
@@ -352,64 +315,98 @@ resolve_vector_l <- function(expr, vector) {
       expr = rlang::eval_tidy(expr = quo, data = NULL)
     )
 
-  if (is.null(resolved)) {
+  item_names <- vector
+  item_count <- length(vector)
+  item_sequence <- seq_along(vector)
 
-    # Maintained for backcompat
-    resolved <- rep_len(TRUE, length(vector))
-
-  } else if (is.logical(resolved)) {
-
-    if (length(resolved) == 1) {
-      resolved <- rep_len(resolved, length(vector))
-    } else if (length(resolved) == length(vector)) {
-      # Do nothing
-    } else {
-      stop(
-        "The number of logical values must either be 1 or the number of items",
-        call. = FALSE
-      )
-    }
-
-  } else if (is.numeric(resolved)) {
-
-    unknown_indices <- setdiff(resolved, seq_along(vector))
-
-    if (length(unknown_indices) != 0) {
-      stop(
-        "The following item number(s) do not exist in the data: ",
-        paste0(unknown_indices, collapse = ", "),
-        call. = FALSE
-      )
-    }
-
-    resolved <- seq_along(vector) %in% resolved
-
-  } else if (is.character(resolved)) {
-
-    unknown_values <- setdiff(resolved, vector)
-
-    if (length(unknown_values) != 0) {
-      stop(
-        "The following item(s) do not exist in the data: ",
-        paste0(unknown_values, collapse = ", "),
-        call. = FALSE
-      )
-    }
-
-    resolved <- vector %in% resolved
-
-  } else {
-
-    stop(
-      "Don't know how to select items using an object of class ",
-      class(resolved)[1],
-      call. = FALSE
+  resolved <-
+    perform_resolution(
+      resolved = resolved,
+      item = item,
+      item_count = item_count,
+      item_names = item_names,
+      item_sequence = item_sequence
     )
-  }
 
   resolved
 }
 
-resolve_vector_i <- function(expr, vector) {
-  which(resolve_vector_l(expr = {{ expr }}, vector = vector))
+resolve_vector_i <- function(expr, vector, item = "item") {
+  which(resolve_vector_l(expr = {{ expr }}, vector = vector, item = item))
+}
+
+resolver_stop_on_logical <- function(item) {
+
+  stop(
+    "The number of logical values must either be 1 or the number of ",
+    item, "s",
+    call. = FALSE
+  )
+}
+
+resolver_stop_on_numeric <- function(item, unknown_resolved) {
+
+  stop(
+    "The following ", item ," indices do not exist in the data: ",
+    paste0(unknown_resolved, collapse = ", "),
+    call. = FALSE
+  )
+}
+
+resolver_stop_on_character <- function(item, unknown_resolved) {
+
+  stop(
+    "The following ", item , "(s) do not exist in the data: ",
+    paste0(unknown_resolved, collapse = ", "),
+    call. = FALSE
+  )
+}
+
+resolver_stop_unknown <- function(item, resolved) {
+
+  stop(
+    "Don't know how to select ", item , "s using an object of class ",
+    class(resolved)[1],
+    call. = FALSE
+  )
+}
+
+perform_resolution <- function(resolved, item, item_count, item_names, item_sequence) {
+
+  if (is.null(resolved)) {
+
+    # Maintained for backcompatability
+    resolved <- rep_len(TRUE, item_count)
+
+  } else if (is.logical(resolved)) {
+
+    if (length(resolved) == 1) {
+      resolved <- rep_len(resolved, item_count)
+    } else if (length(resolved) == item_count) {
+      # Do nothing
+    } else {
+      resolver_stop_on_logical(item = item)
+    }
+
+  } else if (is.numeric(resolved)) {
+
+    unknown_resolved <- setdiff(resolved, item_sequence)
+    if (length(unknown_resolved) != 0) {
+      resolver_stop_on_numeric(item = item, unknown_resolved = unknown_resolved)
+    }
+    resolved <- item_sequence %in% resolved
+
+  } else if (is.character(resolved)) {
+
+    unknown_resolved <- setdiff(resolved, item_names)
+    if (length(unknown_resolved) != 0) {
+      resolver_stop_on_character(item = item, unknown_resolved = unknown_resolved)
+    }
+    resolved <- item_names %in% resolved
+
+  } else {
+    resolver_stop_unknown(item = item, resolved = resolved)
+  }
+
+  resolved
 }
