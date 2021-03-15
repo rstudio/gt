@@ -676,7 +676,7 @@ set_footnote.cells_row_groups <- function(loc, data, footnote) {
     resolve_vector_i(
       expr = !!loc$groups,
       vector = row_groups,
-      item = "row group"
+      item_label = "row group"
     )
 
   groups <- row_groups[resolved_row_groups_idx]
@@ -1150,7 +1150,7 @@ set_style.cells_row_groups <- function(loc, data, style) {
     resolve_vector_i(
       expr = !!loc$groups,
       vector = row_groups,
-      item = "row group"
+      item_label = "row group"
     )
 
   groups <- row_groups[resolved_row_groups_idx]
