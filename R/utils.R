@@ -1325,7 +1325,7 @@ column_classes_are_valid <- function(data, columns, valid_classes) {
     )
 
   dt_data_get(data = data) %>%
-    dplyr::select(resolved) %>%
+    dplyr::select(dplyr::all_of(resolved)) %>%
     vapply(
       FUN.VALUE = logical(1), USE.NAMES = FALSE,
       FUN = function(x) any(class(x) %in% valid_classes)
