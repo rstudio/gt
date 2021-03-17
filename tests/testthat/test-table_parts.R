@@ -124,12 +124,12 @@ test_that("a gt table contains the expected spanner column labels", {
   # Create a `gt_tbl` object with `gt()`; this table
   # contains the spanner heading `perimeter` over the
   # `peri` and `shape` column labels (this time, using
-  # the `vars()` helper to define the columns)
+  # `c()` to define the columns)
   tbl_html <-
     gt(data = rock) %>%
     tab_spanner(
       label = "perimeter",
-      columns = vars(peri, shape)) %>%
+      columns = c(peri, shape)) %>%
     render_as_html() %>%
     xml2::read_html()
 
@@ -176,14 +176,14 @@ test_that("a gt table contains the expected spanner column labels", {
     gt(data = rock) %>%
       tab_spanner(
         label = "perimeter",
-        columns = vars(peris, shapes))
+        columns = c(peris, shapes))
   )
 
   # Expect an error when using an ID twice
   expect_error(
     gt(exibble) %>%
-      tab_spanner(label = "a", columns = vars(num)) %>%
-      tab_spanner(label = "b", id = "a", columns = vars(char))
+      tab_spanner(label = "a", columns = num) %>%
+      tab_spanner(label = "b", id = "a", columns = char)
   )
 })
 
@@ -275,11 +275,11 @@ test_that("`tab_spanner()` doesn't adversely affect column alignment", {
 
   tbl_html <-
     gt(data = airquality) %>%
-    cols_move_to_start(columns = vars(Month, Day)) %>%
+    cols_move_to_start(columns = c(Month, Day)) %>%
     cols_label(Solar.R = html("Solar<br>Radiation")) %>%
     tab_spanner(
       label = "Measurement Period",
-      columns = vars(Month, Day)
+      columns = c(Month, Day)
     ) %>%
     render_as_html()
 
@@ -303,25 +303,25 @@ test_that("`tab_spanner()` works even when columns are forcibly moved", {
     gt(mtcars[1, ]) %>%
     tab_spanner(
       label = md("*group_a*"),
-      columns = vars(cyl, hp)
+      columns = c(cyl, hp)
     ) %>%
     tab_spanner(
       label = md("*group_b*"),
-      columns = vars(drat, wt)
+      columns = c(drat, wt)
     ) %>%
     tab_spanner(
       label = md("*group_c*"),
-      columns = vars(qsec, vs, am)
+      columns = c(qsec, vs, am)
     ) %>%
     tab_spanner(
       label = md("*group_d*"),
-      columns = vars(gear, carb)
+      columns = c(gear, carb)
     ) %>%
     tab_spanner(
       label = md("*never*"),
       columns = ends_with("nothing")
     ) %>%
-    cols_move_to_start(columns = vars(carb)) %>%
+    cols_move_to_start(columns = carb) %>%
     render_as_html()
 
 
@@ -493,7 +493,7 @@ test_that("a gt table contains custom styles at the correct locations", {
     tab_spanner(
       label = "gear_carb_cyl",
       id = "gcc",
-      columns = vars(gear, carb, cyl)
+      columns = c(gear, carb, cyl)
     ) %>%
     row_group_order(groups = c("Mazdas", "Mercs")) %>%
     cols_merge_range(
@@ -508,13 +508,13 @@ test_that("a gt table contains custom styles at the correct locations", {
     cols_label(cyl = md("*cyls*")) %>%
     summary_rows(
       groups = c("Mazdas", "Mercs"),
-      columns = vars(hp, wt, qsec),
+      columns = c(hp, wt, qsec),
       fns = list(
         ~mean(., na.rm = TRUE),
         ~sum(., na.rm = TRUE))
     ) %>%
     summary_rows(
-      columns = vars(hp, wt, qsec),
+      columns = c(hp, wt, qsec),
       fns = list(
         ~mean(., na.rm = TRUE),
         ~sum(., na.rm = TRUE))
@@ -522,7 +522,7 @@ test_that("a gt table contains custom styles at the correct locations", {
     tab_style(
       style = cell_fill(color = "lightgray"),
       locations = list(
-        cells_column_labels(columns = TRUE),
+        cells_column_labels(),
         cells_stub(rows = TRUE))
     ) %>%
     tab_style(
@@ -561,11 +561,11 @@ test_that("a gt table contains custom styles at the correct locations", {
     ) %>%
     tab_style(
       style = cell_fill(color = "turquoise"),
-      locations = cells_column_labels(columns = "gear")
+      locations = cells_column_labels(columns = gear)
     ) %>%
     tab_style(
       style = cell_fill(color = "pink"),
-      locations = cells_column_labels(columns = "hp")
+      locations = cells_column_labels(columns = hp)
     ) %>%
     tab_style(
       style = list(

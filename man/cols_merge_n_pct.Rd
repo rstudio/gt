@@ -94,11 +94,11 @@ tab_1 <-
     rowname_col = "name",
     groupname_col = "type"
   ) \%>\%
-  fmt_currency(vars(price)) \%>\%
-  fmt_percent(vars(frac)) \%>\%
+  fmt_currency(price) \%>\%
+  fmt_percent(frac) \%>\%
   cols_merge_n_pct(
-    col_n = vars(n),
-    col_pct = vars(frac)
+    col_n = n,
+    col_pct = frac
   ) \%>\%
   cols_label(
     n = md("*N* (\%)"),

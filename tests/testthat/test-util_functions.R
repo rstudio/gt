@@ -420,7 +420,7 @@ test_that("the `inline_html_styles()` function works correctly", {
     data %>%
     tab_style(
       style = cell_text(size = px(10)),
-      locations = cells_body(columns = TRUE)
+      locations = cells_body(columns = everything())
     )
 
   # Get the CSS tibble and the raw HTML
@@ -612,7 +612,7 @@ test_that("The `check_spanner_id_unique()` function works properly", {
 
   gt_tbl_2 <-
     gt(exibble) %>%
-    tab_spanner(label = "a", columns = vars(num))
+    tab_spanner(label = "a", columns = num)
 
   # Don't expect an error when checking for unique spanner IDs
   # in a gt table with no spanner column labels

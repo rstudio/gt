@@ -26,6 +26,10 @@ tidyselect::one_of
 #' @export
 tidyselect::everything
 
+#' @importFrom tidyselect num_range
+#' @export
+tidyselect::num_range
+
 #' @importFrom htmltools css
 #' @export
 htmltools::css

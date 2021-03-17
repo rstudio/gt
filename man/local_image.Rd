@@ -63,7 +63,7 @@ tab_1 <-
   ) \%>\%
   gt() \%>\%
   text_transform(
-    locations = cells_body(vars(image)),
+    locations = cells_body(columns = image),
     fn = function(x) {
       local_image(
         filename = test_image(type = "png"),
