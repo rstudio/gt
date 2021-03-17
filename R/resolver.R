@@ -287,7 +287,7 @@ resolve_rows_l <- function(expr, data) {
 
     warning(
       "The use of `NULL` for rows is deprecated since gt 0.2.3:\n",
-      "* please use `everything()` instead",
+      "* please use `TRUE` instead",
       call. = FALSE
     )
 
