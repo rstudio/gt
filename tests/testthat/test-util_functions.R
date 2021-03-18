@@ -484,8 +484,9 @@ test_that("the `as_locations()` function works correctly", {
   # Define `locations` as a `cells_body` object
   locations <-
     cells_body(
-      columns = vars(hp),
-      rows = c("Datsun 710", "Valiant"))
+      columns = hp,
+      rows = c("Datsun 710", "Valiant")
+    )
 
   # Expect certain structural features for a `locations` object
   locations %>% length() %>% expect_equal(2)
