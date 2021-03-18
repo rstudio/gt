@@ -56,8 +56,9 @@ tab_1 <-
   tail(5) \%>\%
   gt() \%>\%
   cols_hide(
-    columns = vars(
-      country_code_2, country_code_3)
+    columns = c(
+      country_code_2, country_code_3
+    )
   )
 
 # Use `countrypops` to create a gt table;
@@ -70,13 +71,14 @@ tab_2 <-
   tail(5) \%>\%
   gt() \%>\%
   cols_hide(
-    columns = vars(country_code_3, population)
+    columns = c(country_code_3, population)
   ) \%>\%
   tab_footnote(
     footnote = "Population above 3,000,000.",
     locations = cells_body(
-      columns = vars(year),
-      rows = population > 3000000)
+      columns = year,
+      rows = population > 3000000
+    )
   )
 
 }

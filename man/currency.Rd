@@ -55,7 +55,7 @@ tab_1 <-
   exibble \%>\%
   gt() \%>\%
   fmt_currency(
-    columns = vars(currency),
+    columns = currency,
     currency = currency(
       html = "&fnof;",
       default = "f"),

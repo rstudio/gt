@@ -14,7 +14,7 @@
 #'
 #' @param data A table object that is created using the [gt()] function.
 #' @param align The alignment type. This can be any of `"center"`, `"left"`, or
-#'   `"right"` for center-, left-, or center-alignment. Alternatively, the
+#'   `"right"` for center-, left-, or right-alignment. Alternatively, the
 #'   `"auto"` option (the default), will automatically align values in columns
 #'   according to the data type (see the Details section for specifics on which
 #'   alignments are applied).
@@ -36,7 +36,7 @@
 #'   gt() %>%
 #'   cols_align(
 #'     align = "left",
-#'     columns = vars(population)
+#'     columns = population
 #'   )
 #'
 #' @section Figures:
@@ -49,7 +49,7 @@
 #' @export
 cols_align <- function(data,
                        align = c("auto", "left", "center", "right"),
-                       columns = TRUE) {
+                       columns = everything()) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -60,10 +60,12 @@ cols_align <- function(data,
   # Get the `align` value, this stops the function if there is no match
   align <- match.arg(align)
 
-  columns <- enquo(columns)
-
   # Get the columns supplied in `columns` as a character vector
-  column_names <- resolve_vars(var_expr = !!columns, data = data)
+  column_names <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data
+    )
 
   if (align == "auto") {
 
@@ -133,7 +135,7 @@ cols_align <- function(data,
 #'   where the left-hand side corresponds to selections of columns and the
 #'   right-hand side evaluates to single-length character values in the form
 #'   `{##}px` (i.e., pixel dimensions); the [px()] helper function is best used
-#'   for this purpose. Column names should be enclosed in [vars()]. The
+#'   for this purpose. Column names should be enclosed in [c()]. The
 #'   column-based select helpers [starts_with()], [ends_with()], [contains()],
 #'   [matches()], [one_of()], and [everything()] can be used in the LHS.
 #'   Subsequent expressions that operate on the columns assigned previously will
@@ -160,7 +162,7 @@ cols_align <- function(data,
 #'   ) %>%
 #'   gt() %>%
 #'   cols_width(
-#'     vars(num) ~ px(150),
+#'     num ~ px(150),
 #'     ends_with("r") ~ px(100),
 #'     starts_with("date") ~ px(200),
 #'     everything() ~ px(60)
@@ -212,13 +214,10 @@ cols_width <- function(data,
     cols <- width_item %>% rlang::f_lhs()
 
     columns <-
-      dt_boxhead_get_vars(data)[
-        resolve_data_vals_idx(
-          var_expr = !!cols,
-          data_tbl = NULL,
-          vals = dt_boxhead_get_vars(data)
-        )
-      ] %>%
+      resolve_cols_c(
+        expr = !!cols,
+        data = data
+      ) %>%
       base::setdiff(columns_used)
 
     columns_used <- c(columns_used, columns)
@@ -424,7 +423,7 @@ cols_label <- function(data,
 #'   tail(5) %>%
 #'   gt() %>%
 #'   cols_move_to_start(
-#'     columns = vars(year)
+#'     columns = year
 #'   )
 #'
 #' # Use `countrypops` to create a gt table;
@@ -437,7 +436,7 @@ cols_label <- function(data,
 #'   tail(5) %>%
 #'   gt() %>%
 #'   cols_move_to_start(
-#'     columns = vars(year, population)
+#'     columns = c(year, population)
 #'   )
 #'
 #' @section Figures:
@@ -457,12 +456,14 @@ cols_move_to_start <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  columns <- enquo(columns)
-
   vars <- dt_boxhead_get_vars(data = data)
 
   # Get the columns supplied in `columns` as a character vector
-  columns <- resolve_vars(var_expr = !!columns, data = data)
+  columns <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data
+    )
 
   # Stop function if no `columns` are provided
   if (length(columns) == 0) {
@@ -517,7 +518,7 @@ cols_move_to_start <- function(data,
 #'   tail(5) %>%
 #'   gt() %>%
 #'   cols_move_to_end(
-#'     columns = vars(year)
+#'     columns = year
 #'   )
 #'
 #' # Use `countrypops` to create a gt table;
@@ -530,7 +531,7 @@ cols_move_to_start <- function(data,
 #'   tail(5) %>%
 #'   gt() %>%
 #'   cols_move_to_end(
-#'     columns = vars(year, country_name)
+#'     columns = c(year, country_name)
 #'   )
 #'
 #' @section Figures:
@@ -550,12 +551,14 @@ cols_move_to_end <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  columns <- enquo(columns)
-
   vars <- dt_boxhead_get_vars(data = data)
 
   # Get the columns supplied in `columns` as a character vector
-  columns <- resolve_vars(var_expr = !!columns, data = data)
+  columns <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data
+    )
 
   # Stop function if no `columns` are provided
   if (length(columns) == 0) {
@@ -615,8 +618,8 @@ cols_move_to_end <- function(data,
 #'   tail(5) %>%
 #'   gt() %>%
 #'   cols_move(
-#'     columns = vars(population),
-#'     after = vars(country_name)
+#'     columns = population,
+#'     after = country_name
 #'   )
 #'
 #' @section Figures:
@@ -635,14 +638,19 @@ cols_move <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  columns <- enquo(columns)
-  after <- enquo(after)
-
   # Get the columns supplied in `columns` as a character vector
-  columns <- resolve_vars(var_expr = !!columns, data = data)
+  columns <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data
+    )
 
   # Get the `after` columns as a character vector
-  after <- resolve_vars(var_expr = !!after, data = data)
+  after <-
+    resolve_cols_c(
+      expr = {{ after }},
+      data = data
+    )
 
   vars <- dt_boxhead_get_vars(data = data)
 
@@ -719,8 +727,9 @@ cols_move <- function(data,
 #'   tail(5) %>%
 #'   gt() %>%
 #'   cols_hide(
-#'     columns = vars(
-#'       country_code_2, country_code_3)
+#'     columns = c(
+#'       country_code_2, country_code_3
+#'     )
 #'   )
 #'
 #' # Use `countrypops` to create a gt table;
@@ -733,13 +742,14 @@ cols_move <- function(data,
 #'   tail(5) %>%
 #'   gt() %>%
 #'   cols_hide(
-#'     columns = vars(country_code_3, population)
+#'     columns = c(country_code_3, population)
 #'   ) %>%
 #'   tab_footnote(
 #'     footnote = "Population above 3,000,000.",
 #'     locations = cells_body(
-#'       columns = vars(year),
-#'       rows = population > 3000000)
+#'       columns = year,
+#'       rows = population > 3000000
+#'     )
 #'   )
 #'
 #' @section Figures:
@@ -761,10 +771,12 @@ cols_hide <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  columns <- enquo(columns)
-
   # Get the columns supplied in `columns` as a character vector
-  columns <- resolve_vars(var_expr = !!columns, data = data)
+  columns <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data
+    )
 
   vars <- dt_boxhead_get_vars(data = data)
 
@@ -935,13 +947,13 @@ cols_unhide <- function(data,
 #'   dplyr::slice(1:7) %>%
 #'   gt() %>%
 #'   fmt_number(
-#'     columns = vars(num),
+#'     columns = num,
 #'     decimals = 3,
 #'     use_seps = FALSE
 #'   ) %>%
 #'   cols_merge_uncert(
-#'     col_val = vars(currency),
-#'     col_uncert = vars(num)
+#'     col_val = currency,
+#'     col_uncert = num
 #'   ) %>%
 #'   cols_label(
 #'     currency = "value + uncert."
@@ -968,8 +980,8 @@ cols_merge_uncert <- function(data,
   resolved <-
     cols_merge_resolver(
       data = data,
-      col_begin = col_val,
-      col_end = col_uncert,
+      col_begin = {{ col_val }},
+      col_end = {{ col_uncert }},
       sep = sep
     )
 
@@ -986,6 +998,13 @@ cols_merge_uncert <- function(data,
     )
 
   if (isTRUE(autohide)) {
+
+    col_uncert <-
+      resolve_cols_c(
+        expr = {{ col_uncert }},
+        data = data
+      )
+
     data <- cols_hide(data = data, columns = col_uncert)
   }
 
@@ -1053,8 +1072,8 @@ cols_merge_uncert <- function(data,
 #'   dplyr::slice(1:8) %>%
 #'   gt() %>%
 #'   cols_merge_range(
-#'     col_begin = vars(mpg_c),
-#'     col_end = vars(mpg_h)
+#'     col_begin = mpg_c,
+#'     col_end = mpg_h
 #'   ) %>%
 #'   cols_label(
 #'     mpg_c = md("*MPG*")
@@ -1081,8 +1100,8 @@ cols_merge_range <- function(data,
   resolved <-
     cols_merge_resolver(
       data = data,
-      col_begin = col_begin,
-      col_end = col_end,
+      col_begin = {{ col_begin }},
+      col_end = {{ col_end }},
       sep = sep
     )
 
@@ -1099,6 +1118,13 @@ cols_merge_range <- function(data,
     )
 
   if (isTRUE(autohide)) {
+
+    col_end <-
+      resolve_cols_c(
+        expr = {{ col_end }},
+        data = data
+      )
+
     data <- cols_hide(data = data, columns = col_end)
   }
 
@@ -1107,23 +1133,25 @@ cols_merge_range <- function(data,
 
 cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 
-  # Set the formatting pattern
-  pattern <- "{1}{sep}{2}"
-
-  col_begin <- enquo(col_begin)
-  col_end <- enquo(col_end)
-
   # Get the columns supplied in `col_begin` as a character vector
-  col_begin <- resolve_vars(var_expr = !!col_begin, data = data)
+  col_begin <-
+    resolve_cols_c(
+      expr = {{ col_begin }},
+      data = data
+    )
 
   # Get the columns supplied in `col_end` as a character vector
-  col_end <- resolve_vars(var_expr = !!col_end, data = data)
+  col_end <-
+    resolve_cols_c(
+      expr = {{ col_end }},
+      data = data
+    )
 
   columns <- c(col_begin, col_end)
 
   list(
     columns = columns,
-    pattern = pattern
+    pattern = "{1}{sep}{2}"
   )
 }
 
@@ -1201,11 +1229,11 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #'     rowname_col = "name",
 #'     groupname_col = "type"
 #'   ) %>%
-#'   fmt_currency(vars(price)) %>%
-#'   fmt_percent(vars(frac)) %>%
+#'   fmt_currency(price) %>%
+#'   fmt_percent(frac) %>%
 #'   cols_merge_n_pct(
-#'     col_n = vars(n),
-#'     col_pct = vars(frac)
+#'     col_n = n,
+#'     col_pct = frac
 #'   ) %>%
 #'   cols_label(
 #'     n = md("*N* (%)"),
@@ -1239,8 +1267,8 @@ cols_merge_n_pct <- function(data,
   resolved <-
     cols_merge_resolver(
       data = data,
-      col_begin = col_n,
-      col_end = col_pct,
+      col_begin = {{ col_n }},
+      col_end = {{ col_pct }},
       sep = ""
     )
 
@@ -1257,6 +1285,13 @@ cols_merge_n_pct <- function(data,
     )
 
   if (isTRUE(autohide)) {
+
+    col_pct <-
+      resolve_cols_c(
+        expr = {{ col_pct }},
+        data = data
+      )
+
     data <- data %>% cols_hide(columns = col_pct)
   }
 
@@ -1287,7 +1322,8 @@ cols_merge_n_pct <- function(data,
 #' @param hide_columns Any column names provided here will have their state
 #'   changed to `hidden` (via internal use of [cols_hide()] if they aren't
 #'   already hidden. This is convenient if the shared purpose of these specified
-#'   columns is only to provide string input to the target column.
+#'   columns is only to provide string input to the target column. To suppress
+#'   any hiding of columns, `FALSE` can be used here.
 #' @param pattern A formatting pattern that specifies the arrangement of the
 #'   `column` values and any string literals. We need to use column numbers
 #'   (corresponding to the position of columns provided in `columns`) within the
@@ -1308,13 +1344,11 @@ cols_merge_n_pct <- function(data,
 #'   dplyr::select(-volume, -adj_close) %>%
 #'   gt() %>%
 #'   cols_merge(
-#'     columns = vars(open, close),
-#'     hide_columns = vars(close),
+#'     columns = c(open, close),
 #'     pattern = "{1}&mdash;{2}"
 #'   ) %>%
 #'   cols_merge(
-#'     columns = vars(low, high),
-#'     hide_columns = vars(high),
+#'     columns = c(low, high),
 #'     pattern = "{1}&mdash;{2}"
 #'   ) %>%
 #'   cols_label(
@@ -1339,17 +1373,29 @@ cols_merge <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  columns <- enquo(columns)
-
   # Get the columns supplied in `columns` as a character vector
-  columns <- resolve_vars(var_expr = !!columns, data = data)
+  columns <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data
+    )
 
-  if (!is.null(hide_columns)) {
+  # NOTE: It's important that `hide_columns` NOT be evaluated until after the
+  # previous line has run. Otherwise, the default `hide_columns` value of
+  # columns[-1] may not evaluate to a sensible result.
+  # NOTE: It's also important that `pattern` not be evaluated, for much the same
+  # reason as above.
 
-    hide_columns <- enquo(hide_columns)
+  # Get the columns supplied in `hide_columns` as a character vector
+  suppressWarnings(
+    hide_columns <-
+      resolve_cols_c(
+        expr = {{ hide_columns }},
+        data = data
+      )
+  )
 
-    # Get the columns supplied in `hide_columns` as a character vector
-    hide_columns <- resolve_vars(var_expr = !!hide_columns, data = data)
+  if (length(hide_columns) > 0) {
 
     hide_columns_from_supplied <- base::intersect(hide_columns, columns)
 
@@ -1359,7 +1405,9 @@ cols_merge <- function(data,
               call. = FALSE)
     }
 
-    data <- cols_hide(data = data, columns = hide_columns_from_supplied)
+    if (length(hide_columns_from_supplied) > 0) {
+      data <- cols_hide(data = data, columns = hide_columns_from_supplied)
+    }
   }
 
   # Create an entry and add it to the `_col_merge` attribute

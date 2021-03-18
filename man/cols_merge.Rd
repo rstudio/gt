@@ -21,7 +21,8 @@ mutation) and the other columns will serve to provide input.}
 \item{hide_columns}{Any column names provided here will have their state
 changed to \code{hidden} (via internal use of \code{\link[=cols_hide]{cols_hide()}} if they aren't
 already hidden. This is convenient if the shared purpose of these specified
-columns is only to provide string input to the target column.}
+columns is only to provide string input to the target column. To suppress
+any hiding of columns, \code{FALSE} can be used here.}
 
 \item{pattern}{A formatting pattern that specifies the arrangement of the
 \code{column} values and any string literals. We need to use column numbers
@@ -71,13 +72,11 @@ tab_1 <-
   dplyr::select(-volume, -adj_close) \%>\%
   gt() \%>\%
   cols_merge(
-    columns = vars(open, close),
-    hide_columns = vars(close),
+    columns = c(open, close),
     pattern = "{1}&mdash;{2}"
   ) \%>\%
   cols_merge(
-    columns = vars(low, high),
-    hide_columns = vars(high),
+    columns = c(low, high),
     pattern = "{1}&mdash;{2}"
   ) \%>\%
   cols_label(

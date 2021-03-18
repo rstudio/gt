@@ -45,12 +45,12 @@ test_that("the `tab_spanner_delim()` function works correctly", {
   # Create a `tbl_latex` object with `gt()`; split the column
   # names into spanner headings and column labels but constrain
   # the splitting only to the `Sepal.Length` and `Sepal.Width`
-  # columns using the `vars()` helper
+  # columns using `c()`
   tbl_latex <-
     gt(iris_short) %>%
     tab_spanner_delim(
       delim = ".",
-      columns = vars(Sepal.Length, Sepal.Width)
+      columns = c(Sepal.Length, Sepal.Width)
     )
 
   # Expect a characteristic pattern

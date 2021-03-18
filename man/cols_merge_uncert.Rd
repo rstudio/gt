@@ -84,13 +84,13 @@ tab_1 <-
   dplyr::slice(1:7) \%>\%
   gt() \%>\%
   fmt_number(
-    columns = vars(num),
+    columns = num,
     decimals = 3,
     use_seps = FALSE
   ) \%>\%
   cols_merge_uncert(
-    col_val = vars(currency),
-    col_uncert = vars(num)
+    col_val = currency,
+    col_uncert = num
   ) \%>\%
   cols_label(
     currency = "value + uncert."

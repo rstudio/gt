@@ -8,7 +8,6 @@
 resolve_cells_body <- function(data,
                                object) {
 
-
   # Get the `stub_df` data frame from `data`
   stub_df <- dt_stub_df_get(data = data)
   data_tbl <- dt_data_get(data = data)
@@ -18,18 +17,18 @@ resolve_cells_body <- function(data,
   # providing the positions of the matched variables
   #
 
+  # Resolve columns as index values
   resolved_columns_idx <-
-    resolve_vars_idx(
-      var_expr = !!object$columns,
+    resolve_cols_i(
+      expr = !!object$columns,
       data = data
     )
 
-  # Get the resolved rows
+  # Resolve rows as index values
   resolved_rows_idx <-
-    resolve_data_vals_idx(
-      var_expr = !!object$rows,
-      data_tbl = data_tbl,
-      vals = stub_df$rowname
+    resolve_rows_i(
+      expr = !!object$rows,
+      data = data
     )
 
   # Get all possible combinations with `expand.grid()`
@@ -46,7 +45,7 @@ resolve_cells_body <- function(data,
   cells_resolved <-
     list(
       columns = expansion[[1]],
-      colnames = resolve_vars(var_expr = expansion[[1]], data = data),
+      colnames = names(expansion[[1]]),
       rows = expansion[[2]]
     )
 
@@ -64,17 +63,14 @@ resolve_cells_body <- function(data,
 resolve_cells_stub <- function(data,
                                object) {
 
-  stub_df <- dt_stub_df_get(data = data)
-
   #
   # Resolution of rows as integer vectors
   # providing the positions of the matched variables
   #
   resolved_rows_idx <-
-    resolve_data_vals_idx(
-      var_expr = !!object$rows,
-      data_tbl = NULL,
-      vals = stub_df$rowname
+    resolve_rows_i(
+      expr = !!object$rows,
+      data = data
     )
 
   # Create a list object
@@ -100,12 +96,10 @@ resolve_cells_column_labels <- function(data,
   # Resolution of columns as integer vectors
   # providing the positions of the matched variables
   #
-
   resolved_columns <-
-    resolve_data_vals_idx(
-      var_expr = !!object$columns,
-      data_tbl = NULL,
-      vals = dt_boxhead_get_vars_default(data = data)
+    resolve_cols_i(
+      expr = !!object$columns,
+      data = data
     )
 
   # Create a list object
@@ -143,10 +137,10 @@ resolve_cells_column_spanners <- function(data,
     .[!is.na(.)]
 
   resolved_spanners_idx <-
-    resolve_data_vals_idx(
-      var_expr = !!object$spanners,
-      data_tbl = NULL,
-      vals = spanner_ids
+    resolve_vector_i(
+      expr = !!object$spanners,
+      vector = spanner_ids,
+      item_label = "spanner"
     )
 
   resolved_spanners <- spanner_ids[resolved_spanners_idx]
@@ -160,157 +154,272 @@ resolve_cells_column_spanners <- function(data,
   cells_resolved
 }
 
-#' Resolve expressions to obtain column indices
-#'
-#' @param var_expr An expression to evaluate. This is passed directly to
-#'   `rlang::eval_tidy()` as a value for the `expr` argument.
-#' @param data The gt object.
-#' @param body_only If FALSE, then the results may include stub and group names.
+#' @param expr An unquoted expression that follows tidyselect semantics
+#' @param data A gt object or data frame or tibble
+#' @return Character vector
 #' @noRd
-resolve_vars_idx <- function(var_expr,
-                             data,
-                             body_only = TRUE) {
+resolve_cols_c <- function(expr,
+                           data,
+                           strict = TRUE) {
 
-  var_expr <- rlang::enquo(var_expr)
-
-  cols <- colnames(dt_data_get(data = data))
-
-  idx <- resolve_data_vals_idx(
-    var_expr = !!var_expr,
-    data_tbl = NULL,
-    vals = cols
+  names(
+    resolve_cols_i(
+      expr = {{expr}},
+      data = data,
+      strict = strict
+    )
   )
-
-  if (body_only) {
-    stub_var <- dt_boxhead_get_var_stub(data)
-    if (!is.na(stub_var)) {
-      stub_idx <- which(cols == stub_var)
-      idx <- idx[idx != stub_idx]
-    }
-
-    group_rows_vars <- dt_boxhead_get_vars_groups(data)
-    group_rows_vars_idx <- which(cols %in% group_rows_vars)
-    idx <- idx[!(idx %in% group_rows_vars_idx)]
-  }
-
-  idx
 }
 
-#' Resolve expressions to obtain row indices
-#'
-#' @param var_expr An expression to evaluate. This is passed directly to
-#'   `rlang::eval_tidy()` as a value for the `expr` argument.
-#' @param data_tbl The input table available in `data` (usually accessed through
-#'   `dt_data_get(data)`).
-#' @param vals The names of columns or rows in `data`.
-#' @import tidyselect
-#' @import rlang
+#' @param expr An unquoted expression that follows tidyselect semantics
+#' @param data A gt object or data frame or tibble
+#' @param strict If TRUE, out-of-bounds errors are thrown if `expr` attempts to
+#'   select a column that doesn't exist. If FALSE, failed selections are
+#'   ignored.
+#' @return Named integer vector
 #' @noRd
-resolve_data_vals_idx <- function(var_expr,
-                                  data_tbl,
-                                  vals) {
+resolve_cols_i <- function(expr,
+                           data,
+                           strict = TRUE) {
 
-  var_expr <- enquo(var_expr)
+  quo <- rlang::enquo(expr)
+  cols_excl <- c()
 
-  if (!is.null(data_tbl)) {
-    data_tbl <- as.data.frame(data_tbl)
+  if (is_gt(data)) {
+
+    cols <- colnames(dt_data_get(data = data))
+
+    # Assumes that only the body of the data is considered (i.e., not the
+    # stub or group cols)
+    stub_var <- dt_boxhead_get_var_stub(data)
+    group_rows_vars <- dt_boxhead_get_vars_groups(data)
+
+    cols_excl <- c(stub_var, group_rows_vars)
+
+    data <- dt_data_get(data = data)
   }
 
-  # Translate variable expressions (e.g., logical
-  # values, select helpers, expressions in `vars()`,
-  # etc.) to the appropriate output
-  resolved <-
-    tidyselect::with_vars(
-      vals,
-      rlang::eval_tidy(
-        expr = var_expr,
-        data = data_tbl,
-        env = emptyenv()
-      )
+  stopifnot(is.data.frame(data))
+
+  quo <- translate_legacy_resolver_expr(quo)
+
+  # No env argument required, because the expr is a quosure
+  selected <- tidyselect::eval_select(expr = quo, data = data, strict = strict)
+
+  # Exclude certain columns (e.g., stub & group columns) if necessary
+  selected[!names(selected) %in% cols_excl]
+}
+
+#' @param quo A quosure that might contain legacy gt column criteria
+#' @noRd
+translate_legacy_resolver_expr <- function(quo) {
+
+  expr <- rlang::quo_get_expr(quo = quo)
+
+  if (identical(expr, FALSE)) {
+    warning(
+      "`columns = FALSE` is deprecated since gt 0.2.3:\n",
+      "* please use `columns = c()` instead",
+      call. = FALSE
     )
 
-  # With the `resolved` output, check types and
-  # process inputs to reliably output as a vector
-  # of column indices based on `vals`
+    rlang::quo_set_expr(quo = quo, expr = quote(NULL))
+
+  } else if (identical(expr, TRUE)) {
+
+    warning(
+      "`columns = TRUE` is deprecated since gt 0.2.3:\n",
+      "* please use `columns = everything()` instead",
+      call. = FALSE
+    )
+
+    rlang::quo_set_expr(quo = quo, expr = quote(everything()))
+
+  } else if (is.null(expr)) {
+
+    warning(
+      "`columns = NULL` is deprecated since gt 0.2.3:\n",
+      "* please use `columns = everything()` instead",
+      call. = FALSE
+    )
+
+    rlang::quo_set_expr(quo = quo, expr = quote(everything()))
+
+  } else if (rlang::quo_is_call(quo = quo, name = "vars")) {
+
+    warning(
+      "`columns = vars(...)` is deprecated since gt 0.2.3:\n",
+      "* please use `columns = c(...)` instead",
+      call. = FALSE
+    )
+
+    rlang::quo_set_expr(
+      quo = quo,
+      expr = rlang::call2(quote(c), !!!rlang::call_args(expr))
+    )
+
+  } else {
+    # No legacy expression detected
+    quo
+  }
+}
+
+resolve_rows_l <- function(expr, data) {
+
+  if (is_gt(data)) {
+    row_names <- dt_stub_df_get(data)$rowname
+    data <- dt_data_get(data = data)
+  } else {
+    row_names <- row.names(data)
+  }
+
+  stopifnot(is.data.frame(data))
+
+  quo <- rlang::enquo(expr)
+
+  resolved <-
+    tidyselect::with_vars(
+      vars = row_names,
+      expr = rlang::eval_tidy(expr = quo, data = data)
+    )
+
   if (is.null(resolved)) {
 
-    resolved <- seq_along(vals)
+    warning(
+      "The use of `NULL` for rows is deprecated since gt 0.2.3:\n",
+      "* please use `TRUE` instead",
+      call. = FALSE
+    )
+
+    # Modify the NULL value of `resolved` to `TRUE` (which is
+    # fully supported for selecting all rows)
+    resolved <- TRUE
+  }
+
+  resolved <-
+    normalize_resolved(
+      resolved = resolved,
+      item_names = row_names,
+      item_label = "row"
+    )
+
+  resolved
+}
+
+resolve_rows_i <- function(expr, data) {
+  which(resolve_rows_l(expr = {{ expr }}, data = data))
+}
+
+resolve_vector_l <- function(expr, vector, item_label = "item") {
+
+  quo <- rlang::enquo(expr)
+
+  resolved <-
+    tidyselect::with_vars(
+      vars = vector,
+      expr = rlang::eval_tidy(expr = quo, data = NULL)
+    )
+
+  resolved <-
+    normalize_resolved(
+      resolved = resolved,
+      item_names = vector,
+      item_label = item_label
+    )
+
+  resolved
+}
+
+resolve_vector_i <- function(expr, vector, item_label = "item") {
+  which(resolve_vector_l(expr = {{ expr }}, vector = vector, item_label = item_label))
+}
+
+normalize_resolved <- function(resolved,
+                               item_names,
+                               item_label) {
+
+  item_count <- length(item_names)
+  item_sequence <- seq_along(item_names)
+
+  if (is.null(resolved)) {
+
+    # Maintained for backcompatability
+    resolved <- rep_len(TRUE, item_count)
+
+    # TODO: this may not apply to all types of resolution so we may
+    # want to either make this warning conditional (after investigating which
+    # resolving contexts still allow `NULL`)
+    warning(
+      "The use of `NULL` for ", item_label , "s is deprecated since gt 0.2.3:\n",
+      "* please use `everything()` instead",
+      call. = FALSE
+    )
 
   } else if (is.logical(resolved)) {
 
-    if (!(length(resolved) == 1 || length(resolved) == length(vals))) {
-      stop("The number of logical values must either be one or the total ",
-           "number of columns or rows", call. = FALSE)
+    if (length(resolved) == 1) {
+      resolved <- rep_len(resolved, item_count)
+    } else if (length(resolved) == item_count) {
+      # Do nothing
+    } else {
+      resolver_stop_on_logical(item_label = item_label)
     }
-
-    resolved <- which(rlang::rep_along(vals, resolved))
 
   } else if (is.numeric(resolved)) {
 
-    if (any(!(resolved %in% seq_along(vals)))) {
-      stop("All column or row indices given must be present in `data_tbl`.",
-           call. = FALSE)
+    unknown_resolved <- setdiff(resolved, item_sequence)
+    if (length(unknown_resolved) != 0) {
+      resolver_stop_on_numeric(item_label = item_label, unknown_resolved = unknown_resolved)
     }
-
-    # `resolved` is already in terms of indices
-    # resolved <- resolved
+    resolved <- item_sequence %in% resolved
 
   } else if (is.character(resolved)) {
 
-    resolved <- tidyselect::vars_select(vals, !!!rlang::syms(resolved))
-    resolved <- resolve_vals(resolved = resolved, vals = vals)
-
-  } else if (is_quosures(resolved)) {
-
-    # Define function to get an expression from a
-    # quosure and translate it to a character vector
-    quo_get_expr_char <- function(x) {
-      rlang::as_name(x)
+    unknown_resolved <- setdiff(resolved, item_names)
+    if (length(unknown_resolved) != 0) {
+      resolver_stop_on_character(item_label = item_label, unknown_resolved = unknown_resolved)
     }
+    resolved <- item_names %in% resolved
 
-    resolved <- vapply(resolved, quo_get_expr_char, character(1))
-    resolved <- tidyselect::vars_select(vals, !!!rlang::syms(resolved)) %>% unname()
-    resolved <- resolve_vals(resolved = resolved, vals = vals)
+  } else {
+    resolver_stop_unknown(item_label = item_label, resolved = resolved)
   }
 
   resolved
 }
 
-resolve_vals <- function(resolved, vals) {
+resolver_stop_on_logical <- function(item_label) {
 
-  resolved_idx <- c()
-
-  for (res in resolved) {
-    resolved_idx <- c(resolved_idx, which(vals %in% res))
-  }
-
-  resolved_idx
+  stop(
+    "The number of logical values must either be 1 or the number of ",
+    item_label, "s",
+    call. = FALSE
+  )
 }
 
-#' Resolve expressions to obtain column names
-#'
-#' @param var_expr The immutable column names from the input table.
-#' @param data A table object that is created using the [gt()] function.
-#' @noRd
-resolve_vars <- function(var_expr,
-                         data) {
+resolver_stop_on_numeric <- function(item_label, unknown_resolved) {
 
-  var_expr <- enquo(var_expr)
+  stop(
+    "The following ", item_label, " indices do not exist in the data: ",
+    paste0(unknown_resolved, collapse = ", "),
+    call. = FALSE
+  )
+}
 
-  # Obtain the data frame of the input table data
-  data_tbl <- dt_data_get(data = data)
+resolver_stop_on_character <- function(item_label, unknown_resolved) {
 
-  # Collect column names from the input table data
-  column_names <- colnames(data_tbl)
+  stop(
+    "The following ", item_label, "(s) do not exist in the data: ",
+    paste0(unknown_resolved, collapse = ", "),
+    call. = FALSE
+  )
+}
 
-  # Use `resolve_vars_idx()` to obtain a vector
-  # column indices
-  columns_idx <-
-    resolve_vars_idx(
-      var_expr = !!var_expr,
-      data = data
-    )
+resolver_stop_unknown <- function(item_label, resolved) {
 
-  # Translate the column indices to column names
-  column_names[columns_idx]
+  stop(
+    "Don't know how to select ", item_label, "s using an object of class ",
+    class(resolved)[1],
+    call. = FALSE
+  )
 }

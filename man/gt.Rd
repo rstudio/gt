@@ -104,7 +104,7 @@ tab_2 <-
     subtitle = "Subtitle"
   ) \%>\%
   fmt_number(
-    columns = vars(num),
+    columns = num,
     decimals = 2
   ) \%>\%
   cols_label(num = "number")

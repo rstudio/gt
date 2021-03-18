@@ -64,7 +64,7 @@
 #'   ) %>%
 #'   summary_rows(
 #'     groups = TRUE,
-#'     columns = vars(open, high, low, close),
+#'     columns = c(open, high, low, close),
 #'     fns = list(
 #'       min = ~min(.),
 #'       max = ~max(.),
@@ -83,7 +83,7 @@
 #' @export
 summary_rows <- function(data,
                          groups = NULL,
-                         columns = TRUE,
+                         columns = everything(),
                          fns,
                          missing_text = "---",
                          formatter = fmt_number,
@@ -97,7 +97,7 @@ summary_rows <- function(data,
 
   # If `groups` is FALSE, then do nothing; just
   # return the `data` unchanged; having `groups`
-  # as `NULL` signifies a grand summary, `TRUE`
+  # as `NULL` signifies a grand summary,
   # is used for groupwise summaries across all
   # groups
   if (is_false(groups)) {
@@ -110,12 +110,13 @@ summary_rows <- function(data,
   stub_available <- dt_stub_df_exists(data = data)
 
   # Resolve the column names
-  columns <- enquo(columns)
-  columns <- resolve_vars(var_expr = !!columns, data = data)
+  columns <- resolve_cols_c(expr = {{ columns }}, data = data)
 
   # If there isn't a stub available, create an
   # 'empty' stub (populated with empty strings);
   # the stub is necessary for summary row labels
+  # TODO: Why is there a requirement for `is_null(groups)`?;
+  #       I think there is a mistake here
   if (!stub_available && is.null(groups)) {
 
     data <-
@@ -209,7 +210,7 @@ summary_rows <- function(data,
 #'     groupname_col = "week"
 #'   ) %>%
 #'   grand_summary_rows(
-#'     columns = vars(open, high, low, close),
+#'     columns = c(open, high, low, close),
 #'     fns = list(
 #'       min = ~min(.),
 #'       max = ~max(.),
@@ -227,7 +228,7 @@ summary_rows <- function(data,
 #'
 #' @export
 grand_summary_rows <- function(data,
-                               columns = TRUE,
+                               columns = everything(),
                                fns,
                                missing_text = "---",
                                formatter = fmt_number,
@@ -239,7 +240,7 @@ grand_summary_rows <- function(data,
   summary_rows(
     data,
     groups = NULL,
-    columns = columns,
+    columns = {{ columns }},
     fns = fns,
     missing_text = missing_text,
     formatter = formatter,

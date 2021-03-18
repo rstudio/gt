@@ -294,13 +294,11 @@ resolve_footnotes_styles <- function(data,
 
       tbl <-
         tbl %>%
-        dplyr::group_by(
-          .dots = colnames(.) %>% base::setdiff(c("styles", "text"))) %>%
+        dplyr::group_by(locname, grpname, colname, locnum, rownum, colnum) %>%
         dplyr::summarize(styles = list(as_style(styles))) %>%
         dplyr::ungroup()
     }
   }
-
 
   if (tbl_type == "footnotes") {
     data <- dt_footnotes_set(data = data, footnotes = tbl)

@@ -61,7 +61,7 @@ tab_1 <-
   gt(rowname_col = "model") \%>\%
   tab_spanner(
     label = "performance",
-    columns = vars(
+    columns = c(
       hp, hp_rpm, trq, trq_rpm,
       mpg_c, mpg_h)
   )

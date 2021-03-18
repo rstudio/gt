@@ -25,11 +25,11 @@ data <-
   tab_stubhead(label = "Stubhead Caption") %>%
   tab_spanner(
     label = "Group 1",
-    columns = vars(col_1, col_2)
+    columns = c(col_1, col_2)
   ) %>%
   tab_spanner(
     label = "Group 2",
-    columns = vars(col_3, col_4)
+    columns = c(col_3, col_4)
   ) %>%
   tab_footnote(
     footnote = "Footnote #1",

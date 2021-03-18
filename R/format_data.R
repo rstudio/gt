@@ -26,15 +26,17 @@
 #'
 #' @param data A table object that is created using the [gt()] function.
 #' @param columns The columns to format. Can either be a series of column names
-#'   provided in [vars()], a vector of column indices, or a helper function
+#'   provided in [c()], a vector of column indices, or a helper function
 #'   focused on selections. The select helper functions are: [starts_with()],
-#'   [ends_with()], [contains()], [matches()], [one_of()], and [everything()].
-#' @param rows Optional rows to format. Not providing any value results in all
-#'   rows in `columns` being formatted. Can either be a vector of row captions
-#'   provided [c()], a vector of row indices, or a helper function focused on
-#'   selections. The select helper functions are: [starts_with()],
-#'   [ends_with()], [contains()], [matches()], [one_of()], and [everything()].
-#'   We can also use expressions to filter down to the rows we need (e.g.,
+#'   [ends_with()], [contains()], [matches()], [one_of()], [num_range()], and
+#'   [everything()].
+#' @param rows Optional rows to format. Providing either [everything()] (the
+#'   default) or `TRUE` results in all rows in `columns` being formatted. Can
+#'   either be a vector of row captions provided in [c()], a vector of row
+#'   indices, or a helper function focused on selections. The select helper
+#'   functions are: [starts_with()], [ends_with()], [contains()], [matches()],
+#'   [one_of()], [num_range()], and [everything()]. We can also use expressions
+#'   to filter down to the rows we need (e.g.,
 #'   `[colname_1] > 100 & [colname_2] < 50`).
 #' @param decimals An option to specify the exact number of decimal places to
 #'   use. The default number of decimal places is `2`.
@@ -102,7 +104,7 @@
 #'   exibble %>%
 #'   gt() %>%
 #'   fmt_number(
-#'     columns = vars(num),
+#'     columns = num,
 #'     decimals = 3,
 #'     use_seps = FALSE
 #'   )
@@ -140,7 +142,7 @@
 #' @export
 fmt_number <- function(data,
                        columns,
-                       rows = NULL,
+                       rows = everything(),
                        decimals = 2,
                        n_sigfig = NULL,
                        drop_trailing_zeros = FALSE,
@@ -167,13 +169,9 @@ fmt_number <- function(data,
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
   suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by)
 
-  # Capture expression in `rows` and `columns`
-  rows <- rlang::enquo(rows)
-  columns <- rlang::enquo(columns)
-
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(data, !!columns, valid_classes = c("numeric", "integer"))) {
+  if (!column_classes_are_valid(data, {{ columns }}, valid_classes = c("numeric", "integer"))) {
     stop("The `fmt_number()` function can only be used on `columns` with numeric data",
          call. = FALSE)
   }
@@ -194,8 +192,8 @@ fmt_number <- function(data,
   # functions as a function list to `fmt()`
   fmt(
     data = data,
-    columns = !!columns,
-    rows = !!rows,
+    columns = {{ columns }},
+    rows = {{ rows }},
     fns = num_fmt_factory_multi(
       pattern = pattern,
       format_fn = function(x, context) {
@@ -256,14 +254,14 @@ fmt_number <- function(data,
 #'   exibble %>%
 #'   gt() %>%
 #'   fmt_number(
-#'     columns = vars(num),
+#'     columns = num,
 #'     rows = num > 500,
 #'     decimals = 1,
 #'     scale_by = 1/1000,
 #'     pattern = "{x}K"
 #'   ) %>%
 #'   fmt_scientific(
-#'     columns = vars(num),
+#'     columns = num,
 #'     rows = num <= 500,
 #'     decimals = 1
 #'   )
@@ -279,7 +277,7 @@ fmt_number <- function(data,
 #' @export
 fmt_scientific <- function(data,
                            columns,
-                           rows = NULL,
+                           rows = everything(),
                            decimals = 2,
                            drop_trailing_zeros = FALSE,
                            scale_by = 1.0,
@@ -306,13 +304,9 @@ fmt_scientific <- function(data,
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
   suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by)
 
-  # Capture expression in `rows` and `columns`
-  rows <- rlang::enquo(rows)
-  columns <- rlang::enquo(columns)
-
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(data, !!columns, valid_classes = c("numeric", "integer"))) {
+  if (!column_classes_are_valid(data, {{ columns }}, valid_classes = c("numeric", "integer"))) {
     stop("The `fmt_scientific()` function can only be used on `columns` with numeric data",
          call. = FALSE)
   }
@@ -321,8 +315,8 @@ fmt_scientific <- function(data,
   # functions as a function list to `fmt()`
   fmt(
     data = data,
-    columns = !!columns,
-    rows = !!rows,
+    columns = {{ columns }},
+    rows = {{ rows }},
     fns = num_fmt_factory_multi(
       pattern = pattern,
       format_fn = function(x, context) {
@@ -389,7 +383,7 @@ fmt_scientific <- function(data,
 #' @noRd
 fmt_symbol <- function(data,
                        columns,
-                       rows = NULL,
+                       rows,
                        symbol = "*",
                        accounting = FALSE,
                        decimals = NULL,
@@ -416,16 +410,12 @@ fmt_symbol <- function(data,
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
   suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by)
 
-  # Capture expression in `rows` and `columns`
-  rows <- rlang::enquo(rows)
-  columns <- rlang::enquo(columns)
-
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(
     data = data,
-    columns = !!columns,
-    rows = !!rows,
+    columns = {{ columns }},
+    rows = {{ rows }},
     fns = num_fmt_factory_multi(
       pattern = pattern,
       format_fn = function(x, context) {
@@ -543,7 +533,7 @@ fmt_symbol <- function(data,
 #'   dplyr::mutate(frac_of_quota = pizzas_sold / 4000) %>%
 #'   gt(rowname_col = "month") %>%
 #'   fmt_percent(
-#'     columns = vars(frac_of_quota),
+#'     columns = frac_of_quota,
 #'     decimals = 1
 #'   )
 #'
@@ -558,7 +548,7 @@ fmt_symbol <- function(data,
 #' @export
 fmt_percent <- function(data,
                         columns,
-                        rows = NULL,
+                        rows = everything(),
                         decimals = 2,
                         drop_trailing_zeros = FALSE,
                         drop_trailing_dec_mark = TRUE,
@@ -574,13 +564,9 @@ fmt_percent <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Capture expression in `rows` and `columns`
-  rows <- rlang::enquo(rows)
-  columns <- rlang::enquo(columns)
-
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(data, !!columns, valid_classes = c("numeric", "integer"))) {
+  if (!column_classes_are_valid(data, {{ columns }}, valid_classes = c("numeric", "integer"))) {
     stop("The `fmt_percent()` function can only be used on `columns` with numeric data",
          call. = FALSE)
   }
@@ -593,8 +579,8 @@ fmt_percent <- function(data,
 
   fmt_symbol(
     data = data,
-    columns = !!columns,
-    rows = !!rows,
+    columns = {{ columns }},
+    rows = {{ rows }},
     symbol = "%",
     accounting = FALSE,
     decimals = decimals,
@@ -691,7 +677,7 @@ fmt_percent <- function(data,
 #'   exibble %>%
 #'   gt() %>%
 #'   fmt_currency(
-#'     columns = vars(currency),
+#'     columns = currency,
 #'     currency = "EUR"
 #'   )
 #'
@@ -704,11 +690,11 @@ fmt_percent <- function(data,
 #'   dplyr::select(num, currency) %>%
 #'   gt() %>%
 #'   fmt_currency(
-#'     columns = vars(num),
+#'     columns = num,
 #'     currency = "CNY"
 #'   ) %>%
 #'   fmt_currency(
-#'     columns = vars(currency),
+#'     columns = currency,
 #'     currency = "GBP"
 #'   )
 #'
@@ -725,7 +711,7 @@ fmt_percent <- function(data,
 #' @export
 fmt_currency <- function(data,
                          columns,
-                         rows = NULL,
+                         rows = everything(),
                          currency = "USD",
                          use_subunits = TRUE,
                          accounting = FALSE,
@@ -744,13 +730,9 @@ fmt_currency <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Capture expression in `rows` and `columns`
-  rows <- rlang::enquo(rows)
-  columns <- rlang::enquo(columns)
-
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(data, !!columns, valid_classes = c("numeric", "integer"))) {
+  if (!column_classes_are_valid(data, {{ columns }}, valid_classes = c("numeric", "integer"))) {
     stop("The `fmt_currency()` function can only be used on `columns` with numeric data",
          call. = FALSE)
   }
@@ -768,8 +750,8 @@ fmt_currency <- function(data,
 
   fmt_symbol(
     data = data,
-    columns = !!columns,
-    rows = !!rows,
+    columns = {{ columns }},
+    rows = {{ rows }},
     symbol = currency,
     accounting = accounting,
     decimals = decimals,
@@ -839,7 +821,7 @@ fmt_currency <- function(data,
 #'   dplyr::select(date, time) %>%
 #'   gt() %>%
 #'   fmt_date(
-#'     columns = vars(date),
+#'     columns = date,
 #'     date_style = 5
 #'   )
 #'
@@ -853,13 +835,13 @@ fmt_currency <- function(data,
 #'   dplyr::select(date, time) %>%
 #'   gt() %>%
 #'   fmt_date(
-#'     columns = vars(date),
+#'     columns = date,
 #'     rows =
 #'       as.Date(date) > as.Date("2015-04-01"),
 #'     date_style = 6
 #'   ) %>%
 #'   fmt_date(
-#'     columns = vars(date),
+#'     columns = date,
 #'     rows =
 #'       as.Date(date) <= as.Date("2015-04-01"),
 #'     date_style = 7
@@ -878,7 +860,7 @@ fmt_currency <- function(data,
 #' @export
 fmt_date <- function(data,
                      columns,
-                     rows = NULL,
+                     rows = everything(),
                      date_style = 2) {
 
   # Perform input object validation
@@ -887,13 +869,9 @@ fmt_date <- function(data,
   # Transform `date_style` to `date_format_str`
   date_format_str <- get_date_format(date_style = date_style)
 
-  # Capture expression in `rows` and `columns`
-  rows <- rlang::enquo(rows)
-  columns <- rlang::enquo(columns)
-
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(data, !!columns, valid_classes = c("Date", "character"))) {
+  if (!column_classes_are_valid(data, {{ columns }}, valid_classes = c("Date", "character"))) {
     stop("The `fmt_date()` function can only be used on `columns` with `character` or `Date` values",
          call. = FALSE)
   }
@@ -902,8 +880,8 @@ fmt_date <- function(data,
   # functions as a function list to `fmt()`
   fmt(
     data = data,
-    columns = !!columns,
-    rows = !!rows,
+    columns = {{ columns }},
+    rows = {{ rows }},
     fns = list(
       default = function(x) {
 
@@ -972,7 +950,7 @@ fmt_date <- function(data,
 #'   dplyr::select(date, time) %>%
 #'   gt() %>%
 #'   fmt_time(
-#'     columns = vars(time),
+#'     columns = time,
 #'     time_style = 3
 #'   )
 #'
@@ -986,13 +964,13 @@ fmt_date <- function(data,
 #'   dplyr::select(date, time) %>%
 #'   gt() %>%
 #'   fmt_time(
-#'     columns = vars(time),
+#'     columns = time,
 #'     rows =
 #'       time > "16:00",
 #'     time_style = 3
 #'   ) %>%
 #'   fmt_time(
-#'     columns = vars(time),
+#'     columns = time,
 #'     rows =
 #'       time <= "16:00",
 #'     time_style = 4
@@ -1011,7 +989,7 @@ fmt_date <- function(data,
 #' @export
 fmt_time <- function(data,
                      columns,
-                     rows = NULL,
+                     rows = everything(),
                      time_style = 2) {
 
   # Perform input object validation
@@ -1020,13 +998,9 @@ fmt_time <- function(data,
   # Transform `time_style` to `time_format_str`
   time_format_str <- get_time_format(time_style = time_style)
 
-  # Capture expression in `rows` and `columns`
-  rows <- rlang::enquo(rows)
-  columns <- rlang::enquo(columns)
-
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(data, !!columns, valid_classes = "character")) {
+  if (!column_classes_are_valid(data, {{ columns }}, valid_classes = "character")) {
     stop("The `fmt_date()` function can only be used on `columns` with `character` values",
          call. = FALSE)
   }
@@ -1035,8 +1009,8 @@ fmt_time <- function(data,
   # functions as a function list to `fmt()`
   fmt(
     data = data,
-    columns = !!columns,
-    rows = !!rows,
+    columns = {{ columns }},
+    rows = {{ rows }},
     fns = list(
       default = function(x) {
 
@@ -1118,7 +1092,7 @@ fmt_time <- function(data,
 #'   dplyr::select(datetime) %>%
 #'   gt() %>%
 #'   fmt_datetime(
-#'     columns = vars(datetime),
+#'     columns = datetime,
 #'     date_style = 5,
 #'     time_style = 3
 #'   )
@@ -1134,7 +1108,7 @@ fmt_time <- function(data,
 #' @export
 fmt_datetime <- function(data,
                          columns,
-                         rows = NULL,
+                         rows = everything(),
                          date_style = 2,
                          time_style = 2) {
 
@@ -1147,13 +1121,9 @@ fmt_datetime <- function(data,
   # Transform `time_style` to `time_format`
   time_format_str <- get_time_format(time_style = time_style)
 
-  # Capture expression in `rows` and `columns`
-  rows <- rlang::enquo(rows)
-  columns <- rlang::enquo(columns)
-
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(data, !!columns, valid_classes = "character")) {
+  if (!column_classes_are_valid(data, {{ columns }}, valid_classes = "character")) {
     stop("The `fmt_datetime()` function can only be used on `columns` with `character` values",
          call. = FALSE)
   }
@@ -1162,8 +1132,8 @@ fmt_datetime <- function(data,
   # functions as a function list to `fmt()`
   fmt(
     data = data,
-    columns = !!columns,
-    rows = !!rows,
+    columns = {{ columns }},
+    rows = {{ rows }},
     fns = list(
       default = function(x) {
 
@@ -1264,7 +1234,7 @@ fmt_datetime <- function(data,
 #'     text_1b,   text_2b,
 #'   ) %>%
 #'     gt() %>%
-#'     fmt_markdown(columns = TRUE) %>%
+#'     fmt_markdown(columns = everything()) %>%
 #'     tab_options(table.width = px(400))
 #'
 #' @section Figures:
@@ -1278,21 +1248,17 @@ fmt_datetime <- function(data,
 #' @export
 fmt_markdown <- function(data,
                          columns,
-                         rows = NULL) {
+                         rows = everything()) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
-
-  # Capture expression in `rows`
-  columns <- rlang::enquo(columns)
-  rows <- rlang::enquo(rows)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(
     data = data,
-    columns = !!columns,
-    rows = !!rows,
+    columns = {{ columns }},
+    rows = {{ rows }},
     fns = list(
       html = function(x) {
         md_to_html(x)
@@ -1304,7 +1270,12 @@ fmt_markdown <- function(data,
         markdown_to_rtf(x)
       },
       default = function(x) {
-        vapply(x, commonmark::markdown_text, character(1), USE.NAMES = FALSE) %>%
+        vapply(
+          x,
+          FUN.VALUE = character(1),
+          USE.NAMES = FALSE,
+          commonmark::markdown_text
+        ) %>%
           stringr::str_replace("\n$", "")
       }
     )
@@ -1347,7 +1318,7 @@ fmt_markdown <- function(data,
 #'   dplyr::select(char) %>%
 #'   gt() %>%
 #'   fmt_passthrough(
-#'     columns = vars(char),
+#'     columns = char,
 #'     rows = !is.na(char),
 #'     pattern = "{x}s"
 #'   )
@@ -1363,23 +1334,19 @@ fmt_markdown <- function(data,
 #' @export
 fmt_passthrough <- function(data,
                             columns,
-                            rows = NULL,
+                            rows = everything(),
                             escape = TRUE,
                             pattern = "{x}") {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Capture expression in `rows` and `columns`
-  rows <- rlang::enquo(rows)
-  columns <- rlang::enquo(columns)
-
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions (as a function list) to `fmt()`
   fmt(
     data = data,
-    columns = !!columns,
-    rows = !!rows,
+    columns = {{ columns }},
+    rows = {{ rows }},
     fns = list(
       html = function(x) {
 
@@ -1500,22 +1467,18 @@ fmt_passthrough <- function(data,
 #' @export
 fmt_missing <- function(data,
                         columns,
-                        rows = NULL,
+                        rows = everything(),
                         missing_text = "---") {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Capture expression in `rows` and `columns`
-  rows <- rlang::enquo(rows)
-  columns <- rlang::enquo(columns)
-
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions (as a function list) to `fmt()`
   fmt(
     data = data,
-    columns = !!columns,
-    rows = !!rows,
+    columns = {{ columns }},
+    rows = {{ rows }},
     fns = list(
       html = function(x) {
 
@@ -1599,7 +1562,7 @@ fmt_missing <- function(data,
 #'   dplyr::select(-row, -group) %>%
 #'   gt() %>%
 #'   fmt(
-#'     columns = vars(num),
+#'     columns = num,
 #'     fns = function(x) {
 #'       paste0("'", x * 1000, "'")
 #'     }
@@ -1615,8 +1578,8 @@ fmt_missing <- function(data,
 #' @import rlang
 #' @export
 fmt <- function(data,
-                columns = NULL,
-                rows = NULL,
+                columns = everything(),
+                rows = everything(),
                 fns) {
 
   # Perform input object validation
@@ -1627,24 +1590,19 @@ fmt <- function(data,
   data_tbl <- dt_data_get(data = data)
 
   #
-  # Resolution of columns and rows as integer vectors
-  # providing the positions of the matched variables
+  # Resolution of columns and rows as character vectors
   #
 
-  columns <- rlang::enquo(columns)
-  rows <- rlang::enquo(rows)
-
   resolved_columns <-
-    resolve_vars(
-      var_expr = !!columns,
+    resolve_cols_c(
+      expr = {{ columns }},
       data = data
     )
 
   resolved_rows_idx <-
-    resolve_data_vals_idx(
-      var_expr = !!rows,
-      data_tbl = data_tbl,
-      vals = stub_df$rowname
+    resolve_rows_i(
+      expr = {{ rows }},
+      data = data
     )
 
   # If a single function is supplied to `fns` then

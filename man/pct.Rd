@@ -43,7 +43,7 @@ tab_1 <-
   gt() \%>\%
   tab_style(
     style = cell_text(size = pct(75)),
-    locations = cells_column_labels(columns = TRUE)
+    locations = cells_column_labels()
   )
 
 }

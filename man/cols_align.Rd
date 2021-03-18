@@ -4,13 +4,17 @@
 \alias{cols_align}
 \title{Set the alignment of columns}
 \usage{
-cols_align(data, align = c("auto", "left", "center", "right"), columns = TRUE)
+cols_align(
+  data,
+  align = c("auto", "left", "center", "right"),
+  columns = everything()
+)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{align}{The alignment type. This can be any of \code{"center"}, \code{"left"}, or
-\code{"right"} for center-, left-, or center-alignment. Alternatively, the
+\code{"right"} for center-, left-, or right-alignment. Alternatively, the
 \code{"auto"} option (the default), will automatically align values in columns
 according to the data type (see the Details section for specifics on which
 alignments are applied).}
@@ -58,7 +62,7 @@ tab_1 <-
   gt() \%>\%
   cols_align(
     align = "left",
-    columns = vars(population)
+    columns = population
   )
 
 }

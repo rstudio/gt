@@ -4,7 +4,7 @@
 \alias{tab_spanner_delim}
 \title{Create column labels and spanners via delimited names}
 \usage{
-tab_spanner_delim(data, delim, columns = NULL, gather = TRUE)
+tab_spanner_delim(data, delim, columns = everything(), gather = TRUE)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}

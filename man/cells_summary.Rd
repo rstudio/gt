@@ -4,7 +4,11 @@
 \alias{cells_summary}
 \title{Location helper for targeting group summary cells}
 \usage{
-cells_summary(groups = TRUE, columns = TRUE, rows = TRUE)
+cells_summary(
+  groups = everything(),
+  columns = everything(),
+  rows = everything()
+)
 }
 \arguments{
 \item{groups}{The names of the groups that the summary rows reside in.}
@@ -80,12 +84,12 @@ tab_1 <-
     groupname_col = "decade"
   ) \%>\%
   fmt_number(
-    columns = vars(population),
+    columns = population,
     decimals = 0
   ) \%>\%
   summary_rows(
     groups = "1960s",
-    columns = vars(population),
+    columns = population,
     fns = list("min", "max"),
     formatter = fmt_number,
     decimals = 0
@@ -97,8 +101,9 @@ tab_1 <-
       ),
     locations = cells_summary(
       groups = "1960s",
-      columns = vars(population),
-      rows = 1)
+      columns = population,
+      rows = 1
+    )
   ) \%>\%
   tab_style(
     style = list(
@@ -107,8 +112,9 @@ tab_1 <-
       ),
     locations = cells_summary(
       groups = "1960s",
-      columns = vars(population),
-      rows = 2)
+      columns = population,
+      rows = 2
+    )
   )
 
 }

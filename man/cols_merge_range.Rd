@@ -82,8 +82,8 @@ tab_1 <-
   dplyr::slice(1:8) \%>\%
   gt() \%>\%
   cols_merge_range(
-    col_begin = vars(mpg_c),
-    col_end = vars(mpg_h)
+    col_begin = mpg_c,
+    col_end = mpg_h
   ) \%>\%
   cols_label(
     mpg_c = md("*MPG*")
