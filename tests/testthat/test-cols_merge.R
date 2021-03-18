@@ -37,7 +37,7 @@ test_that("the function `cols_merge()` works correctly", {
     gt() %>%
     cols_merge(
       columns = c("drat", "wt"),
-      hide_columns = vars(wt),
+      hide_columns = wt,
       pattern = "{1} ({2})"
     )
 
@@ -52,7 +52,7 @@ test_that("the function `cols_merge()` works correctly", {
     expect_equal("merge")
 
   # Create a `tbl_html` object with `gt()`; merge two columns
-  # with a `pattern` and use the `vars()` helper
+  # with a `pattern` and use `c()`
   tbl_html <-
     mtcars_short %>%
     gt() %>%
@@ -113,8 +113,8 @@ test_that("the function `cols_merge()` works correctly", {
     mtcars_short %>%
       gt() %>%
       cols_merge(
-        columns = vars(drat, wt),
-        hide_columns = vars(wt, carb),
+        columns = c(drat, wt),
+        hide_columns = c(wt, carb),
       )
   )
 })

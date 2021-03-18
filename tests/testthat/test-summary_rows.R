@@ -816,7 +816,7 @@ test_that("`groups = FALSE` returns data unchanged", {
     tbl %>%
       summary_rows(
         groups = FALSE,
-        columns = vars(open, high, low, close),
+        columns = c(open, high, low, close),
         fns = list(
           average = ~mean(., na.rm = TRUE),
           total = ~sum(., na.rm = TRUE),

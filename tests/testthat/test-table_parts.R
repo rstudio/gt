@@ -714,7 +714,7 @@ test_that("columns can be hidden and then made visible", {
   # table with `cols_hide()`
   gt_tbl <-
     gt_tbl %>%
-    cols_hide(vars(mfr, drivetrain))
+    cols_hide(c(mfr, drivetrain))
 
   # Expect the two hidden columns to not appear in the rendered table
   gt_tbl %>%
@@ -727,7 +727,7 @@ test_that("columns can be hidden and then made visible", {
   # Make the `mfr` column visible again with `cols_unhide()`
   gt_tbl <-
     gt_tbl %>%
-    cols_unhide(vars(mfr))
+    cols_unhide(mfr)
 
   # Expect that only `drivetrain` is hidden now
   gt_tbl %>%
@@ -741,8 +741,8 @@ test_that("columns can be hidden and then made visible", {
   # series and unhide it
   gt_tbl <-
     gt_tbl %>%
-    cols_move_to_start(vars(drivetrain)) %>%
-    cols_unhide(vars(drivetrain))
+    cols_move_to_start(drivetrain) %>%
+    cols_unhide(drivetrain)
 
   # Expect all column names from the original dataset
   # to be present in the revised order

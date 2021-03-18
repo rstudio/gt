@@ -292,11 +292,11 @@ test_that("the `cells_summary()` function works correctly", {
     expect_equal(c("col_1", "col_2"))
 
   # Create a `cells_summary` object with
-  # columns in `vars()` provided to `columns`
+  # columns in `c()` provided to `columns`
   helper_cells_summary <-
     cells_summary(
       groups = "group_a",
-      columns = vars(col_1, col_2)
+      columns = c(col_1, col_2)
     )
 
   # Expect the RHS of the second component formula to contain
@@ -342,10 +342,10 @@ test_that("the `cells_grand_summary()` function works correctly", {
     expect_equal(c("col_1", "col_2"))
 
   # Create a `cells_grand_summary` object with
-  # columns in `vars()` provided to `columns`
+  # columns in `c()` provided to `columns`
   helper_cells_grand_summary <-
     cells_grand_summary(
-      columns = vars(col_1, col_2)
+      columns = c(col_1, col_2)
     )
 
   # Expect the RHS of the first component formula to contain
