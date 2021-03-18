@@ -77,6 +77,7 @@ reference:
     - cols_move_to_end
     - cols_move
     - cols_hide
+    - cols_unhide
     - cols_merge_range
     - cols_merge_uncert
     - cols_merge_n_pct
