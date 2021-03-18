@@ -828,8 +828,10 @@ cols_hide <- function(data,
 #'   tail(5) %>%
 #'   gt() %>%
 #'   cols_hide(
-#'     columns = vars(
-#'       country_code_2, country_code_3)
+#'     columns = c(
+#'       country_code_2,
+#'       country_code_3
+#'      )
 #'   )
 #'
 #' # If the `tab_1` object is provided without
@@ -839,7 +841,7 @@ cols_hide <- function(data,
 #' # becomes useful
 #' tab_2 <-
 #'   tab_1 %>%
-#'   cols_unhide(columns = vars("country_code_2"))
+#'   cols_unhide(columns = country_code_2)
 #'
 #' @section Figures:
 #' \if{html}{\figure{man_cols_unhide_1.png}{options: width=100\%}}
@@ -860,10 +862,12 @@ cols_unhide <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  columns <- enquo(columns)
-
   # Get the columns supplied in `columns` as a character vector
-  columns <- resolve_vars(var_expr = !!columns, data = data)
+  columns <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data
+    )
 
   vars <- dt_boxhead_get_vars(data = data)
 

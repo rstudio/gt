@@ -52,8 +52,10 @@ tab_1 <-
   tail(5) \%>\%
   gt() \%>\%
   cols_hide(
-    columns = vars(
-      country_code_2, country_code_3)
+    columns = c(
+      country_code_2,
+      country_code_3
+     )
   )
 
 # If the `tab_1` object is provided without
@@ -63,7 +65,7 @@ tab_1 <-
 # becomes useful
 tab_2 <-
   tab_1 \%>\%
-  cols_unhide(columns = vars("country_code_2"))
+  cols_unhide(columns = country_code_2)
 
 }
 \seealso{
