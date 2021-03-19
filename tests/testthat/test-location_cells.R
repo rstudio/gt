@@ -298,13 +298,6 @@ test_that("the `cells_summary()` function works correctly", {
       groups = "group_a",
       columns = c(col_1, col_2)
     )
-
-  # Expect the RHS of the second component formula to contain
-  # the vector provided
-  helper_cells_summary[[2]] %>%
-    rlang::eval_tidy() %>%
-    vapply(rlang::as_name, USE.NAMES = FALSE, character(1)) %>%
-    expect_equal(c("col_1", "col_2"))
 })
 
 test_that("the `cells_grand_summary()` function works correctly", {
@@ -347,13 +340,6 @@ test_that("the `cells_grand_summary()` function works correctly", {
     cells_grand_summary(
       columns = c(col_1, col_2)
     )
-
-  # Expect the RHS of the first component formula to contain
-  # the vector provided
-  helper_cells_grand_summary[[1]] %>%
-    rlang::eval_tidy() %>%
-    vapply(rlang::as_name, USE.NAMES = FALSE, character(1)) %>%
-    expect_equal(c("col_1", "col_2"))
 })
 
 test_that("the `cells_stubhead()` function works correctly", {
