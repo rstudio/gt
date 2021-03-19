@@ -159,7 +159,7 @@ adding custom styles with <code><a href='tab_style.html'>tab_style()</a></code>.
 each of those functions' <code>locations</code> argument.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cells_grand_summary</span><span class='op'>(</span>columns <span class='op'>=</span> <span class='cn'>TRUE</span>, rows <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>cells_grand_summary</span><span class='op'>(</span>columns <span class='op'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span>, rows <span class='op'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -254,11 +254,11 @@ using intersections of <code>columns</code> and <code>rows</code></p></li>
   <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span><span class='op'>(</span><span class='st'>"country"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span>rowname_col <span class='op'>=</span> <span class='st'>"year"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='fmt_number.html'>fmt_number</a></span><span class='op'>(</span>
-    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>population</span><span class='op'>)</span>,
+    columns <span class='op'>=</span> <span class='va'>population</span>,
     decimals <span class='op'>=</span> <span class='fl'>0</span>
   <span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='grand_summary_rows.html'>grand_summary_rows</a></span><span class='op'>(</span>
-    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>population</span><span class='op'>)</span>,
+    columns <span class='op'>=</span> <span class='va'>population</span>,
     fns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
       change <span class='op'>=</span> <span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>.</span><span class='op'>)</span> <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>.</span><span class='op'>)</span>
     <span class='op'>)</span>,
@@ -271,7 +271,7 @@ using intersections of <code>columns</code> and <code>rows</code></p></li>
       <span class='fu'><a href='cell_fill.html'>cell_fill</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"lightblue"</span><span class='op'>)</span>
     <span class='op'>)</span>,
     locations <span class='op'>=</span> <span class='fu'>cells_grand_summary</span><span class='op'>(</span>
-      columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>population</span><span class='op'>)</span>,
+      columns <span class='op'>=</span> <span class='va'>population</span>,
       rows <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
   <span class='op'>)</span>
 

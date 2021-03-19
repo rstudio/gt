@@ -227,8 +227,9 @@ of such a pipeline.</p>
   <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>tail</a></span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>cols_hide</span><span class='op'>(</span>
-    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span>
-      <span class='va'>country_code_2</span>, <span class='va'>country_code_3</span><span class='op'>)</span>
+    columns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+      <span class='va'>country_code_2</span>, <span class='va'>country_code_3</span>
+    <span class='op'>)</span>
   <span class='op'>)</span>
 
 <span class='co'># Use `countrypops` to create a gt table;</span>
@@ -241,13 +242,14 @@ of such a pipeline.</p>
   <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>tail</a></span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>cols_hide</span><span class='op'>(</span>
-    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>country_code_3</span>, <span class='va'>population</span><span class='op'>)</span>
+    columns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>country_code_3</span>, <span class='va'>population</span><span class='op'>)</span>
   <span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='tab_footnote.html'>tab_footnote</a></span><span class='op'>(</span>
     footnote <span class='op'>=</span> <span class='st'>"Population above 3,000,000."</span>,
     locations <span class='op'>=</span> <span class='fu'><a href='cells_body.html'>cells_body</a></span><span class='op'>(</span>
-      columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>year</span><span class='op'>)</span>,
-      rows <span class='op'>=</span> <span class='va'>population</span> <span class='op'>&gt;</span> <span class='fl'>3000000</span><span class='op'>)</span>
+      columns <span class='op'>=</span> <span class='va'>year</span>,
+      rows <span class='op'>=</span> <span class='va'>population</span> <span class='op'>&gt;</span> <span class='fl'>3000000</span>
+    <span class='op'>)</span>
   <span class='op'>)</span>
 
 </div></pre>

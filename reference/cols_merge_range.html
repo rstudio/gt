@@ -259,8 +259,8 @@ the output table through the <code>hide_columns</code> or <code>autohide</code> 
   <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>8</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>cols_merge_range</span><span class='op'>(</span>
-    col_begin <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>mpg_c</span><span class='op'>)</span>,
-    col_end <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>mpg_h</span><span class='op'>)</span>
+    col_begin <span class='op'>=</span> <span class='va'>mpg_c</span>,
+    col_end <span class='op'>=</span> <span class='va'>mpg_h</span>
   <span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='cols_label.html'>cols_label</a></span><span class='op'>(</span>
     mpg_c <span class='op'>=</span> <span class='fu'><a href='md.html'>md</a></span><span class='op'>(</span><span class='st'>"*MPG*"</span><span class='op'>)</span>

@@ -108,10 +108,10 @@
     
 <p align="center">
 <img src="../reference/figures/gtcars.svg" width="50%"></p>
-<p>Let’s make a display table using the <code>gtcars</code> dataset. We all know <code>mtcars</code>… what is <code>gtcars</code>? It’s basically a modernized <code>mtcars</code> for the <strong>gt</strong> age. It’s part of the <strong>gt</strong> package, and here is a preview of the tibble:</p>
+<p>Let’s make a display table using the <code>gtcars</code> dataset. We all know <code>mtcars</code>… what is <code>gtcars</code>? It’s basically a modernized <code>mtcars</code> for the <strong>gt</strong> age. It’s part of the <strong>gt</strong> package, and here is a preview of the tibble using <strong>dplyr</strong>’s <code>glimpse()</code> function:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># This is `gtcars`</span>
-<span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">gtcars</span><span class="op">)</span>
+<span class="fu">glimpse</span><span class="op">(</span><span class="va">gtcars</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 47</span>
 <span class="co">#&gt; Columns: 15</span>
 <span class="co">#&gt; $ mfr         &lt;chr&gt; "Ford", "Ferrari", "Ferrari", "Ferrari", "Ferrari", "Ferra…</span>
@@ -129,37 +129,36 @@
 <span class="co">#&gt; $ trsmn       &lt;chr&gt; "7a", "7a", "7a", "7a", "7a", "7a", "7a", "7a", "7a", "7a"…</span>
 <span class="co">#&gt; $ ctry_origin &lt;chr&gt; "United States", "Italy", "Italy", "Italy", "Italy", "Ital…</span>
 <span class="co">#&gt; $ msrp        &lt;dbl&gt; 447000, 291744, 263553, 233509, 245400, 198973, 298000, 29…</span></code></pre></div>
-<p>For the purpose of simply learning more about <strong>gt</strong>, let’s reduce this 47-row tibble to one that has only 8 rows:</p>
+<p>For the purpose of simply learning more about <strong>gt</strong>, let’s reduce this 47-row tibble to one that has only 8 rows with a little <strong>dplyr</strong>ing:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Get a subset of 8 cars from the `gtcars` dataset: two</span>
 <span class="co"># from each manufacturer country of origin except the UK</span>
 <span class="va">gtcars_8</span> <span class="op">&lt;-</span>
   <span class="va">gtcars</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ctry_origin</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/top_n.html" class="external-link">top_n</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">ctry_origin</span> <span class="op">!=</span> <span class="st">"United Kingdom"</span><span class="op">)</span>
-<span class="co">#&gt; Selecting by msrp</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">ctry_origin</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">slice_head</span><span class="op">(</span>n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">ctry_origin</span> <span class="op">!=</span> <span class="st">"United Kingdom"</span><span class="op">)</span>
 
 <span class="co"># Show the `gtcars_8` tibble</span>
-<span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">gtcars_8</span><span class="op">)</span>
+<span class="fu">glimpse</span><span class="op">(</span><span class="va">gtcars_8</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 8</span>
 <span class="co">#&gt; Columns: 15</span>
-<span class="co">#&gt; $ mfr         &lt;chr&gt; "Ford", "Ferrari", "Acura", "Nissan", "Lamborghini", "BMW"…</span>
-<span class="co">#&gt; $ model       &lt;chr&gt; "GT", "LaFerrari", "NSX", "GT-R", "Aventador", "i8", "Vipe…</span>
-<span class="co">#&gt; $ year        &lt;dbl&gt; 2017, 2015, 2017, 2016, 2015, 2016, 2017, 2016</span>
-<span class="co">#&gt; $ trim        &lt;chr&gt; "Base Coupe", "Base Coupe", "Base Coupe", "Premium Coupe",…</span>
-<span class="co">#&gt; $ bdy_style   &lt;chr&gt; "coupe", "coupe", "coupe", "coupe", "coupe", "coupe", "cou…</span>
-<span class="co">#&gt; $ hp          &lt;dbl&gt; 647, 949, 573, 545, 700, 357, 645, 503</span>
-<span class="co">#&gt; $ hp_rpm      &lt;dbl&gt; 6250, 9000, 6500, 6400, 8250, 5800, 5000, 6250</span>
-<span class="co">#&gt; $ trq         &lt;dbl&gt; 550, 664, 476, 436, 507, 420, 600, 479</span>
-<span class="co">#&gt; $ trq_rpm     &lt;dbl&gt; 5900, 6750, 2000, 3200, 5500, 3700, 5000, 1750</span>
-<span class="co">#&gt; $ mpg_c       &lt;dbl&gt; 11, 12, 21, 16, 11, 28, 12, 16</span>
-<span class="co">#&gt; $ mpg_h       &lt;dbl&gt; 18, 16, 22, 22, 18, 29, 19, 22</span>
-<span class="co">#&gt; $ drivetrain  &lt;chr&gt; "rwd", "rwd", "awd", "awd", "awd", "awd", "rwd", "rwd"</span>
-<span class="co">#&gt; $ trsmn       &lt;chr&gt; "7a", "7a", "9a", "6a", "7a", "6am", "6m", "7a"</span>
-<span class="co">#&gt; $ ctry_origin &lt;chr&gt; "United States", "Italy", "Japan", "Japan", "Italy", "Germ…</span>
-<span class="co">#&gt; $ msrp        &lt;dbl&gt; 447000, 1416362, 156000, 101770, 397500, 140700, 95895, 12…</span></code></pre></div>
+<span class="co">#&gt; $ mfr         &lt;chr&gt; "BMW", "BMW", "Ferrari", "Ferrari", "Acura", "Nissan", "Fo…</span>
+<span class="co">#&gt; $ model       &lt;chr&gt; "6-Series", "i8", "458 Speciale", "458 Spider", "NSX", "GT…</span>
+<span class="co">#&gt; $ year        &lt;dbl&gt; 2016, 2016, 2015, 2015, 2017, 2016, 2017, 2016</span>
+<span class="co">#&gt; $ trim        &lt;chr&gt; "640 I Coupe", "Mega World Coupe", "Base Coupe", "Base", "…</span>
+<span class="co">#&gt; $ bdy_style   &lt;chr&gt; "coupe", "coupe", "coupe", "convertible", "coupe", "coupe"…</span>
+<span class="co">#&gt; $ hp          &lt;dbl&gt; 315, 357, 597, 562, 573, 545, 647, 650</span>
+<span class="co">#&gt; $ hp_rpm      &lt;dbl&gt; 5800, 5800, 9000, 9000, 6500, 6400, 6250, 6400</span>
+<span class="co">#&gt; $ trq         &lt;dbl&gt; 330, 420, 398, 398, 476, 436, 550, 650</span>
+<span class="co">#&gt; $ trq_rpm     &lt;dbl&gt; 1400, 3700, 6000, 6000, 2000, 3200, 5900, 3600</span>
+<span class="co">#&gt; $ mpg_c       &lt;dbl&gt; 20, 28, 13, 13, 21, 16, 11, 15</span>
+<span class="co">#&gt; $ mpg_h       &lt;dbl&gt; 30, 29, 17, 17, 22, 22, 18, 22</span>
+<span class="co">#&gt; $ drivetrain  &lt;chr&gt; "rwd", "awd", "rwd", "rwd", "awd", "awd", "rwd", "rwd"</span>
+<span class="co">#&gt; $ trsmn       &lt;chr&gt; "8am", "6am", "7a", "7a", "9a", "6a", "7a", "7m"</span>
+<span class="co">#&gt; $ ctry_origin &lt;chr&gt; "Germany", "Germany", "Italy", "Italy", "Japan", "Japan", …</span>
+<span class="co">#&gt; $ msrp        &lt;dbl&gt; 77300, 140700, 291744, 263553, 156000, 101770, 447000, 883…</span></code></pre></div>
 <p>Let’s make a display table from this dataset. In doing so we’ll fulfill the following 10 requirements:</p>
 <ol style="list-style-type: decimal">
 <li>putting the cars into characteristic groups (by the car manufacturer’s country of origin)</li>
@@ -181,13 +180,14 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Use `group_by()` on `gtcars` and pass that to `gt()`</span>
 <span class="va">gtcars_8</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ctry_origin</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">ctry_origin</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div id="inqcckjwon" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#fcnwowqmjb .gt_table {
+#inqcckjwon .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -212,7 +212,7 @@
   border-left-color: #D3D3D3;
 }
 
-#fcnwowqmjb .gt_heading {
+#inqcckjwon .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -224,7 +224,7 @@
   border-right-color: #D3D3D3;
 }
 
-#fcnwowqmjb .gt_title {
+#inqcckjwon .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -234,7 +234,7 @@
   border-bottom-width: 0;
 }
 
-#fcnwowqmjb .gt_subtitle {
+#inqcckjwon .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -244,13 +244,13 @@
   border-top-width: 0;
 }
 
-#fcnwowqmjb .gt_bottom_border {
+#inqcckjwon .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#fcnwowqmjb .gt_col_headings {
+#inqcckjwon .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -265,7 +265,7 @@
   border-right-color: #D3D3D3;
 }
 
-#fcnwowqmjb .gt_col_heading {
+#inqcckjwon .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -285,7 +285,7 @@
   overflow-x: hidden;
 }
 
-#fcnwowqmjb .gt_column_spanner_outer {
+#inqcckjwon .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -297,15 +297,15 @@
   padding-right: 4px;
 }
 
-#fcnwowqmjb .gt_column_spanner_outer:first-child {
+#inqcckjwon .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#fcnwowqmjb .gt_column_spanner_outer:last-child {
+#inqcckjwon .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#fcnwowqmjb .gt_column_spanner {
+#inqcckjwon .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -317,7 +317,7 @@
   width: 100%;
 }
 
-#fcnwowqmjb .gt_group_heading {
+#inqcckjwon .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -339,7 +339,7 @@
   vertical-align: middle;
 }
 
-#fcnwowqmjb .gt_empty_group_heading {
+#inqcckjwon .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -354,15 +354,15 @@
   vertical-align: middle;
 }
 
-#fcnwowqmjb .gt_from_md > :first-child {
+#inqcckjwon .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#fcnwowqmjb .gt_from_md > :last-child {
+#inqcckjwon .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#fcnwowqmjb .gt_row {
+#inqcckjwon .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -381,7 +381,7 @@
   overflow-x: hidden;
 }
 
-#fcnwowqmjb .gt_stub {
+#inqcckjwon .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -393,7 +393,7 @@
   padding-left: 12px;
 }
 
-#fcnwowqmjb .gt_summary_row {
+#inqcckjwon .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -403,7 +403,7 @@
   padding-right: 5px;
 }
 
-#fcnwowqmjb .gt_first_summary_row {
+#inqcckjwon .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -413,7 +413,7 @@
   border-top-color: #D3D3D3;
 }
 
-#fcnwowqmjb .gt_grand_summary_row {
+#inqcckjwon .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -423,7 +423,7 @@
   padding-right: 5px;
 }
 
-#fcnwowqmjb .gt_first_grand_summary_row {
+#inqcckjwon .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -433,11 +433,11 @@
   border-top-color: #D3D3D3;
 }
 
-#fcnwowqmjb .gt_striped {
+#inqcckjwon .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#fcnwowqmjb .gt_table_body {
+#inqcckjwon .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -446,7 +446,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#fcnwowqmjb .gt_footnotes {
+#inqcckjwon .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -460,13 +460,13 @@
   border-right-color: #D3D3D3;
 }
 
-#fcnwowqmjb .gt_footnote {
+#inqcckjwon .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#fcnwowqmjb .gt_sourcenotes {
+#inqcckjwon .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -480,46 +480,46 @@
   border-right-color: #D3D3D3;
 }
 
-#fcnwowqmjb .gt_sourcenote {
+#inqcckjwon .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#fcnwowqmjb .gt_left {
+#inqcckjwon .gt_left {
   text-align: left;
 }
 
-#fcnwowqmjb .gt_center {
+#inqcckjwon .gt_center {
   text-align: center;
 }
 
-#fcnwowqmjb .gt_right {
+#inqcckjwon .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#fcnwowqmjb .gt_font_normal {
+#inqcckjwon .gt_font_normal {
   font-weight: normal;
 }
 
-#fcnwowqmjb .gt_font_bold {
+#inqcckjwon .gt_font_bold {
   font-weight: bold;
 }
 
-#fcnwowqmjb .gt_font_italic {
+#inqcckjwon .gt_font_italic {
   font-style: italic;
 }
 
-#fcnwowqmjb .gt_super {
+#inqcckjwon .gt_super {
   font-size: 65%;
 }
 
-#fcnwowqmjb .gt_footnote_marks {
+#inqcckjwon .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="fcnwowqmjb" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="table gt_table">
+<table class="table gt_table">
 <thead class="gt_col_headings"><tr>
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">mfr</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">model</th>
@@ -538,74 +538,74 @@
     </tr></thead>
 <tbody class="gt_table_body">
 <tr class="gt_group_heading_row">
-<td colspan="14" class="gt_group_heading">United States</td>
+<td colspan="14" class="gt_group_heading">Germany</td>
     </tr>
 <tr>
-<td class="gt_row gt_left">Ford</td>
-<td class="gt_row gt_left">GT</td>
-<td class="gt_row gt_right">2017</td>
-<td class="gt_row gt_left">Base Coupe</td>
+<td class="gt_row gt_left">BMW</td>
+<td class="gt_row gt_left">6-Series</td>
+<td class="gt_row gt_right">2016</td>
+<td class="gt_row gt_left">640 I Coupe</td>
 <td class="gt_row gt_left">coupe</td>
-<td class="gt_row gt_right">647</td>
-<td class="gt_row gt_right">6250</td>
-<td class="gt_row gt_right">550</td>
-<td class="gt_row gt_right">5900</td>
-<td class="gt_row gt_right">11</td>
-<td class="gt_row gt_right">18</td>
+<td class="gt_row gt_right">315</td>
+<td class="gt_row gt_right">5800</td>
+<td class="gt_row gt_right">330</td>
+<td class="gt_row gt_right">1400</td>
+<td class="gt_row gt_right">20</td>
+<td class="gt_row gt_right">30</td>
 <td class="gt_row gt_left">rwd</td>
-<td class="gt_row gt_left">7a</td>
-<td class="gt_row gt_right">447000</td>
+<td class="gt_row gt_left">8am</td>
+<td class="gt_row gt_right">77300</td>
 </tr>
 <tr>
-<td class="gt_row gt_left">Dodge</td>
-<td class="gt_row gt_left">Viper</td>
-<td class="gt_row gt_right">2017</td>
-<td class="gt_row gt_left">GT Coupe</td>
+<td class="gt_row gt_left">BMW</td>
+<td class="gt_row gt_left">i8</td>
+<td class="gt_row gt_right">2016</td>
+<td class="gt_row gt_left">Mega World Coupe</td>
 <td class="gt_row gt_left">coupe</td>
-<td class="gt_row gt_right">645</td>
-<td class="gt_row gt_right">5000</td>
-<td class="gt_row gt_right">600</td>
-<td class="gt_row gt_right">5000</td>
-<td class="gt_row gt_right">12</td>
-<td class="gt_row gt_right">19</td>
-<td class="gt_row gt_left">rwd</td>
-<td class="gt_row gt_left">6m</td>
-<td class="gt_row gt_right">95895</td>
+<td class="gt_row gt_right">357</td>
+<td class="gt_row gt_right">5800</td>
+<td class="gt_row gt_right">420</td>
+<td class="gt_row gt_right">3700</td>
+<td class="gt_row gt_right">28</td>
+<td class="gt_row gt_right">29</td>
+<td class="gt_row gt_left">awd</td>
+<td class="gt_row gt_left">6am</td>
+<td class="gt_row gt_right">140700</td>
 </tr>
 <tr class="gt_group_heading_row">
 <td colspan="14" class="gt_group_heading">Italy</td>
     </tr>
 <tr>
 <td class="gt_row gt_left">Ferrari</td>
-<td class="gt_row gt_left">LaFerrari</td>
+<td class="gt_row gt_left">458 Speciale</td>
 <td class="gt_row gt_right">2015</td>
 <td class="gt_row gt_left">Base Coupe</td>
 <td class="gt_row gt_left">coupe</td>
-<td class="gt_row gt_right">949</td>
+<td class="gt_row gt_right">597</td>
 <td class="gt_row gt_right">9000</td>
-<td class="gt_row gt_right">664</td>
-<td class="gt_row gt_right">6750</td>
-<td class="gt_row gt_right">12</td>
-<td class="gt_row gt_right">16</td>
+<td class="gt_row gt_right">398</td>
+<td class="gt_row gt_right">6000</td>
+<td class="gt_row gt_right">13</td>
+<td class="gt_row gt_right">17</td>
 <td class="gt_row gt_left">rwd</td>
 <td class="gt_row gt_left">7a</td>
-<td class="gt_row gt_right">1416362</td>
+<td class="gt_row gt_right">291744</td>
 </tr>
 <tr>
-<td class="gt_row gt_left">Lamborghini</td>
-<td class="gt_row gt_left">Aventador</td>
+<td class="gt_row gt_left">Ferrari</td>
+<td class="gt_row gt_left">458 Spider</td>
 <td class="gt_row gt_right">2015</td>
-<td class="gt_row gt_left">LP 700-4 Coupe</td>
-<td class="gt_row gt_left">coupe</td>
-<td class="gt_row gt_right">700</td>
-<td class="gt_row gt_right">8250</td>
-<td class="gt_row gt_right">507</td>
-<td class="gt_row gt_right">5500</td>
-<td class="gt_row gt_right">11</td>
-<td class="gt_row gt_right">18</td>
-<td class="gt_row gt_left">awd</td>
+<td class="gt_row gt_left">Base</td>
+<td class="gt_row gt_left">convertible</td>
+<td class="gt_row gt_right">562</td>
+<td class="gt_row gt_right">9000</td>
+<td class="gt_row gt_right">398</td>
+<td class="gt_row gt_right">6000</td>
+<td class="gt_row gt_right">13</td>
+<td class="gt_row gt_right">17</td>
+<td class="gt_row gt_left">rwd</td>
 <td class="gt_row gt_left">7a</td>
-<td class="gt_row gt_right">397500</td>
+<td class="gt_row gt_right">263553</td>
 </tr>
 <tr class="gt_group_heading_row">
 <td colspan="14" class="gt_group_heading">Japan</td>
@@ -643,53 +643,55 @@
 <td class="gt_row gt_right">101770</td>
 </tr>
 <tr class="gt_group_heading_row">
-<td colspan="14" class="gt_group_heading">Germany</td>
+<td colspan="14" class="gt_group_heading">United States</td>
     </tr>
 <tr>
-<td class="gt_row gt_left">BMW</td>
-<td class="gt_row gt_left">i8</td>
-<td class="gt_row gt_right">2016</td>
-<td class="gt_row gt_left">Mega World Coupe</td>
+<td class="gt_row gt_left">Ford</td>
+<td class="gt_row gt_left">GT</td>
+<td class="gt_row gt_right">2017</td>
+<td class="gt_row gt_left">Base Coupe</td>
 <td class="gt_row gt_left">coupe</td>
-<td class="gt_row gt_right">357</td>
-<td class="gt_row gt_right">5800</td>
-<td class="gt_row gt_right">420</td>
-<td class="gt_row gt_right">3700</td>
-<td class="gt_row gt_right">28</td>
-<td class="gt_row gt_right">29</td>
-<td class="gt_row gt_left">awd</td>
-<td class="gt_row gt_left">6am</td>
-<td class="gt_row gt_right">140700</td>
-</tr>
-<tr>
-<td class="gt_row gt_left">Mercedes-Benz</td>
-<td class="gt_row gt_left">AMG GT</td>
-<td class="gt_row gt_right">2016</td>
-<td class="gt_row gt_left">S Coupe</td>
-<td class="gt_row gt_left">coupe</td>
-<td class="gt_row gt_right">503</td>
+<td class="gt_row gt_right">647</td>
 <td class="gt_row gt_right">6250</td>
-<td class="gt_row gt_right">479</td>
-<td class="gt_row gt_right">1750</td>
-<td class="gt_row gt_right">16</td>
-<td class="gt_row gt_right">22</td>
+<td class="gt_row gt_right">550</td>
+<td class="gt_row gt_right">5900</td>
+<td class="gt_row gt_right">11</td>
+<td class="gt_row gt_right">18</td>
 <td class="gt_row gt_left">rwd</td>
 <td class="gt_row gt_left">7a</td>
-<td class="gt_row gt_right">129900</td>
+<td class="gt_row gt_right">447000</td>
+</tr>
+<tr>
+<td class="gt_row gt_left">Chevrolet</td>
+<td class="gt_row gt_left">Corvette</td>
+<td class="gt_row gt_right">2016</td>
+<td class="gt_row gt_left">Z06 Coupe</td>
+<td class="gt_row gt_left">coupe</td>
+<td class="gt_row gt_right">650</td>
+<td class="gt_row gt_right">6400</td>
+<td class="gt_row gt_right">650</td>
+<td class="gt_row gt_right">3600</td>
+<td class="gt_row gt_right">15</td>
+<td class="gt_row gt_right">22</td>
+<td class="gt_row gt_left">rwd</td>
+<td class="gt_row gt_left">7m</td>
+<td class="gt_row gt_right">88345</td>
 </tr>
 </tbody>
-</table></div>
+</table>
+</div>
 <p>Getting the row groups in the preferred order can be done easily with <strong>dplyr</strong>’s <code>arrange()</code> function. For example, we can have groups that are arranged alphabetically by manufacturer (<code>mfr</code>) and then sorted by highest sticker price (<code>msrp</code>) to lowest.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gtcars_8</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ctry_origin</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">mfr</span>, <span class="fu">desc</span><span class="op">(</span><span class="va">msrp</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">ctry_origin</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">arrange</span><span class="op">(</span><span class="va">mfr</span>, <span class="fu">desc</span><span class="op">(</span><span class="va">msrp</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div id="msqzbdksdq" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#tankjzheup .gt_table {
+#msqzbdksdq .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -714,7 +716,7 @@
   border-left-color: #D3D3D3;
 }
 
-#tankjzheup .gt_heading {
+#msqzbdksdq .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -726,7 +728,7 @@
   border-right-color: #D3D3D3;
 }
 
-#tankjzheup .gt_title {
+#msqzbdksdq .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -736,7 +738,7 @@
   border-bottom-width: 0;
 }
 
-#tankjzheup .gt_subtitle {
+#msqzbdksdq .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -746,13 +748,13 @@
   border-top-width: 0;
 }
 
-#tankjzheup .gt_bottom_border {
+#msqzbdksdq .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#tankjzheup .gt_col_headings {
+#msqzbdksdq .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -767,7 +769,7 @@
   border-right-color: #D3D3D3;
 }
 
-#tankjzheup .gt_col_heading {
+#msqzbdksdq .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -787,7 +789,7 @@
   overflow-x: hidden;
 }
 
-#tankjzheup .gt_column_spanner_outer {
+#msqzbdksdq .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -799,15 +801,15 @@
   padding-right: 4px;
 }
 
-#tankjzheup .gt_column_spanner_outer:first-child {
+#msqzbdksdq .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#tankjzheup .gt_column_spanner_outer:last-child {
+#msqzbdksdq .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#tankjzheup .gt_column_spanner {
+#msqzbdksdq .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -819,7 +821,7 @@
   width: 100%;
 }
 
-#tankjzheup .gt_group_heading {
+#msqzbdksdq .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -841,7 +843,7 @@
   vertical-align: middle;
 }
 
-#tankjzheup .gt_empty_group_heading {
+#msqzbdksdq .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -856,15 +858,15 @@
   vertical-align: middle;
 }
 
-#tankjzheup .gt_from_md > :first-child {
+#msqzbdksdq .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#tankjzheup .gt_from_md > :last-child {
+#msqzbdksdq .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#tankjzheup .gt_row {
+#msqzbdksdq .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -883,7 +885,7 @@
   overflow-x: hidden;
 }
 
-#tankjzheup .gt_stub {
+#msqzbdksdq .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -895,7 +897,7 @@
   padding-left: 12px;
 }
 
-#tankjzheup .gt_summary_row {
+#msqzbdksdq .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -905,7 +907,7 @@
   padding-right: 5px;
 }
 
-#tankjzheup .gt_first_summary_row {
+#msqzbdksdq .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -915,7 +917,7 @@
   border-top-color: #D3D3D3;
 }
 
-#tankjzheup .gt_grand_summary_row {
+#msqzbdksdq .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -925,7 +927,7 @@
   padding-right: 5px;
 }
 
-#tankjzheup .gt_first_grand_summary_row {
+#msqzbdksdq .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -935,11 +937,11 @@
   border-top-color: #D3D3D3;
 }
 
-#tankjzheup .gt_striped {
+#msqzbdksdq .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#tankjzheup .gt_table_body {
+#msqzbdksdq .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -948,7 +950,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#tankjzheup .gt_footnotes {
+#msqzbdksdq .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -962,13 +964,13 @@
   border-right-color: #D3D3D3;
 }
 
-#tankjzheup .gt_footnote {
+#msqzbdksdq .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#tankjzheup .gt_sourcenotes {
+#msqzbdksdq .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -982,46 +984,46 @@
   border-right-color: #D3D3D3;
 }
 
-#tankjzheup .gt_sourcenote {
+#msqzbdksdq .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#tankjzheup .gt_left {
+#msqzbdksdq .gt_left {
   text-align: left;
 }
 
-#tankjzheup .gt_center {
+#msqzbdksdq .gt_center {
   text-align: center;
 }
 
-#tankjzheup .gt_right {
+#msqzbdksdq .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#tankjzheup .gt_font_normal {
+#msqzbdksdq .gt_font_normal {
   font-weight: normal;
 }
 
-#tankjzheup .gt_font_bold {
+#msqzbdksdq .gt_font_bold {
   font-weight: bold;
 }
 
-#tankjzheup .gt_font_italic {
+#msqzbdksdq .gt_font_italic {
   font-style: italic;
 }
 
-#tankjzheup .gt_super {
+#msqzbdksdq .gt_super {
   font-size: 65%;
 }
 
-#tankjzheup .gt_footnote_marks {
+#msqzbdksdq .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="tankjzheup" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="table gt_table">
+<table class="table gt_table">
 <thead class="gt_col_headings"><tr>
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">mfr</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">model</th>
@@ -1094,39 +1096,39 @@
 <td class="gt_row gt_right">140700</td>
 </tr>
 <tr>
-<td class="gt_row gt_left">Mercedes-Benz</td>
-<td class="gt_row gt_left">AMG GT</td>
+<td class="gt_row gt_left">BMW</td>
+<td class="gt_row gt_left">6-Series</td>
 <td class="gt_row gt_right">2016</td>
-<td class="gt_row gt_left">S Coupe</td>
+<td class="gt_row gt_left">640 I Coupe</td>
 <td class="gt_row gt_left">coupe</td>
-<td class="gt_row gt_right">503</td>
-<td class="gt_row gt_right">6250</td>
-<td class="gt_row gt_right">479</td>
-<td class="gt_row gt_right">1750</td>
-<td class="gt_row gt_right">16</td>
-<td class="gt_row gt_right">22</td>
+<td class="gt_row gt_right">315</td>
+<td class="gt_row gt_right">5800</td>
+<td class="gt_row gt_right">330</td>
+<td class="gt_row gt_right">1400</td>
+<td class="gt_row gt_right">20</td>
+<td class="gt_row gt_right">30</td>
 <td class="gt_row gt_left">rwd</td>
-<td class="gt_row gt_left">7a</td>
-<td class="gt_row gt_right">129900</td>
+<td class="gt_row gt_left">8am</td>
+<td class="gt_row gt_right">77300</td>
 </tr>
 <tr class="gt_group_heading_row">
 <td colspan="14" class="gt_group_heading">United States</td>
     </tr>
 <tr>
-<td class="gt_row gt_left">Dodge</td>
-<td class="gt_row gt_left">Viper</td>
-<td class="gt_row gt_right">2017</td>
-<td class="gt_row gt_left">GT Coupe</td>
+<td class="gt_row gt_left">Chevrolet</td>
+<td class="gt_row gt_left">Corvette</td>
+<td class="gt_row gt_right">2016</td>
+<td class="gt_row gt_left">Z06 Coupe</td>
 <td class="gt_row gt_left">coupe</td>
-<td class="gt_row gt_right">645</td>
-<td class="gt_row gt_right">5000</td>
-<td class="gt_row gt_right">600</td>
-<td class="gt_row gt_right">5000</td>
-<td class="gt_row gt_right">12</td>
-<td class="gt_row gt_right">19</td>
+<td class="gt_row gt_right">650</td>
+<td class="gt_row gt_right">6400</td>
+<td class="gt_row gt_right">650</td>
+<td class="gt_row gt_right">3600</td>
+<td class="gt_row gt_right">15</td>
+<td class="gt_row gt_right">22</td>
 <td class="gt_row gt_left">rwd</td>
-<td class="gt_row gt_left">6m</td>
-<td class="gt_row gt_right">95895</td>
+<td class="gt_row gt_left">7m</td>
+<td class="gt_row gt_right">88345</td>
 </tr>
 <tr>
 <td class="gt_row gt_left">Ford</td>
@@ -1149,38 +1151,39 @@
     </tr>
 <tr>
 <td class="gt_row gt_left">Ferrari</td>
-<td class="gt_row gt_left">LaFerrari</td>
+<td class="gt_row gt_left">458 Speciale</td>
 <td class="gt_row gt_right">2015</td>
 <td class="gt_row gt_left">Base Coupe</td>
 <td class="gt_row gt_left">coupe</td>
-<td class="gt_row gt_right">949</td>
+<td class="gt_row gt_right">597</td>
 <td class="gt_row gt_right">9000</td>
-<td class="gt_row gt_right">664</td>
-<td class="gt_row gt_right">6750</td>
-<td class="gt_row gt_right">12</td>
-<td class="gt_row gt_right">16</td>
+<td class="gt_row gt_right">398</td>
+<td class="gt_row gt_right">6000</td>
+<td class="gt_row gt_right">13</td>
+<td class="gt_row gt_right">17</td>
 <td class="gt_row gt_left">rwd</td>
 <td class="gt_row gt_left">7a</td>
-<td class="gt_row gt_right">1416362</td>
+<td class="gt_row gt_right">291744</td>
 </tr>
 <tr>
-<td class="gt_row gt_left">Lamborghini</td>
-<td class="gt_row gt_left">Aventador</td>
+<td class="gt_row gt_left">Ferrari</td>
+<td class="gt_row gt_left">458 Spider</td>
 <td class="gt_row gt_right">2015</td>
-<td class="gt_row gt_left">LP 700-4 Coupe</td>
-<td class="gt_row gt_left">coupe</td>
-<td class="gt_row gt_right">700</td>
-<td class="gt_row gt_right">8250</td>
-<td class="gt_row gt_right">507</td>
-<td class="gt_row gt_right">5500</td>
-<td class="gt_row gt_right">11</td>
-<td class="gt_row gt_right">18</td>
-<td class="gt_row gt_left">awd</td>
+<td class="gt_row gt_left">Base</td>
+<td class="gt_row gt_left">convertible</td>
+<td class="gt_row gt_right">562</td>
+<td class="gt_row gt_right">9000</td>
+<td class="gt_row gt_right">398</td>
+<td class="gt_row gt_right">6000</td>
+<td class="gt_row gt_right">13</td>
+<td class="gt_row gt_right">17</td>
+<td class="gt_row gt_left">rwd</td>
 <td class="gt_row gt_left">7a</td>
-<td class="gt_row gt_right">397500</td>
+<td class="gt_row gt_right">263553</td>
 </tr>
 </tbody>
-</table></div>
+</table>
+</div>
 <p>We could also use factor levels to get a more particular ordering within <code>arrange()</code>. For example, we can first arrange the groups themselves (the country of origin–<code>ctry_origin</code>) by our own preferred ordering and then arrange by <code>mfr</code> and descending <code>msrp</code> as before. Then, <code>group_by(ctry_origin)</code> can be used on the sorted tibble before passing this to <code><a href="../reference/gt.html">gt()</a></code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Define our preferred order `ctry_origin`</span>
@@ -1188,16 +1191,17 @@
 
 <span class="co"># Reorder the table rows by our specific ordering of groups</span>
 <span class="va">gtcars_8</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span>
+  <span class="fu">arrange</span><span class="op">(</span>
     <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">ctry_origin</span>, levels <span class="op">=</span> <span class="va">order_countries</span><span class="op">)</span>, <span class="va">mfr</span>, <span class="fu">desc</span><span class="op">(</span><span class="va">msrp</span><span class="op">)</span>
   <span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ctry_origin</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">ctry_origin</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div id="kisdfunkeq" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#ngirblttgo .gt_table {
+#kisdfunkeq .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1222,7 +1226,7 @@
   border-left-color: #D3D3D3;
 }
 
-#ngirblttgo .gt_heading {
+#kisdfunkeq .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1234,7 +1238,7 @@
   border-right-color: #D3D3D3;
 }
 
-#ngirblttgo .gt_title {
+#kisdfunkeq .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1244,7 +1248,7 @@
   border-bottom-width: 0;
 }
 
-#ngirblttgo .gt_subtitle {
+#kisdfunkeq .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1254,13 +1258,13 @@
   border-top-width: 0;
 }
 
-#ngirblttgo .gt_bottom_border {
+#kisdfunkeq .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ngirblttgo .gt_col_headings {
+#kisdfunkeq .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1275,7 +1279,7 @@
   border-right-color: #D3D3D3;
 }
 
-#ngirblttgo .gt_col_heading {
+#kisdfunkeq .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1295,7 +1299,7 @@
   overflow-x: hidden;
 }
 
-#ngirblttgo .gt_column_spanner_outer {
+#kisdfunkeq .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1307,15 +1311,15 @@
   padding-right: 4px;
 }
 
-#ngirblttgo .gt_column_spanner_outer:first-child {
+#kisdfunkeq .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ngirblttgo .gt_column_spanner_outer:last-child {
+#kisdfunkeq .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ngirblttgo .gt_column_spanner {
+#kisdfunkeq .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1327,7 +1331,7 @@
   width: 100%;
 }
 
-#ngirblttgo .gt_group_heading {
+#kisdfunkeq .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1349,7 +1353,7 @@
   vertical-align: middle;
 }
 
-#ngirblttgo .gt_empty_group_heading {
+#kisdfunkeq .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1364,15 +1368,15 @@
   vertical-align: middle;
 }
 
-#ngirblttgo .gt_from_md > :first-child {
+#kisdfunkeq .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ngirblttgo .gt_from_md > :last-child {
+#kisdfunkeq .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ngirblttgo .gt_row {
+#kisdfunkeq .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1391,7 +1395,7 @@
   overflow-x: hidden;
 }
 
-#ngirblttgo .gt_stub {
+#kisdfunkeq .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1403,7 +1407,7 @@
   padding-left: 12px;
 }
 
-#ngirblttgo .gt_summary_row {
+#kisdfunkeq .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1413,7 +1417,7 @@
   padding-right: 5px;
 }
 
-#ngirblttgo .gt_first_summary_row {
+#kisdfunkeq .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1423,7 +1427,7 @@
   border-top-color: #D3D3D3;
 }
 
-#ngirblttgo .gt_grand_summary_row {
+#kisdfunkeq .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1433,7 +1437,7 @@
   padding-right: 5px;
 }
 
-#ngirblttgo .gt_first_grand_summary_row {
+#kisdfunkeq .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1443,11 +1447,11 @@
   border-top-color: #D3D3D3;
 }
 
-#ngirblttgo .gt_striped {
+#kisdfunkeq .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ngirblttgo .gt_table_body {
+#kisdfunkeq .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1456,7 +1460,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#ngirblttgo .gt_footnotes {
+#kisdfunkeq .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1470,13 +1474,13 @@
   border-right-color: #D3D3D3;
 }
 
-#ngirblttgo .gt_footnote {
+#kisdfunkeq .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#ngirblttgo .gt_sourcenotes {
+#kisdfunkeq .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1490,46 +1494,46 @@
   border-right-color: #D3D3D3;
 }
 
-#ngirblttgo .gt_sourcenote {
+#kisdfunkeq .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#ngirblttgo .gt_left {
+#kisdfunkeq .gt_left {
   text-align: left;
 }
 
-#ngirblttgo .gt_center {
+#kisdfunkeq .gt_center {
   text-align: center;
 }
 
-#ngirblttgo .gt_right {
+#kisdfunkeq .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ngirblttgo .gt_font_normal {
+#kisdfunkeq .gt_font_normal {
   font-weight: normal;
 }
 
-#ngirblttgo .gt_font_bold {
+#kisdfunkeq .gt_font_bold {
   font-weight: bold;
 }
 
-#ngirblttgo .gt_font_italic {
+#kisdfunkeq .gt_font_italic {
   font-style: italic;
 }
 
-#ngirblttgo .gt_super {
+#kisdfunkeq .gt_super {
   font-size: 65%;
 }
 
-#ngirblttgo .gt_footnote_marks {
+#kisdfunkeq .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="ngirblttgo" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="table gt_table">
+<table class="table gt_table">
 <thead class="gt_col_headings"><tr>
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">mfr</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">model</th>
@@ -1567,74 +1571,74 @@
 <td class="gt_row gt_right">140700</td>
 </tr>
 <tr>
-<td class="gt_row gt_left">Mercedes-Benz</td>
-<td class="gt_row gt_left">AMG GT</td>
+<td class="gt_row gt_left">BMW</td>
+<td class="gt_row gt_left">6-Series</td>
 <td class="gt_row gt_right">2016</td>
-<td class="gt_row gt_left">S Coupe</td>
+<td class="gt_row gt_left">640 I Coupe</td>
 <td class="gt_row gt_left">coupe</td>
-<td class="gt_row gt_right">503</td>
-<td class="gt_row gt_right">6250</td>
-<td class="gt_row gt_right">479</td>
-<td class="gt_row gt_right">1750</td>
-<td class="gt_row gt_right">16</td>
-<td class="gt_row gt_right">22</td>
+<td class="gt_row gt_right">315</td>
+<td class="gt_row gt_right">5800</td>
+<td class="gt_row gt_right">330</td>
+<td class="gt_row gt_right">1400</td>
+<td class="gt_row gt_right">20</td>
+<td class="gt_row gt_right">30</td>
 <td class="gt_row gt_left">rwd</td>
-<td class="gt_row gt_left">7a</td>
-<td class="gt_row gt_right">129900</td>
+<td class="gt_row gt_left">8am</td>
+<td class="gt_row gt_right">77300</td>
 </tr>
 <tr class="gt_group_heading_row">
 <td colspan="14" class="gt_group_heading">Italy</td>
     </tr>
 <tr>
 <td class="gt_row gt_left">Ferrari</td>
-<td class="gt_row gt_left">LaFerrari</td>
+<td class="gt_row gt_left">458 Speciale</td>
 <td class="gt_row gt_right">2015</td>
 <td class="gt_row gt_left">Base Coupe</td>
 <td class="gt_row gt_left">coupe</td>
-<td class="gt_row gt_right">949</td>
+<td class="gt_row gt_right">597</td>
 <td class="gt_row gt_right">9000</td>
-<td class="gt_row gt_right">664</td>
-<td class="gt_row gt_right">6750</td>
-<td class="gt_row gt_right">12</td>
-<td class="gt_row gt_right">16</td>
+<td class="gt_row gt_right">398</td>
+<td class="gt_row gt_right">6000</td>
+<td class="gt_row gt_right">13</td>
+<td class="gt_row gt_right">17</td>
 <td class="gt_row gt_left">rwd</td>
 <td class="gt_row gt_left">7a</td>
-<td class="gt_row gt_right">1416362</td>
+<td class="gt_row gt_right">291744</td>
 </tr>
 <tr>
-<td class="gt_row gt_left">Lamborghini</td>
-<td class="gt_row gt_left">Aventador</td>
+<td class="gt_row gt_left">Ferrari</td>
+<td class="gt_row gt_left">458 Spider</td>
 <td class="gt_row gt_right">2015</td>
-<td class="gt_row gt_left">LP 700-4 Coupe</td>
-<td class="gt_row gt_left">coupe</td>
-<td class="gt_row gt_right">700</td>
-<td class="gt_row gt_right">8250</td>
-<td class="gt_row gt_right">507</td>
-<td class="gt_row gt_right">5500</td>
-<td class="gt_row gt_right">11</td>
-<td class="gt_row gt_right">18</td>
-<td class="gt_row gt_left">awd</td>
+<td class="gt_row gt_left">Base</td>
+<td class="gt_row gt_left">convertible</td>
+<td class="gt_row gt_right">562</td>
+<td class="gt_row gt_right">9000</td>
+<td class="gt_row gt_right">398</td>
+<td class="gt_row gt_right">6000</td>
+<td class="gt_row gt_right">13</td>
+<td class="gt_row gt_right">17</td>
+<td class="gt_row gt_left">rwd</td>
 <td class="gt_row gt_left">7a</td>
-<td class="gt_row gt_right">397500</td>
+<td class="gt_row gt_right">263553</td>
 </tr>
 <tr class="gt_group_heading_row">
 <td colspan="14" class="gt_group_heading">United States</td>
     </tr>
 <tr>
-<td class="gt_row gt_left">Dodge</td>
-<td class="gt_row gt_left">Viper</td>
-<td class="gt_row gt_right">2017</td>
-<td class="gt_row gt_left">GT Coupe</td>
+<td class="gt_row gt_left">Chevrolet</td>
+<td class="gt_row gt_left">Corvette</td>
+<td class="gt_row gt_right">2016</td>
+<td class="gt_row gt_left">Z06 Coupe</td>
 <td class="gt_row gt_left">coupe</td>
-<td class="gt_row gt_right">645</td>
-<td class="gt_row gt_right">5000</td>
-<td class="gt_row gt_right">600</td>
-<td class="gt_row gt_right">5000</td>
-<td class="gt_row gt_right">12</td>
-<td class="gt_row gt_right">19</td>
+<td class="gt_row gt_right">650</td>
+<td class="gt_row gt_right">6400</td>
+<td class="gt_row gt_right">650</td>
+<td class="gt_row gt_right">3600</td>
+<td class="gt_row gt_right">15</td>
+<td class="gt_row gt_right">22</td>
 <td class="gt_row gt_left">rwd</td>
-<td class="gt_row gt_left">6m</td>
-<td class="gt_row gt_right">95895</td>
+<td class="gt_row gt_left">7m</td>
+<td class="gt_row gt_right">88345</td>
 </tr>
 <tr>
 <td class="gt_row gt_left">Ford</td>
@@ -1688,28 +1692,30 @@
 <td class="gt_row gt_right">101770</td>
 </tr>
 </tbody>
-</table></div>
+</table>
+</div>
 <p>The last variation is to combine the manufacturer name with the model name, using those combined strings as row labels for the table. This is just a little more <strong>dplyr</strong> where we can use <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">dplyr::mutate()</a></code> to make a new <code>car</code> column followed by <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code> where we remove the <code>mfr</code> and <code>model</code> columns. When introducing the tibble to the <code><a href="../reference/gt.html">gt()</a></code> function, we can now use the <code>rowname_col</code> argument to specify a column that will serve as row labels (which is the newly made <code>car</code> column).</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Reorder the table rows by our specific ordering of groups</span>
 <span class="va">tab</span> <span class="op">&lt;-</span>
   <span class="va">gtcars_8</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span>
+  <span class="fu">arrange</span><span class="op">(</span>
     <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">ctry_origin</span>, levels <span class="op">=</span> <span class="va">order_countries</span><span class="op">)</span>,
     <span class="va">mfr</span>, <span class="fu">desc</span><span class="op">(</span><span class="va">msrp</span><span class="op">)</span>
     <span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>car <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">mfr</span>, <span class="va">model</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">mfr</span>, <span class="op">-</span><span class="va">model</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ctry_origin</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>car <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">mfr</span>, <span class="va">model</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">mfr</span>, <span class="op">-</span><span class="va">model</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">ctry_origin</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"car"</span><span class="op">)</span>
 
 <span class="co"># Show the table</span>
 <span class="va">tab</span></code></pre></div>
+<div id="nawtlgntqu" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#lmstxcldln .gt_table {
+#nawtlgntqu .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1734,7 +1740,7 @@
   border-left-color: #D3D3D3;
 }
 
-#lmstxcldln .gt_heading {
+#nawtlgntqu .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1746,7 +1752,7 @@
   border-right-color: #D3D3D3;
 }
 
-#lmstxcldln .gt_title {
+#nawtlgntqu .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1756,7 +1762,7 @@
   border-bottom-width: 0;
 }
 
-#lmstxcldln .gt_subtitle {
+#nawtlgntqu .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1766,13 +1772,13 @@
   border-top-width: 0;
 }
 
-#lmstxcldln .gt_bottom_border {
+#nawtlgntqu .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#lmstxcldln .gt_col_headings {
+#nawtlgntqu .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1787,7 +1793,7 @@
   border-right-color: #D3D3D3;
 }
 
-#lmstxcldln .gt_col_heading {
+#nawtlgntqu .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1807,7 +1813,7 @@
   overflow-x: hidden;
 }
 
-#lmstxcldln .gt_column_spanner_outer {
+#nawtlgntqu .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1819,15 +1825,15 @@
   padding-right: 4px;
 }
 
-#lmstxcldln .gt_column_spanner_outer:first-child {
+#nawtlgntqu .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#lmstxcldln .gt_column_spanner_outer:last-child {
+#nawtlgntqu .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#lmstxcldln .gt_column_spanner {
+#nawtlgntqu .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1839,7 +1845,7 @@
   width: 100%;
 }
 
-#lmstxcldln .gt_group_heading {
+#nawtlgntqu .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1861,7 +1867,7 @@
   vertical-align: middle;
 }
 
-#lmstxcldln .gt_empty_group_heading {
+#nawtlgntqu .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1876,15 +1882,15 @@
   vertical-align: middle;
 }
 
-#lmstxcldln .gt_from_md > :first-child {
+#nawtlgntqu .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#lmstxcldln .gt_from_md > :last-child {
+#nawtlgntqu .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#lmstxcldln .gt_row {
+#nawtlgntqu .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1903,7 +1909,7 @@
   overflow-x: hidden;
 }
 
-#lmstxcldln .gt_stub {
+#nawtlgntqu .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1915,7 +1921,7 @@
   padding-left: 12px;
 }
 
-#lmstxcldln .gt_summary_row {
+#nawtlgntqu .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1925,7 +1931,7 @@
   padding-right: 5px;
 }
 
-#lmstxcldln .gt_first_summary_row {
+#nawtlgntqu .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1935,7 +1941,7 @@
   border-top-color: #D3D3D3;
 }
 
-#lmstxcldln .gt_grand_summary_row {
+#nawtlgntqu .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1945,7 +1951,7 @@
   padding-right: 5px;
 }
 
-#lmstxcldln .gt_first_grand_summary_row {
+#nawtlgntqu .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1955,11 +1961,11 @@
   border-top-color: #D3D3D3;
 }
 
-#lmstxcldln .gt_striped {
+#nawtlgntqu .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#lmstxcldln .gt_table_body {
+#nawtlgntqu .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1968,7 +1974,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#lmstxcldln .gt_footnotes {
+#nawtlgntqu .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1982,13 +1988,13 @@
   border-right-color: #D3D3D3;
 }
 
-#lmstxcldln .gt_footnote {
+#nawtlgntqu .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#lmstxcldln .gt_sourcenotes {
+#nawtlgntqu .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2002,46 +2008,46 @@
   border-right-color: #D3D3D3;
 }
 
-#lmstxcldln .gt_sourcenote {
+#nawtlgntqu .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#lmstxcldln .gt_left {
+#nawtlgntqu .gt_left {
   text-align: left;
 }
 
-#lmstxcldln .gt_center {
+#nawtlgntqu .gt_center {
   text-align: center;
 }
 
-#lmstxcldln .gt_right {
+#nawtlgntqu .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#lmstxcldln .gt_font_normal {
+#nawtlgntqu .gt_font_normal {
   font-weight: normal;
 }
 
-#lmstxcldln .gt_font_bold {
+#nawtlgntqu .gt_font_bold {
   font-weight: bold;
 }
 
-#lmstxcldln .gt_font_italic {
+#nawtlgntqu .gt_font_italic {
   font-style: italic;
 }
 
-#lmstxcldln .gt_super {
+#nawtlgntqu .gt_super {
   font-size: 65%;
 }
 
-#lmstxcldln .gt_footnote_marks {
+#nawtlgntqu .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="lmstxcldln" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="table gt_table">
+<table class="table gt_table">
 <thead class="gt_col_headings"><tr>
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"></th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">year</th>
@@ -2077,70 +2083,70 @@
 <td class="gt_row gt_right">140700</td>
 </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Mercedes-Benz AMG GT</td>
+<td class="gt_row gt_left gt_stub">BMW 6-Series</td>
 <td class="gt_row gt_right">2016</td>
-<td class="gt_row gt_left">S Coupe</td>
+<td class="gt_row gt_left">640 I Coupe</td>
 <td class="gt_row gt_left">coupe</td>
-<td class="gt_row gt_right">503</td>
-<td class="gt_row gt_right">6250</td>
-<td class="gt_row gt_right">479</td>
-<td class="gt_row gt_right">1750</td>
-<td class="gt_row gt_right">16</td>
-<td class="gt_row gt_right">22</td>
+<td class="gt_row gt_right">315</td>
+<td class="gt_row gt_right">5800</td>
+<td class="gt_row gt_right">330</td>
+<td class="gt_row gt_right">1400</td>
+<td class="gt_row gt_right">20</td>
+<td class="gt_row gt_right">30</td>
 <td class="gt_row gt_left">rwd</td>
-<td class="gt_row gt_left">7a</td>
-<td class="gt_row gt_right">129900</td>
+<td class="gt_row gt_left">8am</td>
+<td class="gt_row gt_right">77300</td>
 </tr>
 <tr class="gt_group_heading_row">
 <td colspan="13" class="gt_group_heading">Italy</td>
     </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Ferrari LaFerrari</td>
+<td class="gt_row gt_left gt_stub">Ferrari 458 Speciale</td>
 <td class="gt_row gt_right">2015</td>
 <td class="gt_row gt_left">Base Coupe</td>
 <td class="gt_row gt_left">coupe</td>
-<td class="gt_row gt_right">949</td>
+<td class="gt_row gt_right">597</td>
 <td class="gt_row gt_right">9000</td>
-<td class="gt_row gt_right">664</td>
-<td class="gt_row gt_right">6750</td>
-<td class="gt_row gt_right">12</td>
-<td class="gt_row gt_right">16</td>
+<td class="gt_row gt_right">398</td>
+<td class="gt_row gt_right">6000</td>
+<td class="gt_row gt_right">13</td>
+<td class="gt_row gt_right">17</td>
 <td class="gt_row gt_left">rwd</td>
 <td class="gt_row gt_left">7a</td>
-<td class="gt_row gt_right">1416362</td>
+<td class="gt_row gt_right">291744</td>
 </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Lamborghini Aventador</td>
+<td class="gt_row gt_left gt_stub">Ferrari 458 Spider</td>
 <td class="gt_row gt_right">2015</td>
-<td class="gt_row gt_left">LP 700-4 Coupe</td>
-<td class="gt_row gt_left">coupe</td>
-<td class="gt_row gt_right">700</td>
-<td class="gt_row gt_right">8250</td>
-<td class="gt_row gt_right">507</td>
-<td class="gt_row gt_right">5500</td>
-<td class="gt_row gt_right">11</td>
-<td class="gt_row gt_right">18</td>
-<td class="gt_row gt_left">awd</td>
+<td class="gt_row gt_left">Base</td>
+<td class="gt_row gt_left">convertible</td>
+<td class="gt_row gt_right">562</td>
+<td class="gt_row gt_right">9000</td>
+<td class="gt_row gt_right">398</td>
+<td class="gt_row gt_right">6000</td>
+<td class="gt_row gt_right">13</td>
+<td class="gt_row gt_right">17</td>
+<td class="gt_row gt_left">rwd</td>
 <td class="gt_row gt_left">7a</td>
-<td class="gt_row gt_right">397500</td>
+<td class="gt_row gt_right">263553</td>
 </tr>
 <tr class="gt_group_heading_row">
 <td colspan="13" class="gt_group_heading">United States</td>
     </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Dodge Viper</td>
-<td class="gt_row gt_right">2017</td>
-<td class="gt_row gt_left">GT Coupe</td>
+<td class="gt_row gt_left gt_stub">Chevrolet Corvette</td>
+<td class="gt_row gt_right">2016</td>
+<td class="gt_row gt_left">Z06 Coupe</td>
 <td class="gt_row gt_left">coupe</td>
-<td class="gt_row gt_right">645</td>
-<td class="gt_row gt_right">5000</td>
-<td class="gt_row gt_right">600</td>
-<td class="gt_row gt_right">5000</td>
-<td class="gt_row gt_right">12</td>
-<td class="gt_row gt_right">19</td>
+<td class="gt_row gt_right">650</td>
+<td class="gt_row gt_right">6400</td>
+<td class="gt_row gt_right">650</td>
+<td class="gt_row gt_right">3600</td>
+<td class="gt_row gt_right">15</td>
+<td class="gt_row gt_right">22</td>
 <td class="gt_row gt_left">rwd</td>
-<td class="gt_row gt_left">6m</td>
-<td class="gt_row gt_right">95895</td>
+<td class="gt_row gt_left">7m</td>
+<td class="gt_row gt_right">88345</td>
 </tr>
 <tr>
 <td class="gt_row gt_left gt_stub">Ford GT</td>
@@ -2191,7 +2197,8 @@
 <td class="gt_row gt_right">101770</td>
 </tr>
 </tbody>
-</table></div>
+</table>
+</div>
 </div>
 <div id="hiding-and-moving-some-columns" class="section level3">
 <h3 class="hasAnchor">
@@ -2202,19 +2209,20 @@
 <code class="sourceCode R"><span class="co"># Use a few `cols_*()` functions to hide and move columns </span>
 <span class="va">tab</span> <span class="op">&lt;-</span> 
   <span class="va">tab</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/cols_hide.html">cols_hide</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">drivetrain</span>, <span class="va">bdy_style</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/cols_hide.html">cols_hide</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">drivetrain</span>, <span class="va">bdy_style</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/cols_move.html">cols_move</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">trsmn</span>, <span class="va">mpg_c</span>, <span class="va">mpg_h</span><span class="op">)</span>,
-    after <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">trim</span><span class="op">)</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">trsmn</span>, <span class="va">mpg_c</span>, <span class="va">mpg_h</span><span class="op">)</span>,
+    after <span class="op">=</span> <span class="va">trim</span>
   <span class="op">)</span>
 
 <span class="co"># Show the table</span>
 <span class="va">tab</span></code></pre></div>
+<div id="vegbjznbwo" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#uedcdrmmem .gt_table {
+#vegbjznbwo .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -2239,7 +2247,7 @@
   border-left-color: #D3D3D3;
 }
 
-#uedcdrmmem .gt_heading {
+#vegbjznbwo .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2251,7 +2259,7 @@
   border-right-color: #D3D3D3;
 }
 
-#uedcdrmmem .gt_title {
+#vegbjznbwo .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2261,7 +2269,7 @@
   border-bottom-width: 0;
 }
 
-#uedcdrmmem .gt_subtitle {
+#vegbjznbwo .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2271,13 +2279,13 @@
   border-top-width: 0;
 }
 
-#uedcdrmmem .gt_bottom_border {
+#vegbjznbwo .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#uedcdrmmem .gt_col_headings {
+#vegbjznbwo .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2292,7 +2300,7 @@
   border-right-color: #D3D3D3;
 }
 
-#uedcdrmmem .gt_col_heading {
+#vegbjznbwo .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2312,7 +2320,7 @@
   overflow-x: hidden;
 }
 
-#uedcdrmmem .gt_column_spanner_outer {
+#vegbjznbwo .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2324,15 +2332,15 @@
   padding-right: 4px;
 }
 
-#uedcdrmmem .gt_column_spanner_outer:first-child {
+#vegbjznbwo .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#uedcdrmmem .gt_column_spanner_outer:last-child {
+#vegbjznbwo .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#uedcdrmmem .gt_column_spanner {
+#vegbjznbwo .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2344,7 +2352,7 @@
   width: 100%;
 }
 
-#uedcdrmmem .gt_group_heading {
+#vegbjznbwo .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2366,7 +2374,7 @@
   vertical-align: middle;
 }
 
-#uedcdrmmem .gt_empty_group_heading {
+#vegbjznbwo .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2381,15 +2389,15 @@
   vertical-align: middle;
 }
 
-#uedcdrmmem .gt_from_md > :first-child {
+#vegbjznbwo .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#uedcdrmmem .gt_from_md > :last-child {
+#vegbjznbwo .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#uedcdrmmem .gt_row {
+#vegbjznbwo .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2408,7 +2416,7 @@
   overflow-x: hidden;
 }
 
-#uedcdrmmem .gt_stub {
+#vegbjznbwo .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2420,7 +2428,7 @@
   padding-left: 12px;
 }
 
-#uedcdrmmem .gt_summary_row {
+#vegbjznbwo .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2430,7 +2438,7 @@
   padding-right: 5px;
 }
 
-#uedcdrmmem .gt_first_summary_row {
+#vegbjznbwo .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2440,7 +2448,7 @@
   border-top-color: #D3D3D3;
 }
 
-#uedcdrmmem .gt_grand_summary_row {
+#vegbjznbwo .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2450,7 +2458,7 @@
   padding-right: 5px;
 }
 
-#uedcdrmmem .gt_first_grand_summary_row {
+#vegbjznbwo .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2460,11 +2468,11 @@
   border-top-color: #D3D3D3;
 }
 
-#uedcdrmmem .gt_striped {
+#vegbjznbwo .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#uedcdrmmem .gt_table_body {
+#vegbjznbwo .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2473,7 +2481,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#uedcdrmmem .gt_footnotes {
+#vegbjznbwo .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2487,13 +2495,13 @@
   border-right-color: #D3D3D3;
 }
 
-#uedcdrmmem .gt_footnote {
+#vegbjznbwo .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#uedcdrmmem .gt_sourcenotes {
+#vegbjznbwo .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2507,46 +2515,46 @@
   border-right-color: #D3D3D3;
 }
 
-#uedcdrmmem .gt_sourcenote {
+#vegbjznbwo .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#uedcdrmmem .gt_left {
+#vegbjznbwo .gt_left {
   text-align: left;
 }
 
-#uedcdrmmem .gt_center {
+#vegbjznbwo .gt_center {
   text-align: center;
 }
 
-#uedcdrmmem .gt_right {
+#vegbjznbwo .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#uedcdrmmem .gt_font_normal {
+#vegbjznbwo .gt_font_normal {
   font-weight: normal;
 }
 
-#uedcdrmmem .gt_font_bold {
+#vegbjznbwo .gt_font_bold {
   font-weight: bold;
 }
 
-#uedcdrmmem .gt_font_italic {
+#vegbjznbwo .gt_font_italic {
   font-style: italic;
 }
 
-#uedcdrmmem .gt_super {
+#vegbjznbwo .gt_super {
   font-size: 65%;
 }
 
-#uedcdrmmem .gt_footnote_marks {
+#vegbjznbwo .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="uedcdrmmem" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="table gt_table">
+<table class="table gt_table">
 <thead class="gt_col_headings"><tr>
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"></th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">year</th>
@@ -2578,62 +2586,62 @@
 <td class="gt_row gt_right">140700</td>
 </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Mercedes-Benz AMG GT</td>
+<td class="gt_row gt_left gt_stub">BMW 6-Series</td>
 <td class="gt_row gt_right">2016</td>
-<td class="gt_row gt_left">S Coupe</td>
-<td class="gt_row gt_left">7a</td>
-<td class="gt_row gt_right">16</td>
-<td class="gt_row gt_right">22</td>
-<td class="gt_row gt_right">503</td>
-<td class="gt_row gt_right">6250</td>
-<td class="gt_row gt_right">479</td>
-<td class="gt_row gt_right">1750</td>
-<td class="gt_row gt_right">129900</td>
+<td class="gt_row gt_left">640 I Coupe</td>
+<td class="gt_row gt_left">8am</td>
+<td class="gt_row gt_right">20</td>
+<td class="gt_row gt_right">30</td>
+<td class="gt_row gt_right">315</td>
+<td class="gt_row gt_right">5800</td>
+<td class="gt_row gt_right">330</td>
+<td class="gt_row gt_right">1400</td>
+<td class="gt_row gt_right">77300</td>
 </tr>
 <tr class="gt_group_heading_row">
 <td colspan="11" class="gt_group_heading">Italy</td>
     </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Ferrari LaFerrari</td>
+<td class="gt_row gt_left gt_stub">Ferrari 458 Speciale</td>
 <td class="gt_row gt_right">2015</td>
 <td class="gt_row gt_left">Base Coupe</td>
 <td class="gt_row gt_left">7a</td>
-<td class="gt_row gt_right">12</td>
-<td class="gt_row gt_right">16</td>
-<td class="gt_row gt_right">949</td>
+<td class="gt_row gt_right">13</td>
+<td class="gt_row gt_right">17</td>
+<td class="gt_row gt_right">597</td>
 <td class="gt_row gt_right">9000</td>
-<td class="gt_row gt_right">664</td>
-<td class="gt_row gt_right">6750</td>
-<td class="gt_row gt_right">1416362</td>
+<td class="gt_row gt_right">398</td>
+<td class="gt_row gt_right">6000</td>
+<td class="gt_row gt_right">291744</td>
 </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Lamborghini Aventador</td>
+<td class="gt_row gt_left gt_stub">Ferrari 458 Spider</td>
 <td class="gt_row gt_right">2015</td>
-<td class="gt_row gt_left">LP 700-4 Coupe</td>
+<td class="gt_row gt_left">Base</td>
 <td class="gt_row gt_left">7a</td>
-<td class="gt_row gt_right">11</td>
-<td class="gt_row gt_right">18</td>
-<td class="gt_row gt_right">700</td>
-<td class="gt_row gt_right">8250</td>
-<td class="gt_row gt_right">507</td>
-<td class="gt_row gt_right">5500</td>
-<td class="gt_row gt_right">397500</td>
+<td class="gt_row gt_right">13</td>
+<td class="gt_row gt_right">17</td>
+<td class="gt_row gt_right">562</td>
+<td class="gt_row gt_right">9000</td>
+<td class="gt_row gt_right">398</td>
+<td class="gt_row gt_right">6000</td>
+<td class="gt_row gt_right">263553</td>
 </tr>
 <tr class="gt_group_heading_row">
 <td colspan="11" class="gt_group_heading">United States</td>
     </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Dodge Viper</td>
-<td class="gt_row gt_right">2017</td>
-<td class="gt_row gt_left">GT Coupe</td>
-<td class="gt_row gt_left">6m</td>
-<td class="gt_row gt_right">12</td>
-<td class="gt_row gt_right">19</td>
-<td class="gt_row gt_right">645</td>
-<td class="gt_row gt_right">5000</td>
-<td class="gt_row gt_right">600</td>
-<td class="gt_row gt_right">5000</td>
-<td class="gt_row gt_right">95895</td>
+<td class="gt_row gt_left gt_stub">Chevrolet Corvette</td>
+<td class="gt_row gt_right">2016</td>
+<td class="gt_row gt_left">Z06 Coupe</td>
+<td class="gt_row gt_left">7m</td>
+<td class="gt_row gt_right">15</td>
+<td class="gt_row gt_right">22</td>
+<td class="gt_row gt_right">650</td>
+<td class="gt_row gt_right">6400</td>
+<td class="gt_row gt_right">650</td>
+<td class="gt_row gt_right">3600</td>
+<td class="gt_row gt_right">88345</td>
 </tr>
 <tr>
 <td class="gt_row gt_left gt_stub">Ford GT</td>
@@ -2678,7 +2686,8 @@
 <td class="gt_row gt_right">101770</td>
 </tr>
 </tbody>
-</table></div>
+</table>
+</div>
 </div>
 <div id="putting-columns-into-groups" class="section level3">
 <h3 class="hasAnchor">
@@ -2692,16 +2701,17 @@
   <span class="va">tab</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/tab_spanner.html">tab_spanner</a></span><span class="op">(</span>
     label <span class="op">=</span> <span class="st">"Performance"</span>,
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">mpg_c</span>, <span class="va">mpg_h</span>, <span class="va">hp</span>, <span class="va">hp_rpm</span>, <span class="va">trq</span>, <span class="va">trq_rpm</span><span class="op">)</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">mpg_c</span>, <span class="va">mpg_h</span>, <span class="va">hp</span>, <span class="va">hp_rpm</span>, <span class="va">trq</span>, <span class="va">trq_rpm</span><span class="op">)</span>
   <span class="op">)</span>
 
 <span class="co"># Show the table</span>
 <span class="va">tab</span></code></pre></div>
+<div id="solrpxkrnd" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#wbaoftxbss .gt_table {
+#solrpxkrnd .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -2726,7 +2736,7 @@
   border-left-color: #D3D3D3;
 }
 
-#wbaoftxbss .gt_heading {
+#solrpxkrnd .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2738,7 +2748,7 @@
   border-right-color: #D3D3D3;
 }
 
-#wbaoftxbss .gt_title {
+#solrpxkrnd .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2748,7 +2758,7 @@
   border-bottom-width: 0;
 }
 
-#wbaoftxbss .gt_subtitle {
+#solrpxkrnd .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2758,13 +2768,13 @@
   border-top-width: 0;
 }
 
-#wbaoftxbss .gt_bottom_border {
+#solrpxkrnd .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#wbaoftxbss .gt_col_headings {
+#solrpxkrnd .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2779,7 +2789,7 @@
   border-right-color: #D3D3D3;
 }
 
-#wbaoftxbss .gt_col_heading {
+#solrpxkrnd .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2799,7 +2809,7 @@
   overflow-x: hidden;
 }
 
-#wbaoftxbss .gt_column_spanner_outer {
+#solrpxkrnd .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2811,15 +2821,15 @@
   padding-right: 4px;
 }
 
-#wbaoftxbss .gt_column_spanner_outer:first-child {
+#solrpxkrnd .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#wbaoftxbss .gt_column_spanner_outer:last-child {
+#solrpxkrnd .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#wbaoftxbss .gt_column_spanner {
+#solrpxkrnd .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2831,7 +2841,7 @@
   width: 100%;
 }
 
-#wbaoftxbss .gt_group_heading {
+#solrpxkrnd .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2853,7 +2863,7 @@
   vertical-align: middle;
 }
 
-#wbaoftxbss .gt_empty_group_heading {
+#solrpxkrnd .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2868,15 +2878,15 @@
   vertical-align: middle;
 }
 
-#wbaoftxbss .gt_from_md > :first-child {
+#solrpxkrnd .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#wbaoftxbss .gt_from_md > :last-child {
+#solrpxkrnd .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#wbaoftxbss .gt_row {
+#solrpxkrnd .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2895,7 +2905,7 @@
   overflow-x: hidden;
 }
 
-#wbaoftxbss .gt_stub {
+#solrpxkrnd .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2907,7 +2917,7 @@
   padding-left: 12px;
 }
 
-#wbaoftxbss .gt_summary_row {
+#solrpxkrnd .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2917,7 +2927,7 @@
   padding-right: 5px;
 }
 
-#wbaoftxbss .gt_first_summary_row {
+#solrpxkrnd .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2927,7 +2937,7 @@
   border-top-color: #D3D3D3;
 }
 
-#wbaoftxbss .gt_grand_summary_row {
+#solrpxkrnd .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2937,7 +2947,7 @@
   padding-right: 5px;
 }
 
-#wbaoftxbss .gt_first_grand_summary_row {
+#solrpxkrnd .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2947,11 +2957,11 @@
   border-top-color: #D3D3D3;
 }
 
-#wbaoftxbss .gt_striped {
+#solrpxkrnd .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#wbaoftxbss .gt_table_body {
+#solrpxkrnd .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2960,7 +2970,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#wbaoftxbss .gt_footnotes {
+#solrpxkrnd .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2974,13 +2984,13 @@
   border-right-color: #D3D3D3;
 }
 
-#wbaoftxbss .gt_footnote {
+#solrpxkrnd .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#wbaoftxbss .gt_sourcenotes {
+#solrpxkrnd .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2994,46 +3004,46 @@
   border-right-color: #D3D3D3;
 }
 
-#wbaoftxbss .gt_sourcenote {
+#solrpxkrnd .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#wbaoftxbss .gt_left {
+#solrpxkrnd .gt_left {
   text-align: left;
 }
 
-#wbaoftxbss .gt_center {
+#solrpxkrnd .gt_center {
   text-align: center;
 }
 
-#wbaoftxbss .gt_right {
+#solrpxkrnd .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#wbaoftxbss .gt_font_normal {
+#solrpxkrnd .gt_font_normal {
   font-weight: normal;
 }
 
-#wbaoftxbss .gt_font_bold {
+#solrpxkrnd .gt_font_bold {
   font-weight: bold;
 }
 
-#wbaoftxbss .gt_font_italic {
+#solrpxkrnd .gt_font_italic {
   font-style: italic;
 }
 
-#wbaoftxbss .gt_super {
+#solrpxkrnd .gt_super {
   font-size: 65%;
 }
 
-#wbaoftxbss .gt_footnote_marks {
+#solrpxkrnd .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="wbaoftxbss" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="table gt_table">
+<table class="table gt_table">
 <thead class="gt_col_headings">
 <tr>
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1"></th>
@@ -3072,62 +3082,62 @@
 <td class="gt_row gt_right">140700</td>
 </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Mercedes-Benz AMG GT</td>
+<td class="gt_row gt_left gt_stub">BMW 6-Series</td>
 <td class="gt_row gt_right">2016</td>
-<td class="gt_row gt_left">S Coupe</td>
-<td class="gt_row gt_left">7a</td>
-<td class="gt_row gt_right">16</td>
-<td class="gt_row gt_right">22</td>
-<td class="gt_row gt_right">503</td>
-<td class="gt_row gt_right">6250</td>
-<td class="gt_row gt_right">479</td>
-<td class="gt_row gt_right">1750</td>
-<td class="gt_row gt_right">129900</td>
+<td class="gt_row gt_left">640 I Coupe</td>
+<td class="gt_row gt_left">8am</td>
+<td class="gt_row gt_right">20</td>
+<td class="gt_row gt_right">30</td>
+<td class="gt_row gt_right">315</td>
+<td class="gt_row gt_right">5800</td>
+<td class="gt_row gt_right">330</td>
+<td class="gt_row gt_right">1400</td>
+<td class="gt_row gt_right">77300</td>
 </tr>
 <tr class="gt_group_heading_row">
 <td colspan="11" class="gt_group_heading">Italy</td>
     </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Ferrari LaFerrari</td>
+<td class="gt_row gt_left gt_stub">Ferrari 458 Speciale</td>
 <td class="gt_row gt_right">2015</td>
 <td class="gt_row gt_left">Base Coupe</td>
 <td class="gt_row gt_left">7a</td>
-<td class="gt_row gt_right">12</td>
-<td class="gt_row gt_right">16</td>
-<td class="gt_row gt_right">949</td>
+<td class="gt_row gt_right">13</td>
+<td class="gt_row gt_right">17</td>
+<td class="gt_row gt_right">597</td>
 <td class="gt_row gt_right">9000</td>
-<td class="gt_row gt_right">664</td>
-<td class="gt_row gt_right">6750</td>
-<td class="gt_row gt_right">1416362</td>
+<td class="gt_row gt_right">398</td>
+<td class="gt_row gt_right">6000</td>
+<td class="gt_row gt_right">291744</td>
 </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Lamborghini Aventador</td>
+<td class="gt_row gt_left gt_stub">Ferrari 458 Spider</td>
 <td class="gt_row gt_right">2015</td>
-<td class="gt_row gt_left">LP 700-4 Coupe</td>
+<td class="gt_row gt_left">Base</td>
 <td class="gt_row gt_left">7a</td>
-<td class="gt_row gt_right">11</td>
-<td class="gt_row gt_right">18</td>
-<td class="gt_row gt_right">700</td>
-<td class="gt_row gt_right">8250</td>
-<td class="gt_row gt_right">507</td>
-<td class="gt_row gt_right">5500</td>
-<td class="gt_row gt_right">397500</td>
+<td class="gt_row gt_right">13</td>
+<td class="gt_row gt_right">17</td>
+<td class="gt_row gt_right">562</td>
+<td class="gt_row gt_right">9000</td>
+<td class="gt_row gt_right">398</td>
+<td class="gt_row gt_right">6000</td>
+<td class="gt_row gt_right">263553</td>
 </tr>
 <tr class="gt_group_heading_row">
 <td colspan="11" class="gt_group_heading">United States</td>
     </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Dodge Viper</td>
-<td class="gt_row gt_right">2017</td>
-<td class="gt_row gt_left">GT Coupe</td>
-<td class="gt_row gt_left">6m</td>
-<td class="gt_row gt_right">12</td>
-<td class="gt_row gt_right">19</td>
-<td class="gt_row gt_right">645</td>
-<td class="gt_row gt_right">5000</td>
-<td class="gt_row gt_right">600</td>
-<td class="gt_row gt_right">5000</td>
-<td class="gt_row gt_right">95895</td>
+<td class="gt_row gt_left gt_stub">Chevrolet Corvette</td>
+<td class="gt_row gt_right">2016</td>
+<td class="gt_row gt_left">Z06 Coupe</td>
+<td class="gt_row gt_left">7m</td>
+<td class="gt_row gt_right">15</td>
+<td class="gt_row gt_right">22</td>
+<td class="gt_row gt_right">650</td>
+<td class="gt_row gt_right">6400</td>
+<td class="gt_row gt_right">650</td>
+<td class="gt_row gt_right">3600</td>
+<td class="gt_row gt_right">88345</td>
 </tr>
 <tr>
 <td class="gt_row gt_left gt_stub">Ford GT</td>
@@ -3172,7 +3182,8 @@
 <td class="gt_row gt_right">101770</td>
 </tr>
 </tbody>
-</table></div>
+</table>
+</div>
 </div>
 <div id="merging-columns-together-and-labeling-them" class="section level3">
 <h3 class="hasAnchor">
@@ -3195,18 +3206,15 @@
 <span class="va">tab</span> <span class="op">&lt;-</span> 
   <span class="va">tab</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/cols_merge.html">cols_merge</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">mpg_c</span>, <span class="va">mpg_h</span><span class="op">)</span>,
-    hide_columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">mpg_h</span><span class="op">)</span>,
+    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">mpg_c</span>, <span class="va">mpg_h</span><span class="op">)</span>,
     pattern <span class="op">=</span> <span class="st">"{1}c&lt;br&gt;{2}h"</span>
     <span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/cols_merge.html">cols_merge</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">hp</span>, <span class="va">hp_rpm</span><span class="op">)</span>,
-    hide_columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">hp_rpm</span><span class="op">)</span>,
+    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">hp</span>, <span class="va">hp_rpm</span><span class="op">)</span>,
     pattern <span class="op">=</span> <span class="st">"{1}&lt;br&gt;@{2}rpm"</span>
   <span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/cols_merge.html">cols_merge</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">trq</span>, <span class="va">trq_rpm</span><span class="op">)</span>,
-    hide_columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">trq_rpm</span><span class="op">)</span>,
+    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">trq</span>, <span class="va">trq_rpm</span><span class="op">)</span>,
     pattern <span class="op">=</span> <span class="st">"{1}&lt;br&gt;@{2}rpm"</span>
   <span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/cols_label.html">cols_label</a></span><span class="op">(</span>
@@ -3221,11 +3229,12 @@
 
 <span class="co"># Show the table</span>
 <span class="va">tab</span></code></pre></div>
+<div id="opnilynqbs" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#nzewabmbxv .gt_table {
+#opnilynqbs .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -3250,7 +3259,7 @@
   border-left-color: #D3D3D3;
 }
 
-#nzewabmbxv .gt_heading {
+#opnilynqbs .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3262,7 +3271,7 @@
   border-right-color: #D3D3D3;
 }
 
-#nzewabmbxv .gt_title {
+#opnilynqbs .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3272,7 +3281,7 @@
   border-bottom-width: 0;
 }
 
-#nzewabmbxv .gt_subtitle {
+#opnilynqbs .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3282,13 +3291,13 @@
   border-top-width: 0;
 }
 
-#nzewabmbxv .gt_bottom_border {
+#opnilynqbs .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#nzewabmbxv .gt_col_headings {
+#opnilynqbs .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3303,7 +3312,7 @@
   border-right-color: #D3D3D3;
 }
 
-#nzewabmbxv .gt_col_heading {
+#opnilynqbs .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3323,7 +3332,7 @@
   overflow-x: hidden;
 }
 
-#nzewabmbxv .gt_column_spanner_outer {
+#opnilynqbs .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3335,15 +3344,15 @@
   padding-right: 4px;
 }
 
-#nzewabmbxv .gt_column_spanner_outer:first-child {
+#opnilynqbs .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#nzewabmbxv .gt_column_spanner_outer:last-child {
+#opnilynqbs .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#nzewabmbxv .gt_column_spanner {
+#opnilynqbs .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3355,7 +3364,7 @@
   width: 100%;
 }
 
-#nzewabmbxv .gt_group_heading {
+#opnilynqbs .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3377,7 +3386,7 @@
   vertical-align: middle;
 }
 
-#nzewabmbxv .gt_empty_group_heading {
+#opnilynqbs .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3392,15 +3401,15 @@
   vertical-align: middle;
 }
 
-#nzewabmbxv .gt_from_md > :first-child {
+#opnilynqbs .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#nzewabmbxv .gt_from_md > :last-child {
+#opnilynqbs .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#nzewabmbxv .gt_row {
+#opnilynqbs .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3419,7 +3428,7 @@
   overflow-x: hidden;
 }
 
-#nzewabmbxv .gt_stub {
+#opnilynqbs .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3431,7 +3440,7 @@
   padding-left: 12px;
 }
 
-#nzewabmbxv .gt_summary_row {
+#opnilynqbs .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3441,7 +3450,7 @@
   padding-right: 5px;
 }
 
-#nzewabmbxv .gt_first_summary_row {
+#opnilynqbs .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3451,7 +3460,7 @@
   border-top-color: #D3D3D3;
 }
 
-#nzewabmbxv .gt_grand_summary_row {
+#opnilynqbs .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3461,7 +3470,7 @@
   padding-right: 5px;
 }
 
-#nzewabmbxv .gt_first_grand_summary_row {
+#opnilynqbs .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3471,11 +3480,11 @@
   border-top-color: #D3D3D3;
 }
 
-#nzewabmbxv .gt_striped {
+#opnilynqbs .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#nzewabmbxv .gt_table_body {
+#opnilynqbs .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3484,7 +3493,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#nzewabmbxv .gt_footnotes {
+#opnilynqbs .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3498,13 +3507,13 @@
   border-right-color: #D3D3D3;
 }
 
-#nzewabmbxv .gt_footnote {
+#opnilynqbs .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#nzewabmbxv .gt_sourcenotes {
+#opnilynqbs .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3518,46 +3527,46 @@
   border-right-color: #D3D3D3;
 }
 
-#nzewabmbxv .gt_sourcenote {
+#opnilynqbs .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#nzewabmbxv .gt_left {
+#opnilynqbs .gt_left {
   text-align: left;
 }
 
-#nzewabmbxv .gt_center {
+#opnilynqbs .gt_center {
   text-align: center;
 }
 
-#nzewabmbxv .gt_right {
+#opnilynqbs .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#nzewabmbxv .gt_font_normal {
+#opnilynqbs .gt_font_normal {
   font-weight: normal;
 }
 
-#nzewabmbxv .gt_font_bold {
+#opnilynqbs .gt_font_bold {
   font-weight: bold;
 }
 
-#nzewabmbxv .gt_font_italic {
+#opnilynqbs .gt_font_italic {
   font-style: italic;
 }
 
-#nzewabmbxv .gt_super {
+#opnilynqbs .gt_super {
   font-size: 65%;
 }
 
-#nzewabmbxv .gt_footnote_marks {
+#opnilynqbs .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="nzewabmbxv" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="table gt_table">
+<table class="table gt_table">
 <thead class="gt_col_headings">
 <tr>
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1"></th>
@@ -3590,50 +3599,50 @@
 <td class="gt_row gt_right">140700</td>
 </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Mercedes-Benz AMG GT</td>
+<td class="gt_row gt_left gt_stub">BMW 6-Series</td>
 <td class="gt_row gt_right">2016</td>
-<td class="gt_row gt_left">S Coupe</td>
-<td class="gt_row gt_left">7a</td>
-<td class="gt_row gt_right">16c<br>22h</td>
-<td class="gt_row gt_right">503<br>@6250rpm</td>
-<td class="gt_row gt_right">479<br>@1750rpm</td>
-<td class="gt_row gt_right">129900</td>
+<td class="gt_row gt_left">640 I Coupe</td>
+<td class="gt_row gt_left">8am</td>
+<td class="gt_row gt_right">20c<br>30h</td>
+<td class="gt_row gt_right">315<br>@5800rpm</td>
+<td class="gt_row gt_right">330<br>@1400rpm</td>
+<td class="gt_row gt_right">77300</td>
 </tr>
 <tr class="gt_group_heading_row">
 <td colspan="8" class="gt_group_heading">Italy</td>
     </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Ferrari LaFerrari</td>
+<td class="gt_row gt_left gt_stub">Ferrari 458 Speciale</td>
 <td class="gt_row gt_right">2015</td>
 <td class="gt_row gt_left">Base Coupe</td>
 <td class="gt_row gt_left">7a</td>
-<td class="gt_row gt_right">12c<br>16h</td>
-<td class="gt_row gt_right">949<br>@9000rpm</td>
-<td class="gt_row gt_right">664<br>@6750rpm</td>
-<td class="gt_row gt_right">1416362</td>
+<td class="gt_row gt_right">13c<br>17h</td>
+<td class="gt_row gt_right">597<br>@9000rpm</td>
+<td class="gt_row gt_right">398<br>@6000rpm</td>
+<td class="gt_row gt_right">291744</td>
 </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Lamborghini Aventador</td>
+<td class="gt_row gt_left gt_stub">Ferrari 458 Spider</td>
 <td class="gt_row gt_right">2015</td>
-<td class="gt_row gt_left">LP 700-4 Coupe</td>
+<td class="gt_row gt_left">Base</td>
 <td class="gt_row gt_left">7a</td>
-<td class="gt_row gt_right">11c<br>18h</td>
-<td class="gt_row gt_right">700<br>@8250rpm</td>
-<td class="gt_row gt_right">507<br>@5500rpm</td>
-<td class="gt_row gt_right">397500</td>
+<td class="gt_row gt_right">13c<br>17h</td>
+<td class="gt_row gt_right">562<br>@9000rpm</td>
+<td class="gt_row gt_right">398<br>@6000rpm</td>
+<td class="gt_row gt_right">263553</td>
 </tr>
 <tr class="gt_group_heading_row">
 <td colspan="8" class="gt_group_heading">United States</td>
     </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Dodge Viper</td>
-<td class="gt_row gt_right">2017</td>
-<td class="gt_row gt_left">GT Coupe</td>
-<td class="gt_row gt_left">6m</td>
-<td class="gt_row gt_right">12c<br>19h</td>
-<td class="gt_row gt_right">645<br>@5000rpm</td>
-<td class="gt_row gt_right">600<br>@5000rpm</td>
-<td class="gt_row gt_right">95895</td>
+<td class="gt_row gt_left gt_stub">Chevrolet Corvette</td>
+<td class="gt_row gt_right">2016</td>
+<td class="gt_row gt_left">Z06 Coupe</td>
+<td class="gt_row gt_left">7m</td>
+<td class="gt_row gt_right">15c<br>22h</td>
+<td class="gt_row gt_right">650<br>@6400rpm</td>
+<td class="gt_row gt_right">650<br>@3600rpm</td>
+<td class="gt_row gt_right">88345</td>
 </tr>
 <tr>
 <td class="gt_row gt_left gt_stub">Ford GT</td>
@@ -3669,7 +3678,8 @@
 <td class="gt_row gt_right">101770</td>
 </tr>
 </tbody>
-</table></div>
+</table>
+</div>
 </div>
 <div id="using-formatter-functions" class="section level3">
 <h3 class="hasAnchor">
@@ -3681,18 +3691,19 @@
 <span class="va">tab</span> <span class="op">&lt;-</span> 
   <span class="va">tab</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/fmt_currency.html">fmt_currency</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">msrp</span><span class="op">)</span>,
+    columns <span class="op">=</span> <span class="va">msrp</span>,
     currency <span class="op">=</span> <span class="st">"USD"</span>,
     decimals <span class="op">=</span> <span class="fl">0</span>
   <span class="op">)</span>
 
 <span class="co"># Show the table</span>
 <span class="va">tab</span></code></pre></div>
+<div id="cepaozliut" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#psxigqkgxg .gt_table {
+#cepaozliut .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -3717,7 +3728,7 @@
   border-left-color: #D3D3D3;
 }
 
-#psxigqkgxg .gt_heading {
+#cepaozliut .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3729,7 +3740,7 @@
   border-right-color: #D3D3D3;
 }
 
-#psxigqkgxg .gt_title {
+#cepaozliut .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3739,7 +3750,7 @@
   border-bottom-width: 0;
 }
 
-#psxigqkgxg .gt_subtitle {
+#cepaozliut .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3749,13 +3760,13 @@
   border-top-width: 0;
 }
 
-#psxigqkgxg .gt_bottom_border {
+#cepaozliut .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#psxigqkgxg .gt_col_headings {
+#cepaozliut .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3770,7 +3781,7 @@
   border-right-color: #D3D3D3;
 }
 
-#psxigqkgxg .gt_col_heading {
+#cepaozliut .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3790,7 +3801,7 @@
   overflow-x: hidden;
 }
 
-#psxigqkgxg .gt_column_spanner_outer {
+#cepaozliut .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3802,15 +3813,15 @@
   padding-right: 4px;
 }
 
-#psxigqkgxg .gt_column_spanner_outer:first-child {
+#cepaozliut .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#psxigqkgxg .gt_column_spanner_outer:last-child {
+#cepaozliut .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#psxigqkgxg .gt_column_spanner {
+#cepaozliut .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3822,7 +3833,7 @@
   width: 100%;
 }
 
-#psxigqkgxg .gt_group_heading {
+#cepaozliut .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3844,7 +3855,7 @@
   vertical-align: middle;
 }
 
-#psxigqkgxg .gt_empty_group_heading {
+#cepaozliut .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3859,15 +3870,15 @@
   vertical-align: middle;
 }
 
-#psxigqkgxg .gt_from_md > :first-child {
+#cepaozliut .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#psxigqkgxg .gt_from_md > :last-child {
+#cepaozliut .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#psxigqkgxg .gt_row {
+#cepaozliut .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3886,7 +3897,7 @@
   overflow-x: hidden;
 }
 
-#psxigqkgxg .gt_stub {
+#cepaozliut .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3898,7 +3909,7 @@
   padding-left: 12px;
 }
 
-#psxigqkgxg .gt_summary_row {
+#cepaozliut .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3908,7 +3919,7 @@
   padding-right: 5px;
 }
 
-#psxigqkgxg .gt_first_summary_row {
+#cepaozliut .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3918,7 +3929,7 @@
   border-top-color: #D3D3D3;
 }
 
-#psxigqkgxg .gt_grand_summary_row {
+#cepaozliut .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3928,7 +3939,7 @@
   padding-right: 5px;
 }
 
-#psxigqkgxg .gt_first_grand_summary_row {
+#cepaozliut .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3938,11 +3949,11 @@
   border-top-color: #D3D3D3;
 }
 
-#psxigqkgxg .gt_striped {
+#cepaozliut .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#psxigqkgxg .gt_table_body {
+#cepaozliut .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3951,7 +3962,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#psxigqkgxg .gt_footnotes {
+#cepaozliut .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3965,13 +3976,13 @@
   border-right-color: #D3D3D3;
 }
 
-#psxigqkgxg .gt_footnote {
+#cepaozliut .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#psxigqkgxg .gt_sourcenotes {
+#cepaozliut .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3985,46 +3996,46 @@
   border-right-color: #D3D3D3;
 }
 
-#psxigqkgxg .gt_sourcenote {
+#cepaozliut .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#psxigqkgxg .gt_left {
+#cepaozliut .gt_left {
   text-align: left;
 }
 
-#psxigqkgxg .gt_center {
+#cepaozliut .gt_center {
   text-align: center;
 }
 
-#psxigqkgxg .gt_right {
+#cepaozliut .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#psxigqkgxg .gt_font_normal {
+#cepaozliut .gt_font_normal {
   font-weight: normal;
 }
 
-#psxigqkgxg .gt_font_bold {
+#cepaozliut .gt_font_bold {
   font-weight: bold;
 }
 
-#psxigqkgxg .gt_font_italic {
+#cepaozliut .gt_font_italic {
   font-style: italic;
 }
 
-#psxigqkgxg .gt_super {
+#cepaozliut .gt_super {
   font-size: 65%;
 }
 
-#psxigqkgxg .gt_footnote_marks {
+#cepaozliut .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="psxigqkgxg" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="table gt_table">
+<table class="table gt_table">
 <thead class="gt_col_headings">
 <tr>
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1"></th>
@@ -4057,50 +4068,50 @@
 <td class="gt_row gt_right">$140,700</td>
 </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Mercedes-Benz AMG GT</td>
+<td class="gt_row gt_left gt_stub">BMW 6-Series</td>
 <td class="gt_row gt_right">2016</td>
-<td class="gt_row gt_left">S Coupe</td>
-<td class="gt_row gt_left">7a</td>
-<td class="gt_row gt_right">16c<br>22h</td>
-<td class="gt_row gt_right">503<br>@6250rpm</td>
-<td class="gt_row gt_right">479<br>@1750rpm</td>
-<td class="gt_row gt_right">$129,900</td>
+<td class="gt_row gt_left">640 I Coupe</td>
+<td class="gt_row gt_left">8am</td>
+<td class="gt_row gt_right">20c<br>30h</td>
+<td class="gt_row gt_right">315<br>@5800rpm</td>
+<td class="gt_row gt_right">330<br>@1400rpm</td>
+<td class="gt_row gt_right">$77,300</td>
 </tr>
 <tr class="gt_group_heading_row">
 <td colspan="8" class="gt_group_heading">Italy</td>
     </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Ferrari LaFerrari</td>
+<td class="gt_row gt_left gt_stub">Ferrari 458 Speciale</td>
 <td class="gt_row gt_right">2015</td>
 <td class="gt_row gt_left">Base Coupe</td>
 <td class="gt_row gt_left">7a</td>
-<td class="gt_row gt_right">12c<br>16h</td>
-<td class="gt_row gt_right">949<br>@9000rpm</td>
-<td class="gt_row gt_right">664<br>@6750rpm</td>
-<td class="gt_row gt_right">$1,416,362</td>
+<td class="gt_row gt_right">13c<br>17h</td>
+<td class="gt_row gt_right">597<br>@9000rpm</td>
+<td class="gt_row gt_right">398<br>@6000rpm</td>
+<td class="gt_row gt_right">$291,744</td>
 </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Lamborghini Aventador</td>
+<td class="gt_row gt_left gt_stub">Ferrari 458 Spider</td>
 <td class="gt_row gt_right">2015</td>
-<td class="gt_row gt_left">LP 700-4 Coupe</td>
+<td class="gt_row gt_left">Base</td>
 <td class="gt_row gt_left">7a</td>
-<td class="gt_row gt_right">11c<br>18h</td>
-<td class="gt_row gt_right">700<br>@8250rpm</td>
-<td class="gt_row gt_right">507<br>@5500rpm</td>
-<td class="gt_row gt_right">$397,500</td>
+<td class="gt_row gt_right">13c<br>17h</td>
+<td class="gt_row gt_right">562<br>@9000rpm</td>
+<td class="gt_row gt_right">398<br>@6000rpm</td>
+<td class="gt_row gt_right">$263,553</td>
 </tr>
 <tr class="gt_group_heading_row">
 <td colspan="8" class="gt_group_heading">United States</td>
     </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Dodge Viper</td>
-<td class="gt_row gt_right">2017</td>
-<td class="gt_row gt_left">GT Coupe</td>
-<td class="gt_row gt_left">6m</td>
-<td class="gt_row gt_right">12c<br>19h</td>
-<td class="gt_row gt_right">645<br>@5000rpm</td>
-<td class="gt_row gt_right">600<br>@5000rpm</td>
-<td class="gt_row gt_right">$95,895</td>
+<td class="gt_row gt_left gt_stub">Chevrolet Corvette</td>
+<td class="gt_row gt_right">2016</td>
+<td class="gt_row gt_left">Z06 Coupe</td>
+<td class="gt_row gt_left">7m</td>
+<td class="gt_row gt_right">15c<br>22h</td>
+<td class="gt_row gt_right">650<br>@6400rpm</td>
+<td class="gt_row gt_right">650<br>@3600rpm</td>
+<td class="gt_row gt_right">$88,345</td>
 </tr>
 <tr>
 <td class="gt_row gt_left gt_stub">Ford GT</td>
@@ -4136,7 +4147,8 @@
 <td class="gt_row gt_right">$101,770</td>
 </tr>
 </tbody>
-</table></div>
+</table>
+</div>
 </div>
 <div id="column-alignment-and-style-changes" class="section level3">
 <h3 class="hasAnchor">
@@ -4151,21 +4163,23 @@
   <span class="va">tab</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/cols_align.html">cols_align</a></span><span class="op">(</span>
     align <span class="op">=</span> <span class="st">"center"</span>,
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">mpg_c</span>, <span class="va">hp</span>, <span class="va">trq</span><span class="op">)</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">mpg_c</span>, <span class="va">hp</span>, <span class="va">trq</span><span class="op">)</span>
   <span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span>
     style <span class="op">=</span> <span class="fu"><a href="../reference/cell_text.html">cell_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">12</span><span class="op">)</span><span class="op">)</span>,
     locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span>
-      columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">trim</span>, <span class="va">trsmn</span>, <span class="va">mpg_c</span>, <span class="va">hp</span>, <span class="va">trq</span><span class="op">)</span><span class="op">)</span>
+      columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">trim</span>, <span class="va">trsmn</span>, <span class="va">mpg_c</span>, <span class="va">hp</span>, <span class="va">trq</span><span class="op">)</span>
+    <span class="op">)</span>
   <span class="op">)</span>
 
 <span class="co"># Show the table</span>
 <span class="va">tab</span></code></pre></div>
+<div id="clgeuwbjka" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#tjngptbmop .gt_table {
+#clgeuwbjka .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -4190,7 +4204,7 @@
   border-left-color: #D3D3D3;
 }
 
-#tjngptbmop .gt_heading {
+#clgeuwbjka .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -4202,7 +4216,7 @@
   border-right-color: #D3D3D3;
 }
 
-#tjngptbmop .gt_title {
+#clgeuwbjka .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -4212,7 +4226,7 @@
   border-bottom-width: 0;
 }
 
-#tjngptbmop .gt_subtitle {
+#clgeuwbjka .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -4222,13 +4236,13 @@
   border-top-width: 0;
 }
 
-#tjngptbmop .gt_bottom_border {
+#clgeuwbjka .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#tjngptbmop .gt_col_headings {
+#clgeuwbjka .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4243,7 +4257,7 @@
   border-right-color: #D3D3D3;
 }
 
-#tjngptbmop .gt_col_heading {
+#clgeuwbjka .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4263,7 +4277,7 @@
   overflow-x: hidden;
 }
 
-#tjngptbmop .gt_column_spanner_outer {
+#clgeuwbjka .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4275,15 +4289,15 @@
   padding-right: 4px;
 }
 
-#tjngptbmop .gt_column_spanner_outer:first-child {
+#clgeuwbjka .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#tjngptbmop .gt_column_spanner_outer:last-child {
+#clgeuwbjka .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#tjngptbmop .gt_column_spanner {
+#clgeuwbjka .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -4295,7 +4309,7 @@
   width: 100%;
 }
 
-#tjngptbmop .gt_group_heading {
+#clgeuwbjka .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -4317,7 +4331,7 @@
   vertical-align: middle;
 }
 
-#tjngptbmop .gt_empty_group_heading {
+#clgeuwbjka .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -4332,15 +4346,15 @@
   vertical-align: middle;
 }
 
-#tjngptbmop .gt_from_md > :first-child {
+#clgeuwbjka .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#tjngptbmop .gt_from_md > :last-child {
+#clgeuwbjka .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#tjngptbmop .gt_row {
+#clgeuwbjka .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4359,7 +4373,7 @@
   overflow-x: hidden;
 }
 
-#tjngptbmop .gt_stub {
+#clgeuwbjka .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4371,7 +4385,7 @@
   padding-left: 12px;
 }
 
-#tjngptbmop .gt_summary_row {
+#clgeuwbjka .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4381,7 +4395,7 @@
   padding-right: 5px;
 }
 
-#tjngptbmop .gt_first_summary_row {
+#clgeuwbjka .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4391,7 +4405,7 @@
   border-top-color: #D3D3D3;
 }
 
-#tjngptbmop .gt_grand_summary_row {
+#clgeuwbjka .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4401,7 +4415,7 @@
   padding-right: 5px;
 }
 
-#tjngptbmop .gt_first_grand_summary_row {
+#clgeuwbjka .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4411,11 +4425,11 @@
   border-top-color: #D3D3D3;
 }
 
-#tjngptbmop .gt_striped {
+#clgeuwbjka .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#tjngptbmop .gt_table_body {
+#clgeuwbjka .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4424,7 +4438,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#tjngptbmop .gt_footnotes {
+#clgeuwbjka .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4438,13 +4452,13 @@
   border-right-color: #D3D3D3;
 }
 
-#tjngptbmop .gt_footnote {
+#clgeuwbjka .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#tjngptbmop .gt_sourcenotes {
+#clgeuwbjka .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4458,46 +4472,46 @@
   border-right-color: #D3D3D3;
 }
 
-#tjngptbmop .gt_sourcenote {
+#clgeuwbjka .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#tjngptbmop .gt_left {
+#clgeuwbjka .gt_left {
   text-align: left;
 }
 
-#tjngptbmop .gt_center {
+#clgeuwbjka .gt_center {
   text-align: center;
 }
 
-#tjngptbmop .gt_right {
+#clgeuwbjka .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#tjngptbmop .gt_font_normal {
+#clgeuwbjka .gt_font_normal {
   font-weight: normal;
 }
 
-#tjngptbmop .gt_font_bold {
+#clgeuwbjka .gt_font_bold {
   font-weight: bold;
 }
 
-#tjngptbmop .gt_font_italic {
+#clgeuwbjka .gt_font_italic {
   font-style: italic;
 }
 
-#tjngptbmop .gt_super {
+#clgeuwbjka .gt_super {
   font-size: 65%;
 }
 
-#tjngptbmop .gt_footnote_marks {
+#clgeuwbjka .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="tjngptbmop" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="table gt_table">
+<table class="table gt_table">
 <thead class="gt_col_headings">
 <tr>
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1"></th>
@@ -4530,50 +4544,50 @@
 <td class="gt_row gt_right">$140,700</td>
 </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Mercedes-Benz AMG GT</td>
+<td class="gt_row gt_left gt_stub">BMW 6-Series</td>
 <td class="gt_row gt_right">2016</td>
-<td class="gt_row gt_left" style="font-size: 12px;">S Coupe</td>
-<td class="gt_row gt_left" style="font-size: 12px;">7a</td>
-<td class="gt_row gt_center" style="font-size: 12px;">16c<br>22h</td>
-<td class="gt_row gt_center" style="font-size: 12px;">503<br>@6250rpm</td>
-<td class="gt_row gt_center" style="font-size: 12px;">479<br>@1750rpm</td>
-<td class="gt_row gt_right">$129,900</td>
+<td class="gt_row gt_left" style="font-size: 12px;">640 I Coupe</td>
+<td class="gt_row gt_left" style="font-size: 12px;">8am</td>
+<td class="gt_row gt_center" style="font-size: 12px;">20c<br>30h</td>
+<td class="gt_row gt_center" style="font-size: 12px;">315<br>@5800rpm</td>
+<td class="gt_row gt_center" style="font-size: 12px;">330<br>@1400rpm</td>
+<td class="gt_row gt_right">$77,300</td>
 </tr>
 <tr class="gt_group_heading_row">
 <td colspan="8" class="gt_group_heading">Italy</td>
     </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Ferrari LaFerrari</td>
+<td class="gt_row gt_left gt_stub">Ferrari 458 Speciale</td>
 <td class="gt_row gt_right">2015</td>
 <td class="gt_row gt_left" style="font-size: 12px;">Base Coupe</td>
 <td class="gt_row gt_left" style="font-size: 12px;">7a</td>
-<td class="gt_row gt_center" style="font-size: 12px;">12c<br>16h</td>
-<td class="gt_row gt_center" style="font-size: 12px;">949<br>@9000rpm</td>
-<td class="gt_row gt_center" style="font-size: 12px;">664<br>@6750rpm</td>
-<td class="gt_row gt_right">$1,416,362</td>
+<td class="gt_row gt_center" style="font-size: 12px;">13c<br>17h</td>
+<td class="gt_row gt_center" style="font-size: 12px;">597<br>@9000rpm</td>
+<td class="gt_row gt_center" style="font-size: 12px;">398<br>@6000rpm</td>
+<td class="gt_row gt_right">$291,744</td>
 </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Lamborghini Aventador</td>
+<td class="gt_row gt_left gt_stub">Ferrari 458 Spider</td>
 <td class="gt_row gt_right">2015</td>
-<td class="gt_row gt_left" style="font-size: 12px;">LP 700-4 Coupe</td>
+<td class="gt_row gt_left" style="font-size: 12px;">Base</td>
 <td class="gt_row gt_left" style="font-size: 12px;">7a</td>
-<td class="gt_row gt_center" style="font-size: 12px;">11c<br>18h</td>
-<td class="gt_row gt_center" style="font-size: 12px;">700<br>@8250rpm</td>
-<td class="gt_row gt_center" style="font-size: 12px;">507<br>@5500rpm</td>
-<td class="gt_row gt_right">$397,500</td>
+<td class="gt_row gt_center" style="font-size: 12px;">13c<br>17h</td>
+<td class="gt_row gt_center" style="font-size: 12px;">562<br>@9000rpm</td>
+<td class="gt_row gt_center" style="font-size: 12px;">398<br>@6000rpm</td>
+<td class="gt_row gt_right">$263,553</td>
 </tr>
 <tr class="gt_group_heading_row">
 <td colspan="8" class="gt_group_heading">United States</td>
     </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Dodge Viper</td>
-<td class="gt_row gt_right">2017</td>
-<td class="gt_row gt_left" style="font-size: 12px;">GT Coupe</td>
-<td class="gt_row gt_left" style="font-size: 12px;">6m</td>
-<td class="gt_row gt_center" style="font-size: 12px;">12c<br>19h</td>
-<td class="gt_row gt_center" style="font-size: 12px;">645<br>@5000rpm</td>
-<td class="gt_row gt_center" style="font-size: 12px;">600<br>@5000rpm</td>
-<td class="gt_row gt_right">$95,895</td>
+<td class="gt_row gt_left gt_stub">Chevrolet Corvette</td>
+<td class="gt_row gt_right">2016</td>
+<td class="gt_row gt_left" style="font-size: 12px;">Z06 Coupe</td>
+<td class="gt_row gt_left" style="font-size: 12px;">7m</td>
+<td class="gt_row gt_center" style="font-size: 12px;">15c<br>22h</td>
+<td class="gt_row gt_center" style="font-size: 12px;">650<br>@6400rpm</td>
+<td class="gt_row gt_center" style="font-size: 12px;">650<br>@3600rpm</td>
+<td class="gt_row gt_right">$88,345</td>
 </tr>
 <tr>
 <td class="gt_row gt_left gt_stub">Ford GT</td>
@@ -4609,7 +4623,8 @@
 <td class="gt_row gt_right">$101,770</td>
 </tr>
 </tbody>
-</table></div>
+</table>
+</div>
 </div>
 <div id="text-transforms" class="section level3">
 <h3 class="hasAnchor">
@@ -4623,7 +4638,7 @@
 <span class="va">tab</span> <span class="op">&lt;-</span> 
   <span class="va">tab</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/text_transform.html">text_transform</a></span><span class="op">(</span>
-    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">trsmn</span><span class="op">)</span><span class="op">)</span>,
+    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">trsmn</span><span class="op">)</span>,
     fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
       
       <span class="co"># The first character of `x` always</span>
@@ -4649,11 +4664,12 @@
 
 <span class="co"># Show the table</span>
 <span class="va">tab</span></code></pre></div>
+<div id="mqtgqvpozn" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#lkxilpjtdw .gt_table {
+#mqtgqvpozn .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -4678,7 +4694,7 @@
   border-left-color: #D3D3D3;
 }
 
-#lkxilpjtdw .gt_heading {
+#mqtgqvpozn .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -4690,7 +4706,7 @@
   border-right-color: #D3D3D3;
 }
 
-#lkxilpjtdw .gt_title {
+#mqtgqvpozn .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -4700,7 +4716,7 @@
   border-bottom-width: 0;
 }
 
-#lkxilpjtdw .gt_subtitle {
+#mqtgqvpozn .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -4710,13 +4726,13 @@
   border-top-width: 0;
 }
 
-#lkxilpjtdw .gt_bottom_border {
+#mqtgqvpozn .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#lkxilpjtdw .gt_col_headings {
+#mqtgqvpozn .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4731,7 +4747,7 @@
   border-right-color: #D3D3D3;
 }
 
-#lkxilpjtdw .gt_col_heading {
+#mqtgqvpozn .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4751,7 +4767,7 @@
   overflow-x: hidden;
 }
 
-#lkxilpjtdw .gt_column_spanner_outer {
+#mqtgqvpozn .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4763,15 +4779,15 @@
   padding-right: 4px;
 }
 
-#lkxilpjtdw .gt_column_spanner_outer:first-child {
+#mqtgqvpozn .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#lkxilpjtdw .gt_column_spanner_outer:last-child {
+#mqtgqvpozn .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#lkxilpjtdw .gt_column_spanner {
+#mqtgqvpozn .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -4783,7 +4799,7 @@
   width: 100%;
 }
 
-#lkxilpjtdw .gt_group_heading {
+#mqtgqvpozn .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -4805,7 +4821,7 @@
   vertical-align: middle;
 }
 
-#lkxilpjtdw .gt_empty_group_heading {
+#mqtgqvpozn .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -4820,15 +4836,15 @@
   vertical-align: middle;
 }
 
-#lkxilpjtdw .gt_from_md > :first-child {
+#mqtgqvpozn .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#lkxilpjtdw .gt_from_md > :last-child {
+#mqtgqvpozn .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#lkxilpjtdw .gt_row {
+#mqtgqvpozn .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4847,7 +4863,7 @@
   overflow-x: hidden;
 }
 
-#lkxilpjtdw .gt_stub {
+#mqtgqvpozn .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4859,7 +4875,7 @@
   padding-left: 12px;
 }
 
-#lkxilpjtdw .gt_summary_row {
+#mqtgqvpozn .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4869,7 +4885,7 @@
   padding-right: 5px;
 }
 
-#lkxilpjtdw .gt_first_summary_row {
+#mqtgqvpozn .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4879,7 +4895,7 @@
   border-top-color: #D3D3D3;
 }
 
-#lkxilpjtdw .gt_grand_summary_row {
+#mqtgqvpozn .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4889,7 +4905,7 @@
   padding-right: 5px;
 }
 
-#lkxilpjtdw .gt_first_grand_summary_row {
+#mqtgqvpozn .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4899,11 +4915,11 @@
   border-top-color: #D3D3D3;
 }
 
-#lkxilpjtdw .gt_striped {
+#mqtgqvpozn .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#lkxilpjtdw .gt_table_body {
+#mqtgqvpozn .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4912,7 +4928,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#lkxilpjtdw .gt_footnotes {
+#mqtgqvpozn .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4926,13 +4942,13 @@
   border-right-color: #D3D3D3;
 }
 
-#lkxilpjtdw .gt_footnote {
+#mqtgqvpozn .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#lkxilpjtdw .gt_sourcenotes {
+#mqtgqvpozn .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4946,46 +4962,46 @@
   border-right-color: #D3D3D3;
 }
 
-#lkxilpjtdw .gt_sourcenote {
+#mqtgqvpozn .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#lkxilpjtdw .gt_left {
+#mqtgqvpozn .gt_left {
   text-align: left;
 }
 
-#lkxilpjtdw .gt_center {
+#mqtgqvpozn .gt_center {
   text-align: center;
 }
 
-#lkxilpjtdw .gt_right {
+#mqtgqvpozn .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#lkxilpjtdw .gt_font_normal {
+#mqtgqvpozn .gt_font_normal {
   font-weight: normal;
 }
 
-#lkxilpjtdw .gt_font_bold {
+#mqtgqvpozn .gt_font_bold {
   font-weight: bold;
 }
 
-#lkxilpjtdw .gt_font_italic {
+#mqtgqvpozn .gt_font_italic {
   font-style: italic;
 }
 
-#lkxilpjtdw .gt_super {
+#mqtgqvpozn .gt_super {
   font-size: 65%;
 }
 
-#lkxilpjtdw .gt_footnote_marks {
+#mqtgqvpozn .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="lkxilpjtdw" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="table gt_table">
+<table class="table gt_table">
 <thead class="gt_col_headings">
 <tr>
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1"></th>
@@ -5019,54 +5035,54 @@
 <td class="gt_row gt_right">$140,700</td>
 </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Mercedes-Benz AMG GT</td>
+<td class="gt_row gt_left gt_stub">BMW 6-Series</td>
 <td class="gt_row gt_right">2016</td>
-<td class="gt_row gt_left" style="font-size: 12px;">S Coupe</td>
-<td class="gt_row gt_left" style="font-size: 12px;">7  Speed<br><em> Automatic </em>
+<td class="gt_row gt_left" style="font-size: 12px;">640 I Coupe</td>
+<td class="gt_row gt_left" style="font-size: 12px;">8  Speed<br><em> Automatic/Manual </em>
 </td>
-<td class="gt_row gt_center" style="font-size: 12px;">16c<br>22h</td>
-<td class="gt_row gt_center" style="font-size: 12px;">503<br>@6250rpm</td>
-<td class="gt_row gt_center" style="font-size: 12px;">479<br>@1750rpm</td>
-<td class="gt_row gt_right">$129,900</td>
+<td class="gt_row gt_center" style="font-size: 12px;">20c<br>30h</td>
+<td class="gt_row gt_center" style="font-size: 12px;">315<br>@5800rpm</td>
+<td class="gt_row gt_center" style="font-size: 12px;">330<br>@1400rpm</td>
+<td class="gt_row gt_right">$77,300</td>
 </tr>
 <tr class="gt_group_heading_row">
 <td colspan="8" class="gt_group_heading">Italy</td>
     </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Ferrari LaFerrari</td>
+<td class="gt_row gt_left gt_stub">Ferrari 458 Speciale</td>
 <td class="gt_row gt_right">2015</td>
 <td class="gt_row gt_left" style="font-size: 12px;">Base Coupe</td>
 <td class="gt_row gt_left" style="font-size: 12px;">7  Speed<br><em> Automatic </em>
 </td>
-<td class="gt_row gt_center" style="font-size: 12px;">12c<br>16h</td>
-<td class="gt_row gt_center" style="font-size: 12px;">949<br>@9000rpm</td>
-<td class="gt_row gt_center" style="font-size: 12px;">664<br>@6750rpm</td>
-<td class="gt_row gt_right">$1,416,362</td>
+<td class="gt_row gt_center" style="font-size: 12px;">13c<br>17h</td>
+<td class="gt_row gt_center" style="font-size: 12px;">597<br>@9000rpm</td>
+<td class="gt_row gt_center" style="font-size: 12px;">398<br>@6000rpm</td>
+<td class="gt_row gt_right">$291,744</td>
 </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Lamborghini Aventador</td>
+<td class="gt_row gt_left gt_stub">Ferrari 458 Spider</td>
 <td class="gt_row gt_right">2015</td>
-<td class="gt_row gt_left" style="font-size: 12px;">LP 700-4 Coupe</td>
+<td class="gt_row gt_left" style="font-size: 12px;">Base</td>
 <td class="gt_row gt_left" style="font-size: 12px;">7  Speed<br><em> Automatic </em>
 </td>
-<td class="gt_row gt_center" style="font-size: 12px;">11c<br>18h</td>
-<td class="gt_row gt_center" style="font-size: 12px;">700<br>@8250rpm</td>
-<td class="gt_row gt_center" style="font-size: 12px;">507<br>@5500rpm</td>
-<td class="gt_row gt_right">$397,500</td>
+<td class="gt_row gt_center" style="font-size: 12px;">13c<br>17h</td>
+<td class="gt_row gt_center" style="font-size: 12px;">562<br>@9000rpm</td>
+<td class="gt_row gt_center" style="font-size: 12px;">398<br>@6000rpm</td>
+<td class="gt_row gt_right">$263,553</td>
 </tr>
 <tr class="gt_group_heading_row">
 <td colspan="8" class="gt_group_heading">United States</td>
     </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Dodge Viper</td>
-<td class="gt_row gt_right">2017</td>
-<td class="gt_row gt_left" style="font-size: 12px;">GT Coupe</td>
-<td class="gt_row gt_left" style="font-size: 12px;">6  Speed<br><em> Manual </em>
+<td class="gt_row gt_left gt_stub">Chevrolet Corvette</td>
+<td class="gt_row gt_right">2016</td>
+<td class="gt_row gt_left" style="font-size: 12px;">Z06 Coupe</td>
+<td class="gt_row gt_left" style="font-size: 12px;">7  Speed<br><em> Manual </em>
 </td>
-<td class="gt_row gt_center" style="font-size: 12px;">12c<br>19h</td>
-<td class="gt_row gt_center" style="font-size: 12px;">645<br>@5000rpm</td>
-<td class="gt_row gt_center" style="font-size: 12px;">600<br>@5000rpm</td>
-<td class="gt_row gt_right">$95,895</td>
+<td class="gt_row gt_center" style="font-size: 12px;">15c<br>22h</td>
+<td class="gt_row gt_center" style="font-size: 12px;">650<br>@6400rpm</td>
+<td class="gt_row gt_center" style="font-size: 12px;">650<br>@3600rpm</td>
+<td class="gt_row gt_right">$88,345</td>
 </tr>
 <tr>
 <td class="gt_row gt_left gt_stub">Ford GT</td>
@@ -5105,7 +5121,8 @@
 <td class="gt_row gt_right">$101,770</td>
 </tr>
 </tbody>
-</table></div>
+</table>
+</div>
 </div>
 <div id="table-header-title-and-subtitle" class="section level3">
 <h3 class="hasAnchor">
@@ -5123,11 +5140,12 @@
 
 <span class="co"># Show the table</span>
 <span class="va">tab</span></code></pre></div>
+<div id="hinnwttviv" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#cuqvranihy .gt_table {
+#hinnwttviv .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -5152,7 +5170,7 @@
   border-left-color: #D3D3D3;
 }
 
-#cuqvranihy .gt_heading {
+#hinnwttviv .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -5164,7 +5182,7 @@
   border-right-color: #D3D3D3;
 }
 
-#cuqvranihy .gt_title {
+#hinnwttviv .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -5174,7 +5192,7 @@
   border-bottom-width: 0;
 }
 
-#cuqvranihy .gt_subtitle {
+#hinnwttviv .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -5184,13 +5202,13 @@
   border-top-width: 0;
 }
 
-#cuqvranihy .gt_bottom_border {
+#hinnwttviv .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#cuqvranihy .gt_col_headings {
+#hinnwttviv .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -5205,7 +5223,7 @@
   border-right-color: #D3D3D3;
 }
 
-#cuqvranihy .gt_col_heading {
+#hinnwttviv .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -5225,7 +5243,7 @@
   overflow-x: hidden;
 }
 
-#cuqvranihy .gt_column_spanner_outer {
+#hinnwttviv .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -5237,15 +5255,15 @@
   padding-right: 4px;
 }
 
-#cuqvranihy .gt_column_spanner_outer:first-child {
+#hinnwttviv .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#cuqvranihy .gt_column_spanner_outer:last-child {
+#hinnwttviv .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#cuqvranihy .gt_column_spanner {
+#hinnwttviv .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -5257,7 +5275,7 @@
   width: 100%;
 }
 
-#cuqvranihy .gt_group_heading {
+#hinnwttviv .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -5279,7 +5297,7 @@
   vertical-align: middle;
 }
 
-#cuqvranihy .gt_empty_group_heading {
+#hinnwttviv .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -5294,15 +5312,15 @@
   vertical-align: middle;
 }
 
-#cuqvranihy .gt_from_md > :first-child {
+#hinnwttviv .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#cuqvranihy .gt_from_md > :last-child {
+#hinnwttviv .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#cuqvranihy .gt_row {
+#hinnwttviv .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5321,7 +5339,7 @@
   overflow-x: hidden;
 }
 
-#cuqvranihy .gt_stub {
+#hinnwttviv .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -5333,7 +5351,7 @@
   padding-left: 12px;
 }
 
-#cuqvranihy .gt_summary_row {
+#hinnwttviv .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -5343,7 +5361,7 @@
   padding-right: 5px;
 }
 
-#cuqvranihy .gt_first_summary_row {
+#hinnwttviv .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5353,7 +5371,7 @@
   border-top-color: #D3D3D3;
 }
 
-#cuqvranihy .gt_grand_summary_row {
+#hinnwttviv .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -5363,7 +5381,7 @@
   padding-right: 5px;
 }
 
-#cuqvranihy .gt_first_grand_summary_row {
+#hinnwttviv .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5373,11 +5391,11 @@
   border-top-color: #D3D3D3;
 }
 
-#cuqvranihy .gt_striped {
+#hinnwttviv .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#cuqvranihy .gt_table_body {
+#hinnwttviv .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -5386,7 +5404,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#cuqvranihy .gt_footnotes {
+#hinnwttviv .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -5400,13 +5418,13 @@
   border-right-color: #D3D3D3;
 }
 
-#cuqvranihy .gt_footnote {
+#hinnwttviv .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#cuqvranihy .gt_sourcenotes {
+#hinnwttviv .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -5420,46 +5438,46 @@
   border-right-color: #D3D3D3;
 }
 
-#cuqvranihy .gt_sourcenote {
+#hinnwttviv .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#cuqvranihy .gt_left {
+#hinnwttviv .gt_left {
   text-align: left;
 }
 
-#cuqvranihy .gt_center {
+#hinnwttviv .gt_center {
   text-align: center;
 }
 
-#cuqvranihy .gt_right {
+#hinnwttviv .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#cuqvranihy .gt_font_normal {
+#hinnwttviv .gt_font_normal {
   font-weight: normal;
 }
 
-#cuqvranihy .gt_font_bold {
+#hinnwttviv .gt_font_bold {
   font-weight: bold;
 }
 
-#cuqvranihy .gt_font_italic {
+#hinnwttviv .gt_font_italic {
   font-style: italic;
 }
 
-#cuqvranihy .gt_super {
+#hinnwttviv .gt_super {
   font-size: 65%;
 }
 
-#cuqvranihy .gt_footnote_marks {
+#hinnwttviv .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="cuqvranihy" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="table gt_table">
+<table class="table gt_table">
 <thead class="gt_header">
 <tr>
 <th colspan="8" class="gt_heading gt_title gt_font_normal" style>The Cars of <strong>gtcars</strong>
@@ -5502,54 +5520,54 @@
 <td class="gt_row gt_right">$140,700</td>
 </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Mercedes-Benz AMG GT</td>
+<td class="gt_row gt_left gt_stub">BMW 6-Series</td>
 <td class="gt_row gt_right">2016</td>
-<td class="gt_row gt_left" style="font-size: 12px;">S Coupe</td>
-<td class="gt_row gt_left" style="font-size: 12px;">7  Speed<br><em> Automatic </em>
+<td class="gt_row gt_left" style="font-size: 12px;">640 I Coupe</td>
+<td class="gt_row gt_left" style="font-size: 12px;">8  Speed<br><em> Automatic/Manual </em>
 </td>
-<td class="gt_row gt_center" style="font-size: 12px;">16c<br>22h</td>
-<td class="gt_row gt_center" style="font-size: 12px;">503<br>@6250rpm</td>
-<td class="gt_row gt_center" style="font-size: 12px;">479<br>@1750rpm</td>
-<td class="gt_row gt_right">$129,900</td>
+<td class="gt_row gt_center" style="font-size: 12px;">20c<br>30h</td>
+<td class="gt_row gt_center" style="font-size: 12px;">315<br>@5800rpm</td>
+<td class="gt_row gt_center" style="font-size: 12px;">330<br>@1400rpm</td>
+<td class="gt_row gt_right">$77,300</td>
 </tr>
 <tr class="gt_group_heading_row">
 <td colspan="8" class="gt_group_heading">Italy</td>
     </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Ferrari LaFerrari</td>
+<td class="gt_row gt_left gt_stub">Ferrari 458 Speciale</td>
 <td class="gt_row gt_right">2015</td>
 <td class="gt_row gt_left" style="font-size: 12px;">Base Coupe</td>
 <td class="gt_row gt_left" style="font-size: 12px;">7  Speed<br><em> Automatic </em>
 </td>
-<td class="gt_row gt_center" style="font-size: 12px;">12c<br>16h</td>
-<td class="gt_row gt_center" style="font-size: 12px;">949<br>@9000rpm</td>
-<td class="gt_row gt_center" style="font-size: 12px;">664<br>@6750rpm</td>
-<td class="gt_row gt_right">$1,416,362</td>
+<td class="gt_row gt_center" style="font-size: 12px;">13c<br>17h</td>
+<td class="gt_row gt_center" style="font-size: 12px;">597<br>@9000rpm</td>
+<td class="gt_row gt_center" style="font-size: 12px;">398<br>@6000rpm</td>
+<td class="gt_row gt_right">$291,744</td>
 </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Lamborghini Aventador</td>
+<td class="gt_row gt_left gt_stub">Ferrari 458 Spider</td>
 <td class="gt_row gt_right">2015</td>
-<td class="gt_row gt_left" style="font-size: 12px;">LP 700-4 Coupe</td>
+<td class="gt_row gt_left" style="font-size: 12px;">Base</td>
 <td class="gt_row gt_left" style="font-size: 12px;">7  Speed<br><em> Automatic </em>
 </td>
-<td class="gt_row gt_center" style="font-size: 12px;">11c<br>18h</td>
-<td class="gt_row gt_center" style="font-size: 12px;">700<br>@8250rpm</td>
-<td class="gt_row gt_center" style="font-size: 12px;">507<br>@5500rpm</td>
-<td class="gt_row gt_right">$397,500</td>
+<td class="gt_row gt_center" style="font-size: 12px;">13c<br>17h</td>
+<td class="gt_row gt_center" style="font-size: 12px;">562<br>@9000rpm</td>
+<td class="gt_row gt_center" style="font-size: 12px;">398<br>@6000rpm</td>
+<td class="gt_row gt_right">$263,553</td>
 </tr>
 <tr class="gt_group_heading_row">
 <td colspan="8" class="gt_group_heading">United States</td>
     </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Dodge Viper</td>
-<td class="gt_row gt_right">2017</td>
-<td class="gt_row gt_left" style="font-size: 12px;">GT Coupe</td>
-<td class="gt_row gt_left" style="font-size: 12px;">6  Speed<br><em> Manual </em>
+<td class="gt_row gt_left gt_stub">Chevrolet Corvette</td>
+<td class="gt_row gt_right">2016</td>
+<td class="gt_row gt_left" style="font-size: 12px;">Z06 Coupe</td>
+<td class="gt_row gt_left" style="font-size: 12px;">7  Speed<br><em> Manual </em>
 </td>
-<td class="gt_row gt_center" style="font-size: 12px;">12c<br>19h</td>
-<td class="gt_row gt_center" style="font-size: 12px;">645<br>@5000rpm</td>
-<td class="gt_row gt_center" style="font-size: 12px;">600<br>@5000rpm</td>
-<td class="gt_row gt_right">$95,895</td>
+<td class="gt_row gt_center" style="font-size: 12px;">15c<br>22h</td>
+<td class="gt_row gt_center" style="font-size: 12px;">650<br>@6400rpm</td>
+<td class="gt_row gt_center" style="font-size: 12px;">650<br>@3600rpm</td>
+<td class="gt_row gt_right">$88,345</td>
 </tr>
 <tr>
 <td class="gt_row gt_left gt_stub">Ford GT</td>
@@ -5588,7 +5606,8 @@
 <td class="gt_row gt_right">$101,770</td>
 </tr>
 </tbody>
-</table></div>
+</table>
+</div>
 </div>
 <div id="adding-a-source-citation" class="section level3">
 <h3 class="hasAnchor">
@@ -5601,16 +5620,18 @@
   <span class="va">tab</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/tab_source_note.html">tab_source_note</a></span><span class="op">(</span>
     source_note <span class="op">=</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span>
-      <span class="st">"Source: Various pages within the Edmonds website."</span><span class="op">)</span>
+      <span class="st">"Source: Various pages within the Edmonds website."</span>
+    <span class="op">)</span>
   <span class="op">)</span>
 
 <span class="co"># Show the table</span>
 <span class="va">tab</span></code></pre></div>
+<div id="vswurritis" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#jjsvpxkdvy .gt_table {
+#vswurritis .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -5635,7 +5656,7 @@
   border-left-color: #D3D3D3;
 }
 
-#jjsvpxkdvy .gt_heading {
+#vswurritis .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -5647,7 +5668,7 @@
   border-right-color: #D3D3D3;
 }
 
-#jjsvpxkdvy .gt_title {
+#vswurritis .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -5657,7 +5678,7 @@
   border-bottom-width: 0;
 }
 
-#jjsvpxkdvy .gt_subtitle {
+#vswurritis .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -5667,13 +5688,13 @@
   border-top-width: 0;
 }
 
-#jjsvpxkdvy .gt_bottom_border {
+#vswurritis .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#jjsvpxkdvy .gt_col_headings {
+#vswurritis .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -5688,7 +5709,7 @@
   border-right-color: #D3D3D3;
 }
 
-#jjsvpxkdvy .gt_col_heading {
+#vswurritis .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -5708,7 +5729,7 @@
   overflow-x: hidden;
 }
 
-#jjsvpxkdvy .gt_column_spanner_outer {
+#vswurritis .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -5720,15 +5741,15 @@
   padding-right: 4px;
 }
 
-#jjsvpxkdvy .gt_column_spanner_outer:first-child {
+#vswurritis .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#jjsvpxkdvy .gt_column_spanner_outer:last-child {
+#vswurritis .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#jjsvpxkdvy .gt_column_spanner {
+#vswurritis .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -5740,7 +5761,7 @@
   width: 100%;
 }
 
-#jjsvpxkdvy .gt_group_heading {
+#vswurritis .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -5762,7 +5783,7 @@
   vertical-align: middle;
 }
 
-#jjsvpxkdvy .gt_empty_group_heading {
+#vswurritis .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -5777,15 +5798,15 @@
   vertical-align: middle;
 }
 
-#jjsvpxkdvy .gt_from_md > :first-child {
+#vswurritis .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#jjsvpxkdvy .gt_from_md > :last-child {
+#vswurritis .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#jjsvpxkdvy .gt_row {
+#vswurritis .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5804,7 +5825,7 @@
   overflow-x: hidden;
 }
 
-#jjsvpxkdvy .gt_stub {
+#vswurritis .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -5816,7 +5837,7 @@
   padding-left: 12px;
 }
 
-#jjsvpxkdvy .gt_summary_row {
+#vswurritis .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -5826,7 +5847,7 @@
   padding-right: 5px;
 }
 
-#jjsvpxkdvy .gt_first_summary_row {
+#vswurritis .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5836,7 +5857,7 @@
   border-top-color: #D3D3D3;
 }
 
-#jjsvpxkdvy .gt_grand_summary_row {
+#vswurritis .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -5846,7 +5867,7 @@
   padding-right: 5px;
 }
 
-#jjsvpxkdvy .gt_first_grand_summary_row {
+#vswurritis .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5856,11 +5877,11 @@
   border-top-color: #D3D3D3;
 }
 
-#jjsvpxkdvy .gt_striped {
+#vswurritis .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#jjsvpxkdvy .gt_table_body {
+#vswurritis .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -5869,7 +5890,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#jjsvpxkdvy .gt_footnotes {
+#vswurritis .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -5883,13 +5904,13 @@
   border-right-color: #D3D3D3;
 }
 
-#jjsvpxkdvy .gt_footnote {
+#vswurritis .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#jjsvpxkdvy .gt_sourcenotes {
+#vswurritis .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -5903,46 +5924,46 @@
   border-right-color: #D3D3D3;
 }
 
-#jjsvpxkdvy .gt_sourcenote {
+#vswurritis .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#jjsvpxkdvy .gt_left {
+#vswurritis .gt_left {
   text-align: left;
 }
 
-#jjsvpxkdvy .gt_center {
+#vswurritis .gt_center {
   text-align: center;
 }
 
-#jjsvpxkdvy .gt_right {
+#vswurritis .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#jjsvpxkdvy .gt_font_normal {
+#vswurritis .gt_font_normal {
   font-weight: normal;
 }
 
-#jjsvpxkdvy .gt_font_bold {
+#vswurritis .gt_font_bold {
   font-weight: bold;
 }
 
-#jjsvpxkdvy .gt_font_italic {
+#vswurritis .gt_font_italic {
   font-style: italic;
 }
 
-#jjsvpxkdvy .gt_super {
+#vswurritis .gt_super {
   font-size: 65%;
 }
 
-#jjsvpxkdvy .gt_footnote_marks {
+#vswurritis .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="jjsvpxkdvy" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="table gt_table">
+<table class="table gt_table">
 <thead class="gt_header">
 <tr>
 <th colspan="8" class="gt_heading gt_title gt_font_normal" style>The Cars of <strong>gtcars</strong>
@@ -5985,54 +6006,54 @@
 <td class="gt_row gt_right">$140,700</td>
 </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Mercedes-Benz AMG GT</td>
+<td class="gt_row gt_left gt_stub">BMW 6-Series</td>
 <td class="gt_row gt_right">2016</td>
-<td class="gt_row gt_left" style="font-size: 12px;">S Coupe</td>
-<td class="gt_row gt_left" style="font-size: 12px;">7  Speed<br><em> Automatic </em>
+<td class="gt_row gt_left" style="font-size: 12px;">640 I Coupe</td>
+<td class="gt_row gt_left" style="font-size: 12px;">8  Speed<br><em> Automatic/Manual </em>
 </td>
-<td class="gt_row gt_center" style="font-size: 12px;">16c<br>22h</td>
-<td class="gt_row gt_center" style="font-size: 12px;">503<br>@6250rpm</td>
-<td class="gt_row gt_center" style="font-size: 12px;">479<br>@1750rpm</td>
-<td class="gt_row gt_right">$129,900</td>
+<td class="gt_row gt_center" style="font-size: 12px;">20c<br>30h</td>
+<td class="gt_row gt_center" style="font-size: 12px;">315<br>@5800rpm</td>
+<td class="gt_row gt_center" style="font-size: 12px;">330<br>@1400rpm</td>
+<td class="gt_row gt_right">$77,300</td>
 </tr>
 <tr class="gt_group_heading_row">
 <td colspan="8" class="gt_group_heading">Italy</td>
     </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Ferrari LaFerrari</td>
+<td class="gt_row gt_left gt_stub">Ferrari 458 Speciale</td>
 <td class="gt_row gt_right">2015</td>
 <td class="gt_row gt_left" style="font-size: 12px;">Base Coupe</td>
 <td class="gt_row gt_left" style="font-size: 12px;">7  Speed<br><em> Automatic </em>
 </td>
-<td class="gt_row gt_center" style="font-size: 12px;">12c<br>16h</td>
-<td class="gt_row gt_center" style="font-size: 12px;">949<br>@9000rpm</td>
-<td class="gt_row gt_center" style="font-size: 12px;">664<br>@6750rpm</td>
-<td class="gt_row gt_right">$1,416,362</td>
+<td class="gt_row gt_center" style="font-size: 12px;">13c<br>17h</td>
+<td class="gt_row gt_center" style="font-size: 12px;">597<br>@9000rpm</td>
+<td class="gt_row gt_center" style="font-size: 12px;">398<br>@6000rpm</td>
+<td class="gt_row gt_right">$291,744</td>
 </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Lamborghini Aventador</td>
+<td class="gt_row gt_left gt_stub">Ferrari 458 Spider</td>
 <td class="gt_row gt_right">2015</td>
-<td class="gt_row gt_left" style="font-size: 12px;">LP 700-4 Coupe</td>
+<td class="gt_row gt_left" style="font-size: 12px;">Base</td>
 <td class="gt_row gt_left" style="font-size: 12px;">7  Speed<br><em> Automatic </em>
 </td>
-<td class="gt_row gt_center" style="font-size: 12px;">11c<br>18h</td>
-<td class="gt_row gt_center" style="font-size: 12px;">700<br>@8250rpm</td>
-<td class="gt_row gt_center" style="font-size: 12px;">507<br>@5500rpm</td>
-<td class="gt_row gt_right">$397,500</td>
+<td class="gt_row gt_center" style="font-size: 12px;">13c<br>17h</td>
+<td class="gt_row gt_center" style="font-size: 12px;">562<br>@9000rpm</td>
+<td class="gt_row gt_center" style="font-size: 12px;">398<br>@6000rpm</td>
+<td class="gt_row gt_right">$263,553</td>
 </tr>
 <tr class="gt_group_heading_row">
 <td colspan="8" class="gt_group_heading">United States</td>
     </tr>
 <tr>
-<td class="gt_row gt_left gt_stub">Dodge Viper</td>
-<td class="gt_row gt_right">2017</td>
-<td class="gt_row gt_left" style="font-size: 12px;">GT Coupe</td>
-<td class="gt_row gt_left" style="font-size: 12px;">6  Speed<br><em> Manual </em>
+<td class="gt_row gt_left gt_stub">Chevrolet Corvette</td>
+<td class="gt_row gt_right">2016</td>
+<td class="gt_row gt_left" style="font-size: 12px;">Z06 Coupe</td>
+<td class="gt_row gt_left" style="font-size: 12px;">7  Speed<br><em> Manual </em>
 </td>
-<td class="gt_row gt_center" style="font-size: 12px;">12c<br>19h</td>
-<td class="gt_row gt_center" style="font-size: 12px;">645<br>@5000rpm</td>
-<td class="gt_row gt_center" style="font-size: 12px;">600<br>@5000rpm</td>
-<td class="gt_row gt_right">$95,895</td>
+<td class="gt_row gt_center" style="font-size: 12px;">15c<br>22h</td>
+<td class="gt_row gt_center" style="font-size: 12px;">650<br>@6400rpm</td>
+<td class="gt_row gt_center" style="font-size: 12px;">650<br>@3600rpm</td>
+<td class="gt_row gt_right">$88,345</td>
 </tr>
 <tr>
 <td class="gt_row gt_left gt_stub">Ford GT</td>
@@ -6074,7 +6095,8 @@
 <tfoot class="gt_sourcenotes"><tr>
 <td class="gt_sourcenote" colspan="8">Source: Various pages within the Edmonds website.</td>
     </tr></tfoot>
-</table></div>
+</table>
+</div>
 </div>
 <div id="using-the-complete-gtcars-table-and-adding-footnotes" class="section level3">
 <h3 class="hasAnchor">
@@ -6084,61 +6106,58 @@
 b. identifying the car with the highest horsepower
 c. stating the currency of the MSRP</code></pre>
 <p>The <code><a href="../reference/tab_footnote.html">tab_footnote()</a></code> function expects note text for the <code>footnote</code> argument, and locations for where the footnote mark should be attached. It will handle the placement of the footnote mark and also place the footnote in the footnotes area. Here, we’ll use the <code><a href="../reference/cells_body.html">cells_body()</a></code> <em>location helper</em> function. There are several location helper functions for targeting all parts of the table (e.g,. <code><a href="../reference/cells_body.html">cells_body()</a></code>, <code><a href="../reference/cells_stub.html">cells_stub()</a></code>, etc.). Each <em>location helper</em> has their own interface for targeting cells so refer to the documentation for examples of how they work in practice.</p>
-<p>What <code><a href="../reference/cells_body.html">cells_body()</a></code> expects is <code>columns</code> (column names, which can be conveniently provided in <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars()</a></code>) and <code>rows</code> (which can be a vector of row names or row indices). The <code><a href="../reference/cells_stub.html">cells_stub()</a></code> location helper only expects a vector of <code>rows</code>. For <code><a href="../reference/cells_column_labels.html">cells_column_labels()</a></code>, we can either provided targeted column labels in the <code>columns</code> argument or spanner column labels in the <code>groups</code> argument. Here, we are targeting a footnote to the <code>msrp</code> column label so we will use <code>columns = vars(msrp)</code>.</p>
+<p>What <code><a href="../reference/cells_body.html">cells_body()</a></code> expects is <code>columns</code> (column names, which can be conveniently provided in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>) and <code>rows</code> (which can be a vector of row names or row indices). The <code><a href="../reference/cells_stub.html">cells_stub()</a></code> location helper only expects a vector of <code>rows</code>. For <code><a href="../reference/cells_column_labels.html">cells_column_labels()</a></code>, we can either provided targeted column labels in the <code>columns</code> argument or spanner column labels in the <code>groups</code> argument. Here, we are targeting a footnote to the <code>msrp</code> column label so we will use <code>columns = msrp</code>.</p>
 <p>In terms of structuring the code, we’re taking all the previous statements and putting those in first. It should be noted that the order of the statements does not matter to the end result, we could also put in all of the <code><a href="../reference/tab_footnote.html">tab_footnote()</a></code> statements first (again, any in order) and expect the same output table.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Use dplyr functions to get the car with the best city gas mileage;</span>
 <span class="co"># this will be used to target the correct cell for a footnote</span>
 <span class="va">best_gas_mileage_city</span> <span class="op">&lt;-</span> 
   <span class="va">gtcars</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">mpg_c</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>car <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">mfr</span>, <span class="va">model</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">car</span><span class="op">)</span>
+  <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">mpg_c</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">slice</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>car <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">mfr</span>, <span class="va">model</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">pull</span><span class="op">(</span><span class="va">car</span><span class="op">)</span>
 
 <span class="co"># Use dplyr functions to get the car with the highest horsepower</span>
 <span class="co"># this will be used to target the correct cell for a footnote</span>
 <span class="va">highest_horsepower</span> <span class="op">&lt;-</span> 
   <span class="va">gtcars</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">hp</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>car <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">mfr</span>, <span class="va">model</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">car</span><span class="op">)</span>
+  <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">hp</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">slice</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>car <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">mfr</span>, <span class="va">model</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">pull</span><span class="op">(</span><span class="va">car</span><span class="op">)</span>
 
 <span class="co"># Create a display table with `gtcars`, using all of the previous</span>
 <span class="co"># statements piped together + additional `tab_footnote()` stmts</span>
 <span class="va">tab</span> <span class="op">&lt;-</span>
   <span class="va">gtcars</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span>
+  <span class="fu">arrange</span><span class="op">(</span>
     <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">ctry_origin</span>, levels <span class="op">=</span> <span class="va">order_countries</span><span class="op">)</span>,
     <span class="va">mfr</span>, <span class="fu">desc</span><span class="op">(</span><span class="va">msrp</span><span class="op">)</span>
   <span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>car <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">mfr</span>, <span class="va">model</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">mfr</span>, <span class="op">-</span><span class="va">model</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ctry_origin</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>car <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">mfr</span>, <span class="va">model</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">mfr</span>, <span class="op">-</span><span class="va">model</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">ctry_origin</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"car"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/cols_hide.html">cols_hide</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">drivetrain</span>, <span class="va">bdy_style</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/cols_hide.html">cols_hide</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">drivetrain</span>, <span class="va">bdy_style</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/cols_move.html">cols_move</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">trsmn</span>, <span class="va">mpg_c</span>, <span class="va">mpg_h</span><span class="op">)</span>,
-    after <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">trim</span><span class="op">)</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">trsmn</span>, <span class="va">mpg_c</span>, <span class="va">mpg_h</span><span class="op">)</span>,
+    after <span class="op">=</span> <span class="va">trim</span>
   <span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/tab_spanner.html">tab_spanner</a></span><span class="op">(</span>
     label <span class="op">=</span> <span class="st">"Performance"</span>,
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">mpg_c</span>, <span class="va">mpg_h</span>, <span class="va">hp</span>, <span class="va">hp_rpm</span>, <span class="va">trq</span>, <span class="va">trq_rpm</span><span class="op">)</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">mpg_c</span>, <span class="va">mpg_h</span>, <span class="va">hp</span>, <span class="va">hp_rpm</span>, <span class="va">trq</span>, <span class="va">trq_rpm</span><span class="op">)</span>
   <span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/cols_merge.html">cols_merge</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">mpg_c</span>, <span class="va">mpg_h</span><span class="op">)</span>,
-    hide_columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">mpg_h</span><span class="op">)</span>,
+    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">mpg_c</span>, <span class="va">mpg_h</span><span class="op">)</span>,
     pattern <span class="op">=</span> <span class="st">"{1}c&lt;br&gt;{2}h"</span>
   <span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/cols_merge.html">cols_merge</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">hp</span>, <span class="va">hp_rpm</span><span class="op">)</span>,
-    hide_columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">hp_rpm</span><span class="op">)</span>,
+    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">hp</span>, <span class="va">hp_rpm</span><span class="op">)</span>,
     pattern <span class="op">=</span> <span class="st">"{1}&lt;br&gt;@{2}rpm"</span>
   <span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/cols_merge.html">cols_merge</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">trq</span>, <span class="va">trq_rpm</span><span class="op">)</span>,
-    hide_columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">trq_rpm</span><span class="op">)</span>,
+    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">trq</span>, <span class="va">trq_rpm</span><span class="op">)</span>,
     pattern <span class="op">=</span> <span class="st">"{1}&lt;br&gt;@{2}rpm"</span>
   <span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/cols_label.html">cols_label</a></span><span class="op">(</span>
@@ -6151,22 +6170,22 @@ c. stating the currency of the MSRP</code></pre>
     msrp <span class="op">=</span> <span class="st">"MSRP"</span>
   <span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/fmt_currency.html">fmt_currency</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">msrp</span><span class="op">)</span>,
+    columns <span class="op">=</span> <span class="va">msrp</span>,
     currency <span class="op">=</span> <span class="st">"USD"</span>,
     decimals <span class="op">=</span> <span class="fl">0</span>
   <span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/cols_align.html">cols_align</a></span><span class="op">(</span>
     align <span class="op">=</span> <span class="st">"center"</span>,
-    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">mpg_c</span>, <span class="va">hp</span>, <span class="va">trq</span><span class="op">)</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">mpg_c</span>, <span class="va">hp</span>, <span class="va">trq</span><span class="op">)</span>
   <span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span>
     style <span class="op">=</span> <span class="fu"><a href="../reference/cell_text.html">cell_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">12</span><span class="op">)</span><span class="op">)</span>,
     locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span>
-      columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">trim</span>, <span class="va">trsmn</span>, <span class="va">mpg_c</span>, <span class="va">hp</span>, <span class="va">trq</span><span class="op">)</span>
+      columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">trim</span>, <span class="va">trsmn</span>, <span class="va">mpg_c</span>, <span class="va">hp</span>, <span class="va">trq</span><span class="op">)</span>
     <span class="op">)</span>
   <span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/text_transform.html">text_transform</a></span><span class="op">(</span>
-    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">trsmn</span><span class="op">)</span><span class="op">)</span>,
+    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">trsmn</span><span class="op">)</span>,
     fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
       
       <span class="va">speed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substr</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>
@@ -6193,27 +6212,30 @@ c. stating the currency of the MSRP</code></pre>
   <span class="fu"><a href="../reference/tab_footnote.html">tab_footnote</a></span><span class="op">(</span>
     footnote <span class="op">=</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span><span class="st">"Best gas mileage (city) of all the **gtcars**."</span><span class="op">)</span>,
     locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span>
-      columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">mpg_c</span><span class="op">)</span>,
-      rows <span class="op">=</span> <span class="va">best_gas_mileage_city</span><span class="op">)</span>
+      columns <span class="op">=</span> <span class="va">mpg_c</span>,
+      rows <span class="op">=</span> <span class="va">best_gas_mileage_city</span>
+    <span class="op">)</span>
   <span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/tab_footnote.html">tab_footnote</a></span><span class="op">(</span>
     footnote <span class="op">=</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span><span class="st">"The highest horsepower of all the **gtcars**."</span><span class="op">)</span>,
     locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span>
-      columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">hp</span><span class="op">)</span>,
-      rows <span class="op">=</span> <span class="va">highest_horsepower</span><span class="op">)</span>
+      columns <span class="op">=</span> <span class="va">hp</span>,
+      rows <span class="op">=</span> <span class="va">highest_horsepower</span>
+    <span class="op">)</span>
   <span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/tab_footnote.html">tab_footnote</a></span><span class="op">(</span>
     footnote <span class="op">=</span> <span class="st">"All prices in U.S. dollars (USD)."</span>,
-    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_column_labels.html">cells_column_labels</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">msrp</span><span class="op">)</span><span class="op">)</span>
+    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_column_labels.html">cells_column_labels</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">msrp</span><span class="op">)</span>
   <span class="op">)</span>
 
 <span class="co"># Show the table</span>
 <span class="va">tab</span></code></pre></div>
+<div id="nrgqhmhxmd" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#qlgyaadpnb .gt_table {
+#nrgqhmhxmd .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -6238,7 +6260,7 @@ c. stating the currency of the MSRP</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#qlgyaadpnb .gt_heading {
+#nrgqhmhxmd .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -6250,7 +6272,7 @@ c. stating the currency of the MSRP</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#qlgyaadpnb .gt_title {
+#nrgqhmhxmd .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -6260,7 +6282,7 @@ c. stating the currency of the MSRP</code></pre>
   border-bottom-width: 0;
 }
 
-#qlgyaadpnb .gt_subtitle {
+#nrgqhmhxmd .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -6270,13 +6292,13 @@ c. stating the currency of the MSRP</code></pre>
   border-top-width: 0;
 }
 
-#qlgyaadpnb .gt_bottom_border {
+#nrgqhmhxmd .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#qlgyaadpnb .gt_col_headings {
+#nrgqhmhxmd .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -6291,7 +6313,7 @@ c. stating the currency of the MSRP</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#qlgyaadpnb .gt_col_heading {
+#nrgqhmhxmd .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -6311,7 +6333,7 @@ c. stating the currency of the MSRP</code></pre>
   overflow-x: hidden;
 }
 
-#qlgyaadpnb .gt_column_spanner_outer {
+#nrgqhmhxmd .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -6323,15 +6345,15 @@ c. stating the currency of the MSRP</code></pre>
   padding-right: 4px;
 }
 
-#qlgyaadpnb .gt_column_spanner_outer:first-child {
+#nrgqhmhxmd .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qlgyaadpnb .gt_column_spanner_outer:last-child {
+#nrgqhmhxmd .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qlgyaadpnb .gt_column_spanner {
+#nrgqhmhxmd .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -6343,7 +6365,7 @@ c. stating the currency of the MSRP</code></pre>
   width: 100%;
 }
 
-#qlgyaadpnb .gt_group_heading {
+#nrgqhmhxmd .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -6365,7 +6387,7 @@ c. stating the currency of the MSRP</code></pre>
   vertical-align: middle;
 }
 
-#qlgyaadpnb .gt_empty_group_heading {
+#nrgqhmhxmd .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -6380,15 +6402,15 @@ c. stating the currency of the MSRP</code></pre>
   vertical-align: middle;
 }
 
-#qlgyaadpnb .gt_from_md > :first-child {
+#nrgqhmhxmd .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qlgyaadpnb .gt_from_md > :last-child {
+#nrgqhmhxmd .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qlgyaadpnb .gt_row {
+#nrgqhmhxmd .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -6407,7 +6429,7 @@ c. stating the currency of the MSRP</code></pre>
   overflow-x: hidden;
 }
 
-#qlgyaadpnb .gt_stub {
+#nrgqhmhxmd .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -6419,7 +6441,7 @@ c. stating the currency of the MSRP</code></pre>
   padding-left: 12px;
 }
 
-#qlgyaadpnb .gt_summary_row {
+#nrgqhmhxmd .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -6429,7 +6451,7 @@ c. stating the currency of the MSRP</code></pre>
   padding-right: 5px;
 }
 
-#qlgyaadpnb .gt_first_summary_row {
+#nrgqhmhxmd .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -6439,7 +6461,7 @@ c. stating the currency of the MSRP</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#qlgyaadpnb .gt_grand_summary_row {
+#nrgqhmhxmd .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -6449,7 +6471,7 @@ c. stating the currency of the MSRP</code></pre>
   padding-right: 5px;
 }
 
-#qlgyaadpnb .gt_first_grand_summary_row {
+#nrgqhmhxmd .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -6459,11 +6481,11 @@ c. stating the currency of the MSRP</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#qlgyaadpnb .gt_striped {
+#nrgqhmhxmd .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#qlgyaadpnb .gt_table_body {
+#nrgqhmhxmd .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -6472,7 +6494,7 @@ c. stating the currency of the MSRP</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#qlgyaadpnb .gt_footnotes {
+#nrgqhmhxmd .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -6486,13 +6508,13 @@ c. stating the currency of the MSRP</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#qlgyaadpnb .gt_footnote {
+#nrgqhmhxmd .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#qlgyaadpnb .gt_sourcenotes {
+#nrgqhmhxmd .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -6506,46 +6528,46 @@ c. stating the currency of the MSRP</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#qlgyaadpnb .gt_sourcenote {
+#nrgqhmhxmd .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#qlgyaadpnb .gt_left {
+#nrgqhmhxmd .gt_left {
   text-align: left;
 }
 
-#qlgyaadpnb .gt_center {
+#nrgqhmhxmd .gt_center {
   text-align: center;
 }
 
-#qlgyaadpnb .gt_right {
+#nrgqhmhxmd .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qlgyaadpnb .gt_font_normal {
+#nrgqhmhxmd .gt_font_normal {
   font-weight: normal;
 }
 
-#qlgyaadpnb .gt_font_bold {
+#nrgqhmhxmd .gt_font_bold {
   font-weight: bold;
 }
 
-#qlgyaadpnb .gt_font_italic {
+#nrgqhmhxmd .gt_font_italic {
   font-style: italic;
 }
 
-#qlgyaadpnb .gt_super {
+#nrgqhmhxmd .gt_super {
   font-size: 65%;
 }
 
-#qlgyaadpnb .gt_footnote_marks {
+#nrgqhmhxmd .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="qlgyaadpnb" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="table gt_table">
+<table class="table gt_table">
 <thead class="gt_header">
 <tr>
 <th colspan="8" class="gt_heading gt_title gt_font_normal" style>The Cars of <strong>gtcars</strong>
@@ -7134,8 +7156,9 @@ c. stating the currency of the MSRP</code></pre>
           <br></p>
       </td>
     </tr></tfoot>
-</table></div>
-<p>That is it. The final table looks pretty good and conveys the additional information we planned for. That table can be used in a lot of different places like R Markdown, Shiny, email messages… wherever HTML is accepted.</p>
+</table>
+</div>
+<p>And that is it. The final table looks pretty good and conveys the additional information we planned for. That table can be used in a lot of different places like R Markdown, Shiny, email messages… wherever HTML is accepted.</p>
 </div>
   </div>
 

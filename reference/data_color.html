@@ -297,7 +297,7 @@ hexadecimal colors.</p>
   <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>tail</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>data_color</span><span class='op'>(</span>
-    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>population</span><span class='op'>)</span>,
+    columns <span class='op'>=</span> <span class='va'>population</span>,
     colors <span class='op'>=</span> <span class='fu'>scales</span><span class='fu'>::</span><span class='fu'><a href='https://scales.r-lib.org//reference/col_numeric.html'>col_numeric</a></span><span class='op'>(</span>
       palette <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
         <span class='st'>"red"</span>, <span class='st'>"orange"</span>, <span class='st'>"green"</span>, <span class='st'>"blue"</span><span class='op'>)</span>,
@@ -324,7 +324,7 @@ hexadecimal colors.</p>
   <span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span>rowname_col <span class='op'>=</span> <span class='st'>"size"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>data_color</span><span class='op'>(</span>
-    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>sold</span>, <span class='va'>income</span><span class='op'>)</span>,
+    columns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>sold</span>, <span class='va'>income</span><span class='op'>)</span>,
     colors <span class='op'>=</span> <span class='fu'>scales</span><span class='fu'>::</span><span class='fu'><a href='https://scales.r-lib.org//reference/col_numeric.html'>col_numeric</a></span><span class='op'>(</span>
       palette <span class='op'>=</span> <span class='fu'>paletteer</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/paletteer/man/paletteer_d.html'>paletteer_d</a></span><span class='op'>(</span>
         palette <span class='op'>=</span> <span class='st'>"ggsci::red_material"</span>

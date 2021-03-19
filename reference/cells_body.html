@@ -161,7 +161,7 @@ with <code><a href='text_transform.html'>text_transform()</a></code>. The functi
 functions' <code>locations</code> argument.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cells_body</span><span class='op'>(</span>columns <span class='op'>=</span> <span class='cn'>TRUE</span>, rows <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>cells_body</span><span class='op'>(</span>columns <span class='op'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span>, rows <span class='op'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -257,7 +257,7 @@ using intersections of <code>columns</code> and <code>rows</code></p></li>
   <span class='fu'><a href='tab_footnote.html'>tab_footnote</a></span><span class='op'>(</span>
     footnote <span class='op'>=</span> <span class='st'>"Highest horsepower."</span>,
     locations <span class='op'>=</span> <span class='fu'>cells_body</span><span class='op'>(</span>
-      columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>hp</span><span class='op'>)</span>,
+      columns <span class='op'>=</span> <span class='va'>hp</span>,
       rows <span class='op'>=</span> <span class='va'>hp</span> <span class='op'>==</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>hp</span><span class='op'>)</span><span class='op'>)</span>
   <span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='opt_footnote_marks.html'>opt_footnote_marks</a></span><span class='op'>(</span>marks <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"*"</span>, <span class='st'>"+"</span><span class='op'>)</span><span class='op'>)</span>

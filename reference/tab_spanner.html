@@ -235,7 +235,7 @@ columns will be preserved in all cases. By default, this is set to <code>TRUE</c
   <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span>rowname_col <span class='op'>=</span> <span class='st'>"model"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>tab_spanner</span><span class='op'>(</span>
     label <span class='op'>=</span> <span class='st'>"performance"</span>,
-    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span>
+    columns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
       <span class='va'>hp</span>, <span class='va'>hp_rpm</span>, <span class='va'>trq</span>, <span class='va'>trq_rpm</span>,
       <span class='va'>mpg_c</span>, <span class='va'>mpg_h</span><span class='op'>)</span>
   <span class='op'>)</span>

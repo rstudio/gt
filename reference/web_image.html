@@ -235,7 +235,7 @@ heights of most table rows.</p>
   <span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='text_transform.html'>text_transform</a></span><span class='op'>(</span>
-    locations <span class='op'>=</span> <span class='fu'><a href='cells_body.html'>cells_body</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>image</span><span class='op'>)</span><span class='op'>)</span>,
+    locations <span class='op'>=</span> <span class='fu'><a href='cells_body.html'>cells_body</a></span><span class='op'>(</span>columns <span class='op'>=</span> <span class='va'>image</span><span class='op'>)</span>,
     fn <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>{</span>
       <span class='fu'>web_image</span><span class='op'>(</span>
         url <span class='op'>=</span> <span class='va'>r_png_url</span>,

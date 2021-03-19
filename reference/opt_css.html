@@ -224,11 +224,11 @@ already-defined CSS.</p></td>
   <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>num</span>, <span class='va'>currency</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span>id <span class='op'>=</span> <span class='st'>"one"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='fmt_currency.html'>fmt_currency</a></span><span class='op'>(</span>
-    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>currency</span><span class='op'>)</span>,
+    columns <span class='op'>=</span> <span class='va'>currency</span>,
     currency <span class='op'>=</span> <span class='st'>"HKD"</span>
   <span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='fmt_scientific.html'>fmt_scientific</a></span><span class='op'>(</span>
-    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>num</span><span class='op'>)</span>
+    columns <span class='op'>=</span> <span class='va'>num</span>
   <span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>opt_css</span><span class='op'>(</span>
     css <span class='op'>=</span> <span class='st'>"

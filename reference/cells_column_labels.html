@@ -159,7 +159,7 @@ with <code><a href='tab_style.html'>tab_style()</a></code>. The function is expr
 functions' <code>locations</code> argument.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cells_column_labels</span><span class='op'>(</span><span class='va'>columns</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>cells_column_labels</span><span class='op'>(</span>columns <span class='op'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -254,13 +254,13 @@ using intersections of <code>columns</code> and <code>rows</code></p></li>
   <span class='fu'><a href='tab_footnote.html'>tab_footnote</a></span><span class='op'>(</span>
     footnote <span class='op'>=</span> <span class='st'>"True solar time."</span>,
     locations <span class='op'>=</span> <span class='fu'>cells_column_labels</span><span class='op'>(</span>
-      columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>tst</span><span class='op'>)</span>
+      columns <span class='op'>=</span> <span class='va'>tst</span>
     <span class='op'>)</span>
   <span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='tab_footnote.html'>tab_footnote</a></span><span class='op'>(</span>
     footnote <span class='op'>=</span> <span class='st'>"Solar zenith angle."</span>,
     locations <span class='op'>=</span> <span class='fu'>cells_column_labels</span><span class='op'>(</span>
-      columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>sza</span><span class='op'>)</span>
+      columns <span class='op'>=</span> <span class='va'>sza</span>
     <span class='op'>)</span>
   <span class='op'>)</span>
 

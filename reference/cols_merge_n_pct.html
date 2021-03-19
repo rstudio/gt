@@ -269,11 +269,11 @@ the output table through the <code>hide_columns</code> or <code>autohide</code> 
     rowname_col <span class='op'>=</span> <span class='st'>"name"</span>,
     groupname_col <span class='op'>=</span> <span class='st'>"type"</span>
   <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='fmt_currency.html'>fmt_currency</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>price</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='fmt_percent.html'>fmt_percent</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>frac</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='fmt_currency.html'>fmt_currency</a></span><span class='op'>(</span><span class='va'>price</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='fmt_percent.html'>fmt_percent</a></span><span class='op'>(</span><span class='va'>frac</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>cols_merge_n_pct</span><span class='op'>(</span>
-    col_n <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span>,
-    col_pct <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>frac</span><span class='op'>)</span>
+    col_n <span class='op'>=</span> <span class='va'>n</span>,
+    col_pct <span class='op'>=</span> <span class='va'>frac</span>
   <span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='cols_label.html'>cols_label</a></span><span class='op'>(</span>
     n <span class='op'>=</span> <span class='fu'><a href='md.html'>md</a></span><span class='op'>(</span><span class='st'>"*N* (%)"</span><span class='op'>)</span>,

@@ -155,7 +155,7 @@ appropriate output type during render when using fmt_markdown()." />
 appropriate output type during render when using <code>fmt_markdown()</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>fmt_markdown</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>columns</span>, rows <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>fmt_markdown</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>columns</span>, rows <span class='op'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -167,18 +167,20 @@ appropriate output type during render when using <code>fmt_markdown()</code>.</p
     <tr>
       <th>columns</th>
       <td><p>The columns to format. Can either be a series of column names
-provided in <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code>, a vector of column indices, or a helper function
+provided in <code><a href='https://rdrr.io/r/base/c.html'>c()</a></code>, a vector of column indices, or a helper function
 focused on selections. The select helper functions are: <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with()</a></code>,
-<code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/one_of.html'>one_of()</a></code>, and <code><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything()</a></code>.</p></td>
+<code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/one_of.html'>one_of()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>num_range()</a></code>, and
+<code><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything()</a></code>.</p></td>
     </tr>
     <tr>
       <th>rows</th>
-      <td><p>Optional rows to format. Not providing any value results in all
-rows in <code>columns</code> being formatted. Can either be a vector of row captions
-provided <code><a href='https://rdrr.io/r/base/c.html'>c()</a></code>, a vector of row indices, or a helper function focused on
-selections. The select helper functions are: <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with()</a></code>,
-<code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/one_of.html'>one_of()</a></code>, and <code><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything()</a></code>.
-We can also use expressions to filter down to the rows we need (e.g.,
+      <td><p>Optional rows to format. Providing either <code><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything()</a></code> (the
+default) or <code>TRUE</code> results in all rows in <code>columns</code> being formatted. Can
+either be a vector of row captions provided in <code><a href='https://rdrr.io/r/base/c.html'>c()</a></code>, a vector of row
+indices, or a helper function focused on selections. The select helper
+functions are: <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches()</a></code>,
+<code><a href='https://tidyselect.r-lib.org/reference/one_of.html'>one_of()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>num_range()</a></code>, and <code><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything()</a></code>. We can also use expressions
+to filter down to the rows we need (e.g.,
 <code>[colname_1] &gt; 100 &amp; [colname_2] &lt; 50</code>).</p></td>
     </tr>
     </table>
@@ -263,7 +265,7 @@ There's a quick reference [here](https://commonmark.org/help/).
     <span class='va'>text_1b</span>,   <span class='va'>text_2b</span>,
   <span class='op'>)</span> <span class='op'>%&gt;%</span>
     <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-    <span class='fu'>fmt_markdown</span><span class='op'>(</span>columns <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>fmt_markdown</span><span class='op'>(</span>columns <span class='op'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
     <span class='fu'><a href='tab_options.html'>tab_options</a></span><span class='op'>(</span>table.width <span class='op'>=</span> <span class='fu'><a href='px.html'>px</a></span><span class='op'>(</span><span class='fl'>400</span><span class='op'>)</span><span class='op'>)</span>
 
 </div></pre>
