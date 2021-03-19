@@ -174,9 +174,8 @@ of those columns is not necessary.</p>
     </tr>
     <tr>
       <th>columns</th>
-      <td><p>The column names to hide from the output display table. The
-order of the remaining columns will be preserved. Values provided that do
-not correspond to column names will be disregarded.</p></td>
+      <td><p>The column names to hide from the output display table. Values
+provided that do not correspond to column names will be disregarded.</p></td>
     </tr>
     </table>
 
@@ -191,7 +190,9 @@ to a <code>rows</code> argument. Furthermore, the <code>cols_hide()</code> funct
 <strong>gt</strong> functions) can be placed anywhere in a pipeline of <strong>gt</strong> function
 calls (acting as a promise to hide columns when the timing is right). However
 there's perhaps greater readability when placing this call closer to the end
-of such a pipeline.</p>
+of such a pipeline. The <code>cols_hide()</code> function quietly changes the visible
+state of a column (much like the <code><a href='cols_unhide.html'>cols_unhide()</a></code> function) and doesn't yield
+warnings or messages when changing the state of already-invisible columns.</p>
     <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
 
     
@@ -205,7 +206,8 @@ of such a pipeline.</p>
 <p>4-7</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Modify Columns: 
+    <div class='dont-index'><p><code><a href='cols_unhide.html'>cols_unhide()</a></code> to perform the inverse operation.</p>
+<p>Other Modify Columns: 
 <code><a href='cols_align.html'>cols_align</a>()</code>,
 <code><a href='cols_label.html'>cols_label</a>()</code>,
 <code><a href='cols_merge_n_pct.html'>cols_merge_n_pct</a>()</code>,
@@ -215,6 +217,7 @@ of such a pipeline.</p>
 <code><a href='cols_move_to_end.html'>cols_move_to_end</a>()</code>,
 <code><a href='cols_move_to_start.html'>cols_move_to_start</a>()</code>,
 <code><a href='cols_move.html'>cols_move</a>()</code>,
+<code><a href='cols_unhide.html'>cols_unhide</a>()</code>,
 <code><a href='cols_width.html'>cols_width</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
