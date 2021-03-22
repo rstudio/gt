@@ -5,7 +5,6 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-
 library(tidyverse)
 library(gt)
 library(blastula)
@@ -47,15 +46,15 @@ diamonds %>%
   tab_header(title = "The finest diamonds") %>%
   tab_spanner(
     label = "Dimensions",
-    columns = vars(depth, table, x, y, z)
+    columns = c(depth, table, x, y, z)
   ) %>%
   tab_spanner(
     label = "Attributes",
     columns = starts_with("c")
   ) %>%
-  cols_move_to_end(columns = vars(price)) %>%
+  cols_move_to_end(columns = price) %>%
   fmt_currency(
-    columns = vars(price),
+    columns = price,
     currency = "USD",
     decimals = 0
   ) %>%
