@@ -79,7 +79,7 @@ tab_1 <-
 
 }
 \seealso{
-Other Create or Modify Parts:
+Other Create or Modify Parts: 
 \code{\link{tab_footnote}()},
 \code{\link{tab_header}()},
 \code{\link{tab_options}()},
