@@ -475,7 +475,7 @@ test_that("row groups can be successfully generated with `tab_row_group()", {
     ) %>%
     tab_spanner(
       label = md("__*num_char*__"),
-      columns = vars(num, char),
+      columns = c(num, char),
       id = "num_char"
     ) %>%
     tab_footnote(

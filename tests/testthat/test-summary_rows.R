@@ -1397,7 +1397,7 @@ test_that("creating summary rows works for hidden columns", {
   expect_equal(
     colnames(summary_w02),
     c(
-      "groupname", "rowname", "date",
+      "group_id", "rowname", "date",
       "open", "high", "low", "close", "week"
     )
   )
