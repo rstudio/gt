@@ -90,7 +90,7 @@ tab_header <- function(data,
 #'   gt(rowname_col = "model") %>%
 #'   tab_spanner(
 #'     label = "performance",
-#'     columns = vars(
+#'     columns = c(
 #'       hp, hp_rpm, trq, trq_rpm,
 #'       mpg_c, mpg_h)
 #'   )
@@ -120,10 +120,12 @@ tab_spanner <- function(data,
     id, len = 1, any.missing = FALSE, null.ok = FALSE
   )
 
-  columns <- enquo(columns)
-
   # Get the columns supplied in `columns` as a character vector
-  column_names <- resolve_vars(var_expr = !!columns, data = data)
+  column_names <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data
+    )
 
   # If `column_names` evaluates to an empty vector or is NULL,
   # return the data unchanged
@@ -215,21 +217,24 @@ tab_spanner <- function(data,
 #' @export
 tab_spanner_delim <- function(data,
                               delim,
-                              columns = NULL,
+                              columns = everything(),
                               split = c("last", "first"),
                               gather = TRUE) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  columns <- enquo(columns)
   split <- match.arg(split)
 
   # Get all of the columns in the dataset
   all_cols <- data %>% dt_boxhead_get_vars()
 
   # Get the columns supplied in `columns` as a character vector
-  columns <- resolve_vars(var_expr = !!columns, data = data)
+  columns <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data
+    )
 
   if (!is.null(columns)) {
     colnames <- base::intersect(all_cols, columns)
@@ -433,10 +438,9 @@ tab_row_group <- function(data,
 
     # Resolve the row numbers using the `resolve_vars` function
     resolved_rows_idx <-
-      resolve_data_vals_idx(
-        var_expr = !!row_expr,
-        data_tbl = data_tbl,
-        vals = stub_df$rowname
+      resolve_rows_i(
+        expr = !!row_expr,
+        data = data
       )
 
     stub_df <- dt_stub_df_get(data = data)
@@ -599,15 +603,17 @@ tab_stubhead <- function(data,
 #'   dplyr::select(-latitude, -month) %>%
 #'   gt() %>%
 #'   data_color(
-#'     columns = vars(sza),
+#'     columns = sza,
 #'     colors = scales::col_numeric(
 #'       palette = c("white", "yellow", "navyblue"),
-#'       domain = c(0, 90))
+#'       domain = c(0, 90)
+#'     )
 #'   ) %>%
 #'   tab_footnote(
 #'     footnote = "Color indicates height of sun.",
 #'     locations = cells_column_labels(
-#'       columns = vars(sza))
+#'       columns = sza
+#'     )
 #'   )
 #'
 #' @section Figures:
@@ -700,7 +706,7 @@ set_footnote.cells_column_labels <- function(loc, data, footnote) {
 
   cols <- resolved$columns
 
-  colnames <- dt_boxhead_get_vars_default(data = data)[cols]
+  colnames <- names(cols)
 
   data <-
     dt_footnotes_add(
@@ -742,10 +748,10 @@ set_footnote.cells_row_groups <- function(loc, data, footnote) {
 
   # Resolve row groups
   resolved_row_groups_idx <-
-    resolve_data_vals_idx(
-      var_expr = !!loc$groups,
-      data_tbl = NULL,
-      vals = row_groups
+    resolve_vector_i(
+      expr = !!loc$groups,
+      vector = row_groups,
+      item_label = "row group"
     )
 
   groups <- row_groups[resolved_row_groups_idx]
@@ -924,7 +930,7 @@ tab_source_note <- function(data,
 #'   dplyr::select(num, currency) %>%
 #'   gt() %>%
 #'   fmt_number(
-#'     columns = vars(num, currency),
+#'     columns = c(num, currency),
 #'     decimals = 1
 #'   ) %>%
 #'   tab_style(
@@ -933,8 +939,9 @@ tab_source_note <- function(data,
 #'       cell_text(weight = "bold")
 #'       ),
 #'     locations = cells_body(
-#'       columns = vars(num),
-#'       rows = num >= 5000)
+#'       columns = num,
+#'       rows = num >= 5000
+#'     )
 #'   ) %>%
 #'   tab_style(
 #'     style = list(
@@ -942,8 +949,9 @@ tab_source_note <- function(data,
 #'       cell_text(style = "italic")
 #'       ),
 #'     locations = cells_body(
-#'       columns = vars(currency),
-#'       rows = currency < 100)
+#'       columns = currency,
+#'       rows = currency < 100
+#'     )
 #'   )
 #'
 #' # Use `sp500` to create a gt table;
@@ -987,7 +995,7 @@ tab_source_note <- function(data,
 #'       cell_fill(color = "lightcyan"),
 #'       "font-variant: small-caps;"
 #'     ),
-#'     locations = cells_body(columns = vars(char))
+#'     locations = cells_body(columns = char)
 #'   )
 #'
 #' @section Figures:
@@ -1168,7 +1176,7 @@ set_style.cells_column_labels <- function(loc, data, style) {
 
   cols <- resolved$columns
 
-  colnames <- dt_boxhead_get_vars_default(data = data)[cols]
+  colnames <- names(cols)
 
   data <-
     dt_styles_add(
@@ -1186,7 +1194,11 @@ set_style.cells_column_labels <- function(loc, data, style) {
 
 set_style.cells_column_spanners <- function(loc, data, style) {
 
-  resolved <- resolve_cells_column_spanners(data = data, object = loc)
+  resolved <-
+    resolve_cells_column_spanners(
+      data = data,
+      object = {{ loc }}
+    )
 
   groups <- resolved$spanners
 
@@ -1210,10 +1222,10 @@ set_style.cells_row_groups <- function(loc, data, style) {
 
   # Resolve row groups
   resolved_row_groups_idx <-
-    resolve_data_vals_idx(
-      var_expr = !!loc$groups,
-      data_tbl = NULL,
-      vals = row_groups
+    resolve_vector_i(
+      expr = !!loc$groups,
+      vector = row_groups,
+      item_label = "row group"
     )
 
   groups <- row_groups[resolved_row_groups_idx]
@@ -1474,24 +1486,27 @@ set_style.cells_grand_summary <- function(loc, data, style) {
 #'     title = md("Data listing from **exibble**"),
 #'     subtitle = md("`exibble` is an R dataset")
 #'   ) %>%
-#'   fmt_number(columns = vars(num)) %>%
-#'   fmt_currency(columns = vars(currency)) %>%
+#'   fmt_number(columns = num) %>%
+#'   fmt_currency(columns = currency) %>%
 #'   tab_footnote(
 #'     footnote = "Using commas for separators.",
 #'     locations = cells_body(
-#'       columns = vars(num),
-#'       rows = num > 1000)
+#'       columns = num,
+#'       rows = num > 1000
+#'     )
 #'   ) %>%
 #'   tab_footnote(
 #'     footnote = "Using commas for separators.",
 #'     locations = cells_body(
-#'       columns = vars(currency),
-#'       rows = currency > 1000)
+#'       columns = currency,
+#'       rows = currency > 1000
+#'     )
 #'   ) %>%
 #'   tab_footnote(
 #'     footnote = "Alphabetical fruit.",
 #'     locations = cells_column_labels(
-#'       columns = vars(char))
+#'       columns = char
+#'     )
 #'   )
 #'
 #' # Modify the table width to 100% (which

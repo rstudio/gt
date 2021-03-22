@@ -69,7 +69,7 @@ the output table through the \code{hide_columns} or \code{autohide} options.
 
 \section{Function ID}{
 
-4-8
+4-9
 }
 
 \examples{
@@ -84,13 +84,13 @@ tab_1 <-
   dplyr::slice(1:7) \%>\%
   gt() \%>\%
   fmt_number(
-    columns = vars(num),
+    columns = num,
     decimals = 3,
     use_seps = FALSE
   ) \%>\%
   cols_merge_uncert(
-    col_val = vars(currency),
-    col_uncert = vars(num)
+    col_val = currency,
+    col_uncert = num
   ) \%>\%
   cols_label(
     currency = "value + uncert."
@@ -108,6 +108,7 @@ Other Modify Columns:
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
+\code{\link{cols_unhide}()},
 \code{\link{cols_width}()}
 }
 \concept{Modify Columns}

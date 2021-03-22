@@ -131,12 +131,12 @@ test_that("a gt table contains the expected spanner column labels", {
   # Create a `gt_tbl` object with `gt()`; this table
   # contains the spanner heading `perimeter` over the
   # `peri` and `shape` column labels (this time, using
-  # the `vars()` helper to define the columns)
+  # `c()` to define the columns)
   tbl_html <-
     gt(data = rock) %>%
     tab_spanner(
       label = "perimeter",
-      columns = vars(peri, shape)) %>%
+      columns = c(peri, shape)) %>%
     render_as_html() %>%
     xml2::read_html()
 
@@ -183,14 +183,14 @@ test_that("a gt table contains the expected spanner column labels", {
     gt(data = rock) %>%
       tab_spanner(
         label = "perimeter",
-        columns = vars(peris, shapes))
+        columns = c(peris, shapes))
   )
 
   # Expect an error when using an ID twice
   expect_error(
     gt(exibble) %>%
-      tab_spanner(label = "a", columns = vars(num)) %>%
-      tab_spanner(label = "b", id = "a", columns = vars(char))
+      tab_spanner(label = "a", columns = num) %>%
+      tab_spanner(label = "b", id = "a", columns = char)
   )
 })
 
@@ -282,11 +282,11 @@ test_that("`tab_spanner()` doesn't adversely affect column alignment", {
 
   tbl_html <-
     gt(data = airquality) %>%
-    cols_move_to_start(columns = vars(Month, Day)) %>%
+    cols_move_to_start(columns = c(Month, Day)) %>%
     cols_label(Solar.R = html("Solar<br>Radiation")) %>%
     tab_spanner(
       label = "Measurement Period",
-      columns = vars(Month, Day)
+      columns = c(Month, Day)
     ) %>%
     render_as_html()
 
@@ -310,25 +310,25 @@ test_that("`tab_spanner()` works even when columns are forcibly moved", {
     gt(mtcars[1, ]) %>%
     tab_spanner(
       label = md("*group_a*"),
-      columns = vars(cyl, hp)
+      columns = c(cyl, hp)
     ) %>%
     tab_spanner(
       label = md("*group_b*"),
-      columns = vars(drat, wt)
+      columns = c(drat, wt)
     ) %>%
     tab_spanner(
       label = md("*group_c*"),
-      columns = vars(qsec, vs, am)
+      columns = c(qsec, vs, am)
     ) %>%
     tab_spanner(
       label = md("*group_d*"),
-      columns = vars(gear, carb)
+      columns = c(gear, carb)
     ) %>%
     tab_spanner(
       label = md("*never*"),
       columns = ends_with("nothing")
     ) %>%
-    cols_move_to_start(columns = vars(carb)) %>%
+    cols_move_to_start(columns = carb) %>%
     render_as_html()
 
 
@@ -715,7 +715,7 @@ test_that("a gt table contains custom styles at the correct locations", {
     tab_spanner(
       label = "gear_carb_cyl",
       id = "gcc",
-      columns = vars(gear, carb, cyl)
+      columns = c(gear, carb, cyl)
     ) %>%
     row_group_order(groups = c("Mazdas", "Mercs")) %>%
     cols_merge_range(
@@ -730,13 +730,13 @@ test_that("a gt table contains custom styles at the correct locations", {
     cols_label(cyl = md("*cyls*")) %>%
     summary_rows(
       groups = c("Mazdas", "Mercs"),
-      columns = vars(hp, wt, qsec),
+      columns = c(hp, wt, qsec),
       fns = list(
         ~mean(., na.rm = TRUE),
         ~sum(., na.rm = TRUE))
     ) %>%
     summary_rows(
-      columns = vars(hp, wt, qsec),
+      columns = c(hp, wt, qsec),
       fns = list(
         ~mean(., na.rm = TRUE),
         ~sum(., na.rm = TRUE))
@@ -744,7 +744,7 @@ test_that("a gt table contains custom styles at the correct locations", {
     tab_style(
       style = cell_fill(color = "lightgray"),
       locations = list(
-        cells_column_labels(columns = TRUE),
+        cells_column_labels(),
         cells_stub(rows = TRUE))
     ) %>%
     tab_style(
@@ -783,11 +783,11 @@ test_that("a gt table contains custom styles at the correct locations", {
     ) %>%
     tab_style(
       style = cell_fill(color = "turquoise"),
-      locations = cells_column_labels(columns = "gear")
+      locations = cells_column_labels(columns = gear)
     ) %>%
     tab_style(
       style = cell_fill(color = "pink"),
-      locations = cells_column_labels(columns = "hp")
+      locations = cells_column_labels(columns = hp)
     ) %>%
     tab_style(
       style = list(
@@ -912,4 +912,65 @@ test_that("a gt table contains custom styles at the correct locations", {
     rvest::html_nodes("[class='gt_heading gt_subtitle gt_font_normal gt_bottom_border'][style='text-align: left;']") %>%
     rvest::html_text() %>%
     expect_equal("Subtitle")
+})
+
+test_that("columns can be hidden and then made visible", {
+
+  # Check that specific suggested packages are available
+  check_suggests()
+
+  # Create a `gt_tbl` object with the `gtcars` dataset
+  gt_tbl <- gt(gtcars)
+
+  # Expect all column names from the original dataset
+  # to be present
+  gt_tbl %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_left']") %>%
+    rvest::html_text() %>%
+    expect_equal(c("mfr", "model", "trim", "bdy_style", "drivetrain", "trsmn", "ctry_origin"))
+
+  # Hide the `mfr` and `drivetrain` columns from the
+  # table with `cols_hide()`
+  gt_tbl <-
+    gt_tbl %>%
+    cols_hide(c(mfr, drivetrain))
+
+  # Expect the two hidden columns to not appear in the rendered table
+  gt_tbl %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_left']") %>%
+    rvest::html_text() %>%
+    expect_equal(c("model", "trim", "bdy_style", "trsmn", "ctry_origin"))
+
+  # Make the `mfr` column visible again with `cols_unhide()`
+  gt_tbl <-
+    gt_tbl %>%
+    cols_unhide(mfr)
+
+  # Expect that only `drivetrain` is hidden now
+  gt_tbl %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_left']") %>%
+    rvest::html_text() %>%
+    expect_equal(c("mfr", "model", "trim", "bdy_style", "trsmn", "ctry_origin"))
+
+  # Move the drivetrain column to the beginning of the column
+  # series and unhide it
+  gt_tbl <-
+    gt_tbl %>%
+    cols_move_to_start(drivetrain) %>%
+    cols_unhide(drivetrain)
+
+  # Expect all column names from the original dataset
+  # to be present in the revised order
+  gt_tbl %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_left']") %>%
+    rvest::html_text() %>%
+    expect_equal(c("drivetrain", "mfr", "model", "trim", "bdy_style", "trsmn", "ctry_origin"))
 })

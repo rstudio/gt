@@ -113,13 +113,13 @@ opt_footnote_marks <- function(data,
 #'   gt(rowname_col = "row", groupname_col = "group") %>%
 #'   summary_rows(
 #'     groups = "grp_a",
-#'     columns = vars(num, currency),
+#'     columns = c(num, currency),
 #'     fns = list(
 #'       min = ~min(., na.rm = TRUE),
 #'       max = ~max(., na.rm = TRUE)
 #'     )) %>%
 #'   grand_summary_rows(
-#'     columns = vars(currency),
+#'     columns = currency,
 #'     fns = list(
 #'       total = ~sum(., na.rm = TRUE)
 #'     )) %>%
@@ -176,13 +176,13 @@ opt_row_striping <- function(data,
 #'   gt(rowname_col = "row", groupname_col = "group") %>%
 #'   summary_rows(
 #'     groups = "grp_a",
-#'     columns = vars(num, currency),
+#'     columns = c(num, currency),
 #'     fns = list(
 #'       min = ~min(., na.rm = TRUE),
 #'       max = ~max(., na.rm = TRUE)
 #'     )) %>%
 #'   grand_summary_rows(
-#'     columns = vars(currency),
+#'     columns = currency,
 #'     fns = list(
 #'       total = ~sum(., na.rm = TRUE)
 #'     )) %>%
@@ -248,13 +248,13 @@ opt_align_table_header <- function(data,
 #'   gt(rowname_col = "row", groupname_col = "group") %>%
 #'   summary_rows(
 #'     groups = "grp_a",
-#'     columns = vars(num, currency),
+#'     columns = c(num, currency),
 #'     fns = list(
 #'       min = ~min(., na.rm = TRUE),
 #'       max = ~max(., na.rm = TRUE)
 #'     )) %>%
 #'   grand_summary_rows(
-#'     columns = vars(currency),
+#'     columns = currency,
 #'     fns = list(
 #'       total = ~sum(., na.rm = TRUE)
 #'     )) %>%
@@ -343,13 +343,13 @@ opt_all_caps <- function(data,
 #'   gt(rowname_col = "row", groupname_col = "group") %>%
 #'   summary_rows(
 #'     groups = "grp_a",
-#'     columns = vars(num, currency),
+#'     columns = c(num, currency),
 #'     fns = list(
 #'       min = ~min(., na.rm = TRUE),
 #'       max = ~max(., na.rm = TRUE)
 #'     )) %>%
 #'   grand_summary_rows(
-#'     columns = vars(currency),
+#'     columns = currency,
 #'     fns = list(
 #'       total = ~sum(., na.rm = TRUE)
 #'     )) %>%
@@ -421,13 +421,13 @@ opt_table_lines <- function(data,
 #'   gt(rowname_col = "row", groupname_col = "group") %>%
 #'   summary_rows(
 #'     groups = "grp_a",
-#'     columns = vars(num, currency),
+#'     columns = c(num, currency),
 #'     fns = list(
 #'       min = ~min(., na.rm = TRUE),
 #'       max = ~max(., na.rm = TRUE)
 #'     )) %>%
 #'   grand_summary_rows(
-#'     columns = vars(currency),
+#'     columns = currency,
 #'     fns = list(
 #'       total = ~sum(., na.rm = TRUE)
 #'     )) %>%
@@ -655,11 +655,11 @@ opt_table_font <- function(data,
 #'   dplyr::select(num, currency) %>%
 #'   gt(id = "one") %>%
 #'   fmt_currency(
-#'     columns = vars(currency),
+#'     columns = currency,
 #'     currency = "HKD"
 #'   ) %>%
 #'   fmt_scientific(
-#'     columns = vars(num)
+#'     columns = num
 #'   ) %>%
 #'   opt_css(
 #'     css = "

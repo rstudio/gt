@@ -21,7 +21,7 @@ data <-
   tab_spanner(
     label = "gear_carb_cyl",
     id = "gcc",
-    columns = vars(gear, carb, cyl)
+    columns = c(gear, carb, cyl)
   ) %>%
   row_group_order(groups = c("Mazdas", "Mercs")) %>%
   cols_merge_range(
@@ -35,13 +35,13 @@ data <-
   tab_source_note(source_note = "this is a source note") %>%
   summary_rows(
     groups = c("Mazdas", "Mercs"),
-    columns = vars(hp, wt, qsec),
+    columns = c(hp, wt, qsec),
     fns = list(
       ~mean(., na.rm = TRUE),
       ~sum(., na.rm = TRUE))
   ) %>%
   summary_rows(
-    columns = vars(hp, wt),
+    columns = c(hp, wt),
     fns = list(
       ~mean(., na.rm = TRUE),
       ~sum(., na.rm = TRUE))
@@ -83,7 +83,7 @@ test_that("a gt table can store the correct style statements", {
     tab_style(
       style = cell_fill(color = "lightgray"),
       locations = list(
-        cells_column_labels(columns = TRUE),
+        cells_column_labels(),
         cells_stub(rows = TRUE))
     )
 
@@ -208,7 +208,10 @@ test_that("a gt table can store the correct style statements", {
           cell_text(color = "white")
         ),
         locations = cells_summary(
-          groups = "Mercs", columns = starts_with("x"), rows = 2)
+          groups = "Mercs",
+          columns = starts_with("x"),
+          rows = 2
+        )
       )
   )
 
@@ -221,7 +224,10 @@ test_that("a gt table can store the correct style statements", {
           cell_text(color = "white")
         ),
         locations = cells_summary(
-          groups = "Mercs", columns = starts_with("m"), rows = starts_with("x"))
+          groups = "Mercs",
+          columns = starts_with("m"),
+          rows = starts_with("x")
+        )
       )
   )
 
@@ -235,7 +241,8 @@ test_that("a gt table can store the correct style statements", {
         cell_text(color = "white")
       ),
       locations = cells_grand_summary(
-        columns = "hp", rows = vars(sum))
+        columns = "hp", rows = "sum"
+      )
     )
 
   # Expect that the internal `styles_df` data frame will have
@@ -384,28 +391,19 @@ test_that("a gt table can store the correct style statements", {
       )
   )
 
-  # Apply a `yellow` background a single data cell; this time, use `vars()`
-  # to specify the `rows`
-  tbl_html <-
-    data %>%
-    tab_style(
-      style = cell_fill(color = "yellow"),
-      locations = cells_body(columns = "disp", rows = vars(`Mazda RX4`))
-    )
-
   # Expect that the internal `styles_df` data frame will have
   # a single row
   dt_styles_get(data = tbl_html) %>%
     nrow() %>%
     expect_equal(1)
 
-  # Apply a `yellow` background a single data cell; this time, use `vars()`
+  # Apply a `yellow` background a single data cell; this time, use `c()`
   # to specify the `columns`
   tbl_html <-
     data %>%
     tab_style(
       style = cell_fill(color = "yellow"),
-      locations = cells_body(columns = vars(disp, hp), rows = "Mazda RX4")
+      locations = cells_body(columns = c(disp, hp), rows = "Mazda RX4")
     )
 
   # Expect that the internal `styles_df` data frame will have two rows
@@ -442,7 +440,7 @@ test_that("using fonts in `cell_text()` works", {
   tbl %>%
     tab_style(
       style = cell_text(font = c("Comic Sans MS", "Menlo", default_fonts())),
-      locations = cells_body(columns = vars(time), rows = 1)
+      locations = cells_body(columns = time, rows = 1)
     ) %>%
     as_raw_html() %>%
     expect_match(
@@ -454,7 +452,7 @@ test_that("using fonts in `cell_text()` works", {
   tbl %>%
     tab_style(
       style = cell_text(font = c(google_font(name = "Dancing Script"), default_fonts())),
-      locations = cells_body(columns = vars(time), rows = 1)
+      locations = cells_body(columns = time, rows = 1)
     ) %>%
     as_raw_html() %>%
     expect_match(
@@ -464,7 +462,7 @@ test_that("using fonts in `cell_text()` works", {
   tbl %>%
     tab_style(
       style = cell_text(font = list(google_font(name = "Dancing Script"), default_fonts())),
-      locations = cells_body(columns = vars(time), rows = 1)
+      locations = cells_body(columns = time, rows = 1)
     ) %>%
     as_raw_html() %>%
     expect_match(

@@ -33,20 +33,20 @@ info_date_style <- function() {
       "day_month", "year", "month", "day", "year.mn.day", "y.mn.day"),
     date = "2000-02-29") %>%
     gt() %>%
-    fmt_date(columns = vars(date), rows = 1, date_style = 1) %>%
-    fmt_date(columns = vars(date), rows = 2, date_style = 2) %>%
-    fmt_date(columns = vars(date), rows = 3, date_style = 3) %>%
-    fmt_date(columns = vars(date), rows = 4, date_style = 4) %>%
-    fmt_date(columns = vars(date), rows = 5, date_style = 5) %>%
-    fmt_date(columns = vars(date), rows = 6, date_style = 6) %>%
-    fmt_date(columns = vars(date), rows = 7, date_style = 7) %>%
-    fmt_date(columns = vars(date), rows = 8, date_style = 8) %>%
-    fmt_date(columns = vars(date), rows = 9, date_style = 9) %>%
-    fmt_date(columns = vars(date), rows = 10, date_style = 10) %>%
-    fmt_date(columns = vars(date), rows = 11, date_style = 11) %>%
-    fmt_date(columns = vars(date), rows = 12, date_style = 12) %>%
-    fmt_date(columns = vars(date), rows = 13, date_style = 13) %>%
-    fmt_date(columns = vars(date), rows = 14, date_style = 14) %>%
+    fmt_date(columns = "date", rows = 1, date_style = 1) %>%
+    fmt_date(columns = "date", rows = 2, date_style = 2) %>%
+    fmt_date(columns = "date", rows = 3, date_style = 3) %>%
+    fmt_date(columns = "date", rows = 4, date_style = 4) %>%
+    fmt_date(columns = "date", rows = 5, date_style = 5) %>%
+    fmt_date(columns = "date", rows = 6, date_style = 6) %>%
+    fmt_date(columns = "date", rows = 7, date_style = 7) %>%
+    fmt_date(columns = "date", rows = 8, date_style = 8) %>%
+    fmt_date(columns = "date", rows = 9, date_style = 9) %>%
+    fmt_date(columns = "date", rows = 10, date_style = 10) %>%
+    fmt_date(columns = "date", rows = 11, date_style = 11) %>%
+    fmt_date(columns = "date", rows = 12, date_style = 12) %>%
+    fmt_date(columns = "date", rows = 13, date_style = 13) %>%
+    fmt_date(columns = "date", rows = 14, date_style = 14) %>%
     tab_spanner(label = "Date Formats", columns = c("Number", "Name")) %>%
     cols_label(date = "Formatted Date") %>%
     tab_header(
@@ -94,11 +94,11 @@ info_time_style <- function() {
     Name = c("hms", "hm", "hms_p", "hm_p", "h_p"),
     time = "14:35") %>%
     gt() %>%
-    fmt_time(columns = vars(time), rows = 1, time_style = 1) %>%
-    fmt_time(columns = vars(time), rows = 2, time_style = 2) %>%
-    fmt_time(columns = vars(time), rows = 3, time_style = 3) %>%
-    fmt_time(columns = vars(time), rows = 4, time_style = 4) %>%
-    fmt_time(columns = vars(time), rows = 5, time_style = 5) %>%
+    fmt_time(columns = "time", rows = 1, time_style = 1) %>%
+    fmt_time(columns = "time", rows = 2, time_style = 2) %>%
+    fmt_time(columns = "time", rows = 3, time_style = 3) %>%
+    fmt_time(columns = "time", rows = 4, time_style = 4) %>%
+    fmt_time(columns = "time", rows = 5, time_style = 5) %>%
     tab_spanner(label = "Time Formats", columns = c("Number", "Name")) %>%
     cols_label(time = "Formatted Time") %>%
     tab_header(
@@ -193,7 +193,7 @@ info_currencies <- function(type = c("code", "symbol"),
       tab_1 <-
         tab_1 %>%
         fmt_currency(
-          columns = vars(value),
+          columns = "value",
           rows = i,
           currency = curr[[i, "curr_code"]]
         )
@@ -242,7 +242,7 @@ info_currencies <- function(type = c("code", "symbol"),
       tab_1 <-
         tab_1 %>%
         fmt_currency(
-          columns = vars(value),
+          columns = "value",
           rows = i,
           currency = curr[[i, "curr_symbol"]]
         )
@@ -331,7 +331,7 @@ info_locales <- function(begins_with = NULL) {
     tab_1 <-
       tab_1 %>%
       fmt_number(
-        columns = vars(value),
+        columns = "value",
         rows = i,
         locale = loc$base_locale_id[i]
       )
@@ -340,10 +340,10 @@ info_locales <- function(begins_with = NULL) {
   tab_1 %>%
     tab_spanner(
       label = "Separators",
-      columns = vars(group_sep, dec_sep)
+      columns = c("group_sep", "dec_sep")
     ) %>%
     cols_merge(
-      columns = vars(base_locale_id, display_name),
+      columns = c("base_locale_id", "display_name"),
       pattern = "<code>{1}</code><br><span style=font-size:11px>{2}</span>"
     ) %>%
     cols_label(
@@ -354,7 +354,7 @@ info_locales <- function(begins_with = NULL) {
     ) %>%
     cols_align(
       align = "center",
-      columns = vars(group_sep, dec_sep)
+      columns = c("group_sep", "dec_sep")
     ) %>%
     tab_header(
       title = md("Locales Supported in **gt**"),
@@ -369,7 +369,7 @@ info_locales <- function(begins_with = NULL) {
     ) %>%
     tab_style(
       style = cell_text(size = px(32)),
-      locations = cells_body(columns = vars(group_sep, dec_sep))
+      locations = cells_body(columns = c(group_sep, dec_sep))
     ) %>%
     tab_options(data_row.padding = "5px")
 }
@@ -496,7 +496,7 @@ info_paletteer <- function(color_pkgs = NULL) {
     ) %>%
     tab_style(
       style = cell_text(font = "Courier"),
-      locations = cells_body(columns = vars(length))
+      locations = cells_body(columns = "length")
     ) %>%
     tab_options(
       row_group.background.color = "#FFFFF0",
@@ -633,13 +633,13 @@ info_google_fonts <- function() {
     google_font_tbl_int %>%
     dplyr::arrange(category) %>%
     gt(rowname_col = "name", groupname_col = "category") %>%
-    fmt_markdown(columns = vars(weight_ranges)) %>%
+    fmt_markdown(columns = "weight_ranges") %>%
     tab_style(
       style = list(
         cell_text(size = px(8), font = "Courier"),
         cell_fill(color = "#F7F7F7")
       ),
-      locations = cells_body(columns = vars(weight_ranges))
+      locations = cells_body(columns = "weight_ranges")
     ) %>%
     tab_style(
       style = cell_text(size = px(24)),
@@ -651,7 +651,7 @@ info_google_fonts <- function() {
     ) %>%
     tab_style(
       style = cell_text(size = px(28), indent = px(5)),
-      locations = cells_body(columns = vars(samp))
+      locations = cells_body(columns = "samp")
     ) %>%
     tab_style(
       style = cell_text(size = px(14)),
@@ -692,7 +692,7 @@ info_google_fonts <- function() {
       google_font_tbl_gt %>%
       tab_style(
         style = cell_text(font = google_font(name = google_font_tbl_int$name[i])),
-        locations = cells_body(columns = vars(samp), rows = google_font_tbl_int$name[i])
+        locations = cells_body(columns = samp, rows = google_font_tbl_int$name[i])
       )
   }
 

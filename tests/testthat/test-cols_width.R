@@ -55,10 +55,10 @@ test_that("the function `cols_width()` works correctly", {
   tbl_html <-
     gt(tbl) %>%
     cols_width(
-      vars(col_1) ~ px(100),
-      vars(col_2) ~ px(100),
-      vars(col_3) ~ px(100),
-      vars(col_4) ~ px(100)
+      col_1 ~ px(100),
+      col_2 ~ px(100),
+      col_3 ~ px(100),
+      col_4 ~ px(100)
     )
 
   # Expect that the all column widths are set to `100px`
@@ -79,9 +79,9 @@ test_that("the function `cols_width()` works correctly", {
   tbl_html <-
     gt(tbl) %>%
     cols_width(
-      vars(col_1) ~ px(100),
-      vars(col_2) ~ px(100),
-      TRUE ~ px(70)
+      col_1 ~ px(100),
+      col_2 ~ px(100),
+      everything() ~ px(70)
     )
 
   # Expect that the first two column widths are
@@ -102,10 +102,10 @@ test_that("the function `cols_width()` works correctly", {
   tbl_html <-
     gt(tbl) %>%
     cols_width(
-      vars(col_1) ~ "",
-      vars(col_2) ~ "",
-      vars(col_3) ~ "",
-      vars(col_4) ~ ""
+      col_1 ~ "",
+      col_2 ~ "",
+      col_3 ~ "",
+      col_4 ~ ""
     )
 
   # Expect that the all column widths are unset
@@ -126,10 +126,10 @@ test_that("the function `cols_width()` works correctly", {
   tbl_html <-
     gt(tbl) %>%
     cols_width(
-      vars(col_1) ~ px(100),
-      vars(col_2) ~ 200,
-      vars(col_3) ~ pct(20),
-      vars(col_4) ~ ""
+      col_1 ~ px(100),
+      col_2 ~ 200,
+      col_3 ~ pct(20),
+      col_4 ~ ""
     )
 
   # Expect that the first three column widths are
@@ -151,8 +151,8 @@ test_that("the function `cols_width()` works correctly", {
   tbl_html <-
     gt(tbl) %>%
     cols_width(
-      vars(col_1) ~ px(150),
-      vars(col_2) ~ px(150)
+      col_1 ~ px(150),
+      col_2 ~ px(150)
     )
 
   # Expect that the first two column widths are
@@ -217,7 +217,7 @@ test_that("the function `cols_width()` works correctly", {
     gt(tbl) %>%
     cols_width(
       ends_with("1") ~ px(150),
-      TRUE ~ px(100)
+      everything() ~ px(100)
     )
 
   # Expect that the first column width is set to
@@ -282,7 +282,7 @@ test_that("the function `cols_width()` works correctly", {
     gt(tbl) %>%
     cols_width(
       one_of(c("col_1", "col_2")) ~ px(150),
-      TRUE ~ px(100)
+      everything() ~ px(100)
     )
 
   # Expect that the first two column widths are set to
@@ -306,10 +306,10 @@ test_that("the function `cols_width()` works correctly", {
   tbl_html <-
     gt(tbl) %>%
     cols_width(
-      vars(col_1) ~ px(175),
-      vars(col_1) ~ px(150),
-      vars(col_1) ~ px(125),
-      TRUE ~ px(75)
+      col_1 ~ px(175),
+      col_1 ~ px(150),
+      col_1 ~ px(125),
+      everything() ~ px(75)
     )
 
   # Expect that the first column width is set to
@@ -333,12 +333,12 @@ test_that("the function `cols_width()` works correctly", {
   tbl_html <-
     gt(tbl) %>%
     cols_width(
-      vars(col_1) ~ px(150),
-      TRUE ~ px(75)
+      col_1 ~ px(150),
+      everything() ~ px(75)
     ) %>%
     cols_width(
-      vars(col_1) ~ px(250),
-      TRUE ~ px(75)
+      col_1 ~ px(250),
+      everything() ~ px(75)
     )
 
   # Expect that the first column width is set to
@@ -359,16 +359,13 @@ test_that("the function `cols_width()` works correctly", {
   expect_error(
     gt(tbl) %>%
       cols_width(
-        vars(col_10) ~ px(150),
-        TRUE ~ px(75)
+        col_10 ~ px(150),
+        everything() ~ px(75)
       )
   )
 
   # Expect an error if no expressions given to `...`
-  expect_error(
-    gt(tbl) %>%
-      cols_width()
-  )
+  expect_error(gt(tbl) %>% cols_width())
 
   # Expect an error if an incorrect unit is present
   # in any vector element of CSS length values

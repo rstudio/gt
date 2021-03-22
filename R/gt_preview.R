@@ -109,7 +109,12 @@ gt_preview <- function(data,
   if (isTRUE(incl_rownums)) {
     data <-
       cbind(
-        data.frame(rowname = rownames(data), stringsAsFactors = FALSE), data)
+        data.frame(
+          rowname = rownames(data),
+          stringsAsFactors = FALSE
+        ),
+        data
+      )
   }
 
   # Render as a gt table
@@ -139,7 +144,7 @@ gt_preview <- function(data,
         locations = cells_body(columns = visible_vars, rows = ellipsis_row)
       ) %>%
       text_transform(
-        locations = cells_body(columns = TRUE, rows = ellipsis_row),
+        locations = cells_body(columns = everything(), rows = ellipsis_row),
         fn = function(x) ""
       )
 

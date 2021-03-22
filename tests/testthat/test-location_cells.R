@@ -292,19 +292,12 @@ test_that("the `cells_summary()` function works correctly", {
     expect_equal(c("col_1", "col_2"))
 
   # Create a `cells_summary` object with
-  # columns in `vars()` provided to `columns`
+  # columns in `c()` provided to `columns`
   helper_cells_summary <-
     cells_summary(
       groups = "group_a",
-      columns = vars(col_1, col_2)
+      columns = c(col_1, col_2)
     )
-
-  # Expect the RHS of the second component formula to contain
-  # the vector provided
-  helper_cells_summary[[2]] %>%
-    rlang::eval_tidy() %>%
-    vapply(rlang::as_name, USE.NAMES = FALSE, character(1)) %>%
-    expect_equal(c("col_1", "col_2"))
 })
 
 test_that("the `cells_grand_summary()` function works correctly", {
@@ -342,18 +335,11 @@ test_that("the `cells_grand_summary()` function works correctly", {
     expect_equal(c("col_1", "col_2"))
 
   # Create a `cells_grand_summary` object with
-  # columns in `vars()` provided to `columns`
+  # columns in `c()` provided to `columns`
   helper_cells_grand_summary <-
     cells_grand_summary(
-      columns = vars(col_1, col_2)
+      columns = c(col_1, col_2)
     )
-
-  # Expect the RHS of the first component formula to contain
-  # the vector provided
-  helper_cells_grand_summary[[1]] %>%
-    rlang::eval_tidy() %>%
-    vapply(rlang::as_name, USE.NAMES = FALSE, character(1)) %>%
-    expect_equal(c("col_1", "col_2"))
 })
 
 test_that("the `cells_stubhead()` function works correctly", {
@@ -479,8 +465,8 @@ test_that("styles are correctly applied to HTML output with location functions",
   gt_tbl_cells_column_spanners <-
     tbl %>%
     gt(rowname_col = "row", groupname_col = "group") %>%
-    cols_move_to_end(columns = vars(value_1)) %>%
-    tab_spanner(label = "spanner", columns = vars(value_1, value_3)) %>%
+    cols_move_to_end(columns = value_1) %>%
+    tab_spanner(label = "spanner", columns = c(value_1, value_3)) %>%
     tab_style(
       style = list(
         cell_text(size = px(20), color = "white"),
@@ -510,14 +496,14 @@ test_that("styles are correctly applied to HTML output with location functions",
   gt_tbl_cells_column_labels <-
     tbl %>%
     gt(rowname_col = "row", groupname_col = "group") %>%
-    cols_move_to_end(columns = vars(value_1)) %>%
+    cols_move_to_end(columns = "value_1") %>%
     tab_style(
       style = list(
         cell_text(size = px(20), color = "white"),
         cell_fill(color = "#FFA500")
       ),
       locations = cells_column_labels(
-        columns = vars(value_1, value_3))
+        columns = c("value_1", "value_3"))
     )
 
   # Expect that the styling was applied to the correct column labels
@@ -726,7 +712,7 @@ test_that("styles are correctly applied to HTML output with location functions",
     expect_true()
 
   #
-  # cells_group()
+  # cells_body()
   #
 
   # Expect that styling to all cells is performed
@@ -738,7 +724,7 @@ test_that("styles are correctly applied to HTML output with location functions",
         cell_text(size = px(20), color = "white"),
         cell_fill(color = "#FFA500")
       ),
-      locations = cells_body()
+      locations = cells_body(columns = everything(), rows = everything())
     ) %>%
     render_as_html() %>%
     xml2::read_html() %>%

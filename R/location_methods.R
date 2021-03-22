@@ -45,12 +45,14 @@ add_summary_location_row <- function(loc,
 
   summary_data <- summary_data[summary_data_summaries]
 
-  groups <-
-    row_groups[resolve_data_vals_idx(
-      var_expr = !!loc$groups,
-      data_tbl = NULL,
-      vals = row_groups
-    )]
+  resolved_row_groups_idx <-
+    resolve_vector_i(
+      expr = !!loc$groups,
+      vector = row_groups,
+      item_label = "row group"
+    )
+
+  groups <- row_groups[resolved_row_groups_idx]
 
   # Adding styles to intersections of group, row, and column; any
   # that are missing at render time will be ignored
@@ -70,14 +72,11 @@ add_summary_location_row <- function(loc,
       unlist() %>%
       unique()
 
-    col_idx <-
-      resolve_data_vals_idx(
-        var_expr = !!loc$columns,
-        data_tbl = NULL,
-        vals = dt_boxhead_get_vars_default(data = data)
+    columns <-
+      resolve_cols_c(
+        expr = !!loc$columns,
+        data = data
       )
-
-    columns <- dt_boxhead_get_vars_default(data = data)[col_idx]
 
     if (length(columns) == 0) {
       stop("The location requested could not be resolved:\n",
@@ -86,10 +85,10 @@ add_summary_location_row <- function(loc,
     }
 
     rows <-
-      resolve_data_vals_idx(
-        var_expr = !!loc$rows,
-        data_tbl = NULL,
-        vals = summary_labels
+      resolve_vector_i(
+        expr= !!loc$rows,
+        vector = summary_labels,
+        item_label = "summary row"
       )
 
     if (length(rows) == 0) {
@@ -147,8 +146,8 @@ add_grand_summary_location_row <- function(loc,
     unique()
 
   columns <-
-    resolve_vars(
-      var_expr = !!loc$columns,
+    resolve_cols_c(
+      expr = !!loc$columns,
       data = data
     )
 
@@ -159,10 +158,10 @@ add_grand_summary_location_row <- function(loc,
   }
 
   rows <-
-    resolve_data_vals_idx(
-      var_expr = !!loc$rows,
-      data_tbl = NULL,
-      vals = grand_summary_labels
+    resolve_vector_i(
+      expr = !!loc$rows,
+      vector = grand_summary_labels,
+      item_label = "grand summary row"
     )
 
   if (length(rows) == 0) {
@@ -219,16 +218,15 @@ resolve_location.cells_body <- function(loc, data) {
   stub_df <- dt_stub_df_get(data = data)
 
   loc$colnames <-
-    resolve_vars(
-      var_expr = !!loc[["columns"]],
+    resolve_cols_c(
+      expr = !!loc[["columns"]],
       data = data
     )
 
   loc$rows <-
-    resolve_data_vals_idx(
-      var_expr = !!loc[["rows"]],
-      data_tbl = data_tbl,
-      vals = stub_df$rowname
+    resolve_rows_i(
+      expr = !!loc[["rows"]],
+      data = data
     )
 
   class(loc) <- c("resolved", class(loc))
@@ -237,14 +235,12 @@ resolve_location.cells_body <- function(loc, data) {
 
 resolve_location.cells_column_labels <- function(loc, data) {
 
-  data_tbl <- dt_data_get(data = data)
-
   if (!is.null(loc$columns)) {
 
     loc$colnames <-
-      resolve_vars(
-        var_expr = !!loc$columns,
-        data = data_tbl
+      resolve_cols_c(
+        expr = !!loc[["columns"]],
+        data = data
       )
   }
 

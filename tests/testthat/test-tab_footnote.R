@@ -22,7 +22,7 @@ data <-
   tab_spanner(
     label = "gear_carb_cyl",
     id = "gcc",
-    columns = vars(gear, carb, cyl)
+    columns = c(gear, carb, cyl)
   ) %>%
   row_group_order(groups = c("Mazdas", "Mercs")) %>%
   cols_merge_range(
@@ -36,13 +36,13 @@ data <-
   tab_source_note(source_note = "this is a source note") %>%
   summary_rows(
     groups = c("Mazdas", "Mercs"),
-    columns = vars(hp, wt, qsec),
+    columns = c(hp, wt, qsec),
     fns = list(
       ~mean(., na.rm = TRUE),
       ~sum(., na.rm = TRUE))
   ) %>%
   summary_rows(
-    columns = vars(hp, wt),
+    columns = c(hp, wt),
     fns = list(
       ~mean(., na.rm = TRUE),
       ~sum(., na.rm = TRUE))
@@ -61,20 +61,20 @@ data_2 <-
   tab_spanner(
     label = "make and model",
     id = "mm",
-    columns = vars(mfr, model)
+    columns = c(mfr, model)
   ) %>%
   tab_spanner(
     label = "specs and pricing",
     id = "sp",
-    columns = vars(drivetrain, msrp)
+    columns = c(drivetrain, msrp)
   ) %>%
   tab_footnote(
     footnote = "Prices in USD.",
-    locations = cells_column_labels(columns = vars(msrp))
+    locations = cells_column_labels(columns = msrp)
   ) %>%
   tab_footnote(
     footnote = "AWD = All Wheel Drive, RWD = Rear Wheel Drive.",
-    locations = cells_column_labels(columns = vars(drivetrain))
+    locations = cells_column_labels(columns = drivetrain)
   ) %>%
   tab_footnote(
     footnote = "The most important details.",
@@ -97,13 +97,13 @@ data_3 <-
   gt(rowname_col = "model", groupname_col = "mfr") %>%
   summary_rows(
     groups = c("BMW", "Audi"),
-    columns = vars(msrp),
+    columns = "msrp",
     fns = list(
       ~mean(., na.rm = TRUE),
       ~min(., na.rm = TRUE))
   ) %>%
   summary_rows(
-    columns = vars(msrp),
+    columns = "msrp",
     fns = list(
       ~min(., na.rm = TRUE),
       ~max(., na.rm = TRUE))
@@ -112,19 +112,19 @@ data_3 <-
     footnote = "Average price for BMW and Audi.",
     locations = cells_summary(
       groups = c("BMW", "Audi"),
-      columns = vars(msrp),
+      columns = "msrp",
       rows = starts_with("me"))
   ) %>%
   tab_footnote(
     footnote = "Maximum price across all cars.",
     locations = cells_grand_summary(
-      columns = vars(msrp),
+      columns = "msrp",
       rows = starts_with("ma"))
   ) %>%
   tab_footnote(
     footnote = "Minimum price across all cars.",
     locations = cells_grand_summary(
-      columns = vars(msrp),
+      columns = "msrp",
       rows = starts_with("mi"))
   )
 
@@ -192,7 +192,7 @@ test_that("the `tab_footnote()` function works correctly", {
     tab_footnote(
       footnote = "Column labels and stub footnote.",
       locations = list(
-        cells_column_labels(columns = TRUE),
+        cells_column_labels(),
         cells_stub(rows = TRUE)
       )
     )
@@ -360,7 +360,7 @@ test_that("the `tab_footnote()` function works correctly", {
     tab_footnote(
       footnote = "Grand summary cell footnote.",
       locations = cells_grand_summary(
-        columns = vars(wt), rows = starts_with("s")
+        columns = wt, rows = starts_with("s")
       )
     )
 
@@ -413,7 +413,7 @@ test_that("the `tab_footnote()` function works correctly", {
     tab_footnote(
       footnote = "Grand summary cell footnote.",
       locations = cells_grand_summary(
-        columns = vars(wt), rows = starts_with("s")
+        columns = wt, rows = starts_with("s")
       )
     )
 
@@ -549,13 +549,13 @@ test_that("the `tab_footnote()` function works correctly", {
         footnote = "Footnote error.",
         locations = cells_body(columns = "disp", rows = "Mazda RX7")))
 
-  # Apply a footnote to a single data cell; this time, use `vars()`
+  # Apply a footnote to a single data cell; this time, use `c()`
   # to specify the `rows`
   tab <-
     data %>%
     tab_footnote(
       footnote = "A footnote.",
-      locations = cells_body(columns = "disp", rows = vars(`Mazda RX4`)))
+      locations = cells_body(columns = "disp", rows = c("Mazda RX4")))
 
   # Expect that the internal `footnotes_df` data frame will have
   # a single row
@@ -571,13 +571,13 @@ test_that("the `tab_footnote()` function works correctly", {
     expect_equal(
     c("data", NA_character_, "disp", "5", "1", NA_character_, "A footnote."))
 
-  # Apply a footnote to a single data cell; this time, use `vars()`
+  # Apply a footnote to a single data cell; this time, use `c()`
   # to specify the `columns`
   tab <-
     data %>%
     tab_footnote(
       footnote = "A footnote.",
-      locations = cells_body(columns = vars(disp, hp), rows = "Mazda RX4"))
+      locations = cells_body(columns = c(disp, hp), rows = "Mazda RX4"))
 
   # Expect that the internal `footnotes_df` data frame will have two rows
   dt_footnotes_get(data = tab) %>%
@@ -737,13 +737,13 @@ test_that("the `list_of_summaries` table is structured correctly", {
     gt(rowname_col = "model", groupname_col = "mfr") %>%
     summary_rows(
       groups = c("BMW", "Audi"),
-      columns = vars(msrp),
+      columns = msrp,
       fns = list(
         ~mean(., na.rm = TRUE),
         ~min(., na.rm = TRUE))
     ) %>%
     summary_rows(
-      columns = vars(msrp),
+      columns = msrp,
       fns = list(
         ~min(., na.rm = TRUE),
         ~max(., na.rm = TRUE))

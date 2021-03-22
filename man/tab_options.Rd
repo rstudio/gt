@@ -354,24 +354,27 @@ tab_1 <-
     title = md("Data listing from **exibble**"),
     subtitle = md("`exibble` is an R dataset")
   ) \%>\%
-  fmt_number(columns = vars(num)) \%>\%
-  fmt_currency(columns = vars(currency)) \%>\%
+  fmt_number(columns = num) \%>\%
+  fmt_currency(columns = currency) \%>\%
   tab_footnote(
     footnote = "Using commas for separators.",
     locations = cells_body(
-      columns = vars(num),
-      rows = num > 1000)
+      columns = num,
+      rows = num > 1000
+    )
   ) \%>\%
   tab_footnote(
     footnote = "Using commas for separators.",
     locations = cells_body(
-      columns = vars(currency),
-      rows = currency > 1000)
+      columns = currency,
+      rows = currency > 1000
+    )
   ) \%>\%
   tab_footnote(
     footnote = "Alphabetical fruit.",
     locations = cells_column_labels(
-      columns = vars(char))
+      columns = char
+    )
   )
 
 # Modify the table width to 100\% (which

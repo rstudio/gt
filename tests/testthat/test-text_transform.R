@@ -38,7 +38,7 @@ test_that("the `text_transform()` function works correctly", {
     mtcars_short %>%
     gt() %>%
     text_transform(
-      locations = cells_body(columns = vars(mpg)),
+      locations = cells_body(columns = mpg),
       fn = function(x) paste0(x, " mpg")
     )
 
@@ -57,7 +57,7 @@ test_that("the `text_transform()` function works correctly", {
     mtcars_short %>%
     gt() %>%
     text_transform(
-      locations = cells_body(columns = vars(mpg)),
+      locations = cells_body(columns = mpg),
       fn = function(x) {
         paste0(x, " ", ifelse(x >= 20, "(good)", "(bad)"))
       }
@@ -78,7 +78,7 @@ test_that("the `text_transform()` function works correctly", {
     mtcars_short %>%
     gt() %>%
     text_transform(
-      locations = cells_body(columns = vars(mpg)),
+      locations = cells_body(columns = mpg),
       fn = function(x) {
         ifelse(x >= 20, 25, 15)
       }
@@ -101,11 +101,11 @@ test_that("the `text_transform()` function works correctly", {
     mtcars_short %>%
     gt() %>%
     fmt_number(
-      columns = vars(mpg),
+      columns = mpg,
       decimals = 4,
       pattern = "{x} miles") %>%
     text_transform(
-      locations = cells_body(columns = vars(mpg)),
+      locations = cells_body(columns = mpg),
       fn = function(x) {
         paste(x, "per gallon")
       }
@@ -125,13 +125,13 @@ test_that("the `text_transform()` function works correctly", {
     mtcars_short %>%
     gt() %>%
     text_transform(
-      locations = cells_body(columns = vars(mpg)),
+      locations = cells_body(columns = mpg),
       fn = function(x) {
         paste(x, "miles")
       }
     ) %>%
     text_transform(
-      locations = cells_body(columns = vars(mpg)),
+      locations = cells_body(columns = mpg),
       fn = function(x) {
         paste(x, "per gallon")
       }
@@ -201,7 +201,7 @@ test_that("the `text_transform()` function works correctly", {
     mtcars_short %>%
     gt() %>%
     text_transform(
-      locations = cells_body(columns = vars(mpg)),
+      locations = cells_body(columns = mpg),
       fn = round_mult
     )
 

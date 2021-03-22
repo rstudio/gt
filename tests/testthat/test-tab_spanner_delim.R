@@ -143,12 +143,12 @@ test_that("the `tab_spanner_delim()` function works correctly", {
   # Create a `tbl_html` object with `gt()`; split the column
   # names into spanner headings and column labels but constrain
   # the splitting only to the `Sepal.Length` and `Sepal.Width`
-  # columns using the `vars()` helper
+  # columns using `c()`
   tbl_html <-
     gt(iris_short) %>%
     tab_spanner_delim(
       delim = ".",
-      columns = vars(Sepal.Length, Sepal.Width)
+      columns = c(Sepal.Length, Sepal.Width)
     )
 
   # Expect a particular ordering of spanner labels in `_spanners`

@@ -52,7 +52,7 @@ summary_extracted <-
   ) \%>\%
   summary_rows(
     groups = TRUE,
-    columns = vars(open, high, low, close),
+    columns = c(open, high, low, close),
     fns = list(
       min = ~min(.),
       max = ~max(.),

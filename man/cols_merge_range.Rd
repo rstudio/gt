@@ -66,7 +66,7 @@ the output table through the \code{hide_columns} or \code{autohide} options.
 
 \section{Function ID}{
 
-4-9
+4-10
 }
 
 \examples{
@@ -82,8 +82,8 @@ tab_1 <-
   dplyr::slice(1:8) \%>\%
   gt() \%>\%
   cols_merge_range(
-    col_begin = vars(mpg_c),
-    col_end = vars(mpg_h)
+    col_begin = mpg_c,
+    col_end = mpg_h
   ) \%>\%
   cols_label(
     mpg_c = md("*MPG*")
@@ -101,6 +101,7 @@ Other Modify Columns:
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
+\code{\link{cols_unhide}()},
 \code{\link{cols_width}()}
 }
 \concept{Modify Columns}

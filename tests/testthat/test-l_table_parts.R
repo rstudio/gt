@@ -81,12 +81,12 @@ test_that("a gt table contains the expected column spanner labels", {
   # Create a `tbl_latex` object with `gt()`; this table
   # contains the spanner heading `perimeter` over the
   # `peri` and `shape` column labels (this time, using
-  # the `vars()` helper to define the columns)
+  # `c()` to define the columns)
   tbl_latex <-
     gt(data = rock) %>%
     tab_spanner(
       label = "perimeter",
-      columns = vars(peri, shape)
+      columns = c(peri, shape)
     )
 
   # Expect a characteristic pattern
@@ -106,7 +106,7 @@ test_that("a gt table contains the expected column spanner labels", {
     gt(data = rock) %>%
       tab_spanner(
         label = "perimeter",
-        columns = vars(peris, shapes)
+        columns = c(peris, shapes)
       )
   )
 

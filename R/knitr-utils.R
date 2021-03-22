@@ -12,7 +12,8 @@ kable_caption = function(label, caption, format) {
 # create \label{x} or (\#x); the latter is current an internal hack for bookdown
 create_label = function(..., latex = FALSE) {
   if (isTRUE(knitr::opts_knit$get('bookdown.internal.label'))) {
-    lab1 = '(\\#'; lab2 = ')'
+    # knitr use (\\# but we remove the escaping as HTML is directly written
+    lab1 = '(#'; lab2 = ')'
   } else if (latex) {
     lab1 = '\\label{'; lab2 = '}'
   } else {

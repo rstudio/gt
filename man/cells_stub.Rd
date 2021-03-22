@@ -4,7 +4,7 @@
 \alias{cells_stub}
 \title{Location helper for targeting cells in the table stub}
 \usage{
-cells_stub(rows = TRUE)
+cells_stub(rows = everything())
 }
 \arguments{
 \item{rows}{The names of the rows that are to be targeted.}
@@ -72,7 +72,7 @@ tab_1 <-
   tidyr::spread(key = "tst", value = sza) \%>\%
   gt(rowname_col = "month") \%>\%
   fmt_missing(
-    columns = TRUE,
+    columns = everything(),
     missing_text = ""
   ) \%>\%
   tab_style(
@@ -80,7 +80,7 @@ tab_1 <-
       cell_fill(color = "darkblue"),
       cell_text(color = "white")
       ),
-    locations = cells_stub(rows = TRUE)
+    locations = cells_stub()
   )
 
 }
