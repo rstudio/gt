@@ -4,9 +4,9 @@ library(gt)
 morley_tbl <-
   gt(data = morley) %>%
   fmt_number(
-    columns = vars(Speed),
+    columns = Speed,
     decimals = 0,
     sep_mark = ",") %>%
-  cols_align(align = "left", columns = vars(Run, Speed))
+  cols_align(align = "left", columns = c(Run, Speed))
 
 morley_tbl

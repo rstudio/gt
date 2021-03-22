@@ -7,7 +7,7 @@ library(tidyverse)
 
 gt_tbl <-
   exibble %>%
-  dplyr::select(num, char, datetime, row) %>%
+  select(num, char, datetime, row) %>%
   gt(rowname_col = "row")
 
 
@@ -41,8 +41,8 @@ gt_tbl %>%
 # filling the remaining width)
 gt_tbl %>%
   cols_width(
-    vars(num) ~ px(120),
-    vars(char) ~ px(140)
+    num ~ px(120),
+    char ~ px(140)
   ) %>%
   tab_options(table.width = px(800))
 
@@ -64,8 +64,8 @@ gt_tbl %>%
 # filling the remaining width)
 gt_tbl %>%
   cols_width(
-    vars(row) ~ pct(5), # this is the stub column
-    vars(char) ~ pct(10)
+    row ~ pct(5), # this is the stub column
+    char ~ pct(10)
   ) %>%
   tab_options(table.width = px(800))
 
@@ -78,10 +78,10 @@ gt_tbl %>%
 # for the column widths
 gt_tbl %>%
   cols_width(
-    vars(row) ~ px(100),
-    vars(num) ~ px(100),
-    vars(char) ~ pct(10),
-    vars(datetime) ~ pct(10)
+    row ~ px(100),
+    num ~ px(100),
+    char ~ pct(10),
+    datetime ~ pct(10)
   ) %>%
   tab_options(table.width = px(800))
 
@@ -94,8 +94,8 @@ gt_tbl %>%
 # matter what values are given for the column widths
 gt_tbl %>%
   cols_width(
-    vars(num) ~ px(100),
-    vars(char) ~ pct(50)
+    num ~ px(100),
+    char ~ pct(50)
   ) %>%
   tab_options(table.width = px(800))
 
@@ -140,15 +140,15 @@ gt_tbl %>%
 # filling the remaining width)
 gt_tbl %>%
   cols_width(
-    vars(num) ~ px(120),
-    vars(char) ~ px(140)
+    num ~ px(120),
+    char ~ px(140)
   ) %>%
   tab_options(table.width = pct(100))
 
 gt_tbl %>%
   cols_width(
-    vars(num) ~ px(120),
-    vars(char) ~ px(140)
+    num ~ px(120),
+    char ~ px(140)
   ) %>%
   tab_options(table.width = pct(80))
 
@@ -176,15 +176,15 @@ gt_tbl %>%
 # filling the remaining width)
 gt_tbl %>%
   cols_width(
-    vars(row) ~ pct(5), # this is the stub column
-    vars(char) ~ pct(10)
+    row ~ pct(5), # this is the stub column
+    char ~ pct(10)
   ) %>%
   tab_options(table.width = pct(100))
 
 gt_tbl %>%
   cols_width(
-    vars(row) ~ pct(5), # this is the stub column
-    vars(char) ~ pct(10)
+    row ~ pct(5), # this is the stub column
+    char ~ pct(10)
   ) %>%
   tab_options(table.width = pct(80))
 
@@ -197,19 +197,19 @@ gt_tbl %>%
 # for the column widths
 gt_tbl %>%
   cols_width(
-    vars(row) ~ px(100),
-    vars(num) ~ px(100),
-    vars(char) ~ pct(10),
-    vars(datetime) ~ pct(10)
+    row ~ px(100),
+    num ~ px(100),
+    char ~ pct(10),
+    datetime ~ pct(10)
   ) %>%
   tab_options(table.width = pct(100))
 
 gt_tbl %>%
   cols_width(
-    vars(row) ~ px(100),
-    vars(num) ~ px(100),
-    vars(char) ~ pct(10),
-    vars(datetime) ~ pct(10)
+    row ~ px(100),
+    num ~ px(100),
+    char ~ pct(10),
+    datetime ~ pct(10)
   ) %>%
   tab_options(table.width = pct(80))
 
@@ -222,15 +222,15 @@ gt_tbl %>%
 # matter what values are given for the column widths
 gt_tbl %>%
   cols_width(
-    vars(num) ~ px(100),
-    vars(char) ~ pct(50)
+    num ~ px(100),
+    char ~ pct(50)
   ) %>%
   tab_options(table.width = pct(100))
 
 gt_tbl %>%
   cols_width(
-    vars(num) ~ px(100),
-    vars(char) ~ pct(50)
+    num ~ px(100),
+    char ~ pct(50)
   ) %>%
   tab_options(table.width = pct(80))
 
@@ -262,8 +262,8 @@ gt_tbl %>%
 # filling the remaining width)
 gt_tbl %>%
   cols_width(
-    vars(num) ~ px(120),
-    vars(char) ~ px(140)
+    num ~ px(120),
+    char ~ px(140)
   )
 
 
@@ -273,10 +273,10 @@ gt_tbl %>%
 # NOTE: we intervene and set the table width to 100%
 gt_tbl %>%
   cols_width(
-    vars(row) ~ pct(30),
-    vars(num) ~ pct(30),
-    vars(char) ~ pct(10),
-    vars(datetime) ~ pct(10)
+    row ~ pct(30),
+    num ~ pct(30),
+    char ~ pct(10),
+    datetime ~ pct(10)
   )
 
 
@@ -287,8 +287,8 @@ gt_tbl %>%
 # intervention, the table width goes to 100%
 gt_tbl %>%
   cols_width(
-    vars(row) ~ pct(10), # this is the stub column
-    vars(char) ~ pct(10)
+    row ~ pct(10), # this is the stub column
+    char ~ pct(10)
   )
 
 
@@ -299,10 +299,10 @@ gt_tbl %>%
 # intervention, the table width goes to 100%
 gt_tbl %>%
   cols_width(
-    vars(row) ~ px(100),
-    vars(num) ~ px(100),
-    vars(char) ~ pct(10),
-    vars(datetime) ~ pct(10)
+    row ~ px(100),
+    num ~ px(100),
+    char ~ pct(10),
+    datetime ~ pct(10)
   )
 
 
@@ -313,7 +313,7 @@ gt_tbl %>%
 # content
 gt_tbl %>%
   cols_width(
-    vars(num) ~ px(100),
-    vars(char) ~ pct(50)
+    num ~ px(100),
+    char ~ pct(50)
   )
 

@@ -12,7 +12,7 @@ gt:::markdown_to_rtf(markdown_text) %>% cat()
 md_tbl <-
   dplyr::tibble(markdown = markdown_text) %>%
   gt() %>%
-  fmt_markdown(vars(markdown)) %>%
+  fmt_markdown(markdown) %>%
   tab_options(
     table.width = pct(100)
   )
@@ -26,7 +26,7 @@ readr::read_file(out_path) %>% cat()
 unicode_tbl <-
   dplyr::tibble(a = "a\u2014b", b = "**bold** \u2014") %>%
   gt() %>%
-  fmt_markdown(columns = vars(b)) %>%
+  fmt_markdown(columns = b) %>%
   tab_header(title = "title a\u2014b", subtitle = "subtitle a\u2014b") %>%
   tab_source_note("source note a\u2014b") %>%
   tab_footnote("footnote a\u2014b", locations = cells_body(1, 1))
@@ -37,9 +37,9 @@ unicode_tbl %>% gtsave("tests/gt-examples/rtf_output/unicode.rtf")
 iris_tbl <-
   gt(data = iris) %>%
   tab_spanner_delim(delim = ".") %>%
-  cols_move_to_start(columns = vars(Species)) %>%
+  cols_move_to_start(columns = Species) %>%
   fmt_number(
-    columns = vars(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width),
+    columns = c(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width),
     decimals = 1
   ) %>%
   tab_header(
@@ -58,14 +58,14 @@ exibble_tbl <-
   exibble %>%
   dplyr::mutate(char = paste(">", char)) %>%
   gt() %>%
-  fmt_markdown(vars(char))
+  fmt_markdown(char)
 
 exibble_tbl %>%  gtsave("tests/gt-examples/rtf_output/exibble.rtf")
 
 passthrough_tbl <-
   exibble %>%
   gt() %>%
-  fmt_passthrough(columns = vars(char), pattern = "1 {x} 2")
+  fmt_passthrough(columns = char, pattern = "1 {x} 2")
 
 passthrough_tbl %>%  gtsave("tests/gt-examples/rtf_output/passthrough.rtf")
 
@@ -73,10 +73,10 @@ passthrough_tbl %>%  gtsave("tests/gt-examples/rtf_output/passthrough.rtf")
 morley_tbl <-
   gt(data = morley) %>%
   fmt_number(
-    columns = vars(Speed),
+    columns = Speed,
     decimals = 0,
     sep_mark = ",") %>%
-  cols_align(align = "left", columns = vars(Run, Speed))
+  cols_align(align = "left", columns = c(Run, Speed))
 
 morley_tbl %>% gtsave("tests/gt-examples/rtf_output/morley.rtf")
 
@@ -84,7 +84,7 @@ morley_tbl %>% gtsave("tests/gt-examples/rtf_output/morley.rtf")
 pressure_tbl <-
   gt(data = pressure) %>%
   fmt_scientific(
-    columns = vars(pressure),
+    columns = pressure,
     decimals = 2
   )
 
@@ -93,7 +93,7 @@ pressure_tbl %>% gtsave("tests/gt-examples/rtf_output/pressure.rtf")
 # Create a display table based on `sleep`
 sleep_tbl <-
   gt(data = sleep) %>%
-  fmt_scientific(columns = vars(extra)) %>%
+  fmt_scientific(columns = extra) %>%
   tab_footnote(
     footnote = "This is a footnote",
     locations = cells_body(columns = 1, rows = c(2, 3, 4))
@@ -104,19 +104,19 @@ sleep_tbl %>% gtsave("tests/gt-examples/rtf_output/sleep.rtf")
 # Create a display table based on `airquality`
 airquality_tbl <-
   gt(data = airquality) %>%
-  cols_move_to_start(columns = vars(Month, Day)) %>%
+  cols_move_to_start(columns = c(Month, Day)) %>%
   cols_label(Solar.R = md("Solar  \nRadiation")) %>%
   fmt_number(
-    columns = vars(Wind),
+    columns = Wind,
     decimals = 2
   ) %>%
   cols_label(Month = md("**Month**")) %>%
   tab_spanner(
     label = "Measurement Period",
-    columns = vars(Month, Day)
+    columns = c(Month, Day)
   ) %>%
-  fmt_missing(columns = vars(Solar.R, Wind, Temp)) %>%
-  fmt_missing(columns = vars(Ozone), missing_text = I("---"))
+  fmt_missing(columns = c(Solar.R, Wind, Temp)) %>%
+  fmt_missing(columns = Ozone, missing_text = I("---"))
 
 airquality_tbl %>% gtsave("tests/gt-examples/rtf_output/airquality.rtf")
 
@@ -127,17 +127,17 @@ sp500_tbl <-
   ) %>%
   gt() %>%
   fmt_date(
-    columns = vars(Date),
+    columns = Date,
     date_style = 6
   ) %>%
   fmt_currency(
-    columns = vars(High, Open, Low, Close),
+    columns = c(High, Open, Low, Close),
     currency = "USD",
     scale_by = 1/1000,
     pattern = "{x}K"
   ) %>%
   fmt_number(
-    columns = vars(Volume),
+    columns = Volume,
     decimals = 3,
     scale_by = 1E-9,
     pattern = "{x}B"
@@ -167,7 +167,7 @@ summary_tbl <-
   gt(groupname_col = "groups") %>%
   summary_rows(
     groups = c("A", "C"),
-    columns = vars(value),
+    columns = value,
     fns = list(
       ~mean(., na.rm = TRUE),
       ~sum(., na.rm = TRUE),
@@ -175,7 +175,7 @@ summary_tbl <-
     )
   ) %>%
   grand_summary_rows(
-    columns = vars(value_2),
+    columns = value_2,
     fns = list(
       ~mean(., na.rm = TRUE),
       ~sum(., na.rm = TRUE),
@@ -192,7 +192,7 @@ summary_tbl <-
     locations = cells_summary(
       groups = "C", columns = 1, rows = 1)
   ) %>%
-  fmt_missing(columns = vars(value, value_2)) %>%
+  fmt_missing(columns = c(value, value_2)) %>%
   tab_options(
     summary_row.background.color = "#FFFEEE",
     row_group.background.color = "lightblue"
@@ -214,18 +214,18 @@ tbl <-
 uncert_tbl <-
   gt(data = tbl) %>%
   cols_merge_uncert(
-    col_val = vars(value_1),
-    col_uncert = vars(uncertainty)
+    col_val = value_1,
+    col_uncert = uncertainty
   ) %>%
   cols_merge_uncert(
-    col_val = vars(value_2),
-    col_uncert = vars(uncertainty_2)
+    col_val = value_2,
+    col_uncert = uncertainty_2
   ) %>%
   fmt_number(
-    columns = vars(value_1, value_2),
+    columns = c(value_1, value_2),
     decimals = 2
   ) %>%
-  fmt_missing(columns = vars(value_1, value_2))
+  fmt_missing(columns = c(value_1, value_2))
 
 uncert_tbl %>% gtsave("tests/gt-examples/rtf_output/uncert.rtf")
 
@@ -237,19 +237,19 @@ conditional_tbl <-
   ) %>%
   gt() %>%
   fmt_number(
-    columns = vars(Open),
+    columns = Open,
     rows = Open > 1900,
     decimals = 3,
     scale_by = 1/1000,
     pattern = "{x}K"
   ) %>%
   fmt_number(
-    columns = vars(Close),
+    columns = Close,
     rows = High < 1940 & Low > 1915,
     decimals = 3
   ) %>%
   fmt_currency(
-    columns = vars(High, Low, Close),
+    columns = c(High, Low, Close),
     rows = Date > "2016-02-20",
     currency = "USD"
   )
@@ -307,11 +307,11 @@ footnotes_tbl <-
   ) %>%
   tab_footnote(
     footnote = "This is an even smaller number.",
-    locations = cells_body(columns = vars(value_1), rows = 9)
+    locations = cells_body(columns = value_1, rows = 9)
   ) %>%
   tab_footnote(
     footnote = "This is a small number.",
-    locations = cells_body(columns = vars(value_1), rows = 4)
+    locations = cells_body(columns = value_1, rows = 4)
   ) %>%
   tab_footnote(
     footnote = "First data cell.",
@@ -331,7 +331,7 @@ footnotes_tbl <-
   ) %>%
   tab_footnote(
     footnote = md("`value_1` is the first column of values."),
-    locations = cells_column_labels(columns = vars(value_1))
+    locations = cells_column_labels(columns = value_1)
   ) %>%
   tab_footnote(
     footnote = md("The `title` can get a footnote."),
@@ -396,7 +396,7 @@ cell_styles_tbl <-
       cell_text(color = "white")
     ),
     locations = cells_body(
-      columns = vars(value, value_2),
+      columns = c(value, value_2),
       rows = 1
     )
   )
@@ -431,34 +431,34 @@ many_options_tbl <-
   tab_stubhead(label = "Stubhead Label") %>%
   tab_spanner(
     label = "Group 1",
-    columns = vars(col_1, col_2)
+    columns = c(col_1, col_2)
   ) %>%
   tab_spanner(
     label = "Group 2",
-    columns = vars(col_3, col_4)
+    columns = c(col_3, col_4)
   ) %>%
   tab_footnote(
     footnote = "Footnote #1",
     locations = cells_body(
-      columns = vars(col_1), rows = 1
+      columns = col_1, rows = 1
     )
   ) %>%
   tab_footnote(
     footnote = "Footnote #2",
     locations = cells_body(
-      columns = vars(col_2), rows = 2
+      columns = col_2, rows = 2
     )
   ) %>%
   tab_footnote(
     footnote = "Footnote #3",
     locations = cells_body(
-      columns = vars(col_3), rows = 3
+      columns = col_3, rows = 3
     )
   ) %>%
   tab_footnote(
     footnote = "Footnote #4",
     locations = cells_body(
-      columns = vars(col_4), rows = 4
+      columns = col_4, rows = 4
     )
   ) %>%
   tab_source_note("A source note for the table.") %>%
