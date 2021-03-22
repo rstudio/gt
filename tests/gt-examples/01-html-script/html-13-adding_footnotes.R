@@ -19,18 +19,10 @@ tbl <-
 
 # Create a display table
 footnotes_tbl <-
-  gt(data = tbl) %>%
-  tab_row_group(
-    label = md("**earlier date**"),
-    rows = date == "2018-02-10",
-    id = "earlier_date"
+  gt(
+    data = tbl,
+    groupname_col = "date"
   ) %>%
-  tab_row_group(
-    label = "2018-02-11",
-    rows = date == "2018-02-11",
-    id = "later_date"
-  ) %>%
-  row_group_order(groups = c("earlier_date", "later_date")) %>%
   tab_header(title = "The Table Title", subtitle = "The subtitle.") %>%
   tab_spanner(
     label = "values",
@@ -38,11 +30,11 @@ footnotes_tbl <-
   ) %>%
   tab_footnote(
     footnote = "This is an even smaller number.",
-    locations = cells_body(columns = vars(value_1), rows = 9)
+    locations = cells_body(columns = value_1, rows = 9)
   ) %>%
   tab_footnote(
     footnote = "This is a small number.",
-    locations = cells_body(columns = vars(value_1), rows = 4)
+    locations = cells_body(columns = value_1, rows = 4)
   ) %>%
   tab_footnote(
     footnote = "First data cell.",
@@ -50,7 +42,7 @@ footnotes_tbl <-
   ) %>%
   tab_footnote(
     footnote = "The first row group",
-    locations = cells_row_groups(groups = "earlier_date")
+    locations = cells_row_groups(groups = ends_with("10"))
   ) %>%
   tab_footnote(
     footnote = "Two sets of values",
@@ -62,7 +54,7 @@ footnotes_tbl <-
   ) %>%
   tab_footnote(
     footnote = md("`value_1` is the first column of values."),
-    locations = cells_column_labels(columns = vars(value_1))
+    locations = cells_column_labels(columns = value_1)
   ) %>%
   tab_footnote(
     footnote = md("The `title` can get a footnote."),

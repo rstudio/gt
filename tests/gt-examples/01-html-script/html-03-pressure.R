@@ -4,7 +4,7 @@ library(gt)
 pressure_tbl <-
   gt(data = pressure) %>%
   fmt_scientific(
-    columns = vars(pressure),
+    columns = pressure,
     decimals = 2
   )
 
