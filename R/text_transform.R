@@ -82,11 +82,15 @@ text_transform_at_location.cells_body <- function(loc,
 
   loc <- to_output_location(loc = loc, data = data)
 
+  stub_df <- dt_stub_df_get(data = data)
+
   # Do one vectorized operation per column
   for (col in loc$colnames) {
 
     if (col %in% colnames(body)) {
-      body[[col]][loc$rows] <- fn(body[[col]][loc$rows])
+
+      body[[col]][stub_df$rownum_i %in% loc$rows] <-
+        fn(body[[col]][stub_df$rownum_i %in% loc$rows])
     }
   }
 
