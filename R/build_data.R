@@ -14,12 +14,12 @@ build_data <- function(data, context) {
   data <- render_formats(data = data, context = context)
   data <- migrate_unformatted_to_output(data = data, context = context)
   data <- perform_col_merge(data = data, context = context)
-  data <- perform_text_transforms(data = data)
 
   data <- dt_body_reassemble(data = data)
   data <- reorder_stub_df(data = data)
   data <- reorder_footnotes(data = data)
   data <- reorder_styles(data = data)
+  data <- perform_text_transforms(data = data)
 
   # Use `dt_*_build()` methods
   data <- dt_boxhead_build(data = data, context = context)
