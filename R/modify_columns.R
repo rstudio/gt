@@ -222,10 +222,11 @@ cols_width <- function(data,
 
     columns_used <- c(columns_used, columns)
 
+    e <- rlang::caller_env()
     width <-
       width_item %>%
       rlang::f_rhs() %>%
-      rlang::eval_tidy()
+      rlang::eval_tidy(env = e)
 
     # If a bare numeric value is provided, give that the `px` dimension
     if (is.numeric(width)) width <- paste_right(as.character(width), "px")
