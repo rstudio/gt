@@ -1,5 +1,3 @@
-context("Ensuring that the `text_transform()` function works as expected")
-
 # Create a shorter version of `mtcars`
 mtcars_short <- mtcars[1:5, ]
 
@@ -211,4 +209,76 @@ test_that("the `text_transform()` function works correctly", {
     xml2::read_html() %>%
     selection_text("tr td:first-child") %>%
     expect_match(".*\\.(00|25|50|75)$")
+})
+
+test_that("`text_transform()` works even when rows/columns are reordered", {
+
+  # Use `tab_row_group()` to create new row groups (this reorders
+  # the data table) and use `text_transform()` in two separate calls
+  # to modify various cells in the `mpg` column
+  tbl_html <-
+    mtcars_short %>%
+    gt(rownames_to_stub = TRUE) %>%
+    tab_row_group(
+      label = md("**Mazda**"),
+      rows = starts_with("Maz"),
+      id = "Mazda"
+    ) %>%
+    tab_row_group(
+      label = md("**2 Hornets + a Datsun**"),
+      rows = matches("Datsun|Hornet"),
+      id = "DatsunHornet"
+    ) %>%
+    text_transform(
+      locations = cells_body(columns = mpg, rows = "Datsun 710"),
+      fn = function(x) paste0(x, "!")
+    ) %>%
+    text_transform(
+      locations = cells_body(columns = mpg, rows = starts_with("Mazda")),
+      fn = function(x) round(as.numeric(x), 0)
+    )
+
+  # Expect that certain cells are transformed in the `mpg` column
+  tbl_html %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_text("tr td:nth-child(2)") %>%
+    expect_equal(c("22.8!", "21.4", "18.7", "21", "21"))
+
+  # Reorder the groups with the `row_group_order()` function
+  tbl_html <-
+    tbl_html %>%
+    row_group_order(groups = c("Mazda", "DatsunHornet"))
+
+  # Expect that the transformed cells in the `mpg` column are
+  # reordered to match the new group order
+  tbl_html %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_text("tr td:nth-child(1)") %>%
+    expect_equal(
+      c(
+        "Mazda", "Mazda RX4", "Mazda RX4 Wag", "2 Hornets + a Datsun",
+        "Datsun 710", "Hornet 4 Drive", "Hornet Sportabout"
+      )
+    )
+
+  tbl_html %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_text("tr td:nth-child(2)") %>%
+    expect_equal(c("21", "21", "22.8!", "21.4", "18.7"))
+
+  # Move the `mpg` column to the right of `cyl`
+  tbl_html <-
+    tbl_html %>%
+    cols_move(columns = mpg, after = cyl)
+
+  # Expect that the transformed cells in the `mpg` column in its
+  # new position are still transformed properly
+  tbl_html %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_text("tr td:nth-child(3)") %>%
+    expect_equal(c("21", "21", "22.8!", "21.4", "18.7"))
 })
