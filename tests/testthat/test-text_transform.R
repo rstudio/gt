@@ -211,7 +211,7 @@ test_that("the `text_transform()` function works correctly", {
     expect_match(".*\\.(00|25|50|75)$")
 })
 
-test_that("`text_transform()` works even when rows/columns are reordered", {
+test_that("`text_transform()` works in the body even when rows/columns are reordered", {
 
   # Use `tab_row_group()` to create new row groups (this reorders
   # the data table) and use `text_transform()` in two separate calls
@@ -281,4 +281,76 @@ test_that("`text_transform()` works even when rows/columns are reordered", {
     xml2::read_html() %>%
     selection_text("tr td:nth-child(3)") %>%
     expect_equal(c("21", "21", "22.8!", "21.4", "18.7"))
+})
+
+test_that("`text_transform()` works in column labels", {
+
+  # Create a gt table and modify two different column names
+  # with the `text_transform()` function
+  tbl_html <-
+    mtcars_short %>%
+    gt(rownames_to_stub = TRUE) %>%
+    tab_row_group(
+      label = md("**Mazda**"),
+      rows = starts_with("Maz"),
+      id = "Mazda"
+    ) %>%
+    tab_row_group(
+      label = md("**2 Hornets + a Datsun**"),
+      rows = matches("Datsun|Hornet"),
+      id = "DatsunHornet"
+    ) %>%
+    cols_move_to_end(columns = cyl) %>%
+    text_transform(
+      locations = cells_column_labels(columns = c(mpg, cyl)),
+      fn = toupper
+    )
+
+  # Expect column labels to be transformed correctly
+  tbl_html %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_text("th") %>%
+    expect_equal(
+      c(
+        "", "MPG", "disp", "hp", "drat", "wt",
+        "qsec", "vs", "am", "gear", "carb", "CYL"
+      )
+    )
+})
+
+test_that("`text_transform()` works on row labels in the stub", {
+
+  # Create a gt table and modify two different column names
+  # with the `text_transform()` function
+  tbl_html <-
+    mtcars_short %>%
+    gt(rownames_to_stub = TRUE) %>%
+    tab_row_group(
+      label = md("**Mazda**"),
+      rows = starts_with("Maz"),
+      id = "Mazda"
+    ) %>%
+    tab_row_group(
+      label = md("**2 Hornets + a Datsun**"),
+      rows = matches("Datsun|Hornet"),
+      id = "DatsunHornet"
+    ) %>%
+    cols_move_to_end(columns = cyl) %>%
+    text_transform(
+      locations = cells_stub(rows = c("Mazda RX4 Wag", "Hornet Sportabout")),
+      fn = toupper
+    )
+
+  # Expect column labels to be transformed correctly
+  tbl_html %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_text("[class='gt_row gt_left gt_stub']") %>%
+    expect_equal(
+      c(
+        "Datsun 710", "Hornet 4 Drive", "HORNET SPORTABOUT",
+        "Mazda RX4", "MAZDA RX4 WAG"
+      )
+    )
 })
