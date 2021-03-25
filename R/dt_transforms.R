@@ -21,15 +21,18 @@ dt_transforms_add <- function(data, loc, fn) {
   existing_transforms <- dt_transforms_get(data = data)
   resolved <- resolve_location(loc = loc, data = data)
 
+  added_transform <-
+    list(
+      resolved = resolved,
+      fn = fn
+    )
+
+  class(added_transform) <- class(loc)[1]
+
   transforms <-
     c(
       existing_transforms,
-      list(
-        list(
-          resolved = resolved,
-          fn = fn
-        )
-      )
+      list(added_transform)
     )
 
   dt_transforms_set(data = data, transforms = transforms)
