@@ -109,32 +109,29 @@ text_transform_at_location.cells_stub <- function(loc,
 
   for (row in loc$rows) {
 
-    if (row %in% stub_df$rowname) {
-      stub_df[row, "rowname"] <- fn(stub_df[row, "rowname"])
-    }
+    row_idx <- which(stub_df$rownum_i %in% loc$rows)
+
+    stub_df[[row_idx, "rowname"]] <- fn(stub_df[[row_idx, "rowname"]])
   }
 
-  dt_stub_df_set(data = data, stub_df = stub_df)
+  data <- dt_stub_df_set(data = data, stub_df = stub_df)
+
+  data
 }
 
 text_transform_at_location.cells_column_labels <- function(loc,
                                                            data,
                                                            fn = identity) {
-
   boxh <- dt_boxhead_get(data = data)
 
   loc <- to_output_location(loc = loc, data = data)
 
-  for (col in loc$columns) {
+  for (col in loc$colnames) {
 
     if (col %in% boxh$var) {
 
       column_label_edited <-
-        boxh %>%
-        dplyr::filter(var == !!col) %>%
-        dplyr::pull(column_label) %>%
-        .[[1]] %>%
-        fn()
+        fn(dplyr::filter(boxh, var == {{ col }})[, "column_label"][[1]])
 
       data <-
         dt_boxhead_edit(
