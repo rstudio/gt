@@ -12,19 +12,21 @@ jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }} (${{ matrix.r }})
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
 
     strategy:
       fail-fast: false
       matrix:
-        r: 
-          - '3.5'
-          - '3.6'
-          - '4.0'
         config:
-          - {os: windows-latest}
-          - {os: macOS-latest}
-          - {os: ubuntu-16.04, rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest"}
+          - {os: macOS-latest, r: '3.5'}
+          - {os: macOS-latest, r: '3.6'}
+          - {os: macOS-latest, r: '4.0'}
+          - {os: windows-latest, r: '3.5'}
+          - {os: windows-latest, r: '3.6'}
+          - {os: windows-latest, r: '4.0'}
+          - {os: ubuntu-16.04, r: '3.5', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+          - {os: ubuntu-16.04, r: '3.6', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+          - {os: ubuntu-16.04, r: '4.0', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
@@ -37,14 +39,14 @@ jobs:
 
       - uses: r-lib/actions/setup-r@master
         with:
-          r-version: ${{ matrix.r }}
+          r-version: ${{ matrix.config.r }}
 
       - uses: r-lib/actions/setup-pandoc@master
 
       - name: Query dependencies
         run: |
           install.packages('remotes')
-          saveRDS(remotes::dev_package_deps(dependencies = TRUE), "depends.Rds", version = 2)
+          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
         shell: Rscript {0}
 
       - name: Cache R packages
@@ -52,9 +54,9 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-r-${{ matrix.r }}-2-${{ hashFiles('depends.Rds') }}
-          restore-keys: ${{ runner.os }}-r-${{ matrix.r }}-2-
-      
+          key: ${{ runner.os }}-r-${{ matrix.config.r }}-2-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-2-
+
       - name: Problematic Pkgs
         shell: Rscript {0}
         run: |
@@ -73,9 +75,13 @@ jobs:
           sudo -s eval "$sysreqs"
 
       - name: Install dependencies
-        shell: Rscript {0}
         run: |
+          if (Sys.info()[["sysname"]] == "Windows") {
+             options(install.packages.compile.from.source = "never")
+          }
           remotes::install_deps(dependencies = TRUE)
+          remotes::install_cran("rcmdcheck")
+        shell: Rscript {0}
 
       - name: Install rcmdcheck
         shell: Rscript {0}
@@ -83,17 +89,19 @@ jobs:
           remotes::install_cran("rcmdcheck")
 
       - name: Check
+        env:
+          _R_CHECK_CRAN_INCOMING_: false
+        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
-        run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "warning", check_dir = "check")
 
       - name: Upload check results
         if: failure()
         uses: actions/upload-artifact@master
         with:
-          name: ${{ runner.os }}-r${{ matrix.r }}-results
+          name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
 
       - name: Test coverage
-        if: matrix.config.os == 'macOS-latest' && matrix.r == '3.6'
-        shell: Rscript {0}
+        if: matrix.config.os == 'macOS-latest' && matrix.config.r == '3.6'
         run: covr::codecov()
+        shell: Rscript {0}
