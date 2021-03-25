@@ -60,6 +60,7 @@ jobs:
       - name: Problematic Pkgs
         shell: Rscript {0}
         run: |
+          remotes::install_cran("htmltools")
           remotes::install_cran("ellipsis")
           remotes::install_cran("pillar")
           remotes::install_cran("ps")
