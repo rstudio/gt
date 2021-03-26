@@ -86,11 +86,11 @@ tab_2 <-
       ),
       locations = list(
         cells_body(
-          columns = vars(num),
+          columns = num,
           rows = is.na(num)
         ),
         cells_body(
-          columns = vars(currency),
+          columns = currency,
           rows = is.na(currency)
         )
       )

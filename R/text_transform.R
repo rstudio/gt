@@ -22,11 +22,12 @@
 #'   dplyr::select(num, char, currency) %>%
 #'   dplyr::slice(1:4) %>%
 #'   gt() %>%
-#'   fmt_number(columns = vars(num)) %>%
-#'   fmt_currency(columns = vars(currency)) %>%
+#'   fmt_number(columns = num) %>%
+#'   fmt_currency(columns = currency) %>%
 #'   text_transform(
 #'     locations = cells_body(
-#'       columns = vars(num)),
+#'       columns = num
+#'     ),
 #'     fn = function(x) {
 #'       paste0(
 #'         x, " (",

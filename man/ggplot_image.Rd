@@ -82,7 +82,7 @@ tab_1 <-
   ) \%>\%
   gt() \%>\%
   text_transform(
-    locations = cells_body(vars(ggplot)),
+    locations = cells_body(columns = ggplot),
     fn = function(x) {
       plot_object \%>\%
         ggplot_image(height = px(200))

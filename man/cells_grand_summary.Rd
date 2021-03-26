@@ -4,7 +4,7 @@
 \alias{cells_grand_summary}
 \title{Location helper for targeting cells in a grand summary}
 \usage{
-cells_grand_summary(columns = TRUE, rows = TRUE)
+cells_grand_summary(columns = everything(), rows = everything())
 }
 \arguments{
 \item{columns}{The names of the columns that are to be targeted.}
@@ -71,11 +71,11 @@ tab_1 <-
   dplyr::select(-contains("country")) \%>\%
   gt(rowname_col = "year") \%>\%
   fmt_number(
-    columns = vars(population),
+    columns = population,
     decimals = 0
   ) \%>\%
   grand_summary_rows(
-    columns = vars(population),
+    columns = population,
     fns = list(
       change = ~max(.) - min(.)
     ),
@@ -88,7 +88,7 @@ tab_1 <-
       cell_fill(color = "lightblue")
     ),
     locations = cells_grand_summary(
-      columns = vars(population),
+      columns = population,
       rows = 1)
   )
 

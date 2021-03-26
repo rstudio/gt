@@ -72,7 +72,7 @@ tab_1 <-
   dplyr::select(num, currency) \%>\%
   gt() \%>\%
   fmt_number(
-    columns = vars(num, currency),
+    columns = c(num, currency),
     decimals = 1
   ) \%>\%
   tab_style(
@@ -81,8 +81,9 @@ tab_1 <-
       cell_text(weight = "bold")
       ),
     locations = cells_body(
-      columns = vars(num),
-      rows = num >= 5000)
+      columns = num,
+      rows = num >= 5000
+    )
   ) \%>\%
   tab_style(
     style = list(
@@ -90,8 +91,9 @@ tab_1 <-
       cell_text(style = "italic")
       ),
     locations = cells_body(
-      columns = vars(currency),
-      rows = currency < 100)
+      columns = currency,
+      rows = currency < 100
+    )
   )
 
 # Use `sp500` to create a gt table;
@@ -135,7 +137,7 @@ tab_3 <-
       cell_fill(color = "lightcyan"),
       "font-variant: small-caps;"
     ),
-    locations = cells_body(columns = vars(char))
+    locations = cells_body(columns = char)
   )
 
 }

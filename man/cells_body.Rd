@@ -4,7 +4,7 @@
 \alias{cells_body}
 \title{Location helper for targeting data cells in the table body}
 \usage{
-cells_body(columns = TRUE, rows = TRUE)
+cells_body(columns = everything(), rows = everything())
 }
 \arguments{
 \item{columns}{The names of the columns that are to be targeted.}
@@ -73,7 +73,7 @@ tab_1 <-
   tab_footnote(
     footnote = "Highest horsepower.",
     locations = cells_body(
-      columns = vars(hp),
+      columns = hp,
       rows = hp == max(hp))
   ) \%>\%
   opt_footnote_marks(marks = c("*", "+"))

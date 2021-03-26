@@ -60,21 +60,21 @@ tab_1 <-
   dplyr::tibble(a = 1:8, b = 1:8, c = 1:8) \%>\%
   gt() \%>\%
   data_color(
-    columns = vars(a),
+    columns = a,
     colors = scales::col_numeric(
       palette = pal_lighter,
       domain = c(1, 8)
     )
   ) \%>\%
   data_color(
-    columns = vars(b),
+    columns = b,
     colors = scales::col_numeric(
       palette = pal,
       domain = c(1, 8)
     )
   ) \%>\%
   data_color(
-    columns = vars(c),
+    columns = c,
     colors = scales::col_numeric(
       palette = pal_darker,
       domain = c(1, 8)

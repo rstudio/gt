@@ -317,15 +317,19 @@ as_raw_html <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Generation of the HTML table
-  html_table <- render_as_html(data = data)
-
   if (inline_css) {
+
+    # Generation of the HTML table
+    html_table <- render_as_html(data = data)
 
     # Create inline styles
     html_table <-
       html_table %>%
       inline_html_styles(css_tbl = get_css_tbl(data))
+
+  } else {
+
+    html_table <- as.character(as.tags.gt_tbl(data))
   }
 
   htmltools::HTML(html_table)
@@ -540,7 +544,7 @@ as_rtf <- function(data) {
 #'   ) %>%
 #'   summary_rows(
 #'     groups = TRUE,
-#'     columns = vars(open, high, low, close),
+#'     columns = c(open, high, low, close),
 #'     fns = list(
 #'       min = ~min(.),
 #'       max = ~max(.),

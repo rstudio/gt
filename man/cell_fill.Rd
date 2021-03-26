@@ -43,19 +43,19 @@ tab_1 <-
   dplyr::select(num, currency) \%>\%
   gt() \%>\%
   fmt_number(
-    columns = vars(num, currency),
+    columns = c(num, currency),
     decimals = 1
   ) \%>\%
   tab_style(
     style = cell_fill(color = "lightblue"),
     locations = cells_body(
-      columns = vars(num),
+      columns = num,
       rows = num >= 5000)
   ) \%>\%
   tab_style(
     style = cell_fill(color = "gray85"),
     locations = cells_body(
-      columns = vars(currency),
+      columns = currency,
       rows = currency < 100
     )
   )

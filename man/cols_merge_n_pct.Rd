@@ -68,7 +68,7 @@ the output table through the \code{hide_columns} or \code{autohide} options.
 
 \section{Function ID}{
 
-4-10
+4-11
 }
 
 \examples{
@@ -94,11 +94,11 @@ tab_1 <-
     rowname_col = "name",
     groupname_col = "type"
   ) \%>\%
-  fmt_currency(vars(price)) \%>\%
-  fmt_percent(vars(frac)) \%>\%
+  fmt_currency(price) \%>\%
+  fmt_percent(frac) \%>\%
   cols_merge_n_pct(
-    col_n = vars(n),
-    col_pct = vars(frac)
+    col_n = n,
+    col_pct = frac
   ) \%>\%
   cols_label(
     n = md("*N* (\%)"),
@@ -124,6 +124,7 @@ Other Modify Columns:
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
+\code{\link{cols_unhide}()},
 \code{\link{cols_width}()}
 }
 \concept{Modify Columns}

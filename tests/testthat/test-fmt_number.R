@@ -12,7 +12,8 @@ test_that("the `fmt_number()` function works correctly", {
                  "october", "november", "december"),
       num_1 = c(1836.23, 2763.39, 937.29, 643.00, 212.232, 0, -23.24),
       num_2 = c(34, 74, 23, 93, 35, 76, 57),
-      stringsAsFactors = FALSE)
+      stringsAsFactors = FALSE
+    )
 
   # Create a `gt_tbl` object with `gt()` and the
   # `data_tbl` dataset
@@ -39,18 +40,18 @@ test_that("the `fmt_number()` function works correctly", {
   # that does not exist
   expect_error(
     tab %>%
-      fmt_number(columns = "num_3", decimals = 2))
+      fmt_number(columns = num_3, decimals = 2))
 
   # Expect an error when using a locale that does not exist
   expect_error(
     tab %>%
-      fmt_number(columns = "num_2", decimals = 2, locale = "aa_bb"))
+      fmt_number(columns = num_2, decimals = 2, locale = "aa_bb"))
 
   # Format the `num_1` column to 2 decimal places, use all
   # other defaults; extract `output_df` and compare to expected values
   expect_equal(
     (tab %>%
-       fmt_number(columns = "num_1", decimals = 2) %>%
+       fmt_number(columns = num_1, decimals = 2) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c("1,836.23", "2,763.39", "937.29", "643.00", "212.23", "0.00", "&minus;23.24"))
 
@@ -58,7 +59,7 @@ test_that("the `fmt_number()` function works correctly", {
   # other defaults; extract `output_df` and compare to expected values
   expect_equal(
     (tab %>%
-       fmt_number(columns = "num_1", decimals = 5) %>%
+       fmt_number(columns = num_1, decimals = 5) %>%
        render_formats_test("html"))[["num_1"]],
     c("1,836.23000", "2,763.39000", "937.29000", "643.00000",
       "212.23200", "0.00000", "&minus;23.24000"))
@@ -68,7 +69,7 @@ test_that("the `fmt_number()` function works correctly", {
   # expected values
   expect_equal(
     (tab %>%
-       fmt_number(columns = "num_1", decimals = 2,
+       fmt_number(columns = num_1, decimals = 2,
                   drop_trailing_zeros = TRUE) %>%
        render_formats_test("html"))[["num_1"]],
     c("1,836.23", "2,763.39", "937.29", "643", "212.23", "0", "&minus;23.24"))
@@ -78,7 +79,7 @@ test_that("the `fmt_number()` function works correctly", {
   # and compare to expected values
   expect_equal(
     (tab %>%
-       fmt_number(columns = "num_1", decimals = 2, use_seps = FALSE) %>%
+       fmt_number(columns = num_1, decimals = 2, use_seps = FALSE) %>%
        render_formats_test("html"))[["num_1"]],
     c("1836.23", "2763.39", "937.29", "643.00", "212.23", "0.00", "&minus;23.24"))
 
@@ -87,7 +88,7 @@ test_that("the `fmt_number()` function works correctly", {
   # extract `output_df` and compare to expected values
   expect_equal(
     (tab %>%
-       fmt_number(columns = "num_1", decimals = 2, sep_mark = " ") %>%
+       fmt_number(columns = num_1, decimals = 2, sep_mark = " ") %>%
        render_formats_test("html"))[["num_1"]],
     c("1 836.23", "2 763.39", "937.29", "643.00", "212.23", "0.00", "&minus;23.24"))
 
@@ -96,7 +97,7 @@ test_that("the `fmt_number()` function works correctly", {
   # all other defaults; extract `output_df` and compare to expected values
   expect_equal(
     (tab %>%
-       fmt_number(columns = "num_1", decimals = 2,
+       fmt_number(columns = num_1, decimals = 2,
                   sep_mark = ".", dec_mark = ",") %>%
        render_formats_test("html"))[["num_1"]],
     c("1.836,23", "2.763,39", "937,29", "643,00", "212,23", "0,00", "&minus;23,24"))
@@ -106,7 +107,7 @@ test_that("the `fmt_number()` function works correctly", {
   # to expected values
   expect_equal(
     (tab %>%
-       fmt_number(columns = "num_1", decimals = 4, scale_by = 1/1000) %>%
+       fmt_number(columns = num_1, decimals = 4, scale_by = 1/1000) %>%
        render_formats_test("html"))[["num_1"]],
     c("1.8362", "2.7634", "0.9373", "0.6430", "0.2122", "0.0000", "&minus;0.0232"))
 
@@ -115,7 +116,7 @@ test_that("the `fmt_number()` function works correctly", {
   # `output_df` and compare to expected values
   expect_equal(
     (tab %>%
-       fmt_number(columns = "num_1", decimals = 2, pattern = "a {x} b") %>%
+       fmt_number(columns = num_1, decimals = 2, pattern = "a {x} b") %>%
        render_formats_test("html"))[["num_1"]],
     c("a 1,836.23 b", "a 2,763.39 b", "a 937.29 b", "a 643.00 b",
       "a 212.23 b", "a 0.00 b", "a &minus;23.24 b"))
@@ -125,7 +126,7 @@ test_that("the `fmt_number()` function works correctly", {
   # all other defaults; extract `output_df` and compare to expected values
   expect_equal(
     (tab %>%
-       fmt_number(columns = "num_1", decimals = 4,
+       fmt_number(columns = num_1, decimals = 4,
                   scale_by = 1/1000, pattern = "{x}K") %>%
        render_formats_test("html"))[["num_1"]],
     c("1.8362K", "2.7634K", "0.9373K", "0.6430K",
@@ -136,7 +137,7 @@ test_that("the `fmt_number()` function works correctly", {
   # to expected values
   expect_equal(
     (tab %>%
-       fmt_number(columns = "num_1", decimals = 2, locale = "en_US") %>%
+       fmt_number(columns = num_1, decimals = 2, locale = "en_US") %>%
        render_formats_test("html"))[["num_1"]],
     c("1,836.23", "2,763.39", "937.29", "643.00", "212.23", "0.00", "&minus;23.24"))
 
@@ -145,7 +146,7 @@ test_that("the `fmt_number()` function works correctly", {
   # to expected values
   expect_equal(
     (tab %>%
-       fmt_number(columns = "num_1", decimals = 2, locale = "da_DK") %>%
+       fmt_number(columns = num_1, decimals = 2, locale = "da_DK") %>%
        render_formats_test("html"))[["num_1"]],
     c("1.836,23", "2.763,39", "937,29", "643,00", "212,23", "0,00", "&minus;23,24"))
 
@@ -154,7 +155,7 @@ test_that("the `fmt_number()` function works correctly", {
   # to expected values
   expect_equal(
     (tab %>%
-       fmt_number(columns = "num_1", decimals = 2, locale = "de_AT") %>%
+       fmt_number(columns = num_1, decimals = 2, locale = "de_AT") %>%
        render_formats_test("html"))[["num_1"]],
     c("1 836,23", "2 763,39", "937,29", "643,00", "212,23", "0,00", "&minus;23,24"))
 
@@ -163,7 +164,7 @@ test_that("the `fmt_number()` function works correctly", {
   # to expected values
   expect_equal(
     (tab %>%
-       fmt_number(columns = "num_1", decimals = 2, locale = "et_EE") %>%
+       fmt_number(columns = num_1, decimals = 2, locale = "et_EE") %>%
        render_formats_test("html"))[["num_1"]],
     c("1 836,23", "2 763,39", "937,29", "643,00", "212,23", "0,00", "&minus;23,24"))
 
@@ -172,7 +173,7 @@ test_that("the `fmt_number()` function works correctly", {
   # to expected values
   expect_equal(
     (tab %>%
-       fmt_number(columns = "num_1", decimals = 2, locale = "gl_ES") %>%
+       fmt_number(columns = num_1, decimals = 2, locale = "gl_ES") %>%
        render_formats_test("html"))[["num_1"]],
     c("1.836,23", "2.763,39", "937,29", "643,00", "212,23", "0,00", "&minus;23,24"))
 
@@ -183,30 +184,30 @@ test_that("the `fmt_number()` function works correctly", {
   # Expect a returned object of class `gt_tbl` with various
   # uses of `fmt_number()`
   expect_error(
-    na_col_tbl %>% fmt_number(columns = vars(a)) %>% as_raw_html(), NA
+    na_col_tbl %>% fmt_number(columns = a) %>% as_raw_html(), NA
   )
   expect_error(
     na_col_tbl %>%
-      fmt_number(columns = vars(a), rows = 1:5) %>% as_raw_html(), NA
+      fmt_number(columns = a, rows = 1:5) %>% as_raw_html(), NA
   )
   expect_error(
     na_col_tbl %>%
-      fmt_number(columns = vars(a), scale_by = 100) %>% as_raw_html(), NA
+      fmt_number(columns = a, scale_by = 100) %>% as_raw_html(), NA
   )
   expect_error(
     na_col_tbl %>%
-      fmt_number(columns = vars(a), suffixing = TRUE) %>% as_raw_html(), NA
+      fmt_number(columns = a, suffixing = TRUE) %>% as_raw_html(), NA
   )
   expect_error(
     na_col_tbl %>%
-      fmt_number(columns = vars(a), pattern = "a{x}b") %>% as_raw_html(), NA
+      fmt_number(columns = a, pattern = "a{x}b") %>% as_raw_html(), NA
   )
 
   # Expect that two columns being formatted (one entirely NA) will work
   expect_equal(
     (na_col_tbl %>%
-       fmt_number(columns = vars(a)) %>%
-       fmt_number(columns = vars(b)) %>% render_formats_test("html"))[["b"]],
+       fmt_number(columns = a) %>%
+       fmt_number(columns = b) %>% render_formats_test("html"))[["b"]],
     c("1.00", "2.00", "3.00", "4.00", "5.00", "6.00", "7.00", "8.00",
       "9.00", "10.00")
   )
@@ -233,7 +234,7 @@ test_that("the `fmt_number()` function can scale/suffix larger numbers", {
   # 4 ranges used)
   expect_equal(
     (tab %>%
-       fmt_number(columns = "num", decimals = 2, suffixing = TRUE) %>%
+       fmt_number(columns = num, decimals = 2, suffixing = TRUE) %>%
        render_formats_test(context = "html"))[["num"]],
     c("&minus;1,800.00T", "&minus;17.00T", "&minus;16.00B",
       "&minus;150.00M", "&minus;1.40M", "&minus;13.00K",
@@ -247,7 +248,7 @@ test_that("the `fmt_number()` function can scale/suffix larger numbers", {
   # 4 ranges used)
   expect_equal(
     (tab %>%
-       fmt_number(columns = "num", decimals = 0, suffixing = TRUE) %>%
+       fmt_number(columns = num, decimals = 0, suffixing = TRUE) %>%
        render_formats_test(context = "html"))[["num"]],
     c("&minus;1,800T", "&minus;17T", "&minus;16B", "&minus;150M",
       "&minus;1M", "&minus;13K", "&minus;1K", "&minus;11", "0", "11",
@@ -259,7 +260,7 @@ test_that("the `fmt_number()` function can scale/suffix larger numbers", {
   expect_equal(
     (tab %>%
        fmt_number(
-         columns = "num", decimals = 2,
+         columns = num, decimals = 2,
          suffixing = c("k", "Mn", "Bn", "Tr")) %>%
        render_formats_test(context = "html"))[["num"]],
     c("&minus;1,800.00Tr", "&minus;17.00Tr", "&minus;16.00Bn",
@@ -273,7 +274,7 @@ test_that("the `fmt_number()` function can scale/suffix larger numbers", {
   expect_equal(
     (tab %>%
        fmt_number(
-         columns = "num", decimals = 2,
+         columns = num, decimals = 2,
          suffixing = c(NA, "Mio.", "Mia.", NA)) %>%
        render_formats_test(context = "html"))[["num"]],
     c("&minus;1,800,000.00Mia.", "&minus;17,000.00Mia.",
@@ -287,7 +288,7 @@ test_that("the `fmt_number()` function can scale/suffix larger numbers", {
   expect_equal(
     (tab %>%
        fmt_number(
-         columns = "num", decimals = 2,
+         columns = num, decimals = 2,
          suffixing = c("K", NA, "Bn", NA, "Qa", NA, NA)) %>%
        render_formats_test(context = "html"))[["num"]],
     c("&minus;1.80Qa", "&minus;17,000.00Bn", "&minus;16.00Bn",
@@ -301,7 +302,7 @@ test_that("the `fmt_number()` function can scale/suffix larger numbers", {
   expect_equal(
     (tab %>%
        fmt_number(
-         columns = "num", decimals = 2,
+         columns = num, decimals = 2,
          suffixing = FALSE) %>%
        render_formats_test(context = "html"))[["num"]],
     c("&minus;1,800,000,000,000,000.00", "&minus;17,000,000,000,000.00",
@@ -316,7 +317,7 @@ test_that("the `fmt_number()` function can scale/suffix larger numbers", {
   expect_silent(
     tab %>%
       fmt_number(
-        columns = "num", decimals = 2,
+        columns = num, decimals = 2,
         suffixing = c("k", "M", "Bn", "Tr", "Zn")
       )
   )
@@ -324,7 +325,7 @@ test_that("the `fmt_number()` function can scale/suffix larger numbers", {
   expect_silent(
     tab %>%
       fmt_number(
-        columns = "num", decimals = 2,
+        columns = num, decimals = 2,
         suffixing = c("k", NA)
       )
   )
@@ -346,7 +347,7 @@ test_that("the `fmt_number()` function can scale/suffix larger numbers", {
   expect_equal(
     (tab_2 %>%
        fmt_number(
-         columns = "num", decimals = 1,
+         columns = num, decimals = 1,
          suffixing = TRUE) %>%
        render_formats_test(context = "html"))[["num"]],
     "1.0K")
@@ -354,7 +355,7 @@ test_that("the `fmt_number()` function can scale/suffix larger numbers", {
   expect_equal(
     (tab_2 %>%
        fmt_number(
-         columns = "num", decimals = 2,
+         columns = num, decimals = 2,
          suffixing = TRUE) %>%
        render_formats_test(context = "html"))[["num"]],
     "1.00K")
@@ -362,7 +363,7 @@ test_that("the `fmt_number()` function can scale/suffix larger numbers", {
   expect_equal(
     (tab_2 %>%
        fmt_number(
-         columns = "num", decimals = 3,
+         columns = num, decimals = 3,
          suffixing = TRUE) %>%
        render_formats_test(context = "html"))[["num"]],
     "1.000K")
@@ -370,7 +371,7 @@ test_that("the `fmt_number()` function can scale/suffix larger numbers", {
   expect_equal(
     (tab_2 %>%
        fmt_number(
-         columns = "num", decimals = 4,
+         columns = num, decimals = 4,
          suffixing = TRUE) %>%
        render_formats_test(context = "html"))[["num"]],
     "999.9999")
@@ -378,7 +379,7 @@ test_that("the `fmt_number()` function can scale/suffix larger numbers", {
   expect_equal(
     (tab_2 %>%
        fmt_number(
-         columns = "num", decimals = 5,
+         columns = num, decimals = 5,
          suffixing = TRUE) %>%
        render_formats_test(context = "html"))[["num"]],
     "999.99990")
@@ -420,7 +421,7 @@ test_that("the `fmt_number()` function format to specified significant figures",
   # Format the `num` column to 5 significant figures
   expect_equal(
     (tab %>%
-       fmt_number(columns = "num", n_sigfig = 5) %>%
+       fmt_number(columns = num, n_sigfig = 5) %>%
        render_formats_test(context = "html"))[["num"]],
     c("50,000", "1,000.0", "10.000", "12,345", "1,234.5", "123.45",
       "1.2345", "0.12345", "0.000012346", "&minus;50,000", "&minus;1,000.0",
@@ -432,7 +433,7 @@ test_that("the `fmt_number()` function format to specified significant figures",
   # Format the `num` column to 4 significant figures
   expect_equal(
     (tab %>%
-       fmt_number(columns = "num", n_sigfig = 4) %>%
+       fmt_number(columns = num, n_sigfig = 4) %>%
        render_formats_test(context = "html"))[["num"]],
     c("50,000", "1,000", "10.00", "12,340", "1,234", "123.4", "1.234",
       "0.1234", "0.00001235", "&minus;50,000", "&minus;1,000", "&minus;10.00",
@@ -444,7 +445,7 @@ test_that("the `fmt_number()` function format to specified significant figures",
   # Format the `num` column to 3 significant figures
   expect_equal(
     (tab %>%
-       fmt_number(columns = "num", n_sigfig = 3) %>%
+       fmt_number(columns = num, n_sigfig = 3) %>%
        render_formats_test(context = "html"))[["num"]],
     c("50,000", "1,000", "10.0", "12,300", "1,230", "123", "1.23",
       "0.123", "0.0000123", "&minus;50,000", "&minus;1,000", "&minus;10.0",
@@ -456,7 +457,7 @@ test_that("the `fmt_number()` function format to specified significant figures",
   # Format the `num` column to 2 significant figures
   expect_equal(
     (tab %>%
-       fmt_number(columns = "num", n_sigfig = 2) %>%
+       fmt_number(columns = num, n_sigfig = 2) %>%
        render_formats_test(context = "html"))[["num"]],
     c("50,000", "1,000", "10", "12,000", "1,200", "120", "1.2", "0.12",
       "0.000012", "&minus;50,000", "&minus;1,000", "&minus;10", "&minus;12,000",
@@ -467,7 +468,7 @@ test_that("the `fmt_number()` function format to specified significant figures",
   # Format the `num` column to 1 significant figure
   expect_equal(
     (tab %>%
-       fmt_number(columns = "num", n_sigfig = 1) %>%
+       fmt_number(columns = num, n_sigfig = 1) %>%
        render_formats_test(context = "html"))[["num"]],
     c("50,000", "1,000", "10", "10,000", "1,000", "100", "1", "0.1",
       "0.00001", "&minus;50,000", "&minus;1,000", "&minus;10", "&minus;10,000",
@@ -476,26 +477,26 @@ test_that("the `fmt_number()` function format to specified significant figures",
   )
 
   # Expect an error if the length of `n_sigfig` is not 1
-  expect_error(fmt_number(columns = "num", n_sigfig = c(1, 2)))
+  expect_error(fmt_number(columns = num, n_sigfig = c(1, 2)))
 
   # Expect an error if `n_sigfig` is NA
-  expect_error(tab %>% fmt_number(columns = "num", n_sigfig = NA))
-  expect_error(tab %>% fmt_number(columns = "num", n_sigfig = NA_integer_))
-  expect_error(tab %>% fmt_number(columns = "num", n_sigfig = NA_real_))
-  expect_error(tab %>% fmt_number(columns = "num", n_sigfig = NA_integer_))
+  expect_error(tab %>% fmt_number(columns = num, n_sigfig = NA))
+  expect_error(tab %>% fmt_number(columns = num, n_sigfig = NA_integer_))
+  expect_error(tab %>% fmt_number(columns = num, n_sigfig = NA_real_))
+  expect_error(tab %>% fmt_number(columns = num, n_sigfig = NA_integer_))
 
   # Expect an error if `n_sigfig` is not numeric
-  expect_error(tab %>% fmt_number(columns = "num", n_sigfig = "3"))
-  expect_error(tab %>% fmt_number(columns = "num", n_sigfig = TRUE))
-  expect_error(tab %>% fmt_number(columns = "num", n_sigfig = factor(3)))
+  expect_error(tab %>% fmt_number(columns = num, n_sigfig = "3"))
+  expect_error(tab %>% fmt_number(columns = num, n_sigfig = TRUE))
+  expect_error(tab %>% fmt_number(columns = num, n_sigfig = factor(3)))
 
   # Don't expect errors when using integers or doubles
-  expect_error(regexp = NA, tab %>% fmt_number(columns = "num", n_sigfig = 2L))
-  expect_error(regexp = NA, tab %>% fmt_number(columns = "num", n_sigfig = 2))
+  expect_error(regexp = NA, tab %>% fmt_number(columns = num, n_sigfig = 2L))
+  expect_error(regexp = NA, tab %>% fmt_number(columns = num, n_sigfig = 2))
 
   # Expect an error if `n_sigfig` is less than 1
-  expect_error(tab %>% fmt_number(columns = "num", n_sigfig = 0L))
-  expect_error(tab %>% fmt_number(columns = "num", n_sigfig = -1L))
+  expect_error(tab %>% fmt_number(columns = num, n_sigfig = 0L))
+  expect_error(tab %>% fmt_number(columns = num, n_sigfig = -1L))
 })
 
 
@@ -514,7 +515,7 @@ test_that("the `drop_trailing_dec_mark` option works in select `fmt_*()` functio
   # Format the `num` column using `fmt_number()` with default options
   expect_equal(
     (tab %>%
-       fmt_number(columns = "num", drop_trailing_dec_mark = TRUE) %>%
+       fmt_number(columns = num, drop_trailing_dec_mark = TRUE) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
       "0.00", "0.01", "0.10", "0.00", "1.00", "1.10", "1.12", "50,000.00",
@@ -525,7 +526,7 @@ test_that("the `drop_trailing_dec_mark` option works in select `fmt_*()` functio
   # Format the `num` column using `fmt_number()` with `decimals = 0`
   expect_equal(
     (tab %>%
-       fmt_number(columns = "num", decimals = 0) %>%
+       fmt_number(columns = num, decimals = 0) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
       "0", "0", "0", "0", "1", "1", "1", "50,000", "&minus;2", "&minus;5",
@@ -537,7 +538,7 @@ test_that("the `drop_trailing_dec_mark` option works in select `fmt_*()` functio
   # `drop_trailing_dec_mark = FALSE`
   expect_equal(
     (tab %>%
-       fmt_number(columns = "num", decimals = 0, drop_trailing_dec_mark = FALSE) %>%
+       fmt_number(columns = num, decimals = 0, drop_trailing_dec_mark = FALSE) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
       "0.", "0.", "0.", "0.", "1.", "1.", "1.", "50,000.", "&minus;2.",
@@ -548,7 +549,7 @@ test_that("the `drop_trailing_dec_mark` option works in select `fmt_*()` functio
   # Format the `num` column using `fmt_percent()` with default options
   expect_equal(
     (tab %>%
-       fmt_percent(columns = "num", drop_trailing_dec_mark = TRUE) %>%
+       fmt_percent(columns = num, drop_trailing_dec_mark = TRUE) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
       "0.10&percnt;", "1.00&percnt;", "10.00&percnt;", "0.00&percnt;",
@@ -560,7 +561,7 @@ test_that("the `drop_trailing_dec_mark` option works in select `fmt_*()` functio
   # Format the `num` column using `fmt_percent()` with `decimals = 0`
   expect_equal(
     (tab %>%
-       fmt_percent(columns = "num", decimals = 0) %>%
+       fmt_percent(columns = num, decimals = 0) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
       "0&percnt;", "1&percnt;", "10&percnt;", "0&percnt;", "100&percnt;",
@@ -573,7 +574,7 @@ test_that("the `drop_trailing_dec_mark` option works in select `fmt_*()` functio
   # `drop_trailing_dec_mark = FALSE`
   expect_equal(
     (tab %>%
-       fmt_percent(columns = "num", decimals = 0, drop_trailing_dec_mark = FALSE) %>%
+       fmt_percent(columns = num, decimals = 0, drop_trailing_dec_mark = FALSE) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
       "0.&percnt;", "1.&percnt;", "10.&percnt;", "0.&percnt;", "100.&percnt;",
@@ -585,7 +586,7 @@ test_that("the `drop_trailing_dec_mark` option works in select `fmt_*()` functio
   # Format the `num` column using `fmt_currency()` with default options
   expect_equal(
     (tab %>%
-       fmt_currency(columns = "num", drop_trailing_dec_mark = TRUE) %>%
+       fmt_currency(columns = num, drop_trailing_dec_mark = TRUE) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
       "$0.00", "$0.01", "$0.10", "$0.00", "$1.00", "$1.10", "$1.12",
@@ -596,7 +597,7 @@ test_that("the `drop_trailing_dec_mark` option works in select `fmt_*()` functio
   # Format the `num` column using `fmt_currency()` with `decimals = 0`
   expect_equal(
     (tab %>%
-       fmt_currency(columns = "num", decimals = 0) %>%
+       fmt_currency(columns = num, decimals = 0) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
       "$0", "$0", "$0", "$0", "$1", "$1", "$1", "$50,000", "&minus;$2",
@@ -608,7 +609,7 @@ test_that("the `drop_trailing_dec_mark` option works in select `fmt_*()` functio
   # `drop_trailing_dec_mark = FALSE`
   expect_equal(
     (tab %>%
-       fmt_currency(columns = "num", decimals = 0, drop_trailing_dec_mark = FALSE) %>%
+       fmt_currency(columns = num, decimals = 0, drop_trailing_dec_mark = FALSE) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
       "$0.", "$0.", "$0.", "$0.", "$1.", "$1.", "$1.", "$50,000.",
@@ -622,7 +623,7 @@ test_that("the `drop_trailing_dec_mark` option works in select `fmt_*()` functio
   expect_equal(
     (tab %>%
        fmt_currency(
-         columns = "num", currency = "EUR", decimals = 0,
+         columns = num, currency = "EUR", decimals = 0,
          placement = "right", drop_trailing_dec_mark = FALSE
        ) %>%
        render_formats_test(context = "html"))[["num"]],
@@ -654,7 +655,7 @@ test_that("`fmt_number()` with `suffixing = TRUE` works with small numbers", {
   # see any suffixes
   expect_equal(
     (tab %>%
-       fmt_number(columns = "num", decimals = 2, suffixing = TRUE) %>%
+       fmt_number(columns = num, decimals = 2, suffixing = TRUE) %>%
        render_formats_test(context = "html"))[["num"]],
     c("&minus;0.50", "&minus;0.05", "&minus;0.04", "&minus;0.03",
       "&minus;0.02", "&minus;0.01", "0.00", "0.01", "0.02", "0.03",
@@ -666,7 +667,7 @@ test_that("rownames and groupnames aren't included in columns = TRUE", {
   mtcars1 <- cbind(mtcars, chardata = row.names(mtcars))
 
   # This fails; can't apply numeric formatting to the "chardata" col
-  expect_error(mtcars1 %>% gt() %>% fmt_number(columns = TRUE))
+  expect_error(mtcars1 %>% gt() %>% fmt_number(columns = everything()))
 
 
   # These succeed; the "chardata" col no longer counts as a resolvable column
@@ -676,12 +677,12 @@ test_that("rownames and groupnames aren't included in columns = TRUE", {
   expect_error(regexp = NA,
     mtcars1 %>%
       gt(rowname_col = "chardata") %>%
-      fmt_number(columns = TRUE, rows = chardata == "Mazda RX4")
+      fmt_number(columns = everything(), rows = chardata == "Mazda RX4")
   )
 
   expect_error(regexp = NA,
     mtcars1 %>%
       gt(groupname_col = "chardata") %>%
-      fmt_number(columns = TRUE, rows = chardata == "Mazda RX4")
+      fmt_number(columns = everything(), rows = chardata == "Mazda RX4")
   )
 })

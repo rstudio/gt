@@ -4,7 +4,7 @@
 \alias{cells_row_groups}
 \title{Location helper for targeting row groups}
 \usage{
-cells_row_groups(groups = TRUE)
+cells_row_groups(groups = everything())
 }
 \arguments{
 \item{groups}{The names of the row groups that are to be targeted.}
@@ -76,7 +76,7 @@ tab_1 <-
   gt(rowname_col = "size") \%>\%
   summary_rows(
     groups = TRUE,
-    columns = vars("Pizzas Sold"),
+    columns = `Pizzas Sold`,
     fns = list(TOTAL = "sum"),
     formatter = fmt_number,
     decimals = 0,
