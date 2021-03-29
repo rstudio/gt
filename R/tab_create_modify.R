@@ -312,9 +312,19 @@ tab_spanner_delim <- function(data,
 
 #' Add a row group to a **gt** table
 #'
+#' @description
 #' Create a row group with a collection of rows. This requires specification of
 #' the rows to be included, either by supplying row labels, row indices, or
-#' through use of a select helper function like [starts_with()].
+#' through use of a select helper function like [starts_with()]. To modify the
+#' order of row groups, use the [row_group_order()] function.
+#'
+#' To set a default row group label for any rows not formally placed in a row
+#' group, we can use a separate call to `tab_options(row_group.default_label =
+#' <label>)`. If this is not done and there are rows that haven't been placed
+#' into a row group (where one or more row groups already exist), those rows
+#' will be automatically placed into a row group without a label. To restore
+#' labels for row groups not explicitly assigned a group,
+#' `tab_options(row_group.default_label = "")` can be used.
 #'
 #' @inheritParams fmt_number
 #' @param label The text to use for the row group label.
@@ -332,14 +342,7 @@ tab_spanner_delim <- function(data,
 #'   markup, is lengthy, or both). Finally, when providing an `id` value you
 #'   must ensure that it is unique across all ID values set for row groups (the
 #'   function will stop if `id` isn't unique).
-#' @param others_label An option to set a default row group label for any rows
-#'   not formally placed in a row group named by `group` in any call of
-#'   `tab_row_group()`. A separate call to `tab_row_group()` with only a value
-#'   to `others` is possible and makes explicit that the call is meant to
-#'   provide a default row group label. If this is not set and there are rows
-#'   that haven't been placed into a row group (where one or more row groups
-#'   already exist), those rows will be automatically placed into a row group
-#'   without a label.
+#' @param others_label
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -392,14 +395,7 @@ tab_row_group <- function(data,
                           label = NULL,
                           rows = NULL,
                           id = label,
-                          others_label = NULL) {
-
-  # TODO: consider adding the function `others()` to be used in
-  # `rows`; the idea to create a formal group of rows with any rows
-  # that are not incorporated in other groups; I'm hoping this will be
-  # less confusing than using the `others_label` argument here (with all
-  # of its shortcomings) and that this will have the effect of popularizing
-  # the use of the `tab_row_group()` function
+                          others_label = "deprecated") {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -485,17 +481,6 @@ tab_row_group <- function(data,
           )
         )
     }
-  }
-
-  # Set a name for the `others_label` group if a
-  # name is provided
-  if (!is.null(others_label)) {
-
-    data <-
-      dt_stub_others_set(
-        data = data,
-        stub_others = others_label
-      )
   }
 
   data
@@ -1429,6 +1414,12 @@ set_style.cells_grand_summary <- function(loc, data, style) {
 #' @param stub.border.style,stub.border.width,stub.border.color
 #'   The style, width, and color properties for the vertical border of the table
 #'   stub.
+#' @param row_group.default_label An option to set a default row group label for
+#'   any rows not formally placed in a row group named by `group` in any call of
+#'   `tab_row_group()`. If this is set as `NA_character` and there are rows that
+#'   haven't been placed into a row group (where one or more row groups already
+#'   exist), those rows will be automatically placed into a row group without a
+#'   label.
 #' @param summary_row.border.style,summary_row.border.width,summary_row.border.color
 #'   The style, width, and color properties for all horizontal borders of the
 #'   `summary_row` location.
@@ -1645,6 +1636,7 @@ tab_options <- function(data,
                         row_group.border.right.style = NULL,
                         row_group.border.right.width = NULL,
                         row_group.border.right.color = NULL,
+                        row_group.default_label = NULL,
                         table_body.hlines.style = NULL,
                         table_body.hlines.width = NULL,
                         table_body.hlines.color = NULL,

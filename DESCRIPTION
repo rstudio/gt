@@ -77,7 +77,6 @@ Collate:
     'dt_source_notes.R'
     'dt_spanners.R'
     'dt_stub_df.R'
-    'dt_stub_others.R'
     'dt_stubhead.R'
     'dt_styles.R'
     'dt_summary.R'

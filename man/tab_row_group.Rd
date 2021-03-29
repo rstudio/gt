@@ -4,7 +4,13 @@
 \alias{tab_row_group}
 \title{Add a row group to a \strong{gt} table}
 \usage{
-tab_row_group(data, label = NULL, rows = NULL, id = label, others_label = NULL)
+tab_row_group(
+  data,
+  label = NULL,
+  rows = NULL,
+  id = label,
+  others_label = "deprecated"
+)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -27,14 +33,7 @@ markup, is lengthy, or both). Finally, when providing an \code{id} value you
 must ensure that it is unique across all ID values set for row groups (the
 function will stop if \code{id} isn't unique).}
 
-\item{others_label}{An option to set a default row group label for any rows
-not formally placed in a row group named by \code{group} in any call of
-\code{tab_row_group()}. A separate call to \code{tab_row_group()} with only a value
-to \code{others} is possible and makes explicit that the call is meant to
-provide a default row group label. If this is not set and there are rows
-that haven't been placed into a row group (where one or more row groups
-already exist), those rows will be automatically placed into a row group
-without a label.}
+\item{others_label}{}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -42,7 +41,15 @@ An object of class \code{gt_tbl}.
 \description{
 Create a row group with a collection of rows. This requires specification of
 the rows to be included, either by supplying row labels, row indices, or
-through use of a select helper function like \code{\link[=starts_with]{starts_with()}}.
+through use of a select helper function like \code{\link[=starts_with]{starts_with()}}. To modify the
+order of row groups, use the \code{\link[=row_group_order]{row_group_order()}} function.
+
+To set a default row group label for any rows not formally placed in a row
+group, we can use a separate call to \verb{tab_options(row_group.default_label = <label>)}. If this is not done and there are rows that haven't been placed
+into a row group (where one or more row groups already exist), those rows
+will be automatically placed into a row group without a label. To restore
+labels for row groups not explicitly assigned a group,
+\code{tab_options(row_group.default_label = "")} can be used.
 }
 \section{Figures}{
 

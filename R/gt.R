@@ -131,7 +131,6 @@ gt <- function(data,
       row_group.sep = row_group.sep
     )
   data <- dt_row_groups_init(data = data)
-  data <- dt_stub_others_init(data = data)
   data <- dt_heading_init(data = data)
   data <- dt_spanners_init(data = data)
   data <- dt_stubhead_init(data = data)

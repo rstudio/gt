@@ -21,7 +21,8 @@ dt_groups_rows_build <- function(data, context) {
   stub_df <- dt_stub_df_get(data = data)
   ordering <- dt_row_groups_get(data = data)
 
-  others_group <- dt_stub_others_get(data = data)
+  others_group <-
+    dt_options_get_value(data = data, option = "row_group_default_label")
 
   groups_rows <-
     data.frame(
@@ -64,7 +65,8 @@ dt_groups_rows_build <- function(data, context) {
       dplyr::rename(group_label = built) %>%
       dplyr::select(group_id, group_label, dplyr::everything())
 
-    others_group <- dt_stub_others_get(data = data) %||% NA_character_
+    others_group <-
+      dt_options_get_value(data = data, option = "row_group_default_label")
 
     groups_rows[
       is.na(groups_rows[, "group_id"]),
