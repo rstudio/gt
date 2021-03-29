@@ -342,7 +342,8 @@ tab_spanner_delim <- function(data,
 #'   markup, is lengthy, or both). Finally, when providing an `id` value you
 #'   must ensure that it is unique across all ID values set for row groups (the
 #'   function will stop if `id` isn't unique).
-#' @param others_label
+#' @param others_label This argument is deprecated. Instead use
+#'   `tab_options(row_group.default_label = <label>)`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -414,17 +415,17 @@ tab_row_group <- function(data,
     )
   }
 
-  # Stop function if nothing was provided for both `rows` and `others_label`
-  if (rlang::as_label(row_expr) == "NULL" && is.null(others_label))  {
-
-    stop(
-      "No value was provided for `rows`. Please use either of:\n",
-      "* A vector of row captions provided in `c()`\n",
-      "* A vector of row indices\n",
-      "* A helper function focused on selections (e.g., `starts_with()`)",
-      call. = FALSE
-    )
-  }
+  # # Stop function if nothing was provided for `rows`
+  # if (rlang::as_label(row_expr) == "NULL")  {
+  #
+  #   stop(
+  #     "No value was provided for `rows`. Please use either of:\n",
+  #     "* A vector of row captions provided in `c()`\n",
+  #     "* A vector of row indices\n",
+  #     "* A helper function focused on selections (e.g., `starts_with()`)",
+  #     call. = FALSE
+  #   )
+  # }
 
   if (rlang::as_label(row_expr) != "NULL" && !is.null(label)) {
 

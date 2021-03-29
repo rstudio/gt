@@ -33,7 +33,8 @@ markup, is lengthy, or both). Finally, when providing an \code{id} value you
 must ensure that it is unique across all ID values set for row groups (the
 function will stop if \code{id} isn't unique).}
 
-\item{others_label}{}
+\item{others_label}{This argument is deprecated. Instead use
+\verb{tab_options(row_group.default_label = <label>)}.}
 }
 \value{
 An object of class \code{gt_tbl}.

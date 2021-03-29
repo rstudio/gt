@@ -589,8 +589,7 @@ test_that("A default row group name can be modified with `tab_options()`", {
   )
 
   # A previously defined label for the 'Others' can be reset to
-  # nothing by using `others_label = ""` in another call of the
-  # `tab_row_group()` function
+  # nothing by using `tab_options(row_group.default_label = "")`
   expect_equal(
     tbl_html %>%
       tab_row_group(
