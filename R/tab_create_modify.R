@@ -252,30 +252,20 @@ tab_spanner_delim <- function(data,
 
     colnames_with_delim <- colnames[colnames_has_delim]
 
-    split_colnames <- strsplit(colnames_with_delim, delim, fixed = TRUE)
+    # Perform regexec match where the delimiter is either declared
+    # to be the 'first' instance or the 'last' instance
+    regexec_m <-
+      regexec(
+        paste0(
+          "^(.*",
+          ifelse(split == "first", "?", ""),
+          ")\\Q", delim, "\\E(.*)$"
+        ),
+        colnames_with_delim
+      )
 
-    if (split == "first") {
-
-      split_colnames <-
-        lapply(
-          split_colnames,
-          FUN = function(x) {
-            x_len <- length(x)
-            c(x[1], paste(x[2:x_len], collapse = delim))
-          }
-        )
-
-    } else {
-
-      split_colnames <-
-        lapply(
-          split_colnames,
-          FUN = function(x) {
-            x_len <- length(x)
-            c(paste(x[1:(x_len - 1)], collapse = delim), x[x_len])
-          }
-        )
-    }
+    split_colnames <-
+      lapply(regmatches(colnames_with_delim, regexec_m), FUN = `[`, 2:3)
 
     spanners <- vapply(split_colnames, FUN.VALUE = character(1), `[[`, 1)
 
