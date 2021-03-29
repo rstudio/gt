@@ -218,8 +218,8 @@ tab_spanner <- function(data,
 tab_spanner_delim <- function(data,
                               delim,
                               columns = everything(),
-                              split = c("last", "first"),
-                              gather = TRUE) {
+                              gather = TRUE,
+                              split = c("last", "first")) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
