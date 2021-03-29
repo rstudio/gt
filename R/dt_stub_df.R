@@ -20,16 +20,12 @@ dt_stub_df_init <- function(data,
   # Create the `stub_df` table
   stub_df <-
     dplyr::tibble(
-      rownum_i = integer(0),
-      group_id = character(0),
-      rowname = character(0),
-      group_label = list(),
-      built = character(0)
+      rownum_i = seq_len(nrow(data_tbl)),
+      group_id = rep(NA_character_, nrow(data_tbl)),
+      rowname = rep(NA_character_, nrow(data_tbl)),
+      group_label = rep(list(NULL), nrow(data_tbl)),
+      built = rep(NA_character_, nrow(data_tbl))
     )
-
-  for (row in seq_len(nrow(data_tbl))) {
-    stub_df <- dplyr::add_row(stub_df, rownum_i = row)
-  }
 
   # If `rowname` is a column available in `data`,
   # place that column's data into `stub_df` and
