@@ -68,9 +68,7 @@ dt_groups_rows_build <- function(data, context) {
     others_group <-
       dt_options_get_value(data = data, option = "row_group_default_label")
 
-    groups_rows[
-      is.na(groups_rows[, "group_id"]),
-      c("group_id", "group_label")] <- others_group
+    groups_rows[is.na(groups_rows[, "group_id"]), "group_label"] <- others_group
   }
 
   data <- dt_groups_rows_set(data = data, groups_rows = groups_rows)
