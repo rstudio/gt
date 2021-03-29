@@ -227,7 +227,7 @@ tab_spanner_delim <- function(data,
   split <- match.arg(split)
 
   # Get all of the columns in the dataset
-  all_cols <- data %>% dt_boxhead_get_vars()
+  all_cols <- dt_boxhead_get_vars(data = data)
 
   # Get the columns supplied in `columns` as a character vector
   columns <-
@@ -292,8 +292,11 @@ tab_spanner_delim <- function(data,
       var_i <- colnames_with_delim[i]
 
       data <-
-        data %>%
-        dt_boxhead_edit(var = var_i, column_label = new_labels_i)
+        dt_boxhead_edit(
+          data = data,
+          var = var_i,
+          column_label = new_labels_i
+        )
     }
   }
 
