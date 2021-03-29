@@ -107,14 +107,9 @@ text_transform_at_location.cells_stub <- function(loc,
 
   loc <- to_output_location(loc = loc, data = data)
 
-  for (row in loc$rows) {
+  row_idx <- which(stub_df$rownum_i %in% loc$rows)
 
-    row_idx <- which(stub_df$rownum_i %in% loc$rows)
-
-    for (idx in row_idx) {
-      stub_df[[idx, "rowname"]] <- fn(stub_df[[idx, "rowname"]])
-    }
-  }
+  stub_df[["rowname"]][row_idx] <- fn(stub_df[["rowname"]][row_idx])
 
   data <- dt_stub_df_set(data = data, stub_df = stub_df)
 
