@@ -27,8 +27,6 @@ dt_transforms_add <- function(data, loc, fn) {
       fn = fn
     )
 
-  class(added_transform) <- class(loc)[1]
-
   transforms <-
     c(
       existing_transforms,
