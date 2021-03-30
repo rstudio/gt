@@ -847,7 +847,6 @@ create_body_component_h <- function(data) {
               which(groups_rows_df$row_start %in% i), "group_label"
             ][[1]]
 
-          # TODO: Ensure that styling works on the basis of a `group_id`
           if (has_row_group_styles) {
 
             styles_row <-
