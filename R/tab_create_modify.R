@@ -398,10 +398,17 @@ tab_row_group <- function(data,
 
   # Warn user about `others_label` deprecation
   if (!is.null(others_label)) {
+
+    data <- tab_options(data = data, row_group.default_label = others_label)
+
     warn(
       "The `others_label` argument has been deprecated in gt 0.3.3:\n",
       "* Use `tab_options(row_group.default_label = <label>)` to set this label."
     )
+
+    if (missing(label) && missing(rows) && missing(id)) {
+      return(data)
+    }
   }
 
   # Capture the `rows` expression
