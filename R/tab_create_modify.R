@@ -389,12 +389,20 @@ tab_row_group <- function(data,
                           label = NULL,
                           rows = NULL,
                           id = label,
-                          others_label = "deprecated") {
+                          others_label = NULL) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
   arrange_groups_vars <- dt_row_groups_get(data = data)
+
+  # Warn user about `others_label` deprecation
+  if (!is.null(others_label)) {
+    warn(
+      "The `others_label` argument has been deprecated in gt 0.3.3:\n",
+      "* Use `tab_options(row_group.default_label = <label>)` to set this label."
+    )
+  }
 
   # Capture the `rows` expression
   row_expr <- rlang::enquo(rows)
