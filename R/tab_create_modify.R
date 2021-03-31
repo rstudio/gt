@@ -401,9 +401,10 @@ tab_row_group <- function(data,
 
     data <- tab_options(data = data, row_group.default_label = others_label)
 
-    warn(
+    warning(
       "The `others_label` argument has been deprecated in gt 0.3.3:\n",
-      "* Use `tab_options(row_group.default_label = <label>)` to set this label."
+      "* use `tab_options(row_group.default_label = <label>)` to set this label.",
+      call. = FALSE
     )
 
     if (missing(label) && missing(rows) && missing(id)) {
