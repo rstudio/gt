@@ -435,38 +435,22 @@ tab_row_group <- function(data,
 
   # Set the `_row_groups` vector here with the group id; new groups will
   # be placed at the front, pushing down `NA` (the 'Others' group)
+  arrange_groups_vars <- c(id, na.omit(arrange_groups_vars))
+  arrange_groups_vars <- unique(arrange_groups_vars)
+  arrange_groups_vars <- arrange_groups_vars[arrange_groups_vars %in% stub_df$group_id]
   if (dt_stub_groupname_has_na(data = data)) {
-
-    # This is the case where there is at least one row not yet
-    # associated with a row group (even after the alteration to the `_stub_df`
-    # object above); we have to preserve an NA at the end of the
-    # `arrange_groups_vars` vector to indicate that there still is an
-    # 'Others' group (i.e., a group of rows with no formal group membership)
-    data <-
-      dt_row_groups_set(
-        data = data,
-        row_groups = unique(
-          c(
-            id, # we are moving away from using the label
-            arrange_groups_vars,
-            NA_character_
-          )
-        )
-      )
-
-  } else {
-
-    data <-
-      dt_row_groups_set(
-        data = data,
-        row_groups = unique(
-          c(
-            id, # we are moving away from using the label
-            arrange_groups_vars
-          )
-        )
-      )
+    arrange_groups_vars <- c(arrange_groups_vars, NA_character_)
   }
+
+  if (length(arrange_groups_vars) == 1 && is.na(arrange_groups_vars)) {
+    arrange_groups_vars <- character(0)
+  }
+
+  data <-
+    dt_row_groups_set(
+      data = data,
+      row_groups = arrange_groups_vars
+    )
 
   data
 }
