@@ -408,17 +408,17 @@ tab_row_group <- function(data,
     )
   }
 
-  # # Stop function if nothing was provided for `rows`
-  # if (rlang::as_label(row_expr) == "NULL")  {
-  #
-  #   stop(
-  #     "No value was provided for `rows`. Please use either of:\n",
-  #     "* A vector of row captions provided in `c()`\n",
-  #     "* A vector of row indices\n",
-  #     "* A helper function focused on selections (e.g., `starts_with()`)",
-  #     call. = FALSE
-  #   )
-  # }
+  # Stop function if nothing was provided for `rows`
+  if (rlang::as_label(row_expr) == "NULL")  {
+
+    stop(
+      "No value was provided for `rows`. Please use either of:\n",
+      "* A vector of row captions provided in `c()`\n",
+      "* A vector of row indices\n",
+      "* A helper function focused on selections (e.g., `starts_with()`)",
+      call. = FALSE
+    )
+  }
 
   if (rlang::as_label(row_expr) != "NULL" && !is.null(label)) {
 
