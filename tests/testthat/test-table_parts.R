@@ -504,6 +504,16 @@ test_that("row groups can be successfully generated with `tab_row_group()", {
     c("void1", "void")
   )
 
+  # When specifying a row group that captures no rows, expect that
+  # the rendered table is essentially unaffected by this function call
+  expect_equal(
+    gt(exibble, rowname_col = "row") %>%
+      tab_row_group(label = "group", rows = FALSE) %>%
+      render_as_html(),
+    gt(exibble, rowname_col = "row") %>%
+      render_as_html()
+  )
+
   # Expect an error if not providing a `label` for `tab_row_group()`
   # but there is a specification of rows
   expect_error(
@@ -512,6 +522,41 @@ test_that("row groups can be successfully generated with `tab_row_group()", {
       tab_row_group(
         rows = group == "grp_a"
       )
+  )
+
+  # Expect a warning if using the `others_label` argument
+  expect_warning(
+    gt(exibble, rowname_col = "row") %>%
+      tab_row_group(others = "foo")
+  )
+
+  # Expect that `tab_options(row_group.default_label = <label>)`
+  # is called internally if using the deprecated `others_label` argument
+  gt_tbl <-
+    suppressWarnings(
+      gt(exibble, rowname_col = "row") %>%
+        tab_row_group(label = "one", rows = 1:3) %>%
+        tab_row_group(others_label = "foo")
+    )
+
+  expect_equal(
+    dt_options_get_value(gt_tbl, "row_group_default_label"),
+    "foo"
+  )
+
+  expect_equal(
+    gt_tbl %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      get_row_group_text(),
+    c("one", "foo")
+  )
+
+  # Expect an error upon repeat use of a row group `id` value
+  expect_error(
+    gt(exibble, rowname_col = "row") %>%
+      tab_row_group(label = "a", rows = 1:2, id = "one") %>%
+      tab_row_group(label = "b", rows = 3:4, id = "one")
   )
 })
 
