@@ -1233,6 +1233,19 @@ check_spanner_id_unique <- function(data,
   }
 }
 
+check_row_group_id_unique <- function(data,
+                                      row_group_id) {
+
+  stub_df <- dt_stub_df_get(data = data)
+  existing_ids <- stub_df$group_id
+
+  if (row_group_id %in% existing_ids) {
+    stop("The row group `id` provided (`\"", row_group_id, "\"`) is not unique:\n",
+         "* provide a unique ID value for this row group",
+         call. = FALSE)
+  }
+}
+
 flatten_list <- function(x) {
   unlist(x, recursive = FALSE)
 }
