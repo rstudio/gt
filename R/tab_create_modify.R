@@ -412,6 +412,9 @@ tab_row_group <- function(data,
     }
   }
 
+  # Check `id` against existing `id` values and stop if necessary
+  check_row_group_id_unique(data = data, row_group_id = id)
+
   # Capture the `rows` expression
   row_expr <- rlang::enquo(rows)
 
