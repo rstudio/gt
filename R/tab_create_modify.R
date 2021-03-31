@@ -386,8 +386,8 @@ tab_spanner_delim <- function(data,
 #' @import rlang
 #' @export
 tab_row_group <- function(data,
-                          label = NULL,
-                          rows = NULL,
+                          label,
+                          rows,
                           id = label,
                           others_label = NULL) {
 
@@ -414,82 +414,58 @@ tab_row_group <- function(data,
   # Capture the `rows` expression
   row_expr <- rlang::enquo(rows)
 
-  if (rlang::as_label(row_expr) != "NULL" && is.null(label)) {
+  # Get the `stub_df` data frame from `data`
+  stub_df <- dt_stub_df_get(data = data)
+  data_tbl <- dt_data_get(data = data)
 
-    stop(
-      "If specifying a row group for declared `rows`, a `label` must ",
-      "be provided.",
-      call. = FALSE
+  # Resolve the row numbers using the `resolve_vars` function
+  resolved_rows_idx <-
+    resolve_rows_i(
+      expr = !!row_expr,
+      data = data
     )
-  }
 
-  # Stop function if nothing was provided for `rows`
-  if (rlang::as_label(row_expr) == "NULL")  {
+  stub_df <- dt_stub_df_get(data = data)
 
-    stop(
-      "No value was provided for `rows`. Please use either of:\n",
-      "* A vector of row captions provided in `c()`\n",
-      "* A vector of row indices\n",
-      "* A helper function focused on selections (e.g., `starts_with()`)",
-      call. = FALSE
-    )
-  }
+  # Place the `label` in the `groupname` column `stub_df`
+  stub_df[resolved_rows_idx, "group_label"] <- list(list(label))
+  stub_df[resolved_rows_idx, "group_id"] <- as.character(id)
 
-  if (rlang::as_label(row_expr) != "NULL" && !is.null(label)) {
+  data <- dt_stub_df_set(data = data, stub_df = stub_df)
 
-    # Get the `stub_df` data frame from `data`
-    stub_df <- dt_stub_df_get(data = data)
-    data_tbl <- dt_data_get(data = data)
+  # Set the `_row_groups` vector here with the group id; new groups will
+  # be placed at the front, pushing down `NA` (the 'Others' group)
+  if (dt_stub_groupname_has_na(data = data)) {
 
-    # Resolve the row numbers using the `resolve_vars` function
-    resolved_rows_idx <-
-      resolve_rows_i(
-        expr = !!row_expr,
-        data = data
+    # This is the case where there is at least one row not yet
+    # associated with a row group (even after the alteration to the `_stub_df`
+    # object above); we have to preserve an NA at the end of the
+    # `arrange_groups_vars` vector to indicate that there still is an
+    # 'Others' group (i.e., a group of rows with no formal group membership)
+    data <-
+      dt_row_groups_set(
+        data = data,
+        row_groups = unique(
+          c(
+            id, # we are moving away from using the label
+            arrange_groups_vars,
+            NA_character_
+          )
+        )
       )
 
-    stub_df <- dt_stub_df_get(data = data)
+  } else {
 
-    # Place the `label` in the `groupname` column `stub_df`
-    stub_df[resolved_rows_idx, "group_label"] <- list(list(label))
-    stub_df[resolved_rows_idx, "group_id"] <- as.character(id)
-
-    data <- dt_stub_df_set(data = data, stub_df = stub_df)
-
-    # Set the `_row_groups` vector here with the group id; new groups will
-    # be placed at the front, pushing down `NA` (the 'Others' group)
-    if (dt_stub_groupname_has_na(data = data)) {
-
-      # This is the case where there is at least one row not yet
-      # associated with a row group (even after the alteration to the `_stub_df`
-      # object above); we have to preserve an NA at the end of the
-      # `arrange_groups_vars` vector to indicate that there still is an
-      # 'Others' group (i.e., a group of rows with no formal group membership)
-      data <-
-        dt_row_groups_set(
-          data = data,
-          row_groups = unique(
-            c(
-              id, # we are moving away from using the label
-              arrange_groups_vars,
-              NA_character_
-            )
+    data <-
+      dt_row_groups_set(
+        data = data,
+        row_groups = unique(
+          c(
+            id, # we are moving away from using the label
+            arrange_groups_vars
           )
         )
-
-    } else {
-
-      data <-
-        dt_row_groups_set(
-          data = data,
-          row_groups = unique(
-            c(
-              id, # we are moving away from using the label
-              arrange_groups_vars
-            )
-          )
-        )
-    }
+      )
   }
 
   data
