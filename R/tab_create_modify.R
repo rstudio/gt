@@ -1265,6 +1265,34 @@ set_style.cells_grand_summary <- function(loc, data, style) {
   )
 }
 
+set_style.cells_footnotes <- function(loc, data, style) {
+
+  data <-
+    dt_styles_add(
+      data = data,
+      locname = "footnotes",
+      grpname = NA_character_,
+      colname = NA_character_,
+      locnum = 7,
+      rownum = NA_integer_,
+      styles = style
+    )
+}
+
+set_style.cells_source_notes <- function(loc, data, style) {
+
+  data <-
+    dt_styles_add(
+      data = data,
+      locname = "source_notes",
+      grpname = NA_character_,
+      colname = NA_character_,
+      locnum = 8,
+      rownum = NA_integer_,
+      styles = style
+    )
+}
+
 #' Modify the table output options
 #'
 #' Modify the options available in a table. These options are named by the
