@@ -1019,6 +1019,131 @@ cells_grand_summary <- function(columns = everything(),
   cells
 }
 
+# TODO: Capture information for previously inaccessible locations
+
+
+
+#' Location helper for targeting the stub cells in a summary
+#'
+#' The `cells_stub_summary()` function is used to target the stub cells of
+#' summary and it is useful when applying a footnote with [tab_footnote()] or
+#' adding custom styles with [tab_style()]. The function is expressly used in
+#' each of those functions' `locations` argument.
+#'
+#' @param groups The names of the groups that are to be targeted.
+#' @param rows The names of the rows that are to be targeted.
+#'
+#' @family Helper Functions
+#' @section Function ID:
+#' 7-14
+#'
+#' @import rlang
+#' @export
+cells_stub_summary <- function(groups = everything(),
+                               rows = everything()) {
+
+  # Capture expressions for the `groups`
+  # and `rows` arguments
+  group_expr <- rlang::enquo(groups)
+  row_expr <- rlang::enquo(rows)
+
+  # Create the `cells_stub_summary` object
+  cells <-
+    list(
+      groups = group_expr,
+      rows = row_expr
+    )
+
+  # Apply the `cells_stub_summary` and
+  # `location_cells` classes
+  class(cells) <- c("cells_stub_summary", "location_cells")
+
+  cells
+}
+
+
+#' Location helper for targeting the stub cells in a grand summary
+#'
+#' The `cells_stub_summary()` function is used to target the stub cells of a
+#' grand summary and it is useful when applying a footnote with [tab_footnote()]
+#' or adding custom styles with [tab_style()]. The function is expressly used in
+#' each of those functions' `locations` argument.
+#'
+#' @param rows The names of the rows that are to be targeted.
+#'
+#' @family Helper Functions
+#' @section Function ID:
+#' 7-15
+#'
+#' @import rlang
+#' @export
+cells_stub_grand_summary <- function(rows = everything()) {
+
+  # Capture expressions for the `rows` arguments
+  row_expr <- rlang::enquo(rows)
+
+  # Create the `cells_stub_summary` object
+  cells <-
+    list(
+      rows = row_expr
+    )
+
+  # Apply the `cells_stub_grand_summary` and
+  # `location_cells` classes
+  class(cells) <- c("cells_stub_grand_summary", "location_cells")
+
+  cells
+}
+
+
+#' Location helper for targeting the footnotes
+#'
+#' @family Helper Functions
+#' @section Function ID:
+#' 7-16
+#'
+#' @import rlang
+#' @export
+cells_footnotes <- function() {
+
+  # Create the `cells_footnotes` object
+  cells <-
+    list(
+      footnotes = TRUE
+    )
+
+  # Apply the `cells_footnotes` and
+  # `location_cells` classes
+  class(cells) <- c("cells_footnotes", "location_cells")
+
+  cells
+}
+
+
+#' Location helper for targeting the source notes
+#'
+#' @family Helper Functions
+#' @section Function ID:
+#' 7-17
+#'
+#' @import rlang
+#' @export
+cells_source_notes <- function() {
+
+  # Create the `cells_source_notes` object
+  cells <-
+    list(
+      source_notes = TRUE
+    )
+
+  # Apply the `cells_source_notes` and
+  # `location_cells` classes
+  class(cells) <- c("cells_source_notes", "location_cells")
+
+  cells
+}
+
+
 #' Supply a custom currency symbol to `fmt_currency()`
 #'
 #' The `currency()` helper function makes it easy to specify a context-aware
@@ -1067,7 +1192,7 @@ cells_grand_summary <- function(columns = everything(),
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-14
+#' 7-18
 #'
 #' @export
 currency <- function(...,
@@ -1183,7 +1308,7 @@ currency <- function(...,
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-15
+#' 7-19
 #'
 #' @export
 cell_text <- function(color = NULL,
@@ -1334,7 +1459,7 @@ cell_style_to_html.cell_text <- function(style) {
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-16
+#' 7-20
 #'
 #' @export
 cell_fill <- function(color = "#D3D3D3",
@@ -1448,7 +1573,7 @@ cell_style_to_html.cell_fill <- function(style) {
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-17
+#' 7-21
 #'
 #' @export
 cell_borders <- function(sides = "all",
@@ -1621,7 +1746,7 @@ cell_style_structure <- function(name, obj, subclass = name) {
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-18
+#' 7-22
 #'
 #' @export
 google_font <- function(name) {
@@ -1687,7 +1812,7 @@ google_font <- function(name) {
 #' @family Helper Functions
 #'
 #' @section Function ID:
-#' 7-19
+#' 7-23
 #'
 #' @export
 default_fonts <- function() {
@@ -1765,7 +1890,7 @@ default_fonts <- function() {
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-20
+#' 7-24
 #'
 #' @export
 adjust_luminance <- function(colors,
@@ -1818,7 +1943,7 @@ adjust_luminance <- function(colors,
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-21
+#' 7-25
 #'
 #' @export
 random_id <- function(n = 10) {
@@ -1839,7 +1964,7 @@ random_id <- function(n = 10) {
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-22
+#' 7-26
 #'
 #' @export
 escape_latex <- function(text) {
@@ -1891,7 +2016,7 @@ escape_latex <- function(text) {
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-23
+#' 7-27
 #'
 #' @export
 gt_latex_dependencies <- function() {
