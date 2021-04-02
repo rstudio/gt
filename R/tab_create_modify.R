@@ -791,6 +791,20 @@ set_footnote.cells_grand_summary <- function(loc, data, footnote) {
   )
 }
 
+set_footnote.cells_source_notes <- function(loc, data, footnote) {
+
+  warning("Footnotes cannot be applied to source notes.", call. = FALSE)
+
+  data
+}
+
+set_footnote.cells_footnotes <- function(loc, data, footnote) {
+
+  warning("Footnotes cannot be applied to other footnotes.", call. = FALSE)
+
+  data
+}
+
 #' Add a source note citation
 #'
 #' Add a source note to the footer part of the **gt** table. A source note is
