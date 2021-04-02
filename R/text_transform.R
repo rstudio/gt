@@ -103,15 +103,18 @@ text_transform_at_location.cells_stub <- function(loc,
                                                   data,
                                                   fn = identity) {
 
-  stub_df <- dt_stub_df_get(data = data)
+  body <- dt_body_get(data = data)
 
   loc <- to_output_location(loc = loc, data = data)
 
-  row_idx <- which(stub_df$rownum_i %in% loc$rows)
+  stub_df <- dt_stub_df_get(data = data)
 
-  stub_df[["rowname"]][row_idx] <- fn(stub_df[["rowname"]][row_idx])
+  stub_var <- dt_boxhead_get_var_stub(data = data)
 
-  data <- dt_stub_df_set(data = data, stub_df = stub_df)
+  body[[stub_var]][stub_df$rownum_i %in% loc$rows] <-
+    fn(body[[stub_var]][stub_df$rownum_i %in% loc$rows])
+
+  data <- dt_body_set(data = data, body = body)
 
   data
 }
