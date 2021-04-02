@@ -128,7 +128,7 @@ text_transform_at_location.cells_column_labels <- function(loc,
     if (col %in% boxh$var) {
 
       column_label_edited <-
-        fn(dplyr::filter(boxh, var == {{ col }})[, "column_label"][[1]])
+        fn(dplyr::filter(boxh, var == !!col)[, "column_label"][[1]])
 
       data <-
         dt_boxhead_edit(
