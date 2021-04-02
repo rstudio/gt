@@ -686,3 +686,114 @@ test_that("Any shared names in `rowname_col` and `groupname_col` will be disallo
       gt(rowname_col = "row")
   )
 })
+
+test_that("Escapable characters in rownames are handled correctly in each output context", {
+
+  tbl <-
+    data.frame(
+      row_names = c("<em>row_html</em>", "$row_latex", "{row_rtf}"),
+      column_1 = c("<em>html</em>", "$latex", "{rtf}"),
+      column_2 = c("html", "latex", "rtf"),
+      row.names = "row_names",
+      stringsAsFactors = FALSE
+    )
+
+  # Expect that the stub and body rows are escaped correctly
+  # when rendered as HTML
+
+  # Using the data frame and setting its rownames to be the stub
+  expect_match( # stub from data frame's row names
+    gt(tbl, rownames_to_stub = TRUE) %>%
+      render_as_html(),
+    "<tr><td class=\"gt_row gt_left gt_stub\">&lt;em&gt;row_html&lt;/em&gt;</td>",
+    fixed = TRUE
+  )
+  expect_match( # `column_1`
+    gt(tbl, rownames_to_stub = TRUE) %>%
+      render_as_html(),
+    "<td class=\"gt_row gt_left\">&lt;em&gt;html&lt;/em&gt;</td>",
+    fixed = TRUE
+  )
+  expect_match( # `column_2`
+    gt(tbl, rownames_to_stub = TRUE) %>%
+      render_as_html(),
+    "<td class=\"gt_row gt_left\">html</td>",
+    fixed = TRUE
+  )
+
+  # Using a tibble (removes row names) and setting `column_1` as the stub
+  expect_match( # stub from `column_1`
+    gt(dplyr::as_tibble(tbl), rowname_col = "column_1") %>%
+      render_as_html(),
+    "<tr><td class=\"gt_row gt_left gt_stub\">&lt;em&gt;html&lt;/em&gt;</td>",
+    fixed = TRUE
+  )
+  expect_match( # `column_2`
+    gt(dplyr::as_tibble(tbl), rowname_col = "column_1") %>%
+      render_as_html(),
+    "<td class=\"gt_row gt_left\">html</td>",
+    fixed = TRUE
+  )
+
+  # Expect that the stub and body rows are escaped correctly
+  # when rendered as LaTeX
+
+  # Expect that the stub and body rows are escaped correctly
+  # when rendered as LaTeX
+  expect_match(
+    gt(tbl, rownames_to_stub = TRUE) %>%
+      as_latex() %>% as.character(),
+    "\\$row\\_latex & \\$latex & latex \\\\ ",
+    fixed = TRUE
+  )
+
+  # Using a tibble (removes row names) and setting `column_1` as the stub
+  # TODO: does not work: `Error in row_splits[[x]] : subscript out of bounds`
+  # expect_match(
+  #   gt(dplyr::as_tibble(tbl), rowname_col = "column_1") %>%
+  #     as_latex() %>% as.character(),
+  #   "\\$latex & latex \\\\ ",
+  #   fixed = TRUE
+  # )
+
+  # Expect that the stub and body rows are escaped correctly
+  # when rendered as RTF
+
+  # Using the data frame and setting its rownames to be the stub
+  expect_match( # stub from data frame's row names
+    gt(tbl, rownames_to_stub = TRUE) %>%
+      as_rtf() %>% as.character(),
+    "\\intbl {\\f0 {\\f0\\fs20 \\'7brow_rtf\\'7d}}\\cell",
+    fixed = TRUE
+  )
+  expect_match( # `column_1`
+    gt(tbl, rownames_to_stub = TRUE) %>%
+      as_rtf() %>% as.character(),
+    "\\intbl {\\f0 {\\f0\\fs20 \\'7brtf\\'7d}}\\cell",
+    fixed = TRUE
+  )
+  expect_match( # `column_2`
+    gt(tbl, rownames_to_stub = TRUE) %>%
+      as_rtf() %>% as.character(),
+    "\\intbl {\\f0 {\\f0\\fs20 rtf}}\\cell",
+    fixed = TRUE
+  )
+
+  # Using a tibble (removes row names) and setting `column_1` as the stub
+  expect_match( # stub from `column_1`
+    gt(dplyr::as_tibble(tbl), rowname_col = "column_1") %>%
+      as_rtf() %>% as.character(),
+    "\\intbl {\\f0 {\\f0\\fs20 \\'7brtf\\'7d}}\\cell",
+    fixed = TRUE
+  )
+  expect_match( # `column_2`
+    gt(dplyr::as_tibble(tbl), rowname_col = "column_1") %>%
+      as_rtf() %>% as.character(),
+    "\\intbl {\\f0 {\\f0\\fs20 rtf}}\\cell",
+    fixed = TRUE
+  )
+
+
+})
+
+
