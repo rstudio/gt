@@ -25,7 +25,8 @@ as_locations <- function(locations) {
 add_summary_location_row <- function(loc,
                                      data,
                                      style,
-                                     df_type = "styles_df") {
+                                     df_type = "styles_df",
+                                     in_stub = FALSE) {
 
   stub_df <- dt_stub_df_get(data = data)
 
@@ -104,7 +105,7 @@ add_summary_location_row <- function(loc,
           data = data,
           locname = "summary_cells",
           grpname = group,
-          colname = columns,
+          colname = if (in_stub) NA_character_ else columns,
           locnum = 5,
           rownum = rows,
           footnotes = style
@@ -117,7 +118,7 @@ add_summary_location_row <- function(loc,
           data = data,
           locname = "summary_cells",
           grpname = group,
-          colname = columns,
+          colname = if (in_stub) NA_character_ else columns,
           locnum = 5,
           rownum = rows,
           styles = style
@@ -131,7 +132,8 @@ add_summary_location_row <- function(loc,
 add_grand_summary_location_row <- function(loc,
                                            data,
                                            style,
-                                           df_type = "styles_df") {
+                                           df_type = "styles_df",
+                                           in_stub = FALSE) {
 
   summary_data <- dt_summary_get(data = data)
 
@@ -177,7 +179,7 @@ add_grand_summary_location_row <- function(loc,
         data = data,
         locname = "grand_summary_cells",
         grpname = grand_summary_col,
-        colname = columns,
+        colname = if (in_stub) NA_character_ else columns,
         locnum = 6,
         rownum = rows,
         footnotes = style
@@ -190,7 +192,7 @@ add_grand_summary_location_row <- function(loc,
         data = data,
         locname = "grand_summary_cells",
         grpname = grand_summary_col,
-        colname = columns,
+        colname = if (in_stub) NA_character_ else columns,
         locnum = 6,
         rownum = rows,
         styles = style

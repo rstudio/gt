@@ -1091,7 +1091,6 @@ create_footnotes_component_h <- function(data) {
 
   # Get the style attrs for the footnotes
   if ("footnotes" %in% styles_tbl$locname) {
-
     footnotes_style <- dplyr::filter(styles_tbl, locname == "footnotes")
 
     footnotes_styles <-
@@ -1102,7 +1101,7 @@ create_footnotes_component_h <- function(data) {
       }
 
   } else {
-    source_notes_styles <- NA_character_
+    footnotes_styles <- NA_character_
   }
 
   # Get the footnote separator option

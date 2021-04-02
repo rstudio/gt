@@ -118,7 +118,7 @@ resolve_footnotes_styles <- function(data,
       tbl_data <-
         tbl_data %>%
         dplyr::mutate(colnum = colname_to_colnum(data = data, colname = colname)) %>%
-        dplyr::mutate(colnum = ifelse(locname == "stub", 0, colnum))
+        dplyr::mutate(colnum = ifelse(locname == "stub", 0L, colnum))
     }
 
     # Re-combine `tbl_data` with `tbl`
@@ -165,7 +165,8 @@ resolve_footnotes_styles <- function(data,
       ) %>%
       dplyr::mutate(rownum = (rownum / 100) + row_end) %>%
       dplyr::select(-row_start, -row_end) %>%
-      dplyr::mutate(colnum = colname_to_colnum(data = data, colname = colname))
+      dplyr::mutate(colnum = colname_to_colnum(data = data, colname = colname)) %>%
+      dplyr::mutate(colnum = ifelse(is.na(colname), 0L, colnum))
 
     # Re-combine `tbl_not_summary_cells`
     # with `tbl_summary_cells`
@@ -181,7 +182,8 @@ resolve_footnotes_styles <- function(data,
     tbl_g_summary_cells <-
       tbl %>%
       dplyr::filter(locnum == 6) %>%
-      dplyr::mutate(colnum = colname_to_colnum(data = data, colname = colname))
+      dplyr::mutate(colnum = colname_to_colnum(data = data, colname = colname)) %>%
+      dplyr::mutate(colnum = ifelse(is.na(colname), 0L, colnum))
 
     # Re-combine `tbl_not_g_summary_cells`
     # with `tbl_g_summary_cells`
@@ -663,6 +665,7 @@ apply_footnotes_to_summary <- function(data,
     footnotes_data_marks <-
       footnotes_tbl_data %>%
       dplyr::mutate(row = as.integer(round((rownum - floor(rownum)) * 100, 0))) %>%
+      dplyr::mutate(colname = ifelse(is.na(colname), "rowname", colname)) %>%
       dplyr::group_by(grpname, row, colnum) %>%
       dplyr::mutate(fs_id_coalesced = paste(fs_id, collapse = ",")) %>%
       dplyr::ungroup() %>%
@@ -704,6 +707,7 @@ apply_footnotes_to_summary <- function(data,
 
     footnotes_data_marks <-
       footnotes_tbl_data %>%
+      dplyr::mutate(colname = ifelse(is.na(colname), "rowname", colname)) %>%
       dplyr::group_by(rownum, colnum) %>%
       dplyr::mutate(fs_id_coalesced = paste(fs_id, collapse = ",")) %>%
       dplyr::ungroup() %>%

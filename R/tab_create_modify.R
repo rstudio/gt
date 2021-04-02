@@ -777,7 +777,8 @@ set_footnote.cells_summary <- function(loc, data, footnote) {
     loc = loc,
     data = data,
     style = footnote,
-    df_type = "footnotes_df"
+    df_type = "footnotes_df",
+    in_stub = FALSE
   )
 }
 
@@ -787,7 +788,30 @@ set_footnote.cells_grand_summary <- function(loc, data, footnote) {
     loc = loc,
     data = data,
     style = footnote,
-    df_type = "footnotes_df"
+    df_type = "footnotes_df",
+    in_stub = FALSE
+  )
+}
+
+set_footnote.cells_stub_summary <- function(loc, data, footnote) {
+
+  add_summary_location_row(
+    loc = loc,
+    data = data,
+    style = footnote,
+    df_type = "footnotes_df",
+    in_stub = TRUE
+  )
+}
+
+set_footnote.cells_stub_grand_summary <- function(loc, data, footnote) {
+
+  add_grand_summary_location_row(
+    loc = loc,
+    data = data,
+    style = footnote,
+    df_type = "footnotes_df",
+    in_stub = TRUE
   )
 }
 
@@ -1265,7 +1289,8 @@ set_style.cells_summary <- function(loc, data, style) {
     loc = loc,
     data = data,
     style = style,
-    df_type = "styles_df"
+    df_type = "styles_df",
+    in_stub = FALSE
   )
 }
 
@@ -1275,7 +1300,30 @@ set_style.cells_grand_summary <- function(loc, data, style) {
     loc = loc,
     data = data,
     style = style,
-    df_type = "styles_df"
+    df_type = "styles_df",
+    in_stub = FALSE
+  )
+}
+
+set_style.cells_stub_summary <- function(loc, data, style) {
+
+  add_summary_location_row(
+    loc = loc,
+    data = data,
+    style = style,
+    df_type = "styles_df",
+    in_stub = TRUE
+  )
+}
+
+set_style.cells_stub_grand_summary <- function(loc, data, style) {
+
+  add_grand_summary_location_row(
+    loc = loc,
+    data = data,
+    style = style,
+    df_type = "styles_df",
+    in_stub = TRUE
   )
 }
 
