@@ -118,7 +118,7 @@ gt_tbl <-
     source_note = md("Reference: McNeil, D. R. (1977) *Interactive Data Analysis*. Wiley.")
   )
 
-# Show the gt Table
+# Show the gt table
 gt_tbl
 ```
 
@@ -133,12 +133,10 @@ gt_tbl <-
   gt_tbl %>%
   tab_footnote(
     footnote = "The Americas.",
-    locations = cells_body(
-      columns = name, rows = 3:4
-    )
+    locations = cells_body(columns = name, rows = 3:4)
   )
 
-# Show the gt Table
+# Show the gt table
 gt_tbl
 ```
 
@@ -172,7 +170,7 @@ gt_tbl <-
     )
   )
 
-# Show the gt Table
+# Show the gt table
 gt_tbl
 ```
 
@@ -182,7 +180,7 @@ We were able to supply the reference locations in the table by using the `cells_
 
 The **Stub** is the area to the left in a table that contains *row labels*, and may contain *row group labels*, and *summary labels*. Those subparts can be grouped in a sequence of *row groups*. The **Stub Head** provides a location for a label that describes the **Stub**. The **Stub** is optional since there are cases where a **Stub** wouldn't be useful (e.g., the display tables presented above were just fine without a **Stub**).
 
-An easy way to generate a **Stub** part is by specifying a stub column in the `gt()` function with the `rowname_col` argument. Alternatively, we can have an input dataset with a column named `rowname`---this magic column will signal to **gt** that that column should be used as the stub, making *row labels*. Let's add a stub with our `islands_tbl` dataset by modifying the call to `gt()`:
+An easy way to generate a **Stub** part is by specifying a stub column in the `gt()` function with the `rowname_col` argument. This will signal to **gt** that the named column should be used as the stub, making *row labels*. Let's add a stub with our `islands_tbl` dataset by modifying the call to `gt()`:
 
 ```{r}
 # Create a gt table showing ten of the
@@ -192,7 +190,7 @@ gt_tbl <-
   islands_tbl %>%
   gt(rowname_col = "name")
 
-# Show the gt Table
+# Show the gt table
 gt_tbl
 ```
 
@@ -205,7 +203,7 @@ gt_tbl <-
   gt_tbl %>%
   tab_stubhead(label = "landmass")
 
-# Show the gt Table
+# Show the gt table
 gt_tbl
 ```
 
@@ -241,7 +239,7 @@ gt_tbl <-
     )
   )
 
-# Show the gt Table
+# Show the gt table
 gt_tbl
 ```
 
@@ -267,7 +265,7 @@ gt_tbl <-
     rows = c("New Guinea", "Borneo")
   )
 
-# Show the gt Table
+# Show the gt table
 gt_tbl
 ```
 
@@ -318,7 +316,7 @@ gt_tbl <-
     columns = c(Ozone, Solar.R, Wind, Temp)
   )
 
-# Show the gt Table
+# Show the gt table
 gt_tbl
 ```
 
@@ -345,7 +343,7 @@ gt_tbl <-
     Temp = html("Temp,<br>&deg;F")
   )
 
-# Show the gt Table
+# Show the gt table
 gt_tbl
 ```
 
