@@ -755,10 +755,14 @@ create_body_component_h <- function(data) {
   alignment_classes <- paste0("gt_", col_alignment)
 
   if (stub_available) {
+
     n_cols <- n_data_cols + 1
+
     alignment_classes <- c("gt_left", alignment_classes)
+
     stub_var <- dt_boxhead_get_var_stub(data = data)
-    all_stub_vals <- as.matrix(stub_df[, "rowname"])
+    all_stub_vals <- as.matrix(body[, stub_var])
+
   } else {
     n_cols <- n_data_cols
   }
