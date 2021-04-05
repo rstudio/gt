@@ -14,6 +14,31 @@ tbl <-
     "B",    "2",  344.7,    281.2,     2.4
   )
 
+# Create a table with a summary to test HTML output in summary locations
+tbl_summary <-
+  gt(
+    exibble,
+    rowname_col = "row",
+    groupname_col = "group"
+  ) %>%
+  summary_rows(
+    groups = "grp_a",
+    columns = num,
+    fns = list(
+      min = ~min(.),
+      max = ~max(.),
+      avg = ~mean(.)),
+    formatter = fmt_number,
+    use_seps = FALSE
+  ) %>%
+  grand_summary_rows(
+    columns = currency,
+    fns = list(
+      min = ~min(., na.rm = TRUE),
+      max = ~max(., na.rm = TRUE)
+    )
+  )
+
 # Gets the HTML attr value from a single key
 selection_value <- function(html, key) {
 
@@ -520,7 +545,7 @@ test_that("styles are correctly applied to HTML output with location functions",
     expect_true()
 
   #
-  # cells_group()
+  # cells_row_groups()
   #
 
   # Create a gt table with styling applied to first row group
@@ -732,4 +757,153 @@ test_that("styles are correctly applied to HTML output with location functions",
     expect_equal(
       rep("color: white; font-size: 20px; background-color: #FFA500;", 6)
     )
+
+  #
+  # cells_summary()
+  #
+
+  gt_tbl_cells_summary_1 <-
+    tbl_summary %>%
+    tab_style(
+      style = cell_fill(color = "red"),
+      locations = cells_summary(groups = "grp_a", rows = 1, columns = 1)
+    )
+
+  gt_tbl_cells_summary_1 %>%
+    render_as_html() %>%
+    tidy_grepl(
+      paste0(
+        "<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row\" style=\"background-color: #FF0000;\">0.11</td>.*",
+        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row\">&mdash;</td>"
+      )
+    ) %>%
+    expect_true()
+
+  gt_tbl_cells_summary_2 <-
+    tbl_summary %>%
+    tab_style(
+      style = cell_fill(color = "red"),
+      locations = cells_summary(groups = "grp_a", rows = 1)
+    )
+
+  gt_tbl_cells_summary_2 %>%
+    render_as_html() %>%
+    tidy_grepl(
+      paste0(
+        "<td class=\"gt_row gt_stub gt_right gt_summary_row gt_first_summary_row\">min</td>.*",
+        "<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row\" style=\"background-color: #FF0000;\">0.11</td>.*",
+        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+        "<td class=\"gt_row gt_center gt_summary_row gt_first_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+        "<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>"
+      )
+    ) %>%
+    expect_true()
+
+  #
+  # cells_stub_summary()
+  #
+
+  gt_tbl_cells_stub_summary_1 <-
+    tbl_summary %>%
+    tab_style(
+      style = cell_fill(color = "red"),
+      locations = cells_stub_summary(groups = "grp_a", rows = 1)
+    )
+
+  gt_tbl_cells_stub_summary_1 %>%
+    render_as_html() %>%
+    tidy_grepl(
+      "<td class=\"gt_row gt_stub gt_right gt_summary_row gt_first_summary_row\" style=\"background-color: #FF0000;\">min</td>"
+    ) %>%
+    expect_true()
+
+  gt_tbl_cells_stub_summary_2 <-
+    tbl_summary %>%
+    tab_style(
+      style = cell_fill(color = "red"),
+      locations = cells_stub_summary(groups = "grp_a", rows = "min")
+    )
+
+  gt_tbl_cells_stub_summary_2 %>%
+    render_as_html() %>%
+    tidy_grepl(
+      "<td class=\"gt_row gt_stub gt_right gt_summary_row gt_first_summary_row\" style=\"background-color: #FF0000;\">min</td>"
+    ) %>%
+    expect_true()
+
+  #
+  # cells_grand_summary()
+  #
+
+  gt_tbl_cells_grand_summary_1 <-
+    tbl_summary %>%
+    tab_style(
+      style = cell_fill(color = "red"),
+      locations = cells_grand_summary(rows = 1, columns = currency)
+    )
+
+  gt_tbl_cells_grand_summary_1 %>%
+    render_as_html() %>%
+    tidy_grepl(
+      "<td class=\"gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row\" style=\"background-color: #FF0000;\">0.44</td>"
+    ) %>%
+    expect_true()
+
+  gt_tbl_cells_grand_summary_2 <-
+    tbl_summary %>%
+    tab_style(
+      style = cell_fill(color = "red"),
+      locations = cells_grand_summary(rows = "max")
+    )
+
+  gt_tbl_cells_grand_summary_2 %>%
+    render_as_html() %>%
+    tidy_grepl(
+      paste0(
+          "<td class=\"gt_row gt_stub gt_right gt_grand_summary_row\">max</td>.*",
+          "<td class=\"gt_row gt_right gt_grand_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+          "<td class=\"gt_row gt_left gt_grand_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+          "<td class=\"gt_row gt_center gt_grand_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+          "<td class=\"gt_row gt_left gt_grand_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+          "<td class=\"gt_row gt_left gt_grand_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+          "<td class=\"gt_row gt_left gt_grand_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+          "<td class=\"gt_row gt_right gt_grand_summary_row\" style=\"background-color: #FF0000;\">65,100.00</td>"
+      )
+    ) %>%
+    expect_true()
+
+  #
+  # cells_stub_grand_summary()
+  #
+
+  gt_tbl_cells_stub_grand_summary_1 <-
+    tbl_summary %>%
+    tab_style(
+      style = cell_fill(color = "red"),
+      locations = cells_stub_grand_summary(rows = 1)
+    )
+
+  gt_tbl_cells_stub_grand_summary_1 %>%
+    render_as_html() %>%
+    tidy_grepl(
+      "<td class=\"gt_row gt_stub gt_right gt_grand_summary_row gt_first_grand_summary_row\" style=\"background-color: #FF0000;\">min</td>"
+    ) %>%
+    expect_true()
+
+  gt_tbl_cells_stub_grand_summary_2 <-
+    tbl_summary %>%
+    tab_style(
+      style = cell_fill(color = "red"),
+      locations = cells_stub_grand_summary(rows = "max")
+    )
+
+  gt_tbl_cells_stub_grand_summary_2 %>%
+    render_as_html() %>%
+    tidy_grepl(
+      "<td class=\"gt_row gt_stub gt_right gt_grand_summary_row\" style=\"background-color: #FF0000;\">max</td>"
+    ) %>%
+    expect_true()
 })
