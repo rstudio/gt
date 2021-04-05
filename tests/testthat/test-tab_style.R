@@ -426,6 +426,13 @@ test_that("a gt table can store the correct style statements", {
     expect_equal(c(
       "data", NA_character_, "hp", "5", "1", NA_character_, "#FFFF00")
     )
+
+  # Check that `tab_row_group(others_label = ...)` still works but
+  # issues a warning
+  expect_equivalent(
+    expect_warning(data %>% tab_row_group(others_label = "Others1")),
+    data %>% tab_options(row_group.default_label = "Others1")
+  )
 })
 
 test_that("using fonts in `cell_text()` works", {
