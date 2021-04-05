@@ -276,7 +276,7 @@ parse_length_str <- function(lengths_vec,
   # Check for negative values and stop of `allow_negative = FALSE`
   non_na_vals <- vals[!is.na(vals)]
   if (!allow_negative &&
-      length(non_na_vals > 0) &&
+      length(non_na_vals) > 0 &&
       any(!is.na(non_na_vals)) &&
       is.numeric(non_na_vals) &&
       any(non_na_vals < 0)) {
