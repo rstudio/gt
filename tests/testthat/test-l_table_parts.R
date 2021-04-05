@@ -262,7 +262,7 @@ test_that("a gt table contains the correct placement of row groups", {
     mtcars %>%
     gt(rownames_to_stub = TRUE) %>%
     tab_row_group(
-      group = "Mazda",
+      label = "Mazda",
       rows = c("Mazda RX4", "Mazda RX4 Wag")
     )
 
@@ -290,11 +290,11 @@ test_that("a gt table contains the correct placement of row groups", {
   tbl_latex <-
     gt(mtcars, rownames_to_stub = TRUE) %>%
     tab_row_group(
-      group = "Mercs",
+      label = "Mercs",
       rows = contains("Merc")
     ) %>%
     tab_row_group(
-      group = "Mazda",
+      label = "Mazda",
       rows = c("Mazda RX4", "Mazda RX4 Wag")
     ) %>%
     row_group_order(groups = c(NA, "Mazda", "Mercs"))

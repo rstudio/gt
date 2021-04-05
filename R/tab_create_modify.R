@@ -188,6 +188,10 @@ tab_spanner <- function(data,
 #'   in those locations) and the second component will be the column label.
 #' @param columns An optional vector of column names that this operation should
 #'   be limited to. The default is to consider all columns in the table.
+#' @param split Should the delimiter splitting occur at the `"last"` instance of
+#'   `delim` or the `"first"`? By default column name splitting happens at the
+#'   last instance of the delimiter. This relevant only in the case that column
+#'   names included in `columns` have multiple instances of the `delim`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -214,13 +218,16 @@ tab_spanner <- function(data,
 tab_spanner_delim <- function(data,
                               delim,
                               columns = everything(),
-                              gather = TRUE) {
+                              gather = TRUE,
+                              split = c("last", "first")) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
+  split <- match.arg(split)
+
   # Get all of the columns in the dataset
-  all_cols <- data %>% dt_boxhead_get_vars()
+  all_cols <- dt_boxhead_get_vars(data = data)
 
   # Get the columns supplied in `columns` as a character vector
   columns <-
@@ -245,9 +252,22 @@ tab_spanner_delim <- function(data,
 
     colnames_with_delim <- colnames[colnames_has_delim]
 
-    split_colnames <- strsplit(colnames_with_delim, delim, fixed = TRUE)
+    # Perform regexec match where the delimiter is either declared
+    # to be the 'first' instance or the 'last' instance
+    regexec_m <-
+      regexec(
+        paste0(
+          "^(.*",
+          ifelse(split == "first", "?", ""),
+          ")\\Q", delim, "\\E(.*)$"
+        ),
+        colnames_with_delim
+      )
 
-    spanners <- vapply(split_colnames, `[[`, character(1), 1)
+    split_colnames <-
+      lapply(regmatches(colnames_with_delim, regexec_m), FUN = `[`, 2:3)
+
+    spanners <- vapply(split_colnames, FUN.VALUE = character(1), `[[`, 1)
 
     spanner_var_list <- split(colnames_with_delim, spanners)
 
@@ -272,8 +292,11 @@ tab_spanner_delim <- function(data,
       var_i <- colnames_with_delim[i]
 
       data <-
-        data %>%
-        dt_boxhead_edit(var = var_i, column_label = new_labels_i)
+        dt_boxhead_edit(
+          data = data,
+          var = var_i,
+          column_label = new_labels_i
+        )
     }
   }
 
@@ -282,26 +305,38 @@ tab_spanner_delim <- function(data,
 
 #' Add a row group to a **gt** table
 #'
+#' @description
 #' Create a row group with a collection of rows. This requires specification of
 #' the rows to be included, either by supplying row labels, row indices, or
-#' through use of a select helper function like `starts_with()`.
+#' through use of a select helper function like [starts_with()]. To modify the
+#' order of row groups, use the [row_group_order()] function.
+#'
+#' To set a default row group label for any rows not formally placed in a row
+#' group, we can use a separate call to `tab_options(row_group.default_label =
+#' <label>)`. If this is not done and there are rows that haven't been placed
+#' into a row group (where one or more row groups already exist), those rows
+#' will be automatically placed into a row group without a label. To restore
+#' labels for row groups not explicitly assigned a group,
+#' `tab_options(row_group.default_label = "")` can be used.
 #'
 #' @inheritParams fmt_number
-#' @param group The name of the row group. This text will also serve as the row
-#'   group label.
+#' @param label The text to use for the row group label.
 #' @param rows The rows to be made components of the row group. Can either be a
 #'   vector of row captions provided in `c()`, a vector of row indices, or a
 #'   helper function focused on selections. The select helper functions are:
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()], and
 #'   [everything()].
-#' @param others An option to set a default row group label for any rows not
-#'   formally placed in a row group named by `group` in any call of
-#'   `tab_row_group()`. A separate call to `tab_row_group()` with only a value
-#'   to `others` is possible and makes explicit that the call is meant to
-#'   provide a default row group label. If this is not set and there are rows
-#'   that haven't been placed into a row group (where one or more row groups
-#'   already exist), those rows will be automatically placed into a row group
-#'   without a label.
+#' @param id The ID for the row group. When accessing a row group through
+#'   [cells_row_groups()] (when using [tab_style()] or [tab_footnote()]) the
+#'   `id` value is used as the reference (and not the `label`). If an `id` is
+#'   not explicitly provided here, it will be taken from the `label` value. It
+#'   is advisable to set an explicit `id` value if you plan to access this cell
+#'   in a later function call and the label text is complicated (e.g., contains
+#'   markup, is lengthy, or both). Finally, when providing an `id` value you
+#'   must ensure that it is unique across all ID values set for row groups (the
+#'   function will stop if `id` isn't unique).
+#' @param others_label This argument is deprecated. Instead use
+#'   `tab_options(row_group.default_label = <label>)`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -316,7 +351,7 @@ tab_spanner_delim <- function(data,
 #'   dplyr::slice(1:8) %>%
 #'   gt(rowname_col = "model") %>%
 #'   tab_row_group(
-#'     group = "numbered",
+#'     label = "numbered",
 #'     rows = matches("^[0-9]")
 #'   )
 #'
@@ -331,11 +366,11 @@ tab_spanner_delim <- function(data,
 #'   dplyr::slice(1:8) %>%
 #'   gt(rowname_col = "model") %>%
 #'   tab_row_group(
-#'     group = "powerful",
+#'     label = "powerful",
 #'     rows = hp <= 600
 #'   ) %>%
 #'   tab_row_group(
-#'     group = "super powerful",
+#'     label = "super powerful",
 #'     rows = hp > 600
 #'   )
 #'
@@ -351,77 +386,75 @@ tab_spanner_delim <- function(data,
 #' @import rlang
 #' @export
 tab_row_group <- function(data,
-                          group = NULL,
-                          rows = NULL,
-                          others = NULL) {
+                          label,
+                          rows,
+                          id = label,
+                          others_label = NULL) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
   arrange_groups_vars <- dt_row_groups_get(data = data)
 
-  # Capture the `rows` expression
-  row_expr <- rlang::enquo(rows)
+  # Warn user about `others_label` deprecation
+  if (!is.null(others_label)) {
 
-  # Create a row group if a `group` is provided
-  if (!is.null(group)) {
+    data <- tab_options(data = data, row_group.default_label = others_label)
 
-    # Get the `stub_df` data frame from `data`
-    stub_df <- dt_stub_df_get(data = data)
-    data_tbl <- dt_data_get(data = data)
+    warning(
+      "The `others_label` argument has been deprecated in gt 0.3.3:\n",
+      "* use `tab_options(row_group.default_label = <label>)` to set this label.",
+      call. = FALSE
+    )
 
-    # Resolve the row numbers using the `resolve_vars` function
-    resolved_rows_idx <-
-      resolve_rows_i(
-        expr = !!row_expr,
-        data = data
-      )
-
-    # Place the `group` label in the `groupname` column `stub_df`
-    stub_df <- dt_stub_df_get(data = data)
-
-    stub_df[resolved_rows_idx, "groupname"] <- process_text(group[1])
-
-    data <- dt_stub_df_set(data = data, stub_df = stub_df)
-
-    if (dt_stub_groupname_has_na(data = data)) {
-
-      data <-
-        dt_row_groups_set(
-          data = data,
-          row_groups = unique(
-            c(
-              process_text(group[1]),
-              arrange_groups_vars,
-              NA_character_
-            )
-          )
-        )
-
-    } else {
-
-      data <-
-        dt_row_groups_set(
-          data = data,
-          row_groups = unique(
-            c(
-              process_text(group[1]),
-              arrange_groups_vars
-            )
-          )
-        )
+    if (missing(label) && missing(rows) && missing(id)) {
+      return(data)
     }
   }
 
-  # Set a name for the `others` group if a
-  # name is provided
-  if (!is.null(others)) {
-    data <-
-      dt_stub_others_set(
-        data = data,
-        stub_others = process_text(others[1])
-      )
+  # Check `id` against existing `id` values and stop if necessary
+  check_row_group_id_unique(data = data, row_group_id = id)
+
+  # Capture the `rows` expression
+  row_expr <- rlang::enquo(rows)
+
+  # Get the `stub_df` data frame from `data`
+  stub_df <- dt_stub_df_get(data = data)
+  data_tbl <- dt_data_get(data = data)
+
+  # Resolve the row numbers using the `resolve_vars` function
+  resolved_rows_idx <-
+    resolve_rows_i(
+      expr = !!row_expr,
+      data = data
+    )
+
+  stub_df <- dt_stub_df_get(data = data)
+
+  # Place the `label` in the `groupname` column `stub_df`
+  stub_df[resolved_rows_idx, "group_label"] <- list(list(label))
+  stub_df[resolved_rows_idx, "group_id"] <- as.character(id)
+
+  data <- dt_stub_df_set(data = data, stub_df = stub_df)
+
+  # Set the `_row_groups` vector here with the group id; new groups will
+  # be placed at the front, pushing down `NA` (the 'Others' group)
+  arrange_groups_vars <- c(id, stats::na.omit(arrange_groups_vars))
+  arrange_groups_vars <- unique(arrange_groups_vars)
+  arrange_groups_vars <- arrange_groups_vars[arrange_groups_vars %in% stub_df$group_id]
+  if (dt_stub_groupname_has_na(data = data)) {
+    arrange_groups_vars <- c(arrange_groups_vars, NA_character_)
   }
+
+  if (length(arrange_groups_vars) == 1 && is.na(arrange_groups_vars)) {
+    arrange_groups_vars <- character(0)
+  }
+
+  data <-
+    dt_row_groups_set(
+      data = data,
+      row_groups = arrange_groups_vars
+    )
 
   data
 }
@@ -1354,6 +1387,12 @@ set_style.cells_grand_summary <- function(loc, data, style) {
 #' @param stub.border.style,stub.border.width,stub.border.color
 #'   The style, width, and color properties for the vertical border of the table
 #'   stub.
+#' @param row_group.default_label An option to set a default row group label for
+#'   any rows not formally placed in a row group named by `group` in any call of
+#'   `tab_row_group()`. If this is set as `NA_character` and there are rows that
+#'   haven't been placed into a row group (where one or more row groups already
+#'   exist), those rows will be automatically placed into a row group without a
+#'   label.
 #' @param summary_row.border.style,summary_row.border.width,summary_row.border.color
 #'   The style, width, and color properties for all horizontal borders of the
 #'   `summary_row` location.
@@ -1570,6 +1609,7 @@ tab_options <- function(data,
                         row_group.border.right.style = NULL,
                         row_group.border.right.width = NULL,
                         row_group.border.right.color = NULL,
+                        row_group.default_label = NULL,
                         table_body.hlines.style = NULL,
                         table_body.hlines.width = NULL,
                         table_body.hlines.color = NULL,

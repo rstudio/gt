@@ -27,6 +27,13 @@ selection_text <- function(html, selection) {
     rvest::html_text()
 }
 
+# Gets the text from a row group label
+get_row_group_text <- function(tbl_html) {
+  tbl_html %>%
+    selection_text("[class='gt_group_heading_row']") %>%
+    gsub("\n\\s+", "", .)
+}
+
 test_that("a gt table contains the expected heading components", {
 
   # Check that specific suggested packages are available
@@ -378,29 +385,28 @@ test_that("a gt table contains the expected source note", {
         "This was in Motor Trend magazine, hence the `mt`."))
 })
 
-test_that("a gt table contains the correct placement of row groups", {
+test_that("row groups can be successfully generated with `tab_row_group()", {
 
   # Check that specific suggested packages are available
   check_suggests()
 
   # Create a `tbl_html` object with `gt()`; this table
-  # contains a row groups in a specified order
+  # contains a row groups in a specified order using `tab_row_group()`
   tbl_html <-
     gt(mtcars, rownames_to_stub = TRUE) %>%
     tab_row_group(
-      group = "Mazda",
+      label = "Mazda",
       rows = c("Mazda RX4", "Mazda RX4 Wag")
     ) %>%
     render_as_html() %>%
     xml2::read_html()
 
   # Expect that the inner HTML content for the two row groups
-  # is 'Mazda' and an empty string
-  c(tbl_html %>%
-      selection_text("[class='gt_group_heading']"),
-    tbl_html %>%
-      selection_text("[class='gt_empty_group_heading']")) %>%
-    expect_equal(c("Mazda", ""))
+  # is 'Mazda' and then an empty string
+  expect_equal(
+    get_row_group_text(tbl_html),
+    c("Mazda", "")
+  )
 
   # Create a `tbl_html` object with `gt()`; this table
   # contains a three row groups and the use of `row_group_order()`
@@ -409,11 +415,11 @@ test_that("a gt table contains the correct placement of row groups", {
     mtcars %>%
     gt(rownames_to_stub = TRUE) %>%
     tab_row_group(
-      group = "Mercs",
+      label = "Mercs",
       rows = contains("Merc")
     ) %>%
     tab_row_group(
-      group = "Mazda",
+      label = "Mazda",
       rows = c("Mazda RX4", "Mazda RX4 Wag")
     ) %>%
     row_group_order(groups = c(NA, "Mazda", "Mercs")) %>%
@@ -422,11 +428,227 @@ test_that("a gt table contains the correct placement of row groups", {
 
   # Expect that the inner HTML content for the three row groups
   # is in the prescribed order
-  c(tbl_html %>%
-      selection_text("[class='gt_empty_group_heading']"),
+  expect_equal(
+    get_row_group_text(tbl_html),
+    c("", "Mazda", "Mercs")
+  )
+
+  # Create a variation on the above table where `row_group_order()`
+  # leaves out `NA` (it's put at the end)
+  tbl_html <-
+    mtcars %>%
+    gt(rownames_to_stub = TRUE) %>%
+    tab_row_group(
+      label = "Mercs",
+      rows = contains("Merc")
+    ) %>%
+    tab_row_group(
+      label = "Mazda",
+      rows = c("Mazda RX4", "Mazda RX4 Wag")
+    ) %>%
+    row_group_order(groups = c("Mazda", "Mercs")) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect that the inner HTML content for the three row groups
+  # is in the prescribed order
+  expect_equal(
+    get_row_group_text(tbl_html),
+    c("Mazda", "Mercs", "")
+  )
+
+  tbl_html <-
+    exibble %>%
+    gt() %>%
+    tab_row_group(
+      label = md("__*void*__"),
+      rows = group == "grp_a",
+      id = "group_a"
+    ) %>%
+    tab_row_group(
+      label = "void",
+      rows = group != "grp_a",
+      id = "group_void"
+    ) %>%
+    row_group_order(
+      groups = c("group_a", "group_void")
+    ) %>%
+    tab_spanner(
+      label = md("__*num_char*__"),
+      columns = c(num, char),
+      id = "num_char"
+    ) %>%
+    tab_footnote(
+      footnote = "a footnote",
+      locations = cells_row_groups("group_a")
+    ) %>%
+    render_as_html()
+
+  # Expect to see the styled and unstyled variations of the `"void"`
+  # row group labels
+  expect_match(
+    tbl_html,
+    regexp = "<strong><em>void</em></strong><sup class=\"gt_footnote_marks\">1</sup>",
+    fixed = TRUE
+  )
+  expect_match(
+    tbl_html,
+    regexp = "<td colspan=\"9\" class=\"gt_group_heading\">void</td>",
+    fixed = TRUE
+  )
+
+  # Expect that the inner HTML content for the two row groups
+  # is in the prescribed order
+  expect_equal(
+    get_row_group_text(tbl_html %>% xml2::read_html()),
+    c("void1", "void")
+  )
+
+  # When specifying a row group that captures no rows, expect that
+  # the rendered table is essentially unaffected by this function call
+  expect_equal(
+    gt(exibble, rowname_col = "row") %>%
+      tab_row_group(label = "group", rows = FALSE) %>%
+      render_as_html(),
+    gt(exibble, rowname_col = "row") %>%
+      render_as_html()
+  )
+
+  # Expect an error if not providing a `label` for `tab_row_group()`
+  # but there is a specification of rows
+  expect_error(
+    exibble %>%
+      gt() %>%
+      tab_row_group(
+        rows = group == "grp_a"
+      )
+  )
+
+  # Expect a warning if using the `others_label` argument
+  expect_warning(
+    gt(exibble, rowname_col = "row") %>%
+      tab_row_group(others = "foo")
+  )
+
+  # Expect that `tab_options(row_group.default_label = <label>)`
+  # is called internally if using the deprecated `others_label` argument
+  gt_tbl <-
+    suppressWarnings(
+      gt(exibble, rowname_col = "row") %>%
+        tab_row_group(label = "one", rows = 1:3) %>%
+        tab_row_group(others_label = "foo")
+    )
+
+  expect_equal(
+    dt_options_get_value(gt_tbl, "row_group_default_label"),
+    "foo"
+  )
+
+  expect_equal(
+    gt_tbl %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      get_row_group_text(),
+    c("one", "foo")
+  )
+
+  # Expect an error upon repeat use of a row group `id` value
+  expect_error(
+    gt(exibble, rowname_col = "row") %>%
+      tab_row_group(label = "a", rows = 1:2, id = "one") %>%
+      tab_row_group(label = "b", rows = 3:4, id = "one")
+  )
+})
+
+test_that("A default row group name can be modified with `tab_options()`", {
+
+  # Check that specific suggested packages are available
+  check_suggests()
+
+  tbl_html <- gt(exibble)
+
+  # Having some rows associated to ids/labels means that the
+  # non-associated rows will have an NA label
+  expect_equal(
     tbl_html %>%
-      selection_text("[class='gt_group_heading']")) %>%
-    expect_equal(c("", "Mazda", "Mercs"))
+      tab_row_group(
+        label = md("__*void*__"),
+        rows = group == "grp_a",
+        id = "group_a"
+      ) %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      get_row_group_text(),
+    c("void", "")
+  )
+
+  # Setting a default row group label will make that label
+  # appear when rendered
+  expect_equal(
+    tbl_html %>%
+      tab_options(row_group.default_label = "The Others") %>%
+      tab_row_group(
+        label = md("__*void*__"),
+        rows = group == "grp_a",
+        id = "group_a"
+      ) %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      get_row_group_text(),
+    c("void", "The Others")
+  )
+
+  # The order of the two groups (one defined, one the 'Others') can
+  # be modified with `row_group_order()` by putting `NA` before `group_a`
+  expect_equal(
+    tbl_html %>%
+      tab_options(row_group.default_label = "The Others") %>%
+      tab_row_group(
+        label = md("__*void*__"),
+        rows = group == "grp_a",
+        id = "group_a"
+      ) %>%
+      row_group_order(groups = c(NA, "group_a")) %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      get_row_group_text(),
+    c("The Others", "void")
+  )
+
+  # The label for the 'Others' can be overwritten with a subsequent
+  # call of `tab_row_group()`
+  expect_equal(
+    tbl_html %>%
+      tab_row_group(
+        label = md("__*void*__"),
+        rows = group == "grp_a",
+        id = "group_a"
+      ) %>%
+      tab_options(row_group.default_label = "The Others") %>%
+      tab_options(row_group.default_label = "Other Group") %>%
+      row_group_order(groups = c(NA, "group_a")) %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      get_row_group_text(),
+    c("Other Group", "void")
+  )
+
+  # A previously defined label for the 'Others' can be reset to
+  # nothing by using `tab_options(row_group.default_label = "")`
+  expect_equal(
+    tbl_html %>%
+      tab_row_group(
+        label = md("__*void*__"),
+        rows = group == "grp_a",
+        id = "group_a"
+      ) %>%
+      tab_options(row_group.default_label = "The Others") %>%
+      tab_options(row_group.default_label = "") %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      get_row_group_text(),
+    c("void", "")
+  )
 })
 
 test_that("a gt table's row group labels are HTML escaped", {
@@ -483,11 +705,11 @@ test_that("a gt table contains custom styles at the correct locations", {
     cols_hide(columns = "mpg") %>%
     cols_hide(columns = "vs") %>%
     tab_row_group(
-      group = "Mercs",
+      label = "Mercs",
       rows = contains("Merc")
     ) %>%
     tab_row_group(
-      group = "Mazdas",
+      label = "Mazdas",
       rows = contains("Mazda")
     ) %>%
     tab_spanner(
@@ -598,7 +820,7 @@ test_that("a gt table contains custom styles at the correct locations", {
   # Expect that the stubhead label is styled
   tbl_html %>%
     rvest::html_nodes("[style='background-color: #0000FF; color: white;']") %>%
-    rvest::html_text("[class='gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left]") %>%
+    rvest::html_text("[class='gt_col_heading gt_columns_bottom_border gt_left]") %>%
     expect_equal("cars")
 
   # Expect that the data cell (`Mazda RX4`/`disp`) -> (1, 4) is styled
@@ -610,20 +832,19 @@ test_that("a gt table contains custom styles at the correct locations", {
   # Expect that the data cell (`Datsun 710`/`hp`) -> (1, 4) is styled
   tbl_html %>%
     rvest::html_nodes("[style='background-color: #D3D3D3; font-style: italic;']") %>%
-    rvest::html_text("[class='gt_row gt_center']") %>%
+    rvest::html_text("[class='gt_row gt_right']") %>%
     expect_equal("93")
 
   # Expect that the summary cell (`Mercs`::`sum`/`hp`) is styled
-  # TODO: this summary cell value is not correct (shows `885.00` instead of `943.00`)
-  # tbl_html %>%
-  #   rvest::html_nodes("[style='background-color: #00FF00FF; color: white;']") %>%
-  #   rvest::html_text("[class='gt_row gt_summary_row gt_center']") %>%
-  #   expect_equal("943.00")
+  tbl_html %>%
+    rvest::html_nodes("[style='background-color: #00FF00; color: white;']") %>%
+    rvest::html_text("[class='gt_row gt_right gt_summary_row']") %>%
+    expect_equal("943.00")
 
   # Expect that the grand summary cell (`sum`/`hp`) is styled
   tbl_html %>%
     rvest::html_nodes("[style='background-color: #A020F0; color: white;']") %>%
-    rvest::html_text("[class='gt_row gt_grand_summary_row gt_center']") %>%
+    rvest::html_text("[class='gt_row gt_grand_summary_row']") %>%
     expect_equal("4,694.00")
 
   # Expect that some column labels (e.g., `disp`, `wt`, etc.) are

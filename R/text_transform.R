@@ -82,11 +82,15 @@ text_transform_at_location.cells_body <- function(loc,
 
   loc <- to_output_location(loc = loc, data = data)
 
+  stub_df <- dt_stub_df_get(data = data)
+
   # Do one vectorized operation per column
   for (col in loc$colnames) {
 
     if (col %in% colnames(body)) {
-      body[[col]][loc$rows] <- fn(body[[col]][loc$rows])
+
+      body[[col]][stub_df$rownum_i %in% loc$rows] <-
+        fn(body[[col]][stub_df$rownum_i %in% loc$rows])
     }
   }
 
@@ -99,38 +103,35 @@ text_transform_at_location.cells_stub <- function(loc,
                                                   data,
                                                   fn = identity) {
 
-  stub_df <- dt_stub_df_get(data = data)
+  body <- dt_body_get(data = data)
 
   loc <- to_output_location(loc = loc, data = data)
 
-  for (row in loc$rows) {
+  stub_df <- dt_stub_df_get(data = data)
 
-    if (row %in% stub_df$rowname) {
-      stub_df[row, "rowname"] <- fn(stub_df[row, "rowname"])
-    }
-  }
+  stub_var <- dt_boxhead_get_var_stub(data = data)
 
-  dt_stub_df_set(data = data, stub_df = stub_df)
+  body[[stub_var]][stub_df$rownum_i %in% loc$rows] <-
+    fn(body[[stub_var]][stub_df$rownum_i %in% loc$rows])
+
+  data <- dt_body_set(data = data, body = body)
+
+  data
 }
 
 text_transform_at_location.cells_column_labels <- function(loc,
                                                            data,
                                                            fn = identity) {
-
   boxh <- dt_boxhead_get(data = data)
 
   loc <- to_output_location(loc = loc, data = data)
 
-  for (col in loc$columns) {
+  for (col in loc$colnames) {
 
     if (col %in% boxh$var) {
 
       column_label_edited <-
-        boxh %>%
-        dplyr::filter(var == !!col) %>%
-        dplyr::pull(column_label) %>%
-        .[[1]] %>%
-        fn()
+        fn(dplyr::filter(boxh, var == .env$col)[1, "column_label", drop = TRUE])
 
       data <-
         dt_boxhead_edit(

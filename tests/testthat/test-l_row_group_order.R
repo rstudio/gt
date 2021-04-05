@@ -33,20 +33,4 @@ test_that("the `row_group_order()` function works correctly", {
     tbl_latex %>%
       as_latex() %>% as.character()) %>%
     expect_true()
-
-  # Create a `tbl_latex` object that arranges the groups by the
-  # latter calendar date first using group indices
-  tbl_latex <-
-    tbl %>%
-    gt(groupname_col = "dates") %>%
-    row_group_order(groups = c(2, 1))
-
-  # Expect a characteristic pattern
-  grepl(
-    paste0(
-      ".*multicolumn\\{1\\}\\{l\\}\\{2018-02-11\\}",
-      ".*multicolumn\\{1\\}\\{l\\}\\{2018-02-10\\}.*"),
-    tbl_latex %>%
-      as_latex() %>% as.character()) %>%
-    expect_true()
 })
