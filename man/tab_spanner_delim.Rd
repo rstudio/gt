@@ -4,7 +4,13 @@
 \alias{tab_spanner_delim}
 \title{Create column labels and spanners via delimited names}
 \usage{
-tab_spanner_delim(data, delim, columns = everything(), gather = TRUE)
+tab_spanner_delim(
+  data,
+  delim,
+  columns = everything(),
+  gather = TRUE,
+  split = c("last", "first")
+)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -21,6 +27,11 @@ be limited to. The default is to consider all columns in the table.}
 \item{gather}{An option to move the specified \code{columns} such that they are
 unified under the spanner column label. Ordering of the moved-into-place
 columns will be preserved in all cases. By default, this is set to \code{TRUE}.}
+
+\item{split}{Should the delimiter splitting occur at the \code{"last"} instance of
+\code{delim} or the \code{"first"}? By default column name splitting happens at the
+last instance of the delimiter. This relevant only in the case that column
+names included in \code{columns} have multiple instances of the \code{delim}.}
 }
 \value{
 An object of class \code{gt_tbl}.

@@ -218,7 +218,7 @@ translate_legacy_resolver_expr <- function(quo) {
 
   if (identical(expr, FALSE)) {
     warning(
-      "`columns = FALSE` is deprecated since gt 0.2.3:\n",
+      "`columns = FALSE` has been deprecated in gt 0.3.0:\n",
       "* please use `columns = c()` instead",
       call. = FALSE
     )
@@ -228,7 +228,7 @@ translate_legacy_resolver_expr <- function(quo) {
   } else if (identical(expr, TRUE)) {
 
     warning(
-      "`columns = TRUE` is deprecated since gt 0.2.3:\n",
+      "`columns = TRUE` has been deprecated in gt 0.3.0:\n",
       "* please use `columns = everything()` instead",
       call. = FALSE
     )
@@ -238,7 +238,7 @@ translate_legacy_resolver_expr <- function(quo) {
   } else if (is.null(expr)) {
 
     warning(
-      "`columns = NULL` is deprecated since gt 0.2.3:\n",
+      "`columns = NULL` has been deprecated in gt 0.3.0:\n",
       "* please use `columns = everything()` instead",
       call. = FALSE
     )
@@ -248,7 +248,7 @@ translate_legacy_resolver_expr <- function(quo) {
   } else if (rlang::quo_is_call(quo = quo, name = "vars")) {
 
     warning(
-      "`columns = vars(...)` is deprecated since gt 0.2.3:\n",
+      "`columns = vars(...)` has been deprecated in gt 0.3.0:\n",
       "* please use `columns = c(...)` instead",
       call. = FALSE
     )
@@ -286,7 +286,7 @@ resolve_rows_l <- function(expr, data) {
   if (is.null(resolved)) {
 
     warning(
-      "The use of `NULL` for rows is deprecated since gt 0.2.3:\n",
+      "The use of `NULL` for rows has been deprecated in gt 0.3.0:\n",
       "* please use `TRUE` instead",
       call. = FALSE
     )
@@ -350,7 +350,7 @@ normalize_resolved <- function(resolved,
     # want to either make this warning conditional (after investigating which
     # resolving contexts still allow `NULL`)
     warning(
-      "The use of `NULL` for ", item_label , "s is deprecated since gt 0.2.3:\n",
+      "The use of `NULL` for ", item_label , "s has been deprecated in gt 0.3.0:\n",
       "* please use `everything()` instead",
       call. = FALSE
     )

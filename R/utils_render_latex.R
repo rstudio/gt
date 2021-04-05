@@ -162,22 +162,20 @@ create_columns_component_l <- function(data) {
 create_body_component_l <- function(data) {
 
   boxh <- dt_boxhead_get(data = data)
-  styles_tbl <- dt_styles_get(data = data)
   body <- dt_body_get(data = data)
   summaries_present <- dt_summary_exists(data = data)
   list_of_summaries <- dt_summary_df_get(data = data)
   groups_rows_df <- dt_groups_rows_get(data = data)
   stub_components <- dt_stub_components(data = data)
 
+  styles_tbl <- dt_styles_get(data = data)
+
   n_data_cols <- dt_boxhead_get_vars_default(data = data) %>% length()
   n_rows <- nrow(body)
 
   # Get the column alignments for the data columns (this
   # doesn't include the stub alignment)
-  col_alignment <-
-    boxh %>%
-    dplyr::filter(type == "default") %>%
-    dplyr::pull(column_align)
+  col_alignment <- boxh[boxh$type == "default", ][["column_align"]]
 
   # Get the column headings for the visible (e.g., `default`) columns
   default_vars <- dt_boxhead_get_vars_default(data = data)
@@ -201,7 +199,7 @@ create_body_component_l <- function(data) {
   column_series <- seq(n_cols)
 
   # Replace an NA group with an empty string
-  if (any(is.na(groups_rows_df$group))) {
+  if (any(is.na(groups_rows_df$group_label))) {
 
     groups_rows_df <-
       groups_rows_df %>%
@@ -214,16 +212,8 @@ create_body_component_l <- function(data) {
 
   group_rows <- create_group_rows(n_rows, groups_rows_df, context = "latex")
 
-  if (stub_available) {
-
-    default_vars <- c("::rowname", default_vars)
-
-    body <-
-      dt_stub_df_get(data = data) %>%
-      dplyr::select(rowname) %>%
-      dplyr::mutate(rowname = process_text(rowname, context = "latex")) %>%
-      dplyr::rename(`::rowname` = rowname) %>%
-      cbind(body)
+  if (stub_available && "__GT_ROWNAME_PRIVATE__" %in% names(body)) {
+    default_vars <- c("__GT_ROWNAME_PRIVATE__", default_vars)
   }
 
   # Split `body_content` by slices of rows and create data rows

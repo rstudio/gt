@@ -9,16 +9,14 @@ data <-
   cols_hide(columns = "mpg") %>%
   cols_hide(columns = "vs") %>%
   tab_row_group(
-    group = "Mercs",
+    label = "Mercs",
     rows = contains("Merc"),
   ) %>%
   tab_row_group(
-    group = "Mazdas",
+    label = "Mazdas",
     rows = contains("Mazda"),
   ) %>%
-  tab_row_group(
-    others = "Others"
-  ) %>%
+  tab_options(row_group.default_label = "Others") %>%
   tab_spanner(
     label = "gear_carb_cyl",
     id = "gcc",
