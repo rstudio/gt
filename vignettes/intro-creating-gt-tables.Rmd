@@ -245,7 +245,7 @@ gt_tbl <-
 gt_tbl
 ```
 
-Let's incorporate row groups into the display table. This divides rows into groups, creating *row groups*, and results in a display of a *row group labels* right above the each group. This can be easily done with a table containing row labels. We can make a new *row group* with each call of the `tab_row_group()` function. The inputs are group names in the `group` argument, and row references in the `rows` argument. We can use any of the strategies to reference rows as we did we footnotes (e.g., vectors of names/indices, select helpers, etc.).
+Let's incorporate row groups into the display table. This divides rows into groups, creating *row groups*, and results in a display of a *row group labels* right above the each group. This can be easily done with a table containing row labels. We can make a new *row group* with each call of the `tab_row_group()` function. The inputs are row group names in the `label` argument, and row references in the `rows` argument. We can use any of the strategies to reference rows as we did we footnotes (e.g., vectors of names/indices, select helpers, etc.).
 
 Here we will create three row groups (with row group labels `continent`, `country`, and `subregion`) to have a grouping of rows.
 
@@ -255,15 +255,15 @@ Here we will create three row groups (with row group labels `continent`, `countr
 gt_tbl <- 
   gt_tbl %>% 
   tab_row_group(
-    group = "continent",
+    label = "continent",
     rows = 1:6
   ) %>%
   tab_row_group(
-    group = "country",
+    label = "country",
     rows = c("Australia", "Greenland")
   ) %>%
   tab_row_group(
-    group = "subregion",
+    label = "subregion",
     rows = c("New Guinea", "Borneo")
   )
 
@@ -275,7 +275,7 @@ Three *row groups* have been made since there are three unique categories under 
 
 Having groups of rows in *row groups* is a great way to present information. Including data summaries particular to each group is a natural extension of this idea. This process of adding summary rows with *summary labels* is covered in a separate article (*Creating Summary Lines*).
 
-Another way to make row groups is to have the magic column `groupname` present in the input data table. For our above example with `islands_tbl`, a `groupname` column with the categories `continent`, `country`, and `subregion` in the appropriate rows would produce row groups automatically (i.e., there would be no need to use the `tab_row_group()` statements). This strategy of supplying group names in a `groupname` column name can sometimes be advantageous since we can rely on functions such as those available in **dplyr** to generate the categories (e.g., using `case_when()` or `if_else()`).
+Another way to make row groups is to have a column of group names present in the input data table. For our above example with `islands_tbl`, having a `groupname` column with the categories `continent`, `country`, and `subregion` in the appropriate rows would produce row groups when using the `gt()` function's `groupname_col` argument (e.g., `gt(islands_tbl, rowname_col = "name", groupname_col = "groupname") %>% ...`). Then, there would be no need to use the `tab_row_group()` statements. This strategy of supplying group names in a column can sometimes be advantageous since we can rely on functions such as those available in **dplyr** to generate the categories (e.g., using `case_when()` or `if_else()`).
 
 ### The Column Labels
 
