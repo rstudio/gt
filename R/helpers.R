@@ -268,10 +268,10 @@ pct <- function(x) {
 cells_title <- function(groups = c("title", "subtitle")) {
 
   # Capture expression for the `groups` argument
-  group_expr <- rlang::enquo(groups)
+  groups_expr <- rlang::enquo(groups)
 
-  # Create the `cells_title` object
-  cells <- list(groups = group_expr)
+  # Create the `cells` object
+  cells <- list(groups = groups_expr)
 
   # Apply the `cells_title` and `location_cells` classes
   class(cells) <- c("cells_title", "location_cells")
@@ -356,7 +356,7 @@ cells_title <- function(groups = c("title", "subtitle")) {
 #' @export
 cells_stubhead <- function() {
 
-  # Create the `cells_stubhead` object
+  # Create the `cells` object
   cells <- list(groups = "stubhead")
 
   # Apply the `cells_stubhead` and `location_cells` classes
@@ -450,11 +450,13 @@ cells_column_spanners <- function(spanners = everything()) {
   # Capture expression for the `spanners` argument
   spanners_expr <- rlang::enquo(spanners)
 
-  # Create the `cells_column_spanners` object
-  structure(
-    list(spanners = spanners_expr),
-    class = c("cells_column_spanners", "location_cells")
-  )
+  # Create the `cells` object
+  cells <- list(spanners = spanners_expr)
+
+  # Apply the `cells_column_spanners` and `location_cells` classes
+  class(cells) <- c("cells_column_spanners", "location_cells")
+
+  cells
 }
 
 #' Location helper for targeting the column labels
@@ -549,11 +551,13 @@ cells_column_labels <- function(columns = everything()) {
   # Capture expression for the `columns` argument
   columns_expr <- rlang::enquo(columns)
 
-  # Create the `cells_column_labels` object
-  structure(
-    list(columns = columns_expr),
-    class = c("cells_column_labels", "location_cells")
-  )
+  # Create the `cells` object
+  cells <- list(columns = columns_expr)
+
+  # Apply the `cells_column_labels` and `location_cells` classes
+  class(cells) <- c("cells_column_labels", "location_cells")
+
+  cells
 }
 
 #' Location helper for targeting row groups
@@ -650,10 +654,10 @@ cells_column_labels <- function(columns = everything()) {
 cells_row_groups <- function(groups = everything()) {
 
   # Capture expression for the `groups` argument
-  group_expr <- rlang::enquo(groups)
+  groups_expr <- rlang::enquo(groups)
 
-  # Create the `cells_row_groups` object
-  cells <- list(groups = group_expr)
+  # Create the `cells` object
+  cells <- list(groups = groups_expr)
 
   # Apply the `cells_row_groups` and `location_cells` classes
   class(cells) <- c("cells_row_groups", "location_cells")
@@ -766,10 +770,10 @@ cells_group <- function(groups = TRUE) {
 cells_stub <- function(rows = everything()) {
 
   # Capture expression for the `rows` argument
-  row_expr <- rlang::enquo(rows)
+  rows_expr <- rlang::enquo(rows)
 
-  # Create the `cells_stub` object
-  cells <- list(rows = row_expr)
+  # Create the `cells` object
+  cells <- list(rows = rows_expr)
 
   # Apply the `cells_stub` and `location_cells` classes
   class(cells) <- c("cells_stub", "location_cells")
@@ -862,14 +866,14 @@ cells_body <- function(columns = everything(),
                        rows = everything()) {
 
   # Capture expressions for the `columns` and `rows` arguments
-  col_expr <- rlang::enquo(columns)
-  row_expr <- rlang::enquo(rows)
+  columns_expr <- rlang::enquo(columns)
+  rows_expr <- rlang::enquo(rows)
 
-  # Create the `cells_body` object
+  # Create the `cells` object
   cells <-
     list(
-      columns = col_expr,
-      rows = row_expr
+      columns = columns_expr,
+      rows = rows_expr
     )
 
   # Apply the `cells_body` and `location_cells` classes
@@ -999,16 +1003,16 @@ cells_summary <- function(groups = everything(),
 
   # Capture expressions for the `groups`,
   # `columns`, and `rows` arguments
-  group_expr <- rlang::enquo(groups)
-  col_expr <- rlang::enquo(columns)
-  row_expr <- rlang::enquo(rows)
+  groups_expr <- rlang::enquo(groups)
+  columns_expr <- rlang::enquo(columns)
+  rows_expr <- rlang::enquo(rows)
 
-  # Create the `cells_summary` object
+  # Create the `cells` object
   cells <-
     list(
-      groups = group_expr,
-      columns = col_expr,
-      rows = row_expr
+      groups = groups_expr,
+      columns = columns_expr,
+      rows = rows_expr
     )
 
   # Apply the `cells_summary` and `location_cells` classes
@@ -1115,16 +1119,15 @@ cells_summary <- function(groups = everything(),
 cells_grand_summary <- function(columns = everything(),
                                 rows = everything()) {
 
-  # Capture expressions for the `columns`
-  # and `rows` arguments
-  col_expr <- rlang::enquo(columns)
-  row_expr <- rlang::enquo(rows)
+  # Capture expressions for the `columns` and `rows` arguments
+  columns_expr <- rlang::enquo(columns)
+  rows_expr <- rlang::enquo(rows)
 
-  # Create the `cells_grand_summary` object
+  # Create the `cells` object
   cells <-
     list(
-      columns = col_expr,
-      rows = row_expr
+      columns = columns_expr,
+      rows = rows_expr
     )
 
   # Apply the `cells_grand_summary` and `location_cells` classes
@@ -1195,16 +1198,15 @@ cells_grand_summary <- function(columns = everything(),
 cells_stub_summary <- function(groups = everything(),
                                rows = everything()) {
 
-  # Capture expressions for the `groups`
-  # and `rows` arguments
-  group_expr <- rlang::enquo(groups)
-  row_expr <- rlang::enquo(rows)
+  # Capture expressions for the `groups` and `rows` arguments
+  groups_expr <- rlang::enquo(groups)
+  rows_expr <- rlang::enquo(rows)
 
-  # Create the `cells_stub_summary` object
+  # Create the `cells` object
   cells <-
     list(
-      groups = group_expr,
-      rows = row_expr
+      groups = groups_expr,
+      rows = rows_expr
     )
 
   # Apply the `cells_stub_summary` and `location_cells` classes
@@ -1274,13 +1276,10 @@ cells_stub_summary <- function(groups = everything(),
 cells_stub_grand_summary <- function(rows = everything()) {
 
   # Capture expressions for the `rows` arguments
-  row_expr <- rlang::enquo(rows)
+  rows_expr <- rlang::enquo(rows)
 
-  # Create the `cells_stub_summary` object
-  cells <-
-    list(
-      rows = row_expr
-    )
+  # Create the `cells` object
+  cells <- list(rows = rows_expr)
 
   # Apply the `cells_stub_grand_summary` and `location_cells` classes
   class(cells) <- c("cells_stub_grand_summary", "location_cells")
@@ -1341,11 +1340,8 @@ cells_stub_grand_summary <- function(rows = everything()) {
 #' @export
 cells_footnotes <- function() {
 
-  # Create the `cells_footnotes` object
-  cells <-
-    list(
-      footnotes = TRUE
-    )
+  # Create the `cells` object
+  cells <- list(groups = "footnotes")
 
   # Apply the `cells_footnotes` and `location_cells` classes
   class(cells) <- c("cells_footnotes", "location_cells")
@@ -1406,11 +1402,8 @@ cells_footnotes <- function() {
 #' @export
 cells_source_notes <- function() {
 
-  # Create the `cells_source_notes` object
-  cells <-
-    list(
-      source_notes = TRUE
-    )
+  # Create the `cells` object
+  cells <- list(groups = "source_notes")
 
   # Apply the `cells_source_notes` and `location_cells` classes
   class(cells) <- c("cells_source_notes", "location_cells")
