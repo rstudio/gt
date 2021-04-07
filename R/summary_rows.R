@@ -115,9 +115,7 @@ summary_rows <- function(data,
   # If there isn't a stub available, create an
   # 'empty' stub (populated with empty strings);
   # the stub is necessary for summary row labels
-  # TODO: Why is there a requirement for `is_null(groups)`?;
-  #       I think there is a mistake here
-  if (!stub_available && is.null(groups)) {
+  if (!stub_available) {
 
     data <-
       dt_boxhead_add_var(
