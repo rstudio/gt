@@ -451,15 +451,7 @@ rtf_tbl_cell <- function(x,
       italic = italic,
       super_sub = super_sub,
       rtf_raw(x)
-    ) %>%
-    unlist() %>%
-    unname() %>%
-    tidy_gsub("\\\\super", "\\super", fixed = TRUE) %>%
-    tidy_gsub("\\\\i", "\\i", fixed = TRUE)
-
-  # In R <3.6 gt's `tidy_gsub()` function will strip the class from
-  # `cell_text` so it's necessary to reinstate it here
-  class(cell_text) <- "rtf_text"
+    )
 
   # Combine all cell settings
   cell_settings <-
