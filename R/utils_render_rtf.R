@@ -451,11 +451,7 @@ rtf_tbl_cell <- function(x,
       italic = italic,
       super_sub = super_sub,
       rtf_raw(x)
-    ) %>%
-    unlist() %>%
-    unname() %>%
-    tidy_gsub("\\\\super", "\\super", fixed = TRUE) %>%
-    tidy_gsub("\\\\i", "\\i", fixed = TRUE)
+    )
 
   # Combine all cell settings
   cell_settings <-

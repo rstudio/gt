@@ -110,5 +110,5 @@ Collate:
     'utils_render_footnotes.R'
     'utils_render_html.R'
     'utils_render_latex.R'
-    'utils_render_rtf_redo.R'
+    'utils_render_rtf.R'
     'zzz.R'
