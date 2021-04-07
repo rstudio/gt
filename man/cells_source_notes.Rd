@@ -11,7 +11,11 @@ A list object with the classes \code{cells_source_notes} and
 \code{location_cells}.
 }
 \description{
-Location helper for targeting the source notes
+The \code{cells_source_notes()} function is used to target all source notes in the
+footer section of the table. This is useful for adding custom styles to the
+source notes with \code{\link[=tab_style]{tab_style()}} (using the \code{locations} argument). This helper
+function cannot be used for the \code{locations} argument of \code{\link[=tab_footnote]{tab_footnote()}} and
+doing so will result in a warning (with no change made to the table).
 }
 \section{Overview of Location Helper Functions}{
 
@@ -55,11 +59,37 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \code{list()} (e.g., \code{list(cells_body(), cells_grand_summary())}).
 }
 
+\section{Figures}{
+
+\if{html}{\figure{man_cells_source_notes_1.png}{options: width=100\%}}
+}
+
 \section{Function ID}{
 
 7-17
 }
 
+\examples{
+# Use `gtcars` to create a gt table;
+# add a source note and style the
+# source notes section
+tab_1 <-
+  gtcars \%>\%
+  dplyr::select(mfr, model, msrp) \%>\%
+  dplyr::slice(1:5) \%>\%
+  gt() \%>\%
+  tab_source_note(
+    source_note = "From edmunds.com"
+  ) \%>\%
+  tab_style(
+    style = cell_text(
+      color = "#A9A9A9",
+      size = "small"
+    ),
+    locations = cells_source_notes()
+  )
+
+}
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},

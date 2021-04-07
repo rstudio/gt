@@ -1189,6 +1189,54 @@ cells_grand_summary <- function(columns = everything(),
 #' @return A list object with the classes `cells_stub_summary` and
 #'   `location_cells`.
 #'
+#' @examples
+#' # Use `countrypops` to create a gt table; add
+#' # some styling to the summary data stub cells
+#' # with `tab_style()` and `cells_stub_summary()`
+#' tab_1 <-
+#'   countrypops %>%
+#'   dplyr::filter(
+#'     country_name == "Japan",
+#'     year < 1970) %>%
+#'   dplyr::select(-contains("country")) %>%
+#'   dplyr::mutate(
+#'     decade = paste0(substr(year, 1, 3), "0s")
+#'   ) %>%
+#'   dplyr::group_by(decade) %>%
+#'   gt(
+#'     rowname_col = "year",
+#'     groupname_col = "decade"
+#'   ) %>%
+#'   fmt_number(
+#'     columns = population,
+#'     decimals = 0
+#'   ) %>%
+#'   summary_rows(
+#'     groups = "1960s",
+#'     columns = population,
+#'     fns = list("min", "max"),
+#'     formatter = fmt_number,
+#'     decimals = 0
+#'   ) %>%
+#'   tab_style(
+#'     style = list(
+#'       cell_text(
+#'         weight = "bold",
+#'         transform = "capitalize"
+#'       ),
+#'       cell_fill(
+#'         color = "lightblue",
+#'         alpha = 0.5
+#'       )
+#'     ),
+#'     locations = cells_stub_summary(
+#'       groups = "1960s"
+#'     )
+#'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_cells_stub_summary_1.png}{options: width=100\%}}
+#'
 #' @family Helper Functions
 #' @section Function ID:
 #' 7-14
@@ -1267,6 +1315,39 @@ cells_stub_summary <- function(groups = everything(),
 #' @return A list object with the classes `cells_stub_grand_summary` and
 #'   `location_cells`.
 #'
+#' @examples
+#' # Use `countrypops` to create a gt table;
+#' # add some styling to a grand summary stub
+#' # cell with with the `tab_style()` and
+#' # `cells_stub_grand_summary()` functions
+#' tab_1 <-
+#'   countrypops %>%
+#'   dplyr::filter(
+#'     country_name == "Spain",
+#'     year < 1970
+#'   ) %>%
+#'   dplyr::select(-contains("country")) %>%
+#'   gt(rowname_col = "year") %>%
+#'   fmt_number(
+#'     columns = population,
+#'     decimals = 0
+#'   ) %>%
+#'   grand_summary_rows(
+#'     columns = population,
+#'     fns = list(
+#'       change = ~max(.) - min(.)
+#'     ),
+#'     formatter = fmt_number,
+#'     decimals = 0
+#'   ) %>%
+#'   tab_style(
+#'     style = cell_text(weight = "bold", transform = "uppercase"),
+#'     locations = cells_stub_grand_summary(rows = "change")
+#'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_cells_stub_grand_summary_1.png}{options: width=100\%}}
+#'
 #' @family Helper Functions
 #' @section Function ID:
 #' 7-15
@@ -1289,6 +1370,12 @@ cells_stub_grand_summary <- function(rows = everything()) {
 
 #' Location helper for targeting the footnotes
 #'
+#' @description
+#' The `cells_footnotes()` function is used to target all footnotes in the
+#' footer section of the table. This is useful for adding custom styles to the
+#' footnotes with [tab_style()] (using the `locations` argument). This helper
+#' function cannot be used for the `locations` argument of [tab_footnote()] and
+#' doing so will result in a warning (with no change made to the table).
 #'
 #' @section Overview of Location Helper Functions:
 #' Location helper functions can be used to target cells with virtually any
@@ -1332,6 +1419,45 @@ cells_stub_grand_summary <- function(rows = everything()) {
 #' @return A list object with the classes `cells_footnotes` and
 #'   `location_cells`.
 #'
+#' @examples
+#' # Use `sza` to create a gt table; color
+#' # the `sza` column using the `data_color()`
+#' # function, add a footnote and also style
+#' # the footnotes section
+#' tab_1 <-
+#'   sza %>%
+#'   dplyr::filter(
+#'     latitude == 20 &
+#'       month == "jan" &
+#'       !is.na(sza)
+#'   ) %>%
+#'   dplyr::select(-latitude, -month) %>%
+#'   gt() %>%
+#'   data_color(
+#'     columns = sza,
+#'     colors = scales::col_numeric(
+#'       palette = c("white", "yellow", "navyblue"),
+#'       domain = c(0, 90)
+#'     )
+#'   ) %>%
+#'   tab_footnote(
+#'     footnote = "Color indicates height of sun.",
+#'     locations = cells_column_labels(
+#'       columns = sza
+#'     )
+#'   ) %>%
+#'   tab_options(table.width = px(320)) %>%
+#'   tab_style(
+#'     style = list(
+#'       cell_text(size = "smaller"),
+#'       cell_fill(color = "gray90")
+#'       ),
+#'     locations = cells_footnotes()
+#'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_cells_footnotes_1.png}{options: width=100\%}}
+#'
 #' @family Helper Functions
 #' @section Function ID:
 #' 7-16
@@ -1351,6 +1477,12 @@ cells_footnotes <- function() {
 
 #' Location helper for targeting the source notes
 #'
+#' @description
+#' The `cells_source_notes()` function is used to target all source notes in the
+#' footer section of the table. This is useful for adding custom styles to the
+#' source notes with [tab_style()] (using the `locations` argument). This helper
+#' function cannot be used for the `locations` argument of [tab_footnote()] and
+#' doing so will result in a warning (with no change made to the table).
 #'
 #' @section Overview of Location Helper Functions:
 #' Location helper functions can be used to target cells with virtually any
@@ -1393,6 +1525,29 @@ cells_footnotes <- function() {
 #'
 #' @return A list object with the classes `cells_source_notes` and
 #'   `location_cells`.
+#'
+#' @examples
+#' # Use `gtcars` to create a gt table;
+#' # add a source note and style the
+#' # source notes section
+#' tab_1 <-
+#'   gtcars %>%
+#'   dplyr::select(mfr, model, msrp) %>%
+#'   dplyr::slice(1:5) %>%
+#'   gt() %>%
+#'   tab_source_note(
+#'     source_note = "From edmunds.com"
+#'   ) %>%
+#'   tab_style(
+#'     style = cell_text(
+#'       color = "#A9A9A9",
+#'       size = "small"
+#'     ),
+#'     locations = cells_source_notes()
+#'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_cells_source_notes_1.png}{options: width=100\%}}
 #'
 #' @family Helper Functions
 #' @section Function ID:

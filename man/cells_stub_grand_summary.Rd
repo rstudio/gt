@@ -61,11 +61,47 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \code{list()} (e.g., \code{list(cells_body(), cells_grand_summary())}).
 }
 
+\section{Figures}{
+
+\if{html}{\figure{man_cells_stub_grand_summary_1.png}{options: width=100\%}}
+}
+
 \section{Function ID}{
 
 7-15
 }
 
+\examples{
+# Use `countrypops` to create a gt table;
+# add some styling to a grand summary stub
+# cell with with the `tab_style()` and
+# `cells_stub_grand_summary()` functions
+tab_1 <-
+  countrypops \%>\%
+  dplyr::filter(
+    country_name == "Spain",
+    year < 1970
+  ) \%>\%
+  dplyr::select(-contains("country")) \%>\%
+  gt(rowname_col = "year") \%>\%
+  fmt_number(
+    columns = population,
+    decimals = 0
+  ) \%>\%
+  grand_summary_rows(
+    columns = population,
+    fns = list(
+      change = ~max(.) - min(.)
+    ),
+    formatter = fmt_number,
+    decimals = 0
+  ) \%>\%
+  tab_style(
+    style = cell_text(weight = "bold", transform = "uppercase"),
+    locations = cells_stub_grand_summary(rows = "change")
+  )
+
+}
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},

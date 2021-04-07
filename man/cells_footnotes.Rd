@@ -11,7 +11,11 @@ A list object with the classes \code{cells_footnotes} and
 \code{location_cells}.
 }
 \description{
-Location helper for targeting the footnotes
+The \code{cells_footnotes()} function is used to target all footnotes in the
+footer section of the table. This is useful for adding custom styles to the
+footnotes with \code{\link[=tab_style]{tab_style()}} (using the \code{locations} argument). This helper
+function cannot be used for the \code{locations} argument of \code{\link[=tab_footnote]{tab_footnote()}} and
+doing so will result in a warning (with no change made to the table).
 }
 \section{Overview of Location Helper Functions}{
 
@@ -55,11 +59,53 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \code{list()} (e.g., \code{list(cells_body(), cells_grand_summary())}).
 }
 
+\section{Figures}{
+
+\if{html}{\figure{man_cells_footnotes_1.png}{options: width=100\%}}
+}
+
 \section{Function ID}{
 
 7-16
 }
 
+\examples{
+# Use `sza` to create a gt table; color
+# the `sza` column using the `data_color()`
+# function, add a footnote and also style
+# the footnotes section
+tab_1 <-
+  sza \%>\%
+  dplyr::filter(
+    latitude == 20 &
+      month == "jan" &
+      !is.na(sza)
+  ) \%>\%
+  dplyr::select(-latitude, -month) \%>\%
+  gt() \%>\%
+  data_color(
+    columns = sza,
+    colors = scales::col_numeric(
+      palette = c("white", "yellow", "navyblue"),
+      domain = c(0, 90)
+    )
+  ) \%>\%
+  tab_footnote(
+    footnote = "Color indicates height of sun.",
+    locations = cells_column_labels(
+      columns = sza
+    )
+  ) \%>\%
+  tab_options(table.width = px(320)) \%>\%
+  tab_style(
+    style = list(
+      cell_text(size = "smaller"),
+      cell_fill(color = "gray90")
+      ),
+    locations = cells_footnotes()
+  )
+
+}
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},

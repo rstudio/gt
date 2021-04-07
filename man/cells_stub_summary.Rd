@@ -63,11 +63,62 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \code{list()} (e.g., \code{list(cells_body(), cells_grand_summary())}).
 }
 
+\section{Figures}{
+
+\if{html}{\figure{man_cells_stub_summary_1.png}{options: width=100\%}}
+}
+
 \section{Function ID}{
 
 7-14
 }
 
+\examples{
+# Use `countrypops` to create a gt table; add
+# some styling to the summary data stub cells
+# with `tab_style()` and `cells_stub_summary()`
+tab_1 <-
+  countrypops \%>\%
+  dplyr::filter(
+    country_name == "Japan",
+    year < 1970) \%>\%
+  dplyr::select(-contains("country")) \%>\%
+  dplyr::mutate(
+    decade = paste0(substr(year, 1, 3), "0s")
+  ) \%>\%
+  dplyr::group_by(decade) \%>\%
+  gt(
+    rowname_col = "year",
+    groupname_col = "decade"
+  ) \%>\%
+  fmt_number(
+    columns = population,
+    decimals = 0
+  ) \%>\%
+  summary_rows(
+    groups = "1960s",
+    columns = population,
+    fns = list("min", "max"),
+    formatter = fmt_number,
+    decimals = 0
+  ) \%>\%
+  tab_style(
+    style = list(
+      cell_text(
+        weight = "bold",
+        transform = "capitalize"
+      ),
+      cell_fill(
+        color = "lightblue",
+        alpha = 0.5
+      )
+    ),
+    locations = cells_stub_summary(
+      groups = "1960s"
+    )
+  )
+
+}
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},
