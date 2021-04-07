@@ -237,7 +237,7 @@ Passing in parameters like this is useful, especially if there are larger number
 
 A grand summary aggregates column data regardless of the groups within the data. Grand summaries can also be created for **gt** tables that don't have row groups, or, don't have a stub. Finally, we can create a table that has both groupwise summaries and a grand summary.
 
-Let's keep it simple and create group summary rows on a table without a stub. We'll use `exibble` dataset for this once more. A few `exibble` columns are `select()`ed, passed to `gt()`, and then `summary_rows()`. Notice that, in the resulting table, a stub is created just for the summary row labels (they have to go somewhere).
+Let's keep it simple and create grand summary rows on a table without a stub. We'll use `exibble` dataset for this once more. A few `exibble` columns are `select()`ed, passed to `gt()`, and then `grand_summary_rows()`. Notice that, in the resulting table, a stub is created just for the summary row labels (they have to go somewhere).
 
 ```{r exibble_g}
 # Create a simple grand summary on a gt
@@ -254,16 +254,13 @@ exibble_g <-
 exibble_g
 ```
 
-By default, `groups` in the `summary_rows()` function is set to `NULL` and will produce a grand summary.
-
-A grand summary can be used in conjunction with groupwise summaries. Here's an mashup where both types are present:
+A grand summary can be used in conjunction with groupwise summaries. Here's an table where both types of summaries are present:
 
 ```{r exibble_h}
 # Using the table in `exibble_f`, create
-# additional grand summary rows (using two
-# separate calls of `grand_summary_rows()`
-# since the formatting
-# will be different)
+# grand summary rows (using two separate
+# calls of `grand_summary_rows()` since
+# the formatting will be different)
 exibble_h <- 
   exibble_f %>%
   grand_summary_rows(
