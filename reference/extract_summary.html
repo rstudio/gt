@@ -49,7 +49,7 @@
 <meta property="og:title" content="Extract a summary list from a gt object — extract_summary" />
 <meta property="og:description" content="Get a list of summary row data frames from a gt_tbl object where summary
 rows were added via the summary_rows() function. The output data frames
-contain the groupname and rowname columns, whereby rowname contains
+contain the group_id and rowname columns, whereby rowname contains
 descriptive stub labels for the summary rows." />
 <meta property="og:image" content="https://gt.rstudio.com/logo.svg" />
 
@@ -158,7 +158,7 @@ descriptive stub labels for the summary rows." />
     <div class="ref-description">
     <p>Get a list of summary row data frames from a <code>gt_tbl</code> object where summary
 rows were added via the <code><a href='summary_rows.html'>summary_rows()</a></code> function. The output data frames
-contain the <code>groupname</code> and <code>rowname</code> columns, whereby <code>rowname</code> contains
+contain the <code>group_id</code> and <code>rowname</code> columns, whereby <code>rowname</code> contains
 descriptive stub labels for the summary rows.</p>
     </div>
 
@@ -231,9 +231,7 @@ descriptive stub labels for the summary rows.</p>
 <span class='co'># Use the summary list to make a new</span>
 <span class='co'># gt table; the key thing is to use</span>
 <span class='co'># `dplyr::bind_rows()` and then pass the</span>
-<span class='co'># tibble to `gt()` (the `groupname` and</span>
-<span class='co'># `rowname` magic column names create</span>
-<span class='co'># row groups and a stub)</span>
+<span class='co'># tibble to `gt()`</span>
 <span class='va'>tab_1</span> <span class='op'>&lt;-</span>
   <span class='va'>summary_extracted</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span>recursive <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>

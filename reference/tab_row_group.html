@@ -49,7 +49,14 @@
 <meta property="og:title" content="Add a row group to a gt table — tab_row_group" />
 <meta property="og:description" content="Create a row group with a collection of rows. This requires specification of
 the rows to be included, either by supplying row labels, row indices, or
-through use of a select helper function like starts_with()." />
+through use of a select helper function like starts_with(). To modify the
+order of row groups, use the row_group_order() function.
+To set a default row group label for any rows not formally placed in a row
+group, we can use a separate call to tab_options(row_group.default_label = &amp;lt;label&amp;gt;). If this is not done and there are rows that haven't been placed
+into a row group (where one or more row groups already exist), those rows
+will be automatically placed into a row group without a label. To restore
+labels for row groups not explicitly assigned a group,
+tab_options(row_group.default_label = &quot;&quot;) can be used." />
 <meta property="og:image" content="https://gt.rstudio.com/logo.svg" />
 
 
@@ -157,10 +164,17 @@ through use of a select helper function like starts_with()." />
     <div class="ref-description">
     <p>Create a row group with a collection of rows. This requires specification of
 the rows to be included, either by supplying row labels, row indices, or
-through use of a select helper function like <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with()</a></code>.</p>
+through use of a select helper function like <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with()</a></code>. To modify the
+order of row groups, use the <code><a href='row_group_order.html'>row_group_order()</a></code> function.</p>
+<p>To set a default row group label for any rows not formally placed in a row
+group, we can use a separate call to <code>tab_options(row_group.default_label = &lt;label&gt;)</code>. If this is not done and there are rows that haven't been placed
+into a row group (where one or more row groups already exist), those rows
+will be automatically placed into a row group without a label. To restore
+labels for row groups not explicitly assigned a group,
+<code><a href='tab_options.html'>tab_options(row_group.default_label = "")</a></code> can be used.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tab_row_group</span><span class='op'>(</span><span class='va'>data</span>, group <span class='op'>=</span> <span class='cn'>NULL</span>, rows <span class='op'>=</span> <span class='cn'>NULL</span>, others <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>tab_row_group</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>label</span>, <span class='va'>rows</span>, id <span class='op'>=</span> <span class='va'>label</span>, others_label <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -170,9 +184,8 @@ through use of a select helper function like <code><a href='https://tidyselect.r
       <td><p>A table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
     </tr>
     <tr>
-      <th>group</th>
-      <td><p>The name of the row group. This text will also serve as the row
-group label.</p></td>
+      <th>label</th>
+      <td><p>The text to use for the row group label.</p></td>
     </tr>
     <tr>
       <th>rows</th>
@@ -183,15 +196,21 @@ helper function focused on selections. The select helper functions are:
 <code><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything()</a></code>.</p></td>
     </tr>
     <tr>
-      <th>others</th>
-      <td><p>An option to set a default row group label for any rows not
-formally placed in a row group named by <code>group</code> in any call of
-<code>tab_row_group()</code>. A separate call to <code>tab_row_group()</code> with only a value
-to <code>others</code> is possible and makes explicit that the call is meant to
-provide a default row group label. If this is not set and there are rows
-that haven't been placed into a row group (where one or more row groups
-already exist), those rows will be automatically placed into a row group
-without a label.</p></td>
+      <th>id</th>
+      <td><p>The ID for the row group. When accessing a row group through
+<code><a href='cells_row_groups.html'>cells_row_groups()</a></code> (when using <code><a href='tab_style.html'>tab_style()</a></code> or <code><a href='tab_footnote.html'>tab_footnote()</a></code>) the
+<code>id</code> value is used as the reference (and not the <code>label</code>). If an <code>id</code> is
+not explicitly provided here, it will be taken from the <code>label</code> value. It
+is advisable to set an explicit <code>id</code> value if you plan to access this cell
+in a later function call and the label text is complicated (e.g., contains
+markup, is lengthy, or both). Finally, when providing an <code>id</code> value you
+must ensure that it is unique across all ID values set for row groups (the
+function will stop if <code>id</code> isn't unique).</p></td>
+    </tr>
+    <tr>
+      <th>others_label</th>
+      <td><p>This argument is deprecated. Instead use
+<code>tab_options(row_group.default_label = &lt;label&gt;)</code>.</p></td>
     </tr>
     </table>
 
@@ -232,7 +251,7 @@ without a label.</p></td>
   <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>8</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span>rowname_col <span class='op'>=</span> <span class='st'>"model"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>tab_row_group</span><span class='op'>(</span>
-    group <span class='op'>=</span> <span class='st'>"numbered"</span>,
+    label <span class='op'>=</span> <span class='st'>"numbered"</span>,
     rows <span class='op'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches</a></span><span class='op'>(</span><span class='st'>"^[0-9]"</span><span class='op'>)</span>
   <span class='op'>)</span>
 
@@ -247,11 +266,11 @@ without a label.</p></td>
   <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>8</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span>rowname_col <span class='op'>=</span> <span class='st'>"model"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>tab_row_group</span><span class='op'>(</span>
-    group <span class='op'>=</span> <span class='st'>"powerful"</span>,
+    label <span class='op'>=</span> <span class='st'>"powerful"</span>,
     rows <span class='op'>=</span> <span class='va'>hp</span> <span class='op'>&lt;=</span> <span class='fl'>600</span>
   <span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>tab_row_group</span><span class='op'>(</span>
-    group <span class='op'>=</span> <span class='st'>"super powerful"</span>,
+    label <span class='op'>=</span> <span class='st'>"super powerful"</span>,
     rows <span class='op'>=</span> <span class='va'>hp</span> <span class='op'>&gt;</span> <span class='fl'>600</span>
   <span class='op'>)</span>
 

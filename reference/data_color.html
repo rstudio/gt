@@ -199,8 +199,8 @@ colors to either the cell background or the cell text.</p>
       <td><p>Either a color mapping function from the <strong>scales</strong> package or
 a vector of colors to use for each distinct value or level in each of the
 provided <code>columns</code>. The color mapping functions are:
-<code><a href='https://scales.r-lib.org//reference/col_numeric.html'>scales::col_quantile()</a></code>, <code><a href='https://scales.r-lib.org//reference/col_numeric.html'>scales::col_bin()</a></code>, <code><a href='https://scales.r-lib.org//reference/col_numeric.html'>scales::col_numeric()</a></code>, and
-<code><a href='https://scales.r-lib.org//reference/col_numeric.html'>scales::col_factor()</a></code>. If providing a vector of colors as a palette, each
+<code><a href='https://scales.r-lib.org/reference/col_numeric.html'>scales::col_quantile()</a></code>, <code><a href='https://scales.r-lib.org/reference/col_numeric.html'>scales::col_bin()</a></code>, <code><a href='https://scales.r-lib.org/reference/col_numeric.html'>scales::col_numeric()</a></code>, and
+<code><a href='https://scales.r-lib.org/reference/col_numeric.html'>scales::col_factor()</a></code>. If providing a vector of colors as a palette, each
 color value provided must either be a color name (in the set of colors
 provided by <code><a href='https://rdrr.io/r/grDevices/colors.html'>grDevices::colors()</a></code>) or a hexadecimal string in the form of
 "#RRGGBB" or "#RRGGBBAA".</p></td>
@@ -235,14 +235,14 @@ more optimal text-to-background color contrast. By default, this is set to
 the <code>colors</code> argument. These functions map data values (<code>numeric</code> or
 <code>factor</code>/<code>character</code>) to colors according to the provided palette.</p>
 <ul>
-<li><p><code><a href='https://scales.r-lib.org//reference/col_numeric.html'>scales::col_numeric()</a></code>: provides a simple linear mapping from
+<li><p><code><a href='https://scales.r-lib.org/reference/col_numeric.html'>scales::col_numeric()</a></code>: provides a simple linear mapping from
 continuous numeric data to an interpolated palette.</p></li>
-<li><p><code><a href='https://scales.r-lib.org//reference/col_numeric.html'>scales::col_bin()</a></code>: provides a mapping of continuous numeric data to
+<li><p><code><a href='https://scales.r-lib.org/reference/col_numeric.html'>scales::col_bin()</a></code>: provides a mapping of continuous numeric data to
 value-based bins. This internally uses the <code><a href='https://rdrr.io/r/base/cut.html'>base::cut()</a></code> function.</p></li>
-<li><p><code><a href='https://scales.r-lib.org//reference/col_numeric.html'>scales::col_quantile()</a></code>: provides a mapping of continuous
+<li><p><code><a href='https://scales.r-lib.org/reference/col_numeric.html'>scales::col_quantile()</a></code>: provides a mapping of continuous
 numeric data to quantiles. This internally uses the
 <code><a href='https://rdrr.io/r/stats/quantile.html'>stats::quantile()</a></code> function.</p></li>
-<li><p><code><a href='https://scales.r-lib.org//reference/col_numeric.html'>scales::col_factor()</a></code>: provides a mapping of factors to colors. If the
+<li><p><code><a href='https://scales.r-lib.org/reference/col_numeric.html'>scales::col_factor()</a></code>: provides a mapping of factors to colors. If the
 palette is discrete and has a different number of colors than the number of
 factors, interpolation is used.</p></li>
 </ul>
@@ -301,7 +301,7 @@ hexadecimal colors.</p>
   <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>data_color</span><span class='op'>(</span>
     columns <span class='op'>=</span> <span class='va'>population</span>,
-    colors <span class='op'>=</span> <span class='fu'>scales</span><span class='fu'>::</span><span class='fu'><a href='https://scales.r-lib.org//reference/col_numeric.html'>col_numeric</a></span><span class='op'>(</span>
+    colors <span class='op'>=</span> <span class='fu'>scales</span><span class='fu'>::</span><span class='fu'><a href='https://scales.r-lib.org/reference/col_numeric.html'>col_numeric</a></span><span class='op'>(</span>
       palette <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
         <span class='st'>"red"</span>, <span class='st'>"orange"</span>, <span class='st'>"green"</span>, <span class='st'>"blue"</span><span class='op'>)</span>,
       domain <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.2E7</span>, <span class='fl'>0.4E7</span><span class='op'>)</span><span class='op'>)</span>
@@ -328,7 +328,7 @@ hexadecimal colors.</p>
   <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span>rowname_col <span class='op'>=</span> <span class='st'>"size"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>data_color</span><span class='op'>(</span>
     columns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>sold</span>, <span class='va'>income</span><span class='op'>)</span>,
-    colors <span class='op'>=</span> <span class='fu'>scales</span><span class='fu'>::</span><span class='fu'><a href='https://scales.r-lib.org//reference/col_numeric.html'>col_numeric</a></span><span class='op'>(</span>
+    colors <span class='op'>=</span> <span class='fu'>scales</span><span class='fu'>::</span><span class='fu'><a href='https://scales.r-lib.org/reference/col_numeric.html'>col_numeric</a></span><span class='op'>(</span>
       palette <span class='op'>=</span> <span class='fu'>paletteer</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/paletteer/man/paletteer_d.html'>paletteer_d</a></span><span class='op'>(</span>
         palette <span class='op'>=</span> <span class='st'>"ggsci::red_material"</span>
         <span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='op'>)</span>,

@@ -47,13 +47,13 @@
 
 
 <meta property="og:title" content="Modify the ordering of any row groups — row_group_order" />
-<meta property="og:description" content="We can modify the display order of any row groups in a gt object with
-the row_group_order() function. The groups argument can either take a
-vector of row group names or a numeric vector of row group indices; whichever
-is provided, the row groups will adhere to this revised ordering. It isn't
-necessary to provide all row group names in groups, rather, what is
-provided will assume the specified ordering at the top of the table and the
-remaining row groups will follow in their original ordering." />
+<meta property="og:description" content="We can modify the display order of any row groups in a gt object with the
+row_group_order() function. The groups argument takes a vector of row
+group ID values. After this function is invoked, the row groups will adhere
+to this revised ordering. It isn't necessary to provide all row ID values in
+groups, rather, what is provided will assume the specified ordering at the
+top of the table and the remaining row groups will follow in their original
+ordering." />
 <meta property="og:image" content="https://gt.rstudio.com/logo.svg" />
 
 
@@ -159,13 +159,13 @@ remaining row groups will follow in their original ordering." />
     </div>
 
     <div class="ref-description">
-    <p>We can modify the display order of any row groups in a <strong>gt</strong> object with
-the <code>row_group_order()</code> function. The <code>groups</code> argument can either take a
-vector of row group names or a numeric vector of row group indices; whichever
-is provided, the row groups will adhere to this revised ordering. It isn't
-necessary to provide all row group names in <code>groups</code>, rather, what is
-provided will assume the specified ordering at the top of the table and the
-remaining row groups will follow in their original ordering.</p>
+    <p>We can modify the display order of any row groups in a <strong>gt</strong> object with the
+<code>row_group_order()</code> function. The <code>groups</code> argument takes a vector of row
+group ID values. After this function is invoked, the row groups will adhere
+to this revised ordering. It isn't necessary to provide all row ID values in
+<code>groups</code>, rather, what is provided will assume the specified ordering at the
+top of the table and the remaining row groups will follow in their original
+ordering.</p>
     </div>
 
     <pre class="usage"><span class='fu'>row_group_order</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>groups</span><span class='op'>)</span></pre>
@@ -179,12 +179,10 @@ remaining row groups will follow in their original ordering.</p>
     </tr>
     <tr>
       <th>groups</th>
-      <td><p>A vector of row group names, or, a numeric vector of indices
-corresponding to the new ordering. Either vector must correspond to
-assigned group names or the index positions. Also, either type of vector is
-not required to have all of the row group names or available index
-positions within it; any omitted values will be added to the end while
-preserving the original ordering.</p></td>
+      <td><p>A character vector of row group ID values corresponding to the
+revised ordering. While this vector must contain valid group ID values, it
+is not required to have all of the row group IDs within it; any omitted
+values will be added to the end while preserving the original ordering.</p></td>
     </tr>
     </table>
 

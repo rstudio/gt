@@ -164,7 +164,13 @@ reference to individual columns must continue to be the column names from the
 input table data (which are unique by necessity).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tab_spanner_delim</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>delim</span>, columns <span class='op'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span>, gather <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>tab_spanner_delim</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  <span class='va'>delim</span>,
+  columns <span class='op'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span>,
+  gather <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  split <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"last"</span>, <span class='st'>"first"</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -191,6 +197,13 @@ be limited to. The default is to consider all columns in the table.</p></td>
       <td><p>An option to move the specified <code>columns</code> such that they are
 unified under the spanner column label. Ordering of the moved-into-place
 columns will be preserved in all cases. By default, this is set to <code>TRUE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>split</th>
+      <td><p>Should the delimiter splitting occur at the <code>"last"</code> instance of
+<code>delim</code> or the <code>"first"</code>? By default column name splitting happens at the
+last instance of the delimiter. This relevant only in the case that column
+names included in <code>columns</code> have multiple instances of the <code>delim</code>.</p></td>
     </tr>
     </table>
 
