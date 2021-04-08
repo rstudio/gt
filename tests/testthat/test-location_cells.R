@@ -906,4 +906,69 @@ test_that("styles are correctly applied to HTML output with location functions",
       "<td class=\"gt_row gt_stub gt_right gt_grand_summary_row\" style=\"background-color: #FF0000;\">max</td>"
     ) %>%
     expect_true()
+
+  #
+  # cells_footnotes()
+  #
+
+  gt_tbl_cells_footnotes_1 <-
+    tbl %>%
+    gt() %>%
+    tab_footnote("This is a footnote", locations = cells_body(1, 1)) %>%
+    tab_style(
+      style = cell_fill(color = "red"),
+      locations = cells_footnotes()
+    )
+
+  gt_tbl_cells_footnotes_1 %>%
+    render_as_html() %>%
+    tidy_grepl(
+      "<tr class=\"gt_footnotes\" style=\"background-color: #FF0000;\">"
+    ) %>%
+    expect_true()
+
+  # Expect a warning if applying footnotes to the footnotes location
+  expect_warning(
+    tbl %>%
+      gt() %>%
+      tab_footnote(
+        footnote = "This is a footnote",
+        locations = cells_body(1, 1)
+      ) %>%
+      tab_footnote(
+        footnote = "Illegal footnote",
+        locations = cells_footnotes()
+      )
+  )
+
+  #
+  # cells_source_notes()
+  #
+
+  gt_tbl_cells_source_notes_1 <-
+    tbl %>%
+    gt() %>%
+    tab_source_note(source_note = "This is a source note") %>%
+    tab_style(
+      style = cell_fill(color = "red"),
+      locations = cells_source_notes()
+    )
+
+  gt_tbl_cells_source_notes_1 %>%
+    render_as_html() %>%
+    tidy_grepl(
+      "<td class=\"gt_sourcenote\" style=\"background-color: #FF0000;\" colspan=\"5\">This is a source note</td>"
+    ) %>%
+    expect_true()
+
+  # Expect a warning if applying footnotes to the source notes location
+  expect_warning(
+    tbl %>%
+      gt() %>%
+      tab_source_note(source_note = "This is a source note") %>%
+      tab_footnote(
+        footnote = "Illegal footnote",
+        locations = cells_source_notes()
+      )
+  )
 })
