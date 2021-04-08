@@ -73,16 +73,19 @@ add_summary_location_row <- function(loc,
       unlist() %>%
       unique()
 
-    columns <-
-      resolve_cols_c(
-        expr = !!loc$columns,
-        data = data
-      )
+    if (!in_stub) {
 
-    if (length(columns) == 0) {
-      stop("The location requested could not be resolved:\n",
-           " * Review the expression provided as `columns`",
-           call. = FALSE)
+      columns <-
+        resolve_cols_c(
+          expr = !!loc$columns,
+          data = data
+        )
+
+      if (length(columns) == 0) {
+        stop("The location requested could not be resolved:\n",
+             " * Review the expression provided as `columns`",
+             call. = FALSE)
+      }
     }
 
     rows <-
@@ -147,16 +150,19 @@ add_grand_summary_location_row <- function(loc,
     unlist() %>%
     unique()
 
-  columns <-
-    resolve_cols_c(
-      expr = !!loc$columns,
-      data = data
-    )
+  if (!in_stub) {
 
-  if (length(columns) == 0) {
-    stop("The location requested could not be resolved:\n",
-         " * Review the expression provided as `columns`",
-         call. = FALSE)
+    columns <-
+      resolve_cols_c(
+        expr = !!loc$columns,
+        data = data
+      )
+
+    if (length(columns) == 0) {
+      stop("The location requested could not be resolved:\n",
+           " * Review the expression provided as `columns`",
+           call. = FALSE)
+    }
   }
 
   rows <-
