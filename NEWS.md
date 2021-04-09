@@ -1,5 +1,7 @@
 # gt 0.2.2
 
+* Fixed a bug when using `local_image()` where it errors on trying to add multiple images. Just added an `lapply` to apply `get_image_uri`to the file paths. @primaj (#510)
+
 ## New features
 
 * The new `opt_table_font()` function makes it possible to define a custom font for the entire **gt** table. The standard fallback fonts are still set by default but the font defined here will take precedence. You could still have different fonts in select locations in the table, and for that you would need to use `tab_style()` in conjunction with the `cell_text()` helper function. The new `google_font()` helper function provides an option for supplying a font available at the Google Fonts service (this is in addition to using system fonts in the `font` argument). Using the `info_google_fonts()` function will provide a table with a set of helpful font recommendations from the *Google Fonts* catalog. The new `default_fonts()` functions provides a helpful vector of system fallback fonts which works well when defining a vector of fonts. (#591)

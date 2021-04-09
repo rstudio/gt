@@ -190,7 +190,7 @@ local_image <- function(filename,
     )
 
   # Create the image URI
-  uri <- get_image_uri(filename)
+  uri <- lapply(filename, get_image_uri)
 
   # Generate the Base64-encoded image and place it
   # within <img> tags
