@@ -112,7 +112,7 @@ dt_summary_build <- function(data,
 
     assert_rowgroups <- function() {
 
-      if (all(is.na(stub_df$groupname))) {
+      if (all(is.na(stub_df$group_id))) {
         stop("There are no row groups in the gt object:\n",
              " * Use `groups = NULL` to create a grand summary\n",
              " * Define row groups using `gt()` or `tab_row_group()`",
@@ -127,7 +127,7 @@ dt_summary_build <- function(data,
 
       assert_rowgroups()
 
-      groups <- unique(stub_df$groupname)
+      groups <- unique(stub_df$group_id)
 
     } else if (!is.null(groups) && is.character(groups)) {
 
@@ -135,7 +135,7 @@ dt_summary_build <- function(data,
 
       # Get the names of row groups available
       # in the gt object
-      groups_available <- unique(stub_df$groupname)
+      groups_available <- unique(stub_df$group_id)
 
       if (any(!(groups %in% groups_available))) {
 
@@ -173,8 +173,8 @@ dt_summary_build <- function(data,
 
       select_data_tbl <-
         dplyr::select(data_tbl, !!columns) %>%
-        dplyr::mutate(groupname = !!grand_summary_col) %>%
-        dplyr::select(groupname, !!columns) %>%
+        dplyr::mutate(group_id = !!grand_summary_col) %>%
+        dplyr::select(group_id, !!columns) %>%
         as.data.frame(stringsAsFactors = FALSE)
 
     } else {
@@ -182,7 +182,7 @@ dt_summary_build <- function(data,
       select_data_tbl <-
         as.data.frame(
           dplyr::bind_cols(
-            dplyr::select(stub_df, groupname),
+            dplyr::select(stub_df, group_id),
             data_tbl[stub_df$rownum_i, columns]
           ),
           stringsAsFactors = FALSE
@@ -191,19 +191,19 @@ dt_summary_build <- function(data,
 
     # Get the registered function calls
     agg_funs <- lapply(fns, rlang::as_closure)
-
     summary_dfs_data <-
       dplyr::bind_rows(
         lapply(
           seq_along(agg_funs),
           FUN = function(j) {
+
             select_data_tbl %>%
-              dplyr::filter(groupname %in% !!groups) %>%
-              dplyr::group_by(groupname) %>%
+              dplyr::filter(group_id %in% !!groups) %>%
+              dplyr::group_by(group_id) %>%
               dplyr::summarize_all(.funs = agg_funs[[j]]) %>%
               dplyr::ungroup() %>%
               dplyr::mutate(rowname = !!labels[j]) %>%
-              dplyr::select(groupname, rowname, dplyr::everything())
+              dplyr::select(group_id, rowname, dplyr::everything())
           }
         )
       )
@@ -213,7 +213,7 @@ dt_summary_build <- function(data,
     summary_dfs_data[, columns_excl] <- NA_real_
 
     summary_dfs_data <-
-      dplyr::select(summary_dfs_data, groupname, rowname, colnames(body))
+      dplyr::select(summary_dfs_data, group_id, rowname, colnames(body))
 
     # Format the displayed summary lines
     summary_dfs_display <-
@@ -260,11 +260,11 @@ dt_summary_build <- function(data,
 
       group_summary_data_df <-
         summary_dfs_data %>%
-        dplyr::filter(groupname == !!group_sym)
+        dplyr::filter(group_id == !!group_sym)
 
       group_summary_display_df <-
         summary_dfs_display %>%
-        dplyr::filter(groupname == !!group_sym)
+        dplyr::filter(group_id == !!group_sym)
 
       summary_df_data_list <-
         c(summary_df_data_list,
@@ -290,7 +290,7 @@ dt_summary_build <- function(data,
 
     summary_df_display_list[[i]] <-
       summary_df_display_list[[i]] %>%
-      dplyr::select(-groupname) %>%
+      dplyr::select(-group_id) %>%
       dplyr::group_by(rowname) %>%
       dplyr::summarize_all(last_non_na)
 

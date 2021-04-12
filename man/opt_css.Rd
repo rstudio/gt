@@ -52,11 +52,11 @@ tab_1 <-
   dplyr::select(num, currency) \%>\%
   gt(id = "one") \%>\%
   fmt_currency(
-    columns = vars(currency),
+    columns = currency,
     currency = "HKD"
   ) \%>\%
   fmt_scientific(
-    columns = vars(num)
+    columns = num
   ) \%>\%
   opt_css(
     css = "

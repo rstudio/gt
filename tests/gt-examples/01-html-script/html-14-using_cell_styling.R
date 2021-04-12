@@ -21,7 +21,8 @@ cell_styles_tbl <-
   tab_style(
     style = cell_text(size = px(28)),
     locations = cells_column_labels(
-      columns = c("value", "value_2"))
+      columns = c(value, value_2)
+    )
   ) %>%
   tab_style(
     style = list(
@@ -29,7 +30,7 @@ cell_styles_tbl <-
       cell_text(color = "white")
     ),
     locations = cells_body(
-      columns = vars(value, value_2),
+      columns = c(value, value_2),
       rows = 1
     )
   )

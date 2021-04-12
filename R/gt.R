@@ -28,6 +28,8 @@
 #'   group labels for generation of stub row groups. If the input `data` table
 #'   has the `grouped_df` class (through use of the [dplyr::group_by()] function
 #'   or associated `group_by*()` functions) then any input here is ignored.
+#' @param caption An optional table caption to use for cross-referencing
+#'   in R Markdown documents and **bookdown** book projects.
 #' @param rownames_to_stub An option to take rownames from the input `data`
 #'   table as row captions in the display table stub.
 #' @param auto_align Optionally have column data be aligned depending on the
@@ -64,7 +66,7 @@
 #'     subtitle = "Subtitle"
 #'   ) %>%
 #'   fmt_number(
-#'     columns = vars(num),
+#'     columns = num,
 #'     decimals = 2
 #'   ) %>%
 #'   cols_label(num = "number")
@@ -82,6 +84,7 @@
 gt <- function(data,
                rowname_col = "rowname",
                groupname_col = dplyr::group_vars(data),
+               caption = NULL,
                rownames_to_stub = FALSE,
                auto_align = TRUE,
                id = NULL,
@@ -128,7 +131,6 @@ gt <- function(data,
       row_group.sep = row_group.sep
     )
   data <- dt_row_groups_init(data = data)
-  data <- dt_stub_others_init(data = data)
   data <- dt_heading_init(data = data)
   data <- dt_spanners_init(data = data)
   data <- dt_stubhead_init(data = data)
@@ -144,7 +146,26 @@ gt <- function(data,
   # Add any user-defined table ID to the `table_id` parameter
   # (if NULL, the default setting will generate a random ID)
   if (!is.null(id)) {
-    data <- dt_options_set_value(data = data, option = "table_id", value = id)
+    data <-
+      dt_options_set_value(
+        data = data,
+        option = "table_id",
+        value = id
+      )
+  }
+
+  # Add any user-defined table caption to the `table_id` parameter
+  # TODO: consider whether this might take a string or a logical (to say that
+  # we'll use the header from `tab_header` as the table caption); this might
+  # require some more thought still because a `caption` arg might also be
+  # sensible in `tab_header`
+  if (!is.null(caption)) {
+    data <-
+      dt_options_set_value(
+        data = data,
+        option = "table_caption",
+        value = caption
+      )
   }
 
   # Apply the `gt_tbl` class to the object while

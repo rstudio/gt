@@ -203,7 +203,7 @@ get_row_reorder_df <- function(groups,
   }
 
   indices <-
-    lapply(stub_df$groupname, `%in%`, x = groups) %>%
+    lapply(stub_df$group_id, `%in%`, x = groups) %>%
     lapply(which) %>%
     unlist() %>%
     order()
@@ -279,7 +279,7 @@ perform_col_merge <- function(data,
 
     type <- col_merge[[i]]$type
 
-    if (!(type %in% c("merge", "merge_range", "merge_uncert"))) {
+    if (!(type %in% c("merge", "merge_range", "merge_uncert", "merge_n_pct"))) {
       stop("Unknown `type` supplied.")
     }
 
@@ -300,6 +300,40 @@ perform_col_merge <- function(data,
           !!mutated_column_sym := glue_gt(glue_src_data, pattern) %>%
             as.character()
         )
+
+    } else if (type == "merge_n_pct") {
+
+      data_tbl <- dt_data_get(data = data)
+
+      mutated_column <- col_merge[[i]]$vars[1]
+      second_column <- col_merge[[i]]$vars[2]
+
+      # This is a fixed pattern
+      pattern <- "{1} ({2})"
+
+      # Determine rows where NA values exist, and, those rows where
+      # `0` is the value in the `mutated_column` (we don't want to
+      # include a zero percentage value in parentheses)
+      na_1_rows <- is.na(data_tbl[[mutated_column]])
+      na_2_rows <- is.na(data_tbl[[second_column]])
+      zero_rows <- data_tbl[[mutated_column]] == 0
+      zero_rows[is.na(zero_rows)] <- FALSE
+      zero_rows_idx <- which(zero_rows)
+
+      # An `NA` value in either column should exclude that row from
+      # processing via `glue_gt()`
+      rows_to_format_idx <- which(!(na_1_rows | na_2_rows))
+      rows_to_format_idx <- setdiff(rows_to_format_idx, zero_rows_idx)
+
+      body[rows_to_format_idx, mutated_column] <-
+        glue_gt(
+          list(
+            "1" = body[[mutated_column]][rows_to_format_idx],
+            "2" = body[[second_column]][rows_to_format_idx]
+          ),
+          pattern
+        ) %>%
+        as.character()
 
     } else {
 
@@ -358,7 +392,7 @@ create_group_rows <- function(n_rows,
         seq(n_rows),
         FUN = function(x) {
 
-          if (!(x %in% groups_rows_df$row)) {
+          if (!(x %in% groups_rows_df$row_start)) {
             return("")
           }
 
@@ -366,7 +400,7 @@ create_group_rows <- function(n_rows,
 
             latex_group_row(
               group_name = groups_rows_df[
-                which(groups_rows_df$row %in% x), "group_label"][[1]],
+                which(groups_rows_df$row_start %in% x), "group_label"][[1]],
               top_border = x != 1,
               bottom_border = x != n_rows
             )
@@ -386,7 +420,6 @@ create_data_rows <- function(n_rows,
       lapply(
         seq(n_rows),
         FUN = function(x) {
-
           if (context == "latex") {
             latex_body_row(content = row_splits[[x]], type = "row")
           }
@@ -432,7 +465,7 @@ create_summary_rows <- function(n_rows,
       group <-
         groups_rows_df %>%
         dplyr::filter(row_end == x) %>%
-        dplyr::pull(group)
+        dplyr::pull(group_id)
 
       if (!(group %in% names(list_of_summaries$summary_df_display_list))) {
         return("")
@@ -440,10 +473,10 @@ create_summary_rows <- function(n_rows,
 
       summary_df <-
         list_of_summaries$summary_df_display_list[[group]] %>%
+        dplyr::select(-groups) %>%
         as.data.frame(stringsAsFactors = FALSE)
 
       body_content_summary <- as.vector(t(summary_df))
-
       row_splits_summary <-
         split_body_content(
           body_content = body_content_summary,
@@ -487,7 +520,7 @@ replace_na_groups_df <- function(groups_df,
                                  others_group) {
 
   if (nrow(groups_df) > 0) {
-    groups_df[is.na(groups_df[, "groupname"]), "groupname"] <- others_group
+    groups_df[is.na(groups_df[, "group_id"]), "group_id"] <- others_group
   }
 
   groups_df

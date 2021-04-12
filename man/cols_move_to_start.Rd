@@ -54,7 +54,7 @@ tab_1 <-
   tail(5) \%>\%
   gt() \%>\%
   cols_move_to_start(
-    columns = vars(year)
+    columns = year
   )
 
 # Use `countrypops` to create a gt table;
@@ -67,7 +67,7 @@ tab_2 <-
   tail(5) \%>\%
   gt() \%>\%
   cols_move_to_start(
-    columns = vars(year, population)
+    columns = c(year, population)
   )
 
 }
@@ -76,11 +76,13 @@ Other Modify Columns:
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
 \code{\link{cols_label}()},
+\code{\link{cols_merge_n_pct}()},
 \code{\link{cols_merge_range}()},
 \code{\link{cols_merge_uncert}()},
 \code{\link{cols_merge}()},
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move}()},
+\code{\link{cols_unhide}()},
 \code{\link{cols_width}()}
 }
 \concept{Modify Columns}

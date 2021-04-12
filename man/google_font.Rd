@@ -53,7 +53,7 @@ tab_1 <-
         default_fonts()
       )
     ),
-    locations = cells_body(columns = vars(time))
+    locations = cells_body(columns = time)
   )
 
 # Use `sp500` to create a small gt table,

@@ -1,5 +1,3 @@
-context("Ensuring that the common utility functions work as expected")
-
 test_that("the `date_formats()` function works correctly", {
 
   # Expect that the `info_date_style()` function produces an
@@ -360,7 +358,7 @@ test_that("the `get_css_tbl()` function works correctly", {
 
   css_tbl %>% expect_is(c("tbl_df", "tbl", "data.frame"))
 
-  css_tbl %>% dim() %>% expect_equal(c(228, 4))
+  ncol(css_tbl) %>% expect_equal(4)
 
   css_tbl %>%
     colnames() %>%
@@ -422,7 +420,7 @@ test_that("the `inline_html_styles()` function works correctly", {
     data %>%
     tab_style(
       style = cell_text(size = px(10)),
-      locations = cells_body(columns = TRUE)
+      locations = cells_body(columns = everything())
     )
 
   # Get the CSS tibble and the raw HTML
@@ -486,8 +484,9 @@ test_that("the `as_locations()` function works correctly", {
   # Define `locations` as a `cells_body` object
   locations <-
     cells_body(
-      columns = vars(hp),
-      rows = c("Datsun 710", "Valiant"))
+      columns = hp,
+      rows = c("Datsun 710", "Valiant")
+    )
 
   # Expect certain structural features for a `locations` object
   locations %>% length() %>% expect_equal(2)
@@ -608,3 +607,24 @@ test_that("the `glue_gt()` function works in a safe manner", {
   expect_identical(glue_gt(list(), "a", "b") %>% as.character(), "ab")
 })
 
+test_that("The `check_spanner_id_unique()` function works properly", {
+
+  gt_tbl_1 <- gt(exibble)
+
+  gt_tbl_2 <-
+    gt(exibble) %>%
+    tab_spanner(label = "a", columns = num)
+
+  # Don't expect an error when checking for unique spanner IDs
+  # in a gt table with no spanner column labels
+  expect_error(
+    regexp = NA,
+    check_spanner_id_unique(data = gt_tbl_1, spanner_id = "a")
+  )
+
+  # Expect an error when reusing a spanner ID value (the `label` value
+  # is used as the `id` value)
+  expect_error(
+    check_spanner_id_unique(data = gt_tbl_2, spanner_id = "a")
+  )
+})

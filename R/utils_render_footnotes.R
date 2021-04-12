@@ -64,12 +64,12 @@ resolve_footnotes_styles <- function(data,
     # Filter by `grpname` in columns groups
     if ("columns_groups" %in% tbl[["locname"]]) { # remove conditional
 
-      spanner_labels <- unique(unlist(spanners$spanner_label))
+      spanner_ids <- unique(unlist(spanners$spanner_id))
 
       tbl <-
         dplyr::filter(
           tbl,
-          locname != "columns_groups" | grpname %in% spanner_labels
+          locname != "columns_groups" | grpname %in% spanner_ids
         )
     }
 
@@ -81,7 +81,7 @@ resolve_footnotes_styles <- function(data,
           dplyr::filter(tbl, locname != "row_groups"),
           tbl %>%
             dplyr::filter(locname == "row_groups") %>%
-            dplyr::filter(grpname %in% groups_rows_df$group)
+            dplyr::filter(grpname %in% groups_rows_df$group_id)
         )
     }
 
@@ -139,11 +139,11 @@ resolve_footnotes_styles <- function(data,
       dplyr::filter(locname == "row_groups") %>%
       dplyr::inner_join(
         groups_rows_df %>% dplyr::select(-group_label),
-        by = c("grpname" = "group")
+        by = c("grpname" = "group_id")
       ) %>%
-      dplyr::mutate(rownum = row - 0.1) %>%
+      dplyr::mutate(rownum = row_start - 0.1) %>%
       dplyr::mutate(colnum = 1) %>%
-      dplyr::select(-row, -row_end)
+      dplyr::select(-row_start, -row_end)
 
     # Re-combine `tbl_not_row_groups`
     # with `tbl_row_groups`
@@ -161,10 +161,10 @@ resolve_footnotes_styles <- function(data,
       dplyr::filter(locname == "summary_cells") %>%
       dplyr::inner_join(
         groups_rows_df %>% dplyr::select(-group_label),
-        by = c("grpname" = "group")
+        by = c("grpname" = "group_id")
       ) %>%
       dplyr::mutate(rownum = (rownum / 100) + row_end) %>%
-      dplyr::select(-row, -row_end) %>%
+      dplyr::select(-row_start, -row_end) %>%
       dplyr::mutate(colnum = colname_to_colnum(data = data, colname = colname))
 
     # Re-combine `tbl_not_summary_cells`
@@ -221,14 +221,19 @@ resolve_footnotes_styles <- function(data,
   # For the column spanner label cells, insert a
   # `colnum` based on `boxh_df`
   if ("columns_groups" %in% tbl[["locname"]]) {
-
     vars_default <- seq_along(dt_boxhead_get_vars_default(data = data))
-    spanners_labels <- dt_spanners_print(data = data, include_hidden = FALSE)
+
+    spanners_ids <-
+      dt_spanners_print(
+        data = data,
+        include_hidden = FALSE,
+        ids = TRUE
+      )
 
     group_label_df <-
       dplyr::tibble(
         colnum = seq(vars_default),
-        grpname = spanners_labels
+        grpname = spanners_ids
       ) %>%
       dplyr::group_by(grpname) %>%
       dplyr::summarize(colnum = min(colnum))
@@ -289,13 +294,11 @@ resolve_footnotes_styles <- function(data,
 
       tbl <-
         tbl %>%
-        dplyr::group_by(
-          .dots = colnames(.) %>% base::setdiff(c("styles", "text"))) %>%
+        dplyr::group_by(locname, grpname, colname, locnum, rownum, colnum) %>%
         dplyr::summarize(styles = list(as_style(styles))) %>%
         dplyr::ungroup()
     }
   }
-
 
   if (tbl_type == "footnotes") {
     data <- dt_footnotes_set(data = data, footnotes = tbl)
@@ -344,9 +347,10 @@ set_footnote_marks_columns <- function(data,
 
         spanners <- dt_spanners_get(data = data)
         spanner_labels <- dt_spanners_print(data = data)
+        spanner_ids <- dt_spanners_print(data = data, ids = TRUE)
 
         column_indices <-
-          which(spanner_labels == footnotes_columns_group_marks$grpname[i])
+          which(spanner_ids == footnotes_columns_group_marks$grpname[i])
 
         text <- unique(spanner_labels[column_indices])
 
@@ -380,7 +384,7 @@ set_footnote_marks_columns <- function(data,
 
         spanners_i <-
           which(
-            unlist(spanners$spanner_label) == footnotes_columns_group_marks$grpname[i]
+            unlist(spanners$spanner_id) == footnotes_columns_group_marks$grpname[i]
           )
 
         spanners[spanners_i, ][["built"]] <- text
@@ -591,7 +595,7 @@ set_footnote_marks_row_groups <- function(data,
     for (i in seq(nrow(footnotes_row_groups_marks))) {
 
       row_index <-
-        which(groups_rows_df[, "group"] == footnotes_row_groups_marks$grpname[i])
+        which(groups_rows_df[, "group_id"] == footnotes_row_groups_marks$grpname[i])
 
       text <- groups_rows_df[row_index, "group_label"]
 

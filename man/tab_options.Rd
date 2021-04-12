@@ -81,6 +81,7 @@ tab_options(
   row_group.border.right.style = NULL,
   row_group.border.right.width = NULL,
   row_group.border.right.color = NULL,
+  row_group.default_label = NULL,
   table_body.hlines.style = NULL,
   table_body.hlines.width = NULL,
   table_body.hlines.color = NULL,
@@ -255,6 +256,13 @@ header (if present) will collapse downward.}
 \item{row_group.border.top.style, row_group.border.top.width, row_group.border.top.color, row_group.border.bottom.style, row_group.border.bottom.width, row_group.border.bottom.color, row_group.border.left.style, row_group.border.left.width, row_group.border.left.color, row_group.border.right.style, row_group.border.right.width, row_group.border.right.color}{The style, width, and color properties for all top, bottom, left, and right
 borders of the \code{row_group} location.}
 
+\item{row_group.default_label}{An option to set a default row group label for
+any rows not formally placed in a row group named by \code{group} in any call of
+\code{tab_row_group()}. If this is set as \code{NA_character} and there are rows that
+haven't been placed into a row group (where one or more row groups already
+exist), those rows will be automatically placed into a row group without a
+label.}
+
 \item{table_body.hlines.style, table_body.hlines.width, table_body.hlines.color, table_body.vlines.style, table_body.vlines.width, table_body.vlines.color}{The style, width, and color properties for all horizontal lines ('hlines')
 and vertical lines ('vlines') in the \code{table_body}.}
 
@@ -354,24 +362,27 @@ tab_1 <-
     title = md("Data listing from **exibble**"),
     subtitle = md("`exibble` is an R dataset")
   ) \%>\%
-  fmt_number(columns = vars(num)) \%>\%
-  fmt_currency(columns = vars(currency)) \%>\%
+  fmt_number(columns = num) \%>\%
+  fmt_currency(columns = currency) \%>\%
   tab_footnote(
     footnote = "Using commas for separators.",
     locations = cells_body(
-      columns = vars(num),
-      rows = num > 1000)
+      columns = num,
+      rows = num > 1000
+    )
   ) \%>\%
   tab_footnote(
     footnote = "Using commas for separators.",
     locations = cells_body(
-      columns = vars(currency),
-      rows = currency > 1000)
+      columns = currency,
+      rows = currency > 1000
+    )
   ) \%>\%
   tab_footnote(
     footnote = "Alphabetical fruit.",
     locations = cells_column_labels(
-      columns = vars(char))
+      columns = char
+    )
   )
 
 # Modify the table width to 100\% (which

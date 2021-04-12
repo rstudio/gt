@@ -116,7 +116,7 @@ is_rtf <- function(x) {
 #'   gt() %>%
 #'   tab_style(
 #'     style = cell_text(size = px(20)),
-#'     locations = cells_column_labels(columns = TRUE)
+#'     locations = cells_column_labels()
 #'   )
 #'
 #' @section Figures:
@@ -162,7 +162,7 @@ px <- function(x) {
 #'   gt() %>%
 #'   tab_style(
 #'     style = cell_text(size = pct(75)),
-#'     locations = cells_column_labels(columns = TRUE)
+#'     locations = cells_column_labels()
 #'   )
 #'
 #' @section Figures:
@@ -391,11 +391,12 @@ cells_stubhead <- function() {
 #'   gt(rowname_col = "row") %>%
 #'   tab_spanner(
 #'     label = "dates and times",
-#'     columns = vars(date, time, datetime)
+#'     id = "dt",
+#'     columns = c(date, time, datetime)
 #'   ) %>%
 #'   tab_style(
 #'     style = cell_text(weight = "bold"),
-#'     locations = cells_column_spanners(spanners = "dates and times")
+#'     locations = cells_column_spanners(spanners = "dt")
 #'   )
 #'
 #' @section Figures:
@@ -407,10 +408,9 @@ cells_stubhead <- function() {
 #'
 #' @import rlang
 #' @export
-cells_column_spanners <- function(spanners) {
+cells_column_spanners <- function(spanners = everything()) {
 
   # Capture expression for the `spanners` argument
-  col_expr <- NULL
   spanners_expr <- rlang::enquo(spanners)
 
   # Create the `cells_column_spanners` object
@@ -475,13 +475,13 @@ cells_column_spanners <- function(spanners) {
 #'   tab_footnote(
 #'     footnote = "True solar time.",
 #'     locations = cells_column_labels(
-#'       columns = vars(tst)
+#'       columns = tst
 #'     )
 #'   ) %>%
 #'   tab_footnote(
 #'     footnote = "Solar zenith angle.",
 #'     locations = cells_column_labels(
-#'       columns = vars(sza)
+#'       columns = sza
 #'     )
 #'   )
 #'
@@ -494,7 +494,7 @@ cells_column_spanners <- function(spanners) {
 #'
 #' @import rlang
 #' @export
-cells_column_labels <- function(columns) {
+cells_column_labels <- function(columns = everything()) {
 
   # Capture expression for the `columns` argument
   columns_expr <- rlang::enquo(columns)
@@ -564,7 +564,7 @@ cells_column_labels <- function(columns) {
 #'   gt(rowname_col = "size") %>%
 #'   summary_rows(
 #'     groups = TRUE,
-#'     columns = vars("Pizzas Sold"),
+#'     columns = `Pizzas Sold`,
 #'     fns = list(TOTAL = "sum"),
 #'     formatter = fmt_number,
 #'     decimals = 0,
@@ -584,7 +584,7 @@ cells_column_labels <- function(columns) {
 #'
 #' @import rlang
 #' @export
-cells_row_groups <- function(groups = TRUE) {
+cells_row_groups <- function(groups = everything()) {
 
   # Capture expression for the `groups` argument
   group_expr <- rlang::enquo(groups)
@@ -667,7 +667,7 @@ cells_group <- function(groups = TRUE) {
 #'   tidyr::spread(key = "tst", value = sza) %>%
 #'   gt(rowname_col = "month") %>%
 #'   fmt_missing(
-#'     columns = TRUE,
+#'     columns = everything(),
 #'     missing_text = ""
 #'   ) %>%
 #'   tab_style(
@@ -675,7 +675,7 @@ cells_group <- function(groups = TRUE) {
 #'       cell_fill(color = "darkblue"),
 #'       cell_text(color = "white")
 #'       ),
-#'     locations = cells_stub(rows = TRUE)
+#'     locations = cells_stub()
 #'   )
 #'
 #' @section Figures:
@@ -687,7 +687,7 @@ cells_group <- function(groups = TRUE) {
 #'
 #' @import rlang
 #' @export
-cells_stub <- function(rows = TRUE) {
+cells_stub <- function(rows = everything()) {
 
   # Capture expression for the `rows` argument
   row_expr <- rlang::enquo(rows)
@@ -755,7 +755,7 @@ cells_stub <- function(rows = TRUE) {
 #'   tab_footnote(
 #'     footnote = "Highest horsepower.",
 #'     locations = cells_body(
-#'       columns = vars(hp),
+#'       columns = hp,
 #'       rows = hp == max(hp))
 #'   ) %>%
 #'   opt_footnote_marks(marks = c("*", "+"))
@@ -769,8 +769,8 @@ cells_stub <- function(rows = TRUE) {
 #'
 #' @import rlang
 #' @export
-cells_body <- function(columns = TRUE,
-                       rows = TRUE) {
+cells_body <- function(columns = everything(),
+                       rows = everything()) {
 
   # Capture expressions for the `columns` and `rows` arguments
   col_expr <- rlang::enquo(columns)
@@ -787,22 +787,6 @@ cells_body <- function(columns = TRUE,
   class(cells) <- c("cells_body", "location_cells")
 
   cells
-}
-
-#' Location helper for targeting data cells in the table body (deprecated)
-#'
-#' @inheritParams cells_body
-#'
-#' @keywords internal
-#' @export
-cells_data <- function(columns = TRUE,
-                       rows = TRUE) {
-
-  warning("The `cells_data()` function is deprecated and will soon be removed\n",
-          " * Use the `cells_body()` function instead",
-          call. = FALSE)
-
-  cells_body(columns = {{columns}}, rows = {{rows}})
 }
 
 #' Location helper for targeting group summary cells
@@ -865,12 +849,12 @@ cells_data <- function(columns = TRUE,
 #'     groupname_col = "decade"
 #'   ) %>%
 #'   fmt_number(
-#'     columns = vars(population),
+#'     columns = population,
 #'     decimals = 0
 #'   ) %>%
 #'   summary_rows(
 #'     groups = "1960s",
-#'     columns = vars(population),
+#'     columns = population,
 #'     fns = list("min", "max"),
 #'     formatter = fmt_number,
 #'     decimals = 0
@@ -882,8 +866,9 @@ cells_data <- function(columns = TRUE,
 #'       ),
 #'     locations = cells_summary(
 #'       groups = "1960s",
-#'       columns = vars(population),
-#'       rows = 1)
+#'       columns = population,
+#'       rows = 1
+#'     )
 #'   ) %>%
 #'   tab_style(
 #'     style = list(
@@ -892,8 +877,9 @@ cells_data <- function(columns = TRUE,
 #'       ),
 #'     locations = cells_summary(
 #'       groups = "1960s",
-#'       columns = vars(population),
-#'       rows = 2)
+#'       columns = population,
+#'       rows = 2
+#'     )
 #'   )
 #'
 #' @section Figures:
@@ -905,9 +891,9 @@ cells_data <- function(columns = TRUE,
 #'
 #' @import rlang
 #' @export
-cells_summary <- function(groups = TRUE,
-                          columns = TRUE,
-                          rows = TRUE) {
+cells_summary <- function(groups = everything(),
+                          columns = everything(),
+                          rows = everything()) {
 
   # Capture expressions for the `groups`,
   # `columns`, and `rows` arguments
@@ -981,11 +967,11 @@ cells_summary <- function(groups = TRUE,
 #'   dplyr::select(-contains("country")) %>%
 #'   gt(rowname_col = "year") %>%
 #'   fmt_number(
-#'     columns = vars(population),
+#'     columns = population,
 #'     decimals = 0
 #'   ) %>%
 #'   grand_summary_rows(
-#'     columns = vars(population),
+#'     columns = population,
 #'     fns = list(
 #'       change = ~max(.) - min(.)
 #'     ),
@@ -998,7 +984,7 @@ cells_summary <- function(groups = TRUE,
 #'       cell_fill(color = "lightblue")
 #'     ),
 #'     locations = cells_grand_summary(
-#'       columns = vars(population),
+#'       columns = population,
 #'       rows = 1)
 #'   )
 #'
@@ -1011,8 +997,8 @@ cells_summary <- function(groups = TRUE,
 #'
 #' @import rlang
 #' @export
-cells_grand_summary <- function(columns = TRUE,
-                                rows = TRUE) {
+cells_grand_summary <- function(columns = everything(),
+                                rows = everything()) {
 
   # Capture expressions for the `columns`
   # and `rows` arguments
@@ -1023,7 +1009,8 @@ cells_grand_summary <- function(columns = TRUE,
   cells <-
     list(
       columns = col_expr,
-      rows = row_expr)
+      rows = row_expr
+    )
 
   # Apply the `cells_grand_summary` and
   # `location_cells` classes
@@ -1068,7 +1055,7 @@ cells_grand_summary <- function(columns = TRUE,
 #'   exibble %>%
 #'   gt() %>%
 #'   fmt_currency(
-#'     columns = vars(currency),
+#'     columns = currency,
 #'     currency = currency(
 #'       html = "&fnof;",
 #'       default = "f"),
@@ -1174,19 +1161,19 @@ currency <- function(...,
 #'   dplyr::select(num, currency) %>%
 #'   gt() %>%
 #'   fmt_number(
-#'     columns = vars(num, currency),
+#'     columns = c(num, currency),
 #'     decimals = 1
 #'   ) %>%
 #'   tab_style(
 #'     style = cell_text(weight = "bold"),
 #'     locations = cells_body(
-#'       columns = vars(num),
+#'       columns = num,
 #'       rows = num >= 5000)
 #'   ) %>%
 #'   tab_style(
 #'     style = cell_text(style = "italic"),
 #'     locations = cells_body(
-#'       columns = vars(currency),
+#'       columns = currency,
 #'       rows = currency < 100
 #'     )
 #'   )
@@ -1325,19 +1312,19 @@ cell_style_to_html.cell_text <- function(style) {
 #'   dplyr::select(num, currency) %>%
 #'   gt() %>%
 #'   fmt_number(
-#'     columns = vars(num, currency),
+#'     columns = c(num, currency),
 #'     decimals = 1
 #'   ) %>%
 #'   tab_style(
 #'     style = cell_fill(color = "lightblue"),
 #'     locations = cells_body(
-#'       columns = vars(num),
+#'       columns = num,
 #'       rows = num >= 5000)
 #'   ) %>%
 #'   tab_style(
 #'     style = cell_fill(color = "gray85"),
 #'     locations = cells_body(
-#'       columns = vars(currency),
+#'       columns = currency,
 #'       rows = currency < 100
 #'     )
 #'   )
@@ -1444,11 +1431,11 @@ cell_style_to_html.cell_fill <- function(style) {
 #'       ),
 #'       locations = list(
 #'         cells_body(
-#'           columns = vars(num),
+#'           columns = num,
 #'           rows = is.na(num)
 #'         ),
 #'         cells_body(
-#'           columns = vars(currency),
+#'           columns = currency,
 #'           rows = is.na(currency)
 #'         )
 #'       )
@@ -1596,7 +1583,7 @@ cell_style_structure <- function(name, obj, subclass = name) {
 #'         default_fonts()
 #'       )
 #'     ),
-#'     locations = cells_body(columns = vars(time))
+#'     locations = cells_body(columns = time)
 #'   )
 #'
 #' # Use `sp500` to create a small gt table,
@@ -1691,7 +1678,7 @@ google_font <- function(name) {
 #'         default_fonts()
 #'       )
 #'     ),
-#'     locations = cells_body(columns = vars(time))
+#'     locations = cells_body(columns = time)
 #'   )
 #'
 #' @section Figures:
@@ -1752,21 +1739,21 @@ default_fonts <- function() {
 #'   dplyr::tibble(a = 1:8, b = 1:8, c = 1:8) %>%
 #'   gt() %>%
 #'   data_color(
-#'     columns = vars(a),
+#'     columns = a,
 #'     colors = scales::col_numeric(
 #'       palette = pal_lighter,
 #'       domain = c(1, 8)
 #'     )
 #'   ) %>%
 #'   data_color(
-#'     columns = vars(b),
+#'     columns = b,
 #'     colors = scales::col_numeric(
 #'       palette = pal,
 #'       domain = c(1, 8)
 #'     )
 #'   ) %>%
 #'   data_color(
-#'     columns = vars(c),
+#'     columns = c,
 #'     colors = scales::col_numeric(
 #'       palette = pal_darker,
 #'       domain = c(1, 8)

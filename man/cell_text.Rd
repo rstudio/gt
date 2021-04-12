@@ -91,19 +91,19 @@ tab_1 <-
   dplyr::select(num, currency) \%>\%
   gt() \%>\%
   fmt_number(
-    columns = vars(num, currency),
+    columns = c(num, currency),
     decimals = 1
   ) \%>\%
   tab_style(
     style = cell_text(weight = "bold"),
     locations = cells_body(
-      columns = vars(num),
+      columns = num,
       rows = num >= 5000)
   ) \%>\%
   tab_style(
     style = cell_text(style = "italic"),
     locations = cells_body(
-      columns = vars(currency),
+      columns = currency,
       rows = currency < 100
     )
   )

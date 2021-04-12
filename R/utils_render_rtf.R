@@ -451,11 +451,7 @@ rtf_tbl_cell <- function(x,
       italic = italic,
       super_sub = super_sub,
       rtf_raw(x)
-    ) %>%
-    unlist() %>%
-    unname() %>%
-    tidy_gsub("\\\\super", "\\super", fixed = TRUE) %>%
-    tidy_gsub("\\\\i", "\\i", fixed = TRUE)
+    )
 
   # Combine all cell settings
   cell_settings <-
@@ -786,34 +782,31 @@ create_columns_component_rtf <- function(data) {
 
   if (stubh_available) headings_labels[1] <- dt_stubhead_get(data = data) %>% .$label
 
-  if (isTRUE(spanners_present)) {
-
+  if (spanners_present) {
     spanners <- dt_spanners_print(data = data, include_hidden = FALSE)
+    spanner_ids <- dt_spanners_print(data = data, include_hidden = FALSE, ids = TRUE)
+
     spanners[is.na(spanners)] <- ""
 
     if (stub_available) {
       spanners <- c("", spanners)
+      spanner_ids <- c("", spanner_ids)
     }
-
-    # TODO: add vertical lines separating adjacent spanner
-
-    # TODO: Need to differentiate between (1) non-merging spanners, (2) first
-    # instance of multi-column spanner, and (3) continuation of multi-column spanner
-
-    spanners_rle <- rle(spanners)$lengths
+    spanners_lengths <- unclass(rle(spanner_ids))
 
     merge_keys <- c()
-    for (i in seq(spanners_rle)) {
-      if (spanners_rle[i] == 1) {
+    for (i in seq_along(spanners_lengths$lengths)) {
+      if (spanners_lengths$lengths[i] == 1) {
         merge_keys <- c(merge_keys, 0)
       } else {
-        merge_keys <- c(merge_keys, 1, rep(2, spanners_rle[i] - 1))
+        merge_keys <- c(merge_keys, 1, rep(2, spanners_lengths$lengths[i] - 1))
       }
     }
 
     spanners_list <-
       lapply(
-        seq_along(spanners), FUN = function(x) {
+        seq_along(spanner_ids),
+        FUN = function(x) {
           rtf_tbl_cell(
             rtf_font(
               font_size = 10,
@@ -836,7 +829,8 @@ create_columns_component_rtf <- function(data) {
 
   cell_list <-
     lapply(
-      seq_along(headings_labels), FUN = function(x) {
+      seq_along(headings_labels),
+      FUN = function(x) {
         rtf_tbl_cell(
           rtf_font(
             font_size = 10,
@@ -853,7 +847,7 @@ create_columns_component_rtf <- function(data) {
       }
     )
 
-  if (isTRUE(spanners_present)) {
+  if (spanners_present) {
     row_list_column_labels <-
       list(
         rtf_tbl_row(spanners_list, height = 0, repeat_header = TRUE),
@@ -897,7 +891,7 @@ create_body_component_rtf <- function(data) {
 
   headings_vars <- boxh %>% dplyr::filter(type == "default") %>% dplyr::pull(var)
   row_groups_present <- nrow(groups_rows) > 0
-  row_group_rows <- groups_rows$row
+  row_group_rows <- groups_rows$row_start
   row_group_labels <- groups_rows$group_label
   row_group_labels[is.na(row_group_labels)] <- ""
 

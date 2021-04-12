@@ -154,6 +154,43 @@ get_table_defs <- function(data) {
   )
 }
 
+create_caption_component_h <- function(data) {
+
+  # Create the table caption if available
+  table_caption <- dt_options_get_value(data = data, option = "table_caption")
+
+  if (!is.null(table_caption)) {
+    table_caption <- process_text(table_caption, context = "html")
+    if (isTRUE(getOption("knitr.in.progress"))) {
+      table_caption <- kable_caption(label = NULL, table_caption, "html")
+    }
+    if (!getOption("htmltools.preserve.raw", FALSE)) {
+      # <!--/html_preserve--> ... <!--html_preserve--> is because bookdown scans
+      # the .md file, looking for references in the form of:
+      # <caption>(#tab:mytable)
+      # Ref:
+      # https://github.com/rstudio/bookdown/blob/00987215b7572def2f5cd73a623efc38f4f30ab7/R/html.R#L629
+      # https://github.com/rstudio/bookdown/blob/00987215b7572def2f5cd73a623efc38f4f30ab7/R/html.R#L667
+      #
+      # Normally, the gt table in its entirety is excluded from the .md, to
+      # prevent it from being corrupted by pandoc's md-to-html rendering. We do
+      # this by wrapping the whole table in htmltools::htmlPreserve (I think this
+      # actually happens in htmlwidgets). So the extra markup here is used to
+      # temporarily suspend that protection, emit the caption (including the HTML
+      # <caption> tag, which bookdown searches for), and then resume protection.
+      htmltools::HTML(paste0(
+        "<!--/html_preserve--><caption>",
+        table_caption,
+        "</caption><!--html_preserve-->"
+      ))
+    } else {
+      htmltools::HTML(paste0("<caption>", table_caption, "</caption>"))
+    }
+  } else {
+    NULL
+  }
+}
+
 #' Create the heading component of a table
 #'
 #' The table heading component contains the title and possibly a subtitle; if
@@ -472,9 +509,10 @@ create_columns_component_h <- function(data) {
     table_col_headings <- htmltools::tags$tr(table_col_headings)
   }
 
-  if (isTRUE(spanners_present)) {
+  if (spanners_present) {
 
     spanners <- dt_spanners_print(data = data, include_hidden = FALSE)
+    spanner_ids <- dt_spanners_print(data = data, include_hidden = FALSE, ids = TRUE)
 
     # A list of <th> elements that will go in the top row. This includes
     # spanner labels and column labels for solo columns (don't have spanner
@@ -485,7 +523,7 @@ create_columns_component_h <- function(data) {
     second_set <- list()
 
     # Create the cell for the stubhead label
-    if (isTRUE(stub_available)) {
+    if (stub_available) {
 
       stubhead_style <-
         if (nrow(stubhead_style_attrs) > 0) {
@@ -515,7 +553,7 @@ create_columns_component_h <- function(data) {
 
     # NOTE: rle treats NA values as distinct from each other; in other words,
     # each NA value starts a new run of length 1.
-    spanners_rle <- rle(spanners)
+    spanners_rle <- rle(spanner_ids)
     # sig_cells contains the indices of spanners' elements where the value is
     # either NA, or, is different than the previous value. (Because NAs are
     # distinct, every NA element will be present sig_cells.)
@@ -526,13 +564,13 @@ create_columns_component_h <- function(data) {
     colspans <- ifelse(
       seq_along(spanners) %in% sig_cells,
       # Index back into the rle result, working backward through sig_cells
-      spanners_rle$lengths[match(seq_along(spanners), sig_cells)],
+      spanners_rle$lengths[match(seq_along(spanner_ids), sig_cells)],
       0
     )
 
     for (i in seq(headings_vars)) {
 
-      if (is.na(spanners[i])) {
+      if (is.na(spanner_ids[i])) {
 
         styles_heading <-
           dplyr::filter(
@@ -566,7 +604,7 @@ create_columns_component_h <- function(data) {
             htmltools::HTML(headings_labels[i])
           )
 
-      } else if (!is.na(spanners[i])) {
+      } else if (!is.na(spanner_ids[i])) {
 
         # If colspans[i] == 0, it means that a previous cell's colspan
         # will cover us.
@@ -577,7 +615,7 @@ create_columns_component_h <- function(data) {
             dplyr::filter(
               spanner_style_attrs,
               locname == "columns_groups",
-              grpname == spanners[i]
+              grpname == spanner_ids[i]
             )
 
           spanner_style <-
@@ -609,7 +647,7 @@ create_columns_component_h <- function(data) {
       }
     }
 
-    solo_headings <- headings_vars[is.na(spanners)]
+    solo_headings <- headings_vars[is.na(spanner_ids)]
     remaining_headings <- headings_vars[!(headings_vars %in% solo_headings)]
 
     remaining_headings_indices <- which(remaining_headings %in% headings_vars)
@@ -688,6 +726,7 @@ create_body_component_h <- function(data) {
 
   boxh <- dt_boxhead_get(data = data)
   body <- dt_body_get(data = data)
+  stub_df <- dt_stub_df_get(data = data)
   summaries_present <- dt_summary_exists(data = data)
   list_of_summaries <- dt_summary_df_get(data = data)
   groups_rows_df <- dt_groups_rows_get(data = data)
@@ -714,11 +753,16 @@ create_body_component_h <- function(data) {
   all_default_vals <- unname(as.matrix(body[, default_vars]))
 
   alignment_classes <- paste0("gt_", col_alignment)
+
   if (stub_available) {
+
     n_cols <- n_data_cols + 1
+
     alignment_classes <- c("gt_left", alignment_classes)
+
     stub_var <- dt_boxhead_get_var_stub(data = data)
     all_stub_vals <- as.matrix(body[, stub_var])
+
   } else {
     n_cols <- n_data_cols
   }
@@ -741,7 +785,7 @@ create_body_component_h <- function(data) {
   column_series <- seq(n_cols)
 
   # Replace an NA group with an empty string
-  if (any(is.na(groups_rows_df$group))) {
+  if (any(is.na(groups_rows_df$group_label))) {
 
     groups_rows_df <-
       groups_rows_df %>%
@@ -795,16 +839,22 @@ create_body_component_h <- function(data) {
         #
         # Create a group heading row
         #
+        if (!is.null(groups_rows_df) && i %in% groups_rows_df$row_start) {
 
-        if (!is.null(groups_rows_df) && i %in% groups_rows_df$row) {
+          group_id <-
+            groups_rows_df[
+              which(groups_rows_df$row_start %in% i), "group_id"
+            ][[1]]
 
           group_label <-
-            groups_rows_df[which(groups_rows_df$row %in% i), "group_label"][[1]]
+            groups_rows_df[
+              which(groups_rows_df$row_start %in% i), "group_label"
+            ][[1]]
 
           if (has_row_group_styles) {
 
             styles_row <-
-              styles_tbl_row_groups[styles_tbl_row_groups$grpname == group_label, ]
+              styles_tbl_row_groups[styles_tbl_row_groups$grpname == group_id, ]
 
             row_style <-
               if (nrow(styles_row) > 0) {
@@ -892,7 +942,10 @@ create_body_component_h <- function(data) {
             summaries_present &&
             i %in% groups_rows_df$row_end) {
 
-          group_id <- groups_rows_df[groups_rows_df$row_end == i, ][["group"]]
+          group_id <-
+            groups_rows_df[
+              groups_rows_df$row_end == i &
+                !is.na(groups_rows_df$row_end), ][["group_id"]]
 
           summary_section <-
             summary_row_tags(

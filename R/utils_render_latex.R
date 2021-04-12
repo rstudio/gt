@@ -115,59 +115,43 @@ create_columns_component_l <- function(data) {
 
     # Get vector of group labels (spanners)
     spanners <- dt_spanners_print(data = data, include_hidden = FALSE)
-
-    # Promote column labels to the group level wherever the
-    # spanner label is NA
-    spanners[is.na(spanners)] <- headings_vars[is.na(spanners)]
+    spanner_ids <- dt_spanners_print(data = data, include_hidden = FALSE, ids = TRUE)
 
     if (stub_available) {
       spanners <- c(NA_character_, spanners)
+      spanner_ids <- c(NA_character_, spanner_ids)
     }
 
-    spanners_lengths <- rle(spanners)
+    spanners_rle <- unclass(rle(spanner_ids))
 
-    multicol <- c()
-    cmidrule <- c()
+    # We need a parallel vector of spanner labels and this could
+    # be part of the `spanners_rle` list
+    spanners_rle$labels <- spanners[cumsum(spanners_rle$lengths)]
 
-    for (i in seq(spanners_lengths$lengths)) {
+    begins <- (cumsum(utils::head(c(0, spanners_rle$lengths), -1)) + 1)[!is.na(spanners_rle$values)]
+    ends <- cumsum(spanners_rle$lengths)[!is.na(spanners_rle$values)]
+    cmidrule <- paste0("\\cmidrule(lr){", begins, "-", ends, "}")
 
-      if (spanners_lengths$lengths[i] > 1) {
+    is_spanner_na <- is.na(spanners_rle$values)
+    is_spanner_single <- spanners_rle$lengths == 1
 
-        if (length(multicol) > 0 &&
-            grepl("\\\\multicolumn", multicol[length(multicol)])) {
-          multicol <- c(multicol, "& ")
-        }
+    multicol <-
+      ifelse(
+        is_spanner_na, "",
+        ifelse(
+          is_spanner_single, spanners_rle$labels,
+          sprintf(
+            "\\multicolumn{%d}{c}{%s}", spanners_rle$lengths, spanners_rle$labels
+          )
+        )
+      )
 
-        multicol <-
-          c(multicol,
-            paste0(
-              "\\multicolumn{", spanners_lengths$lengths[i],
-              "}{c}{",
-              spanners_lengths$values[i],
-              "} "))
-
-        cmidrule <-
-          c(cmidrule,
-            paste0(
-              "\\cmidrule(lr){",
-              sum(spanners_lengths$lengths[1:i]) - spanners_lengths$lengths[i] + 1,
-              "-",
-              sum(spanners_lengths$lengths[1:i]),
-              "}"))
-
-      } else {
-        multicol <- c(multicol, "& ")
-      }
-
-    }
-
-    multicol <- paste0(paste(multicol, collapse = ""), "\\\\ \n")
-    cmidrule <- paste0(paste(cmidrule, collapse = ""), "\n")
+    multicol <- paste0(paste(multicol, collapse = " & "), " \\\\ \n")
+    cmidrule <- paste0(paste(cmidrule, collapse = " "), "\n")
 
     table_col_spanners <- paste(multicol, cmidrule, collapse = "")
 
   } else {
-
     table_col_spanners <- ""
   }
 
@@ -178,22 +162,20 @@ create_columns_component_l <- function(data) {
 create_body_component_l <- function(data) {
 
   boxh <- dt_boxhead_get(data = data)
-  styles_tbl <- dt_styles_get(data = data)
   body <- dt_body_get(data = data)
   summaries_present <- dt_summary_exists(data = data)
   list_of_summaries <- dt_summary_df_get(data = data)
   groups_rows_df <- dt_groups_rows_get(data = data)
   stub_components <- dt_stub_components(data = data)
 
+  styles_tbl <- dt_styles_get(data = data)
+
   n_data_cols <- dt_boxhead_get_vars_default(data = data) %>% length()
   n_rows <- nrow(body)
 
   # Get the column alignments for the data columns (this
   # doesn't include the stub alignment)
-  col_alignment <-
-    boxh %>%
-    dplyr::filter(type == "default") %>%
-    dplyr::pull(column_align)
+  col_alignment <- boxh[boxh$type == "default", ][["column_align"]]
 
   # Get the column headings for the visible (e.g., `default`) columns
   default_vars <- dt_boxhead_get_vars_default(data = data)
@@ -217,7 +199,7 @@ create_body_component_l <- function(data) {
   column_series <- seq(n_cols)
 
   # Replace an NA group with an empty string
-  if (any(is.na(groups_rows_df$group))) {
+  if (any(is.na(groups_rows_df$group_label))) {
 
     groups_rows_df <-
       groups_rows_df %>%
@@ -230,16 +212,9 @@ create_body_component_l <- function(data) {
 
   group_rows <- create_group_rows(n_rows, groups_rows_df, context = "latex")
 
-  if (stub_available) {
-    default_vars <- c("::rowname", default_vars)
-
-    body <-
-      dt_stub_df_get(data = data) %>%
-      dplyr::select(rowname) %>%
-      dplyr::rename(`::rowname` = rowname) %>%
-      cbind(body)
+  if (stub_available && "__GT_ROWNAME_PRIVATE__" %in% names(body)) {
+    default_vars <- c("__GT_ROWNAME_PRIVATE__", default_vars)
   }
-
 
   # Split `body_content` by slices of rows and create data rows
   body_content <- as.vector(t(body[, default_vars]))

@@ -204,7 +204,7 @@ process_text <- function(text,
 
       return(text)
 
-    } else if (is_html(text)) {
+    } else if (is_html(text) || inherits(text, "shiny.tag") || inherits(text, "shiny.tag.list")) {
 
       text <- as.character(text)
 
@@ -1128,7 +1128,6 @@ process_footnote_marks <- function(x,
     unname()
 }
 
-
 #' Determine whether an object is a `gt_tbl`
 #'
 #' @param data A table object that is created using the [gt()] function.
@@ -1222,6 +1221,31 @@ validate_style_in <- function(style_vals,
   }
 }
 
+check_spanner_id_unique <- function(data,
+                                    spanner_id) {
+
+  existing_ids <- dt_spanners_get_ids(data = data)
+
+  if (spanner_id %in% existing_ids) {
+    stop("The spanner `id` provided (`\"", spanner_id, "\"`) is not unique:\n",
+         "* provide a unique ID value for this spanner",
+         call. = FALSE)
+  }
+}
+
+check_row_group_id_unique <- function(data,
+                                      row_group_id) {
+
+  stub_df <- dt_stub_df_get(data = data)
+  existing_ids <- stub_df$group_id
+
+  if (row_group_id %in% existing_ids) {
+    stop("The row group `id` provided (`\"", row_group_id, "\"`) is not unique:\n",
+         "* provide a unique ID value for this row group",
+         call. = FALSE)
+  }
+}
+
 flatten_list <- function(x) {
   unlist(x, recursive = FALSE)
 }
@@ -1307,8 +1331,14 @@ validate_css_lengths <- function(x) {
 
 column_classes_are_valid <- function(data, columns, valid_classes) {
 
+  resolved <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data
+    )
+
   dt_data_get(data = data) %>%
-    dplyr::select(resolve_vars(var_expr = {{columns}}, data = data)) %>%
+    dplyr::select(dplyr::all_of(resolved)) %>%
     vapply(
       FUN.VALUE = logical(1), USE.NAMES = FALSE,
       FUN = function(x) any(class(x) %in% valid_classes)
