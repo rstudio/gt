@@ -537,11 +537,11 @@ tab_stubhead <- function(data,
 #'   the location cells that are associated with the footnote text. These helper
 #'   functions are: [cells_title()], [cells_stubhead()],
 #'   [cells_column_spanners()], [cells_column_labels()], [cells_row_groups()],
-#'   [cells_stub()], [cells_body()], [cells_summary()], and
-#'   [cells_grand_summary()]. Additionally, we can enclose several `cells_*()`
-#'   calls within a `list()` if we wish to link the footnote text to different
-#'   types of locations (e.g., body cells, row group labels, the table title,
-#'   etc.).
+#'   [cells_stub()], [cells_body()], [cells_summary()], [cells_grand_summary()],
+#'   [cells_stub_summary()], and [cells_stub_grand_summary()]. Additionally, we
+#'   can enclose several `cells_*()` calls within a `list()` if we wish to link
+#'   the footnote text to different types of locations (e.g., body cells, row
+#'   group labels, the table title, etc.).
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -909,10 +909,12 @@ tab_source_note <- function(data,
 #'   the location cells that are associated with the styling. These helper
 #'   functions are: [cells_title()], [cells_stubhead()],
 #'   [cells_column_spanners()], [cells_column_labels()], [cells_row_groups()],
-#'   [cells_stub()], [cells_body()], [cells_summary()], and
-#'   [cells_grand_summary()]. Additionally, we can enclose several `cells_*()`
-#'   calls within a `list()` if we wish to apply styling to different types of
-#'   locations (e.g., body cells, row group labels, the table title, etc.).
+#'   [cells_stub()], [cells_body()], [cells_summary()], [cells_grand_summary()],
+#'   [cells_stub_summary()], [cells_stub_grand_summary()], [cells_footnotes()],
+#'   and [cells_source_notes()]. Additionally, we can enclose several
+#'   `cells_*()` calls within a `list()` if we wish to apply styling to
+#'   different types of locations (e.g., body cells, row group labels, the table
+#'   title, etc.).
 #'
 #' @return An object of class `gt_tbl`.
 #'

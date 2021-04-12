@@ -18,11 +18,11 @@ Supplying any of the \verb{cells_*()} helper functions is a useful way to target
 the location cells that are associated with the footnote text. These helper
 functions are: \code{\link[=cells_title]{cells_title()}}, \code{\link[=cells_stubhead]{cells_stubhead()}},
 \code{\link[=cells_column_spanners]{cells_column_spanners()}}, \code{\link[=cells_column_labels]{cells_column_labels()}}, \code{\link[=cells_row_groups]{cells_row_groups()}},
-\code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_summary]{cells_summary()}}, and
-\code{\link[=cells_grand_summary]{cells_grand_summary()}}. Additionally, we can enclose several \verb{cells_*()}
-calls within a \code{list()} if we wish to link the footnote text to different
-types of locations (e.g., body cells, row group labels, the table title,
-etc.).}
+\code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_summary]{cells_summary()}}, \code{\link[=cells_grand_summary]{cells_grand_summary()}},
+\code{\link[=cells_stub_summary]{cells_stub_summary()}}, and \code{\link[=cells_stub_grand_summary]{cells_stub_grand_summary()}}. Additionally, we
+can enclose several \verb{cells_*()} calls within a \code{list()} if we wish to link
+the footnote text to different types of locations (e.g., body cells, row
+group labels, the table title, etc.).}
 }
 \value{
 An object of class \code{gt_tbl}.
