@@ -817,14 +817,14 @@ set_footnote.cells_stub_grand_summary <- function(loc, data, footnote) {
 
 set_footnote.cells_source_notes <- function(loc, data, footnote) {
 
-  warning("Footnotes cannot be applied to source notes.", call. = FALSE)
+  stop("Footnotes cannot be applied to source notes.", call. = FALSE)
 
   data
 }
 
 set_footnote.cells_footnotes <- function(loc, data, footnote) {
 
-  warning("Footnotes cannot be applied to other footnotes.", call. = FALSE)
+  stop("Footnotes cannot be applied to other footnotes.", call. = FALSE)
 
   data
 }
