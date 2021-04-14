@@ -927,8 +927,8 @@ test_that("styles are correctly applied to HTML output with location functions",
     ) %>%
     expect_true()
 
-  # Expect a warning if applying footnotes to the footnotes location
-  expect_warning(
+  # Expect an error if applying footnotes to the footnotes location
+  expect_error(
     tbl %>%
       gt() %>%
       tab_footnote(
@@ -961,8 +961,8 @@ test_that("styles are correctly applied to HTML output with location functions",
     ) %>%
     expect_true()
 
-  # Expect a warning if applying footnotes to the source notes location
-  expect_warning(
+  # Expect an error if applying footnotes to the source notes location
+  expect_error(
     tbl %>%
       gt() %>%
       tab_source_note(source_note = "This is a source note") %>%
