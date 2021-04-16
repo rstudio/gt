@@ -165,8 +165,11 @@ resolve_footnotes_styles <- function(data,
       ) %>%
       dplyr::mutate(rownum = (rownum / 100) + row_end) %>%
       dplyr::select(-row_start, -row_end) %>%
-      dplyr::mutate(colnum = colname_to_colnum(data = data, colname = colname)) %>%
-      dplyr::mutate(colnum = ifelse(is.na(colname), 0L, colnum))
+      dplyr::mutate(colnum = colname_to_colnum(
+        data = data,
+        colname = colname,
+        missing_is_zero = TRUE
+      ))
 
     # Re-combine `tbl_not_summary_cells`
     # with `tbl_summary_cells`
@@ -182,8 +185,11 @@ resolve_footnotes_styles <- function(data,
     tbl_g_summary_cells <-
       tbl %>%
       dplyr::filter(locnum == 6) %>%
-      dplyr::mutate(colnum = colname_to_colnum(data = data, colname = colname)) %>%
-      dplyr::mutate(colnum = ifelse(is.na(colname), 0L, colnum))
+      dplyr::mutate(colnum = colname_to_colnum(
+        data = data,
+        colname = colname,
+        missing_is_zero = TRUE
+      ))
 
     # Re-combine `tbl_not_g_summary_cells`
     # with `tbl_g_summary_cells`
