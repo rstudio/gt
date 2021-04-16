@@ -25,8 +25,7 @@ as_locations <- function(locations) {
 add_summary_location_row <- function(loc,
                                      data,
                                      style,
-                                     df_type = "styles_df",
-                                     in_stub = FALSE) {
+                                     df_type = "styles_df") {
 
   stub_df <- dt_stub_df_get(data = data)
 
@@ -73,7 +72,7 @@ add_summary_location_row <- function(loc,
       unlist() %>%
       unique()
 
-    if (!in_stub) {
+    if (!inherits(loc, "cells_stub_summary")) {
 
       columns <-
         resolve_cols_c(
@@ -86,6 +85,8 @@ add_summary_location_row <- function(loc,
              " * Review the expression provided as `columns`",
              call. = FALSE)
       }
+    } else {
+      columns <- NA_character_
     }
 
     rows <-
@@ -108,7 +109,7 @@ add_summary_location_row <- function(loc,
           data = data,
           locname = "summary_cells",
           grpname = group,
-          colname = if (in_stub) NA_character_ else columns,
+          colname = columns,
           locnum = 5,
           rownum = rows,
           footnotes = style
@@ -121,7 +122,7 @@ add_summary_location_row <- function(loc,
           data = data,
           locname = "summary_cells",
           grpname = group,
-          colname = if (in_stub) NA_character_ else columns,
+          colname = columns,
           locnum = 5,
           rownum = rows,
           styles = style
@@ -135,8 +136,7 @@ add_summary_location_row <- function(loc,
 add_grand_summary_location_row <- function(loc,
                                            data,
                                            style,
-                                           df_type = "styles_df",
-                                           in_stub = FALSE) {
+                                           df_type = "styles_df") {
 
   summary_data <- dt_summary_get(data = data)
 
@@ -150,7 +150,7 @@ add_grand_summary_location_row <- function(loc,
     unlist() %>%
     unique()
 
-  if (!in_stub) {
+  if (!inherits(loc, "cells_stub_grand_summary")) {
 
     columns <-
       resolve_cols_c(
@@ -163,6 +163,8 @@ add_grand_summary_location_row <- function(loc,
            " * Review the expression provided as `columns`",
            call. = FALSE)
     }
+  } else {
+    columns <- NA_character_
   }
 
   rows <-
@@ -185,7 +187,7 @@ add_grand_summary_location_row <- function(loc,
         data = data,
         locname = "grand_summary_cells",
         grpname = grand_summary_col,
-        colname = if (in_stub) NA_character_ else columns,
+        colname = columns,
         locnum = 6,
         rownum = rows,
         footnotes = style
@@ -198,7 +200,7 @@ add_grand_summary_location_row <- function(loc,
         data = data,
         locname = "grand_summary_cells",
         grpname = grand_summary_col,
-        colname = if (in_stub) NA_character_ else columns,
+        colname = columns,
         locnum = 6,
         rownum = rows,
         styles = style
