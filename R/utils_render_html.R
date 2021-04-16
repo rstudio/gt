@@ -1032,13 +1032,13 @@ create_source_notes_component_h <- function(data) {
 
     source_notes_styles <-
       if (nrow(source_notes_style) > 0) {
-        source_notes_style$html_style
+        paste(source_notes_style$html_style, collapse = " ")
       } else {
         NULL
       }
 
   } else {
-    source_notes_styles <- NA_character_
+    source_notes_styles <- NULL
   }
 
   htmltools::tags$tfoot(
@@ -1099,13 +1099,13 @@ create_footnotes_component_h <- function(data) {
 
     footnotes_styles <-
       if (nrow(footnotes_style) > 0) {
-        footnotes_style$html_style
+        paste(footnotes_style$html_style, collapse = " ")
       } else {
         NULL
       }
 
   } else {
-    footnotes_styles <- NA_character_
+    footnotes_styles <- NULL
   }
 
   # Get the footnote separator option
