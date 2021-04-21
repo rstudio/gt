@@ -1011,6 +1011,8 @@ create_source_notes_component_h <- function(data) {
 
   stub_components <- dt_stub_components(data = data)
 
+  styles_tbl <- dt_styles_get(data = data)
+
   n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
 
   # Determine whether the stub is available through analysis
@@ -1023,6 +1025,22 @@ create_source_notes_component_h <- function(data) {
     n_cols <- n_data_cols
   }
 
+  # Get the style attrs for the source notes
+  if ("source_notes" %in% styles_tbl$locname) {
+
+    source_notes_style <- dplyr::filter(styles_tbl, locname == "source_notes")
+
+    source_notes_styles <-
+      if (nrow(source_notes_style) > 0) {
+        paste(source_notes_style$html_style, collapse = " ")
+      } else {
+        NULL
+      }
+
+  } else {
+    source_notes_styles <- NULL
+  }
+
   htmltools::tags$tfoot(
     class = "gt_sourcenotes",
     lapply(
@@ -1031,6 +1049,7 @@ create_source_notes_component_h <- function(data) {
         htmltools::tags$tr(
           htmltools::tags$td(
             class = "gt_sourcenote",
+            style = source_notes_styles,
             colspan = n_cols,
             htmltools::HTML(x)
           )
@@ -1055,6 +1074,8 @@ create_footnotes_component_h <- function(data) {
 
   stub_components <- dt_stub_components(data = data)
 
+  styles_tbl <- dt_styles_get(data = data)
+
   n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
 
   # Determine whether the stub is available through analysis
@@ -1072,6 +1093,21 @@ create_footnotes_component_h <- function(data) {
     dplyr::select(fs_id, footnotes) %>%
     dplyr::distinct()
 
+  # Get the style attrs for the footnotes
+  if ("footnotes" %in% styles_tbl$locname) {
+    footnotes_style <- dplyr::filter(styles_tbl, locname == "footnotes")
+
+    footnotes_styles <-
+      if (nrow(footnotes_style) > 0) {
+        paste(footnotes_style$html_style, collapse = " ")
+      } else {
+        NULL
+      }
+
+  } else {
+    footnotes_styles <- NULL
+  }
+
   # Get the footnote separator option
   separator <- dt_options_get_value(data = data, option = "footnotes_sep")
 
@@ -1082,6 +1118,7 @@ create_footnotes_component_h <- function(data) {
   htmltools::tags$tfoot(
     htmltools::tags$tr(
       class = "gt_footnotes",
+      style = footnotes_styles,
       htmltools::tags$td(
         colspan = n_cols,
         mapply(

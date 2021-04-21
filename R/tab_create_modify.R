@@ -537,11 +537,11 @@ tab_stubhead <- function(data,
 #'   the location cells that are associated with the footnote text. These helper
 #'   functions are: [cells_title()], [cells_stubhead()],
 #'   [cells_column_spanners()], [cells_column_labels()], [cells_row_groups()],
-#'   [cells_stub()], [cells_body()], [cells_summary()], and
-#'   [cells_grand_summary()]. Additionally, we can enclose several `cells_*()`
-#'   calls within a `list()` if we wish to link the footnote text to different
-#'   types of locations (e.g., body cells, row group labels, the table title,
-#'   etc.).
+#'   [cells_stub()], [cells_body()], [cells_summary()], [cells_grand_summary()],
+#'   [cells_stub_summary()], and [cells_stub_grand_summary()]. Additionally, we
+#'   can enclose several `cells_*()` calls within a `list()` if we wish to link
+#'   the footnote text to different types of locations (e.g., body cells, row
+#'   group labels, the table title, etc.).
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -791,6 +791,40 @@ set_footnote.cells_grand_summary <- function(loc, data, footnote) {
   )
 }
 
+set_footnote.cells_stub_summary <- function(loc, data, footnote) {
+
+  add_summary_location_row(
+    loc = loc,
+    data = data,
+    style = footnote,
+    df_type = "footnotes_df"
+  )
+}
+
+set_footnote.cells_stub_grand_summary <- function(loc, data, footnote) {
+
+  add_grand_summary_location_row(
+    loc = loc,
+    data = data,
+    style = footnote,
+    df_type = "footnotes_df"
+  )
+}
+
+set_footnote.cells_source_notes <- function(loc, data, footnote) {
+
+  stop("Footnotes cannot be applied to source notes.", call. = FALSE)
+
+  data
+}
+
+set_footnote.cells_footnotes <- function(loc, data, footnote) {
+
+  stop("Footnotes cannot be applied to other footnotes.", call. = FALSE)
+
+  data
+}
+
 #' Add a source note citation
 #'
 #' Add a source note to the footer part of the **gt** table. A source note is
@@ -871,10 +905,12 @@ tab_source_note <- function(data,
 #'   the location cells that are associated with the styling. These helper
 #'   functions are: [cells_title()], [cells_stubhead()],
 #'   [cells_column_spanners()], [cells_column_labels()], [cells_row_groups()],
-#'   [cells_stub()], [cells_body()], [cells_summary()], and
-#'   [cells_grand_summary()]. Additionally, we can enclose several `cells_*()`
-#'   calls within a `list()` if we wish to apply styling to different types of
-#'   locations (e.g., body cells, row group labels, the table title, etc.).
+#'   [cells_stub()], [cells_body()], [cells_summary()], [cells_grand_summary()],
+#'   [cells_stub_summary()], [cells_stub_grand_summary()], [cells_footnotes()],
+#'   and [cells_source_notes()]. Additionally, we can enclose several
+#'   `cells_*()` calls within a `list()` if we wish to apply styling to
+#'   different types of locations (e.g., body cells, row group labels, the table
+#'   title, etc.).
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -1263,6 +1299,54 @@ set_style.cells_grand_summary <- function(loc, data, style) {
     style = style,
     df_type = "styles_df"
   )
+}
+
+set_style.cells_stub_summary <- function(loc, data, style) {
+
+  add_summary_location_row(
+    loc = loc,
+    data = data,
+    style = style,
+    df_type = "styles_df"
+  )
+}
+
+set_style.cells_stub_grand_summary <- function(loc, data, style) {
+
+  add_grand_summary_location_row(
+    loc = loc,
+    data = data,
+    style = style,
+    df_type = "styles_df"
+  )
+}
+
+set_style.cells_footnotes <- function(loc, data, style) {
+
+  data <-
+    dt_styles_add(
+      data = data,
+      locname = "footnotes",
+      grpname = NA_character_,
+      colname = NA_character_,
+      locnum = 7,
+      rownum = NA_integer_,
+      styles = style
+    )
+}
+
+set_style.cells_source_notes <- function(loc, data, style) {
+
+  data <-
+    dt_styles_add(
+      data = data,
+      locname = "source_notes",
+      grpname = NA_character_,
+      colname = NA_character_,
+      locnum = 8,
+      rownum = NA_integer_,
+      styles = style
+    )
 }
 
 #' Modify the table output options

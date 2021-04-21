@@ -20,13 +20,18 @@ validate_contexts <- function(contexts) {
 # Utility function to generate column numbers from column names;
 # used in: `resolve_footnotes_styles()`
 colname_to_colnum <- function(data,
-                              colname) {
+                              colname,
+                              missing_is_zero = FALSE) {
 
   col_nums <- c()
 
   for (col in colname) {
     if (is.na(col)) {
-      col_nums <- c(col_nums, NA_integer_)
+      if (missing_is_zero) {
+        col_nums <- c(col_nums, 0L)
+      } else {
+        col_nums <- c(col_nums, NA_integer_)
+      }
     } else {
       col_nums <-
         c(

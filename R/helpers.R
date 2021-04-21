@@ -184,37 +184,50 @@ pct <- function(x) {
 
 #' Location helper for targeting the table title and subtitle
 #'
+#' @description
 #' The `cells_title()` function is used to target the table title or subtitle
 #' when applying a footnote with [tab_footnote()] or adding custom style with
 #' [tab_style()]. The function is expressly used in each of those functions'
 #' `locations` argument.
 #'
-#' When using any of the location helper functions with an appropriate function
-#' that has a `locations` argument, multiple locations can be targeted by
-#' enclosing several `cells_*()` helper functions in a `list()`. The following
-#' helper functions can be used to target cells (roughly in order from the top
-#' to the bottom of a table):
-#' \itemize{
-#' \item [cells_title()]: targets the table title or the table subtitle
-#' depending on the value given to the `groups` argument (`"title"` or
-#' `"subtitle"`).
-#' \item [cells_stubhead()]: targets the stubhead location, a cell of which is
-#' only available when there is a stub; a label in that location can be created
-#' by using the [tab_stubhead()] function.
-#' \item [cells_column_spanners()]: targets the spanner column labels, which
-#' appear above the column labels.
-#' \item [cells_column_labels()]: targets the column labels.
-#' \item [cells_row_groups()]: targets the row group labels in any available row
-#' groups using the `groups` argument.
-#' \item [cells_stub()]: targets row labels in the table stub using the `rows`
+#' @section Overview of Location Helper Functions:
+#' Location helper functions can be used to target cells with virtually any
+#' function that has a `locations` argument. Here is a listing of all of the
+#' location helper functions, with locations corresponding roughly from top to
+#' bottom of a table:
+#'
+#' - [cells_title()]: targets the table title or the table subtitle depending on
+#' the value given to the `groups` argument (`"title"` or `"subtitle"`).
+#' - [cells_stubhead()]: targets the stubhead location, a cell of which is only
+#' available when there is a stub; a label in that location can be created by
+#' using the [tab_stubhead()] function.
+#' - [cells_column_spanners()]: targets the spanner column labels with the
+#' `spanners` argument; spanner column labels appear above the column labels.
+#' - [cells_column_labels()]: targets the column labels with its `columns`
 #' argument.
-#' \item [cells_body()]: targets data cells in the table body using
-#' intersections of `columns` and `rows`.
-#' \item [cells_summary()]: targets summary cells in the table body using the
+#' - [cells_row_groups()]: targets the row group labels in any available row
+#' groups using the `groups` argument.
+#' - [cells_stub()]: targets row labels in the table stub using the `rows`
+#' argument.
+#' - [cells_body()]: targets data cells in the table body using intersections of
+#' `columns` and `rows`.
+#' - [cells_summary()]: targets summary cells in the table body using the
 #' `groups` argument and intersections of `columns` and `rows`.
-#' \item [cells_grand_summary()]: targets cells of the table's grand summary
-#' using intersections of `columns` and `rows`
-#' }
+#' - [cells_grand_summary()]: targets cells of the table's grand summary using
+#' intersections of `columns` and `rows`
+#' - [cells_stub_summary()]: targets summary row labels in the table stub using
+#' the `groups` and `rows` arguments.
+#' - [cells_stub_grand_summary()]: targets grand summary row labels in the table
+#' stub using the `rows` argument.
+#' - [cells_footnotes()]: targets all footnotes in the table footer (cannot be
+#' used with [tab_footnote()]).
+#' - [cells_source_notes()]: targets all source notes in the table footer
+#' (cannot be used with [tab_footnote()]).
+#'
+#' When using any of the location helper functions with an appropriate function
+#' that has a `locations` argument (e.g., [tab_style()]), multiple locations
+#' can be targeted by enclosing several `cells_*()` helper functions in a
+#' `list()` (e.g., `list(cells_body(), cells_grand_summary())`).
 #'
 #' @param groups We can either specify `"title"` or `"subtitle"` to target the
 #'   title element or the subtitle element.
@@ -255,13 +268,12 @@ pct <- function(x) {
 cells_title <- function(groups = c("title", "subtitle")) {
 
   # Capture expression for the `groups` argument
-  group_expr <- rlang::enquo(groups)
+  groups_expr <- rlang::enquo(groups)
 
-  # Create the `cells_title` object
-  cells <- list(groups = group_expr)
+  # Create the `cells` object
+  cells <- list(groups = groups_expr)
 
-  # Apply the `cells_title` and
-  # `location_cells` classes
+  # Apply the `cells_title` and `location_cells` classes
   class(cells) <- c("cells_title", "location_cells")
 
   cells
@@ -269,37 +281,50 @@ cells_title <- function(groups = c("title", "subtitle")) {
 
 #' Location helper for targeting the table stubhead cell
 #'
+#' @description
 #' The `cells_stubhead()` function is used to target the table stubhead location
 #' when applying a footnote with [tab_footnote()] or adding custom style with
 #' [tab_style()]. The function is expressly used in each of those functions'
 #' `locations` argument.
 #'
-#' When using any of the location helper functions with an appropriate function
-#' that has a `locations` argument, multiple locations can be targeted by
-#' enclosing several `cells_*()` helper functions in a `list()`. The following
-#' helper functions can be used to target cells (roughly in order from the top
-#' to the bottom of a table):
-#' \itemize{
-#' \item [cells_title()]: targets the table title or the table subtitle
-#' depending on the value given to the `groups` argument (`"title"` or
-#' `"subtitle"`).
-#' \item [cells_stubhead()]: targets the stubhead location, a cell of which is
-#' only available when there is a stub; a label in that location can be created
-#' by using the [tab_stubhead()] function.
-#' \item [cells_column_spanners()]: targets the spanner column labels, which
-#' appear above the column labels.
-#' \item [cells_column_labels()]: targets the column labels.
-#' \item [cells_row_groups()]: targets the row group labels in any available row
-#' groups using the `groups` argument.
-#' \item [cells_stub()]: targets row labels in the table stub using the `rows`
+#' @section Overview of Location Helper Functions:
+#' Location helper functions can be used to target cells with virtually any
+#' function that has a `locations` argument. Here is a listing of all of the
+#' location helper functions, with locations corresponding roughly from top to
+#' bottom of a table:
+#'
+#' - [cells_title()]: targets the table title or the table subtitle depending on
+#' the value given to the `groups` argument (`"title"` or `"subtitle"`).
+#' - [cells_stubhead()]: targets the stubhead location, a cell of which is only
+#' available when there is a stub; a label in that location can be created by
+#' using the [tab_stubhead()] function.
+#' - [cells_column_spanners()]: targets the spanner column labels with the
+#' `spanners` argument; spanner column labels appear above the column labels.
+#' - [cells_column_labels()]: targets the column labels with its `columns`
 #' argument.
-#' \item [cells_body()]: targets data cells in the table body using
-#' intersections of `columns` and `rows`.
-#' \item [cells_summary()]: targets summary cells in the table body using the
+#' - [cells_row_groups()]: targets the row group labels in any available row
+#' groups using the `groups` argument.
+#' - [cells_stub()]: targets row labels in the table stub using the `rows`
+#' argument.
+#' - [cells_body()]: targets data cells in the table body using intersections of
+#' `columns` and `rows`.
+#' - [cells_summary()]: targets summary cells in the table body using the
 #' `groups` argument and intersections of `columns` and `rows`.
-#' \item [cells_grand_summary()]: targets cells of the table's grand summary
-#' using intersections of `columns` and `rows`
-#' }
+#' - [cells_grand_summary()]: targets cells of the table's grand summary using
+#' intersections of `columns` and `rows`
+#' - [cells_stub_summary()]: targets summary row labels in the table stub using
+#' the `groups` and `rows` arguments.
+#' - [cells_stub_grand_summary()]: targets grand summary row labels in the table
+#' stub using the `rows` argument.
+#' - [cells_footnotes()]: targets all footnotes in the table footer (cannot be
+#' used with [tab_footnote()]).
+#' - [cells_source_notes()]: targets all source notes in the table footer
+#' (cannot be used with [tab_footnote()]).
+#'
+#' When using any of the location helper functions with an appropriate function
+#' that has a `locations` argument (e.g., [tab_style()]), multiple locations
+#' can be targeted by enclosing several `cells_*()` helper functions in a
+#' `list()` (e.g., `list(cells_body(), cells_grand_summary())`).
 #'
 #' @return A list object with the classes `cells_stubhead` and `location_cells`.
 #'
@@ -331,11 +356,10 @@ cells_title <- function(groups = c("title", "subtitle")) {
 #' @export
 cells_stubhead <- function() {
 
-  # Create the `cells_stubhead` object
+  # Create the `cells` object
   cells <- list(groups = "stubhead")
 
-  # Apply the `cells_stubhead` and
-  # `location_cells` classes
+  # Apply the `cells_stubhead` and `location_cells` classes
   class(cells) <- c("cells_stubhead", "location_cells")
 
   cells
@@ -343,37 +367,50 @@ cells_stubhead <- function() {
 
 #' Location helper for targeting the column spanners
 #'
+#' @description
 #' The `cells_column_spanners()` function is used to target the cells that
 #' contain the table column spanners. This is useful when applying a footnote
 #' with [tab_footnote()] or adding custom style with [tab_style()]. The function
 #' is expressly used in each of those functions' `locations` argument.
 #'
-#' When using any of the location helper functions with an appropriate function
-#' that has a `locations` argument, multiple locations can be targeted by
-#' enclosing several `cells_*()` helper functions in a `list()`. The following
-#' helper functions can be used to target cells (roughly in order from the top
-#' to the bottom of a table):
-#' \itemize{
-#' \item [cells_title()]: targets the table title or the table subtitle
-#' depending on the value given to the `groups` argument (`"title"` or
-#' `"subtitle"`).
-#' \item [cells_stubhead()]: targets the stubhead location, a cell of which is
-#' only available when there is a stub; a label in that location can be created
-#' by using the [tab_stubhead()] function.
-#' \item [cells_column_spanners()]: targets the spanner column labels, which
-#' appear above the column labels.
-#' \item [cells_column_labels()]: targets the column labels.
-#' \item [cells_row_groups()]: targets the row group labels in any available row
-#' groups using the `groups` argument.
-#' \item [cells_stub()]: targets row labels in the table stub using the `rows`
+#' @section Overview of Location Helper Functions:
+#' Location helper functions can be used to target cells with virtually any
+#' function that has a `locations` argument. Here is a listing of all of the
+#' location helper functions, with locations corresponding roughly from top to
+#' bottom of a table:
+#'
+#' - [cells_title()]: targets the table title or the table subtitle depending on
+#' the value given to the `groups` argument (`"title"` or `"subtitle"`).
+#' - [cells_stubhead()]: targets the stubhead location, a cell of which is only
+#' available when there is a stub; a label in that location can be created by
+#' using the [tab_stubhead()] function.
+#' - [cells_column_spanners()]: targets the spanner column labels with the
+#' `spanners` argument; spanner column labels appear above the column labels.
+#' - [cells_column_labels()]: targets the column labels with its `columns`
 #' argument.
-#' \item [cells_body()]: targets data cells in the table body using
-#' intersections of `columns` and `rows`.
-#' \item [cells_summary()]: targets summary cells in the table body using the
+#' - [cells_row_groups()]: targets the row group labels in any available row
+#' groups using the `groups` argument.
+#' - [cells_stub()]: targets row labels in the table stub using the `rows`
+#' argument.
+#' - [cells_body()]: targets data cells in the table body using intersections of
+#' `columns` and `rows`.
+#' - [cells_summary()]: targets summary cells in the table body using the
 #' `groups` argument and intersections of `columns` and `rows`.
-#' \item [cells_grand_summary()]: targets cells of the table's grand summary
-#' using intersections of `columns` and `rows`
-#' }
+#' - [cells_grand_summary()]: targets cells of the table's grand summary using
+#' intersections of `columns` and `rows`
+#' - [cells_stub_summary()]: targets summary row labels in the table stub using
+#' the `groups` and `rows` arguments.
+#' - [cells_stub_grand_summary()]: targets grand summary row labels in the table
+#' stub using the `rows` argument.
+#' - [cells_footnotes()]: targets all footnotes in the table footer (cannot be
+#' used with [tab_footnote()]).
+#' - [cells_source_notes()]: targets all source notes in the table footer
+#' (cannot be used with [tab_footnote()]).
+#'
+#' When using any of the location helper functions with an appropriate function
+#' that has a `locations` argument (e.g., [tab_style()]), multiple locations
+#' can be targeted by enclosing several `cells_*()` helper functions in a
+#' `list()` (e.g., `list(cells_body(), cells_grand_summary())`).
 #'
 #' @param spanners The names of the spanners that are to be targeted.
 #'
@@ -413,51 +450,66 @@ cells_column_spanners <- function(spanners = everything()) {
   # Capture expression for the `spanners` argument
   spanners_expr <- rlang::enquo(spanners)
 
-  # Create the `cells_column_spanners` object
-  structure(
-    list(spanners = spanners_expr),
-    class = c("cells_column_spanners", "location_cells")
-  )
+  # Create the `cells` object
+  cells <- list(spanners = spanners_expr)
+
+  # Apply the `cells_column_spanners` and `location_cells` classes
+  class(cells) <- c("cells_column_spanners", "location_cells")
+
+  cells
 }
 
 #' Location helper for targeting the column labels
 #'
+#' @description
 #' The `cells_column_labels()` function is used to target the table's column
 #' labels when applying a footnote with [tab_footnote()] or adding custom style
 #' with [tab_style()]. The function is expressly used in each of those
 #' functions' `locations` argument.
 #'
-#' When using any of the location helper functions with an appropriate function
-#' that has a `locations` argument, multiple locations can be targeted by
-#' enclosing several `cells_*()` helper functions in a `list()`. The following
-#' helper functions can be used to target cells (roughly in order from the top
-#' to the bottom of a table):
-#' \itemize{
-#' \item [cells_title()]: targets the table title or the table subtitle
-#' depending on the value given to the `groups` argument (`"title"` or
-#' `"subtitle"`).
-#' \item [cells_stubhead()]: targets the stubhead location, a cell of which is
-#' only available when there is a stub; a label in that location can be created
-#' by using the [tab_stubhead()] function.
-#' \item [cells_column_spanners()]: targets the spanner column labels, which
-#' appear above the column labels.
-#' \item [cells_column_labels()]: targets the column labels.
-#' \item [cells_row_groups()]: targets the row group labels in any available row
-#' groups using the `groups` argument.
-#' \item [cells_stub()]: targets row labels in the table stub using the `rows`
+#' @section Overview of Location Helper Functions:
+#' Location helper functions can be used to target cells with virtually any
+#' function that has a `locations` argument. Here is a listing of all of the
+#' location helper functions, with locations corresponding roughly from top to
+#' bottom of a table:
+#'
+#' - [cells_title()]: targets the table title or the table subtitle depending on
+#' the value given to the `groups` argument (`"title"` or `"subtitle"`).
+#' - [cells_stubhead()]: targets the stubhead location, a cell of which is only
+#' available when there is a stub; a label in that location can be created by
+#' using the [tab_stubhead()] function.
+#' - [cells_column_spanners()]: targets the spanner column labels with the
+#' `spanners` argument; spanner column labels appear above the column labels.
+#' - [cells_column_labels()]: targets the column labels with its `columns`
 #' argument.
-#' \item [cells_body()]: targets data cells in the table body using
-#' intersections of `columns` and `rows`.
-#' \item [cells_summary()]: targets summary cells in the table body using the
+#' - [cells_row_groups()]: targets the row group labels in any available row
+#' groups using the `groups` argument.
+#' - [cells_stub()]: targets row labels in the table stub using the `rows`
+#' argument.
+#' - [cells_body()]: targets data cells in the table body using intersections of
+#' `columns` and `rows`.
+#' - [cells_summary()]: targets summary cells in the table body using the
 #' `groups` argument and intersections of `columns` and `rows`.
-#' \item [cells_grand_summary()]: targets cells of the table's grand summary
-#' using intersections of `columns` and `rows`
-#' }
+#' - [cells_grand_summary()]: targets cells of the table's grand summary using
+#' intersections of `columns` and `rows`
+#' - [cells_stub_summary()]: targets summary row labels in the table stub using
+#' the `groups` and `rows` arguments.
+#' - [cells_stub_grand_summary()]: targets grand summary row labels in the table
+#' stub using the `rows` argument.
+#' - [cells_footnotes()]: targets all footnotes in the table footer (cannot be
+#' used with [tab_footnote()]).
+#' - [cells_source_notes()]: targets all source notes in the table footer
+#' (cannot be used with [tab_footnote()]).
+#'
+#' When using any of the location helper functions with an appropriate function
+#' that has a `locations` argument (e.g., [tab_style()]), multiple locations
+#' can be targeted by enclosing several `cells_*()` helper functions in a
+#' `list()` (e.g., `list(cells_body(), cells_grand_summary())`).
 #'
 #' @param columns The names of the column labels that are to be targeted.
 #'
 #' @return A list object with the classes `cells_column_labels` and
-#' `location_cells`.
+#'   `location_cells`.
 #'
 #' @examples
 #' # Use `sza` to create a gt table; add a
@@ -499,51 +551,66 @@ cells_column_labels <- function(columns = everything()) {
   # Capture expression for the `columns` argument
   columns_expr <- rlang::enquo(columns)
 
-  # Create the `cells_column_labels` object
-  structure(
-    list(columns = columns_expr),
-    class = c("cells_column_labels", "location_cells")
-  )
+  # Create the `cells` object
+  cells <- list(columns = columns_expr)
+
+  # Apply the `cells_column_labels` and `location_cells` classes
+  class(cells) <- c("cells_column_labels", "location_cells")
+
+  cells
 }
 
 #' Location helper for targeting row groups
 #'
+#' @description
 #' The `cells_row_groups()` function is used to target the table's row groups
 #' when applying a footnote with [tab_footnote()] or adding custom style with
 #' [tab_style()]. The function is expressly used in each of those functions'
 #' `locations` argument.
 #'
-#' When using any of the location helper functions with an appropriate function
-#' that has a `locations` argument, multiple locations can be targeted by
-#' enclosing several `cells_*()` helper functions in a `list()`. The following
-#' helper functions can be used to target cells (roughly in order from the top
-#' to the bottom of a table):
-#' \itemize{
-#' \item [cells_title()]: targets the table title or the table subtitle
-#' depending on the value given to the `groups` argument (`"title"` or
-#' `"subtitle"`).
-#' \item [cells_stubhead()]: targets the stubhead location, a cell of which is
-#' only available when there is a stub; a label in that location can be created
-#' by using the [tab_stubhead()] function.
-#' \item [cells_column_spanners()]: targets the spanner column labels, which
-#' appear above the column labels.
-#' \item [cells_column_labels()]: targets the column labels.
-#' \item [cells_row_groups()]: targets the row group labels in any available row
-#' groups using the `groups` argument.
-#' \item [cells_stub()]: targets row labels in the table stub using the `rows`
+#' @section Overview of Location Helper Functions:
+#' Location helper functions can be used to target cells with virtually any
+#' function that has a `locations` argument. Here is a listing of all of the
+#' location helper functions, with locations corresponding roughly from top to
+#' bottom of a table:
+#'
+#' - [cells_title()]: targets the table title or the table subtitle depending on
+#' the value given to the `groups` argument (`"title"` or `"subtitle"`).
+#' - [cells_stubhead()]: targets the stubhead location, a cell of which is only
+#' available when there is a stub; a label in that location can be created by
+#' using the [tab_stubhead()] function.
+#' - [cells_column_spanners()]: targets the spanner column labels with the
+#' `spanners` argument; spanner column labels appear above the column labels.
+#' - [cells_column_labels()]: targets the column labels with its `columns`
 #' argument.
-#' \item [cells_body()]: targets data cells in the table body using
-#' intersections of `columns` and `rows`.
-#' \item [cells_summary()]: targets summary cells in the table body using the
+#' - [cells_row_groups()]: targets the row group labels in any available row
+#' groups using the `groups` argument.
+#' - [cells_stub()]: targets row labels in the table stub using the `rows`
+#' argument.
+#' - [cells_body()]: targets data cells in the table body using intersections of
+#' `columns` and `rows`.
+#' - [cells_summary()]: targets summary cells in the table body using the
 #' `groups` argument and intersections of `columns` and `rows`.
-#' \item [cells_grand_summary()]: targets cells of the table's grand summary
-#' using intersections of `columns` and `rows`
-#' }
+#' - [cells_grand_summary()]: targets cells of the table's grand summary using
+#' intersections of `columns` and `rows`
+#' - [cells_stub_summary()]: targets summary row labels in the table stub using
+#' the `groups` and `rows` arguments.
+#' - [cells_stub_grand_summary()]: targets grand summary row labels in the table
+#' stub using the `rows` argument.
+#' - [cells_footnotes()]: targets all footnotes in the table footer (cannot be
+#' used with [tab_footnote()]).
+#' - [cells_source_notes()]: targets all source notes in the table footer
+#' (cannot be used with [tab_footnote()]).
+#'
+#' When using any of the location helper functions with an appropriate function
+#' that has a `locations` argument (e.g., [tab_style()]), multiple locations
+#' can be targeted by enclosing several `cells_*()` helper functions in a
+#' `list()` (e.g., `list(cells_body(), cells_grand_summary())`).
 #'
 #' @param groups The names of the row groups that are to be targeted.
 #'
 #' @return A list object with the classes `cells_row_groups` and
-#' `location_cells`.
+#'   `location_cells`.
 #'
 #' @examples
 #' # Use `pizzaplace` to create a gt table
@@ -587,10 +654,10 @@ cells_column_labels <- function(columns = everything()) {
 cells_row_groups <- function(groups = everything()) {
 
   # Capture expression for the `groups` argument
-  group_expr <- rlang::enquo(groups)
+  groups_expr <- rlang::enquo(groups)
 
-  # Create the `cells_row_groups` object
-  cells <- list(groups = group_expr)
+  # Create the `cells` object
+  cells <- list(groups = groups_expr)
 
   # Apply the `cells_row_groups` and `location_cells` classes
   class(cells) <- c("cells_row_groups", "location_cells")
@@ -615,37 +682,50 @@ cells_group <- function(groups = TRUE) {
 
 #' Location helper for targeting cells in the table stub
 #'
+#' @description
 #' The `cells_stub()` function is used to target the table's stub cells and it
 #' is useful when applying a footnote with [tab_footnote()] or adding a custom
 #' style with [tab_style()]. The function is expressly used in each of those
 #' functions' `locations` argument.
 #'
-#' When using any of the location helper functions with an appropriate function
-#' that has a `locations` argument, multiple locations can be targeted by
-#' enclosing several `cells_*()` helper functions in a `list()`. The following
-#' helper functions can be used to target cells (roughly in order from the top
-#' to the bottom of a table):
-#' \itemize{
-#' \item [cells_title()]: targets the table title or the table subtitle
-#' depending on the value given to the `groups` argument (`"title"` or
-#' `"subtitle"`).
-#' \item [cells_stubhead()]: targets the stubhead location, a cell of which is
-#' only available when there is a stub; a label in that location can be created
-#' by using the [tab_stubhead()] function.
-#' \item [cells_column_spanners()]: targets the spanner column labels, which
-#' appear above the column labels.
-#' \item [cells_column_labels()]: targets the column labels.
-#' \item [cells_row_groups()]: targets the row group labels in any available row
-#' groups using the `groups` argument.
-#' \item [cells_stub()]: targets row labels in the table stub using the `rows`
+#' @section Overview of Location Helper Functions:
+#' Location helper functions can be used to target cells with virtually any
+#' function that has a `locations` argument. Here is a listing of all of the
+#' location helper functions, with locations corresponding roughly from top to
+#' bottom of a table:
+#'
+#' - [cells_title()]: targets the table title or the table subtitle depending on
+#' the value given to the `groups` argument (`"title"` or `"subtitle"`).
+#' - [cells_stubhead()]: targets the stubhead location, a cell of which is only
+#' available when there is a stub; a label in that location can be created by
+#' using the [tab_stubhead()] function.
+#' - [cells_column_spanners()]: targets the spanner column labels with the
+#' `spanners` argument; spanner column labels appear above the column labels.
+#' - [cells_column_labels()]: targets the column labels with its `columns`
 #' argument.
-#' \item [cells_body()]: targets data cells in the table body using
-#' intersections of `columns` and `rows`.
-#' \item [cells_summary()]: targets summary cells in the table body using the
+#' - [cells_row_groups()]: targets the row group labels in any available row
+#' groups using the `groups` argument.
+#' - [cells_stub()]: targets row labels in the table stub using the `rows`
+#' argument.
+#' - [cells_body()]: targets data cells in the table body using intersections of
+#' `columns` and `rows`.
+#' - [cells_summary()]: targets summary cells in the table body using the
 #' `groups` argument and intersections of `columns` and `rows`.
-#' \item [cells_grand_summary()]: targets cells of the table's grand summary
-#' using intersections of `columns` and `rows`
-#' }
+#' - [cells_grand_summary()]: targets cells of the table's grand summary using
+#' intersections of `columns` and `rows`
+#' - [cells_stub_summary()]: targets summary row labels in the table stub using
+#' the `groups` and `rows` arguments.
+#' - [cells_stub_grand_summary()]: targets grand summary row labels in the table
+#' stub using the `rows` argument.
+#' - [cells_footnotes()]: targets all footnotes in the table footer (cannot be
+#' used with [tab_footnote()]).
+#' - [cells_source_notes()]: targets all source notes in the table footer
+#' (cannot be used with [tab_footnote()]).
+#'
+#' When using any of the location helper functions with an appropriate function
+#' that has a `locations` argument (e.g., [tab_style()]), multiple locations
+#' can be targeted by enclosing several `cells_*()` helper functions in a
+#' `list()` (e.g., `list(cells_body(), cells_grand_summary())`).
 #'
 #' @param rows The names of the rows that are to be targeted.
 #'
@@ -690,10 +770,10 @@ cells_group <- function(groups = TRUE) {
 cells_stub <- function(rows = everything()) {
 
   # Capture expression for the `rows` argument
-  row_expr <- rlang::enquo(rows)
+  rows_expr <- rlang::enquo(rows)
 
-  # Create the `cells_stub` object
-  cells <- list(rows = row_expr)
+  # Create the `cells` object
+  cells <- list(rows = rows_expr)
 
   # Apply the `cells_stub` and `location_cells` classes
   class(cells) <- c("cells_stub", "location_cells")
@@ -703,38 +783,51 @@ cells_stub <- function(rows = everything()) {
 
 #' Location helper for targeting data cells in the table body
 #'
+#' @description
 #' The `cells_body()` function is used to target the data cells in the table
 #' body. The function can be used to apply a footnote with [tab_footnote()], to
 #' add custom styling with [tab_style()], or the transform the targeted cells
 #' with [text_transform()]. The function is expressly used in each of those
 #' functions' `locations` argument.
 #'
-#' When using any of the location helper functions with an appropriate function
-#' that has a `locations` argument, multiple locations can be targeted by
-#' enclosing several `cells_*()` helper functions in a `list()`. The following
-#' helper functions can be used to target cells (roughly in order from the top
-#' to the bottom of a table):
-#' \itemize{
-#' \item [cells_title()]: targets the table title or the table subtitle
-#' depending on the value given to the `groups` argument (`"title"` or
-#' `"subtitle"`).
-#' \item [cells_stubhead()]: targets the stubhead location, a cell of which is
-#' only available when there is a stub; a label in that location can be created
-#' by using the [tab_stubhead()] function.
-#' \item [cells_column_spanners()]: targets the spanner column labels, which
-#' appear above the column labels.
-#' \item [cells_column_labels()]: targets the column labels.
-#' \item [cells_row_groups()]: targets the row group labels in any available row
-#' groups using the `groups` argument.
-#' \item [cells_stub()]: targets row labels in the table stub using the `rows`
+#' @section Overview of Location Helper Functions:
+#' Location helper functions can be used to target cells with virtually any
+#' function that has a `locations` argument. Here is a listing of all of the
+#' location helper functions, with locations corresponding roughly from top to
+#' bottom of a table:
+#'
+#' - [cells_title()]: targets the table title or the table subtitle depending on
+#' the value given to the `groups` argument (`"title"` or `"subtitle"`).
+#' - [cells_stubhead()]: targets the stubhead location, a cell of which is only
+#' available when there is a stub; a label in that location can be created by
+#' using the [tab_stubhead()] function.
+#' - [cells_column_spanners()]: targets the spanner column labels with the
+#' `spanners` argument; spanner column labels appear above the column labels.
+#' - [cells_column_labels()]: targets the column labels with its `columns`
 #' argument.
-#' \item [cells_body()]: targets data cells in the table body using
-#' intersections of `columns` and `rows`.
-#' \item [cells_summary()]: targets summary cells in the table body using the
+#' - [cells_row_groups()]: targets the row group labels in any available row
+#' groups using the `groups` argument.
+#' - [cells_stub()]: targets row labels in the table stub using the `rows`
+#' argument.
+#' - [cells_body()]: targets data cells in the table body using intersections of
+#' `columns` and `rows`.
+#' - [cells_summary()]: targets summary cells in the table body using the
 #' `groups` argument and intersections of `columns` and `rows`.
-#' \item [cells_grand_summary()]: targets cells of the table's grand summary
-#' using intersections of `columns` and `rows`
-#' }
+#' - [cells_grand_summary()]: targets cells of the table's grand summary using
+#' intersections of `columns` and `rows`
+#' - [cells_stub_summary()]: targets summary row labels in the table stub using
+#' the `groups` and `rows` arguments.
+#' - [cells_stub_grand_summary()]: targets grand summary row labels in the table
+#' stub using the `rows` argument.
+#' - [cells_footnotes()]: targets all footnotes in the table footer (cannot be
+#' used with [tab_footnote()]).
+#' - [cells_source_notes()]: targets all source notes in the table footer
+#' (cannot be used with [tab_footnote()]).
+#'
+#' When using any of the location helper functions with an appropriate function
+#' that has a `locations` argument (e.g., [tab_style()]), multiple locations
+#' can be targeted by enclosing several `cells_*()` helper functions in a
+#' `list()` (e.g., `list(cells_body(), cells_grand_summary())`).
 #'
 #' @param columns The names of the columns that are to be targeted.
 #' @param rows The names of the rows that are to be targeted.
@@ -773,14 +866,14 @@ cells_body <- function(columns = everything(),
                        rows = everything()) {
 
   # Capture expressions for the `columns` and `rows` arguments
-  col_expr <- rlang::enquo(columns)
-  row_expr <- rlang::enquo(rows)
+  columns_expr <- rlang::enquo(columns)
+  rows_expr <- rlang::enquo(rows)
 
-  # Create the `cells_body` object
+  # Create the `cells` object
   cells <-
     list(
-      columns = col_expr,
-      rows = row_expr
+      columns = columns_expr,
+      rows = rows_expr
     )
 
   # Apply the `cells_body` and `location_cells` classes
@@ -791,37 +884,50 @@ cells_body <- function(columns = everything(),
 
 #' Location helper for targeting group summary cells
 #'
+#' @description
 #' The `cells_summary()` function is used to target the cells in a group summary
 #' and it is useful when applying a footnote with [tab_footnote()] or adding a
 #' custom style with [tab_style()]. The function is expressly used in each of
 #' those functions' `locations` argument.
 #'
-#' When using any of the location helper functions with an appropriate function
-#' that has a `locations` argument, multiple locations can be targeted by
-#' enclosing several `cells_*()` helper functions in a `list()`. The following
-#' helper functions can be used to target cells (roughly in order from the top
-#' to the bottom of a table):
-#' \itemize{
-#' \item [cells_title()]: targets the table title or the table subtitle
-#' depending on the value given to the `groups` argument (`"title"` or
-#' `"subtitle"`).
-#' \item [cells_stubhead()]: targets the stubhead location, a cell of which is
-#' only available when there is a stub; a label in that location can be created
-#' by using the [tab_stubhead()] function.
-#' \item [cells_column_spanners()]: targets the spanner column labels, which
-#' appear above the column labels.
-#' \item [cells_column_labels()]: targets the column labels.
-#' \item [cells_row_groups()]: targets the row group labels in any available row
-#' groups using the `groups` argument.
-#' \item [cells_stub()]: targets row labels in the table stub using the `rows`
+#' @section Overview of Location Helper Functions:
+#' Location helper functions can be used to target cells with virtually any
+#' function that has a `locations` argument. Here is a listing of all of the
+#' location helper functions, with locations corresponding roughly from top to
+#' bottom of a table:
+#'
+#' - [cells_title()]: targets the table title or the table subtitle depending on
+#' the value given to the `groups` argument (`"title"` or `"subtitle"`).
+#' - [cells_stubhead()]: targets the stubhead location, a cell of which is only
+#' available when there is a stub; a label in that location can be created by
+#' using the [tab_stubhead()] function.
+#' - [cells_column_spanners()]: targets the spanner column labels with the
+#' `spanners` argument; spanner column labels appear above the column labels.
+#' - [cells_column_labels()]: targets the column labels with its `columns`
 #' argument.
-#' \item [cells_body()]: targets data cells in the table body using
-#' intersections of `columns` and `rows`.
-#' \item [cells_summary()]: targets summary cells in the table body using the
+#' - [cells_row_groups()]: targets the row group labels in any available row
+#' groups using the `groups` argument.
+#' - [cells_stub()]: targets row labels in the table stub using the `rows`
+#' argument.
+#' - [cells_body()]: targets data cells in the table body using intersections of
+#' `columns` and `rows`.
+#' - [cells_summary()]: targets summary cells in the table body using the
 #' `groups` argument and intersections of `columns` and `rows`.
-#' \item [cells_grand_summary()]: targets cells of the table's grand summary
-#' using intersections of `columns` and `rows`
-#' }
+#' - [cells_grand_summary()]: targets cells of the table's grand summary using
+#' intersections of `columns` and `rows`
+#' - [cells_stub_summary()]: targets summary row labels in the table stub using
+#' the `groups` and `rows` arguments.
+#' - [cells_stub_grand_summary()]: targets grand summary row labels in the table
+#' stub using the `rows` argument.
+#' - [cells_footnotes()]: targets all footnotes in the table footer (cannot be
+#' used with [tab_footnote()]).
+#' - [cells_source_notes()]: targets all source notes in the table footer
+#' (cannot be used with [tab_footnote()]).
+#'
+#' When using any of the location helper functions with an appropriate function
+#' that has a `locations` argument (e.g., [tab_style()]), multiple locations
+#' can be targeted by enclosing several `cells_*()` helper functions in a
+#' `list()` (e.g., `list(cells_body(), cells_grand_summary())`).
 #'
 #' @param groups The names of the groups that the summary rows reside in.
 #' @param columns The names of the columns that are to be targeted.
@@ -897,16 +1003,16 @@ cells_summary <- function(groups = everything(),
 
   # Capture expressions for the `groups`,
   # `columns`, and `rows` arguments
-  group_expr <- rlang::enquo(groups)
-  col_expr <- rlang::enquo(columns)
-  row_expr <- rlang::enquo(rows)
+  groups_expr <- rlang::enquo(groups)
+  columns_expr <- rlang::enquo(columns)
+  rows_expr <- rlang::enquo(rows)
 
-  # Create the `cells_summary` object
+  # Create the `cells` object
   cells <-
     list(
-      groups = group_expr,
-      columns = col_expr,
-      rows = row_expr
+      groups = groups_expr,
+      columns = columns_expr,
+      rows = rows_expr
     )
 
   # Apply the `cells_summary` and `location_cells` classes
@@ -917,37 +1023,50 @@ cells_summary <- function(groups = everything(),
 
 #' Location helper for targeting cells in a grand summary
 #'
+#' @description
 #' The `cells_grand_summary()` function is used to target the cells in a grand
 #' summary and it is useful when applying a footnote with [tab_footnote()] or
 #' adding custom styles with [tab_style()]. The function is expressly used in
 #' each of those functions' `locations` argument.
 #'
-#' When using any of the location helper functions with an appropriate function
-#' that has a `locations` argument, multiple locations can be targeted by
-#' enclosing several `cells_*()` helper functions in a `list()`. The following
-#' helper functions can be used to target cells (roughly in order from the top
-#' to the bottom of a table):
-#' \itemize{
-#' \item [cells_title()]: targets the table title or the table subtitle
-#' depending on the value given to the `groups` argument (`"title"` or
-#' `"subtitle"`).
-#' \item [cells_stubhead()]: targets the stubhead location, a cell of which is
-#' only available when there is a stub; a label in that location can be created
-#' by using the [tab_stubhead()] function.
-#' \item [cells_column_spanners()]: targets the spanner column labels, which
-#' appear above the column labels.
-#' \item [cells_column_labels()]: targets the column labels.
-#' \item [cells_row_groups()]: targets the row group labels in any available row
-#' groups using the `groups` argument.
-#' \item [cells_stub()]: targets row labels in the table stub using the `rows`
+#' @section Overview of Location Helper Functions:
+#' Location helper functions can be used to target cells with virtually any
+#' function that has a `locations` argument. Here is a listing of all of the
+#' location helper functions, with locations corresponding roughly from top to
+#' bottom of a table:
+#'
+#' - [cells_title()]: targets the table title or the table subtitle depending on
+#' the value given to the `groups` argument (`"title"` or `"subtitle"`).
+#' - [cells_stubhead()]: targets the stubhead location, a cell of which is only
+#' available when there is a stub; a label in that location can be created by
+#' using the [tab_stubhead()] function.
+#' - [cells_column_spanners()]: targets the spanner column labels with the
+#' `spanners` argument; spanner column labels appear above the column labels.
+#' - [cells_column_labels()]: targets the column labels with its `columns`
 #' argument.
-#' \item [cells_body()]: targets data cells in the table body using
-#' intersections of `columns` and `rows`.
-#' \item [cells_summary()]: targets summary cells in the table body using the
+#' - [cells_row_groups()]: targets the row group labels in any available row
+#' groups using the `groups` argument.
+#' - [cells_stub()]: targets row labels in the table stub using the `rows`
+#' argument.
+#' - [cells_body()]: targets data cells in the table body using intersections of
+#' `columns` and `rows`.
+#' - [cells_summary()]: targets summary cells in the table body using the
 #' `groups` argument and intersections of `columns` and `rows`.
-#' \item [cells_grand_summary()]: targets cells of the table's grand summary
-#' using intersections of `columns` and `rows`
-#' }
+#' - [cells_grand_summary()]: targets cells of the table's grand summary using
+#' intersections of `columns` and `rows`
+#' - [cells_stub_summary()]: targets summary row labels in the table stub using
+#' the `groups` and `rows` arguments.
+#' - [cells_stub_grand_summary()]: targets grand summary row labels in the table
+#' stub using the `rows` argument.
+#' - [cells_footnotes()]: targets all footnotes in the table footer (cannot be
+#' used with [tab_footnote()]).
+#' - [cells_source_notes()]: targets all source notes in the table footer
+#' (cannot be used with [tab_footnote()]).
+#'
+#' When using any of the location helper functions with an appropriate function
+#' that has a `locations` argument (e.g., [tab_style()]), multiple locations
+#' can be targeted by enclosing several `cells_*()` helper functions in a
+#' `list()` (e.g., `list(cells_body(), cells_grand_summary())`).
 #'
 #' @param columns The names of the columns that are to be targeted.
 #' @param rows The names of the rows that are to be targeted.
@@ -1000,21 +1119,449 @@ cells_summary <- function(groups = everything(),
 cells_grand_summary <- function(columns = everything(),
                                 rows = everything()) {
 
-  # Capture expressions for the `columns`
-  # and `rows` arguments
-  col_expr <- rlang::enquo(columns)
-  row_expr <- rlang::enquo(rows)
+  # Capture expressions for the `columns` and `rows` arguments
+  columns_expr <- rlang::enquo(columns)
+  rows_expr <- rlang::enquo(rows)
 
-  # Create the `cells_grand_summary` object
+  # Create the `cells` object
   cells <-
     list(
-      columns = col_expr,
-      rows = row_expr
+      columns = columns_expr,
+      rows = rows_expr
     )
 
-  # Apply the `cells_grand_summary` and
-  # `location_cells` classes
+  # Apply the `cells_grand_summary` and `location_cells` classes
   class(cells) <- c("cells_grand_summary", "location_cells")
+
+  cells
+}
+
+#' Location helper for targeting the stub cells in a summary
+#'
+#' @description
+#' The `cells_stub_summary()` function is used to target the stub cells of
+#' summary and it is useful when applying a footnote with [tab_footnote()] or
+#' adding custom styles with [tab_style()]. The function is expressly used in
+#' each of those functions' `locations` argument.
+#'
+#' @section Overview of Location Helper Functions:
+#' Location helper functions can be used to target cells with virtually any
+#' function that has a `locations` argument. Here is a listing of all of the
+#' location helper functions, with locations corresponding roughly from top to
+#' bottom of a table:
+#'
+#' - [cells_title()]: targets the table title or the table subtitle depending on
+#' the value given to the `groups` argument (`"title"` or `"subtitle"`).
+#' - [cells_stubhead()]: targets the stubhead location, a cell of which is only
+#' available when there is a stub; a label in that location can be created by
+#' using the [tab_stubhead()] function.
+#' - [cells_column_spanners()]: targets the spanner column labels with the
+#' `spanners` argument; spanner column labels appear above the column labels.
+#' - [cells_column_labels()]: targets the column labels with its `columns`
+#' argument.
+#' - [cells_row_groups()]: targets the row group labels in any available row
+#' groups using the `groups` argument.
+#' - [cells_stub()]: targets row labels in the table stub using the `rows`
+#' argument.
+#' - [cells_body()]: targets data cells in the table body using intersections of
+#' `columns` and `rows`.
+#' - [cells_summary()]: targets summary cells in the table body using the
+#' `groups` argument and intersections of `columns` and `rows`.
+#' - [cells_grand_summary()]: targets cells of the table's grand summary using
+#' intersections of `columns` and `rows`
+#' - [cells_stub_summary()]: targets summary row labels in the table stub using
+#' the `groups` and `rows` arguments.
+#' - [cells_stub_grand_summary()]: targets grand summary row labels in the table
+#' stub using the `rows` argument.
+#' - [cells_footnotes()]: targets all footnotes in the table footer (cannot be
+#' used with [tab_footnote()]).
+#' - [cells_source_notes()]: targets all source notes in the table footer
+#' (cannot be used with [tab_footnote()]).
+#'
+#' When using any of the location helper functions with an appropriate function
+#' that has a `locations` argument (e.g., [tab_style()]), multiple locations
+#' can be targeted by enclosing several `cells_*()` helper functions in a
+#' `list()` (e.g., `list(cells_body(), cells_grand_summary())`).
+#'
+#' @param groups The names of the groups that are to be targeted.
+#' @param rows The names of the rows that are to be targeted.
+#'
+#' @return A list object with the classes `cells_stub_summary` and
+#'   `location_cells`.
+#'
+#' @examples
+#' # Use `countrypops` to create a gt table; add
+#' # some styling to the summary data stub cells
+#' # with `tab_style()` and `cells_stub_summary()`
+#' tab_1 <-
+#'   countrypops %>%
+#'   dplyr::filter(
+#'     country_name == "Japan",
+#'     year < 1970) %>%
+#'   dplyr::select(-contains("country")) %>%
+#'   dplyr::mutate(
+#'     decade = paste0(substr(year, 1, 3), "0s")
+#'   ) %>%
+#'   dplyr::group_by(decade) %>%
+#'   gt(
+#'     rowname_col = "year",
+#'     groupname_col = "decade"
+#'   ) %>%
+#'   fmt_number(
+#'     columns = population,
+#'     decimals = 0
+#'   ) %>%
+#'   summary_rows(
+#'     groups = "1960s",
+#'     columns = population,
+#'     fns = list("min", "max"),
+#'     formatter = fmt_number,
+#'     decimals = 0
+#'   ) %>%
+#'   tab_style(
+#'     style = list(
+#'       cell_text(
+#'         weight = "bold",
+#'         transform = "capitalize"
+#'       ),
+#'       cell_fill(
+#'         color = "lightblue",
+#'         alpha = 0.5
+#'       )
+#'     ),
+#'     locations = cells_stub_summary(
+#'       groups = "1960s"
+#'     )
+#'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_cells_stub_summary_1.png}{options: width=100\%}}
+#'
+#' @family Helper Functions
+#' @section Function ID:
+#' 7-14
+#'
+#' @import rlang
+#' @export
+cells_stub_summary <- function(groups = everything(),
+                               rows = everything()) {
+
+  # Capture expressions for the `groups` and `rows` arguments
+  groups_expr <- rlang::enquo(groups)
+  rows_expr <- rlang::enquo(rows)
+
+  # Create the `cells` object
+  cells <-
+    list(
+      groups = groups_expr,
+      rows = rows_expr
+    )
+
+  # Apply the `cells_stub_summary` and `location_cells` classes
+  class(cells) <- c("cells_stub_summary", "location_cells")
+
+  cells
+}
+
+#' Location helper for targeting the stub cells in a grand summary
+#'
+#' @description
+#' The `cells_stub_summary()` function is used to target the stub cells of a
+#' grand summary and it is useful when applying a footnote with [tab_footnote()]
+#' or adding custom styles with [tab_style()]. The function is expressly used in
+#' each of those functions' `locations` argument.
+#'
+#' @section Overview of Location Helper Functions:
+#' Location helper functions can be used to target cells with virtually any
+#' function that has a `locations` argument. Here is a listing of all of the
+#' location helper functions, with locations corresponding roughly from top to
+#' bottom of a table:
+#'
+#' - [cells_title()]: targets the table title or the table subtitle depending on
+#' the value given to the `groups` argument (`"title"` or `"subtitle"`).
+#' - [cells_stubhead()]: targets the stubhead location, a cell of which is only
+#' available when there is a stub; a label in that location can be created by
+#' using the [tab_stubhead()] function.
+#' - [cells_column_spanners()]: targets the spanner column labels with the
+#' `spanners` argument; spanner column labels appear above the column labels.
+#' - [cells_column_labels()]: targets the column labels with its `columns`
+#' argument.
+#' - [cells_row_groups()]: targets the row group labels in any available row
+#' groups using the `groups` argument.
+#' - [cells_stub()]: targets row labels in the table stub using the `rows`
+#' argument.
+#' - [cells_body()]: targets data cells in the table body using intersections of
+#' `columns` and `rows`.
+#' - [cells_summary()]: targets summary cells in the table body using the
+#' `groups` argument and intersections of `columns` and `rows`.
+#' - [cells_grand_summary()]: targets cells of the table's grand summary using
+#' intersections of `columns` and `rows`
+#' - [cells_stub_summary()]: targets summary row labels in the table stub using
+#' the `groups` and `rows` arguments.
+#' - [cells_stub_grand_summary()]: targets grand summary row labels in the table
+#' stub using the `rows` argument.
+#' - [cells_footnotes()]: targets all footnotes in the table footer (cannot be
+#' used with [tab_footnote()]).
+#' - [cells_source_notes()]: targets all source notes in the table footer
+#' (cannot be used with [tab_footnote()]).
+#'
+#' When using any of the location helper functions with an appropriate function
+#' that has a `locations` argument (e.g., [tab_style()]), multiple locations
+#' can be targeted by enclosing several `cells_*()` helper functions in a
+#' `list()` (e.g., `list(cells_body(), cells_grand_summary())`).
+#'
+#' @param rows The names of the rows that are to be targeted.
+#'
+#' @return A list object with the classes `cells_stub_grand_summary` and
+#'   `location_cells`.
+#'
+#' @examples
+#' # Use `countrypops` to create a gt table;
+#' # add some styling to a grand summary stub
+#' # cell with with the `tab_style()` and
+#' # `cells_stub_grand_summary()` functions
+#' tab_1 <-
+#'   countrypops %>%
+#'   dplyr::filter(
+#'     country_name == "Spain",
+#'     year < 1970
+#'   ) %>%
+#'   dplyr::select(-contains("country")) %>%
+#'   gt(rowname_col = "year") %>%
+#'   fmt_number(
+#'     columns = population,
+#'     decimals = 0
+#'   ) %>%
+#'   grand_summary_rows(
+#'     columns = population,
+#'     fns = list(
+#'       change = ~max(.) - min(.)
+#'     ),
+#'     formatter = fmt_number,
+#'     decimals = 0
+#'   ) %>%
+#'   tab_style(
+#'     style = cell_text(weight = "bold", transform = "uppercase"),
+#'     locations = cells_stub_grand_summary(rows = "change")
+#'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_cells_stub_grand_summary_1.png}{options: width=100\%}}
+#'
+#' @family Helper Functions
+#' @section Function ID:
+#' 7-15
+#'
+#' @import rlang
+#' @export
+cells_stub_grand_summary <- function(rows = everything()) {
+
+  # Capture expressions for the `rows` arguments
+  rows_expr <- rlang::enquo(rows)
+
+  # Create the `cells` object
+  cells <- list(rows = rows_expr)
+
+  # Apply the `cells_stub_grand_summary` and `location_cells` classes
+  class(cells) <- c("cells_stub_grand_summary", "location_cells")
+
+  cells
+}
+
+#' Location helper for targeting the footnotes
+#'
+#' @description
+#' The `cells_footnotes()` function is used to target all footnotes in the
+#' footer section of the table. This is useful for adding custom styles to the
+#' footnotes with [tab_style()] (using the `locations` argument). This helper
+#' function cannot be used for the `locations` argument of [tab_footnote()] and
+#' doing so will result in a warning (with no change made to the table).
+#'
+#' @section Overview of Location Helper Functions:
+#' Location helper functions can be used to target cells with virtually any
+#' function that has a `locations` argument. Here is a listing of all of the
+#' location helper functions, with locations corresponding roughly from top to
+#' bottom of a table:
+#'
+#' - [cells_title()]: targets the table title or the table subtitle depending on
+#' the value given to the `groups` argument (`"title"` or `"subtitle"`).
+#' - [cells_stubhead()]: targets the stubhead location, a cell of which is only
+#' available when there is a stub; a label in that location can be created by
+#' using the [tab_stubhead()] function.
+#' - [cells_column_spanners()]: targets the spanner column labels with the
+#' `spanners` argument; spanner column labels appear above the column labels.
+#' - [cells_column_labels()]: targets the column labels with its `columns`
+#' argument.
+#' - [cells_row_groups()]: targets the row group labels in any available row
+#' groups using the `groups` argument.
+#' - [cells_stub()]: targets row labels in the table stub using the `rows`
+#' argument.
+#' - [cells_body()]: targets data cells in the table body using intersections of
+#' `columns` and `rows`.
+#' - [cells_summary()]: targets summary cells in the table body using the
+#' `groups` argument and intersections of `columns` and `rows`.
+#' - [cells_grand_summary()]: targets cells of the table's grand summary using
+#' intersections of `columns` and `rows`
+#' - [cells_stub_summary()]: targets summary row labels in the table stub using
+#' the `groups` and `rows` arguments.
+#' - [cells_stub_grand_summary()]: targets grand summary row labels in the table
+#' stub using the `rows` argument.
+#' - [cells_footnotes()]: targets all footnotes in the table footer (cannot be
+#' used with [tab_footnote()]).
+#' - [cells_source_notes()]: targets all source notes in the table footer
+#' (cannot be used with [tab_footnote()]).
+#'
+#' When using any of the location helper functions with an appropriate function
+#' that has a `locations` argument (e.g., [tab_style()]), multiple locations
+#' can be targeted by enclosing several `cells_*()` helper functions in a
+#' `list()` (e.g., `list(cells_body(), cells_grand_summary())`).
+#'
+#' @return A list object with the classes `cells_footnotes` and
+#'   `location_cells`.
+#'
+#' @examples
+#' # Use `sza` to create a gt table; color
+#' # the `sza` column using the `data_color()`
+#' # function, add a footnote and also style
+#' # the footnotes section
+#' tab_1 <-
+#'   sza %>%
+#'   dplyr::filter(
+#'     latitude == 20 &
+#'       month == "jan" &
+#'       !is.na(sza)
+#'   ) %>%
+#'   dplyr::select(-latitude, -month) %>%
+#'   gt() %>%
+#'   data_color(
+#'     columns = sza,
+#'     colors = scales::col_numeric(
+#'       palette = c("white", "yellow", "navyblue"),
+#'       domain = c(0, 90)
+#'     )
+#'   ) %>%
+#'   tab_footnote(
+#'     footnote = "Color indicates height of sun.",
+#'     locations = cells_column_labels(
+#'       columns = sza
+#'     )
+#'   ) %>%
+#'   tab_options(table.width = px(320)) %>%
+#'   tab_style(
+#'     style = list(
+#'       cell_text(size = "smaller"),
+#'       cell_fill(color = "gray90")
+#'       ),
+#'     locations = cells_footnotes()
+#'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_cells_footnotes_1.png}{options: width=100\%}}
+#'
+#' @family Helper Functions
+#' @section Function ID:
+#' 7-16
+#'
+#' @import rlang
+#' @export
+cells_footnotes <- function() {
+
+  # Create the `cells` object
+  cells <- list(groups = "footnotes")
+
+  # Apply the `cells_footnotes` and `location_cells` classes
+  class(cells) <- c("cells_footnotes", "location_cells")
+
+  cells
+}
+
+#' Location helper for targeting the source notes
+#'
+#' @description
+#' The `cells_source_notes()` function is used to target all source notes in the
+#' footer section of the table. This is useful for adding custom styles to the
+#' source notes with [tab_style()] (using the `locations` argument). This helper
+#' function cannot be used for the `locations` argument of [tab_footnote()] and
+#' doing so will result in a warning (with no change made to the table).
+#'
+#' @section Overview of Location Helper Functions:
+#' Location helper functions can be used to target cells with virtually any
+#' function that has a `locations` argument. Here is a listing of all of the
+#' location helper functions, with locations corresponding roughly from top to
+#' bottom of a table:
+#'
+#' - [cells_title()]: targets the table title or the table subtitle depending on
+#' the value given to the `groups` argument (`"title"` or `"subtitle"`).
+#' - [cells_stubhead()]: targets the stubhead location, a cell of which is only
+#' available when there is a stub; a label in that location can be created by
+#' using the [tab_stubhead()] function.
+#' - [cells_column_spanners()]: targets the spanner column labels with the
+#' `spanners` argument; spanner column labels appear above the column labels.
+#' - [cells_column_labels()]: targets the column labels with its `columns`
+#' argument.
+#' - [cells_row_groups()]: targets the row group labels in any available row
+#' groups using the `groups` argument.
+#' - [cells_stub()]: targets row labels in the table stub using the `rows`
+#' argument.
+#' - [cells_body()]: targets data cells in the table body using intersections of
+#' `columns` and `rows`.
+#' - [cells_summary()]: targets summary cells in the table body using the
+#' `groups` argument and intersections of `columns` and `rows`.
+#' - [cells_grand_summary()]: targets cells of the table's grand summary using
+#' intersections of `columns` and `rows`
+#' - [cells_stub_summary()]: targets summary row labels in the table stub using
+#' the `groups` and `rows` arguments.
+#' - [cells_stub_grand_summary()]: targets grand summary row labels in the table
+#' stub using the `rows` argument.
+#' - [cells_footnotes()]: targets all footnotes in the table footer (cannot be
+#' used with [tab_footnote()]).
+#' - [cells_source_notes()]: targets all source notes in the table footer
+#' (cannot be used with [tab_footnote()]).
+#'
+#' When using any of the location helper functions with an appropriate function
+#' that has a `locations` argument (e.g., [tab_style()]), multiple locations
+#' can be targeted by enclosing several `cells_*()` helper functions in a
+#' `list()` (e.g., `list(cells_body(), cells_grand_summary())`).
+#'
+#' @return A list object with the classes `cells_source_notes` and
+#'   `location_cells`.
+#'
+#' @examples
+#' # Use `gtcars` to create a gt table;
+#' # add a source note and style the
+#' # source notes section
+#' tab_1 <-
+#'   gtcars %>%
+#'   dplyr::select(mfr, model, msrp) %>%
+#'   dplyr::slice(1:5) %>%
+#'   gt() %>%
+#'   tab_source_note(
+#'     source_note = "From edmunds.com"
+#'   ) %>%
+#'   tab_style(
+#'     style = cell_text(
+#'       color = "#A9A9A9",
+#'       size = "small"
+#'     ),
+#'     locations = cells_source_notes()
+#'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_cells_source_notes_1.png}{options: width=100\%}}
+#'
+#' @family Helper Functions
+#' @section Function ID:
+#' 7-17
+#'
+#' @import rlang
+#' @export
+cells_source_notes <- function() {
+
+  # Create the `cells` object
+  cells <- list(groups = "source_notes")
+
+  # Apply the `cells_source_notes` and `location_cells` classes
+  class(cells) <- c("cells_source_notes", "location_cells")
 
   cells
 }
@@ -1067,7 +1614,7 @@ cells_grand_summary <- function(columns = everything(),
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-14
+#' 7-18
 #'
 #' @export
 currency <- function(...,
@@ -1183,7 +1730,7 @@ currency <- function(...,
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-15
+#' 7-19
 #'
 #' @export
 cell_text <- function(color = NULL,
@@ -1334,7 +1881,7 @@ cell_style_to_html.cell_text <- function(style) {
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-16
+#' 7-20
 #'
 #' @export
 cell_fill <- function(color = "#D3D3D3",
@@ -1448,7 +1995,7 @@ cell_style_to_html.cell_fill <- function(style) {
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-17
+#' 7-21
 #'
 #' @export
 cell_borders <- function(sides = "all",
@@ -1621,7 +2168,7 @@ cell_style_structure <- function(name, obj, subclass = name) {
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-18
+#' 7-22
 #'
 #' @export
 google_font <- function(name) {
@@ -1687,7 +2234,7 @@ google_font <- function(name) {
 #' @family Helper Functions
 #'
 #' @section Function ID:
-#' 7-19
+#' 7-23
 #'
 #' @export
 default_fonts <- function() {
@@ -1765,7 +2312,7 @@ default_fonts <- function() {
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-20
+#' 7-24
 #'
 #' @export
 adjust_luminance <- function(colors,
@@ -1818,7 +2365,7 @@ adjust_luminance <- function(colors,
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-21
+#' 7-25
 #'
 #' @export
 random_id <- function(n = 10) {
@@ -1839,7 +2386,7 @@ random_id <- function(n = 10) {
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-22
+#' 7-26
 #'
 #' @export
 escape_latex <- function(text) {
@@ -1891,7 +2438,7 @@ escape_latex <- function(text) {
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-23
+#' 7-27
 #'
 #' @export
 gt_latex_dependencies <- function() {
