@@ -389,12 +389,26 @@ tab_row_group <- function(data,
                           label,
                           rows,
                           id = label,
-                          others_label = NULL) {
+                          others_label = NULL,
+                          group = NULL) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
   arrange_groups_vars <- dt_row_groups_get(data = data)
+
+  if (!missing(group)) {
+
+    if (missing(label)) {
+      label <- group
+    }
+
+    warning(
+      "The `group` argument has been deprecated in gt 0.3.3:\n",
+      "* use the `label` argument to specify the group label.",
+      call. = FALSE
+    )
+  }
 
   # Warn user about `others_label` deprecation
   if (!is.null(others_label)) {
