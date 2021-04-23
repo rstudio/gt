@@ -337,6 +337,7 @@ tab_spanner_delim <- function(data,
 #'   function will stop if `id` isn't unique).
 #' @param others_label This argument is deprecated. Instead use
 #'   `tab_options(row_group.default_label = <label>)`.
+#' @param group This argument is deprecated. Instead use `label`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
