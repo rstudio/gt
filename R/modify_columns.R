@@ -213,10 +213,15 @@ cols_width <- function(data,
 
     cols <- width_item %>% rlang::f_lhs()
 
+    # The default use of `resolve_cols_c()` won't work here if there
+    # is a table stub column (because we need to be able to set the
+    # stub column width and, by default, `resolve_cols_c()` excludes
+    # the stub); to prevent this exclusion, we set `excl_stub` to FALSE
     columns <-
       resolve_cols_c(
         expr = !!cols,
-        data = data
+        data = data,
+        excl_stub = FALSE
       ) %>%
       base::setdiff(columns_used)
 
