@@ -1253,7 +1253,7 @@ create_body_component_rtf <- function(data) {
 
         summary_df <-
           list_of_summaries$summary_df_display_list[[
-            which(names(list_of_summaries$summary_df_display_list) == group)]] %>%
+            which(names(list_of_summaries$summary_df_display_list) == group_id)]] %>%
           as.data.frame(stringsAsFactors = FALSE)
 
         for (j in seq_len(nrow(summary_df))) {
