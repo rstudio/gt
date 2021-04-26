@@ -46,8 +46,8 @@ gt_tbl %>%
 # filling the remaining width)
 gt_tbl %>%
   cols_width(
-    vars(num) ~ px(120),
-    vars(char) ~ px(140)
+    num ~ px(120),
+    char ~ px(140)
   ) %>%
   tab_options(table.width = px(400)) %>%
   gtsave("tests/gt-examples/rtf_output/col_widths_1_3.rtf")
@@ -71,8 +71,8 @@ gt_tbl %>%
 # filling the remaining width)
 gt_tbl %>%
   cols_width(
-    vars(row) ~ pct(5), # this is the stub column
-    vars(char) ~ pct(10)
+    row ~ pct(5), # this is the stub column
+    char ~ pct(10)
   ) %>%
   tab_options(table.width = px(400)) %>%
   gtsave("tests/gt-examples/rtf_output/col_widths_1_5.rtf")
@@ -86,10 +86,10 @@ gt_tbl %>%
 # for the column widths
 gt_tbl %>%
   cols_width(
-    vars(row) ~ px(100),
-    vars(num) ~ px(100),
-    vars(char) ~ pct(10),
-    vars(datetime) ~ pct(10)
+    row ~ px(100),
+    num ~ px(100),
+    char ~ pct(10),
+    datetime ~ pct(10)
   ) %>%
   tab_options(table.width = px(400)) %>%
   gtsave("tests/gt-examples/rtf_output/col_widths_1_6.rtf")
@@ -103,8 +103,8 @@ gt_tbl %>%
 # matter what values are given for the column widths
 gt_tbl %>%
   cols_width(
-    vars(num) ~ px(100),
-    vars(char) ~ pct(50)
+    num ~ px(100),
+    char ~ pct(50)
   ) %>%
   tab_options(table.width = px(400)) %>%
   gtsave("tests/gt-examples/rtf_output/col_widths_1_7.rtf")
@@ -154,16 +154,16 @@ gt_tbl %>%
 # filling the remaining width)
 gt_tbl %>%
   cols_width(
-    vars(num) ~ px(120),
-    vars(char) ~ px(140)
+    num ~ px(120),
+    char ~ px(140)
   ) %>%
   tab_options(table.width = pct(100)) %>%
   gtsave("tests/gt-examples/rtf_output/col_widths_2_3a.rtf")
 
 gt_tbl %>%
   cols_width(
-    vars(num) ~ px(120),
-    vars(char) ~ px(140)
+    num ~ px(120),
+    char ~ px(140)
   ) %>%
   tab_options(table.width = pct(80)) %>%
   gtsave("tests/gt-examples/rtf_output/col_widths_2_3b.rtf")
@@ -194,16 +194,16 @@ gt_tbl %>%
 # filling the remaining width)
 gt_tbl %>%
   cols_width(
-    vars(row) ~ pct(5), # this is the stub column
-    vars(char) ~ pct(10)
+    row ~ pct(5), # this is the stub column
+    char ~ pct(10)
   ) %>%
   tab_options(table.width = pct(100)) %>%
   gtsave("tests/gt-examples/rtf_output/col_widths_2_5a.rtf")
 
 gt_tbl %>%
   cols_width(
-    vars(row) ~ pct(5), # this is the stub column
-    vars(char) ~ pct(10)
+    row ~ pct(5), # this is the stub column
+    char ~ pct(10)
   ) %>%
   tab_options(table.width = pct(80)) %>%
   gtsave("tests/gt-examples/rtf_output/col_widths_2_5b.rtf")
@@ -217,20 +217,20 @@ gt_tbl %>%
 # for the column widths
 gt_tbl %>%
   cols_width(
-    vars(row) ~ px(100),
-    vars(num) ~ px(100),
-    vars(char) ~ pct(10),
-    vars(datetime) ~ pct(10)
+    row ~ px(100),
+    num ~ px(100),
+    char ~ pct(10),
+    datetime ~ pct(10)
   ) %>%
   tab_options(table.width = pct(100)) %>%
   gtsave("tests/gt-examples/rtf_output/col_widths_2_6a.rtf")
 
 gt_tbl %>%
   cols_width(
-    vars(row) ~ px(100),
-    vars(num) ~ px(100),
-    vars(char) ~ pct(10),
-    vars(datetime) ~ pct(10)
+    row ~ px(100),
+    num ~ px(100),
+    char ~ pct(10),
+    datetime ~ pct(10)
   ) %>%
   tab_options(table.width = pct(80)) %>%
   gtsave("tests/gt-examples/rtf_output/col_widths_2_6b.rtf")
@@ -244,16 +244,16 @@ gt_tbl %>%
 # matter what values are given for the column widths
 gt_tbl %>%
   cols_width(
-    vars(num) ~ px(100),
-    vars(char) ~ pct(50)
+    num ~ px(100),
+    char ~ pct(50)
   ) %>%
   tab_options(table.width = pct(100)) %>%
   gtsave("tests/gt-examples/rtf_output/col_widths_2_7a.rtf")
 
 gt_tbl %>%
   cols_width(
-    vars(num) ~ px(100),
-    vars(char) ~ pct(50)
+    num ~ px(100),
+    char ~ pct(50)
   ) %>%
   tab_options(table.width = pct(80)) %>%
   gtsave("tests/gt-examples/rtf_output/col_widths_2_7b.rtf")
@@ -288,8 +288,8 @@ gt_tbl %>%
 # filling the remaining width)
 gt_tbl %>%
   cols_width(
-    vars(num) ~ px(120),
-    vars(char) ~ px(140)
+    num ~ px(120),
+    char ~ px(140)
   ) %>%
   gtsave("tests/gt-examples/rtf_output/col_widths_3_3.rtf")
 
@@ -300,10 +300,10 @@ gt_tbl %>%
 # NOTE: we intervene and set the table width to 100%
 gt_tbl %>%
   cols_width(
-    vars(row) ~ pct(30),
-    vars(num) ~ pct(30),
-    vars(char) ~ pct(10),
-    vars(datetime) ~ pct(10)
+    row ~ pct(30),
+    num ~ pct(30),
+    char ~ pct(10),
+    datetime ~ pct(10)
   ) %>%
   gtsave("tests/gt-examples/rtf_output/col_widths_3_4.rtf")
 
@@ -315,8 +315,8 @@ gt_tbl %>%
 # intervention, the table width goes to 100%
 gt_tbl %>%
   cols_width(
-    vars(row) ~ pct(10), # this is the stub column
-    vars(char) ~ pct(10)
+    row ~ pct(10), # this is the stub column
+    char ~ pct(10)
   ) %>%
   gtsave("tests/gt-examples/rtf_output/col_widths_3_5.rtf")
 
@@ -328,10 +328,10 @@ gt_tbl %>%
 # intervention, the table width goes to 100%
 gt_tbl %>%
   cols_width(
-    vars(row) ~ px(100),
-    vars(num) ~ px(100),
-    vars(char) ~ pct(10),
-    vars(datetime) ~ pct(10)
+    row ~ px(100),
+    num ~ px(100),
+    char ~ pct(10),
+    datetime ~ pct(10)
   ) %>%
   gtsave("tests/gt-examples/rtf_output/col_widths_3_6.rtf")
 
@@ -343,8 +343,8 @@ gt_tbl %>%
 # content
 gt_tbl %>%
   cols_width(
-    vars(num) ~ px(100),
-    vars(char) ~ pct(50)
+    num ~ px(100),
+    char ~ pct(50)
   ) %>%
   gtsave("tests/gt-examples/rtf_output/col_widths_3_7.rtf")
 
