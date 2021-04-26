@@ -135,7 +135,9 @@ summary_rows <- function(data,
       dplyr::mutate(rowname = rep("", nrow(data$`_data`))) %>%
       dplyr::select(dplyr::everything(), rowname)
 
-    # Place the `rowname` values into `stub_df$rowname`
+    # Place the `rowname` values into `stub_df$rowname`; these are
+    # empty strings which will provide an empty stub for locations
+    # adjacent to the body rows
     stub_df[["rowname"]] <- ""
 
     data <- dt_stub_df_set(data = data, stub_df = stub_df)
