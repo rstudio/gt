@@ -326,8 +326,8 @@ abs_len_to_twips <- function(lengths_df) {
 # length-1 vector and the latter should be a vector with as many
 # elements as there are visible columns in the gt table
 col_width_resolver_rtf <- function(table_width,
-                                   col_widths,
-                                   n_cols) {
+                                   col_widths = NULL,
+                                   n_cols = length(col_widths)) {
 
   rtf_page_width <- getOption("gt.rtf_page_width")
 
@@ -353,13 +353,6 @@ col_width_resolver_rtf <- function(table_width,
 
   # Ensure that the `table_width` unit is `"tw"`
   stopifnot(isTRUE(table_width$unit == "tw"))
-
-  # If given a table width (i.e., not `"auto"`) without any specification
-  # of column widths, generate evenly spaced column widths based on the
-  # table width
-  if (is.null(col_widths)) {
-    col_widths <- paste0(rep(table_width$value / n_cols, n_cols), "tw")
-  }
 
   col_widths <- abs_len_to_twips(parse_length_str(col_widths))
 
