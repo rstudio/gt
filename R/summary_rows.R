@@ -126,14 +126,14 @@ summary_rows <- function(data,
         column_align = "left",
         column_width = list(NULL),
         hidden_px = list(NULL),
-        add_where = "top"
+        add_where = "bottom"
       )
 
     # Add the `"rowname"` column into `_data`
     data$`_data` <-
       data$`_data` %>%
       dplyr::mutate(rowname = rep("", nrow(data$`_data`))) %>%
-      dplyr::select(rowname, dplyr::everything())
+      dplyr::select(dplyr::everything(), rowname)
 
     # Place the `rowname` values into `stub_df$rowname`
     stub_df[["rowname"]] <- ""
