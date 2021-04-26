@@ -1244,18 +1244,17 @@ create_body_component_rtf <- function(data) {
     if (stub_available && summaries_present &&
         i %in% groups_rows_df$row_end) {
 
-      group <-
-        groups_rows_df %>%
-        dplyr::filter(row_end == i) %>%
-        dplyr::pull(group)
+      group_id <-
+        groups_rows_df[
+          groups_rows_df$row_end == i &
+            !is.na(groups_rows_df$row_end), ][["group_id"]]
 
-      if (group %in% names(list_of_summaries$summary_df_display_list)) {
+      if (group_id %in% names(list_of_summaries$summary_df_display_list)) {
 
         summary_df <-
           list_of_summaries$summary_df_display_list[[
             which(names(list_of_summaries$summary_df_display_list) == group)]] %>%
-          as.data.frame(stringsAsFactors = FALSE) %>%
-          dplyr::select(-matches("^group[s]?$"))
+          as.data.frame(stringsAsFactors = FALSE)
 
         for (j in seq_len(nrow(summary_df))) {
 
@@ -1307,8 +1306,7 @@ create_body_component_rtf <- function(data) {
 
     summary_df <-
       list_of_summaries$summary_df_display_list[["::GRAND_SUMMARY"]] %>%
-      as.data.frame(stringsAsFactors = FALSE) %>%
-      dplyr::select(-matches("^group[s]?$"))
+      as.data.frame(stringsAsFactors = FALSE)
 
     for (j in seq_len(nrow(summary_df))) {
 
