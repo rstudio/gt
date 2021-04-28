@@ -1165,6 +1165,10 @@ create_body_component_rtf <- function(data) {
       n_cols = length(col_alignment)
     )
 
+  default_vars <-
+    dplyr::filter(boxh, type == "default") %>%
+    dplyr::pull(var)
+
   row_list_body <- list()
 
   for (i in seq_len(n_rows)) {
@@ -1252,8 +1256,8 @@ create_body_component_rtf <- function(data) {
       if (group_id %in% names(list_of_summaries$summary_df_display_list)) {
 
         summary_df <-
-          list_of_summaries$summary_df_display_list[[
-            which(names(list_of_summaries$summary_df_display_list) == group_id)]] %>%
+          list_of_summaries$summary_df_display_list[[group_id]] %>%
+          dplyr::select(rowname, .env$default_vars) %>%
           as.data.frame(stringsAsFactors = FALSE)
 
         for (j in seq_len(nrow(summary_df))) {

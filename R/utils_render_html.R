@@ -1169,7 +1169,7 @@ summary_row_tags <- function(group_id,
 
     summary_df <-
       list_of_summaries$summary_df_display_list[[group_id]] %>%
-      dplyr::select(rowname, default_vars) %>%
+      dplyr::select(rowname, .env$default_vars) %>%
       as.data.frame(stringsAsFactors = FALSE)
 
     n_cols <- ncol(summary_df)
