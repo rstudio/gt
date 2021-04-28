@@ -943,7 +943,10 @@ create_body_component_h <- function(data) {
             i %in% groups_rows_df$row_end) {
 
           group_id <-
-            groups_rows_df[na.omit(groups_rows_df$row_end == i), "group_id", drop = TRUE]
+            groups_rows_df[
+              stats::na.omit(groups_rows_df$row_end == i),
+              "group_id", drop = TRUE
+            ]
 
           summary_section <-
             summary_row_tags(

@@ -1249,7 +1249,10 @@ create_body_component_rtf <- function(data) {
         i %in% groups_rows_df$row_end) {
 
       group_id <-
-        groups_rows_df[na.omit(groups_rows_df$row_end == i), "group_id", drop = TRUE]
+        groups_rows_df[
+          stats::na.omit(groups_rows_df$row_end == i),
+          "group_id", drop = TRUE
+        ]
 
       if (group_id %in% names(list_of_summaries$summary_df_display_list)) {
 
