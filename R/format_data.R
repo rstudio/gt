@@ -894,11 +894,14 @@ fmt_bytes <- function(data,
         units_str <- character(length(x))
 
         units_str[num_power_idx < 1] <- "B"
-        units_str[num_power_idx >= 1] <-
-          byte_units[num_power_idx[num_power_idx >= 1]]
+        units_str[num_power_idx >= 1] <- byte_units[num_power_idx[num_power_idx >= 1]]
+        units_str[num_power_idx > length(byte_units)] <- byte_units[length(byte_units)]
 
-        x[num_power_idx >= 1] <-
-          x[num_power_idx >= 1] / (base^num_power_idx[num_power_idx >= 1])
+        x_gt_limit <- num_power_idx > length(byte_units)
+        x_within_limit <- num_power_idx >= 1 & num_power_idx <= length(byte_units)
+
+        x[x_within_limit] <- x[x_within_limit] / (base^num_power_idx[x_within_limit])
+        x[x_gt_limit] <- x[x_gt_limit] / (base^(length(byte_units)))
 
         x %>%
           # Format numeric values to character-based numbers
