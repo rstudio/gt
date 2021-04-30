@@ -840,6 +840,7 @@ fmt_bytes <- function(data,
                       n_sigfig = NULL,
                       drop_trailing_zeros = TRUE,
                       drop_trailing_dec_mark = TRUE,
+                      use_seps = TRUE,
                       pattern = "{x}",
                       sep_mark = ",",
                       dec_mark = ".",
@@ -850,6 +851,10 @@ fmt_bytes <- function(data,
   stop_if_not_gt(data = data)
 
   standard <- match.arg(standard)
+
+  # Use locale-based marks if a locale ID is provided
+  sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
+  dec_mark <- get_locale_dec_mark(locale, dec_mark)
 
   # Set the `formatC_format` option according to whether number
   # formatting with significant figures is to be performed
