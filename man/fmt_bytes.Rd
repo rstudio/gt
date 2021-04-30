@@ -13,6 +13,7 @@ fmt_bytes(
   n_sigfig = NULL,
   drop_trailing_zeros = TRUE,
   drop_trailing_dec_mark = TRUE,
+  use_seps = TRUE,
   pattern = "{x}",
   sep_mark = ",",
   dec_mark = ".",
@@ -57,6 +58,10 @@ trailing zeros (those redundant zeros after the decimal mark).}
 marks should always appear even if there are no decimal digits to display
 after formatting (e.g, \code{23} becomes \code{23.}). The default for this is \code{TRUE},
 which means that trailing decimal marks are not shown.}
+
+\item{use_seps}{An option to use digit group separators. The type of digit
+group separator is set by \code{sep_mark} and overridden if a locale ID is
+provided to \code{locale}. This setting is \code{TRUE} by default.}
 
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other
