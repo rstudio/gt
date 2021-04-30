@@ -810,6 +810,7 @@ fmt_currency <- function(data,
 #' # byte sizes in the binary standard
 #' tab_1 <-
 #'   exibble %>%
+#'   dplyr::select(num) %>%
 #'   gt() %>%
 #'   fmt_bytes(columns = num)
 #'
@@ -818,6 +819,7 @@ fmt_currency <- function(data,
 #' # showing byte sizes as binary values
 #' tab_2 <-
 #'   exibble %>%
+#'   dplyr::select(num) %>%
 #'   gt() %>%
 #'   fmt_bytes(
 #'     columns = num,

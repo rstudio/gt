@@ -116,6 +116,7 @@ formatting specific to the chosen locale
 # byte sizes in the binary standard
 tab_1 <-
   exibble \%>\%
+  dplyr::select(num) \%>\%
   gt() \%>\%
   fmt_bytes(columns = num)
 
@@ -124,6 +125,7 @@ tab_1 <-
 # showing byte sizes as binary values
 tab_2 <-
   exibble \%>\%
+  dplyr::select(num) \%>\%
   gt() \%>\%
   fmt_bytes(
     columns = num,
