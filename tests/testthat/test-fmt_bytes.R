@@ -9,6 +9,8 @@ test_that("the `fmt_bytes()` function works correctly", {
         -500, # "-500 B"
         -0.9, 0, 0.9, # All should be "0 B"
         500,  # "500 B"
+        1023,
+        1001,
         1024,                        # 1 kB binary
         1048576,                     # 1 MB ''
         1073741824,                  # 1 GB ''
@@ -58,10 +60,10 @@ test_that("the `fmt_bytes()` function works correctly", {
        fmt_bytes(columns = num, decimals = 1) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "&minus;500 B", "0 B", "0 B", "0 B", "500 B", "1 kB", "1 MB",
-      "1.1 GB", "1.1 TB", "1.1 PB", "1.2 EB", "1.2 ZB", "1.2 YB", "1 kB",
-      "1 MB", "1 GB", "1 TB", "1 PB", "1 EB", "1 ZB", "1 YB", "15 YB",
-      "150 YB", "1,500 YB", "15,000 YB", "NA"
+      "&minus;500 B", "0 B", "0 B", "0 B", "500 B", "1 kB", "1 kB",
+      "1 kB", "1 MB", "1.1 GB", "1.1 TB", "1.1 PB", "1.2 EB", "1.2 ZB",
+      "1.2 YB", "1 kB", "1 MB", "1 GB", "1 TB", "1 PB", "1 EB", "1 ZB",
+      "1 YB", "15 YB", "150 YB", "1,500 YB", "15,000 YB", "NA"
     )
   )
 
@@ -72,10 +74,11 @@ test_that("the `fmt_bytes()` function works correctly", {
        fmt_bytes(columns = num, decimals = 4) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;500 B", "0 B", "0 B", "0 B", "500 B", "1.024 kB", "1.0486 MB",
-      "1.0737 GB", "1.0995 TB", "1.1259 PB", "1.1529 EB", "1.1806 ZB",
-      "1.2089 YB", "1 kB", "1 MB", "1 GB", "1 TB", "1 PB", "1 EB",
-      "1 ZB", "1 YB", "15 YB", "150 YB", "1,500 YB", "15,000 YB", "NA"
+      "&minus;500 B", "0 B", "0 B", "0 B", "500 B", "1.023 kB", "1.001 kB",
+      "1.024 kB", "1.0486 MB", "1.0737 GB", "1.0995 TB", "1.1259 PB",
+      "1.1529 EB", "1.1806 ZB", "1.2089 YB", "1 kB", "1 MB", "1 GB",
+      "1 TB", "1 PB", "1 EB", "1 ZB", "1 YB", "15 YB", "150 YB", "1,500 YB",
+      "15,000 YB", "NA"
     )
   )
 
@@ -91,10 +94,30 @@ test_that("the `fmt_bytes()` function works correctly", {
        render_formats_test("html"))[["num"]],
     c(
       "&minus;500.00 B", "0.00 B", "0.00 B", "0.00 B", "500.00 B",
-      "1.02 kB", "1.05 MB", "1.07 GB", "1.10 TB", "1.13 PB", "1.15 EB",
-      "1.18 ZB", "1.21 YB", "1.00 kB", "1.00 MB", "1.00 GB", "1.00 TB",
-      "1.00 PB", "1.00 EB", "1.00 ZB", "1.00 YB", "15.00 YB", "150.00 YB",
-      "1,500.00 YB", "15,000.00 YB", "NA"
+      "1.02 kB", "1.00 kB", "1.02 kB", "1.05 MB", "1.07 GB", "1.10 TB",
+      "1.13 PB", "1.15 EB", "1.18 ZB", "1.21 YB", "1.00 kB", "1.00 MB",
+      "1.00 GB", "1.00 TB", "1.00 PB", "1.00 EB", "1.00 ZB", "1.00 YB",
+      "15.00 YB", "150.00 YB", "1,500.00 YB", "15,000.00 YB", "NA"
+    )
+  )
+
+  # Format the `num` column to 2 decimal places, keep the trailing
+  # zeros, express byte sizes in the binary standard; extract `output_df`
+  # and compare to expected values
+  expect_equal(
+    (tab %>%
+       fmt_bytes(
+         columns = num, standard = "binary", decimals = 2,
+         drop_trailing_zeros = FALSE
+       ) %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "&minus;500.00 B", "0.00 B", "0.00 B", "0.00 B", "500.00 B",
+      "1,023.00 B", "1,001.00 B", "1.00 KiB", "1.00 MiB", "1.00 GiB",
+      "1.00 TiB", "1.00 PiB", "1.00 EiB", "1.00 ZiB", "1.00 YiB", "1,000.00 B",
+      "976.56 KiB", "953.67 MiB", "931.32 GiB", "909.49 TiB", "888.18 PiB",
+      "867.36 EiB", "847.03 ZiB", "12.41 YiB", "124.08 YiB", "1,240.77 YiB",
+      "12,407.71 YiB", "NA"
     )
   )
 
@@ -106,10 +129,10 @@ test_that("the `fmt_bytes()` function works correctly", {
        fmt_bytes(columns = num, use_seps = FALSE) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;500 B", "0 B", "0 B", "0 B", "500 B", "1 kB", "1 MB",
-      "1.1 GB", "1.1 TB", "1.1 PB", "1.2 EB", "1.2 ZB", "1.2 YB", "1 kB",
-      "1 MB", "1 GB", "1 TB", "1 PB", "1 EB", "1 ZB", "1 YB", "15 YB",
-      "150 YB", "1500 YB", "15000 YB", "NA"
+      "&minus;500 B", "0 B", "0 B", "0 B", "500 B", "1 kB", "1 kB",
+      "1 kB", "1 MB", "1.1 GB", "1.1 TB", "1.1 PB", "1.2 EB", "1.2 ZB",
+      "1.2 YB", "1 kB", "1 MB", "1 GB", "1 TB", "1 PB", "1 EB", "1 ZB",
+      "1 YB", "15 YB", "150 YB", "1500 YB", "15000 YB", "NA"
     )
   )
 
@@ -121,10 +144,11 @@ test_that("the `fmt_bytes()` function works correctly", {
        fmt_bytes(columns = num, decimals = 2, sep_mark = " ") %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;500 B", "0 B", "0 B", "0 B", "500 B", "1.02 kB", "1.05 MB",
-      "1.07 GB", "1.1 TB", "1.13 PB", "1.15 EB", "1.18 ZB", "1.21 YB",
-      "1 kB", "1 MB", "1 GB", "1 TB", "1 PB", "1 EB", "1 ZB", "1 YB",
-      "15 YB", "150 YB", "1 500 YB", "15 000 YB", "NA"
+      "&minus;500 B", "0 B", "0 B", "0 B", "500 B", "1.02 kB", "1 kB",
+      "1.02 kB", "1.05 MB", "1.07 GB", "1.1 TB", "1.13 PB", "1.15 EB",
+      "1.18 ZB", "1.21 YB", "1 kB", "1 MB", "1 GB", "1 TB", "1 PB",
+      "1 EB", "1 ZB", "1 YB", "15 YB", "150 YB", "1 500 YB", "15 000 YB",
+      "NA"
     )
   )
 
@@ -136,10 +160,10 @@ test_that("the `fmt_bytes()` function works correctly", {
        fmt_bytes(columns = num, decimals = 2, incl_space = FALSE) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;500B", "0B", "0B", "0B", "500B", "1.02kB", "1.05MB",
-      "1.07GB", "1.1TB", "1.13PB", "1.15EB", "1.18ZB", "1.21YB", "1kB",
-      "1MB", "1GB", "1TB", "1PB", "1EB", "1ZB", "1YB", "15YB", "150YB",
-      "1,500YB", "15,000YB", "NA"
+      "&minus;500B", "0B", "0B", "0B", "500B", "1.02kB", "1kB", "1.02kB",
+      "1.05MB", "1.07GB", "1.1TB", "1.13PB", "1.15EB", "1.18ZB", "1.21YB",
+      "1kB", "1MB", "1GB", "1TB", "1PB", "1EB", "1ZB", "1YB", "15YB",
+      "150YB", "1,500YB", "15,000YB", "NA"
     )
   )
 
@@ -153,10 +177,11 @@ test_that("the `fmt_bytes()` function works correctly", {
        ) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;500 B", "0 B", "0 B", "0 B", "500 B", "1,02 kB", "1,05 MB",
-      "1,07 GB", "1,1 TB", "1,13 PB", "1,15 EB", "1,18 ZB", "1,21 YB",
-      "1 kB", "1 MB", "1 GB", "1 TB", "1 PB", "1 EB", "1 ZB", "1 YB",
-      "15 YB", "150 YB", "1.500 YB", "15.000 YB", "NA"
+      "&minus;500 B", "0 B", "0 B", "0 B", "500 B", "1,02 kB", "1 kB",
+      "1,02 kB", "1,05 MB", "1,07 GB", "1,1 TB", "1,13 PB", "1,15 EB",
+      "1,18 ZB", "1,21 YB", "1 kB", "1 MB", "1 GB", "1 TB", "1 PB",
+      "1 EB", "1 ZB", "1 YB", "15 YB", "150 YB", "1.500 YB", "15.000 YB",
+      "NA"
     )
   )
 
@@ -169,10 +194,11 @@ test_that("the `fmt_bytes()` function works correctly", {
        render_formats_test("html"))[["num"]],
     c(
       "a &minus;500 B b", "a 0 B b", "a 0 B b", "a 0 B b", "a 500 B b",
-      "a 1.02 kB b", "a 1.05 MB b", "a 1.07 GB b", "a 1.1 TB b", "a 1.13 PB b",
-      "a 1.15 EB b", "a 1.18 ZB b", "a 1.21 YB b", "a 1 kB b", "a 1 MB b",
-      "a 1 GB b", "a 1 TB b", "a 1 PB b", "a 1 EB b", "a 1 ZB b", "a 1 YB b",
-      "a 15 YB b", "a 150 YB b", "a 1,500 YB b", "a 15,000 YB b", "NA"
+      "a 1.02 kB b", "a 1 kB b", "a 1.02 kB b", "a 1.05 MB b", "a 1.07 GB b",
+      "a 1.1 TB b", "a 1.13 PB b", "a 1.15 EB b", "a 1.18 ZB b", "a 1.21 YB b",
+      "a 1 kB b", "a 1 MB b", "a 1 GB b", "a 1 TB b", "a 1 PB b", "a 1 EB b",
+      "a 1 ZB b", "a 1 YB b", "a 15 YB b", "a 150 YB b", "a 1,500 YB b",
+      "a 15,000 YB b", "NA"
     )
   )
 
@@ -184,10 +210,11 @@ test_that("the `fmt_bytes()` function works correctly", {
        fmt_bytes(columns = num, decimals = 2, locale = "en_US") %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;500 B", "0 B", "0 B", "0 B", "500 B", "1.02 kB", "1.05 MB",
-      "1.07 GB", "1.1 TB", "1.13 PB", "1.15 EB", "1.18 ZB", "1.21 YB",
-      "1 kB", "1 MB", "1 GB", "1 TB", "1 PB", "1 EB", "1 ZB", "1 YB",
-      "15 YB", "150 YB", "1,500 YB", "15,000 YB", "NA"
+      "&minus;500 B", "0 B", "0 B", "0 B", "500 B", "1.02 kB", "1 kB",
+      "1.02 kB", "1.05 MB", "1.07 GB", "1.1 TB", "1.13 PB", "1.15 EB",
+      "1.18 ZB", "1.21 YB", "1 kB", "1 MB", "1 GB", "1 TB", "1 PB",
+      "1 EB", "1 ZB", "1 YB", "15 YB", "150 YB", "1,500 YB", "15,000 YB",
+      "NA"
     )
   )
 
@@ -199,10 +226,11 @@ test_that("the `fmt_bytes()` function works correctly", {
        fmt_bytes(columns = num, decimals = 2, locale = "da_DK") %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;500 B", "0 B", "0 B", "0 B", "500 B", "1,02 kB", "1,05 MB",
-      "1,07 GB", "1,1 TB", "1,13 PB", "1,15 EB", "1,18 ZB", "1,21 YB",
-      "1 kB", "1 MB", "1 GB", "1 TB", "1 PB", "1 EB", "1 ZB", "1 YB",
-      "15 YB", "150 YB", "1.500 YB", "15.000 YB", "NA"
+      "&minus;500 B", "0 B", "0 B", "0 B", "500 B", "1,02 kB", "1 kB",
+      "1,02 kB", "1,05 MB", "1,07 GB", "1,1 TB", "1,13 PB", "1,15 EB",
+      "1,18 ZB", "1,21 YB", "1 kB", "1 MB", "1 GB", "1 TB", "1 PB",
+      "1 EB", "1 ZB", "1 YB", "15 YB", "150 YB", "1.500 YB", "15.000 YB",
+      "NA"
     )
   )
 
@@ -214,10 +242,11 @@ test_that("the `fmt_bytes()` function works correctly", {
        fmt_bytes(columns = num, decimals = 2, locale = "de_AT") %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;500 B", "0 B", "0 B", "0 B", "500 B", "1,02 kB", "1,05 MB",
-      "1,07 GB", "1,1 TB", "1,13 PB", "1,15 EB", "1,18 ZB", "1,21 YB",
-      "1 kB", "1 MB", "1 GB", "1 TB", "1 PB", "1 EB", "1 ZB", "1 YB",
-      "15 YB", "150 YB", "1 500 YB", "15 000 YB", "NA"
+      "&minus;500 B", "0 B", "0 B", "0 B", "500 B", "1,02 kB", "1 kB",
+      "1,02 kB", "1,05 MB", "1,07 GB", "1,1 TB", "1,13 PB", "1,15 EB",
+      "1,18 ZB", "1,21 YB", "1 kB", "1 MB", "1 GB", "1 TB", "1 PB",
+      "1 EB", "1 ZB", "1 YB", "15 YB", "150 YB", "1 500 YB", "15 000 YB",
+      "NA"
     )
   )
 
@@ -228,10 +257,12 @@ test_that("the `fmt_bytes()` function works correctly", {
     (tab %>%
        fmt_bytes(columns = num, decimals = 2, locale = "et_EE") %>%
        render_formats_test("html"))[["num"]],
-    c("&minus;500 B", "0 B", "0 B", "0 B", "500 B", "1,02 kB", "1,05 MB",
-      "1,07 GB", "1,1 TB", "1,13 PB", "1,15 EB", "1,18 ZB", "1,21 YB",
-      "1 kB", "1 MB", "1 GB", "1 TB", "1 PB", "1 EB", "1 ZB", "1 YB",
-      "15 YB", "150 YB", "1 500 YB", "15 000 YB", "NA"
+    c(
+      "&minus;500 B", "0 B", "0 B", "0 B", "500 B", "1,02 kB", "1 kB",
+      "1,02 kB", "1,05 MB", "1,07 GB", "1,1 TB", "1,13 PB", "1,15 EB",
+      "1,18 ZB", "1,21 YB", "1 kB", "1 MB", "1 GB", "1 TB", "1 PB",
+      "1 EB", "1 ZB", "1 YB", "15 YB", "150 YB", "1 500 YB", "15 000 YB",
+      "NA"
     )
   )
 
@@ -243,10 +274,11 @@ test_that("the `fmt_bytes()` function works correctly", {
        fmt_bytes(columns = num, decimals = 2, locale = "gl_ES") %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;500 B", "0 B", "0 B", "0 B", "500 B", "1,02 kB", "1,05 MB",
-      "1,07 GB", "1,1 TB", "1,13 PB", "1,15 EB", "1,18 ZB", "1,21 YB",
-      "1 kB", "1 MB", "1 GB", "1 TB", "1 PB", "1 EB", "1 ZB", "1 YB",
-      "15 YB", "150 YB", "1.500 YB", "15.000 YB", "NA"
+      "&minus;500 B", "0 B", "0 B", "0 B", "500 B", "1,02 kB", "1 kB",
+      "1,02 kB", "1,05 MB", "1,07 GB", "1,1 TB", "1,13 PB", "1,15 EB",
+      "1,18 ZB", "1,21 YB", "1 kB", "1 MB", "1 GB", "1 TB", "1 PB",
+      "1 EB", "1 ZB", "1 YB", "15 YB", "150 YB", "1.500 YB", "15.000 YB",
+      "NA"
     )
   )
 
