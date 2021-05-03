@@ -889,7 +889,7 @@ fmt_bytes <- function(data,
         # Truncate all byte values
         x <- trunc(x)
 
-        num_power_idx <- floor(log10(abs(x)) / 3) + 1
+        num_power_idx <- floor(log(abs(x), base = base)) + 1
         num_power_idx <- pmax(1, pmin(length(byte_units), num_power_idx))
 
         units_str <- byte_units[num_power_idx]
