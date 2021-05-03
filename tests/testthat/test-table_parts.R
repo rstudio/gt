@@ -530,6 +530,29 @@ test_that("row groups can be successfully generated with `tab_row_group()", {
       tab_row_group(others = "foo")
   )
 
+  # Expect a warning if using the `group` argument
+  expect_warning(
+    gt(exibble, rowname_col = "row") %>%
+      tab_row_group(group = "group", rows = 1:3)
+  )
+
+  # Expect a warning if using both the `label` and `group` argument
+  expect_warning(
+    gt_tbl <-
+      gt(exibble, rowname_col = "row") %>%
+      tab_row_group(label = "group_prioritized", group = "group", rows = 1:3)
+  )
+
+  # Expect that the label text specified in `label` was used over the
+  # text given in `group`
+  expect_equal(
+    gt_tbl %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      get_row_group_text(),
+    c("group_prioritized", "")
+  )
+
   # Expect that `tab_options(row_group.default_label = <label>)`
   # is called internally if using the deprecated `others_label` argument
   gt_tbl <-
