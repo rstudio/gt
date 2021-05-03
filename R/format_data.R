@@ -871,11 +871,11 @@ fmt_bytes <- function(data,
   if (standard == "decimal") {
     base <- 1000
     byte_units <-
-      c("kB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
+      c("B", "kB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
   } else {
     base <- 1024
     byte_units <-
-      c("KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB")
+      c("B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB")
   }
 
   fmt(
@@ -889,19 +889,11 @@ fmt_bytes <- function(data,
         # Truncate all byte values
         x <- trunc(x)
 
-        num_power_idx <- floor(log10(trunc(abs(x))) / 3)
+        num_power_idx <- floor(log10(abs(x)) / 3) + 1
+        num_power_idx <- pmax(1, pmin(length(byte_units), num_power_idx))
 
-        units_str <- character(length(x))
-
-        units_str[num_power_idx < 1] <- "B"
-        units_str[num_power_idx >= 1] <- byte_units[num_power_idx[num_power_idx >= 1]]
-        units_str[num_power_idx > length(byte_units)] <- byte_units[length(byte_units)]
-
-        x_gt_limit <- num_power_idx > length(byte_units)
-        x_within_limit <- num_power_idx >= 1 & num_power_idx <= length(byte_units)
-
-        x[x_within_limit] <- x[x_within_limit] / (base^num_power_idx[x_within_limit])
-        x[x_gt_limit] <- x[x_gt_limit] / (base^(length(byte_units)))
+        units_str <- byte_units[num_power_idx]
+        x <- x / base^(num_power_idx-1)
 
         x %>%
           # Format numeric values to character-based numbers
