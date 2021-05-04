@@ -1,0 +1,271 @@
+test_that("the `fmt_fraction()` function works correctly", {
+
+  # Create an input data frame two columns: one
+  # character-based and one that is numeric
+  data_tbl <-
+    data.frame(
+      char = "a",
+      num = c(
+        -50,
+        -1.5
+        -0.999,
+        -0.9,
+        -0.002,
+        0,
+        0.002,
+        0.04,
+        0.06,
+        0.1,
+        0.3,
+        0.5,
+        0.5555555555555555,
+        0.92,
+        0.999,
+        1.000010,
+        1.1,
+        1.95,
+        2000000.2,
+        30000000000.0,
+        NA,
+        Inf,
+        -Inf
+      ),
+      stringsAsFactors = FALSE
+    )
+
+  # Create a `gt_tbl` object with `gt()` and the
+  # `data_tbl` dataset
+  tab <- gt(data = data_tbl)
+
+  # Expect that the object has the correct classes
+  expect_is(tab, c("gt_tbl", "data.frame"))
+
+  # Extract vectors from the table object for comparison
+  # to the original dataset
+  char <- (tab %>% dt_data_get())[["char"]]
+  num <- (tab %>% dt_data_get())[["num"]]
+
+  # Expect the extracted values to match those of the original dataset
+  expect_equal(data_tbl$char, char)
+  expect_equal(data_tbl$num, num)
+
+  # Expect an error when attempting to format a column
+  # that does not exist
+  expect_error(tab %>% fmt_fraction(columns = num_2))
+
+  # Expect an error when using a locale that does not exist
+  expect_error(tab %>% fmt_fraction(columns = num_2, locale = "aa_bb"))
+
+  # Format the `num` column to fractions with an accuracy
+  # of 1 digit in the denominator, use all other defaults
+  expect_equal(
+    (tab %>%
+       fmt_fraction(columns = num, accuracy = "1") %>%
+       render_formats_test(context = "html"))[["num"]],
+    c(
+      "&minus;50", "&minus;2<span class=\"gt_fraction_numerator\">1</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">2</span>",
+      "&minus;<span class=\"gt_fraction_numerator\">9</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">10</span>",
+      "0", "0", "0", "0", "<span class=\"gt_fraction_numerator\">1</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">10</span>",
+      "<span class=\"gt_fraction_numerator\">1</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">10</span>",
+      "<span class=\"gt_fraction_numerator\">1</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">3</span>",
+      "<span class=\"gt_fraction_numerator\">1</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">2</span>",
+      "<span class=\"gt_fraction_numerator\">5</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">8</span>",
+      "<span class=\"gt_fraction_numerator\">9</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">10</span>",
+      "1", "1", "1<span class=\"gt_fraction_numerator\">1</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">10</span>",
+      "2", "2,000,000<span class=\"gt_fraction_numerator\">1</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">4</span>",
+      "30,000,000,000", "NA", "Inf", "-Inf"
+    )
+  )
+
+  # Format the `num` column to fractions with an accuracy
+  # of 2 digits in the denominator, have the layout be 'plain'
+  expect_equal(
+    (tab %>%
+       fmt_fraction(columns = num, accuracy = "2", layout = "plain") %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "&minus;50", "&minus;2 5/10", "&minus;9/10", "0", "0", "0",
+      "1/24", "1/16", "1/10", "3/10", "5/10", "9/16", "11/12", "1",
+      "1", "1 1/10", "1 19/20", "2,000,000 2/10", "30,000,000,000",
+      "NA", "Inf", "-Inf"
+    )
+  )
+
+  # Format the `num` column to fractions with an accuracy
+  # of 3 digits in the denominator, have the layout be 'plain'
+  expect_equal(
+    (tab %>%
+       fmt_fraction(columns = num, accuracy = "3", layout = "plain") %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "&minus;50", "&minus;2 333/668", "&minus;90/100", "&minus;1/400",
+      "0", "1/400", "4/100", "6/100", "10/100", "30/100", "50/100",
+      "60/108", "92/100", "667/1000", "1", "1 10/100", "1 95/100",
+      "2,000,000 20/100", "30,000,000,000", "NA", "Inf", "-Inf"
+    )
+  )
+
+  # Format the `num` column to fractions with an accuracy in terms of
+  # halves ("1/2") for the denominator, have the layout be 'plain'
+  expect_equal(
+    (tab %>%
+       fmt_fraction(columns = num, accuracy = "1/2", layout = "plain") %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "&minus;50", "&minus;2 1/2", "&minus;1", "0", "0", "0", "0",
+      "0", "0", "1/2", "1/2", "1/2", "1", "1", "1", "1", "2", "2,000,000",
+      "30,000,000,000", "NA", "Inf", "-Inf"
+    )
+  )
+
+  # Format the `num` column to fractions with an accuracy in terms of
+  # quarters ("1/4") for the denominator, have the layout be 'plain'
+  expect_equal(
+    (tab %>%
+       fmt_fraction(columns = num, accuracy = "1/4", layout = "plain") %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "&minus;50", "&minus;2 2/4", "&minus;1", "0", "0", "0", "0",
+      "0", "0", "1/4", "2/4", "2/4", "1", "1", "1", "1", "2", "2,000,000 1/4",
+      "30,000,000,000", "NA", "Inf", "-Inf"
+    )
+  )
+
+  # Format the `num` column to fractions with an accuracy in terms of
+  # eighths ("1/8") for the denominator, have the layout be 'plain'
+  expect_equal(
+    (tab %>%
+       fmt_fraction(columns = num, accuracy = "1/8", layout = "plain") %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "&minus;50", "&minus;2 4/8", "&minus;7/8", "0", "0", "0",
+      "0", "0", "1/8", "2/8", "4/8", "4/8", "7/8", "1", "1", "1 1/8",
+      "2", "2,000,000 2/8", "30,000,000,000", "NA", "Inf", "-Inf"
+    )
+  )
+
+  # Format the `num` column to fractions with an accuracy in terms of
+  # sixteenths ("1/16") for the denominator, have the layout be 'plain'
+  expect_equal(
+    (tab %>%
+       fmt_fraction(columns = num, accuracy = "1/16", layout = "plain") %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "&minus;50", "&minus;2 8/16", "&minus;14/16", "0", "0", "0",
+      "1/16", "1/16", "2/16", "5/16", "8/16", "9/16", "15/16", "1",
+      "1", "1 2/16", "1 15/16", "2,000,000 3/16", "30,000,000,000",
+      "NA", "Inf", "-Inf"
+    )
+  )
+
+  # Format the `num` column to fractions with an accuracy in terms of
+  # tenths ("1/10") for the denominator, have the layout be 'plain'
+  expect_equal(
+    (tab %>%
+       fmt_fraction(columns = num, accuracy = "1/10", layout = "plain") %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "&minus;50", "&minus;2 5/10", "&minus;9/10", "0", "0", "0",
+      "0", "1/10", "1/10", "3/10", "5/10", "6/10", "9/10", "1", "1",
+      "1 1/10", "2", "2,000,000 2/10", "30,000,000,000", "NA", "Inf",
+      "-Inf"
+    )
+  )
+
+  # Format the `num` column to fractions with an accuracy in terms of
+  # hundreths ("1/100") for the denominator, have the layout be 'plain'
+  expect_equal(
+    (tab %>%
+       fmt_fraction(columns = num, accuracy = "1/100", layout = "plain") %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "&minus;50", "&minus;2 50/100", "&minus;90/100", "0", "0",
+      "0", "4/100", "6/100", "10/100", "30/100", "50/100", "56/100",
+      "92/100", "1", "1", "1 10/100", "1 95/100", "2,000,000 20/100",
+      "30,000,000,000", "NA", "Inf", "-Inf"
+    )
+  )
+
+  # Format the `num` column to fractions with an accuracy in terms of
+  # hundreths ("1/100") for the denominator, have the layout be 'plain' and
+  # apply the `en_US` locale
+  expect_equal(
+    (tab %>%
+       fmt_fraction(
+         columns = num, accuracy = "1/100",
+         layout = "plain", locale = "en_US"
+       ) %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "&minus;50", "&minus;2 50/100", "&minus;90/100", "0", "0",
+      "0", "4/100", "6/100", "10/100", "30/100", "50/100", "56/100",
+      "92/100", "1", "1", "1 10/100", "1 95/100", "2,000,000 20/100",
+      "30,000,000,000", "NA", "Inf", "-Inf"
+    )
+  )
+
+  # Format the `num` column to fractions with an accuracy in terms of
+  # hundreths ("1/100") for the denominator, have the layout be 'plain' and
+  # apply the `da_DK` locale
+  expect_equal(
+    (tab %>%
+       fmt_fraction(
+         columns = num, accuracy = "1/100",
+         layout = "plain", locale = "da_DK"
+       ) %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "&minus;50", "&minus;2 50/100", "&minus;90/100", "0", "0",
+      "0", "4/100", "6/100", "10/100", "30/100", "50/100", "56/100",
+      "92/100", "1", "1", "1 10/100", "1 95/100", "2.000.000 20/100",
+      "30.000.000.000", "NA", "Inf", "-Inf"
+    )
+  )
+
+  # Format the `num` column to fractions with an accuracy in terms of
+  # hundreths ("1/100") for the denominator, have the layout be 'plain' and
+  # apply the `de_AT` locale
+  expect_equal(
+    (tab %>%
+       fmt_fraction(
+         columns = num, accuracy = "1/100",
+         layout = "plain", locale = "de_AT"
+       ) %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "&minus;50", "&minus;2 50/100", "&minus;90/100", "0", "0",
+      "0", "4/100", "6/100", "10/100", "30/100", "50/100", "56/100",
+      "92/100", "1", "1", "1 10/100", "1 95/100", "2 000 000 20/100",
+      "30 000 000 000", "NA", "Inf", "-Inf"
+    )
+  )
+
+  # Expect that a column with NAs will work fine with `fmt_fraction()`,
+  # it'll just produce NA values
+  na_col_tbl <- dplyr::tibble(a = rep(NA_real_, 10), b = 1:10) %>% gt()
+
+  # Expect a returned object of class `gt_tbl` with various
+  # uses of `fmt_fraction()`
+  expect_error(
+    regexp = NA,
+    na_col_tbl %>% fmt_fraction(columns = a) %>% as_raw_html()
+  )
+  expect_error(
+    regexp = NA,
+    na_col_tbl %>%
+      fmt_fraction(columns = a, rows = 1:5) %>% as_raw_html()
+  )
+  expect_error(
+    regexp = NA,
+    na_col_tbl %>%
+      fmt_fraction(columns = a, pattern = "a{x}b", incl_space = FALSE) %>% as_raw_html()
+  )
+
+  # Expect that two columns being formatted (one entirely NA) will work
+  expect_equal(
+    (na_col_tbl %>%
+       fmt_fraction(columns = a) %>%
+       fmt_fraction(columns = b) %>% render_formats_test("html"))[["b"]],
+    c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
+  )
+})
