@@ -598,6 +598,223 @@ fmt_percent <- function(data,
   )
 }
 
+#' Format values as a mixed fractions
+#'
+#' With numeric values in a **gt** table, we can perform mixed-fraction-based
+#' formatting.
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). A number of
+#' helper functions exist to make targeting more effective. Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the Arguments section for more information on this.
+#'
+#' @inheritParams fmt_number
+#' @param type The type of fractions to generate. With either of `"1"`, `"2"`,
+#'   and `"3"` we can generate fractions with denominators 1, 2, or 3 digits.
+#' @param layout The `"optimal"` layout (the default) will generate fractions
+#'   that are more aesthetically pleasing than the `"plain"` layout.
+#' @param incl_space An option for whether to include a space between the whole
+#'   value and the fraction. The default is to not introduce a space character,
+#'   however, if `layout = "plain"` then this option is ignored since a space
+#'   is absolutely required to distinguish the whole number from the fraction.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @import rlang
+#' @export
+fmt_fraction <- function(data,
+                         columns,
+                         rows = everything(),
+                         type = c("1", "2", "3", "1/2", "1/4", "1/8", "1/16", "1/10", "1/100"),
+                         layout = c("optimal", "plain"),
+                         use_seps = TRUE,
+                         pattern = "{x}",
+                         sep_mark = ",",
+                         dec_mark = ".",
+                         incl_space = FALSE,
+                         locale = NULL) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  type <- match.arg(type)
+  layout <- match.arg(layout)
+
+  # In the plain layout (where there is no special typesetting of the
+  # fraction part) we must include a space to distinguish between the
+  # whole number and fraction parts
+  if (layout == "plain") {
+    incl_space <- TRUE
+  }
+
+  # Use locale-based marks if a locale ID is provided
+  sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
+  dec_mark <- get_locale_dec_mark(locale, dec_mark)
+
+  # Stop function if `locale` does not have a valid value
+  validate_locale(locale)
+
+  # Stop function if any columns have data that is incompatible
+  # with this formatter
+  if (!column_classes_are_valid(data, {{ columns }}, valid_classes = c("numeric", "integer"))) {
+    stop("The `fmt_number()` function can only be used on `columns` with numeric data",
+         call. = FALSE)
+  }
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    fns = num_fmt_factory_multi(
+      pattern = pattern,
+      format_fn = function(x, context) {
+
+        big_x <- trunc(x)
+        small_x <- abs(x - big_x)
+
+        x_is_zero <- x == 0
+        x_is_a_number <- is.finite(x)
+
+        minus_mark <- context_minus_mark(context = context)
+
+        big_x <-
+          big_x %>%
+          # Format numeric values to character-based numbers
+          format_num_to_str(
+            context = context, decimals = 0, n_sigfig = NULL,
+            sep_mark = sep_mark, dec_mark = dec_mark,
+            drop_trailing_zeros = TRUE,
+            drop_trailing_dec_mark = TRUE,
+            format = "f"
+          )
+
+        big_x <-
+          big_x %>%
+          tidy_gsub("^0$", "") %>%
+          tidy_gsub("^-0$", minus_mark)
+
+        # Get a table that contains the numerator and denominator
+        # parts for each value of `small_x`
+        frac_tbl <- get_frac_tbl(type = type, value = small_x)
+
+        # Generate the fractions based on the context
+        small_x_p <- generate_fractions_h(frac_tbl = frac_tbl, layout = layout)
+
+        # Generate mixed fractions
+        x[x_is_a_number] <-
+          paste0(
+            big_x[x_is_a_number],
+            if (incl_space) " ", "",
+            small_x_p[x_is_a_number]
+          )
+
+        x[x_is_zero] <- "0"
+
+        x
+      }
+    )
+  )
+}
+
+get_frac_tbl <- function(type, values) {
+
+  lu_tbl <-
+    switch(
+      type,
+      "1" = frac_1_d,
+      "2" = frac_10_d,
+      "3" = frac_100_d,
+      stop("Unknown `type` value.")
+    )
+
+  values <- round(values, digits = as.numeric(type))
+
+  lookup_fractions(lu_tbl = lu_tbl, values = values)
+}
+
+lookup_fractions <- function(lu_tbl, values) {
+
+  frac_tbl <- dplyr::tibble(num = integer(0), denom = integer(0))
+
+  for (value in values) {
+
+    if (is.na(value)) {
+
+      frac_tbl <-
+        dplyr::add_row(
+          frac_tbl,
+          num = NA_integer_,
+          denom = NA_integer_
+        )
+
+    } else if (value == 0) {
+
+      frac_tbl <-
+        dplyr::add_row(
+          frac_tbl,
+          num = 0L,
+          denom = 0L
+        )
+
+    } else {
+
+    idx <- lu_tbl$value == value
+
+    frac_tbl <-
+      dplyr::add_row(
+        frac_tbl,
+        num = lu_tbl$num[idx][1],
+        denom = lu_tbl$denom[idx][1]
+      )
+    }
+  }
+
+  frac_tbl
+}
+
+generate_fractions_h <- function(frac_tbl, layout) {
+
+  valid_frac <-
+    frac_tbl$num != 0 & !is.na(frac_tbl$num) &
+    frac_tbl$denom != 0 & !is.na(frac_tbl$denom)
+
+  zero_values <- frac_tbl$num == 0 & frac_tbl$denom == 0
+
+  slash_mark <-
+    htmltools::tags$span(
+      class = "gt_slash_mark",
+      htmltools::HTML(if (layout == "optimal") "&frasl;" else "/")
+    )
+
+  if (layout == "optimal") {
+
+    numerator_vec <-
+      paste0("<span class=\"gt_fraction_numerator\">", frac_tbl$num, "</span>")
+
+    denominator_vec <-
+      paste0("<span class=\"gt_fraction_denominator\">", frac_tbl$denom, "</span>")
+
+  } else {
+    numerator_vec <- frac_tbl$num
+    denominator_vec <- frac_tbl$denom
+  }
+
+  fractions <-
+    paste0(
+      numerator_vec,
+      slash_mark,
+      denominator_vec
+    )
+
+  fractions[!valid_frac] <- ""
+  fractions[zero_values] <- ""
+
+  fractions
+}
+
 #' Format values as currencies
 #'
 #' With numeric values in a **gt** table, we can perform currency-based
