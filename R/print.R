@@ -96,3 +96,16 @@ as.tags.gt_tbl <- function(x, ...) {
 
   html_tbl
 }
+
+#' Print RTF text
+#'
+#' @param x Object to be printed.
+#' @param ... Any additional parameters.
+#'
+#' @keywords internal
+#'
+#' @export
+print.rtf_text <- function(x, ...) {
+
+  cat(paste(x, collapse = "\n"))
+}
