@@ -755,6 +755,13 @@ fmt_fraction <- function(data,
         # special values are printed correctly
         x_str[is.infinite(x)] <- x[is.infinite(x)]
 
+        # Replace any signed zeros with a plain zero and remove
+        # zeros where values are between -1 and 0
+        x_str <-
+          x_str %>%
+          tidy_gsub(paste0("^(", minus_mark, "|-)0$"), "0") %>%
+          tidy_gsub(paste0("^(", minus_mark, ")(0)(.+)$"), "\\1\\3")
+
         x_str
       }
     )
