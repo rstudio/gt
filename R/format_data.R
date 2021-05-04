@@ -672,6 +672,10 @@ fmt_fraction <- function(data,
       pattern = pattern,
       format_fn = function(x, context) {
 
+        # Round all values of x to the highest
+        # granularity required for this formatter
+        x <- round(x, 3)
+
         # Divide the `x` values in 'big' and 'small' components
         big_x <- trunc(x)
         small_x <- abs(x - big_x)
@@ -738,29 +742,37 @@ fmt_fraction <- function(data,
             small_x_p[x_is_a_number]
           )
 
+        # Trim whitespace
+        x_str <-
+          x_str %>%
+          tidy_gsub("(^ | $)", "")
+
         # For values that are true zeros, ensure that
         # only a single zero appears
         x_str[x_is_zero] <- "0"
 
-        # In situations where the `minus_mark` is separated from
-        # mixed fraction component by a space, eliminate the space
-        x_str <- x_str %>% tidy_gsub(paste0(minus_mark, " "), minus_mark)
-
         # Numbers that are rounded to zero will have empty strings
         # for `x_str`; after ensuring these are real numbers and finite,
         # display a zero
-        x_str[x_str == "" & x_is_a_number & is.finite(x)] <- "0"
+        x_str[
+          (x_str == "" | x_str == " " | x_str == minus_mark ) &
+            x_is_a_number &
+            is.finite(x)
+        ] <- "0"
 
         # In rare cases that Inf or -Inf appear, ensure that these
         # special values are printed correctly
         x_str[is.infinite(x)] <- x[is.infinite(x)]
 
-        # Replace any signed zeros with a plain zero and remove
-        # zeros where values are between -1 and 0
+        # Replace any signed zeros with a plain zero; remove
+        # zeros where values are between -1 and 0; in situations where
+        # the `minus_mark` is separated from mixed fraction component
+        # by a space, eliminate the space
         x_str <-
           x_str %>%
           tidy_gsub(paste0("^(", minus_mark, "|-)0$"), "0") %>%
-          tidy_gsub(paste0("^(", minus_mark, ")(0)(.+)$"), "\\1\\3")
+          tidy_gsub(paste0("^(", minus_mark, ")(0)(.+)$"), "\\1\\3") %>%
+          tidy_gsub(paste0(minus_mark, " "), minus_mark)
 
         x_str
       }
