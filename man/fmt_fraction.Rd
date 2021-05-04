@@ -8,7 +8,7 @@ fmt_fraction(
   data,
   columns,
   rows = everything(),
-  type = c("1", "2", "3", "1/2", "1/4", "1/8", "1/16", "1/10", "1/100"),
+  accuracy = c("1", "2", "3", "1/2", "1/4", "1/8", "1/16", "1/10", "1/100"),
   layout = c("optimal", "plain"),
   use_seps = TRUE,
   pattern = "{x}",
@@ -35,9 +35,6 @@ functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with
 \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
 to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
-
-\item{type}{The type of fractions to generate. With either of \code{"1"}, \code{"2"},
-and \code{"3"} we can generate fractions with denominators 1, 2, or 3 digits.}
 
 \item{layout}{The \code{"optimal"} layout (the default) will generate fractions
 that are more aesthetically pleasing than the \code{"plain"} layout.}
@@ -67,6 +64,9 @@ according the locale's rules. Examples include \code{"en_US"} for English
 locale ID will override any values provided in \code{sep_mark} and \code{dec_mark}.
 We can use the \code{\link[=info_locales]{info_locales()}} function as a useful reference for all of
 the locales that are supported.}
+
+\item{type}{The type of fractions to generate. With either of \code{"1"}, \code{"2"},
+and \code{"3"} we can generate fractions with denominators 1, 2, or 3 digits.}
 }
 \value{
 An object of class \code{gt_tbl}.
