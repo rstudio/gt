@@ -240,11 +240,165 @@ rtf_table <- function(rows) {
   rtf_raw(paste(unlist(rows), collapse = ""))
 }
 
+# Conversion factors from absolute width units to twips (`tw`)
+twip_factors <-
+  c(
+    `in` = 1440, `pt` = 20, `px` = 15,
+    `cm` = 566.9291, `mm` = 56.69291, `tw` = 1
+  )
+
+# Input: character vector of any length. Valid values are numbers with
+# suffix of in, pt, px, cm, mm, tw; you can also include `""`.
+# Output: data frame with columns `value` and `unit`, with NA for both
+# if input element was `""`. Values that cannot be parsed will throw errors.
+parse_length_str <- function(lengths_vec,
+                             allow_negative = FALSE) {
+
+  match <- regexec("^([0-9.-]+)(%|[a-z]+)$", lengths_vec)
+  match <- regmatches(lengths_vec, match)
+
+  vals <- vapply(match, function(m) {
+    if (length(m)) {
+      as.numeric(m[[2]])
+    } else {
+      NA_real_
+    }
+  }, numeric(1))
+
+  units <- vapply(match, function(m) {
+    if (length(m)) {
+      m[[3]]
+    } else {
+      NA_character_
+    }
+  }, character(1))
+
+  # Check for negative values and stop of `allow_negative = FALSE`
+  non_na_vals <- vals[!is.na(vals)]
+  if (!allow_negative &&
+      length(non_na_vals) > 0 &&
+      any(!is.na(non_na_vals)) &&
+      is.numeric(non_na_vals) &&
+      any(non_na_vals < 0)) {
+
+    stop("Negative values supplied to widths cannot be used.",
+         call. = FALSE)
+  }
+
+  # Check for bad values and stop if necessary
+  bad_values <- nzchar(lengths_vec) & is.na(vals)
+  if (any(bad_values)) {
+
+    bad_values <- lengths_vec[nzchar(lengths_vec) & is.na(vals)]
+
+    stop(
+      "Some of the values supplied cannot be interpreted:\n",
+      "* Problem values are: ",
+      str_catalog(bad_values, surround = c("\"")), "\n",
+      "* Use either of: `px`, `pt`, `in`, `cm`, `mm`, or `tw` ",
+      "(e.g., \"12px\")",
+      call. = FALSE
+    )
+  }
+
+  dplyr::tibble(value = vals, unit = units)
+}
+
+abs_len_to_twips <- function(lengths_df) {
+
+  lengths_df %>%
+    dplyr::left_join(
+      tibble::enframe(twip_factors, name = "unit", value = "conv"),
+      by = c("unit" = "unit")
+    ) %>%
+    dplyr::mutate(
+      value = ifelse(!is.na(conv), value * conv, value),
+      unit = ifelse(!is.na(conv), "tw", unit)
+    ) %>%
+    dplyr::select(value, unit)
+}
+
+# The `col_width_resolver_rtf()` function returns a vector of
+# RTF column widths in units of twips (numeric)
+#
+# `table_width` and `col_widths` should be character vectors with
+# a numeric portion followed by the unit; the first should be a
+# length-1 vector and the latter should be a vector with as many
+# elements as there are visible columns in the gt table
+col_width_resolver_rtf <- function(table_width,
+                                   col_widths = NULL,
+                                   n_cols = length(col_widths)) {
+
+  rtf_page_width <- getOption("gt.rtf_page_width")
+
+  stopifnot(length(table_width) == 1)
+
+  if (table_width == "auto") {
+    table_width <- paste0(rtf_page_width, "tw")
+  }
+
+  if (is.null(col_widths)) {
+    col_widths <- rep_len("", n_cols)
+  }
+
+  table_width <- abs_len_to_twips(parse_length_str(table_width))
+
+  # For a table width set as a percentage, convert it to twips
+  # using the assumed width of a table set in a page
+  if (table_width$unit == "%") {
+
+    table_width$value <- (table_width$value / 100) * rtf_page_width
+    table_width$unit <- "tw"
+  }
+
+  # Ensure that the `table_width` unit is `"tw"`
+  stopifnot(isTRUE(table_width$unit == "tw"))
+
+  col_widths <- abs_len_to_twips(parse_length_str(col_widths))
+
+  is_udf <- is.na(col_widths$value) & is.na(col_widths$unit)
+  is_abs <- !is_udf & col_widths$unit == "tw"
+  is_pct <- !is_udf & col_widths$unit == "%"
+
+  stopifnot(all(is_abs | is_pct | is_udf))
+
+  twips_used <- sum(col_widths$value[is_abs])
+  twips_remaining <- max(0, table_width$value - twips_used)
+  # 1 - [fraction used by absolute lengths]
+  fraction_remaining <- max(0, twips_remaining / table_width$value)
+
+  # fraction_remaining -= [fraction used by explicit percentages]
+  fraction_remaining <- max(0, fraction_remaining - (sum(col_widths$value[is_pct]) / 100))
+
+  # Distribute fraction_remaining among undefined-width cols
+  col_widths$value[is_udf] <- (fraction_remaining / sum(is_udf) * 100)
+  col_widths$unit[is_udf] <- "%"
+  is_pct <- is_pct | is_udf
+  is_udf <- is_udf & FALSE
+
+  pct_used <- sum(col_widths$value[is_pct])
+  # Avoid divide-by-zero
+  if (pct_used != 0) {
+    # Normalize pct to add up to 100
+    col_widths$value[is_pct] <- col_widths$value[is_pct] * (100 / pct_used)
+  }
+
+  # Convert % to tw
+  col_widths$value[is_pct] <- twips_remaining * col_widths$value[is_pct] / 100
+  col_widths$unit[is_pct] <- "tw"
+  is_abs <- is_abs | TRUE
+  is_pct <- is_pct & FALSE
+
+  round(col_widths[["value"]])
+}
+
 rtf_tbl_row <- function(x,
                         widths = NULL,
                         height = NULL,
                         borders = NULL,
                         repeat_header = FALSE) {
+
+  rtf_page_width <- getOption("gt.rtf_page_width")
 
   if (is.list(x)) x <- unlist(x)
 
@@ -253,7 +407,7 @@ rtf_tbl_row <- function(x,
   if (!is.null(widths)) {
     widths_twips <- cumsum(widths)
   } else {
-    widths_twips <- cumsum(rep(standard_width_twips / cell_count, cell_count))
+    widths_twips <- cumsum(rep(rtf_page_width / cell_count, cell_count))
   }
 
   if (is.null(height)) height <- 425
@@ -364,7 +518,6 @@ rtf_tbl_cell <- function(x,
                          bold = FALSE,
                          italic = FALSE,
                          super_sub = NULL) {
-
 
   x <- paste(x, collapse = " ")
 
@@ -659,10 +812,6 @@ as_rtf_string <- function(x) {
   )
 }
 
-# This is the assumed width of the area within page
-# margins in a default Word document
-standard_width_twips <- 9468L
-
 #
 # Table Header
 #
@@ -672,15 +821,47 @@ create_heading_component_rtf <- function(data) {
       !dt_heading_has_subtitle(data = data)) {
     return(list())
   }
-
   # Get table components and metadata using the `data`
+  boxh <- dt_boxhead_get(data)
   heading <- dt_heading_get(data)
   footnotes_tbl <- dt_footnotes_get(data)
+
+  # Get table width
+  table_width <- dt_options_get_value(data = data, option = "table_width")
+
+  # Obtain widths for each visible column label
+  col_widths <-
+    boxh %>%
+    dplyr::filter(type %in% c("default", "stub")) %>%
+    dplyr::arrange(dplyr::desc(type)) %>%
+    dplyr::pull(column_width) %>%
+    unlist()
+
+  if (is.null(col_widths)) {
+
+     n_cols <-
+       boxh %>%
+       dplyr::filter(type %in% c("default", "stub")) %>%
+       nrow()
+
+     col_widths <- rep("100%", n_cols)
+  }
+
+  col_widths <-
+    col_width_resolver_rtf(
+      table_width = table_width,
+      col_widths = col_widths,
+      n_cols = length(col_widths)
+    )
+
+  table_width <- sum(col_widths)
 
   # Get table options
   table_font_color <- dt_options_get_value(data, option = "table_font_color")
   table_border_top_include <- dt_options_get_value(data, option = "table_border_top_include")
   table_border_top_color <- dt_options_get_value(data, option = "table_border_top_color")
+
+
   if ("title" %in% footnotes_tbl$locname) {
     footnote_title_marks <- footnotes_tbl %>% coalesce_marks(locname = "title")
     footnote_title_marks <- footnote_title_marks$fs_id_c
@@ -738,6 +919,7 @@ create_heading_component_rtf <- function(data) {
   list(
     rtf_tbl_row(
       tbl_cell,
+      widths = table_width,
       height = 0,
       repeat_header = TRUE
     )
@@ -771,6 +953,14 @@ create_columns_component_rtf <- function(data) {
     dplyr::filter(type == "default") %>%
     dplyr::pull(column_align)
 
+  # Obtain widths for each visible column label
+  col_widths <-
+    boxh %>%
+    dplyr::filter(type %in% c("default", "stub")) %>%
+    dplyr::arrange(dplyr::desc(type)) %>%
+    dplyr::pull(column_width) %>%
+    unlist()
+
   if (column_labels_hidden) {
     return(list())
   }
@@ -780,9 +970,14 @@ create_columns_component_rtf <- function(data) {
     col_alignment <- c("left", col_alignment)
   }
 
-  if (stubh_available) headings_labels[1] <- dt_stubhead_get(data = data) %>% .$label
+  if (stubh_available) {
+    headings_labels[1] <-
+      dt_stubhead_get(data = data) %>%
+      .$label
+  }
 
   if (spanners_present) {
+
     spanners <- dt_spanners_print(data = data, include_hidden = FALSE)
     spanner_ids <- dt_spanners_print(data = data, include_hidden = FALSE, ids = TRUE)
 
@@ -827,6 +1022,16 @@ create_columns_component_rtf <- function(data) {
     spanners_list <- list()
   }
 
+  table_width <- dt_options_get_value(data = data, option = "table_width")
+
+  col_widths <-
+    col_width_resolver_rtf(
+      table_width = table_width,
+      col_widths = col_widths,
+      n_cols = length(headings_labels)
+    )
+
+
   cell_list <-
     lapply(
       seq_along(headings_labels),
@@ -848,14 +1053,34 @@ create_columns_component_rtf <- function(data) {
     )
 
   if (spanners_present) {
+
     row_list_column_labels <-
       list(
-        rtf_tbl_row(spanners_list, height = 0, repeat_header = TRUE),
-        rtf_tbl_row(cell_list, height = 0, repeat_header = TRUE)
+        rtf_tbl_row(
+          spanners_list,
+          widths = col_widths,
+          height = 0,
+          repeat_header = TRUE
+        ),
+        rtf_tbl_row(
+          cell_list,
+          widths = col_widths,
+          height = 0,
+          repeat_header = TRUE
+        )
       )
+
   } else {
+
     row_list_column_labels <-
-      list(rtf_tbl_row(cell_list, height = 0, repeat_header = TRUE))
+      list(
+        rtf_tbl_row(
+          cell_list,
+          widths = col_widths,
+          height = 0,
+          repeat_header = TRUE
+        )
+      )
   }
 
   # Return a list of RTF table rows (either one or two rows)
@@ -880,6 +1105,9 @@ create_body_component_rtf <- function(data) {
   groups_rows_df <- dt_groups_rows_get(data = data)
   stub_components <- dt_stub_components(data = data)
 
+  # Get the table width
+  table_width <- dt_options_get_value(data = data, option = "table_width")
+
   # Get table options
   row_group_border_top_color <- dt_options_get_value(data = data, option = "row_group_border_top_color")
   row_group_border_bottom_color <- dt_options_get_value(data = data, option = "row_group_border_bottom_color")
@@ -895,15 +1123,18 @@ create_body_component_rtf <- function(data) {
   row_group_labels <- groups_rows$group_label
   row_group_labels[is.na(row_group_labels)] <- ""
 
+  # Ensure that the columns are only the visible ones, and,
+  # that they are in order
+  body <- body %>% dplyr::select(dplyr::all_of(headings_vars))
+
+  n_cols <- ncol(body)
+  n_rows <- nrow(body)
+
   # Obtain alignments for each values in each visible column label
   col_alignment <-
     boxh %>%
     dplyr::filter(type == "default") %>%
     dplyr::pull(column_align)
-
-  # Ensure that the columns are only the visible ones, and,
-  # that they are in order
-  body <- body %>% dplyr::select(dplyr::all_of(headings_vars))
 
   if (stub_available) {
 
@@ -916,10 +1147,28 @@ create_body_component_rtf <- function(data) {
       )
 
     col_alignment <- c("left", col_alignment)
+    n_cols <- n_cols + 1
   }
 
-  n_cols <- ncol(body)
-  n_rows <- nrow(body)
+  # Obtain widths for each visible column label
+  col_widths <-
+    boxh %>%
+    dplyr::filter(type %in% c("default", "stub")) %>%
+    dplyr::arrange(dplyr::desc(type)) %>%
+    dplyr::pull(column_width) %>%
+    unlist()
+
+  col_widths <-
+    col_width_resolver_rtf(
+      table_width = table_width,
+      col_widths = col_widths,
+      n_cols = length(col_alignment)
+    )
+
+  default_vars <-
+    dplyr::filter(boxh, type == "default") %>%
+    dplyr::pull(var)
+
   row_list_body <- list()
 
   for (i in seq_len(n_rows)) {
@@ -944,6 +1193,7 @@ create_body_component_rtf <- function(data) {
                 )
               )
             ),
+            widths = sum(col_widths),
             height = 0
           )
         )
@@ -976,10 +1226,17 @@ create_body_component_rtf <- function(data) {
           borders = list(
             rtf_border(direction = "top", color = table_body_hlines_color)
           ),
+          widths = col_widths,
           height = 0
         )
     } else {
-      body_row <- rtf_tbl_row(cell_list, height = 0)
+
+      body_row <-
+        rtf_tbl_row(
+          cell_list,
+          widths = col_widths,
+          height = 0
+        )
     }
 
     row_list_body <- c(row_list_body, body_row)
@@ -991,18 +1248,18 @@ create_body_component_rtf <- function(data) {
     if (stub_available && summaries_present &&
         i %in% groups_rows_df$row_end) {
 
-      group <-
-        groups_rows_df %>%
-        dplyr::filter(row_end == i) %>%
-        dplyr::pull(group)
+      group_id <-
+        groups_rows_df[
+          stats::na.omit(groups_rows_df$row_end == i),
+          "group_id", drop = TRUE
+        ]
 
-      if (group %in% names(list_of_summaries$summary_df_display_list)) {
+      if (group_id %in% names(list_of_summaries$summary_df_display_list)) {
 
         summary_df <-
-          list_of_summaries$summary_df_display_list[[
-            which(names(list_of_summaries$summary_df_display_list) == group)]] %>%
-          as.data.frame(stringsAsFactors = FALSE) %>%
-          dplyr::select(-matches("^group[s]?$"))
+          list_of_summaries$summary_df_display_list[[group_id]] %>%
+          dplyr::select(rowname, .env$default_vars) %>%
+          as.data.frame(stringsAsFactors = FALSE)
 
         for (j in seq_len(nrow(summary_df))) {
 
@@ -1034,7 +1291,11 @@ create_body_component_rtf <- function(data) {
           row_list_body <-
             c(
               row_list_body,
-              rtf_tbl_row(cell_list, height = 0)
+              rtf_tbl_row(
+                cell_list,
+                widths = col_widths,
+                height = 0
+              )
             )
         }
       }
@@ -1050,8 +1311,7 @@ create_body_component_rtf <- function(data) {
 
     summary_df <-
       list_of_summaries$summary_df_display_list[["::GRAND_SUMMARY"]] %>%
-      as.data.frame(stringsAsFactors = FALSE) %>%
-      dplyr::select(-matches("^group[s]?$"))
+      as.data.frame(stringsAsFactors = FALSE)
 
     for (j in seq_len(nrow(summary_df))) {
 
@@ -1083,6 +1343,7 @@ create_body_component_rtf <- function(data) {
           row_list_body,
           rtf_tbl_row(
             cell_list,
+            widths = col_widths,
             height = 0,
             borders = list(
               rtf_border(
@@ -1106,6 +1367,8 @@ create_body_component_rtf <- function(data) {
 #
 create_footnotes_component_rtf <- function(data) {
 
+  boxh <- dt_boxhead_get(data)
+
   # Get table components and metadata using the `data`
   footnotes_tbl <- dt_footnotes_get(data)
 
@@ -1115,6 +1378,36 @@ create_footnotes_component_rtf <- function(data) {
     row_list_footnotes <- list()
     return(row_list_footnotes)
   }
+
+  # Get table width
+  table_width <- dt_options_get_value(data = data, option = "table_width")
+
+  # Obtain widths for each visible column label
+  col_widths <-
+    boxh %>%
+    dplyr::filter(type %in% c("default", "stub")) %>%
+    dplyr::arrange(dplyr::desc(type)) %>%
+    dplyr::pull(column_width) %>%
+    unlist()
+
+  if (is.null(col_widths)) {
+
+    n_cols <-
+      boxh %>%
+      dplyr::filter(type %in% c("default", "stub")) %>%
+      nrow()
+
+    col_widths <- rep("100%", n_cols)
+  }
+
+  col_widths <-
+    col_width_resolver_rtf(
+      table_width = table_width,
+      col_widths = col_widths,
+      n_cols = length(col_widths)
+    )
+
+  table_width <- sum(col_widths)
 
   footnotes_tbl <-
     footnotes_tbl %>%
@@ -1155,13 +1448,19 @@ create_footnotes_component_rtf <- function(data) {
   }
 
   # Return a list of RTF table rows (a single row) for the footnotes section
-  rtf_tbl_row(list(rtf_tbl_cell(cell_list)), height = 0)
+  rtf_tbl_row(
+    list(rtf_tbl_cell(cell_list)),
+    widths = table_width,
+    height = 0
+  )
 }
 
 #
 # Table Source Notes
 #
 create_source_notes_component_rtf <- function(data) {
+
+  boxh <- dt_boxhead_get(data)
 
   # Get table components and metadata using the `data`
   source_notes <- dt_source_notes_get(data)
@@ -1171,6 +1470,36 @@ create_source_notes_component_rtf <- function(data) {
     row_list_source_notes <- list()
     return(row_list_source_notes)
   }
+
+  # Get table width
+  table_width <- dt_options_get_value(data = data, option = "table_width")
+
+  # Obtain widths for each visible column label
+  col_widths <-
+    boxh %>%
+    dplyr::filter(type %in% c("default", "stub")) %>%
+    dplyr::arrange(dplyr::desc(type)) %>%
+    dplyr::pull(column_width) %>%
+    unlist()
+
+  if (is.null(col_widths)) {
+
+    n_cols <-
+      boxh %>%
+      dplyr::filter(type %in% c("default", "stub")) %>%
+      nrow()
+
+    col_widths <- rep("100%", n_cols)
+  }
+
+  col_widths <-
+    col_width_resolver_rtf(
+      table_width = table_width,
+      col_widths = col_widths,
+      n_cols = length(col_widths)
+    )
+
+  table_width <- sum(col_widths)
 
   n_source_notes <- length(source_notes)
   row_list_source_notes <- list()
@@ -1190,5 +1519,9 @@ create_source_notes_component_rtf <- function(data) {
   }
 
   # Return a list of RTF table rows (a single row) for the source notes section
-  rtf_tbl_row(list(rtf_tbl_cell(cell_list)), height = 0)
+  rtf_tbl_row(
+    list(rtf_tbl_cell(cell_list)),
+    widths = table_width,
+    height = 0
+  )
 }

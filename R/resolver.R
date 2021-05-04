@@ -160,13 +160,15 @@ resolve_cells_column_spanners <- function(data,
 #' @noRd
 resolve_cols_c <- function(expr,
                            data,
-                           strict = TRUE) {
+                           strict = TRUE,
+                           excl_stub = TRUE) {
 
   names(
     resolve_cols_i(
       expr = {{expr}},
       data = data,
-      strict = strict
+      strict = strict,
+      excl_stub = excl_stub
     )
   )
 }
@@ -176,11 +178,14 @@ resolve_cols_c <- function(expr,
 #' @param strict If TRUE, out-of-bounds errors are thrown if `expr` attempts to
 #'   select a column that doesn't exist. If FALSE, failed selections are
 #'   ignored.
+#' @param excl_stub If TRUE then the table stub column, if present, will be
+#'   excluded from the selection of column names.
 #' @return Named integer vector
 #' @noRd
 resolve_cols_i <- function(expr,
                            data,
-                           strict = TRUE) {
+                           strict = TRUE,
+                           excl_stub = TRUE) {
 
   quo <- rlang::enquo(expr)
   cols_excl <- c()
@@ -189,9 +194,21 @@ resolve_cols_i <- function(expr,
 
     cols <- colnames(dt_data_get(data = data))
 
-    # Assumes that only the body of the data is considered (i.e., not the
-    # stub or group cols)
-    stub_var <- dt_boxhead_get_var_stub(data)
+    # In most cases we would want to exclude the column that
+    # represents the stub but that isn't always the case (e.g.,
+    # when considering the stub for column sizing); the `excl_stub`
+    # argument will determine whether the stub column is obtained
+    # for exclusion or not (if FALSE, we get NULL which removes the
+    # stub, if present, from `cols_excl`)
+    stub_var <-
+      if (excl_stub) {
+        dt_boxhead_get_var_stub(data)
+      } else {
+        NULL
+      }
+
+    # The columns that represent the group rows are always
+    # excluded (i.e., included in the `col_excl` vector)
     group_rows_vars <- dt_boxhead_get_vars_groups(data)
 
     cols_excl <- c(stub_var, group_rows_vars)

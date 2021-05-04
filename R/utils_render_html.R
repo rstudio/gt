@@ -944,8 +944,9 @@ create_body_component_h <- function(data) {
 
           group_id <-
             groups_rows_df[
-              groups_rows_df$row_end == i &
-                !is.na(groups_rows_df$row_end), ][["group_id"]]
+              stats::na.omit(groups_rows_df$row_end == i),
+              "group_id", drop = TRUE
+            ]
 
           summary_section <-
             summary_row_tags(
@@ -1169,7 +1170,7 @@ summary_row_tags <- function(group_id,
 
     summary_df <-
       list_of_summaries$summary_df_display_list[[group_id]] %>%
-      dplyr::select(rowname, default_vars) %>%
+      dplyr::select(rowname, .env$default_vars) %>%
       as.data.frame(stringsAsFactors = FALSE)
 
     n_cols <- ncol(summary_df)
