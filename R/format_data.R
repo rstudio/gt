@@ -626,7 +626,7 @@ fmt_percent <- function(data,
 fmt_fraction <- function(data,
                          columns,
                          rows = everything(),
-                         type = c("1", "2", "3", "1/2", "1/4", "1/8", "1/16", "1/10", "1/100"),
+                         accuracy = c("1", "2", "3", "1/2", "1/4", "1/8", "1/16", "1/10", "1/100"),
                          layout = c("optimal", "plain"),
                          use_seps = TRUE,
                          pattern = "{x}",
@@ -638,7 +638,7 @@ fmt_fraction <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  type <- match.arg(type)
+  accuracy <- match.arg(accuracy)
   layout <- match.arg(layout)
 
   # In the plain layout (where there is no special typesetting of the
@@ -672,17 +672,36 @@ fmt_fraction <- function(data,
       pattern = pattern,
       format_fn = function(x, context) {
 
+        # Divide the `x` values in 'big' and 'small' components
         big_x <- trunc(x)
         small_x <- abs(x - big_x)
 
-        x_is_zero <- x == 0
+        # Determine which of `x` are finite values
         x_is_a_number <- is.finite(x)
 
+        # Determine which of `x` have the value zero
+        x_is_zero <- x == 0
+
+        # Get the correct minus mark based on the output context
         minus_mark <- context_minus_mark(context = context)
 
+        # Get a table that contains the numerator and denominator
+        # parts for each value of `small_x`
+        frac_tbl <- get_frac_tbl(accuracy = accuracy, value = small_x)
+
+        # Determine which direction rounding should occur for certain values
+        up_down_vals <-
+          ifelse(x[!is.na(frac_tbl$one_up) & frac_tbl$one_up] > 0, 1, -1)
+
+        # Increase/decrease values by one where the `one_up` value is TRUE
+        big_x[!is.na(frac_tbl$one_up) & frac_tbl$one_up] <-
+          big_x[!is.na(frac_tbl$one_up) & frac_tbl$one_up] +
+          up_down_vals
+
+        # Format the 'big' portions of the numeric values
+        # to character-based numbers
         big_x <-
           big_x %>%
-          # Format numeric values to character-based numbers
           format_num_to_str(
             context = context, decimals = 0, n_sigfig = NULL,
             sep_mark = sep_mark, dec_mark = dec_mark,
@@ -691,53 +710,102 @@ fmt_fraction <- function(data,
             format = "f"
           )
 
+        # Eliminate the printing of solitary zeros (signed version as
+        # well); in mixed fractions between -1 and 1, we don't want to
+        # print the zero (we'll bring back zeros that stand alone in
+        # a later statement)
         big_x <-
           big_x %>%
           tidy_gsub("^0$", "") %>%
           tidy_gsub("^-0$", minus_mark)
 
-        # Get a table that contains the numerator and denominator
-        # parts for each value of `small_x`
-        frac_tbl <- get_frac_tbl(type = type, value = small_x)
-
         # Generate the fractions based on the context
-        small_x_p <- generate_fractions_h(frac_tbl = frac_tbl, layout = layout)
+        small_x_p <-
+          generate_fractions(
+            frac_tbl = frac_tbl,
+            layout = layout,
+            context = context
+          )
+
+        # Initialize a vector that will contain the finalized strings
+        x_str <- character(length(x))
 
         # Generate mixed fractions
-        x[x_is_a_number] <-
+        x_str[x_is_a_number] <-
           paste0(
             big_x[x_is_a_number],
             if (incl_space) " ", "",
             small_x_p[x_is_a_number]
           )
 
-        x[x_is_zero] <- "0"
+        # For values that are true zeros, ensure that
+        # only a single zero appears
+        x_str[x_is_zero] <- "0"
 
-        x
+        # In situations where the `minus_mark` is separated from
+        # mixed fraction component by a space, eliminate the space
+        x_str <- x_str %>% tidy_gsub(paste0(minus_mark, " "), minus_mark)
+
+        # Numbers that are rounded to zero will have empty strings
+        # for `x_str`; after ensuring these are real numbers and finite,
+        # display a zero
+        x_str[x_str == "" & x_is_a_number & is.finite(x)] <- "0"
+
+        # In rare cases that Inf or -Inf appear, ensure that these
+        # special values are printed correctly
+        x_str[is.infinite(x)] <- x[is.infinite(x)]
+
+        x_str
       }
     )
   )
 }
 
-get_frac_tbl <- function(type, values) {
+get_frac_tbl <- function(accuracy, values) {
 
   lu_tbl <-
     switch(
-      type,
+      accuracy,
       "1" = frac_1_d,
       "2" = frac_10_d,
       "3" = frac_100_d,
-      stop("Unknown `type` value.")
+      "1/2" = frac_1_2,
+      "1/4" = frac_1_4,
+      "1/8" = frac_1_8,
+      "1/16" = frac_1_16,
+      "1/10" = frac_1_10,
+      "1/100" = frac_1_100,
+      stop("Unknown `accuracy` value.")
     )
 
-  values <- round(values, digits = as.numeric(type))
+  digits <-
+    switch(
+      accuracy,
+      "1" = 1,
+      "2" = 2,
+      "3" = 3,
+      "1/2" =,
+      "1/4" =,
+      "1/8" =,
+      "1/16" =,
+      "1/10" =,
+      "1/100" = 2,
+      stop("Unknown `accuracy` value.")
+    )
+
+  values <- round(values, digits = digits)
 
   lookup_fractions(lu_tbl = lu_tbl, values = values)
 }
 
 lookup_fractions <- function(lu_tbl, values) {
 
-  frac_tbl <- dplyr::tibble(num = integer(0), denom = integer(0))
+  precision <- floor(log10(nrow(lu_tbl) + 1))
+
+  frac_tbl <-
+    dplyr::tibble(num = integer(0), denom = integer(0), one_up = logical(0))
+
+  has_rounding <- "one_up" %in% names(lu_tbl)
 
   for (value in values) {
 
@@ -747,7 +815,8 @@ lookup_fractions <- function(lu_tbl, values) {
         dplyr::add_row(
           frac_tbl,
           num = NA_integer_,
-          denom = NA_integer_
+          denom = NA_integer_,
+          one_up = NA
         )
 
     } else if (value == 0) {
@@ -756,26 +825,51 @@ lookup_fractions <- function(lu_tbl, values) {
         dplyr::add_row(
           frac_tbl,
           num = 0L,
-          denom = 0L
+          denom = 0L,
+          one_up = FALSE
+        )
+
+    } else if (value == 1) {
+
+      frac_tbl <-
+        dplyr::add_row(
+          frac_tbl,
+          num = 0L,
+          denom = 0L,
+          one_up = TRUE
         )
 
     } else {
 
-    idx <- lu_tbl$value == value
+      idx <- round(value, precision) == round(lu_tbl$value, precision)
 
-    frac_tbl <-
-      dplyr::add_row(
-        frac_tbl,
-        num = lu_tbl$num[idx][1],
-        denom = lu_tbl$denom[idx][1]
-      )
+      if (!has_rounding) {
+
+        frac_tbl <-
+          dplyr::add_row(
+            frac_tbl,
+            num = lu_tbl$num[idx][1],
+            denom = lu_tbl$denom[idx][1],
+            one_up = FALSE
+          )
+
+      } else {
+
+        frac_tbl <-
+          dplyr::add_row(
+            frac_tbl,
+            num = lu_tbl$num[idx][1],
+            denom = lu_tbl$denom[idx][1],
+            one_up = lu_tbl$one_up[idx][1]
+          )
+      }
     }
   }
 
   frac_tbl
 }
 
-generate_fractions_h <- function(frac_tbl, layout) {
+generate_fractions <- function(frac_tbl, layout, context) {
 
   valid_frac <-
     frac_tbl$num != 0 & !is.na(frac_tbl$num) &
@@ -783,13 +877,7 @@ generate_fractions_h <- function(frac_tbl, layout) {
 
   zero_values <- frac_tbl$num == 0 & frac_tbl$denom == 0
 
-  slash_mark <-
-    htmltools::tags$span(
-      class = "gt_slash_mark",
-      htmltools::HTML(if (layout == "optimal") "&frasl;" else "/")
-    )
-
-  if (layout == "optimal") {
+  if (context == "html" && layout == "optimal") {
 
     numerator_vec <-
       paste0("<span class=\"gt_fraction_numerator\">", frac_tbl$num, "</span>")
@@ -797,9 +885,16 @@ generate_fractions_h <- function(frac_tbl, layout) {
     denominator_vec <-
       paste0("<span class=\"gt_fraction_denominator\">", frac_tbl$denom, "</span>")
 
+    slash_mark <-
+      htmltools::tags$span(
+        class = "gt_slash_mark",
+        htmltools::HTML(if (layout == "optimal") "&frasl;" else "/")
+      )
+
   } else {
     numerator_vec <- frac_tbl$num
     denominator_vec <- frac_tbl$denom
+    slash_mark <- "/"
   }
 
   fractions <-
