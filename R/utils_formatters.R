@@ -265,6 +265,10 @@ format_num_to_str <- function(x,
       decimal.mark = dec_mark
     )
 
+  # Remove `-` for any signed zeros returned by `formatC()`
+  x_str_signed_zero <- grepl("^(-0|-0\\.0*?)$", x_str)
+  x_str[x_str_signed_zero] <- gsub("-", "", x_str[x_str_signed_zero])
+
   # If a trailing decimal mark is to be retained (not the
   # default option but sometimes desirable), affix the `dec_mark`
   # to the right of those figures that are missing this mark

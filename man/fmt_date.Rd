@@ -74,7 +74,7 @@ argument. See the Arguments section for more information on this.
 
 \section{Function ID}{
 
-3-5
+3-6
 }
 
 \examples{
@@ -118,6 +118,7 @@ tab_2 <-
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},
+\code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_markdown}()},
