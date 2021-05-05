@@ -239,7 +239,7 @@ gt_save_rtf <- function(data,
                         path = NULL,
                         ...,
                         page_numbering.active = FALSE,
-                        page_numbering.location = c("header", "footer")) {
+                        page_numbering.location = c("footer", "header")) {
 
   page_numbering.location <- match.arg(page_numbering.location)
 
@@ -454,12 +454,12 @@ as_latex <- function(data) {
 #' @param data A table object that is created using the `gt()` function.
 #' @param page_numbering.active An option to include page numbering in the RTF
 #'   document. The location for page numbering text is either in the document
-#'   header or footer (governed by the `page_numbering.location` option). By
+#'   footer or header (governed by the `page_numbering.location` option). By
 #'   default, page numbering is not active (`FALSE`).
 #' @param page_numbering.location If `page_numbering.active` is `TRUE` then this
 #'   option determines where the page numbering text will be placed. It will
-#'   either be in the RTF document `"header"` (default option) or the
-#'   `"footer"`.
+#'   either be in the RTF document `"footer"` (default option) or the
+#'   `"header"`.
 #'
 #' @examples
 #' # Use `gtcars` to create a gt table;
@@ -483,7 +483,7 @@ as_latex <- function(data) {
 #' @export
 as_rtf <- function(data,
                    page_numbering.active = FALSE,
-                   page_numbering.location = c("header", "footer")) {
+                   page_numbering.location = c("footer", "header")) {
 
   page_numbering.location <- match.arg(page_numbering.location)
 
