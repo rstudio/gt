@@ -4,10 +4,24 @@
 \alias{as_rtf}
 \title{Output a \strong{gt} object as RTF}
 \usage{
-as_rtf(data)
+as_rtf(
+  data,
+  page_numbering.active = FALSE,
+  page_numbering.location = c("header", "footer")
+)
 }
 \arguments{
-\item{data}{a table object that is created using the \code{gt()} function.}
+\item{data}{A table object that is created using the \code{gt()} function.}
+
+\item{page_numbering.active}{An option to include page numbering in the RTF
+document. The location for page numbering text is either in the document
+header or footer (governed by the \code{page_numbering.location} option). By
+default, page numbering is not active (\code{FALSE}).}
+
+\item{page_numbering.location}{If \code{page_numbering.active} is \code{TRUE} then this
+option determines where the page numbering text will be placed. It will
+either be in the RTF document \code{"header"} (default option) or the
+\code{"footer"}.}
 }
 \description{
 Get the RTF content from a \code{gt_tbl} object as as a single-element character
