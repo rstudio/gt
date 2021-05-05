@@ -115,9 +115,7 @@ summary_rows <- function(data,
   # If there isn't a stub available, create an
   # 'empty' stub (populated with empty strings);
   # the stub is necessary for summary row labels
-  # TODO: Why is there a requirement for `is_null(groups)`?;
-  #       I think there is a mistake here
-  if (!stub_available && is.null(groups)) {
+  if (!stub_available) {
 
     data <-
       dt_boxhead_add_var(
@@ -128,16 +126,18 @@ summary_rows <- function(data,
         column_align = "left",
         column_width = list(NULL),
         hidden_px = list(NULL),
-        add_where = "top"
+        add_where = "bottom"
       )
 
     # Add the `"rowname"` column into `_data`
     data$`_data` <-
       data$`_data` %>%
       dplyr::mutate(rowname = rep("", nrow(data$`_data`))) %>%
-      dplyr::select(rowname, dplyr::everything())
+      dplyr::select(dplyr::everything(), rowname)
 
-    # Place the `rowname` values into `stub_df$rowname`
+    # Place the `rowname` values into `stub_df$rowname`; these are
+    # empty strings which will provide an empty stub for locations
+    # adjacent to the body rows
     stub_df[["rowname"]] <- ""
 
     data <- dt_stub_df_set(data = data, stub_df = stub_df)

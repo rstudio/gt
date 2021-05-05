@@ -39,7 +39,9 @@ globalVariables(
     "colnum_final",
     "column_align",
     "column_label",
+    "column_width",
     "colors",
+    "conv",
     "copyright",
     "curr_code",
     "curr_name",
@@ -98,6 +100,7 @@ globalVariables(
     "text_col",
     "time",
     "type",
+    "unit",
     "value",
     "var",
     "weight",
@@ -123,6 +126,7 @@ NULL
 
 gt_default_options <- list(
   gt.row_group.sep = " - ",
+  gt.rtf_page_width = 9468L,
   gt.html_tag_check = TRUE
 )
 
