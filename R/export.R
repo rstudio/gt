@@ -14,10 +14,10 @@
 #' of these arguments.
 #'
 #' If the output filename is expressed with the `.rtf` extension then an RTF
-#' file will be generated. In this case, there two options that can be passed
-#' through `...`: `page_numbering.active` and `page_numbering.location`. Both of
-#' these options control RTF document page numbering and, by default, page
-#' numbering is not activated (i.e., `page_numbering.active = FALSE`).
+#' file will be generated. In this case, there is an option that can be passed
+#' through `...`: `page_numbering`. This controls RTF document page numbering
+#' and, by default, page numbering is not enabled (i.e., `page_numbering =
+#' "none"`).
 #'
 #' We can create an image file based on the HTML version of the `gt` table. With
 #' the filename extension `.png`, we get a PNG image file. A PDF document can be
@@ -238,18 +238,14 @@ gt_save_rtf <- function(data,
                         filename,
                         path = NULL,
                         ...,
-                        page_numbering.active = FALSE,
-                        page_numbering.location = c("footer", "header")) {
+                        page_numbering = c("none", "footer", "header")) {
 
-  page_numbering.location <- match.arg(page_numbering.location)
+  page_numbering <- match.arg(page_numbering)
 
   filename <- gtsave_filename(path = path, filename = filename)
 
   data %>%
-    as_rtf(
-      page_numbering.active = page_numbering.active,
-      page_numbering.location = page_numbering.location
-    ) %>%
+    as_rtf(page_numbering = page_numbering) %>%
     writeLines(con = filename)
 }
 
@@ -452,14 +448,9 @@ as_latex <- function(data) {
 #' file that can be opened by RTF readers.
 #'
 #' @param data A table object that is created using the `gt()` function.
-#' @param page_numbering.active An option to include page numbering in the RTF
-#'   document. The location for page numbering text is either in the document
-#'   footer or header (governed by the `page_numbering.location` option). By
-#'   default, page numbering is not active (`FALSE`).
-#' @param page_numbering.location If `page_numbering.active` is `TRUE` then this
-#'   option determines where the page numbering text will be placed. It will
-#'   either be in the RTF document `"footer"` (default option) or the
-#'   `"header"`.
+#' @param page_numbering An option to include page numbering in the RTF
+#'   document. The page numbering text can either be in the document `"footer"`
+#'   or `"header"`. By default, page numbering is not active (`"none"`).
 #'
 #' @examples
 #' # Use `gtcars` to create a gt table;
@@ -482,10 +473,9 @@ as_latex <- function(data) {
 #'
 #' @export
 as_rtf <- function(data,
-                   page_numbering.active = FALSE,
-                   page_numbering.location = c("footer", "header")) {
+                   page_numbering = c("none", "footer", "header")) {
 
-  page_numbering.location <- match.arg(page_numbering.location)
+  page_numbering <- match.arg(page_numbering)
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -524,8 +514,7 @@ as_rtf <- function(data,
           )
         )
       },
-      page_numbering.active = page_numbering.active,
-      page_numbering.location = page_numbering.location
+      page_numbering = page_numbering
     ) %>%
     as_rtf_string()
 

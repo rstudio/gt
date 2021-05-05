@@ -183,8 +183,7 @@ rtf_header <- function(..., .charset = "ansi", .ansi_code_page = 1252) {
 
 rtf_file <- function(header = NULL,
                      document = NULL,
-                     page_numbering.active,
-                     page_numbering.location) {
+                     page_numbering) {
 
   if (is.null(header) && is.null(document)) {
     header <- document <- ""
@@ -231,8 +230,8 @@ rtf_file <- function(header = NULL,
     header <- rtf_header(fonttbl, colortbl)
   }
 
-  # Include RTF code to express page numbering if `page_numbering.active = TRUE`
-  if (page_numbering.active) {
+  # Include RTF code to express page numbering if `page_numbering != "none"`
+  if (page_numbering != "none") {
 
     document <-
       paste(
@@ -240,7 +239,7 @@ rtf_file <- function(header = NULL,
         "\n\n",
         rtf_raw(
           "{",
-          if (page_numbering.location == "footer") "\\footer" else "\\header",
+          if (page_numbering == "footer") "\\footer" else "\\header",
           "\\qr{\n{\\field{\\*\\fldinst {PAGE}}{\\fldrslt {Refresh >F9<}}}}\\par}"
         )
       )

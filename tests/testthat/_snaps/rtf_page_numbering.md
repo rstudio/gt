@@ -177,8 +177,7 @@
        
       
        {\footer\qr{
-      Page {\field{\*\fldinst {PAGE}}{\fldrslt {Refresh >F9<}}} of {\field{\*\fldinst {SECTIONPAGES}}{\fldrslt {Refresh >F9<}}}
-      }\par}}
+      {\field{\*\fldinst {PAGE}}{\fldrslt {Refresh >F9<}}}}\par}}
 
 ---
 
@@ -270,6 +269,5 @@
        
       
        {\header\qr{
-      Page {\field{\*\fldinst {PAGE}}{\fldrslt {Refresh >F9<}}} of {\field{\*\fldinst {SECTIONPAGES}}{\fldrslt {Refresh >F9<}}}
-      }\par}}
+      {\field{\*\fldinst {PAGE}}{\fldrslt {Refresh >F9<}}}}\par}}
 

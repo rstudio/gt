@@ -36,10 +36,9 @@ please refer to the \strong{htmltools} documentation for more details on the use
 of these arguments.
 
 If the output filename is expressed with the \code{.rtf} extension then an RTF
-file will be generated. In this case, there two options that can be passed
-through \code{...}: \code{page_numbering.active} and \code{page_numbering.location}. Both of
-these options control RTF document page numbering and, by default, page
-numbering is not activated (i.e., \code{page_numbering.active = FALSE}).
+file will be generated. In this case, there is an option that can be passed
+through \code{...}: \code{page_numbering}. This controls RTF document page numbering
+and, by default, page numbering is not enabled (i.e., \code{page_numbering = "none"}).
 
 We can create an image file based on the HTML version of the \code{gt} table. With
 the filename extension \code{.png}, we get a PNG image file. A PDF document can be
