@@ -600,9 +600,24 @@ fmt_percent <- function(data,
 
 #' Format values as a mixed fractions
 #'
+#' @description
 #' With numeric values in a **gt** table, we can perform mixed-fraction-based
-#' formatting.
+#' formatting. There are several options for setting the accuracy of the
+#' fractions (e.g., setting the number of desired figures in the denominator or
+#' expressing fractions with fixed denominators). The following options are
+#' available for controlling this type of formatting:
 #'
+#' - accuracy: how to express the fractional part of the mixed fractions; there
+#' are nine named options for this.
+#' - layout: for HTML output, we can choose to use diagonal or inline fractions
+#' - digit grouping separators: options to enable/disable digit separators
+#' and provide a choice of separator symbol for the whole number portion
+#' - pattern: option to use a text pattern for decoration of the formatted
+#' mixed fractions
+#' - locale-based formatting: providing a locale ID will result in number
+#' formatting specific to the chosen locale
+#'
+#' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). A number of
 #' helper functions exist to make targeting more effective. Conditional
@@ -611,13 +626,19 @@ fmt_percent <- function(data,
 #'
 #' @inheritParams fmt_number
 #' @param type The type of fractions to generate. With either of `"1"`, `"2"`,
-#'   and `"3"` we can generate fractions with denominators 1, 2, or 3 digits.
-#' @param layout The `"optimal"` layout (the default) will generate fractions
-#'   that are more aesthetically pleasing than the `"plain"` layout.
+#'   and `"3"` we can generate fractions with denominators comprising 1, 2, or 3
+#'   digits. Several options provide a fixed denominator: `"1/2"` (for fractions
+#'   as halves), `"1/4"` (quarters), `"1/8"` (eighths), `"1/16"` (sixteenths),
+#'   `"1/10"` (tenths), and `"1/100"` (hundreths).
+#' @param layout The `"diagonal"` layout (the default) will generate fractions
+#'   that are more aesthetically pleasing than the `"inline"` layout. The
+#'   diagonal layout is currently only supported for tables in the HTML output
+#'   format.
 #' @param incl_space An option for whether to include a space between the whole
-#'   value and the fraction. The default is to not introduce a space character,
-#'   however, if `layout = "plain"` then this option is ignored since a space
-#'   is absolutely required to distinguish the whole number from the fraction.
+#'   value and the fraction (provided both are present). The default is to not
+#'   introduce a space character, however, if `layout = "inline"` then this
+#'   option is ignored since a space is required to distinguish the whole number
+#'   from the fraction.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -627,7 +648,7 @@ fmt_fraction <- function(data,
                          columns,
                          rows = everything(),
                          accuracy = c("1", "2", "3", "1/2", "1/4", "1/8", "1/16", "1/10", "1/100"),
-                         layout = c("optimal", "plain"),
+                         layout = c("diagonal", "inline"),
                          use_seps = TRUE,
                          pattern = "{x}",
                          sep_mark = ",",
@@ -641,10 +662,10 @@ fmt_fraction <- function(data,
   accuracy <- match.arg(accuracy)
   layout <- match.arg(layout)
 
-  # In the plain layout (where there is no special typesetting of the
+  # In the inline layout (where there is no special typesetting of the
   # fraction part) we must include a space to distinguish between the
   # whole number and fraction parts
-  if (layout == "plain") {
+  if (layout == "inline") {
     incl_space <- TRUE
   }
 
@@ -705,8 +726,8 @@ fmt_fraction <- function(data,
         # Format the 'big' portions of the numeric values
         # to character-based numbers
         big_x <-
-          big_x %>%
           format_num_to_str(
+            big_x,
             context = context, decimals = 0, n_sigfig = NULL,
             sep_mark = sep_mark, dec_mark = dec_mark,
             drop_trailing_zeros = TRUE,
@@ -718,10 +739,8 @@ fmt_fraction <- function(data,
         # well); in mixed fractions between -1 and 1, we don't want to
         # print the zero (we'll bring back zeros that stand alone in
         # a later statement)
-        big_x <-
-          big_x %>%
-          tidy_gsub("^0$", "") %>%
-          tidy_gsub("^-0$", minus_mark)
+        big_x <- gsub("^0$", "", big_x)
+        big_x <- gsub("^-0$", minus_mark, big_x)
 
         # Generate the fractions based on the context
         small_x_p <-
@@ -743,9 +762,7 @@ fmt_fraction <- function(data,
           )
 
         # Trim whitespace
-        x_str <-
-          x_str %>%
-          tidy_gsub("(^ | $)", "")
+        x_str <- gsub("(^ | $)", "", x_str)
 
         # For values that are true zeros, ensure that
         # only a single zero appears
@@ -764,15 +781,13 @@ fmt_fraction <- function(data,
         # special values are printed correctly
         x_str[is.infinite(x)] <- x[is.infinite(x)]
 
-        # Replace any signed zeros with a plain zero; remove
+        # Replace any signed zeros with an undecorated zero; remove
         # zeros where values are between -1 and 0; in situations where
         # the `minus_mark` is separated from mixed fraction component
         # by a space, eliminate the space
-        x_str <-
-          x_str %>%
-          tidy_gsub(paste0("^(", minus_mark, "|-)0$"), "0") %>%
-          tidy_gsub(paste0("^(", minus_mark, ")(0)(.+)$"), "\\1\\3") %>%
-          tidy_gsub(paste0(minus_mark, " "), minus_mark)
+        x_str <- gsub(paste0("^(", minus_mark, "|-)0$"), "0", x_str)
+        x_str <- gsub(paste0("^(", minus_mark, ")(0)(.+)$"), "\\1\\3", x_str)
+        x_str <- gsub(paste0(minus_mark, " "), minus_mark, x_str)
 
         x_str
       }
@@ -896,7 +911,7 @@ generate_fractions <- function(frac_tbl, layout, context) {
 
   zero_values <- frac_tbl$num == 0 & frac_tbl$denom == 0
 
-  if (context == "html" && layout == "optimal") {
+  if (context == "html" && layout == "diagonal") {
 
     numerator_vec <-
       paste0("<span class=\"gt_fraction_numerator\">", frac_tbl$num, "</span>")
@@ -907,7 +922,7 @@ generate_fractions <- function(frac_tbl, layout, context) {
     slash_mark <-
       htmltools::tags$span(
         class = "gt_slash_mark",
-        htmltools::HTML(if (layout == "optimal") "&frasl;" else "/")
+        htmltools::HTML(if (layout == "diagonal") "&frasl;" else "/")
       )
 
   } else {
