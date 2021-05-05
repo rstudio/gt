@@ -625,11 +625,11 @@ fmt_percent <- function(data,
 #' argument. See the Arguments section for more information on this.
 #'
 #' @inheritParams fmt_number
-#' @param type The type of fractions to generate. With either of `"1"`, `"2"`,
-#'   and `"3"` we can generate fractions with denominators comprising 1, 2, or 3
-#'   digits. Several options provide a fixed denominator: `"1/2"` (for fractions
-#'   as halves), `"1/4"` (quarters), `"1/8"` (eighths), `"1/16"` (sixteenths),
-#'   `"1/10"` (tenths), and `"1/100"` (hundreths).
+#' @param accuracy The type of fractions to generate. With either of `"1"`,
+#'   `"2"`, and `"3"` we can generate fractions with denominators comprising 1,
+#'   2, or 3 digits. Several options provide a fixed denominator: `"1/2"` (for
+#'   fractions as halves), `"1/4"` (quarters), `"1/8"` (eighths), `"1/16"`
+#'   (sixteenths), `"1/10"` (tenths), and `"1/100"` (hundreths).
 #' @param layout The `"diagonal"` layout (the default) will generate fractions
 #'   that are more aesthetically pleasing than the `"inline"` layout. The
 #'   diagonal layout is currently only supported for tables in the HTML output
