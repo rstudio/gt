@@ -9,7 +9,7 @@ fmt_fraction(
   columns,
   rows = everything(),
   accuracy = c("1", "2", "3", "1/2", "1/4", "1/8", "1/16", "1/10", "1/100"),
-  layout = c("optimal", "plain"),
+  layout = c("diagonal", "inline"),
   use_seps = TRUE,
   pattern = "{x}",
   sep_mark = ",",
@@ -36,8 +36,10 @@ functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with
 to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{layout}{The \code{"optimal"} layout (the default) will generate fractions
-that are more aesthetically pleasing than the \code{"plain"} layout.}
+\item{layout}{The \code{"diagonal"} layout (the default) will generate fractions
+that are more aesthetically pleasing than the \code{"inline"} layout. The
+diagonal layout is currently only supported for tables in the HTML output
+format.}
 
 \item{use_seps}{An option to use digit group separators. The type of digit
 group separator is set by \code{sep_mark} and overridden if a locale ID is
@@ -54,9 +56,10 @@ of \verb{1,000}).}
 \item{dec_mark}{The character to use as a decimal mark (e.g., using \code{dec_mark = ","} with \code{0.152} would result in a formatted value of \verb{0,152}).}
 
 \item{incl_space}{An option for whether to include a space between the whole
-value and the fraction. The default is to not introduce a space character,
-however, if \code{layout = "plain"} then this option is ignored since a space
-is absolutely required to distinguish the whole number from the fraction.}
+value and the fraction (provided both are present). The default is to not
+introduce a space character, however, if \code{layout = "inline"} then this
+option is ignored since a space is required to distinguish the whole number
+from the fraction.}
 
 \item{locale}{An optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include \code{"en_US"} for English
@@ -66,14 +69,31 @@ We can use the \code{\link[=info_locales]{info_locales()}} function as a useful 
 the locales that are supported.}
 
 \item{type}{The type of fractions to generate. With either of \code{"1"}, \code{"2"},
-and \code{"3"} we can generate fractions with denominators 1, 2, or 3 digits.}
+and \code{"3"} we can generate fractions with denominators comprising 1, 2, or 3
+digits. Several options provide a fixed denominator: \code{"1/2"} (for fractions
+as halves), \code{"1/4"} (quarters), \code{"1/8"} (eighths), \code{"1/16"} (sixteenths),
+\code{"1/10"} (tenths), and \code{"1/100"} (hundreths).}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
 With numeric values in a \strong{gt} table, we can perform mixed-fraction-based
-formatting.
+formatting. There are several options for setting the accuracy of the
+fractions (e.g., setting the number of desired figures in the denominator or
+expressing fractions with fixed denominators). The following options are
+available for controlling this type of formatting:
+\itemize{
+\item accuracy: how to express the fractional part of the mixed fractions; there
+are nine named options for this.
+\item layout: for HTML output, we can choose to use diagonal or inline fractions
+\item digit grouping separators: options to enable/disable digit separators
+and provide a choice of separator symbol for the whole number portion
+\item pattern: option to use a text pattern for decoration of the formatted
+mixed fractions
+\item locale-based formatting: providing a locale ID will result in number
+formatting specific to the chosen locale
+}
 }
 \details{
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
