@@ -181,7 +181,10 @@ rtf_header <- function(..., .charset = "ansi", .ansi_code_page = 1252) {
   rtf_header
 }
 
-rtf_file <- function(header = NULL, document = NULL) {
+rtf_file <- function(header = NULL,
+                     document = NULL,
+                     page_numbering.active,
+                     page_numbering.location) {
 
   if (is.null(header) && is.null(document)) {
     header <- document <- ""
@@ -228,6 +231,23 @@ rtf_file <- function(header = NULL, document = NULL) {
     header <- rtf_header(fonttbl, colortbl)
   }
 
+  # Include RTF code to express page numbering if `page_numbering.active = TRUE`
+  if (page_numbering.active) {
+
+    document <-
+      paste(
+        document,
+        "\n\n",
+        rtf_raw(
+          "{",
+          if (page_numbering.location == "footer") "\\footer" else "\\header",
+          "\\qr{\n",
+          "Page {\\field{\\*\\fldinst {PAGE}}{\\fldrslt {Refresh >F9<}}} ",
+          "of {\\field{\\*\\fldinst {SECTIONPAGES}}{\\fldrslt {Refresh >F9<}}}\n",
+          "}\\par}"
+        )
+      )
+  }
 
   rtf_file <- list(header = header, document = document)
 
