@@ -712,7 +712,7 @@ fmt_fraction <- function(data,
 
         # Get a table that contains the numerator and denominator
         # parts for each value of `small_x`
-        frac_tbl <- get_frac_tbl(accuracy = accuracy, value = small_x)
+        frac_tbl <- get_frac_tbl(accuracy = accuracy, values = small_x)
 
         # Determine which direction rounding should occur for certain values
         up_down_vals <-
