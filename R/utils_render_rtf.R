@@ -241,10 +241,7 @@ rtf_file <- function(header = NULL,
         rtf_raw(
           "{",
           if (page_numbering.location == "footer") "\\footer" else "\\header",
-          "\\qr{\n",
-          "Page {\\field{\\*\\fldinst {PAGE}}{\\fldrslt {Refresh >F9<}}} ",
-          "of {\\field{\\*\\fldinst {SECTIONPAGES}}{\\fldrslt {Refresh >F9<}}}\n",
-          "}\\par}"
+          "\\qr{\n{\\field{\\*\\fldinst {PAGE}}{\\fldrslt {Refresh >F9<}}}}\\par}"
         )
       )
   }
