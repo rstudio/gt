@@ -1,5 +1,3 @@
-context("Ensuring that the `fmt_number()` function works as expected")
-
 test_that("the `fmt_number()` function works correctly", {
 
   # Create an input data frame four columns: two
@@ -131,6 +129,50 @@ test_that("the `fmt_number()` function works correctly", {
        render_formats_test("html"))[["num_1"]],
     c("1.8362K", "2.7634K", "0.9373K", "0.6430K",
       "0.2122K", "0.0000K", "&minus;0.0232K"))
+
+  # Format the `num_1` column to 2 decimal places, use accounting style
+  expect_equal(
+    (tab %>%
+       fmt_number(columns = num_1, accounting = TRUE) %>%
+       render_formats_test("html"))[["num_1"]],
+    c("1,836.23", "2,763.39", "937.29", "643.00", "212.23", "0.00", "(23.24)")
+  )
+
+  # Format the `num_1` column to 3 decimal places, use accounting style
+  expect_equal(
+    (tab %>%
+       fmt_number(columns = num_1, decimals = 3, accounting = TRUE) %>%
+       render_formats_test("html"))[["num_1"]],
+    c(
+      "1,836.230", "2,763.390", "937.290", "643.000", "212.232",
+      "0.000", "(23.240)"
+    )
+  )
+
+  # Format the `num_1` column to 2 decimal places, use accounting style
+  # and a pattern around the values
+  expect_equal(
+    (tab %>%
+       fmt_number(
+         columns = num_1, decimals = 3,
+         accounting = TRUE, pattern = "a{x}b") %>%
+       render_formats_test("html"))[["num_1"]],
+    c(
+      "a1,836.230b", "a2,763.390b", "a937.290b", "a643.000b", "a212.232b",
+      "a0.000b", "a(23.240)b"
+    )
+  )
+
+  # Format the `num_1` column to 2 decimal places, use accounting style
+  # and drop all trailing zeros
+  expect_equal(
+    (tab %>%
+       fmt_number(
+         columns = num_1, decimals = 3,
+         accounting = TRUE, drop_trailing_zeros = TRUE) %>%
+       render_formats_test("html"))[["num_1"]],
+    c("1,836.23", "2,763.39", "937.29", "643", "212.232", "0", "(23.24)")
+  )
 
   # Format the `num_1` column to 2 decimal places, apply the `en_US`
   # locale and use all other defaults; extract `output_df` and compare

@@ -1,6 +1,4 @@
-context("LaTeX -- Ensuring that the `fmt_number()` function works as expected")
-
-test_that("the `fmt_number()` function works correctly", {
+test_that("the `fmt_number()` function works correctly in the LaTeX context", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric
@@ -23,7 +21,7 @@ test_that("the `fmt_number()` function works correctly", {
   # other defaults; extract `output_df` and compare to expected values
   expect_equal(
     (tbl_latex %>%
-       fmt_number(columns = "num_1", decimals = 2) %>%
+       fmt_number(columns = num_1, decimals = 2) %>%
        render_formats_test(context = "latex"))[["num_1"]],
     c("$1,836.23$", "$2,763.39$", "$937.29$", "$643.00$",
       "$212.23$", "$0.00$", "$-23.24$")
@@ -33,7 +31,7 @@ test_that("the `fmt_number()` function works correctly", {
   # other defaults; extract `output_df` and compare to expected values
   expect_equal(
     (tbl_latex %>%
-       fmt_number(columns = "num_1", decimals = 5) %>%
+       fmt_number(columns = num_1, decimals = 5) %>%
        render_formats_test("latex"))[["num_1"]],
     c("$1,836.23000$", "$2,763.39000$", "$937.29000$",
       "$643.00000$", "$212.23200$", "$0.00000$", "$-23.24000$")
@@ -45,7 +43,7 @@ test_that("the `fmt_number()` function works correctly", {
   expect_equal(
     (tbl_latex %>%
        fmt_number(
-         columns = "num_1", decimals = 2,
+         columns = num_1, decimals = 2,
          drop_trailing_zeros = TRUE
        ) %>%
        render_formats_test("latex"))[["num_1"]],
@@ -58,7 +56,7 @@ test_that("the `fmt_number()` function works correctly", {
   # and compare to expected values
   expect_equal(
     (tbl_latex %>%
-       fmt_number(columns = "num_1", decimals = 2, use_seps = FALSE) %>%
+       fmt_number(columns = num_1, decimals = 2, use_seps = FALSE) %>%
        render_formats_test("latex"))[["num_1"]],
     c("$1836.23$", "$2763.39$", "$937.29$", "$643.00$",
       "$212.23$", "$0.00$", "$-23.24$")
@@ -69,7 +67,7 @@ test_that("the `fmt_number()` function works correctly", {
   # extract `output_df` and compare to expected values
   expect_equal(
     (tbl_latex %>%
-       fmt_number(columns = "num_1", decimals = 2, sep_mark = " ") %>%
+       fmt_number(columns = num_1, decimals = 2, sep_mark = " ") %>%
        render_formats_test("latex"))[["num_1"]],
     c("$1 836.23$", "$2 763.39$", "$937.29$", "$643.00$",
       "$212.23$", "$0.00$", "$-23.24$")
@@ -81,7 +79,7 @@ test_that("the `fmt_number()` function works correctly", {
   expect_equal(
     (tbl_latex %>%
        fmt_number(
-         columns = "num_1", decimals = 2,
+         columns = num_1, decimals = 2,
          sep_mark = ".", dec_mark = ","
        ) %>%
        render_formats_test("latex"))[["num_1"]],
@@ -94,7 +92,7 @@ test_that("the `fmt_number()` function works correctly", {
   # to expected values
   expect_equal(
     (tbl_latex %>%
-       fmt_number(columns = "num_1", decimals = 4, scale_by = 1/1000) %>%
+       fmt_number(columns = num_1, decimals = 4, scale_by = 1/1000) %>%
        render_formats_test("latex"))[["num_1"]],
     c("$1.8362$", "$2.7634$", "$0.9373$", "$0.6430$", "$0.2122$",
       "$0.0000$", "$-0.0232$")
@@ -105,7 +103,7 @@ test_that("the `fmt_number()` function works correctly", {
   # `output_df` and compare to expected values
   expect_equal(
     (tbl_latex %>%
-       fmt_number(columns = "num_1", decimals = 2, pattern = "a {x} b") %>%
+       fmt_number(columns = num_1, decimals = 2, pattern = "a {x} b") %>%
        render_formats_test("latex"))[["num_1"]],
     c("a $1,836.23$ b", "a $2,763.39$ b", "a $937.29$ b", "a $643.00$ b",
       "a $212.23$ b", "a $0.00$ b", "a $-23.24$ b")
@@ -116,11 +114,61 @@ test_that("the `fmt_number()` function works correctly", {
   # all other defaults; extract `output_df` and compare to expected values
   expect_equal(
     (tbl_latex %>%
-       fmt_number(columns = "num_1", decimals = 4,
+       fmt_number(columns = num_1, decimals = 4,
                   scale_by = 1/1000, pattern = "{x}K") %>%
        render_formats_test("latex"))[["num_1"]],
     c("$1.8362$K", "$2.7634$K", "$0.9373$K", "$0.6430$K",
       "$0.2122$K", "$0.0000$K", "$-0.0232$K")
+  )
+
+  # Format the `num_1` column to 2 decimal places, use accounting style
+  expect_equal(
+    (tbl_latex %>%
+       fmt_number(columns = num_1, accounting = TRUE) %>%
+       render_formats_test("latex"))[["num_1"]],
+    c(
+      "$1,836.23$", "$2,763.39$", "$937.29$", "$643.00$", "$212.23$",
+      "$0.00$", "$(23.24)$"
+    )
+  )
+
+  # Format the `num_1` column to 3 decimal places, use accounting style
+  expect_equal(
+    (tbl_latex %>%
+       fmt_number(columns = num_1, decimals = 3, accounting = TRUE) %>%
+       render_formats_test("latex"))[["num_1"]],
+    c(
+      "$1,836.230$", "$2,763.390$", "$937.290$", "$643.000$", "$212.232$",
+      "$0.000$", "$(23.240)$"
+    )
+  )
+
+  # Format the `num_1` column to 2 decimal places, use accounting style
+  # and a pattern around the values
+  expect_equal(
+    (tbl_latex %>%
+       fmt_number(
+         columns = num_1, decimals = 3,
+         accounting = TRUE, pattern = "a{x}b") %>%
+       render_formats_test("latex"))[["num_1"]],
+    c(
+      "a$1,836.230$b", "a$2,763.390$b", "a$937.290$b", "a$643.000$b",
+      "a$212.232$b", "a$0.000$b", "a$(23.240)$b"
+    )
+  )
+
+  # Format the `num_1` column to 2 decimal places, use accounting style
+  # and drop all trailing zeros
+  expect_equal(
+    (tbl_latex %>%
+       fmt_number(
+         columns = num_1, decimals = 3,
+         accounting = TRUE, drop_trailing_zeros = TRUE) %>%
+       render_formats_test("latex"))[["num_1"]],
+    c(
+      "$1,836.23$", "$2,763.39$", "$937.29$", "$643$", "$212.232$",
+      "$0$", "$(23.24)$"
+    )
   )
 
   # Format the `num_1` column to 2 decimal places, apply the `en_US`
@@ -128,7 +176,7 @@ test_that("the `fmt_number()` function works correctly", {
   # to expected values
   expect_equal(
     (tbl_latex %>%
-       fmt_number(columns = "num_1", decimals = 2, locale = "en_US") %>%
+       fmt_number(columns = num_1, decimals = 2, locale = "en_US") %>%
        render_formats_test("latex"))[["num_1"]],
     c("$1,836.23$", "$2,763.39$", "$937.29$", "$643.00$",
       "$212.23$", "$0.00$", "$-23.24$")
@@ -139,7 +187,7 @@ test_that("the `fmt_number()` function works correctly", {
   # to expected values
   expect_equal(
     (tbl_latex %>%
-       fmt_number(columns = "num_1", decimals = 2, locale = "da_DK") %>%
+       fmt_number(columns = num_1, decimals = 2, locale = "da_DK") %>%
        render_formats_test("latex"))[["num_1"]],
     c("$1.836,23$", "$2.763,39$", "$937,29$", "$643,00$",
       "$212,23$", "$0,00$", "$-23,24$")
@@ -150,7 +198,7 @@ test_that("the `fmt_number()` function works correctly", {
   # to expected values
   expect_equal(
     (tbl_latex %>%
-       fmt_number(columns = "num_1", decimals = 2, locale = "de_AT") %>%
+       fmt_number(columns = num_1, decimals = 2, locale = "de_AT") %>%
        render_formats_test("latex"))[["num_1"]],
     c("$1 836,23$", "$2 763,39$", "$937,29$", "$643,00$",
       "$212,23$", "$0,00$", "$-23,24$")
@@ -161,7 +209,7 @@ test_that("the `fmt_number()` function works correctly", {
   # to expected values
   expect_equal(
     (tbl_latex %>%
-       fmt_number(columns = "num_1", decimals = 2, locale = "et_EE") %>%
+       fmt_number(columns = num_1, decimals = 2, locale = "et_EE") %>%
        render_formats_test("latex"))[["num_1"]],
     c("$1 836,23$", "$2 763,39$", "$937,29$", "$643,00$",
       "$212,23$", "$0,00$", "$-23,24$")
@@ -172,7 +220,7 @@ test_that("the `fmt_number()` function works correctly", {
   # to expected values
   expect_equal(
     (tbl_latex %>%
-       fmt_number(columns = "num_1", decimals = 2, locale = "gl_ES") %>%
+       fmt_number(columns = num_1, decimals = 2, locale = "gl_ES") %>%
        render_formats_test("latex"))[["num_1"]],
     c("$1.836,23$", "$2.763,39$", "$937,29$", "$643,00$",
       "$212,23$", "$0,00$", "$-23,24$")
