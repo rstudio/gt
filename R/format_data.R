@@ -55,6 +55,9 @@
 #' @param use_seps An option to use digit group separators. The type of digit
 #'   group separator is set by `sep_mark` and overridden if a locale ID is
 #'   provided to `locale`. This setting is `TRUE` by default.
+#' @param accounting An option to use accounting style for values. With `FALSE`
+#'   (the default), negative values will be shown with a minus sign. Using
+#'   `accounting = TRUE` will put negative values in parentheses.
 #' @param scale_by A value to scale the input. The default is `1.0`. All numeric
 #'   values will be multiplied by this value first before undergoing formatting.
 #'   This value will be ignored if using any of the `suffixing` options (i.e.,
@@ -148,6 +151,7 @@ fmt_number <- function(data,
                        drop_trailing_zeros = FALSE,
                        drop_trailing_dec_mark = TRUE,
                        use_seps = TRUE,
+                       accounting = FALSE,
                        scale_by = 1.0,
                        suffixing = FALSE,
                        pattern = "{x}",
@@ -201,7 +205,11 @@ fmt_number <- function(data,
         # Create the `suffix_df` object
         suffix_df <- create_suffix_df(x, decimals, suffix_labels, scale_by)
 
-        x %>%
+        # Create the `x_str` vector
+        x_str <- character(length(x))
+
+        x_str <-
+          x %>%
           # Scale the `x_vals` by the `scale_by` values
           scale_x_values(suffix_df$scale_by) %>%
           # Format numeric values to character-based numbers
@@ -215,6 +223,14 @@ fmt_number <- function(data,
           # With large-number suffixing support, we paste the
           # vector of suffixes to the right of the values
           paste_right(suffix_df$suffix)
+
+        x_str <-
+          x_str %>%
+          format_as_accounting(
+            x = x, context = context, accounting = accounting
+          )
+
+        x_str
       }
     )
   )
@@ -556,6 +572,7 @@ fmt_percent <- function(data,
                         drop_trailing_dec_mark = TRUE,
                         scale_values = TRUE,
                         use_seps = TRUE,
+                        accounting = FALSE,
                         pattern = "{x}",
                         sep_mark = ",",
                         dec_mark = ".",
@@ -584,7 +601,7 @@ fmt_percent <- function(data,
     columns = {{ columns }},
     rows = {{ rows }},
     symbol = "%",
-    accounting = FALSE,
+    accounting = accounting,
     decimals = decimals,
     drop_trailing_zeros = drop_trailing_zeros,
     drop_trailing_dec_mark = drop_trailing_dec_mark,
@@ -661,9 +678,6 @@ fmt_percent <- function(data,
 #'   used.
 #' @param use_subunits An option for whether the subunits portion of a currency
 #'   value should be displayed. By default, this is `TRUE`.
-#' @param accounting An option to use accounting style for currency values. With
-#'   `FALSE` (the default), negative values will be shown with a minus sign.
-#'   Using `accounting = TRUE` will put negative values in parentheses.
 #' @param placement The placement of the currency symbol. This can be either be
 #'   `left` (the default) or `right`.
 #' @param incl_space An option for whether to include a space between the value
@@ -716,10 +730,10 @@ fmt_currency <- function(data,
                          rows = everything(),
                          currency = "USD",
                          use_subunits = TRUE,
-                         accounting = FALSE,
                          decimals = NULL,
                          drop_trailing_dec_mark = TRUE,
                          use_seps = TRUE,
+                         accounting = FALSE,
                          scale_by = 1.0,
                          suffixing = FALSE,
                          pattern = "{x}",
