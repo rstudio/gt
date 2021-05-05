@@ -695,7 +695,7 @@ fmt_fraction <- function(data,
 
         # Round all values of x to the highest
         # granularity required for this formatter
-        x <- round(x, 3)
+        x <- round_gt(x, 3)
 
         # Divide the `x` values in 'big' and 'small' components
         big_x <- trunc(x)
@@ -827,7 +827,7 @@ get_frac_tbl <- function(accuracy, values) {
       stop("Unknown `accuracy` value.")
     )
 
-  values <- round(values, digits = digits)
+  values <- round_gt(values, digits = digits)
 
   lookup_fractions(lu_tbl = lu_tbl, values = values)
 }
@@ -875,7 +875,7 @@ lookup_fractions <- function(lu_tbl, values) {
 
     } else {
 
-      idx <- round(value, precision) == round(lu_tbl$value, precision)
+      idx <- round_gt(value, precision) == round_gt(lu_tbl$value, precision)
 
       if (!has_rounding) {
 
@@ -942,6 +942,19 @@ generate_fractions <- function(frac_tbl, layout, context) {
   fractions[zero_values] <- ""
 
   fractions
+}
+
+# The `round_gt()` function is used in gt over `base::round()` for consistency
+# in rounding across R versions; it uses the 'Round-Half-Up' (R-H-U) algorithm,
+# which is *not* used in R >= 4.0
+round_gt <- function(x, digits = 0) {
+
+  x_sign <- sign(x)
+  z <- abs(x) * 10^digits
+  z <- 0.5 + z + sqrt(.Machine$double.eps)
+  z <- trunc(z)
+  z <- z / 10^digits
+  z * x_sign
 }
 
 #' Format values as currencies
