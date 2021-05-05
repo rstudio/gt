@@ -213,6 +213,7 @@ tab_2 <-
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},
+\code{\link{fmt_bytes}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
 \code{\link{fmt_markdown}()},

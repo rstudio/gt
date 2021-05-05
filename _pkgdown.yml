@@ -52,6 +52,7 @@ reference:
     - fmt_scientific
     - fmt_percent
     - fmt_currency
+    - fmt_bytes
     - fmt_date
     - fmt_time
     - fmt_datetime

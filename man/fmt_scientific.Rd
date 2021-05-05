@@ -42,9 +42,7 @@ use. The default number of decimal places is \code{2}.}
 trailing zeros (those redundant zeros after the decimal mark).}
 
 \item{scale_by}{A value to scale the input. The default is \code{1.0}. All numeric
-values will be multiplied by this value first before undergoing formatting.
-This value will be ignored if using any of the \code{suffixing} options (i.e.,
-where \code{suffixing} is not set to \code{FALSE}).}
+values will be multiplied by this value first before undergoing formatting.}
 
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other
@@ -122,6 +120,7 @@ tab_1 <-
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},
+\code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},

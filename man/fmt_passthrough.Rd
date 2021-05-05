@@ -66,7 +66,7 @@ argument. See the Arguments section for more information on this.
 
 \section{Function ID}{
 
-3-9
+3-10
 }
 
 \examples{
@@ -89,6 +89,7 @@ tab_1 <-
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},
+\code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
