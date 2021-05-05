@@ -57,23 +57,15 @@ test_that("the `fmt_fraction()` function works correctly", {
   expect_error(tab %>% fmt_fraction(columns = num_2, locale = "aa_bb"))
 
   # Format the `num` column to fractions with an accuracy
-  # of 1 digit in the denominator, use all other defaults
+  # of 1 digit in the denominator, have the layout be 'inline'
   expect_equal(
     (tab %>%
-       fmt_fraction(columns = num, accuracy = "1") %>%
+       fmt_fraction(columns = num, accuracy = "1", layout = "inline") %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "&minus;50", "&minus;2<span class=\"gt_fraction_numerator\">1</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">2</span>",
-      "&minus;<span class=\"gt_fraction_numerator\">9</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">10</span>",
-      "0", "0", "0", "0", "<span class=\"gt_fraction_numerator\">1</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">10</span>",
-      "<span class=\"gt_fraction_numerator\">1</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">10</span>",
-      "<span class=\"gt_fraction_numerator\">1</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">3</span>",
-      "<span class=\"gt_fraction_numerator\">1</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">2</span>",
-      "<span class=\"gt_fraction_numerator\">5</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">8</span>",
-      "<span class=\"gt_fraction_numerator\">9</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">10</span>",
-      "1", "1", "1<span class=\"gt_fraction_numerator\">1</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">10</span>",
-      "2", "2,000,000<span class=\"gt_fraction_numerator\">1</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">4</span>",
-      "30,000,000,000", "NA", "Inf", "-Inf"
+      "&minus;50", "&minus;2 1/2", "&minus;9/10", "0", "0", "0",
+      "0", "1/10", "1/10", "1/3", "1/2", "5/8", "9/10", "1", "1", "1 1/10",
+      "2", "2,000,000 1/4", "30,000,000,000", "NA", "Inf", "-Inf"
     )
   )
 
