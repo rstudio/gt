@@ -377,6 +377,155 @@ fmt_scientific <- function(data,
   )
 }
 
+
+#' Format values to engineering notation
+#'
+#' With numeric values in a **gt** table, we can perform formatting so that the
+#' targeted values are rendered in engineering notation. Furthermore, there is
+#' fine control with the following options:
+#' \itemize{
+#' \item decimals: choice of the number of decimal places, option to drop
+#' trailing zeros, and a choice of the decimal symbol
+#' \item scaling: we can choose to scale targeted values by a multiplier value
+#' \item pattern: option to use a text pattern for decoration of the formatted
+#' values
+#' \item locale-based formatting: providing a locale ID will result in
+#' formatting specific to the chosen locale
+#' }
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). A number of
+#' helper functions exist to make targeting more effective. Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the Arguments section for more information on this.
+#'
+#' @inheritParams fmt_number
+#' @param scale_by A value to scale the input. The default is `1.0`. All numeric
+#'   values will be multiplied by this value first before undergoing formatting.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @examples
+#' # Use `exibble` to create a gt table;
+#' # format the `num` column in
+#' # engineering notation
+#' tab_1 <-
+#'   exibble %>%
+#'   gt() %>%
+#'   fmt_engineering(columns = num)
+#'
+#' @export
+fmt_engineering <- function(data,
+                            columns,
+                            rows = everything(),
+                            decimals = 2,
+                            drop_trailing_zeros = FALSE,
+                            scale_by = 1.0,
+                            pattern = "{x}",
+                            sep_mark = ",",
+                            dec_mark = ".",
+                            locale = NULL) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  # Set default values
+  suffixing <- FALSE
+  use_seps <- TRUE
+
+  # Use locale-based marks if a locale ID is provided
+  sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
+  dec_mark <- get_locale_dec_mark(locale, dec_mark)
+
+  # Stop function if `locale` does not have a valid value
+  validate_locale(locale)
+
+  # Normalize the `suffixing` input to either return a character vector
+  # of suffix labels, or NULL (the case where `suffixing` is FALSE)
+  suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by)
+
+  # Stop function if any columns have data that is incompatible
+  # with this formatter
+  if (!column_classes_are_valid(data, {{ columns }}, valid_classes = c("numeric", "integer"))) {
+    stop("The `fmt_scientific()` function can only be used on `columns` with numeric data",
+         call. = FALSE)
+  }
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    fns = num_fmt_factory_multi(
+      pattern = pattern,
+      format_fn = function(x, context) {
+        # Define the marks by context
+        exp_marks <- context_exp_marks(context)
+        minus_mark <- context_minus_mark(context)
+
+        # Define the `replace_minus()` function
+        replace_minus <- function(x) {
+          x %>% tidy_gsub("-", minus_mark, fixed = TRUE)
+        }
+
+        # Create the `suffix_df` object
+        suffix_df <- create_suffix_df(x, decimals, suffix_labels, scale_by)
+
+        # Scale the `x_vals` by the `scale_by` values
+        x <- x %>% scale_x_values(suffix_df$scale_by)
+
+        zero_x <- x == 0
+        negative_x <- x < 0
+        x_str_left <- x_str_right <- x_str <- character(length = length(x))
+
+        # Powers in engineering notation always in steps of 3; this
+        # calculation gets, for every value, the effective power value
+        power_3 <- floor(log(abs(x), base = 1000)) * 3
+
+        # Any zero values will return Inf from the previous calculation
+        # so we must replace these with a `0`
+        power_3[is.infinite(power_3)] <- 0L
+
+        # The numbers on the LHS must be scaled to correspond to the
+        # RHS 10^`power_level` values (i.e., `<LHS> x 10^(n * 3)`)
+        x <- x / 10^(power_3)
+
+        # With the scaled values for the LHS, format these according
+        # to the options set by the user
+        x_str_left <-
+          x %>%
+          format_num_to_str(
+            context = context, decimals = decimals, n_sigfig = NULL,
+            sep_mark = sep_mark, dec_mark = dec_mark,
+            drop_trailing_zeros = drop_trailing_zeros,
+            drop_trailing_dec_mark = FALSE,
+            format = "f",
+            replace_minus_mark = FALSE
+          ) %>%
+          replace_minus()
+
+        # Generate the RHS of the formatted value (i.e., the `x 10^(n * 3)`)
+        x_str_right <-
+          paste0(
+            exp_marks[1],
+            as.character(power_3) %>% replace_minus(),
+            exp_marks[2]
+          )
+
+        # Replace elements from `x_str_right` where exponent values
+        # are zero with empty strings
+        x_str_right[power_3 == 0] <- ""
+
+        # Paste the LHS and RHS components to generate the formatted values
+        x_str <- paste0(x_str_left, x_str_right)
+
+        x_str
+      }
+    )
+  )
+}
+
 #' Format values to take a predefined symbol
 #'
 #' @inheritParams fmt_number
