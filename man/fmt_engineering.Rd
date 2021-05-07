@@ -85,6 +85,16 @@ helper functions exist to make targeting more effective. Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
 argument. See the Arguments section for more information on this.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_fmt_engineering_1.png}{options: width=100\%}}
+}
+
+\section{Function ID}{
+
+3-3
+}
+
 \examples{
 # Use `exibble` to create a gt table;
 # format the `num` column in
@@ -95,3 +105,21 @@ tab_1 <-
   fmt_engineering(columns = num)
 
 }
+\seealso{
+Other Format Data: 
+\code{\link{data_color}()},
+\code{\link{fmt_bytes}()},
+\code{\link{fmt_currency}()},
+\code{\link{fmt_datetime}()},
+\code{\link{fmt_date}()},
+\code{\link{fmt_markdown}()},
+\code{\link{fmt_missing}()},
+\code{\link{fmt_number}()},
+\code{\link{fmt_passthrough}()},
+\code{\link{fmt_percent}()},
+\code{\link{fmt_scientific}()},
+\code{\link{fmt_time}()},
+\code{\link{fmt}()},
+\code{\link{text_transform}()}
+}
+\concept{Format Data}

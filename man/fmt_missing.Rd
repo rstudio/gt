@@ -50,7 +50,7 @@ argument. See the Arguments section for more information on this.
 
 \section{Function ID}{
 
-3-11
+3-12
 }
 
 \examples{
@@ -78,6 +78,7 @@ Other Format Data:
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_engineering}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},
 \code{\link{fmt_passthrough}()},

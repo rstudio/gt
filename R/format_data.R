@@ -390,22 +390,22 @@ fmt_scientific <- function(data,
   )
 }
 
-
 #' Format values to engineering notation
 #'
+#' @description
 #' With numeric values in a **gt** table, we can perform formatting so that the
 #' targeted values are rendered in engineering notation. Furthermore, there is
 #' fine control with the following options:
-#' \itemize{
-#' \item decimals: choice of the number of decimal places, option to drop
-#' trailing zeros, and a choice of the decimal symbol
-#' \item scaling: we can choose to scale targeted values by a multiplier value
-#' \item pattern: option to use a text pattern for decoration of the formatted
-#' values
-#' \item locale-based formatting: providing a locale ID will result in
-#' formatting specific to the chosen locale
-#' }
 #'
+#' - decimals: choice of the number of decimal places, option to drop
+#' trailing zeros, and a choice of the decimal symbol
+#' - scaling: we can choose to scale targeted values by a multiplier value
+#' - pattern: option to use a text pattern for decoration of the formatted
+#' values
+#' - locale-based formatting: providing a locale ID will result in
+#' formatting specific to the chosen locale
+#'
+#' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). A number of
 #' helper functions exist to make targeting more effective. Conditional
@@ -426,6 +426,13 @@ fmt_scientific <- function(data,
 #'   exibble %>%
 #'   gt() %>%
 #'   fmt_engineering(columns = num)
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_fmt_engineering_1.png}{options: width=100\%}}
+#'
+#' @family Format Data
+#' @section Function ID:
+#' 3-3
 #'
 #' @export
 fmt_engineering <- function(data,
@@ -706,7 +713,7 @@ fmt_symbol <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-3
+#' 3-4
 #'
 #' @import rlang
 #' @export
@@ -867,7 +874,7 @@ fmt_percent <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-4
+#' 3-5
 #'
 #' @import rlang
 #' @export
@@ -988,7 +995,7 @@ fmt_currency <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-5
+#' 3-6
 #'
 #' @import rlang
 #' @export
@@ -1155,7 +1162,7 @@ fmt_bytes <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-6
+#' 3-7
 #'
 #' @import rlang
 #' @export
@@ -1284,7 +1291,7 @@ fmt_date <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-7
+#' 3-8
 #'
 #' @import rlang
 #' @export
@@ -1403,7 +1410,7 @@ fmt_time <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-8
+#' 3-9
 #'
 #' @import rlang
 #' @export
@@ -1543,7 +1550,7 @@ fmt_datetime <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-9
+#' 3-10
 #'
 #' @import rlang
 #' @export
@@ -1629,7 +1636,7 @@ fmt_markdown <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-10
+#' 3-11
 #'
 #' @import rlang
 #' @export
@@ -1762,7 +1769,7 @@ fmt_passthrough <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-11
+#' 3-12
 #'
 #' @import rlang
 #' @export
@@ -1874,7 +1881,7 @@ fmt_missing <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-12
+#' 3-13
 #'
 #' @import rlang
 #' @export
