@@ -39,6 +39,7 @@ If providing a single function to \code{fns}, the recommended format is in the
 form: \code{fns = function(x) ...}. This single function will format the targeted
 data cells the same way regardless of the output format (e.g., HTML, LaTeX,
 RTF).
+
 If you require formatting of \code{x} that depends on the output format, a list of
 functions can be provided for the \code{html}, \code{latex}, and \code{default} contexts.
 This can be in the form of \code{fns = list(html = function(x) ..., latex = function(x) ..., default = function(x) ...)}. In this multiple-function case,

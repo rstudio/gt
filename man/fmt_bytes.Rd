@@ -92,8 +92,7 @@ bytes with human readable units. The \code{fmt_bytes()} function allows for the
 formatting of byte sizes to either of two common representations: (1) with
 decimal units (powers of 1000, examples being \code{"kB"} and \code{"MB"}), and (2)
 with binary units (powers of 1024, examples being \code{"KiB"} and \code{"MiB"}).
-}
-\details{
+
 It is assumed the input numeric values represent the number of bytes and
 automatic truncation of values will occur. The numeric values will be scaled
 to be in the range of 1 to <1000 and then decorated with the correct unit
@@ -109,6 +108,13 @@ values
 \item locale-based formatting: providing a locale ID will result in number
 formatting specific to the chosen locale
 }
+}
+\details{
+Targeting of values is done through \code{columns} and additionally by \code{rows} (if
+nothing is provided for \code{rows} then entire columns are selected). A number of
+helper functions exist to make targeting more effective. Conditional
+formatting is possible by providing a conditional expression to the \code{rows}
+argument. See the Arguments section for more information on this.
 }
 \section{Function ID}{
 
