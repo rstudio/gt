@@ -39,17 +39,14 @@ functions (e.g., \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_col
 \details{
 The formatting of the footnotes can be controlled through the use of various
 parameters in the \code{\link[=tab_options]{tab_options()}} function:
-
 \itemize{
-\item \code{footnotes.sep}: allows for a choice of the separator between
-consecutive footnotes in the table footer. By default, this is set to a
-linebreak.
-\item \code{footnotes.marks}: the set of sequential characters or numbers used
-to identify the footnotes.
-\item \code{footnotes.font.size}: the size of the font used in the footnote
-section.
-\item \code{footnotes.padding}: the amount of padding to apply between the
-footnote and source note sections in the table footer.
+\item \code{footnotes.sep}: allows for a choice of the separator between consecutive
+footnotes in the table footer. By default, this is set to a linebreak.
+\item \code{footnotes.marks}: the set of sequential characters or numbers used to
+identify the footnotes.
+\item \code{footnotes.font.size}: the size of the font used in the footnote section.
+\item \code{footnotes.padding}: the amount of padding to apply between the footnote
+and source note sections in the table footer.
 }
 }
 \section{Figures}{
