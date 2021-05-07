@@ -205,9 +205,6 @@ fmt_number <- function(data,
         # Create the `suffix_df` object
         suffix_df <- create_suffix_df(x, decimals, suffix_labels, scale_by)
 
-        # Create the `x_str` vector
-        x_str <- character(length(x))
-
         x_str <-
           x %>%
           # Scale the `x_vals` by the `scale_by` values
