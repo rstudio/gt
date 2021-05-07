@@ -50,6 +50,7 @@ reference:
     contents:
     - fmt_number
     - fmt_scientific
+    - fmt_engineering
     - fmt_percent
     - fmt_currency
     - fmt_bytes
