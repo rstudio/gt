@@ -599,6 +599,10 @@ format_as_accounting <- function(x_str,
                                  context,
                                  accounting) {
 
+  if (!accounting) {
+    return(x_str)
+  }
+
   # TODO: Handle using `x_abs_str` instead
 
   # Store logical vector of `x` < 0
@@ -609,19 +613,15 @@ format_as_accounting <- function(x_str,
     return(x_str)
   }
 
-  # Handle case where negative values are to be placed within parentheses
-  if (accounting) {
+  # Create the minus and parens marks for the context
+  minus_mark <- context_minus_mark(context)
+  parens_marks <- context_parens_marks(context)
 
-    # Create the minus and parens marks for the context
-    minus_mark <- context_minus_mark(context)
-    parens_marks <- context_parens_marks(context)
-
-    # Selectively remove minus sign and paste between parentheses
-    x_str[x_lt0] <-
-      x_str[x_lt0] %>%
-      tidy_gsub(minus_mark, "", fixed = TRUE) %>%
-      paste_between(x_2 = parens_marks)
-  }
+  # Selectively remove minus sign and paste between parentheses
+  x_str[x_lt0] <-
+    x_str[x_lt0] %>%
+    tidy_gsub(minus_mark, "", fixed = TRUE) %>%
+    paste_between(x_2 = parens_marks)
 
   x_str
 }
