@@ -217,37 +217,37 @@ already-defined CSS.</p></td>
 <code><a href='opt_table_outline.html'>opt_table_outline</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Use `exibble` to create a gt table and</span>
-<span class='co'># format the data in both columns; with</span>
-<span class='co'># `opt_css()` insert CSS rulesets as</span>
-<span class='co'># as string and be sure to set the table</span>
-<span class='co'># ID explicitly (here as "one")</span>
-<span class='va'>tab_1</span> <span class='op'>&lt;-</span>
-  <span class='va'>exibble</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>num</span>, <span class='va'>currency</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span>id <span class='op'>=</span> <span class='st'>"one"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='fmt_currency.html'>fmt_currency</a></span><span class='op'>(</span>
-    columns <span class='op'>=</span> <span class='va'>currency</span>,
-    currency <span class='op'>=</span> <span class='st'>"HKD"</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='fmt_scientific.html'>fmt_scientific</a></span><span class='op'>(</span>
-    columns <span class='op'>=</span> <span class='va'>num</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>opt_css</span><span class='op'>(</span>
-    css <span class='op'>=</span> <span class='st'>"
-    #one .gt_table {
-      background-color: skyblue;
-    }
-    #one .gt_row {
-      padding: 20px 30px;
-    }
-    #one .gt_col_heading {
-      text-align: center !important;
-    }
-    "</span>
-  <span class='op'>)</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Use `exibble` to create a gt table and</span></span>
+<span class='r-in'><span class='co'># format the data in both columns; with</span></span>
+<span class='r-in'><span class='co'># `opt_css()` insert CSS rulesets as</span></span>
+<span class='r-in'><span class='co'># as string and be sure to set the table</span></span>
+<span class='r-in'><span class='co'># ID explicitly (here as "one")</span></span>
+<span class='r-in'><span class='va'>tab_1</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='va'>exibble</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>num</span>, <span class='va'>currency</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span>id <span class='op'>=</span> <span class='st'>"one"</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='fmt_currency.html'>fmt_currency</a></span><span class='op'>(</span></span>
+<span class='r-in'>    columns <span class='op'>=</span> <span class='va'>currency</span>,</span>
+<span class='r-in'>    currency <span class='op'>=</span> <span class='st'>"HKD"</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='fmt_scientific.html'>fmt_scientific</a></span><span class='op'>(</span></span>
+<span class='r-in'>    columns <span class='op'>=</span> <span class='va'>num</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>opt_css</span><span class='op'>(</span></span>
+<span class='r-in'>    css <span class='op'>=</span> <span class='st'>"</span>
+<span class='r-in'>    #one .gt_table {</span>
+<span class='r-in'>      background-color: skyblue;</span>
+<span class='r-in'>    }</span>
+<span class='r-in'>    #one .gt_row {</span>
+<span class='r-in'>      padding: 20px 30px;</span>
+<span class='r-in'>    }</span>
+<span class='r-in'>    #one .gt_col_heading {</span>
+<span class='r-in'>      text-align: center !important;</span>
+<span class='r-in'>    }</span>
+<span class='r-in'>    "</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

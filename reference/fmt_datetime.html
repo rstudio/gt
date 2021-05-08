@@ -283,11 +283,12 @@ argument. See the Arguments section for more information on this.</p>
 
     
 
-<p>3-7</p>
+<p>3-8</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Format Data: 
 <code><a href='data_color.html'>data_color</a>()</code>,
+<code><a href='fmt_bytes.html'>fmt_bytes</a>()</code>,
 <code><a href='fmt_currency.html'>fmt_currency</a>()</code>,
 <code><a href='fmt_date.html'>fmt_date</a>()</code>,
 <code><a href='fmt_markdown.html'>fmt_markdown</a>()</code>,
@@ -301,22 +302,22 @@ argument. See the Arguments section for more information on this.</p>
 <code><a href='text_transform.html'>text_transform</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Use `exibble` to create a gt table;</span>
-<span class='co'># keep only the `datetime` column;</span>
-<span class='co'># format the column to have dates</span>
-<span class='co'># formatted as `month_day_year` and</span>
-<span class='co'># times to be `hms_p`</span>
-<span class='va'>tab_1</span> <span class='op'>&lt;-</span>
-  <span class='va'>exibble</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>datetime</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>fmt_datetime</span><span class='op'>(</span>
-    columns <span class='op'>=</span> <span class='va'>datetime</span>,
-    date_style <span class='op'>=</span> <span class='fl'>5</span>,
-    time_style <span class='op'>=</span> <span class='fl'>3</span>
-  <span class='op'>)</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Use `exibble` to create a gt table;</span></span>
+<span class='r-in'><span class='co'># keep only the `datetime` column;</span></span>
+<span class='r-in'><span class='co'># format the column to have dates</span></span>
+<span class='r-in'><span class='co'># formatted as `month_day_year` and</span></span>
+<span class='r-in'><span class='co'># times to be `hms_p`</span></span>
+<span class='r-in'><span class='va'>tab_1</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='va'>exibble</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>datetime</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>fmt_datetime</span><span class='op'>(</span></span>
+<span class='r-in'>    columns <span class='op'>=</span> <span class='va'>datetime</span>,</span>
+<span class='r-in'>    date_style <span class='op'>=</span> <span class='fl'>5</span>,</span>
+<span class='r-in'>    time_style <span class='op'>=</span> <span class='fl'>3</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -214,10 +214,12 @@ Supplying any of the <code>cells_*()</code> helper functions is a useful way to 
 the location cells that are associated with the styling. These helper
 functions are: <code><a href='cells_title.html'>cells_title()</a></code>, <code><a href='cells_stubhead.html'>cells_stubhead()</a></code>,
 <code><a href='cells_column_spanners.html'>cells_column_spanners()</a></code>, <code><a href='cells_column_labels.html'>cells_column_labels()</a></code>, <code><a href='cells_row_groups.html'>cells_row_groups()</a></code>,
-<code><a href='cells_stub.html'>cells_stub()</a></code>, <code><a href='cells_body.html'>cells_body()</a></code>, <code><a href='cells_summary.html'>cells_summary()</a></code>, and
-<code><a href='cells_grand_summary.html'>cells_grand_summary()</a></code>. Additionally, we can enclose several <code>cells_*()</code>
-calls within a <code><a href='https://rdrr.io/r/base/list.html'>list()</a></code> if we wish to apply styling to different types of
-locations (e.g., body cells, row group labels, the table title, etc.).</p></td>
+<code><a href='cells_stub.html'>cells_stub()</a></code>, <code><a href='cells_body.html'>cells_body()</a></code>, <code><a href='cells_summary.html'>cells_summary()</a></code>, <code><a href='cells_grand_summary.html'>cells_grand_summary()</a></code>,
+<code><a href='cells_stub_summary.html'>cells_stub_summary()</a></code>, <code><a href='cells_stub_grand_summary.html'>cells_stub_grand_summary()</a></code>, <code><a href='cells_footnotes.html'>cells_footnotes()</a></code>,
+and <code><a href='cells_source_notes.html'>cells_source_notes()</a></code>. Additionally, we can enclose several
+<code>cells_*()</code> calls within a <code><a href='https://rdrr.io/r/base/list.html'>list()</a></code> if we wish to apply styling to
+different types of locations (e.g., body cells, row group labels, the table
+title, etc.).</p></td>
     </tr>
     </table>
 
@@ -252,84 +254,84 @@ functions for targeting the locations to be styled.</p>
 <code><a href='tab_stubhead.html'>tab_stubhead</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Use `exibble` to create a gt table;</span>
-<span class='co'># add styles that are to be applied</span>
-<span class='co'># to data cells that satisfy a</span>
-<span class='co'># condition (using `tab_style()`)</span>
-<span class='va'>tab_1</span> <span class='op'>&lt;-</span>
-  <span class='va'>exibble</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>num</span>, <span class='va'>currency</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='fmt_number.html'>fmt_number</a></span><span class='op'>(</span>
-    columns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>num</span>, <span class='va'>currency</span><span class='op'>)</span>,
-    decimals <span class='op'>=</span> <span class='fl'>1</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>tab_style</span><span class='op'>(</span>
-    style <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-      <span class='fu'><a href='cell_fill.html'>cell_fill</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"lightcyan"</span><span class='op'>)</span>,
-      <span class='fu'><a href='cell_text.html'>cell_text</a></span><span class='op'>(</span>weight <span class='op'>=</span> <span class='st'>"bold"</span><span class='op'>)</span>
-      <span class='op'>)</span>,
-    locations <span class='op'>=</span> <span class='fu'><a href='cells_body.html'>cells_body</a></span><span class='op'>(</span>
-      columns <span class='op'>=</span> <span class='va'>num</span>,
-      rows <span class='op'>=</span> <span class='va'>num</span> <span class='op'>&gt;=</span> <span class='fl'>5000</span>
-    <span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>tab_style</span><span class='op'>(</span>
-    style <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-      <span class='fu'><a href='cell_fill.html'>cell_fill</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"#F9E3D6"</span><span class='op'>)</span>,
-      <span class='fu'><a href='cell_text.html'>cell_text</a></span><span class='op'>(</span>style <span class='op'>=</span> <span class='st'>"italic"</span><span class='op'>)</span>
-      <span class='op'>)</span>,
-    locations <span class='op'>=</span> <span class='fu'><a href='cells_body.html'>cells_body</a></span><span class='op'>(</span>
-      columns <span class='op'>=</span> <span class='va'>currency</span>,
-      rows <span class='op'>=</span> <span class='va'>currency</span> <span class='op'>&lt;</span> <span class='fl'>100</span>
-    <span class='op'>)</span>
-  <span class='op'>)</span>
-
-<span class='co'># Use `sp500` to create a gt table;</span>
-<span class='co'># color entire rows of cells based</span>
-<span class='co'># on values in a particular column</span>
-<span class='va'>tab_2</span> <span class='op'>&lt;-</span>
-  <span class='va'>sp500</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span>
-    <span class='va'>date</span> <span class='op'>&gt;=</span> <span class='st'>"2015-12-01"</span> <span class='op'>&amp;</span>
-    <span class='va'>date</span> <span class='op'>&lt;=</span> <span class='st'>"2015-12-15"</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>adj_close</span>, <span class='va'>volume</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>tab_style</span><span class='op'>(</span>
-    style <span class='op'>=</span> <span class='fu'><a href='cell_fill.html'>cell_fill</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"lightgreen"</span><span class='op'>)</span>,
-    locations <span class='op'>=</span> <span class='fu'><a href='cells_body.html'>cells_body</a></span><span class='op'>(</span>
-      rows <span class='op'>=</span> <span class='va'>close</span> <span class='op'>&gt;</span> <span class='va'>open</span><span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>tab_style</span><span class='op'>(</span>
-    style <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-      <span class='fu'><a href='cell_fill.html'>cell_fill</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>,
-      <span class='fu'><a href='cell_text.html'>cell_text</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"white"</span><span class='op'>)</span>
-      <span class='op'>)</span>,
-    locations <span class='op'>=</span> <span class='fu'><a href='cells_body.html'>cells_body</a></span><span class='op'>(</span>
-      rows <span class='op'>=</span> <span class='va'>open</span> <span class='op'>&gt;</span> <span class='va'>close</span><span class='op'>)</span>
-  <span class='op'>)</span>
-
-<span class='co'># Use `exibble` to create a gt table;</span>
-<span class='co'># replace missing values with the</span>
-<span class='co'># `fmt_missing()` function and then</span>
-<span class='co'># add styling to the `char` column</span>
-<span class='co'># with `cell_fill()` and with a</span>
-<span class='co'># CSS style declaration</span>
-<span class='va'>tab_3</span> <span class='op'>&lt;-</span>
-  <span class='va'>exibble</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>char</span>, <span class='va'>fctr</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='fmt_missing.html'>fmt_missing</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>tab_style</span><span class='op'>(</span>
-    style <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-      <span class='fu'><a href='cell_fill.html'>cell_fill</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"lightcyan"</span><span class='op'>)</span>,
-      <span class='st'>"font-variant: small-caps;"</span>
-    <span class='op'>)</span>,
-    locations <span class='op'>=</span> <span class='fu'><a href='cells_body.html'>cells_body</a></span><span class='op'>(</span>columns <span class='op'>=</span> <span class='va'>char</span><span class='op'>)</span>
-  <span class='op'>)</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Use `exibble` to create a gt table;</span></span>
+<span class='r-in'><span class='co'># add styles that are to be applied</span></span>
+<span class='r-in'><span class='co'># to data cells that satisfy a</span></span>
+<span class='r-in'><span class='co'># condition (using `tab_style()`)</span></span>
+<span class='r-in'><span class='va'>tab_1</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='va'>exibble</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>num</span>, <span class='va'>currency</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='fmt_number.html'>fmt_number</a></span><span class='op'>(</span></span>
+<span class='r-in'>    columns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>num</span>, <span class='va'>currency</span><span class='op'>)</span>,</span>
+<span class='r-in'>    decimals <span class='op'>=</span> <span class='fl'>1</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>tab_style</span><span class='op'>(</span></span>
+<span class='r-in'>    style <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>      <span class='fu'><a href='cell_fill.html'>cell_fill</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"lightcyan"</span><span class='op'>)</span>,</span>
+<span class='r-in'>      <span class='fu'><a href='cell_text.html'>cell_text</a></span><span class='op'>(</span>weight <span class='op'>=</span> <span class='st'>"bold"</span><span class='op'>)</span></span>
+<span class='r-in'>      <span class='op'>)</span>,</span>
+<span class='r-in'>    locations <span class='op'>=</span> <span class='fu'><a href='cells_body.html'>cells_body</a></span><span class='op'>(</span></span>
+<span class='r-in'>      columns <span class='op'>=</span> <span class='va'>num</span>,</span>
+<span class='r-in'>      rows <span class='op'>=</span> <span class='va'>num</span> <span class='op'>&gt;=</span> <span class='fl'>5000</span></span>
+<span class='r-in'>    <span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>tab_style</span><span class='op'>(</span></span>
+<span class='r-in'>    style <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>      <span class='fu'><a href='cell_fill.html'>cell_fill</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"#F9E3D6"</span><span class='op'>)</span>,</span>
+<span class='r-in'>      <span class='fu'><a href='cell_text.html'>cell_text</a></span><span class='op'>(</span>style <span class='op'>=</span> <span class='st'>"italic"</span><span class='op'>)</span></span>
+<span class='r-in'>      <span class='op'>)</span>,</span>
+<span class='r-in'>    locations <span class='op'>=</span> <span class='fu'><a href='cells_body.html'>cells_body</a></span><span class='op'>(</span></span>
+<span class='r-in'>      columns <span class='op'>=</span> <span class='va'>currency</span>,</span>
+<span class='r-in'>      rows <span class='op'>=</span> <span class='va'>currency</span> <span class='op'>&lt;</span> <span class='fl'>100</span></span>
+<span class='r-in'>    <span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Use `sp500` to create a gt table;</span></span>
+<span class='r-in'><span class='co'># color entire rows of cells based</span></span>
+<span class='r-in'><span class='co'># on values in a particular column</span></span>
+<span class='r-in'><span class='va'>tab_2</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='va'>sp500</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='va'>date</span> <span class='op'>&gt;=</span> <span class='st'>"2015-12-01"</span> <span class='op'>&amp;</span></span>
+<span class='r-in'>    <span class='va'>date</span> <span class='op'>&lt;=</span> <span class='st'>"2015-12-15"</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>adj_close</span>, <span class='va'>volume</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>tab_style</span><span class='op'>(</span></span>
+<span class='r-in'>    style <span class='op'>=</span> <span class='fu'><a href='cell_fill.html'>cell_fill</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"lightgreen"</span><span class='op'>)</span>,</span>
+<span class='r-in'>    locations <span class='op'>=</span> <span class='fu'><a href='cells_body.html'>cells_body</a></span><span class='op'>(</span></span>
+<span class='r-in'>      rows <span class='op'>=</span> <span class='va'>close</span> <span class='op'>&gt;</span> <span class='va'>open</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>tab_style</span><span class='op'>(</span></span>
+<span class='r-in'>    style <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>      <span class='fu'><a href='cell_fill.html'>cell_fill</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>,</span>
+<span class='r-in'>      <span class='fu'><a href='cell_text.html'>cell_text</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"white"</span><span class='op'>)</span></span>
+<span class='r-in'>      <span class='op'>)</span>,</span>
+<span class='r-in'>    locations <span class='op'>=</span> <span class='fu'><a href='cells_body.html'>cells_body</a></span><span class='op'>(</span></span>
+<span class='r-in'>      rows <span class='op'>=</span> <span class='va'>open</span> <span class='op'>&gt;</span> <span class='va'>close</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Use `exibble` to create a gt table;</span></span>
+<span class='r-in'><span class='co'># replace missing values with the</span></span>
+<span class='r-in'><span class='co'># `fmt_missing()` function and then</span></span>
+<span class='r-in'><span class='co'># add styling to the `char` column</span></span>
+<span class='r-in'><span class='co'># with `cell_fill()` and with a</span></span>
+<span class='r-in'><span class='co'># CSS style declaration</span></span>
+<span class='r-in'><span class='va'>tab_3</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='va'>exibble</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>char</span>, <span class='va'>fctr</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='fmt_missing.html'>fmt_missing</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>tab_style</span><span class='op'>(</span></span>
+<span class='r-in'>    style <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>      <span class='fu'><a href='cell_fill.html'>cell_fill</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"lightcyan"</span><span class='op'>)</span>,</span>
+<span class='r-in'>      <span class='st'>"font-variant: small-caps;"</span></span>
+<span class='r-in'>    <span class='op'>)</span>,</span>
+<span class='r-in'>    locations <span class='op'>=</span> <span class='fu'><a href='cells_body.html'>cells_body</a></span><span class='op'>(</span>columns <span class='op'>=</span> <span class='va'>char</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

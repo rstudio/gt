@@ -230,62 +230,62 @@ the list serves as fallbacks when certain fonts are not available.</p></td>
 <code><a href='opt_table_outline.html'>opt_table_outline</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-
-<span class='co'># Use `sp500` to create a small gt table,</span>
-<span class='co'># using `fmt_currency()` to provide a</span>
-<span class='co'># dollar sign for the first row of monetary</span>
-<span class='co'># values; then, set a larger font size for</span>
-<span class='co'># the table and use the 'Merriweather' font</span>
-<span class='co'># (from Google Fonts, via `google_font()`)</span>
-<span class='co'># with two font fallbacks ('Cochin' and the</span>
-<span class='co'># catchall 'Serif' group)</span>
-<span class='va'>tab_1</span> <span class='op'>&lt;-</span>
-  <span class='va'>sp500</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>volume</span>, <span class='op'>-</span><span class='va'>adj_close</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='fmt_currency.html'>fmt_currency</a></span><span class='op'>(</span>
-    columns <span class='op'>=</span> <span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span>,
-    rows <span class='op'>=</span> <span class='fl'>1</span>,
-    currency <span class='op'>=</span> <span class='st'>"USD"</span>,
-    use_seps <span class='op'>=</span> <span class='cn'>FALSE</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='tab_options.html'>tab_options</a></span><span class='op'>(</span>table.font.size <span class='op'>=</span> <span class='fu'><a href='px.html'>px</a></span><span class='op'>(</span><span class='fl'>18</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>opt_table_font</span><span class='op'>(</span>
-    font <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-      <span class='fu'><a href='google_font.html'>google_font</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"Merriweather"</span><span class='op'>)</span>,
-      <span class='st'>"Cochin"</span>, <span class='st'>"Serif"</span>
-    <span class='op'>)</span>
-  <span class='op'>)</span>
-
-<span class='co'># Use `sza` to create an eleven-row table;</span>
-<span class='co'># within `opt_table_font()`, set up a</span>
-<span class='co'># preferred list of sans-serif fonts that</span>
-<span class='co'># are commonly available in macOS (using</span>
-<span class='co'># part of the `default_fonts()` vector as</span>
-<span class='co'># a fallback)</span>
-<span class='co'># and Windows 10</span>
-<span class='va'>tab_2</span> <span class='op'>&lt;-</span>
-  <span class='va'>sza</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span>
-    <span class='va'>latitude</span> <span class='op'>==</span> <span class='fl'>20</span> <span class='op'>&amp;</span>
-      <span class='va'>month</span> <span class='op'>==</span> <span class='st'>"jan"</span> <span class='op'>&amp;</span>
-      <span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>sza</span><span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>latitude</span>, <span class='op'>-</span><span class='va'>month</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>opt_table_font</span><span class='op'>(</span>
-    font <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
-      <span class='st'>"Helvetica Neue"</span>, <span class='st'>"Segoe UI"</span>,
-      <span class='fu'><a href='default_fonts.html'>default_fonts</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>[</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span><span class='op'>]</span>
-    <span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='opt_all_caps.html'>opt_all_caps</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='op'>}</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Use `sp500` to create a small gt table,</span></span>
+<span class='r-in'><span class='co'># using `fmt_currency()` to provide a</span></span>
+<span class='r-in'><span class='co'># dollar sign for the first row of monetary</span></span>
+<span class='r-in'><span class='co'># values; then, set a larger font size for</span></span>
+<span class='r-in'><span class='co'># the table and use the 'Merriweather' font</span></span>
+<span class='r-in'><span class='co'># (from Google Fonts, via `google_font()`)</span></span>
+<span class='r-in'><span class='co'># with two font fallbacks ('Cochin' and the</span></span>
+<span class='r-in'><span class='co'># catchall 'Serif' group)</span></span>
+<span class='r-in'><span class='va'>tab_1</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='va'>sp500</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>volume</span>, <span class='op'>-</span><span class='va'>adj_close</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='fmt_currency.html'>fmt_currency</a></span><span class='op'>(</span></span>
+<span class='r-in'>    columns <span class='op'>=</span> <span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span>,</span>
+<span class='r-in'>    rows <span class='op'>=</span> <span class='fl'>1</span>,</span>
+<span class='r-in'>    currency <span class='op'>=</span> <span class='st'>"USD"</span>,</span>
+<span class='r-in'>    use_seps <span class='op'>=</span> <span class='cn'>FALSE</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='tab_options.html'>tab_options</a></span><span class='op'>(</span>table.font.size <span class='op'>=</span> <span class='fu'><a href='px.html'>px</a></span><span class='op'>(</span><span class='fl'>18</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>opt_table_font</span><span class='op'>(</span></span>
+<span class='r-in'>    font <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>      <span class='fu'><a href='google_font.html'>google_font</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"Merriweather"</span><span class='op'>)</span>,</span>
+<span class='r-in'>      <span class='st'>"Cochin"</span>, <span class='st'>"Serif"</span></span>
+<span class='r-in'>    <span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Use `sza` to create an eleven-row table;</span></span>
+<span class='r-in'><span class='co'># within `opt_table_font()`, set up a</span></span>
+<span class='r-in'><span class='co'># preferred list of sans-serif fonts that</span></span>
+<span class='r-in'><span class='co'># are commonly available in macOS (using</span></span>
+<span class='r-in'><span class='co'># part of the `default_fonts()` vector as</span></span>
+<span class='r-in'><span class='co'># a fallback)</span></span>
+<span class='r-in'><span class='co'># and Windows 10</span></span>
+<span class='r-in'><span class='va'>tab_2</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='va'>sza</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='va'>latitude</span> <span class='op'>==</span> <span class='fl'>20</span> <span class='op'>&amp;</span></span>
+<span class='r-in'>      <span class='va'>month</span> <span class='op'>==</span> <span class='st'>"jan"</span> <span class='op'>&amp;</span></span>
+<span class='r-in'>      <span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>sza</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>latitude</span>, <span class='op'>-</span><span class='va'>month</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>opt_table_font</span><span class='op'>(</span></span>
+<span class='r-in'>    font <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span></span>
+<span class='r-in'>      <span class='st'>"Helvetica Neue"</span>, <span class='st'>"Segoe UI"</span>,</span>
+<span class='r-in'>      <span class='fu'><a href='default_fonts.html'>default_fonts</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>[</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span><span class='op'>]</span></span>
+<span class='r-in'>    <span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='opt_all_caps.html'>opt_all_caps</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -188,34 +188,47 @@ those functions' <code>locations</code> argument.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A list object with the classes <code>cells_summary</code> and <code>location_cells</code>.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="overview-of-location-helper-functions"><a class="anchor" href="#overview-of-location-helper-functions"></a>Overview of Location Helper Functions</h2>
 
-    <p>When using any of the location helper functions with an appropriate function
-that has a <code>locations</code> argument, multiple locations can be targeted by
-enclosing several <code>cells_*()</code> helper functions in a <code><a href='https://rdrr.io/r/base/list.html'>list()</a></code>. The following
-helper functions can be used to target cells (roughly in order from the top
-to the bottom of a table):</p><ul>
-<li><p><code><a href='cells_title.html'>cells_title()</a></code>: targets the table title or the table subtitle
-depending on the value given to the <code>groups</code> argument (<code>"title"</code> or
-<code>"subtitle"</code>).</p></li>
-<li><p><code><a href='cells_stubhead.html'>cells_stubhead()</a></code>: targets the stubhead location, a cell of which is
-only available when there is a stub; a label in that location can be created
-by using the <code><a href='tab_stubhead.html'>tab_stubhead()</a></code> function.</p></li>
-<li><p><code><a href='cells_column_spanners.html'>cells_column_spanners()</a></code>: targets the spanner column labels, which
-appear above the column labels.</p></li>
-<li><p><code><a href='cells_column_labels.html'>cells_column_labels()</a></code>: targets the column labels.</p></li>
+    
+
+<p>Location helper functions can be used to target cells with virtually any
+function that has a <code>locations</code> argument. Here is a listing of all of the
+location helper functions, with locations corresponding roughly from top to
+bottom of a table:</p><ul>
+<li><p><code><a href='cells_title.html'>cells_title()</a></code>: targets the table title or the table subtitle depending on
+the value given to the <code>groups</code> argument (<code>"title"</code> or <code>"subtitle"</code>).</p></li>
+<li><p><code><a href='cells_stubhead.html'>cells_stubhead()</a></code>: targets the stubhead location, a cell of which is only
+available when there is a stub; a label in that location can be created by
+using the <code><a href='tab_stubhead.html'>tab_stubhead()</a></code> function.</p></li>
+<li><p><code><a href='cells_column_spanners.html'>cells_column_spanners()</a></code>: targets the spanner column labels with the
+<code>spanners</code> argument; spanner column labels appear above the column labels.</p></li>
+<li><p><code><a href='cells_column_labels.html'>cells_column_labels()</a></code>: targets the column labels with its <code>columns</code>
+argument.</p></li>
 <li><p><code><a href='cells_row_groups.html'>cells_row_groups()</a></code>: targets the row group labels in any available row
 groups using the <code>groups</code> argument.</p></li>
 <li><p><code><a href='cells_stub.html'>cells_stub()</a></code>: targets row labels in the table stub using the <code>rows</code>
 argument.</p></li>
-<li><p><code><a href='cells_body.html'>cells_body()</a></code>: targets data cells in the table body using
-intersections of <code>columns</code> and <code>rows</code>.</p></li>
+<li><p><code><a href='cells_body.html'>cells_body()</a></code>: targets data cells in the table body using intersections of
+<code>columns</code> and <code>rows</code>.</p></li>
 <li><p><code>cells_summary()</code>: targets summary cells in the table body using the
 <code>groups</code> argument and intersections of <code>columns</code> and <code>rows</code>.</p></li>
-<li><p><code><a href='cells_grand_summary.html'>cells_grand_summary()</a></code>: targets cells of the table's grand summary
-using intersections of <code>columns</code> and <code>rows</code></p></li>
+<li><p><code><a href='cells_grand_summary.html'>cells_grand_summary()</a></code>: targets cells of the table's grand summary using
+intersections of <code>columns</code> and <code>rows</code></p></li>
+<li><p><code><a href='cells_stub_summary.html'>cells_stub_summary()</a></code>: targets summary row labels in the table stub using
+the <code>groups</code> and <code>rows</code> arguments.</p></li>
+<li><p><code><a href='cells_stub_grand_summary.html'>cells_stub_grand_summary()</a></code>: targets grand summary row labels in the table
+stub using the <code>rows</code> argument.</p></li>
+<li><p><code><a href='cells_footnotes.html'>cells_footnotes()</a></code>: targets all footnotes in the table footer (cannot be
+used with <code><a href='tab_footnote.html'>tab_footnote()</a></code>).</p></li>
+<li><p><code><a href='cells_source_notes.html'>cells_source_notes()</a></code>: targets all source notes in the table footer
+(cannot be used with <code><a href='tab_footnote.html'>tab_footnote()</a></code>).</p></li>
 </ul>
 
+<p>When using any of the location helper functions with an appropriate function
+that has a <code>locations</code> argument (e.g., <code><a href='tab_style.html'>tab_style()</a></code>), multiple locations
+can be targeted by enclosing several <code>cells_*()</code> helper functions in a
+<code><a href='https://rdrr.io/r/base/list.html'>list()</a></code> (e.g., <code>list(cells_body(), cells_grand_summary())</code>).</p>
     <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
 
     
@@ -236,8 +249,12 @@ using intersections of <code>columns</code> and <code>rows</code></p></li>
 <code><a href='cells_body.html'>cells_body</a>()</code>,
 <code><a href='cells_column_labels.html'>cells_column_labels</a>()</code>,
 <code><a href='cells_column_spanners.html'>cells_column_spanners</a>()</code>,
+<code><a href='cells_footnotes.html'>cells_footnotes</a>()</code>,
 <code><a href='cells_grand_summary.html'>cells_grand_summary</a>()</code>,
 <code><a href='cells_row_groups.html'>cells_row_groups</a>()</code>,
+<code><a href='cells_source_notes.html'>cells_source_notes</a>()</code>,
+<code><a href='cells_stub_grand_summary.html'>cells_stub_grand_summary</a>()</code>,
+<code><a href='cells_stub_summary.html'>cells_stub_summary</a>()</code>,
 <code><a href='cells_stubhead.html'>cells_stubhead</a>()</code>,
 <code><a href='cells_stub.html'>cells_stub</a>()</code>,
 <code><a href='cells_title.html'>cells_title</a>()</code>,
@@ -253,59 +270,59 @@ using intersections of <code>columns</code> and <code>rows</code></p></li>
 <code><a href='random_id.html'>random_id</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Use `countrypops` to create a gt table; add</span>
-<span class='co'># some styling to the summary data cells with</span>
-<span class='co'># with `tab_style()`, using `cells_summary()`</span>
-<span class='co'># in `locations`</span>
-<span class='va'>tab_1</span> <span class='op'>&lt;-</span>
-  <span class='va'>countrypops</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span>
-    <span class='va'>country_name</span> <span class='op'>==</span> <span class='st'>"Japan"</span>,
-    <span class='va'>year</span> <span class='op'>&lt;</span> <span class='fl'>1970</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span><span class='op'>(</span><span class='st'>"country"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>
-    decade <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/substr.html'>substr</a></span><span class='op'>(</span><span class='va'>year</span>, <span class='fl'>1</span>, <span class='fl'>3</span><span class='op'>)</span>, <span class='st'>"0s"</span><span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>decade</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span>
-    rowname_col <span class='op'>=</span> <span class='st'>"year"</span>,
-    groupname_col <span class='op'>=</span> <span class='st'>"decade"</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='fmt_number.html'>fmt_number</a></span><span class='op'>(</span>
-    columns <span class='op'>=</span> <span class='va'>population</span>,
-    decimals <span class='op'>=</span> <span class='fl'>0</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='summary_rows.html'>summary_rows</a></span><span class='op'>(</span>
-    groups <span class='op'>=</span> <span class='st'>"1960s"</span>,
-    columns <span class='op'>=</span> <span class='va'>population</span>,
-    fns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"min"</span>, <span class='st'>"max"</span><span class='op'>)</span>,
-    formatter <span class='op'>=</span> <span class='va'>fmt_number</span>,
-    decimals <span class='op'>=</span> <span class='fl'>0</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='tab_style.html'>tab_style</a></span><span class='op'>(</span>
-    style <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-      <span class='fu'><a href='cell_text.html'>cell_text</a></span><span class='op'>(</span>style <span class='op'>=</span> <span class='st'>"italic"</span><span class='op'>)</span>,
-      <span class='fu'><a href='cell_fill.html'>cell_fill</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"lightblue"</span><span class='op'>)</span>
-      <span class='op'>)</span>,
-    locations <span class='op'>=</span> <span class='fu'>cells_summary</span><span class='op'>(</span>
-      groups <span class='op'>=</span> <span class='st'>"1960s"</span>,
-      columns <span class='op'>=</span> <span class='va'>population</span>,
-      rows <span class='op'>=</span> <span class='fl'>1</span>
-    <span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='tab_style.html'>tab_style</a></span><span class='op'>(</span>
-    style <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-      <span class='fu'><a href='cell_text.html'>cell_text</a></span><span class='op'>(</span>style <span class='op'>=</span> <span class='st'>"italic"</span><span class='op'>)</span>,
-      <span class='fu'><a href='cell_fill.html'>cell_fill</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"lightgreen"</span><span class='op'>)</span>
-      <span class='op'>)</span>,
-    locations <span class='op'>=</span> <span class='fu'>cells_summary</span><span class='op'>(</span>
-      groups <span class='op'>=</span> <span class='st'>"1960s"</span>,
-      columns <span class='op'>=</span> <span class='va'>population</span>,
-      rows <span class='op'>=</span> <span class='fl'>2</span>
-    <span class='op'>)</span>
-  <span class='op'>)</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Use `countrypops` to create a gt table; add</span></span>
+<span class='r-in'><span class='co'># some styling to the summary data cells with</span></span>
+<span class='r-in'><span class='co'># with `tab_style()`, using `cells_summary()`</span></span>
+<span class='r-in'><span class='co'># in `locations`</span></span>
+<span class='r-in'><span class='va'>tab_1</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='va'>countrypops</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='va'>country_name</span> <span class='op'>==</span> <span class='st'>"Japan"</span>,</span>
+<span class='r-in'>    <span class='va'>year</span> <span class='op'>&lt;</span> <span class='fl'>1970</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span><span class='op'>(</span><span class='st'>"country"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span></span>
+<span class='r-in'>    decade <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/substr.html'>substr</a></span><span class='op'>(</span><span class='va'>year</span>, <span class='fl'>1</span>, <span class='fl'>3</span><span class='op'>)</span>, <span class='st'>"0s"</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>decade</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span></span>
+<span class='r-in'>    rowname_col <span class='op'>=</span> <span class='st'>"year"</span>,</span>
+<span class='r-in'>    groupname_col <span class='op'>=</span> <span class='st'>"decade"</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='fmt_number.html'>fmt_number</a></span><span class='op'>(</span></span>
+<span class='r-in'>    columns <span class='op'>=</span> <span class='va'>population</span>,</span>
+<span class='r-in'>    decimals <span class='op'>=</span> <span class='fl'>0</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='summary_rows.html'>summary_rows</a></span><span class='op'>(</span></span>
+<span class='r-in'>    groups <span class='op'>=</span> <span class='st'>"1960s"</span>,</span>
+<span class='r-in'>    columns <span class='op'>=</span> <span class='va'>population</span>,</span>
+<span class='r-in'>    fns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"min"</span>, <span class='st'>"max"</span><span class='op'>)</span>,</span>
+<span class='r-in'>    formatter <span class='op'>=</span> <span class='va'>fmt_number</span>,</span>
+<span class='r-in'>    decimals <span class='op'>=</span> <span class='fl'>0</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='tab_style.html'>tab_style</a></span><span class='op'>(</span></span>
+<span class='r-in'>    style <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>      <span class='fu'><a href='cell_text.html'>cell_text</a></span><span class='op'>(</span>style <span class='op'>=</span> <span class='st'>"italic"</span><span class='op'>)</span>,</span>
+<span class='r-in'>      <span class='fu'><a href='cell_fill.html'>cell_fill</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"lightblue"</span><span class='op'>)</span></span>
+<span class='r-in'>      <span class='op'>)</span>,</span>
+<span class='r-in'>    locations <span class='op'>=</span> <span class='fu'>cells_summary</span><span class='op'>(</span></span>
+<span class='r-in'>      groups <span class='op'>=</span> <span class='st'>"1960s"</span>,</span>
+<span class='r-in'>      columns <span class='op'>=</span> <span class='va'>population</span>,</span>
+<span class='r-in'>      rows <span class='op'>=</span> <span class='fl'>1</span></span>
+<span class='r-in'>    <span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='tab_style.html'>tab_style</a></span><span class='op'>(</span></span>
+<span class='r-in'>    style <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>      <span class='fu'><a href='cell_text.html'>cell_text</a></span><span class='op'>(</span>style <span class='op'>=</span> <span class='st'>"italic"</span><span class='op'>)</span>,</span>
+<span class='r-in'>      <span class='fu'><a href='cell_fill.html'>cell_fill</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"lightgreen"</span><span class='op'>)</span></span>
+<span class='r-in'>      <span class='op'>)</span>,</span>
+<span class='r-in'>    locations <span class='op'>=</span> <span class='fu'>cells_summary</span><span class='op'>(</span></span>
+<span class='r-in'>      groups <span class='op'>=</span> <span class='st'>"1960s"</span>,</span>
+<span class='r-in'>      columns <span class='op'>=</span> <span class='va'>population</span>,</span>
+<span class='r-in'>      rows <span class='op'>=</span> <span class='fl'>2</span></span>
+<span class='r-in'>    <span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -176,34 +176,47 @@ functions' <code>locations</code> argument.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A list object with the classes <code>cells_stub</code> and <code>location_cells</code>.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="overview-of-location-helper-functions"><a class="anchor" href="#overview-of-location-helper-functions"></a>Overview of Location Helper Functions</h2>
 
-    <p>When using any of the location helper functions with an appropriate function
-that has a <code>locations</code> argument, multiple locations can be targeted by
-enclosing several <code>cells_*()</code> helper functions in a <code><a href='https://rdrr.io/r/base/list.html'>list()</a></code>. The following
-helper functions can be used to target cells (roughly in order from the top
-to the bottom of a table):</p><ul>
-<li><p><code><a href='cells_title.html'>cells_title()</a></code>: targets the table title or the table subtitle
-depending on the value given to the <code>groups</code> argument (<code>"title"</code> or
-<code>"subtitle"</code>).</p></li>
-<li><p><code><a href='cells_stubhead.html'>cells_stubhead()</a></code>: targets the stubhead location, a cell of which is
-only available when there is a stub; a label in that location can be created
-by using the <code><a href='tab_stubhead.html'>tab_stubhead()</a></code> function.</p></li>
-<li><p><code><a href='cells_column_spanners.html'>cells_column_spanners()</a></code>: targets the spanner column labels, which
-appear above the column labels.</p></li>
-<li><p><code><a href='cells_column_labels.html'>cells_column_labels()</a></code>: targets the column labels.</p></li>
+    
+
+<p>Location helper functions can be used to target cells with virtually any
+function that has a <code>locations</code> argument. Here is a listing of all of the
+location helper functions, with locations corresponding roughly from top to
+bottom of a table:</p><ul>
+<li><p><code><a href='cells_title.html'>cells_title()</a></code>: targets the table title or the table subtitle depending on
+the value given to the <code>groups</code> argument (<code>"title"</code> or <code>"subtitle"</code>).</p></li>
+<li><p><code><a href='cells_stubhead.html'>cells_stubhead()</a></code>: targets the stubhead location, a cell of which is only
+available when there is a stub; a label in that location can be created by
+using the <code><a href='tab_stubhead.html'>tab_stubhead()</a></code> function.</p></li>
+<li><p><code><a href='cells_column_spanners.html'>cells_column_spanners()</a></code>: targets the spanner column labels with the
+<code>spanners</code> argument; spanner column labels appear above the column labels.</p></li>
+<li><p><code><a href='cells_column_labels.html'>cells_column_labels()</a></code>: targets the column labels with its <code>columns</code>
+argument.</p></li>
 <li><p><code><a href='cells_row_groups.html'>cells_row_groups()</a></code>: targets the row group labels in any available row
 groups using the <code>groups</code> argument.</p></li>
 <li><p><code>cells_stub()</code>: targets row labels in the table stub using the <code>rows</code>
 argument.</p></li>
-<li><p><code><a href='cells_body.html'>cells_body()</a></code>: targets data cells in the table body using
-intersections of <code>columns</code> and <code>rows</code>.</p></li>
+<li><p><code><a href='cells_body.html'>cells_body()</a></code>: targets data cells in the table body using intersections of
+<code>columns</code> and <code>rows</code>.</p></li>
 <li><p><code><a href='cells_summary.html'>cells_summary()</a></code>: targets summary cells in the table body using the
 <code>groups</code> argument and intersections of <code>columns</code> and <code>rows</code>.</p></li>
-<li><p><code><a href='cells_grand_summary.html'>cells_grand_summary()</a></code>: targets cells of the table's grand summary
-using intersections of <code>columns</code> and <code>rows</code></p></li>
+<li><p><code><a href='cells_grand_summary.html'>cells_grand_summary()</a></code>: targets cells of the table's grand summary using
+intersections of <code>columns</code> and <code>rows</code></p></li>
+<li><p><code><a href='cells_stub_summary.html'>cells_stub_summary()</a></code>: targets summary row labels in the table stub using
+the <code>groups</code> and <code>rows</code> arguments.</p></li>
+<li><p><code><a href='cells_stub_grand_summary.html'>cells_stub_grand_summary()</a></code>: targets grand summary row labels in the table
+stub using the <code>rows</code> argument.</p></li>
+<li><p><code><a href='cells_footnotes.html'>cells_footnotes()</a></code>: targets all footnotes in the table footer (cannot be
+used with <code><a href='tab_footnote.html'>tab_footnote()</a></code>).</p></li>
+<li><p><code><a href='cells_source_notes.html'>cells_source_notes()</a></code>: targets all source notes in the table footer
+(cannot be used with <code><a href='tab_footnote.html'>tab_footnote()</a></code>).</p></li>
 </ul>
 
+<p>When using any of the location helper functions with an appropriate function
+that has a <code>locations</code> argument (e.g., <code><a href='tab_style.html'>tab_style()</a></code>), multiple locations
+can be targeted by enclosing several <code>cells_*()</code> helper functions in a
+<code><a href='https://rdrr.io/r/base/list.html'>list()</a></code> (e.g., <code>list(cells_body(), cells_grand_summary())</code>).</p>
     <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
 
     
@@ -224,8 +237,12 @@ using intersections of <code>columns</code> and <code>rows</code></p></li>
 <code><a href='cells_body.html'>cells_body</a>()</code>,
 <code><a href='cells_column_labels.html'>cells_column_labels</a>()</code>,
 <code><a href='cells_column_spanners.html'>cells_column_spanners</a>()</code>,
+<code><a href='cells_footnotes.html'>cells_footnotes</a>()</code>,
 <code><a href='cells_grand_summary.html'>cells_grand_summary</a>()</code>,
 <code><a href='cells_row_groups.html'>cells_row_groups</a>()</code>,
+<code><a href='cells_source_notes.html'>cells_source_notes</a>()</code>,
+<code><a href='cells_stub_grand_summary.html'>cells_stub_grand_summary</a>()</code>,
+<code><a href='cells_stub_summary.html'>cells_stub_summary</a>()</code>,
 <code><a href='cells_stubhead.html'>cells_stubhead</a>()</code>,
 <code><a href='cells_summary.html'>cells_summary</a>()</code>,
 <code><a href='cells_title.html'>cells_title</a>()</code>,
@@ -241,33 +258,33 @@ using intersections of <code>columns</code> and <code>rows</code></p></li>
 <code><a href='random_id.html'>random_id</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyr.tidyverse.org'>tidyr</a></span><span class='op'>)</span>
-
-<span class='co'># Use `sza` to create a gt table; color</span>
-<span class='co'># all of the `month` values in the table</span>
-<span class='co'># stub with `tab_style()`, using `cells_stub()`</span>
-<span class='co'># in `locations` (`rows = TRUE` targets</span>
-<span class='co'># all stub rows)</span>
-<span class='va'>tab_1</span> <span class='op'>&lt;-</span>
-  <span class='va'>sza</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>latitude</span> <span class='op'>==</span> <span class='fl'>20</span> <span class='op'>&amp;</span> <span class='va'>tst</span> <span class='op'>&lt;=</span> <span class='st'>"1000"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>latitude</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>sza</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>tidyr</span><span class='fu'>::</span><span class='fu'><a href='https://tidyr.tidyverse.org/reference/spread.html'>spread</a></span><span class='op'>(</span>key <span class='op'>=</span> <span class='st'>"tst"</span>, value <span class='op'>=</span> <span class='va'>sza</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span>rowname_col <span class='op'>=</span> <span class='st'>"month"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='fmt_missing.html'>fmt_missing</a></span><span class='op'>(</span>
-    columns <span class='op'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span>,
-    missing_text <span class='op'>=</span> <span class='st'>""</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='tab_style.html'>tab_style</a></span><span class='op'>(</span>
-    style <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-      <span class='fu'><a href='cell_fill.html'>cell_fill</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"darkblue"</span><span class='op'>)</span>,
-      <span class='fu'><a href='cell_text.html'>cell_text</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"white"</span><span class='op'>)</span>
-      <span class='op'>)</span>,
-    locations <span class='op'>=</span> <span class='fu'>cells_stub</span><span class='op'>(</span><span class='op'>)</span>
-  <span class='op'>)</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyr.tidyverse.org'>tidyr</a></span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Use `sza` to create a gt table; color</span></span>
+<span class='r-in'><span class='co'># all of the `month` values in the table</span></span>
+<span class='r-in'><span class='co'># stub with `tab_style()`, using `cells_stub()`</span></span>
+<span class='r-in'><span class='co'># in `locations` (`rows = TRUE` targets</span></span>
+<span class='r-in'><span class='co'># all stub rows)</span></span>
+<span class='r-in'><span class='va'>tab_1</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='va'>sza</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>latitude</span> <span class='op'>==</span> <span class='fl'>20</span> <span class='op'>&amp;</span> <span class='va'>tst</span> <span class='op'>&lt;=</span> <span class='st'>"1000"</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>latitude</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>sza</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>tidyr</span><span class='fu'>::</span><span class='fu'><a href='https://tidyr.tidyverse.org/reference/spread.html'>spread</a></span><span class='op'>(</span>key <span class='op'>=</span> <span class='st'>"tst"</span>, value <span class='op'>=</span> <span class='va'>sza</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span>rowname_col <span class='op'>=</span> <span class='st'>"month"</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='fmt_missing.html'>fmt_missing</a></span><span class='op'>(</span></span>
+<span class='r-in'>    columns <span class='op'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span>,</span>
+<span class='r-in'>    missing_text <span class='op'>=</span> <span class='st'>""</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='tab_style.html'>tab_style</a></span><span class='op'>(</span></span>
+<span class='r-in'>    style <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>      <span class='fu'><a href='cell_fill.html'>cell_fill</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"darkblue"</span><span class='op'>)</span>,</span>
+<span class='r-in'>      <span class='fu'><a href='cell_text.html'>cell_text</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"white"</span><span class='op'>)</span></span>
+<span class='r-in'>      <span class='op'>)</span>,</span>
+<span class='r-in'>    locations <span class='op'>=</span> <span class='fu'>cells_stub</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

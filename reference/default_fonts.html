@@ -183,7 +183,7 @@ since it is handled by its <code>add</code> option (which is <code>TRUE</code> b
 
     
 
-<p>7-19</p>
+<p>7-23</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Helper Functions: 
@@ -194,8 +194,12 @@ since it is handled by its <code>add</code> option (which is <code>TRUE</code> b
 <code><a href='cells_body.html'>cells_body</a>()</code>,
 <code><a href='cells_column_labels.html'>cells_column_labels</a>()</code>,
 <code><a href='cells_column_spanners.html'>cells_column_spanners</a>()</code>,
+<code><a href='cells_footnotes.html'>cells_footnotes</a>()</code>,
 <code><a href='cells_grand_summary.html'>cells_grand_summary</a>()</code>,
 <code><a href='cells_row_groups.html'>cells_row_groups</a>()</code>,
+<code><a href='cells_source_notes.html'>cells_source_notes</a>()</code>,
+<code><a href='cells_stub_grand_summary.html'>cells_stub_grand_summary</a>()</code>,
+<code><a href='cells_stub_summary.html'>cells_stub_summary</a>()</code>,
 <code><a href='cells_stubhead.html'>cells_stubhead</a>()</code>,
 <code><a href='cells_stub.html'>cells_stub</a>()</code>,
 <code><a href='cells_summary.html'>cells_summary</a>()</code>,
@@ -211,30 +215,30 @@ since it is handled by its <code>add</code> option (which is <code>TRUE</code> b
 <code><a href='random_id.html'>random_id</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Use `exibble` to create a gt table;</span>
-<span class='co'># attempting to modify the fonts used</span>
-<span class='co'># for the `time` column is much safer</span>
-<span class='co'># if `default_fonts()` is appended to</span>
-<span class='co'># the end of the `font` listing in the</span>
-<span class='co'># `cell_text()` call (the "Comic Sansa"</span>
-<span class='co'># and "Menloa" fonts don't exist, but,</span>
-<span class='co'># we'll get the first available font</span>
-<span class='co'># from the `default_fonts()` set)</span>
-<span class='va'>tab_1</span> <span class='op'>&lt;-</span>
-  <span class='va'>exibble</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>char</span>, <span class='va'>time</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='tab_style.html'>tab_style</a></span><span class='op'>(</span>
-    style <span class='op'>=</span> <span class='fu'><a href='cell_text.html'>cell_text</a></span><span class='op'>(</span>
-      font <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
-        <span class='st'>"Comic Sansa"</span>, <span class='st'>"Menloa"</span>,
-        <span class='fu'>default_fonts</span><span class='op'>(</span><span class='op'>)</span>
-      <span class='op'>)</span>
-    <span class='op'>)</span>,
-    locations <span class='op'>=</span> <span class='fu'><a href='cells_body.html'>cells_body</a></span><span class='op'>(</span>columns <span class='op'>=</span> <span class='va'>time</span><span class='op'>)</span>
-  <span class='op'>)</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Use `exibble` to create a gt table;</span></span>
+<span class='r-in'><span class='co'># attempting to modify the fonts used</span></span>
+<span class='r-in'><span class='co'># for the `time` column is much safer</span></span>
+<span class='r-in'><span class='co'># if `default_fonts()` is appended to</span></span>
+<span class='r-in'><span class='co'># the end of the `font` listing in the</span></span>
+<span class='r-in'><span class='co'># `cell_text()` call (the "Comic Sansa"</span></span>
+<span class='r-in'><span class='co'># and "Menloa" fonts don't exist, but,</span></span>
+<span class='r-in'><span class='co'># we'll get the first available font</span></span>
+<span class='r-in'><span class='co'># from the `default_fonts()` set)</span></span>
+<span class='r-in'><span class='va'>tab_1</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='va'>exibble</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>char</span>, <span class='va'>time</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='tab_style.html'>tab_style</a></span><span class='op'>(</span></span>
+<span class='r-in'>    style <span class='op'>=</span> <span class='fu'><a href='cell_text.html'>cell_text</a></span><span class='op'>(</span></span>
+<span class='r-in'>      font <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span></span>
+<span class='r-in'>        <span class='st'>"Comic Sansa"</span>, <span class='st'>"Menloa"</span>,</span>
+<span class='r-in'>        <span class='fu'>default_fonts</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'>      <span class='op'>)</span></span>
+<span class='r-in'>    <span class='op'>)</span>,</span>
+<span class='r-in'>    locations <span class='op'>=</span> <span class='fu'><a href='cells_body.html'>cells_body</a></span><span class='op'>(</span>columns <span class='op'>=</span> <span class='va'>time</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

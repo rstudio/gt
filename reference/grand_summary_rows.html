@@ -191,8 +191,8 @@ like <code>mean</code>, <code>min</code>, <code>max</code>, <code>median</code>,
 user-defined aggregation function. The function(s) should be supplied
 within a <code><a href='https://rdrr.io/r/base/list.html'>list()</a></code>. Within that list, we can specify the functions by use of
 function names in quotes (e.g., <code>"sum"</code>), as bare functions (e.g., <code>sum</code>),
-or as one-sided R formulas using a leading <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code>. In the formula
-representation, a <code>.</code> serves as the data to be summarized (e.g., <code><a href='https://rdrr.io/r/base/sum.html'>sum(., na.rm = TRUE)</a></code>). The use of named arguments is recommended as the names
+or as one-sided R formulas using a leading <code>~</code>. In the formula
+representation, a <code>.</code> serves as the data to be summarized (e.g., <code>sum(., na.rm = TRUE)</code>). The use of named arguments is recommended as the names
 will serve as summary row labels for the corresponding summary rows data
 (the labels can derived from the function names but only when not providing
 bare function names).</p></td>
@@ -242,36 +242,36 @@ summary rows were added via <code>grand_summary_rows()</code>.</p>
 <code><a href='summary_rows.html'>summary_rows</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Use `sp500` to create a gt table with</span>
-<span class='co'># row groups; create grand summary rows</span>
-<span class='co'># (`min`, `max`, `avg`) for the table</span>
-<span class='va'>tab_1</span> <span class='op'>&lt;-</span>
-  <span class='va'>sp500</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span>
-    <span class='va'>date</span> <span class='op'>&gt;=</span> <span class='st'>"2015-01-05"</span> <span class='op'>&amp;</span>
-      <span class='va'>date</span> <span class='op'>&lt;=</span><span class='st'>"2015-01-16"</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>
-    week <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span>
-      <span class='st'>"W"</span>, <span class='fu'><a href='https://rdrr.io/r/base/strptime.html'>strftime</a></span><span class='op'>(</span><span class='va'>date</span>, format <span class='op'>=</span> <span class='st'>"%V"</span><span class='op'>)</span><span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>adj_close</span>, <span class='op'>-</span><span class='va'>volume</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span>
-    rowname_col <span class='op'>=</span> <span class='st'>"date"</span>,
-    groupname_col <span class='op'>=</span> <span class='st'>"week"</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>grand_summary_rows</span><span class='op'>(</span>
-    columns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>open</span>, <span class='va'>high</span>, <span class='va'>low</span>, <span class='va'>close</span><span class='op'>)</span>,
-    fns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-      min <span class='op'>=</span> <span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>.</span><span class='op'>)</span>,
-      max <span class='op'>=</span> <span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>.</span><span class='op'>)</span>,
-      avg <span class='op'>=</span> <span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>.</span><span class='op'>)</span><span class='op'>)</span>,
-    formatter <span class='op'>=</span> <span class='va'>fmt_number</span>,
-    use_seps <span class='op'>=</span> <span class='cn'>FALSE</span>
-  <span class='op'>)</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Use `sp500` to create a gt table with</span></span>
+<span class='r-in'><span class='co'># row groups; create grand summary rows</span></span>
+<span class='r-in'><span class='co'># (`min`, `max`, `avg`) for the table</span></span>
+<span class='r-in'><span class='va'>tab_1</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='va'>sp500</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='va'>date</span> <span class='op'>&gt;=</span> <span class='st'>"2015-01-05"</span> <span class='op'>&amp;</span></span>
+<span class='r-in'>      <span class='va'>date</span> <span class='op'>&lt;=</span><span class='st'>"2015-01-16"</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span></span>
+<span class='r-in'>    week <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span></span>
+<span class='r-in'>      <span class='st'>"W"</span>, <span class='fu'><a href='https://rdrr.io/r/base/strptime.html'>strftime</a></span><span class='op'>(</span><span class='va'>date</span>, format <span class='op'>=</span> <span class='st'>"%V"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>adj_close</span>, <span class='op'>-</span><span class='va'>volume</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span></span>
+<span class='r-in'>    rowname_col <span class='op'>=</span> <span class='st'>"date"</span>,</span>
+<span class='r-in'>    groupname_col <span class='op'>=</span> <span class='st'>"week"</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>grand_summary_rows</span><span class='op'>(</span></span>
+<span class='r-in'>    columns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>open</span>, <span class='va'>high</span>, <span class='va'>low</span>, <span class='va'>close</span><span class='op'>)</span>,</span>
+<span class='r-in'>    fns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>      min <span class='op'>=</span> <span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>.</span><span class='op'>)</span>,</span>
+<span class='r-in'>      max <span class='op'>=</span> <span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>.</span><span class='op'>)</span>,</span>
+<span class='r-in'>      avg <span class='op'>=</span> <span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>.</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span class='r-in'>    formatter <span class='op'>=</span> <span class='va'>fmt_number</span>,</span>
+<span class='r-in'>    use_seps <span class='op'>=</span> <span class='cn'>FALSE</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

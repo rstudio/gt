@@ -160,14 +160,20 @@ vector. This object can be used with <code><a href='https://rdrr.io/r/base/write
 file that can be opened by RTF readers.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>as_rtf</span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>as_rtf</span><span class='op'>(</span><span class='va'>data</span>, page_numbering <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"none"</span>, <span class='st'>"footer"</span>, <span class='st'>"header"</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>a table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
+      <td><p>A table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
+    </tr>
+    <tr>
+      <th>page_numbering</th>
+      <td><p>An option to include page numbering in the RTF
+document. The page numbering text can either be in the document <code>"footer"</code>
+or <code>"header"</code>. By default, page numbering is not active (<code>"none"</code>).</p></td>
     </tr>
     </table>
 
@@ -185,21 +191,21 @@ file that can be opened by RTF readers.</p>
 <code><a href='gtsave.html'>gtsave</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Use `gtcars` to create a gt table;</span>
-<span class='co'># add a header and then export as</span>
-<span class='co'># RTF code</span>
-<span class='va'>tab_rtf</span> <span class='op'>&lt;-</span>
-  <span class='va'>gtcars</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>mfr</span>, <span class='va'>model</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='tab_header.html'>tab_header</a></span><span class='op'>(</span>
-    title <span class='op'>=</span> <span class='fu'><a href='md.html'>md</a></span><span class='op'>(</span><span class='st'>"Data listing from **gtcars**"</span><span class='op'>)</span>,
-    subtitle <span class='op'>=</span> <span class='fu'><a href='md.html'>md</a></span><span class='op'>(</span><span class='st'>"`gtcars` is an R dataset"</span><span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>as_rtf</span><span class='op'>(</span><span class='op'>)</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Use `gtcars` to create a gt table;</span></span>
+<span class='r-in'><span class='co'># add a header and then export as</span></span>
+<span class='r-in'><span class='co'># RTF code</span></span>
+<span class='r-in'><span class='va'>tab_rtf</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='va'>gtcars</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>mfr</span>, <span class='va'>model</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='tab_header.html'>tab_header</a></span><span class='op'>(</span></span>
+<span class='r-in'>    title <span class='op'>=</span> <span class='fu'><a href='md.html'>md</a></span><span class='op'>(</span><span class='st'>"Data listing from **gtcars**"</span><span class='op'>)</span>,</span>
+<span class='r-in'>    subtitle <span class='op'>=</span> <span class='fu'><a href='md.html'>md</a></span><span class='op'>(</span><span class='st'>"`gtcars` is an R dataset"</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>as_rtf</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

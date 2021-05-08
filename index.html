@@ -123,22 +123,22 @@
 
 <span class="co"># Create a gt table based on preprocessed</span>
 <span class="co"># `sp500` table data</span>
-<span class="va">sp500</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">date</span> <span class="op">&gt;=</span> <span class="va">start_date</span> <span class="op">&amp;</span> <span class="va">date</span> <span class="op">&lt;=</span> <span class="va">end_date</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">adj_close</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+<span class="va">sp500</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">date</span> <span class="op">&gt;=</span> <span class="va">start_date</span> <span class="op">&amp;</span> <span class="va">date</span> <span class="op">&lt;=</span> <span class="va">end_date</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">adj_close</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="reference/tab_header.html">tab_header</a></span><span class="op">(</span>
     title <span class="op">=</span> <span class="st">"S&amp;P 500"</span>,
     subtitle <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"{start_date} to {end_date}"</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="reference/fmt_date.html">fmt_date</a></span><span class="op">(</span>
     columns <span class="op">=</span> <span class="va">date</span>,
     date_style <span class="op">=</span> <span class="fl">3</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="reference/fmt_currency.html">fmt_currency</a></span><span class="op">(</span>
     columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">open</span>, <span class="va">high</span>, <span class="va">low</span>, <span class="va">close</span><span class="op">)</span>,
     currency <span class="op">=</span> <span class="st">"USD"</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="reference/fmt_number.html">fmt_number</a></span><span class="op">(</span>
     columns <span class="op">=</span> <span class="va">volume</span>,
     suffixing <span class="op">=</span> <span class="cn">TRUE</span>
@@ -161,7 +161,7 @@
 <hr>
 <div id="how-gt-fits-in-with-other-packages-that-generate-display-tables" class="section level4">
 <h4 class="hasAnchor">
-<a href="#how-gt-fits-in-with-other-packages-that-generate-display-tables" class="anchor"></a>How <strong>gt</strong> fits in with Other Packages that Generate Display Tables</h4>
+<a href="#how-gt-fits-in-with-other-packages-that-generate-display-tables" class="anchor" aria-hidden="true"></a>How <strong>gt</strong> fits in with Other Packages that Generate Display Tables</h4>
 <p>The <strong>gt</strong> package joins a burgeoning collection of packages for display table generation. Why another? We feel that there is enough room in this space to innovate further. Here are some of the ways that <strong>gt</strong> contributes to this ecosystem:</p>
 <ul>
 <li>the interface is high-level and declarative (general instructions versus very specific)</li>
@@ -210,12 +210,12 @@
 </div>
 <div id="code-of-conduct" class="section level4">
 <h4 class="hasAnchor">
-<a href="#code-of-conduct" class="anchor"></a>Code of Conduct</h4>
+<a href="#code-of-conduct" class="anchor" aria-hidden="true"></a>Code of Conduct</h4>
 <p>Please note that this project is released with a <a href="https://contributor-covenant.org/version/1/0/0" class="external-link">Contributor Code of Conduct</a>.<br>By participating in this project you agree to abide by its terms.</p>
 </div>
 <div id="license" class="section level4">
 <h4 class="hasAnchor">
-<a href="#license" class="anchor"></a>License</h4>
+<a href="#license" class="anchor" aria-hidden="true"></a>License</h4>
 <p>MIT © RStudio, PBC</p>
 </div>
 </div>

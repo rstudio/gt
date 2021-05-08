@@ -216,10 +216,10 @@ the possible inputs to the <code>currency</code> argument.</p>
   rows <span class='op'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span>,
   currency <span class='op'>=</span> <span class='st'>"USD"</span>,
   use_subunits <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  accounting <span class='op'>=</span> <span class='cn'>FALSE</span>,
   decimals <span class='op'>=</span> <span class='cn'>NULL</span>,
   drop_trailing_dec_mark <span class='op'>=</span> <span class='cn'>TRUE</span>,
   use_seps <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  accounting <span class='op'>=</span> <span class='cn'>FALSE</span>,
   scale_by <span class='op'>=</span> <span class='fl'>1</span>,
   suffixing <span class='op'>=</span> <span class='cn'>FALSE</span>,
   pattern <span class='op'>=</span> <span class='st'>"{x}"</span>,
@@ -269,7 +269,7 @@ information table with all of the supported currency symbol names along
 with examples.</p>
 <p>We can also use the <code><a href='currency.html'>currency()</a></code> helper function to specify a custom
 currency, where the string could vary across output contexts. For example,
-using <code><a href='currency.html'>currency(html = "&amp;fnof;", default = "f")</a></code> would give us a suitable
+using <code>currency(html = "&amp;fnof;", default = "f")</code> would give us a suitable
 glyph for the Dutch guilder in an HTML output table, and it would simply be
 the letter "f" in all other output contexts). Please note that <code>decimals</code>
 will default to <code>2</code> when using the <code><a href='currency.html'>currency()</a></code> helper function.</p>
@@ -280,12 +280,6 @@ used.</p></td>
       <th>use_subunits</th>
       <td><p>An option for whether the subunits portion of a currency
 value should be displayed. By default, this is <code>TRUE</code>.</p></td>
-    </tr>
-    <tr>
-      <th>accounting</th>
-      <td><p>An option to use accounting style for currency values. With
-<code>FALSE</code> (the default), negative values will be shown with a minus sign.
-Using <code>accounting = TRUE</code> will put negative values in parentheses.</p></td>
     </tr>
     <tr>
       <th>decimals</th>
@@ -306,6 +300,12 @@ group separator is set by <code>sep_mark</code> and overridden if a locale ID is
 provided to <code>locale</code>. This setting is <code>TRUE</code> by default.</p></td>
     </tr>
     <tr>
+      <th>accounting</th>
+      <td><p>An option to use accounting style for values. With <code>FALSE</code>
+(the default), negative values will be shown with a minus sign. Using
+<code>accounting = TRUE</code> will put negative values in parentheses.</p></td>
+    </tr>
+    <tr>
       <th>scale_by</th>
       <td><p>A value to scale the input. The default is <code>1.0</code>. All numeric
 values will be multiplied by this value first before undergoing formatting.
@@ -321,10 +321,10 @@ transformation and <code>TRUE</code> will apply thousands (<code>K</code>), mill
 billions (<code>B</code>), and trillions (<code>T</code>) suffixes after automatic value scaling.
 We can also specify which symbols to use for each of the value ranges by
 using a character vector of the preferred symbols to replace the defaults
-(e.g., <code><a href='https://rdrr.io/r/base/c.html'>c("k", "Ml", "Bn", "Tr")</a></code>).</p>
+(e.g., <code>c("k", "Ml", "Bn", "Tr")</code>).</p>
 <p>Including <code>NA</code> values in the vector will ensure that the particular range
-will either not be included in the transformation (e.g, <code><a href='https://rdrr.io/r/base/c.html'>c(NA, "M", "B", "T")</a></code> won't modify numbers in the thousands range) or the range will
-inherit a previous suffix (e.g., with <code><a href='https://rdrr.io/r/base/c.html'>c("K", "M", NA, "T")</a></code>, all numbers
+will either not be included in the transformation (e.g, <code>c(NA, "M", "B", "T")</code> won't modify numbers in the thousands range) or the range will
+inherit a previous suffix (e.g., with <code>c("K", "M", NA, "T")</code>, all numbers
 in the range of millions and billions will be in terms of millions).</p>
 <p>Any use of <code>suffixing</code> (where it is not set expressly as <code>FALSE</code>) means
 that any value provided to <code>scale_by</code> will be ignored.</p></td>
@@ -391,6 +391,7 @@ argument. See the Arguments section for more information on this.</p>
 
     <div class='dont-index'><p>Other Format Data: 
 <code><a href='data_color.html'>data_color</a>()</code>,
+<code><a href='fmt_bytes.html'>fmt_bytes</a>()</code>,
 <code><a href='fmt_datetime.html'>fmt_datetime</a>()</code>,
 <code><a href='fmt_date.html'>fmt_date</a>()</code>,
 <code><a href='fmt_markdown.html'>fmt_markdown</a>()</code>,
@@ -404,35 +405,35 @@ argument. See the Arguments section for more information on this.</p>
 <code><a href='text_transform.html'>text_transform</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Use `exibble` to create a gt table;</span>
-<span class='co'># format the `currency` column to have</span>
-<span class='co'># currency values in euros (EUR)</span>
-<span class='va'>tab_1</span> <span class='op'>&lt;-</span>
-  <span class='va'>exibble</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>fmt_currency</span><span class='op'>(</span>
-    columns <span class='op'>=</span> <span class='va'>currency</span>,
-    currency <span class='op'>=</span> <span class='st'>"EUR"</span>
-  <span class='op'>)</span>
-
-<span class='co'># Use `exibble` to create a gt table;</span>
-<span class='co'># Keep only the `num` and `currency`,</span>
-<span class='co'># columns, then, format those columns</span>
-<span class='co'># using the "CNY" and "GBP" currencies</span>
-<span class='va'>tab_2</span> <span class='op'>&lt;-</span>
-  <span class='va'>exibble</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>num</span>, <span class='va'>currency</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>fmt_currency</span><span class='op'>(</span>
-    columns <span class='op'>=</span> <span class='va'>num</span>,
-    currency <span class='op'>=</span> <span class='st'>"CNY"</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>fmt_currency</span><span class='op'>(</span>
-    columns <span class='op'>=</span> <span class='va'>currency</span>,
-    currency <span class='op'>=</span> <span class='st'>"GBP"</span>
-  <span class='op'>)</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Use `exibble` to create a gt table;</span></span>
+<span class='r-in'><span class='co'># format the `currency` column to have</span></span>
+<span class='r-in'><span class='co'># currency values in euros (EUR)</span></span>
+<span class='r-in'><span class='va'>tab_1</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='va'>exibble</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>fmt_currency</span><span class='op'>(</span></span>
+<span class='r-in'>    columns <span class='op'>=</span> <span class='va'>currency</span>,</span>
+<span class='r-in'>    currency <span class='op'>=</span> <span class='st'>"EUR"</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Use `exibble` to create a gt table;</span></span>
+<span class='r-in'><span class='co'># Keep only the `num` and `currency`,</span></span>
+<span class='r-in'><span class='co'># columns, then, format those columns</span></span>
+<span class='r-in'><span class='co'># using the "CNY" and "GBP" currencies</span></span>
+<span class='r-in'><span class='va'>tab_2</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='va'>exibble</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>num</span>, <span class='va'>currency</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>fmt_currency</span><span class='op'>(</span></span>
+<span class='r-in'>    columns <span class='op'>=</span> <span class='va'>num</span>,</span>
+<span class='r-in'>    currency <span class='op'>=</span> <span class='st'>"CNY"</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>fmt_currency</span><span class='op'>(</span></span>
+<span class='r-in'>    columns <span class='op'>=</span> <span class='va'>currency</span>,</span>
+<span class='r-in'>    currency <span class='op'>=</span> <span class='st'>"GBP"</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

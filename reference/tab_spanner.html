@@ -224,26 +224,26 @@ columns will be preserved in all cases. By default, this is set to <code>TRUE</c
 <code><a href='tab_style.html'>tab_style</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Use `gtcars` to create a gt table;</span>
-<span class='co'># Group several columns related to car</span>
-<span class='co'># performance under a spanner column</span>
-<span class='co'># with the label `performance`</span>
-<span class='va'>tab_1</span> <span class='op'>&lt;-</span>
-  <span class='va'>gtcars</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span>
-    <span class='op'>-</span><span class='va'>mfr</span>, <span class='op'>-</span><span class='va'>trim</span>, <span class='va'>bdy_style</span>, <span class='va'>drivetrain</span>,
-    <span class='op'>-</span><span class='va'>drivetrain</span>, <span class='op'>-</span><span class='va'>trsmn</span>, <span class='op'>-</span><span class='va'>ctry_origin</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>8</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span>rowname_col <span class='op'>=</span> <span class='st'>"model"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>tab_spanner</span><span class='op'>(</span>
-    label <span class='op'>=</span> <span class='st'>"performance"</span>,
-    columns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
-      <span class='va'>hp</span>, <span class='va'>hp_rpm</span>, <span class='va'>trq</span>, <span class='va'>trq_rpm</span>,
-      <span class='va'>mpg_c</span>, <span class='va'>mpg_h</span><span class='op'>)</span>
-  <span class='op'>)</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Use `gtcars` to create a gt table;</span></span>
+<span class='r-in'><span class='co'># Group several columns related to car</span></span>
+<span class='r-in'><span class='co'># performance under a spanner column</span></span>
+<span class='r-in'><span class='co'># with the label `performance`</span></span>
+<span class='r-in'><span class='va'>tab_1</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='va'>gtcars</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='op'>-</span><span class='va'>mfr</span>, <span class='op'>-</span><span class='va'>trim</span>, <span class='va'>bdy_style</span>, <span class='va'>drivetrain</span>,</span>
+<span class='r-in'>    <span class='op'>-</span><span class='va'>drivetrain</span>, <span class='op'>-</span><span class='va'>trsmn</span>, <span class='op'>-</span><span class='va'>ctry_origin</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>8</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span>rowname_col <span class='op'>=</span> <span class='st'>"model"</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>tab_spanner</span><span class='op'>(</span></span>
+<span class='r-in'>    label <span class='op'>=</span> <span class='st'>"performance"</span>,</span>
+<span class='r-in'>    columns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span></span>
+<span class='r-in'>      <span class='va'>hp</span>, <span class='va'>hp_rpm</span>, <span class='va'>trq</span>, <span class='va'>trq_rpm</span>,</span>
+<span class='r-in'>      <span class='va'>mpg_c</span>, <span class='va'>mpg_h</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

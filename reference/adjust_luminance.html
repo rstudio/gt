@@ -201,7 +201,7 @@ argument).</p>
 
     
 
-<p>7-20</p>
+<p>7-24</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Helper Functions: 
@@ -211,8 +211,12 @@ argument).</p>
 <code><a href='cells_body.html'>cells_body</a>()</code>,
 <code><a href='cells_column_labels.html'>cells_column_labels</a>()</code>,
 <code><a href='cells_column_spanners.html'>cells_column_spanners</a>()</code>,
+<code><a href='cells_footnotes.html'>cells_footnotes</a>()</code>,
 <code><a href='cells_grand_summary.html'>cells_grand_summary</a>()</code>,
 <code><a href='cells_row_groups.html'>cells_row_groups</a>()</code>,
+<code><a href='cells_source_notes.html'>cells_source_notes</a>()</code>,
+<code><a href='cells_stub_grand_summary.html'>cells_stub_grand_summary</a>()</code>,
+<code><a href='cells_stub_summary.html'>cells_stub_summary</a>()</code>,
 <code><a href='cells_stubhead.html'>cells_stubhead</a>()</code>,
 <code><a href='cells_stub.html'>cells_stub</a>()</code>,
 <code><a href='cells_summary.html'>cells_summary</a>()</code>,
@@ -229,46 +233,46 @@ argument).</p>
 <code><a href='random_id.html'>random_id</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Get a palette of 8 pastel colors from</span>
-<span class='co'># the RColorBrewer package</span>
-<span class='va'>pal</span> <span class='op'>&lt;-</span> <span class='fu'>RColorBrewer</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html'>brewer.pal</a></span><span class='op'>(</span><span class='fl'>8</span>, <span class='st'>"Pastel2"</span><span class='op'>)</span>
-
-<span class='co'># Create lighter and darker variants</span>
-<span class='co'># of the base palette (one step lower, one</span>
-<span class='co'># step higher)</span>
-<span class='va'>pal_darker</span>  <span class='op'>&lt;-</span> <span class='va'>pal</span> <span class='op'>%&gt;%</span> <span class='fu'>adjust_luminance</span><span class='op'>(</span><span class='op'>-</span><span class='fl'>1.0</span><span class='op'>)</span>
-<span class='va'>pal_lighter</span> <span class='op'>&lt;-</span> <span class='va'>pal</span> <span class='op'>%&gt;%</span> <span class='fu'>adjust_luminance</span><span class='op'>(</span><span class='op'>+</span><span class='fl'>1.0</span><span class='op'>)</span>
-
-<span class='co'># Create a tibble and make a gt table</span>
-<span class='co'># from it; color each column in order of</span>
-<span class='co'># increasingly darker palettes (with</span>
-<span class='co'># `data_color()`)</span>
-<span class='va'>tab_1</span> <span class='op'>&lt;-</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>8</span>, b <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>8</span>, c <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>8</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='data_color.html'>data_color</a></span><span class='op'>(</span>
-    columns <span class='op'>=</span> <span class='va'>a</span>,
-    colors <span class='op'>=</span> <span class='fu'>scales</span><span class='fu'>::</span><span class='fu'><a href='https://scales.r-lib.org/reference/col_numeric.html'>col_numeric</a></span><span class='op'>(</span>
-      palette <span class='op'>=</span> <span class='va'>pal_lighter</span>,
-      domain <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>8</span><span class='op'>)</span>
-    <span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='data_color.html'>data_color</a></span><span class='op'>(</span>
-    columns <span class='op'>=</span> <span class='va'>b</span>,
-    colors <span class='op'>=</span> <span class='fu'>scales</span><span class='fu'>::</span><span class='fu'><a href='https://scales.r-lib.org/reference/col_numeric.html'>col_numeric</a></span><span class='op'>(</span>
-      palette <span class='op'>=</span> <span class='va'>pal</span>,
-      domain <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>8</span><span class='op'>)</span>
-    <span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='data_color.html'>data_color</a></span><span class='op'>(</span>
-    columns <span class='op'>=</span> <span class='va'>c</span>,
-    colors <span class='op'>=</span> <span class='fu'>scales</span><span class='fu'>::</span><span class='fu'><a href='https://scales.r-lib.org/reference/col_numeric.html'>col_numeric</a></span><span class='op'>(</span>
-      palette <span class='op'>=</span> <span class='va'>pal_darker</span>,
-      domain <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>8</span><span class='op'>)</span>
-    <span class='op'>)</span>
-  <span class='op'>)</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Get a palette of 8 pastel colors from</span></span>
+<span class='r-in'><span class='co'># the RColorBrewer package</span></span>
+<span class='r-in'><span class='va'>pal</span> <span class='op'>&lt;-</span> <span class='fu'>RColorBrewer</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html'>brewer.pal</a></span><span class='op'>(</span><span class='fl'>8</span>, <span class='st'>"Pastel2"</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Create lighter and darker variants</span></span>
+<span class='r-in'><span class='co'># of the base palette (one step lower, one</span></span>
+<span class='r-in'><span class='co'># step higher)</span></span>
+<span class='r-in'><span class='va'>pal_darker</span>  <span class='op'>&lt;-</span> <span class='va'>pal</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span> <span class='fu'>adjust_luminance</span><span class='op'>(</span><span class='op'>-</span><span class='fl'>1.0</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>pal_lighter</span> <span class='op'>&lt;-</span> <span class='va'>pal</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span> <span class='fu'>adjust_luminance</span><span class='op'>(</span><span class='op'>+</span><span class='fl'>1.0</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Create a tibble and make a gt table</span></span>
+<span class='r-in'><span class='co'># from it; color each column in order of</span></span>
+<span class='r-in'><span class='co'># increasingly darker palettes (with</span></span>
+<span class='r-in'><span class='co'># `data_color()`)</span></span>
+<span class='r-in'><span class='va'>tab_1</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>8</span>, b <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>8</span>, c <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>8</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='data_color.html'>data_color</a></span><span class='op'>(</span></span>
+<span class='r-in'>    columns <span class='op'>=</span> <span class='va'>a</span>,</span>
+<span class='r-in'>    colors <span class='op'>=</span> <span class='fu'>scales</span><span class='fu'>::</span><span class='fu'><a href='https://scales.r-lib.org/reference/col_numeric.html'>col_numeric</a></span><span class='op'>(</span></span>
+<span class='r-in'>      palette <span class='op'>=</span> <span class='va'>pal_lighter</span>,</span>
+<span class='r-in'>      domain <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>8</span><span class='op'>)</span></span>
+<span class='r-in'>    <span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='data_color.html'>data_color</a></span><span class='op'>(</span></span>
+<span class='r-in'>    columns <span class='op'>=</span> <span class='va'>b</span>,</span>
+<span class='r-in'>    colors <span class='op'>=</span> <span class='fu'>scales</span><span class='fu'>::</span><span class='fu'><a href='https://scales.r-lib.org/reference/col_numeric.html'>col_numeric</a></span><span class='op'>(</span></span>
+<span class='r-in'>      palette <span class='op'>=</span> <span class='va'>pal</span>,</span>
+<span class='r-in'>      domain <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>8</span><span class='op'>)</span></span>
+<span class='r-in'>    <span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='data_color.html'>data_color</a></span><span class='op'>(</span></span>
+<span class='r-in'>    columns <span class='op'>=</span> <span class='va'>c</span>,</span>
+<span class='r-in'>    colors <span class='op'>=</span> <span class='fu'>scales</span><span class='fu'>::</span><span class='fu'><a href='https://scales.r-lib.org/reference/col_numeric.html'>col_numeric</a></span><span class='op'>(</span></span>
+<span class='r-in'>      palette <span class='op'>=</span> <span class='va'>pal_darker</span>,</span>
+<span class='r-in'>      domain <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>8</span><span class='op'>)</span></span>
+<span class='r-in'>    <span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

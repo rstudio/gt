@@ -213,16 +213,17 @@ noontime SZA to be 43.0 degrees.</p>
 <code><a href='sp500.html'>sp500</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Here is a glimpse at the data</span>
-<span class='co'># available in `sza`</span>
-<span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://pillar.r-lib.org/reference/glimpse.html'>glimpse</a></span><span class='op'>(</span><span class='va'>sza</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Rows: 816
-#&gt; Columns: 4
-#&gt; $ latitude <span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 2…
-#&gt; $ month    </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span> jan, jan, jan, jan, jan, jan, jan, jan, jan, jan, jan, jan, j…
-#&gt; $ tst      </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> "0400", "0430", "0500", "0530", "0600", "0630", "0700", "0730…
-#&gt; $ sza      </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> NA, NA, NA, NA, NA, NA, 84.9, 78.7, 72.7, 66.1, 61.5, 56.5, 5…</div><div class='input'>
-</div></span></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Here is a glimpse at the data</span></span>
+<span class='r-in'><span class='co'># available in `sza`</span></span>
+<span class='r-in'><span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://pillar.r-lib.org/reference/glimpse.html'>glimpse</a></span><span class='op'>(</span><span class='va'>sza</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Rows: 816</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Columns: 4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $ latitude <span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 2…</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $ month    <span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span> jan, jan, jan, jan, jan, jan, jan, jan, jan, jan, jan, jan, j…</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $ tst      <span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> "0400", "0430", "0500", "0530", "0600", "0630", "0700", "0730…</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $ sza      <span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> NA, NA, NA, NA, NA, NA, 84.9, 78.7, 72.7, 66.1, 61.5, 56.5, 5…</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

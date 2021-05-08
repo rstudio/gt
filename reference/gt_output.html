@@ -184,7 +184,7 @@ ID given during the <code><a href='render_gt.html'>render_gt()</a></code> call i
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>We need to ensure that we have the <strong>shiny</strong> package installed first. This
-is easily by using <code><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages("shiny")</a></code>. More information on creating
+is easily by using <code>install.packages("shiny")</code>. More information on creating
 Shiny apps can be found at the <a href='https://shiny.rstudio.com'>Shiny Site</a>.</p>
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
@@ -197,43 +197,43 @@ Shiny apps can be found at the <a href='https://shiny.rstudio.com'>Shiny Site</a
 <code><a href='render_gt.html'>render_gt</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://shiny.rstudio.com/'>shiny</a></span><span class='op'>)</span>
-
-<span class='co'># Here is a Shiny app (contained within</span>
-<span class='co'># a single file) that (1) prepares a</span>
-<span class='co'># gt table, (2) sets up the `ui` with</span>
-<span class='co'># `gt_output()`, and (3) sets up the</span>
-<span class='co'># `server` with a `render_gt()` that</span>
-<span class='co'># uses the `gt_tbl` object as the input</span>
-<span class='co'># expression</span>
-
-<span class='va'>gt_tbl</span> <span class='op'>&lt;-</span>
-  <span class='va'>gtcars</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='cols_hide.html'>cols_hide</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span><span class='op'>(</span><span class='st'>"_"</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='va'>ui</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/fluidPage.html'>fluidPage</a></span><span class='op'>(</span>
-
-  <span class='fu'>gt_output</span><span class='op'>(</span>outputId <span class='op'>=</span> <span class='st'>"table"</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='va'>server</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>input</span>,
-                   <span class='va'>output</span>,
-                   <span class='va'>session</span><span class='op'>)</span> <span class='op'>{</span>
-
-  <span class='va'>output</span><span class='op'>$</span><span class='va'>table</span> <span class='op'>&lt;-</span>
-    <span class='fu'><a href='render_gt.html'>render_gt</a></span><span class='op'>(</span>
-      expr <span class='op'>=</span> <span class='va'>gt_tbl</span>,
-      height <span class='op'>=</span> <span class='fu'><a href='px.html'>px</a></span><span class='op'>(</span><span class='fl'>600</span><span class='op'>)</span>,
-      width <span class='op'>=</span> <span class='fu'><a href='px.html'>px</a></span><span class='op'>(</span><span class='fl'>600</span><span class='op'>)</span>
-    <span class='op'>)</span>
-<span class='op'>}</span>
-
-<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/shinyApp.html'>shinyApp</a></span><span class='op'>(</span><span class='va'>ui</span>, <span class='va'>server</span><span class='op'>)</span>
-<span class='op'>}</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://shiny.rstudio.com/'>shiny</a></span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Here is a Shiny app (contained within</span></span>
+<span class='r-in'><span class='co'># a single file) that (1) prepares a</span></span>
+<span class='r-in'><span class='co'># gt table, (2) sets up the `ui` with</span></span>
+<span class='r-in'><span class='co'># `gt_output()`, and (3) sets up the</span></span>
+<span class='r-in'><span class='co'># `server` with a `render_gt()` that</span></span>
+<span class='r-in'><span class='co'># uses the `gt_tbl` object as the input</span></span>
+<span class='r-in'><span class='co'># expression</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>gt_tbl</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='va'>gtcars</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='cols_hide.html'>cols_hide</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span><span class='op'>(</span><span class='st'>"_"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>ui</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/fluidPage.html'>fluidPage</a></span><span class='op'>(</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='fu'>gt_output</span><span class='op'>(</span>outputId <span class='op'>=</span> <span class='st'>"table"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>server</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>input</span>,</span>
+<span class='r-in'>                   <span class='va'>output</span>,</span>
+<span class='r-in'>                   <span class='va'>session</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='va'>output</span><span class='op'>$</span><span class='va'>table</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>    <span class='fu'><a href='render_gt.html'>render_gt</a></span><span class='op'>(</span></span>
+<span class='r-in'>      expr <span class='op'>=</span> <span class='va'>gt_tbl</span>,</span>
+<span class='r-in'>      height <span class='op'>=</span> <span class='fu'><a href='px.html'>px</a></span><span class='op'>(</span><span class='fl'>600</span><span class='op'>)</span>,</span>
+<span class='r-in'>      width <span class='op'>=</span> <span class='fu'><a href='px.html'>px</a></span><span class='op'>(</span><span class='fl'>600</span><span class='op'>)</span></span>
+<span class='r-in'>    <span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/shinyApp.html'>shinyApp</a></span><span class='op'>(</span><span class='va'>ui</span>, <span class='va'>server</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

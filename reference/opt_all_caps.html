@@ -217,38 +217,38 @@ default it includes all of the <code>"column_labels"</code>, the <code>"stub"</c
 <code><a href='opt_table_outline.html'>opt_table_outline</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Use `exibble` to create a gt table with</span>
-<span class='co'># a number of table parts added; all text</span>
-<span class='co'># in the column labels, the stub, and in</span>
-<span class='co'># all row groups is to be transformed to</span>
-<span class='co'># all caps using `opt_all_caps()`</span>
-<span class='va'>tab_1</span> <span class='op'>&lt;-</span>
-  <span class='va'>exibble</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span>rowname_col <span class='op'>=</span> <span class='st'>"row"</span>, groupname_col <span class='op'>=</span> <span class='st'>"group"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='summary_rows.html'>summary_rows</a></span><span class='op'>(</span>
-    groups <span class='op'>=</span> <span class='st'>"grp_a"</span>,
-    columns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>num</span>, <span class='va'>currency</span><span class='op'>)</span>,
-    fns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-      min <span class='op'>=</span> <span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>.</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
-      max <span class='op'>=</span> <span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>.</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-    <span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='grand_summary_rows.html'>grand_summary_rows</a></span><span class='op'>(</span>
-    columns <span class='op'>=</span> <span class='va'>currency</span>,
-    fns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-      total <span class='op'>=</span> <span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>.</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-    <span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='tab_source_note.html'>tab_source_note</a></span><span class='op'>(</span>source_note <span class='op'>=</span> <span class='st'>"This is a source note."</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='tab_footnote.html'>tab_footnote</a></span><span class='op'>(</span>
-    footnote <span class='op'>=</span> <span class='st'>"This is a footnote."</span>,
-    locations <span class='op'>=</span> <span class='fu'><a href='cells_body.html'>cells_body</a></span><span class='op'>(</span>columns <span class='op'>=</span> <span class='fl'>1</span>, rows <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='tab_header.html'>tab_header</a></span><span class='op'>(</span>
-    title <span class='op'>=</span> <span class='st'>"The title of the table"</span>,
-    subtitle <span class='op'>=</span> <span class='st'>"The table's subtitle"</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>opt_all_caps</span><span class='op'>(</span><span class='op'>)</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Use `exibble` to create a gt table with</span></span>
+<span class='r-in'><span class='co'># a number of table parts added; all text</span></span>
+<span class='r-in'><span class='co'># in the column labels, the stub, and in</span></span>
+<span class='r-in'><span class='co'># all row groups is to be transformed to</span></span>
+<span class='r-in'><span class='co'># all caps using `opt_all_caps()`</span></span>
+<span class='r-in'><span class='va'>tab_1</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='va'>exibble</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span>rowname_col <span class='op'>=</span> <span class='st'>"row"</span>, groupname_col <span class='op'>=</span> <span class='st'>"group"</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='summary_rows.html'>summary_rows</a></span><span class='op'>(</span></span>
+<span class='r-in'>    groups <span class='op'>=</span> <span class='st'>"grp_a"</span>,</span>
+<span class='r-in'>    columns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>num</span>, <span class='va'>currency</span><span class='op'>)</span>,</span>
+<span class='r-in'>    fns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>      min <span class='op'>=</span> <span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>.</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,</span>
+<span class='r-in'>      max <span class='op'>=</span> <span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>.</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'>    <span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='grand_summary_rows.html'>grand_summary_rows</a></span><span class='op'>(</span></span>
+<span class='r-in'>    columns <span class='op'>=</span> <span class='va'>currency</span>,</span>
+<span class='r-in'>    fns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>      total <span class='op'>=</span> <span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>.</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'>    <span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='tab_source_note.html'>tab_source_note</a></span><span class='op'>(</span>source_note <span class='op'>=</span> <span class='st'>"This is a source note."</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='tab_footnote.html'>tab_footnote</a></span><span class='op'>(</span></span>
+<span class='r-in'>    footnote <span class='op'>=</span> <span class='st'>"This is a footnote."</span>,</span>
+<span class='r-in'>    locations <span class='op'>=</span> <span class='fu'><a href='cells_body.html'>cells_body</a></span><span class='op'>(</span>columns <span class='op'>=</span> <span class='fl'>1</span>, rows <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='tab_header.html'>tab_header</a></span><span class='op'>(</span></span>
+<span class='r-in'>    title <span class='op'>=</span> <span class='st'>"The title of the table"</span>,</span>
+<span class='r-in'>    subtitle <span class='op'>=</span> <span class='st'>"The table's subtitle"</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>opt_all_caps</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

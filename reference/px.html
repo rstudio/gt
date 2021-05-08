@@ -200,8 +200,12 @@ pixels (e.g., <code>table.font.size</code>).</p></td>
 <code><a href='cells_body.html'>cells_body</a>()</code>,
 <code><a href='cells_column_labels.html'>cells_column_labels</a>()</code>,
 <code><a href='cells_column_spanners.html'>cells_column_spanners</a>()</code>,
+<code><a href='cells_footnotes.html'>cells_footnotes</a>()</code>,
 <code><a href='cells_grand_summary.html'>cells_grand_summary</a>()</code>,
 <code><a href='cells_row_groups.html'>cells_row_groups</a>()</code>,
+<code><a href='cells_source_notes.html'>cells_source_notes</a>()</code>,
+<code><a href='cells_stub_grand_summary.html'>cells_stub_grand_summary</a>()</code>,
+<code><a href='cells_stub_summary.html'>cells_stub_summary</a>()</code>,
 <code><a href='cells_stubhead.html'>cells_stubhead</a>()</code>,
 <code><a href='cells_stub.html'>cells_stub</a>()</code>,
 <code><a href='cells_summary.html'>cells_summary</a>()</code>,
@@ -217,18 +221,18 @@ pixels (e.g., <code>table.font.size</code>).</p></td>
 <code><a href='random_id.html'>random_id</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Use `exibble` to create a gt table;</span>
-<span class='co'># use the `px()` helper to define the</span>
-<span class='co'># font size for the column labels</span>
-<span class='va'>tab_1</span> <span class='op'>&lt;-</span>
-  <span class='va'>exibble</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='tab_style.html'>tab_style</a></span><span class='op'>(</span>
-    style <span class='op'>=</span> <span class='fu'><a href='cell_text.html'>cell_text</a></span><span class='op'>(</span>size <span class='op'>=</span> <span class='fu'>px</span><span class='op'>(</span><span class='fl'>20</span><span class='op'>)</span><span class='op'>)</span>,
-    locations <span class='op'>=</span> <span class='fu'><a href='cells_column_labels.html'>cells_column_labels</a></span><span class='op'>(</span><span class='op'>)</span>
-  <span class='op'>)</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Use `exibble` to create a gt table;</span></span>
+<span class='r-in'><span class='co'># use the `px()` helper to define the</span></span>
+<span class='r-in'><span class='co'># font size for the column labels</span></span>
+<span class='r-in'><span class='va'>tab_1</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='va'>exibble</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='tab_style.html'>tab_style</a></span><span class='op'>(</span></span>
+<span class='r-in'>    style <span class='op'>=</span> <span class='fu'><a href='cell_text.html'>cell_text</a></span><span class='op'>(</span>size <span class='op'>=</span> <span class='fu'>px</span><span class='op'>(</span><span class='fl'>20</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span class='r-in'>    locations <span class='op'>=</span> <span class='fu'><a href='cells_column_labels.html'>cells_column_labels</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

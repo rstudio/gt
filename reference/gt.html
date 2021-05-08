@@ -208,7 +208,7 @@ table as row captions in the display table stub.</p></td>
       <th>auto_align</th>
       <td><p>Optionally have column data be aligned depending on the
 content contained in each column of the input <code>data</code>. Internally, this
-calls <code><a href='cols_align.html'>cols_align(align = "auto")</a></code> for all columns.</p></td>
+calls <code>cols_align(align = "auto")</code> for all columns.</p></td>
     </tr>
     <tr>
       <th>id</th>
@@ -258,33 +258,33 @@ appear in the display table.</p>
 <code><a href='gt_preview.html'>gt_preview</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create a table object using the</span>
-<span class='co'># `exibble` dataset; use the `row`</span>
-<span class='co'># and `group` columns to add a stub</span>
-<span class='co'># and row groups</span>
-<span class='va'>tab_1</span> <span class='op'>&lt;-</span>
-  <span class='va'>exibble</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>gt</span><span class='op'>(</span>
-    rowname_col <span class='op'>=</span> <span class='st'>"row"</span>,
-    groupname_col <span class='op'>=</span> <span class='st'>"group"</span>
-  <span class='op'>)</span>
-
-<span class='co'># The resulting object can be used</span>
-<span class='co'># in transformations (with `tab_*()`,</span>
-<span class='co'># `fmt_*()`, `cols_*()` functions)</span>
-<span class='va'>tab_2</span> <span class='op'>&lt;-</span>
-  <span class='va'>tab_1</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='tab_header.html'>tab_header</a></span><span class='op'>(</span>
-    title <span class='op'>=</span> <span class='st'>"Table Title"</span>,
-    subtitle <span class='op'>=</span> <span class='st'>"Subtitle"</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='fmt_number.html'>fmt_number</a></span><span class='op'>(</span>
-    columns <span class='op'>=</span> <span class='va'>num</span>,
-    decimals <span class='op'>=</span> <span class='fl'>2</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='cols_label.html'>cols_label</a></span><span class='op'>(</span>num <span class='op'>=</span> <span class='st'>"number"</span><span class='op'>)</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Create a table object using the</span></span>
+<span class='r-in'><span class='co'># `exibble` dataset; use the `row`</span></span>
+<span class='r-in'><span class='co'># and `group` columns to add a stub</span></span>
+<span class='r-in'><span class='co'># and row groups</span></span>
+<span class='r-in'><span class='va'>tab_1</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='va'>exibble</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>gt</span><span class='op'>(</span></span>
+<span class='r-in'>    rowname_col <span class='op'>=</span> <span class='st'>"row"</span>,</span>
+<span class='r-in'>    groupname_col <span class='op'>=</span> <span class='st'>"group"</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># The resulting object can be used</span></span>
+<span class='r-in'><span class='co'># in transformations (with `tab_*()`,</span></span>
+<span class='r-in'><span class='co'># `fmt_*()`, `cols_*()` functions)</span></span>
+<span class='r-in'><span class='va'>tab_2</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='va'>tab_1</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='tab_header.html'>tab_header</a></span><span class='op'>(</span></span>
+<span class='r-in'>    title <span class='op'>=</span> <span class='st'>"Table Title"</span>,</span>
+<span class='r-in'>    subtitle <span class='op'>=</span> <span class='st'>"Subtitle"</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='fmt_number.html'>fmt_number</a></span><span class='op'>(</span></span>
+<span class='r-in'>    columns <span class='op'>=</span> <span class='va'>num</span>,</span>
+<span class='r-in'>    decimals <span class='op'>=</span> <span class='fl'>2</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='cols_label.html'>cols_label</a></span><span class='op'>(</span>num <span class='op'>=</span> <span class='st'>"number"</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

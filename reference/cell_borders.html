@@ -205,7 +205,7 @@ any defined <code>sides</code> can be removed by supplying <code>NULL</code> to 
 
     
 
-<p>7-17</p>
+<p>7-21</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Helper Functions: 
@@ -215,8 +215,12 @@ any defined <code>sides</code> can be removed by supplying <code>NULL</code> to 
 <code><a href='cells_body.html'>cells_body</a>()</code>,
 <code><a href='cells_column_labels.html'>cells_column_labels</a>()</code>,
 <code><a href='cells_column_spanners.html'>cells_column_spanners</a>()</code>,
+<code><a href='cells_footnotes.html'>cells_footnotes</a>()</code>,
 <code><a href='cells_grand_summary.html'>cells_grand_summary</a>()</code>,
 <code><a href='cells_row_groups.html'>cells_row_groups</a>()</code>,
+<code><a href='cells_source_notes.html'>cells_source_notes</a>()</code>,
+<code><a href='cells_stub_grand_summary.html'>cells_stub_grand_summary</a>()</code>,
+<code><a href='cells_stub_summary.html'>cells_stub_summary</a>()</code>,
 <code><a href='cells_stubhead.html'>cells_stubhead</a>()</code>,
 <code><a href='cells_stub.html'>cells_stub</a>()</code>,
 <code><a href='cells_summary.html'>cells_summary</a>()</code>,
@@ -233,58 +237,58 @@ any defined <code>sides</code> can be removed by supplying <code>NULL</code> to 
 <code><a href='random_id.html'>random_id</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Add horizontal border lines for</span>
-<span class='co'># all table body rows in `exibble`</span>
-<span class='va'>tab_1</span> <span class='op'>&lt;-</span>
-  <span class='va'>exibble</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='tab_options.html'>tab_options</a></span><span class='op'>(</span>row.striping.include_table_body <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='tab_style.html'>tab_style</a></span><span class='op'>(</span>
-      style <span class='op'>=</span> <span class='fu'>cell_borders</span><span class='op'>(</span>
-        sides <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"top"</span>, <span class='st'>"bottom"</span><span class='op'>)</span>,
-        color <span class='op'>=</span> <span class='st'>"#BBBBBB"</span>,
-        weight <span class='op'>=</span> <span class='fu'><a href='px.html'>px</a></span><span class='op'>(</span><span class='fl'>1.5</span><span class='op'>)</span>,
-        style <span class='op'>=</span> <span class='st'>"solid"</span>
-      <span class='op'>)</span>,
-      locations <span class='op'>=</span> <span class='fu'><a href='cells_body.html'>cells_body</a></span><span class='op'>(</span>
-        columns <span class='op'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span>,
-        rows <span class='op'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span>
-      <span class='op'>)</span>
-    <span class='op'>)</span>
-
-<span class='co'># Incorporate different horizontal and</span>
-<span class='co'># vertical borders at several locations;</span>
-<span class='co'># this uses multiple `cell_borders()` and</span>
-<span class='co'># `cells_body()` calls within `list()`s</span>
-<span class='va'>tab_2</span> <span class='op'>&lt;-</span>
-  <span class='va'>exibble</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='tab_style.html'>tab_style</a></span><span class='op'>(</span>
-      style <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-        <span class='fu'>cell_borders</span><span class='op'>(</span>
-          sides <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"top"</span>, <span class='st'>"bottom"</span><span class='op'>)</span>,
-          color <span class='op'>=</span> <span class='st'>"#FF0000"</span>,
-          weight <span class='op'>=</span> <span class='fu'><a href='px.html'>px</a></span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span>
-        <span class='op'>)</span>,
-        <span class='fu'>cell_borders</span><span class='op'>(</span>
-          sides <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"right"</span><span class='op'>)</span>,
-          color <span class='op'>=</span> <span class='st'>"#0000FF"</span>,
-          weight <span class='op'>=</span> <span class='fu'><a href='px.html'>px</a></span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span>
-        <span class='op'>)</span>
-      <span class='op'>)</span>,
-      locations <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-        <span class='fu'><a href='cells_body.html'>cells_body</a></span><span class='op'>(</span>
-          columns <span class='op'>=</span> <span class='va'>num</span>,
-          rows <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>num</span><span class='op'>)</span>
-        <span class='op'>)</span>,
-        <span class='fu'><a href='cells_body.html'>cells_body</a></span><span class='op'>(</span>
-          columns <span class='op'>=</span> <span class='va'>currency</span>,
-          rows <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>currency</span><span class='op'>)</span>
-        <span class='op'>)</span>
-      <span class='op'>)</span>
-    <span class='op'>)</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Add horizontal border lines for</span></span>
+<span class='r-in'><span class='co'># all table body rows in `exibble`</span></span>
+<span class='r-in'><span class='va'>tab_1</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='va'>exibble</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='fu'><a href='tab_options.html'>tab_options</a></span><span class='op'>(</span>row.striping.include_table_body <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='fu'><a href='tab_style.html'>tab_style</a></span><span class='op'>(</span></span>
+<span class='r-in'>      style <span class='op'>=</span> <span class='fu'>cell_borders</span><span class='op'>(</span></span>
+<span class='r-in'>        sides <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"top"</span>, <span class='st'>"bottom"</span><span class='op'>)</span>,</span>
+<span class='r-in'>        color <span class='op'>=</span> <span class='st'>"#BBBBBB"</span>,</span>
+<span class='r-in'>        weight <span class='op'>=</span> <span class='fu'><a href='px.html'>px</a></span><span class='op'>(</span><span class='fl'>1.5</span><span class='op'>)</span>,</span>
+<span class='r-in'>        style <span class='op'>=</span> <span class='st'>"solid"</span></span>
+<span class='r-in'>      <span class='op'>)</span>,</span>
+<span class='r-in'>      locations <span class='op'>=</span> <span class='fu'><a href='cells_body.html'>cells_body</a></span><span class='op'>(</span></span>
+<span class='r-in'>        columns <span class='op'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span>,</span>
+<span class='r-in'>        rows <span class='op'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'>      <span class='op'>)</span></span>
+<span class='r-in'>    <span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Incorporate different horizontal and</span></span>
+<span class='r-in'><span class='co'># vertical borders at several locations;</span></span>
+<span class='r-in'><span class='co'># this uses multiple `cell_borders()` and</span></span>
+<span class='r-in'><span class='co'># `cells_body()` calls within `list()`s</span></span>
+<span class='r-in'><span class='va'>tab_2</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='va'>exibble</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>    <span class='fu'><a href='tab_style.html'>tab_style</a></span><span class='op'>(</span></span>
+<span class='r-in'>      style <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>        <span class='fu'>cell_borders</span><span class='op'>(</span></span>
+<span class='r-in'>          sides <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"top"</span>, <span class='st'>"bottom"</span><span class='op'>)</span>,</span>
+<span class='r-in'>          color <span class='op'>=</span> <span class='st'>"#FF0000"</span>,</span>
+<span class='r-in'>          weight <span class='op'>=</span> <span class='fu'><a href='px.html'>px</a></span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-in'>        <span class='op'>)</span>,</span>
+<span class='r-in'>        <span class='fu'>cell_borders</span><span class='op'>(</span></span>
+<span class='r-in'>          sides <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"right"</span><span class='op'>)</span>,</span>
+<span class='r-in'>          color <span class='op'>=</span> <span class='st'>"#0000FF"</span>,</span>
+<span class='r-in'>          weight <span class='op'>=</span> <span class='fu'><a href='px.html'>px</a></span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-in'>        <span class='op'>)</span></span>
+<span class='r-in'>      <span class='op'>)</span>,</span>
+<span class='r-in'>      locations <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>        <span class='fu'><a href='cells_body.html'>cells_body</a></span><span class='op'>(</span></span>
+<span class='r-in'>          columns <span class='op'>=</span> <span class='va'>num</span>,</span>
+<span class='r-in'>          rows <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>num</span><span class='op'>)</span></span>
+<span class='r-in'>        <span class='op'>)</span>,</span>
+<span class='r-in'>        <span class='fu'><a href='cells_body.html'>cells_body</a></span><span class='op'>(</span></span>
+<span class='r-in'>          columns <span class='op'>=</span> <span class='va'>currency</span>,</span>
+<span class='r-in'>          rows <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>currency</span><span class='op'>)</span></span>
+<span class='r-in'>        <span class='op'>)</span></span>
+<span class='r-in'>      <span class='op'>)</span></span>
+<span class='r-in'>    <span class='op'>)</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

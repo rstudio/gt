@@ -220,16 +220,16 @@ numbering option can be deactivated by setting <code>incl_rownums</code> to <cod
 <code><a href='gt.html'>gt</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Use `gtcars` to create a gt table</span>
-<span class='co'># preview (with only a few of its</span>
-<span class='co'># columns); you'll see the first five</span>
-<span class='co'># rows and the last row</span>
-<span class='va'>tab_1</span> <span class='op'>&lt;-</span>
-  <span class='va'>gtcars</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>mfr</span>, <span class='va'>model</span>, <span class='va'>year</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>gt_preview</span><span class='op'>(</span><span class='op'>)</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Use `gtcars` to create a gt table</span></span>
+<span class='r-in'><span class='co'># preview (with only a few of its</span></span>
+<span class='r-in'><span class='co'># columns); you'll see the first five</span></span>
+<span class='r-in'><span class='co'># rows and the last row</span></span>
+<span class='r-in'><span class='va'>tab_1</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='va'>gtcars</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>mfr</span>, <span class='va'>model</span>, <span class='va'>year</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>gt_preview</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

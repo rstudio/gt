@@ -220,30 +220,30 @@ heights of most table rows.</p>
 <code><a href='web_image.html'>web_image</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create a tibble that contains heights</span>
-<span class='co'># of an image in pixels (one column as a</span>
-<span class='co'># string, the other as numerical values),</span>
-<span class='co'># then, create a gt table; use the</span>
-<span class='co'># `text_transform()` function to insert</span>
-<span class='co'># a local test image (PNG) image with the</span>
-<span class='co'># various sizes</span>
-<span class='va'>tab_1</span> <span class='op'>&lt;-</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>
-    pixels <span class='op'>=</span> <span class='fu'><a href='px.html'>px</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>35</span>, <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>,
-    image <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>35</span>, <span class='fl'>5</span><span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='text_transform.html'>text_transform</a></span><span class='op'>(</span>
-    locations <span class='op'>=</span> <span class='fu'><a href='cells_body.html'>cells_body</a></span><span class='op'>(</span>columns <span class='op'>=</span> <span class='va'>image</span><span class='op'>)</span>,
-    fn <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>{</span>
-      <span class='fu'>local_image</span><span class='op'>(</span>
-        filename <span class='op'>=</span> <span class='fu'><a href='test_image.html'>test_image</a></span><span class='op'>(</span>type <span class='op'>=</span> <span class='st'>"png"</span><span class='op'>)</span>,
-        height <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-      <span class='op'>)</span>
-    <span class='op'>}</span>
-  <span class='op'>)</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Create a tibble that contains heights</span></span>
+<span class='r-in'><span class='co'># of an image in pixels (one column as a</span></span>
+<span class='r-in'><span class='co'># string, the other as numerical values),</span></span>
+<span class='r-in'><span class='co'># then, create a gt table; use the</span></span>
+<span class='r-in'><span class='co'># `text_transform()` function to insert</span></span>
+<span class='r-in'><span class='co'># a local test image (PNG) image with the</span></span>
+<span class='r-in'><span class='co'># various sizes</span></span>
+<span class='r-in'><span class='va'>tab_1</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span></span>
+<span class='r-in'>    pixels <span class='op'>=</span> <span class='fu'><a href='px.html'>px</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>35</span>, <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span class='r-in'>    image <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>35</span>, <span class='fl'>5</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='text_transform.html'>text_transform</a></span><span class='op'>(</span></span>
+<span class='r-in'>    locations <span class='op'>=</span> <span class='fu'><a href='cells_body.html'>cells_body</a></span><span class='op'>(</span>columns <span class='op'>=</span> <span class='va'>image</span><span class='op'>)</span>,</span>
+<span class='r-in'>    fn <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>      <span class='fu'>local_image</span><span class='op'>(</span></span>
+<span class='r-in'>        filename <span class='op'>=</span> <span class='fu'><a href='test_image.html'>test_image</a></span><span class='op'>(</span>type <span class='op'>=</span> <span class='st'>"png"</span><span class='op'>)</span>,</span>
+<span class='r-in'>        height <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></span>
+<span class='r-in'>      <span class='op'>)</span></span>
+<span class='r-in'>    <span class='op'>}</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

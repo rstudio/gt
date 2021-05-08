@@ -189,46 +189,47 @@ containing the LaTeX code.</p>
 <code><a href='gtsave.html'>gtsave</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Use `gtcars` to create a gt table;</span>
-<span class='co'># add a header and then export as</span>
-<span class='co'># an object with LaTeX code</span>
-<span class='va'>tab_latex</span> <span class='op'>&lt;-</span>
-  <span class='va'>gtcars</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>mfr</span>, <span class='va'>model</span>, <span class='va'>msrp</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='tab_header.html'>tab_header</a></span><span class='op'>(</span>
-    title <span class='op'>=</span> <span class='fu'><a href='md.html'>md</a></span><span class='op'>(</span><span class='st'>"Data listing from **gtcars**"</span><span class='op'>)</span>,
-    subtitle <span class='op'>=</span> <span class='fu'><a href='md.html'>md</a></span><span class='op'>(</span><span class='st'>"`gtcars` is an R dataset"</span><span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>as_latex</span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'># `tab_latex` is a `knit_asis` object,</span>
-<span class='co'># which makes it easy to include in</span>
-<span class='co'># R Markdown documents that are knit to</span>
-<span class='co'># PDF; we can use `as.character()` to</span>
-<span class='co'># get just the LaTeX code as a single-</span>
-<span class='co'># element vector</span>
-<span class='va'>tab_latex</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; \captionsetup[table]{labelformat=empty,skip=1pt}
-#&gt; \begin{longtable}{llr}
-#&gt; \caption*{
-#&gt; \large Data listing from \textbf{gtcars}\\ 
-#&gt; \small \texttt{gtcars} is an R dataset\\ 
-#&gt; } \\ 
-#&gt; \toprule
-#&gt; mfr &amp; model &amp; msrp \\ 
-#&gt; \midrule
-#&gt; Ford &amp; GT &amp; 447000 \\ 
-#&gt; Ferrari &amp; 458 Speciale &amp; 291744 \\ 
-#&gt; Ferrari &amp; 458 Spider &amp; 263553 \\ 
-#&gt; Ferrari &amp; 458 Italia &amp; 233509 \\ 
-#&gt; Ferrari &amp; 488 GTB &amp; 245400 \\ 
-#&gt; \bottomrule
-#&gt; \end{longtable}</div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Use `gtcars` to create a gt table;</span></span>
+<span class='r-in'><span class='co'># add a header and then export as</span></span>
+<span class='r-in'><span class='co'># an object with LaTeX code</span></span>
+<span class='r-in'><span class='va'>tab_latex</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='va'>gtcars</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>mfr</span>, <span class='va'>model</span>, <span class='va'>msrp</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='tab_header.html'>tab_header</a></span><span class='op'>(</span></span>
+<span class='r-in'>    title <span class='op'>=</span> <span class='fu'><a href='md.html'>md</a></span><span class='op'>(</span><span class='st'>"Data listing from **gtcars**"</span><span class='op'>)</span>,</span>
+<span class='r-in'>    subtitle <span class='op'>=</span> <span class='fu'><a href='md.html'>md</a></span><span class='op'>(</span><span class='st'>"`gtcars` is an R dataset"</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>as_latex</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># `tab_latex` is a `knit_asis` object,</span></span>
+<span class='r-in'><span class='co'># which makes it easy to include in</span></span>
+<span class='r-in'><span class='co'># R Markdown documents that are knit to</span></span>
+<span class='r-in'><span class='co'># PDF; we can use `as.character()` to</span></span>
+<span class='r-in'><span class='co'># get just the LaTeX code as a single-</span></span>
+<span class='r-in'><span class='co'># element vector</span></span>
+<span class='r-in'><span class='va'>tab_latex</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> \captionsetup[table]{labelformat=empty,skip=1pt}</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> \begin{longtable}{llr}</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> \caption*{</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> \large Data listing from \textbf{gtcars}\\ </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> \small \texttt{gtcars} is an R dataset\\ </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> } \\ </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> \toprule</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> mfr &amp; model &amp; msrp \\ </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> \midrule</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Ford &amp; GT &amp; 447000 \\ </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Ferrari &amp; 458 Speciale &amp; 291744 \\ </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Ferrari &amp; 458 Spider &amp; 263553 \\ </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Ferrari &amp; 458 Italia &amp; 233509 \\ </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Ferrari &amp; 488 GTB &amp; 245400 \\ </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> \bottomrule</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> \end{longtable}</span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
