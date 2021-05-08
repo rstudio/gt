@@ -1,5 +1,6 @@
 #' Interpret input text as Markdown-formatted text
 #'
+#' @description
 #' Markdown! It's a wonderful thing. We can use it in certain places (e.g.,
 #' footnotes, source notes, the table title, etc.) and expect it to render to
 #' HTML as Markdown does. There is the [html()] helper that allows you to ferry
@@ -43,6 +44,7 @@ md <- function(text) {
 
 #' Interpret input text as HTML-formatted text
 #'
+#' @description
 #' For certain pieces of text (like in column labels or table headings) we may
 #' want to express them as raw HTML. In fact, with HTML, anything goes so it can
 #' be much more than just text. The `html()` function will guard the input HTML
@@ -95,6 +97,7 @@ is_rtf <- function(x) {
 
 #' Helper for providing a numeric value as pixels value
 #'
+#' @description
 #' For certain parameters, a length value is required. Examples include the
 #' setting of font sizes (e.g., in [cell_text()]) and thicknesses of lines
 #' (e.g., in [cell_borders()]). Setting a length in pixels with `px()` allows
@@ -138,6 +141,7 @@ px <- function(x) {
 
 #' Helper for providing a numeric value as percentage
 #'
+#' @description
 #' A percentage value acts as a length value that is relative to an initial
 #' state. For instance an 80 percent value for something will size the target
 #' to 80 percent the size of its 'previous' value. This type of sizing is
@@ -1568,6 +1572,7 @@ cells_source_notes <- function() {
 
 #' Supply a custom currency symbol to `fmt_currency()`
 #'
+#' @description
 #' The `currency()` helper function makes it easy to specify a context-aware
 #' currency symbol to `currency` argument of [fmt_currency()]. Since **gt** can
 #' render tables to several output formats, `currency()` allows for different
@@ -1576,6 +1581,7 @@ cells_source_notes <- function() {
 #' the custom currency defaults to `2`, however, a value set for the `decimals`
 #' argument of [fmt_currency()] will take precedence.
 #'
+#' @details
 #' We can use any combination of `html`, `latex`, `rtf`, and `default` as named
 #' arguments for the currency text in each of the namesake contexts. The
 #' `default` value is used as a fallback when there doesn't exist a dedicated
@@ -1658,6 +1664,7 @@ currency <- function(...,
 
 #' Helper for defining custom text styles for table cells
 #'
+#' @description
 #' This helper function is to be used with the [tab_style()] function, which
 #' itself allows for the setting of custom styles to one or more cells. We can
 #' also define several styles within a single call of `cell_text()` and
@@ -1836,6 +1843,7 @@ cell_style_to_html.cell_text <- function(style) {
 
 #' Helper for defining custom fills for table cells
 #'
+#' @description
 #' The `cell_fill()` helper function is to be used with the [tab_style()]
 #' function, which itself allows for the setting of custom styles to one or more
 #' cells. Specifically, the call to `cell_fill()` should be bound to the
@@ -1914,6 +1922,7 @@ cell_style_to_html.cell_fill <- function(style) {
 
 #' Helper for defining custom borders for table cells
 #'
+#' @description
 #' The `cell_borders()` helper function is to be used with the [tab_style()]
 #' function, which itself allows for the setting of custom styles to one or more
 #' cells. Specifically, the call to `cell_borders()` should be bound to the
@@ -2098,6 +2107,7 @@ cell_style_structure <- function(name, obj, subclass = name) {
 
 #' Helper function for specifying a font from the Google Fonts service
 #'
+#' @description
 #' The `google_font()` helper function can be used wherever a font name should
 #' be specified. There are two instances where this helper can be used: the
 #' `name` argument in [opt_table_font()] (for setting a table font) and in that
@@ -2194,6 +2204,7 @@ google_font <- function(name) {
 
 #' A vector of default fonts for use with **gt** tables
 #'
+#' @description
 #' The vector of fonts given by `default_fonts()` should be used with a **gt**
 #' table that is rendered to HTML. We can specify additional fonts to use but
 #' this default set should be placed after that to act as fallbacks. This is
@@ -2247,12 +2258,14 @@ default_fonts <- function() {
 
 #' Adjust the luminance for a palette of colors
 #'
+#' @description
 #' This function can brighten or darken a palette of colors by an arbitrary
 #' number of steps, which is defined by a real number between -2.0 and 2.0. The
 #' transformation of a palette by a fixed step in this function will tend to
 #' apply greater darkening or lightening for those colors in the midrange
 #' compared to any very dark or very light colors in the input palette.
 #'
+#' @details
 #' This function can be useful when combined with the [data_color()] function's
 #' `palette` argument, which can use a vector of colors or any of the `col_*`
 #' functions from the **scales** package (all of which have a `palette`
@@ -2356,6 +2369,7 @@ adjust_luminance <- function(colors,
 
 #' Helper for creating a random `id` for a **gt** table
 #'
+#' @description
 #' This helper function can be used to create a random, character-based ID
 #' value argument of variable length (the default is 10 letters).
 #'
@@ -2375,6 +2389,7 @@ random_id <- function(n = 10) {
 
 #' Perform LaTeX escaping
 #'
+#' @description
 #' Text may contain several characters with special meanings in LaTeX. This
 #' function will transform a character vector so that it is safe to use within
 #' LaTeX tables.
@@ -2400,6 +2415,7 @@ escape_latex <- function(text) {
 
 #' Get the LaTeX dependencies required for a **gt** table
 #'
+#' @description
 #' When working with Rnw (Sweave) files or otherwise writing LaTeX code,
 #' including a **gt** table can be problematic if we don't have knowledge
 #' of the LaTeX dependencies. For the most part, these dependencies are the
@@ -2408,6 +2424,7 @@ escape_latex <- function(text) {
 #' used to provide the LaTeX in an Rnw file, allowing **gt** tables to work
 #' and not yield errors due to missing packages.
 #'
+#' @details
 #' Here is an example Rnw document that shows how the
 #' `gt_latex_dependencies()` can be used in conjunction with a **gt**
 #' table:

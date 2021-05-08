@@ -1,28 +1,28 @@
 #' Option to modify the set of footnote marks
 #'
+#' @description
 #' Alter the footnote marks for any footnotes that may be present in the table.
 #' Either a vector of marks can be provided (including Unicode characters), or,
 #' a specific keyword could be used to signify a preset sequence. This function
 #' serves as a shortcut for using `tab_options(footnotes.marks = {marks})`
 #'
+#' @details
 #' We can supply a vector of that will represent the series of marks.
 #' The series of footnote marks is recycled when its usage goes beyond the
 #' length of the set. At each cycle, the marks are simply doubled, tripled, and
 #' so on (e.g., `*` -> `**` -> `***`). The option exists for providing keywords
 #' for certain types of footnote marks. The keywords are:
 #'
-#' \itemize{
-#' \item `"numbers"`: numeric marks, they begin from 1 and these marks are not
+#' - `"numbers"`: numeric marks, they begin from 1 and these marks are not
 #' subject to recycling behavior
-#' \item `"letters"`: miniscule alphabetic marks, internally uses the `letters`
+#' - `"letters"`: miniscule alphabetic marks, internally uses the `letters`
 #' vector
 #' which contains 26 lowercase letters of the Roman alphabet
-#' \item `"LETTERS"`: majuscule alphabetic marks, using the `LETTERS` vector
+#' - `"LETTERS"`: majuscule alphabetic marks, using the `LETTERS` vector
 #' which has 26 uppercase letters of the Roman alphabet
-#' \item `"standard"`: symbolic marks, four symbols in total
-#' \item `"extended"`: symbolic marks, extends the standard set by adding two
+#' - `"standard"`: symbolic marks, four symbols in total
+#' - `"extended"`: symbolic marks, extends the standard set by adding two
 #' more symbols, making six
-#' }
 #'
 #' @inheritParams fmt_number
 #' @param marks Either a character vector of length greater than 1 (that will
@@ -92,6 +92,7 @@ opt_footnote_marks <- function(data,
 
 #' Option to add or remove row striping
 #'
+#' @description
 #' By default, a **gt** table does not have row striping enabled. However, this
 #' function allows us to easily enable or disable striped rows in the table
 #' body. This function serves as a convenient shortcut for
@@ -153,6 +154,7 @@ opt_row_striping <- function(data,
 
 #' Option to align the table header
 #'
+#' @description
 #' By default, a table header added to a **gt** table has center alignment
 #' for both the title and the subtitle elements. This function allows us to
 #' easily set the horizontal alignment of the title and subtitle to the left
@@ -218,6 +220,7 @@ opt_align_table_header <- function(data,
 
 #' Option to use all caps in select table locations
 #'
+#' @description
 #' Sometimes an all-capitalized look is suitable for a table. With the
 #' `opt_all_caps()` function, we can transform characters in the column labels,
 #' the stub, and in all row groups in this way (and there's control over which
@@ -319,6 +322,7 @@ opt_all_caps <- function(data,
 
 #' Option to set table lines to different extents
 #'
+#' @description
 #' The `opt_table_lines()` function sets table lines in one of three possible
 #' ways: (1) all possible table lines drawn (`"all"`), (2) no table lines at all
 #' (`"none"`), and (3) resetting to the default line styles (`"default"`). This
@@ -397,6 +401,7 @@ opt_table_lines <- function(data,
 
 #' Option to wrap an outline around the entire table
 #'
+#' @description
 #' This function puts an outline of consistent `style`, `width`, and `color`
 #' around the entire table. It'll write over any existing outside lines so long
 #' as the `width` is larger that of the existing lines. The default value of
@@ -497,7 +502,6 @@ opt_table_outline <- function(data,
   tab_options_multi(data, option_value_list)
 }
 
-
 #' Option to define a custom font for the table
 #'
 #' @description
@@ -507,6 +511,7 @@ opt_table_outline <- function(data,
 #' different fonts in select locations in the table, and for that you would need
 #' to use [tab_style()] in conjunction with the [cell_text()] helper function.
 #'
+#' @details
 #' We have the option to supply either a system font for the `font_name`, or, a
 #' font available at the Google Fonts service by use of the [google_font()]
 #' helper function.
@@ -625,6 +630,7 @@ opt_table_font <- function(data,
 
 #' Option to add custom CSS for the table
 #'
+#' @description
 #' The `opt_css()` function makes it possible to add CSS to a **gt** table. This
 #' CSS will be added after the compiled CSS that **gt** generates automatically
 #' when the object is transformed to an HTML output table. You can supply `css`

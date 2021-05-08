@@ -38,7 +38,6 @@ the output table.
 This function could be somewhat replicated using \code{\link[=cols_merge]{cols_merge()}}, however,
 \code{cols_merge_range()} employs the following specialized operations for \code{NA}
 handling:
-
 \enumerate{
 \item \code{NA}s in \code{col_begin} (but not \code{col_end}) result in a display of only
 \item \code{NA}s in \code{col_end} (but not \code{col_begin}) result in a display of only

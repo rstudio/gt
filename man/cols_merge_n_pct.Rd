@@ -34,7 +34,6 @@ specified in \code{col_pct} is dropped from the output table.
 This function could be somewhat replicated using \code{\link[=cols_merge]{cols_merge()}}, however,
 \code{cols_merge_n_pct()} employs the following specialized semantics for \code{NA}
 and zero-value handling:
-
 \enumerate{
 \item \code{NA}s in \code{col_n} result in missing values for the merged
 column (e.g., \code{NA} + \verb{10.2\%} = \code{NA})
