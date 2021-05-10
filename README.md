@@ -168,3 +168,7 @@ participating in this project you agree to abide by its terms.
 #### License
 
 MIT © RStudio, PBC
+
+<p align="center">
+<img src="man/figures/gt_tables_footer.png" width="100%">
+</p>

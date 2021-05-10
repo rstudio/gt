@@ -137,3 +137,5 @@ Please note that this project is released with a [Contributor Code of Conduct](h
 #### License
 
 MIT &copy; RStudio, PBC
+
+<p align="center"><img src="man/figures/gt_tables_footer.png" width="100%"></p>
