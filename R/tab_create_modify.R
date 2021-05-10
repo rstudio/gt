@@ -409,7 +409,7 @@ tab_row_group <- function(data,
     }
 
     warning(
-      "The `group` argument has been deprecated in gt 0.3.3:\n",
+      "The `group` argument has been deprecated in gt 0.3.0:\n",
       "* use the `label` argument to specify the group label.",
       call. = FALSE
     )
@@ -421,7 +421,7 @@ tab_row_group <- function(data,
     data <- tab_options(data = data, row_group.default_label = others_label)
 
     warning(
-      "The `others_label` argument has been deprecated in gt 0.3.3:\n",
+      "The `others_label` argument has been deprecated in gt 0.3.0:\n",
       "* use `tab_options(row_group.default_label = <label>)` to set this label.",
       call. = FALSE
     )
