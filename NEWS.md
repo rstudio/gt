@@ -2,7 +2,7 @@
 
 ## New features
 
-* References to columns (by way of the `columns` argument in many **gt** functions) now better adheres to **tidyselect** semantics; instead of using `columns = vars(a, b)`, we can now use `columns = c(a, b)` (`columns = c("a", "b")` also works, and this type of expression always has been an option in **gt**). (#718)
+* References to columns (by way of the `columns` argument in many **gt** functions) now better adheres to **tidyselect** semantics; instead of using `columns = vars(a, b)`, we can now use `columns = c(a, b)` (`columns = c("a", "b")` also works, and this type of expression always has been an option in **gt**). Other aspects of **tidyselect** should also work, so things like using `where()` to target columns (e.g., `gt(exibble) %>% cols_hide(columns = where(is.numeric))` will hide all numeric columns). (#718)
 
 * As part of the **tidyselect** changes made in #718, using `columns = TRUE` (to mean that all columns should be considered) has now been replaced with `columns = everything()`.
 
