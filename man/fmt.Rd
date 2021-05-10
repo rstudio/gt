@@ -49,10 +49,9 @@ aren't provided.
 \details{
 As with all of the \verb{fmt_*()} functions, targeting of values is done through
 \code{columns} and additionally by \code{rows} (if nothing is provided for \code{rows} then
-entire columns are selected). A number of helper functions exist to make
-targeting more effective. Conditional formatting is possible by providing a
-conditional expression to the \code{rows} argument. See the Arguments section for
-more information on this.
+entire columns are selected). Conditional formatting is possible by providing
+a conditional expression to the \code{rows} argument. See the Arguments section
+for more information on this.
 }
 \section{Figures}{
 

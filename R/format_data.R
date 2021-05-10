@@ -20,8 +20,7 @@
 #'
 #' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the Arguments section for more information on this.
 #'
@@ -251,8 +250,7 @@ fmt_number <- function(data,
 #'
 #' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the Arguments section for more information on this.
 #'
@@ -521,8 +519,7 @@ fmt_symbol <- function(data,
 #'
 #' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the Arguments section for more information on this.
 #'
@@ -653,8 +650,7 @@ fmt_percent <- function(data,
 #'
 #' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the Arguments section for more information on this.
 #'
@@ -813,8 +809,7 @@ fmt_currency <- function(data,
 #'
 #' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the Arguments section for more information on this.
 #'
@@ -964,8 +959,7 @@ fmt_bytes <- function(data,
 #'
 #' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the Arguments section for more information on this.
 #'
@@ -1096,8 +1090,7 @@ fmt_date <- function(data,
 #'
 #' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the Arguments section for more information on this.
 #'
@@ -1242,8 +1235,7 @@ fmt_time <- function(data,
 #'
 #' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the Arguments section for more information on this.
 #'
@@ -1355,8 +1347,7 @@ fmt_datetime <- function(data,
 #'
 #' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the Arguments section for more information on this.
 #'
@@ -1469,8 +1460,7 @@ fmt_markdown <- function(data,
 #'
 #' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the Arguments section for more information on this.
 #'
@@ -1606,8 +1596,7 @@ fmt_passthrough <- function(data,
 #'
 #' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the Arguments section for more information on this.
 #'
@@ -1723,10 +1712,9 @@ fmt_missing <- function(data,
 #' @details
 #' As with all of the `fmt_*()` functions, targeting of values is done through
 #' `columns` and additionally by `rows` (if nothing is provided for `rows` then
-#' entire columns are selected). A number of helper functions exist to make
-#' targeting more effective. Conditional formatting is possible by providing a
-#' conditional expression to the `rows` argument. See the Arguments section for
-#' more information on this.
+#' entire columns are selected). Conditional formatting is possible by providing
+#' a conditional expression to the `rows` argument. See the Arguments section
+#' for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param fns Either a single formatting function or a named list of functions.
