@@ -16,10 +16,6 @@
 
 * New location helper functions have been added to make it possible to style more locations and add footnotes to once inaccessible summary labels; these are `cells_stub_summary()`, `cells_stub_grand_summary()`, `cells_footnotes()`, and `cells_source_notes()`. (#737)
 
-* Added a plethora of options for specifying fonts for HTML tables. We can now specify a `google_font()` and this can be done with the new `opt_table_font()` (for the entire table) or inside `tab_style()` (for one or more targeted locations). The newly added `info_google_fonts()` provides a set of recommendations on good fonts to use in **gt** tables. Further to this, the `default_fonts()` function yields a vector of default fonts that can serve as font fallbacks. (#591)
-
-* It's now possible to manually adjust the CSS for an HTML table with the new `opt_css()` function. (#591)
-
 * The `cols_unhide()` function has been added as a complement to the `cols_hide()` function. This is useful when provided the `gt_tbl` object without the source data and code to recreate it *and* there are hidden columns that should be visible. (#710)
 
 * The new formatting function `fmt_bytes()` helps you to transform numerical values to byte sizes with human readable units. (#750)
