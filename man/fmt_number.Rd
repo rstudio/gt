@@ -14,6 +14,7 @@ fmt_number(
   drop_trailing_zeros = FALSE,
   drop_trailing_dec_mark = TRUE,
   use_seps = TRUE,
+  accounting = FALSE,
   scale_by = 1,
   suffixing = FALSE,
   pattern = "{x}",
@@ -65,6 +66,10 @@ which means that trailing decimal marks are not shown.}
 \item{use_seps}{An option to use digit group separators. The type of digit
 group separator is set by \code{sep_mark} and overridden if a locale ID is
 provided to \code{locale}. This setting is \code{TRUE} by default.}
+
+\item{accounting}{An option to use accounting style for values. With \code{FALSE}
+(the default), negative values will be shown with a minus sign. Using
+\code{accounting = TRUE} will put negative values in parentheses.}
 
 \item{scale_by}{A value to scale the input. The default is \code{1.0}. All numeric
 values will be multiplied by this value first before undergoing formatting.
@@ -188,6 +193,7 @@ tab_2 <-
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},
+\code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},

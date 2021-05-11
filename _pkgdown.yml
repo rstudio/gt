@@ -52,6 +52,7 @@ reference:
     - fmt_scientific
     - fmt_percent
     - fmt_currency
+    - fmt_bytes
     - fmt_date
     - fmt_time
     - fmt_datetime
@@ -103,16 +104,15 @@ reference:
 
   - title: Helper Functions
     desc: >
-      A small assortment of helper functions is available in the **gt**
-      package. The various `cells_*()` functions are used for targeting
-      cells with the `locations` argument in the `tab_footnote()`,
-      `tab_style()`, and `text_transform()` functions. The `cells_styles()`
-      function is used exclusively with `tab_style()`'s `style` argument
-      (and the `px()` & `pct()` functions may be useful there for specifying
-      units in pixels or percentages). The `md()` and `html()` helpers can
-      used be during label creation with the `tab_header()`,
-      `tab_footnote()`, `tab_spanner()`, `tab_stubhead_label()`, and
-      `tab_source_note()` functions.
+      An assortment of helper functions is available in the **gt** package.
+      The various `cells_*()` functions are used for targeting cells with the
+      `locations` argument in the `tab_footnote()`, `tab_style()`, and
+      `text_transform()` functions. The `cells_styles()` function is used
+      exclusively with `tab_style()`'s `style` argument (and the `px()` &
+      `pct()` functions may be useful there for specifying units in pixels or
+      percentages). The `md()` and `html()` helpers can used be during label
+      creation with the `tab_header()`, `tab_footnote()`, `tab_spanner()`,
+      `tab_stubhead_label()`, and `tab_source_note()` functions.
     contents:
     - md
     - html
@@ -127,6 +127,10 @@ reference:
     - cells_body
     - cells_summary
     - cells_grand_summary
+    - cells_stub_summary
+    - cells_stub_grand_summary
+    - cells_footnotes
+    - cells_source_notes
     - currency
     - cell_text
     - cell_fill

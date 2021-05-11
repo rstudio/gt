@@ -265,6 +265,10 @@ format_num_to_str <- function(x,
       decimal.mark = dec_mark
     )
 
+  # Remove `-` for any signed zeros returned by `formatC()`
+  x_str_signed_zero <- grepl("^(-0|-0\\.0*?)$", x_str)
+  x_str[x_str_signed_zero] <- gsub("-", "", x_str[x_str_signed_zero])
+
   # If a trailing decimal mark is to be retained (not the
   # default option but sometimes desirable), affix the `dec_mark`
   # to the right of those figures that are missing this mark
@@ -437,14 +441,14 @@ context_parens_marks <- function(context) {
 }
 
 context_pre_parens_spacer <- function(context) {
-  
+
   switch(context,
          latex = "\\hphantom{(}",
          "<span style=\"visibility: hidden;\">(</span>")
 }
 
 context_post_parens_spacer <- function(context) {
-  
+
   switch(context,
          latex = "\\hphantom{)}",
          "<span style=\"visibility: hidden;\">)</span>")
@@ -609,11 +613,15 @@ format_as_accounting <- function(x_str,
                                  context,
                                  accounting) {
 
+  if (!accounting) {
+    return(x_str)
+  }
+
   # TODO: Handle using `x_abs_str` instead
 
   # Store logical vector of `x` < 0
   x_lt0 <- x < 0
-  
+
   # Store logical vector `x` >= 0
   x_gte0 <- x >= 0
 
@@ -622,8 +630,9 @@ format_as_accounting <- function(x_str,
     return(x_str)
   }
 
-  # Handle case where negative values are to be placed within parentheses
-  if (accounting) {
+  # Create the minus and parens marks for the context
+  minus_mark <- context_minus_mark(context)
+  parens_marks <- context_parens_marks(context)
 
     # Create the minus and parens marks or placeholders for the context
     minus_mark <- context_minus_mark(context)
@@ -636,7 +645,7 @@ format_as_accounting <- function(x_str,
       x_str[x_lt0] %>%
       tidy_gsub(minus_mark, "", fixed = TRUE) %>%
       paste_between(x_2 = parens_marks)
-    
+
     x_str[x_gte0] <-
       x_str[x_gte0] %>%
       paste_between(x_2 = c(pre_parens_spacer, post_parens_spacer))

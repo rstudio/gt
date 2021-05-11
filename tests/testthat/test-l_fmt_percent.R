@@ -1,6 +1,4 @@
-context("LaTeX -- Ensuring that the `fmt_percent()` function works as expected")
-
-test_that("the `fmt_percent()` function works correctly", {
+test_that("the `fmt_percent()` function works correctly in the LaTeX context", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric
@@ -23,21 +21,25 @@ test_that("the `fmt_percent()` function works correctly", {
   # other defaults; extract `output_df` and compare to expected values
   expect_equal(
     (tbl_latex %>%
-       fmt_percent(columns = "num_1", decimals = 2) %>%
+       fmt_percent(columns = num_1, decimals = 2) %>%
        render_formats_test("latex"))[["num_1"]],
-    c("$183,623.00\\%$", "$276,339.00\\%$", "$93,729.00\\%$",
-      "$64,300.00\\%$", "$21,223.20\\%$", "$0.00\\%$", "$-2,324.00\\%$")
+    c(
+      "$183,623.00\\%$", "$276,339.00\\%$", "$93,729.00\\%$",
+      "$64,300.00\\%$", "$21,223.20\\%$", "$0.00\\%$", "$-2,324.00\\%$"
+    )
   )
 
   # Format the `num_1` column to 5 decimal places, use all
   # other defaults; extract `output_df` and compare to expected values
   expect_equal(
     (tbl_latex %>%
-       fmt_percent(columns = "num_1", decimals = 5) %>%
+       fmt_percent(columns = num_1, decimals = 5) %>%
        render_formats_test("latex"))[["num_1"]],
-    c("$183,623.00000\\%$", "$276,339.00000\\%$", "$93,729.00000\\%$",
+    c(
+      "$183,623.00000\\%$", "$276,339.00000\\%$", "$93,729.00000\\%$",
       "$64,300.00000\\%$", "$21,223.20000\\%$", "$0.00000\\%$",
-      "$-2,324.00000\\%$")
+      "$-2,324.00000\\%$"
+    )
   )
 
   # Format the `num_1` column to 2 decimal places, drop the trailing
@@ -46,12 +48,14 @@ test_that("the `fmt_percent()` function works correctly", {
   expect_equal(
     (tbl_latex %>%
        fmt_percent(
-         columns = "num_1", decimals = 2,
+         columns = num_1, decimals = 2,
          drop_trailing_zeros = TRUE
        ) %>%
        render_formats_test("latex"))[["num_1"]],
-    c("$183,623\\%$", "$276,339\\%$", "$93,729\\%$", "$64,300\\%$",
-      "$21,223.2\\%$", "$0\\%$", "$-2,324\\%$")
+    c(
+      "$183,623\\%$", "$276,339\\%$", "$93,729\\%$", "$64,300\\%$",
+      "$21,223.2\\%$", "$0\\%$", "$-2,324\\%$"
+    )
   )
 
   # Format the `num_1` column to 2 decimal places, don't use digit
@@ -59,10 +63,12 @@ test_that("the `fmt_percent()` function works correctly", {
   # and compare to expected values
   expect_equal(
     (tbl_latex %>%
-       fmt_percent(columns = "num_1", decimals = 2, use_seps = FALSE) %>%
+       fmt_percent(columns = num_1, decimals = 2, use_seps = FALSE) %>%
        render_formats_test("latex"))[["num_1"]],
-    c("$183623.00\\%$", "$276339.00\\%$", "$93729.00\\%$", "$64300.00\\%$",
-      "$21223.20\\%$", "$0.00\\%$", "$-2324.00\\%$")
+    c(
+      "$183623.00\\%$", "$276339.00\\%$", "$93729.00\\%$", "$64300.00\\%$",
+      "$21223.20\\%$", "$0.00\\%$", "$-2324.00\\%$"
+    )
   )
 
   # Format the `num_1` column to 2 decimal places, use a single space
@@ -70,10 +76,12 @@ test_that("the `fmt_percent()` function works correctly", {
   # extract `output_df` and compare to expected values
   expect_equal(
     (tbl_latex %>%
-       fmt_percent(columns = "num_1", decimals = 2, sep_mark = " ") %>%
+       fmt_percent(columns = num_1, decimals = 2, sep_mark = " ") %>%
        render_formats_test("latex"))[["num_1"]],
-    c("$183 623.00\\%$", "$276 339.00\\%$", "$93 729.00\\%$", "$64 300.00\\%$",
-      "$21 223.20\\%$", "$0.00\\%$", "$-2 324.00\\%$")
+    c(
+      "$183 623.00\\%$", "$276 339.00\\%$", "$93 729.00\\%$", "$64 300.00\\%$",
+      "$21 223.20\\%$", "$0.00\\%$", "$-2 324.00\\%$"
+    )
   )
   
   # Format the `num_1` column to accounting format, use all other defaults;
@@ -97,12 +105,14 @@ test_that("the `fmt_percent()` function works correctly", {
   expect_equal(
     (tbl_latex %>%
        fmt_percent(
-         columns = "num_1", decimals = 2,
+         columns = num_1, decimals = 2,
          sep_mark = ".", dec_mark = ","
        ) %>%
        render_formats_test("latex"))[["num_1"]],
-    c("$183.623,00\\%$", "$276.339,00\\%$", "$93.729,00\\%$", "$64.300,00\\%$",
-      "$21.223,20\\%$", "$0,00\\%$", "$-2.324,00\\%$")
+    c(
+      "$183.623,00\\%$", "$276.339,00\\%$", "$93.729,00\\%$", "$64.300,00\\%$",
+      "$21.223,20\\%$", "$0,00\\%$", "$-2.324,00\\%$"
+    )
   )
 
   # Format the `num_1` column to 2 decimal places, prepend and append
@@ -110,11 +120,13 @@ test_that("the `fmt_percent()` function works correctly", {
   # `output_df` and compare to expected values
   expect_equal(
     (tbl_latex %>%
-       fmt_percent(columns = "num_1", decimals = 2, pattern = "a {x}:n") %>%
+       fmt_percent(columns = num_1, decimals = 2, pattern = "a {x}:n") %>%
        render_formats_test("latex"))[["num_1"]],
-    c("a $183,623.00\\%$:n", "a $276,339.00\\%$:n", "a $93,729.00\\%$:n",
+    c(
+      "a $183,623.00\\%$:n", "a $276,339.00\\%$:n", "a $93,729.00\\%$:n",
       "a $64,300.00\\%$:n", "a $21,223.20\\%$:n", "a $0.00\\%$:n",
-      "a $-2,324.00\\%$:n")
+      "a $-2,324.00\\%$:n"
+    )
   )
 
   # Format the `num_1` column to 0 decimal places, place a space between
@@ -123,12 +135,14 @@ test_that("the `fmt_percent()` function works correctly", {
   expect_equal(
     (tbl_latex %>%
        fmt_percent(
-         columns = "num_1", decimals = 0,
+         columns = num_1, decimals = 0,
          placement = "right", incl_space = TRUE
        ) %>%
        render_formats_test("latex"))[["num_1"]],
-    c("$183,623 \\%$", "$276,339 \\%$", "$93,729 \\%$", "$64,300 \\%$",
-      "$21,223 \\%$", "$0 \\%$", "$-2,324 \\%$")
+    c(
+      "$183,623 \\%$", "$276,339 \\%$", "$93,729 \\%$", "$64,300 \\%$",
+      "$21,223 \\%$", "$0 \\%$", "$-2,324 \\%$"
+    )
   )
 
   # Format the `num_1` column to 0 decimal places, place a space between
@@ -137,12 +151,64 @@ test_that("the `fmt_percent()` function works correctly", {
   expect_equal(
     (tbl_latex %>%
        fmt_percent(
-         columns = "num_1", decimals = 0,
+         columns = num_1, decimals = 0,
          placement = "left", incl_space = TRUE
        ) %>%
        render_formats_test("latex"))[["num_1"]],
-    c("$\\% 183,623$", "$\\% 276,339$", "$\\% 93,729$", "$\\% 64,300$",
-      "$\\% 21,223$", "$\\% 0$", "$-\\% 2,324$")
+    c(
+      "$\\% 183,623$", "$\\% 276,339$", "$\\% 93,729$", "$\\% 64,300$",
+      "$\\% 21,223$", "$\\% 0$", "$-\\% 2,324$"
+    )
+  )
+
+  # Format the `num_1` column to 2 decimal places, use accounting style
+  expect_equal(
+    (tbl_latex %>%
+       fmt_percent(columns = num_1, accounting = TRUE) %>%
+       render_formats_test("latex"))[["num_1"]],
+    c(
+      "$183,623.00\\%$", "$276,339.00\\%$", "$93,729.00\\%$", "$64,300.00\\%$",
+      "$21,223.20\\%$", "$0.00\\%$", "$(2,324.00\\%)$"
+    )
+  )
+
+  # Format the `num_1` column to 3 decimal places, use accounting style
+  expect_equal(
+    (tbl_latex %>%
+       fmt_percent(columns = num_1, decimals = 3, accounting = TRUE) %>%
+       render_formats_test("latex"))[["num_1"]],
+    c(
+      "$183,623.000\\%$", "$276,339.000\\%$", "$93,729.000\\%$",
+      "$64,300.000\\%$", "$21,223.200\\%$", "$0.000\\%$", "$(2,324.000\\%)$"
+    )
+  )
+
+  # Format the `num_1` column to 2 decimal places, use accounting style
+  # and a pattern around the values
+  expect_equal(
+    (tbl_latex %>%
+       fmt_percent(
+         columns = num_1, decimals = 3,
+         accounting = TRUE, pattern = "a{x}b") %>%
+       render_formats_test("latex"))[["num_1"]],
+    c(
+      "a$183,623.000\\%$b", "a$276,339.000\\%$b", "a$93,729.000\\%$b",
+      "a$64,300.000\\%$b", "a$21,223.200\\%$b", "a$0.000\\%$b", "a$(2,324.000\\%)$b"
+    )
+  )
+
+  # Format the `num_1` column to 2 decimal places, use accounting style
+  # and drop all trailing zeros
+  expect_equal(
+    (tbl_latex %>%
+       fmt_percent(
+         columns = num_1, decimals = 3,
+         accounting = TRUE, drop_trailing_zeros = TRUE) %>%
+       render_formats_test("latex"))[["num_1"]],
+    c(
+      "$183,623\\%$", "$276,339\\%$", "$93,729\\%$", "$64,300\\%$",
+      "$21,223.2\\%$", "$0\\%$", "$(2,324\\%)$"
+    )
   )
 
   # Format the `num_1` column to 2 decimal places, apply the `en_US`
@@ -150,10 +216,12 @@ test_that("the `fmt_percent()` function works correctly", {
   # to expected values
   expect_equal(
     (tbl_latex %>%
-       fmt_percent(columns = "num_1", decimals = 2, locale = "en_US") %>%
+       fmt_percent(columns = num_1, decimals = 2, locale = "en_US") %>%
        render_formats_test("latex"))[["num_1"]],
-    c("$183,623.00\\%$", "$276,339.00\\%$", "$93,729.00\\%$",
-      "$64,300.00\\%$", "$21,223.20\\%$", "$0.00\\%$", "$-2,324.00\\%$")
+    c(
+      "$183,623.00\\%$", "$276,339.00\\%$", "$93,729.00\\%$",
+      "$64,300.00\\%$", "$21,223.20\\%$", "$0.00\\%$", "$-2,324.00\\%$"
+    )
   )
 
   # Format the `num_1` column to 2 decimal places, apply the `da_DK`
@@ -161,10 +229,12 @@ test_that("the `fmt_percent()` function works correctly", {
   # to expected values
   expect_equal(
     (tbl_latex %>%
-       fmt_percent(columns = "num_1", decimals = 2, locale = "da_DK") %>%
+       fmt_percent(columns = num_1, decimals = 2, locale = "da_DK") %>%
        render_formats_test("latex"))[["num_1"]],
-    c("$183.623,00\\%$", "$276.339,00\\%$", "$93.729,00\\%$",
-      "$64.300,00\\%$", "$21.223,20\\%$", "$0,00\\%$", "$-2.324,00\\%$")
+    c(
+      "$183.623,00\\%$", "$276.339,00\\%$", "$93.729,00\\%$",
+      "$64.300,00\\%$", "$21.223,20\\%$", "$0,00\\%$", "$-2.324,00\\%$"
+    )
   )
 
   # Format the `num_1` column to 2 decimal places, apply the `de_AT`
@@ -172,10 +242,12 @@ test_that("the `fmt_percent()` function works correctly", {
   # to expected values
   expect_equal(
     (tbl_latex %>%
-       fmt_percent(columns = "num_1", decimals = 2, locale = "de_AT") %>%
+       fmt_percent(columns = num_1, decimals = 2, locale = "de_AT") %>%
        render_formats_test("latex"))[["num_1"]],
-    c("$183 623,00\\%$", "$276 339,00\\%$", "$93 729,00\\%$",
-      "$64 300,00\\%$", "$21 223,20\\%$", "$0,00\\%$", "$-2 324,00\\%$")
+    c(
+      "$183 623,00\\%$", "$276 339,00\\%$", "$93 729,00\\%$",
+      "$64 300,00\\%$", "$21 223,20\\%$", "$0,00\\%$", "$-2 324,00\\%$"
+    )
   )
 
   # Format the `num_1` column to 2 decimal places, apply the `et_EE`
@@ -183,10 +255,12 @@ test_that("the `fmt_percent()` function works correctly", {
   # to expected values
   expect_equal(
     (tbl_latex %>%
-       fmt_percent(columns = "num_1", decimals = 2, locale = "et_EE") %>%
+       fmt_percent(columns = num_1, decimals = 2, locale = "et_EE") %>%
        render_formats_test("latex"))[["num_1"]],
-    c("$183 623,00\\%$", "$276 339,00\\%$", "$93 729,00\\%$",
-      "$64 300,00\\%$", "$21 223,20\\%$", "$0,00\\%$", "$-2 324,00\\%$")
+    c(
+      "$183 623,00\\%$", "$276 339,00\\%$", "$93 729,00\\%$",
+      "$64 300,00\\%$", "$21 223,20\\%$", "$0,00\\%$", "$-2 324,00\\%$"
+    )
   )
 
   # Format the `num_1` column to 2 decimal places, apply the `gl_ES`
@@ -194,9 +268,11 @@ test_that("the `fmt_percent()` function works correctly", {
   # to expected values
   expect_equal(
     (tbl_latex %>%
-       fmt_percent(columns = "num_1", decimals = 2, locale = "gl_ES") %>%
+       fmt_percent(columns = num_1, decimals = 2, locale = "gl_ES") %>%
        render_formats_test("latex"))[["num_1"]],
-    c("$183.623,00\\%$", "$276.339,00\\%$", "$93.729,00\\%$",
-      "$64.300,00\\%$", "$21.223,20\\%$", "$0,00\\%$", "$-2.324,00\\%$")
+    c(
+      "$183.623,00\\%$", "$276.339,00\\%$", "$93.729,00\\%$",
+      "$64.300,00\\%$", "$21.223,20\\%$", "$0,00\\%$", "$-2.324,00\\%$"
+    )
   )
 })

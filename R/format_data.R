@@ -60,6 +60,9 @@
 #' @param use_seps An option to use digit group separators. The type of digit
 #'   group separator is set by `sep_mark` and overridden if a locale ID is
 #'   provided to `locale`. This setting is `TRUE` by default.
+#' @param accounting An option to use accounting style for values. With `FALSE`
+#'   (the default), negative values will be shown with a minus sign. Using
+#'   `accounting = TRUE` will put negative values in parentheses.
 #' @param scale_by A value to scale the input. The default is `1.0`. All numeric
 #'   values will be multiplied by this value first before undergoing formatting.
 #'   This value will be ignored if using any of the `suffixing` options (i.e.,
@@ -154,6 +157,7 @@ fmt_number <- function(data,
                        drop_trailing_zeros = FALSE,
                        drop_trailing_dec_mark = TRUE,
                        use_seps = TRUE,
+                       accounting = FALSE,
                        scale_by = 1.0,
                        suffixing = FALSE,
                        pattern = "{x}",
@@ -207,7 +211,8 @@ fmt_number <- function(data,
         # Create the `suffix_df` object
         suffix_df <- create_suffix_df(x, decimals, suffix_labels, scale_by)
 
-        x %>%
+        x_str <-
+          x %>%
           # Scale the `x_vals` by the `scale_by` values
           scale_x_values(suffix_df$scale_by) %>%
           # Format numeric values to character-based numbers
@@ -224,6 +229,14 @@ fmt_number <- function(data,
           # With large-number suffixing support, we paste the
           # vector of suffixes to the right of the values
           paste_right(suffix_df$suffix)
+
+        x_str <-
+          x_str %>%
+          format_as_accounting(
+            x = x, context = context, accounting = accounting
+          )
+
+        x_str
       }
     )
   )
@@ -251,6 +264,8 @@ fmt_number <- function(data,
 #' argument. See the Arguments section for more information on this.
 #'
 #' @inheritParams fmt_number
+#' @param scale_by A value to scale the input. The default is `1.0`. All numeric
+#'   values will be multiplied by this value first before undergoing formatting.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -566,6 +581,7 @@ fmt_percent <- function(data,
                         drop_trailing_dec_mark = TRUE,
                         scale_values = TRUE,
                         use_seps = TRUE,
+                        accounting = FALSE,
                         pattern = "{x}",
                         sep_mark = ",",
                         dec_mark = ".",
@@ -671,9 +687,6 @@ fmt_percent <- function(data,
 #'   used.
 #' @param use_subunits An option for whether the subunits portion of a currency
 #'   value should be displayed. By default, this is `TRUE`.
-#' @param accounting An option to use accounting style for currency values. With
-#'   `FALSE` (the default), negative values will be shown with a minus sign.
-#'   Using `accounting = TRUE` will put negative values in parentheses.
 #' @param placement The placement of the currency symbol. This can be either be
 #'   `left` (the default) or `right`.
 #' @param incl_space An option for whether to include a space between the value
@@ -726,10 +739,10 @@ fmt_currency <- function(data,
                          rows = everything(),
                          currency = "USD",
                          use_subunits = TRUE,
-                         accounting = FALSE,
                          decimals = NULL,
                          drop_trailing_dec_mark = TRUE,
                          use_seps = TRUE,
+                         accounting = FALSE,
                          scale_by = 1.0,
                          suffixing = FALSE,
                          pattern = "{x}",
@@ -778,6 +791,145 @@ fmt_currency <- function(data,
     placement = placement,
     incl_space = incl_space,
     locale = locale
+  )
+}
+
+#' Format values as bytes
+#'
+#' With numeric values in a **gt** table, we can transform those to values of
+#' bytes with human readable units. The `fmt_bytes()` function allows for the
+#' formatting of byte sizes to either of two common representations: (1) with
+#' decimal units (powers of 1000, examples being `"kB"` and `"MB"`), and (2)
+#' with binary units (powers of 1024, examples being `"KiB"` and `"MiB"`).
+#'
+#' It is assumed the input numeric values represent the number of bytes and
+#' automatic truncation of values will occur. The numeric values will be scaled
+#' to be in the range of 1 to <1000 and then decorated with the correct unit
+#' symbol according to the standard chosen. For more control over the formatting
+#' of byte sizes, we can use the following options:
+#' \itemize{
+#' \item decimals: choice of the number of decimal places, option to drop
+#' trailing zeros, and a choice of the decimal symbol
+#' \item digit grouping separators: options to enable/disable digit separators
+#' and provide a choice of separator symbol
+#' \item pattern: option to use a text pattern for decoration of the formatted
+#' values
+#' \item locale-based formatting: providing a locale ID will result in number
+#' formatting specific to the chosen locale
+#' }
+#'
+#' @inheritParams fmt_number
+#' @param standard The way to express large byte sizes.
+#' @param decimals An option to specify the exact number of decimal places to
+#'   use. The default number of decimal places is `1`.
+#' @param incl_space An option for whether to include a space between the value
+#'   and the units. The default of `TRUE` uses a space character for separation.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @examples
+#' # Use `exibble` to create a gt table;
+#' # format the `num` column to have
+#' # byte sizes in the binary standard
+#' tab_1 <-
+#'   exibble %>%
+#'   dplyr::select(num) %>%
+#'   gt() %>%
+#'   fmt_bytes(columns = num)
+#'
+#' # Create a similar table with the
+#' # `fmt_bytes()` function, this time
+#' # showing byte sizes as binary values
+#' tab_2 <-
+#'   exibble %>%
+#'   dplyr::select(num) %>%
+#'   gt() %>%
+#'   fmt_bytes(
+#'     columns = num,
+#'     standard = "binary"
+#'   )
+#'
+#' @family Format Data
+#' @section Function ID:
+#' 3-5
+#'
+#' @import rlang
+#' @export
+fmt_bytes <- function(data,
+                      columns,
+                      rows = everything(),
+                      standard = c("decimal", "binary"),
+                      decimals = 1,
+                      n_sigfig = NULL,
+                      drop_trailing_zeros = TRUE,
+                      drop_trailing_dec_mark = TRUE,
+                      use_seps = TRUE,
+                      pattern = "{x}",
+                      sep_mark = ",",
+                      dec_mark = ".",
+                      incl_space = TRUE,
+                      locale = NULL) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  standard <- match.arg(standard)
+
+  # Use locale-based marks if a locale ID is provided
+  sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
+  dec_mark <- get_locale_dec_mark(locale, dec_mark)
+
+  # Set the `formatC_format` option according to whether number
+  # formatting with significant figures is to be performed
+  if (!is.null(n_sigfig)) {
+
+    # Stop function if `n_sigfig` does not have a valid value
+    validate_n_sigfig(n_sigfig)
+
+    formatC_format <- "fg"
+  } else {
+    formatC_format <- "f"
+  }
+
+  if (standard == "decimal") {
+    base <- 1000
+    byte_units <-
+      c("B", "kB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
+  } else {
+    base <- 1024
+    byte_units <-
+      c("B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB")
+  }
+
+  fmt(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    fns = num_fmt_factory_multi(
+      pattern = pattern,
+      format_fn = function(x, context) {
+
+        # Truncate all byte values
+        x <- trunc(x)
+
+        num_power_idx <- floor(log(abs(x), base = base)) + 1
+        num_power_idx <- pmax(1, pmin(length(byte_units), num_power_idx))
+
+        units_str <- byte_units[num_power_idx]
+        x <- x / base^(num_power_idx-1)
+
+        x %>%
+          # Format numeric values to character-based numbers
+          format_num_to_str(
+            context = context, decimals = decimals, n_sigfig = n_sigfig,
+            sep_mark = sep_mark, dec_mark = dec_mark,
+            drop_trailing_zeros = drop_trailing_zeros,
+            drop_trailing_dec_mark = drop_trailing_dec_mark,
+            format = formatC_format
+          ) %>%
+          paste_right(paste0(if (incl_space) " ", units_str))
+      }
+    )
   )
 }
 
@@ -866,7 +1018,7 @@ fmt_currency <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-5
+#' 3-6
 #'
 #' @import rlang
 #' @export
@@ -995,7 +1147,7 @@ fmt_date <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-6
+#' 3-7
 #'
 #' @import rlang
 #' @export
@@ -1114,7 +1266,7 @@ fmt_time <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-7
+#' 3-8
 #'
 #' @import rlang
 #' @export
@@ -1254,7 +1406,7 @@ fmt_datetime <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-8
+#' 3-9
 #'
 #' @import rlang
 #' @export
@@ -1340,7 +1492,7 @@ fmt_markdown <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-9
+#' 3-10
 #'
 #' @import rlang
 #' @export
@@ -1473,7 +1625,7 @@ fmt_passthrough <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-10
+#' 3-11
 #'
 #' @import rlang
 #' @export
@@ -1585,7 +1737,7 @@ fmt_missing <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-11
+#' 3-12
 #'
 #' @import rlang
 #' @export

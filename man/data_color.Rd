@@ -152,6 +152,7 @@ tab_2 <-
 }
 \seealso{
 Other Format Data: 
+\code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},

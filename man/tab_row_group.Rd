@@ -4,7 +4,7 @@
 \alias{tab_row_group}
 \title{Add a row group to a \strong{gt} table}
 \usage{
-tab_row_group(data, label, rows, id = label, others_label = NULL)
+tab_row_group(data, label, rows, id = label, others_label = NULL, group = NULL)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -29,6 +29,8 @@ function will stop if \code{id} isn't unique).}
 
 \item{others_label}{This argument is deprecated. Instead use
 \verb{tab_options(row_group.default_label = <label>)}.}
+
+\item{group}{This argument is deprecated. Instead use \code{label}.}
 }
 \value{
 An object of class \code{gt_tbl}.

@@ -23,13 +23,13 @@ mtcars_tbl <-
     after = c(gear)
   ) %>%
   tab_row_group(
-    group = "Mercs",
+    label = "Mercs",
     rows = c(
       "Merc 240D", "Merc 230", "Merc 280C", "Merc 280",
       "Merc 450SE", "Merc 450SL", "Merc 450SLC")
   ) %>%
   tab_row_group(
-    group = "Supercars",
+    label = "Supercars",
     rows = c("Ferrari Dino", "Maserati Bora", "Porsche 914-2", "Ford Pantera L")
   ) %>%
   row_group_order(groups = c("Supercars", "Mercs")) %>%
