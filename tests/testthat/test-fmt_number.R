@@ -101,12 +101,12 @@ test_that("the `fmt_number()` function works correctly in the HTML context", {
     (tab %>%
        fmt_number(columns = "num_1", accounting = TRUE) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("<span style=\"visibility: hidden;\">(</span>1,836.23<span style=\"visibility: hidden;\">)</span>",
-      "<span style=\"visibility: hidden;\">(</span>2,763.39<span style=\"visibility: hidden;\">)</span>",
-      "<span style=\"visibility: hidden;\">(</span>937.29<span style=\"visibility: hidden;\">)</span>",
-      "<span style=\"visibility: hidden;\">(</span>643.00<span style=\"visibility: hidden;\">)</span>",
-      "<span style=\"visibility: hidden;\">(</span>212.23<span style=\"visibility: hidden;\">)</span>",
-      "<span style=\"visibility: hidden;\">(</span>0.00<span style=\"visibility: hidden;\">)</span>",
+    c("<span style=\"visibility: hidden;\">(</span>1,836.23<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>2,763.39<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>937.29<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>643.00<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>212.23<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>0.00<span style=\"visibility: hidden;position: absolute\">)</span>",
       "(23.24)"))
 
   # Format the `num_1` column to 2 decimal places, use a period for the
