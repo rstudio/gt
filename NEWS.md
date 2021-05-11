@@ -3,13 +3,13 @@
 This release focuses on improvements to two main areas:
 
 1. Better RTF output support:
-  * RTF table generation is now fit for use following an extensive rewrite of internal RTF rendering functions.
-  * RTF table output with `gtsave(..., "<file>.rtf")` and `as_rtf()` now has much more feature parity compared to HTML tables; we can now add summary rows, format table text with Markdown via `fmt_markdown()`, and expect tables that look acceptable in Word and text editors that are RTF-compatible.
+    * RTF table generation is now fit for use following an extensive rewrite of internal RTF rendering functions.
+    * RTF table output with `gtsave(..., "<file>.rtf")` and `as_rtf()` now has much more feature parity compared to HTML tables; we can now add summary rows, format table text with Markdown via `fmt_markdown()`, and expect tables that look acceptable in Word and text editors that are RTF-compatible.
 
 2. Implementation of **tidyselect** semantics:
-  * References to columns (by way of the `columns` argument in many **gt** functions) now better adhere to **tidyselect** semantics.
-  * Instead of using `columns = vars(a, b)`, we now use `columns = c(a, b)` (`columns = c("a", "b")` also works, and this type of expression always has been an option in **gt**).
-  * Other **tidyselect** idioms should also work; things like using `where()` to target columns (e.g., `gt(exibble) %>% cols_hide(columns = where(is.numeric))` will hide all numeric columns) and negation (e.g., `columns = -c(a, b)`) function as expected.
+    * References to columns (by way of the `columns` argument in many **gt** functions) now better adhere to **tidyselect** semantics.
+    * Instead of using `columns = vars(a, b)`, we now use `columns = c(a, b)` (`columns = c("a", "b")` also works, and this type of expression always has been an option in **gt**).
+    * Other **tidyselect** idioms should also work; things like using `where()` to target columns (e.g., `gt(exibble) %>% cols_hide(columns = where(is.numeric))` will hide all numeric columns) and negation (e.g., `columns = -c(a, b)`) function as expected.
   
 ## Breaking changes and deprecations
 
