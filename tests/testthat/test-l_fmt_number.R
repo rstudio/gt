@@ -102,10 +102,13 @@ test_that("the `fmt_number()` function works correctly in the LaTeX context", {
        fmt_number(
          columns = "num_1", accounting = TRUE) %>%
        render_formats_test("latex"))[["num_1"]],
-    c("$\\hphantom{(}1,836.23\\hphantom{)}$", "$\\hphantom{(}2,763.39\\rlap{\\hphantom{)}}$",
-      "$\\hphantom{(}937.29\\hphantom{)}$", "$\\hphantom{(}643.00\\rlap{\\hphantom{)}}$",
-      "$\\hphantom{(}212.23\\hphantom{)}$", "$\\hphantom{(}0.00\\rlap{\\hphantom{)}}$",
-      "$(23.24)$")
+    c("$\\hphantom{(}1,836.23\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}2,763.39\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}937.29\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}643.00\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}212.23\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}0.00\\rlap{\\hphantom{)}}$",
+      "$(23.24\\rlap{)}$")
   )
 
   # Format the `num_1` column to 4 decimal places, scale all values by
@@ -151,9 +154,13 @@ test_that("the `fmt_number()` function works correctly in the LaTeX context", {
     (tbl_latex %>%
        fmt_number(columns = num_1, accounting = TRUE) %>%
        render_formats_test("latex"))[["num_1"]],
-    c(
-      "$1,836.23$", "$2,763.39$", "$937.29$", "$643.00$", "$212.23$",
-      "$0.00$", "$(23.24)$"
+    c("$\\hphantom{(}1,836.23\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}2,763.39\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}937.29\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}643.00\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}212.23\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}0.00\\rlap{\\hphantom{)}}$",
+      "$(23.24\\rlap{)}$"
     )
   )
 
@@ -162,9 +169,13 @@ test_that("the `fmt_number()` function works correctly in the LaTeX context", {
     (tbl_latex %>%
        fmt_number(columns = num_1, decimals = 3, accounting = TRUE) %>%
        render_formats_test("latex"))[["num_1"]],
-    c(
-      "$1,836.230$", "$2,763.390$", "$937.290$", "$643.000$", "$212.232$",
-      "$0.000$", "$(23.240)$"
+    c("$\\hphantom{(}1,836.230\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}2,763.390\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}937.290\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}643.000\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}212.232\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}0.000\\rlap{\\hphantom{)}}$",
+      "$(23.240\\rlap{)}$"
     )
   )
 
@@ -176,9 +187,13 @@ test_that("the `fmt_number()` function works correctly in the LaTeX context", {
          columns = num_1, decimals = 3,
          accounting = TRUE, pattern = "a{x}b") %>%
        render_formats_test("latex"))[["num_1"]],
-    c(
-      "a$1,836.230$b", "a$2,763.390$b", "a$937.290$b", "a$643.000$b",
-      "a$212.232$b", "a$0.000$b", "a$(23.240)$b"
+    c("a$\\hphantom{(}1,836.230\\rlap{\\hphantom{)}}$b",
+      "a$\\hphantom{(}2,763.390\\rlap{\\hphantom{)}}$b",
+      "a$\\hphantom{(}937.290\\rlap{\\hphantom{)}}$b",
+      "a$\\hphantom{(}643.000\\rlap{\\hphantom{)}}$b",
+      "a$\\hphantom{(}212.232\\rlap{\\hphantom{)}}$b",
+      "a$\\hphantom{(}0.000\\rlap{\\hphantom{)}}$b",
+      "a$(23.240\\rlap{)}$b"
     )
   )
 
@@ -190,9 +205,13 @@ test_that("the `fmt_number()` function works correctly in the LaTeX context", {
          columns = num_1, decimals = 3,
          accounting = TRUE, drop_trailing_zeros = TRUE) %>%
        render_formats_test("latex"))[["num_1"]],
-    c(
-      "$1,836.23$", "$2,763.39$", "$937.29$", "$643$", "$212.232$",
-      "$0$", "$(23.24)$"
+    c("$\\hphantom{(}1,836.23\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}2,763.39\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}937.29\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}643\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}212.232\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}0\\rlap{\\hphantom{)}}$",
+      "$(23.24\\rlap{)}$"
     )
   )
 

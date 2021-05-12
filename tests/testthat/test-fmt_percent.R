@@ -105,7 +105,8 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
       "<span style=\"visibility: hidden;\">(</span>64,300.00&percnt;<span style=\"visibility: hidden;position: absolute\">)</span>",
       "<span style=\"visibility: hidden;\">(</span>21,223.20&percnt;<span style=\"visibility: hidden;position: absolute\">)</span>",
       "<span style=\"visibility: hidden;\">(</span>0.00&percnt;<span style=\"visibility: hidden;position: absolute\">)</span>",
-      "(2,324.00&percnt;)")
+      "(2,324.00&percnt;<span style=\"position: absolute\">)</span>"
+    )
   )
 
   # Format the `num_1` column to 2 decimal places, use a period for the
@@ -171,8 +172,13 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
        fmt_percent(columns = num_1, accounting = TRUE) %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      "183,623.00&percnt;", "276,339.00&percnt;", "93,729.00&percnt;",
-      "64,300.00&percnt;", "21,223.20&percnt;", "0.00&percnt;", "(2,324.00&percnt;)"
+      "<span style=\"visibility: hidden;\">(</span>183,623.00&percnt;<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>276,339.00&percnt;<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>93,729.00&percnt;<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>64,300.00&percnt;<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>21,223.20&percnt;<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>0.00&percnt;<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "(2,324.00&percnt;<span style=\"position: absolute\">)</span>"
     )
   )
 
@@ -182,9 +188,13 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
        fmt_percent(columns = num_1, decimals = 3, accounting = TRUE) %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      "183,623.000&percnt;", "276,339.000&percnt;", "93,729.000&percnt;",
-      "64,300.000&percnt;", "21,223.200&percnt;", "0.000&percnt;",
-      "(2,324.000&percnt;)"
+      "<span style=\"visibility: hidden;\">(</span>183,623.000&percnt;<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>276,339.000&percnt;<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>93,729.000&percnt;<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>64,300.000&percnt;<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>21,223.200&percnt;<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>0.000&percnt;<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "(2,324.000&percnt;<span style=\"position: absolute\">)</span>"
     )
   )
 
@@ -197,9 +207,13 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
          accounting = TRUE, pattern = "a{x}b") %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      "a183,623.000&percnt;b", "a276,339.000&percnt;b", "a93,729.000&percnt;b",
-      "a64,300.000&percnt;b", "a21,223.200&percnt;b", "a0.000&percnt;b",
-      "a(2,324.000&percnt;)b"
+      "a<span style=\"visibility: hidden;\">(</span>183,623.000&percnt;<span style=\"visibility: hidden;position: absolute\">)</span>b",
+      "a<span style=\"visibility: hidden;\">(</span>276,339.000&percnt;<span style=\"visibility: hidden;position: absolute\">)</span>b",
+      "a<span style=\"visibility: hidden;\">(</span>93,729.000&percnt;<span style=\"visibility: hidden;position: absolute\">)</span>b",
+      "a<span style=\"visibility: hidden;\">(</span>64,300.000&percnt;<span style=\"visibility: hidden;position: absolute\">)</span>b",
+      "a<span style=\"visibility: hidden;\">(</span>21,223.200&percnt;<span style=\"visibility: hidden;position: absolute\">)</span>b",
+      "a<span style=\"visibility: hidden;\">(</span>0.000&percnt;<span style=\"visibility: hidden;position: absolute\">)</span>b",
+      "a(2,324.000&percnt;<span style=\"position: absolute\">)</span>b"
     )
   )
 
@@ -212,8 +226,13 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
          accounting = TRUE, drop_trailing_zeros = TRUE) %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      "183,623&percnt;", "276,339&percnt;", "93,729&percnt;", "64,300&percnt;",
-      "21,223.2&percnt;", "0&percnt;", "(2,324&percnt;)"
+      "<span style=\"visibility: hidden;\">(</span>183,623&percnt;<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>276,339&percnt;<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>93,729&percnt;<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>64,300&percnt;<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>21,223.2&percnt;<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>0&percnt;<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "(2,324&percnt;<span style=\"position: absolute\">)</span>"
     )
   )
 

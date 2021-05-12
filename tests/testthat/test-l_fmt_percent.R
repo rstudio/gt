@@ -83,20 +83,21 @@ test_that("the `fmt_percent()` function works correctly in the LaTeX context", {
       "$21 223.20\\%$", "$0.00\\%$", "$-2 324.00\\%$"
     )
   )
-  
+
   # Format the `num_1` column to accounting format, use all other defaults;
   # extract `output_df` and compare to expected values
   expect_equal(
     (tbl_latex %>%
        fmt_percent(columns = "num_1", accounting = TRUE) %>%
        render_formats_test("latex"))[["num_1"]],
-    c("$\\hphantom{(}183,623.00\\%\\hphantom{)}$", 
-      "$\\hphantom{(}276,339.00\\%\\hphantom{)}$", 
-      "$\\hphantom{(}93,729.00\\%\\hphantom{)}$",
-      "$\\hphantom{(}64,300.00\\%\\hphantom{)}$",
-      "$\\hphantom{(}21,223.20\\%\\hphantom{)}$",
-      "$\\hphantom{(}0.00\\%\\hphantom{)}$",
-      "$(2,324.00\\%)$")
+    c("$\\hphantom{(}183,623.00\\%\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}276,339.00\\%\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}93,729.00\\%\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}64,300.00\\%\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}21,223.20\\%\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}0.00\\%\\rlap{\\hphantom{)}}$",
+      "$(2,324.00\\%\\rlap{)}$"
+      )
   )
 
   # Format the `num_1` column to 2 decimal places, use a period for the
@@ -166,10 +167,14 @@ test_that("the `fmt_percent()` function works correctly in the LaTeX context", {
     (tbl_latex %>%
        fmt_percent(columns = num_1, accounting = TRUE) %>%
        render_formats_test("latex"))[["num_1"]],
-    c(
-      "$183,623.00\\%$", "$276,339.00\\%$", "$93,729.00\\%$", "$64,300.00\\%$",
-      "$21,223.20\\%$", "$0.00\\%$", "$(2,324.00\\%)$"
-    )
+    c("$\\hphantom{(}183,623.00\\%\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}276,339.00\\%\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}93,729.00\\%\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}64,300.00\\%\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}21,223.20\\%\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}0.00\\%\\rlap{\\hphantom{)}}$",
+      "$(2,324.00\\%\\rlap{)}$"
+      )
   )
 
   # Format the `num_1` column to 3 decimal places, use accounting style
@@ -177,10 +182,14 @@ test_that("the `fmt_percent()` function works correctly in the LaTeX context", {
     (tbl_latex %>%
        fmt_percent(columns = num_1, decimals = 3, accounting = TRUE) %>%
        render_formats_test("latex"))[["num_1"]],
-    c(
-      "$183,623.000\\%$", "$276,339.000\\%$", "$93,729.000\\%$",
-      "$64,300.000\\%$", "$21,223.200\\%$", "$0.000\\%$", "$(2,324.000\\%)$"
-    )
+    c("$\\hphantom{(}183,623.000\\%\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}276,339.000\\%\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}93,729.000\\%\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}64,300.000\\%\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}21,223.200\\%\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}0.000\\%\\rlap{\\hphantom{)}}$",
+      "$(2,324.000\\%\\rlap{)}$"
+      )
   )
 
   # Format the `num_1` column to 2 decimal places, use accounting style
@@ -191,10 +200,14 @@ test_that("the `fmt_percent()` function works correctly in the LaTeX context", {
          columns = num_1, decimals = 3,
          accounting = TRUE, pattern = "a{x}b") %>%
        render_formats_test("latex"))[["num_1"]],
-    c(
-      "a$183,623.000\\%$b", "a$276,339.000\\%$b", "a$93,729.000\\%$b",
-      "a$64,300.000\\%$b", "a$21,223.200\\%$b", "a$0.000\\%$b", "a$(2,324.000\\%)$b"
-    )
+    c("a$\\hphantom{(}183,623.000\\%\\rlap{\\hphantom{)}}$b",
+      "a$\\hphantom{(}276,339.000\\%\\rlap{\\hphantom{)}}$b",
+      "a$\\hphantom{(}93,729.000\\%\\rlap{\\hphantom{)}}$b",
+      "a$\\hphantom{(}64,300.000\\%\\rlap{\\hphantom{)}}$b",
+      "a$\\hphantom{(}21,223.200\\%\\rlap{\\hphantom{)}}$b",
+      "a$\\hphantom{(}0.000\\%\\rlap{\\hphantom{)}}$b",
+      "a$(2,324.000\\%\\rlap{)}$b"
+      )
   )
 
   # Format the `num_1` column to 2 decimal places, use accounting style
@@ -205,10 +218,14 @@ test_that("the `fmt_percent()` function works correctly in the LaTeX context", {
          columns = num_1, decimals = 3,
          accounting = TRUE, drop_trailing_zeros = TRUE) %>%
        render_formats_test("latex"))[["num_1"]],
-    c(
-      "$183,623\\%$", "$276,339\\%$", "$93,729\\%$", "$64,300\\%$",
-      "$21,223.2\\%$", "$0\\%$", "$(2,324\\%)$"
-    )
+    c("$\\hphantom{(}183,623\\%\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}276,339\\%\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}93,729\\%\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}64,300\\%\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}21,223.2\\%\\rlap{\\hphantom{)}}$",
+      "$\\hphantom{(}0\\%\\rlap{\\hphantom{)}}$",
+      "$(2,324\\%\\rlap{)}$"
+      )
   )
 
   # Format the `num_1` column to 2 decimal places, apply the `en_US`

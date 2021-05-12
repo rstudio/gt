@@ -107,7 +107,8 @@ test_that("the `fmt_number()` function works correctly in the HTML context", {
       "<span style=\"visibility: hidden;\">(</span>643.00<span style=\"visibility: hidden;position: absolute\">)</span>",
       "<span style=\"visibility: hidden;\">(</span>212.23<span style=\"visibility: hidden;position: absolute\">)</span>",
       "<span style=\"visibility: hidden;\">(</span>0.00<span style=\"visibility: hidden;position: absolute\">)</span>",
-      "(23.24)"))
+      "(23.24<span style=\"position: absolute\">)</span>")
+    )
 
   # Format the `num_1` column to 2 decimal places, use a period for the
   # digit grouping separators and a comma for the decimal mark, use
@@ -160,7 +161,14 @@ test_that("the `fmt_number()` function works correctly in the HTML context", {
     (tab %>%
        fmt_number(columns = num_1, accounting = TRUE) %>%
        render_formats_test("html"))[["num_1"]],
-    c("1,836.23", "2,763.39", "937.29", "643.00", "212.23", "0.00", "(23.24)")
+    c("<span style=\"visibility: hidden;\">(</span>1,836.23<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>2,763.39<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>937.29<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>643.00<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>212.23<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>0.00<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "(23.24<span style=\"position: absolute\">)</span>"
+    )
   )
 
   # Format the `num_1` column to 3 decimal places, use accounting style
@@ -168,9 +176,13 @@ test_that("the `fmt_number()` function works correctly in the HTML context", {
     (tab %>%
        fmt_number(columns = num_1, decimals = 3, accounting = TRUE) %>%
        render_formats_test("html"))[["num_1"]],
-    c(
-      "1,836.230", "2,763.390", "937.290", "643.000", "212.232",
-      "0.000", "(23.240)"
+    c("<span style=\"visibility: hidden;\">(</span>1,836.230<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>2,763.390<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>937.290<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>643.000<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>212.232<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>0.000<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "(23.240<span style=\"position: absolute\">)</span>"
     )
   )
 
@@ -182,9 +194,13 @@ test_that("the `fmt_number()` function works correctly in the HTML context", {
          columns = num_1, decimals = 3,
          accounting = TRUE, pattern = "a{x}b") %>%
        render_formats_test("html"))[["num_1"]],
-    c(
-      "a1,836.230b", "a2,763.390b", "a937.290b", "a643.000b", "a212.232b",
-      "a0.000b", "a(23.240)b"
+    c("a<span style=\"visibility: hidden;\">(</span>1,836.230<span style=\"visibility: hidden;position: absolute\">)</span>b",
+      "a<span style=\"visibility: hidden;\">(</span>2,763.390<span style=\"visibility: hidden;position: absolute\">)</span>b",
+      "a<span style=\"visibility: hidden;\">(</span>937.290<span style=\"visibility: hidden;position: absolute\">)</span>b",
+      "a<span style=\"visibility: hidden;\">(</span>643.000<span style=\"visibility: hidden;position: absolute\">)</span>b",
+      "a<span style=\"visibility: hidden;\">(</span>212.232<span style=\"visibility: hidden;position: absolute\">)</span>b",
+      "a<span style=\"visibility: hidden;\">(</span>0.000<span style=\"visibility: hidden;position: absolute\">)</span>b",
+      "a(23.240<span style=\"position: absolute\">)</span>b"
     )
   )
 
@@ -196,7 +212,14 @@ test_that("the `fmt_number()` function works correctly in the HTML context", {
          columns = num_1, decimals = 3,
          accounting = TRUE, drop_trailing_zeros = TRUE) %>%
        render_formats_test("html"))[["num_1"]],
-    c("1,836.23", "2,763.39", "937.29", "643", "212.232", "0", "(23.24)")
+    c("<span style=\"visibility: hidden;\">(</span>1,836.23<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>2,763.39<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>937.29<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>643<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>212.232<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "<span style=\"visibility: hidden;\">(</span>0<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "(23.24<span style=\"position: absolute\">)</span>"
+    )
   )
 
   # Format the `num_1` column to 2 decimal places, apply the `en_US`

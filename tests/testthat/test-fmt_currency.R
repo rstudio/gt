@@ -148,7 +148,8 @@ test_that("the `fmt_currency()` function works correctly", {
       "<span style=\"visibility: hidden;\">(</span>$937.29<span style=\"visibility: hidden;position: absolute\">)</span>",
       "<span style=\"visibility: hidden;\">(</span>$643.00<span style=\"visibility: hidden;position: absolute\">)</span>",
       "<span style=\"visibility: hidden;\">(</span>$212.23<span style=\"visibility: hidden;position: absolute\">)</span>",
-      "<span style=\"visibility: hidden;\">(</span>$0.00<span style=\"visibility: hidden;position: absolute\">)</span>", "($23.24)")
+      "<span style=\"visibility: hidden;\">(</span>$0.00<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "($23.24<span style=\"position: absolute\">)</span>")
   )
 
   # Format the `num_1` column as USD, apply parentheses to all negative
@@ -164,7 +165,8 @@ test_that("the `fmt_currency()` function works correctly", {
       "<span style=\"visibility: hidden;\">(</span>$937.29<span style=\"visibility: hidden;position: absolute\">)</span>",
       "<span style=\"visibility: hidden;\">(</span>$643.00<span style=\"visibility: hidden;position: absolute\">)</span>",
       "<span style=\"visibility: hidden;\">(</span>$212.23<span style=\"visibility: hidden;position: absolute\">)</span>",
-      "<span style=\"visibility: hidden;\">(</span>$0.00<span style=\"visibility: hidden;position: absolute\">)</span>", "($23.24)")
+      "<span style=\"visibility: hidden;\">(</span>$0.00<span style=\"visibility: hidden;position: absolute\">)</span>",
+      "($23.24<span style=\"position: absolute\">)</span>")
   )
 
   # Format the `num_1` column as USD to 4 decimal places, scale all values by
