@@ -154,7 +154,7 @@ resolve_cells_column_spanners <- function(data,
   cells_resolved
 }
 
-#' @param expr An unquoted expression that follows tidyselect semantics
+#' @param expr An unquoted expression that follows **tidyselect** semantics
 #' @param data A gt object or data frame or tibble
 #' @return Character vector
 #' @noRd
@@ -173,7 +173,7 @@ resolve_cols_c <- function(expr,
   )
 }
 
-#' @param expr An unquoted expression that follows tidyselect semantics
+#' @param expr An unquoted expression that follows **tidyselect** semantics
 #' @param data A gt object or data frame or tibble
 #' @param strict If TRUE, out-of-bounds errors are thrown if `expr` attempts to
 #'   select a column that doesn't exist. If FALSE, failed selections are

@@ -17,7 +17,8 @@ A list object with the classes \code{cells_column_labels} and
 The \code{cells_column_labels()} function is used to target the table's column
 labels when applying a footnote with \code{\link[=tab_footnote]{tab_footnote()}} or adding custom style
 with \code{\link[=tab_style]{tab_style()}}. The function is expressly used in each of those
-functions' \code{locations} argument.
+functions' \code{locations} argument. The 'column_labels' location is present by
+default in every \strong{gt} table.
 }
 \section{Overview of Location Helper Functions}{
 

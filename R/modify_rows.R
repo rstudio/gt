@@ -1,5 +1,6 @@
 #' Modify the ordering of any row groups
 #'
+#' @description
 #' We can modify the display order of any row groups in a **gt** object with the
 #' `row_group_order()` function. The `groups` argument takes a vector of row
 #' group ID values. After this function is invoked, the row groups will adhere

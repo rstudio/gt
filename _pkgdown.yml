@@ -234,8 +234,6 @@ navbar:
   left:
   - text: Intro
     href: articles/intro-creating-gt-tables.html
-  - text: Reference
-    href: reference/index.html
   - text: Articles
     menu:
     - text: How to Use
@@ -246,11 +244,10 @@ navbar:
     - text: Case Studies
     - text: 'Case Study: gtcars'
       href: articles/case-study-gtcars.html
+  - text: Reference
+    href: reference/index.html
   - text: News
     href: news/index.html
-  right:
-  - icon: fa-github fa-lg
-    href: https://github.com/rstudio/gt
 
 development:
-  mode: release
+  version_tooltip: "Development version"
