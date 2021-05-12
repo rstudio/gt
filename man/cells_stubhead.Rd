@@ -13,7 +13,8 @@ A list object with the classes \code{cells_stubhead} and \code{location_cells}.
 The \code{cells_stubhead()} function is used to target the table stubhead location
 when applying a footnote with \code{\link[=tab_footnote]{tab_footnote()}} or adding custom style with
 \code{\link[=tab_style]{tab_style()}}. The function is expressly used in each of those functions'
-\code{locations} argument.
+\code{locations} argument. The 'stubhead' location is always present alongside the
+'stub' location.
 }
 \section{Overview of Location Helper Functions}{
 
