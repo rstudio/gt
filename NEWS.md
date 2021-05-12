@@ -1,4 +1,4 @@
-# gt (development version)
+# gt 0.3.0
 
 This release focuses on improvements to two main areas:
 
