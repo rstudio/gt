@@ -1,5 +1,6 @@
 #' Add a table header
 #'
+#' @description
 #' We can add a table header to the **gt** table with a title and even a
 #' subtitle. A table header is an optional table part that is positioned above
 #' the column labels. We have the flexibility to use Markdown formatting for the
@@ -52,6 +53,7 @@ tab_header <- function(data,
 
 #' Add a spanner column label
 #'
+#' @description
 #' Set a spanner column label by mapping it to columns already in the table.
 #' This label is placed above one or more column labels, spanning the width of
 #' those columns and column labels.
@@ -162,12 +164,14 @@ tab_spanner <- function(data,
 
 #' Create column labels and spanners via delimited names
 #'
+#' @description
 #' This function will split selected delimited column names such that the first
 #' components (LHS) are promoted to being spanner column labels, and the
 #' secondary components (RHS) will become the column labels. Please note that
 #' reference to individual columns must continue to be the column names from the
 #' input table data (which are unique by necessity).
 #'
+#' @details
 #' If we look to the column names in the `iris` dataset as an example of how
 #' `tab_spanner_delim()` might be useful, we find the names `Sepal.Length`,
 #' `Sepal.Width`, `Petal.Length`, `Petal.Width`. From this naming system, it's
@@ -405,7 +409,7 @@ tab_row_group <- function(data,
     }
 
     warning(
-      "The `group` argument has been deprecated in gt 0.3.3:\n",
+      "The `group` argument has been deprecated in gt 0.3.0:\n",
       "* use the `label` argument to specify the group label.",
       call. = FALSE
     )
@@ -417,7 +421,7 @@ tab_row_group <- function(data,
     data <- tab_options(data = data, row_group.default_label = others_label)
 
     warning(
-      "The `others_label` argument has been deprecated in gt 0.3.3:\n",
+      "The `others_label` argument has been deprecated in gt 0.3.0:\n",
       "* use `tab_options(row_group.default_label = <label>)` to set this label.",
       call. = FALSE
     )
@@ -476,6 +480,7 @@ tab_row_group <- function(data,
 
 #' Add label text to the stubhead
 #'
+#' @description
 #' Add a label to the stubhead of a **gt** table. The stubhead is the lone
 #' element that is positioned left of the column labels, and above the stub. If
 #' a stub does not exist, then there is no stubhead (so no change will be made
@@ -520,6 +525,7 @@ tab_stubhead <- function(data,
 
 #' Add a table footnote
 #'
+#' @description
 #' The `tab_footnote()` function can make it a painless process to add a
 #' footnote to a **gt** table. There are two components to a footnote: (1) a
 #' footnote mark that is attached to the targeted cell text, and (2) the
@@ -528,20 +534,16 @@ tab_stubhead <- function(data,
 #' different note, and one or more cells can be targeted via the location helper
 #' functions (e.g., [cells_body()], [cells_column_labels()], etc.).
 #'
+#' @details
 #' The formatting of the footnotes can be controlled through the use of various
 #' parameters in the [tab_options()] function:
-#'
-#' \itemize{
-#'   \item `footnotes.sep`: allows for a choice of the separator between
-#' consecutive footnotes in the table footer. By default, this is set to a
-#' linebreak.
-#'   \item `footnotes.marks`: the set of sequential characters or numbers used
-#' to identify the footnotes.
-#'   \item `footnotes.font.size`: the size of the font used in the footnote
-#' section.
-#'   \item `footnotes.padding`: the amount of padding to apply between the
-#' footnote and source note sections in the table footer.
-#' }
+#' - `footnotes.sep`: allows for a choice of the separator between consecutive
+#' footnotes in the table footer. By default, this is set to a linebreak.
+#' - `footnotes.marks`: the set of sequential characters or numbers used to
+#' identify the footnotes.
+#' - `footnotes.font.size`: the size of the font used in the footnote section.
+#' - `footnotes.padding`: the amount of padding to apply between the footnote
+#' and source note sections in the table footer.
 #'
 #' @inheritParams fmt_number
 #' @param footnote The text to be used in the footnote. We can optionally use
@@ -842,6 +844,7 @@ set_footnote.cells_footnotes <- function(loc, data, footnote) {
 
 #' Add a source note citation
 #'
+#' @description
 #' Add a source note to the footer part of the **gt** table. A source note is
 #' useful for citing the data included in the table. Several can be added to the
 #' footer, simply use multiple calls of `tab_source_note()` and they will be
@@ -890,24 +893,24 @@ tab_source_note <- function(data,
 
 #' Add custom styles to one or more cells
 #'
+#' @description
 #' With the `tab_style()` function we can target specific cells and apply styles
 #' to them. This is best done in conjunction with the helper functions
 #' [cell_text()], [cell_fill()], and [cell_borders()]. At present this function
 #' is focused on the application of styles for HTML output only (as such, other
 #' output formats will ignore all `tab_style()` calls). Using the aforementioned
 #' helper functions, here are some of the styles we can apply:
-#' \itemize{
-#' \item the background color of the cell ([cell_fill()]: `color`)
-#' \item the cell's text color, font, and size ([cell_text()]: `color`, `font`,
+#'
+#' - the background color of the cell ([cell_fill()]: `color`)
+#' - the cell's text color, font, and size ([cell_text()]: `color`, `font`,
 #' `size`)
-#' \item the text style ([cell_text()]: `style`), enabling the use of italics or
+#' - the text style ([cell_text()]: `style`), enabling the use of italics or
 #' oblique text.
-#' \item the text weight ([cell_text()]: `weight`), allowing the use of thin to
+#' - the text weight ([cell_text()]: `weight`), allowing the use of thin to
 #' bold text (the degree of choice is greater with variable fonts)
-#' \item the alignment and indentation of text ([cell_text()]: `align` and
+#' - the alignment and indentation of text ([cell_text()]: `align` and
 #' `indent`)
-#' \item the cell borders ([cell_borders()])
-#' }
+#' - the cell borders ([cell_borders()])
 #'
 #' @inheritParams fmt_number
 #' @param style a vector of styles to use. The [cell_text()], [cell_fill()], and
@@ -1366,6 +1369,7 @@ set_style.cells_source_notes <- function(loc, data, style) {
 
 #' Modify the table output options
 #'
+#' @description
 #' Modify the options available in a table. These options are named by the
 #' components, the subcomponents, and the element that can adjusted.
 #'
@@ -1463,7 +1467,7 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' @param column_labels.border.top.style,column_labels.border.top.width,column_labels.border.top.color
 #'   The style, width, and color properties for the top border of the
 #'   `column_labels` location. This border shares space with that of the
-#'   `heading` location. If dthe `width` of this border is larger, then it will
+#'   `heading` location. If the `width` of this border is larger, then it will
 #'   be the visible border.
 #' @param column_labels.border.bottom.style,column_labels.border.bottom.width,column_labels.border.bottom.color
 #'   The style, width, and color properties for the bottom border of the
