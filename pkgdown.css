@@ -264,21 +264,17 @@ table {
 
 /* Syntax highlighting ---------------------------------------------------- */
 
-pre {
-  word-wrap: normal;
-  word-break: normal;
-  border: 1px solid #eee;
-}
-
-pre, code {
+pre, code, pre code {
   background-color: #f8f8f8;
   color: #333;
+
+  white-space: pre-wrap;
+  word-break: break-all;
+  word-wrap: break-word;
 }
 
-pre code {
-  overflow: auto;
-  word-wrap: normal;
-  white-space: pre;
+pre {
+  border: 1px solid #eee;
 }
 
 pre .img {

@@ -96,7 +96,7 @@ the output table." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Development version">0.2.2</span>
       </span>
     </div>
 
@@ -104,9 +104,6 @@ the output table." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../articles/intro-creating-gt-tables.html">Intro</a>
-</li>
-<li>
-  <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -129,13 +126,16 @@ the output table." />
   </ul>
 </li>
 <li>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li>
   <a href="../news/index.html">News</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/rstudio/gt">
-    <span class="fas fa-github fa-lg"></span>
+  <a href="https://github.com/rstudio/gt/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -206,8 +206,7 @@ the same as before, they just won't be displayed in the finalized table.</p></td
 
     <p>This function could be somewhat replicated using <code><a href='cols_merge.html'>cols_merge()</a></code>, however,
 <code>cols_merge_range()</code> employs the following specialized operations for <code>NA</code>
-handling:</p>
-<ol>
+handling:</p><ol>
 <li><p><code>NA</code>s in <code>col_begin</code> (but not <code>col_end</code>) result in a display of only</p></li>
 <li><p><code>NA</code>s in <code>col_end</code> (but not <code>col_begin</code>) result in a display of only
 the <code>col_begin</code> values only for the merged column (this is the converse of

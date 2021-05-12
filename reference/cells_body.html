@@ -51,7 +51,8 @@
 body. The function can be used to apply a footnote with tab_footnote(), to
 add custom styling with tab_style(), or the transform the targeted cells
 with text_transform(). The function is expressly used in each of those
-functions' locations argument." />
+functions' locations argument. The 'body' location is present by default in
+every gt table." />
 <meta property="og:image" content="https://gt.rstudio.com/logo.svg" />
 
 
@@ -95,7 +96,7 @@ functions' locations argument." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Development version">0.2.2</span>
       </span>
     </div>
 
@@ -103,9 +104,6 @@ functions' locations argument." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../articles/intro-creating-gt-tables.html">Intro</a>
-</li>
-<li>
-  <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -128,13 +126,16 @@ functions' locations argument." />
   </ul>
 </li>
 <li>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li>
   <a href="../news/index.html">News</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/rstudio/gt">
-    <span class="fas fa-github fa-lg"></span>
+  <a href="https://github.com/rstudio/gt/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -161,7 +162,8 @@ functions' locations argument." />
 body. The function can be used to apply a footnote with <code><a href='tab_footnote.html'>tab_footnote()</a></code>, to
 add custom styling with <code><a href='tab_style.html'>tab_style()</a></code>, or the transform the targeted cells
 with <code><a href='text_transform.html'>text_transform()</a></code>. The function is expressly used in each of those
-functions' <code>locations</code> argument.</p>
+functions' <code>locations</code> argument. The 'body' location is present by default in
+every <strong>gt</strong> table.</p>
     </div>
 
     <pre class="usage"><span class='fu'>cells_body</span><span class='op'>(</span>columns <span class='op'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span>, rows <span class='op'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>

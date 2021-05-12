@@ -53,11 +53,13 @@ targeted with columns (and, optionally, rows), we can simply apply a
 preset time style to format the times. The following time styles are
 available for simpler formatting of ISO times (all using the input time of
 14:35:00 in the example output times):
-hms: 14:35:00
-hm: 14:35
-hms_p: 2:35:00 PM
-hm_p: 2:35 PM
-h_p: 2 PM
+&quot;hms&quot;: 14:35:00
+&quot;hm&quot;: 14:35
+&quot;hms_p&quot;: 2:35:00 PM
+&quot;hm_p&quot;: 2:35 PM
+&quot;h_p&quot;: 2 PM
+
+
 We can use the info_time_style() function for a useful reference on all of
 the possible inputs to time_style." />
 <meta property="og:image" content="https://gt.rstudio.com/logo.svg" />
@@ -103,7 +105,7 @@ the possible inputs to time_style." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Development version">0.2.2</span>
       </span>
     </div>
 
@@ -111,9 +113,6 @@ the possible inputs to time_style." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../articles/intro-creating-gt-tables.html">Intro</a>
-</li>
-<li>
-  <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -136,13 +135,16 @@ the possible inputs to time_style." />
   </ul>
 </li>
 <li>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li>
   <a href="../news/index.html">News</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/rstudio/gt">
-    <span class="fas fa-github fa-lg"></span>
+  <a href="https://github.com/rstudio/gt/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -171,12 +173,14 @@ targeted with <code>columns</code> (and, optionally, <code>rows</code>), we can 
 preset time style to format the times. The following time styles are
 available for simpler formatting of ISO times (all using the input time of
 <code>14:35:00</code> in the example output times):</p><ol>
-<li><p>hms: <code>14:35:00</code></p></li>
-<li><p>hm: <code>14:35</code></p></li>
-<li><p>hms_p: <code>2:35:00 PM</code></p></li>
-<li><p>hm_p: <code>2:35 PM</code></p></li>
-<li><p>h_p: <code>2 PM</code></p></li>
-</ol><p>We can use the <code><a href='info_time_style.html'>info_time_style()</a></code> function for a useful reference on all of
+<li><p><code>"hms"</code>: <code>14:35:00</code></p></li>
+<li><p><code>"hm"</code>: <code>14:35</code></p></li>
+<li><p><code>"hms_p"</code>: <code>2:35:00 PM</code></p></li>
+<li><p><code>"hm_p"</code>: <code>2:35 PM</code></p></li>
+<li><p><code>"h_p"</code>: <code>2 PM</code></p></li>
+</ol>
+
+<p>We can use the <code><a href='info_time_style.html'>info_time_style()</a></code> function for a useful reference on all of
 the possible inputs to <code>time_style</code>.</p>
     </div>
 
@@ -211,8 +215,9 @@ to filter down to the rows we need (e.g.,
     <tr>
       <th>time_style</th>
       <td><p>The time style to use. Supply a number (from <code>1</code> to <code>5</code>)
-that corresponds to the preferred time style. Use <code><a href='info_time_style.html'>info_time_style()</a></code> to
-see the different numbered and named time presets.</p></td>
+that corresponds to the preferred time style, or, provide a named time
+style (<code>"hms"</code>, <code>"hms_p"</code>, <code>"h_p"</code>, etc.). Use <code><a href='info_time_style.html'>info_time_style()</a></code> to see
+the different numbered and named time presets.</p></td>
     </tr>
     </table>
 
@@ -222,8 +227,7 @@ see the different numbered and named time presets.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Targeting of values is done through <code>columns</code> and additionally by <code>rows</code> (if
-nothing is provided for <code>rows</code> then entire columns are selected). A number of
-helper functions exist to make targeting more effective. Conditional
+nothing is provided for <code>rows</code> then entire columns are selected). Conditional
 formatting is possible by providing a conditional expression to the <code>rows</code>
 argument. See the Arguments section for more information on this.</p>
     <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>

@@ -51,7 +51,22 @@
 bytes with human readable units. The fmt_bytes() function allows for the
 formatting of byte sizes to either of two common representations: (1) with
 decimal units (powers of 1000, examples being &quot;kB&quot; and &quot;MB&quot;), and (2)
-with binary units (powers of 1024, examples being &quot;KiB&quot; and &quot;MiB&quot;)." />
+with binary units (powers of 1024, examples being &quot;KiB&quot; and &quot;MiB&quot;).
+It is assumed the input numeric values represent the number of bytes and
+automatic truncation of values will occur. The numeric values will be scaled
+to be in the range of 1 to &amp;lt;1000 and then decorated with the correct unit
+symbol according to the standard chosen. For more control over the formatting
+of byte sizes, we can use the following options:
+decimals: choice of the number of decimal places, option to drop
+trailing zeros, and a choice of the decimal symbol
+digit grouping separators: options to enable/disable digit separators
+and provide a choice of separator symbol
+pattern: option to use a text pattern for decoration of the formatted
+values
+locale-based formatting: providing a locale ID will result in number
+formatting specific to the chosen locale
+
+" />
 <meta property="og:image" content="https://gt.rstudio.com/logo.svg" />
 
 
@@ -95,7 +110,7 @@ with binary units (powers of 1024, examples being &quot;KiB&quot; and &quot;MiB&
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Development version">0.2.2</span>
       </span>
     </div>
 
@@ -103,9 +118,6 @@ with binary units (powers of 1024, examples being &quot;KiB&quot; and &quot;MiB&
       <ul class="nav navbar-nav">
         <li>
   <a href="../articles/intro-creating-gt-tables.html">Intro</a>
-</li>
-<li>
-  <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -128,13 +140,16 @@ with binary units (powers of 1024, examples being &quot;KiB&quot; and &quot;MiB&
   </ul>
 </li>
 <li>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li>
   <a href="../news/index.html">News</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/rstudio/gt">
-    <span class="fas fa-github fa-lg"></span>
+  <a href="https://github.com/rstudio/gt/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -162,6 +177,21 @@ bytes with human readable units. The <code>fmt_bytes()</code> function allows fo
 formatting of byte sizes to either of two common representations: (1) with
 decimal units (powers of 1000, examples being <code>"kB"</code> and <code>"MB"</code>), and (2)
 with binary units (powers of 1024, examples being <code>"KiB"</code> and <code>"MiB"</code>).</p>
+<p>It is assumed the input numeric values represent the number of bytes and
+automatic truncation of values will occur. The numeric values will be scaled
+to be in the range of 1 to &lt;1000 and then decorated with the correct unit
+symbol according to the standard chosen. For more control over the formatting
+of byte sizes, we can use the following options:</p><ul>
+<li><p>decimals: choice of the number of decimal places, option to drop
+trailing zeros, and a choice of the decimal symbol</p></li>
+<li><p>digit grouping separators: options to enable/disable digit separators
+and provide a choice of separator symbol</p></li>
+<li><p>pattern: option to use a text pattern for decoration of the formatted
+values</p></li>
+<li><p>locale-based formatting: providing a locale ID will result in number
+formatting specific to the chosen locale</p></li>
+</ul>
+
     </div>
 
     <pre class="usage"><span class='fu'>fmt_bytes</span><span class='op'>(</span>
@@ -280,21 +310,10 @@ the locales that are supported.</p></td>
     <p>An object of class <code>gt_tbl</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>It is assumed the input numeric values represent the number of bytes and
-automatic truncation of values will occur. The numeric values will be scaled
-to be in the range of 1 to &lt;1000 and then decorated with the correct unit
-symbol according to the standard chosen. For more control over the formatting
-of byte sizes, we can use the following options:</p><ul>
-<li><p>decimals: choice of the number of decimal places, option to drop
-trailing zeros, and a choice of the decimal symbol</p></li>
-<li><p>digit grouping separators: options to enable/disable digit separators
-and provide a choice of separator symbol</p></li>
-<li><p>pattern: option to use a text pattern for decoration of the formatted
-values</p></li>
-<li><p>locale-based formatting: providing a locale ID will result in number
-formatting specific to the chosen locale</p></li>
-</ul>
-
+    <p>Targeting of values is done through <code>columns</code> and additionally by <code>rows</code> (if
+nothing is provided for <code>rows</code> then entire columns are selected). Conditional
+formatting is possible by providing a conditional expression to the <code>rows</code>
+argument. See the Arguments section for more information on this.</p>
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
     

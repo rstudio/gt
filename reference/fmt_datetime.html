@@ -54,27 +54,31 @@ we can simply apply preset date and time styles to format the date-time
 values. The following date styles are available for simpler formatting of the
 date portion (all using the input date of 2000-02-29 in the example output
 dates):
-iso: 2000-02-29
-wday_month_day_year: Tuesday, February 29, 2000
-wd_m_day_year: Tue, Feb 29, 2000
-wday_day_month_year: Tuesday 29 February 2000
-month_day_year: February 29, 2000
-m_day_year: Feb 29, 2000
-day_m_year: 29 Feb 2000
-day_month_year: 29 February 2000
-day_month: 29 February
-year: 2000
-month: February
-day: 29
-year.mn.day: 2000/02/29
-y.mn.day: 0/02/29
+&quot;iso&quot;: 2000-02-29
+&quot;wday_month_day_year&quot;: Tuesday, February 29, 2000
+&quot;wd_m_day_year&quot;: Tue, Feb 29, 2000
+&quot;wday_day_month_year&quot;: Tuesday 29 February 2000
+&quot;month_day_year&quot;: February 29, 2000
+&quot;m_day_year&quot;: Feb 29, 2000
+&quot;day_m_year&quot;: 29 Feb 2000
+&quot;day_month_year&quot;: 29 February 2000
+&quot;day_month&quot;: 29 February
+&quot;year&quot;: 2000
+&quot;month&quot;: February
+&quot;day&quot;: 29
+&quot;year.mn.day&quot;: 2000/02/29
+&quot;y.mn.day&quot;: 00/02/29
+
+
 The following time styles are available for simpler formatting of the time
 portion (all using the input time of 14:35:00 in the example output times):
-hms: 14:35:00
-hm: 14:35
-hms_p: 2:35:00 PM
-hm_p: 2:35 PM
-h_p: 2 PM
+&quot;hms&quot;: 14:35:00
+&quot;hm&quot;: 14:35
+&quot;hms_p&quot;: 2:35:00 PM
+&quot;hm_p&quot;: 2:35 PM
+&quot;h_p&quot;: 2 PM
+
+
 We can use the info_date_style() and info_time_style() functions as
 useful references for all of the possible inputs to date_style and
 time_style." />
@@ -121,7 +125,7 @@ time_style." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Development version">0.2.2</span>
       </span>
     </div>
 
@@ -129,9 +133,6 @@ time_style." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../articles/intro-creating-gt-tables.html">Intro</a>
-</li>
-<li>
-  <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -154,13 +155,16 @@ time_style." />
   </ul>
 </li>
 <li>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li>
   <a href="../news/index.html">News</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/rstudio/gt">
-    <span class="fas fa-github fa-lg"></span>
+  <a href="https://github.com/rstudio/gt/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -190,28 +194,32 @@ we can simply apply preset date and time styles to format the date-time
 values. The following date styles are available for simpler formatting of the
 date portion (all using the input date of <code>2000-02-29</code> in the example output
 dates):</p><ol>
-<li><p>iso: <code>2000-02-29</code></p></li>
-<li><p>wday_month_day_year: <code>Tuesday, February 29, 2000</code></p></li>
-<li><p>wd_m_day_year: <code>Tue, Feb 29, 2000</code></p></li>
-<li><p>wday_day_month_year: <code>Tuesday 29 February 2000</code></p></li>
-<li><p>month_day_year: <code>February 29, 2000</code></p></li>
-<li><p>m_day_year: <code>Feb 29, 2000</code></p></li>
-<li><p>day_m_year: <code>29 Feb 2000</code></p></li>
-<li><p>day_month_year: <code>29 February 2000</code></p></li>
-<li><p>day_month: <code>29 February</code></p></li>
-<li><p>year: <code>2000</code></p></li>
-<li><p>month: <code>February</code></p></li>
-<li><p>day: <code>29</code></p></li>
-<li><p>year.mn.day: <code>2000/02/29</code></p></li>
-<li><p>y.mn.day: <code>0/02/29</code></p></li>
-</ol><p>The following time styles are available for simpler formatting of the time
+<li><p><code>"iso"</code>: <code>2000-02-29</code></p></li>
+<li><p><code>"wday_month_day_year"</code>: <code>Tuesday, February 29, 2000</code></p></li>
+<li><p><code>"wd_m_day_year"</code>: <code>Tue, Feb 29, 2000</code></p></li>
+<li><p><code>"wday_day_month_year"</code>: <code>Tuesday 29 February 2000</code></p></li>
+<li><p><code>"month_day_year"</code>: <code>February 29, 2000</code></p></li>
+<li><p><code>"m_day_year"</code>: <code>Feb 29, 2000</code></p></li>
+<li><p><code>"day_m_year"</code>: <code>29 Feb 2000</code></p></li>
+<li><p><code>"day_month_year"</code>: <code>29 February 2000</code></p></li>
+<li><p><code>"day_month"</code>: <code>29 February</code></p></li>
+<li><p><code>"year"</code>: <code>2000</code></p></li>
+<li><p><code>"month"</code>: <code>February</code></p></li>
+<li><p><code>"day"</code>: <code>29</code></p></li>
+<li><p><code>"year.mn.day"</code>: <code>2000/02/29</code></p></li>
+<li><p><code>"y.mn.day"</code>: <code>00/02/29</code></p></li>
+</ol>
+
+<p>The following time styles are available for simpler formatting of the time
 portion (all using the input time of <code>14:35:00</code> in the example output times):</p><ol>
-<li><p>hms: <code>14:35:00</code></p></li>
-<li><p>hm: <code>14:35</code></p></li>
-<li><p>hms_p: <code>2:35:00 PM</code></p></li>
-<li><p>hm_p: <code>2:35 PM</code></p></li>
-<li><p>h_p: <code>2 PM</code></p></li>
-</ol><p>We can use the <code><a href='info_date_style.html'>info_date_style()</a></code> and <code><a href='info_time_style.html'>info_time_style()</a></code> functions as
+<li><p><code>"hms"</code>: <code>14:35:00</code></p></li>
+<li><p><code>"hm"</code>: <code>14:35</code></p></li>
+<li><p><code>"hms_p"</code>: <code>2:35:00 PM</code></p></li>
+<li><p><code>"hm_p"</code>: <code>2:35 PM</code></p></li>
+<li><p><code>"h_p"</code>: <code>2 PM</code></p></li>
+</ol>
+
+<p>We can use the <code><a href='info_date_style.html'>info_date_style()</a></code> and <code><a href='info_time_style.html'>info_time_style()</a></code> functions as
 useful references for all of the possible inputs to <code>date_style</code> and
 <code>time_style</code>.</p>
     </div>
@@ -253,14 +261,16 @@ to filter down to the rows we need (e.g.,
     <tr>
       <th>date_style</th>
       <td><p>The date style to use. Supply a number (from <code>1</code> to <code>14</code>)
-that corresponds to the preferred date style. Use <code><a href='info_date_style.html'>info_date_style()</a></code> to
-see the different numbered and named date presets.</p></td>
+that corresponds to the preferred date style, or, provide a named date
+style (<code>"wday_month_day_year"</code>, <code>"m_day_year"</code>, <code>"year.mn.day"</code>, etc.). Use
+<code><a href='info_date_style.html'>info_date_style()</a></code> to see the different numbered and named date presets.</p></td>
     </tr>
     <tr>
       <th>time_style</th>
       <td><p>The time style to use. Supply a number (from <code>1</code> to <code>5</code>)
-that corresponds to the preferred time style. Use <code><a href='info_time_style.html'>info_time_style()</a></code> to
-see the different numbered and named time presets.</p></td>
+that corresponds to the preferred time style, or, provide a named time
+style (<code>"hms"</code>, <code>"hms_p"</code>, <code>"h_p"</code>, etc.). Use <code><a href='info_time_style.html'>info_time_style()</a></code> to see
+the different numbered and named time presets.</p></td>
     </tr>
     </table>
 
@@ -270,8 +280,7 @@ see the different numbered and named time presets.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Targeting of values is done through <code>columns</code> and additionally by <code>rows</code> (if
-nothing is provided for <code>rows</code> then entire columns are selected). A number of
-helper functions exist to make targeting more effective. Conditional
+nothing is provided for <code>rows</code> then entire columns are selected). Conditional
 formatting is possible by providing a conditional expression to the <code>rows</code>
 argument. See the Arguments section for more information on this.</p>
     <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>

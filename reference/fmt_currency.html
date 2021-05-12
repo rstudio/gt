@@ -73,6 +73,8 @@ pattern: option to use a text pattern for decoration of the formatted
 currency values
 locale-based formatting: providing a locale ID will result in
 currency formatting specific to the chosen locale
+
+
 We can use the info_currencies() function for a useful reference on all of
 the possible inputs to the currency argument." />
 <meta property="og:image" content="https://gt.rstudio.com/logo.svg" />
@@ -118,7 +120,7 @@ the possible inputs to the currency argument." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Development version">0.2.2</span>
       </span>
     </div>
 
@@ -126,9 +128,6 @@ the possible inputs to the currency argument." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../articles/intro-creating-gt-tables.html">Intro</a>
-</li>
-<li>
-  <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -151,13 +150,16 @@ the possible inputs to the currency argument." />
   </ul>
 </li>
 <li>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li>
   <a href="../news/index.html">News</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/rstudio/gt">
-    <span class="fas fa-github fa-lg"></span>
+  <a href="https://github.com/rstudio/gt/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -206,7 +208,9 @@ be autoscaled and decorated with the appropriate suffixes</p></li>
 currency values</p></li>
 <li><p>locale-based formatting: providing a locale ID will result in
 currency formatting specific to the chosen locale</p></li>
-</ul><p>We can use the <code><a href='info_currencies.html'>info_currencies()</a></code> function for a useful reference on all of
+</ul>
+
+<p>We can use the <code><a href='info_currencies.html'>info_currencies()</a></code> function for a useful reference on all of
 the possible inputs to the <code>currency</code> argument.</p>
     </div>
 
@@ -372,8 +376,7 @@ the locales that are supported.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Targeting of values is done through <code>columns</code> and additionally by <code>rows</code> (if
-nothing is provided for <code>rows</code> then entire columns are selected). A number of
-helper functions exist to make targeting more effective. Conditional
+nothing is provided for <code>rows</code> then entire columns are selected). Conditional
 formatting is possible by providing a conditional expression to the <code>rows</code>
 argument. See the Arguments section for more information on this.</p>
     <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>

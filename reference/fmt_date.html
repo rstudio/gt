@@ -54,20 +54,22 @@ character-based and expressed according to the ISO 8601 date format
 the dates. The following date styles are available for simpler formatting of
 ISO dates (all using the input date of 2000-02-29 in the example output
 dates):
-iso: 2000-02-29
-wday_month_day_year: Tuesday, February 29, 2000
-wd_m_day_year: Tue, Feb 29, 2000
-wday_day_month_year: Tuesday 29 February 2000
-month_day_year: February 29, 2000
-m_day_year: Feb 29, 2000
-day_m_year: 29 Feb 2000
-day_month_year: 29 February 2000
-day_month: 29 February
-year: 2000
-month: February
-day: 29
-year.mn.day: 2000/02/29
-y.mn.day: 0/02/29
+&quot;iso&quot;: 2000-02-29
+&quot;wday_month_day_year&quot;: Tuesday, February 29, 2000
+&quot;wd_m_day_year&quot;: Tue, Feb 29, 2000
+&quot;wday_day_month_year&quot;: Tuesday 29 February 2000
+&quot;month_day_year&quot;: February 29, 2000
+&quot;m_day_year&quot;: Feb 29, 2000
+&quot;day_m_year&quot;: 29 Feb 2000
+&quot;day_month_year&quot;: 29 February 2000
+&quot;day_month&quot;: 29 February
+&quot;year&quot;: 2000
+&quot;month&quot;: February
+&quot;day&quot;: 29
+&quot;year.mn.day&quot;: 2000/02/29
+&quot;y.mn.day&quot;: 00/02/29
+
+
 We can use the info_date_style() function for a useful reference on all of
 the possible inputs to date_style." />
 <meta property="og:image" content="https://gt.rstudio.com/logo.svg" />
@@ -113,7 +115,7 @@ the possible inputs to date_style." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Development version">0.2.2</span>
       </span>
     </div>
 
@@ -121,9 +123,6 @@ the possible inputs to date_style." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../articles/intro-creating-gt-tables.html">Intro</a>
-</li>
-<li>
-  <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -146,13 +145,16 @@ the possible inputs to date_style." />
   </ul>
 </li>
 <li>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li>
   <a href="../news/index.html">News</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/rstudio/gt">
-    <span class="fas fa-github fa-lg"></span>
+  <a href="https://github.com/rstudio/gt/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -182,21 +184,23 @@ character-based and expressed according to the ISO 8601 date format
 the dates. The following date styles are available for simpler formatting of
 ISO dates (all using the input date of <code>2000-02-29</code> in the example output
 dates):</p><ol>
-<li><p>iso: <code>2000-02-29</code></p></li>
-<li><p>wday_month_day_year: <code>Tuesday, February 29, 2000</code></p></li>
-<li><p>wd_m_day_year: <code>Tue, Feb 29, 2000</code></p></li>
-<li><p>wday_day_month_year: <code>Tuesday 29 February 2000</code></p></li>
-<li><p>month_day_year: <code>February 29, 2000</code></p></li>
-<li><p>m_day_year: <code>Feb 29, 2000</code></p></li>
-<li><p>day_m_year: <code>29 Feb 2000</code></p></li>
-<li><p>day_month_year: <code>29 February 2000</code></p></li>
-<li><p>day_month: <code>29 February</code></p></li>
-<li><p>year: <code>2000</code></p></li>
-<li><p>month: <code>February</code></p></li>
-<li><p>day: <code>29</code></p></li>
-<li><p>year.mn.day: <code>2000/02/29</code></p></li>
-<li><p>y.mn.day: <code>0/02/29</code></p></li>
-</ol><p>We can use the <code><a href='info_date_style.html'>info_date_style()</a></code> function for a useful reference on all of
+<li><p><code>"iso"</code>: <code>2000-02-29</code></p></li>
+<li><p><code>"wday_month_day_year"</code>: <code>Tuesday, February 29, 2000</code></p></li>
+<li><p><code>"wd_m_day_year"</code>: <code>Tue, Feb 29, 2000</code></p></li>
+<li><p><code>"wday_day_month_year"</code>: <code>Tuesday 29 February 2000</code></p></li>
+<li><p><code>"month_day_year"</code>: <code>February 29, 2000</code></p></li>
+<li><p><code>"m_day_year"</code>: <code>Feb 29, 2000</code></p></li>
+<li><p><code>"day_m_year"</code>: <code>29 Feb 2000</code></p></li>
+<li><p><code>"day_month_year"</code>: <code>29 February 2000</code></p></li>
+<li><p><code>"day_month"</code>: <code>29 February</code></p></li>
+<li><p><code>"year"</code>: <code>2000</code></p></li>
+<li><p><code>"month"</code>: <code>February</code></p></li>
+<li><p><code>"day"</code>: <code>29</code></p></li>
+<li><p><code>"year.mn.day"</code>: <code>2000/02/29</code></p></li>
+<li><p><code>"y.mn.day"</code>: <code>00/02/29</code></p></li>
+</ol>
+
+<p>We can use the <code><a href='info_date_style.html'>info_date_style()</a></code> function for a useful reference on all of
 the possible inputs to <code>date_style</code>.</p>
     </div>
 
@@ -231,8 +235,9 @@ to filter down to the rows we need (e.g.,
     <tr>
       <th>date_style</th>
       <td><p>The date style to use. Supply a number (from <code>1</code> to <code>14</code>)
-that corresponds to the preferred date style. Use <code><a href='info_date_style.html'>info_date_style()</a></code> to
-see the different numbered and named date presets.</p></td>
+that corresponds to the preferred date style, or, provide a named date
+style (<code>"wday_month_day_year"</code>, <code>"m_day_year"</code>, <code>"year.mn.day"</code>, etc.). Use
+<code><a href='info_date_style.html'>info_date_style()</a></code> to see the different numbered and named date presets.</p></td>
     </tr>
     </table>
 
@@ -242,8 +247,7 @@ see the different numbered and named date presets.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Targeting of values is done through <code>columns</code> and additionally by <code>rows</code> (if
-nothing is provided for <code>rows</code> then entire columns are selected). A number of
-helper functions exist to make targeting more effective. Conditional
+nothing is provided for <code>rows</code> then entire columns are selected). Conditional
 formatting is possible by providing a conditional expression to the <code>rows</code>
 argument. See the Arguments section for more information on this.</p>
     <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
@@ -302,13 +306,13 @@ argument. See the Arguments section for more information on this.</p>
 <span class='r-in'>    columns <span class='op'>=</span> <span class='va'>date</span>,</span>
 <span class='r-in'>    rows <span class='op'>=</span></span>
 <span class='r-in'>      <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='st'>"2015-04-01"</span><span class='op'>)</span>,</span>
-<span class='r-in'>    date_style <span class='op'>=</span> <span class='fl'>6</span></span>
+<span class='r-in'>    date_style <span class='op'>=</span> <span class='st'>"m_day_year"</span></span>
 <span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
 <span class='r-in'>  <span class='fu'>fmt_date</span><span class='op'>(</span></span>
 <span class='r-in'>    columns <span class='op'>=</span> <span class='va'>date</span>,</span>
 <span class='r-in'>    rows <span class='op'>=</span></span>
 <span class='r-in'>      <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span> <span class='op'>&lt;=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='st'>"2015-04-01"</span><span class='op'>)</span>,</span>
-<span class='r-in'>    date_style <span class='op'>=</span> <span class='fl'>7</span></span>
+<span class='r-in'>    date_style <span class='op'>=</span> <span class='st'>"day_m_year"</span></span>
 <span class='r-in'>  <span class='op'>)</span></span>
 <span class='r-in'></span>
 </pre>

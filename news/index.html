@@ -88,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Development version">0.2.2</span>
       </span>
     </div>
 
@@ -96,9 +96,6 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../articles/intro-creating-gt-tables.html">Intro</a>
-</li>
-<li>
-  <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -121,13 +118,16 @@
   </ul>
 </li>
 <li>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li>
   <a href="../news/index.html">News</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/rstudio/gt">
-    <span class="fas fa-github fa-lg"></span>
+  <a href="https://github.com/rstudio/gt/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -148,12 +148,64 @@
       <small>Source: <a href='https://github.com/rstudio/gt/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="gt-022" class="section level1">
-<h1 class="page-header" data-toc-text="0.2.2">
-<a href="#gt-022" class="anchor" aria-hidden="true"></a>gt 0.2.2<small> 2020-08-05 </small></h1>
+    <div id="gt-development-version" class="section level1">
+<h1 class="page-header" data-toc-text="development version">
+<a href="#gt-development-version" class="anchor" aria-hidden="true"></a>gt (development version)<small> Unreleased </small></h1>
+<p>This release focuses on improvements to two main areas:</p>
+<ol style="list-style-type: decimal"><li>Better RTF output support:
+<ul><li>RTF table generation is now fit for use following an extensive rewrite of internal RTF rendering functions.</li>
+<li>RTF table output with <code>gtsave(..., "&lt;file&gt;.rtf")</code> and <code><a href="../reference/as_rtf.html">as_rtf()</a></code> now has much more feature parity compared to HTML tables; we can now add summary rows, format table text with Markdown via <code><a href="../reference/fmt_markdown.html">fmt_markdown()</a></code>, and expect tables that look acceptable in Word and text editors that are RTF-compatible.</li>
+</ul></li>
+<li>Implementation of <strong>tidyselect</strong> semantics:
+<ul><li>References to columns (by way of the <code>columns</code> argument in many <strong>gt</strong> functions) now better adhere to <strong>tidyselect</strong> semantics.</li>
+<li>Instead of using <code>columns = vars(a, b)</code>, we now use <code>columns = c(a, b)</code> (<code>columns = c("a", "b")</code> also works, and this type of expression always has been an option in <strong>gt</strong>).</li>
+<li>Other <strong>tidyselect</strong> idioms should also work; things like using <code>where()</code> to target columns (e.g., <code>gt(exibble) %&gt;% cols_hide(columns = where(is.numeric))</code> will hide all numeric columns) and negation (e.g., <code>columns = -c(a, b)</code>) function as expected.</li>
+</ul></li>
+</ol><div id="breaking-changes-and-deprecations" class="section level2">
+<h2 class="hasAnchor">
+<a href="#breaking-changes-and-deprecations" class="anchor" aria-hidden="true"></a>Breaking changes and deprecations</h2>
+<ul><li><p>Column labels subordinate to column spanner labels had their alignment forced to be <code>"center"</code> but now there is no specialized alignment of column labels under spanners. Should you need the old behavior, <code><a href="../reference/tab_style.html">tab_style()</a></code> can be used along with <code>cell_text(align = "center")</code> for all columns that live under spanners. (<a href='https://github.com/rstudio/gt/issues/662'>#662</a>)</p></li>
+<li><p>The automatic alignment of integer values has been changed from <code>"center"</code> to <code>"right"</code>. To correct for this, use <code><a href="../reference/tab_style.html">tab_style()</a></code> with <code>cell_text(align = "center")</code> for all affected columns. (<a href='https://github.com/rstudio/gt/issues/662'>#662</a>)</p></li>
+<li><p>As part of the <strong>tidyselect</strong> changes made in this release, using <code>columns = TRUE</code> (to mean that all columns should be considered) has now been replaced with <code>columns = everything()</code>. Using the former will result in a warning message. (<a href='https://github.com/rstudio/gt/issues/718'>#718</a>)</p></li>
+<li><p>While <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars()</a></code> is still reexported in <strong>gt</strong>, its use with the <code>columns</code> argument (present in a large number of functions) is deprecated and a warning message will appear if it is used. In a later release, it can be expected that <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars()</a></code> will no longer be reexported. (<a href='https://github.com/rstudio/gt/issues/718'>#718</a>)</p></li>
+<li><p>The <code>others_label</code> argument of <code><a href="../reference/tab_row_group.html">tab_row_group()</a></code> is deprecated since it was confusing to use. To specify a default label for row groups, the course of action is now to use <code>tab_options(row_group.default_label = &lt;label&gt;)</code>. (<a href='https://github.com/rstudio/gt/issues/699'>#699</a>)</p></li>
+</ul></div>
 <div id="new-features" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-features" class="anchor" aria-hidden="true"></a>New features</h2>
+<ul><li><p>RTF table output via <code>gtsave(..., "&lt;file&gt;.rtf")</code> and <code><a href="../reference/as_rtf.html">as_rtf()</a></code> should produce more robust tables (allowing use of <code><a href="../reference/summary_rows.html">summary_rows()</a></code>, <code><a href="../reference/fmt_markdown.html">fmt_markdown()</a></code>, etc.). And tables generated as RTF can now take advantage of <code><a href="../reference/cols_width.html">cols_width()</a></code> for flexible modifications of column widths. (<a href='https://github.com/rstudio/gt/issues/638'>#638</a> and <a href='https://github.com/rstudio/gt/issues/696'>#696</a>)</p></li>
+<li><p>All functions with a <code>columns</code> argument can now take advantage of <strong>gt</strong>’s full adherence to <strong>tidyselect</strong> semantics (use <code>columns = c(a, b)</code> or <code>columns = c("a", "b")</code> instead of <code>columns = vars(a, b)</code>). (<a href='https://github.com/rstudio/gt/issues/718'>#718</a>)</p></li>
+<li><p>New location helper functions have been added to make it possible to style more locations and add footnotes to once inaccessible locations; these are <code><a href="../reference/cells_stub_summary.html">cells_stub_summary()</a></code>, <code><a href="../reference/cells_stub_grand_summary.html">cells_stub_grand_summary()</a></code>, <code><a href="../reference/cells_footnotes.html">cells_footnotes()</a></code>, and <code><a href="../reference/cells_source_notes.html">cells_source_notes()</a></code>. Note that footnotes cannot be declared with the latter two functions. (<a href='https://github.com/rstudio/gt/issues/737'>#737</a>)</p></li>
+<li><p>The <code><a href="../reference/cols_unhide.html">cols_unhide()</a></code> function has been added as a complement to the <code><a href="../reference/cols_hide.html">cols_hide()</a></code> function. This is useful when provided the <code>gt_tbl</code> object without the source data and code to recreate it <em>and</em> there are hidden columns that should be made visible. (<a href='https://github.com/rstudio/gt/issues/710'>#710</a>)</p></li>
+<li><p>The new formatting function <code><a href="../reference/fmt_bytes.html">fmt_bytes()</a></code> helps you to transform numerical values to byte sizes with human readable units. (<a href='https://github.com/rstudio/gt/issues/750'>#750</a>)</p></li>
+<li><p>A new column merging function, <code><a href="../reference/cols_merge_n_pct.html">cols_merge_n_pct()</a></code>, works to merge a count column and a percentage column together. This function will automatically hide the <code>col_pct</code> column by default (but that can be changed by setting <code>autohide = FALSE</code>). (<a href='https://github.com/rstudio/gt/issues/683'>#683</a>)</p></li>
+<li><p>Added the <code>caption</code> argument to <code><a href="../reference/gt.html">gt()</a></code>. This brings caption support to <strong>gt</strong> tables in R Markdown and <strong>bookdown</strong> documents. (<a href='https://github.com/rstudio/gt/issues/689'>#689</a>)</p></li>
+</ul></div>
+<div id="minor-improvements" class="section level2">
+<h2 class="hasAnchor">
+<a href="#minor-improvements" class="anchor" aria-hidden="true"></a>Minor improvements</h2>
+<ul><li><p>The <code>accounting</code> option is now available in the <code><a href="../reference/fmt_percent.html">fmt_percent()</a></code> and <code><a href="../reference/fmt_number.html">fmt_number()</a></code> formatting functions (previously it was only present in <code><a href="../reference/fmt_currency.html">fmt_currency()</a></code>). (<a href='https://github.com/rstudio/gt/issues/756'>#756</a>)</p></li>
+<li><p>In RTF documents generated through <code><a href="../reference/as_rtf.html">as_rtf()</a></code> and <code>gtsave(..., filename = "&lt;file&gt;.rtf")</code>, there is now a <code>page_numbering</code> option for adding page numbers to either the <code>"footer"</code> or the <code>"header"</code> areas (the default is <code>"none"</code>). (<a href='https://github.com/rstudio/gt/issues/755'>#755</a>)</p></li>
+<li><p><code><a href="../reference/tab_spanner_delim.html">tab_spanner_delim()</a></code> gained a <code>split</code> argument to govern whether delimiter splitting should occur at the <code>"first"</code> or <code>"last"</code> instance of <code>delim</code>. For example, if the column name <code>"a.b.c"</code> is present and <code>split = "first"</code> then the spanner column label is <code>"a"</code> and the associated column label will be <code>"b.c"</code>; should <code>split = "last"</code> then the spanner and column will have <code>"a.b"</code> and <code>"c"</code> labels. (<a href='https://github.com/rstudio/gt/issues/699'>#699</a>)</p></li>
+<li><p>Added <code>id</code> as an argument to <code><a href="../reference/tab_spanner.html">tab_spanner()</a></code> and <code><a href="../reference/tab_row_group.html">tab_row_group()</a></code>, which is useful for later access to these locations (especially when spanner or row group labels are complicated). (<a href='https://github.com/rstudio/gt/issues/665'>#665</a>, <a href='https://github.com/rstudio/gt/issues/699'>#699</a>)</p></li>
+<li><p>HTML table generation is much faster due to efforts to optimize HTML code generation in the building/rendering phase. (<a href='https://github.com/rstudio/gt/issues/664'>#664</a>)</p></li>
+</ul></div>
+<div id="bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes" class="anchor" aria-hidden="true"></a>Bug fixes</h2>
+<ul><li><p>When getting the HTML text for <strong>gt</strong> table with <code>as_raw_html(..., inline_css = FALSE)</code>, the <code>&lt;style&gt;</code> tag content is no longer omitted. (<a href='https://github.com/rstudio/gt/issues/718'>#718</a>)</p></li>
+<li><p>Fixed two bugs in <code><a href="../reference/tab_row_group.html">tab_row_group()</a></code>: (1) incorrect reordering of rows (Issue <a href='https://github.com/rstudio/gt/issues/717'>#717</a>), and (2) spurious warnings with multiple calls (Issue <a href='https://github.com/rstudio/gt/issues/675'>#675</a>). (<a href='https://github.com/rstudio/gt/issues/699'>#699</a>)</p></li>
+<li><p>The <code><a href="../reference/tab_spanner_delim.html">tab_spanner_delim()</a></code> with <code>gather = TRUE</code> did not work reliably (Issue <a href='https://github.com/rstudio/gt/issues/626'>#626</a>) but was fixed along with other work done to overhaul the function. (<a href='https://github.com/rstudio/gt/issues/665'>#665</a>)</p></li>
+<li><p>Correction made to the representation of the <code>PEN</code> (Peruvian Neuvo Sol) currency. (<a href='https://github.com/rstudio/gt/issues/663'>#663</a>)</p></li>
+<li><p>Fix for <code><a href="../reference/gtsave.html">gtsave()</a></code> when saving an image and specifying a <code>path</code> value. (<a href='https://github.com/rstudio/gt/issues/592'>#592</a>)</p></li>
+</ul></div>
+</div>
+    <div id="gt-022" class="section level1">
+<h1 class="page-header" data-toc-text="0.2.2">
+<a href="#gt-022" class="anchor" aria-hidden="true"></a>gt 0.2.2<small> 2020-08-05 </small></h1>
+<div id="new-features-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-features-1" class="anchor" aria-hidden="true"></a>New features</h2>
 <ul><li><p>The new <code><a href="../reference/opt_table_font.html">opt_table_font()</a></code> function makes it possible to define a custom font for the entire <strong>gt</strong> table. The standard fallback fonts are still set by default but the font defined here will take precedence. You could still have different fonts in select locations in the table, and for that you would need to use <code><a href="../reference/tab_style.html">tab_style()</a></code> in conjunction with the <code><a href="../reference/cell_text.html">cell_text()</a></code> helper function. The new <code><a href="../reference/google_font.html">google_font()</a></code> helper function provides an option for supplying a font available at the Google Fonts service (this is in addition to using system fonts in the <code>font</code> argument). Using the <code><a href="../reference/info_google_fonts.html">info_google_fonts()</a></code> function will provide a table with a set of helpful font recommendations from the <em>Google Fonts</em> catalog. The new <code><a href="../reference/default_fonts.html">default_fonts()</a></code> functions provides a helpful vector of system fallback fonts which works well when defining a vector of fonts. (<a href='https://github.com/rstudio/gt/issues/591'>#591</a>)</p></li>
 <li><p>The new <code><a href="../reference/opt_css.html">opt_css()</a></code> function makes allows for the addition of custom CSS to a <strong>gt</strong> table. This CSS will be added after the compiled CSS that <strong>gt</strong> generates automatically when the <code>gt_tbl</code> object is transformed to an HTML output table. You can supply <code>css</code> as a vector of lines or as a single string. The <code><a href="https://rdrr.io/pkg/htmltools/man/css.html" class="external-link">css()</a></code> function has been re-exported from <strong>htmltools</strong> to make it easier to build CSS style declarations. (Also <a href='https://github.com/rstudio/gt/issues/591'>#591</a>)</p></li>
 <li><p>Setting the widths of table columns is now easier and more dependable with <code><a href="../reference/cols_width.html">cols_width()</a></code>. Widths can be expressed in units of pixels (easily set by use of the <code><a href="../reference/px.html">px()</a></code> helper function), as percentages (where the <code><a href="../reference/pct.html">pct()</a></code> helper function is useful), or a mixture of the two. The function takes into consideration whether an overall table width has been provided with <code>tab_options(table.width = ...)</code>. Providing pixel widths for all columns serves to override any table width defined (yielding columns with the exact widths specified). (<a href='https://github.com/rstudio/gt/issues/561'>#561</a>)</p></li>
@@ -168,16 +220,16 @@
 <li><p>Restore the ability to have row striping in stub cells (with <code>tab_option()</code>’s <code>row.striping.include_stub = TRUE</code>). Thanks <a href='https://github.com/gergness'>@gergness</a> for creating PR <a href='https://github.com/rstudio/gt/issues/537'>#537</a>, which prompted this final fix. (<a href='https://github.com/rstudio/gt/issues/564'>#564</a>)</p></li>
 </ul></div>
 </div>
-    <div id="gt-021-2020-05-26" class="section level1">
+    <div id="gt-021" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.1">
-<a href="#gt-021-2020-05-26" class="anchor" aria-hidden="true"></a>gt 0.2.1 (2020-05-26)<small> 2020-05-23 </small></h1>
+<a href="#gt-021" class="anchor" aria-hidden="true"></a>gt 0.2.1<small> 2020-05-23 </small></h1>
 <ul><li><p><code><a href="../reference/summary_rows.html">summary_rows()</a></code> and <code><a href="../reference/grand_summary_rows.html">grand_summary_rows()</a></code> no longer incorrectly calculate summary values in cases where rows aren’t already sorted by group (<a href='https://github.com/rstudio/gt/issues/556'>#556</a>).</p></li>
 <li><p>Ensure compatibility with <strong>tibble</strong> 3.0.0. (<a href='https://github.com/rstudio/gt/issues/557'>#557</a>)</p></li>
 <li><p>Adapt tests to changes in dependent packages. (<a href='https://github.com/rstudio/gt/issues/575'>#575</a>)</p></li>
 </ul></div>
-    <div id="gt-0205-2020-03-31" class="section level1">
+    <div id="gt-0205" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.0.5">
-<a href="#gt-0205-2020-03-31" class="anchor" aria-hidden="true"></a>gt 0.2.0.5 (2020-03-31)<small> 2020-03-31 </small></h1>
+<a href="#gt-0205" class="anchor" aria-hidden="true"></a>gt 0.2.0.5<small> 2020-03-31 </small></h1>
 <ul><li>New package with 80 exported functions for building display tables</li>
 </ul></div>
     <div id="gt-010-unreleased" class="section level1">

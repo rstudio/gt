@@ -50,7 +50,8 @@
 <meta property="og:description" content="Sometimes an all-capitalized look is suitable for a table. With the
 opt_all_caps() function, we can transform characters in the column labels,
 the stub, and in all row groups in this way (and there's control over which
-of these locations are transformed)." />
+of these locations are transformed).
+This function serves as a convenient shortcut for &amp;lt;gt_tbl&amp;gt; %&amp;gt;% tab_options(&amp;lt;location&amp;gt;.text_transform = &quot;uppercase&quot;, &amp;lt;location&amp;gt;.font.size = pct(80), &amp;lt;location&amp;gt;.font.weight = &quot;bolder&quot;) (for all locations selected)." />
 <meta property="og:image" content="https://gt.rstudio.com/logo.svg" />
 
 
@@ -94,7 +95,7 @@ of these locations are transformed)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Development version">0.2.2</span>
       </span>
     </div>
 
@@ -102,9 +103,6 @@ of these locations are transformed)." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../articles/intro-creating-gt-tables.html">Intro</a>
-</li>
-<li>
-  <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -127,13 +125,16 @@ of these locations are transformed)." />
   </ul>
 </li>
 <li>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li>
   <a href="../news/index.html">News</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/rstudio/gt">
-    <span class="fas fa-github fa-lg"></span>
+  <a href="https://github.com/rstudio/gt/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -160,6 +161,7 @@ of these locations are transformed)." />
 <code>opt_all_caps()</code> function, we can transform characters in the column labels,
 the stub, and in all row groups in this way (and there's control over which
 of these locations are transformed).</p>
+<p>This function serves as a convenient shortcut for <code>&lt;gt_tbl&gt; %&gt;% tab_options(&lt;location&gt;.text_transform = "uppercase", &lt;location&gt;.font.size = pct(80), &lt;location&gt;.font.weight = "bolder")</code> (for all <code>locations</code> selected).</p>
     </div>
 
     <pre class="usage"><span class='fu'>opt_all_caps</span><span class='op'>(</span>
@@ -192,9 +194,6 @@ default it includes all of the <code>"column_labels"</code>, the <code>"stub"</c
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>gt_tbl</code>.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>This function serves as a convenient shortcut for <code>&lt;gt_tbl&gt; %&gt;% tab_options(&lt;location&gt;.text_transform = "uppercase", &lt;location&gt;.font.size = pct(80), &lt;location&gt;.font.weight = "bolder")</code> (for all <code>locations</code> selected).</p>
     <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
 
     
