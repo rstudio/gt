@@ -7,8 +7,6 @@
 #' \itemize{
 #' \item decimals: choice of the number of decimal places, option to drop
 #' trailing zeros, and a choice of the decimal symbol
-#' \item negative values: choice of a negative sign or parentheses for values
-#' less than zero
 #' \item digit grouping separators: options to enable/disable digit separators
 #' and provide a choice of separator symbol
 #' \item scaling: we can choose to scale targeted values by a multiplier value
@@ -42,9 +40,6 @@
 #'   `[colname_1] > 100 & [colname_2] < 50`).
 #' @param decimals An option to specify the exact number of decimal places to
 #'   use. The default number of decimal places is `2`.
-#' @param accounting An option to use accounting style for negative values. With
-#'   `FALSE` (the default), negative values will be shown with a minus sign.
-#'   Using `accounting = TRUE` will put negative values in parentheses.
 #' @param n_sigfig A option to format numbers to *n* significant figures. By
 #'   default, this is `NULL` and thus number values will be formatted according
 #'   to the number of decimal places set via `decimals`. If opting to format
@@ -221,9 +216,6 @@ fmt_number <- function(data,
             drop_trailing_zeros = drop_trailing_zeros,
             drop_trailing_dec_mark = drop_trailing_dec_mark,
             format = formatC_format
-          ) %>%
-          format_as_accounting(
-            x = x, context = context, accounting = accounting
           ) %>%
           # With large-number suffixing support, we paste the
           # vector of suffixes to the right of the values
@@ -517,8 +509,6 @@ fmt_symbol <- function(data,
 #' value.
 #' \item decimals: choice of the number of decimal places, option to drop
 #' trailing zeros, and a choice of the decimal symbol
-#' \item negative values: choice of a negative sign or parentheses for values
-#' less than zero
 #' \item digit grouping separators: options to enable/disable digit separators
 #' and provide a choice of separator symbol
 #' \item pattern: option to use a text pattern for decoration of the formatted

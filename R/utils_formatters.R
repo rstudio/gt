@@ -436,8 +436,9 @@ context_percent_mark <- function(context) {
 context_parens_marks <- function(context) {
 
   switch(context,
-         latex = c("(", ")"),
-         c("(", ")"))
+         latex = c("(", "\\rlap{)}"),
+         c("(", "<span style=\"position: absolute\">)</span>")
+	 )
 }
 
 context_pre_parens_spacer <- function(context) {
