@@ -161,7 +161,7 @@ pages:
 
 #### Code of Conduct
 
-Please note that the pointblank project is released with a [contributor
+Please note that the gt project is released with a [contributor
 code of
 conduct](https://www.contributor-covenant.org/version/2/0/code_of_conduct/).<br>By
 participating in this project you agree to abide by its terms.
