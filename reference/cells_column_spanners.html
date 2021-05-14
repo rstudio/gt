@@ -71,8 +71,6 @@ tab_spanner() function or the tab_spanner_delim() function." />
 
 
 
-<!-- dependencies from examples -->
-
 
   
 
@@ -166,7 +164,7 @@ is expressly used in each of those functions' <code>locations</code> argument. T
 <code><a href='tab_spanner.html'>tab_spanner()</a></code> function or the <code><a href='tab_spanner_delim.html'>tab_spanner_delim()</a></code> function.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cells_column_spanners</span><span class='op'>(</span>spanners <span class='op'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>cells_column_spanners</span><span class='op'>(</span>spanners <span class='op'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -263,7 +261,7 @@ can be targeted by enclosing several <code>cells_*()</code> helper functions in 
 <code><a href='random_id.html'>random_id</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='r-in'><span class='co'># Use `exibble` to create a gt table; add a</span></span>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># Use `exibble` to create a gt table; add a</span></span>
 <span class='r-in'><span class='co'># spanner column label over three column</span></span>
 <span class='r-in'><span class='co'># labels and then use `tab_style()` to make</span></span>
 <span class='r-in'><span class='co'># the spanner label text bold</span></span>
@@ -281,7 +279,7 @@ can be targeted by enclosing several <code>cells_*()</code> helper functions in 
 <span class='r-in'>    locations <span class='op'>=</span> <span class='fu'>cells_column_spanners</span><span class='op'>(</span>spanners <span class='op'>=</span> <span class='st'>"dt"</span><span class='op'>)</span></span>
 <span class='r-in'>  <span class='op'>)</span></span>
 <span class='r-in'></span>
-</pre>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

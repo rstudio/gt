@@ -264,13 +264,12 @@ table {
 
 /* Syntax highlighting ---------------------------------------------------- */
 
-pre, code, pre code {
+pre, pre code {
   background-color: #f8f8f8;
   color: #333;
-
   white-space: pre-wrap;
   word-break: break-all;
-  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 pre {

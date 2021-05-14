@@ -70,8 +70,6 @@ use of a formatter function (e.g, fmt_number) and any relevant options." />
 
 
 
-<!-- dependencies from examples -->
-
 
   
 
@@ -164,14 +162,14 @@ groups. You choose how to format the values in the resulting summary cells by
 use of a <code>formatter</code> function (e.g, <code>fmt_number</code>) and any relevant options.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>grand_summary_rows</span><span class='op'>(</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>grand_summary_rows</span><span class='op'>(</span>
   <span class='va'>data</span>,
   columns <span class='op'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span>,
   <span class='va'>fns</span>,
   missing_text <span class='op'>=</span> <span class='st'>"---"</span>,
   formatter <span class='op'>=</span> <span class='va'>fmt_number</span>,
   <span class='va'>...</span>
-<span class='op'>)</span></pre>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -242,7 +240,7 @@ summary rows were added via <code>grand_summary_rows()</code>.</p>
 <code><a href='summary_rows.html'>summary_rows</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='r-in'><span class='co'># Use `sp500` to create a gt table with</span></span>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># Use `sp500` to create a gt table with</span></span>
 <span class='r-in'><span class='co'># row groups; create grand summary rows</span></span>
 <span class='r-in'><span class='co'># (`min`, `max`, `avg`) for the table</span></span>
 <span class='r-in'><span class='va'>tab_1</span> <span class='op'>&lt;-</span></span>
@@ -271,7 +269,7 @@ summary rows were added via <code>grand_summary_rows()</code>.</p>
 <span class='r-in'>    use_seps <span class='op'>=</span> <span class='cn'>FALSE</span></span>
 <span class='r-in'>  <span class='op'>)</span></span>
 <span class='r-in'></span>
-</pre>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

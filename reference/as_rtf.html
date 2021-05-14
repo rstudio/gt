@@ -68,8 +68,6 @@ file that can be opened by RTF readers." />
 
 
 
-<!-- dependencies from examples -->
-
 
   
 
@@ -160,7 +158,7 @@ vector. This object can be used with <code><a href='https://rdrr.io/r/base/write
 file that can be opened by RTF readers.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>as_rtf</span><span class='op'>(</span><span class='va'>data</span>, page_numbering <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"none"</span>, <span class='st'>"footer"</span>, <span class='st'>"header"</span><span class='op'>)</span><span class='op'>)</span></pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>as_rtf</span><span class='op'>(</span><span class='va'>data</span>, page_numbering <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"none"</span>, <span class='st'>"footer"</span>, <span class='st'>"header"</span><span class='op'>)</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -191,7 +189,7 @@ or <code>"header"</code>. By default, page numbering is not active (<code>"none"
 <code><a href='gtsave.html'>gtsave</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='r-in'><span class='co'># Use `gtcars` to create a gt table;</span></span>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># Use `gtcars` to create a gt table;</span></span>
 <span class='r-in'><span class='co'># add a header and then export as</span></span>
 <span class='r-in'><span class='co'># RTF code</span></span>
 <span class='r-in'><span class='va'>tab_rtf</span> <span class='op'>&lt;-</span></span>
@@ -205,7 +203,7 @@ or <code>"header"</code>. By default, page numbering is not active (<code>"none"
 <span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
 <span class='r-in'>  <span class='fu'>as_rtf</span><span class='op'>(</span><span class='op'>)</span></span>
 <span class='r-in'></span>
-</pre>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

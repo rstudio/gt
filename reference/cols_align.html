@@ -70,8 +70,6 @@ the data type (with the auto option)." />
 
 
 
-<!-- dependencies from examples -->
-
 
   
 
@@ -164,11 +162,11 @@ allow <strong>gt</strong> to automatically choose the alignment of each column b
 the data type (with the <code>auto</code> option).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cols_align</span><span class='op'>(</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>cols_align</span><span class='op'>(</span>
   <span class='va'>data</span>,
   align <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"auto"</span>, <span class='st'>"left"</span>, <span class='st'>"center"</span>, <span class='st'>"right"</span><span class='op'>)</span>,
   columns <span class='op'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='op'>)</span></pre>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -229,7 +227,7 @@ right-alignment is used for the <code>numeric</code> and <code>integer</code> co
 <code><a href='cols_width.html'>cols_width</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='r-in'><span class='co'># Use `countrypops` to create a gt table;</span></span>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># Use `countrypops` to create a gt table;</span></span>
 <span class='r-in'><span class='co'># align the `population` column data to</span></span>
 <span class='r-in'><span class='co'># the left</span></span>
 <span class='r-in'><span class='va'>tab_1</span> <span class='op'>&lt;-</span></span>
@@ -243,7 +241,7 @@ right-alignment is used for the <code>numeric</code> and <code>integer</code> co
 <span class='r-in'>    columns <span class='op'>=</span> <span class='va'>population</span></span>
 <span class='r-in'>  <span class='op'>)</span></span>
 <span class='r-in'></span>
-</pre>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

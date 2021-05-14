@@ -73,8 +73,6 @@ subsequent columns given in columns)." />
 
 
 
-<!-- dependencies from examples -->
-
 
   
 
@@ -170,12 +168,12 @@ There is the option to hide the non-target columns (i.e., second and
 subsequent columns given in <code>columns</code>).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cols_merge</span><span class='op'>(</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>cols_merge</span><span class='op'>(</span>
   <span class='va'>data</span>,
   <span class='va'>columns</span>,
   hide_columns <span class='op'>=</span> <span class='va'>columns</span><span class='op'>[</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>]</span>,
   pattern <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"{"</span>, <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_along</a></span><span class='op'>(</span><span class='va'>columns</span><span class='op'>)</span>, <span class='st'>"}"</span>, collapse <span class='op'>=</span> <span class='st'>" "</span><span class='op'>)</span>
-<span class='op'>)</span></pre>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -244,7 +242,7 @@ output table through the <code>autohide</code> option.</p>
 <code><a href='cols_width.html'>cols_width</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='r-in'><span class='co'># Use `sp500` to create a gt table;</span></span>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># Use `sp500` to create a gt table;</span></span>
 <span class='r-in'><span class='co'># merge the `open` &amp; `close` columns</span></span>
 <span class='r-in'><span class='co'># together, and, the `low` &amp; `high`</span></span>
 <span class='r-in'><span class='co'># columns (putting an em dash between</span></span>
@@ -267,7 +265,7 @@ output table through the <code>autohide</code> option.</p>
 <span class='r-in'>    low <span class='op'>=</span> <span class='st'>"low/high"</span></span>
 <span class='r-in'>  <span class='op'>)</span></span>
 <span class='r-in'></span>
-</pre>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
