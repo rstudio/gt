@@ -516,6 +516,60 @@ create_summary_rows <- function(n_rows,
     unname()
 }
 
+create_grand_summary_rows <- function(n_cols,
+                                      list_of_summaries,
+                                      stub_available,
+                                      summaries_present,
+                                      context = "latex") {
+
+  if (
+    length(list_of_summaries) < 1 ||
+    is.null(list_of_summaries$summary_df_display_list$`::GRAND_SUMMARY`)
+  ) {
+    return("")
+  }
+
+  grand_summary_df <-
+    list_of_summaries$summary_df_display_list$`::GRAND_SUMMARY` %>%
+    dplyr::select(-group) %>%
+    as.data.frame(stringsAsFactors = FALSE)
+
+  body_content_summary <- as.vector(t(grand_summary_df))
+
+  row_splits_summary <-
+    split_body_content(
+      body_content = body_content_summary,
+      n_cols = n_cols
+    )
+
+  if (length(row_splits_summary) > 0) {
+
+    if (context == "latex") {
+
+      # TODO: change this to a double rule
+      top_line <- "\\midrule \n"
+
+      s_rows <-
+        paste(
+          vapply(
+            row_splits_summary,
+            FUN.VALUE = character(1),
+            latex_body_row,
+            type = "row"
+          ),
+          collapse = ""
+        )
+
+      s_rows <- paste0(top_line, top_line, s_rows)
+    }
+
+  } else {
+    s_rows <- ""
+  }
+
+  s_rows %>% unlist() %>% unname()
+}
+
 #' Suitably replace `NA` values in the `groups_df` data frame
 #'
 #' @param groups_df The `groups_df` data frame.

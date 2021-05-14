@@ -163,6 +163,7 @@ create_body_component_l <- function(data) {
 
   boxh <- dt_boxhead_get(data = data)
   body <- dt_body_get(data = data)
+
   summaries_present <- dt_summary_exists(data = data)
   list_of_summaries <- dt_summary_df_get(data = data)
   groups_rows_df <- dt_groups_rows_get(data = data)
@@ -232,7 +233,23 @@ create_body_component_l <- function(data) {
       context = "latex"
     )
 
-  paste(collapse = "", paste0(group_rows, data_rows, summary_rows))
+  grand_summary_rows <-
+    create_grand_summary_rows(
+      n_cols = n_cols,
+      list_of_summaries = list_of_summaries,
+      stub_available = stub_available,
+      summaries_present = summaries_present,
+      context = "latex"
+    )
+
+  paste(
+    paste(
+      paste0(group_rows, data_rows, summary_rows),
+      collapse = ""
+    ),
+    grand_summary_rows,
+    collapse = ""
+  )
 }
 
 #' @noRd
