@@ -265,6 +265,10 @@ format_num_to_str <- function(x,
       decimal.mark = dec_mark
     )
 
+  # Remove `-` for any signed zeros returned by `formatC()`
+  x_str_signed_zero <- grepl("^(-0|-0\\.0*?)$", x_str)
+  x_str[x_str_signed_zero] <- gsub("-", "", x_str[x_str_signed_zero])
+
   # If a trailing decimal mark is to be retained (not the
   # default option but sometimes desirable), affix the `dec_mark`
   # to the right of those figures that are missing this mark
@@ -327,29 +331,39 @@ to_latex_math_mode <- function(x,
 context_missing_text <- function(missing_text,
                                  context) {
 
-  missing_text <- process_text(missing_text, context)
-
-  switch(context,
-         html =
-           {
-             if (!inherits(missing_text, "AsIs") && missing_text == "---") {
-               "&mdash;"
-             } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
-               "&ndash;"
-             } else {
-               missing_text
-             }
-           },
-         latex =
-           {
-             if (!inherits(missing_text, "AsIs") && missing_text == "---") {
-               "\u2014"
-             } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
-               "\u2013"
-             } else {
-               missing_text
-             }
-           })
+  switch(
+    context,
+    html =
+      {
+        if (!inherits(missing_text, "AsIs") && missing_text == "---") {
+          "&mdash;"
+        } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
+          "&ndash;"
+        } else {
+          process_text(missing_text, context)
+        }
+      },
+    latex =
+      {
+        if (!inherits(missing_text, "AsIs") && missing_text == "---") {
+          "\u2014"
+        } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
+          "\u2013"
+        } else {
+          process_text(missing_text, context)
+        }
+      },
+    rtf =
+      {
+        if (!inherits(missing_text, "AsIs") && missing_text == "---") {
+          "\\'97"
+        } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
+          "\\'96"
+        } else {
+          process_text(missing_text, context)
+        }
+      }
+  )
 }
 context_dash_mark <- context_missing_text
 
@@ -360,25 +374,36 @@ context_dash_mark <- context_missing_text
 context_plusminus_mark <- function(plusminus_mark,
                                    context) {
 
-  switch(context,
-         html =
-           {
-             if (!inherits(plusminus_mark, "AsIs") &&
-                 plusminus_mark == " +/- ") {
-               " &plusmn; "
-             } else {
-               plusminus_mark
-             }
-           },
-         latex =
-         {
-           if (!inherits(plusminus_mark, "AsIs") &&
-               plusminus_mark == " +/- ") {
-             " \u00B1 "
-           } else {
-             plusminus_mark
-           }
-         })
+  switch(
+    context,
+    html =
+      {
+        if (!inherits(plusminus_mark, "AsIs") &&
+            plusminus_mark == " +/- ") {
+          " &plusmn; "
+        } else {
+          plusminus_mark
+        }
+      },
+    latex =
+      {
+        if (!inherits(plusminus_mark, "AsIs") &&
+            plusminus_mark == " +/- ") {
+          " \u00B1 "
+        } else {
+          plusminus_mark
+        }
+      },
+    rtf =
+      {
+        if (!inherits(plusminus_mark, "AsIs") &&
+            plusminus_mark == " +/- ") {
+          " \\'b1 "
+        } else {
+          plusminus_mark
+        }
+      }
+  )
 }
 
 #' Obtain the contextually correct minus mark
@@ -424,6 +449,7 @@ context_exp_marks <- function(context) {
   switch(context,
          html = c(" &times; 10<sup class='gt_super'>", "</sup>"),
          latex = c(" \\times 10^{", "}"),
+         rtf = c(" \\'d7 10{\\super ", "}"),
          c(" x 10(", ")"))
 }
 
@@ -573,6 +599,10 @@ format_as_accounting <- function(x_str,
                                  context,
                                  accounting) {
 
+  if (!accounting) {
+    return(x_str)
+  }
+
   # TODO: Handle using `x_abs_str` instead
 
   # Store logical vector of `x` < 0
@@ -583,19 +613,15 @@ format_as_accounting <- function(x_str,
     return(x_str)
   }
 
-  # Handle case where negative values are to be placed within parentheses
-  if (accounting) {
+  # Create the minus and parens marks for the context
+  minus_mark <- context_minus_mark(context)
+  parens_marks <- context_parens_marks(context)
 
-    # Create the minus and parens marks for the context
-    minus_mark <- context_minus_mark(context)
-    parens_marks <- context_parens_marks(context)
-
-    # Selectively remove minus sign and paste between parentheses
-    x_str[x_lt0] <-
-      x_str[x_lt0] %>%
-      tidy_gsub(minus_mark, "", fixed = TRUE) %>%
-      paste_between(x_2 = parens_marks)
-  }
+  # Selectively remove minus sign and paste between parentheses
+  x_str[x_lt0] <-
+    x_str[x_lt0] %>%
+    tidy_gsub(minus_mark, "", fixed = TRUE) %>%
+    paste_between(x_2 = parens_marks)
 
   x_str
 }

@@ -4,13 +4,17 @@
 \alias{cols_align}
 \title{Set the alignment of columns}
 \usage{
-cols_align(data, align = c("auto", "left", "center", "right"), columns = TRUE)
+cols_align(
+  data,
+  align = c("auto", "left", "center", "right"),
+  columns = everything()
+)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{align}{The alignment type. This can be any of \code{"center"}, \code{"left"}, or
-\code{"right"} for center-, left-, or center-alignment. Alternatively, the
+\code{"right"} for center-, left-, or right-alignment. Alternatively, the
 \code{"auto"} option (the default), will automatically align values in columns
 according to the data type (see the Details section for specifics on which
 alignments are applied).}
@@ -58,7 +62,7 @@ tab_1 <-
   gt() \%>\%
   cols_align(
     align = "left",
-    columns = vars(population)
+    columns = population
   )
 
 }
@@ -66,12 +70,14 @@ tab_1 <-
 Other Modify Columns: 
 \code{\link{cols_hide}()},
 \code{\link{cols_label}()},
+\code{\link{cols_merge_n_pct}()},
 \code{\link{cols_merge_range}()},
 \code{\link{cols_merge_uncert}()},
 \code{\link{cols_merge}()},
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
+\code{\link{cols_unhide}()},
 \code{\link{cols_width}()}
 }
 \concept{Modify Columns}

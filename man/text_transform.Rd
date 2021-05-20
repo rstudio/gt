@@ -45,11 +45,12 @@ tab_1 <-
   dplyr::select(num, char, currency) \%>\%
   dplyr::slice(1:4) \%>\%
   gt() \%>\%
-  fmt_number(columns = vars(num)) \%>\%
-  fmt_currency(columns = vars(currency)) \%>\%
+  fmt_number(columns = num) \%>\%
+  fmt_currency(columns = currency) \%>\%
   text_transform(
     locations = cells_body(
-      columns = vars(num)),
+      columns = num
+    ),
     fn = function(x) {
       paste0(
         x, " (",
@@ -64,6 +65,7 @@ tab_1 <-
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},
+\code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},

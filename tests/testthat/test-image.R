@@ -36,7 +36,7 @@ test_that("the `local_image()` function works correctly", {
   #     b = c(1.6, 9.6, 5.3, 3.5, 6.3)) %>%
   #   gt() %>%
   #   text_transform(
-  #     locations = cells_body(vars(b)),
+  #     locations = cells_body(columns = b),
   #     fn = function(x) {
   #       x <- as.numeric(x)
   #       ifelse(

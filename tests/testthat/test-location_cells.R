@@ -14,6 +14,31 @@ tbl <-
     "B",    "2",  344.7,    281.2,     2.4
   )
 
+# Create a table with a summary to test HTML output in summary locations
+tbl_summary <-
+  gt(
+    exibble,
+    rowname_col = "row",
+    groupname_col = "group"
+  ) %>%
+  summary_rows(
+    groups = "grp_a",
+    columns = num,
+    fns = list(
+      min = ~min(.),
+      max = ~max(.),
+      avg = ~mean(.)),
+    formatter = fmt_number,
+    use_seps = FALSE
+  ) %>%
+  grand_summary_rows(
+    columns = currency,
+    fns = list(
+      min = ~min(., na.rm = TRUE),
+      max = ~max(., na.rm = TRUE)
+    )
+  )
+
 # Gets the HTML attr value from a single key
 selection_value <- function(html, key) {
 
@@ -292,19 +317,12 @@ test_that("the `cells_summary()` function works correctly", {
     expect_equal(c("col_1", "col_2"))
 
   # Create a `cells_summary` object with
-  # columns in `vars()` provided to `columns`
+  # columns in `c()` provided to `columns`
   helper_cells_summary <-
     cells_summary(
       groups = "group_a",
-      columns = vars(col_1, col_2)
+      columns = c(col_1, col_2)
     )
-
-  # Expect the RHS of the second component formula to contain
-  # the vector provided
-  helper_cells_summary[[2]] %>%
-    rlang::eval_tidy() %>%
-    vapply(rlang::as_name, USE.NAMES = FALSE, character(1)) %>%
-    expect_equal(c("col_1", "col_2"))
 })
 
 test_that("the `cells_grand_summary()` function works correctly", {
@@ -342,18 +360,11 @@ test_that("the `cells_grand_summary()` function works correctly", {
     expect_equal(c("col_1", "col_2"))
 
   # Create a `cells_grand_summary` object with
-  # columns in `vars()` provided to `columns`
+  # columns in `c()` provided to `columns`
   helper_cells_grand_summary <-
     cells_grand_summary(
-      columns = vars(col_1, col_2)
+      columns = c(col_1, col_2)
     )
-
-  # Expect the RHS of the first component formula to contain
-  # the vector provided
-  helper_cells_grand_summary[[1]] %>%
-    rlang::eval_tidy() %>%
-    vapply(rlang::as_name, USE.NAMES = FALSE, character(1)) %>%
-    expect_equal(c("col_1", "col_2"))
 })
 
 test_that("the `cells_stubhead()` function works correctly", {
@@ -479,8 +490,8 @@ test_that("styles are correctly applied to HTML output with location functions",
   gt_tbl_cells_column_spanners <-
     tbl %>%
     gt(rowname_col = "row", groupname_col = "group") %>%
-    cols_move_to_end(columns = vars(value_1)) %>%
-    tab_spanner(label = "spanner", columns = vars(value_1, value_3)) %>%
+    cols_move_to_end(columns = value_1) %>%
+    tab_spanner(label = "spanner", columns = c(value_1, value_3)) %>%
     tab_style(
       style = list(
         cell_text(size = px(20), color = "white"),
@@ -510,14 +521,14 @@ test_that("styles are correctly applied to HTML output with location functions",
   gt_tbl_cells_column_labels <-
     tbl %>%
     gt(rowname_col = "row", groupname_col = "group") %>%
-    cols_move_to_end(columns = vars(value_1)) %>%
+    cols_move_to_end(columns = "value_1") %>%
     tab_style(
       style = list(
         cell_text(size = px(20), color = "white"),
         cell_fill(color = "#FFA500")
       ),
       locations = cells_column_labels(
-        columns = vars(value_1, value_3))
+        columns = c("value_1", "value_3"))
     )
 
   # Expect that the styling was applied to the correct column labels
@@ -534,7 +545,7 @@ test_that("styles are correctly applied to HTML output with location functions",
     expect_true()
 
   #
-  # cells_group()
+  # cells_row_groups()
   #
 
   # Create a gt table with styling applied to first row group
@@ -726,7 +737,7 @@ test_that("styles are correctly applied to HTML output with location functions",
     expect_true()
 
   #
-  # cells_group()
+  # cells_body()
   #
 
   # Expect that styling to all cells is performed
@@ -738,7 +749,7 @@ test_that("styles are correctly applied to HTML output with location functions",
         cell_text(size = px(20), color = "white"),
         cell_fill(color = "#FFA500")
       ),
-      locations = cells_body()
+      locations = cells_body(columns = everything(), rows = everything())
     ) %>%
     render_as_html() %>%
     xml2::read_html() %>%
@@ -746,4 +757,218 @@ test_that("styles are correctly applied to HTML output with location functions",
     expect_equal(
       rep("color: white; font-size: 20px; background-color: #FFA500;", 6)
     )
+
+  #
+  # cells_summary()
+  #
+
+  gt_tbl_cells_summary_1 <-
+    tbl_summary %>%
+    tab_style(
+      style = cell_fill(color = "red"),
+      locations = cells_summary(groups = "grp_a", rows = 1, columns = 1)
+    )
+
+  gt_tbl_cells_summary_1 %>%
+    render_as_html() %>%
+    tidy_grepl(
+      paste0(
+        "<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row\" style=\"background-color: #FF0000;\">0.11</td>.*",
+        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row\">&mdash;</td>"
+      )
+    ) %>%
+    expect_true()
+
+  gt_tbl_cells_summary_2 <-
+    tbl_summary %>%
+    tab_style(
+      style = cell_fill(color = "red"),
+      locations = cells_summary(groups = "grp_a", rows = 1)
+    )
+
+  gt_tbl_cells_summary_2 %>%
+    render_as_html() %>%
+    tidy_grepl(
+      paste0(
+        "<td class=\"gt_row gt_stub gt_right gt_summary_row gt_first_summary_row\">min</td>.*",
+        "<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row\" style=\"background-color: #FF0000;\">0.11</td>.*",
+        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+        "<td class=\"gt_row gt_center gt_summary_row gt_first_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+        "<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>"
+      )
+    ) %>%
+    expect_true()
+
+  #
+  # cells_stub_summary()
+  #
+
+  gt_tbl_cells_stub_summary_1 <-
+    tbl_summary %>%
+    tab_style(
+      style = cell_fill(color = "red"),
+      locations = cells_stub_summary(groups = "grp_a", rows = 1)
+    )
+
+  gt_tbl_cells_stub_summary_1 %>%
+    render_as_html() %>%
+    tidy_grepl(
+      "<td class=\"gt_row gt_stub gt_right gt_summary_row gt_first_summary_row\" style=\"background-color: #FF0000;\">min</td>"
+    ) %>%
+    expect_true()
+
+  gt_tbl_cells_stub_summary_2 <-
+    tbl_summary %>%
+    tab_style(
+      style = cell_fill(color = "red"),
+      locations = cells_stub_summary(groups = "grp_a", rows = "min")
+    )
+
+  gt_tbl_cells_stub_summary_2 %>%
+    render_as_html() %>%
+    tidy_grepl(
+      "<td class=\"gt_row gt_stub gt_right gt_summary_row gt_first_summary_row\" style=\"background-color: #FF0000;\">min</td>"
+    ) %>%
+    expect_true()
+
+  #
+  # cells_grand_summary()
+  #
+
+  gt_tbl_cells_grand_summary_1 <-
+    tbl_summary %>%
+    tab_style(
+      style = cell_fill(color = "red"),
+      locations = cells_grand_summary(rows = 1, columns = currency)
+    )
+
+  gt_tbl_cells_grand_summary_1 %>%
+    render_as_html() %>%
+    tidy_grepl(
+      "<td class=\"gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row\" style=\"background-color: #FF0000;\">0.44</td>"
+    ) %>%
+    expect_true()
+
+  gt_tbl_cells_grand_summary_2 <-
+    tbl_summary %>%
+    tab_style(
+      style = cell_fill(color = "red"),
+      locations = cells_grand_summary(rows = "max")
+    )
+
+  gt_tbl_cells_grand_summary_2 %>%
+    render_as_html() %>%
+    tidy_grepl(
+      paste0(
+          "<td class=\"gt_row gt_stub gt_right gt_grand_summary_row\">max</td>.*",
+          "<td class=\"gt_row gt_right gt_grand_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+          "<td class=\"gt_row gt_left gt_grand_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+          "<td class=\"gt_row gt_center gt_grand_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+          "<td class=\"gt_row gt_left gt_grand_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+          "<td class=\"gt_row gt_left gt_grand_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+          "<td class=\"gt_row gt_left gt_grand_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+          "<td class=\"gt_row gt_right gt_grand_summary_row\" style=\"background-color: #FF0000;\">65,100.00</td>"
+      )
+    ) %>%
+    expect_true()
+
+  #
+  # cells_stub_grand_summary()
+  #
+
+  gt_tbl_cells_stub_grand_summary_1 <-
+    tbl_summary %>%
+    tab_style(
+      style = cell_fill(color = "red"),
+      locations = cells_stub_grand_summary(rows = 1)
+    )
+
+  gt_tbl_cells_stub_grand_summary_1 %>%
+    render_as_html() %>%
+    tidy_grepl(
+      "<td class=\"gt_row gt_stub gt_right gt_grand_summary_row gt_first_grand_summary_row\" style=\"background-color: #FF0000;\">min</td>"
+    ) %>%
+    expect_true()
+
+  gt_tbl_cells_stub_grand_summary_2 <-
+    tbl_summary %>%
+    tab_style(
+      style = cell_fill(color = "red"),
+      locations = cells_stub_grand_summary(rows = "max")
+    )
+
+  gt_tbl_cells_stub_grand_summary_2 %>%
+    render_as_html() %>%
+    tidy_grepl(
+      "<td class=\"gt_row gt_stub gt_right gt_grand_summary_row\" style=\"background-color: #FF0000;\">max</td>"
+    ) %>%
+    expect_true()
+
+  #
+  # cells_footnotes()
+  #
+
+  gt_tbl_cells_footnotes_1 <-
+    tbl %>%
+    gt() %>%
+    tab_footnote("This is a footnote", locations = cells_body(1, 1)) %>%
+    tab_style(
+      style = cell_fill(color = "red"),
+      locations = cells_footnotes()
+    )
+
+  gt_tbl_cells_footnotes_1 %>%
+    render_as_html() %>%
+    tidy_grepl(
+      "<tr class=\"gt_footnotes\" style=\"background-color: #FF0000;\">"
+    ) %>%
+    expect_true()
+
+  # Expect an error if applying footnotes to the footnotes location
+  expect_error(
+    tbl %>%
+      gt() %>%
+      tab_footnote(
+        footnote = "This is a footnote",
+        locations = cells_body(1, 1)
+      ) %>%
+      tab_footnote(
+        footnote = "Illegal footnote",
+        locations = cells_footnotes()
+      )
+  )
+
+  #
+  # cells_source_notes()
+  #
+
+  gt_tbl_cells_source_notes_1 <-
+    tbl %>%
+    gt() %>%
+    tab_source_note(source_note = "This is a source note") %>%
+    tab_style(
+      style = cell_fill(color = "red"),
+      locations = cells_source_notes()
+    )
+
+  gt_tbl_cells_source_notes_1 %>%
+    render_as_html() %>%
+    tidy_grepl(
+      "<td class=\"gt_sourcenote\" style=\"background-color: #FF0000;\" colspan=\"5\">This is a source note</td>"
+    ) %>%
+    expect_true()
+
+  # Expect an error if applying footnotes to the source notes location
+  expect_error(
+    tbl %>%
+      gt() %>%
+      tab_source_note(source_note = "This is a source note") %>%
+      tab_footnote(
+        footnote = "Illegal footnote",
+        locations = cells_source_notes()
+      )
+  )
 })

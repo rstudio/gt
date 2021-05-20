@@ -18,7 +18,7 @@ test_that("the `cols_move()` function works correctly", {
   # `cyl`, and `drat` columns placed after `drat`
   tbl_html <-
     gt(data = mtcars_short) %>%
-    cols_move(columns = vars(mpg, cyl, disp), after = vars(drat))
+    cols_move(columns = c(mpg, cyl, disp), after = drat)
 
   # Expect a particular ordering of columns in `_boxh`
   tbl_html %>%
@@ -66,7 +66,7 @@ test_that("the `cols_move()` function works correctly", {
   # `cyl`, and `drat` columns placed after `carb` (the end of the series)
   tbl_html <-
     gt(data = mtcars_short) %>%
-    cols_move(columns = vars(mpg, cyl, disp), after = vars(carb))
+    cols_move(columns = c(mpg, cyl, disp), after = carb)
 
   # Expect a particular ordering of columns in the internal `boxh_df`
   tbl_html %>%
@@ -89,17 +89,17 @@ test_that("the `cols_move()` function works correctly", {
   # Expect an error if more than one column provided in `after`
   expect_error(
     gt(data = mtcars_short) %>%
-      cols_move(columns = vars(mpg, cyl, disp), after = vars(am, wt)))
+      cols_move(columns = c(mpg, cyl, disp), after = c(am, wt)))
 
   # Expect an error if the column provided in `after` doesn't exist
   expect_error(
     gt(data = mtcars_short) %>%
-      cols_move(columns = vars(mpg, cyl, disp), after = vars(wts)))
+      cols_move(columns = c(mpg, cyl, disp), after = wts))
 
   # Expect an error if any of the `columns` doesn't exist in `data_df`
   expect_error(
     gt(data = mtcars_short) %>%
-      cols_move(columns = vars(mpg, cyls, disp), after = vars(wt)))
+      cols_move(columns = c(mpg, cyls, disp), after = wt))
 })
 
 test_that("the `cols_move_to_start()` function works correctly", {
@@ -111,7 +111,7 @@ test_that("the `cols_move_to_start()` function works correctly", {
   # and `carb` columns placed at the start
   tbl_html <-
     gt(data = mtcars_short) %>%
-    cols_move_to_start(columns = vars(gear, carb))
+    cols_move_to_start(columns = c(gear, carb))
 
   # Expect a particular ordering of columns in the internal `boxh_df`
   tbl_html %>%
@@ -158,7 +158,7 @@ test_that("the `cols_move_to_start()` function works correctly", {
   # Expect an error if any of the `columns` doesn't exist in `data_df`
   expect_error(
     gt(data = mtcars_short) %>%
-      cols_move_to_start(columns = vars(mpg, cyls, disp)))
+      cols_move_to_start(columns = c(mpg, cyls, disp)))
 })
 
 test_that("the `cols_move_to_end()` function works correctly", {
@@ -170,7 +170,7 @@ test_that("the `cols_move_to_end()` function works correctly", {
   # and `carb` columns placed at the end
   tbl_html <-
     gt(data = mtcars_short) %>%
-    cols_move_to_end(columns = vars(gear, carb))
+    cols_move_to_end(columns = c(gear, carb))
 
   # Expect a particular ordering of columns in the internal `boxh_df`
   tbl_html %>%
@@ -217,5 +217,5 @@ test_that("the `cols_move_to_end()` function works correctly", {
   # Expect an error if any of the `columns` doesn't exist in `data_df`
   expect_error(
     gt(data = mtcars_short) %>%
-      cols_move_to_end(columns = vars(mpg, cyls, disp)))
+      cols_move_to_end(columns = c(mpg, cyls, disp)))
 })

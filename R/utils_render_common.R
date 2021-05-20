@@ -20,15 +20,24 @@ validate_contexts <- function(contexts) {
 # Utility function to generate column numbers from column names;
 # used in: `resolve_footnotes_styles()`
 colname_to_colnum <- function(data,
-                              colname) {
+                              colname,
+                              missing_is_zero = FALSE) {
 
   col_nums <- c()
 
   for (col in colname) {
     if (is.na(col)) {
-      col_nums <- c(col_nums, NA_integer_)
+      if (missing_is_zero) {
+        col_nums <- c(col_nums, 0L)
+      } else {
+        col_nums <- c(col_nums, NA_integer_)
+      }
     } else {
-      col_nums <- c(col_nums, which(dt_boxhead_get_vars_default(data = data) == col))
+      col_nums <-
+        c(
+          col_nums,
+          which(dt_boxhead_get_vars_default(data = data) == col)
+        )
     }
   }
 
@@ -43,8 +52,10 @@ rownum_translation <- function(body,
   rownum_final <- c()
   for (rownum_s in rownum_start) {
     rownum_final <-
-      c(rownum_final,
-        which(as.numeric(rownames(body)) == rownum_s))
+      c(
+        rownum_final,
+        which(as.numeric(rownames(body)) == rownum_s)
+      )
   }
 
   rownum_final
@@ -112,15 +123,21 @@ migrate_unformatted_to_output <- function(data,
       body[[colname]][row_index] <-
         lapply(
           data_tbl[[colname]][row_index],
-          function(x) {
+          FUN = function(x) {
 
             if (is.numeric(x)) {
-              x <- format(x, drop0trailing = FALSE, trim = TRUE, justify = "none")
+              x <-
+                format(
+                  x,
+                  drop0trailing = FALSE,
+                  trim = TRUE,
+                  justify = "none"
+                )
             }
 
             x %>%
               tidy_gsub("\\s+$", "") %>%
-              process_text(context) %>%
+              process_text(context = context) %>%
               paste(collapse = ", ")
           }
         )
@@ -131,10 +148,16 @@ migrate_unformatted_to_output <- function(data,
       vals <- data_tbl[[colname]][row_index]
 
       if (is.numeric(vals)) {
-        vals <- format(vals, drop0trailing = FALSE, trim = TRUE, justify = "none")
+        vals <-
+          format(
+            vals,
+            drop0trailing = FALSE,
+            trim = TRUE,
+            justify = "none"
+          )
       }
 
-      body[[colname]][row_index] <- vals %>% process_text(context)
+      body[[colname]][row_index] <- process_text(text = vals, context = context)
     }
   }
 
@@ -185,7 +208,7 @@ get_row_reorder_df <- function(groups,
   }
 
   indices <-
-    lapply(stub_df$groupname, `%in%`, x = groups) %>%
+    lapply(stub_df$group_id, `%in%`, x = groups) %>%
     lapply(which) %>%
     unlist() %>%
     order()
@@ -261,7 +284,7 @@ perform_col_merge <- function(data,
 
     type <- col_merge[[i]]$type
 
-    if (!(type %in% c("merge", "merge_range", "merge_uncert"))) {
+    if (!(type %in% c("merge", "merge_range", "merge_uncert", "merge_n_pct"))) {
       stop("Unknown `type` supplied.")
     }
 
@@ -282,6 +305,40 @@ perform_col_merge <- function(data,
           !!mutated_column_sym := glue_gt(glue_src_data, pattern) %>%
             as.character()
         )
+
+    } else if (type == "merge_n_pct") {
+
+      data_tbl <- dt_data_get(data = data)
+
+      mutated_column <- col_merge[[i]]$vars[1]
+      second_column <- col_merge[[i]]$vars[2]
+
+      # This is a fixed pattern
+      pattern <- "{1} ({2})"
+
+      # Determine rows where NA values exist, and, those rows where
+      # `0` is the value in the `mutated_column` (we don't want to
+      # include a zero percentage value in parentheses)
+      na_1_rows <- is.na(data_tbl[[mutated_column]])
+      na_2_rows <- is.na(data_tbl[[second_column]])
+      zero_rows <- data_tbl[[mutated_column]] == 0
+      zero_rows[is.na(zero_rows)] <- FALSE
+      zero_rows_idx <- which(zero_rows)
+
+      # An `NA` value in either column should exclude that row from
+      # processing via `glue_gt()`
+      rows_to_format_idx <- which(!(na_1_rows | na_2_rows))
+      rows_to_format_idx <- setdiff(rows_to_format_idx, zero_rows_idx)
+
+      body[rows_to_format_idx, mutated_column] <-
+        glue_gt(
+          list(
+            "1" = body[[mutated_column]][rows_to_format_idx],
+            "2" = body[[second_column]][rows_to_format_idx]
+          ),
+          pattern
+        ) %>%
+        as.character()
 
     } else {
 
@@ -334,22 +391,28 @@ create_group_rows <- function(n_rows,
                               groups_rows_df,
                               context = "latex") {
 
-  lapply(seq(n_rows), function(x) {
+  unname(
+    unlist(
+      lapply(
+        seq(n_rows),
+        FUN = function(x) {
 
-    if (!(x %in% groups_rows_df$row)) {
-      return("")
-    }
+          if (!(x %in% groups_rows_df$row_start)) {
+            return("")
+          }
 
-    if (context == "latex") {
+          if (context == "latex") {
 
-      latex_group_row(
-        group_name = groups_rows_df[
-          which(groups_rows_df$row %in% x), "group_label"][[1]],
-        top_border = x != 1, bottom_border = x != n_rows)
-    }
-  }) %>%
-    unlist() %>%
-    unname()
+            latex_group_row(
+              group_name = groups_rows_df[
+                which(groups_rows_df$row_start %in% x), "group_label"][[1]],
+              top_border = x != 1,
+              bottom_border = x != n_rows
+            )
+          }
+        })
+    )
+  )
 }
 
 # Function to build a vector of `data` rows in the table body
@@ -357,16 +420,32 @@ create_data_rows <- function(n_rows,
                              row_splits,
                              context = "latex") {
 
-  lapply(seq(n_rows), function(x) {
+  unname(
+    unlist(
+      lapply(
+        seq(n_rows),
+        FUN = function(x) {
+          if (context == "latex") {
+            latex_body_row(content = row_splits[[x]], type = "row")
+          }
+        })
+    )
+  )
+}
 
-    if (context == "latex") {
+#' Split the body content vector into a list structure
+#'
+#' Taking the `body_content` vector, split into list components with one item
+#' per row in the output table
+#' @noRd
+split_body_content <- function(body_content,
+                               n_cols) {
 
-      latex_body_row(content = row_splits[[x]], type = "row")
-    }
+  if (length(body_content) == 0) {
+    return(list(rep("", n_cols)))
+  }
 
-  }) %>%
-    unlist() %>%
-    unname()
+  split(body_content, ceiling(seq_along(body_content) / n_cols))
 }
 
 # Function to build a vector of `summary` rows in the table body
@@ -378,54 +457,61 @@ create_summary_rows <- function(n_rows,
                                 summaries_present,
                                 context = "latex") {
 
-  lapply(seq(n_rows), function(x) {
+  lapply(
+    seq(n_rows),
+    FUN = function(x) {
 
-    if (!stub_available ||
-        !summaries_present ||
-        !(x %in% groups_rows_df$row_end)) {
-      return("")
-    }
-
-    group <-
-      groups_rows_df %>%
-      dplyr::filter(row_end == x) %>%
-      dplyr::pull(group)
-
-    if (!(group %in% names(list_of_summaries$summary_df_display_list))) {
-      return("")
-    }
-
-    summary_df <-
-      list_of_summaries$summary_df_display_list[[group]] %>%
-      as.data.frame(stringsAsFactors = FALSE)
-
-    body_content_summary <-
-      as.vector(t(summary_df))
-
-    row_splits_summary <-
-      split_body_content(
-        body_content = body_content_summary,
-        n_cols = n_cols)
-
-    if (length(row_splits_summary) > 0) {
-
-      if (context == "latex") {
-
-        top_line <- "\\midrule \n"
-
-        s_rows <-
-          paste(
-            vapply(
-              row_splits_summary, latex_body_row, character(1), type = "row"),
-            collapse = "")
-
-        s_rows <- paste0(top_line, s_rows)
+      if (!stub_available ||
+          !summaries_present ||
+          !(x %in% groups_rows_df$row_end)) {
+        return("")
       }
 
-    } else {
-      s_rows <- ""
-    }
-  }) %>%
+      group <-
+        groups_rows_df %>%
+        dplyr::filter(row_end == x) %>%
+        dplyr::pull(group_id)
+
+      if (!(group %in% names(list_of_summaries$summary_df_display_list))) {
+        return("")
+      }
+
+      summary_df <-
+        list_of_summaries$summary_df_display_list[[group]] %>%
+        dplyr::select(-groups) %>%
+        as.data.frame(stringsAsFactors = FALSE)
+
+      body_content_summary <- as.vector(t(summary_df))
+      row_splits_summary <-
+        split_body_content(
+          body_content = body_content_summary,
+          n_cols = n_cols
+        )
+
+      if (length(row_splits_summary) > 0) {
+
+        if (context == "latex") {
+
+          top_line <- "\\midrule \n"
+
+          s_rows <-
+            paste(
+              vapply(
+                row_splits_summary,
+                FUN.VALUE = character(1),
+                latex_body_row,
+                type = "row"
+              ),
+              collapse = ""
+            )
+
+          s_rows <- paste0(top_line, s_rows)
+        }
+
+      } else {
+        s_rows <- ""
+      }
+    }) %>%
     unlist() %>%
     unname()
 }
@@ -439,7 +525,7 @@ replace_na_groups_df <- function(groups_df,
                                  others_group) {
 
   if (nrow(groups_df) > 0) {
-    groups_df[is.na(groups_df[, "groupname"]), "groupname"] <- others_group
+    groups_df[is.na(groups_df[, "group_id"]), "group_id"] <- others_group
   }
 
   groups_df

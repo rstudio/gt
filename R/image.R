@@ -45,7 +45,7 @@
 #'   ) %>%
 #'   gt() %>%
 #'   text_transform(
-#'     locations = cells_body(vars(image)),
+#'     locations = cells_body(columns = image),
 #'     fn = function(x) {
 #'       web_image(
 #'         url = r_png_url,
@@ -154,7 +154,7 @@ web_image <- function(url,
 #'   ) %>%
 #'   gt() %>%
 #'   text_transform(
-#'     locations = cells_body(vars(image)),
+#'     locations = cells_body(columns = image),
 #'     fn = function(x) {
 #'       local_image(
 #'         filename = test_image(type = "png"),
@@ -260,7 +260,7 @@ local_image <- function(filename,
 #'   ) %>%
 #'   gt() %>%
 #'   text_transform(
-#'     locations = cells_body(vars(ggplot)),
+#'     locations = cells_body(columns = ggplot),
 #'     fn = function(x) {
 #'       plot_object %>%
 #'         ggplot_image(height = px(200))

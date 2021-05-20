@@ -31,7 +31,7 @@ cells. Specifically, the call to \code{cell_fill()} should be bound to the
 
 \section{Function ID}{
 
-7-16
+7-20
 }
 
 \examples{
@@ -43,19 +43,19 @@ tab_1 <-
   dplyr::select(num, currency) \%>\%
   gt() \%>\%
   fmt_number(
-    columns = vars(num, currency),
+    columns = c(num, currency),
     decimals = 1
   ) \%>\%
   tab_style(
     style = cell_fill(color = "lightblue"),
     locations = cells_body(
-      columns = vars(num),
+      columns = num,
       rows = num >= 5000)
   ) \%>\%
   tab_style(
     style = cell_fill(color = "gray85"),
     locations = cells_body(
-      columns = vars(currency),
+      columns = currency,
       rows = currency < 100
     )
   )
@@ -69,14 +69,20 @@ Other Helper Functions:
 \code{\link{cells_body}()},
 \code{\link{cells_column_labels}()},
 \code{\link{cells_column_spanners}()},
+\code{\link{cells_footnotes}()},
 \code{\link{cells_grand_summary}()},
 \code{\link{cells_row_groups}()},
+\code{\link{cells_source_notes}()},
+\code{\link{cells_stub_grand_summary}()},
+\code{\link{cells_stub_summary}()},
 \code{\link{cells_stubhead}()},
 \code{\link{cells_stub}()},
 \code{\link{cells_summary}()},
 \code{\link{cells_title}()},
 \code{\link{currency}()},
+\code{\link{default_fonts}()},
 \code{\link{escape_latex}()},
+\code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
 \code{\link{md}()},

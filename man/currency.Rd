@@ -43,7 +43,7 @@ required each and every context.
 
 \section{Function ID}{
 
-7-14
+7-18
 }
 
 \examples{
@@ -55,7 +55,7 @@ tab_1 <-
   exibble \%>\%
   gt() \%>\%
   fmt_currency(
-    columns = vars(currency),
+    columns = currency,
     currency = currency(
       html = "&fnof;",
       default = "f"),
@@ -72,13 +72,19 @@ Other Helper Functions:
 \code{\link{cells_body}()},
 \code{\link{cells_column_labels}()},
 \code{\link{cells_column_spanners}()},
+\code{\link{cells_footnotes}()},
 \code{\link{cells_grand_summary}()},
 \code{\link{cells_row_groups}()},
+\code{\link{cells_source_notes}()},
+\code{\link{cells_stub_grand_summary}()},
+\code{\link{cells_stub_summary}()},
 \code{\link{cells_stubhead}()},
 \code{\link{cells_stub}()},
 \code{\link{cells_summary}()},
 \code{\link{cells_title}()},
+\code{\link{default_fonts}()},
 \code{\link{escape_latex}()},
+\code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
 \code{\link{md}()},

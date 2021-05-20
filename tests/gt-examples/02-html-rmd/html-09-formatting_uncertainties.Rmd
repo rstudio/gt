@@ -27,16 +27,16 @@ tbl <-
 ```{r}
 gt(data = tbl) %>%
   cols_merge_uncert(
-    col_val = vars(value_1),
-    col_uncert = vars(uncertainty)
+    col_val = value_1,
+    col_uncert = uncertainty
   ) %>%
   cols_merge_uncert(
-    col_val = vars(value_2),
-    col_uncert = vars(uncertainty_2)
+    col_val = value_2,
+    col_uncert = uncertainty_2
   ) %>%
   fmt_number(
-    columns = vars(value_1, value_2),
+    columns = c(value_1, value_2),
     decimals = 2
   ) %>%
-  fmt_missing(columns = vars(value_1, value_2))
+  fmt_missing(columns = c(value_1, value_2))
 ```

@@ -41,13 +41,13 @@ tab_1 <-
   gt(rowname_col = "row", groupname_col = "group") \%>\%
   summary_rows(
     groups = "grp_a",
-    columns = vars(num, currency),
+    columns = c(num, currency),
     fns = list(
       min = ~min(., na.rm = TRUE),
       max = ~max(., na.rm = TRUE)
     )) \%>\%
   grand_summary_rows(
-    columns = vars(currency),
+    columns = currency,
     fns = list(
       total = ~sum(., na.rm = TRUE)
     )) \%>\%
@@ -67,7 +67,9 @@ tab_1 <-
 Other Table Option Functions: 
 \code{\link{opt_align_table_header}()},
 \code{\link{opt_all_caps}()},
+\code{\link{opt_css}()},
 \code{\link{opt_footnote_marks}()},
+\code{\link{opt_table_font}()},
 \code{\link{opt_table_lines}()},
 \code{\link{opt_table_outline}()}
 }

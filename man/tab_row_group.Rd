@@ -4,13 +4,12 @@
 \alias{tab_row_group}
 \title{Add a row group to a \strong{gt} table}
 \usage{
-tab_row_group(data, group = NULL, rows = NULL, others = NULL)
+tab_row_group(data, label, rows, id = label, others_label = NULL, group = NULL)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{group}{The name of the row group. This text will also serve as the row
-group label.}
+\item{label}{The text to use for the row group label.}
 
 \item{rows}{The rows to be made components of the row group. Can either be a
 vector of row captions provided in \code{c()}, a vector of row indices, or a
@@ -18,14 +17,20 @@ helper function focused on selections. The select helper functions are:
 \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and
 \code{\link[=everything]{everything()}}.}
 
-\item{others}{An option to set a default row group label for any rows not
-formally placed in a row group named by \code{group} in any call of
-\code{tab_row_group()}. A separate call to \code{tab_row_group()} with only a value
-to \code{others} is possible and makes explicit that the call is meant to
-provide a default row group label. If this is not set and there are rows
-that haven't been placed into a row group (where one or more row groups
-already exist), those rows will be automatically placed into a row group
-without a label.}
+\item{id}{The ID for the row group. When accessing a row group through
+\code{\link[=cells_row_groups]{cells_row_groups()}} (when using \code{\link[=tab_style]{tab_style()}} or \code{\link[=tab_footnote]{tab_footnote()}}) the
+\code{id} value is used as the reference (and not the \code{label}). If an \code{id} is
+not explicitly provided here, it will be taken from the \code{label} value. It
+is advisable to set an explicit \code{id} value if you plan to access this cell
+in a later function call and the label text is complicated (e.g., contains
+markup, is lengthy, or both). Finally, when providing an \code{id} value you
+must ensure that it is unique across all ID values set for row groups (the
+function will stop if \code{id} isn't unique).}
+
+\item{others_label}{This argument is deprecated. Instead use
+\verb{tab_options(row_group.default_label = <label>)}.}
+
+\item{group}{This argument is deprecated. Instead use \code{label}.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -33,7 +38,15 @@ An object of class \code{gt_tbl}.
 \description{
 Create a row group with a collection of rows. This requires specification of
 the rows to be included, either by supplying row labels, row indices, or
-through use of a select helper function like \code{starts_with()}.
+through use of a select helper function like \code{\link[=starts_with]{starts_with()}}. To modify the
+order of row groups, use the \code{\link[=row_group_order]{row_group_order()}} function.
+
+To set a default row group label for any rows not formally placed in a row
+group, we can use a separate call to \verb{tab_options(row_group.default_label = <label>)}. If this is not done and there are rows that haven't been placed
+into a row group (where one or more row groups already exist), those rows
+will be automatically placed into a row group without a label. To restore
+labels for row groups not explicitly assigned a group,
+\code{tab_options(row_group.default_label = "")} can be used.
 }
 \section{Figures}{
 
@@ -58,7 +71,7 @@ tab_1 <-
   dplyr::slice(1:8) \%>\%
   gt(rowname_col = "model") \%>\%
   tab_row_group(
-    group = "numbered",
+    label = "numbered",
     rows = matches("^[0-9]")
   )
 
@@ -73,11 +86,11 @@ tab_2 <-
   dplyr::slice(1:8) \%>\%
   gt(rowname_col = "model") \%>\%
   tab_row_group(
-    group = "powerful",
+    label = "powerful",
     rows = hp <= 600
   ) \%>\%
   tab_row_group(
-    group = "super powerful",
+    label = "super powerful",
     rows = hp > 600
   )
 
