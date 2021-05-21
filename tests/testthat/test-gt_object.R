@@ -748,13 +748,12 @@ test_that("Escapable characters in rownames are handled correctly in each output
   )
 
   # Using a tibble (removes row names) and setting `column_1` as the stub
-  # TODO: does not work: `Error in row_splits[[x]] : subscript out of bounds`
-  # expect_match(
-  #   gt(dplyr::as_tibble(tbl), rowname_col = "column_1") %>%
-  #     as_latex() %>% as.character(),
-  #   "\\$latex & latex \\\\ ",
-  #   fixed = TRUE
-  # )
+  expect_match(
+    gt(dplyr::as_tibble(tbl), rowname_col = "column_1") %>%
+      as_latex() %>% as.character(),
+    "\\$latex & latex \\\\ ",
+    fixed = TRUE
+  )
 
   # Expect that the stub and body rows are escaped correctly
   # when rendered as RTF
