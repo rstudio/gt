@@ -181,14 +181,7 @@ create_body_component_l <- function(data) {
   # Get the column headings for the visible (e.g., `default`) columns
   default_vars <- dt_boxhead_get_vars_default(data = data)
 
-
-  if (stub_available && "__GT_ROWNAME_PRIVATE__" %in% names(body)) {
-
-    n_cols <- n_data_cols + 1
-
-    body_content <- as.vector(t(body[, c("__GT_ROWNAME_PRIVATE__", default_vars)]))
-
-  } else if (stub_available) {
+  if (stub_available) {
 
     n_cols <- n_data_cols + 1
 
