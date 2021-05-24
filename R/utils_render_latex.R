@@ -174,30 +174,35 @@ create_body_component_l <- function(data) {
   n_data_cols <- dt_boxhead_get_vars_default(data = data) %>% length()
   n_rows <- nrow(body)
 
-  # Get the column alignments for the data columns (this
-  # doesn't include the stub alignment)
-  col_alignment <- boxh[boxh$type == "default", ][["column_align"]]
-
-  # Get the column headings for the visible (e.g., `default`) columns
-  default_vars <- dt_boxhead_get_vars_default(data = data)
-
-  if ("rowname" %in% names(body)) {
-    default_vars <- c("rowname", default_vars)
-  }
-
   # Determine whether the stub is available through analysis
   # of the `stub_components`
   stub_available <- dt_stub_components_has_rowname(stub_components)
 
-  if (stub_available) {
-    n_cols <- n_data_cols + 1
-  } else {
-    n_cols <- n_data_cols
-  }
+  # Get the column headings for the visible (e.g., `default`) columns
+  default_vars <- dt_boxhead_get_vars_default(data = data)
 
-  # Get the sequence of column numbers in the table body (these
-  # are the visible columns in the table exclusive of the stub)
-  column_series <- seq(n_cols)
+
+  if (stub_available && "__GT_ROWNAME_PRIVATE__" %in% names(body)) {
+
+    n_cols <- n_data_cols + 1
+
+    body_content <- as.vector(t(body[, c("__GT_ROWNAME_PRIVATE__", default_vars)]))
+
+  } else if (stub_available) {
+
+    n_cols <- n_data_cols + 1
+
+    stub_var <- dt_boxhead_get_var_stub(data = data)
+    all_stub_vals <- as.matrix(body[, stub_var])
+
+    body_content <- as.vector(t(cbind(all_stub_vals, body[, default_vars])))
+
+  } else {
+
+    n_cols <- n_data_cols
+
+    body_content <- as.vector(t(body[, default_vars]))
+  }
 
   # Replace an NA group with an empty string
   if (any(is.na(groups_rows_df$group_label))) {
@@ -213,16 +218,7 @@ create_body_component_l <- function(data) {
 
   group_rows <- create_group_rows(n_rows, groups_rows_df)
 
-  if (stub_available && "__GT_ROWNAME_PRIVATE__" %in% names(body)) {
-    visible_vars <- c("__GT_ROWNAME_PRIVATE__", default_vars)
-  } else if (stub_available) {
-    visible_vars <- c(dt_boxhead_get_var_stub(data), default_vars)
-  } else {
-    visible_vars <- default_vars
-  }
-
   # Split `body_content` by slices of rows and create data rows
-  body_content <- as.vector(t(body[, visible_vars]))
   row_splits <- split(body_content, ceiling(seq_along(body_content) / n_cols))
   data_rows <- create_data_rows(n_rows = n_rows, row_splits = row_splits)
 
