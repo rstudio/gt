@@ -224,12 +224,13 @@ create_body_component_l <- function(data) {
   # Split `body_content` by slices of rows and create data rows
   body_content <- as.vector(t(body[, visible_vars]))
   row_splits <- split(body_content, ceiling(seq_along(body_content) / n_cols))
-  data_rows <- create_data_rows(n_rows = n_rows, row_splits)
+  data_rows <- create_data_rows(n_rows = n_rows, row_splits = row_splits)
 
   summary_rows <-
     create_summary_rows(
       n_rows = n_rows,
       n_cols = n_cols,
+      boxh = boxh,
       list_of_summaries = list_of_summaries,
       groups_rows_df = groups_rows_df,
       stub_available = stub_available,
@@ -239,6 +240,7 @@ create_body_component_l <- function(data) {
   grand_summary_rows <-
     create_grand_summary_rows(
       n_cols = n_cols,
+      boxh = boxh,
       list_of_summaries = list_of_summaries,
       stub_available = stub_available
     )

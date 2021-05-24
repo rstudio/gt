@@ -446,10 +446,15 @@ split_body_content <- function(body_content,
 # Function to build a vector of `summary` rows in the table body
 create_summary_rows <- function(n_rows,
                                 n_cols,
+                                boxh,
                                 list_of_summaries,
                                 groups_rows_df,
                                 stub_available,
                                 summaries_present) {
+
+  default_vars <-
+    dplyr::filter(boxh, type == "default") %>%
+    dplyr::pull(var)
 
   unname(
     unlist(
@@ -474,9 +479,10 @@ create_summary_rows <- function(n_rows,
 
           summary_df <-
             list_of_summaries$summary_df_display_list[[group]] %>%
-            dplyr::select(-.data$group)
+            dplyr::select(rowname, .env$default_vars)
 
           body_content_summary <- as.vector(t(summary_df))
+
           row_splits_summary <-
             split_body_content(
               body_content = body_content_summary,
@@ -510,6 +516,7 @@ create_summary_rows <- function(n_rows,
 }
 
 create_grand_summary_rows <- function(n_cols,
+                                      boxh,
                                       list_of_summaries,
                                       stub_available) {
 
@@ -520,9 +527,13 @@ create_grand_summary_rows <- function(n_cols,
     return("")
   }
 
+  default_vars <-
+    dplyr::filter(boxh, type == "default") %>%
+    dplyr::pull(var)
+
   grand_summary_df <-
     list_of_summaries$summary_df_display_list$`::GRAND_SUMMARY` %>%
-    dplyr::select(-.data$group)
+    dplyr::select(rowname, .env$default_vars)
 
   body_content_summary <- as.vector(t(grand_summary_df))
 
