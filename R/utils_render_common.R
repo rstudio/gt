@@ -388,8 +388,7 @@ perform_col_merge <- function(data,
 
 # Function to build a vector of `group` rows in the table body
 create_group_rows <- function(n_rows,
-                              groups_rows_df,
-                              context = "latex") {
+                              groups_rows_df) {
 
   unname(
     unlist(
@@ -401,15 +400,13 @@ create_group_rows <- function(n_rows,
             return("")
           }
 
-          if (context == "latex") {
-
             latex_group_row(
               group_name = groups_rows_df[
                 which(groups_rows_df$row_start %in% x), "group_label"][[1]],
               top_border = x != 1,
               bottom_border = x != n_rows
             )
-          }
+
         })
     )
   )
@@ -417,17 +414,14 @@ create_group_rows <- function(n_rows,
 
 # Function to build a vector of `data` rows in the table body
 create_data_rows <- function(n_rows,
-                             row_splits,
-                             context = "latex") {
+                             row_splits) {
 
   unname(
     unlist(
       lapply(
         seq(n_rows),
         FUN = function(x) {
-          if (context == "latex") {
             latex_body_row(content = row_splits[[x]], type = "row")
-          }
         })
     )
   )
@@ -454,73 +448,69 @@ create_summary_rows <- function(n_rows,
                                 list_of_summaries,
                                 groups_rows_df,
                                 stub_available,
-                                summaries_present,
-                                context = "latex") {
+                                summaries_present) {
 
-  lapply(
-    seq(n_rows),
-    FUN = function(x) {
+  unname(
+    unlist(
+      lapply(
+        seq(n_rows),
+        FUN = function(x) {
 
-      if (!stub_available ||
-          !summaries_present ||
-          !(x %in% groups_rows_df$row_end)) {
-        return("")
-      }
+          if (!stub_available ||
+              !summaries_present ||
+              !(x %in% groups_rows_df$row_end)) {
+            return("")
+          }
 
-      group <-
-        groups_rows_df %>%
-        dplyr::filter(row_end == x) %>%
-        dplyr::pull(group_id)
+          group <-
+            groups_rows_df %>%
+            dplyr::filter(row_end == x) %>%
+            dplyr::pull(group_id)
 
-      if (!(group %in% names(list_of_summaries$summary_df_display_list))) {
-        return("")
-      }
+          if (!(group %in% names(list_of_summaries$summary_df_display_list))) {
+            return("")
+          }
 
-      summary_df <-
-        list_of_summaries$summary_df_display_list[[group]] %>%
-        dplyr::select(-group) %>%
-        as.data.frame(stringsAsFactors = FALSE)
+          summary_df <-
+            list_of_summaries$summary_df_display_list[[group]] %>%
+            dplyr::select(-.data$group)
 
-      body_content_summary <- as.vector(t(summary_df))
-      row_splits_summary <-
-        split_body_content(
-          body_content = body_content_summary,
-          n_cols = n_cols
-        )
-
-      if (length(row_splits_summary) > 0) {
-
-        if (context == "latex") {
-
-          top_line <- "\\midrule \n"
-
-          s_rows <-
-            paste(
-              vapply(
-                row_splits_summary,
-                FUN.VALUE = character(1),
-                latex_body_row,
-                type = "row"
-              ),
-              collapse = ""
+          body_content_summary <- as.vector(t(summary_df))
+          row_splits_summary <-
+            split_body_content(
+              body_content = body_content_summary,
+              n_cols = n_cols
             )
 
-          s_rows <- paste0(top_line, s_rows)
-        }
+          if (length(row_splits_summary) > 0) {
 
-      } else {
-        s_rows <- ""
-      }
-    }) %>%
-    unlist() %>%
-    unname()
+              top_line <- "\\midrule \n"
+
+              s_rows <-
+                paste(
+                  vapply(
+                    row_splits_summary,
+                    FUN.VALUE = character(1),
+                    latex_body_row,
+                    type = "row"
+                  ),
+                  collapse = ""
+                )
+
+              s_rows <- paste0(top_line, s_rows)
+
+          } else {
+            s_rows <- ""
+          }
+        }
+      )
+    )
+  )
 }
 
 create_grand_summary_rows <- function(n_cols,
                                       list_of_summaries,
-                                      stub_available,
-                                      summaries_present,
-                                      context = "latex") {
+                                      stub_available) {
 
   if (
     length(list_of_summaries) < 1 ||
@@ -531,8 +521,7 @@ create_grand_summary_rows <- function(n_cols,
 
   grand_summary_df <-
     list_of_summaries$summary_df_display_list$`::GRAND_SUMMARY` %>%
-    dplyr::select(-group) %>%
-    as.data.frame(stringsAsFactors = FALSE)
+    dplyr::select(-.data$group)
 
   body_content_summary <- as.vector(t(grand_summary_df))
 
@@ -544,9 +533,6 @@ create_grand_summary_rows <- function(n_cols,
 
   if (length(row_splits_summary) > 0) {
 
-    if (context == "latex") {
-
-      # TODO: change this to a double rule
       top_line <- "\\midrule \n"
 
       s_rows <-
@@ -561,13 +547,12 @@ create_grand_summary_rows <- function(n_cols,
         )
 
       s_rows <- paste0(top_line, top_line, s_rows)
-    }
 
   } else {
     s_rows <- ""
   }
 
-  s_rows %>% unlist() %>% unname()
+  s_rows
 }
 
 #' Suitably replace `NA` values in the `groups_df` data frame
