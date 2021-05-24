@@ -161,14 +161,15 @@ create_columns_component_l <- function(data) {
 #' @noRd
 create_body_component_l <- function(data) {
 
-  boxh <- dt_boxhead_get(data = data)
   body <- dt_body_get(data = data)
+  boxh <- dt_boxhead_get(data = data)
 
-  summaries_present <- dt_summary_exists(data = data)
   list_of_summaries <- dt_summary_df_get(data = data)
+  summaries_present <- dt_summary_exists(data = data)
   groups_rows_df <- dt_groups_rows_get(data = data)
   stub_components <- dt_stub_components(data = data)
 
+  # Obtain the `styles_tbl` (NOTE: this is currently unused)
   styles_tbl <- dt_styles_get(data = data)
 
   n_data_cols <- dt_boxhead_get_vars_default(data = data) %>% length()
@@ -176,7 +177,7 @@ create_body_component_l <- function(data) {
 
   # Determine whether the stub is available through analysis
   # of the `stub_components`
-  stub_available <- dt_stub_components_has_rowname(stub_components)
+  stub_available <- dt_stub_components_has_rowname(stub_components = stub_components)
 
   # Get the column headings for the visible (e.g., `default`) columns
   default_vars <- dt_boxhead_get_vars_default(data = data)
@@ -197,6 +198,19 @@ create_body_component_l <- function(data) {
     body_content <- as.vector(t(body[, default_vars]))
   }
 
+  # Split `body_content` by slices of rows and create data rows
+  row_splits_body <-
+    split_body_content(
+      body_content = body_content,
+      n_cols = n_cols
+    )
+
+  body_rows <-
+    create_body_rows(
+      n_rows = n_rows,
+      row_splits_body = row_splits_body
+    )
+
   # Replace an NA group with an empty string
   if (any(is.na(groups_rows_df$group_label))) {
 
@@ -209,11 +223,11 @@ create_body_component_l <- function(data) {
         group_label = gsub("^NA", "\\textemdash", group_label))
   }
 
-  group_rows <- create_group_rows(n_rows, groups_rows_df)
-
-  # Split `body_content` by slices of rows and create data rows
-  row_splits <- split(body_content, ceiling(seq_along(body_content) / n_cols))
-  data_rows <- create_data_rows(n_rows = n_rows, row_splits = row_splits)
+  group_rows <-
+    create_group_rows(
+      n_rows = n_rows,
+      groups_rows_df = groups_rows_df
+    )
 
   summary_rows <-
     create_summary_rows(
@@ -236,7 +250,7 @@ create_body_component_l <- function(data) {
 
   paste(
     paste(
-      paste0(group_rows, data_rows, summary_rows),
+      paste0(group_rows, body_rows, summary_rows),
       collapse = ""
     ),
     grand_summary_rows,
@@ -340,22 +354,22 @@ create_group_rows <- function(n_rows,
             top_border = x != 1,
             bottom_border = x != n_rows
           )
-
-        })
+        }
+      )
     )
   )
 }
 
-# Function to build a vector of `data` rows in the table body
-create_data_rows <- function(n_rows,
-                             row_splits) {
+# Function to build a vector of `body` rows
+create_body_rows <- function(n_rows,
+                             row_splits_body) {
 
   unname(
     unlist(
       lapply(
         seq_len(n_rows),
         FUN = function(x) {
-          latex_body_row(content = row_splits[[x]], type = "row")
+          latex_body_row(content = row_splits_body[[x]], type = "row")
         }
       )
     )
@@ -371,9 +385,7 @@ create_summary_rows <- function(n_rows,
                                 stub_available,
                                 summaries_present) {
 
-  default_vars <-
-    dplyr::filter(boxh, type == "default") %>%
-    dplyr::pull(var)
+  default_vars <- dplyr::pull(dplyr::filter(boxh, type == "default"), "var")
 
   unname(
     unlist(
@@ -410,9 +422,7 @@ create_summary_rows <- function(n_rows,
 
           if (length(row_splits_summary) > 0) {
 
-            top_line <- "\\midrule \n"
-
-            s_rows <-
+            summary_rows <-
               paste(
                 vapply(
                   row_splits_summary,
@@ -423,10 +433,10 @@ create_summary_rows <- function(n_rows,
                 collapse = ""
               )
 
-            s_rows <- paste0(top_line, s_rows)
+            summary_rows <- paste0(summary_h_border, summary_rows)
 
           } else {
-            s_rows <- ""
+            summary_rows <- ""
           }
         }
       )
@@ -446,27 +456,23 @@ create_grand_summary_rows <- function(n_cols,
     return("")
   }
 
-  default_vars <-
-    dplyr::filter(boxh, type == "default") %>%
-    dplyr::pull(var)
+  default_vars <- dplyr::pull(dplyr::filter(boxh, type == "default"), "var")
 
   grand_summary_df <-
     list_of_summaries$summary_df_display_list$`::GRAND_SUMMARY` %>%
     dplyr::select(rowname, .env$default_vars)
 
-  body_content_summary <- as.vector(t(grand_summary_df))
+  body_content_grand_summary <- as.vector(t(grand_summary_df))
 
   row_splits_summary <-
     split_body_content(
-      body_content = body_content_summary,
+      body_content = body_content_grand_summary,
       n_cols = n_cols
     )
 
   if (length(row_splits_summary) > 0) {
 
-    top_line <- "\\midrule \n"
-
-    s_rows <-
+    grand_summary_rows <-
       paste(
         vapply(
           row_splits_summary,
@@ -477,14 +483,19 @@ create_grand_summary_rows <- function(n_cols,
         collapse = ""
       )
 
-    s_rows <- paste0(top_line, top_line, s_rows)
+    grand_summary_rows <- paste0(grand_summary_h_border, grand_summary_rows)
 
   } else {
-    s_rows <- ""
+    grand_summary_rows <- ""
   }
 
-  s_rows
+  grand_summary_rows
 }
+
+# Define horizontal border line types for
+# summary rows and for grand summary rows
+summary_h_border <- "\\midrule \n"
+grand_summary_h_border <- "\\midrule \n\\midrule \n"
 
 #' Split the body content vector into a list structure
 #'
