@@ -4,10 +4,10 @@
 \alias{fmt}
 \title{Set a column format with a formatter function}
 \usage{
-fmt(data, columns = everything(), rows = everything(), fns)
+fmt(.data, columns = everything(), rows = everything(), fns)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{The columns to format. Can either be a series of column names
 provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
@@ -35,6 +35,7 @@ than any of the specialized \verb{fmt_*()} functions that are available in
 \strong{gt}. Along with the \code{columns} and \code{rows} arguments that provide some
 precision in targeting data cells, the \code{fns} argument allows you to define
 one or more functions for manipulating the raw data.
+
 If providing a single function to \code{fns}, the recommended format is in the
 form: \code{fns = function(x) ...}. This single function will format the targeted
 data cells the same way regardless of the output format (e.g., HTML, LaTeX,

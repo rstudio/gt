@@ -5,7 +5,7 @@
 \title{Format values to scientific notation}
 \usage{
 fmt_scientific(
-  data,
+  .data,
   columns,
   rows = everything(),
   decimals = 2,
@@ -18,7 +18,7 @@ fmt_scientific(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{The columns to format. Can either be a series of column names
 provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function

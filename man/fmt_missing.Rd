@@ -4,10 +4,10 @@
 \alias{fmt_missing}
 \title{Format missing values}
 \usage{
-fmt_missing(data, columns, rows = everything(), missing_text = "---")
+fmt_missing(.data, columns, rows = everything(), missing_text = "---")
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{The columns to format. Can either be a series of column names
 provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function

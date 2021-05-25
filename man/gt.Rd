@@ -5,9 +5,9 @@
 \title{Create a \strong{gt} table object}
 \usage{
 gt(
-  data,
+  .data,
   rowname_col = "rowname",
-  groupname_col = dplyr::group_vars(data),
+  groupname_col = dplyr::group_vars(.data),
   caption = NULL,
   rownames_to_stub = FALSE,
   auto_align = TRUE,
@@ -16,7 +16,7 @@ gt(
 )
 }
 \arguments{
-\item{data}{A \code{data.frame} object or a tibble.}
+\item{.data}{A \code{data.frame} object or a tibble.}
 
 \item{rowname_col}{The column name in the input \code{data} table to use as row
 captions to be placed in the display table stub. If the \code{rownames_to_stub}
