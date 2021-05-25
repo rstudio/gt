@@ -4,10 +4,10 @@
 \alias{as_raw_html}
 \title{Get the HTML content of a \strong{gt} table}
 \usage{
-as_raw_html(data, inline_css = TRUE)
+as_raw_html(.data, inline_css = TRUE)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{inline_css}{An option to supply styles to table elements as inlined CSS
 styles. This is useful when including the table HTML as part of an HTML

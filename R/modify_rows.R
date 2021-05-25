@@ -42,11 +42,11 @@
 #' 5-1
 #'
 #' @export
-row_group_order <- function(data,
+row_group_order <- function(.data,
                             groups) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt(data = .data)
 
   # Stop function if `groups` is not a `character` vector
   if (!inherits(groups, "character")) {
@@ -58,7 +58,7 @@ row_group_order <- function(data,
   }
 
   # Get the current arrangement of the row groups
-  arrange_groups <- dt_row_groups_get(data = data)
+  arrange_groups <- dt_row_groups_get(data = .data)
 
   # Stop function if any value in `groups` doesn't match a group name
   if (any(!groups %in% arrange_groups)) {
@@ -75,5 +75,8 @@ row_group_order <- function(data,
   groups <- c(unique(groups), base::setdiff(arrange_groups, unique(groups)))
 
   # Create and store a list of row groups in the intended ordering
-  dt_row_groups_set(data = data, row_groups = groups)
+  dt_row_groups_set(
+    data = .data,
+    row_groups = groups
+  )
 }

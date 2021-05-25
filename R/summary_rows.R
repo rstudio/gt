@@ -11,7 +11,7 @@
 #' [extract_summary()] function can be used with a `gt_tbl` object where summary
 #' rows were added via `summary_rows()`.
 #'
-#' @param data A table object that is created using the [gt()] function.
+#' @param .data A table object that is created using the [gt()] function.
 #' @param groups The groups to consider for generation of groupwise summary
 #'   rows. By default this is set to `NULL`, which results in the formation of
 #'   grand summary rows (a grand summary operates on all table data). Providing
@@ -83,7 +83,7 @@
 #' 6-1
 #'
 #' @export
-summary_rows <- function(data,
+summary_rows <- function(.data,
                          groups = NULL,
                          columns = everything(),
                          fns,
@@ -92,7 +92,7 @@ summary_rows <- function(data,
                          ...) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt(data = .data)
 
   # Collect all provided formatter options in a list
   formatter_options <- list(...)
@@ -103,25 +103,29 @@ summary_rows <- function(data,
   # is used for groupwise summaries across all
   # groups
   if (is_false(groups)) {
-    return(data)
+    return(.data)
   }
 
   # Get the `stub_df` object from `data`
-  stub_df <- dt_stub_df_get(data = data)
+  stub_df <- dt_stub_df_get(data = .data)
 
-  stub_available <- dt_stub_df_exists(data = data)
+  stub_available <- dt_stub_df_exists(data = .data)
 
   # Resolve the column names
-  columns <- resolve_cols_c(expr = {{ columns }}, data = data)
+  columns <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = .data
+    )
 
   # If there isn't a stub available, create an
   # 'empty' stub (populated with empty strings);
   # the stub is necessary for summary row labels
   if (!stub_available) {
 
-    data <-
+    .data <-
       dt_boxhead_add_var(
-        data = data,
+        data = .data,
         var = "rowname",
         type = "stub",
         column_label = list("rowname"),
@@ -131,18 +135,24 @@ summary_rows <- function(data,
         add_where = "bottom"
       )
 
+    nrow_data <- nrow(.data$`_data`)
+
     # Add the `"rowname"` column into `_data`
-    data$`_data` <-
-      data$`_data` %>%
-      dplyr::mutate(rowname = rep("", nrow(data$`_data`))) %>%
-      dplyr::select(dplyr::everything(), rowname)
+    .data$`_data` <-
+      .data$`_data` %>%
+      dplyr::mutate(rowname = rep("", .env$nrow_data)) %>%
+      dplyr::select(dplyr::everything(), .data$rowname)
 
     # Place the `rowname` values into `stub_df$rowname`; these are
     # empty strings which will provide an empty stub for locations
     # adjacent to the body rows
     stub_df[["rowname"]] <- ""
 
-    data <- dt_stub_df_set(data = data, stub_df = stub_df)
+    .data <-
+      dt_stub_df_set(
+        data = .data,
+        stub_df = stub_df
+      )
   }
 
   # Derive the summary labels
@@ -170,9 +180,13 @@ summary_rows <- function(data,
       formatter_options = formatter_options
     )
 
-  data <- dt_summary_add(data = data, summary = summary_list)
+  .data <-
+    dt_summary_add(
+      data = .data,
+      summary = summary_list
+    )
 
-  data
+  .data
 }
 
 #' Add grand summary rows using aggregation functions
@@ -231,7 +245,7 @@ summary_rows <- function(data,
 #' 6-2
 #'
 #' @export
-grand_summary_rows <- function(data,
+grand_summary_rows <- function(.data,
                                columns = everything(),
                                fns,
                                missing_text = "---",
@@ -239,10 +253,10 @@ grand_summary_rows <- function(data,
                                ...) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt(data = .data)
 
   summary_rows(
-    data,
+    .data = .data,
     groups = NULL,
     columns = {{ columns }},
     fns = fns,

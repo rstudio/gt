@@ -4,10 +4,10 @@
 \alias{as_latex}
 \title{Output a gt object as LaTeX}
 \usage{
-as_latex(data)
+as_latex(.data)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 }
 \description{
 Get the LaTeX content from a \code{gt_tbl} object as a \code{knit_asis} object. This

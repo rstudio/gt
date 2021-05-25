@@ -4,10 +4,17 @@
 \alias{tab_row_group}
 \title{Add a row group to a \strong{gt} table}
 \usage{
-tab_row_group(data, label, rows, id = label, others_label = NULL, group = NULL)
+tab_row_group(
+  .data,
+  label,
+  rows,
+  id = label,
+  others_label = NULL,
+  group = NULL
+)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{label}{The text to use for the row group label.}
 

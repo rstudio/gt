@@ -4,10 +4,10 @@
 \alias{opt_align_table_header}
 \title{Option to align the table header}
 \usage{
-opt_align_table_header(data, align = c("left", "center", "right"))
+opt_align_table_header(.data, align = c("left", "center", "right"))
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{align}{The alignment of the title and subtitle elements in the table
 header. Options are \code{"left"} (the default), \code{"center"}, or \code{"right"}.}

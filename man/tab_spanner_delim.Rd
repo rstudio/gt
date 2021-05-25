@@ -5,7 +5,7 @@
 \title{Create column labels and spanners via delimited names}
 \usage{
 tab_spanner_delim(
-  data,
+  .data,
   delim,
   columns = everything(),
   gather = TRUE,
@@ -13,7 +13,7 @@ tab_spanner_delim(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{delim}{The delimiter to use to split an input column name. The
 delimiter supplied will be autoescaped for the internal splitting

@@ -4,10 +4,10 @@
 \alias{opt_table_outline}
 \title{Option to wrap an outline around the entire table}
 \usage{
-opt_table_outline(data, style = "solid", width = px(3), color = "#D3D3D3")
+opt_table_outline(.data, style = "solid", width = px(3), color = "#D3D3D3")
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{style, width, color}{The style, width, and color properties for the table
 outline. By default, these are \code{"solid"}, \code{px(3)} (or, \code{"3px"}), and

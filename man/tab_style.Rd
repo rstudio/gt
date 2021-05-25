@@ -4,10 +4,10 @@
 \alias{tab_style}
 \title{Add custom styles to one or more cells}
 \usage{
-tab_style(data, style, locations)
+tab_style(.data, style, locations)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{style}{a vector of styles to use. The \code{\link[=cell_text]{cell_text()}}, \code{\link[=cell_fill]{cell_fill()}}, and
 \code{\link[=cell_borders]{cell_borders()}} helper functions can be used here to more easily generate

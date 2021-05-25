@@ -37,15 +37,15 @@
 #' 2-1
 #'
 #' @export
-tab_header <- function(data,
+tab_header <- function(.data,
                        title,
                        subtitle = NULL) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt(data = .data)
 
   dt_heading_title_subtitle(
-    data = data,
+    data = .data,
     title = title,
     subtitle = subtitle
   )
@@ -105,14 +105,14 @@ tab_header <- function(data,
 #' 2-2
 #'
 #' @export
-tab_spanner <- function(data,
+tab_spanner <- function(.data,
                         label,
                         columns,
                         id = label,
                         gather = TRUE) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt(data = .data)
 
   checkmate::assert_character(
     label, len = 1, any.missing = FALSE, null.ok = FALSE
@@ -126,22 +126,22 @@ tab_spanner <- function(data,
   column_names <-
     resolve_cols_c(
       expr = {{ columns }},
-      data = data
+      data = .data
     )
 
   # If `column_names` evaluates to an empty vector or is NULL,
   # return the data unchanged
   if (length(column_names) < 1) {
-    return(data)
+    return(.data)
   }
 
   # Check `id` against existing `id` values and stop if necessary
-  check_spanner_id_unique(data = data, spanner_id = id)
+  check_spanner_id_unique(data = .data, spanner_id = id)
 
   # Add the spanner to the `_spanners` table
-  data <-
+  .data <-
     dt_spanners_add(
-      data = data,
+      data = .data,
       vars = column_names,
       spanner_label = label,
       spanner_id = id,
@@ -151,15 +151,15 @@ tab_spanner <- function(data,
   if (isTRUE(gather) && length(column_names) >= 1) {
 
     # Move columns into place
-    data <-
-      data %>%
+    .data <-
       cols_move(
+        .data = .data,
         columns = column_names,
         after = column_names[1]
       )
   }
 
-  data
+  .data
 }
 
 #' Create column labels and spanners via delimited names
@@ -219,25 +219,25 @@ tab_spanner <- function(data,
 #' 2-3
 #'
 #' @export
-tab_spanner_delim <- function(data,
+tab_spanner_delim <- function(.data,
                               delim,
                               columns = everything(),
                               gather = TRUE,
                               split = c("last", "first")) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt(data = .data)
 
   split <- match.arg(split)
 
   # Get all of the columns in the dataset
-  all_cols <- dt_boxhead_get_vars(data = data)
+  all_cols <- dt_boxhead_get_vars(data = .data)
 
   # Get the columns supplied in `columns` as a character vector
   columns <-
     resolve_cols_c(
       expr = {{ columns }},
-      data = data
+      data = .data
     )
 
   if (!is.null(columns)) {
@@ -247,7 +247,7 @@ tab_spanner_delim <- function(data,
   }
 
   if (length(colnames) == 0) {
-    return(data)
+    return(.data)
   }
 
   colnames_has_delim <- grepl(pattern = delim, x = colnames, fixed = TRUE)
@@ -277,9 +277,9 @@ tab_spanner_delim <- function(data,
 
     for (label in names(spanner_var_list)) {
 
-      data <-
+      .data <-
         tab_spanner(
-          data = data,
+          .data = .data,
           label = label,
           columns = spanner_var_list[[label]],
           gather = gather
@@ -295,16 +295,16 @@ tab_spanner_delim <- function(data,
       new_labels_i <- new_labels[i]
       var_i <- colnames_with_delim[i]
 
-      data <-
+      .data <-
         dt_boxhead_edit(
-          data = data,
+          data = .data,
           var = var_i,
           column_label = new_labels_i
         )
     }
   }
 
-  data
+  .data
 }
 
 #' Add a row group to a **gt** table
@@ -390,7 +390,7 @@ tab_spanner_delim <- function(data,
 #'
 #' @import rlang
 #' @export
-tab_row_group <- function(data,
+tab_row_group <- function(.data,
                           label,
                           rows,
                           id = label,
@@ -398,9 +398,9 @@ tab_row_group <- function(data,
                           group = NULL) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt(data = .data)
 
-  arrange_groups_vars <- dt_row_groups_get(data = data)
+  arrange_groups_vars <- dt_row_groups_get(data = .data)
 
   if (!missing(group)) {
 
@@ -418,7 +418,11 @@ tab_row_group <- function(data,
   # Warn user about `others_label` deprecation
   if (!is.null(others_label)) {
 
-    data <- tab_options(data = data, row_group.default_label = others_label)
+    .data <-
+      tab_options(
+        .data = .data,
+        row_group.default_label = others_label
+      )
 
     warning(
       "The `others_label` argument has been deprecated in gt 0.3.0:\n",
@@ -427,41 +431,42 @@ tab_row_group <- function(data,
     )
 
     if (missing(label) && missing(rows) && missing(id)) {
-      return(data)
+      return(.data)
     }
   }
 
   # Check `id` against existing `id` values and stop if necessary
-  check_row_group_id_unique(data = data, row_group_id = id)
+  check_row_group_id_unique(data = .data, row_group_id = id)
 
   # Capture the `rows` expression
   row_expr <- rlang::enquo(rows)
 
   # Get the `stub_df` data frame from `data`
-  stub_df <- dt_stub_df_get(data = data)
-  data_tbl <- dt_data_get(data = data)
+  stub_df <- dt_stub_df_get(data = .data)
+  data_tbl <- dt_data_get(data = .data)
 
   # Resolve the row numbers using the `resolve_vars` function
   resolved_rows_idx <-
     resolve_rows_i(
       expr = !!row_expr,
-      data = data
+      data = .data
     )
 
-  stub_df <- dt_stub_df_get(data = data)
+  stub_df <- dt_stub_df_get(data = .data)
 
   # Place the `label` in the `groupname` column `stub_df`
   stub_df[resolved_rows_idx, "group_label"] <- list(list(label))
   stub_df[resolved_rows_idx, "group_id"] <- as.character(id)
 
-  data <- dt_stub_df_set(data = data, stub_df = stub_df)
+  .data <- dt_stub_df_set(data = .data, stub_df = stub_df)
 
   # Set the `_row_groups` vector here with the group id; new groups will
   # be placed at the front, pushing down `NA` (the 'Others' group)
   arrange_groups_vars <- c(id, stats::na.omit(arrange_groups_vars))
   arrange_groups_vars <- unique(arrange_groups_vars)
   arrange_groups_vars <- arrange_groups_vars[arrange_groups_vars %in% stub_df$group_id]
-  if (dt_stub_groupname_has_na(data = data)) {
+
+  if (dt_stub_groupname_has_na(data = .data)) {
     arrange_groups_vars <- c(arrange_groups_vars, NA_character_)
   }
 
@@ -469,13 +474,13 @@ tab_row_group <- function(data,
     arrange_groups_vars <- character(0)
   }
 
-  data <-
+  .data <-
     dt_row_groups_set(
-      data = data,
+      data = .data,
       row_groups = arrange_groups_vars
     )
 
-  data
+  .data
 }
 
 #' Add label text to the stubhead
@@ -514,13 +519,13 @@ tab_row_group <- function(data,
 #' 2-5
 #'
 #' @export
-tab_stubhead <- function(data,
+tab_stubhead <- function(.data,
                          label) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt(data = .data)
 
-  dt_stubhead_label(data = data, label = label)
+  dt_stubhead_label(data = .data, label = label)
 }
 
 #' Add a table footnote
@@ -599,12 +604,12 @@ tab_stubhead <- function(data,
 #' 2-6
 #'
 #' @export
-tab_footnote <- function(data,
+tab_footnote <- function(.data,
                          footnote,
                          locations) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt(data = .data)
 
   # Resolve into a list of locations
   locations <- as_locations(locations)
@@ -612,15 +617,16 @@ tab_footnote <- function(data,
   # Resolve the locations of the targeted data cells and append
   # the footnotes
   for (loc in locations) {
-    data <-
+
+    .data <-
       set_footnote(
         loc = loc,
-        data = data,
+        data = .data,
         footnote = process_text(footnote)
       )
   }
 
-  data
+  .data
 }
 
 set_footnote <- function(loc, data, footnote) {
@@ -879,14 +885,14 @@ set_footnote.cells_footnotes <- function(loc, data, footnote) {
 #' 2-7
 #'
 #' @export
-tab_source_note <- function(data,
+tab_source_note <- function(.data,
                             source_note) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt(data = .data)
 
   dt_source_notes_add(
-    data = data,
+    data = .data,
     source_note = source_note
   )
 }
@@ -1026,12 +1032,12 @@ tab_source_note <- function(data,
 #'   functions for targeting the locations to be styled.
 #'
 #' @export
-tab_style <- function(data,
+tab_style <- function(.data,
                       style,
                       locations) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt(data = .data)
 
   # Intercept font styles that require registration
   if ("cell_text" %in% names(style)) {
@@ -1043,15 +1049,15 @@ tab_style <- function(data,
 
       existing_additional_css <-
         dt_options_get_value(
-          data = data,
+          data = .data,
           option = "table_additional_css"
         )
 
       additional_css <- c(font$import_stmt, existing_additional_css)
 
-      data <-
+      .data <-
         tab_options(
-          data = data,
+          .data = .data,
           table.additional_css = additional_css
         )
 
@@ -1074,15 +1080,15 @@ tab_style <- function(data,
   # the format directives
   for (loc in locations) {
 
-    data <-
+    .data <-
       set_style(
         loc = loc,
-        data = data,
+        data = .data,
         style = style
       )
   }
 
-  data
+  .data
 }
 
 as_style <- function(style) {
@@ -1636,7 +1642,7 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' 2-9
 #'
 #' @export
-tab_options <- function(data,
+tab_options <- function(.data,
                         container.width = NULL,
                         container.height = NULL,
                         container.overflow.x = NULL,
@@ -1773,12 +1779,12 @@ tab_options <- function(data,
   # TODO: add helper functions to divide the options into those by parameter
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt(data = .data)
 
   # Extract the options table from `data`
-  opts_df <- dt_options_get(data = data)
+  opts_df <- dt_options_get(data = .data)
 
-  arg_names <- formals(tab_options) %>% names() %>% base::setdiff("data")
+  arg_names <- formals(tab_options) %>% names() %>% base::setdiff(".data")
   arg_vals <- mget(arg_names)
   arg_vals <- arg_vals[!vapply(arg_vals, FUN = is.null, FUN.VALUE = logical(1))]
   arg_vals <- arg_vals %>% set_super_options()
@@ -1812,10 +1818,10 @@ tab_options <- function(data,
         dplyr::anti_join(new_df, by = "parameter")
     )
 
-  # Write the modified options table back to `data`
-  data <- dt_options_set(data = data, options = opts_df)
+  # Write the modified options table back to `.data`
+  .data <- dt_options_set(data = .data, options = opts_df)
 
-  data
+  .data
 }
 
 preprocess_tab_option <- function(option, var_name, type) {

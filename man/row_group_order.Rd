@@ -4,10 +4,10 @@
 \alias{row_group_order}
 \title{Modify the ordering of any row groups}
 \usage{
-row_group_order(data, groups)
+row_group_order(.data, groups)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{groups}{A character vector of row group ID values corresponding to the
 revised ordering. While this vector must contain valid group ID values, it
