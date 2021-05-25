@@ -15,7 +15,7 @@ test_that("the `fmt_number()` function works correctly in the HTML context", {
 
   # Create a `gt_tbl` object with `gt()` and the
   # `data_tbl` dataset
-  tab <- gt(data = data_tbl)
+  tab <- gt(data_tbl)
 
   # Expect that the object has the correct classes
   expect_is(tab, c("gt_tbl", "data.frame"))
@@ -289,7 +289,7 @@ test_that("the `fmt_number()` function can scale/suffix larger numbers", {
     )
 
   # Create a `gt_tbl` object with `gt()` and the `data_tbl` dataset
-  tab <- gt(data = data_tbl)
+  tab <- gt(data_tbl)
 
   # Format the `num` column to 2 decimal places, have the `suffixing` option
   # set to TRUE (default labels, all 4 ranges used)
@@ -407,9 +407,8 @@ test_that("the `fmt_number()` function can scale/suffix larger numbers", {
   # numeric column and with one row
   data_tbl_2 <- data.frame(num = 999.9999)
 
-  # Create a `gt_tbl` object with `gt()` and the
-  # `data_tbl_2` dataset
-  tab_2 <- gt(data = data_tbl_2)
+  # Create a `gt_tbl` object with `gt()` and the `data_tbl_2` dataset
+  tab_2 <- gt(data_tbl_2)
 
   #
   # Adjust the `decimals` value to verify that
@@ -493,7 +492,7 @@ test_that("the `fmt_number()` function format to specified significant figures",
   numbers_tbl <- dplyr::tibble(num = numbers)
 
   # Create a `gt_tbl` object with `gt()` and the `numbers_tbl` dataset
-  tab <- gt(data = numbers_tbl)
+  tab <- gt(numbers_tbl)
 
   # Format the `num` column to 5 significant figures
   expect_equal(
@@ -590,9 +589,8 @@ test_that("the `drop_trailing_dec_mark` option works in select `fmt_*()` functio
   # Create a single-column tibble with these values in `num`
   numbers_tbl <- dplyr::tibble(num = numbers)
 
-  # Create a `gt_tbl` object with `gt()` and the
-  # `numbers_tbl` dataset
-  tab <- gt(data = numbers_tbl)
+  # Create a `gt_tbl` object with `gt()` and the `numbers_tbl` dataset
+  tab <- gt(numbers_tbl)
 
   # Format the `num` column using `fmt_number()` with default options
   expect_equal(
@@ -731,7 +729,7 @@ test_that("`fmt_number()` with `suffixing = TRUE` works with small numbers", {
     )
 
   # Create a `gt_tbl` object with `gt()` and the `data_tbl` dataset
-  tab <- gt(data = data_tbl)
+  tab <- gt(data_tbl)
 
   # Format the `num` column to 2 decimal places, have the `suffixing` option
   # set to TRUE; we shouldn't expect to see any suffixes

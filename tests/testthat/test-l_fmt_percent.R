@@ -15,7 +15,7 @@ test_that("the `fmt_percent()` function works correctly in the LaTeX context", {
 
   # Create a `tbl_latex` object with `gt()` and the
   # `data_tbl` dataset
-  tbl_latex <- gt(data = data_tbl)
+  tbl_latex <- gt(data_tbl)
 
   # Format the `num_1` column to 2 decimal places, use all
   # other defaults; extract `output_df` and compare to expected values

@@ -14,7 +14,7 @@
 #' center-alignment is for columns of class `logical`, `factor`, or `list`; and
 #' right-alignment is used for the `numeric` and `integer` columns.
 #'
-#' @param data A table object that is created using the [gt()] function.
+#' @param .data A table object that is created using the [gt()] function.
 #' @param align The alignment type. This can be any of `"center"`, `"left"`, or
 #'   `"right"` for center-, left-, or right-alignment. Alternatively, the
 #'   `"auto"` option (the default), will automatically align values in columns
@@ -49,15 +49,15 @@
 #' 4-1
 #'
 #' @export
-cols_align <- function(data,
+cols_align <- function(.data,
                        align = c("auto", "left", "center", "right"),
                        columns = everything()) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt(data = .data)
 
   # Get the internal data table
-  data_tbl <- dt_data_get(data = data)
+  data_tbl <- dt_data_get(data = .data)
 
   # Get the `align` value, this stops the function if there is no match
   align <- match.arg(align)
@@ -66,7 +66,7 @@ cols_align <- function(data,
   column_names <-
     resolve_cols_c(
       expr = {{ columns }},
-      data = data
+      data = .data
     )
 
   if (align == "auto") {
@@ -98,19 +98,21 @@ cols_align <- function(data,
       )
 
   } else {
+
     align <- rep(align, length(column_names))
   }
 
   for (i in seq(column_names)) {
-    data <-
+
+    .data <-
       dt_boxhead_edit(
-        data = data,
+        data = .data,
         var = column_names[i],
         column_align = align[i]
       )
   }
 
-  data
+  .data
 }
 
 #' Set the widths of columns
@@ -135,7 +137,7 @@ cols_align <- function(data,
 #'
 #' @inheritParams cols_align
 #' @param ... Expressions for the assignment of column widths for the table
-#'   columns in `data`. Two-sided formulas (e.g, `<LHS> ~ <RHS>`) can be used,
+#'   columns in `.data`. Two-sided formulas (e.g, `<LHS> ~ <RHS>`) can be used,
 #'   where the left-hand side corresponds to selections of columns and the
 #'   right-hand side evaluates to single-length character values in the form
 #'   `{##}px` (i.e., pixel dimensions); the [px()] helper function is best used
@@ -180,17 +182,17 @@ cols_align <- function(data,
 #' 4-2
 #'
 #' @export
-cols_width <- function(data,
+cols_width <- function(.data,
                        ...,
                        .list = list2(...)) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt(data = .data)
 
   # Collect a named list of column widths
   widths_list <- .list
 
-  # If nothing is provided, return `data` unchanged
+  # If nothing is provided, return `.data` unchanged
   if (length(widths_list) == 0) {
     stop("Nothing was provided to `...`:\n",
          " * Use formula expressions to define custom column widths",
@@ -224,7 +226,7 @@ cols_width <- function(data,
     columns <-
       resolve_cols_c(
         expr = !!cols,
-        data = data,
+        data = .data,
         excl_stub = FALSE
       ) %>%
       base::setdiff(columns_used)
@@ -240,9 +242,10 @@ cols_width <- function(data,
     if (is.numeric(width)) width <- paste_right(as.character(width), "px")
 
     for (column in columns) {
-      data <-
+
+      .data <-
         dt_boxhead_edit(
-          data = data,
+          data = .data,
           var = column,
           column_width = list(width)
         )
@@ -250,27 +253,27 @@ cols_width <- function(data,
   }
 
   unset_widths <-
-    dt_boxhead_get(data = data) %>%
+    dt_boxhead_get(data = .data) %>%
     .$column_width %>%
     lapply(is.null) %>%
     unlist()
 
   if (any(unset_widths)) {
 
-    columns_unset <- dt_boxhead_get_vars(data = data)[unset_widths]
+    columns_unset <- dt_boxhead_get_vars(data = .data)[unset_widths]
 
     for (column in columns_unset) {
 
-      data <-
+      .data <-
         dt_boxhead_edit(
-          data = data,
+          data = .data,
           var = column,
           column_width = list("")
         )
     }
   }
 
-  data
+  .data
 }
 
 #' Relabel one or more columns
@@ -347,19 +350,19 @@ cols_width <- function(data,
 #'
 #' @import rlang
 #' @export
-cols_label <- function(data,
+cols_label <- function(.data,
                        ...,
                        .list = list2(...)) {
-
-  # Perform input object validation
-  stop_if_not_gt(data = data)
 
   # Collect a named list of column labels
   labels_list <- .list
 
+  # Perform input object validation
+  stop_if_not_gt(data = .data)
+
   # If nothing is provided, return `data` unchanged
   if (length(labels_list) == 0) {
-    return(data)
+    return(.data)
   }
 
   # Test for names being NULL
@@ -373,32 +376,32 @@ cols_label <- function(data,
   }
 
   # Stop function if any of the column names specified are not in `cols_labels`
-  if (!all(names(labels_list) %in% dt_boxhead_get_vars(data = data))) {
-    stop("All column names provided must exist in the input `data` table.")
+  if (!all(names(labels_list) %in% dt_boxhead_get_vars(data = .data))) {
+    stop("All column names provided must exist in the input `.data` table.")
   }
 
   # Filter the list of labels by the var names in `data`
   labels_list <-
-    labels_list[names(labels_list) %in% dt_boxhead_get_vars(data = data)]
+    labels_list[names(labels_list) %in% dt_boxhead_get_vars(data = .data)]
 
   # If no labels remain after filtering, return the data
   if (length(labels_list) == 0) {
-    return(data)
+    return(.data)
   }
 
   nm_labels_list <- names(labels_list)
 
   for (i in seq_along(labels_list)) {
 
-    data <-
+    .data <-
       dt_boxhead_edit_column_label(
-        data = data,
+        data = .data,
         var = nm_labels_list[i],
         column_label = labels_list[[i]]
       )
   }
 
-  data
+  .data
 }
 
 #' Move one or more columns to the start
@@ -463,19 +466,19 @@ cols_label <- function(data,
 #'
 #' @import rlang
 #' @export
-cols_move_to_start <- function(data,
+cols_move_to_start <- function(.data,
                                columns) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt(data = .data)
 
-  vars <- dt_boxhead_get_vars(data = data)
+  vars <- dt_boxhead_get_vars(data = .data)
 
   # Get the columns supplied in `columns` as a character vector
   columns <-
     resolve_cols_c(
       expr = {{ columns }},
-      data = data
+      data = .data
     )
 
   # Stop function if no `columns` are provided
@@ -485,7 +488,7 @@ cols_move_to_start <- function(data,
 
   # Stop function if any of the `columns` don't exist in `vars`
   if (!all(columns %in% vars)) {
-    stop("All `columns` must exist and be visible in the input `data` table.",
+    stop("All `columns` must exist and be visible in the input `.data` table.",
          call. = FALSE)
   }
 
@@ -494,9 +497,9 @@ cols_move_to_start <- function(data,
 
   new_vars <- append(other_columns, columns, after = 0)
 
-  data <- dt_boxhead_set_var_order(data = data, vars = new_vars)
+  .data <- dt_boxhead_set_var_order(data = .data, vars = new_vars)
 
-  data
+  .data
 }
 
 #' Move one or more columns to the end
@@ -560,19 +563,19 @@ cols_move_to_start <- function(data,
 #'
 #' @import rlang
 #' @export
-cols_move_to_end <- function(data,
+cols_move_to_end <- function(.data,
                              columns) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt(data = .data)
 
-  vars <- dt_boxhead_get_vars(data = data)
+  vars <- dt_boxhead_get_vars(data = .data)
 
   # Get the columns supplied in `columns` as a character vector
   columns <-
     resolve_cols_c(
       expr = {{ columns }},
-      data = data
+      data = .data
     )
 
   # Stop function if no `columns` are provided
@@ -582,7 +585,7 @@ cols_move_to_end <- function(data,
 
   # Stop function if any of the `columns` don't exist in `vars`
   if (!all(columns %in% vars)) {
-    stop("All `columns` must exist and be visible in the input `data` table.",
+    stop("All `columns` must exist and be visible in the input `.data` table.",
          call. = FALSE)
   }
 
@@ -591,9 +594,9 @@ cols_move_to_end <- function(data,
 
   new_vars <- append(other_columns, columns)
 
-  data <- dt_boxhead_set_var_order(data = data, vars = new_vars)
+  .data <- dt_boxhead_set_var_order(data = .data, vars = new_vars)
 
-  data
+  .data
 }
 
 #' Move one or more columns
@@ -648,28 +651,28 @@ cols_move_to_end <- function(data,
 #'
 #' @import rlang
 #' @export
-cols_move <- function(data,
+cols_move <- function(.data,
                       columns,
                       after) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt(data = .data)
 
   # Get the columns supplied in `columns` as a character vector
   columns <-
     resolve_cols_c(
       expr = {{ columns }},
-      data = data
+      data = .data
     )
 
   # Get the `after` columns as a character vector
   after <-
     resolve_cols_c(
       expr = {{ after }},
-      data = data
+      data = .data
     )
 
-  vars <- dt_boxhead_get_vars(data = data)
+  vars <- dt_boxhead_get_vars(data = .data)
 
   # Stop function if `after` contains multiple columns
   if (length(after) > 1) {
@@ -679,7 +682,7 @@ cols_move <- function(data,
 
   # Stop function if `after` doesn't exist in `vars`
   if (!(after %in% vars)) {
-    stop("The column supplied to `after` doesn't exist in the input `data` table.",
+    stop("The column supplied to `after` doesn't exist in the input `.data` table.",
          call. = FALSE)
   }
 
@@ -690,7 +693,7 @@ cols_move <- function(data,
 
   # Stop function if any of the `columns` don't exist in `vars`
   if (!all(columns %in% vars)) {
-    stop("All `columns` must exist and be visible in the input `data` table.",
+    stop("All `columns` must exist and be visible in the input `.data` table.",
          call. = FALSE)
   }
 
@@ -704,9 +707,9 @@ cols_move <- function(data,
 
   new_vars <- append(other_columns, moving_columns, after = after_index)
 
-  data <- dt_boxhead_set_var_order(data = data, vars = new_vars)
+  .data <- dt_boxhead_set_var_order(data = .data, vars = new_vars)
 
-  data
+  .data
 }
 
 #' Hide one or more columns
@@ -784,20 +787,20 @@ cols_move <- function(data,
 #'
 #' @import rlang
 #' @export
-cols_hide <- function(data,
+cols_hide <- function(.data,
                       columns) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt(data = .data)
 
   # Get the columns supplied in `columns` as a character vector
   columns <-
     resolve_cols_c(
       expr = {{ columns }},
-      data = data
+      data = .data
     )
 
-  vars <- dt_boxhead_get_vars(data = data)
+  vars <- dt_boxhead_get_vars(data = .data)
 
   # Stop function if no `columns` are provided
   if (length(columns) == 0) {
@@ -806,14 +809,14 @@ cols_hide <- function(data,
 
   # Stop function if any of the `columns` don't exist in `vars`
   if (!all(columns %in% vars)) {
-    stop("All `columns` must exist in the input `data` table.",
+    stop("All `columns` must exist in the input `.data` table.",
          call. = FALSE)
   }
 
   # Set the `"hidden"` type for the `columns` in `_dt_boxhead`
-  data <- dt_boxhead_set_hidden(data = data, vars = columns)
+  .data <- dt_boxhead_set_hidden(data = .data, vars = columns)
 
-  data
+  .data
 }
 
 #' Unhide one or more columns
@@ -877,20 +880,20 @@ cols_hide <- function(data,
 #'
 #' @import rlang
 #' @export
-cols_unhide <- function(data,
+cols_unhide <- function(.data,
                         columns) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt(data = .data)
 
   # Get the columns supplied in `columns` as a character vector
   columns <-
     resolve_cols_c(
       expr = {{ columns }},
-      data = data
+      data = .data
     )
 
-  vars <- dt_boxhead_get_vars(data = data)
+  vars <- dt_boxhead_get_vars(data = .data)
 
   # Stop function if no `columns` are provided
   if (length(columns) == 0) {
@@ -899,14 +902,14 @@ cols_unhide <- function(data,
 
   # Stop function if any of the `columns` don't exist in `vars`
   if (!all(columns %in% vars)) {
-    stop("All `columns` must exist in the input `data` table.",
+    stop("All `columns` must exist in the input `.data` table.",
          call. = FALSE)
   }
 
   # Set the `"visible"` type for the `columns` in `_dt_boxhead`
-  data <- dt_boxhead_set_not_hidden(data = data, vars = columns)
+  .data <- dt_boxhead_set_not_hidden(data = .data, vars = columns)
 
-  data
+  .data
 }
 
 #' Merge two columns to a value & uncertainty column
@@ -994,27 +997,27 @@ cols_unhide <- function(data,
 #'
 #' @import rlang
 #' @export
-cols_merge_uncert <- function(data,
+cols_merge_uncert <- function(.data,
                               col_val,
                               col_uncert,
                               sep = " +/- ",
                               autohide = TRUE) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt(data = .data)
 
   resolved <-
     cols_merge_resolver(
-      data = data,
+      data = .data,
       col_begin = {{ col_val }},
       col_end = {{ col_uncert }},
       sep = sep
     )
 
   # Create an entry and add it to the `_col_merge` attribute
-  data <-
+  .data <-
     dt_col_merge_add(
-      data = data,
+      data = .data,
       col_merge = dt_col_merge_entry(
         vars = resolved$columns,
         type = "merge_uncert",
@@ -1028,13 +1031,13 @@ cols_merge_uncert <- function(data,
     col_uncert <-
       resolve_cols_c(
         expr = {{ col_uncert }},
-        data = data
+        data = .data
       )
 
-    data <- cols_hide(data = data, columns = col_uncert)
+    .data <- cols_hide(.data = .data, columns = col_uncert)
   }
 
-  data
+  .data
 }
 
 #' Merge two columns to a value range column
@@ -1114,27 +1117,27 @@ cols_merge_uncert <- function(data,
 #'
 #' @import rlang
 #' @export
-cols_merge_range <- function(data,
+cols_merge_range <- function(.data,
                              col_begin,
                              col_end,
                              sep = "--",
                              autohide = TRUE) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt(data = .data)
 
   resolved <-
     cols_merge_resolver(
-      data = data,
+      data = .data,
       col_begin = {{ col_begin }},
       col_end = {{ col_end }},
       sep = sep
     )
 
   # Create an entry and add it to the `_col_merge` attribute
-  data <-
+  .data <-
     dt_col_merge_add(
-      data = data,
+      data = .data,
       col_merge = dt_col_merge_entry(
         vars = resolved$columns,
         type = "merge_range",
@@ -1148,13 +1151,13 @@ cols_merge_range <- function(data,
     col_end <-
       resolve_cols_c(
         expr = {{ col_end }},
-        data = data
+        data = .data
       )
 
-    data <- cols_hide(data = data, columns = col_end)
+    .data <- cols_hide(.data = .data, columns = col_end)
   }
 
-  data
+  .data
 }
 
 cols_merge_resolver <- function(data, col_begin, col_end, sep) {
@@ -1281,26 +1284,26 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #'
 #' @import rlang
 #' @export
-cols_merge_n_pct <- function(data,
+cols_merge_n_pct <- function(.data,
                              col_n,
                              col_pct,
                              autohide = TRUE) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt(data = .data)
 
   resolved <-
     cols_merge_resolver(
-      data = data,
+      data = .data,
       col_begin = {{ col_n }},
       col_end = {{ col_pct }},
       sep = ""
     )
 
   # Create an entry and add it to the `_col_merge` attribute
-  data <-
+  .data <-
     dt_col_merge_add(
-      data = data,
+      data = .data,
       col_merge = dt_col_merge_entry(
         vars = resolved$columns,
         type = "merge_n_pct",
@@ -1314,13 +1317,13 @@ cols_merge_n_pct <- function(data,
     col_pct <-
       resolve_cols_c(
         expr = {{ col_pct }},
-        data = data
+        data = .data
       )
 
-    data <- data %>% cols_hide(columns = col_pct)
+    .data <- cols_hide(.data = .data, columns = col_pct)
   }
 
-  data
+  .data
 }
 
 #' Merge data from two or more columns to a single column
@@ -1392,19 +1395,19 @@ cols_merge_n_pct <- function(data,
 #'
 #' @import rlang
 #' @export
-cols_merge <- function(data,
+cols_merge <- function(.data,
                        columns,
                        hide_columns = columns[-1],
                        pattern = paste0("{", seq_along(columns), "}", collapse = " ")) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt(data = .data)
 
   # Get the columns supplied in `columns` as a character vector
   columns <-
     resolve_cols_c(
       expr = {{ columns }},
-      data = data
+      data = .data
     )
 
   # NOTE: It's important that `hide_columns` NOT be evaluated until after the
@@ -1418,7 +1421,7 @@ cols_merge <- function(data,
     hide_columns <-
       resolve_cols_c(
         expr = {{ hide_columns }},
-        data = data
+        data = .data
       )
   )
 
@@ -1427,20 +1430,22 @@ cols_merge <- function(data,
     hide_columns_from_supplied <- base::intersect(hide_columns, columns)
 
     if (length(base::setdiff(hide_columns, columns) > 0)) {
-      warning("Only the columns supplied in `columns` will be hidden.\n",
-              " * use `cols_hide()` to hide any out of scope columns",
-              call. = FALSE)
+      warning(
+        "Only the columns supplied in `columns` will be hidden.\n",
+        " * use `cols_hide()` to hide any out of scope columns",
+        call. = FALSE
+      )
     }
 
     if (length(hide_columns_from_supplied) > 0) {
-      data <- cols_hide(data = data, columns = hide_columns_from_supplied)
+      .data <- cols_hide(.data = .data, columns = hide_columns_from_supplied)
     }
   }
 
   # Create an entry and add it to the `_col_merge` attribute
-  data <-
+  .data <-
     dt_col_merge_add(
-      data = data,
+      data = .data,
       col_merge = dt_col_merge_entry(
         vars = columns,
         type = "merge",
@@ -1448,5 +1453,5 @@ cols_merge <- function(data,
       )
     )
 
-  data
+  .data
 }

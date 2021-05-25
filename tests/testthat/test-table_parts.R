@@ -42,7 +42,7 @@ test_that("a gt table contains the expected heading components", {
   # Create a `tbl_html` object with `gt()`; this table
   # contains a title
   tbl_html <-
-    gt(data = mtcars_short) %>%
+    gt(mtcars_short) %>%
     tab_header(title = "test heading") %>%
     render_as_html() %>%
     xml2::read_html()
@@ -67,7 +67,7 @@ test_that("a gt table contains the expected heading components", {
   # Create a `gt_tbl` object with `gt()`; this table
   # contains a title and a subtitle
   tbl_html <-
-    gt(data = mtcars_short) %>%
+    gt(mtcars_short) %>%
     tab_header(
       title = "test title",
       subtitle = "test subtitle") %>%
@@ -93,7 +93,7 @@ test_that("a gt table contains the expected stubhead label", {
   # Create a `tbl_html` object with `gt()`; this table
   # contains a stub and a stubhead label
   tbl_html <-
-    gt(data = mtcars_short, rownames_to_stub = TRUE) %>%
+    gt(mtcars_short, rownames_to_stub = TRUE) %>%
     tab_stubhead(label = "the mtcars") %>%
     render_as_html() %>%
     xml2::read_html()
@@ -114,7 +114,7 @@ test_that("a gt table contains the expected spanner column labels", {
   # contains the spanner heading `perimeter` over the
   # `peri` and `shape` column labels
   tbl_html <-
-    gt(data = rock) %>%
+    gt(rock) %>%
     tab_spanner(
       label = "perimeter",
       columns = c("peri", "shape")) %>%
@@ -133,7 +133,7 @@ test_that("a gt table contains the expected spanner column labels", {
   # `peri` and `shape` column labels (this time, using
   # `c()` to define the columns)
   tbl_html <-
-    gt(data = rock) %>%
+    gt(rock) %>%
     tab_spanner(
       label = "perimeter",
       columns = c(peri, shape)) %>%
@@ -151,7 +151,7 @@ test_that("a gt table contains the expected spanner column labels", {
   # contains the spanner heading `perimeter` that is formatted
   # with Markdown via `md()`
   tbl_html <-
-    gt(data = rock) %>%
+    gt(rock) %>%
     tab_spanner(
       label = md("*perimeter*"),
       columns = c("peri", "shape")) %>%
@@ -166,7 +166,7 @@ test_that("a gt table contains the expected spanner column labels", {
   # contains the spanner heading `perimeter` that is formatted
   # with HTML via `html()`
   tbl_html <-
-    gt(data = rock) %>%
+    gt(rock) %>%
     tab_spanner(
       label = html("<em>perimeter</em>"),
       columns = c("peri", "shape")) %>%
@@ -180,7 +180,7 @@ test_that("a gt table contains the expected spanner column labels", {
   # Expect an error when using column labels
   # that don't exist
   expect_error(
-    gt(data = rock) %>%
+    gt(rock) %>%
       tab_spanner(
         label = "perimeter",
         columns = c(peris, shapes))
@@ -281,7 +281,7 @@ test_that("`tab_spanner()` exclusively uses IDs for arranging spanners", {
 test_that("`tab_spanner()` doesn't adversely affect column alignment", {
 
   tbl_html <-
-    gt(data = airquality) %>%
+    gt(airquality) %>%
     cols_move_to_start(columns = c(Month, Day)) %>%
     cols_label(Solar.R = html("Solar<br>Radiation")) %>%
     tab_spanner(

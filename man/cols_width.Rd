@@ -4,13 +4,13 @@
 \alias{cols_width}
 \title{Set the widths of columns}
 \usage{
-cols_width(data, ..., .list = list2(...))
+cols_width(.data, ..., .list = list2(...))
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{...}{Expressions for the assignment of column widths for the table
-columns in \code{data}. Two-sided formulas (e.g, \verb{<LHS> ~ <RHS>}) can be used,
+columns in \code{.data}. Two-sided formulas (e.g, \verb{<LHS> ~ <RHS>}) can be used,
 where the left-hand side corresponds to selections of columns and the
 right-hand side evaluates to single-length character values in the form
 \verb{\{##\}px} (i.e., pixel dimensions); the \code{\link[=px]{px()}} helper function is best used

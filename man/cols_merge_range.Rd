@@ -4,10 +4,10 @@
 \alias{cols_merge_range}
 \title{Merge two columns to a value range column}
 \usage{
-cols_merge_range(data, col_begin, col_end, sep = "--", autohide = TRUE)
+cols_merge_range(.data, col_begin, col_end, sep = "--", autohide = TRUE)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{col_begin}{A column that contains values for the start of the range.}
 

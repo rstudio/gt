@@ -6,7 +6,7 @@ test_that("a gt table contains the expected column spanner labels", {
   # contains the spanner heading `perimeter` over the
   # `peri` and `shape` column labels
   tbl_rtf <-
-    gt(data = rock) %>%
+    gt(rock) %>%
     tab_spanner(
       label = "perimeter",
       columns = c("peri", "shape")

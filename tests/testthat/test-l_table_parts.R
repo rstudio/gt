@@ -5,10 +5,9 @@ mtcars_short <- mtcars[1:5, ]
 
 test_that("a gt table contains the expected heading components", {
 
-  # Create a `tbl_latex` object with `gt()`; this table
-  # contains a title
+  # Create a `tbl_latex` object with `gt()`; this table contains a title
   tbl_latex <-
-    gt(data = mtcars_short) %>%
+    gt(mtcars_short) %>%
     tab_header(title = "test title")
 
   # Expect a characteristic pattern
@@ -22,7 +21,7 @@ test_that("a gt table contains the expected heading components", {
   # Create a `tbl_latex` object with `gt()`; this table
   # contains a title and a subtitle
   tbl_latex <-
-    gt(data = mtcars_short) %>%
+    gt(mtcars_short) %>%
     tab_header(title = "test title", subtitle = "test subtitle")
 
   # Expect a characteristic pattern
@@ -42,7 +41,7 @@ test_that("a gt table contains the expected stubhead label", {
   # Create a `tbl_latex` object with `gt()`; this table
   # contains a stub and a stubhead caption
   tbl_latex <-
-    gt(data = mtcars_short, rownames_to_stub = TRUE) %>%
+    gt(mtcars_short, rownames_to_stub = TRUE) %>%
     tab_stubhead(label = "the mtcars")
 
   # Expect a characteristic pattern
@@ -61,7 +60,7 @@ test_that("a gt table contains the expected column spanner labels", {
   # contains the spanner heading `perimeter` over the
   # `peri` and `shape` column labels
   tbl_latex <-
-    gt(data = rock) %>%
+    gt(rock) %>%
     tab_spanner(
       label = "perimeter",
       columns = c("peri", "shape")
@@ -83,7 +82,7 @@ test_that("a gt table contains the expected column spanner labels", {
   # `peri` and `shape` column labels (this time, using
   # `c()` to define the columns)
   tbl_latex <-
-    gt(data = rock) %>%
+    gt(rock) %>%
     tab_spanner(
       label = "perimeter",
       columns = c(peri, shape)
@@ -103,7 +102,7 @@ test_that("a gt table contains the expected column spanner labels", {
   # Expect an error when using column labels
   # that don't exist
   expect_error(
-    gt(data = rock) %>%
+    gt(rock) %>%
       tab_spanner(
         label = "perimeter",
         columns = c(peris, shapes)

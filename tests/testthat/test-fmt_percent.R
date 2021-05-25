@@ -13,9 +13,8 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
       stringsAsFactors = FALSE
     )
 
-  # Create a `gt_tbl` object with `gt()` and the
-  # `data_tbl` dataset
-  tab <- gt(data = data_tbl)
+  # Create a `gt_tbl` object with `gt()` and the `data_tbl` dataset
+  tab <- gt(data_tbl)
 
   # Expect an error when attempting to format a column
   # that does not exist

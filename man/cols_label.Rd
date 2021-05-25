@@ -4,10 +4,10 @@
 \alias{cols_label}
 \title{Relabel one or more columns}
 \usage{
-cols_label(data, ..., .list = list2(...))
+cols_label(.data, ..., .list = list2(...))
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{...}{One or more named arguments of column names from the input \code{data}
 table along with their labels for display as the column labels. We can

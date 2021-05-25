@@ -5,13 +5,13 @@
 \title{Set the alignment of columns}
 \usage{
 cols_align(
-  data,
+  .data,
   align = c("auto", "left", "center", "right"),
   columns = everything()
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{align}{The alignment type. This can be any of \code{"center"}, \code{"left"}, or
 \code{"right"} for center-, left-, or right-alignment. Alternatively, the

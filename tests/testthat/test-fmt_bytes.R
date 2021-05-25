@@ -31,7 +31,7 @@ test_that("the `fmt_bytes()` function works correctly", {
 
   # Create a `gt_tbl` object with `gt()` and the
   # `data_tbl` dataset
-  tab <- gt(data = data_tbl)
+  tab <- gt(data_tbl)
 
   # Expect that the object has the correct classes
   expect_is(tab, c("gt_tbl", "data.frame"))
@@ -343,7 +343,7 @@ test_that("the `fmt_bytes()` function format to specified significant figures", 
 
   # Create a `gt_tbl` object with `gt()` and the
   # `numbers_tbl` dataset
-  tab <- gt(data = numbers_tbl)
+  tab <- gt(numbers_tbl)
 
   # Format the `num` column to 5 significant figures
   expect_equal(
