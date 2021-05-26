@@ -393,14 +393,13 @@ create_summary_rows_l <- function(list_of_summaries,
             return("")
           }
 
-          # Obtain the group ID for group summary that is placed after
-          # the body row `x`
+          # Obtain the group ID for the group of rows that ends at row `x`;
           group <-
             groups_rows_df[groups_rows_df$row_end == x, "group_id", drop = TRUE]
 
-          # Check for whether the the `group_id` has a corresponding entry
-          # in `list_of_summaries$summary_df_display_list`; if not, return
-          # an empty string
+          # Check whether this group has a corresponding entry in
+          # `list_of_summaries$summary_df_display_list` (i.e., are there
+          # summary rows for this group?); if not, return an empty string
           if (!(group %in% names(list_of_summaries$summary_df_display_list))) {
             return("")
           }
@@ -410,12 +409,6 @@ create_summary_rows_l <- function(list_of_summaries,
           summary_df <-
             list_of_summaries$summary_df_display_list[[group]] %>%
             dplyr::select(.data$rowname, .env$default_vars)
-
-          # Check if the summary has no rows; if that's found to be the
-          # case, return an empty string
-          if (nrow(summary_df) < 1) {
-            return("")
-          }
 
           row_splits_summary <-
             split_row_content(
