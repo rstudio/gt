@@ -409,7 +409,7 @@ create_summary_rows <- function(n_rows,
 
           summary_df <-
             list_of_summaries$summary_df_display_list[[group]] %>%
-            dplyr::select(rowname, .env$default_vars)
+            dplyr::select(.data$rowname, .env$default_vars)
 
           body_content_summary <- as.vector(t(summary_df))
 
