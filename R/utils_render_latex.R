@@ -437,6 +437,7 @@ create_summary_rows <- function(n_rows,
           } else {
             summary_rows <- ""
           }
+          summary_rows
         }
       )
     )
