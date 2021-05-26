@@ -120,4 +120,96 @@ test_that("Using summary rows in LaTeX tables is correct", {
     as_latex() %>%
     as.character() %>%
     expect_snapshot()
+
+  #
+  # Tests with both `summary_rows()` and `grand_summary_rows()`
+  #
+
+  gt(tbl, groupname_col = "group") %>%
+    summary_rows(
+      groups = "first_five",
+      columns = col_1,
+      fns = list(average = ~ mean(., na.rm = TRUE))
+    ) %>%
+    summary_rows(
+      groups = "first_five",
+      columns = col_2,
+      fns = list(min = ~ min(., na.rm = TRUE))
+    ) %>%
+    summary_rows(
+      groups = "first_five",
+      columns = col_4,
+      fns = list(average = ~ mean(., na.rm = TRUE))
+    ) %>%
+    summary_rows(
+      groups = "2nd_five",
+      columns = col_4,
+      fns = list(
+        max = ~ max(., na.rm = TRUE)
+      )
+    ) %>%
+    summary_rows(
+      groups = TRUE,
+      columns = col_3,
+      fns = list(
+        count = ~ length(.)
+      ),
+      formatter = fmt_number,
+      decimals = 0
+    ) %>%
+    grand_summary_rows(
+      columns = starts_with("col"),
+      fns = list(
+        MEAN = ~ mean(., na.rm = TRUE),
+        MIN = ~ min(., na.rm = TRUE),
+        MAX = ~ max(., na.rm = TRUE)
+      )
+    ) %>%
+    as_latex() %>%
+    as.character() %>%
+    expect_snapshot()
+
+  gt(tbl, rowname_col = "row", groupname_col = "group") %>%
+    summary_rows(
+      groups = "first_five",
+      columns = col_1,
+      fns = list(average = ~ mean(., na.rm = TRUE))
+    ) %>%
+    summary_rows(
+      groups = "first_five",
+      columns = col_2,
+      fns = list(min = ~ min(., na.rm = TRUE))
+    ) %>%
+    summary_rows(
+      groups = "first_five",
+      columns = col_4,
+      fns = list(average = ~ mean(., na.rm = TRUE))
+    ) %>%
+    summary_rows(
+      groups = "2nd_five",
+      columns = col_4,
+      fns = list(
+        max = ~ max(., na.rm = TRUE)
+      )
+    ) %>%
+    summary_rows(
+      groups = TRUE,
+      columns = col_3,
+      fns = list(
+        count = ~ length(.)
+      ),
+      formatter = fmt_number,
+      decimals = 0
+    ) %>%
+    grand_summary_rows(
+      columns = starts_with("col"),
+      fns = list(
+        MEAN = ~ mean(., na.rm = TRUE),
+        MIN = ~ min(., na.rm = TRUE),
+        MAX = ~ max(., na.rm = TRUE)
+      )
+    ) %>%
+    as_latex() %>%
+    as.character() %>%
+    expect_snapshot()
 })
