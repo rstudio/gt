@@ -172,7 +172,7 @@ create_body_component_l <- function(data) {
   # Obtain the `styles_tbl` (NOTE: this is currently unused)
   styles_tbl <- dt_styles_get(data = data)
 
-  n_data_cols <- dt_boxhead_get_vars_default(data = data) %>% length()
+  n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
   n_rows <- nrow(body)
 
   # Determine whether the stub is available through analysis
@@ -182,33 +182,33 @@ create_body_component_l <- function(data) {
   # Get the column headings for the visible (e.g., `default`) columns
   default_vars <- dt_boxhead_get_vars_default(data = data)
 
+  # Split `body_content` by slices of rows in cases where there is
+  # and isn't a stub present
   if (stub_available) {
 
     n_cols <- n_data_cols + 1
 
     stub_var <- dt_boxhead_get_var_stub(data = data)
 
-    body_content <- as.vector(t(body[, c(stub_var, default_vars)]))
+    row_splits_body <-
+      split_row_content(
+        body[, c(stub_var, default_vars)],
+        n_cols = n_cols
+      )
 
   } else {
 
     n_cols <- n_data_cols
 
-    body_content <- as.vector(t(body[, default_vars]))
+    row_splits_body <-
+      split_row_content(
+        body[, default_vars],
+        n_cols = n_cols
+      )
   }
 
-  # Split `body_content` by slices of rows and create data rows
-  row_splits_body <-
-    split_body_content(
-      body_content = body_content,
-      n_cols = n_cols
-    )
-
-  body_rows <-
-    create_body_rows(
-      n_rows = n_rows,
-      row_splits_body = row_splits_body
-    )
+  # Create a vector body rows
+  body_rows <- create_body_rows_l(row_splits_body = row_splits_body)
 
   # Replace an NA group with an empty string
   if (any(is.na(groups_rows_df$group_label))) {
@@ -223,28 +223,23 @@ create_body_component_l <- function(data) {
   }
 
   group_rows <-
-    create_group_rows(
-      n_rows = n_rows,
-      groups_rows_df = groups_rows_df
+    create_group_rows_l(
+      groups_rows_df = groups_rows_df,
+      n_rows = n_rows
     )
 
   summary_rows <-
-    create_summary_rows(
-      n_rows = n_rows,
-      n_cols = n_cols,
-      boxh = boxh,
+    create_summary_rows_l(
       list_of_summaries = list_of_summaries,
+      boxh = boxh,
       groups_rows_df = groups_rows_df,
-      stub_available = stub_available,
-      summaries_present = summaries_present
+      n_rows = n_rows
     )
 
   grand_summary_rows <-
-    create_grand_summary_rows(
-      n_cols = n_cols,
-      boxh = boxh,
+    create_grand_summary_rows_l(
       list_of_summaries = list_of_summaries,
-      stub_available = stub_available
+      boxh = boxh
     )
 
   paste(
@@ -334,13 +329,13 @@ create_source_note_component_l <- function(data) {
 }
 
 # Function to build a vector of `group` rows in the table body
-create_group_rows <- function(n_rows,
-                              groups_rows_df) {
+create_group_rows_l <- function(groups_rows_df,
+                                n_rows) {
 
   unname(
     unlist(
       lapply(
-        seq(n_rows),
+        seq_len(n_rows),
         FUN = function(x) {
 
           if (!(x %in% groups_rows_df$row_start)) {
@@ -349,7 +344,7 @@ create_group_rows <- function(n_rows,
 
           latex_group_row(
             group_name = groups_rows_df[
-              which(groups_rows_df$row_start %in% x), "group_label"][[1]],
+              groups_rows_df$row_start == x, "group_label"][[1]],
             top_border = x != 1,
             bottom_border = x != n_rows
           )
@@ -360,13 +355,12 @@ create_group_rows <- function(n_rows,
 }
 
 # Function to build a vector of `body` rows
-create_body_rows <- function(n_rows,
-                             row_splits_body) {
+create_body_rows_l <- function(row_splits_body) {
 
   unname(
     unlist(
       lapply(
-        seq_len(n_rows),
+        seq_len(length(row_splits_body)),
         FUN = function(x) {
           latex_body_row(content = row_splits_body[[x]], type = "row")
         }
@@ -376,15 +370,16 @@ create_body_rows <- function(n_rows,
 }
 
 # Function to build a vector of `summary` rows in the table body
-create_summary_rows <- function(n_rows,
-                                n_cols,
-                                boxh,
-                                list_of_summaries,
-                                groups_rows_df,
-                                stub_available,
-                                summaries_present) {
+create_summary_rows_l <- function(list_of_summaries,
+                                  boxh,
+                                  groups_rows_df,
+                                  n_rows) {
 
-  default_vars <- dplyr::pull(dplyr::filter(boxh, type == "default"), "var")
+  if (length(list_of_summaries) < 1) {
+    return(rep_len("", n_rows))
+  }
+
+  default_vars <- boxh[boxh$type == "default", "var", drop = TRUE]
 
   unname(
     unlist(
@@ -392,104 +387,95 @@ create_summary_rows <- function(n_rows,
         seq_len(n_rows),
         FUN = function(x) {
 
-          if (!stub_available ||
-              !summaries_present ||
-              !(x %in% groups_rows_df$row_end)) {
+          # Determine if body row `x` has a group summary placed after
+          # it; if not, return an empty string
+          if (!(x %in% groups_rows_df$row_end)) {
             return("")
           }
 
+          # Obtain the group ID for group summary that is placed after
+          # the body row `x`
           group <-
-            groups_rows_df %>%
-            dplyr::filter(row_end == x) %>%
-            dplyr::pull(group_id)
+            groups_rows_df[groups_rows_df$row_end == x, "group_id", drop = TRUE]
 
+          # Check for whether the the `group_id` has a corresponding entry
+          # in `list_of_summaries$summary_df_display_list`; if not, return
+          # an empty string
           if (!(group %in% names(list_of_summaries$summary_df_display_list))) {
             return("")
           }
 
+          # Obtain the summary data table specific to the group ID and
+          # select the column named `rowname` and all of the visible columns
           summary_df <-
             list_of_summaries$summary_df_display_list[[group]] %>%
             dplyr::select(.data$rowname, .env$default_vars)
 
-          body_content_summary <- as.vector(t(summary_df))
+          # Check if the summary has no rows; if that's found to be the
+          # case, return an empty string
+          if (nrow(summary_df) < 1) {
+            return("")
+          }
 
           row_splits_summary <-
-            split_body_content(
-              body_content = body_content_summary,
-              n_cols = n_cols
+            split_row_content(
+              summary_df,
+              n_cols = ncol(summary_df)
             )
 
-          if (length(row_splits_summary) > 0) {
+          summary_rows <-
+            paste(
+              vapply(
+                row_splits_summary,
+                FUN.VALUE = character(1),
+                latex_body_row,
+                type = "row"
+              ),
+              collapse = ""
+            )
 
-            summary_rows <-
-              paste(
-                vapply(
-                  row_splits_summary,
-                  FUN.VALUE = character(1),
-                  latex_body_row,
-                  type = "row"
-                ),
-                collapse = ""
-              )
-
-            summary_rows <- paste0(summary_h_border, summary_rows)
-
-          } else {
-            summary_rows <- ""
-          }
-          summary_rows
+          paste0(summary_h_border, summary_rows)
         }
       )
     )
   )
 }
 
-create_grand_summary_rows <- function(n_cols,
-                                      boxh,
-                                      list_of_summaries,
-                                      stub_available) {
+create_grand_summary_rows_l <- function(list_of_summaries,
+                                        boxh) {
 
   if (
     length(list_of_summaries) < 1 ||
-    is.null(list_of_summaries$summary_df_display_list$`::GRAND_SUMMARY`)
+    is.null(list_of_summaries$summary_df_display_list$`::GRAND_SUMMARY`) ||
+    nrow(list_of_summaries$summary_df_display_list$`::GRAND_SUMMARY`) < 1
   ) {
     return("")
   }
 
-  default_vars <- dplyr::pull(dplyr::filter(boxh, type == "default"), "var")
+  default_vars <- boxh[boxh$type == "default", "var", drop = TRUE]
 
   grand_summary_df <-
     list_of_summaries$summary_df_display_list$`::GRAND_SUMMARY` %>%
-    dplyr::select(rowname, .env$default_vars)
-
-  body_content_grand_summary <- as.vector(t(grand_summary_df))
+    dplyr::select(.data$rowname, .env$default_vars)
 
   row_splits_summary <-
-    split_body_content(
-      body_content = body_content_grand_summary,
-      n_cols = n_cols
+    split_row_content(
+      grand_summary_df,
+      n_cols = ncol(grand_summary_df)
     )
 
-  if (length(row_splits_summary) > 0) {
+  grand_summary_rows <-
+    paste(
+      vapply(
+        row_splits_summary,
+        FUN.VALUE = character(1),
+        latex_body_row,
+        type = "row"
+      ),
+      collapse = ""
+    )
 
-    grand_summary_rows <-
-      paste(
-        vapply(
-          row_splits_summary,
-          FUN.VALUE = character(1),
-          latex_body_row,
-          type = "row"
-        ),
-        collapse = ""
-      )
-
-    grand_summary_rows <- paste0(grand_summary_h_border, grand_summary_rows)
-
-  } else {
-    grand_summary_rows <- ""
-  }
-
-  grand_summary_rows
+  paste0(grand_summary_h_border, grand_summary_rows)
 }
 
 # Define horizontal border line types for
@@ -497,17 +483,21 @@ create_grand_summary_rows <- function(n_cols,
 summary_h_border <- "\\midrule \n"
 grand_summary_h_border <- "\\midrule \n\\midrule \n"
 
-#' Split the body content vector into a list structure
+#' Split data frame or matrix row content into a list structure
 #'
-#' Taking the `body_content` vector, split into list components with one item
-#' per row in the output table
+#' This function takes any data frame or matrix and creates a list
+#' with every component representing a row, each containing a vector
+#' with length corresponding to the total number of columns in the
+#' finalized table
+#'
 #' @noRd
-split_body_content <- function(body_content,
-                               n_cols) {
+split_row_content <- function(x, n_cols) {
 
-  if (length(body_content) == 0) {
+  row_content <- as.vector(t(x))
+
+  if (length(row_content) == 0) {
     return(list(rep("", n_cols)))
   }
 
-  split(body_content, ceiling(seq_along(body_content) / n_cols))
+  split(row_content, ceiling(seq_along(row_content) / n_cols))
 }

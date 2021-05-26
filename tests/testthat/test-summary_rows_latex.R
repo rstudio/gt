@@ -27,6 +27,7 @@ test_that("Using summary rows in LaTeX tables is correct", {
       fns = list(average = ~ mean(., na.rm = TRUE))
     ) %>%
     as_latex() %>%
+    as.character() %>%
     expect_snapshot()
 
   gt(tbl, rowname_col = "row") %>%
@@ -35,6 +36,7 @@ test_that("Using summary rows in LaTeX tables is correct", {
       fns = list(average = ~ mean(., na.rm = TRUE))
     ) %>%
     as_latex() %>%
+    as.character() %>%
     expect_snapshot()
 
   gt(tbl, groupname_col = "group") %>%
@@ -43,6 +45,7 @@ test_that("Using summary rows in LaTeX tables is correct", {
       fns = list(average = ~ mean(., na.rm = TRUE))
     ) %>%
     as_latex() %>%
+    as.character() %>%
     expect_snapshot()
 
   gt(tbl, rowname_col = "row", groupname_col = "group") %>%
@@ -51,6 +54,7 @@ test_that("Using summary rows in LaTeX tables is correct", {
       fns = list(average = ~ mean(., na.rm = TRUE))
     ) %>%
     as_latex() %>%
+    as.character() %>%
     expect_snapshot()
 
   #
@@ -64,6 +68,7 @@ test_that("Using summary rows in LaTeX tables is correct", {
       fns = list(average = ~ mean(., na.rm = TRUE))
     ) %>%
     as_latex() %>%
+    as.character() %>%
     expect_snapshot()
 
   gt(tbl, rowname_col = "row", groupname_col = "group") %>%
@@ -73,6 +78,7 @@ test_that("Using summary rows in LaTeX tables is correct", {
       fns = list(average = ~ mean(., na.rm = TRUE))
     ) %>%
     as_latex() %>%
+    as.character() %>%
     expect_snapshot()
 
   gt(tbl, groupname_col = "group") %>%
@@ -82,6 +88,7 @@ test_that("Using summary rows in LaTeX tables is correct", {
       fns = list(average = ~ mean(., na.rm = TRUE))
     ) %>%
     as_latex() %>%
+    as.character() %>%
     expect_snapshot()
 
   gt(tbl, groupname_col = "group") %>%
@@ -91,6 +98,7 @@ test_that("Using summary rows in LaTeX tables is correct", {
       fns = list(average = ~ mean(., na.rm = TRUE))
     ) %>%
     as_latex() %>%
+    as.character() %>%
     expect_snapshot()
 
   gt(tbl, groupname_col = "group") %>%
@@ -100,6 +108,7 @@ test_that("Using summary rows in LaTeX tables is correct", {
       fns = list(average = ~ mean(., na.rm = TRUE))
     ) %>%
     as_latex() %>%
+    as.character() %>%
     expect_snapshot()
 
   gt(tbl, rowname_col = "row", groupname_col = "group") %>%
@@ -109,5 +118,6 @@ test_that("Using summary rows in LaTeX tables is correct", {
       fns = list(average = ~ mean(., na.rm = TRUE))
     ) %>%
     as_latex() %>%
+    as.character() %>%
     expect_snapshot()
 })
