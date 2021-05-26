@@ -389,7 +389,7 @@ create_summary_rows <- function(n_rows,
   unname(
     unlist(
       lapply(
-        seq(n_rows),
+        seq_len(n_rows),
         FUN = function(x) {
 
           if (!stub_available ||
