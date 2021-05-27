@@ -221,7 +221,7 @@ create_body_component_l <- function(data) {
   }
 
   # Split `body_content` by slices of rows and create data rows
-  body_content <- as.vector(t(body[, visible_vars]))
+  body_content <- as.vector(t(body[, unique(visible_vars)]))
   row_splits <- split(body_content, ceiling(seq_along(body_content) / n_cols))
   data_rows <- create_data_rows(n_rows, row_splits, context = "latex")
 
@@ -231,6 +231,7 @@ create_body_component_l <- function(data) {
       n_cols = n_cols,
       list_of_summaries = list_of_summaries,
       groups_rows_df = groups_rows_df,
+      boxh = boxh,
       stub_available = stub_available,
       summaries_present = summaries_present,
       context = "latex"

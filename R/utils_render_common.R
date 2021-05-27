@@ -454,9 +454,13 @@ create_summary_rows <- function(n_rows,
                                 n_cols,
                                 list_of_summaries,
                                 groups_rows_df,
+                                boxh,
                                 stub_available,
                                 summaries_present,
                                 context = "latex") {
+  default_vars <-
+    dplyr::filter(boxh, type == "default") %>%
+    dplyr::pull(var)
 
   lapply(
     seq(n_rows),
@@ -479,7 +483,7 @@ create_summary_rows <- function(n_rows,
 
       summary_df <-
         list_of_summaries$summary_df_display_list[[group]] %>%
-        dplyr::select(-groups) %>%
+        dplyr::select(rowname, .env$default_vars) %>%
         as.data.frame(stringsAsFactors = FALSE)
 
       body_content_summary <- as.vector(t(summary_df))
