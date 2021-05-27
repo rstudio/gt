@@ -18,12 +18,11 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: windows-latest, r: '3.5'}
-          - {os: windows-latest, r: '3.6'}
-          - {os: windows-latest, r: '4.0'}
           - {os: macOS-latest, r: '3.5'}
           - {os: macOS-latest, r: '3.6'}
           - {os: macOS-latest, r: '4.0'}
+          - {os: windows-latest, r: '3.6'}
+          - {os: windows-latest, r: '4.0'}
           - {os: ubuntu-16.04, r: '3.5', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
           - {os: ubuntu-16.04, r: '3.6', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
           - {os: ubuntu-16.04, r: '4.0', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
@@ -32,6 +31,7 @@ jobs:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       _R_CHECK_FORCE_SUGGESTS_: false
       RSPM: ${{ matrix.config.rspm }}
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       - uses: actions/checkout@v2
@@ -45,7 +45,7 @@ jobs:
       - name: Query dependencies
         run: |
           install.packages('remotes')
-          saveRDS(remotes::dev_package_deps(dependencies = TRUE), "depends.Rds", version = 2)
+          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
         shell: Rscript {0}
 
       - name: Cache R packages
@@ -53,8 +53,17 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-r-${{ matrix.config.r }}-1-${{ hashFiles('depends.Rds') }}
-          restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-1-
+          key: ${{ runner.os }}-r-${{ matrix.config.r }}-2-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-2-
+
+      - name: Problematic Pkgs
+        shell: Rscript {0}
+        run: |
+          remotes::install_cran("htmltools")
+          remotes::install_cran("ellipsis")
+          remotes::install_cran("pillar")
+          remotes::install_cran("ps")
+          remotes::install_cran("processx")
 
       - name: Install system dependencies
         if: runner.os == 'Linux'
@@ -67,9 +76,17 @@ jobs:
 
       - name: Install dependencies
         run: |
+          if (Sys.info()[["sysname"]] == "Windows") {
+             options(install.packages.compile.from.source = "never")
+          }
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
+
+      - name: Install rcmdcheck
+        shell: Rscript {0}
+        run: |
+          remotes::install_cran("rcmdcheck")
 
       - name: Check
         env:

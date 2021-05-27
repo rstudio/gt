@@ -42,7 +42,7 @@ There's a quick reference [here](https://commonmark.org/help/).
       text_1b,   text_2b,
     ) %>%
     gt() %>%
-    fmt_markdown(columns = TRUE)
+    fmt_markdown(columns = everything())
 
   # Expect that the object has the correct classes
   expect_is(tab, c("gt_tbl", "data.frame"))

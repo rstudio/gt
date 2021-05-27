@@ -1,9 +1,11 @@
 #' Save a **gt** table as a file
 #'
+#' @description
 #' The `gtsave()` function makes it easy to save a **gt** table to a file. The
 #' function guesses the file type by the extension provided in the output
 #' filename, producing either an HTML, PDF, PNG, LaTeX, or RTF file.
 #'
+#' @details
 #' Output filenames with either the `.html` or `.htm` extensions will produce an
 #' HTML document. In this case, we can pass a `TRUE` or `FALSE` value to the
 #' `inline_css` option to obtain an HTML document with inlined CSS styles (the
@@ -12,6 +14,12 @@
 #' through the `...`. Those arguments are either `background` or `libdir`,
 #' please refer to the **htmltools** documentation for more details on the use
 #' of these arguments.
+#'
+#' If the output filename is expressed with the `.rtf` extension then an RTF
+#' file will be generated. In this case, there is an option that can be passed
+#' through `...`: `page_numbering`. This controls RTF document page numbering
+#' and, by default, page numbering is not enabled (i.e., `page_numbering =
+#' "none"`).
 #'
 #' We can create an image file based on the HTML version of the `gt` table. With
 #' the filename extension `.png`, we get a PNG image file. A PDF document can be
@@ -82,7 +90,6 @@
 #' # document
 #' tab_1 %>%
 #'   gtsave("tab_1.tex", path = tempdir())
-#'
 #' }
 #'
 #' @family Export Functions
@@ -186,7 +193,11 @@ gt_save_webshot <- function(data,
     tidy_gsub("\\\\", "/")
 
   # Save gt table as HTML using the `gt_save_html()` function
-  data %>% gt_save_html(filename = tempfile_, path = NULL)
+  gt_save_html(
+    data = data,
+    filename = tempfile_,
+    path = NULL
+  )
 
   # Saving an image requires the webshot package; if it's
   # not present, stop with a message
@@ -219,9 +230,7 @@ gt_save_latex <- function(data,
 
   filename <- gtsave_filename(path = path, filename = filename)
 
-  data %>%
-    as_latex() %>%
-    writeLines(con = filename)
+  writeLines(text = as_latex(data = data), con = filename)
 }
 
 #' Saving function for an RTF file
@@ -230,12 +239,15 @@ gt_save_latex <- function(data,
 gt_save_rtf <- function(data,
                         filename,
                         path = NULL,
-                        ...) {
+                        ...,
+                        page_numbering = c("none", "footer", "header")) {
+
+  page_numbering <- match.arg(page_numbering)
 
   filename <- gtsave_filename(path = path, filename = filename)
 
   data %>%
-    as_rtf() %>%
+    as_rtf(page_numbering = page_numbering) %>%
     writeLines(con = filename)
 }
 
@@ -252,15 +264,23 @@ gtsave_file_ext <- function(filename) {
 #' @noRd
 gtsave_filename <- function(path, filename) {
 
-  if (!is.null(path)) {
-    filename <- file.path(path, filename)
-  }
+  if (is.null(path)) path <- "."
 
-  filename %>% path_expand()
+  # The use of `fs::path_abs()` works around
+  # the saving code in `htmltools::save_html()`
+  # See htmltools Issue #165 for more details
+
+  fs::path_abs(
+    path = filename,
+    start = path
+  ) %>%
+    fs::path_expand() %>%
+    as.character()
 }
 
 #' Get the HTML content of a **gt** table
 #'
+#' @description
 #' Get the HTML content from a `gt_tbl` object as a single-element character
 #' vector. By default, the generated HTML will have inlined styles, where CSS
 #' styles (that were previously contained in CSS rule sets external to the
@@ -309,15 +329,19 @@ as_raw_html <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Generation of the HTML table
-  html_table <- render_as_html(data = data)
-
   if (inline_css) {
+
+    # Generation of the HTML table
+    html_table <- render_as_html(data = data)
 
     # Create inline styles
     html_table <-
       html_table %>%
       inline_html_styles(css_tbl = get_css_tbl(data))
+
+  } else {
+
+    html_table <- as.character(as.tags.gt_tbl(data))
   }
 
   htmltools::HTML(html_table)
@@ -325,6 +349,7 @@ as_raw_html <- function(data,
 
 #' Output a gt object as LaTeX
 #'
+#' @description
 #' Get the LaTeX content from a `gt_tbl` object as a `knit_asis` object. This
 #' object contains the LaTeX code and attributes that serve as LaTeX
 #' dependencies (i.e., the LaTeX packages required for the table). Using
@@ -422,11 +447,15 @@ as_latex <- function(data) {
 
 #' Output a **gt** object as RTF
 #'
+#' @description
 #' Get the RTF content from a `gt_tbl` object as as a single-element character
 #' vector. This object can be used with `writeLines()` to generate a valid .rtf
 #' file that can be opened by RTF readers.
 #'
-#' @param data a table object that is created using the `gt()` function.
+#' @param data A table object that is created using the `gt()` function.
+#' @param page_numbering An option to include page numbering in the RTF
+#'   document. The page numbering text can either be in the document `"footer"`
+#'   or `"header"`. By default, page numbering is not active (`"none"`).
 #'
 #' @examples
 #' # Use `gtcars` to create a gt table;
@@ -448,7 +477,10 @@ as_latex <- function(data) {
 #' 13-4
 #'
 #' @export
-as_rtf <- function(data) {
+as_rtf <- function(data,
+                   page_numbering = c("none", "footer", "header")) {
+
+  page_numbering <- match.arg(page_numbering)
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -458,39 +490,38 @@ as_rtf <- function(data) {
 
   # Composition of RTF ------------------------------------------------------
 
-  # Create a RTF fragment for the start of the table
-  table_start <- rtf_head()
-
   # Create the heading component
-  heading_component <- create_heading_component(data = data, context = "rtf")
+  heading_component <- create_heading_component_rtf(data = data)
 
   # Create the columns component
-  columns_component <- create_columns_component_r(data = data)
+  columns_component <- create_columns_component_rtf(data = data)
 
   # Create the body component
-  body_component <- create_body_component_r(data = data)
+  body_component <- create_body_component_rtf(data = data)
 
   # Create the footnotes component
-  footnotes_component <- create_footnotes_component_r(data = data)
+  footnotes_component <- create_footnotes_component_rtf(data = data)
 
   # Create the source notes component
-  source_notes_component <- create_source_notes_component_r(data = data)
-
-  # Create a fragment for the ending tabular statement
-  table_end <- "}\n"
+  source_notes_component <- create_source_notes_component_rtf(data = data)
 
   # Compose the RTF table
   rtf_table <-
-    paste0(
-      table_start,
-      heading_component,
-      columns_component,
-      body_component,
-      footnotes_component,
-      source_notes_component,
-      table_end,
-      collapse = ""
-    )
+    rtf_file(
+      document = {
+        rtf_table(
+          rows = c(
+            heading_component,
+            columns_component,
+            body_component,
+            footnotes_component,
+            source_notes_component
+          )
+        )
+      },
+      page_numbering = page_numbering
+    ) %>%
+    as_rtf_string()
 
   if (isTRUE(getOption('knitr.in.progress'))) {
     rtf_table <- rtf_table %>% knitr::raw_output()
@@ -499,11 +530,13 @@ as_rtf <- function(data) {
   rtf_table
 }
 
+
 #' Extract a summary list from a **gt** object
 #'
+#' @description
 #' Get a list of summary row data frames from a `gt_tbl` object where summary
 #' rows were added via the [summary_rows()] function. The output data frames
-#' contain the `groupname` and `rowname` columns, whereby `rowname` contains
+#' contain the `group_id` and `rowname` columns, whereby `rowname` contains
 #' descriptive stub labels for the summary rows.
 #'
 #' @param data A table object that is created using the [gt()] function.
@@ -534,7 +567,7 @@ as_rtf <- function(data) {
 #'   ) %>%
 #'   summary_rows(
 #'     groups = TRUE,
-#'     columns = vars(open, high, low, close),
+#'     columns = c(open, high, low, close),
 #'     fns = list(
 #'       min = ~min(.),
 #'       max = ~max(.),
@@ -547,9 +580,7 @@ as_rtf <- function(data) {
 #' # Use the summary list to make a new
 #' # gt table; the key thing is to use
 #' # `dplyr::bind_rows()` and then pass the
-#' # tibble to `gt()` (the `groupname` and
-#' # `rowname` magic column names create
-#' # row groups and a stub)
+#' # tibble to `gt()`
 #' tab_1 <-
 #'   summary_extracted %>%
 #'   unlist(recursive = FALSE) %>%

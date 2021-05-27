@@ -1,10 +1,12 @@
 #' Create a **gt** table object
 #'
+#' @description
 #' The `gt()` function creates a **gt** table object when provided with table
 #' data. Using this function is the first step in a typical **gt** workflow.
 #' Once we have the **gt** table object, we can perform styling transformations
 #' before rendering to a display table of various formats.
 #'
+#' @details
 #' There are a few data ingest options we can consider at this stage. We can
 #' choose to create a table stub with rowname captions using the `rowname_col`
 #' argument. Further to this, stub row groups can be created with the
@@ -28,6 +30,8 @@
 #'   group labels for generation of stub row groups. If the input `data` table
 #'   has the `grouped_df` class (through use of the [dplyr::group_by()] function
 #'   or associated `group_by*()` functions) then any input here is ignored.
+#' @param caption An optional table caption to use for cross-referencing
+#'   in R Markdown documents and **bookdown** book projects.
 #' @param rownames_to_stub An option to take rownames from the input `data`
 #'   table as row captions in the display table stub.
 #' @param auto_align Optionally have column data be aligned depending on the
@@ -64,7 +68,7 @@
 #'     subtitle = "Subtitle"
 #'   ) %>%
 #'   fmt_number(
-#'     columns = vars(num),
+#'     columns = num,
 #'     decimals = 2
 #'   ) %>%
 #'   cols_label(num = "number")
@@ -82,6 +86,7 @@
 gt <- function(data,
                rowname_col = "rowname",
                groupname_col = dplyr::group_vars(data),
+               caption = NULL,
                rownames_to_stub = FALSE,
                auto_align = TRUE,
                id = NULL,
@@ -113,35 +118,56 @@ gt <- function(data,
 
   # Initialize the main objects
   data <-
-    list() %>%
     dt_data_init(
+      data = list(),
       data_tbl = data,
       rownames_to_column = if (rownames_to_stub) rowname_col else NA_character_
-    ) %>%
-    dt_boxhead_init() %>%
+    )
+
+  data <- dt_boxhead_init(data = data)
+  data <-
     dt_stub_df_init(
+      data = data,
       rowname_col = rowname_col,
       groupname_col = groupname_col,
       row_group.sep = row_group.sep
-    ) %>%
-    dt_row_groups_init() %>%
-    dt_stub_others_init() %>%
-    dt_heading_init() %>%
-    dt_spanners_init() %>%
-    dt_stubhead_init() %>%
-    dt_footnotes_init() %>%
-    dt_source_notes_init() %>%
-    dt_formats_init() %>%
-    dt_styles_init() %>%
-    dt_summary_init() %>%
-    dt_options_init() %>%
-    dt_transforms_init() %>%
-    dt_has_built_init()
+    )
+  data <- dt_row_groups_init(data = data)
+  data <- dt_heading_init(data = data)
+  data <- dt_spanners_init(data = data)
+  data <- dt_stubhead_init(data = data)
+  data <- dt_footnotes_init(data = data)
+  data <- dt_source_notes_init(data = data)
+  data <- dt_formats_init(data = data)
+  data <- dt_styles_init(data = data)
+  data <- dt_summary_init(data = data)
+  data <- dt_options_init(data = data)
+  data <- dt_transforms_init(data = data)
+  data <- dt_has_built_init(data = data)
 
   # Add any user-defined table ID to the `table_id` parameter
   # (if NULL, the default setting will generate a random ID)
   if (!is.null(id)) {
-    data <- data %>% dt_options_set_value(option = "table_id", value = id)
+    data <-
+      dt_options_set_value(
+        data = data,
+        option = "table_id",
+        value = id
+      )
+  }
+
+  # Add any user-defined table caption to the `table_id` parameter
+  # TODO: consider whether this might take a string or a logical (to say that
+  # we'll use the header from `tab_header` as the table caption); this might
+  # require some more thought still because a `caption` arg might also be
+  # sensible in `tab_header`
+  if (!is.null(caption)) {
+    data <-
+      dt_options_set_value(
+        data = data,
+        option = "table_caption",
+        value = caption
+      )
   }
 
   # Apply the `gt_tbl` class to the object while
@@ -150,8 +176,8 @@ gt <- function(data,
 
   # If automatic alignment of values is to be done, call
   # the `cols_align()` function on data
-  if (isTRUE(auto_align)) {
-    data <- data %>% cols_align(align = "auto")
+  if (auto_align) {
+    data <- cols_align(data = data, align = "auto")
   }
 
   data

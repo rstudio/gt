@@ -30,17 +30,24 @@ globalVariables(
     "arrange_dfs",
     "b",
     "blue",
+    "built",
     "boxhead",
+    "category",
     "colname",
     "colnames_start",
     "colnum",
     "colnum_final",
     "column_align",
     "column_label",
+    "column_width",
     "colors",
+    "conv",
+    "copyright",
     "curr_code",
     "curr_name",
     "data_attr",
+    "date_added",
+    "designer",
     "display_name",
     "footnotes",
     "footnotes_to_list",
@@ -49,20 +56,26 @@ globalVariables(
     "get_groups_rows",
     "g",
     "green",
+    "group_id",
     "group_label",
+    "groups",
     "grpname",
     "grprow",
     "integrate_summary_lines",
+    "label",
     "locname",
     "locnum",
     "missing_text",
     "n",
     "n_cols",
+    "name",
+    "name_copy",
     "obtain_group_ordering",
     "package",
     "palette",
     "red",
     "row_end",
+    "row_start",
     "rownum",
     "rownum_i",
     "styles",
@@ -80,14 +93,19 @@ globalVariables(
     "r",
     "rgba",
     "rowname",
+    "samp",
     "scss",
     "selector",
     "style",
     "text_col",
     "time",
     "type",
+    "unit",
     "value",
     "var",
+    "weight",
+    "weight_range",
+    "weight_ranges",
     "yiq"
     )
   )
@@ -101,11 +119,14 @@ globalVariables(
 #'   \item `gt.row_group.sep`: a separator between groups for the row group
 #'   label.
 #' }
+#'
+#' @keywords internal
 #' @name gt-options
 NULL
 
 gt_default_options <- list(
   gt.row_group.sep = " - ",
+  gt.rtf_page_width = 9468L,
   gt.html_tag_check = TRUE
 )
 

@@ -44,13 +44,13 @@ test_that("the function `cols_merge()` works correctly", {
     expect_true()
 
   # Create a `tbl_latex` object with `gt()`; merge two columns
-  # with a `pattern` and use the `vars()` helper
+  # with a `pattern` and use `c()`
   tbl_latex <-
     mtcars_short %>%
     gt() %>%
     cols_merge(
-      columns = vars(drat, wt),
-      hide_columns = vars(wt),
+      columns = c(drat, wt),
+      hide_columns = wt,
       pattern = "{1} ({2})"
     )
 
@@ -67,18 +67,18 @@ test_that("the function `cols_merge()` works correctly", {
     expect_true()
 
   # Create a `tbl_latex` object with `gt()`; merge two columns, twice,
-  # with two different `pattern`s; use the `vars()` helper
+  # with two different `pattern`s; use `c()`
   tbl_latex <-
     mtcars_short %>%
     gt() %>%
     cols_merge(
-      columns = vars(drat, wt),
-      hide_columns = vars(wt),
+      columns = c(drat, wt),
+      hide_columns = wt,
       pattern = "{1} ({2})"
     ) %>%
     cols_merge(
-      columns = vars(gear, carb),
-      hide_columns = vars(carb),
+      columns = c(gear, carb),
+      hide_columns = carb,
       pattern = "{1}-{2}"
     )
 
@@ -125,13 +125,13 @@ test_that("the `cols_merge_uncert()` function works correctly", {
     expect_true()
 
   # Create a `tbl_latex` object with `gt()`; merge two columns
-  # with `cols_merge_uncert()` and use the `vars()` helper
+  # with `cols_merge_uncert()`
   tbl_latex <-
     tbl %>%
     gt() %>%
     cols_merge_uncert(
-      col_val = vars(col_1),
-      col_uncert = vars(col_2)
+      col_val = col_1,
+      col_uncert = col_2
     )
 
   # Expect a characteristic pattern
@@ -152,17 +152,17 @@ test_that("the `cols_merge_uncert()` function works correctly", {
     expect_true()
 
   # Create a `tbl_latex` object with `gt()`; merge two columns, twice,
-  # with `cols_merge_uncert()` and use the `vars()` helper
+  # with `cols_merge_uncert()`
   tbl_latex <-
     tbl %>%
     gt() %>%
     cols_merge_uncert(
-      col_val = vars(col_1),
-      col_uncert = vars(col_2)
+      col_val = col_1,
+      col_uncert = col_2
     ) %>%
     cols_merge_uncert(
-      col_val = vars(col_3),
-      col_uncert = vars(col_4)
+      col_val = col_3,
+      col_uncert = col_4
     )
 
   # Expect a characteristic pattern
@@ -213,13 +213,13 @@ test_that("the `cols_merge_range()` function works correctly", {
     expect_true()
 
   # Create a `tbl_latex` object with `gt()`; merge two columns
-  # with `cols_merge_range()` and use the `vars()` helper
+  # with `cols_merge_range()`
   tbl_latex <-
     tbl %>%
     gt() %>%
     cols_merge_range(
-      col_begin = vars(col_1),
-      col_end = vars(col_2)
+      col_begin = col_1,
+      col_end = col_2
     )
 
   # Expect a characteristic pattern
@@ -240,17 +240,17 @@ test_that("the `cols_merge_range()` function works correctly", {
     expect_true()
 
   # Create a `tbl_latex` object with `gt()`; merge two columns, twice,
-  # with `cols_merge_range()` and use the `vars()` helper
+  # with `cols_merge_range()`
   tbl_latex <-
     tbl %>%
     gt() %>%
     cols_merge_range(
-      col_begin = vars(col_1),
-      col_end = vars(col_2)
+      col_begin = col_1,
+      col_end = col_2
     ) %>%
     cols_merge_range(
-      col_begin = vars(col_3),
-      col_end = vars(col_4)
+      col_begin = col_3,
+      col_end = col_4
     )
 
   # Expect a characteristic pattern

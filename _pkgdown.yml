@@ -52,6 +52,7 @@ reference:
     - fmt_scientific
     - fmt_percent
     - fmt_currency
+    - fmt_bytes
     - fmt_date
     - fmt_time
     - fmt_datetime
@@ -77,8 +78,10 @@ reference:
     - cols_move_to_end
     - cols_move
     - cols_hide
+    - cols_unhide
     - cols_merge_range
     - cols_merge_uncert
+    - cols_merge_n_pct
     - cols_merge
 
   - title: Modify Rows
@@ -101,16 +104,15 @@ reference:
 
   - title: Helper Functions
     desc: >
-      A small assortment of helper functions is available in the **gt**
-      package. The various `cells_*()` functions are used for targeting
-      cells with the `locations` argument in the `tab_footnote()`,
-      `tab_style()`, and `text_transform()` functions. The `cells_styles()`
-      function is used exclusively with `tab_style()`'s `style` argument
-      (and the `px()` & `pct()` functions may be useful there for specifying
-      units in pixels or percentages). The `md()` and `html()` helpers can
-      used be during label creation with the `tab_header()`,
-      `tab_footnote()`, `tab_spanner()`, `tab_stubhead_label()`, and
-      `tab_source_note()` functions.
+      An assortment of helper functions is available in the **gt** package.
+      The various `cells_*()` functions are used for targeting cells with the
+      `locations` argument in the `tab_footnote()`, `tab_style()`, and
+      `text_transform()` functions. The `cells_styles()` function is used
+      exclusively with `tab_style()`'s `style` argument (and the `px()` &
+      `pct()` functions may be useful there for specifying units in pixels or
+      percentages). The `md()` and `html()` helpers can used be during label
+      creation with the `tab_header()`, `tab_footnote()`, `tab_spanner()`,
+      `tab_stubhead_label()`, and `tab_source_note()` functions.
     contents:
     - md
     - html
@@ -125,6 +127,10 @@ reference:
     - cells_body
     - cells_summary
     - cells_grand_summary
+    - cells_stub_summary
+    - cells_stub_grand_summary
+    - cells_footnotes
+    - cells_source_notes
     - currency
     - cell_text
     - cell_fill
@@ -133,6 +139,8 @@ reference:
     - random_id
     - escape_latex
     - gt_latex_dependencies
+    - default_fonts
+    - google_font
 
   - title: Image Addition Functions
     desc: >
@@ -160,6 +168,8 @@ reference:
     - opt_all_caps
     - opt_table_lines
     - opt_table_outline
+    - opt_table_font
+    - opt_css
 
   - title: Information Functions
     desc: >
@@ -167,15 +177,17 @@ reference:
       useful information. So far, we can get reference information on
       date styles (`info_date_style()`), on time styles
       (`info_time_style()`), on a huge number of color palettes
-      (`info_paletteer()`), on currencies (`info_currencies()`), and, on
+      (`info_paletteer()`), on currencies (`info_currencies()`), on
       all of the different locales supported in the formatter functions
-      (`info_locales()`).
+      (`info_locales()`), and on our recommendations for which Google Fonts
+      to try in your tables.
     contents:
     - info_date_style
     - info_time_style
     - info_currencies
     - info_locales
     - info_paletteer
+    - info_google_fonts
 
   - title: Datasets
     desc: >
@@ -222,8 +234,6 @@ navbar:
   left:
   - text: Intro
     href: articles/intro-creating-gt-tables.html
-  - text: Reference
-    href: reference/index.html
   - text: Articles
     menu:
     - text: How to Use
@@ -234,11 +244,10 @@ navbar:
     - text: Case Studies
     - text: 'Case Study: gtcars'
       href: articles/case-study-gtcars.html
+  - text: Reference
+    href: reference/index.html
   - text: News
     href: news/index.html
-  right:
-  - icon: fa-github fa-lg
-    href: https://github.com/rstudio/gt
 
 development:
-  mode: release
+  version_tooltip: "Development version"

@@ -15,7 +15,7 @@ A list of data frames containing summary data.
 \description{
 Get a list of summary row data frames from a \code{gt_tbl} object where summary
 rows were added via the \code{\link[=summary_rows]{summary_rows()}} function. The output data frames
-contain the \code{groupname} and \code{rowname} columns, whereby \code{rowname} contains
+contain the \code{group_id} and \code{rowname} columns, whereby \code{rowname} contains
 descriptive stub labels for the summary rows.
 }
 \section{Figures}{
@@ -52,7 +52,7 @@ summary_extracted <-
   ) \%>\%
   summary_rows(
     groups = TRUE,
-    columns = vars(open, high, low, close),
+    columns = c(open, high, low, close),
     fns = list(
       min = ~min(.),
       max = ~max(.),
@@ -65,9 +65,7 @@ summary_extracted <-
 # Use the summary list to make a new
 # gt table; the key thing is to use
 # `dplyr::bind_rows()` and then pass the
-# tibble to `gt()` (the `groupname` and
-# `rowname` magic column names create
-# row groups and a stub)
+# tibble to `gt()`
 tab_1 <-
   summary_extracted \%>\%
   unlist(recursive = FALSE) \%>\%

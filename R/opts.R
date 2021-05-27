@@ -1,28 +1,28 @@
 #' Option to modify the set of footnote marks
 #'
+#' @description
 #' Alter the footnote marks for any footnotes that may be present in the table.
 #' Either a vector of marks can be provided (including Unicode characters), or,
 #' a specific keyword could be used to signify a preset sequence. This function
 #' serves as a shortcut for using `tab_options(footnotes.marks = {marks})`
 #'
+#' @details
 #' We can supply a vector of that will represent the series of marks.
 #' The series of footnote marks is recycled when its usage goes beyond the
 #' length of the set. At each cycle, the marks are simply doubled, tripled, and
 #' so on (e.g., `*` -> `**` -> `***`). The option exists for providing keywords
 #' for certain types of footnote marks. The keywords are:
 #'
-#' \itemize{
-#' \item `"numbers"`: numeric marks, they begin from 1 and these marks are not
+#' - `"numbers"`: numeric marks, they begin from 1 and these marks are not
 #' subject to recycling behavior
-#' \item `"letters"`: miniscule alphabetic marks, internally uses the `letters`
+#' - `"letters"`: miniscule alphabetic marks, internally uses the `letters`
 #' vector
 #' which contains 26 lowercase letters of the Roman alphabet
-#' \item `"LETTERS"`: majuscule alphabetic marks, using the `LETTERS` vector
+#' - `"LETTERS"`: majuscule alphabetic marks, using the `LETTERS` vector
 #' which has 26 uppercase letters of the Roman alphabet
-#' \item `"standard"`: symbolic marks, four symbols in total
-#' \item `"extended"`: symbolic marks, extends the standard set by adding two
+#' - `"standard"`: symbolic marks, four symbols in total
+#' - `"extended"`: symbolic marks, extends the standard set by adding two
 #' more symbols, making six
-#' }
 #'
 #' @inheritParams fmt_number
 #' @param marks Either a character vector of length greater than 1 (that will
@@ -92,6 +92,7 @@ opt_footnote_marks <- function(data,
 
 #' Option to add or remove row striping
 #'
+#' @description
 #' By default, a **gt** table does not have row striping enabled. However, this
 #' function allows us to easily enable or disable striped rows in the table
 #' body. This function serves as a convenient shortcut for
@@ -113,13 +114,13 @@ opt_footnote_marks <- function(data,
 #'   gt(rowname_col = "row", groupname_col = "group") %>%
 #'   summary_rows(
 #'     groups = "grp_a",
-#'     columns = vars(num, currency),
+#'     columns = c(num, currency),
 #'     fns = list(
 #'       min = ~min(., na.rm = TRUE),
 #'       max = ~max(., na.rm = TRUE)
 #'     )) %>%
 #'   grand_summary_rows(
-#'     columns = vars(currency),
+#'     columns = currency,
 #'     fns = list(
 #'       total = ~sum(., na.rm = TRUE)
 #'     )) %>%
@@ -153,6 +154,7 @@ opt_row_striping <- function(data,
 
 #' Option to align the table header
 #'
+#' @description
 #' By default, a table header added to a **gt** table has center alignment
 #' for both the title and the subtitle elements. This function allows us to
 #' easily set the horizontal alignment of the title and subtitle to the left
@@ -176,13 +178,13 @@ opt_row_striping <- function(data,
 #'   gt(rowname_col = "row", groupname_col = "group") %>%
 #'   summary_rows(
 #'     groups = "grp_a",
-#'     columns = vars(num, currency),
+#'     columns = c(num, currency),
 #'     fns = list(
 #'       min = ~min(., na.rm = TRUE),
 #'       max = ~max(., na.rm = TRUE)
 #'     )) %>%
 #'   grand_summary_rows(
-#'     columns = vars(currency),
+#'     columns = currency,
 #'     fns = list(
 #'       total = ~sum(., na.rm = TRUE)
 #'     )) %>%
@@ -218,6 +220,7 @@ opt_align_table_header <- function(data,
 
 #' Option to use all caps in select table locations
 #'
+#' @description
 #' Sometimes an all-capitalized look is suitable for a table. With the
 #' `opt_all_caps()` function, we can transform characters in the column labels,
 #' the stub, and in all row groups in this way (and there's control over which
@@ -248,13 +251,13 @@ opt_align_table_header <- function(data,
 #'   gt(rowname_col = "row", groupname_col = "group") %>%
 #'   summary_rows(
 #'     groups = "grp_a",
-#'     columns = vars(num, currency),
+#'     columns = c(num, currency),
 #'     fns = list(
 #'       min = ~min(., na.rm = TRUE),
 #'       max = ~max(., na.rm = TRUE)
 #'     )) %>%
 #'   grand_summary_rows(
-#'     columns = vars(currency),
+#'     columns = currency,
 #'     fns = list(
 #'       total = ~sum(., na.rm = TRUE)
 #'     )) %>%
@@ -319,6 +322,7 @@ opt_all_caps <- function(data,
 
 #' Option to set table lines to different extents
 #'
+#' @description
 #' The `opt_table_lines()` function sets table lines in one of three possible
 #' ways: (1) all possible table lines drawn (`"all"`), (2) no table lines at all
 #' (`"none"`), and (3) resetting to the default line styles (`"default"`). This
@@ -343,13 +347,13 @@ opt_all_caps <- function(data,
 #'   gt(rowname_col = "row", groupname_col = "group") %>%
 #'   summary_rows(
 #'     groups = "grp_a",
-#'     columns = vars(num, currency),
+#'     columns = c(num, currency),
 #'     fns = list(
 #'       min = ~min(., na.rm = TRUE),
 #'       max = ~max(., na.rm = TRUE)
 #'     )) %>%
 #'   grand_summary_rows(
-#'     columns = vars(currency),
+#'     columns = currency,
 #'     fns = list(
 #'       total = ~sum(., na.rm = TRUE)
 #'     )) %>%
@@ -397,6 +401,7 @@ opt_table_lines <- function(data,
 
 #' Option to wrap an outline around the entire table
 #'
+#' @description
 #' This function puts an outline of consistent `style`, `width`, and `color`
 #' around the entire table. It'll write over any existing outside lines so long
 #' as the `width` is larger that of the existing lines. The default value of
@@ -421,13 +426,13 @@ opt_table_lines <- function(data,
 #'   gt(rowname_col = "row", groupname_col = "group") %>%
 #'   summary_rows(
 #'     groups = "grp_a",
-#'     columns = vars(num, currency),
+#'     columns = c(num, currency),
 #'     fns = list(
 #'       min = ~min(., na.rm = TRUE),
 #'       max = ~max(., na.rm = TRUE)
 #'     )) %>%
 #'   grand_summary_rows(
-#'     columns = vars(currency),
+#'     columns = currency,
 #'     fns = list(
 #'       total = ~sum(., na.rm = TRUE)
 #'     )) %>%
@@ -495,6 +500,249 @@ opt_table_outline <- function(data,
 
   option_value_list <- create_option_value_list(options_vec, values_vec)
   tab_options_multi(data, option_value_list)
+}
+
+#' Option to define a custom font for the table
+#'
+#' @description
+#' The `opt_table_font()` function makes it possible to define a custom font for
+#' the entire **gt** table. The standard fallback fonts are still set by default
+#' but the font defined here will take precedence. You could still have
+#' different fonts in select locations in the table, and for that you would need
+#' to use [tab_style()] in conjunction with the [cell_text()] helper function.
+#'
+#' @details
+#' We have the option to supply either a system font for the `font_name`, or, a
+#' font available at the Google Fonts service by use of the [google_font()]
+#' helper function.
+#'
+#' @inheritParams fmt_number
+#' @param font Either the name of a font available in the user system or a call
+#'   to [google_font()], which has a large selection of typefaces.
+#' @param style The text style. Can be one of either `"normal"`, `"italic"`, or
+#'   `"oblique"`.
+#' @param weight The weight of the font. Can be a text-based keyword such as
+#'   `"normal"`, `"bold"`, `"lighter"`, `"bolder"`, or, a numeric value between
+#'   `1` and `1000`, inclusive. Note that only variable fonts may support the
+#'   numeric mapping of weight.
+#' @param add Should this font be added to the front of the already-defined
+#'   fonts for the table? By default, this is `TRUE` and is recommended since
+#'   the list serves as fallbacks when certain fonts are not available.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @examples
+#' if (interactive()) {
+#'
+#' # Use `sp500` to create a small gt table,
+#' # using `fmt_currency()` to provide a
+#' # dollar sign for the first row of monetary
+#' # values; then, set a larger font size for
+#' # the table and use the 'Merriweather' font
+#' # (from Google Fonts, via `google_font()`)
+#' # with two font fallbacks ('Cochin' and the
+#' # catchall 'Serif' group)
+#' tab_1 <-
+#'   sp500 %>%
+#'   dplyr::slice(1:10) %>%
+#'   dplyr::select(-volume, -adj_close) %>%
+#'   gt() %>%
+#'   fmt_currency(
+#'     columns = 2:5,
+#'     rows = 1,
+#'     currency = "USD",
+#'     use_seps = FALSE
+#'   ) %>%
+#'   tab_options(table.font.size = px(18)) %>%
+#'   opt_table_font(
+#'     font = list(
+#'       google_font(name = "Merriweather"),
+#'       "Cochin", "Serif"
+#'     )
+#'   )
+#'
+#' # Use `sza` to create an eleven-row table;
+#' # within `opt_table_font()`, set up a
+#' # preferred list of sans-serif fonts that
+#' # are commonly available in macOS (using
+#' # part of the `default_fonts()` vector as
+#' # a fallback)
+#' # and Windows 10
+#' tab_2 <-
+#'   sza %>%
+#'   dplyr::filter(
+#'     latitude == 20 &
+#'       month == "jan" &
+#'       !is.na(sza)
+#'   ) %>%
+#'   dplyr::select(-latitude, -month) %>%
+#'   gt() %>%
+#'   opt_table_font(
+#'     font = c(
+#'       "Helvetica Neue", "Segoe UI",
+#'       default_fonts()[-c(1:3)]
+#'     )
+#'   ) %>%
+#'   opt_all_caps()
+#'
+#' }
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_opt_table_font_1.png}{options: width=100\%}}
+#'
+#' \if{html}{\figure{man_opt_table_font_2.png}{options: width=100\%}}
+#'
+#' @family Table Option Functions
+#' @section Function ID:
+#' 9-7
+#'
+#' @export
+opt_table_font <- function(data,
+                           font,
+                           weight = NULL,
+                           style = NULL,
+                           add = TRUE) {
+
+  existing_fonts <- dt_options_get_value(data = data, option = "table_font_names")
+  existing_additional_css <- dt_options_get_value(data = data, option = "table_additional_css")
+
+  font <- normalize_font_input(font_input = font)
+
+  additional_css <- c(font$import_stmt, existing_additional_css)
+
+  data <- tab_options(data = data, table.font.names = c(font$name, if (add) existing_fonts))
+  data <- tab_options(data = data, table.additional_css = additional_css)
+
+  if (!is.null(weight)) {
+
+    if (is.numeric(weight)) weight <- as.character(weight)
+
+    data <- tab_options(data = data, table.font.weight = weight)
+    data <- tab_options(data = data, column_labels.font.weight = weight)
+  }
+
+  if (!is.null(style)) {
+    data <- tab_options(data = data, table.font.style = style)
+  }
+
+  data
+}
+
+#' Option to add custom CSS for the table
+#'
+#' @description
+#' The `opt_css()` function makes it possible to add CSS to a **gt** table. This
+#' CSS will be added after the compiled CSS that **gt** generates automatically
+#' when the object is transformed to an HTML output table. You can supply `css`
+#' as a vector of lines or as a single string.
+#'
+#' @inheritParams fmt_number
+#' @param css The CSS to include as part of the rendered table's `<style>`
+#'   element.
+#' @param add If `TRUE`, the default, the CSS is added to any already-defined
+#'   CSS (typically from previous calls of [opt_table_font()], `opt_css()`, or,
+#'   directly setting CSS the `table.additional_css` value in [tab_options()]).
+#'   If this is set to `FALSE`, the CSS provided here will replace any
+#'   previously-stored CSS.
+#' @param allow_duplicates When this is `FALSE` (the default), the CSS provided
+#'   here won't be added (provided that `add = TRUE`) if it is seen in the
+#'   already-defined CSS.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @examples
+#' # Use `exibble` to create a gt table and
+#' # format the data in both columns; with
+#' # `opt_css()` insert CSS rulesets as
+#' # as string and be sure to set the table
+#' # ID explicitly (here as "one")
+#' tab_1 <-
+#'   exibble %>%
+#'   dplyr::select(num, currency) %>%
+#'   gt(id = "one") %>%
+#'   fmt_currency(
+#'     columns = currency,
+#'     currency = "HKD"
+#'   ) %>%
+#'   fmt_scientific(
+#'     columns = num
+#'   ) %>%
+#'   opt_css(
+#'     css = "
+#'     #one .gt_table {
+#'       background-color: skyblue;
+#'     }
+#'     #one .gt_row {
+#'       padding: 20px 30px;
+#'     }
+#'     #one .gt_col_heading {
+#'       text-align: center !important;
+#'     }
+#'     "
+#'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_opt_css_1.png}{options: width=100\%}}
+#'
+#' @family Table Option Functions
+#' @section Function ID:
+#' 9-8
+#'
+#' @export
+opt_css <- function(data,
+                    css,
+                    add = TRUE,
+                    allow_duplicates = FALSE) {
+
+  existing_additional_css <-
+    dt_options_get_value(data = data, option = "table_additional_css")
+
+  css <- paste(css, collapse = "\n")
+
+  if (!add && !allow_duplicates && css %in% existing_additional_css) {
+    return(data)
+  }
+
+  additional_css <- c(existing_additional_css, css)
+
+  tab_options(data = data, table.additional_css = additional_css)
+}
+
+normalize_font_input <- function(font_input) {
+
+  if (!inherits(font_input, "character") &&
+      !inherits(font_input, "list") &&
+      !inherits(font_input, "font_css")) {
+    stop("Values provided to `font` must either be a list or a character vector.",
+         call. = FALSE)
+  }
+
+  if (inherits(font_input, "character")) {
+    font_input <- list(font_input)
+  }
+
+  # Unlist a list of lists; this normalizes the value for `font_input`
+  # in the cases where multiple fonts were provided in `c()` and `list()`
+  if (any(vapply(font_input, is.list, FUN.VALUE = logical(1)))) {
+    font_input <- unlist(font_input, recursive = FALSE)
+  }
+
+  if (is.null(names(font_input))) {
+    font_names <- unlist(font_input)
+    import_stmts <- ""
+  } else {
+    font_names <- unique(unname(unlist(font_input[names(font_input) %in% c("name", "")])))
+    import_stmts <- unique(unname(unlist(font_input[names(font_input) %in% "import_stmt"])))
+  }
+
+  font_list <-
+    list(
+      name = font_names,
+      import_stmt = import_stmts
+    )
+
+  class(font_list) <- "font_css"
+  font_list
 }
 
 # Create an option-value list with a vector of arg names from the
