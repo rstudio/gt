@@ -198,31 +198,26 @@ create_caption_component_h <- function(data) {
 #' string.
 #'
 #' @noRd
-create_heading_component <- function(data,
-                                     context = "html") {
+create_heading_component_h <- function(data) {
 
-  # TODO: This should probably become `create_heading_component_h()`;
-  # The other 'part creation' functions follow this convention and this
-  # one is the last holdout (there is now a `create_heading_component_rtf()`)
-
-  heading <- dt_heading_get(data = data)
-
-  # If there is no heading component, then return an empty string
-  if (length(heading$title) == 0) {
+  # If there is no title or heading component, then return an empty string
+  if (!dt_heading_has_title(data = data)) {
     return("")
   }
 
+  heading <- dt_heading_get(data = data)
   footnotes_tbl <- dt_footnotes_get(data = data)
   styles_tbl <- dt_styles_get(data = data)
   stub_components <- dt_stub_components(data = data)
   subtitle_defined <- dt_heading_has_subtitle(data = data)
 
+  # Obtain the number of visible columns in the built table
   n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
 
-  # Determine whether the stub is available through analysis
-  # of the `stub_components`
+  # Determine whether the stub is available
   stub_available <- dt_stub_components_has_rowname(stub_components)
 
+  # If a stub is present then the effective number of columns increases by 1
   if (stub_available) {
     n_cols <- n_data_cols + 1
   } else {
@@ -239,163 +234,103 @@ create_heading_component <- function(data,
       )
 
     footnote_title_marks <-
-      switch(context,
-             html = footnote_mark_to_html(footnote_title_marks$fs_id_c),
-             latex = footnote_mark_to_latex(footnote_title_marks$fs_id_c),
-             rtf = footnote_mark_to_rtf(footnote_title_marks$fs_id_c),
-             stop("The context (`", context, "`) is invalid"))
+      footnote_mark_to_html(mark = footnote_title_marks$fs_id_c)
 
   } else {
     footnote_title_marks <- ""
   }
 
   # Get the style attrs for the title
-  if (context == "html" && "title" %in% styles_tbl$locname) {
+  if ("title" %in% styles_tbl$locname) {
 
-    title_style_rows <-
-      dplyr::filter(styles_tbl, locname == "title")
+    title_style_rows <- dplyr::filter(styles_tbl, locname == "title")
 
-    title_styles <-
-      if (nrow(title_style_rows) > 0) {
-        title_style_rows$html_style
-      } else {
-        NULL
-      }
+    if (nrow(title_style_rows) > 0) {
+      title_styles <- title_style_rows$html_style
+    } else {
+      title_styles <- NULL
+    }
 
   } else {
     title_styles <- NA_character_
   }
 
   # Get the footnote marks for the subtitle
-  if (subtitle_defined & "subtitle" %in% footnotes_tbl$locname) {
+  if (subtitle_defined && "subtitle" %in% footnotes_tbl$locname) {
 
     footnote_subtitle_marks <-
-      coalesce_marks(fn_tbl = footnotes_tbl, locname = "subtitle")
-
-    footnote_subtitle_marks <-
-      switch(
-        context,
-        html = footnote_mark_to_html(footnote_subtitle_marks$fs_id_c),
-        latex = footnote_mark_to_latex(footnote_subtitle_marks$fs_id_c),
-        rtf = footnote_mark_to_rtf(footnote_subtitle_marks$fs_id_c),
-        stop("The context (`", context, "`) is invalid")
+      coalesce_marks(
+        fn_tbl = footnotes_tbl,
+        locname = "subtitle"
       )
+
+    footnote_subtitle_marks <-
+      footnote_mark_to_html(mark = footnote_subtitle_marks$fs_id_c)
 
   } else {
     footnote_subtitle_marks <- ""
   }
 
   # Get the style attrs for the subtitle
-  if (context == "html" && "subtitle" %in% styles_tbl$locname) {
+  if (subtitle_defined && "subtitle" %in% styles_tbl$locname) {
 
     subtitle_style_rows <- dplyr::filter(styles_tbl, locname == "subtitle")
 
-    subtitle_styles <-
-      if (nrow(subtitle_style_rows) > 0) {
-        subtitle_style_rows$html_style
-      } else {
-        NULL
-      }
+    if (nrow(subtitle_style_rows) > 0) {
+      subtitle_styles <- subtitle_style_rows$html_style
+    } else {
+      subtitle_styles <- NULL
+    }
 
   } else {
     subtitle_styles <- NA_character_
   }
 
-  if (context == "html") {
+  title_classes <- c("gt_heading", "gt_title", "gt_font_normal")
 
-    title_classes <- c("gt_heading", "gt_title", "gt_font_normal")
+  subtitle_classes <- title_classes %>% tidy_sub("title", "subtitle")
 
-    subtitle_classes <- title_classes %>% tidy_sub("title", "subtitle")
+  if (!subtitle_defined) {
+    title_classes <- c(title_classes, "gt_bottom_border")
+  } else {
+    subtitle_classes <- c(subtitle_classes, "gt_bottom_border")
+  }
 
-    if (!subtitle_defined) {
-      title_classes <- c(title_classes, "gt_bottom_border")
-    } else {
-      subtitle_classes <- c(subtitle_classes, "gt_bottom_border")
-    }
+  title_row <-
+    htmltools::tags$tr(
+      htmltools::tags$th(
+        colspan = n_cols,
+        class = paste(title_classes, collapse = " "),
+        style = title_styles,
+        htmltools::HTML(
+          heading$title %>% paste_right(footnote_title_marks)
+        )
+      )
+    )
 
-    title_row <-
+  if (subtitle_defined) {
+
+    subtitle_row <-
       htmltools::tags$tr(
         htmltools::tags$th(
           colspan = n_cols,
-          class = paste(title_classes, collapse = " "),
-          style = title_styles,
+          class = paste(subtitle_classes, collapse = " "),
+          style = subtitle_styles,
           htmltools::HTML(
-            heading$title %>% paste_right(footnote_title_marks)
+            heading$subtitle %>% paste_right(footnote_subtitle_marks)
           )
         )
       )
 
-    if (subtitle_defined) {
-
-      subtitle_row <-
-        htmltools::tags$tr(
-          htmltools::tags$th(
-            colspan = n_cols,
-            class = paste(subtitle_classes, collapse = " "),
-            style = subtitle_styles,
-            htmltools::HTML(
-              heading$subtitle %>% paste_right(footnote_subtitle_marks)
-            )
-          )
-        )
-
-    } else {
-      subtitle_row <- ""
-    }
-
-    heading_component <-
-      htmltools::tags$thead(
-        class = "gt_header",
-        title_row,
-        subtitle_row
-      )
+  } else {
+    subtitle_row <- ""
   }
 
-  if (context == "latex") {
-
-    title_row <-
-      paste0(heading$title, footnote_title_marks) %>%
-      paste_left("\\large ") %>%
-      paste_right("\\\\ \n")
-
-    if (subtitle_defined) {
-
-      subtitle_row <-
-        paste0(heading$subtitle, footnote_subtitle_marks) %>%
-        paste_left("\\small ") %>%
-        paste_right("\\\\ \n")
-
-    } else {
-      subtitle_row <- ""
-    }
-
-    heading_component <-
-      paste0(title_row, subtitle_row) %>%
-      paste_between(x_2 = c("\\caption*{\n", "} \\\\ \n"))
-  }
-
-  # if (context == "rtf") {
-  #
-  #   if (subtitle_defined) {
-  #
-  #     heading_component <-
-  #       rtf_title_subtitle(
-  #         title = paste0(remove_html(heading$title), footnote_title_marks),
-  #         subtitle = paste0(remove_html(heading$subtitle), footnote_subtitle_marks),
-  #         n_cols = n_cols
-  #       )
-  #
-  #   } else {
-  #
-  #     heading_component <-
-  #       rtf_title(
-  #         title = paste0(remove_html(heading$heading), footnote_title_marks),
-  #         n_cols = n_cols
-  #       )
-  #   }
-  # }
-
-  heading_component
+  htmltools::tags$thead(
+    class = "gt_header",
+    title_row,
+    subtitle_row
+  )
 }
 
 #' Create the columns component of a table (HTML)
