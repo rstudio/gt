@@ -1,5 +1,7 @@
 context("Ensuring that the creation of tab components works as expected")
 
+testthat::local_edition(3)
+
 # Create a shorter version of `mtcars`
 mtcars_short <- mtcars[1:5, ]
 
@@ -83,6 +85,29 @@ test_that("a gt table contains the expected heading components", {
   tbl_html %>%
     selection_text("[class='gt_heading gt_subtitle gt_font_normal gt_bottom_border']") %>%
     expect_equal("test subtitle")
+
+  # Perform a snapshot test where an HTML table contains only a title
+  mtcars_short %>%
+    gt() %>%
+    tab_header(title = "test title") %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  # Expect that providing a subtitle value with an empty
+  # string won't produce a subtitle line
+  mtcars_short %>%
+    gt() %>%
+    tab_header(title = "test title", subtitle = "") %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  # Expect that providing a subtitle value with a series
+  # a space characters also won't produce a subtitle line
+  mtcars_short %>%
+    gt() %>%
+    tab_header(title = "test title", subtitle = "   ") %>%
+    render_as_html() %>%
+    expect_snapshot()
 })
 
 test_that("a gt table contains the expected stubhead label", {
