@@ -8,7 +8,6 @@ fmt_integer(
   data,
   columns,
   rows = everything(),
-  n_sigfig = NULL,
   use_seps = TRUE,
   accounting = FALSE,
   scale_by = 1,
@@ -35,13 +34,6 @@ functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with
 \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
 to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
-
-\item{n_sigfig}{A option to format numbers to \emph{n} significant figures. By
-default, this is \code{NULL} and thus number values will be formatted according
-to the number of decimal places set via \code{decimals}. If opting to format
-according to the rules of significant figures, \code{n_sigfig} must be a number
-greater than or equal to \code{1}. Any values passed to the \code{decimals} and
-\code{drop_trailing_zeros} arguments will be ignored.}
 
 \item{use_seps}{An option to use digit group separators. The type of digit
 group separator is set by \code{sep_mark} and overridden if a locale ID is
