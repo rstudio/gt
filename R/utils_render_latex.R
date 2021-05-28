@@ -186,25 +186,12 @@ create_body_component_l <- function(data) {
   # and isn't a stub present
   if (stub_available) {
 
-    n_cols <- n_data_cols + 1
-
     stub_var <- dt_boxhead_get_var_stub(data = data)
-
-    row_splits_body <-
-      split_row_content(
-        body[, c(stub_var, default_vars)],
-        n_cols = n_cols
-      )
+    row_splits_body <- split_row_content(body[, c(stub_var, default_vars)])
 
   } else {
 
-    n_cols <- n_data_cols
-
-    row_splits_body <-
-      split_row_content(
-        body[, default_vars],
-        n_cols = n_cols
-      )
+    row_splits_body <- split_row_content(body[, default_vars])
   }
 
   # Create a vector body rows
@@ -410,11 +397,7 @@ create_summary_rows_l <- function(list_of_summaries,
             list_of_summaries$summary_df_display_list[[group]] %>%
             dplyr::select(.data$rowname, .env$default_vars)
 
-          row_splits_summary <-
-            split_row_content(
-              summary_df,
-              n_cols = ncol(summary_df)
-            )
+          row_splits_summary <- split_row_content(summary_df)
 
           summary_rows <-
             paste(
@@ -451,11 +434,7 @@ create_grand_summary_rows_l <- function(list_of_summaries,
     list_of_summaries$summary_df_display_list$`::GRAND_SUMMARY` %>%
     dplyr::select(.data$rowname, .env$default_vars)
 
-  row_splits_summary <-
-    split_row_content(
-      grand_summary_df,
-      n_cols = ncol(grand_summary_df)
-    )
+  row_splits_summary <- split_row_content(grand_summary_df)
 
   grand_summary_rows <-
     paste(
@@ -484,13 +463,9 @@ grand_summary_h_border <- "\\midrule \n\\midrule \n"
 #' finalized table
 #'
 #' @noRd
-split_row_content <- function(x, n_cols) {
+split_row_content <- function(x) {
 
   row_content <- as.vector(t(x))
 
-  if (length(row_content) == 0) {
-    return(list(rep("", n_cols)))
-  }
-
-  split(row_content, ceiling(seq_along(row_content) / n_cols))
+  split(row_content, ceiling(seq_along(row_content) / ncol(x)))
 }
