@@ -16,7 +16,12 @@ A list object with the classes \code{cells_stub} and \code{location_cells}.
 The \code{cells_stub()} function is used to target the table's stub cells and it
 is useful when applying a footnote with \code{\link[=tab_footnote]{tab_footnote()}} or adding a custom
 style with \code{\link[=tab_style]{tab_style()}}. The function is expressly used in each of those
-functions' \code{locations} argument.
+functions' \code{locations} argument. Here are several ways that a stub location
+might be available in a \strong{gt} table: (1) through specification of a
+\code{rowname_col} in \code{\link[=gt]{gt()}}, (2) by introducing a data frame with row names to
+\code{\link[=gt]{gt()}} with \code{rownames_to_stub = TRUE}, or (3) by using \code{\link[=summary_rows]{summary_rows()}} or
+\code{\link[=grand_summary_rows]{grand_summary_rows()}} with neither of the previous two conditions being
+true.
 }
 \section{Overview of Location Helper Functions}{
 

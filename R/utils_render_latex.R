@@ -213,11 +213,15 @@ create_body_component_l <- function(data) {
   group_rows <- create_group_rows(n_rows, groups_rows_df, context = "latex")
 
   if (stub_available && "__GT_ROWNAME_PRIVATE__" %in% names(body)) {
-    default_vars <- c("__GT_ROWNAME_PRIVATE__", default_vars)
+    visible_vars <- c("__GT_ROWNAME_PRIVATE__", default_vars)
+  } else if (stub_available) {
+    visible_vars <- c(dt_boxhead_get_var_stub(data), default_vars)
+  } else {
+    visible_vars <- default_vars
   }
 
   # Split `body_content` by slices of rows and create data rows
-  body_content <- as.vector(t(body[, default_vars]))
+  body_content <- as.vector(t(body[, visible_vars]))
   row_splits <- split(body_content, ceiling(seq_along(body_content) / n_cols))
   data_rows <- create_data_rows(n_rows, row_splits, context = "latex")
 

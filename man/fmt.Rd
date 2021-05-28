@@ -39,6 +39,7 @@ If providing a single function to \code{fns}, the recommended format is in the
 form: \code{fns = function(x) ...}. This single function will format the targeted
 data cells the same way regardless of the output format (e.g., HTML, LaTeX,
 RTF).
+
 If you require formatting of \code{x} that depends on the output format, a list of
 functions can be provided for the \code{html}, \code{latex}, and \code{default} contexts.
 This can be in the form of \code{fns = list(html = function(x) ..., latex = function(x) ..., default = function(x) ...)}. In this multiple-function case,
@@ -48,10 +49,9 @@ aren't provided.
 \details{
 As with all of the \verb{fmt_*()} functions, targeting of values is done through
 \code{columns} and additionally by \code{rows} (if nothing is provided for \code{rows} then
-entire columns are selected). A number of helper functions exist to make
-targeting more effective. Conditional formatting is possible by providing a
-conditional expression to the \code{rows} argument. See the Arguments section for
-more information on this.
+entire columns are selected). Conditional formatting is possible by providing
+a conditional expression to the \code{rows} argument. See the Arguments section
+for more information on this.
 }
 \section{Figures}{
 

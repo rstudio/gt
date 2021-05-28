@@ -1,26 +1,26 @@
 #' Format numeric values
 #'
+#' @description
 #' With numeric values in a **gt** table, we can perform number-based
 #' formatting so that the targeted values are rendered with a higher
 #' consideration for tabular presentation. Furthermore, there is finer control
 #' over numeric formatting with the following options:
-#' \itemize{
-#' \item decimals: choice of the number of decimal places, option to drop
-#' trailing zeros, and a choice of the decimal symbol
-#' \item digit grouping separators: options to enable/disable digit separators
-#' and provide a choice of separator symbol
-#' \item scaling: we can choose to scale targeted values by a multiplier value
-#' \item large-number suffixing: larger figures (thousands, millions, etc.) can
-#' be autoscaled and decorated with the appropriate suffixes
-#' \item pattern: option to use a text pattern for decoration of the formatted
-#' values
-#' \item locale-based formatting: providing a locale ID will result in number
-#' formatting specific to the chosen locale
-#' }
 #'
+#' - decimals: choice of the number of decimal places, option to drop
+#' trailing zeros, and a choice of the decimal symbol
+#' - digit grouping separators: options to enable/disable digit separators
+#' and provide a choice of separator symbol
+#' - scaling: we can choose to scale targeted values by a multiplier value
+#' - large-number suffixing: larger figures (thousands, millions, etc.) can
+#' be autoscaled and decorated with the appropriate suffixes
+#' - pattern: option to use a text pattern for decoration of the formatted
+#' values
+#' - locale-based formatting: providing a locale ID will result in number
+#' formatting specific to the chosen locale
+#'
+#' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the Arguments section for more information on this.
 #'
@@ -235,22 +235,22 @@ fmt_number <- function(data,
 
 #' Format values to scientific notation
 #'
+#' @description
 #' With numeric values in a **gt** table, we can perform formatting so that the
 #' targeted values are rendered in scientific notation. Furthermore, there is
 #' fine control with the following options:
-#' \itemize{
-#' \item decimals: choice of the number of decimal places, option to drop
-#' trailing zeros, and a choice of the decimal symbol
-#' \item scaling: we can choose to scale targeted values by a multiplier value
-#' \item pattern: option to use a text pattern for decoration of the formatted
-#' values
-#' \item locale-based formatting: providing a locale ID will result in
-#' formatting specific to the chosen locale
-#' }
 #'
+#' - decimals: choice of the number of decimal places, option to drop
+#' trailing zeros, and a choice of the decimal symbol
+#' - scaling: we can choose to scale targeted values by a multiplier value
+#' - pattern: option to use a text pattern for decoration of the formatted
+#' values
+#' - locale-based formatting: providing a locale ID will result in
+#' formatting specific to the chosen locale
+#'
+#' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the Arguments section for more information on this.
 #'
@@ -653,29 +653,29 @@ fmt_symbol <- function(data,
 
 #' Format values as a percentage
 #'
+#' @description
 #' With numeric values in a **gt** table, we can perform percentage-based
 #' formatting. It is assumed the input numeric values are proportional values
 #' and, in this case, the values will be automatically multiplied by `100`
 #' before decorating with a percent sign (the other case is accommodated though
 #' setting the `scale_values` to `FALSE`) For more control over percentage
 #' formatting, we can use the following options:
-#' \itemize{
-#' \item percent sign placement: the percent sign can be placed after or
+#'
+#' - percent sign placement: the percent sign can be placed after or
 #' before the values and a space can be inserted between the symbol and the
 #' value.
-#' \item decimals: choice of the number of decimal places, option to drop
+#' - decimals: choice of the number of decimal places, option to drop
 #' trailing zeros, and a choice of the decimal symbol
-#' \item digit grouping separators: options to enable/disable digit separators
+#' - digit grouping separators: options to enable/disable digit separators
 #' and provide a choice of separator symbol
-#' \item pattern: option to use a text pattern for decoration of the formatted
+#' - pattern: option to use a text pattern for decoration of the formatted
 #' values
-#' \item locale-based formatting: providing a locale ID will result in number
+#' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
-#' }
 #'
+#' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the Arguments section for more information on this.
 #'
@@ -772,6 +772,7 @@ fmt_percent <- function(data,
 
 #' Format values as currencies
 #'
+#' @description
 #' With numeric values in a **gt** table, we can perform currency-based
 #' formatting. This function supports both automatic formatting with a
 #' three-letter or numeric currency code. We can also specify a custom currency
@@ -779,33 +780,33 @@ fmt_percent <- function(data,
 #' helper function. Numeric formatting facilitated through the use of a locale
 #' ID. We have fine control over the conversion from numeric values to currency
 #' values, where we could take advantage of the following options:
-#' \itemize{
-#' \item the currency: providing a currency code or common currency name will
+#'
+#' - the currency: providing a currency code or common currency name will
 #' procure the correct currency symbol and number of currency subunits; we could
 #' also use the [currency()] helper function to specify a custom currency
-#' \item currency symbol placement: the currency symbol can be placed before
+#' - currency symbol placement: the currency symbol can be placed before
 #' or after the values
-#' \item decimals/subunits: choice of the number of decimal places, and a
+#' - decimals/subunits: choice of the number of decimal places, and a
 #' choice of the decimal symbol, and an option on whether to include or exclude
 #' the currency subunits (decimal portion)
-#' \item negative values: choice of a negative sign or parentheses for values
+#' - negative values: choice of a negative sign or parentheses for values
 #' less than zero
-#' \item digit grouping separators: options to enable/disable digit separators
+#' - digit grouping separators: options to enable/disable digit separators
 #' and provide a choice of separator symbol
-#' \item scaling: we can choose to scale targeted values by a multiplier value
-#' \item large-number suffixing: larger figures (thousands, millions, etc.) can
+#' - scaling: we can choose to scale targeted values by a multiplier value
+#' - large-number suffixing: larger figures (thousands, millions, etc.) can
 #' be autoscaled and decorated with the appropriate suffixes
-#' \item pattern: option to use a text pattern for decoration of the formatted
+#' - pattern: option to use a text pattern for decoration of the formatted
 #' currency values
-#' \item locale-based formatting: providing a locale ID will result in
+#' - locale-based formatting: providing a locale ID will result in
 #' currency formatting specific to the chosen locale
-#' }
+#'
 #' We can use the [info_currencies()] function for a useful reference on all of
 #' the possible inputs to the `currency` argument.
 #'
+#' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the Arguments section for more information on this.
 #'
@@ -940,6 +941,7 @@ fmt_currency <- function(data,
 
 #' Format values as bytes
 #'
+#' @description
 #' With numeric values in a **gt** table, we can transform those to values of
 #' bytes with human readable units. The `fmt_bytes()` function allows for the
 #' formatting of byte sizes to either of two common representations: (1) with
@@ -951,16 +953,21 @@ fmt_currency <- function(data,
 #' to be in the range of 1 to <1000 and then decorated with the correct unit
 #' symbol according to the standard chosen. For more control over the formatting
 #' of byte sizes, we can use the following options:
-#' \itemize{
-#' \item decimals: choice of the number of decimal places, option to drop
+#'
+#' - decimals: choice of the number of decimal places, option to drop
 #' trailing zeros, and a choice of the decimal symbol
-#' \item digit grouping separators: options to enable/disable digit separators
+#' - digit grouping separators: options to enable/disable digit separators
 #' and provide a choice of separator symbol
-#' \item pattern: option to use a text pattern for decoration of the formatted
+#' - pattern: option to use a text pattern for decoration of the formatted
 #' values
-#' \item locale-based formatting: providing a locale ID will result in number
+#' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
-#' }
+#'
+#' @details
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the Arguments section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param standard The way to express large byte sizes.
@@ -1079,6 +1086,7 @@ fmt_bytes <- function(data,
 
 #' Format values as dates
 #'
+#' @description
 #' Format input date values that are either of the `Date` type, or, are
 #' character-based and expressed according to the ISO 8601 date format
 #' (`YYYY-MM-DD`). Once the appropriate data cells are targeted with `columns`
@@ -1086,35 +1094,36 @@ fmt_bytes <- function(data,
 #' the dates. The following date styles are available for simpler formatting of
 #' ISO dates (all using the input date of `2000-02-29` in the example output
 #' dates):
-#' \enumerate{
-#' \item iso: `2000-02-29`
-#' \item wday_month_day_year: `Tuesday, February 29, 2000`
-#' \item wd_m_day_year: `Tue, Feb 29, 2000`
-#' \item wday_day_month_year: `Tuesday 29 February 2000`
-#' \item month_day_year: `February 29, 2000`
-#' \item m_day_year: `Feb 29, 2000`
-#' \item day_m_year: `29 Feb 2000`
-#' \item day_month_year: `29 February 2000`
-#' \item day_month: `29 February`
-#' \item year: `2000`
-#' \item month: `February`
-#' \item day: `29`
-#' \item year.mn.day: `2000/02/29`
-#' \item y.mn.day: `0/02/29`
-#' }
+#'
+#' 1. `"iso"`: `2000-02-29`
+#' 2. `"wday_month_day_year"`: `Tuesday, February 29, 2000`
+#' 3. `"wd_m_day_year"`: `Tue, Feb 29, 2000`
+#' 4. `"wday_day_month_year"`: `Tuesday 29 February 2000`
+#' 5. `"month_day_year"`: `February 29, 2000`
+#' 6. `"m_day_year"`: `Feb 29, 2000`
+#' 7. `"day_m_year"`: `29 Feb 2000`
+#' 8. `"day_month_year"`: `29 February 2000`
+#' 9. `"day_month"`: `29 February`
+#' 10. `"year"`: `2000`
+#' 11. `"month"`: `February`
+#' 12. `"day"`: `29`
+#' 13. `"year.mn.day"`: `2000/02/29`
+#' 14. `"y.mn.day"`: `00/02/29`
+#'
 #' We can use the [info_date_style()] function for a useful reference on all of
 #' the possible inputs to `date_style`.
 #'
+#' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the Arguments section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param date_style The date style to use. Supply a number (from `1` to `14`)
-#'   that corresponds to the preferred date style. Use [info_date_style()] to
-#'   see the different numbered and named date presets.
+#'   that corresponds to the preferred date style, or, provide a named date
+#'   style (`"wday_month_day_year"`, `"m_day_year"`, `"year.mn.day"`, etc.). Use
+#'   [info_date_style()] to see the different numbered and named date presets.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -1146,13 +1155,13 @@ fmt_bytes <- function(data,
 #'     columns = date,
 #'     rows =
 #'       as.Date(date) > as.Date("2015-04-01"),
-#'     date_style = 6
+#'     date_style = "m_day_year"
 #'   ) %>%
 #'   fmt_date(
 #'     columns = date,
 #'     rows =
 #'       as.Date(date) <= as.Date("2015-04-01"),
-#'     date_style = 7
+#'     date_style = "day_m_year"
 #'   )
 #'
 #' @section Figures:
@@ -1218,32 +1227,34 @@ fmt_date <- function(data,
 
 #' Format values as times
 #'
+#' @description
 #' Format input time values that are character-based and expressed according to
 #' the ISO 8601 time format (`HH:MM:SS`). Once the appropriate data cells are
 #' targeted with `columns` (and, optionally, `rows`), we can simply apply a
 #' preset time style to format the times. The following time styles are
 #' available for simpler formatting of ISO times (all using the input time of
 #' `14:35:00` in the example output times):
-#' \enumerate{
-#' \item hms: `14:35:00`
-#' \item hm: `14:35`
-#' \item hms_p: `2:35:00 PM`
-#' \item hm_p: `2:35 PM`
-#' \item h_p: `2 PM`
-#' }
+#'
+#' 1. `"hms"`: `14:35:00`
+#' 2. `"hm"`: `14:35`
+#' 3. `"hms_p"`: `2:35:00 PM`
+#' 4. `"hm_p"`: `2:35 PM`
+#' 5. `"h_p"`: `2 PM`
+#'
 #' We can use the [info_time_style()] function for a useful reference on all of
 #' the possible inputs to `time_style`.
 #'
+#' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the Arguments section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param time_style The time style to use. Supply a number (from `1` to `5`)
-#'   that corresponds to the preferred time style. Use [info_time_style()] to
-#'   see the different numbered and named time presets.
+#'   that corresponds to the preferred time style, or, provide a named time
+#'   style (`"hms"`, `"hms_p"`, `"h_p"`, etc.). Use [info_time_style()] to see
+#'   the different numbered and named time presets.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -1341,6 +1352,7 @@ fmt_time <- function(data,
 
 #' Format values as date-times
 #'
+#' @description
 #' Format input date-time values that are character-based and expressed
 #' according to the ISO 8601 date-time format (`YYYY-MM-DD HH:MM:SS`). Once the
 #' appropriate data cells are targeted with `columns` (and, optionally, `rows`),
@@ -1348,38 +1360,38 @@ fmt_time <- function(data,
 #' values. The following date styles are available for simpler formatting of the
 #' date portion (all using the input date of `2000-02-29` in the example output
 #' dates):
-#' \enumerate{
-#' \item iso: `2000-02-29`
-#' \item wday_month_day_year: `Tuesday, February 29, 2000`
-#' \item wd_m_day_year: `Tue, Feb 29, 2000`
-#' \item wday_day_month_year: `Tuesday 29 February 2000`
-#' \item month_day_year: `February 29, 2000`
-#' \item m_day_year: `Feb 29, 2000`
-#' \item day_m_year: `29 Feb 2000`
-#' \item day_month_year: `29 February 2000`
-#' \item day_month: `29 February`
-#' \item year: `2000`
-#' \item month: `February`
-#' \item day: `29`
-#' \item year.mn.day: `2000/02/29`
-#' \item y.mn.day: `0/02/29`
-#' }
+#'
+#' 1. `"iso"`: `2000-02-29`
+#' 2. `"wday_month_day_year"`: `Tuesday, February 29, 2000`
+#' 3. `"wd_m_day_year"`: `Tue, Feb 29, 2000`
+#' 4. `"wday_day_month_year"`: `Tuesday 29 February 2000`
+#' 5. `"month_day_year"`: `February 29, 2000`
+#' 6. `"m_day_year"`: `Feb 29, 2000`
+#' 7. `"day_m_year"`: `29 Feb 2000`
+#' 8. `"day_month_year"`: `29 February 2000`
+#' 9. `"day_month"`: `29 February`
+#' 10. `"year"`: `2000`
+#' 11. `"month"`: `February`
+#' 12. `"day"`: `29`
+#' 13. `"year.mn.day"`: `2000/02/29`
+#' 14. `"y.mn.day"`: `00/02/29`
+#'
 #' The following time styles are available for simpler formatting of the time
 #' portion (all using the input time of `14:35:00` in the example output times):
-#' \enumerate{
-#' \item hms: `14:35:00`
-#' \item hm: `14:35`
-#' \item hms_p: `2:35:00 PM`
-#' \item hm_p: `2:35 PM`
-#' \item h_p: `2 PM`
-#' }
+#'
+#' 1. `"hms"`: `14:35:00`
+#' 2. `"hm"`: `14:35`
+#' 3. `"hms_p"`: `2:35:00 PM`
+#' 4. `"hm_p"`: `2:35 PM`
+#' 5. `"h_p"`: `2 PM`
+#'
 #' We can use the [info_date_style()] and [info_time_style()] functions as
 #' useful references for all of the possible inputs to `date_style` and
 #' `time_style`.
 #'
+#' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the Arguments section for more information on this.
 #'
@@ -1485,12 +1497,13 @@ fmt_datetime <- function(data,
 
 #' Format Markdown text
 #'
+#' @description
 #' Any Markdown-formatted text in the incoming cells will be transformed to the
 #' appropriate output type during render when using `fmt_markdown()`.
 #'
+#' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the Arguments section for more information on this.
 #'
@@ -1592,6 +1605,7 @@ fmt_markdown <- function(data,
 
 #' Format by simply passing data through
 #'
+#' @description
 #' Format by passing data through no other transformation other than: (1)
 #' coercing to `character` (as all the `fmt_*()` functions do), and (2) applying
 #' text via the `pattern` argument (the default is to apply nothing). All of
@@ -1600,9 +1614,9 @@ fmt_markdown <- function(data,
 #' `formatter` function in the [summary_rows()] function, where the output may
 #' be text or useful as is.
 #'
+#' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the Arguments section for more information on this.
 #'
@@ -1730,14 +1744,15 @@ fmt_passthrough <- function(data,
 
 #' Format missing values
 #'
+#' @description
 #' Wherever there is missing data (i.e., `NA` values) a customizable mark may
 #' present better than the standard `NA` text that would otherwise appear. The
 #' `fmt_missing()` function allows for this replacement through its
 #' `missing_text` argument (where an em dash serves as the default).
 #'
+#' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the Arguments section for more information on this.
 #'
@@ -1832,6 +1847,7 @@ fmt_missing <- function(data,
 
 #' Set a column format with a formatter function
 #'
+#' @description
 #' The `fmt()` function provides greater control in formatting raw data values
 #' than any of the specialized `fmt_*()` functions that are available in
 #' **gt**. Along with the `columns` and `rows` arguments that provide some
@@ -1841,6 +1857,7 @@ fmt_missing <- function(data,
 #' form: `fns = function(x) ...`. This single function will format the targeted
 #' data cells the same way regardless of the output format (e.g., HTML, LaTeX,
 #' RTF).
+#'
 #' If you require formatting of `x` that depends on the output format, a list of
 #' functions can be provided for the `html`, `latex`, and `default` contexts.
 #' This can be in the form of `fns = list(html = function(x) ..., latex =
@@ -1848,12 +1865,12 @@ fmt_missing <- function(data,
 #' we recommended including the `default` function as a fallback if all contexts
 #' aren't provided.
 #'
+#' @details
 #' As with all of the `fmt_*()` functions, targeting of values is done through
 #' `columns` and additionally by `rows` (if nothing is provided for `rows` then
-#' entire columns are selected). A number of helper functions exist to make
-#' targeting more effective. Conditional formatting is possible by providing a
-#' conditional expression to the `rows` argument. See the Arguments section for
-#' more information on this.
+#' entire columns are selected). Conditional formatting is possible by providing
+#' a conditional expression to the `rows` argument. See the Arguments section
+#' for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param fns Either a single formatting function or a named list of functions.

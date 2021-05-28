@@ -423,12 +423,13 @@ create_data_rows <- function(n_rows,
   unname(
     unlist(
       lapply(
-        seq(n_rows),
+        seq_len(n_rows),
         FUN = function(x) {
           if (context == "latex") {
             latex_body_row(content = row_splits[[x]], type = "row")
           }
-        })
+        }
+      )
     )
   )
 }
