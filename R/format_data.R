@@ -265,6 +265,23 @@ fmt_number <- function(data,
 #' argument. See the Arguments section for more information on this.
 #'
 #' @inheritParams fmt_number
+#' @param suffixing An option to scale and apply suffixes to larger numbers
+#'   (e.g., `1924000` can be transformed to `2M`). This option can accept a
+#'   logical value, where `FALSE` (the default) will not perform this
+#'   transformation and `TRUE` will apply thousands (`K`), millions (`M`),
+#'   billions (`B`), and trillions (`T`) suffixes after automatic value scaling.
+#'   We can also specify which symbols to use for each of the value ranges by
+#'   using a character vector of the preferred symbols to replace the defaults
+#'   (e.g., `c("k", "Ml", "Bn", "Tr")`).
+#'
+#'   Including `NA` values in the vector will ensure that the particular range
+#'   will either not be included in the transformation (e.g, `c(NA, "M", "B",
+#'   "T")` won't modify numbers in the thousands range) or the range will
+#'   inherit a previous suffix (e.g., with `c("K", "M", NA, "T")`, all numbers
+#'   in the range of millions and billions will be in terms of millions).
+#'
+#'   Any use of `suffixing` (where it is not set expressly as `FALSE`) means
+#'   that any value provided to `scale_by` will be ignored.
 #'
 #' @return An object of class `gt_tbl`.
 #'

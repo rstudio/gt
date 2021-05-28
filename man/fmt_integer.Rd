@@ -49,7 +49,7 @@ This value will be ignored if using any of the \code{suffixing} options (i.e.,
 where \code{suffixing} is not set to \code{FALSE}).}
 
 \item{suffixing}{An option to scale and apply suffixes to larger numbers
-(e.g., \code{1924000} can be transformed to \verb{1.92M}). This option can accept a
+(e.g., \code{1924000} can be transformed to \verb{2M}). This option can accept a
 logical value, where \code{FALSE} (the default) will not perform this
 transformation and \code{TRUE} will apply thousands (\code{K}), millions (\code{M}),
 billions (\code{B}), and trillions (\code{T}) suffixes after automatic value scaling.
