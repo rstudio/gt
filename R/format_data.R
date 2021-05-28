@@ -174,10 +174,18 @@ fmt_number <- function(data,
   suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by)
 
   # Stop function if any columns have data that is incompatible
-  # with this formatter
-  if (!column_classes_are_valid(data, {{ columns }}, valid_classes = c("numeric", "integer"))) {
-    stop("The `fmt_number()` function can only be used on `columns` with numeric data",
-         call. = FALSE)
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = c("numeric", "integer")
+    )
+  ) {
+    stop(
+      "The `fmt_number()` and `fmt_integer()` functions can only be ",
+      "used on `columns` with numeric data",
+      call. = FALSE
+    )
   }
 
   # Set the `formatC_format` option according to whether number
@@ -230,6 +238,86 @@ fmt_number <- function(data,
         x_str
       }
     )
+  )
+}
+
+#' Format values as integers
+#'
+#' @description
+#' With numeric values in a **gt** table, we can perform number-based
+#' formatting so that the targeted values are always rendered as integer values.
+#' We can have fine control over integer formatting with the following options:
+#'
+#' - digit grouping separators: options to enable/disable digit separators
+#' and provide a choice of separator symbol
+#' - scaling: we can choose to scale targeted values by a multiplier value
+#' - large-number suffixing: larger figures (thousands, millions, etc.) can
+#' be autoscaled and decorated with the appropriate suffixes
+#' - pattern: option to use a text pattern for decoration of the formatted
+#' values
+#' - locale-based formatting: providing a locale ID will result in number
+#' formatting specific to the chosen locale
+#'
+#' @details
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the Arguments section for more information on this.
+#'
+#' @inheritParams fmt_number
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @examples
+#' # Use `exibble` to create a gt table;
+#' # format the `num` column as integer
+#' # values having no digit separators
+#' tab_1 <-
+#'   exibble %>%
+#'   dplyr::select(num, char) %>%
+#'   gt() %>%
+#'   fmt_integer(
+#'     columns = num,
+#'     use_seps = FALSE
+#'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_fmt_integer_1.png}{options: width=100\%}}
+#'
+#' @family Format Data
+#' @section Function ID:
+#' 3-2
+#'
+#' @import rlang
+#' @export
+fmt_integer <- function(data,
+                        columns,
+                        rows = everything(),
+                        n_sigfig = NULL,
+                        use_seps = TRUE,
+                        accounting = FALSE,
+                        scale_by = 1.0,
+                        suffixing = FALSE,
+                        pattern = "{x}",
+                        sep_mark = ",",
+                        locale = NULL) {
+
+  fmt_number(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    decimals = 0,
+    n_sigfig = n_sigfig,
+    drop_trailing_zeros = FALSE,
+    drop_trailing_dec_mark = TRUE,
+    use_seps = use_seps,
+    accounting = accounting,
+    scale_by = scale_by,
+    suffixing = suffixing,
+    pattern = pattern,
+    sep_mark = sep_mark,
+    dec_mark = ".",
+    locale = locale
   )
 }
 
@@ -286,7 +374,7 @@ fmt_number <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-2
+#' 3-3
 #'
 #' @import rlang
 #' @export
@@ -432,7 +520,7 @@ fmt_scientific <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-3
+#' 3-4
 #'
 #' @export
 fmt_engineering <- function(data,
@@ -713,7 +801,7 @@ fmt_symbol <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-4
+#' 3-5
 #'
 #' @import rlang
 #' @export
@@ -875,7 +963,7 @@ fmt_percent <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-5
+#' 3-6
 #'
 #' @import rlang
 #' @export
@@ -1002,7 +1090,7 @@ fmt_currency <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-6
+#' 3-7
 #'
 #' @import rlang
 #' @export
@@ -1171,7 +1259,7 @@ fmt_bytes <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-7
+#' 3-8
 #'
 #' @import rlang
 #' @export
@@ -1302,7 +1390,7 @@ fmt_date <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-8
+#' 3-9
 #'
 #' @import rlang
 #' @export
@@ -1422,7 +1510,7 @@ fmt_time <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-9
+#' 3-10
 #'
 #' @import rlang
 #' @export
@@ -1563,7 +1651,7 @@ fmt_datetime <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-10
+#' 3-11
 #'
 #' @import rlang
 #' @export
@@ -1650,7 +1738,7 @@ fmt_markdown <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-11
+#' 3-12
 #'
 #' @import rlang
 #' @export
@@ -1784,7 +1872,7 @@ fmt_passthrough <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-12
+#' 3-13
 #'
 #' @import rlang
 #' @export
@@ -1898,7 +1986,7 @@ fmt_missing <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-13
+#' 3-14
 #'
 #' @import rlang
 #' @export

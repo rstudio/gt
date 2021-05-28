@@ -65,7 +65,7 @@ argument. See the Arguments section for more information on this.
 
 \section{Function ID}{
 
-3-8
+3-9
 }
 
 \examples{
@@ -114,6 +114,7 @@ Other Format Data:
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
 \code{\link{fmt_engineering}()},
+\code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},

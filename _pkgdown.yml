@@ -49,6 +49,7 @@ reference:
       transformation.
     contents:
     - fmt_number
+    - fmt_integer
     - fmt_scientific
     - fmt_engineering
     - fmt_percent
