@@ -256,11 +256,11 @@ test_that("gt table can be made with grouped data -- one group", {
   built_tbl$`_row_groups` %>% expect_equal(c("grp_a", "grp_b"))
 
   built_tbl$`_groups_rows` %>%
-    expect_equal(
+    expect_equivalent(
       data.frame(
-        group = c("grp_a", "grp_b"),
+        group_id = c("grp_a", "grp_b"),
         group_label = c("grp_a", "grp_b"),
-        row = c(1, 5),
+        row_start = c(1, 5),
         row_end = c(4, 8),
         stringsAsFactors = FALSE
       )
@@ -275,11 +275,13 @@ test_that("gt table can be made with grouped data -- one group", {
     )
 
   built_tbl$`_stub_df` %>%
-    expect_equal(
+    expect_equivalent(
       dplyr::tibble(
         rownum_i = 1:8,
-        groupname = c(rep("grp_a", 4), rep("grp_b", 4)),
-        rowname = NA_character_
+        group_id = c(rep("grp_a", 4), rep("grp_b", 4)),
+        rowname = NA_character_,
+        group_label = c(rep("grp_a", 4), rep("grp_b", 4)),
+        built = c(rep("grp_a", 4), rep("grp_b", 4))
       )
     )
 
@@ -336,13 +338,12 @@ test_that("gt table can be made with grouped data - two groups", {
     expect_equal(table_groups)
 
   built_tbl$`_groups_rows` %>%
-    expect_equal(
-      data.frame(
-        group = table_groups,
+    expect_equivalent(
+      dplyr::tibble(
+        group_id = table_groups,
         group_label = table_groups,
-        row = c(1, 3, 5, 7),
-        row_end = c(2, 4, 6, 8),
-        stringsAsFactors = FALSE
+        row_start = c(1, 3, 5, 7),
+        row_end = c(2, 4, 6, 8)
       )
     )
 
@@ -358,11 +359,13 @@ test_that("gt table can be made with grouped data - two groups", {
     )
 
   built_tbl$`_stub_df` %>%
-    expect_equal(
+    expect_equivalent(
       dplyr::tibble(
         rownum_i = 1:8,
-        groupname = rep(table_groups, 2) %>% sort(),
-        rowname = NA_character_
+        group_id = rep(table_groups, 2) %>% sort(),
+        rowname = NA_character_,
+        group_label = rep(table_groups, 2) %>% sort(),
+        built = rep(table_groups, 2) %>% sort()
       )
     )
 
@@ -426,15 +429,15 @@ test_that("The `gt()` groupname_col arg will override any grouped data", {
     )
 
   built_tbl$`_groups_rows` %>%
-    expect_equal(
+    expect_equivalent(
       data.frame(
-        group = c(
+        group_id = c(
           "2015-01-15", "2015-02-15", "2015-03-15", "2015-04-15",
           "2015-05-15", "2015-06-15", "NA", "2015-08-15"),
         group_label = c(
           "2015-01-15", "2015-02-15", "2015-03-15", "2015-04-15",
           "2015-05-15", "2015-06-15", "NA", "2015-08-15"),
-        row = 1:8,
+        row_start = 1:8,
         row_end = 1:8,
         stringsAsFactors = FALSE
       )
@@ -449,13 +452,22 @@ test_that("The `gt()` groupname_col arg will override any grouped data", {
     )
 
   built_tbl$`_stub_df` %>%
-    expect_equal(
+    expect_equivalent(
       dplyr::tibble(
         rownum_i = 1:8,
-        groupname = c(
+        group_id = c(
           "2015-01-15", "2015-02-15", "2015-03-15", "2015-04-15",
-          "2015-05-15", "2015-06-15", "NA", "2015-08-15"),
-        rowname = NA_character_
+          "2015-05-15", "2015-06-15", "NA", "2015-08-15"
+        ),
+        rowname = NA_character_,
+        group_label = c(
+          "2015-01-15", "2015-02-15", "2015-03-15", "2015-04-15",
+          "2015-05-15", "2015-06-15", "NA", "2015-08-15"
+        ),
+        built = c(
+          "2015-01-15", "2015-02-15", "2015-03-15", "2015-04-15",
+          "2015-05-15", "2015-06-15", "NA", "2015-08-15"
+        )
       )
     )
 
@@ -534,11 +546,13 @@ test_that("The `gt()` `rowname_col` arg will be overridden by `rownames_to_stub 
     )
 
   built_tbl$`_stub_df` %>%
-    expect_equal(
+    expect_equivalent(
       dplyr::tibble(
         rownum_i = 1:10,
-        groupname = NA_character_,
-        rowname = rownames(mtcars)[1:10]
+        group_id = NA_character_,
+        rowname = rownames(mtcars)[1:10],
+        group_label = list(NULL),
+        built = ""
       )
     )
 
@@ -602,11 +616,13 @@ test_that("The `rowname` column will be safely included when `rownames_to_stub =
     )
 
   built_tbl$`_stub_df` %>%
-    expect_equal(
+    expect_equivalent(
       dplyr::tibble(
         rownum_i = 1:8,
-        groupname = NA_character_,
-        rowname = as.character(1:8)
+        group_id = NA_character_,
+        rowname = as.character(1:8),
+        group_label = list(NULL),
+        built = ""
       )
     )
 
@@ -668,5 +684,111 @@ test_that("Any shared names in `rowname_col` and `groupname_col` will be disallo
     exibble %>%
       dplyr::group_by(date, row) %>%
       gt(rowname_col = "row")
+  )
+})
+
+test_that("Escapable characters in rownames are handled correctly in each output context", {
+
+  tbl <-
+    data.frame(
+      row_names = c("<em>row_html</em>", "$row_latex", "{row_rtf}"),
+      column_1 = c("<em>html</em>", "$latex", "{rtf}"),
+      column_2 = c("html", "latex", "rtf"),
+      row.names = "row_names",
+      stringsAsFactors = FALSE
+    )
+
+  # Expect that the stub and body rows are escaped correctly
+  # when rendered as HTML
+
+  # Using the data frame and setting its rownames to be the stub
+  expect_match( # stub from data frame's row names
+    gt(tbl, rownames_to_stub = TRUE) %>%
+      render_as_html(),
+    "<tr><td class=\"gt_row gt_left gt_stub\">&lt;em&gt;row_html&lt;/em&gt;</td>",
+    fixed = TRUE
+  )
+  expect_match( # `column_1`
+    gt(tbl, rownames_to_stub = TRUE) %>%
+      render_as_html(),
+    "<td class=\"gt_row gt_left\">&lt;em&gt;html&lt;/em&gt;</td>",
+    fixed = TRUE
+  )
+  expect_match( # `column_2`
+    gt(tbl, rownames_to_stub = TRUE) %>%
+      render_as_html(),
+    "<td class=\"gt_row gt_left\">html</td>",
+    fixed = TRUE
+  )
+
+  # Using a tibble (removes row names) and setting `column_1` as the stub
+  expect_match( # stub from `column_1`
+    gt(dplyr::as_tibble(tbl), rowname_col = "column_1") %>%
+      render_as_html(),
+    "<tr><td class=\"gt_row gt_left gt_stub\">&lt;em&gt;html&lt;/em&gt;</td>",
+    fixed = TRUE
+  )
+  expect_match( # `column_2`
+    gt(dplyr::as_tibble(tbl), rowname_col = "column_1") %>%
+      render_as_html(),
+    "<td class=\"gt_row gt_left\">html</td>",
+    fixed = TRUE
+  )
+
+  # Expect that the stub and body rows are escaped correctly
+  # when rendered as LaTeX
+
+  # Expect that the stub and body rows are escaped correctly
+  # when rendered as LaTeX
+  expect_match(
+    gt(tbl, rownames_to_stub = TRUE) %>%
+      as_latex() %>% as.character(),
+    "\\$row\\_latex & \\$latex & latex \\\\ ",
+    fixed = TRUE
+  )
+
+  # Using a tibble (removes row names) and setting `column_1` as the stub
+  expect_match(
+    gt(dplyr::as_tibble(tbl), rowname_col = "column_1") %>%
+      as_latex() %>% as.character(),
+    "\\$latex & latex \\\\ ",
+    fixed = TRUE
+  )
+
+  # Expect that the stub and body rows are escaped correctly
+  # when rendered as RTF
+
+  # Using the data frame and setting its rownames to be the stub
+  expect_match( # stub from data frame's row names
+    gt(tbl, rownames_to_stub = TRUE) %>%
+      as_rtf() %>% as.character(),
+    "\\intbl {\\f0 {\\f0\\fs20 \\'7brow_rtf\\'7d}}\\cell",
+    fixed = TRUE
+  )
+  expect_match( # `column_1`
+    gt(tbl, rownames_to_stub = TRUE) %>%
+      as_rtf() %>% as.character(),
+    "\\intbl {\\f0 {\\f0\\fs20 \\'7brtf\\'7d}}\\cell",
+    fixed = TRUE
+  )
+  expect_match( # `column_2`
+    gt(tbl, rownames_to_stub = TRUE) %>%
+      as_rtf() %>% as.character(),
+    "\\intbl {\\f0 {\\f0\\fs20 rtf}}\\cell",
+    fixed = TRUE
+  )
+
+  # Using a tibble (removes row names) and setting `column_1` as the stub
+  expect_match( # stub from `column_1`
+    gt(dplyr::as_tibble(tbl), rowname_col = "column_1") %>%
+      as_rtf() %>% as.character(),
+    "\\intbl {\\f0 {\\f0\\fs20 \\'7brtf\\'7d}}\\cell",
+    fixed = TRUE
+  )
+  expect_match( # `column_2`
+    gt(dplyr::as_tibble(tbl), rowname_col = "column_1") %>%
+      as_rtf() %>% as.character(),
+    "\\intbl {\\f0 {\\f0\\fs20 rtf}}\\cell",
+    fixed = TRUE
   )
 })

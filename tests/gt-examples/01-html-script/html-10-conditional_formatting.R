@@ -9,19 +9,19 @@ conditional_tbl <-
   ) %>%
   gt() %>%
   fmt_number(
-    columns = vars(Open),
+    columns = Open,
     rows = Open > 1900,
     decimals = 3,
     scale_by = 1/1000,
     pattern = "{x}K"
   ) %>%
   fmt_number(
-    columns = vars(Close),
+    columns = Close,
     rows = High < 1940 & Low > 1915,
     decimals = 3
   ) %>%
   fmt_currency(
-    columns = vars(High, Low, Close),
+    columns = c(High, Low, Close),
     rows = Date > "2016-02-20",
     currency = "USD"
   )

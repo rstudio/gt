@@ -22,9 +22,7 @@ These include the *table header*, the *stub*, the *column labels* and
 *spanner column labels*, the *table body*, and the *table footer*.
 
 <p align="center">
-
 <img src="man/figures/gt_parts_of_a_table.svg" width="800px">
-
 </p>
 
 It all begins with preprocessed **table data** (be it a tibble or a data
@@ -36,9 +34,7 @@ Markdown document, or exporting to a file using `gtsave()`. Currently,
 the future.
 
 <p align="center">
-
 <img src="man/figures/gt_workflow_diagram.svg" width="800px">
-
 </p>
 
 The **gt** package is designed to be both straightforward yet powerful.
@@ -58,31 +54,29 @@ end_date <- "2010-06-14"
 # Create a gt table based on preprocessed
 # `sp500` table data
 sp500 %>%
-  dplyr::filter(date >= start_date & date <= end_date) %>%
-  dplyr::select(-adj_close) %>%
+  filter(date >= start_date & date <= end_date) %>%
+  select(-adj_close) %>%
   gt() %>%
   tab_header(
     title = "S&P 500",
     subtitle = glue::glue("{start_date} to {end_date}")
   ) %>%
   fmt_date(
-    columns = vars(date),
+    columns = date,
     date_style = 3
   ) %>%
   fmt_currency(
-    columns = vars(open, high, low, close),
+    columns = c(open, high, low, close),
     currency = "USD"
   ) %>%
   fmt_number(
-    columns = vars(volume),
+    columns = volume,
     suffixing = TRUE
   )
 ```
 
 <p align="center">
-
 <img src="man/figures/gt_sp500_table.svg" width="1200px">
-
 </p>
 
 There are six datasets included in **gt**: `countrypops`, `sza`,
@@ -96,11 +90,9 @@ Want to try this out? Then, take the **gt** Test Drive on **RStudio
 Cloud**. It’s full of ready-to-run examples.
 
 <p align="center">
-
 <a href="https://rstudio.cloud/project/779965">
 <img src="man/figures/gt-test-drive.svg" alt="RStudio Cloud Example" height="80px">
 </a>
-
 </p>
 
 The **gt** package can be installed from **CRAN** with:
@@ -120,7 +112,7 @@ If you encounter a bug, have usage questions, or want to share ideas to
 make this package better, please feel free to file an
 [issue](https://github.com/rstudio/gt/issues).
 
------
+------------------------------------------------------------------------
 
 #### How **gt** fits in with Other Packages that Generate Display Tables
 
@@ -129,49 +121,60 @@ table generation. Why another? We feel that there is enough room in this
 space to innovate further. Here are some of the ways that **gt**
 contributes to this ecosystem:
 
-  - the interface is high-level and declarative (general instructions
+-   the interface is high-level and declarative (general instructions
     versus very specific)
-  - the formatting options are ‘batteries included’ (scientific
+-   the formatting options are ‘batteries included’ (scientific
     notation, uncertainty, ranges, percentages, suffixes, localized
     currency, dates/times + much more)
-  - there is excellent, pain-free support for footnotes
-  - the output is ‘camera-ready’
-  - it will eventually support multiple output formats (including LaTeX)
+-   there is excellent, pain-free support for footnotes
+-   the output is ‘camera-ready’
+-   it will eventually support multiple output formats (including LaTeX)
     with the same declarative interface
-  - the API closely follows tidyverse conventions by adhering to the
+-   the API closely follows tidyverse conventions by adhering to the
     [tidyverse style guide](https://style.tidyverse.org)
-  - a focus on making the package documentation and examples the best
+-   a focus on making the package documentation and examples the best
     they can be
-  - rigorous QA/QC measures: high test coverage for automated tests, and
+-   rigorous QA/QC measures: high test coverage for automated tests, and
     thorough manual testing by QA engineers (with every proposed code
     change)
 
 While **gt** is trying to do something different with its own interface,
-it may not suit your specific needs. Here is a listing of leading
+it may not suit your specific needs. Here is a listing of other leading
 table-making **R** packages, with links to their respective project
 pages:
 
-**knitr** ([GITHUB](https://github.com/yihui/knitr), [WEBSITE](https://yihui.org/knitr/)) —
-**kableExtra** ([GITHUB](https://github.com/haozhu233/kableExtra), [WEBSITE](https://haozhu233.github.io/kableExtra/)) —
-**formattable** ([GITHUB](https://github.com/renkun-ken/formattable), [WEBSITE](https://renkun-ken.github.io/formattable/)) —
-**DT** ([GITHUB](https://github.com/rstudio/DT), [WEBSITE](https://rstudio.github.io/DT/)) —
-**pander** ([GITHUB](https://github.com/Rapporter/pander), [WEBSITE](http://rapporter.github.io/pander)) —
-**huxtable** ([GITHUB](https://github.com/hughjonesd/huxtable), [WEBSITE](https://hughjonesd.github.io/huxtable/)) —
-**reactable** ([GITHUB](https://github.com/glin/reactable), [WEBSITE](https://glin.github.io/reactable/)) —
-**flextable** ([GITHUB](https://github.com/davidgohel/flextable), [WEBSITE](https://davidgohel.github.io/flextable/)) —
-**pixiedust** ([GITHUB](https://github.com/nutterb/pixiedust)) —
-**tangram** ([GITHUB](https://github.com/spgarbet/tangram)) —
-**ztable** ([GITHUB](https://github.com/cardiomoon/ztable)) —
-**condformat** ([GITHUB](https://github.com/zeehio/condformat)) —
-**stargazer** ([CRAN](https://CRAN.R-project.org/package=stargazer)) —
-**xtable** ([CRAN](https://CRAN.R-project.org/package=xtable))
+-   **knitr** ([GITHUB](https://github.com/yihui/knitr), [WEBSITE](https://yihui.org/knitr/))
+-   **kableExtra** ([GITHUB](https://github.com/haozhu233/kableExtra), [WEBSITE](https://haozhu233.github.io/kableExtra/))
+-   **formattable** ([GITHUB](https://github.com/renkun-ken/formattable), [WEBSITE](https://renkun-ken.github.io/formattable/))
+-   **DT** ([GITHUB](https://github.com/rstudio/DT), [WEBSITE](https://rstudio.github.io/DT/))
+-   **pander** ([GITHUB](https://github.com/Rapporter/pander), [WEBSITE](http://rapporter.github.io/pander))
+-   **huxtable** ([GITHUB](https://github.com/hughjonesd/huxtable), [WEBSITE](https://hughjonesd.github.io/huxtable/))
+-   **reactable** ([GITHUB](https://github.com/glin/reactable), [WEBSITE](https://glin.github.io/reactable/))
+-   **flextable** ([GITHUB](https://github.com/davidgohel/flextable), [WEBSITE](https://davidgohel.github.io/flextable/))
+-   **ftextra** ([GITHUB](https://github.com/atusy/ftExtra), [WEBSITE](https://ftextra.atusy.net/))
+-   **pixiedust** ([GITHUB](https://github.com/nutterb/pixiedust))
+-   **tangram** ([GITHUB](https://github.com/spgarbet/tangram))
+-   **ztable** ([GITHUB](https://github.com/cardiomoon/ztable))
+-   **condformat** ([GITHUB](https://github.com/zeehio/condformat))
+-   **stargazer** ([CRAN](https://CRAN.R-project.org/package=stargazer))
+-   **xtable** ([CRAN](https://CRAN.R-project.org/package=xtable))
 
 #### Code of Conduct
 
-Please note that this project is released with a [Contributor Code of
-Conduct](https://contributor-covenant.org/version/1/0/0).<br>By
+Please note that the gt project is released with a [contributor
+code of
+conduct](https://www.contributor-covenant.org/version/2/0/code_of_conduct/).<br>By
 participating in this project you agree to abide by its terms.
 
-#### License
+#### 📄 License
 
-MIT © RStudio, PBC
+**gt** is licensed under the MIT license. See the
+[`LICENSE.md`](LICENSE.md) file for more details.
+
+© RStudio, PBC.
+
+------------------------------------------------------------------------
+
+<p align="center">
+<img src="man/figures/gt_tables_footer.png" width="100%">
+</p>

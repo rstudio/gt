@@ -1,11 +1,13 @@
 #' Set the alignment of columns
 #'
+#' @description
 #' The individual alignments of columns (which includes the column labels and
 #' all of their data cells) can be modified. We have the option to align text to
 #' the `left`, the `center`, and the `right`. In a less explicit manner, we can
 #' allow **gt** to automatically choose the alignment of each column based on
 #' the data type (with the `auto` option).
 #'
+#' @details
 #' When you create a **gt** table object using [gt()], automatic alignment of
 #' column labels and their data cells is performed. By default, left-alignment
 #' is applied to columns of class `character`, `Date`, or `POSIXct`;
@@ -14,7 +16,7 @@
 #'
 #' @param data A table object that is created using the [gt()] function.
 #' @param align The alignment type. This can be any of `"center"`, `"left"`, or
-#'   `"right"` for center-, left-, or center-alignment. Alternatively, the
+#'   `"right"` for center-, left-, or right-alignment. Alternatively, the
 #'   `"auto"` option (the default), will automatically align values in columns
 #'   according to the data type (see the Details section for specifics on which
 #'   alignments are applied).
@@ -36,7 +38,7 @@
 #'   gt() %>%
 #'   cols_align(
 #'     align = "left",
-#'     columns = vars(population)
+#'     columns = population
 #'   )
 #'
 #' @section Figures:
@@ -49,7 +51,7 @@
 #' @export
 cols_align <- function(data,
                        align = c("auto", "left", "center", "right"),
-                       columns = TRUE) {
+                       columns = everything()) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -60,41 +62,52 @@ cols_align <- function(data,
   # Get the `align` value, this stops the function if there is no match
   align <- match.arg(align)
 
-  columns <- enquo(columns)
-
   # Get the columns supplied in `columns` as a character vector
-  column_names <- resolve_vars(var_expr = !!columns, data = data)
+  column_names <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data
+    )
 
   if (align == "auto") {
 
     # Obtain a vector of column classes for each of the column
     # names
     col_classes <-
-      lapply(
-        data_tbl[column_names], class) %>%
-      lapply(`[[`, 1) %>%
-      unlist()
+      unlist(
+        lapply(
+          data_tbl[column_names], class) %>%
+          lapply(`[[`, 1)
+      )
 
     # Get a vector of `align` values based on the column classes
-    align <- sapply(
-      col_classes, switch,
-      "character" = "left",
-      "Date" = "left",
-      "POSIXct" = "left",
-      "logical" = "center",
-      "factor" = "center",
-      "list" = "center",
-      "numeric" = "right",
-      "integer" = "center",
-      "center") %>%
-      unname()
-  } else {
+    align <-
+      unname(
+        sapply(
+          col_classes, switch,
+          "character" = "left",
+          "Date" = "left",
+          "POSIXct" = "left",
+          "logical" = "center",
+          "factor" = "center",
+          "list" = "center",
+          "numeric" = "right",
+          "integer" = "right",
+          "center"
+        )
+      )
 
+  } else {
     align <- rep(align, length(column_names))
   }
 
   for (i in seq(column_names)) {
-    data <- data %>% dt_boxhead_edit(var = column_names[i], column_align = align[i])
+    data <-
+      dt_boxhead_edit(
+        data = data,
+        var = column_names[i],
+        column_align = align[i]
+      )
   }
 
   data
@@ -102,6 +115,7 @@ cols_align <- function(data,
 
 #' Set the widths of columns
 #'
+#' @description
 #' Manual specifications of column widths can be performed using the
 #' `cols_width()` function. We choose which columns get specific widths. This
 #' can be in units of pixels (easily set by use of the [px()] helper function),
@@ -110,6 +124,7 @@ cols_align <- function(data,
 #' left-hand side defines the target columns and the right-hand side is a single
 #' dimension.
 #'
+#' @details
 #' Column widths can be set as absolute or relative values (with px and
 #' percentage values). Those columns not specified are treated as having
 #' variable width. The sizing behavior for column widths depends on the
@@ -124,7 +139,7 @@ cols_align <- function(data,
 #'   where the left-hand side corresponds to selections of columns and the
 #'   right-hand side evaluates to single-length character values in the form
 #'   `{##}px` (i.e., pixel dimensions); the [px()] helper function is best used
-#'   for this purpose. Column names should be enclosed in [vars()]. The
+#'   for this purpose. Column names should be enclosed in [c()]. The
 #'   column-based select helpers [starts_with()], [ends_with()], [contains()],
 #'   [matches()], [one_of()], and [everything()] can be used in the LHS.
 #'   Subsequent expressions that operate on the columns assigned previously will
@@ -151,7 +166,7 @@ cols_align <- function(data,
 #'   ) %>%
 #'   gt() %>%
 #'   cols_width(
-#'     vars(num) ~ px(150),
+#'     num ~ px(150),
 #'     ends_with("r") ~ px(100),
 #'     starts_with("date") ~ px(200),
 #'     everything() ~ px(60)
@@ -202,14 +217,16 @@ cols_width <- function(data,
 
     cols <- width_item %>% rlang::f_lhs()
 
+    # The default use of `resolve_cols_c()` won't work here if there
+    # is a table stub column (because we need to be able to set the
+    # stub column width and, by default, `resolve_cols_c()` excludes
+    # the stub); to prevent this exclusion, we set `excl_stub` to FALSE
     columns <-
-      dt_boxhead_get_vars(data)[
-        resolve_data_vals_idx(
-          var_expr = !!cols,
-          data_tbl = NULL,
-          vals = dt_boxhead_get_vars(data)
-        )
-      ] %>%
+      resolve_cols_c(
+        expr = !!cols,
+        data = data,
+        excl_stub = FALSE
+      ) %>%
       base::setdiff(columns_used)
 
     columns_used <- c(columns_used, columns)
@@ -223,24 +240,33 @@ cols_width <- function(data,
     if (is.numeric(width)) width <- paste_right(as.character(width), "px")
 
     for (column in columns) {
-      data <- data %>% dt_boxhead_edit(var = column, column_width = list(width))
+      data <-
+        dt_boxhead_edit(
+          data = data,
+          var = column,
+          column_width = list(width)
+        )
     }
   }
 
   unset_widths <-
-    data %>%
-    dt_boxhead_get() %>%
+    dt_boxhead_get(data = data) %>%
     .$column_width %>%
     lapply(is.null) %>%
     unlist()
 
   if (any(unset_widths)) {
 
-    columns_unset <- (data %>% dt_boxhead_get_vars())[unset_widths]
+    columns_unset <- dt_boxhead_get_vars(data = data)[unset_widths]
 
     for (column in columns_unset) {
 
-      data <- data %>% dt_boxhead_edit(var = column, column_width = list(""))
+      data <-
+        dt_boxhead_edit(
+          data = data,
+          var = column,
+          column_width = list("")
+        )
     }
   }
 
@@ -249,6 +275,7 @@ cols_width <- function(data,
 
 #' Relabel one or more columns
 #'
+#' @description
 #' Column labels can be modified from their default values (the names of the
 #' columns from the input table data). When you create a **gt** table object
 #' using [gt()], column names effectively become the column labels. While this
@@ -258,6 +285,7 @@ cols_width <- function(data,
 #' option to use the [md()] or [html()] helper functions for rendering column
 #' labels from Markdown or using HTML.
 #'
+#' @details
 #' It's important to note that while columns can be freely relabeled, we
 #' continue to refer to columns by their original column names. Column names in
 #' a tibble or data frame must be unique whereas column labels in **gt** have
@@ -375,6 +403,7 @@ cols_label <- function(data,
 
 #' Move one or more columns to the start
 #'
+#' @description
 #' We can easily move set of columns to the beginning of the column series and
 #' we only need to specify which `columns`. It's possible to do this upstream of
 #' **gt**, however, it is easier with this function and it presents less
@@ -382,6 +411,7 @@ cols_label <- function(data,
 #' start is preserved (same with the ordering of all other columns in the
 #' table).
 #'
+#' @details
 #' The columns supplied in `columns` must all exist in the table. If you need to
 #' place one or columns at the end of the column series, the
 #' [cols_move_to_end()] function should be used. More control is offered with
@@ -406,7 +436,7 @@ cols_label <- function(data,
 #'   tail(5) %>%
 #'   gt() %>%
 #'   cols_move_to_start(
-#'     columns = vars(year)
+#'     columns = year
 #'   )
 #'
 #' # Use `countrypops` to create a gt table;
@@ -419,7 +449,7 @@ cols_label <- function(data,
 #'   tail(5) %>%
 #'   gt() %>%
 #'   cols_move_to_start(
-#'     columns = vars(year, population)
+#'     columns = c(year, population)
 #'   )
 #'
 #' @section Figures:
@@ -439,12 +469,14 @@ cols_move_to_start <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  columns <- enquo(columns)
-
   vars <- dt_boxhead_get_vars(data = data)
 
   # Get the columns supplied in `columns` as a character vector
-  columns <- resolve_vars(var_expr = !!columns, data = data)
+  columns <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data
+    )
 
   # Stop function if no `columns` are provided
   if (length(columns) == 0) {
@@ -462,19 +494,21 @@ cols_move_to_start <- function(data,
 
   new_vars <- append(other_columns, columns, after = 0)
 
-  data <- dt_boxhead_set_var_order(data, vars = new_vars)
+  data <- dt_boxhead_set_var_order(data = data, vars = new_vars)
 
   data
 }
 
 #' Move one or more columns to the end
 #'
+#' @description
 #' It's possible to move a set of columns to the end of the column series, we
 #' only need to specify which `columns` are to be moved. While this can be done
 #' upstream of **gt**, this function makes to process much easier and it's less
 #' error prone. The ordering of the `columns` that are moved to the end is
 #' preserved (same with the ordering of all other columns in the table).
 #'
+#' @details
 #' The columns supplied in `columns` must all exist in the table. If you need to
 #' place one or columns at the start of the column series, the
 #' [cols_move_to_start()] function should be used. More control is offered with
@@ -499,7 +533,7 @@ cols_move_to_start <- function(data,
 #'   tail(5) %>%
 #'   gt() %>%
 #'   cols_move_to_end(
-#'     columns = vars(year)
+#'     columns = year
 #'   )
 #'
 #' # Use `countrypops` to create a gt table;
@@ -512,7 +546,7 @@ cols_move_to_start <- function(data,
 #'   tail(5) %>%
 #'   gt() %>%
 #'   cols_move_to_end(
-#'     columns = vars(year, country_name)
+#'     columns = c(year, country_name)
 #'   )
 #'
 #' @section Figures:
@@ -532,12 +566,14 @@ cols_move_to_end <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  columns <- enquo(columns)
-
   vars <- dt_boxhead_get_vars(data = data)
 
   # Get the columns supplied in `columns` as a character vector
-  columns <- resolve_vars(var_expr = !!columns, data = data)
+  columns <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data
+    )
 
   # Stop function if no `columns` are provided
   if (length(columns) == 0) {
@@ -555,13 +591,14 @@ cols_move_to_end <- function(data,
 
   new_vars <- append(other_columns, columns)
 
-  data <- dt_boxhead_set_var_order(data, vars = new_vars)
+  data <- dt_boxhead_set_var_order(data = data, vars = new_vars)
 
   data
 }
 
 #' Move one or more columns
 #'
+#' @description
 #' On those occasions where you need to move columns this way or that way, we
 #' can make use of the `cols_move()` function. While it's true that the movement
 #' of columns can be done upstream of **gt**, it is much easier and less error
@@ -571,6 +608,7 @@ cols_move_to_end <- function(data,
 #' `columns` to be moved is preserved, as is the ordering of all other columns
 #' in the table.
 #'
+#' @details
 #' The columns supplied in `columns` must all exist in the table and none of
 #' them can be in the `after` argument. The `after` column must also exist and
 #' only one column should be provided here. If you need to place one or columns
@@ -597,8 +635,8 @@ cols_move_to_end <- function(data,
 #'   tail(5) %>%
 #'   gt() %>%
 #'   cols_move(
-#'     columns = vars(population),
-#'     after = vars(country_name)
+#'     columns = population,
+#'     after = country_name
 #'   )
 #'
 #' @section Figures:
@@ -617,14 +655,19 @@ cols_move <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  columns <- enquo(columns)
-  after <- enquo(after)
-
   # Get the columns supplied in `columns` as a character vector
-  columns <- resolve_vars(var_expr = !!columns, data = data)
+  columns <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data
+    )
 
   # Get the `after` columns as a character vector
-  after <- resolve_vars(var_expr = !!after, data = data)
+  after <-
+    resolve_cols_c(
+      expr = {{ after }},
+      data = data
+    )
 
   vars <- dt_boxhead_get_vars(data = data)
 
@@ -661,13 +704,14 @@ cols_move <- function(data,
 
   new_vars <- append(other_columns, moving_columns, after = after_index)
 
-  data <- dt_boxhead_set_var_order(data, vars = new_vars)
+  data <- dt_boxhead_set_var_order(data = data, vars = new_vars)
 
   data
 }
 
 #' Hide one or more columns
 #'
+#' @description
 #' The `cols_hide()` function allows us to hide one or more columns from
 #' appearing in the final output table. While it's possible and often desirable
 #' to omit columns from the input table data before introduction to the [gt()]
@@ -675,18 +719,20 @@ cols_move <- function(data,
 #' a column reference during formatting of other columns) but the final display
 #' of those columns is not necessary.
 #'
+#' @details
 #' The hiding of columns is internally a rendering directive, so, all columns
 #' that are 'hidden' are still accessible and useful in any expression provided
 #' to a `rows` argument. Furthermore, the `cols_hide()` function (as with many
 #' **gt** functions) can be placed anywhere in a pipeline of **gt** function
 #' calls (acting as a promise to hide columns when the timing is right). However
 #' there's perhaps greater readability when placing this call closer to the end
-#' of such a pipeline.
+#' of such a pipeline. The `cols_hide()` function quietly changes the visible
+#' state of a column (much like the [cols_unhide()] function) and doesn't yield
+#' warnings or messages when changing the state of already-invisible columns.
 #'
 #' @inheritParams cols_align
-#' @param columns The column names to hide from the output display table. The
-#'   order of the remaining columns will be preserved. Values provided that do
-#'   not correspond to column names will be disregarded.
+#' @param columns The column names to hide from the output display table. Values
+#'   provided that do not correspond to column names will be disregarded.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -700,8 +746,9 @@ cols_move <- function(data,
 #'   tail(5) %>%
 #'   gt() %>%
 #'   cols_hide(
-#'     columns = vars(
-#'       country_code_2, country_code_3)
+#'     columns = c(
+#'       country_code_2, country_code_3
+#'     )
 #'   )
 #'
 #' # Use `countrypops` to create a gt table;
@@ -714,13 +761,14 @@ cols_move <- function(data,
 #'   tail(5) %>%
 #'   gt() %>%
 #'   cols_hide(
-#'     columns = vars(country_code_3, population)
+#'     columns = c(country_code_3, population)
 #'   ) %>%
 #'   tab_footnote(
 #'     footnote = "Population above 3,000,000.",
 #'     locations = cells_body(
-#'       columns = vars(year),
-#'       rows = population > 3000000)
+#'       columns = year,
+#'       rows = population > 3000000
+#'     )
 #'   )
 #'
 #' @section Figures:
@@ -732,6 +780,8 @@ cols_move <- function(data,
 #' @section Function ID:
 #' 4-7
 #'
+#' @seealso [cols_unhide()] to perform the inverse operation.
+#'
 #' @import rlang
 #' @export
 cols_hide <- function(data,
@@ -740,10 +790,12 @@ cols_hide <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  columns <- enquo(columns)
-
   # Get the columns supplied in `columns` as a character vector
-  columns <- resolve_vars(var_expr = !!columns, data = data)
+  columns <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data
+    )
 
   vars <- dt_boxhead_get_vars(data = data)
 
@@ -759,11 +811,107 @@ cols_hide <- function(data,
   }
 
   # Set the `"hidden"` type for the `columns` in `_dt_boxhead`
-  data %>% dt_boxhead_set_hidden(vars = columns)
+  data <- dt_boxhead_set_hidden(data = data, vars = columns)
+
+  data
+}
+
+#' Unhide one or more columns
+#'
+#' @description
+#' The `cols_unhide()` function allows us to take one or more hidden columns
+#' (usually made so via the [cols_hide()] function) and make them visible
+#' in the final output table. This may be important in cases where the user
+#' obtains a `gt_tbl` object with hidden columns and there is motivation to
+#' reveal one or more of those.
+#'
+#' @details
+#' The hiding and unhiding of columns is internally a rendering directive, so,
+#' all columns that are 'hidden' are still accessible and useful in any
+#' expression provided to a `rows` argument. The `cols_unhide()` function
+#' quietly changes the visible state of a column (much like the [cols_hide()]
+#' function) and doesn't yield warnings or messages when changing the state of
+#' already-visible columns.
+#'
+#' @inheritParams cols_align
+#' @param columns The column names to unhide from the output display table.
+#'   Values provided that do not correspond to column names will be disregarded.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @examples
+#' # Use `countrypops` to create a gt table;
+#' # Hide the columns `country_code_2` and
+#' # `country_code_3`
+#' tab_1 <-
+#'   countrypops %>%
+#'   dplyr::filter(country_name == "Mongolia") %>%
+#'   tail(5) %>%
+#'   gt() %>%
+#'   cols_hide(
+#'     columns = c(
+#'       country_code_2,
+#'       country_code_3
+#'      )
+#'   )
+#'
+#' # If the `tab_1` object is provided without
+#' # the code or source data to regenerate it, and,
+#' # the user wants to reveal otherwise hidden
+#' # columns then the `cols_unhide()` function
+#' # becomes useful
+#' tab_2 <-
+#'   tab_1 %>%
+#'   cols_unhide(columns = country_code_2)
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_cols_unhide_1.png}{options: width=100\%}}
+#'
+#' \if{html}{\figure{man_cols_unhide_2.png}{options: width=100\%}}
+#'
+#' @family Modify Columns
+#' @section Function ID:
+#' 4-8
+#'
+#' @seealso [cols_hide()] to perform the inverse operation.
+#'
+#' @import rlang
+#' @export
+cols_unhide <- function(data,
+                        columns) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  # Get the columns supplied in `columns` as a character vector
+  columns <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data
+    )
+
+  vars <- dt_boxhead_get_vars(data = data)
+
+  # Stop function if no `columns` are provided
+  if (length(columns) == 0) {
+    stop("Columns must be provided.", call. = FALSE)
+  }
+
+  # Stop function if any of the `columns` don't exist in `vars`
+  if (!all(columns %in% vars)) {
+    stop("All `columns` must exist in the input `data` table.",
+         call. = FALSE)
+  }
+
+  # Set the `"visible"` type for the `columns` in `_dt_boxhead`
+  data <- dt_boxhead_set_not_hidden(data = data, vars = columns)
+
+  data
 }
 
 #' Merge two columns to a value & uncertainty column
 #'
+#' @description
 #' The `cols_merge_uncert()` function is a specialized variant of the
 #' [cols_merge()] function. It operates by taking a base value column
 #' (`col_val`) and an uncertainty column (`col_uncert`) and merges them into a
@@ -771,6 +919,7 @@ cols_hide <- function(data,
 #' uncertainties (e.g., `12.0 ± 0.1`), and, the column specified in `col_uncert`
 #' is dropped from the output table.
 #'
+#' @details
 #' This function could be somewhat replicated using [cols_merge()], however,
 #' `cols_merge_uncert()` employs the following specialized semantics for `NA`
 #' handling:
@@ -789,11 +938,11 @@ cols_hide <- function(data,
 #' Any resulting `NA` values in the `col_val` column following the merge
 #' operation can be easily formatted using the [fmt_missing()] function.
 #'
-#' This function is part of a set of three column-merging functions. The other
+#' This function is part of a set of four column-merging functions. The other
 #' two are the general [cols_merge()] function and the specialized
-#' [cols_merge_range()] function. These functions operate similarly, where the
-#' non-target columns can be optionally hidden from the output table through the
-#' `hide_columns` or `autohide` options.
+#' [cols_merge_range()] and [cols_merge_n_pct()] functions. These functions
+#' operate similarly, where the non-target columns can be optionally hidden from
+#' the output table through the `hide_columns` or `autohide` options.
 #'
 #' @inheritParams cols_align
 #' @param col_val A single column name that contains the base values. This is
@@ -824,13 +973,13 @@ cols_hide <- function(data,
 #'   dplyr::slice(1:7) %>%
 #'   gt() %>%
 #'   fmt_number(
-#'     columns = vars(num),
+#'     columns = num,
 #'     decimals = 3,
 #'     use_seps = FALSE
 #'   ) %>%
 #'   cols_merge_uncert(
-#'     col_val = vars(currency),
-#'     col_uncert = vars(num)
+#'     col_val = currency,
+#'     col_uncert = num
 #'   ) %>%
 #'   cols_label(
 #'     currency = "value + uncert."
@@ -841,7 +990,7 @@ cols_hide <- function(data,
 #'
 #' @family Modify Columns
 #' @section Function ID:
-#' 4-8
+#' 4-9
 #'
 #' @import rlang
 #' @export
@@ -857,8 +1006,8 @@ cols_merge_uncert <- function(data,
   resolved <-
     cols_merge_resolver(
       data = data,
-      col_begin = col_val,
-      col_end = col_uncert,
+      col_begin = {{ col_val }},
+      col_end = {{ col_uncert }},
       sep = sep
     )
 
@@ -875,7 +1024,14 @@ cols_merge_uncert <- function(data,
     )
 
   if (isTRUE(autohide)) {
-    data <- data %>% cols_hide(columns = col_uncert)
+
+    col_uncert <-
+      resolve_cols_c(
+        expr = {{ col_uncert }},
+        data = data
+      )
+
+    data <- cols_hide(data = data, columns = col_uncert)
   }
 
   data
@@ -883,6 +1039,7 @@ cols_merge_uncert <- function(data,
 
 #' Merge two columns to a value range column
 #'
+#' @description
 #' The `cols_merge_range()` function is a specialized variant of the
 #' [cols_merge()] function. It operates by taking a two columns that constitute
 #' a range of values (`col_begin` and `col_end`) and merges them into a single
@@ -890,30 +1047,29 @@ cols_merge_uncert <- function(data,
 #' dash (e.g., `12.0 — 20.0`). The column specified in `col_end` is dropped from
 #' the output table.
 #'
+#' @details
 #' This function could be somewhat replicated using [cols_merge()], however,
 #' `cols_merge_range()` employs the following specialized operations for `NA`
 #' handling:
 #'
-#' \enumerate{
-#' \item `NA`s in `col_begin` (but not `col_end`) result in a display of only
+#' 1. `NA`s in `col_begin` (but not `col_end`) result in a display of only
 #  the `col_end` values only for the merged column
-#' \item `NA`s in `col_end` (but not `col_begin`) result in a display of only
+#' 2. `NA`s in `col_end` (but not `col_begin`) result in a display of only
 #' the `col_begin` values only for the merged column (this is the converse of
 #' the previous)
-#' \item `NA`s both in `col_begin` and `col_end` result in missing values for
+#' 3. `NA`s both in `col_begin` and `col_end` result in missing values for
 #' the merged column
-#' }
 #'
 #' Any resulting `NA` values in the `col_begin` column following the merge
 #' operation can be easily formatted using the [fmt_missing()] function.
 #' Separate calls of [fmt_missing()] can be used for the `col_begin` and
 #' `col_end` columns for finer control of the replacement values.
 #'
-#' This function is part of a set of three column-merging functions. The other
+#' This function is part of a set of four column-merging functions. The other
 #' two are the general [cols_merge()] function and the specialized
-#' [cols_merge_uncert()] function. These functions operate similarly, where the
-#' non-target columns can be optionally hidden from the output table through the
-#' `hide_columns` or `autohide` options.
+#' [cols_merge_uncert()] and [cols_merge_n_pct()] functions. These functions
+#' operate similarly, where the non-target columns can be optionally hidden from
+#' the output table through the `hide_columns` or `autohide` options.
 #'
 #' @inheritParams cols_align
 #' @param col_begin A column that contains values for the start of the range.
@@ -942,8 +1098,8 @@ cols_merge_uncert <- function(data,
 #'   dplyr::slice(1:8) %>%
 #'   gt() %>%
 #'   cols_merge_range(
-#'     col_begin = vars(mpg_c),
-#'     col_end = vars(mpg_h)
+#'     col_begin = mpg_c,
+#'     col_end = mpg_h
 #'   ) %>%
 #'   cols_label(
 #'     mpg_c = md("*MPG*")
@@ -954,7 +1110,7 @@ cols_merge_uncert <- function(data,
 #'
 #' @family Modify Columns
 #' @section Function ID:
-#' 4-9
+#' 4-10
 #'
 #' @import rlang
 #' @export
@@ -970,8 +1126,8 @@ cols_merge_range <- function(data,
   resolved <-
     cols_merge_resolver(
       data = data,
-      col_begin = col_begin,
-      col_end = col_end,
+      col_begin = {{ col_begin }},
+      col_end = {{ col_end }},
       sep = sep
     )
 
@@ -988,7 +1144,14 @@ cols_merge_range <- function(data,
     )
 
   if (isTRUE(autohide)) {
-    data <- data %>% cols_hide(columns = col_end)
+
+    col_end <-
+      resolve_cols_c(
+        expr = {{ col_end }},
+        data = data
+      )
+
+    data <- cols_hide(data = data, columns = col_end)
   }
 
   data
@@ -996,28 +1159,173 @@ cols_merge_range <- function(data,
 
 cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 
-  # Set the formatting pattern
-  pattern <- "{1}{sep}{2}"
-
-  col_begin <- enquo(col_begin)
-  col_end <- enquo(col_end)
-
   # Get the columns supplied in `col_begin` as a character vector
-  col_begin <- resolve_vars(var_expr = !!col_begin, data = data)
+  col_begin <-
+    resolve_cols_c(
+      expr = {{ col_begin }},
+      data = data
+    )
 
   # Get the columns supplied in `col_end` as a character vector
-  col_end <- resolve_vars(var_expr = !!col_end, data = data)
+  col_end <-
+    resolve_cols_c(
+      expr = {{ col_end }},
+      data = data
+    )
 
   columns <- c(col_begin, col_end)
 
   list(
     columns = columns,
-    pattern = pattern
+    pattern = "{1}{sep}{2}"
   )
+}
+
+#' Merge two columns to combine counts and percentages
+#'
+#' @description
+#' The `cols_merge_n_pct()` function is a specialized variant of the
+#' [cols_merge()] function. It operates by taking two columns that constitute
+#' both a count (`col_n`) and a fraction of the total population (`col_pct`) and
+#' merges them into a single column. What results is a column containing both
+#' counts and their associated percentages (e.g., `12 (23.2%)`). The column
+#' specified in `col_pct` is dropped from the output table.
+#'
+#' @details
+#' This function could be somewhat replicated using [cols_merge()], however,
+#' `cols_merge_n_pct()` employs the following specialized semantics for `NA`
+#' and zero-value handling:
+#'
+#' 1. `NA`s in `col_n` result in missing values for the merged
+#' column (e.g., `NA` + `10.2%` = `NA`)
+#' 2. `NA`s in `col_pct` (but not `col_n`) result in
+#' base values only for the merged column (e.g., `13` + `NA` = `13`)
+#' 3. `NA`s both `col_n` and `col_pct` result in
+#' missing values for the merged column (e.g., `NA` + `NA` = `NA`)
+#' 4. If a zero (`0`) value is in `col_n` then the formatted output will be
+#' `"0"` (i.e., no percentage will be shown)
+#'
+#' Any resulting `NA` values in the `col_n` column following the merge
+#' operation can be easily formatted using the [fmt_missing()] function.
+#' Separate calls of [fmt_missing()] can be used for the `col_n` and
+#' `col_pct` columns for finer control of the replacement values. It is the
+#' responsibility of the user to ensure that values are correct in both the
+#' `col_n` and `col_pct` columns (this function neither generates nor
+#' recalculates values in either). Formatting of each column can be done
+#' independently in separate [fmt_number()] and [fmt_percent()] calls.
+#'
+#' This function is part of a set of four column-merging functions. The other
+#' two are the general [cols_merge()] function and the specialized
+#' [cols_merge_uncert()] and [cols_merge_range()] functions. These functions
+#' operate similarly, where the non-target columns can be optionally hidden from
+#' the output table through the `hide_columns` or `autohide` options.
+#'
+#' @inheritParams cols_align
+#' @param col_n A column that contains values for the count component.
+#' @param col_pct A column that contains values for the percentage component.
+#'   This column should be formatted such that percentages are displayed (e.g.,
+#'   with `fmt_percent()`).
+#' @param autohide An option to automatically hide the column specified as
+#'   `col_pct`. Any columns with their state changed to hidden will behave
+#'   the same as before, they just won't be displayed in the finalized table.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @examples
+#' # Use `pizzaplace` to create a gt table
+#' # that displays the counts and percentages
+#' # of the top 3 pizzas sold by pizza
+#' # category in 2015; the `cols_merge_n_pct()`
+#' # function is used to merge the `n` and
+#' # `frac` columns (and the `frac` column is
+#' # formatted using `fmt_percent()`)
+#' tab_1 <-
+#'   pizzaplace %>%
+#'   dplyr::group_by(name, type, price) %>%
+#'   dplyr::summarize(
+#'     n = dplyr::n(),
+#'     frac = n/nrow(.),
+#'     .groups = "drop"
+#'   ) %>%
+#'   dplyr::arrange(type, dplyr::desc(n)) %>%
+#'   dplyr::group_by(type) %>%
+#'   dplyr::slice_head(n = 3) %>%
+#'   gt(
+#'     rowname_col = "name",
+#'     groupname_col = "type"
+#'   ) %>%
+#'   fmt_currency(price) %>%
+#'   fmt_percent(frac) %>%
+#'   cols_merge_n_pct(
+#'     col_n = n,
+#'     col_pct = frac
+#'   ) %>%
+#'   cols_label(
+#'     n = md("*N* (%)"),
+#'     price = "Price"
+#'   ) %>%
+#'   tab_style(
+#'     style = cell_text(font = "monospace"),
+#'     locations = cells_stub()
+#'   ) %>%
+#'   tab_stubhead(md("Cat. and  \nPizza Code")) %>%
+#'   tab_header(title = "Top 3 Pizzas Sold by Category in 2015") %>%
+#'   tab_options(table.width = px(512))
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_cols_merge_n_pct_1.png}{options: width=100\%}}
+#'
+#' @family Modify Columns
+#' @section Function ID:
+#' 4-11
+#'
+#' @import rlang
+#' @export
+cols_merge_n_pct <- function(data,
+                             col_n,
+                             col_pct,
+                             autohide = TRUE) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  resolved <-
+    cols_merge_resolver(
+      data = data,
+      col_begin = {{ col_n }},
+      col_end = {{ col_pct }},
+      sep = ""
+    )
+
+  # Create an entry and add it to the `_col_merge` attribute
+  data <-
+    dt_col_merge_add(
+      data = data,
+      col_merge = dt_col_merge_entry(
+        vars = resolved$columns,
+        type = "merge_n_pct",
+        pattern = resolved$pattern,
+        sep = ""
+      )
+    )
+
+  if (isTRUE(autohide)) {
+
+    col_pct <-
+      resolve_cols_c(
+        expr = {{ col_pct }},
+        data = data
+      )
+
+    data <- data %>% cols_hide(columns = col_pct)
+  }
+
+  data
 }
 
 #' Merge data from two or more columns to a single column
 #'
+#' @description
 #' This function takes input from two or more columns and allows the contents to
 #' be merged them into a single column, using a pattern that specifies the
 #' formatting. We can specify which columns to merge together in the `columns`
@@ -1027,11 +1335,12 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #' There is the option to hide the non-target columns (i.e., second and
 #' subsequent columns given in `columns`).
 #'
-#' There are two other column-merging functions that offer specialized behavior
-#' that is optimized for common table tasks: [cols_merge_range()] and
-#' [cols_merge_uncert()]. These functions operate similarly, where the
-#' non-target columns can be optionally hidden from the output table through the
-#' `autohide` option.
+#' @details
+#' There are three other column-merging functions that offer specialized
+#' behavior that is optimized for common table tasks: [cols_merge_range()],
+#' [cols_merge_uncert()], and [cols_merge_n_pct()]. These functions operate
+#' similarly, where the non-target columns can be optionally hidden from the
+#' output table through the `autohide` option.
 #'
 #' @inheritParams cols_align
 #' @param columns The columns that will participate in the merging process. The
@@ -1040,7 +1349,8 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #' @param hide_columns Any column names provided here will have their state
 #'   changed to `hidden` (via internal use of [cols_hide()] if they aren't
 #'   already hidden. This is convenient if the shared purpose of these specified
-#'   columns is only to provide string input to the target column.
+#'   columns is only to provide string input to the target column. To suppress
+#'   any hiding of columns, `FALSE` can be used here.
 #' @param pattern A formatting pattern that specifies the arrangement of the
 #'   `column` values and any string literals. We need to use column numbers
 #'   (corresponding to the position of columns provided in `columns`) within the
@@ -1061,13 +1371,11 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #'   dplyr::select(-volume, -adj_close) %>%
 #'   gt() %>%
 #'   cols_merge(
-#'     columns = vars(open, close),
-#'     hide_columns = vars(close),
+#'     columns = c(open, close),
 #'     pattern = "{1}&mdash;{2}"
 #'   ) %>%
 #'   cols_merge(
-#'     columns = vars(low, high),
-#'     hide_columns = vars(high),
+#'     columns = c(low, high),
 #'     pattern = "{1}&mdash;{2}"
 #'   ) %>%
 #'   cols_label(
@@ -1080,7 +1388,7 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #'
 #' @family Modify Columns
 #' @section Function ID:
-#' 4-10
+#' 4-12
 #'
 #' @import rlang
 #' @export
@@ -1092,17 +1400,29 @@ cols_merge <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  columns <- enquo(columns)
-
   # Get the columns supplied in `columns` as a character vector
-  columns <- resolve_vars(var_expr = !!columns, data = data)
+  columns <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data
+    )
 
-  if (!is.null(hide_columns)) {
+  # NOTE: It's important that `hide_columns` NOT be evaluated until after the
+  # previous line has run. Otherwise, the default `hide_columns` value of
+  # columns[-1] may not evaluate to a sensible result.
+  # NOTE: It's also important that `pattern` not be evaluated, for much the same
+  # reason as above.
 
-    hide_columns <- enquo(hide_columns)
+  # Get the columns supplied in `hide_columns` as a character vector
+  suppressWarnings(
+    hide_columns <-
+      resolve_cols_c(
+        expr = {{ hide_columns }},
+        data = data
+      )
+  )
 
-    # Get the columns supplied in `hide_columns` as a character vector
-    hide_columns <- resolve_vars(var_expr = !!hide_columns, data = data)
+  if (length(hide_columns) > 0) {
 
     hide_columns_from_supplied <- base::intersect(hide_columns, columns)
 
@@ -1112,7 +1432,9 @@ cols_merge <- function(data,
               call. = FALSE)
     }
 
-    data <- data %>% cols_hide(columns = hide_columns_from_supplied)
+    if (length(hide_columns_from_supplied) > 0) {
+      data <- cols_hide(data = data, columns = hide_columns_from_supplied)
+    }
   }
 
   # Create an entry and add it to the `_col_merge` attribute

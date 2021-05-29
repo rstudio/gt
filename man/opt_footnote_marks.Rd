@@ -31,7 +31,6 @@ The series of footnote marks is recycled when its usage goes beyond the
 length of the set. At each cycle, the marks are simply doubled, tripled, and
 so on (e.g., \code{*} -> \verb{**} -> \verb{***}). The option exists for providing keywords
 for certain types of footnote marks. The keywords are:
-
 \itemize{
 \item \code{"numbers"}: numeric marks, they begin from 1 and these marks are not
 subject to recycling behavior
@@ -96,7 +95,9 @@ tab_1 <-
 Other Table Option Functions: 
 \code{\link{opt_align_table_header}()},
 \code{\link{opt_all_caps}()},
+\code{\link{opt_css}()},
 \code{\link{opt_row_striping}()},
+\code{\link{opt_table_font}()},
 \code{\link{opt_table_lines}()},
 \code{\link{opt_table_outline}()}
 }

@@ -12,6 +12,9 @@ palettes should be displayed in the information table. If this is
 \code{NULL} (the default) then all of the discrete palettes from all of the
 color packages represented in \strong{paletteer} will be displayed.}
 }
+\value{
+An object of class \code{gt_tbl}.
+}
 \description{
 While the \code{\link[=data_color]{data_color()}} function allows us to flexibly color data cells in
 our \strong{gt} table, the harder part of this process is discovering and
@@ -81,6 +84,7 @@ tab_1 <-
 Other Information Functions: 
 \code{\link{info_currencies}()},
 \code{\link{info_date_style}()},
+\code{\link{info_google_fonts}()},
 \code{\link{info_locales}()},
 \code{\link{info_time_style}()}
 }

@@ -12,27 +12,30 @@ library(gt)
 Create a table based on `mtcars`, add all of the different types of table parts, and add styles in every type of part
 
 ```{r}
-gt(mtcars, rownames_to_stub = TRUE) %>%
-  cols_move_to_start(columns = c("gear", "carb")) %>%
+gt(
+  mtcars,
+  rownames_to_stub = TRUE
+) %>%
+  cols_move_to_start(columns = c(gear, carb)) %>%
   tab_stubhead(label = "cars") %>%
   cols_hide(columns = "mpg") %>%
   cols_hide(columns = "vs") %>%
   tab_row_group(
-    group = "Mercs",
+    label = "Mercs",
     rows = contains("Merc")
   ) %>%
   tab_row_group(
-    group = "Mazdas",
+    label = "Mazdas",
     rows = contains("Mazda")
   ) %>%
   tab_spanner(
     label = "gear_carb_cyl",
-    columns = vars(gear, carb, cyl)
+    columns = c(gear, carb, cyl)
   ) %>%
   row_group_order(groups = c("Mazdas", "Mercs")) %>%
   cols_merge_range(
-    col_begin = "disp",
-    col_end = "drat"
+    col_begin = disp,
+    col_end = drat
   ) %>%
   tab_header(
     title = "Title",
@@ -42,7 +45,7 @@ gt(mtcars, rownames_to_stub = TRUE) %>%
   cols_label(cyl = md("*cyls*")) %>%
   summary_rows(
     groups = c("Mazdas", "Mercs"),
-    columns = vars(hp, wt, qsec),
+    columns = c(hp, wt, qsec),
     fns = list(
       ~mean(., na.rm = TRUE),
       ~sum(., na.rm = TRUE))
@@ -50,8 +53,9 @@ gt(mtcars, rownames_to_stub = TRUE) %>%
   tab_style(
     style = cell_fill(color = "lightgray"),
     locations = list(
-      cells_column_labels(columns = TRUE),
-      cells_stub(rows = TRUE))
+      cells_column_labels(),
+      cells_stub()
+    )
   ) %>%
   tab_style(
     style = list(
@@ -75,8 +79,9 @@ gt(mtcars, rownames_to_stub = TRUE) %>%
     ),
     locations = cells_summary(
       groups = "Mercs",
-      columns = "hp",
-      rows = 2)
+      columns = hp,
+      rows = 2
+    )
   ) %>%
   tab_style(
     style = cell_fill(color = "lightgreen"),
@@ -84,11 +89,11 @@ gt(mtcars, rownames_to_stub = TRUE) %>%
   ) %>%
   tab_style(
     style = cell_fill(color = "turquoise"),
-    locations = cells_column_labels(columns = "gear")
+    locations = cells_column_labels(columns = gear)
   ) %>%
   tab_style(
     style = cell_fill(color = "pink"),
-    locations = cells_column_labels(columns = "hp")
+    locations = cells_column_labels(columns = hp)
   ) %>%
   tab_style(
     style = list(
@@ -96,13 +101,15 @@ gt(mtcars, rownames_to_stub = TRUE) %>%
       cell_text(style = "italic")
     ),
     locations = cells_body(
-      columns = "hp",
-      rows = "Datsun 710")
+      columns = hp,
+      rows = "Datsun 710"
+    )
   ) %>%
   tab_style(
     style = cell_fill(color = "yellow"),
     locations = cells_body(
-      columns = "disp",
-      rows = "Mazda RX4")
+      columns = disp,
+      rows = "Mazda RX4"
+    )
   )
 ```

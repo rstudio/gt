@@ -29,12 +29,17 @@ dt_options_set_value <- function(data, option, value) {
 
 dt_options_get_value <- function(data, option) {
 
-  dt_options <-
-    data %>%
-    dt_options_get()
+  dt_options <- dt_options_get(data = data)
 
   dt_options$value[[which(dt_options$parameter == option)]]
 }
+
+default_fonts_vec <-
+  c(
+    "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Helvetica Neue", "Fira Sans",
+    "Droid Sans", "Arial", "sans-serif"
+  )
 
 dt_options_tbl <-
   dplyr::tribble(
@@ -45,14 +50,19 @@ dt_options_tbl <-
     "container_overflow_x",              FALSE,  "container",        "overflow","auto",
     "container_overflow_y",              FALSE,  "container",        "overflow","auto",
     "table_id",                          FALSE,  "table",            "value",   NA_character_,
+    "table_caption",                     FALSE,  "table",            "value",   NULL,
     "table_width",                        TRUE,  "table",            "px",      "auto",
     "table_layout",                       TRUE,  "table",            "value",   "fixed",
     "table_margin_left",                  TRUE,  "table",            "px",      "auto",
     "table_margin_right",                 TRUE,  "table",            "px",      "auto",
     "table_background_color",             TRUE,  "table",            "value",   "#FFFFFF",
+    "table_additional_css",              FALSE,  "table",            "values",  character(0),
+    "table_font_names",                  FALSE,  "table",            "values",  default_fonts_vec,
+    "table_font_size",                    TRUE,  "table",            "px",      "16px",
+    "table_font_weight",                  TRUE,  "table",            "value",   "normal",
+    "table_font_style",                   TRUE,   "table",           "value",   "normal",
     "table_font_color",                   TRUE,  "table",            "value",   "#333333",
     "table_font_color_light",             TRUE,  "table",            "value",   "#FFFFFF",
-    "table_font_size",                    TRUE,  "table",            "px",      "16px",
     "table_border_top_include",          FALSE,  "table",            "logical", TRUE,
     "table_border_top_style",             TRUE,  "table",            "value",   "solid",
     "table_border_top_width",             TRUE,  "table",            "px",      "2px",
@@ -113,6 +123,7 @@ dt_options_tbl <-
     "row_group_border_left_style",        TRUE,  "row_group",        "value",   "none",
     "row_group_border_left_width",        TRUE,  "row_group",        "px",      "1px",
     "row_group_border_left_color",        TRUE,  "row_group",        "value",   "#D3D3D3",
+    "row_group_default_label",           FALSE,  "row_group",        "value",   NA_character_,
     "table_body_hlines_style",            TRUE,  "table_body",       "value",   "solid",
     "table_body_hlines_width",            TRUE,  "table_body",       "px",      "1px",
     "table_body_hlines_color",            TRUE,  "table_body",       "value",   "#D3D3D3",

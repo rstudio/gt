@@ -11,18 +11,21 @@ tab_style(data, style, locations)
 
 \item{style}{a vector of styles to use. The \code{\link[=cell_text]{cell_text()}}, \code{\link[=cell_fill]{cell_fill()}}, and
 \code{\link[=cell_borders]{cell_borders()}} helper functions can be used here to more easily generate
-valid styles. If using more than one helper function to define styles, all
-calls must be enclosed in a \code{\link[=list]{list()}}.}
+valid styles.  If using more than one helper function to define styles, all
+calls must be enclosed in a \code{\link[=list]{list()}}. Custom CSS declarations can be used
+for HTML output by including a \code{\link[=css]{css()}}-based statement as a list item.}
 
 \item{locations}{the cell or set of cells to be associated with the style.
 Supplying any of the \verb{cells_*()} helper functions is a useful way to target
 the location cells that are associated with the styling. These helper
 functions are: \code{\link[=cells_title]{cells_title()}}, \code{\link[=cells_stubhead]{cells_stubhead()}},
 \code{\link[=cells_column_spanners]{cells_column_spanners()}}, \code{\link[=cells_column_labels]{cells_column_labels()}}, \code{\link[=cells_row_groups]{cells_row_groups()}},
-\code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_summary]{cells_summary()}}, and
-\code{\link[=cells_grand_summary]{cells_grand_summary()}}. Additionally, we can enclose several \verb{cells_*()}
-calls within a \code{list()} if we wish to apply styling to different types of
-locations (e.g., body cells, row group labels, the table title, etc.).}
+\code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_summary]{cells_summary()}}, \code{\link[=cells_grand_summary]{cells_grand_summary()}},
+\code{\link[=cells_stub_summary]{cells_stub_summary()}}, \code{\link[=cells_stub_grand_summary]{cells_stub_grand_summary()}}, \code{\link[=cells_footnotes]{cells_footnotes()}},
+and \code{\link[=cells_source_notes]{cells_source_notes()}}. Additionally, we can enclose several
+\verb{cells_*()} calls within a \code{list()} if we wish to apply styling to
+different types of locations (e.g., body cells, row group labels, the table
+title, etc.).}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -52,6 +55,8 @@ bold text (the degree of choice is greater with variable fonts)
 \if{html}{\figure{man_tab_style_1.png}{options: width=100\%}}
 
 \if{html}{\figure{man_tab_style_2.png}{options: width=100\%}}
+
+\if{html}{\figure{man_tab_style_3.png}{options: width=100\%}}
 }
 
 \section{Function ID}{
@@ -69,7 +74,7 @@ tab_1 <-
   dplyr::select(num, currency) \%>\%
   gt() \%>\%
   fmt_number(
-    columns = vars(num, currency),
+    columns = c(num, currency),
     decimals = 1
   ) \%>\%
   tab_style(
@@ -78,8 +83,9 @@ tab_1 <-
       cell_text(weight = "bold")
       ),
     locations = cells_body(
-      columns = vars(num),
-      rows = num >= 5000)
+      columns = num,
+      rows = num >= 5000
+    )
   ) \%>\%
   tab_style(
     style = list(
@@ -87,8 +93,9 @@ tab_1 <-
       cell_text(style = "italic")
       ),
     locations = cells_body(
-      columns = vars(currency),
-      rows = currency < 100)
+      columns = currency,
+      rows = currency < 100
+    )
   )
 
 # Use `sp500` to create a gt table;
@@ -114,6 +121,25 @@ tab_2 <-
       ),
     locations = cells_body(
       rows = open > close)
+  )
+
+# Use `exibble` to create a gt table;
+# replace missing values with the
+# `fmt_missing()` function and then
+# add styling to the `char` column
+# with `cell_fill()` and with a
+# CSS style declaration
+tab_3 <-
+  exibble \%>\%
+  dplyr::select(char, fctr) \%>\%
+  gt() \%>\%
+  fmt_missing(everything()) \%>\%
+  tab_style(
+    style = list(
+      cell_fill(color = "lightcyan"),
+      "font-variant: small-caps;"
+    ),
+    locations = cells_body(columns = char)
   )
 
 }

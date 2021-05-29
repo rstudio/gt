@@ -113,7 +113,7 @@ tab_1 <-
   tail(10) \%>\%
   gt() \%>\%
   data_color(
-    columns = vars(population),
+    columns = population,
     colors = scales::col_numeric(
       palette = c(
         "red", "orange", "green", "blue"),
@@ -140,7 +140,7 @@ tab_2 <-
   ) \%>\%
   gt(rowname_col = "size") \%>\%
   data_color(
-    columns = vars(sold, income),
+    columns = c(sold, income),
     colors = scales::col_numeric(
       palette = paletteer::paletteer_d(
         palette = "ggsci::red_material"
@@ -152,6 +152,7 @@ tab_2 <-
 }
 \seealso{
 Other Format Data: 
+\code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},

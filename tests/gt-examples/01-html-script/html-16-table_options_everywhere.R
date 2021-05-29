@@ -28,40 +28,40 @@ many_options_tbl <-
   tab_stubhead(label = "Stubhead Label") %>%
   tab_spanner(
     label = "Group 1",
-    columns = vars(col_1, col_2)
+    columns = c(col_1, col_2)
   ) %>%
   tab_spanner(
     label = "Group 2",
-    columns = vars(col_3, col_4)
+    columns = c(col_3, col_4)
   ) %>%
   tab_footnote(
     footnote = "Footnote #1",
     locations = cells_body(
-      columns = vars(col_1), rows = 1
+      columns = col_1, rows = 1
     )
   ) %>%
   tab_footnote(
     footnote = "Footnote #2",
     locations = cells_body(
-      columns = vars(col_2), rows = 2
+      columns = col_2, rows = 2
     )
   ) %>%
   tab_footnote(
     footnote = "Footnote #3",
     locations = cells_body(
-      columns = vars(col_3), rows = 3
+      columns = col_3, rows = 3
     )
   ) %>%
   tab_footnote(
     footnote = "Footnote #4",
     locations = cells_body(
-      columns = vars(col_4), rows = 4
+      columns = col_4, rows = 4
     )
   ) %>%
   tab_source_note("A source note for the table.") %>%
   tab_options(
     table.font.size = px(14),            # Entire table's font size
-    table.background.color = NULL,       # Entire table's background color
+    table.background.color = "aliceblue",# Entire table's background color
     table.width = px(360),               # Entire table's width
     table.border.top.style = "solid",    # Top line of table - style
     table.border.top.width = px(3),      # Top line of table - width
@@ -86,7 +86,7 @@ many_options_tbl <-
     row_group.border.bottom.color = "orange",    # Bottom line of row group - color
     table_body.border.top.style = "solid",          # Top line of table body - style
     table_body.border.top.width = px(5),            # Top line of table body - width
-    table_body.border.top.color = "indianred",      # Top line of table body - color
+    table_body.border.top.color = "chocolate1",     # Top line of table body - color
     table_body.border.bottom.style = "solid",       # Bottom line of table body - style
     table_body.border.bottom.width = px(5),         # Bottom line of table body - width
     table_body.border.bottom.color = "turquoise",   # Bottom line of table body - color
