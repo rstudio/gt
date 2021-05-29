@@ -48,14 +48,16 @@ get_date_format <- function(date_style) {
     return(
       date_formats() %>%
         dplyr::filter(format_number == as.character(date_style)) %>%
-        dplyr::pull(format_code))
+        dplyr::pull(format_code)
+    )
   }
 
   if (date_style %in% date_formats()$format_name) {
     return(
       date_formats() %>%
         dplyr::filter(format_name == date_style) %>%
-        dplyr::pull(format_code))
+        dplyr::pull(format_code)
+    )
   }
 }
 

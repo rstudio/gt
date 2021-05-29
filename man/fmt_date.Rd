@@ -25,8 +25,9 @@ to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{date_style}{The date style to use. Supply a number (from \code{1} to \code{14})
-that corresponds to the preferred date style. Use \code{\link[=info_date_style]{info_date_style()}} to
-see the different numbered and named date presets.}
+that corresponds to the preferred date style, or, provide a named date
+style (\code{"wday_month_day_year"}, \code{"m_day_year"}, \code{"year.mn.day"}, etc.). Use
+\code{\link[=info_date_style]{info_date_style()}} to see the different numbered and named date presets.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -40,28 +41,28 @@ the dates. The following date styles are available for simpler formatting of
 ISO dates (all using the input date of \code{2000-02-29} in the example output
 dates):
 \enumerate{
-\item iso: \code{2000-02-29}
-\item wday_month_day_year: \verb{Tuesday, February 29, 2000}
-\item wd_m_day_year: \verb{Tue, Feb 29, 2000}
-\item wday_day_month_year: \verb{Tuesday 29 February 2000}
-\item month_day_year: \verb{February 29, 2000}
-\item m_day_year: \verb{Feb 29, 2000}
-\item day_m_year: \verb{29 Feb 2000}
-\item day_month_year: \verb{29 February 2000}
-\item day_month: \verb{29 February}
-\item year: \code{2000}
-\item month: \code{February}
-\item day: \code{29}
-\item year.mn.day: \code{2000/02/29}
-\item y.mn.day: \code{0/02/29}
+\item \code{"iso"}: \code{2000-02-29}
+\item \code{"wday_month_day_year"}: \verb{Tuesday, February 29, 2000}
+\item \code{"wd_m_day_year"}: \verb{Tue, Feb 29, 2000}
+\item \code{"wday_day_month_year"}: \verb{Tuesday 29 February 2000}
+\item \code{"month_day_year"}: \verb{February 29, 2000}
+\item \code{"m_day_year"}: \verb{Feb 29, 2000}
+\item \code{"day_m_year"}: \verb{29 Feb 2000}
+\item \code{"day_month_year"}: \verb{29 February 2000}
+\item \code{"day_month"}: \verb{29 February}
+\item \code{"year"}: \code{2000}
+\item \code{"month"}: \code{February}
+\item \code{"day"}: \code{29}
+\item \code{"year.mn.day"}: \code{2000/02/29}
+\item \code{"y.mn.day"}: \code{00/02/29}
 }
+
 We can use the \code{\link[=info_date_style]{info_date_style()}} function for a useful reference on all of
 the possible inputs to \code{date_style}.
 }
 \details{
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
-nothing is provided for \code{rows} then entire columns are selected). A number of
-helper functions exist to make targeting more effective. Conditional
+nothing is provided for \code{rows} then entire columns are selected). Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
 argument. See the Arguments section for more information on this.
 }
@@ -74,7 +75,7 @@ argument. See the Arguments section for more information on this.
 
 \section{Function ID}{
 
-3-5
+3-6
 }
 
 \examples{
@@ -105,19 +106,20 @@ tab_2 <-
     columns = date,
     rows =
       as.Date(date) > as.Date("2015-04-01"),
-    date_style = 6
+    date_style = "m_day_year"
   ) \%>\%
   fmt_date(
     columns = date,
     rows =
       as.Date(date) <= as.Date("2015-04-01"),
-    date_style = 7
+    date_style = "day_m_year"
   )
 
 }
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},
+\code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_markdown}()},

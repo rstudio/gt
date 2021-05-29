@@ -19,7 +19,8 @@ The \code{cells_body()} function is used to target the data cells in the table
 body. The function can be used to apply a footnote with \code{\link[=tab_footnote]{tab_footnote()}}, to
 add custom styling with \code{\link[=tab_style]{tab_style()}}, or the transform the targeted cells
 with \code{\link[=text_transform]{text_transform()}}. The function is expressly used in each of those
-functions' \code{locations} argument.
+functions' \code{locations} argument. The 'body' location is present by default in
+every \strong{gt} table.
 }
 \section{Overview of Location Helper Functions}{
 

@@ -10,10 +10,10 @@ fmt_currency(
   rows = everything(),
   currency = "USD",
   use_subunits = TRUE,
-  accounting = FALSE,
   decimals = NULL,
   drop_trailing_dec_mark = TRUE,
   use_seps = TRUE,
+  accounting = FALSE,
   scale_by = 1,
   suffixing = FALSE,
   pattern = "{x}",
@@ -65,10 +65,6 @@ used.}
 \item{use_subunits}{An option for whether the subunits portion of a currency
 value should be displayed. By default, this is \code{TRUE}.}
 
-\item{accounting}{An option to use accounting style for currency values. With
-\code{FALSE} (the default), negative values will be shown with a minus sign.
-Using \code{accounting = TRUE} will put negative values in parentheses.}
-
 \item{decimals}{An option to specify the exact number of decimal places to
 use. The default number of decimal places is \code{2}.}
 
@@ -80,6 +76,10 @@ which means that trailing decimal marks are not shown.}
 \item{use_seps}{An option to use digit group separators. The type of digit
 group separator is set by \code{sep_mark} and overridden if a locale ID is
 provided to \code{locale}. This setting is \code{TRUE} by default.}
+
+\item{accounting}{An option to use accounting style for values. With \code{FALSE}
+(the default), negative values will be shown with a minus sign. Using
+\code{accounting = TRUE} will put negative values in parentheses.}
 
 \item{scale_by}{A value to scale the input. The default is \code{1.0}. All numeric
 values will be multiplied by this value first before undergoing formatting.
@@ -158,13 +158,13 @@ currency values
 \item locale-based formatting: providing a locale ID will result in
 currency formatting specific to the chosen locale
 }
+
 We can use the \code{\link[=info_currencies]{info_currencies()}} function for a useful reference on all of
 the possible inputs to the \code{currency} argument.
 }
 \details{
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
-nothing is provided for \code{rows} then entire columns are selected). A number of
-helper functions exist to make targeting more effective. Conditional
+nothing is provided for \code{rows} then entire columns are selected). Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
 argument. See the Arguments section for more information on this.
 }
@@ -213,6 +213,7 @@ tab_2 <-
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},
+\code{\link{fmt_bytes}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
 \code{\link{fmt_markdown}()},

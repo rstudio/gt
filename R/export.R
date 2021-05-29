@@ -1,9 +1,11 @@
 #' Save a **gt** table as a file
 #'
+#' @description
 #' The `gtsave()` function makes it easy to save a **gt** table to a file. The
 #' function guesses the file type by the extension provided in the output
 #' filename, producing either an HTML, PDF, PNG, LaTeX, or RTF file.
 #'
+#' @details
 #' Output filenames with either the `.html` or `.htm` extensions will produce an
 #' HTML document. In this case, we can pass a `TRUE` or `FALSE` value to the
 #' `inline_css` option to obtain an HTML document with inlined CSS styles (the
@@ -12,6 +14,12 @@
 #' through the `...`. Those arguments are either `background` or `libdir`,
 #' please refer to the **htmltools** documentation for more details on the use
 #' of these arguments.
+#'
+#' If the output filename is expressed with the `.rtf` extension then an RTF
+#' file will be generated. In this case, there is an option that can be passed
+#' through `...`: `page_numbering`. This controls RTF document page numbering
+#' and, by default, page numbering is not enabled (i.e., `page_numbering =
+#' "none"`).
 #'
 #' We can create an image file based on the HTML version of the `gt` table. With
 #' the filename extension `.png`, we get a PNG image file. A PDF document can be
@@ -231,12 +239,15 @@ gt_save_latex <- function(data,
 gt_save_rtf <- function(data,
                         filename,
                         path = NULL,
-                        ...) {
+                        ...,
+                        page_numbering = c("none", "footer", "header")) {
+
+  page_numbering <- match.arg(page_numbering)
 
   filename <- gtsave_filename(path = path, filename = filename)
 
   data %>%
-    as_rtf() %>%
+    as_rtf(page_numbering = page_numbering) %>%
     writeLines(con = filename)
 }
 
@@ -269,6 +280,7 @@ gtsave_filename <- function(path, filename) {
 
 #' Get the HTML content of a **gt** table
 #'
+#' @description
 #' Get the HTML content from a `gt_tbl` object as a single-element character
 #' vector. By default, the generated HTML will have inlined styles, where CSS
 #' styles (that were previously contained in CSS rule sets external to the
@@ -337,6 +349,7 @@ as_raw_html <- function(data,
 
 #' Output a gt object as LaTeX
 #'
+#' @description
 #' Get the LaTeX content from a `gt_tbl` object as a `knit_asis` object. This
 #' object contains the LaTeX code and attributes that serve as LaTeX
 #' dependencies (i.e., the LaTeX packages required for the table). Using
@@ -434,11 +447,15 @@ as_latex <- function(data) {
 
 #' Output a **gt** object as RTF
 #'
+#' @description
 #' Get the RTF content from a `gt_tbl` object as as a single-element character
 #' vector. This object can be used with `writeLines()` to generate a valid .rtf
 #' file that can be opened by RTF readers.
 #'
-#' @param data a table object that is created using the `gt()` function.
+#' @param data A table object that is created using the `gt()` function.
+#' @param page_numbering An option to include page numbering in the RTF
+#'   document. The page numbering text can either be in the document `"footer"`
+#'   or `"header"`. By default, page numbering is not active (`"none"`).
 #'
 #' @examples
 #' # Use `gtcars` to create a gt table;
@@ -460,7 +477,10 @@ as_latex <- function(data) {
 #' 13-4
 #'
 #' @export
-as_rtf <- function(data) {
+as_rtf <- function(data,
+                   page_numbering = c("none", "footer", "header")) {
+
+  page_numbering <- match.arg(page_numbering)
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -498,7 +518,9 @@ as_rtf <- function(data) {
             source_notes_component
           )
         )
-      }) %>%
+      },
+      page_numbering = page_numbering
+    ) %>%
     as_rtf_string()
 
   if (isTRUE(getOption('knitr.in.progress'))) {
@@ -511,6 +533,7 @@ as_rtf <- function(data) {
 
 #' Extract a summary list from a **gt** object
 #'
+#' @description
 #' Get a list of summary row data frames from a `gt_tbl` object where summary
 #' rows were added via the [summary_rows()] function. The output data frames
 #' contain the `group_id` and `rowname` columns, whereby `rowname` contains

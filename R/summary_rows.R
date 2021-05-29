@@ -1,10 +1,12 @@
 #' Add groupwise summary rows using aggregation functions
 #'
+#' @description
 #' Add summary rows to one or more row groups by using the table data and any
 #' suitable aggregation functions. You choose how to format the values in the
 #' resulting summary cells by use of a `formatter` function (e.g, `fmt_number`,
 #' etc.) and any relevant options.
 #'
+#' @details
 #' Should we need to obtain the summary data for external purposes, the
 #' [extract_summary()] function can be used with a `gt_tbl` object where summary
 #' rows were added via `summary_rows()`.
@@ -175,12 +177,14 @@ summary_rows <- function(data,
 
 #' Add grand summary rows using aggregation functions
 #'
+#' @description
 #' Add grand summary rows to the **gt** table by using applying aggregation
 #' functions to the table data. The summary rows incorporate all of the
 #' available data, regardless of whether some of the data are part of row
 #' groups. You choose how to format the values in the resulting summary cells by
 #' use of a `formatter` function (e.g, `fmt_number`) and any relevant options.
 #'
+#' @details
 #' Should we need to obtain the summary data for external purposes, the
 #' [extract_summary()] function can be used with a `gt_tbl` object where grand
 #' summary rows were added via `grand_summary_rows()`.
