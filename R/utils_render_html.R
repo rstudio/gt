@@ -661,7 +661,7 @@ create_body_component_h <- function(data) {
 
   boxh <- dt_boxhead_get(data = data)
   body <- dt_body_get(data = data)
-  stub_df <- dt_stub_df_get(data = data)
+
   summaries_present <- dt_summary_exists(data = data)
   list_of_summaries <- dt_summary_df_get(data = data)
   groups_rows_df <- dt_groups_rows_get(data = data)
