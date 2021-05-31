@@ -44,6 +44,7 @@ test_that("a gt table contains the expected heading components", {
     gt() %>%
     tab_header(title = "test title") %>%
     as_latex() %>%
+    as.character() %>%
     expect_snapshot()
 
   # Expect that providing a subtitle value with an empty
@@ -52,6 +53,7 @@ test_that("a gt table contains the expected heading components", {
     gt() %>%
     tab_header(title = "test title", subtitle = "") %>%
     as_latex() %>%
+    as.character() %>%
     expect_snapshot()
 
   # Expect that providing a subtitle value with a series
@@ -60,6 +62,7 @@ test_that("a gt table contains the expected heading components", {
     gt() %>%
     tab_header(title = "test title", subtitle = "   ") %>%
     as_latex() %>%
+    as.character() %>%
     expect_snapshot()
 })
 
