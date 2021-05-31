@@ -498,11 +498,14 @@ fmt_scientific <- function(data,
 #'
 #' @description
 #' With numeric values in a **gt** table, we can perform formatting so that the
-#' targeted values are rendered in engineering notation. Furthermore, there is
-#' fine control with the following options:
+#' targeted values are rendered in engineering notation.
+#'
+#' With this function, there is fine control over the formatted values with the
+#' following options:
 #'
 #' - decimals: choice of the number of decimal places, option to drop
 #' trailing zeros, and a choice of the decimal symbol
+#' - digit grouping separators: choice of separator symbol
 #' - scaling: we can choose to scale targeted values by a multiplier value
 #' - pattern: option to use a text pattern for decoration of the formatted
 #' values
