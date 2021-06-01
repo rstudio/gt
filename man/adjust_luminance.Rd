@@ -38,7 +38,7 @@ argument).
 
 \section{Function ID}{
 
-7-18
+7-24
 }
 
 \examples{
@@ -60,21 +60,21 @@ tab_1 <-
   dplyr::tibble(a = 1:8, b = 1:8, c = 1:8) \%>\%
   gt() \%>\%
   data_color(
-    columns = vars(a),
+    columns = a,
     colors = scales::col_numeric(
       palette = pal_lighter,
       domain = c(1, 8)
     )
   ) \%>\%
   data_color(
-    columns = vars(b),
+    columns = b,
     colors = scales::col_numeric(
       palette = pal,
       domain = c(1, 8)
     )
   ) \%>\%
   data_color(
-    columns = vars(c),
+    columns = c,
     colors = scales::col_numeric(
       palette = pal_darker,
       domain = c(1, 8)
@@ -90,14 +90,20 @@ Other Helper Functions:
 \code{\link{cells_body}()},
 \code{\link{cells_column_labels}()},
 \code{\link{cells_column_spanners}()},
+\code{\link{cells_footnotes}()},
 \code{\link{cells_grand_summary}()},
 \code{\link{cells_row_groups}()},
+\code{\link{cells_source_notes}()},
+\code{\link{cells_stub_grand_summary}()},
+\code{\link{cells_stub_summary}()},
 \code{\link{cells_stubhead}()},
 \code{\link{cells_stub}()},
 \code{\link{cells_summary}()},
 \code{\link{cells_title}()},
 \code{\link{currency}()},
+\code{\link{default_fonts}()},
 \code{\link{escape_latex}()},
+\code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
 \code{\link{md}()},

@@ -19,18 +19,22 @@ tbl <-
 
 # Create a display table
 footnotes_tbl <-
-  gt(data = tbl, groupname_col = "date") %>%
+  gt(
+    data = tbl,
+    groupname_col = "date"
+  ) %>%
+  tab_header(title = "The Table Title", subtitle = "The subtitle.") %>%
   tab_spanner(
     label = "values",
     columns = starts_with("value")
   ) %>%
   tab_footnote(
     footnote = "This is an even smaller number.",
-    locations = cells_body(columns = vars(value_1), rows = 9)
+    locations = cells_body(columns = value_1, rows = 9)
   ) %>%
   tab_footnote(
     footnote = "This is a small number.",
-    locations = cells_body(columns = vars(value_1), rows = 4)
+    locations = cells_body(columns = value_1, rows = 4)
   ) %>%
   tab_footnote(
     footnote = "First data cell.",
@@ -50,7 +54,15 @@ footnotes_tbl <-
   ) %>%
   tab_footnote(
     footnote = md("`value_1` is the first column of values."),
-    locations = cells_column_labels(columns = vars(value_1))
+    locations = cells_column_labels(columns = value_1)
+  ) %>%
+  tab_footnote(
+    footnote = md("The `title` can get a footnote."),
+    locations = cells_title(groups = "title")
+  ) %>%
+  tab_footnote(
+    footnote = md("The `subtitle` can likewise get a footnote."),
+    locations = cells_title(groups = "subtitle")
   )
 
 footnotes_tbl

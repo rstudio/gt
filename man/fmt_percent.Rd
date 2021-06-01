@@ -7,10 +7,13 @@
 fmt_percent(
   data,
   columns,
-  rows = NULL,
+  rows = everything(),
   decimals = 2,
   drop_trailing_zeros = FALSE,
+  drop_trailing_dec_mark = TRUE,
+  scale_values = TRUE,
   use_seps = TRUE,
+  accounting = FALSE,
   pattern = "{x}",
   sep_mark = ",",
   dec_mark = ".",
@@ -23,16 +26,18 @@ fmt_percent(
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{The columns to format. Can either be a series of column names
-provided in \code{\link[=vars]{vars()}}, a vector of column indices, or a helper function
+provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
 focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.}
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
+\code{\link[=everything]{everything()}}.}
 
-\item{rows}{Optional rows to format. Not providing any value results in all
-rows in \code{columns} being formatted. Can either be a vector of row captions
-provided \code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on
-selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.
-We can also use expressions to filter down to the rows we need (e.g.,
+\item{rows}{Optional rows to format. Providing either \code{\link[=everything]{everything()}} (the
+default) or \code{TRUE} results in all rows in \code{columns} being formatted. Can
+either be a vector of row captions provided in \code{\link[=c]{c()}}, a vector of row
+indices, or a helper function focused on selections. The select helper
+functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
+to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{decimals}{An option to specify the exact number of decimal places to
@@ -41,9 +46,23 @@ use. The default number of decimal places is \code{2}.}
 \item{drop_trailing_zeros}{A logical value that allows for removal of
 trailing zeros (those redundant zeros after the decimal mark).}
 
+\item{drop_trailing_dec_mark}{A logical value that determines whether decimal
+marks should always appear even if there are no decimal digits to display
+after formatting (e.g, \code{23} becomes \code{23.}). The default for this is \code{TRUE},
+which means that trailing decimal marks are not shown.}
+
+\item{scale_values}{Should the values be scaled through multiplication by
+100? By default this is \code{TRUE} since the expectation is that normally
+values are proportions. Setting to \code{FALSE} signifies that the values are
+already scaled and require only the percent sign when formatted.}
+
 \item{use_seps}{An option to use digit group separators. The type of digit
 group separator is set by \code{sep_mark} and overridden if a locale ID is
 provided to \code{locale}. This setting is \code{TRUE} by default.}
+
+\item{accounting}{An option to use accounting style for values. With \code{FALSE}
+(the default), negative values will be shown with a minus sign. Using
+\code{accounting = TRUE} will put negative values in parentheses.}
 
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other
@@ -73,10 +92,11 @@ An object of class \code{gt_tbl}.
 }
 \description{
 With numeric values in a \strong{gt} table, we can perform percentage-based
-formatting. It is assumed the input numeric values are in a fractional format
-since the numbers will be automatically multiplied by \code{100} before decorating
-with a percent sign. For more control over percentage formatting, we can use
-the following options:
+formatting. It is assumed the input numeric values are proportional values
+and, in this case, the values will be automatically multiplied by \code{100}
+before decorating with a percent sign (the other case is accommodated though
+setting the \code{scale_values} to \code{FALSE}) For more control over percentage
+formatting, we can use the following options:
 \itemize{
 \item percent sign placement: the percent sign can be placed after or
 before the values and a space can be inserted between the symbol and the
@@ -93,8 +113,7 @@ formatting specific to the chosen locale
 }
 \details{
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
-nothing is provided for \code{rows} then entire columns are selected). A number of
-helper functions exist to make targeting more effective. Conditional
+nothing is provided for \code{rows} then entire columns are selected). Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
 argument. See the Arguments section for more information on this.
 }
@@ -116,12 +135,12 @@ tab_1 <-
   pizzaplace \%>\%
   dplyr::mutate(month = as.numeric(substr(date, 6, 7))) \%>\%
   dplyr::group_by(month) \%>\%
-  dplyr::summarize(pizzas_sold = n()) \%>\%
+  dplyr::summarize(pizzas_sold = dplyr::n()) \%>\%
   dplyr::ungroup() \%>\%
   dplyr::mutate(frac_of_quota = pizzas_sold / 4000) \%>\%
   gt(rowname_col = "month") \%>\%
   fmt_percent(
-    columns = vars(frac_of_quota),
+    columns = frac_of_quota,
     decimals = 1
   )
 
@@ -129,6 +148,7 @@ tab_1 <-
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},
+\code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},

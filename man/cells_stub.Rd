@@ -4,7 +4,7 @@
 \alias{cells_stub}
 \title{Location helper for targeting cells in the table stub}
 \usage{
-cells_stub(rows = TRUE)
+cells_stub(rows = everything())
 }
 \arguments{
 \item{rows}{The names of the rows that are to be targeted.}
@@ -16,36 +16,55 @@ A list object with the classes \code{cells_stub} and \code{location_cells}.
 The \code{cells_stub()} function is used to target the table's stub cells and it
 is useful when applying a footnote with \code{\link[=tab_footnote]{tab_footnote()}} or adding a custom
 style with \code{\link[=tab_style]{tab_style()}}. The function is expressly used in each of those
-functions' \code{locations} argument.
+functions' \code{locations} argument. Here are several ways that a stub location
+might be available in a \strong{gt} table: (1) through specification of a
+\code{rowname_col} in \code{\link[=gt]{gt()}}, (2) by introducing a data frame with row names to
+\code{\link[=gt]{gt()}} with \code{rownames_to_stub = TRUE}, or (3) by using \code{\link[=summary_rows]{summary_rows()}} or
+\code{\link[=grand_summary_rows]{grand_summary_rows()}} with neither of the previous two conditions being
+true.
 }
-\details{
-When using any of the location helper functions with an appropriate function
-that has a \code{locations} argument, multiple locations can be targeted by
-enclosing several \verb{cells_*()} helper functions in a \code{list()}. The following
-helper functions can be used to target cells (roughly in order from the top
-to the bottom of a table):
+\section{Overview of Location Helper Functions}{
+
+Location helper functions can be used to target cells with virtually any
+function that has a \code{locations} argument. Here is a listing of all of the
+location helper functions, with locations corresponding roughly from top to
+bottom of a table:
 \itemize{
-\item \code{\link[=cells_title]{cells_title()}}: targets the table title or the table subtitle
-depending on the value given to the \code{groups} argument (\code{"title"} or
-\code{"subtitle"}).
-\item \code{\link[=cells_stubhead]{cells_stubhead()}}: targets the stubhead location, a cell of which is
-only available when there is a stub; a label in that location can be created
-by using the \code{\link[=tab_stubhead]{tab_stubhead()}} function.
-\item \code{\link[=cells_column_spanners]{cells_column_spanners()}}: targets the spanner column labels, which
-appear above the column labels.
-\item \code{\link[=cells_column_labels]{cells_column_labels()}}: targets the column labels.
+\item \code{\link[=cells_title]{cells_title()}}: targets the table title or the table subtitle depending on
+the value given to the \code{groups} argument (\code{"title"} or \code{"subtitle"}).
+\item \code{\link[=cells_stubhead]{cells_stubhead()}}: targets the stubhead location, a cell of which is only
+available when there is a stub; a label in that location can be created by
+using the \code{\link[=tab_stubhead]{tab_stubhead()}} function.
+\item \code{\link[=cells_column_spanners]{cells_column_spanners()}}: targets the spanner column labels with the
+\code{spanners} argument; spanner column labels appear above the column labels.
+\item \code{\link[=cells_column_labels]{cells_column_labels()}}: targets the column labels with its \code{columns}
+argument.
 \item \code{\link[=cells_row_groups]{cells_row_groups()}}: targets the row group labels in any available row
 groups using the \code{groups} argument.
 \item \code{\link[=cells_stub]{cells_stub()}}: targets row labels in the table stub using the \code{rows}
 argument.
-\item \code{\link[=cells_body]{cells_body()}}: targets data cells in the table body using
-intersections of \code{columns} and \code{rows}.
+\item \code{\link[=cells_body]{cells_body()}}: targets data cells in the table body using intersections of
+\code{columns} and \code{rows}.
 \item \code{\link[=cells_summary]{cells_summary()}}: targets summary cells in the table body using the
 \code{groups} argument and intersections of \code{columns} and \code{rows}.
-\item \code{\link[=cells_grand_summary]{cells_grand_summary()}}: targets cells of the table's grand summary
-using intersections of \code{columns} and \code{rows}
+\item \code{\link[=cells_grand_summary]{cells_grand_summary()}}: targets cells of the table's grand summary using
+intersections of \code{columns} and \code{rows}
+\item \code{\link[=cells_stub_summary]{cells_stub_summary()}}: targets summary row labels in the table stub using
+the \code{groups} and \code{rows} arguments.
+\item \code{\link[=cells_stub_grand_summary]{cells_stub_grand_summary()}}: targets grand summary row labels in the table
+stub using the \code{rows} argument.
+\item \code{\link[=cells_footnotes]{cells_footnotes()}}: targets all footnotes in the table footer (cannot be
+used with \code{\link[=tab_footnote]{tab_footnote()}}).
+\item \code{\link[=cells_source_notes]{cells_source_notes()}}: targets all source notes in the table footer
+(cannot be used with \code{\link[=tab_footnote]{tab_footnote()}}).
 }
+
+When using any of the location helper functions with an appropriate function
+that has a \code{locations} argument (e.g., \code{\link[=tab_style]{tab_style()}}), multiple locations
+can be targeted by enclosing several \verb{cells_*()} helper functions in a
+\code{list()} (e.g., \code{list(cells_body(), cells_grand_summary())}).
 }
+
 \section{Figures}{
 
 \if{html}{\figure{man_cells_stub_1.png}{options: width=100\%}}
@@ -72,7 +91,7 @@ tab_1 <-
   tidyr::spread(key = "tst", value = sza) \%>\%
   gt(rowname_col = "month") \%>\%
   fmt_missing(
-    columns = TRUE,
+    columns = everything(),
     missing_text = ""
   ) \%>\%
   tab_style(
@@ -80,7 +99,7 @@ tab_1 <-
       cell_fill(color = "darkblue"),
       cell_text(color = "white")
       ),
-    locations = cells_stub(rows = TRUE)
+    locations = cells_stub()
   )
 
 }
@@ -93,13 +112,19 @@ Other Helper Functions:
 \code{\link{cells_body}()},
 \code{\link{cells_column_labels}()},
 \code{\link{cells_column_spanners}()},
+\code{\link{cells_footnotes}()},
 \code{\link{cells_grand_summary}()},
 \code{\link{cells_row_groups}()},
+\code{\link{cells_source_notes}()},
+\code{\link{cells_stub_grand_summary}()},
+\code{\link{cells_stub_summary}()},
 \code{\link{cells_stubhead}()},
 \code{\link{cells_summary}()},
 \code{\link{cells_title}()},
 \code{\link{currency}()},
+\code{\link{default_fonts}()},
 \code{\link{escape_latex}()},
+\code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
 \code{\link{md}()},

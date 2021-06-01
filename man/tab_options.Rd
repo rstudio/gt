@@ -11,13 +11,18 @@ tab_options(
   container.overflow.x = NULL,
   container.overflow.y = NULL,
   table.width = NULL,
+  table.layout = NULL,
   table.align = NULL,
   table.margin.left = NULL,
   table.margin.right = NULL,
   table.background.color = NULL,
+  table.additional_css = NULL,
+  table.font.names = NULL,
+  table.font.size = NULL,
+  table.font.weight = NULL,
+  table.font.style = NULL,
   table.font.color = NULL,
   table.font.color.light = NULL,
-  table.font.size = NULL,
   table.border.top.style = NULL,
   table.border.top.width = NULL,
   table.border.top.color = NULL,
@@ -76,6 +81,7 @@ tab_options(
   row_group.border.right.style = NULL,
   row_group.border.right.width = NULL,
   row_group.border.right.color = NULL,
+  row_group.default_label = NULL,
   table_body.hlines.style = NULL,
   table_body.hlines.width = NULL,
   table_body.hlines.color = NULL,
@@ -157,6 +163,10 @@ given in units of pixels. The \code{\link[=px]{px()}} and \code{\link[=pct]{pct(
 be used to pass in numeric values and obtain values as pixel or percent
 units.}
 
+\item{table.layout}{The value for the \code{table-layout} CSS style in the HTML
+output context. By default, this is \code{"fixed"} but another valid option is
+\code{"auto"}.}
+
 \item{table.align}{The horizontal alignment of the table in its container. By
 default, this is \code{"center"}. Other options are \code{"left"} and \code{"right"}. This
 will automatically set \code{table.margin.left} and \code{table.margin.right} to the
@@ -176,11 +186,13 @@ elements: \code{heading}, \code{column_labels}, \code{row_group}, \code{stub}, \
 \code{grand_summary_row}, \code{footnotes}, and \code{source_notes}. A color name or a
 hexadecimal color code should be provided.}
 
-\item{table.font.color, table.font.color.light}{The text color used throughout the table. There are two variants:
-\code{table.font.color} is for text overlaid on lighter background colors, and
-\code{table.font.color.light} is automatically used when text needs to be
-overlaid on darker background colors. A color name or a hexadecimal color
-code should be provided.}
+\item{table.additional_css}{This option can be used to supply an additional
+block of CSS rules to be applied after the automatically generated table
+CSS.}
+
+\item{table.font.names}{The names of the fonts used for the table. This is
+a vector of several font names. If the first font isn't available, then
+the next font is tried (and so on).}
 
 \item{table.font.size, heading.title.font.size, heading.subtitle.font.size, column_labels.font.size, row_group.font.size, stub.font.size, footnotes.font.size, source_notes.font.size}{The font sizes for the parent text element \code{table} and the following child
 elements: \code{heading.title}, \code{heading.subtitle}, \code{column_labels},
@@ -191,17 +203,26 @@ it is assumed that the value is given in units of pixels. The \code{\link[=px]{p
 \code{\link[=pct]{pct()}} helper functions can also be used to pass in numeric values and
 obtain values as pixel or percentage units.}
 
+\item{table.font.weight, heading.title.font.weight, heading.subtitle.font.weight, column_labels.font.weight, row_group.font.weight, stub.font.weight}{The font weights of the table, \code{heading.title}, \code{heading.subtitle},
+\code{column_labels}, \code{row_group}, and \code{stub} text elements. Can be a text-based
+keyword such as \code{"normal"}, \code{"bold"}, \code{"lighter"}, \code{"bolder"}, or, a
+numeric value between \code{1} and \code{1000}, inclusive. Note that only variable
+fonts may support the numeric mapping of weight.}
+
+\item{table.font.style}{The font style for the table. Can be one of either
+\code{"normal"}, \code{"italic"}, or \code{"oblique"}.}
+
+\item{table.font.color, table.font.color.light}{The text color used throughout the table. There are two variants:
+\code{table.font.color} is for text overlaid on lighter background colors, and
+\code{table.font.color.light} is automatically used when text needs to be
+overlaid on darker background colors. A color name or a hexadecimal color
+code should be provided.}
+
 \item{table.border.top.style, table.border.top.width, table.border.top.color, table.border.right.style, table.border.right.width, table.border.right.color, table.border.bottom.style, table.border.bottom.width, table.border.bottom.color, table.border.left.style, table.border.left.width, table.border.left.color}{The style, width, and color properties of the table's absolute top and
 absolute bottom borders.}
 
 \item{heading.align}{Controls the horizontal alignment of the heading title
 and subtitle. We can either use \code{"center"}, \code{"left"}, or \code{"right"}.}
-
-\item{heading.title.font.weight, heading.subtitle.font.weight, column_labels.font.weight, row_group.font.weight, stub.font.weight}{The font weights of the \code{heading.title}, \code{heading.subtitle},
-\code{column_labels}, \code{row_group}, and \code{stub} text elements. Can be a text-based
-keyword such as \code{"normal"}, \code{"bold"}, \code{"lighter"}, \code{"bolder"}, or, a
-numeric value between \code{1} and \code{1000}, inclusive. Note that only variable
-fonts may support the numeric mapping of weight.}
 
 \item{heading.border.bottom.style, heading.border.bottom.width, heading.border.bottom.color}{The style, width, and color properties of the header's bottom border. This
 border shares space with that of the \code{column_labels} location. If the
@@ -219,7 +240,7 @@ of the the \code{column_labels}.}
 
 \item{column_labels.border.top.style, column_labels.border.top.width, column_labels.border.top.color}{The style, width, and color properties for the top border of the
 \code{column_labels} location. This border shares space with that of the
-\code{heading} location. If dthe \code{width} of this border is larger, then it will
+\code{heading} location. If the \code{width} of this border is larger, then it will
 be the visible border.}
 
 \item{column_labels.border.bottom.style, column_labels.border.bottom.width, column_labels.border.bottom.color}{The style, width, and color properties for the bottom border of the
@@ -234,6 +255,13 @@ header (if present) will collapse downward.}
 
 \item{row_group.border.top.style, row_group.border.top.width, row_group.border.top.color, row_group.border.bottom.style, row_group.border.bottom.width, row_group.border.bottom.color, row_group.border.left.style, row_group.border.left.width, row_group.border.left.color, row_group.border.right.style, row_group.border.right.width, row_group.border.right.color}{The style, width, and color properties for all top, bottom, left, and right
 borders of the \code{row_group} location.}
+
+\item{row_group.default_label}{An option to set a default row group label for
+any rows not formally placed in a row group named by \code{group} in any call of
+\code{tab_row_group()}. If this is set as \code{NA_character} and there are rows that
+haven't been placed into a row group (where one or more row groups already
+exist), those rows will be automatically placed into a row group without a
+label.}
 
 \item{table_body.hlines.style, table_body.hlines.width, table_body.hlines.color, table_body.vlines.style, table_body.vlines.width, table_body.vlines.color}{The style, width, and color properties for all horizontal lines ('hlines')
 and vertical lines ('vlines') in the \code{table_body}.}
@@ -334,24 +362,27 @@ tab_1 <-
     title = md("Data listing from **exibble**"),
     subtitle = md("`exibble` is an R dataset")
   ) \%>\%
-  fmt_number(columns = vars(num)) \%>\%
-  fmt_currency(columns = vars(currency)) \%>\%
+  fmt_number(columns = num) \%>\%
+  fmt_currency(columns = currency) \%>\%
   tab_footnote(
     footnote = "Using commas for separators.",
     locations = cells_body(
-      columns = vars(num),
-      rows = num > 1000)
+      columns = num,
+      rows = num > 1000
+    )
   ) \%>\%
   tab_footnote(
     footnote = "Using commas for separators.",
     locations = cells_body(
-      columns = vars(currency),
-      rows = currency > 1000)
+      columns = currency,
+      rows = currency > 1000
+    )
   ) \%>\%
   tab_footnote(
     footnote = "Alphabetical fruit.",
     locations = cells_column_labels(
-      columns = vars(char))
+      columns = char
+    )
   )
 
 # Modify the table width to 100\% (which

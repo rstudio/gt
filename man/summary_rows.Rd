@@ -7,7 +7,7 @@
 summary_rows(
   data,
   groups = NULL,
-  columns = TRUE,
+  columns = everything(),
   fns,
   missing_text = "---",
   formatter = fmt_number,
@@ -97,7 +97,7 @@ tab_1 <-
   ) \%>\%
   summary_rows(
     groups = TRUE,
-    columns = vars(open, high, low, close),
+    columns = c(open, high, low, close),
     fns = list(
       min = ~min(.),
       max = ~max(.),

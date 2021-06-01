@@ -18,11 +18,11 @@ Supplying any of the \verb{cells_*()} helper functions is a useful way to target
 the location cells that are associated with the footnote text. These helper
 functions are: \code{\link[=cells_title]{cells_title()}}, \code{\link[=cells_stubhead]{cells_stubhead()}},
 \code{\link[=cells_column_spanners]{cells_column_spanners()}}, \code{\link[=cells_column_labels]{cells_column_labels()}}, \code{\link[=cells_row_groups]{cells_row_groups()}},
-\code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_summary]{cells_summary()}}, and
-\code{\link[=cells_grand_summary]{cells_grand_summary()}}. Additionally, we can enclose several \verb{cells_*()}
-calls within a \code{list()} if we wish to link the footnote text to different
-types of locations (e.g., body cells, row group labels, the table title,
-etc.).}
+\code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_summary]{cells_summary()}}, \code{\link[=cells_grand_summary]{cells_grand_summary()}},
+\code{\link[=cells_stub_summary]{cells_stub_summary()}}, and \code{\link[=cells_stub_grand_summary]{cells_stub_grand_summary()}}. Additionally, we
+can enclose several \verb{cells_*()} calls within a \code{list()} if we wish to link
+the footnote text to different types of locations (e.g., body cells, row
+group labels, the table title, etc.).}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -39,17 +39,14 @@ functions (e.g., \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_col
 \details{
 The formatting of the footnotes can be controlled through the use of various
 parameters in the \code{\link[=tab_options]{tab_options()}} function:
-
 \itemize{
-\item \code{footnotes.sep}: allows for a choice of the separator between
-consecutive footnotes in the table footer. By default, this is set to a
-linebreak.
-\item \code{footnotes.marks}: the set of sequential characters or numbers used
-to identify the footnotes.
-\item \code{footnotes.font.size}: the size of the font used in the footnote
-section.
-\item \code{footnotes.padding}: the amount of padding to apply between the
-footnote and source note sections in the table footer.
+\item \code{footnotes.sep}: allows for a choice of the separator between consecutive
+footnotes in the table footer. By default, this is set to a linebreak.
+\item \code{footnotes.marks}: the set of sequential characters or numbers used to
+identify the footnotes.
+\item \code{footnotes.font.size}: the size of the font used in the footnote section.
+\item \code{footnotes.padding}: the amount of padding to apply between the footnote
+and source note sections in the table footer.
 }
 }
 \section{Figures}{
@@ -78,15 +75,17 @@ tab_1 <-
   dplyr::select(-latitude, -month) \%>\%
   gt() \%>\%
   data_color(
-    columns = vars(sza),
+    columns = sza,
     colors = scales::col_numeric(
       palette = c("white", "yellow", "navyblue"),
-      domain = c(0, 90))
+      domain = c(0, 90)
+    )
   ) \%>\%
   tab_footnote(
     footnote = "Color indicates height of sun.",
     locations = cells_column_labels(
-      columns = vars(sza))
+      columns = sza
+    )
   )
 
 }

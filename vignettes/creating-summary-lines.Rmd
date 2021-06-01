@@ -10,7 +10,8 @@ vignette: >
 ```{r options, message=FALSE, warning=FALSE, include=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>")
+  comment = "#>"
+)
 
 library(gt)
 library(dplyr)
@@ -39,7 +40,7 @@ We'll create a table stub with both row labels (using the `row` column) and row 
 # Create a gt table using the `exibble` dataset
 exibble_a <-
   exibble %>%
-  dplyr::select(-c(fctr, date, time, datetime)) %>%
+  select(-c(fctr, date, time, datetime)) %>%
   gt(rowname_col = "row", groupname_col = "group") %>%
   fmt_missing(columns = everything())
 
@@ -65,7 +66,7 @@ exibble_b <-
   exibble_a %>%
   summary_rows(
     groups = TRUE,
-    columns = vars(num),
+    columns = num,
     fns = list(
       average = "mean",
       total = "sum",
@@ -89,7 +90,7 @@ exibble_c <-
   exibble_a %>%
   summary_rows(
     groups = TRUE,
-    columns = vars(num),
+    columns = num,
     fns = list(
       avg = ~mean(., na.rm = TRUE),
       total = ~sum(., na.rm = TRUE),
@@ -118,12 +119,12 @@ fns_labels <-
 exibble_d <- 
   exibble_a %>%
   fmt_scientific(
-    columns = vars(num),
+    columns = num,
     decimals = 3
   ) %>%
   summary_rows(
     groups = TRUE,
-    columns = vars(num),
+    columns = num,
     fns = fns_labels,
     formatter = fmt_scientific,
     decimals = 3
@@ -147,23 +148,23 @@ We can re-use summary row labels and fill the otherwise empty summary cells with
 exibble_e <- 
   exibble_a %>%
   fmt_scientific(
-    columns = vars(num),
+    columns = num,
     decimals = 3
   ) %>%
   fmt_currency(
-    columns = vars(currency),
+    columns = currency,
     currency = "EUR"
     ) %>%
   summary_rows(
     groups = TRUE,
-    columns = vars(num),
+    columns = num,
     fns = fns_labels,
     formatter = fmt_scientific,
     decimals = 3
   ) %>%
   summary_rows(
     groups = "grp_a",
-    columns = vars(currency),
+    columns = currency,
     fns = c(
       fns_labels,
       min = ~min(.),
@@ -197,18 +198,18 @@ formats <-
 exibble_f <- 
   exibble_a %>%
   fmt_scientific(
-    columns = vars(num),
+    columns = num,
     decimals = formats$decimals,
     locale = formats$locale
   ) %>%
   fmt_currency(
-    columns = vars(currency),
+    columns = currency,
     currency = formats$currency,
     locale = formats$locale
-    ) %>%
+  ) %>%
   summary_rows(
     groups = TRUE,
-    columns = vars(num),
+    columns = num,
     fns = fns_labels,
     formatter = fmt_scientific,
     decimals = formats$decimals,
@@ -216,11 +217,12 @@ exibble_f <-
   ) %>%
   summary_rows(
     groups = "grp_a",
-    columns = vars(currency),
+    columns = currency,
     fns = c(
       fns_labels,
       min = ~min(.),
-      max = ~max(.)),
+      max = ~max(.)
+    ),
     formatter = fmt_currency,
     currency = formats$currency,
     locale = formats$locale
@@ -235,44 +237,41 @@ Passing in parameters like this is useful, especially if there are larger number
 
 A grand summary aggregates column data regardless of the groups within the data. Grand summaries can also be created for **gt** tables that don't have row groups, or, don't have a stub. Finally, we can create a table that has both groupwise summaries and a grand summary.
 
-Let's keep it simple and create group summary rows on a table without a stub. We'll use `exibble` dataset for this once more. A few `exibble` columns are `select()`ed, passed to `gt()`, and then `summary_rows()`. Notice that, in the resulting table, a stub is created just for the summary row labels (they have to go somewhere).
+Let's keep it simple and create grand summary rows on a table without a stub. We'll use `exibble` dataset for this once more. A few `exibble` columns are `select()`ed, passed to `gt()`, and then `grand_summary_rows()`. Notice that, in the resulting table, a stub is created just for the summary row labels (they have to go somewhere).
 
 ```{r exibble_g}
 # Create a simple grand summary on a gt
 # table that contains no stub
 exibble_g <-
   exibble %>%
-  dplyr::select(num, char, currency) %>%
+  select(num, char, currency) %>%
   gt() %>%
   grand_summary_rows(
-    columns = vars(num, currency),
+    columns = c(num, currency),
     fns = fns_labels
   )
 
 exibble_g
 ```
 
-By default, `groups` in the `summary_rows()` function is set to `NULL` and will produce a grand summary.
-
-A grand summary can be used in conjunction with groupwise summaries. Here's an mashup where both types are present:
+A grand summary can be used in conjunction with groupwise summaries. Here's an table where both types of summaries are present:
 
 ```{r exibble_h}
 # Using the table in `exibble_f`, create
-# additional grand summary rows (using two
-# separate calls of `grand_summary_rows()`
-# since the formatting
-# will be different)
+# grand summary rows (using two separate
+# calls of `grand_summary_rows()` since
+# the formatting will be different)
 exibble_h <- 
   exibble_f %>%
   grand_summary_rows(
-    columns = vars(num),
+    columns = num,
     fns = fns_labels,
     formatter = fmt_number,
     suffixing = TRUE,
     locale = formats$locale
   ) %>%
   grand_summary_rows(
-    columns = vars(currency),
+    columns = currency,
     fns = fns_labels,
     formatter = fmt_currency,
     suffixing = TRUE,
@@ -309,14 +308,14 @@ exibble_i <-
   tab_footnote(
     footnote = md("Mean of all *num* values."),
     locations = cells_grand_summary(
-      columns = vars(num), rows = vars(avg)
+      columns = "num", rows = "avg"
     )
   ) %>%
   tab_footnote(
     footnote = md("Highest `currency` value in **grp_a**"),
     locations = cells_summary(
       groups = "grp_a",
-      columns = vars(currency),
+      columns = "currency",
       rows = "max"
     )
   )
@@ -358,14 +357,14 @@ The output data from `extract_summary()` can be reintroduced to a reproducible w
 exibble_d %>%
   extract_summary() %>%
   unlist(recursive = FALSE) %>%
-  dplyr::bind_rows() %>%
+  bind_rows() %>%
   gt() %>%
   fmt_number(
-    columns = vars(num),
+    columns = num,
     decimals = 1
   ) %>%
   fmt_missing(
-    columns = vars(char, currency, row, group)
+    columns = c(char, currency, row, group)
   )
 ```
 
@@ -413,9 +412,9 @@ Because this is character value that's returned, we don't need formatting functi
 exibble_j <- 
   exibble_a %>%
   grand_summary_rows(
-    columns = vars(num, currency),
+    columns = c(num, currency),
     fns = list(
-      high = ~agg_highest_two_above_value(., 20)),
+      high = ~ agg_highest_two_above_value(., 20)),
     formatter = fmt_passthrough,
     pattern = "({x})"
   )
@@ -432,5 +431,3 @@ exibble_j %>%
   extract_summary() %>%
   str()
 ```
-
-

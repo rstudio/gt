@@ -85,10 +85,11 @@ pizza_tab_email <-
   dplyr::arrange(type, size) %>%
   gt(rowname_col = "size") %>%
   fmt_currency(
-    columns = vars(income),
-    currency = "USD") %>%
+    columns = income,
+    currency = "USD"
+  ) %>%
   fmt_number(
-    columns = vars(pies),
+    columns = pies,
     use_seps = TRUE,
     decimals = 0
   ) %>%

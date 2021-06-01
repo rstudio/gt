@@ -42,13 +42,12 @@ dt_heading_has_title <- function(data) {
 
   heading <- dt_heading_get(data = data)
 
-  length(heading) > 0 && !is.null(heading$title)
+  length(heading) > 0 && length(heading$title) > 0 && !is.null(heading$title)
 }
 
 dt_heading_has_subtitle <- function(data) {
 
   heading <- dt_heading_get(data = data)
 
-  length(heading) > 0 && !is.null(heading$subtitle)
+  length(heading) > 0 && length(heading$subtitle) > 0 && !is.null(heading$subtitle)
 }
-

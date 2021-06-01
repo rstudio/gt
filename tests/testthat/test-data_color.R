@@ -47,7 +47,7 @@ test_that("the correct color values are obtained when defining a palette", {
     dplyr::mutate(month = as.character(month)) %>%
     gt() %>%
     data_color(
-      columns = vars(month),
+      columns = "month",
       colors = pal_12,
       autocolor_text = TRUE
     ) %>%
@@ -83,7 +83,7 @@ test_that("the correct color values are obtained when defining a palette", {
     dplyr::mutate(month = as.character(month)) %>%
     gt() %>%
     data_color(
-      columns = vars(month),
+      columns = month,
       colors = pal_12,
       autocolor_text = FALSE
     ) %>%
@@ -100,7 +100,7 @@ test_that("the correct color values are obtained when defining a palette", {
     test_tbl %>%
     gt() %>%
     data_color(
-      columns = vars(month),
+      columns = month,
       colors = pal_12,
       autocolor_text = TRUE
     ) %>%
@@ -133,7 +133,7 @@ test_that("the correct color values are obtained when defining a palette", {
   test_tbl %>%
     gt() %>%
     data_color(
-      columns = vars(month),
+      columns = month,
       colors = pal_12,
       autocolor_text = FALSE
     ) %>%
@@ -151,7 +151,7 @@ test_that("the correct color values are obtained when defining a palette", {
     test_tbl %>%
     gt() %>%
     data_color(
-      columns = vars(min_sza),
+      columns = min_sza,
       colors = c("red", "orange", "green", "blue"),
       autocolor_text = TRUE
     ) %>%
@@ -194,7 +194,7 @@ test_that("the correct color values are obtained when defining a palette", {
     test_tbl %>%
     gt() %>%
     data_color(
-      columns = vars(min_sza),
+      columns = min_sza,
       colors = rgb_hex_colors,
       autocolor_text = TRUE
     ) %>%
@@ -246,7 +246,7 @@ test_that("the correct color values are obtained when defining a palette", {
     test_tbl %>%
     gt() %>%
     data_color(
-      columns = vars(min_sza),
+      columns = min_sza,
       colors = rgba_hex_colors,
       autocolor_text = TRUE
     ) %>%
@@ -301,7 +301,7 @@ test_that("the correct color values are obtained when defining a palette", {
     test_tbl %>%
     gt() %>%
     data_color(
-      columns = vars(min_sza),
+      columns = min_sza,
       colors = rgba_hex_colors_mixed,
       autocolor_text = TRUE
     ) %>%
@@ -357,7 +357,7 @@ test_that("the correct color values are obtained when defining a palette", {
     test_tbl %>%
     gt() %>%
     data_color(
-      columns = vars(min_sza),
+      columns = min_sza,
       colors = rgba_hex_colors_mixed_2,
       autocolor_text = TRUE
     ) %>%
@@ -424,7 +424,7 @@ test_that("the correct color values are obtained when defining a palette", {
     dplyr::mutate(month = as.character(month)) %>%
     gt() %>%
     data_color(
-      columns = vars(month),
+      columns = month,
       colors = pal_12,
       autocolor_text = TRUE,
       alpha = 1
@@ -461,7 +461,7 @@ test_that("the correct color values are obtained when defining a palette", {
     dplyr::mutate(month = as.character(month)) %>%
     gt() %>%
     data_color(
-      columns = vars(month),
+      columns = month,
       colors = pal_12,
       autocolor_text = FALSE,
       alpha = 1
@@ -492,7 +492,7 @@ test_that("the correct color values are obtained when defining a palette", {
     dplyr::mutate(month = as.character(month)) %>%
     gt() %>%
     data_color(
-      columns = vars(month),
+      columns = month,
       colors = pal_12,
       autocolor_text = TRUE,
       alpha = 0.5
@@ -555,7 +555,7 @@ test_that("the correct color values are obtained when defining a palette", {
   tbl %>%
     gt() %>%
     data_color(
-      columns = vars(country_name),
+      columns = country_name,
       colors = c("red", "orange", "green", "blue")
     ) %>%
     render_as_html() %>%
@@ -567,7 +567,7 @@ test_that("the correct color values are obtained when defining a palette", {
   tbl %>%
     gt() %>%
     data_color(
-      columns = vars(year),
+      columns = year,
       colors = c("red", "orange", "green", "blue")
     ) %>%
     render_as_html() %>%
@@ -581,7 +581,7 @@ test_that("the correct color values are obtained when defining a palette", {
   tbl %>%
     gt() %>%
     data_color(
-      columns = vars(population),
+      columns = population,
       colors = c("red", "orange", "green", "blue")
     ) %>%
     render_as_html() %>%
@@ -597,7 +597,7 @@ test_that("the correct color values are obtained when defining a palette", {
     test_tbl %>%
       gt() %>%
       data_color(
-        columns = vars(min_sza),
+        columns = min_sza,
         colors = c("red", "blau"),
         autocolor_text = TRUE
       )
@@ -608,7 +608,7 @@ test_that("the correct color values are obtained when defining a palette", {
     test_tbl %>%
       gt() %>%
       data_color(
-        columns = vars(min_sza),
+        columns = min_sza,
         colors = NULL,
         autocolor_text = TRUE
       )
@@ -619,20 +619,8 @@ test_that("the correct color values are obtained when defining a palette", {
     test_tbl %>%
       gt() %>%
       data_color(
-        columns = vars(min_sza),
+        columns = min_sza,
         colors = NA,
-        autocolor_text = TRUE
-      )
-  )
-
-  # Expect an error when providing an `NA` along
-  # with valid color names to `colors`
-  expect_error(
-    test_tbl %>%
-      gt() %>%
-      data_color(
-        columns = vars(min_sza),
-        colors = c("green", "blue", NA),
         autocolor_text = TRUE
       )
   )
@@ -643,7 +631,7 @@ test_that("the correct color values are obtained when defining a palette", {
     test_tbl %>%
       gt() %>%
       data_color(
-        columns = vars(min_sza),
+        columns = min_sza,
         colors = 1:6,
         autocolor_text = TRUE
       )
@@ -655,7 +643,7 @@ test_that("the correct color values are obtained when defining a palette", {
     test_tbl %>%
       gt() %>%
       data_color(
-        columns = vars(min_sza),
+        columns = min_sza,
         colors = c("#EEFFAA", "##45AA22"),
         autocolor_text = TRUE
       )
@@ -672,7 +660,7 @@ test_that("the correct color values are obtained when using a color fn", {
     dplyr::mutate(month = as.character(month)) %>%
     gt() %>%
     data_color(
-      columns = vars(month),
+      columns = month,
       colors = scales::col_factor(
         palette = c(
           "red", "orange", "green", "blue"),
@@ -718,7 +706,7 @@ test_that("the correct color values are obtained when using a color fn", {
     dplyr::mutate(month = as.character(month)) %>%
     gt() %>%
     data_color(
-      columns = vars(month),
+      columns = month,
       colors = scales::col_factor(
         palette = c("red", "orange", "green", "blue"),
         domain = levels(test_tbl$month)
@@ -763,7 +751,7 @@ test_that("the correct color values are obtained when using a color fn", {
     dplyr::mutate(month = as.character(month)) %>%
     gt() %>%
     data_color(
-      columns = vars(month),
+      columns = month,
       colors = scales::col_factor(
         palette = c("red", "orange", "green", "blue"),
         domain = levels(test_tbl$month)
@@ -818,7 +806,7 @@ test_that("the correct color values are obtained when using a color fn", {
     test_tbl %>%
     gt() %>%
     data_color(
-      columns = vars(month),
+      columns = month,
       colors = scales::col_factor(
         palette = c("red", "orange", "green", "blue"),
         domain = levels(test_tbl$month)
@@ -873,7 +861,7 @@ test_that("the correct color values are obtained when using a color fn", {
     test_tbl %>%
     gt() %>%
     data_color(
-      columns = vars(min_sza),
+      columns = min_sza,
       colors = scales::col_numeric(
         palette = c("red", "orange", "green", "blue"),
         domain = c(0, 90)
@@ -918,7 +906,7 @@ test_that("the correct color values are obtained when using a color fn", {
     test_tbl %>%
     gt() %>%
     data_color(
-      columns = vars(min_sza),
+      columns = min_sza,
       colors = scales::col_numeric(
         palette = c("red", "orange", "green", "blue"),
         domain = c(0, 90)
@@ -961,7 +949,7 @@ test_that("the correct color values are obtained when using a color fn", {
     test_tbl %>%
     gt() %>%
     data_color(
-      columns = vars(min_sza),
+      columns = min_sza,
       colors = scales::col_quantile(
         palette = c("red", "orange", "green", "blue"),
         domain = c(0, 90)
@@ -1004,7 +992,7 @@ test_that("the correct color values are obtained when using a color fn", {
     test_tbl %>%
     gt() %>%
     data_color(
-      columns = vars(min_sza),
+      columns = min_sza,
       colors = scales::col_bin(
         palette = c("red", "orange", "green", "blue"),
         domain = c(0, 90),
@@ -1343,7 +1331,7 @@ test_that("the `cell_fill()` function accepts colors of various types", {
     gt() %>%
     tab_style(
       style = cell_fill(color = "tomato"),
-      locations = cells_body(columns = vars(month))
+      locations = cells_body(columns = "month")
     ) %>%
     render_as_html() %>%
     xml2::read_html()
@@ -1370,7 +1358,7 @@ test_that("the `cell_fill()` function accepts colors of various types", {
     gt() %>%
     tab_style(
       style = cell_fill(color = "#FFAA00"),
-      locations = cells_body(columns = vars(month))
+      locations = cells_body(columns = "month")
     ) %>%
     render_as_html() %>%
     xml2::read_html()
@@ -1397,7 +1385,7 @@ test_that("the `cell_fill()` function accepts colors of various types", {
     gt() %>%
     tab_style(
       style = cell_fill(color = "#FF235D60"),
-      locations = cells_body(columns = vars(month))
+      locations = cells_body(columns = "month")
     ) %>%
     render_as_html() %>%
     xml2::read_html()
@@ -1425,7 +1413,7 @@ test_that("the `cell_fill()` function accepts colors of various types", {
     gt() %>%
     tab_style(
       style = cell_fill(color = "#FF235D", alpha = 0.5),
-      locations = cells_body(columns = vars(month))
+      locations = cells_body(columns = "month")
     ) %>%
     render_as_html() %>%
     xml2::read_html()
@@ -1465,7 +1453,7 @@ test_that("the `cell_fill()` function accepts colors of various types", {
     gt() %>%
     tab_style(
       style = cell_fill(color = "#F3F300EE", alpha = 0.5),
-      locations = cells_body(columns = vars(month))
+      locations = cells_body(columns = "month")
     ) %>%
     render_as_html() %>%
     xml2::read_html()

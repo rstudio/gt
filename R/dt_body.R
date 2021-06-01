@@ -13,7 +13,7 @@ dt_body_get <- function(data) {
 
 dt_body_set <- function(data, body) {
 
-  dt__set(data, .dt_body_key, body %>% dplyr::as_tibble())
+  dt__set(data, .dt_body_key, dplyr::as_tibble(body))
 }
 
 dt_body_build_init <- function(data) {

@@ -5,13 +5,12 @@
 ^\.github$
 ^\.Rproj\.user$
 ^gt\.Rproj$
-^\.travis\.yml$
 ^_pkgdown\.yml$
-^appveyor\.yml$
 ^codecov\.yml$
 ^README\.Rmd$
+^README\.md$
 ^LICENSE\.md$
-^CODE_OF_CONDUCT\.md$
-^TODOS
 tests/gt-examples
 vignettes
+man/figures/.*svg$
+man/figures/[^m].*png$

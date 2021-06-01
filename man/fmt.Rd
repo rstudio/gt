@@ -4,22 +4,24 @@
 \alias{fmt}
 \title{Set a column format with a formatter function}
 \usage{
-fmt(data, columns = NULL, rows = NULL, fns)
+fmt(data, columns = everything(), rows = everything(), fns)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{The columns to format. Can either be a series of column names
-provided in \code{\link[=vars]{vars()}}, a vector of column indices, or a helper function
+provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
 focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.}
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
+\code{\link[=everything]{everything()}}.}
 
-\item{rows}{Optional rows to format. Not providing any value results in all
-rows in \code{columns} being formatted. Can either be a vector of row captions
-provided \code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on
-selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.
-We can also use expressions to filter down to the rows we need (e.g.,
+\item{rows}{Optional rows to format. Providing either \code{\link[=everything]{everything()}} (the
+default) or \code{TRUE} results in all rows in \code{columns} being formatted. Can
+either be a vector of row captions provided in \code{\link[=c]{c()}}, a vector of row
+indices, or a helper function focused on selections. The select helper
+functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
+to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{fns}{Either a single formatting function or a named list of functions.}
@@ -37,6 +39,7 @@ If providing a single function to \code{fns}, the recommended format is in the
 form: \code{fns = function(x) ...}. This single function will format the targeted
 data cells the same way regardless of the output format (e.g., HTML, LaTeX,
 RTF).
+
 If you require formatting of \code{x} that depends on the output format, a list of
 functions can be provided for the \code{html}, \code{latex}, and \code{default} contexts.
 This can be in the form of \code{fns = list(html = function(x) ..., latex = function(x) ..., default = function(x) ...)}. In this multiple-function case,
@@ -46,10 +49,9 @@ aren't provided.
 \details{
 As with all of the \verb{fmt_*()} functions, targeting of values is done through
 \code{columns} and additionally by \code{rows} (if nothing is provided for \code{rows} then
-entire columns are selected). A number of helper functions exist to make
-targeting more effective. Conditional formatting is possible by providing a
-conditional expression to the \code{rows} argument. See the Arguments section for
-more information on this.
+entire columns are selected). Conditional formatting is possible by providing
+a conditional expression to the \code{rows} argument. See the Arguments section
+for more information on this.
 }
 \section{Figures}{
 
@@ -58,7 +60,7 @@ more information on this.
 
 \section{Function ID}{
 
-3-11
+3-12
 }
 
 \examples{
@@ -71,7 +73,7 @@ tab_1 <-
   dplyr::select(-row, -group) \%>\%
   gt() \%>\%
   fmt(
-    columns = vars(num),
+    columns = num,
     fns = function(x) {
       paste0("'", x * 1000, "'")
     }
@@ -81,6 +83,7 @@ tab_1 <-
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},
+\code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},

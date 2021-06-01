@@ -14,7 +14,7 @@ Create a display table based on `pressure`.
 ```{r}
   gt(data = pressure) %>%
   fmt_scientific(
-    columns = vars(pressure),
+    columns = pressure,
     decimals = 2
   )
 ```

@@ -1,5 +1,6 @@
 #' Add a table header
 #'
+#' @description
 #' We can add a table header to the **gt** table with a title and even a
 #' subtitle. A table header is an optional table part that is positioned above
 #' the column labels. We have the flexibility to use Markdown formatting for the
@@ -43,11 +44,16 @@ tab_header <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  data %>% dt_heading_title_subtitle(title = title, subtitle = subtitle)
+  dt_heading_title_subtitle(
+    data = data,
+    title = title,
+    subtitle = subtitle
+  )
 }
 
 #' Add a spanner column label
 #'
+#' @description
 #' Set a spanner column label by mapping it to columns already in the table.
 #' This label is placed above one or more column labels, spanning the width of
 #' those columns and column labels.
@@ -55,9 +61,19 @@ tab_header <- function(data,
 #' @inheritParams fmt_number
 #' @param label The text to use for the spanner column label.
 #' @param columns The columns to be components of the spanner heading.
+#' @param id The ID for the spanner column label. When accessing a spanner
+#'   column label through [cells_column_spanners()] (when using [tab_style()] or
+#'   [tab_footnote()]) the `id` value is used as the reference (and not the
+#'   `label`). If an `id` is not explicitly provided here, it will be taken from
+#'   the `label` value. It is advisable to set an explicit `id` value if you
+#'   plan to access this cell in a later function call and the label text is
+#'   complicated (e.g., contains markup, is lengthy, or both). Finally, when
+#'   providing an `id` value you must ensure that it is unique across all ID
+#'   values set for column spanner labels (the function will stop if `id` isn't
+#'   unique).
 #' @param gather An option to move the specified `columns` such that they are
 #'   unified under the spanner column label. Ordering of the moved-into-place
-#'   columns will be preserved in all cases.
+#'   columns will be preserved in all cases. By default, this is set to `TRUE`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -76,7 +92,7 @@ tab_header <- function(data,
 #'   gt(rowname_col = "model") %>%
 #'   tab_spanner(
 #'     label = "performance",
-#'     columns = vars(
+#'     columns = c(
 #'       hp, hp_rpm, trq, trq_rpm,
 #'       mpg_c, mpg_h)
 #'   )
@@ -92,24 +108,43 @@ tab_header <- function(data,
 tab_spanner <- function(data,
                         label,
                         columns,
+                        id = label,
                         gather = TRUE) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
   checkmate::assert_character(
-    label, len = 1, any.missing = FALSE, null.ok = FALSE)
+    label, len = 1, any.missing = FALSE, null.ok = FALSE
+  )
 
-  columns <- enquo(columns)
+  checkmate::assert_character(
+    id, len = 1, any.missing = FALSE, null.ok = FALSE
+  )
 
   # Get the columns supplied in `columns` as a character vector
-  column_names <- resolve_vars(var_expr = !!columns, data = data)
+  column_names <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data
+    )
 
+  # If `column_names` evaluates to an empty vector or is NULL,
+  # return the data unchanged
+  if (length(column_names) < 1) {
+    return(data)
+  }
+
+  # Check `id` against existing `id` values and stop if necessary
+  check_spanner_id_unique(data = data, spanner_id = id)
+
+  # Add the spanner to the `_spanners` table
   data <-
     dt_spanners_add(
       data = data,
       vars = column_names,
       spanner_label = label,
+      spanner_id = id,
       gather = gather
     )
 
@@ -129,12 +164,14 @@ tab_spanner <- function(data,
 
 #' Create column labels and spanners via delimited names
 #'
+#' @description
 #' This function will split selected delimited column names such that the first
 #' components (LHS) are promoted to being spanner column labels, and the
 #' secondary components (RHS) will become the column labels. Please note that
 #' reference to individual columns must continue to be the column names from the
 #' input table data (which are unique by necessity).
 #'
+#' @details
 #' If we look to the column names in the `iris` dataset as an example of how
 #' `tab_spanner_delim()` might be useful, we find the names `Sepal.Length`,
 #' `Sepal.Width`, `Petal.Length`, `Petal.Width`. From this naming system, it's
@@ -150,10 +187,15 @@ tab_spanner <- function(data,
 #' @inheritParams tab_spanner
 #' @param delim The delimiter to use to split an input column name. The
 #'   delimiter supplied will be autoescaped for the internal splitting
-#'   procedure. The first component of the split will become the group name and
-#'   the second component will be the column label.
+#'   procedure. The first component of the split will become the spanner column
+#'   label (and its ID value, used for styling or for the addition of footnotes
+#'   in those locations) and the second component will be the column label.
 #' @param columns An optional vector of column names that this operation should
 #'   be limited to. The default is to consider all columns in the table.
+#' @param split Should the delimiter splitting occur at the `"last"` instance of
+#'   `delim` or the `"first"`? By default column name splitting happens at the
+#'   last instance of the delimiter. This relevant only in the case that column
+#'   names included in `columns` have multiple instances of the `delim`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -179,19 +221,24 @@ tab_spanner <- function(data,
 #' @export
 tab_spanner_delim <- function(data,
                               delim,
-                              columns = NULL,
-                              gather = TRUE) {
+                              columns = everything(),
+                              gather = TRUE,
+                              split = c("last", "first")) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  columns <- enquo(columns)
+  split <- match.arg(split)
 
   # Get all of the columns in the dataset
-  all_cols <- data %>% dt_boxhead_get_vars()
+  all_cols <- dt_boxhead_get_vars(data = data)
 
   # Get the columns supplied in `columns` as a character vector
-  columns <- resolve_vars(var_expr = !!columns, data = data)
+  columns <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data
+    )
 
   if (!is.null(columns)) {
     colnames <- base::intersect(all_cols, columns)
@@ -209,9 +256,35 @@ tab_spanner_delim <- function(data,
 
     colnames_with_delim <- colnames[colnames_has_delim]
 
-    split_colnames <- strsplit(colnames_with_delim, delim, fixed = TRUE)
+    # Perform regexec match where the delimiter is either declared
+    # to be the 'first' instance or the 'last' instance
+    regexec_m <-
+      regexec(
+        paste0(
+          "^(.*",
+          ifelse(split == "first", "?", ""),
+          ")\\Q", delim, "\\E(.*)$"
+        ),
+        colnames_with_delim
+      )
 
-    spanners <- vapply(split_colnames, `[[`, character(1), 1)
+    split_colnames <-
+      lapply(regmatches(colnames_with_delim, regexec_m), FUN = `[`, 2:3)
+
+    spanners <- vapply(split_colnames, FUN.VALUE = character(1), `[[`, 1)
+
+    spanner_var_list <- split(colnames_with_delim, spanners)
+
+    for (label in names(spanner_var_list)) {
+
+      data <-
+        tab_spanner(
+          data = data,
+          label = label,
+          columns = spanner_var_list[[label]],
+          gather = gather
+        )
+    }
 
     new_labels <-
       lapply(split_colnames, `[[`, -1) %>%
@@ -219,25 +292,14 @@ tab_spanner_delim <- function(data,
 
     for (i in seq_along(split_colnames)) {
 
-      spanners_i <- spanners[i]
       new_labels_i <- new_labels[i]
       var_i <- colnames_with_delim[i]
 
       data <-
-        data %>%
-        dt_boxhead_edit(var = var_i, column_label = new_labels_i)
-    }
-
-    spanner_var_list <- split(colnames_with_delim, spanners)
-
-    for (spanner_label in names(spanner_var_list)) {
-
-      data <-
-        data %>%
-        dt_spanners_add(
-          vars = spanner_var_list[[spanner_label]],
-          spanner_label = spanner_label,
-          gather = gather
+        dt_boxhead_edit(
+          data = data,
+          var = var_i,
+          column_label = new_labels_i
         )
     }
   }
@@ -247,26 +309,39 @@ tab_spanner_delim <- function(data,
 
 #' Add a row group to a **gt** table
 #'
+#' @description
 #' Create a row group with a collection of rows. This requires specification of
 #' the rows to be included, either by supplying row labels, row indices, or
-#' through use of a select helper function like `starts_with()`.
+#' through use of a select helper function like [starts_with()]. To modify the
+#' order of row groups, use the [row_group_order()] function.
+#'
+#' To set a default row group label for any rows not formally placed in a row
+#' group, we can use a separate call to `tab_options(row_group.default_label =
+#' <label>)`. If this is not done and there are rows that haven't been placed
+#' into a row group (where one or more row groups already exist), those rows
+#' will be automatically placed into a row group without a label. To restore
+#' labels for row groups not explicitly assigned a group,
+#' `tab_options(row_group.default_label = "")` can be used.
 #'
 #' @inheritParams fmt_number
-#' @param group The name of the row group. This text will also serve as the row
-#'   group label.
+#' @param label The text to use for the row group label.
 #' @param rows The rows to be made components of the row group. Can either be a
 #'   vector of row captions provided in `c()`, a vector of row indices, or a
 #'   helper function focused on selections. The select helper functions are:
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()], and
 #'   [everything()].
-#' @param others An option to set a default row group label for any rows not
-#'   formally placed in a row group named by `group` in any call of
-#'   `tab_row_group()`. A separate call to `tab_row_group()` with only a value
-#'   to `others` is possible and makes explicit that the call is meant to
-#'   provide a default row group label. If this is not set and there are rows
-#'   that haven't been placed into a row group (where one or more row groups
-#'   already exist), those rows will be automatically placed into a row group
-#'   without a label.
+#' @param id The ID for the row group. When accessing a row group through
+#'   [cells_row_groups()] (when using [tab_style()] or [tab_footnote()]) the
+#'   `id` value is used as the reference (and not the `label`). If an `id` is
+#'   not explicitly provided here, it will be taken from the `label` value. It
+#'   is advisable to set an explicit `id` value if you plan to access this cell
+#'   in a later function call and the label text is complicated (e.g., contains
+#'   markup, is lengthy, or both). Finally, when providing an `id` value you
+#'   must ensure that it is unique across all ID values set for row groups (the
+#'   function will stop if `id` isn't unique).
+#' @param others_label This argument is deprecated. Instead use
+#'   `tab_options(row_group.default_label = <label>)`.
+#' @param group This argument is deprecated. Instead use `label`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -281,7 +356,7 @@ tab_spanner_delim <- function(data,
 #'   dplyr::slice(1:8) %>%
 #'   gt(rowname_col = "model") %>%
 #'   tab_row_group(
-#'     group = "numbered",
+#'     label = "numbered",
 #'     rows = matches("^[0-9]")
 #'   )
 #'
@@ -296,11 +371,11 @@ tab_spanner_delim <- function(data,
 #'   dplyr::slice(1:8) %>%
 #'   gt(rowname_col = "model") %>%
 #'   tab_row_group(
-#'     group = "powerful",
+#'     label = "powerful",
 #'     rows = hp <= 600
 #'   ) %>%
 #'   tab_row_group(
-#'     group = "super powerful",
+#'     label = "super powerful",
 #'     rows = hp > 600
 #'   )
 #'
@@ -316,82 +391,96 @@ tab_spanner_delim <- function(data,
 #' @import rlang
 #' @export
 tab_row_group <- function(data,
-                          group = NULL,
-                          rows = NULL,
-                          others = NULL) {
+                          label,
+                          rows,
+                          id = label,
+                          others_label = NULL,
+                          group = NULL) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
   arrange_groups_vars <- dt_row_groups_get(data = data)
 
-  # Capture the `rows` expression
-  row_expr <- rlang::enquo(rows)
+  if (!missing(group)) {
 
-  # Create a row group if a `group` is provided
-  if (!is.null(group)) {
+    if (missing(label)) {
+      label <- group
+    }
 
-    # Get the `stub_df` data frame from `data`
-    stub_df <- dt_stub_df_get(data = data)
-    data_tbl <- dt_data_get(data = data)
+    warning(
+      "The `group` argument has been deprecated in gt 0.3.0:\n",
+      "* use the `label` argument to specify the group label.",
+      call. = FALSE
+    )
+  }
 
-    # Resolve the row numbers using the `resolve_vars` function
-    resolved_rows_idx <-
-      resolve_data_vals_idx(
-        var_expr = !!row_expr,
-        data_tbl = data_tbl,
-        vals = stub_df$rowname
-      )
+  # Warn user about `others_label` deprecation
+  if (!is.null(others_label)) {
 
-    # Place the `group` label in the `groupname` column `stub_df`
-    stub_df <- dt_stub_df_get(data = data)
+    data <- tab_options(data = data, row_group.default_label = others_label)
 
-    stub_df[resolved_rows_idx, "groupname"] <- process_text(group[1])
+    warning(
+      "The `others_label` argument has been deprecated in gt 0.3.0:\n",
+      "* use `tab_options(row_group.default_label = <label>)` to set this label.",
+      call. = FALSE
+    )
 
-    data <- dt_stub_df_set(data = data, stub_df = stub_df)
-
-    if (dt_stub_groupname_has_na(data = data)) {
-
-      data <-
-        dt_row_groups_set(
-          data = data,
-          row_groups = c(
-            process_text(group[1]),
-            arrange_groups_vars,
-            NA_character_
-          ) %>%
-            unique()
-        )
-
-    } else {
-
-      data <-
-        dt_row_groups_set(
-          data = data,
-          row_groups = c(
-            process_text(group[1]),
-            arrange_groups_vars
-          ) %>%
-            unique()
-        )
+    if (missing(label) && missing(rows) && missing(id)) {
+      return(data)
     }
   }
 
-  # Set a name for the `others` group if a
-  # name is provided
-  if (!is.null(others)) {
-    data <-
-      dt_stub_others_set(
-        data = data,
-        stub_others = others[1] %>% process_text()
-      )
+  # Check `id` against existing `id` values and stop if necessary
+  check_row_group_id_unique(data = data, row_group_id = id)
+
+  # Capture the `rows` expression
+  row_expr <- rlang::enquo(rows)
+
+  # Get the `stub_df` data frame from `data`
+  stub_df <- dt_stub_df_get(data = data)
+  data_tbl <- dt_data_get(data = data)
+
+  # Resolve the row numbers using the `resolve_vars` function
+  resolved_rows_idx <-
+    resolve_rows_i(
+      expr = !!row_expr,
+      data = data
+    )
+
+  stub_df <- dt_stub_df_get(data = data)
+
+  # Place the `label` in the `groupname` column `stub_df`
+  stub_df[resolved_rows_idx, "group_label"] <- list(list(label))
+  stub_df[resolved_rows_idx, "group_id"] <- as.character(id)
+
+  data <- dt_stub_df_set(data = data, stub_df = stub_df)
+
+  # Set the `_row_groups` vector here with the group id; new groups will
+  # be placed at the front, pushing down `NA` (the 'Others' group)
+  arrange_groups_vars <- c(id, stats::na.omit(arrange_groups_vars))
+  arrange_groups_vars <- unique(arrange_groups_vars)
+  arrange_groups_vars <- arrange_groups_vars[arrange_groups_vars %in% stub_df$group_id]
+  if (dt_stub_groupname_has_na(data = data)) {
+    arrange_groups_vars <- c(arrange_groups_vars, NA_character_)
   }
+
+  if (length(arrange_groups_vars) == 1 && is.na(arrange_groups_vars)) {
+    arrange_groups_vars <- character(0)
+  }
+
+  data <-
+    dt_row_groups_set(
+      data = data,
+      row_groups = arrange_groups_vars
+    )
 
   data
 }
 
 #' Add label text to the stubhead
 #'
+#' @description
 #' Add a label to the stubhead of a **gt** table. The stubhead is the lone
 #' element that is positioned left of the column labels, and above the stub. If
 #' a stub does not exist, then there is no stubhead (so no change will be made
@@ -431,11 +520,12 @@ tab_stubhead <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  data %>% dt_stubhead_label(label = label)
+  dt_stubhead_label(data = data, label = label)
 }
 
 #' Add a table footnote
 #'
+#' @description
 #' The `tab_footnote()` function can make it a painless process to add a
 #' footnote to a **gt** table. There are two components to a footnote: (1) a
 #' footnote mark that is attached to the targeted cell text, and (2) the
@@ -444,20 +534,16 @@ tab_stubhead <- function(data,
 #' different note, and one or more cells can be targeted via the location helper
 #' functions (e.g., [cells_body()], [cells_column_labels()], etc.).
 #'
+#' @details
 #' The formatting of the footnotes can be controlled through the use of various
 #' parameters in the [tab_options()] function:
-#'
-#' \itemize{
-#'   \item `footnotes.sep`: allows for a choice of the separator between
-#' consecutive footnotes in the table footer. By default, this is set to a
-#' linebreak.
-#'   \item `footnotes.marks`: the set of sequential characters or numbers used
-#' to identify the footnotes.
-#'   \item `footnotes.font.size`: the size of the font used in the footnote
-#' section.
-#'   \item `footnotes.padding`: the amount of padding to apply between the
-#' footnote and source note sections in the table footer.
-#' }
+#' - `footnotes.sep`: allows for a choice of the separator between consecutive
+#' footnotes in the table footer. By default, this is set to a linebreak.
+#' - `footnotes.marks`: the set of sequential characters or numbers used to
+#' identify the footnotes.
+#' - `footnotes.font.size`: the size of the font used in the footnote section.
+#' - `footnotes.padding`: the amount of padding to apply between the footnote
+#' and source note sections in the table footer.
 #'
 #' @inheritParams fmt_number
 #' @param footnote The text to be used in the footnote. We can optionally use
@@ -468,11 +554,11 @@ tab_stubhead <- function(data,
 #'   the location cells that are associated with the footnote text. These helper
 #'   functions are: [cells_title()], [cells_stubhead()],
 #'   [cells_column_spanners()], [cells_column_labels()], [cells_row_groups()],
-#'   [cells_stub()], [cells_body()], [cells_summary()], and
-#'   [cells_grand_summary()]. Additionally, we can enclose several `cells_*()`
-#'   calls within a `list()` if we wish to link the footnote text to different
-#'   types of locations (e.g., body cells, row group labels, the table title,
-#'   etc.).
+#'   [cells_stub()], [cells_body()], [cells_summary()], [cells_grand_summary()],
+#'   [cells_stub_summary()], and [cells_stub_grand_summary()]. Additionally, we
+#'   can enclose several `cells_*()` calls within a `list()` if we wish to link
+#'   the footnote text to different types of locations (e.g., body cells, row
+#'   group labels, the table title, etc.).
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -492,15 +578,17 @@ tab_stubhead <- function(data,
 #'   dplyr::select(-latitude, -month) %>%
 #'   gt() %>%
 #'   data_color(
-#'     columns = vars(sza),
+#'     columns = sza,
 #'     colors = scales::col_numeric(
 #'       palette = c("white", "yellow", "navyblue"),
-#'       domain = c(0, 90))
+#'       domain = c(0, 90)
+#'     )
 #'   ) %>%
 #'   tab_footnote(
 #'     footnote = "Color indicates height of sun.",
 #'     locations = cells_column_labels(
-#'       columns = vars(sza))
+#'       columns = sza
+#'     )
 #'   )
 #'
 #' @section Figures:
@@ -524,7 +612,12 @@ tab_footnote <- function(data,
   # Resolve the locations of the targeted data cells and append
   # the footnotes
   for (loc in locations) {
-    data <- set_footnote(loc = loc, data = data, footnote = process_text(footnote))
+    data <-
+      set_footnote(
+        loc = loc,
+        data = data,
+        footnote = process_text(footnote)
+      )
   }
 
   data
@@ -588,7 +681,7 @@ set_footnote.cells_column_labels <- function(loc, data, footnote) {
 
   cols <- resolved$columns
 
-  colnames <- dt_boxhead_get_vars_default(data = data)[cols]
+  colnames <- names(cols)
 
   data <-
     dt_footnotes_add(
@@ -630,10 +723,10 @@ set_footnote.cells_row_groups <- function(loc, data, footnote) {
 
   # Resolve row groups
   resolved_row_groups_idx <-
-    resolve_data_vals_idx(
-      var_expr = !!loc$groups,
-      data_tbl = NULL,
-      vals = row_groups
+    resolve_vector_i(
+      expr = !!loc$groups,
+      vector = row_groups,
+      item_label = "row group"
     )
 
   groups <- row_groups[resolved_row_groups_idx]
@@ -715,8 +808,43 @@ set_footnote.cells_grand_summary <- function(loc, data, footnote) {
   )
 }
 
+set_footnote.cells_stub_summary <- function(loc, data, footnote) {
+
+  add_summary_location_row(
+    loc = loc,
+    data = data,
+    style = footnote,
+    df_type = "footnotes_df"
+  )
+}
+
+set_footnote.cells_stub_grand_summary <- function(loc, data, footnote) {
+
+  add_grand_summary_location_row(
+    loc = loc,
+    data = data,
+    style = footnote,
+    df_type = "footnotes_df"
+  )
+}
+
+set_footnote.cells_source_notes <- function(loc, data, footnote) {
+
+  stop("Footnotes cannot be applied to source notes.", call. = FALSE)
+
+  data
+}
+
+set_footnote.cells_footnotes <- function(loc, data, footnote) {
+
+  stop("Footnotes cannot be applied to other footnotes.", call. = FALSE)
+
+  data
+}
+
 #' Add a source note citation
 #'
+#' @description
 #' Add a source note to the footer part of the **gt** table. A source note is
 #' useful for citing the data included in the table. Several can be added to the
 #' footer, simply use multiple calls of `tab_source_note()` and they will be
@@ -757,44 +885,50 @@ tab_source_note <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  data %>% dt_source_notes_add(source_note = source_note)
+  dt_source_notes_add(
+    data = data,
+    source_note = source_note
+  )
 }
 
 #' Add custom styles to one or more cells
 #'
+#' @description
 #' With the `tab_style()` function we can target specific cells and apply styles
 #' to them. This is best done in conjunction with the helper functions
 #' [cell_text()], [cell_fill()], and [cell_borders()]. At present this function
 #' is focused on the application of styles for HTML output only (as such, other
 #' output formats will ignore all `tab_style()` calls). Using the aforementioned
 #' helper functions, here are some of the styles we can apply:
-#' \itemize{
-#' \item the background color of the cell ([cell_fill()]: `color`)
-#' \item the cell's text color, font, and size ([cell_text()]: `color`, `font`,
+#'
+#' - the background color of the cell ([cell_fill()]: `color`)
+#' - the cell's text color, font, and size ([cell_text()]: `color`, `font`,
 #' `size`)
-#' \item the text style ([cell_text()]: `style`), enabling the use of italics or
+#' - the text style ([cell_text()]: `style`), enabling the use of italics or
 #' oblique text.
-#' \item the text weight ([cell_text()]: `weight`), allowing the use of thin to
+#' - the text weight ([cell_text()]: `weight`), allowing the use of thin to
 #' bold text (the degree of choice is greater with variable fonts)
-#' \item the alignment and indentation of text ([cell_text()]: `align` and
+#' - the alignment and indentation of text ([cell_text()]: `align` and
 #' `indent`)
-#' \item the cell borders ([cell_borders()])
-#' }
+#' - the cell borders ([cell_borders()])
 #'
 #' @inheritParams fmt_number
 #' @param style a vector of styles to use. The [cell_text()], [cell_fill()], and
 #'   [cell_borders()] helper functions can be used here to more easily generate
-#'   valid styles. If using more than one helper function to define styles, all
-#'   calls must be enclosed in a [list()].
+#'   valid styles.  If using more than one helper function to define styles, all
+#'   calls must be enclosed in a [list()]. Custom CSS declarations can be used
+#'   for HTML output by including a [css()]-based statement as a list item.
 #' @param locations the cell or set of cells to be associated with the style.
 #'   Supplying any of the `cells_*()` helper functions is a useful way to target
 #'   the location cells that are associated with the styling. These helper
 #'   functions are: [cells_title()], [cells_stubhead()],
 #'   [cells_column_spanners()], [cells_column_labels()], [cells_row_groups()],
-#'   [cells_stub()], [cells_body()], [cells_summary()], and
-#'   [cells_grand_summary()]. Additionally, we can enclose several `cells_*()`
-#'   calls within a `list()` if we wish to apply styling to different types of
-#'   locations (e.g., body cells, row group labels, the table title, etc.).
+#'   [cells_stub()], [cells_body()], [cells_summary()], [cells_grand_summary()],
+#'   [cells_stub_summary()], [cells_stub_grand_summary()], [cells_footnotes()],
+#'   and [cells_source_notes()]. Additionally, we can enclose several
+#'   `cells_*()` calls within a `list()` if we wish to apply styling to
+#'   different types of locations (e.g., body cells, row group labels, the table
+#'   title, etc.).
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -808,7 +942,7 @@ tab_source_note <- function(data,
 #'   dplyr::select(num, currency) %>%
 #'   gt() %>%
 #'   fmt_number(
-#'     columns = vars(num, currency),
+#'     columns = c(num, currency),
 #'     decimals = 1
 #'   ) %>%
 #'   tab_style(
@@ -817,8 +951,9 @@ tab_source_note <- function(data,
 #'       cell_text(weight = "bold")
 #'       ),
 #'     locations = cells_body(
-#'       columns = vars(num),
-#'       rows = num >= 5000)
+#'       columns = num,
+#'       rows = num >= 5000
+#'     )
 #'   ) %>%
 #'   tab_style(
 #'     style = list(
@@ -826,8 +961,9 @@ tab_source_note <- function(data,
 #'       cell_text(style = "italic")
 #'       ),
 #'     locations = cells_body(
-#'       columns = vars(currency),
-#'       rows = currency < 100)
+#'       columns = currency,
+#'       rows = currency < 100
+#'     )
 #'   )
 #'
 #' # Use `sp500` to create a gt table;
@@ -855,10 +991,31 @@ tab_source_note <- function(data,
 #'       rows = open > close)
 #'   )
 #'
+#' # Use `exibble` to create a gt table;
+#' # replace missing values with the
+#' # `fmt_missing()` function and then
+#' # add styling to the `char` column
+#' # with `cell_fill()` and with a
+#' # CSS style declaration
+#' tab_3 <-
+#'   exibble %>%
+#'   dplyr::select(char, fctr) %>%
+#'   gt() %>%
+#'   fmt_missing(everything()) %>%
+#'   tab_style(
+#'     style = list(
+#'       cell_fill(color = "lightcyan"),
+#'       "font-variant: small-caps;"
+#'     ),
+#'     locations = cells_body(columns = char)
+#'   )
+#'
 #' @section Figures:
 #' \if{html}{\figure{man_tab_style_1.png}{options: width=100\%}}
 #'
 #' \if{html}{\figure{man_tab_style_2.png}{options: width=100\%}}
+#'
+#' \if{html}{\figure{man_tab_style_3.png}{options: width=100\%}}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
@@ -876,14 +1033,47 @@ tab_style <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
+  # Intercept font styles that require registration
+  if ("cell_text" %in% names(style)) {
+
+    if ("font" %in% names(style[["cell_text"]])) {
+
+      font <- style[["cell_text"]][["font"]]
+      font <- normalize_font_input(font_input = font)
+
+      existing_additional_css <-
+        dt_options_get_value(
+          data = data,
+          option = "table_additional_css"
+        )
+
+      additional_css <- c(font$import_stmt, existing_additional_css)
+
+      data <-
+        tab_options(
+          data = data,
+          table.additional_css = additional_css
+        )
+
+      font_names <- font$name
+
+      style[["cell_text"]][["font"]] <-
+        as_css_font_family_attr(
+          font_vec = font_names,
+          value_only = TRUE
+        )
+    }
+  }
+
   # Resolve into a list of locations
   locations <- as_locations(locations)
 
-  style <- as_style(style)
+  style <- as_style(style = style)
 
   # Resolve the locations of the targeted data cells and append
   # the format directives
   for (loc in locations) {
+
     data <-
       set_style(
         loc = loc,
@@ -901,14 +1091,14 @@ as_style <- function(style) {
   # components together
   if (!inherits(style, "cell_styles")) {
 
-    if (!inherits(style, "list")) {
-      stop("Styles should be provided exclusively by the stylizing ",
-           "helper functions:",
-           " * `cell_text()\n",
-           " * `cell_fill()\n",
-           " * `cell_borders()`",
-           call. = FALSE)
-    }
+    # if (!inherits(style, "list")) {
+    #   stop("Styles should be provided exclusively by the stylizing ",
+    #        "helper functions:\n",
+    #        " * `cell_text()\n",
+    #        " * `cell_fill()\n",
+    #        " * `cell_borders()`",
+    #        call. = FALSE)
+    # }
 
     # Initialize an empty list that will be
     # populated with normalized style declarations
@@ -918,7 +1108,11 @@ as_style <- function(style) {
 
       style_item <- style[[i]]
 
-      if (!inherits(style_item, "cell_styles")) {
+      if (inherits(style_item, "character")) {
+
+        style_item <- list(cell_style = style_item)
+
+      } else if (!inherits(style_item, "cell_styles")) {
 
         stop("All provided styles should be generated by stylizing ",
              "helper functions. Style with index `", i, "` is invalid.",
@@ -932,9 +1126,6 @@ as_style <- function(style) {
 
     style <- final_style
   }
-
-  # Check for class of `cell_style` in upgraded `style` list
-  lapply(style, function(x) checkmate::assert_class(x = x, classes = "cell_style"))
 
   style
 }
@@ -997,7 +1188,7 @@ set_style.cells_column_labels <- function(loc, data, style) {
 
   cols <- resolved$columns
 
-  colnames <- dt_boxhead_get_vars_default(data = data)[cols]
+  colnames <- names(cols)
 
   data <-
     dt_styles_add(
@@ -1015,7 +1206,11 @@ set_style.cells_column_labels <- function(loc, data, style) {
 
 set_style.cells_column_spanners <- function(loc, data, style) {
 
-  resolved <- resolve_cells_column_spanners(data = data, object = loc)
+  resolved <-
+    resolve_cells_column_spanners(
+      data = data,
+      object = {{ loc }}
+    )
 
   groups <- resolved$spanners
 
@@ -1039,10 +1234,10 @@ set_style.cells_row_groups <- function(loc, data, style) {
 
   # Resolve row groups
   resolved_row_groups_idx <-
-    resolve_data_vals_idx(
-      var_expr = !!loc$groups,
-      data_tbl = NULL,
-      vals = row_groups
+    resolve_vector_i(
+      expr = !!loc$groups,
+      vector = row_groups,
+      item_label = "row group"
     )
 
   groups <- row_groups[resolved_row_groups_idx]
@@ -1124,8 +1319,57 @@ set_style.cells_grand_summary <- function(loc, data, style) {
   )
 }
 
+set_style.cells_stub_summary <- function(loc, data, style) {
+
+  add_summary_location_row(
+    loc = loc,
+    data = data,
+    style = style,
+    df_type = "styles_df"
+  )
+}
+
+set_style.cells_stub_grand_summary <- function(loc, data, style) {
+
+  add_grand_summary_location_row(
+    loc = loc,
+    data = data,
+    style = style,
+    df_type = "styles_df"
+  )
+}
+
+set_style.cells_footnotes <- function(loc, data, style) {
+
+  data <-
+    dt_styles_add(
+      data = data,
+      locname = "footnotes",
+      grpname = NA_character_,
+      colname = NA_character_,
+      locnum = 7,
+      rownum = NA_integer_,
+      styles = style
+    )
+}
+
+set_style.cells_source_notes <- function(loc, data, style) {
+
+  data <-
+    dt_styles_add(
+      data = data,
+      locname = "source_notes",
+      grpname = NA_character_,
+      colname = NA_character_,
+      locnum = 8,
+      rownum = NA_integer_,
+      styles = style
+    )
+}
+
 #' Modify the table output options
 #'
+#' @description
 #' Modify the options available in a table. These options are named by the
 #' components, the subcomponents, and the element that can adjusted.
 #'
@@ -1148,6 +1392,9 @@ set_style.cells_grand_summary <- function(loc, data, style) {
 #'   given in units of pixels. The [px()] and [pct()] helper functions can also
 #'   be used to pass in numeric values and obtain values as pixel or percent
 #'   units.
+#' @param table.layout The value for the `table-layout` CSS style in the HTML
+#'   output context. By default, this is `"fixed"` but another valid option is
+#'   `"auto"`.
 #' @param table.align The horizontal alignment of the table in its container. By
 #'   default, this is `"center"`. Other options are `"left"` and `"right"`. This
 #'   will automatically set `table.margin.left` and `table.margin.right` to the
@@ -1165,6 +1412,14 @@ set_style.cells_grand_summary <- function(loc, data, style) {
 #'   elements: `heading`, `column_labels`, `row_group`, `stub`, `summary_row`,
 #'   `grand_summary_row`, `footnotes`, and `source_notes`. A color name or a
 #'   hexadecimal color code should be provided.
+#' @param table.additional_css This option can be used to supply an additional
+#'   block of CSS rules to be applied after the automatically generated table
+#'   CSS.
+#' @param table.font.names The names of the fonts used for the table. This is
+#'   a vector of several font names. If the first font isn't available, then
+#'   the next font is tried (and so on).
+#' @param table.font.style The font style for the table. Can be one of either
+#'   `"normal"`, `"italic"`, or `"oblique"`.
 #' @param table.font.color,table.font.color.light
 #'   The text color used throughout the table. There are two variants:
 #'   `table.font.color` is for text overlaid on lighter background colors, and
@@ -1182,8 +1437,8 @@ set_style.cells_grand_summary <- function(loc, data, style) {
 #'   obtain values as pixel or percentage units.
 #' @param heading.align Controls the horizontal alignment of the heading title
 #'   and subtitle. We can either use `"center"`, `"left"`, or `"right"`.
-#' @param heading.title.font.weight,heading.subtitle.font.weight,column_labels.font.weight,row_group.font.weight,stub.font.weight
-#'   The font weights of the `heading.title`, `heading.subtitle`,
+#' @param table.font.weight,heading.title.font.weight,heading.subtitle.font.weight,column_labels.font.weight,row_group.font.weight,stub.font.weight
+#'   The font weights of the table, `heading.title`, `heading.subtitle`,
 #'   `column_labels`, `row_group`, and `stub` text elements. Can be a text-based
 #'   keyword such as `"normal"`, `"bold"`, `"lighter"`, `"bolder"`, or, a
 #'   numeric value between `1` and `1000`, inclusive. Note that only variable
@@ -1212,7 +1467,7 @@ set_style.cells_grand_summary <- function(loc, data, style) {
 #' @param column_labels.border.top.style,column_labels.border.top.width,column_labels.border.top.color
 #'   The style, width, and color properties for the top border of the
 #'   `column_labels` location. This border shares space with that of the
-#'   `heading` location. If dthe `width` of this border is larger, then it will
+#'   `heading` location. If the `width` of this border is larger, then it will
 #'   be the visible border.
 #' @param column_labels.border.bottom.style,column_labels.border.bottom.width,column_labels.border.bottom.color
 #'   The style, width, and color properties for the bottom border of the
@@ -1235,6 +1490,12 @@ set_style.cells_grand_summary <- function(loc, data, style) {
 #' @param stub.border.style,stub.border.width,stub.border.color
 #'   The style, width, and color properties for the vertical border of the table
 #'   stub.
+#' @param row_group.default_label An option to set a default row group label for
+#'   any rows not formally placed in a row group named by `group` in any call of
+#'   `tab_row_group()`. If this is set as `NA_character` and there are rows that
+#'   haven't been placed into a row group (where one or more row groups already
+#'   exist), those rows will be automatically placed into a row group without a
+#'   label.
 #' @param summary_row.border.style,summary_row.border.width,summary_row.border.color
 #'   The style, width, and color properties for all horizontal borders of the
 #'   `summary_row` location.
@@ -1292,24 +1553,27 @@ set_style.cells_grand_summary <- function(loc, data, style) {
 #'     title = md("Data listing from **exibble**"),
 #'     subtitle = md("`exibble` is an R dataset")
 #'   ) %>%
-#'   fmt_number(columns = vars(num)) %>%
-#'   fmt_currency(columns = vars(currency)) %>%
+#'   fmt_number(columns = num) %>%
+#'   fmt_currency(columns = currency) %>%
 #'   tab_footnote(
 #'     footnote = "Using commas for separators.",
 #'     locations = cells_body(
-#'       columns = vars(num),
-#'       rows = num > 1000)
+#'       columns = num,
+#'       rows = num > 1000
+#'     )
 #'   ) %>%
 #'   tab_footnote(
 #'     footnote = "Using commas for separators.",
 #'     locations = cells_body(
-#'       columns = vars(currency),
-#'       rows = currency > 1000)
+#'       columns = currency,
+#'       rows = currency > 1000
+#'     )
 #'   ) %>%
 #'   tab_footnote(
 #'     footnote = "Alphabetical fruit.",
 #'     locations = cells_column_labels(
-#'       columns = vars(char))
+#'       columns = char
+#'     )
 #'   )
 #'
 #' # Modify the table width to 100% (which
@@ -1378,13 +1642,18 @@ tab_options <- function(data,
                         container.overflow.x = NULL,
                         container.overflow.y = NULL,
                         table.width = NULL,
+                        table.layout = NULL,
                         table.align = NULL,
                         table.margin.left = NULL,
                         table.margin.right = NULL,
                         table.background.color = NULL,
+                        table.additional_css = NULL,
+                        table.font.names = NULL,
+                        table.font.size = NULL,
+                        table.font.weight = NULL,
+                        table.font.style = NULL,
                         table.font.color = NULL,
                         table.font.color.light = NULL,
-                        table.font.size = NULL,
                         table.border.top.style = NULL,
                         table.border.top.width = NULL,
                         table.border.top.color = NULL,
@@ -1443,6 +1712,7 @@ tab_options <- function(data,
                         row_group.border.right.style = NULL,
                         row_group.border.right.width = NULL,
                         row_group.border.right.color = NULL,
+                        row_group.default_label = NULL,
                         table_body.hlines.style = NULL,
                         table_body.hlines.width = NULL,
                         table_body.hlines.color = NULL,
