@@ -13,8 +13,7 @@ test_that("the `fmt_integer()` function works correctly in the HTML context", {
       stringsAsFactors = FALSE
     )
 
-  # Create a `gt_tbl` object with `gt()` and the
-  # `data_tbl` dataset
+  # Create a `gt_tbl` object with `gt()` and the `data_tbl` dataset
   tab <- gt(data = data_tbl)
 
   # Expect that the object has the correct classes
