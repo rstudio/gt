@@ -748,6 +748,8 @@ create_body_component_h <- function(data) {
   # of the `stub_components`
   stub_available <- dt_stub_components_has_rowname(stub_components)
 
+  # Obtain all of the visible (`"default"`), non-stub
+  # column names for the table
   default_vars <- dt_boxhead_get_vars_default(data = data)
 
   all_default_vals <- unname(as.matrix(body[, default_vars]))
@@ -1168,6 +1170,8 @@ summary_row_tags <- function(group_id,
 
   if (group_id %in% names(list_of_summaries$summary_df_display_list)) {
 
+    # Obtain the summary data table specific to the group ID and
+    # select the column named `rowname` and all of the visible columns
     summary_df <-
       list_of_summaries$summary_df_display_list[[group_id]] %>%
       dplyr::select(rowname, .env$default_vars) %>%
