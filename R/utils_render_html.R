@@ -1197,6 +1197,12 @@ summary_row_tags <- function(group_id,
       styles_resolved %>%
       dplyr::filter(grpname == group_id, locname == locname_val) %>%
       dplyr::mutate(grprow = ceiling((rownum %% 1) * 100))
+      dplyr::filter(
+        styles_resolved,
+        grpname == .env$group_id,
+        locname == .env$locname
+      ) %>%
+      dplyr::mutate(grprow = round((rownum %% 1) * 100))
 
     for (j in seq_len(nrow(summary_df))) {
 
