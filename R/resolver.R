@@ -220,7 +220,11 @@ resolve_cols_i <- function(expr,
 
   quo <- translate_legacy_resolver_expr(quo)
 
-  # No env argument required, because the expr is a quosure
+  # With the quosure and the `data`, we can use `tidyselect::eval_select()`
+  # to resolve the expression to columns indices/names
+  # - no `env` argument is required here because the `expr` is a quosure
+  # - using `tryCatch()` simply to modify the `stop()` message to something
+  #   that is more meaningful in gt
   selected <-
     tryCatch(
       tidyselect::eval_select(expr = quo, data = data, strict = strict),
