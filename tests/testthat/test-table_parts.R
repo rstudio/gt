@@ -83,6 +83,67 @@ test_that("a gt table contains the expected heading components", {
   tbl_html %>%
     selection_text("[class='gt_heading gt_subtitle gt_font_normal gt_bottom_border']") %>%
     expect_equal("test subtitle")
+
+  # Style both parts of the table heading (title and subtitle) with
+  # a single `tab_style()` call (with defaults for `cells_title()`)
+  tbl_html_2 <-
+    mtcars_short %>%
+    gt() %>%
+    tab_header(
+      title = "test title",
+      subtitle = "test subtitle"
+    ) %>%
+    tab_style(
+      style = cell_fill(color = "lightblue"),
+      locations = cells_title(groups = c("subtitle", "title"))
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect two instances of the background color (lightblue -> #ADD8E6)
+  tbl_html_2 %>%
+    selection_value("style") %>%
+    expect_equal(rep("background-color: #ADD8E6;", 2))
+
+  # Style one part of the table heading (title) with `tab_style()`
+  tbl_html_3 <-
+    mtcars_short %>%
+    gt() %>%
+    tab_header(
+      title = "test title",
+      subtitle = "test subtitle"
+    ) %>%
+    tab_style(
+      style = cell_fill(color = "lightblue"),
+      locations = cells_title(groups = "title")
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect a single instance of the background color (for the "title")
+  tbl_html_3 %>%
+    selection_value("style") %>%
+    expect_equal(c("background-color: #ADD8E6;", ""))
+
+  # Style the other part of the table heading (subtitle) with `tab_style()`
+  tbl_html_4 <-
+    mtcars_short %>%
+    gt() %>%
+    tab_header(
+      title = "test title",
+      subtitle = "test subtitle"
+    ) %>%
+    tab_style(
+      style = cell_fill(color = "lightblue"),
+      locations = cells_title(groups = "subtitle")
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect a single instance of the background color (for the "subtitle")
+  tbl_html_4 %>%
+    selection_value("style") %>%
+    expect_equal(c("", "background-color: #ADD8E6;"))
 })
 
 test_that("a gt table contains the expected stubhead label", {
