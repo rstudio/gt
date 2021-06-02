@@ -276,7 +276,8 @@ cells_title <- function(groups = c("title", "subtitle")) {
     is.null(groups) ||
     !is.character(groups) ||
     length(groups) < 1 ||
-    !all(groups %in% c("title", "subtitle"))
+    !all(groups %in% c("title", "subtitle")) ||
+    any(duplicated(groups))
   ) {
     stop(
       "The input to `groups` must be either `\"title\"`, `\"subtitle\"`, or both.",
