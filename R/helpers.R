@@ -271,6 +271,19 @@ pct <- function(x) {
 #' @export
 cells_title <- function(groups = c("title", "subtitle")) {
 
+  # Stop function if the `groups` input is invalid
+  if (
+    is.null(groups) ||
+    !is.character(groups) ||
+    length(groups) < 1 ||
+    !all(groups %in% c("title", "subtitle"))
+  ) {
+    stop(
+      "The input to `groups` must be either `\"title\"`, `\"subtitle\"`, or both.",
+      call. = FALSE
+    )
+  }
+
   # Capture expression for the `groups` argument
   groups_expr <- rlang::enquo(groups)
 
