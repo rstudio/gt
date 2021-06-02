@@ -221,7 +221,11 @@ resolve_cols_i <- function(expr,
   quo <- translate_legacy_resolver_expr(quo)
 
   # No env argument required, because the expr is a quosure
-  selected <- tidyselect::eval_select(expr = quo, data = data, strict = strict)
+  selected <-
+    tryCatch(
+      tidyselect::eval_select(expr = quo, data = data, strict = strict),
+      error = function(cond) stop("This selection contain invalid column names", call. = FALSE)
+    )
 
   # Exclude certain columns (e.g., stub & group columns) if necessary
   selected[!names(selected) %in% cols_excl]
