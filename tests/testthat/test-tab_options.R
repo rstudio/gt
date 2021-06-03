@@ -1539,3 +1539,222 @@ test_that("the row striping options work correctly", {
     ),
     0)
 })
+
+test_that("certain X11 color names are replaced in HTML tables", {
+
+  # Here, the `gray85` color supplied to `heading.background.color`
+  # is transformed to the #D9D9D9 color and it appears in the rule:
+  #
+  # .gt_heading {
+  #   background-color: #D9D9D9;
+  #   ...
+  # }
+  #
+  # and it appears only once in the raw HTML
+  expect_match(
+    tbl %>%
+      gt() %>%
+      tab_options(heading.background.color = "gray85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+
+  # Similar testing with the `turquoise2` color, which is replaced
+  # with a hexadecimal color (#00E5EE)
+  expect_match(
+    tbl %>%
+      gt() %>%
+      tab_options(heading.background.color = "turquoise2") %>%
+      as_raw_html(inline_css = FALSE),
+    "#00E5EE"
+  )
+
+  # Testing with `grey85` (synonym of `gray85`) with all possible
+  # `*.color` options in `tab_options()`
+  expect_match(
+    tbl %>% gt() %>% tab_options(table.background.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(table.font.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  # TODO: Should work but doesn't
+  # expect_match(
+  #   tbl %>% gt() %>% tab_options(table.font.color.light = "grey85") %>%
+  #     as_raw_html(inline_css = FALSE),
+  #   "#D9D9D9"
+  # )
+  expect_match(
+    tbl %>% gt() %>% tab_options(table.border.top.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(table.border.right.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(table.border.bottom.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(table.border.left.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(heading.background.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(heading.border.bottom.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(heading.border.lr.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(column_labels.background.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(column_labels.vlines.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(column_labels.border.top.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(column_labels.border.bottom.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(column_labels.border.lr.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(row_group.background.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(row_group.border.top.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(row_group.border.bottom.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(row_group.border.left.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(row_group.border.right.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(table_body.hlines.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(table_body.vlines.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(table_body.border.top.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(table_body.border.bottom.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(stub.background.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(stub.border.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(summary_row.background.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(summary_row.border.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(grand_summary_row.background.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(grand_summary_row.border.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(footnotes.background.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(footnotes.border.bottom.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(footnotes.border.lr.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(source_notes.background.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(source_notes.border.bottom.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(source_notes.border.lr.color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+  expect_match(
+    tbl %>% gt() %>% tab_options(row.striping.background_color = "grey85") %>%
+      as_raw_html(inline_css = FALSE),
+    "#D9D9D9"
+  )
+})
