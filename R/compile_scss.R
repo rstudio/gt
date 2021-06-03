@@ -15,7 +15,7 @@ compile_scss <- function(data, id = NULL) {
           seq_len(nrow(gt_options_tbl)),
           FUN = function(x) {
 
-            if (x %in% which(grepl("_color$", gt_options_tbl$parameter))) {
+            if (x %in% which(grepl("_color", gt_options_tbl$parameter))) {
               x11_to_suitable_html_color(gt_options_tbl[, "value", drop = TRUE][[x]])
             } else {
               gt_options_tbl[, "value", drop = TRUE][[x]]
