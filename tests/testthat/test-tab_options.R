@@ -1581,12 +1581,6 @@ test_that("certain X11 color names are replaced in HTML tables", {
       as_raw_html(inline_css = FALSE),
     "#D9D9D9"
   )
-  # TODO: Should work but doesn't
-  # expect_match(
-  #   tbl %>% gt() %>% tab_options(table.font.color.light = "grey85") %>%
-  #     as_raw_html(inline_css = FALSE),
-  #   "#D9D9D9"
-  # )
   expect_match(
     tbl %>% gt() %>% tab_options(table.border.top.color = "grey85") %>%
       as_raw_html(inline_css = FALSE),
