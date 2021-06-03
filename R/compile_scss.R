@@ -7,6 +7,23 @@ compile_scss <- function(data, id = NULL) {
     subset(scss) %>%
     subset(!is.na(value))
 
+  gt_options_tbl <-
+    dplyr::mutate(
+      gt_options_tbl,
+      value =
+        lapply(
+          seq_len(nrow(gt_options_tbl)),
+          FUN = function(x) {
+
+            if (x %in% which(grepl("_color$", gt_options_tbl$parameter))) {
+              x11_to_suitable_html_color(gt_options_tbl[, "value", drop = TRUE][[x]])
+            } else {
+              gt_options_tbl[, "value", drop = TRUE][[x]]
+            }
+          }
+        )
+    )
+
   has_id <- !is.null(id)
 
   # Get the vector of fonts and transform to a `font-family` string
@@ -45,4 +62,22 @@ compile_scss <- function(data, id = NULL) {
         ")
     )
   )
+}
+
+x11_numbered_grays <-
+  grDevices::colors()[grepl("^gr(a|e)y[0-9]+", grDevices::colors())]
+
+x11_numbered_non_grays <-
+  base::setdiff(
+    grDevices::colors()[grepl("^[a-z]*?[1-4]+", grDevices::colors())],
+    x11_numbered_grays
+  )
+
+x11_to_suitable_html_color <- function(color) {
+
+  if (color %in% c(x11_numbered_grays, x11_numbered_non_grays)) {
+    color <- html_color(colors = color)
+  }
+
+  color
 }
