@@ -303,7 +303,7 @@ create_heading_component_h <- function(data) {
         class = paste(title_classes, collapse = " "),
         style = title_styles,
         htmltools::HTML(
-          heading$title %>% paste_right(footnote_title_marks)
+          paste0(heading$title, footnote_title_marks)
         )
       )
     )
@@ -317,7 +317,7 @@ create_heading_component_h <- function(data) {
           class = paste(subtitle_classes, collapse = " "),
           style = subtitle_styles,
           htmltools::HTML(
-            heading$subtitle %>% paste_right(footnote_subtitle_marks)
+            paste0(heading$subtitle, footnote_subtitle_marks)
           )
         )
       )

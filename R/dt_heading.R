@@ -49,9 +49,5 @@ dt_heading_has_subtitle <- function(data) {
 
   heading <- dt_heading_get(data = data)
 
-  length(heading) > 0 &&
-    length(heading$subtitle) > 0 &&
-    !is.null(heading$subtitle) &&
-    heading$subtitle != "" &&
-    !grepl("^\\s+$", heading$subtitle)
+  length(heading) > 0 && is_nonempty_string(heading$subtitle)
 }

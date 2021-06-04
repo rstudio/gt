@@ -1,3 +1,7 @@
+# Create a simple LaTeX group by surrounding a statement with curly braces
+latex_group <- function(...) {
+  paste0("{", paste0(...), "}")
+}
 
 # Create a vector of LaTeX packages to use as table dependencies
 latex_packages <- function() {
@@ -121,23 +125,22 @@ create_heading_component_l <- function(data) {
   }
 
   title_row <-
-    paste0(heading$title, footnote_title_marks) %>%
-    paste_left("\\large ") %>%
-    paste_right("\\\\ \n")
+    latex_group("\\large ", heading$title, footnote_title_marks)
 
   if (subtitle_defined) {
 
     subtitle_row <-
-      paste0(heading$subtitle, footnote_subtitle_marks) %>%
-      paste_left("\\small ") %>%
-      paste_right("\\\\ \n")
+      paste0(
+        " \\\\ \n",
+        latex_group("\\small ", heading$subtitle, footnote_subtitle_marks)
+      )
 
   } else {
     subtitle_row <- ""
   }
 
   paste0(title_row, subtitle_row) %>%
-    paste_between(x_2 = c("\\caption*{\n", "} \\\\ \n"))
+    paste_between(x_2 = c("\\caption*{\n", "\n} \\\\ \n"))
 }
 
 #' Create the columns component of a table

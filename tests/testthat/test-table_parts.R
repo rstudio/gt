@@ -93,6 +93,13 @@ test_that("a gt table contains the expected heading components", {
     render_as_html() %>%
     expect_snapshot()
 
+  # Perform a snapshot test where an HTML table contains a title and a subtitle
+  mtcars_short %>%
+    gt() %>%
+    tab_header(title = "test title", subtitle = "test subtitle") %>%
+    render_as_html() %>%
+    expect_snapshot()
+
   # Expect that providing a subtitle value with an empty
   # string won't produce a subtitle line
   mtcars_short %>%
@@ -108,6 +115,13 @@ test_that("a gt table contains the expected heading components", {
     tab_header(title = "test title", subtitle = "   ") %>%
     render_as_html() %>%
     expect_snapshot()
+
+  # Expect an error if only a subtitle is provided to `tab_header()`
+  expect_error(
+    mtcars_short %>%
+      gt() %>%
+      tab_header(subtitle = "test subtitle")
+  )
 })
 
 test_that("a gt table contains the expected stubhead label", {
