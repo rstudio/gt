@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Format values as times — fmt_time • gt</title>
+<title>Format values as integers — fmt_integer • gt</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,22 +46,21 @@
 
 
 
-<meta property="og:title" content="Format values as times — fmt_time" />
-<meta property="og:description" content="Format input time values that are character-based and expressed according to
-the ISO 8601 time format (HH:MM:SS). Once the appropriate data cells are
-targeted with columns (and, optionally, rows), we can simply apply a
-preset time style to format the times. The following time styles are
-available for simpler formatting of ISO times (all using the input time of
-14:35:00 in the example output times):
-&quot;hms&quot;: 14:35:00
-&quot;hm&quot;: 14:35
-&quot;hms_p&quot;: 2:35:00 PM
-&quot;hm_p&quot;: 2:35 PM
-&quot;h_p&quot;: 2 PM
+<meta property="og:title" content="Format values as integers — fmt_integer" />
+<meta property="og:description" content="With numeric values in a gt table, we can perform number-based
+formatting so that the targeted values are always rendered as integer values.
+We can have fine control over integer formatting with the following options:
+digit grouping separators: options to enable/disable digit separators
+and provide a choice of separator symbol
+scaling: we can choose to scale targeted values by a multiplier value
+large-number suffixing: larger figures (thousands, millions, etc.) can
+be autoscaled and decorated with the appropriate suffixes
+pattern: option to use a text pattern for decoration of the formatted
+values
+locale-based formatting: providing a locale ID will result in number
+formatting specific to the chosen locale
 
-
-We can use the info_time_style() function for a useful reference on all of
-the possible inputs to time_style." />
+" />
 <meta property="og:image" content="https://gt.rstudio.com/logo.svg" />
 
 
@@ -158,30 +157,40 @@ the possible inputs to time_style." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Format values as times</h1>
+    <h1>Format values as integers</h1>
     <small class="dont-index">Source: <a href='https://github.com/rstudio/gt/blob/master/R/format_data.R'><code>R/format_data.R</code></a></small>
-    <div class="hidden name"><code>fmt_time.Rd</code></div>
+    <div class="hidden name"><code>fmt_integer.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Format input time values that are character-based and expressed according to
-the ISO 8601 time format (<code>HH:MM:SS</code>). Once the appropriate data cells are
-targeted with <code>columns</code> (and, optionally, <code>rows</code>), we can simply apply a
-preset time style to format the times. The following time styles are
-available for simpler formatting of ISO times (all using the input time of
-<code>14:35:00</code> in the example output times):</p><ol>
-<li><p><code>"hms"</code>: <code>14:35:00</code></p></li>
-<li><p><code>"hm"</code>: <code>14:35</code></p></li>
-<li><p><code>"hms_p"</code>: <code>2:35:00 PM</code></p></li>
-<li><p><code>"hm_p"</code>: <code>2:35 PM</code></p></li>
-<li><p><code>"h_p"</code>: <code>2 PM</code></p></li>
-</ol>
+    <p>With numeric values in a <strong>gt</strong> table, we can perform number-based
+formatting so that the targeted values are always rendered as integer values.
+We can have fine control over integer formatting with the following options:</p><ul>
+<li><p>digit grouping separators: options to enable/disable digit separators
+and provide a choice of separator symbol</p></li>
+<li><p>scaling: we can choose to scale targeted values by a multiplier value</p></li>
+<li><p>large-number suffixing: larger figures (thousands, millions, etc.) can
+be autoscaled and decorated with the appropriate suffixes</p></li>
+<li><p>pattern: option to use a text pattern for decoration of the formatted
+values</p></li>
+<li><p>locale-based formatting: providing a locale ID will result in number
+formatting specific to the chosen locale</p></li>
+</ul>
 
-<p>We can use the <code><a href='info_time_style.html'>info_time_style()</a></code> function for a useful reference on all of
-the possible inputs to <code>time_style</code>.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>fmt_time</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>columns</span>, rows <span class='op'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span>, time_style <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></code></pre></div>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>fmt_integer</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  <span class='va'>columns</span>,
+  rows <span class='op'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span>,
+  use_seps <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  accounting <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  scale_by <span class='op'>=</span> <span class='fl'>1</span>,
+  suffixing <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  pattern <span class='op'>=</span> <span class='st'>"{x}"</span>,
+  sep_mark <span class='op'>=</span> <span class='st'>","</span>,
+  locale <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -210,11 +219,61 @@ to filter down to the rows we need (e.g.,
 <code>[colname_1] &gt; 100 &amp; [colname_2] &lt; 50</code>).</p></td>
     </tr>
     <tr>
-      <th>time_style</th>
-      <td><p>The time style to use. Supply a number (from <code>1</code> to <code>5</code>)
-that corresponds to the preferred time style, or, provide a named time
-style (<code>"hms"</code>, <code>"hms_p"</code>, <code>"h_p"</code>, etc.). Use <code><a href='info_time_style.html'>info_time_style()</a></code> to see
-the different numbered and named time presets.</p></td>
+      <th>use_seps</th>
+      <td><p>An option to use digit group separators. The type of digit
+group separator is set by <code>sep_mark</code> and overridden if a locale ID is
+provided to <code>locale</code>. This setting is <code>TRUE</code> by default.</p></td>
+    </tr>
+    <tr>
+      <th>accounting</th>
+      <td><p>An option to use accounting style for values. With <code>FALSE</code>
+(the default), negative values will be shown with a minus sign. Using
+<code>accounting = TRUE</code> will put negative values in parentheses.</p></td>
+    </tr>
+    <tr>
+      <th>scale_by</th>
+      <td><p>A value to scale the input. The default is <code>1.0</code>. All numeric
+values will be multiplied by this value first before undergoing formatting.
+This value will be ignored if using any of the <code>suffixing</code> options (i.e.,
+where <code>suffixing</code> is not set to <code>FALSE</code>).</p></td>
+    </tr>
+    <tr>
+      <th>suffixing</th>
+      <td><p>An option to scale and apply suffixes to larger numbers
+(e.g., <code>1924000</code> can be transformed to <code>2M</code>). This option can accept a
+logical value, where <code>FALSE</code> (the default) will not perform this
+transformation and <code>TRUE</code> will apply thousands (<code>K</code>), millions (<code>M</code>),
+billions (<code>B</code>), and trillions (<code>T</code>) suffixes after automatic value scaling.
+We can also specify which symbols to use for each of the value ranges by
+using a character vector of the preferred symbols to replace the defaults
+(e.g., <code>c("k", "Ml", "Bn", "Tr")</code>).</p>
+<p>Including <code>NA</code> values in the vector will ensure that the particular range
+will either not be included in the transformation (e.g, <code>c(NA, "M", "B", "T")</code> won't modify numbers in the thousands range) or the range will
+inherit a previous suffix (e.g., with <code>c("K", "M", NA, "T")</code>, all numbers
+in the range of millions and billions will be in terms of millions).</p>
+<p>Any use of <code>suffixing</code> (where it is not set expressly as <code>FALSE</code>) means
+that any value provided to <code>scale_by</code> will be ignored.</p></td>
+    </tr>
+    <tr>
+      <th>pattern</th>
+      <td><p>A formatting pattern that allows for decoration of the
+formatted value. The value itself is represented by <code>{x}</code> and all other
+characters are taken to be string literals.</p></td>
+    </tr>
+    <tr>
+      <th>sep_mark</th>
+      <td><p>The mark to use as a separator between groups of digits
+(e.g., using <code>sep_mark = ","</code> with <code>1000</code> would result in a formatted value
+of <code>1,000</code>).</p></td>
+    </tr>
+    <tr>
+      <th>locale</th>
+      <td><p>An optional locale ID that can be used for formatting the value
+according the locale's rules. Examples include <code>"en_US"</code> for English
+(United States) and <code>"fr_FR"</code> for French (France). The use of a valid
+locale ID will override any values provided in <code>sep_mark</code> and <code>dec_mark</code>.
+We can use the <code><a href='info_locales.html'>info_locales()</a></code> function as a useful reference for all of
+the locales that are supported.</p></td>
     </tr>
     </table>
 
@@ -231,13 +290,12 @@ argument. See the Arguments section for more information on this.</p>
 
     
 
-<p><img src='figures/man_fmt_time_1.png' width=100% /></p>
-<p><img src='figures/man_fmt_time_2.png' width=100% /></p>
+<p><img src='figures/man_fmt_integer_1.png' width=100% /></p>
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
     
 
-<p>3-9</p>
+<p>3-2</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Format Data: 
@@ -247,51 +305,27 @@ argument. See the Arguments section for more information on this.</p>
 <code><a href='fmt_datetime.html'>fmt_datetime</a>()</code>,
 <code><a href='fmt_date.html'>fmt_date</a>()</code>,
 <code><a href='fmt_engineering.html'>fmt_engineering</a>()</code>,
-<code><a href='fmt_integer.html'>fmt_integer</a>()</code>,
 <code><a href='fmt_markdown.html'>fmt_markdown</a>()</code>,
 <code><a href='fmt_missing.html'>fmt_missing</a>()</code>,
 <code><a href='fmt_number.html'>fmt_number</a>()</code>,
 <code><a href='fmt_passthrough.html'>fmt_passthrough</a>()</code>,
 <code><a href='fmt_percent.html'>fmt_percent</a>()</code>,
 <code><a href='fmt_scientific.html'>fmt_scientific</a>()</code>,
+<code><a href='fmt_time.html'>fmt_time</a>()</code>,
 <code><a href='fmt.html'>fmt</a>()</code>,
 <code><a href='text_transform.html'>text_transform</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># Use `exibble` to create a gt table;</span></span>
-<span class='r-in'><span class='co'># keep only the `date` and `time` columns;</span></span>
-<span class='r-in'><span class='co'># format the `time` column to have</span></span>
-<span class='r-in'><span class='co'># times formatted as `hms_p`</span></span>
-<span class='r-in'><span class='co'># (time style `3`)</span></span>
+<span class='r-in'><span class='co'># format the `num` column as integer</span></span>
+<span class='r-in'><span class='co'># values having no digit separators</span></span>
 <span class='r-in'><span class='va'>tab_1</span> <span class='op'>&lt;-</span></span>
 <span class='r-in'>  <span class='va'>exibble</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
-<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>date</span>, <span class='va'>time</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>num</span>, <span class='va'>char</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
 <span class='r-in'>  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
-<span class='r-in'>  <span class='fu'>fmt_time</span><span class='op'>(</span></span>
-<span class='r-in'>    columns <span class='op'>=</span> <span class='va'>time</span>,</span>
-<span class='r-in'>    time_style <span class='op'>=</span> <span class='fl'>3</span></span>
-<span class='r-in'>  <span class='op'>)</span></span>
-<span class='r-in'></span>
-<span class='r-in'><span class='co'># Use `exibble` to create a gt table;</span></span>
-<span class='r-in'><span class='co'># keep only the `date` and `time` columns;</span></span>
-<span class='r-in'><span class='co'># format the `time` column to have mixed</span></span>
-<span class='r-in'><span class='co'># time formats (times after 16:00 will</span></span>
-<span class='r-in'><span class='co'># be different than the others)</span></span>
-<span class='r-in'><span class='va'>tab_2</span> <span class='op'>&lt;-</span></span>
-<span class='r-in'>  <span class='va'>exibble</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
-<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>date</span>, <span class='va'>time</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
-<span class='r-in'>  <span class='fu'><a href='gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
-<span class='r-in'>  <span class='fu'>fmt_time</span><span class='op'>(</span></span>
-<span class='r-in'>    columns <span class='op'>=</span> <span class='va'>time</span>,</span>
-<span class='r-in'>    rows <span class='op'>=</span></span>
-<span class='r-in'>      <span class='va'>time</span> <span class='op'>&gt;</span> <span class='st'>"16:00"</span>,</span>
-<span class='r-in'>    time_style <span class='op'>=</span> <span class='fl'>3</span></span>
-<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
-<span class='r-in'>  <span class='fu'>fmt_time</span><span class='op'>(</span></span>
-<span class='r-in'>    columns <span class='op'>=</span> <span class='va'>time</span>,</span>
-<span class='r-in'>    rows <span class='op'>=</span></span>
-<span class='r-in'>      <span class='va'>time</span> <span class='op'>&lt;=</span> <span class='st'>"16:00"</span>,</span>
-<span class='r-in'>    time_style <span class='op'>=</span> <span class='fl'>4</span></span>
+<span class='r-in'>  <span class='fu'>fmt_integer</span><span class='op'>(</span></span>
+<span class='r-in'>    columns <span class='op'>=</span> <span class='va'>num</span>,</span>
+<span class='r-in'>    use_seps <span class='op'>=</span> <span class='cn'>FALSE</span></span>
 <span class='r-in'>  <span class='op'>)</span></span>
 <span class='r-in'></span>
 </code></pre></div>
