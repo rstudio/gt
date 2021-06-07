@@ -1,12 +1,12 @@
 pandoc: 2.7.3
 pkgdown: 1.6.1.9001
-pkgdown_sha: 5bd377e7cb6d268565018b73e4bb99d2788182ed
+pkgdown_sha: 900ef5471576f8f29508a7e7d94fae51390f2d96
 articles:
   case-study-gtcars: case-study-gtcars.html
   creating-summary-lines: creating-summary-lines.html
   gt-datasets: gt-datasets.html
   intro-creating-gt-tables: intro-creating-gt-tables.html
-last_built: 2021-05-21T18:20Z
+last_built: 2021-06-07T19:02Z
 urls:
   reference: https://gt.rstudio.com/reference
   article: https://gt.rstudio.com/articles
