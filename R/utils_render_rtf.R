@@ -1181,9 +1181,9 @@ create_body_component_rtf <- function(data) {
       n_cols = length(col_alignment)
     )
 
-  default_vars <-
-    dplyr::filter(boxh, type == "default") %>%
-    dplyr::pull(var)
+  # Obtain all of the visible (`"default"`), non-stub
+  # column names for the table
+  default_vars <- dt_boxhead_get_vars_default(data = data)
 
   row_list_body <- list()
 
@@ -1261,7 +1261,7 @@ create_body_component_rtf <- function(data) {
     # Add groupwise summary rows
     #
 
-    if (stub_available && summaries_present &&
+    if (summaries_present &&
         i %in% groups_rows_df$row_end) {
 
       group_id <-

@@ -406,7 +406,7 @@ as_latex <- function(.data) {
   table_start <- create_table_start_l(data = data)
 
   # Create the heading component
-  heading_component <- create_heading_component(data = data, context = "latex")
+  heading_component <- create_heading_component_l(data = data)
 
   # Create the columns component
   columns_component <- create_columns_component_l(data = data)

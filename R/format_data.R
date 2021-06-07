@@ -183,7 +183,8 @@ fmt_number <- function(.data,
     )
   ) {
     stop(
-      "The `fmt_number()` function can only be used on `columns` with numeric data.",
+      "The `fmt_number()` and `fmt_integer()` functions can only be ",
+      "used on `columns` with numeric data",
       call. = FALSE
     )
   }
@@ -241,6 +242,102 @@ fmt_number <- function(.data,
   )
 }
 
+#' Format values as integers
+#'
+#' @description
+#' With numeric values in a **gt** table, we can perform number-based
+#' formatting so that the targeted values are always rendered as integer values.
+#' We can have fine control over integer formatting with the following options:
+#'
+#' - digit grouping separators: options to enable/disable digit separators
+#' and provide a choice of separator symbol
+#' - scaling: we can choose to scale targeted values by a multiplier value
+#' - large-number suffixing: larger figures (thousands, millions, etc.) can
+#' be autoscaled and decorated with the appropriate suffixes
+#' - pattern: option to use a text pattern for decoration of the formatted
+#' values
+#' - locale-based formatting: providing a locale ID will result in number
+#' formatting specific to the chosen locale
+#'
+#' @details
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the Arguments section for more information on this.
+#'
+#' @inheritParams fmt_number
+#' @param suffixing An option to scale and apply suffixes to larger numbers
+#'   (e.g., `1924000` can be transformed to `2M`). This option can accept a
+#'   logical value, where `FALSE` (the default) will not perform this
+#'   transformation and `TRUE` will apply thousands (`K`), millions (`M`),
+#'   billions (`B`), and trillions (`T`) suffixes after automatic value scaling.
+#'   We can also specify which symbols to use for each of the value ranges by
+#'   using a character vector of the preferred symbols to replace the defaults
+#'   (e.g., `c("k", "Ml", "Bn", "Tr")`).
+#'
+#'   Including `NA` values in the vector will ensure that the particular range
+#'   will either not be included in the transformation (e.g, `c(NA, "M", "B",
+#'   "T")` won't modify numbers in the thousands range) or the range will
+#'   inherit a previous suffix (e.g., with `c("K", "M", NA, "T")`, all numbers
+#'   in the range of millions and billions will be in terms of millions).
+#'
+#'   Any use of `suffixing` (where it is not set expressly as `FALSE`) means
+#'   that any value provided to `scale_by` will be ignored.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @examples
+#' # Use `exibble` to create a gt table;
+#' # format the `num` column as integer
+#' # values having no digit separators
+#' tab_1 <-
+#'   exibble %>%
+#'   dplyr::select(num, char) %>%
+#'   gt() %>%
+#'   fmt_integer(
+#'     columns = num,
+#'     use_seps = FALSE
+#'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_fmt_integer_1.png}{options: width=100\%}}
+#'
+#' @family Format Data
+#' @section Function ID:
+#' 3-2
+#'
+#' @import rlang
+#' @export
+fmt_integer <- function(data,
+                        columns,
+                        rows = everything(),
+                        use_seps = TRUE,
+                        accounting = FALSE,
+                        scale_by = 1.0,
+                        suffixing = FALSE,
+                        pattern = "{x}",
+                        sep_mark = ",",
+                        locale = NULL) {
+
+  fmt_number(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    decimals = 0,
+    n_sigfig = NULL,
+    drop_trailing_zeros = FALSE,
+    drop_trailing_dec_mark = TRUE,
+    use_seps = use_seps,
+    accounting = accounting,
+    scale_by = scale_by,
+    suffixing = suffixing,
+    pattern = pattern,
+    sep_mark = sep_mark,
+    dec_mark = "not used",
+    locale = locale
+  )
+}
+
 #' Format values to scientific notation
 #'
 #' @description
@@ -294,7 +391,7 @@ fmt_number <- function(.data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-2
+#' 3-3
 #'
 #' @import rlang
 #' @export
@@ -399,6 +496,165 @@ fmt_scientific <- function(.data,
             sci_parts$exp %>% replace_minus(),
             exp_marks[2]
           )
+
+        x_str
+      }
+    )
+  )
+}
+
+#' Format values to engineering notation
+#'
+#' @description
+#' With numeric values in a **gt** table, we can perform formatting so that the
+#' targeted values are rendered in engineering notation.
+#'
+#' With this function, there is fine control over the formatted values with the
+#' following options:
+#'
+#' - decimals: choice of the number of decimal places, option to drop
+#' trailing zeros, and a choice of the decimal symbol
+#' - digit grouping separators: choice of separator symbol
+#' - scaling: we can choose to scale targeted values by a multiplier value
+#' - pattern: option to use a text pattern for decoration of the formatted
+#' values
+#' - locale-based formatting: providing a locale ID will result in
+#' formatting specific to the chosen locale
+#'
+#' @details
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). A number of
+#' helper functions exist to make targeting more effective. Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the Arguments section for more information on this.
+#'
+#' @inheritParams fmt_number
+#' @param scale_by A value to scale the input. The default is `1.0`. All numeric
+#'   values will be multiplied by this value first before undergoing formatting.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @examples
+#' # Use `exibble` to create a gt table;
+#' # format the `num` column in
+#' # engineering notation
+#' tab_1 <-
+#'   exibble %>%
+#'   gt() %>%
+#'   fmt_engineering(columns = num)
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_fmt_engineering_1.png}{options: width=100\%}}
+#'
+#' @family Format Data
+#' @section Function ID:
+#' 3-4
+#'
+#' @export
+fmt_engineering <- function(.data,
+                            columns,
+                            rows = everything(),
+                            decimals = 2,
+                            drop_trailing_zeros = FALSE,
+                            scale_by = 1.0,
+                            pattern = "{x}",
+                            sep_mark = ",",
+                            dec_mark = ".",
+                            locale = NULL) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = .data)
+
+  # Set default values
+  suffixing <- FALSE
+  use_seps <- TRUE
+
+  # Use locale-based marks if a locale ID is provided
+  sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
+  dec_mark <- get_locale_dec_mark(locale, dec_mark)
+
+  # Stop function if `locale` does not have a valid value
+  validate_locale(locale)
+
+  # Normalize the `suffixing` input to either return a character vector
+  # of suffix labels, or NULL (the case where `suffixing` is FALSE)
+  suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by)
+
+  # Stop function if any columns have data that is incompatible
+  # with this formatter
+  if (!column_classes_are_valid(data, {{ columns }}, valid_classes = c("numeric", "integer"))) {
+    stop("The `fmt_scientific()` function can only be used on `columns` with numeric data",
+         call. = FALSE)
+  }
+
+  # Pass `.data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    .data = .data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    fns = num_fmt_factory_multi(
+      pattern = pattern,
+      format_fn = function(x, context) {
+        # Define the marks by context
+        exp_marks <- context_exp_marks(context)
+        minus_mark <- context_minus_mark(context)
+
+        # Define the `replace_minus()` function
+        replace_minus <- function(x) {
+          x %>% tidy_gsub("-", minus_mark, fixed = TRUE)
+        }
+
+        # Create the `suffix_df` object
+        suffix_df <- create_suffix_df(x, decimals, suffix_labels, scale_by)
+
+        # Scale the `x_vals` by the `scale_by` values
+        x <- x %>% scale_x_values(suffix_df$scale_by)
+
+        zero_x <- x == 0
+        negative_x <- x < 0
+        x_str_left <- x_str_right <- x_str <- character(length = length(x))
+
+        # Powers in engineering notation always in steps of 3; this
+        # calculation gets, for every value, the effective power value
+        power_3 <- floor(log(abs(x), base = 1000)) * 3
+
+        # Any zero values will return Inf from the previous calculation
+        # so we must replace these with a `0`
+        power_3[is.infinite(power_3)] <- 0L
+
+        # The numbers on the LHS must be scaled to correspond to the
+        # RHS 10^`power_level` values (i.e., `<LHS> x 10^(n * 3)`)
+        x <- x / 10^(power_3)
+
+        # With the scaled values for the LHS, format these according
+        # to the options set by the user
+        x_str_left <-
+          x %>%
+          format_num_to_str(
+            context = context, decimals = decimals, n_sigfig = NULL,
+            sep_mark = sep_mark, dec_mark = dec_mark,
+            drop_trailing_zeros = drop_trailing_zeros,
+            drop_trailing_dec_mark = FALSE,
+            format = "f",
+            replace_minus_mark = FALSE
+          ) %>%
+          replace_minus()
+
+        # Generate the RHS of the formatted value (i.e., the `x 10^(n * 3)`)
+        x_str_right <-
+          paste0(
+            exp_marks[1],
+            as.character(power_3) %>% replace_minus(),
+            exp_marks[2]
+          )
+
+        # Replace elements from `x_str_right` where exponent values
+        # are zero with empty strings
+        x_str_right[power_3 == 0] <- ""
+
+        # Paste the LHS and RHS components to generate the formatted values
+        x_str <- paste0(x_str_left, x_str_right)
 
         x_str
       }
@@ -573,7 +829,7 @@ fmt_symbol <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-3
+#' 3-5
 #'
 #' @import rlang
 #' @export
@@ -744,7 +1000,7 @@ fmt_percent <- function(.data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-4
+#' 3-6
 #'
 #' @import rlang
 #' @export
@@ -880,7 +1136,7 @@ fmt_currency <- function(.data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-5
+#' 3-7
 #'
 #' @import rlang
 #' @export
@@ -1051,7 +1307,7 @@ fmt_bytes <- function(.data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-6
+#' 3-8
 #'
 #' @import rlang
 #' @export
@@ -1190,7 +1446,7 @@ fmt_date <- function(.data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-7
+#' 3-9
 #'
 #' @import rlang
 #' @export
@@ -1317,7 +1573,7 @@ fmt_time <- function(.data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-8
+#' 3-10
 #'
 #' @import rlang
 #' @export
@@ -1465,7 +1721,7 @@ fmt_datetime <- function(.data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-9
+#' 3-11
 #'
 #' @import rlang
 #' @export
@@ -1552,7 +1808,7 @@ fmt_markdown <- function(.data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-10
+#' 3-12
 #'
 #' @import rlang
 #' @export
@@ -1686,7 +1942,7 @@ fmt_passthrough <- function(.data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-11
+#' 3-13
 #'
 #' @import rlang
 #' @export
@@ -1801,7 +2057,7 @@ fmt_missing <- function(.data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-12
+#' 3-14
 #'
 #' @import rlang
 #' @export
