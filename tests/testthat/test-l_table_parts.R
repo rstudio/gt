@@ -1,5 +1,7 @@
 context("LaTeX -- Ensuring that the creation of tab components works as expected")
 
+testthat::local_edition(3)
+
 # Create a shorter version of `mtcars`
 mtcars_short <- mtcars[1:5, ]
 
@@ -13,7 +15,7 @@ test_that("a gt table contains the expected heading components", {
 
   # Expect a characteristic pattern
   grepl(
-    "\\caption*{\n\\large test title\\\\ \n} \\\\ \n\\toprule",
+    "\\caption*{\n{\\large test title}\n} \\\\ \n\\toprule",
     tbl_latex %>% as_latex() %>% as.character(),
     fixed = TRUE
   ) %>%
@@ -35,6 +37,42 @@ test_that("a gt table contains the expected heading components", {
     tbl_latex %>% as_latex() %>% as.character()
   ) %>%
     expect_true()
+
+  # Perform a snapshot test where a LaTeX table
+  # contains only a title
+  mtcars_short %>%
+    gt() %>%
+    tab_header(title = "test title") %>%
+    as_latex() %>%
+    as.character() %>%
+    expect_snapshot()
+
+  # Perform a snapshot test where a LaTeX table
+  # contains a title and a subtitle
+  mtcars_short %>%
+    gt() %>%
+    tab_header(title = "test title", subtitle = "test subtitle") %>%
+    as_latex() %>%
+    as.character() %>%
+    expect_snapshot()
+
+  # Expect that providing a subtitle value with an empty
+  # string won't produce a subtitle line
+  mtcars_short %>%
+    gt() %>%
+    tab_header(title = "test title", subtitle = "") %>%
+    as_latex() %>%
+    as.character() %>%
+    expect_snapshot()
+
+  # Expect that providing a subtitle value with a series
+  # a space characters also won't produce a subtitle line
+  mtcars_short %>%
+    gt() %>%
+    tab_header(title = "test title", subtitle = "   ") %>%
+    as_latex() %>%
+    as.character() %>%
+    expect_snapshot()
 })
 
 test_that("a gt table contains the expected stubhead label", {
