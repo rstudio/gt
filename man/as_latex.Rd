@@ -16,6 +16,28 @@ dependencies (i.e., the LaTeX packages required for the table). Using
 \code{as.character()} on the created object will result in a single-element vector
 containing the LaTeX code.
 }
+\details{
+LaTeX packages required to generate tables are:
+amsmath, booktabs, caption, longtable.
+
+In the event packages are not automatically added during the render phase
+of the document, please create and include a style file to load them.
+
+Inside the document's YAML metadata, please include:
+
+\preformatted{
+output:
+  pdf_document: # Change to appropriate LaTeX template
+    includes:
+      in_header: 'gt_packages.sty'
+}
+
+The \code{gt_packages.sty} file would then contain the listed dependencies above:
+
+\preformatted{
+  \usepackage{amsmath, booktabs, caption, longtable}
+}
+}
 \section{Function ID}{
 
 13-3
