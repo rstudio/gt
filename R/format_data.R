@@ -308,7 +308,7 @@ fmt_number <- function(.data,
 #'
 #' @import rlang
 #' @export
-fmt_integer <- function(data,
+fmt_integer <- function(.data,
                         columns,
                         rows = everything(),
                         use_seps = TRUE,
@@ -320,7 +320,7 @@ fmt_integer <- function(data,
                         locale = NULL) {
 
   fmt_number(
-    data = data,
+    .data = .data,
     columns = {{ columns }},
     rows = {{ rows }},
     decimals = 0,
@@ -582,7 +582,7 @@ fmt_engineering <- function(.data,
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(data, {{ columns }}, valid_classes = c("numeric", "integer"))) {
+  if (!column_classes_are_valid(.data, {{ columns }}, valid_classes = c("numeric", "integer"))) {
     stop("The `fmt_scientific()` function can only be used on `columns` with numeric data",
          call. = FALSE)
   }
