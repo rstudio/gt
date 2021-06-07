@@ -1,6 +1,6 @@
 # Create a simple LaTeX group by surrounding a statement with curly braces
 latex_group <- function(...) {
-  paste0("{", paste0(...), "}")
+  paste0("{", ..., "}")
 }
 
 # Create a vector of LaTeX packages to use as table dependencies
