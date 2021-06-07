@@ -248,11 +248,11 @@ create_body_component_l <- function(data) {
   n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
   n_rows <- nrow(body)
 
-  # Determine whether the stub is available through analysis
-  # of the `stub_components`
+  # Determine whether the stub is available
   stub_available <- dt_stub_components_has_rowname(stub_components = stub_components)
 
-  # Get the column headings for the visible (e.g., `default`) columns
+  # Obtain all of the visible (`"default"`), non-stub
+  # column names for the table
   default_vars <- dt_boxhead_get_vars_default(data = data)
 
   # Split `body_content` by slices of rows in cases where there is
@@ -439,6 +439,8 @@ create_summary_rows_l <- function(list_of_summaries,
     return(rep_len("", n_rows))
   }
 
+  # Obtain all of the visible (`"default"`), non-stub
+  # column names for the table
   default_vars <- boxh[boxh$type == "default", "var", drop = TRUE]
 
   unname(
@@ -501,6 +503,8 @@ create_grand_summary_rows_l <- function(list_of_summaries,
     return("")
   }
 
+  # Obtain all of the visible (`"default"`), non-stub
+  # column names for the table
   default_vars <- boxh[boxh$type == "default", "var", drop = TRUE]
 
   grand_summary_df <-
