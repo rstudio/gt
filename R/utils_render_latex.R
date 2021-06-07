@@ -1,3 +1,7 @@
+# Create a simple LaTeX group by surrounding a statement with curly braces
+latex_group <- function(...) {
+  paste0("{", ..., "}")
+}
 
 # Create a vector of LaTeX packages to use as table dependencies
 latex_packages <- function() {
@@ -68,6 +72,75 @@ create_table_start_l <- function(data) {
     "}\n",
     collapse = ""
   )
+}
+
+#' Create the heading component of a table
+#'
+#' The table heading component contains the title and possibly a subtitle; if
+#' there are no heading components defined this function will return an empty
+#' string.
+#'
+#' @noRd
+create_heading_component_l <- function(data) {
+
+  # If there is no title or heading component, then return an empty string
+  if (!dt_heading_has_title(data = data)) {
+    return("")
+  }
+
+  heading <- dt_heading_get(data = data)
+  footnotes_tbl <- dt_footnotes_get(data = data)
+  subtitle_defined <- dt_heading_has_subtitle(data = data)
+
+  # Get the footnote marks for the title
+  if ("title" %in% footnotes_tbl$locname) {
+
+    footnote_title_marks <-
+      coalesce_marks(
+        fn_tbl = footnotes_tbl,
+        locname = "title"
+      )
+
+    footnote_title_marks <-
+      footnote_mark_to_latex(mark = footnote_title_marks$fs_id_c)
+
+  } else {
+    footnote_title_marks <- ""
+  }
+
+  # Get the footnote marks for the subtitle
+  if (subtitle_defined && "subtitle" %in% footnotes_tbl$locname) {
+
+    footnote_subtitle_marks <-
+      coalesce_marks(
+        fn_tbl = footnotes_tbl,
+        locname = "subtitle"
+      )
+
+    footnote_subtitle_marks <-
+      footnote_mark_to_latex(mark = footnote_subtitle_marks$fs_id_c)
+
+  } else {
+    footnote_subtitle_marks <- ""
+  }
+
+  title_row <-
+    latex_group("\\large ", heading$title, footnote_title_marks)
+
+  if (subtitle_defined) {
+
+    subtitle_row <-
+      paste0(
+        " \\\\ \n",
+        latex_group("\\small ", heading$subtitle, footnote_subtitle_marks)
+      )
+
+  } else {
+    subtitle_row <- ""
+  }
+
+  paste0(title_row, subtitle_row) %>%
+    paste_between(x_2 = c("\\caption*{\n", "\n} \\\\ \n"))
 }
 
 #' Create the columns component of a table
@@ -175,11 +248,11 @@ create_body_component_l <- function(data) {
   n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
   n_rows <- nrow(body)
 
-  # Determine whether the stub is available through analysis
-  # of the `stub_components`
+  # Determine whether the stub is available
   stub_available <- dt_stub_components_has_rowname(stub_components = stub_components)
 
-  # Get the column headings for the visible (e.g., `default`) columns
+  # Obtain all of the visible (`"default"`), non-stub
+  # column names for the table
   default_vars <- dt_boxhead_get_vars_default(data = data)
 
   # Split `body_content` by slices of rows in cases where there is
@@ -366,6 +439,8 @@ create_summary_rows_l <- function(list_of_summaries,
     return(rep_len("", n_rows))
   }
 
+  # Obtain all of the visible (`"default"`), non-stub
+  # column names for the table
   default_vars <- boxh[boxh$type == "default", "var", drop = TRUE]
 
   unname(
@@ -428,6 +503,8 @@ create_grand_summary_rows_l <- function(list_of_summaries,
     return("")
   }
 
+  # Obtain all of the visible (`"default"`), non-stub
+  # column names for the table
   default_vars <- boxh[boxh$type == "default", "var", drop = TRUE]
 
   grand_summary_df <-
