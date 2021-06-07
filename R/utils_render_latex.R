@@ -1,3 +1,7 @@
+# Create a simple LaTeX group by surrounding a statement with curly braces
+latex_group <- function(...) {
+  paste0("{", ..., "}")
+}
 
 # Create a vector of LaTeX packages to use as table dependencies
 latex_packages <- function() {
@@ -68,6 +72,75 @@ create_table_start_l <- function(data) {
     "}\n",
     collapse = ""
   )
+}
+
+#' Create the heading component of a table
+#'
+#' The table heading component contains the title and possibly a subtitle; if
+#' there are no heading components defined this function will return an empty
+#' string.
+#'
+#' @noRd
+create_heading_component_l <- function(data) {
+
+  # If there is no title or heading component, then return an empty string
+  if (!dt_heading_has_title(data = data)) {
+    return("")
+  }
+
+  heading <- dt_heading_get(data = data)
+  footnotes_tbl <- dt_footnotes_get(data = data)
+  subtitle_defined <- dt_heading_has_subtitle(data = data)
+
+  # Get the footnote marks for the title
+  if ("title" %in% footnotes_tbl$locname) {
+
+    footnote_title_marks <-
+      coalesce_marks(
+        fn_tbl = footnotes_tbl,
+        locname = "title"
+      )
+
+    footnote_title_marks <-
+      footnote_mark_to_latex(mark = footnote_title_marks$fs_id_c)
+
+  } else {
+    footnote_title_marks <- ""
+  }
+
+  # Get the footnote marks for the subtitle
+  if (subtitle_defined && "subtitle" %in% footnotes_tbl$locname) {
+
+    footnote_subtitle_marks <-
+      coalesce_marks(
+        fn_tbl = footnotes_tbl,
+        locname = "subtitle"
+      )
+
+    footnote_subtitle_marks <-
+      footnote_mark_to_latex(mark = footnote_subtitle_marks$fs_id_c)
+
+  } else {
+    footnote_subtitle_marks <- ""
+  }
+
+  title_row <-
+    latex_group("\\large ", heading$title, footnote_title_marks)
+
+  if (subtitle_defined) {
+
+    subtitle_row <-
+      paste0(
+        " \\\\ \n",
+        latex_group("\\small ", heading$subtitle, footnote_subtitle_marks)
+      )
+
+  } else {
+    subtitle_row <- ""
+  }
+
+  paste0(title_row, subtitle_row) %>%
+    paste_between(x_2 = c("\\caption*{\n", "\n} \\\\ \n"))
 }
 
 #' Create the columns component of a table
