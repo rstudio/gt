@@ -14,7 +14,7 @@ test_that("the `fmt_integer()` function works correctly in the HTML context", {
     )
 
   # Create a `gt_tbl` object with `gt()` and the `data_tbl` dataset
-  tab <- gt(data = data_tbl)
+  tab <- gt(data_tbl)
 
   # Expect that the object has the correct classes
   expect_is(tab, c("gt_tbl", "data.frame"))
@@ -206,7 +206,7 @@ test_that("the `fmt_integer()` function can scale/suffix larger numbers", {
     )
 
   # Create a `gt_tbl` object with `gt()` and the `data_tbl` dataset
-  tab <- gt(data = data_tbl)
+  tab <- gt(data_tbl)
 
   # Format the `num` column, have the `suffixing` option
   # set to TRUE (default labels, all 4 ranges used)
