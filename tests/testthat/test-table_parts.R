@@ -1,5 +1,7 @@
 context("Ensuring that the creation of tab components works as expected")
 
+testthat::local_edition(3)
+
 # Create a shorter version of `mtcars`
 mtcars_short <- mtcars[1:5, ]
 
@@ -84,66 +86,42 @@ test_that("a gt table contains the expected heading components", {
     selection_text("[class='gt_heading gt_subtitle gt_font_normal gt_bottom_border']") %>%
     expect_equal("test subtitle")
 
-  # Style both parts of the table heading (title and subtitle) with
-  # a single `tab_style()` call (with defaults for `cells_title()`)
-  tbl_html_2 <-
-    mtcars_short %>%
+  # Perform a snapshot test where an HTML table contains only a title
+  mtcars_short %>%
     gt() %>%
-    tab_header(
-      title = "test title",
-      subtitle = "test subtitle"
-    ) %>%
-    tab_style(
-      style = cell_fill(color = "lightblue"),
-      locations = cells_title(groups = c("subtitle", "title"))
-    ) %>%
+    tab_header(title = "test title") %>%
     render_as_html() %>%
-    xml2::read_html()
+    expect_snapshot()
 
-  # Expect two instances of the background color (lightblue -> #ADD8E6)
-  tbl_html_2 %>%
-    selection_value("style") %>%
-    expect_equal(rep("background-color: #ADD8E6;", 2))
-
-  # Style one part of the table heading (title) with `tab_style()`
-  tbl_html_3 <-
-    mtcars_short %>%
+  # Perform a snapshot test where an HTML table contains a title and a subtitle
+  mtcars_short %>%
     gt() %>%
-    tab_header(
-      title = "test title",
-      subtitle = "test subtitle"
-    ) %>%
-    tab_style(
-      style = cell_fill(color = "lightblue"),
-      locations = cells_title(groups = "title")
-    ) %>%
+    tab_header(title = "test title", subtitle = "test subtitle") %>%
     render_as_html() %>%
-    xml2::read_html()
+    expect_snapshot()
 
-  # Expect a single instance of the background color (for the "title")
-  tbl_html_3 %>%
-    selection_value("style") %>%
-    expect_equal(c("background-color: #ADD8E6;", ""))
-
-  # Style the other part of the table heading (subtitle) with `tab_style()`
-  tbl_html_4 <-
-    mtcars_short %>%
+  # Expect that providing a subtitle value with an empty
+  # string won't produce a subtitle line
+  mtcars_short %>%
     gt() %>%
-    tab_header(
-      title = "test title",
-      subtitle = "test subtitle"
-    ) %>%
-    tab_style(
-      style = cell_fill(color = "lightblue"),
-      locations = cells_title(groups = "subtitle")
-    ) %>%
+    tab_header(title = "test title", subtitle = "") %>%
     render_as_html() %>%
-    xml2::read_html()
+    expect_snapshot()
 
-  # Expect a single instance of the background color (for the "subtitle")
-  tbl_html_4 %>%
-    selection_value("style") %>%
-    expect_equal(c("", "background-color: #ADD8E6;"))
+  # Expect that providing a subtitle value with a series
+  # a space characters also won't produce a subtitle line
+  mtcars_short %>%
+    gt() %>%
+    tab_header(title = "test title", subtitle = "   ") %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  # Expect an error if only a subtitle is provided to `tab_header()`
+  expect_error(
+    mtcars_short %>%
+      gt() %>%
+      tab_header(subtitle = "test subtitle")
+  )
 })
 
 test_that("a gt table contains the expected stubhead label", {

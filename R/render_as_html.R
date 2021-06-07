@@ -19,7 +19,7 @@ render_as_html <- function(data) {
   caption_component <- create_caption_component_h(data = data)
 
   # Create the heading component
-  heading_component <- create_heading_component(data = data, context = "html")
+  heading_component <- create_heading_component_h(data = data)
 
   # Create the columns component
   columns_component <- create_columns_component_h(data = data)
