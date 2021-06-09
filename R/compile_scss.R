@@ -5,20 +5,22 @@ compile_scss <- function(data, id = NULL) {
   gt_options_tbl <-
     dt_options_get(data = data) %>%
     subset(scss) %>%
-    subset(!is.na(value))
-
-  gt_options_tbl <-
+    subset(!is.na(value)) %>%
     dplyr::mutate(
-      gt_options_tbl,
       value =
         lapply(
-          seq_len(nrow(gt_options_tbl)),
+          seq_len(nrow(.)),
           FUN = function(x) {
 
-            if (x %in% which(grepl("_color", gt_options_tbl$parameter))) {
-              x11_to_suitable_html_color(gt_options_tbl[, "value", drop = TRUE][[x]])
+            option_value <- .[, "value", drop = TRUE][[x]]
+
+            if (
+              x %in% which(grepl("_color", .$parameter)) &&
+              !is_rgba_col(option_value)
+            ) {
+              html_color(colors = option_value)
             } else {
-              gt_options_tbl[, "value", drop = TRUE][[x]]
+              option_value
             }
           }
         )
@@ -62,22 +64,4 @@ compile_scss <- function(data, id = NULL) {
         ")
     )
   )
-}
-
-x11_numbered_grays <-
-  grDevices::colors()[grepl("^gr(a|e)y[0-9]+", grDevices::colors())]
-
-x11_numbered_non_grays <-
-  base::setdiff(
-    grDevices::colors()[grepl("^[a-z]*?[1-4]+", grDevices::colors())],
-    x11_numbered_grays
-  )
-
-x11_to_suitable_html_color <- function(color) {
-
-  if (color %in% c(x11_numbered_grays, x11_numbered_non_grays)) {
-    color <- html_color(colors = color)
-  }
-
-  color
 }
