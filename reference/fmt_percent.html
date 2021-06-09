@@ -202,6 +202,7 @@ formatting specific to the chosen locale</p></li>
   pattern <span class='op'>=</span> <span class='st'>"{x}"</span>,
   sep_mark <span class='op'>=</span> <span class='st'>","</span>,
   dec_mark <span class='op'>=</span> <span class='st'>"."</span>,
+  force_sign <span class='op'>=</span> <span class='cn'>FALSE</span>,
   incl_space <span class='op'>=</span> <span class='cn'>FALSE</span>,
   placement <span class='op'>=</span> <span class='st'>"right"</span>,
   locale <span class='op'>=</span> <span class='cn'>NULL</span>
@@ -284,6 +285,14 @@ of <code>1,000</code>).</p></td>
     <tr>
       <th>dec_mark</th>
       <td><p>The character to use as a decimal mark (e.g., using <code>dec_mark = ","</code> with <code>0.152</code> would result in a formatted value of <code>0,152</code>).</p></td>
+    </tr>
+    <tr>
+      <th>force_sign</th>
+      <td><p>Should the positive sign be shown for positive values
+(effectively showing a sign for all values except zero)? If so, use <code>TRUE</code>
+for this option. The default is <code>FALSE</code>, where only negative numbers will
+display a minus sign. This option is disregarded when using accounting
+notation with <code>accounting = TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>incl_space</th>
