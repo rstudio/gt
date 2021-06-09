@@ -372,6 +372,56 @@ html_color <- function(colors, alpha = NULL) {
     stop("No values supplied in `colors` should be NA")
   }
 
+  # Ensure that all color names (assumed to be values not preceded
+  # with `#`) are in the set of X11/R color names or CSS color names;
+  # translate certain color names (CSS exclusive names) if necessary
+  if (!all(grepl("^#", colors))) {
+
+    named_colors <- tolower(colors[!grepl("^#", colors)])
+
+    if (!all(named_colors %in% valid_color_names())) {
+
+      invalid_colors <- base::setdiff(unique(named_colors), valid_color_names())
+
+      several <- length(invalid_colors) > 1
+
+      stop(
+        ifelse(
+          several,
+          "Several invalid color names were ",
+          "An invalid color name was "
+        ), "used: ", str_catalog(invalid_colors, conj = "and"), ".",
+        call. = FALSE
+      )
+    }
+
+    # Translate any CSS exclusive colors to hexadecimal values;
+    # there are nine CSS 3.0 named colors that don't belong to the
+    # set of X11/R color names (not included numbered variants and
+    # the numbered grays, those will be handled by `grDevices::col2rgb()`)
+    if (any(named_colors %in% css_exclusive_color_names())) {
+
+      colors <-
+        vapply(
+          colors,
+          FUN.VALUE = character(1),
+          USE.NAMES = FALSE,
+          FUN = function(x) {
+
+            if (!grepl("^#", x) && tolower(x) %in% css_exclusive_color_names()) {
+
+              x <-
+                css_colors[
+                  tolower(css_colors$color_name) == tolower(x),
+                ][, "hexadecimal", drop = TRUE]
+            }
+
+            x
+          }
+        )
+    }
+  }
+
   # Utility function for creating rgba() color values
   # from an RGBA color matrix (already subsetted to those
   # rows where alpha < 1)
@@ -417,4 +467,12 @@ html_color <- function(colors, alpha = NULL) {
     col_matrix_to_rgba()
 
   colors_html
+}
+
+css_exclusive_color_names <- function() {
+  tolower(css_colors[!css_colors$is_x11_color, ][, "color_name", drop = TRUE])
+}
+
+valid_color_names <- function() {
+  c(tolower(grDevices::colors()), css_exclusive_color_names())
 }
