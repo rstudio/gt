@@ -1184,12 +1184,12 @@ test_that("extracting a summary from a gt table is possible", {
   # tibbles in `gt_tbl_summary_groupwise`
   expect_equal(
     names(gt_tbl_summary_groupwise$summary_df_data_list[[1]]),
-    c("group_id", "rowname", "date", "open", "high", "low", "close", "week")
+    c("::group_id::", "::rowname::", "date", "open", "high", "low", "close", "week")
   )
 
   expect_equal(
     names(gt_tbl_summary_groupwise$summary_df_data_list[[2]]),
-    c("group_id", "rowname", "date", "open", "high", "low", "close", "week")
+    c("::group_id::", "::rowname::", "date", "open", "high", "low", "close", "week")
   )
 
   # Expect specific values in each of the tibbles
@@ -1266,7 +1266,7 @@ test_that("extracting a summary from a gt table is possible", {
   # tibble in `gt_tbl_summary_grand`
   expect_equal(
     names(gt_tbl_summary_grand$summary_df_data_list[[1]]),
-    c("group_id", "rowname", "date", "open", "high", "low", "close", "week")
+    c("::group_id::", "::rowname::", "date", "open", "high", "low", "close", "week")
   )
 
   # Expect specific values in the tibble
@@ -1397,8 +1397,8 @@ test_that("creating summary rows works for hidden columns", {
   expect_equal(
     colnames(summary_w02),
     c(
-      "group_id", "rowname", "date",
-      "open", "high", "low", "close", "week"
+      "::group_id::", "::rowname::",
+      "date", "open", "high", "low", "close", "week"
     )
   )
 
