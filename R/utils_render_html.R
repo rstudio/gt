@@ -1102,7 +1102,7 @@ summary_row_tags <- function(list_of_summaries,
     # select the column named `rowname` and all of the visible columns
     summary_df <-
       list_of_summaries$summary_df_display_list[[group_id]] %>%
-      dplyr::select(.data$rowname, .env$default_vars)
+      dplyr::select(.data$`::rowname::`, .env$default_vars)
 
     n_cols <- ncol(summary_df)
 

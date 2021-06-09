@@ -456,21 +456,21 @@ create_summary_rows_l <- function(list_of_summaries,
           }
 
           # Obtain the group ID for the group of rows that ends at row `x`;
-          group <-
+          group_id <-
             groups_rows_df[groups_rows_df$row_end == x, "group_id", drop = TRUE]
 
           # Check whether this group has a corresponding entry in
           # `list_of_summaries$summary_df_display_list` (i.e., are there
           # summary rows for this group?); if not, return an empty string
-          if (!(group %in% names(list_of_summaries$summary_df_display_list))) {
+          if (!(group_id %in% names(list_of_summaries$summary_df_display_list))) {
             return("")
           }
 
           # Obtain the summary data table specific to the group ID and
-          # select the column named `rowname` and all of the visible columns
+          # select the column named `::rowname::` and all of the visible columns
           summary_df <-
-            list_of_summaries$summary_df_display_list[[group]] %>%
-            dplyr::select(.data$rowname, .env$default_vars)
+            list_of_summaries$summary_df_display_list[[group_id]] %>%
+            dplyr::select(.data$`::rowname::`, .env$default_vars)
 
           row_splits_summary <- split_row_content(summary_df)
 
@@ -509,7 +509,7 @@ create_grand_summary_rows_l <- function(list_of_summaries,
 
   grand_summary_df <-
     list_of_summaries$summary_df_display_list$`::GRAND_SUMMARY` %>%
-    dplyr::select(.data$rowname, .env$default_vars)
+    dplyr::select(.data$`::rowname::`, .env$default_vars)
 
   row_splits_summary <- split_row_content(grand_summary_df)
 

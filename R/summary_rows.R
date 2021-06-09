@@ -122,9 +122,9 @@ summary_rows <- function(data,
     data <-
       dt_boxhead_add_var(
         data = data,
-        var = "rowname",
+        var = "::rowname::",
         type = "stub",
-        column_label = list("rowname"),
+        column_label = list("::rowname::"),
         column_align = "left",
         column_width = list(NULL),
         hidden_px = list(NULL),
@@ -134,8 +134,8 @@ summary_rows <- function(data,
     # Add the `"rowname"` column into `_data`
     data$`_data` <-
       data$`_data` %>%
-      dplyr::mutate(rowname = rep("", nrow(data$`_data`))) %>%
-      dplyr::select(dplyr::everything(), rowname)
+      dplyr::mutate(`::rowname::` = rep("", nrow(data$`_data`))) %>%
+      dplyr::select(dplyr::everything(), `::rowname::`)
 
     # Place the `rowname` values into `stub_df$rowname`; these are
     # empty strings which will provide an empty stub for locations
