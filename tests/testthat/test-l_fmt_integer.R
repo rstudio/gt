@@ -130,6 +130,41 @@ test_that("the `fmt_integer()` function works correctly in the LaTeX context", {
       "a$0$b", "a$(23)$b")
   )
 
+  # Format the `num_1` column to 2 decimal places, force the sign
+  expect_equal(
+    (tab %>%
+       fmt_integer(
+         columns = num_1, force_sign = TRUE) %>%
+       render_formats_test("latex"))[["num_1"]],
+    c("$+1,836$", "$+2,763$", "$+937$", "$+643$", "$+212$", "$0$", "$-23$")
+  )
+
+  # Expect that using `force_sign = TRUE` with `accounting = TRUE`
+  # will render values in accounting format
+  expect_equal(
+    (tab %>%
+       fmt_integer(
+         columns = num_1, accounting = TRUE, force_sign = TRUE) %>%
+       render_formats_test("latex"))[["num_1"]],
+    (tab %>%
+       fmt_integer(
+         columns = num_1, accounting = TRUE) %>%
+       render_formats_test("latex"))[["num_1"]]
+  )
+
+  # Format the `num_1` column to 2 decimal places, force the sign and
+  # define a pattern for decorating values
+  expect_equal(
+    (tab %>%
+       fmt_integer(
+         columns = num_1, pattern = "*{x}*", force_sign = TRUE) %>%
+       render_formats_test("latex"))[["num_1"]],
+    c(
+      "*$+1,836$*", "*$+2,763$*", "*$+937$*", "*$+643$*", "*$+212$*",
+      "*$0$*", "*$-23$*"
+    )
+  )
+
   # Format the `num_1`, apply the `en_US`
   # locale and use all other defaults
   expect_equal(

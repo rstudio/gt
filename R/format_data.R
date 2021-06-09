@@ -87,6 +87,11 @@
 #'   of `1,000`).
 #' @param dec_mark The character to use as a decimal mark (e.g., using `dec_mark
 #'   = ","` with `0.152` would result in a formatted value of `0,152`).
+#' @param force_sign Should the positive sign be shown for positive values
+#'   (effectively showing a sign for all values except zero)? If so, use `TRUE`
+#'   for this option. The default is `FALSE`, where only negative numbers will
+#'   display a minus sign. This option is disregarded when using accounting
+#'   notation with `accounting = TRUE`.
 #' @param locale An optional locale ID that can be used for formatting the value
 #'   according the locale's rules. Examples include `"en_US"` for English
 #'   (United States) and `"fr_FR"` for French (France). The use of a valid
@@ -157,6 +162,7 @@ fmt_number <- function(data,
                        pattern = "{x}",
                        sep_mark = ",",
                        dec_mark = ".",
+                       force_sign = FALSE,
                        locale = NULL) {
 
   # Perform input object validation
@@ -211,29 +217,49 @@ fmt_number <- function(data,
       format_fn = function(x, context) {
 
         # Create the `suffix_df` object
-        suffix_df <- create_suffix_df(x, decimals, suffix_labels, scale_by)
+        suffix_df <-
+          create_suffix_df(
+            x,
+            decimals = decimals,
+            suffix_labels = suffix_labels,
+            scale_by = scale_by
+          )
 
+        # Scale the `x` values by the `scale_by` values in `suffix_df`
+        x <- scale_x_values(x, scale_by = suffix_df$scale_by)
+
+        # Format numeric values to character-based numbers
         x_str <-
-          x %>%
-          # Scale the `x_vals` by the `scale_by` values
-          scale_x_values(suffix_df$scale_by) %>%
-          # Format numeric values to character-based numbers
           format_num_to_str(
-            context = context, decimals = decimals, n_sigfig = n_sigfig,
-            sep_mark = sep_mark, dec_mark = dec_mark,
+            x,
+            context = context,
+            decimals = decimals,
+            n_sigfig = n_sigfig,
+            sep_mark = sep_mark,
+            dec_mark = dec_mark,
             drop_trailing_zeros = drop_trailing_zeros,
             drop_trailing_dec_mark = drop_trailing_dec_mark,
             format = formatC_format
-          ) %>%
-          # With large-number suffixing support, we paste the
-          # vector of suffixes to the right of the values
-          paste_right(suffix_df$suffix)
-
-        x_str <-
-          x_str %>%
-          format_as_accounting(
-            x = x, context = context, accounting = accounting
           )
+
+        # Paste the vector of suffixes to the right of the values
+        x_str <- paste_right(x_str, x_right = suffix_df$suffix)
+
+        # Format values in accounting notation (if `accounting = TRUE`)
+        x_str <-
+          format_as_accounting(
+            x_str,
+            x = x,
+            context = context,
+            accounting = accounting
+          )
+
+        # Force a positive sign on certain values if the option is taken
+        if (!accounting && force_sign) {
+
+          positive_x <- !is.na(x) & x > 0
+          x_str[positive_x] <- paste_left(x_str[positive_x], x_left = "+")
+        }
 
         x_str
       }
@@ -316,6 +342,7 @@ fmt_integer <- function(data,
                         suffixing = FALSE,
                         pattern = "{x}",
                         sep_mark = ",",
+                        force_sign = FALSE,
                         locale = NULL) {
 
   fmt_number(
@@ -333,6 +360,7 @@ fmt_integer <- function(data,
     pattern = pattern,
     sep_mark = sep_mark,
     dec_mark = "not used",
+    force_sign = force_sign,
     locale = locale
   )
 }
@@ -361,6 +389,10 @@ fmt_integer <- function(data,
 #' @inheritParams fmt_number
 #' @param scale_by A value to scale the input. The default is `1.0`. All numeric
 #'   values will be multiplied by this value first before undergoing formatting.
+#' @param force_sign Should the positive sign be shown for positive values
+#'   (effectively showing a sign for all values except zero)? If so, use `TRUE`
+#'   for this option. The default is `FALSE`, where only negative numbers will
+#'   display a minus sign.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -403,6 +435,7 @@ fmt_scientific <- function(data,
                            pattern = "{x}",
                            sep_mark = ",",
                            dec_mark = ".",
+                           force_sign = FALSE,
                            locale = NULL) {
 
   # Perform input object validation
@@ -417,7 +450,7 @@ fmt_scientific <- function(data,
   dec_mark <- get_locale_dec_mark(locale, dec_mark)
 
   # Stop function if `locale` does not have a valid value
-  validate_locale(locale)
+  validate_locale(locale = locale)
 
   # Normalize the `suffixing` input to either return a character vector
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
@@ -450,16 +483,25 @@ fmt_scientific <- function(data,
         }
 
         # Create the `suffix_df` object
-        suffix_df <- create_suffix_df(x, decimals, suffix_labels, scale_by)
+        suffix_df <-
+          create_suffix_df(
+            x,
+            decimals = decimals,
+            suffix_labels = suffix_labels,
+            scale_by = scale_by
+          )
 
-        # Scale the `x_vals` by the `scale_by` values
-        x <- x %>% scale_x_values(suffix_df$scale_by)
+        # Scale the `x` values by the `scale_by` values in `suffix_df`
+        x <- scale_x_values(x, scale_by = suffix_df$scale_by)
 
         x_str <-
-          x %>%
           format_num_to_str(
-            context = context, decimals = decimals, n_sigfig = NULL,
-            sep_mark = sep_mark, dec_mark = dec_mark,
+            x,
+            context = context,
+            decimals = decimals,
+            n_sigfig = NULL,
+            sep_mark = sep_mark,
+            dec_mark = dec_mark,
             drop_trailing_zeros = drop_trailing_zeros,
             drop_trailing_dec_mark = FALSE,
             format = "e",
@@ -487,6 +529,13 @@ fmt_scientific <- function(data,
             sci_parts$exp %>% replace_minus(),
             exp_marks[2]
           )
+
+        # Force a positive sign on certain values if the option is taken
+        if (force_sign) {
+
+          positive_x <- !is.na(x) & x > 0
+          x_str[positive_x] <- paste_left(x_str[positive_x], x_left = "+")
+        }
 
         x_str
       }
@@ -522,6 +571,10 @@ fmt_scientific <- function(data,
 #' @inheritParams fmt_number
 #' @param scale_by A value to scale the input. The default is `1.0`. All numeric
 #'   values will be multiplied by this value first before undergoing formatting.
+#' @param force_sign Should the positive sign be shown for positive values
+#'   (effectively showing a sign for all values except zero)? If so, use `TRUE`
+#'   for this option. The default is `FALSE`, where only negative numbers will
+#'   display a minus sign.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -551,6 +604,7 @@ fmt_engineering <- function(data,
                             pattern = "{x}",
                             sep_mark = ",",
                             dec_mark = ".",
+                            force_sign = FALSE,
                             locale = NULL) {
 
   # Perform input object validation
@@ -565,7 +619,7 @@ fmt_engineering <- function(data,
   dec_mark <- get_locale_dec_mark(locale, dec_mark)
 
   # Stop function if `locale` does not have a valid value
-  validate_locale(locale)
+  validate_locale(locale = locale)
 
   # Normalize the `suffixing` input to either return a character vector
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
@@ -597,10 +651,16 @@ fmt_engineering <- function(data,
         }
 
         # Create the `suffix_df` object
-        suffix_df <- create_suffix_df(x, decimals, suffix_labels, scale_by)
+        suffix_df <-
+          create_suffix_df(
+            x,
+            decimals = decimals,
+            suffix_labels = suffix_labels,
+            scale_by = scale_by
+          )
 
         # Scale the `x_vals` by the `scale_by` values
-        x <- x %>% scale_x_values(suffix_df$scale_by)
+        x <- scale_x_values(x, suffix_df$scale_by)
 
         zero_x <- x == 0
         negative_x <- x < 0
@@ -621,10 +681,13 @@ fmt_engineering <- function(data,
         # With the scaled values for the LHS, format these according
         # to the options set by the user
         x_str_left <-
-          x %>%
           format_num_to_str(
-            context = context, decimals = decimals, n_sigfig = NULL,
-            sep_mark = sep_mark, dec_mark = dec_mark,
+            x,
+            context = context,
+            decimals = decimals,
+            n_sigfig = NULL,
+            sep_mark = sep_mark,
+            dec_mark = dec_mark,
             drop_trailing_zeros = drop_trailing_zeros,
             drop_trailing_dec_mark = FALSE,
             format = "f",
@@ -646,6 +709,13 @@ fmt_engineering <- function(data,
 
         # Paste the LHS and RHS components to generate the formatted values
         x_str <- paste0(x_str_left, x_str_right)
+
+        # Force a positive sign on certain values if the option is taken
+        if (force_sign) {
+
+          positive_x <- !is.na(x) & x > 0
+          x_str[positive_x] <- paste_left(x_str[positive_x], x_left = "+")
+        }
 
         x_str
       }
@@ -673,6 +743,7 @@ fmt_symbol <- function(data,
                        pattern = "{x}",
                        sep_mark = ",",
                        dec_mark = ".",
+                       force_sign = FALSE,
                        placement = "left",
                        incl_space = FALSE,
                        locale = NULL) {
@@ -682,7 +753,7 @@ fmt_symbol <- function(data,
   dec_mark <- get_locale_dec_mark(locale, dec_mark)
 
   # Stop function if `locale` does not have a valid value
-  validate_locale(locale)
+  validate_locale(locale = locale)
 
   # Normalize the `suffixing` input to either return a character vector
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
@@ -702,22 +773,31 @@ fmt_symbol <- function(data,
         x_str <- character(length(x))
 
         # Create the `suffix_df` object
-        suffix_df <- create_suffix_df(x, decimals, suffix_labels, scale_by)
+        suffix_df <-
+          create_suffix_df(
+            x,
+            decimals = decimals,
+            suffix_labels = suffix_labels,
+            scale_by = scale_by
+          )
 
         # Scale the `x_vals` by the `scale_by` value
-        x <- x %>% scale_x_values(suffix_df$scale_by)
+        x <- scale_x_values(x, suffix_df$scale_by)
 
         is_negative_x <- x < 0
         is_not_negative_x <- !is_negative_x
 
         if (any(is_not_negative_x)) {
 
+          # Format numeric values to character-based numbers
           x_str[is_not_negative_x] <-
-            x[is_not_negative_x] %>%
-            # Format numeric values to character-based numbers
             format_num_to_str_c(
-              context = context, decimals = decimals, sep_mark = sep_mark,
-              dec_mark = dec_mark, drop_trailing_zeros = drop_trailing_zeros,
+              x[is_not_negative_x],
+              context = context,
+              decimals = decimals,
+              sep_mark = sep_mark,
+              dec_mark = dec_mark,
+              drop_trailing_zeros = drop_trailing_zeros,
               drop_trailing_dec_mark = drop_trailing_dec_mark
             )
         }
@@ -726,31 +806,48 @@ fmt_symbol <- function(data,
 
         if (any(is_negative_x)) {
 
+          # Format numeric values to character-based numbers
           x_abs_str[is_negative_x] <-
-            x[is_negative_x] %>%
-            abs() %>%
-            # Format numeric values to character-based numbers
             format_num_to_str_c(
-              context = context, decimals = decimals, sep_mark = sep_mark,
-              dec_mark = dec_mark, drop_trailing_zeros = drop_trailing_zeros,
+              abs(x[is_negative_x]),
+              context = context,
+              decimals = decimals,
+              sep_mark = sep_mark,
+              dec_mark = dec_mark,
+              drop_trailing_zeros = drop_trailing_zeros,
               drop_trailing_dec_mark = drop_trailing_dec_mark
             )
         }
 
+        # Format values with a symbol string
         x_str <-
-          # Format values with a symbol string
           format_symbol_str(
-            context = context, x_abs_str = x_abs_str, x = x,
-            symbol = symbol, incl_space = incl_space,
+            x_abs_str = x_abs_str,
+            x = x,
+            context = context,
+            symbol = symbol,
+            incl_space = incl_space,
             placement = placement
-          ) %>%
-          # Format values in accounting style
+          )
+
+        # Format values in accounting notation (if `accounting = TRUE`)
+        x_str <-
           format_as_accounting(
-            x = x, context = context, accounting = accounting
-          ) %>%
-          # With large-number suffixing support, we paste the
-          # vector of suffixes to the right of the values
-          paste_right(suffix_df$suffix)
+            x_str,
+            x = x,
+            context = context,
+            accounting = accounting
+          )
+
+        # Paste the vector of suffixes to the right of the values
+        x_str <- paste_right(x_str, x_right = suffix_df$suffix)
+
+        # Force a positive sign on certain values if the option is taken
+        if (!accounting && force_sign) {
+
+          positive_x <- !is.na(x) & x > 0
+          x_str[positive_x] <- paste_left(x_str[positive_x], x_left = "+")
+        }
 
         x_str
       }
@@ -836,6 +933,7 @@ fmt_percent <- function(data,
                         pattern = "{x}",
                         sep_mark = ",",
                         dec_mark = ".",
+                        force_sign = FALSE,
                         incl_space = FALSE,
                         placement = "right",
                         locale = NULL) {
@@ -871,6 +969,7 @@ fmt_percent <- function(data,
     pattern = pattern,
     sep_mark = sep_mark,
     dec_mark = dec_mark,
+    force_sign = force_sign,
     placement = placement,
     incl_space = incl_space,
     locale = locale
@@ -1000,6 +1099,7 @@ fmt_currency <- function(data,
                          pattern = "{x}",
                          sep_mark = ",",
                          dec_mark = ".",
+                         force_sign = FALSE,
                          placement = "left",
                          incl_space = FALSE,
                          locale = NULL) {
@@ -1040,6 +1140,7 @@ fmt_currency <- function(data,
     pattern = pattern,
     sep_mark = sep_mark,
     dec_mark = dec_mark,
+    force_sign = force_sign,
     placement = placement,
     incl_space = incl_space,
     locale = locale
@@ -1082,6 +1183,10 @@ fmt_currency <- function(data,
 #'   use. The default number of decimal places is `1`.
 #' @param incl_space An option for whether to include a space between the value
 #'   and the units. The default of `TRUE` uses a space character for separation.
+#' @param force_sign Should the positive sign be shown for positive numbers
+#'   (effectively showing a sign for all numbers except zero)? If so, use `TRUE`
+#'   for this option. The default is `FALSE`, where only negative numbers will
+#'   display a minus sign.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -1125,6 +1230,7 @@ fmt_bytes <- function(data,
                       pattern = "{x}",
                       sep_mark = ",",
                       dec_mark = ".",
+                      force_sign = FALSE,
                       incl_space = TRUE,
                       locale = NULL) {
 
@@ -1142,21 +1248,23 @@ fmt_bytes <- function(data,
   if (!is.null(n_sigfig)) {
 
     # Stop function if `n_sigfig` does not have a valid value
-    validate_n_sigfig(n_sigfig)
+    validate_n_sigfig(n_sigfig = n_sigfig)
 
     formatC_format <- "fg"
+
   } else {
     formatC_format <- "f"
   }
 
   if (standard == "decimal") {
+
     base <- 1000
-    byte_units <-
-      c("B", "kB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
+    byte_units <- c("B", "kB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
+
   } else {
+
     base <- 1024
-    byte_units <-
-      c("B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB")
+    byte_units <- c("B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB")
   }
 
   fmt(
@@ -1176,16 +1284,29 @@ fmt_bytes <- function(data,
         units_str <- byte_units[num_power_idx]
         x <- x / base^(num_power_idx-1)
 
-        x %>%
-          # Format numeric values to character-based numbers
+        # Format numeric values to character-based numbers
+        x_str <-
           format_num_to_str(
-            context = context, decimals = decimals, n_sigfig = n_sigfig,
-            sep_mark = sep_mark, dec_mark = dec_mark,
+            x,
+            context = context,
+            decimals = decimals,
+            n_sigfig = n_sigfig,
+            sep_mark = sep_mark,
+            dec_mark = dec_mark,
             drop_trailing_zeros = drop_trailing_zeros,
             drop_trailing_dec_mark = drop_trailing_dec_mark,
             format = formatC_format
           ) %>%
-          paste_right(paste0(if (incl_space) " ", units_str))
+          paste_right(x_right = paste0(if (incl_space) " ", units_str))
+
+        # Force a positive sign on certain values if the option is taken
+        if (force_sign) {
+
+          positive_x <- !is.na(x) & x > 0
+          x_str[positive_x] <- paste_left(x_str[positive_x], x_left = "+")
+        }
+
+        x_str
       }
     )
   )
@@ -1926,6 +2047,7 @@ fmt_missing <- function(data,
         ifelse(is.na(x), missing_text, NA_character_)
       },
       rtf = function(x) {
+
         missing_text <-
           context_missing_text(
             missing_text = missing_text,
