@@ -1121,6 +1121,30 @@ test_that("the various color utility functions work correctly", {
     length() %>%
     expect_equal(1)
 
+  # Expect that CSS color names not present as an R/X11 color will
+  # still work
+  expect_equal(
+    html_color(colors = css_exclusive_color_names()),
+    c(
+      "#DC143C", "#FF00FF", "#663399",
+      "#4B0082", "#00FF00", "#808000",
+      "#008080", "#00FFFF", "#C0C0C0"
+    )
+  )
+
+  # Expect that mixed names will work in `html_color()` (all the
+  # previous types plus the CSS exclusive names)
+  expect_equal(
+    html_color(colors = c(c_name, c_hex, c_hex_a, css_exclusive_color_names())),
+    c(
+      "#FF0000", "#FF6347", "#CD6889", "#32CD32", "#DBDBDB", "#0000FF",
+      "#FFAA00", "#FFBB34", "#AD552E", "#900019", "rgba(255,35,93,0.38)",
+      "rgba(170,37,58,0.44)", "#F3F300", "rgba(210,215,33,0.06)",
+      "#DC143C", "#FF00FF", "#663399", "#4B0082", "#00FF00", "#808000",
+      "#008080", "#00FFFF", "#C0C0C0"
+    )
+  )
+
   # Expect an error if an NA value is provided anywhere as input
   expect_error(
     html_color(colors = c(c_name, c_hex, c_hex_a, NA_character_))
