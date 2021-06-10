@@ -221,15 +221,9 @@ resolve_cols_i <- function(expr,
   quo <- translate_legacy_resolver_expr(quo)
 
   # With the quosure and the `data`, we can use `tidyselect::eval_select()`
-  # to resolve the expression to columns indices/names
-  # - no `env` argument is required here because the `expr` is a quosure
-  # - using `tryCatch()` simply to modify the `stop()` message to something
-  #   that is more meaningful in gt
-  selected <-
-    tryCatch(
-      tidyselect::eval_select(expr = quo, data = data, strict = strict),
-      error = function(cond) stop("This selection contain invalid column names", call. = FALSE)
-    )
+  # to resolve the expression to columns indices/names; no `env` argument
+  # is required here because the `expr` is a quosure
+  selected <- tidyselect::eval_select(expr = quo, data = data, strict = strict)
 
   # Exclude certain columns (e.g., stub & group columns) if necessary
   selected[!names(selected) %in% cols_excl]
