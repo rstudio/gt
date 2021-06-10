@@ -389,7 +389,7 @@ html_color <- function(colors, alpha = NULL) {
           "Several invalid color names were ",
           "An invalid color name was "
         ), "used (", str_catalog(invalid_colors, conj = "and"), "):\n",
-        "* Only R/X11 color names and CSS 3.0 color names can be used",
+        " * Only R/X11 color names and CSS 3.0 color names can be used",
         call. = FALSE
       )
     }

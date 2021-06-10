@@ -2064,14 +2064,16 @@ cell_borders <- function(sides = "all",
     "bottom", "b",
     "all", "everything", "a"
   ))) {
-    stop("The `sides` vector for `cell_borders()` has to include one ",
-         "or more of the following keywords (or short forms):\n",
-         " * \"left\" (or: \"l\")\n",
-         " * \"right\" (or: \"r\")\n",
-         " * \"top\" (or: \"t\")\n",
-         " * \"bottom\" (or: \"b\")\n",
-         " * \"all\" (or: \"a\", \"everything\"",
-         call. = FALSE)
+    stop(
+      "The `sides` vector for `cell_borders()` has to include one ",
+      "or more of the following keywords (or short forms):\n",
+      " * \"left\" (or: \"l\")\n",
+      " * \"right\" (or: \"r\")\n",
+      " * \"top\" (or: \"t\")\n",
+      " * \"bottom\" (or: \"b\")\n",
+      " * \"all\" (or: \"a\", \"everything\"",
+      call. = FALSE
+    )
   }
 
   # Resolve the selection of borders into a vector of
