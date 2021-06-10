@@ -4,10 +4,10 @@
 \alias{opt_footnote_marks}
 \title{Option to modify the set of footnote marks}
 \usage{
-opt_footnote_marks(.data, marks)
+opt_footnote_marks(data, marks)
 }
 \arguments{
-\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{marks}{Either a character vector of length greater than 1 (that will
 represent the series of marks) or a single keyword that represents a preset

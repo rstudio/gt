@@ -9,7 +9,7 @@ cols_label(.data, ..., .list = list2(...))
 \arguments{
 \item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{...}{One or more named arguments of column names from the input \code{data}
+\item{...}{One or more named arguments of column names from the input \code{.data}
 table along with their labels for display as the column labels. We can
 optionally wrap the column labels with \code{\link[=md]{md()}} (to interpret text as
 Markdown) or \code{\link[=html]{html()}} (to interpret text as HTML).}

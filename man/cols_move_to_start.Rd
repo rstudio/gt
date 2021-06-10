@@ -4,10 +4,10 @@
 \alias{cols_move_to_start}
 \title{Move one or more columns to the start}
 \usage{
-cols_move_to_start(.data, columns)
+cols_move_to_start(data, columns)
 }
 \arguments{
-\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{The column names to move to the left-most side of the table.
 The order in which columns are provided will be preserved (as is the case

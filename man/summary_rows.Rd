@@ -5,7 +5,7 @@
 \title{Add groupwise summary rows using aggregation functions}
 \usage{
 summary_rows(
-  .data,
+  data,
   groups = NULL,
   columns = everything(),
   fns,
@@ -15,7 +15,7 @@ summary_rows(
 )
 }
 \arguments{
-\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{groups}{The groups to consider for generation of groupwise summary
 rows. By default this is set to \code{NULL}, which results in the formation of

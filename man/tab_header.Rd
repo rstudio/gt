@@ -4,10 +4,10 @@
 \alias{tab_header}
 \title{Add a table header}
 \usage{
-tab_header(.data, title, subtitle = NULL)
+tab_header(data, title, subtitle = NULL)
 }
 \arguments{
-\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{title, subtitle}{Text to be used in the table title and, optionally, for
 the table subtitle. We can elect to use the \code{\link[=md]{md()}} and \code{\link[=html]{html()}} helper

@@ -4,10 +4,10 @@
 \alias{extract_summary}
 \title{Extract a summary list from a \strong{gt} object}
 \usage{
-extract_summary(.data)
+extract_summary(data)
 }
 \arguments{
-\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 }
 \value{
 A list of data frames containing summary data.

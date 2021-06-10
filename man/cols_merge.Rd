@@ -5,14 +5,14 @@
 \title{Merge data from two or more columns to a single column}
 \usage{
 cols_merge(
-  .data,
+  data,
   columns,
   hide_columns = columns[-1],
   pattern = paste0("{", seq_along(columns), "}", collapse = " ")
 )
 }
 \arguments{
-\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{The columns that will participate in the merging process. The
 first column name provided will be the target column (i.e., undergo

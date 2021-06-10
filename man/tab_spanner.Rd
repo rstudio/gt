@@ -4,10 +4,10 @@
 \alias{tab_spanner}
 \title{Add a spanner column label}
 \usage{
-tab_spanner(.data, label, columns, id = label, gather = TRUE)
+tab_spanner(data, label, columns, id = label, gather = TRUE)
 }
 \arguments{
-\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{label}{The text to use for the spanner column label.}
 

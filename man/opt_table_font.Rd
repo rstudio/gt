@@ -4,10 +4,10 @@
 \alias{opt_table_font}
 \title{Option to define a custom font for the table}
 \usage{
-opt_table_font(.data, font, weight = NULL, style = NULL, add = TRUE)
+opt_table_font(data, font, weight = NULL, style = NULL, add = TRUE)
 }
 \arguments{
-\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{font}{Either the name of a font available in the user system or a call
 to \code{\link[=google_font]{google_font()}}, which has a large selection of typefaces.}

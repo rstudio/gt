@@ -4,10 +4,10 @@
 \alias{gtsave}
 \title{Save a \strong{gt} table as a file}
 \usage{
-gtsave(.data, filename, path = NULL, ...)
+gtsave(data, filename, path = NULL, ...)
 }
 \arguments{
-\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{filename}{The file name to create on disk. Ensure that an extension
 compatible with the output types is provided (\code{.html}, \code{.tex}, \code{.ltx},

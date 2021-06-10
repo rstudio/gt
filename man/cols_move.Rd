@@ -4,10 +4,10 @@
 \alias{cols_move}
 \title{Move one or more columns}
 \usage{
-cols_move(.data, columns, after)
+cols_move(data, columns, after)
 }
 \arguments{
-\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{The column names to move to as a group to a different
 position. The order of the remaining columns will be preserved.}

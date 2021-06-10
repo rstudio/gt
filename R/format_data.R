@@ -24,7 +24,7 @@
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the Arguments section for more information on this.
 #'
-#' @param .data A table object that is created using the [gt()] function.
+#' @param data A table object that is created using the [gt()] function.
 #' @param columns The columns to format. Can either be a series of column names
 #'   provided in [c()], a vector of column indices, or a helper function
 #'   focused on selections. The select helper functions are: [starts_with()],
@@ -148,7 +148,7 @@
 #'
 #' @import rlang
 #' @export
-fmt_number <- function(.data,
+fmt_number <- function(data,
                        columns,
                        rows = everything(),
                        decimals = 2,
@@ -166,7 +166,7 @@ fmt_number <- function(.data,
                        locale = NULL) {
 
   # Perform input object validation
-  stop_if_not_gt(data = .data)
+  stop_if_not_gt(data = data)
 
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
@@ -183,7 +183,7 @@ fmt_number <- function(.data,
   # with this formatter
   if (
     !column_classes_are_valid(
-      data = .data,
+      data = data,
       columns = {{ columns }},
       valid_classes = c("numeric", "integer")
     )
@@ -207,10 +207,10 @@ fmt_number <- function(.data,
     formatC_format <- "f"
   }
 
-  # Pass `.data`, `columns`, `rows`, and the formatting
+  # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(
-    .data = .data,
+    data = data,
     columns = {{ columns }},
     rows = {{ rows }},
     fns = num_fmt_factory_multi(
@@ -334,7 +334,7 @@ fmt_number <- function(.data,
 #'
 #' @import rlang
 #' @export
-fmt_integer <- function(.data,
+fmt_integer <- function(data,
                         columns,
                         rows = everything(),
                         use_seps = TRUE,
@@ -347,7 +347,7 @@ fmt_integer <- function(.data,
                         locale = NULL) {
 
   fmt_number(
-    .data = .data,
+    data = data,
     columns = {{ columns }},
     rows = {{ rows }},
     decimals = 0,
@@ -427,7 +427,7 @@ fmt_integer <- function(.data,
 #'
 #' @import rlang
 #' @export
-fmt_scientific <- function(.data,
+fmt_scientific <- function(data,
                            columns,
                            rows = everything(),
                            decimals = 2,
@@ -440,7 +440,7 @@ fmt_scientific <- function(.data,
                            locale = NULL) {
 
   # Perform input object validation
-  stop_if_not_gt(data = .data)
+  stop_if_not_gt(data = data)
 
   # Set default values
   suffixing <- FALSE
@@ -461,7 +461,7 @@ fmt_scientific <- function(.data,
   # with this formatter
   if (
     !column_classes_are_valid(
-      data = .data,
+      data = data,
       columns = {{ columns }},
       valid_classes = c("numeric", "integer")
     )
@@ -472,10 +472,10 @@ fmt_scientific <- function(.data,
     )
   }
 
-  # Pass `.data`, `columns`, `rows`, and the formatting
+  # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(
-    .data = .data,
+    data = data,
     columns = {{ columns }},
     rows = {{ rows }},
     fns = num_fmt_factory_multi(
@@ -604,7 +604,7 @@ fmt_scientific <- function(.data,
 #' 3-4
 #'
 #' @export
-fmt_engineering <- function(.data,
+fmt_engineering <- function(data,
                             columns,
                             rows = everything(),
                             decimals = 2,
@@ -617,7 +617,7 @@ fmt_engineering <- function(.data,
                             locale = NULL) {
 
   # Perform input object validation
-  stop_if_not_gt(data = .data)
+  stop_if_not_gt(data = data)
 
   # Set default values
   suffixing <- FALSE
@@ -636,15 +636,15 @@ fmt_engineering <- function(.data,
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(.data, {{ columns }}, valid_classes = c("numeric", "integer"))) {
+  if (!column_classes_are_valid(data, {{ columns }}, valid_classes = c("numeric", "integer"))) {
     stop("The `fmt_scientific()` function can only be used on `columns` with numeric data",
          call. = FALSE)
   }
 
-  # Pass `.data`, `columns`, `rows`, and the formatting
+  # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(
-    .data = .data,
+    data = data,
     columns = {{ columns }},
     rows = {{ rows }},
     fns = num_fmt_factory_multi(
@@ -771,7 +771,7 @@ fmt_symbol <- function(data,
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(
-    .data = data,
+    data = data,
     columns = {{ columns }},
     rows = {{ rows }},
     fns = num_fmt_factory_multi(
@@ -930,7 +930,7 @@ fmt_symbol <- function(data,
 #'
 #' @import rlang
 #' @export
-fmt_percent <- function(.data,
+fmt_percent <- function(data,
                         columns,
                         rows = everything(),
                         decimals = 2,
@@ -948,13 +948,13 @@ fmt_percent <- function(.data,
                         locale = NULL) {
 
   # Perform input object validation
-  stop_if_not_gt(data = .data)
+  stop_if_not_gt(data = data)
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
   if (
     !column_classes_are_valid(
-      data = .data,
+      data = data,
       columns = {{ columns }},
       valid_classes = c("numeric", "integer")
     )
@@ -971,9 +971,9 @@ fmt_percent <- function(.data,
     scale_by <- 1.0
   }
 
-  # Pass `.data`, `columns`, `rows`, and other options to `fmt_symbol()`
+  # Pass `data`, `columns`, `rows`, and other options to `fmt_symbol()`
   fmt_symbol(
-    data = .data,
+    data = data,
     columns = {{ columns }},
     rows = {{ rows }},
     symbol = "%",
@@ -1103,7 +1103,7 @@ fmt_percent <- function(.data,
 #'
 #' @import rlang
 #' @export
-fmt_currency <- function(.data,
+fmt_currency <- function(data,
                          columns,
                          rows = everything(),
                          currency = "USD",
@@ -1123,13 +1123,13 @@ fmt_currency <- function(.data,
                          locale = NULL) {
 
   # Perform input object validation
-  stop_if_not_gt(data = .data)
+  stop_if_not_gt(data = data)
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
   if (
     !column_classes_are_valid(
-      data = .data,
+      data = data,
       columns = {{ columns }},
       valid_classes = c("numeric", "integer")
     )
@@ -1151,9 +1151,9 @@ fmt_currency <- function(.data,
       use_subunits = use_subunits
     )
 
-  # Pass `.data`, `columns`, `rows`, and other options to `fmt_symbol()`
+  # Pass `data`, `columns`, `rows`, and other options to `fmt_symbol()`
   fmt_symbol(
-    data = .data,
+    data = data,
     columns = {{ columns }},
     rows = {{ rows }},
     symbol = currency,
@@ -1245,7 +1245,7 @@ fmt_currency <- function(.data,
 #'
 #' @import rlang
 #' @export
-fmt_bytes <- function(.data,
+fmt_bytes <- function(data,
                       columns,
                       rows = everything(),
                       standard = c("decimal", "binary"),
@@ -1262,7 +1262,7 @@ fmt_bytes <- function(.data,
                       locale = NULL) {
 
   # Perform input object validation
-  stop_if_not_gt(data = .data)
+  stop_if_not_gt(data = data)
 
   standard <- match.arg(standard)
 
@@ -1294,10 +1294,10 @@ fmt_bytes <- function(.data,
     byte_units <- c("B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB")
   }
 
-  # Pass `.data`, `columns`, `rows`, and the formatting
+  # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(
-    .data = .data,
+    data = data,
     columns = {{ columns }},
     rows = {{ rows }},
     fns = num_fmt_factory_multi(
@@ -1432,13 +1432,13 @@ fmt_bytes <- function(.data,
 #'
 #' @import rlang
 #' @export
-fmt_date <- function(.data,
+fmt_date <- function(data,
                      columns,
                      rows = everything(),
                      date_style = 2) {
 
   # Perform input object validation
-  stop_if_not_gt(data = .data)
+  stop_if_not_gt(data = data)
 
   # Transform `date_style` to `date_format_str`
   date_format_str <- get_date_format(date_style = date_style)
@@ -1447,7 +1447,7 @@ fmt_date <- function(.data,
   # with this formatter
   if (
     !column_classes_are_valid(
-      data = .data,
+      data = data,
       columns = {{ columns }},
       valid_classes = c("Date", "character")
     )
@@ -1458,10 +1458,10 @@ fmt_date <- function(.data,
     )
   }
 
-  # Pass `.data`, `columns`, `rows`, and the formatting
+  # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(
-    .data = .data,
+    data = data,
     columns = {{ columns }},
     rows = {{ rows }},
     fns = list(
@@ -1571,13 +1571,13 @@ fmt_date <- function(.data,
 #'
 #' @import rlang
 #' @export
-fmt_time <- function(.data,
+fmt_time <- function(data,
                      columns,
                      rows = everything(),
                      time_style = 2) {
 
   # Perform input object validation
-  stop_if_not_gt(data = .data)
+  stop_if_not_gt(data = data)
 
   # Transform `time_style` to `time_format_str`
   time_format_str <- get_time_format(time_style = time_style)
@@ -1586,7 +1586,7 @@ fmt_time <- function(.data,
   # with this formatter
   if (
     !column_classes_are_valid(
-      data = .data,
+      data = data,
       columns = {{ columns }},
       valid_classes = "character")
   ) {
@@ -1596,10 +1596,10 @@ fmt_time <- function(.data,
     )
   }
 
-  # Pass `.data`, `columns`, `rows`, and the formatting
+  # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(
-    .data = .data,
+    data = data,
     columns = {{ columns }},
     rows = {{ rows }},
     fns = list(
@@ -1698,14 +1698,14 @@ fmt_time <- function(.data,
 #'
 #' @import rlang
 #' @export
-fmt_datetime <- function(.data,
+fmt_datetime <- function(data,
                          columns,
                          rows = everything(),
                          date_style = 2,
                          time_style = 2) {
 
   # Perform input object validation
-  stop_if_not_gt(data = .data)
+  stop_if_not_gt(data = data)
 
   # Transform `date_style` to `date_format`
   date_format_str <- get_date_format(date_style = date_style)
@@ -1717,7 +1717,7 @@ fmt_datetime <- function(.data,
   # with this formatter
   if (
     !column_classes_are_valid(
-      data = .data,
+      data = data,
       columns = {{ columns }},
       valid_classes = "character"
     )) {
@@ -1727,10 +1727,10 @@ fmt_datetime <- function(.data,
     )
   }
 
-  # Pass `.data`, `columns`, `rows`, and the formatting
+  # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(
-    .data = .data,
+    data = data,
     columns = {{ columns }},
     rows = {{ rows }},
     fns = list(
@@ -1846,17 +1846,17 @@ fmt_datetime <- function(.data,
 #'
 #' @import rlang
 #' @export
-fmt_markdown <- function(.data,
+fmt_markdown <- function(data,
                          columns,
                          rows = everything()) {
 
   # Perform input object validation
-  stop_if_not_gt(data = .data)
+  stop_if_not_gt(data = data)
 
-  # Pass `.data`, `columns`, `rows`, and the formatting
+  # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(
-    .data = .data,
+    data = data,
     columns = {{ columns }},
     rows = {{ rows }},
     fns = list(
@@ -1933,19 +1933,19 @@ fmt_markdown <- function(.data,
 #'
 #' @import rlang
 #' @export
-fmt_passthrough <- function(.data,
+fmt_passthrough <- function(data,
                             columns,
                             rows = everything(),
                             escape = TRUE,
                             pattern = "{x}") {
 
   # Perform input object validation
-  stop_if_not_gt(data = .data)
+  stop_if_not_gt(data = data)
 
-  # Pass `.data`, `columns`, `rows`, and the formatting
+  # Pass `data`, `columns`, `rows`, and the formatting
   # functions (as a function list) to `fmt()`
   fmt(
-    .data = .data,
+    data = data,
     columns = {{ columns }},
     rows = {{ rows }},
     fns = list(
@@ -2067,18 +2067,18 @@ fmt_passthrough <- function(.data,
 #'
 #' @import rlang
 #' @export
-fmt_missing <- function(.data,
+fmt_missing <- function(data,
                         columns,
                         rows = everything(),
                         missing_text = "---") {
 
   # Perform input object validation
-  stop_if_not_gt(data = .data)
+  stop_if_not_gt(data = data)
 
-  # Pass `.data`, `columns`, `rows`, and the formatting
+  # Pass `data`, `columns`, `rows`, and the formatting
   # functions (as a function list) to `fmt()`
   fmt(
-    .data = .data,
+    data = data,
     columns = {{ columns }},
     rows = {{ rows }},
     fns = list(
@@ -2183,17 +2183,17 @@ fmt_missing <- function(.data,
 #'
 #' @import rlang
 #' @export
-fmt <- function(.data,
+fmt <- function(data,
                 columns = everything(),
                 rows = everything(),
                 fns) {
 
   # Perform input object validation
-  stop_if_not_gt(data = .data)
+  stop_if_not_gt(data = data)
 
   # Get the `stub_df` data frame from `data`
-  stub_df <- dt_stub_df_get(data = .data)
-  data_tbl <- dt_data_get(data = .data)
+  stub_df <- dt_stub_df_get(data = data)
+  data_tbl <- dt_data_get(data = data)
 
   #
   # Resolution of columns and rows as character vectors
@@ -2202,13 +2202,13 @@ fmt <- function(.data,
   resolved_columns <-
     resolve_cols_c(
       expr = {{ columns }},
-      data = .data
+      data = data
     )
 
   resolved_rows_idx <-
     resolve_rows_i(
       expr = {{ rows }},
-      data = .data
+      data = data
     )
 
   # If a single function is supplied to `fns` then
@@ -2226,5 +2226,5 @@ fmt <- function(.data,
       rows = resolved_rows_idx
     )
 
-  dt_formats_add(data = .data, formats = formatter_list)
+  dt_formats_add(data = data, formats = formatter_list)
 }

@@ -4,10 +4,10 @@
 \alias{cols_unhide}
 \title{Unhide one or more columns}
 \usage{
-cols_unhide(.data, columns)
+cols_unhide(data, columns)
 }
 \arguments{
-\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{The column names to unhide from the output display table.
 Values provided that do not correspond to column names will be disregarded.}

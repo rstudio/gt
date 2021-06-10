@@ -5,13 +5,13 @@
 \title{Option to use all caps in select table locations}
 \usage{
 opt_all_caps(
-  .data,
+  data,
   all_caps = TRUE,
   locations = c("column_labels", "stub", "row_group")
 )
 }
 \arguments{
-\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{all_caps}{A logical value to indicate whether the text transformation
 to all caps should be performed (\code{TRUE}, the default) or reset to default

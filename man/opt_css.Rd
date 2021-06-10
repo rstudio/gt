@@ -4,10 +4,10 @@
 \alias{opt_css}
 \title{Option to add custom CSS for the table}
 \usage{
-opt_css(.data, css, add = TRUE, allow_duplicates = FALSE)
+opt_css(data, css, add = TRUE, allow_duplicates = FALSE)
 }
 \arguments{
-\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{css}{The CSS to include as part of the rendered table's \verb{<style>}
 element.}

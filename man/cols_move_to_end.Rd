@@ -4,10 +4,10 @@
 \alias{cols_move_to_end}
 \title{Move one or more columns to the end}
 \usage{
-cols_move_to_end(.data, columns)
+cols_move_to_end(data, columns)
 }
 \arguments{
-\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{The column names to move to the right-most side of the table.
 The order in which columns are provided will be preserved (as is the case

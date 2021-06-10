@@ -5,7 +5,7 @@
 \title{Format values as integers}
 \usage{
 fmt_integer(
-  .data,
+  data,
   columns,
   rows = everything(),
   use_seps = TRUE,
@@ -19,7 +19,7 @@ fmt_integer(
 )
 }
 \arguments{
-\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{The columns to format. Can either be a series of column names
 provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function

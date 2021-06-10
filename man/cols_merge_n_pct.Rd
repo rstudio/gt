@@ -4,10 +4,10 @@
 \alias{cols_merge_n_pct}
 \title{Merge two columns to combine counts and percentages}
 \usage{
-cols_merge_n_pct(.data, col_n, col_pct, autohide = TRUE)
+cols_merge_n_pct(data, col_n, col_pct, autohide = TRUE)
 }
 \arguments{
-\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{col_n}{A column that contains values for the count component.}
 

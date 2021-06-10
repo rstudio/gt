@@ -4,10 +4,10 @@
 \alias{cols_hide}
 \title{Hide one or more columns}
 \usage{
-cols_hide(.data, columns)
+cols_hide(data, columns)
 }
 \arguments{
-\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{The column names to hide from the output display table. Values
 provided that do not correspond to column names will be disregarded.}

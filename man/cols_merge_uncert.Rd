@@ -4,10 +4,10 @@
 \alias{cols_merge_uncert}
 \title{Merge two columns to a value & uncertainty column}
 \usage{
-cols_merge_uncert(.data, col_val, col_uncert, sep = " +/- ", autohide = TRUE)
+cols_merge_uncert(data, col_val, col_uncert, sep = " +/- ", autohide = TRUE)
 }
 \arguments{
-\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{col_val}{A single column name that contains the base values. This is
 the column where values will be mutated.}

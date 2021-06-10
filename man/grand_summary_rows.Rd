@@ -5,7 +5,7 @@
 \title{Add grand summary rows using aggregation functions}
 \usage{
 grand_summary_rows(
-  .data,
+  data,
   columns = everything(),
   fns,
   missing_text = "---",
@@ -14,7 +14,7 @@ grand_summary_rows(
 )
 }
 \arguments{
-\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{The columns for which the summaries should be calculated.}
 

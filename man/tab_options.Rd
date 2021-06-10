@@ -5,7 +5,7 @@
 \title{Modify the table output options}
 \usage{
 tab_options(
-  .data,
+  data,
   container.width = NULL,
   container.height = NULL,
   container.overflow.x = NULL,
@@ -140,7 +140,7 @@ tab_options(
 )
 }
 \arguments{
-\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{container.width, container.height}{The width and height of the table's
 container. Can be specified as a single-length character with units of

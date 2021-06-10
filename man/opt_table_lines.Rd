@@ -4,10 +4,10 @@
 \alias{opt_table_lines}
 \title{Option to set table lines to different extents}
 \usage{
-opt_table_lines(.data, extent = c("all", "none", "default"))
+opt_table_lines(data, extent = c("all", "none", "default"))
 }
 \arguments{
-\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{extent}{The extent to which lines will be visible in the table. Options
 are \code{"all"}, \code{"none"}, or \code{"default"}.}

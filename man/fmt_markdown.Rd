@@ -4,10 +4,10 @@
 \alias{fmt_markdown}
 \title{Format Markdown text}
 \usage{
-fmt_markdown(.data, columns, rows = everything())
+fmt_markdown(data, columns, rows = everything())
 }
 \arguments{
-\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{The columns to format. Can either be a series of column names
 provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function

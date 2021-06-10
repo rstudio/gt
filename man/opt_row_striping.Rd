@@ -4,10 +4,10 @@
 \alias{opt_row_striping}
 \title{Option to add or remove row striping}
 \usage{
-opt_row_striping(.data, row_striping = TRUE)
+opt_row_striping(data, row_striping = TRUE)
 }
 \arguments{
-\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{row_striping}{A logical value to indicate whether row striping should
 be added or removed.}

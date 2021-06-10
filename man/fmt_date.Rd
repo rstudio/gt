@@ -4,10 +4,10 @@
 \alias{fmt_date}
 \title{Format values as dates}
 \usage{
-fmt_date(.data, columns, rows = everything(), date_style = 2)
+fmt_date(data, columns, rows = everything(), date_style = 2)
 }
 \arguments{
-\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{The columns to format. Can either be a series of column names
 provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
