@@ -1413,3 +1413,203 @@ test_that("creating summary rows works for hidden columns", {
   # when `cols_unhide()`ing 'open' and 'low' their summary
   # data will be displayed
 })
+
+test_that("Situtations where `rowname` is a column name don't interfere with internals", {
+
+  local_edition(3)
+  skip_on_cran()
+
+  # The most basic table where rowname exists as a column; by default
+  # a `"rowname"` column is used as the stub
+  summary_tbl_1 <-
+    exibble %>%
+    dplyr::rename(rowname = row) %>%
+    gt() %>%
+    grand_summary_rows(
+      columns = c(num, currency),
+      fns = list(
+        min = ~min(., na.rm = TRUE),
+        max = ~max(., na.rm = TRUE),
+        avg = ~mean(., na.rm = TRUE)),
+      formatter = fmt_number
+    )
+
+  # Take snapshots of `summary_tbl_1`
+  summary_tbl_1 %>% render_as_html() %>% expect_snapshot()
+  summary_tbl_1 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  summary_tbl_1 %>% as_rtf() %>% expect_snapshot()
+
+
+  # Here the default value of `rowname_col` is set to NULL set that the
+  # `"rowname"` col won't be used as the stub; it exists as a visible column
+  # and the stub is empty except for the grand summary labels
+  summary_tbl_2 <-
+    exibble %>%
+    dplyr::rename(rowname = row) %>%
+    gt(rowname_col = NULL) %>%
+    grand_summary_rows(
+      columns = c(num, currency),
+      fns = list(
+        min = ~min(., na.rm = TRUE),
+        max = ~max(., na.rm = TRUE),
+        avg = ~mean(., na.rm = TRUE)),
+      formatter = fmt_number
+    )
+
+  # Take snapshots of `summary_tbl_2`
+  summary_tbl_2 %>% render_as_html() %>% expect_snapshot()
+  summary_tbl_2 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  summary_tbl_2 %>% as_rtf() %>% expect_snapshot()
+
+
+  # Here, the `"rowname"` column is prevented from being used in the stub
+  # but the `"group"` column is used to generate row group labels; we have
+  # a largely empty stub except for the summary row labels (we can use
+  # `summary_rows()` here because of the groupings) and the grand summary
+  # row labels
+  summary_tbl_3 <-
+    exibble %>%
+    dplyr::rename(rowname = row) %>%
+    gt(rowname_col = NULL, groupname_col = "group") %>%
+    summary_rows(
+      columns = c(num, currency),
+      groups = c("grp_a", "grp_b"),
+      fns = list(
+        median = ~median(., na.rm = TRUE)
+      ),
+      formatter = fmt_number
+    ) %>%
+    grand_summary_rows(
+      columns = c(num, currency),
+      fns = list(
+        min = ~min(., na.rm = TRUE),
+        max = ~max(., na.rm = TRUE),
+        avg = ~mean(., na.rm = TRUE)),
+      formatter = fmt_number
+    )
+
+  # Take snapshots of `summary_tbl_3`
+  summary_tbl_3 %>% render_as_html() %>% expect_snapshot()
+  summary_tbl_3 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  summary_tbl_3 %>% as_rtf() %>% expect_snapshot()
+
+  # This table has a stub with values but it is utilizing the `"char"`
+  # column for its labels (`"rowname"` and `"group"` are visible columns)
+  summary_tbl_4 <-
+    exibble %>%
+    dplyr::rename(rowname = row) %>%
+    gt(rowname_col = "char") %>%
+    grand_summary_rows(
+      columns = c(num, currency),
+      fns = list(
+        min = ~min(., na.rm = TRUE),
+        max = ~max(., na.rm = TRUE),
+        avg = ~mean(., na.rm = TRUE)),
+      formatter = fmt_number
+    )
+
+  # Take snapshots of `summary_tbl_4`
+  summary_tbl_4 %>% render_as_html() %>% expect_snapshot()
+  summary_tbl_4 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  summary_tbl_4 %>% as_rtf() %>% expect_snapshot()
+
+  # This table is a slight modification on `summary_tbl_4` in that the
+  # `"group"` column is being used to generate row groups
+  summary_tbl_5 <-
+    exibble %>%
+    dplyr::rename(rowname = row) %>%
+    gt(rowname_col = "char", groupname_col = "group") %>%
+    summary_rows(
+      columns = c(num, currency),
+      groups = c("grp_a", "grp_b"),
+      fns = list(
+        median = ~median(., na.rm = TRUE)
+      ),
+      formatter = fmt_number
+    ) %>%
+    grand_summary_rows(
+      columns = c(num, currency),
+      fns = list(
+        min = ~min(., na.rm = TRUE),
+        max = ~max(., na.rm = TRUE),
+        avg = ~mean(., na.rm = TRUE)),
+      formatter = fmt_number
+    )
+
+  # Take snapshots of `summary_tbl_5`
+  summary_tbl_5 %>% render_as_html() %>% expect_snapshot()
+  summary_tbl_5 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  summary_tbl_5 %>% as_rtf() %>% expect_snapshot()
+
+  # This table uses the `"rowname"` column to generate rownames in the stub,
+  # and, the `"group"` column is used to form row groups
+  summary_tbl_6 <-
+    exibble %>%
+    dplyr::rename(rowname = row) %>%
+    gt(rowname_col = "rowname", groupname_col = "group") %>%
+    summary_rows(
+      columns = c(num, currency),
+      groups = c("grp_a", "grp_b"),
+      fns = list(
+        median = ~median(., na.rm = TRUE)
+      ),
+      formatter = fmt_number
+    ) %>%
+    grand_summary_rows(
+      columns = c(num, currency),
+      fns = list(
+        min = ~min(., na.rm = TRUE),
+        max = ~max(., na.rm = TRUE),
+        avg = ~mean(., na.rm = TRUE)),
+      formatter = fmt_number
+    )
+
+  # Take snapshots of `summary_tbl_6`
+  summary_tbl_6 %>% render_as_html() %>% expect_snapshot()
+  summary_tbl_6 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  summary_tbl_6 %>% as_rtf() %>% expect_snapshot()
+
+  # We should expect no errors or warnings when rendering each of these
+  # tables to the different output formats
+  expect_error(regexp = NA, summary_tbl_1 %>% render_as_html())
+  expect_error(regexp = NA, summary_tbl_1 %>% as_latex())
+  expect_error(regexp = NA, summary_tbl_1 %>% as_rtf())
+  expect_warning(regexp = NA, summary_tbl_1 %>% render_as_html())
+  expect_warning(regexp = NA, summary_tbl_1 %>% as_latex())
+  expect_warning(regexp = NA, summary_tbl_1 %>% as_rtf())
+
+  expect_error(regexp = NA, summary_tbl_2 %>% render_as_html())
+  expect_error(regexp = NA, summary_tbl_2 %>% as_latex())
+  expect_error(regexp = NA, summary_tbl_2 %>% as_rtf())
+  expect_warning(regexp = NA, summary_tbl_2 %>% render_as_html())
+  expect_warning(regexp = NA, summary_tbl_2 %>% as_latex())
+  expect_warning(regexp = NA, summary_tbl_2 %>% as_rtf())
+
+  expect_error(regexp = NA, summary_tbl_3 %>% render_as_html())
+  expect_error(regexp = NA, summary_tbl_3 %>% as_latex())
+  expect_error(regexp = NA, summary_tbl_3 %>% as_rtf())
+  expect_warning(regexp = NA, summary_tbl_3 %>% render_as_html())
+  expect_warning(regexp = NA, summary_tbl_3 %>% as_latex())
+  expect_warning(regexp = NA, summary_tbl_3 %>% as_rtf())
+
+  expect_error(regexp = NA, summary_tbl_4 %>% render_as_html())
+  expect_error(regexp = NA, summary_tbl_4 %>% as_latex())
+  expect_error(regexp = NA, summary_tbl_4 %>% as_rtf())
+  expect_warning(regexp = NA, summary_tbl_4 %>% render_as_html())
+  expect_warning(regexp = NA, summary_tbl_4 %>% as_latex())
+  expect_warning(regexp = NA, summary_tbl_4 %>% as_rtf())
+
+  expect_error(regexp = NA, summary_tbl_5 %>% render_as_html())
+  expect_error(regexp = NA, summary_tbl_5 %>% as_latex())
+  expect_error(regexp = NA, summary_tbl_5 %>% as_rtf())
+  expect_warning(regexp = NA, summary_tbl_5 %>% render_as_html())
+  expect_warning(regexp = NA, summary_tbl_5 %>% as_latex())
+  expect_warning(regexp = NA, summary_tbl_5 %>% as_rtf())
+
+  expect_error(regexp = NA, summary_tbl_6 %>% render_as_html())
+  expect_error(regexp = NA, summary_tbl_6 %>% as_latex())
+  expect_error(regexp = NA, summary_tbl_6 %>% as_rtf())
+  expect_warning(regexp = NA, summary_tbl_6 %>% render_as_html())
+  expect_warning(regexp = NA, summary_tbl_6 %>% as_latex())
+  expect_warning(regexp = NA, summary_tbl_6 %>% as_rtf())
+})
