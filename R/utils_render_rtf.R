@@ -1274,7 +1274,7 @@ create_body_component_rtf <- function(data) {
 
         summary_df <-
           list_of_summaries$summary_df_display_list[[group_id]] %>%
-          dplyr::select(.data$`::rowname::`, .env$default_vars)
+          dplyr::select(.env$rowname_col_private, .env$default_vars)
 
         for (j in seq_len(nrow(summary_df))) {
 
@@ -1325,8 +1325,8 @@ create_body_component_rtf <- function(data) {
       grand_summary_col %in% names(list_of_summaries$summary_df_display_list)) {
 
     grand_summary_df <-
-      list_of_summaries$summary_df_display_list$`::GRAND_SUMMARY` %>%
-      dplyr::select(.data$`::rowname::`, .env$default_vars)
+      list_of_summaries$summary_df_display_list[[grand_summary_col]] %>%
+      dplyr::select(.env$rowname_col_private, .env$default_vars)
 
     for (j in seq_len(nrow(grand_summary_df))) {
 

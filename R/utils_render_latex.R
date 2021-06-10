@@ -470,7 +470,7 @@ create_summary_rows_l <- function(list_of_summaries,
           # select the column named `::rowname::` and all of the visible columns
           summary_df <-
             list_of_summaries$summary_df_display_list[[group_id]] %>%
-            dplyr::select(.data$`::rowname::`, .env$default_vars)
+            dplyr::select(.env$rowname_col_private, .env$default_vars)
 
           row_splits_summary <- split_row_content(summary_df)
 
@@ -497,8 +497,8 @@ create_grand_summary_rows_l <- function(list_of_summaries,
 
   if (
     length(list_of_summaries) < 1 ||
-    is.null(list_of_summaries$summary_df_display_list$`::GRAND_SUMMARY`) ||
-    nrow(list_of_summaries$summary_df_display_list$`::GRAND_SUMMARY`) < 1
+    is.null(list_of_summaries$summary_df_display_list[[grand_summary_col]]) ||
+    nrow(list_of_summaries$summary_df_display_list[[grand_summary_col]]) < 1
   ) {
     return("")
   }
@@ -508,8 +508,8 @@ create_grand_summary_rows_l <- function(list_of_summaries,
   default_vars <- boxh[boxh$type == "default", "var", drop = TRUE]
 
   grand_summary_df <-
-    list_of_summaries$summary_df_display_list$`::GRAND_SUMMARY` %>%
-    dplyr::select(.data$`::rowname::`, .env$default_vars)
+    list_of_summaries$summary_df_display_list[[grand_summary_col]] %>%
+    dplyr::select(.env$rowname_col_private, .env$default_vars)
 
   row_splits_summary <- split_row_content(grand_summary_df)
 
