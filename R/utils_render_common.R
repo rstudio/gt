@@ -1,6 +1,3 @@
-
-grand_summary_col <- "::GRAND_SUMMARY"
-
 # Define the contexts
 all_contexts <- c("html", "latex", "rtf", "default")
 

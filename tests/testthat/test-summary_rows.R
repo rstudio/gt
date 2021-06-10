@@ -1493,6 +1493,7 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
   summary_tbl_3 %>% as_latex() %>% as.character() %>% expect_snapshot()
   summary_tbl_3 %>% as_rtf() %>% expect_snapshot()
 
+
   # This table has a stub with values but it is utilizing the `"char"`
   # column for its labels (`"rowname"` and `"group"` are visible columns)
   summary_tbl_4 <-
@@ -1512,6 +1513,7 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
   summary_tbl_4 %>% render_as_html() %>% expect_snapshot()
   summary_tbl_4 %>% as_latex() %>% as.character() %>% expect_snapshot()
   summary_tbl_4 %>% as_rtf() %>% expect_snapshot()
+
 
   # This table is a slight modification on `summary_tbl_4` in that the
   # `"group"` column is being used to generate row groups
@@ -1541,6 +1543,7 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
   summary_tbl_5 %>% as_latex() %>% as.character() %>% expect_snapshot()
   summary_tbl_5 %>% as_rtf() %>% expect_snapshot()
 
+
   # This table uses the `"rowname"` column to generate rownames in the stub,
   # and, the `"group"` column is used to form row groups
   summary_tbl_6 <-
@@ -1568,6 +1571,7 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
   summary_tbl_6 %>% render_as_html() %>% expect_snapshot()
   summary_tbl_6 %>% as_latex() %>% as.character() %>% expect_snapshot()
   summary_tbl_6 %>% as_rtf() %>% expect_snapshot()
+
 
   # We should expect no errors or warnings when rendering each of these
   # tables to the different output formats

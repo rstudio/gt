@@ -163,7 +163,7 @@ dt_summary_build <- function(data,
       base::setdiff(
         base::setdiff(
           colnames(body),
-          c("groupname", "::rowname::")
+          c("groupname", rowname_col_private)
         ),
         columns
       )
@@ -174,14 +174,14 @@ dt_summary_build <- function(data,
 
       select_data_tbl <-
         dplyr::select(data_tbl, .env$columns) %>%
-        dplyr::mutate(`::group_id::` = .env$grand_summary_col) %>%
-        dplyr::select(`::group_id::`, .env$columns)
+        dplyr::mutate(!!group_id_col_private := .env$grand_summary_col) %>%
+        dplyr::select(.env$group_id_col_private, .env$columns)
 
     } else {
 
       select_data_tbl <-
         dplyr::bind_cols(
-          dplyr::select(stub_df, `::group_id::` = .data$group_id),
+          dplyr::select(stub_df, !!group_id_col_private := .data$group_id),
           data_tbl[stub_df$rownum_i, columns]
         )
     }
@@ -198,12 +198,12 @@ dt_summary_build <- function(data,
             group_label <- labels[j]
 
             select_data_tbl %>%
-              dplyr::filter(`::group_id::` %in% .env$groups) %>%
-              dplyr::group_by(`::group_id::`) %>%
+              dplyr::filter(dplyr::across(1, ~ . %in% .env$groups)) %>%
+              dplyr::group_by(dplyr::across(1)) %>%
               dplyr::summarize_all(.funs = agg_funs[[j]]) %>%
               dplyr::ungroup() %>%
-              dplyr::mutate(`::rowname::` = .env$group_label) %>%
-              dplyr::select(.data$`::group_id::`, .data$`::rowname::`, dplyr::everything())
+              dplyr::mutate(!!rowname_col_private := .env$group_label) %>%
+              dplyr::select(group_id_col_private, rowname_col_private, dplyr::everything())
           }
         )
       )
@@ -213,7 +213,7 @@ dt_summary_build <- function(data,
     summary_dfs_data[, columns_excl] <- NA_real_
 
     summary_dfs_data <-
-      dplyr::select(summary_dfs_data, `::group_id::`, `::rowname::`, colnames(body))
+      dplyr::select(summary_dfs_data, group_id_col_private, rowname_col_private, colnames(body))
 
     # Format the displayed summary lines
     summary_dfs_display <-
@@ -255,24 +255,23 @@ dt_summary_build <- function(data,
 
     for (group in groups) {
 
-      # Place data frame in separate list component by `group`
-      group_sym <- rlang::enquo(group)
-
       group_summary_data_df <-
-        summary_dfs_data %>%
-        dplyr::filter(`::group_id::` == !!group_sym)
+        dplyr::filter(summary_dfs_data, dplyr::across(1, ~ . == .env$group))
 
       group_summary_display_df <-
-        summary_dfs_display %>%
-        dplyr::filter(`::group_id::` == !!group_sym)
+        dplyr::filter(summary_dfs_display, dplyr::across(1, ~ . == .env$group))
 
       summary_df_data_list <-
-        c(summary_df_data_list,
-          stats::setNames(list(group_summary_data_df), group))
+        c(
+          summary_df_data_list,
+          stats::setNames(list(group_summary_data_df), group)
+        )
 
       summary_df_display_list <-
-        c(summary_df_display_list,
-          stats::setNames(list(group_summary_display_df), group))
+        c(
+          summary_df_display_list,
+          stats::setNames(list(group_summary_display_df), group)
+        )
     }
   }
 
@@ -286,23 +285,24 @@ dt_summary_build <- function(data,
 
   for (i in seq(summary_df_display_list)) {
 
-    arrangement <- unique(summary_df_display_list[[i]]$`::rowname::`)
+    arrangement <-
+      unique(summary_df_display_list[[i]][, rowname_col_private, drop = TRUE])
 
     summary_df_display_list[[i]] <-
       summary_df_display_list[[i]] %>%
-      dplyr::select(-`::group_id::`) %>%
-      dplyr::group_by(`::rowname::`) %>%
+      dplyr::select(-group_id_col_private) %>%
+      dplyr::group_by(dplyr::across(1)) %>%
       dplyr::summarize_all(last_non_na)
 
     summary_df_display_list[[i]] <-
       summary_df_display_list[[i]][
-        match(arrangement, summary_df_display_list[[i]]$`::rowname::`), ] %>%
+        match(arrangement, summary_df_display_list[[i]][
+          , rowname_col_private, drop = TRUE]), ] %>%
       replace(is.na(.), missing_text)
   }
 
-  # Return a list of lists, each of which have
-  # summary data frames for display and for data
-  # collection purposes
+  # Return a list of lists, each of which have summary data frames for
+  # display and for data collection purposes
   list_of_summaries <-
     list(
       summary_df_data_list = summary_df_data_list,
@@ -311,3 +311,7 @@ dt_summary_build <- function(data,
 
   dt_summary_data_set(data = data, summary = list_of_summaries)
 }
+
+grand_summary_col <- "::GRAND_SUMMARY"
+rowname_col_private <- "::rowname::"
+group_id_col_private <- "::group_id::"
