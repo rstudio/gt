@@ -1102,7 +1102,7 @@ summary_row_tags <- function(list_of_summaries,
     # select the column named `rowname` and all of the visible columns
     summary_df <-
       list_of_summaries$summary_df_display_list[[group_id]] %>%
-      dplyr::select(.data$`::rowname::`, .env$default_vars)
+      dplyr::select(.env$rowname_col_private, .env$default_vars)
 
     n_cols <- ncol(summary_df)
 
@@ -1127,8 +1127,8 @@ summary_row_tags <- function(list_of_summaries,
 
       if (group_id == grand_summary_col) {
 
-        # In this case, `grand_summary_col` is a global variable
-        # (`"::GRAND_SUMMARY"`) assigned in `utils_render_common.R`)
+        # In the above condition, `grand_summary_col` is a global variable
+        # (`"::GRAND_SUMMARY"`) assigned in `dt_summary.R`)
 
         styles_resolved_row <-
           styles_resolved_group[styles_resolved_group$rownum == j, , drop = FALSE]
