@@ -14,6 +14,7 @@ fmt_integer(
   suffixing = FALSE,
   pattern = "{x}",
   sep_mark = ",",
+  force_sign = FALSE,
   locale = NULL
 )
 }
@@ -72,6 +73,12 @@ characters are taken to be string literals.}
 \item{sep_mark}{The mark to use as a separator between groups of digits
 (e.g., using \code{sep_mark = ","} with \code{1000} would result in a formatted value
 of \verb{1,000}).}
+
+\item{force_sign}{Should the positive sign be shown for positive values
+(effectively showing a sign for all values except zero)? If so, use \code{TRUE}
+for this option. The default is \code{FALSE}, where only negative numbers will
+display a minus sign. This option is disregarded when using accounting
+notation with \code{accounting = TRUE}.}
 
 \item{locale}{An optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include \code{"en_US"} for English

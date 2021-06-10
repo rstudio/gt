@@ -201,6 +201,53 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
     )
   )
 
+  # Format the `num_1` column to 2 decimal places, force the sign
+  expect_equal(
+    (tab %>%
+       fmt_percent(
+         columns = num_1, decimals = 2,  drop_trailing_zeros = TRUE,
+         scale_values = FALSE, force_sign = TRUE
+       ) %>%
+       render_formats_test("html"))[["num_1"]],
+    c(
+      "+1,836.23&percnt;", "+2,763.39&percnt;", "+937.29&percnt;",
+      "+643&percnt;", "+212.23&percnt;", "0&percnt;", "&minus;23.24&percnt;"
+    )
+  )
+
+  # Expect that using `force_sign = TRUE` with `accounting = TRUE`
+  # will render values in accounting format
+  expect_equal(
+    (tab %>%
+       fmt_percent(
+         columns = num_1, decimals = 2, drop_trailing_zeros = TRUE,
+         scale_values = FALSE, accounting = TRUE, force_sign = TRUE
+       ) %>%
+       render_formats_test("html"))[["num_1"]],
+    (tab %>%
+       fmt_percent(
+         columns = num_1, decimals = 2,  drop_trailing_zeros = TRUE,
+         scale_values = FALSE, accounting = TRUE
+       ) %>%
+       render_formats_test("html"))[["num_1"]]
+  )
+
+  # Format the `num_1` column to 2 decimal places, force the sign and
+  # define a pattern for decorating values
+  expect_equal(
+    (tab %>%
+       fmt_percent(
+         columns = num_1, decimals = 2, drop_trailing_zeros = TRUE,
+         pattern = "*{x}*", force_sign = TRUE
+       ) %>%
+       render_formats_test("html"))[["num_1"]],
+    c(
+      "*+183,623&percnt;*", "*+276,339&percnt;*", "*+93,729&percnt;*",
+      "*+64,300&percnt;*", "*+21,223.2&percnt;*", "*0&percnt;*",
+      "*&minus;2,324&percnt;*"
+    )
+  )
+
   # Format the `num_1` column to 2 decimal places, apply the `en_US`
   # locale and use all other defaults
   expect_equal(

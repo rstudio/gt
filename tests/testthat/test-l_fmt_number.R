@@ -182,6 +182,44 @@ test_that("the `fmt_number()` function works correctly in the LaTeX context", {
     )
   )
 
+  # Format the `num_1` column to 2 decimal places, force the sign
+  expect_equal(
+    (tbl_latex %>%
+       fmt_number(
+         columns = num_1, decimals = 3, force_sign = TRUE) %>%
+       render_formats_test("latex"))[["num_1"]],
+    c(
+      "$+1,836.230$", "$+2,763.390$", "$+937.290$", "$+643.000$",
+      "$+212.232$", "$0.000$", "$-23.240$"
+    )
+  )
+
+  # Expect that using `force_sign = TRUE` with `accounting = TRUE`
+  # will render values in accounting format
+  expect_equal(
+    (tbl_latex %>%
+       fmt_number(
+         columns = num_1, decimals = 3, accounting = TRUE, force_sign = TRUE) %>%
+       render_formats_test("latex"))[["num_1"]],
+    (tbl_latex %>%
+       fmt_number(
+         columns = num_1, decimals = 3, accounting = TRUE) %>%
+       render_formats_test("latex"))[["num_1"]]
+  )
+
+  # Format the `num_1` column to 2 decimal places, force the sign and
+  # define a pattern for decorating values
+  expect_equal(
+    (tbl_latex %>%
+       fmt_number(
+         columns = num_1, pattern = "*{x}*", force_sign = TRUE) %>%
+       render_formats_test("latex"))[["num_1"]],
+    c(
+      "*$+1,836.23$*", "*$+2,763.39$*", "*$+937.29$*", "*$+643.00$*",
+      "*$+212.23$*", "*$0.00$*", "*$-23.24$*"
+    )
+  )
+
   # Format the `num_1` column to 2 decimal places, apply the `en_US`
   # locale and use all other defaults
   expect_equal(
