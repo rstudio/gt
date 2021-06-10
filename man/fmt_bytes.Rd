@@ -17,6 +17,7 @@ fmt_bytes(
   pattern = "{x}",
   sep_mark = ",",
   dec_mark = ".",
+  force_sign = FALSE,
   incl_space = TRUE,
   locale = NULL
 )
@@ -72,6 +73,11 @@ characters are taken to be string literals.}
 of \verb{1,000}).}
 
 \item{dec_mark}{The character to use as a decimal mark (e.g., using \code{dec_mark = ","} with \code{0.152} would result in a formatted value of \verb{0,152}).}
+
+\item{force_sign}{Should the positive sign be shown for positive numbers
+(effectively showing a sign for all numbers except zero)? If so, use \code{TRUE}
+for this option. The default is \code{FALSE}, where only negative numbers will
+display a minus sign.}
 
 \item{incl_space}{An option for whether to include a space between the value
 and the units. The default of \code{TRUE} uses a space character for separation.}

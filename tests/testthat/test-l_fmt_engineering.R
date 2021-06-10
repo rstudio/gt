@@ -165,6 +165,49 @@ test_that("the `fmt_engineering()` function works correctly in the LaTeX context
     )
   )
 
+  # Format the `num` column to 2 decimal places, force the sign
+  expect_equal(
+    (tab %>%
+       fmt_engineering(
+         columns = "num", decimals = 3, force_sign = TRUE) %>%
+       render_formats_test("latex"))[["num"]],
+    c(
+      "$+82.030 \\times 10^{30}$", "$+829.300 \\times 10^{18}$",
+      "$+492.032 \\times 10^{9}$", "$+84.930 \\times 10^{9}$",
+      "$+5.043 \\times 10^{9}$", "$+203.821 \\times 10^{6}$",
+      "$+84.729 \\times 10^{6}$", "$+2.323 \\times 10^{6}$",
+      "$+230.323 \\times 10^{3}$", "$+50.000 \\times 10^{3}$",
+      "$+1.000 \\times 10^{3}$", "$+10.000$", "$+12.345 \\times 10^{3}$",
+      "$+1.234 \\times 10^{3}$", "$+123.450$", "$+1.234$",
+      "$+123.450 \\times 10^{-3}$", "$+12.346 \\times 10^{-6}$",
+      "$-50.000 \\times 10^{3}$", "$-1.000 \\times 10^{3}$", "$-10.000$",
+      "$-12.345 \\times 10^{3}$", "$-1.234 \\times 10^{3}$", "$-123.450$",
+      "$-1.234$", "$-123.450 \\times 10^{-3}$", "$-12.346 \\times 10^{-6}$"
+    )
+  )
+
+  # Format the `num` column to 2 decimal places, force the sign and
+  # define a pattern for decorating values
+  expect_equal(
+    (tab %>%
+       fmt_engineering(
+         columns = "num", pattern = "*{x}*", force_sign = TRUE) %>%
+       render_formats_test("latex"))[["num"]],
+    c(
+      "*$+82.03 \\times 10^{30}$*", "*$+829.30 \\times 10^{18}$*",
+      "*$+492.03 \\times 10^{9}$*", "*$+84.93 \\times 10^{9}$*",
+      "*$+5.04 \\times 10^{9}$*", "*$+203.82 \\times 10^{6}$*",
+      "*$+84.73 \\times 10^{6}$*", "*$+2.32 \\times 10^{6}$*",
+      "*$+230.32 \\times 10^{3}$*", "*$+50.00 \\times 10^{3}$*",
+      "*$+1.00 \\times 10^{3}$*", "*$+10.00$*", "*$+12.35 \\times 10^{3}$*",
+      "*$+1.23 \\times 10^{3}$*", "*$+123.45$*", "*$+1.23$*",
+      "*$+123.45 \\times 10^{-3}$*", "*$+12.35 \\times 10^{-6}$*",
+      "*$-50.00 \\times 10^{3}$*", "*$-1.00 \\times 10^{3}$*", "*$-10.00$*",
+      "*$-12.35 \\times 10^{3}$*", "*$-1.23 \\times 10^{3}$*", "*$-123.45$*",
+      "*$-1.23$*", "*$-123.45 \\times 10^{-3}$*", "*$-12.35 \\times 10^{-6}$*"
+    )
+  )
+
   # Format the `num` column to 2 decimal places, apply the `en_US`
   # locale and use all other defaults
   expect_equal(
