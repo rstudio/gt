@@ -202,6 +202,37 @@ test_that("the `fmt_bytes()` function works correctly", {
     )
   )
 
+  # Format the `num` column to 3 decimal places, force the sign
+  expect_equal(
+    (tab %>%
+       fmt_bytes(
+         columns = num, decimals = 3, force_sign = TRUE) %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "&minus;500 B", "0 B", "0 B", "0 B", "+500 B", "+1.023 kB",
+      "+1.001 kB", "+1.024 kB", "+1.049 MB", "+1.074 GB", "+1.1 TB",
+      "+1.126 PB", "+1.153 EB", "+1.181 ZB", "+1.209 YB", "+1 kB",
+      "+1 MB", "+1 GB", "+1 TB", "+1 PB", "+1 EB", "+1 ZB", "+1 YB",
+      "+15 YB", "+150 YB", "+1,500 YB", "+15,000 YB", "NA"
+    )
+  )
+
+  # Format the `num` column, force the sign and
+  # define a pattern for decorating values
+  expect_equal(
+    (tab %>%
+       fmt_bytes(
+         columns = num, pattern = "*{x}*", force_sign = TRUE) %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "*&minus;500 B*", "*0 B*", "*0 B*", "*0 B*", "*+500 B*", "*+1 kB*",
+      "*+1 kB*", "*+1 kB*", "*+1 MB*", "*+1.1 GB*", "*+1.1 TB*", "*+1.1 PB*",
+      "*+1.2 EB*", "*+1.2 ZB*", "*+1.2 YB*", "*+1 kB*", "*+1 MB*",
+      "*+1 GB*", "*+1 TB*", "*+1 PB*", "*+1 EB*", "*+1 ZB*", "*+1 YB*",
+      "*+15 YB*", "*+150 YB*", "*+1,500 YB*", "*+15,000 YB*", "NA"
+    )
+  )
+
   # Format the `num` column to 2 decimal places, apply the `en_US`
   # locale and use all other defaults; extract `output_df` and compare
   # to expected values
