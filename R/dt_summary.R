@@ -203,7 +203,10 @@ dt_summary_build <- function(data,
               dplyr::summarize_all(.funs = agg_funs[[j]]) %>%
               dplyr::ungroup() %>%
               dplyr::mutate(!!rowname_col_private := .env$group_label) %>%
-              dplyr::select(group_id_col_private, rowname_col_private, dplyr::everything())
+              dplyr::select(
+                .env$group_id_col_private, .env$rowname_col_private,
+                dplyr::everything()
+              )
           }
         )
       )
@@ -213,7 +216,10 @@ dt_summary_build <- function(data,
     summary_dfs_data[, columns_excl] <- NA_real_
 
     summary_dfs_data <-
-      dplyr::select(summary_dfs_data, group_id_col_private, rowname_col_private, colnames(body))
+      dplyr::select(
+        summary_dfs_data, .env$group_id_col_private, .env$rowname_col_private,
+        colnames(body)
+      )
 
     # Format the displayed summary lines
     summary_dfs_display <-
@@ -290,7 +296,7 @@ dt_summary_build <- function(data,
 
     summary_df_display_list[[i]] <-
       summary_df_display_list[[i]] %>%
-      dplyr::select(-group_id_col_private) %>%
+      dplyr::select(-.env$group_id_col_private) %>%
       dplyr::group_by(dplyr::across(1)) %>%
       dplyr::summarize_all(last_non_na)
 
