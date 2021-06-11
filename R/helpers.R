@@ -1717,14 +1717,17 @@ currency <- function(...,
 #'   `"expanded"`, `"extra-expanded"`, or `"ultra-expanded"`. Alternatively, we
 #'   can supply percentage values from `0\%` to `200\%`, inclusive. Negative
 #'   percentage values are not allowed.
+#' @param decorate Allows for text decoration effect to be applied. Here, we can
+#'   use `"overline"`, `"line-through"`, or `"underline"`.
+#' @param transform Allows for the transformation of text. Options are
+#'   `"uppercase"`, `"lowercase"`, or `"capitalize"`.
+#' @param whitespace A whitespace preservation option. By default, runs of
+#'   whitespace will be collapsed into single spaces. If we use `"pre"` here,
+#'   all whitespace will be preserved.
 #' @param indent The indentation of the text. Can be provided as a number that
 #'   is assumed to represent `px` values (or could be wrapped in the [px()])
 #'   helper function. Alternatively, this can be given as a percentage (easily
 #'   constructed with [pct()]).
-#' @param decorate allows for text decoration effect to be applied. Here, we can
-#'   use `"overline"`, `"line-through"`, or `"underline"`.
-#' @param transform Allows for the transformation of text. Options are
-#'   `"uppercase"`, `"lowercase"`, or `"capitalize"`.
 #'
 #' @return A list object of class `cell_styles`.
 #'
@@ -1770,9 +1773,10 @@ cell_text <- function(color = NULL,
                       style = NULL,
                       weight = NULL,
                       stretch = NULL,
-                      indent = NULL,
                       decorate = NULL,
-                      transform = NULL) {
+                      transform = NULL,
+                      whitespace = NULL,
+                      indent = NULL) {
 
   # Get all assigned values for the functions' arguments
   style_names <- formals(cell_text) %>% names()
@@ -1836,6 +1840,12 @@ cell_text <- function(color = NULL,
     in_vector = c("uppercase", "lowercase", "capitalize")
   )
 
+  validate_style_in(
+    style_vals, style_names,
+    arg_name = "whitespace",
+    in_vector = "pre"
+  )
+
   cell_style_structure(name = "cell_text", obj = style_vals)
 }
 
@@ -1852,9 +1862,10 @@ cell_style_to_html.cell_text <- function(style) {
       style = "font-style",
       weight = "font-weight",
       stretch = "font-stretch",
-      indent = "text-indent",
       decorate = "text-decoration",
-      transform = "text-transform"
+      transform = "text-transform",
+      whitespace = "white-space",
+      indent = "text-indent"
     )
 
   html_names <- css_names[names(css)]
