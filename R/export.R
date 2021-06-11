@@ -586,7 +586,7 @@ as_rtf <- function(data,
 #'   summary_extracted %>%
 #'   unlist(recursive = FALSE) %>%
 #'   dplyr::bind_rows() %>%
-#'   gt()
+#'   gt(groupname_col = "group_id")
 #'
 #' @section Figures:
 #' \if{html}{\figure{man_extract_summary_1.png}{options: width=100\%}}
@@ -607,7 +607,7 @@ extract_summary <- function(data) {
 
     stop(
       "There is no summary list to extract.\n",
-      "* Use the `summary_rows()` function to generate summaries.",
+      "Use the `summary_rows()`/`grand_summary_rows()` functions to generate summaries.",
       call. = FALSE
     )
   }
@@ -618,5 +618,17 @@ extract_summary <- function(data) {
 
   # Extract the list of summary data frames
   # that contains tidy, unformatted data
-  as.list(dt_summary_df_data_get(data = built_data))
+  summary_tbl <-
+    dt_summary_df_data_get(data = built_data) %>%
+    lapply(FUN = function(x) {
+      lapply(x, function(y) {
+        dplyr::rename(
+          y,
+          rowname = .env$rowname_col_private,
+          group_id = .env$group_id_col_private
+        )
+      })
+    })
+
+  as.list(summary_tbl)
 }
