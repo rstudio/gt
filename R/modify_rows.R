@@ -75,5 +75,8 @@ row_group_order <- function(data,
   groups <- c(unique(groups), base::setdiff(arrange_groups, unique(groups)))
 
   # Create and store a list of row groups in the intended ordering
-  dt_row_groups_set(data = data, row_groups = groups)
+  dt_row_groups_set(
+    data = data,
+    row_groups = groups
+  )
 }

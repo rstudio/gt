@@ -12,7 +12,7 @@ tbl <-
 
 # Create a display table
 gt_tbl <-
-  gt(data = tbl) %>%
+  gt(tbl) %>%
   tab_spanner(
     label = "v_1_2",
     columns =  c(v_1, v_2)

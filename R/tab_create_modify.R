@@ -152,8 +152,8 @@ tab_spanner <- function(data,
 
     # Move columns into place
     data <-
-      data %>%
       cols_move(
+        data = data,
         columns = column_names,
         after = column_names[1]
       )
@@ -418,7 +418,11 @@ tab_row_group <- function(data,
   # Warn user about `others_label` deprecation
   if (!is.null(others_label)) {
 
-    data <- tab_options(data = data, row_group.default_label = others_label)
+    data <-
+      tab_options(
+        data = data,
+        row_group.default_label = others_label
+      )
 
     warning(
       "The `others_label` argument has been deprecated in gt 0.3.0:\n",
@@ -461,6 +465,7 @@ tab_row_group <- function(data,
   arrange_groups_vars <- c(id, stats::na.omit(arrange_groups_vars))
   arrange_groups_vars <- unique(arrange_groups_vars)
   arrange_groups_vars <- arrange_groups_vars[arrange_groups_vars %in% stub_df$group_id]
+
   if (dt_stub_groupname_has_na(data = data)) {
     arrange_groups_vars <- c(arrange_groups_vars, NA_character_)
   }
@@ -469,13 +474,10 @@ tab_row_group <- function(data,
     arrange_groups_vars <- character(0)
   }
 
-  data <-
-    dt_row_groups_set(
-      data = data,
-      row_groups = arrange_groups_vars
-    )
-
-  data
+  dt_row_groups_set(
+    data = data,
+    row_groups = arrange_groups_vars
+  )
 }
 
 #' Add label text to the stubhead
@@ -612,6 +614,7 @@ tab_footnote <- function(data,
   # Resolve the locations of the targeted data cells and append
   # the footnotes
   for (loc in locations) {
+
     data <-
       set_footnote(
         loc = loc,
@@ -1813,9 +1816,10 @@ tab_options <- function(data,
     )
 
   # Write the modified options table back to `data`
-  data <- dt_options_set(data = data, options = opts_df)
-
-  data
+  dt_options_set(
+    data = data,
+    options = opts_df
+  )
 }
 
 preprocess_tab_option <- function(option, var_name, type) {
