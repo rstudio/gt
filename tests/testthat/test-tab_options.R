@@ -322,6 +322,15 @@ test_that("the internal `opts_df` table can be correctly modified", {
   # ) %>%
   #   expect_equal(c("normal", "bolder"))
 
+  # Modify the `heading.padding`
+  tbl_html <- data %>% tab_options(heading.padding = px(10))
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "heading_padding"),
+    dt_options_get_value(data = tbl_html, option = "heading_padding")
+  ) %>%
+    expect_equal(c("4px", "10px"))
+
   # Modify the `heading.border.bottom.style`
   tbl_html <- data %>% tab_options(heading.border.bottom.style = "dashed")
 
@@ -438,6 +447,15 @@ test_that("the internal `opts_df` table can be correctly modified", {
     dt_options_get_value(data = tbl_html, option = "column_labels_text_transform")
   ) %>%
     expect_equal(c("inherit", "uppercase"))
+
+  # Modify the `column_labels.padding`
+  tbl_html <- data %>% tab_options(column_labels.padding = px(10))
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "column_labels_padding"),
+    dt_options_get_value(data = tbl_html, option = "column_labels_padding")
+  ) %>%
+    expect_equal(c("5px", "10px"))
 
   # Modify the `column_labels.border.top.style`
   tbl_html <- data %>% tab_options(column_labels.border.top.style = "dashed")
