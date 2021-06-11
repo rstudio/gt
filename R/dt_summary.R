@@ -262,10 +262,10 @@ dt_summary_build <- function(data,
     for (group in groups) {
 
       group_summary_data_df <-
-        dplyr::filter(summary_dfs_data, dplyr::across(1, ~ . == .env$group))
+        dplyr::filter(summary_dfs_data, .data[[group_id_col_private]] == .env$group)
 
       group_summary_display_df <-
-        dplyr::filter(summary_dfs_display, dplyr::across(1, ~ . == .env$group))
+        dplyr::filter(summary_dfs_display, .data[[group_id_col_private]] == .env$group)
 
       summary_df_data_list <-
         c(
