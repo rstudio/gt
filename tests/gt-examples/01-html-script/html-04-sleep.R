@@ -2,7 +2,7 @@ library(gt)
 
 # Create a display table based on `sleep`
 sleep_tbl <-
-  gt(data = sleep) %>%
+  gt(sleep) %>%
   fmt_scientific(columns = extra) %>%
   tab_footnote(
     footnote = "This is a footnote",

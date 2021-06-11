@@ -87,7 +87,7 @@ opt_footnote_marks <- function(data,
   # Validate input for `marks`
   validate_marks(marks)
 
-  tab_options(data, footnotes.marks = marks)
+  tab_options(data = data, footnotes.marks = marks)
 }
 
 #' Option to add or remove row striping
@@ -149,7 +149,10 @@ opt_row_striping <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  tab_options(data, row.striping.include_table_body = row_striping)
+  tab_options(
+    data = data,
+    row.striping.include_table_body = row_striping
+  )
 }
 
 #' Option to align the table header
@@ -215,7 +218,10 @@ opt_align_table_header <- function(data,
 
   align <- match.arg(align)
 
-  tab_options(data, heading.align = align)
+  tab_options(
+    data = data,
+    heading.align = align
+  )
 }
 
 #' Option to use all caps in select table locations
@@ -289,8 +295,11 @@ opt_all_caps <- function(data,
 
   # Ensure that all named locations are valid
   if (!all(locations %in% c("column_labels", "stub", "row_group"))) {
-    stop("The available locations are `column_labels`, `stub`, and `row_group`.",
-         call. = FALSE)
+
+    stop(
+      "The available locations are `column_labels`, `stub`, and `row_group`.",
+      call. = FALSE
+    )
   }
 
   # Create a regex pattern to obtain arg names for all specific `locations`
@@ -317,7 +326,10 @@ opt_all_caps <- function(data,
     option_value_list <- create_default_option_value_list(options_vec)
   }
 
-  tab_options_multi(data, option_value_list)
+  tab_options_multi(
+    data = data,
+    options = option_value_list
+  )
 }
 
 #' Option to set table lines to different extents
@@ -396,7 +408,10 @@ opt_table_lines <- function(data,
     option_value_list <- create_default_option_value_list(options_vec)
   }
 
-  tab_options_multi(data, option_value_list)
+  tab_options_multi(
+    data = data,
+    options = option_value_list
+  )
 }
 
 #' Option to wrap an outline around the entire table
@@ -499,7 +514,11 @@ opt_table_outline <- function(data,
     )
 
   option_value_list <- create_option_value_list(options_vec, values_vec)
-  tab_options_multi(data, option_value_list)
+
+  tab_options_multi(
+    data = data,
+    options = option_value_list
+  )
 }
 
 #' Option to define a custom font for the table
@@ -603,26 +622,58 @@ opt_table_font <- function(data,
                            style = NULL,
                            add = TRUE) {
 
-  existing_fonts <- dt_options_get_value(data = data, option = "table_font_names")
-  existing_additional_css <- dt_options_get_value(data = data, option = "table_additional_css")
+  existing_fonts <-
+    dt_options_get_value(
+      data = data,
+      option = "table_font_names"
+    )
+
+  existing_additional_css <-
+    dt_options_get_value(
+      data = data,
+      option = "table_additional_css"
+    )
 
   font <- normalize_font_input(font_input = font)
 
   additional_css <- c(font$import_stmt, existing_additional_css)
 
-  data <- tab_options(data = data, table.font.names = c(font$name, if (add) existing_fonts))
-  data <- tab_options(data = data, table.additional_css = additional_css)
+  data <-
+    tab_options(
+      data = data,
+      table.font.names = c(font$name, if (add) existing_fonts)
+    )
+
+  data <-
+    tab_options(
+      data = data,
+      table.additional_css = additional_css
+    )
 
   if (!is.null(weight)) {
 
     if (is.numeric(weight)) weight <- as.character(weight)
 
-    data <- tab_options(data = data, table.font.weight = weight)
-    data <- tab_options(data = data, column_labels.font.weight = weight)
+    data <-
+      tab_options(
+        data = data,
+        table.font.weight = weight
+      )
+
+    data <-
+      tab_options(
+        data = data,
+        column_labels.font.weight = weight
+      )
   }
 
   if (!is.null(style)) {
-    data <- tab_options(data = data, table.font.style = style)
+
+    data <-
+      tab_options(
+        data = data,
+        table.font.style = style
+      )
   }
 
   data
@@ -695,7 +746,10 @@ opt_css <- function(data,
                     allow_duplicates = FALSE) {
 
   existing_additional_css <-
-    dt_options_get_value(data = data, option = "table_additional_css")
+    dt_options_get_value(
+      data = data,
+      option = "table_additional_css"
+    )
 
   css <- paste(css, collapse = "\n")
 
@@ -705,7 +759,10 @@ opt_css <- function(data,
 
   additional_css <- c(existing_additional_css, css)
 
-  tab_options(data = data, table.additional_css = additional_css)
+  tab_options(
+    data = data,
+    table.additional_css = additional_css
+  )
 }
 
 normalize_font_input <- function(font_input) {

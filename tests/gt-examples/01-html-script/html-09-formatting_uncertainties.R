@@ -13,7 +13,7 @@ tbl <-
 
 # Create a display table with uncertainties
 uncert_tbl <-
-  gt(data = tbl) %>%
+  gt(tbl) %>%
   cols_merge_uncert(
     col_val = value_1,
     col_uncert = uncertainty

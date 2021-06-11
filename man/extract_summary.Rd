@@ -70,7 +70,7 @@ tab_1 <-
   summary_extracted \%>\%
   unlist(recursive = FALSE) \%>\%
   dplyr::bind_rows() \%>\%
-  gt()
+  gt(groupname_col = "group_id")
 
 }
 \seealso{
