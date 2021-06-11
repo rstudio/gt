@@ -41,6 +41,7 @@ tab_options(
   heading.title.font.weight = NULL,
   heading.subtitle.font.size = NULL,
   heading.subtitle.font.weight = NULL,
+  heading.padding = NULL,
   heading.border.bottom.style = NULL,
   heading.border.bottom.width = NULL,
   heading.border.bottom.color = NULL,
@@ -51,6 +52,7 @@ tab_options(
   column_labels.font.size = NULL,
   column_labels.font.weight = NULL,
   column_labels.text_transform = NULL,
+  column_labels.padding = NULL,
   column_labels.vlines.style = NULL,
   column_labels.vlines.width = NULL,
   column_labels.vlines.color = NULL,
@@ -224,6 +226,11 @@ absolute bottom borders.}
 \item{heading.align}{Controls the horizontal alignment of the heading title
 and subtitle. We can either use \code{"center"}, \code{"left"}, or \code{"right"}.}
 
+\item{heading.padding, column_labels.padding, data_row.padding, row_group.padding, summary_row.padding, grand_summary_row.padding, footnotes.padding, source_notes.padding}{The amount of vertical padding to incorporate in the \code{heading},
+\code{column_labels} (and \code{column_spanners}), \code{row_group}, \code{body}, \code{stub},
+\code{summary_row}, \code{grand_summary_row}, \code{footnotes}, and \code{source_notes}
+locations.}
+
 \item{heading.border.bottom.style, heading.border.bottom.width, heading.border.bottom.color}{The style, width, and color properties of the header's bottom border. This
 border shares space with that of the \code{column_labels} location. If the
 \code{width} of this border is larger, then it will be the visible border.}
@@ -271,10 +278,6 @@ the \code{table_body} location.}
 
 \item{stub.border.style, stub.border.width, stub.border.color}{The style, width, and color properties for the vertical border of the table
 stub.}
-
-\item{data_row.padding, row_group.padding, summary_row.padding, grand_summary_row.padding, footnotes.padding, source_notes.padding}{The amount of vertical padding to incorporate in the \code{data_row},
-\code{row_group}, \code{summary_row}, \code{grand_summary_row}, \code{footnotes}, and
-\code{source_notes} locations.}
 
 \item{summary_row.border.style, summary_row.border.width, summary_row.border.color}{The style, width, and color properties for all horizontal borders of the
 \code{summary_row} location.}
