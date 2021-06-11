@@ -8,9 +8,8 @@ test_that("the `fmt_date()` function works correctly", {
     dplyr::tibble(date = c(
       "2017-10-15", "2013-02-22", "2014-09-22", "2018-01-10"))
 
-  # Create a `tbl_latex` object with `gt()` and the
-  # `data_tbl` dataset
-  tbl_latex <- gt(data = data_tbl)
+  # Create a `tbl_latex` object with `gt()` and the `data_tbl` dataset
+  tbl_latex <- gt(data_tbl)
 
   #
   # Format `date` in various date formats and verify the output
@@ -112,9 +111,8 @@ test_that("the `fmt_date()` function works correctly", {
     dplyr::tibble(date = as.Date(c(
       "2017-10-15", "2013-02-22", "2014-09-22", "2018-01-10")))
 
-  # Create a `tbl_latex` object with `gt()` and the
-  # `data_tbl` dataset
-  tbl_latex <- gt(data = data_tbl)
+  # Create a `tbl_latex` object with `gt()` and the `data_tbl` dataset
+  tbl_latex <- gt(data_tbl)
 
   #
   # Format `date` in various date formats and verify the output
@@ -220,9 +218,8 @@ test_that("the `fmt_time()` function works correctly", {
     dplyr::tibble(time = c(
       "12:35:23", "15:01:34", "09:45:23", "01:32:00"))
 
-  # Create a `tbl_latex` object with `gt()` and the
-  # `data_tbl` dataset
-  tbl_latex <- gt(data = data_tbl)
+  # Create a `tbl_latex` object with `gt()` and the `data_tbl` dataset
+  tbl_latex <- gt(data_tbl)
 
   #
   # Format `time` in various date formats and verify the output
@@ -270,9 +267,8 @@ test_that("the `fmt_datetime()` function works correctly", {
       "2017-08-05 09:45:23",
       "2017-10-23 01:32:00"))
 
-  # Create a `tbl_latex` object with `gt()` and the
-  # `data_tbl` dataset
-  tbl_latex <- gt(data = data_tbl)
+  # Create a `tbl_latex` object with `gt()` and the `data_tbl` dataset
+  tbl_latex <- gt(data_tbl)
 
   #
   # Format `time` in various date formats and verify the output

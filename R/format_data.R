@@ -180,6 +180,7 @@ fmt_number <- function(data,
   suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by)
 
   # Stop function if any columns have data that is incompatible
+  # with this formatter
   if (
     !column_classes_are_valid(
       data = data,
@@ -458,9 +459,17 @@ fmt_scientific <- function(data,
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(data, {{ columns }}, valid_classes = c("numeric", "integer"))) {
-    stop("The `fmt_scientific()` function can only be used on `columns` with numeric data",
-         call. = FALSE)
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = c("numeric", "integer")
+    )
+  ) {
+    stop(
+      "The `fmt_scientific()` function can only be used on `columns` with numeric data.",
+      call. = FALSE
+    )
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -943,9 +952,17 @@ fmt_percent <- function(data,
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(data, {{ columns }}, valid_classes = c("numeric", "integer"))) {
-    stop("The `fmt_percent()` function can only be used on `columns` with numeric data",
-         call. = FALSE)
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = c("numeric", "integer")
+    )
+  ) {
+    stop(
+      "The `fmt_percent()` function can only be used on `columns` with numeric data.",
+      call. = FALSE
+    )
   }
 
   if (scale_values) {
@@ -954,6 +971,7 @@ fmt_percent <- function(data,
     scale_by <- 1.0
   }
 
+  # Pass `data`, `columns`, `rows`, and other options to `fmt_symbol()`
   fmt_symbol(
     data = data,
     columns = {{ columns }},
@@ -1109,9 +1127,17 @@ fmt_currency <- function(data,
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(data, {{ columns }}, valid_classes = c("numeric", "integer"))) {
-    stop("The `fmt_currency()` function can only be used on `columns` with numeric data",
-         call. = FALSE)
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = c("numeric", "integer")
+    )
+  ) {
+    stop(
+      "The `fmt_currency()` function can only be used on `columns` with numeric data.",
+      call. = FALSE
+    )
   }
 
   # Stop function if `currency` does not have a valid value
@@ -1125,6 +1151,7 @@ fmt_currency <- function(data,
       use_subunits = use_subunits
     )
 
+  # Pass `data`, `columns`, `rows`, and other options to `fmt_symbol()`
   fmt_symbol(
     data = data,
     columns = {{ columns }},
@@ -1267,6 +1294,8 @@ fmt_bytes <- function(data,
     byte_units <- c("B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB")
   }
 
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
   fmt(
     data = data,
     columns = {{ columns }},
@@ -1416,9 +1445,17 @@ fmt_date <- function(data,
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(data, {{ columns }}, valid_classes = c("Date", "character"))) {
-    stop("The `fmt_date()` function can only be used on `columns` with `character` or `Date` values",
-         call. = FALSE)
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = c("Date", "character")
+    )
+  ) {
+    stop(
+      "The `fmt_date()` function can only be used on `columns` with `character` or `Date` values.",
+      call. = FALSE
+    )
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -1547,9 +1584,16 @@ fmt_time <- function(data,
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(data, {{ columns }}, valid_classes = "character")) {
-    stop("The `fmt_date()` function can only be used on `columns` with `character` values",
-         call. = FALSE)
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = "character")
+  ) {
+    stop(
+      "The `fmt_date()` function can only be used on `columns` with `character` values.",
+      call. = FALSE
+    )
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -1671,9 +1715,16 @@ fmt_datetime <- function(data,
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(data, {{ columns }}, valid_classes = "character")) {
-    stop("The `fmt_datetime()` function can only be used on `columns` with `character` values",
-         call. = FALSE)
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = "character"
+    )) {
+    stop(
+      "The `fmt_datetime()` function can only be used on `columns` with `character` values.",
+      call. = FALSE
+    )
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -2082,6 +2133,7 @@ fmt_missing <- function(data,
 #' **gt**. Along with the `columns` and `rows` arguments that provide some
 #' precision in targeting data cells, the `fns` argument allows you to define
 #' one or more functions for manipulating the raw data.
+#'
 #' If providing a single function to `fns`, the recommended format is in the
 #' form: `fns = function(x) ...`. This single function will format the targeted
 #' data cells the same way regardless of the output format (e.g., HTML, LaTeX,
