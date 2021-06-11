@@ -9,9 +9,8 @@ test_that("the `fmt_missing()` function works correctly", {
       num_2 = c(34, 74, 23, 93, 35, 76, 57),
       stringsAsFactors = FALSE)
 
-  # Create a `tbl_latex` object with `gt()` and the
-  # `data_tbl` dataset
-  tbl_latex <- gt(data = data_tbl)
+  # Create a `tbl_latex` object with `gt()` and the `data_tbl` dataset
+  tbl_latex <- gt(data_tbl)
 
   #
   # Use `fmt_missing()` with various options

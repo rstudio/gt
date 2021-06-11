@@ -560,6 +560,51 @@ test_that("the function `cols_width()` works correctly with a simple table", {
       "</colgroup>"
     ) %>%
     expect_true()
+
+  # Expect no partial matching issues with column names and arguments
+  expect_error(
+    regexp = NA,
+    dplyr::tribble(
+      ~a , ~d,
+      1, 4,
+      5, 8
+    ) %>%
+      gt() %>%
+      cols_width(
+        a ~ px(100),
+        d ~ px(125)
+      )
+  )
+  expect_error(
+    regexp = NA,
+    dplyr::tribble(
+      ~a , ~dat,
+      1, 4,
+      5, 8
+    ) %>%
+      gt() %>%
+      cols_width(
+        a ~ px(100),
+        dat ~ px(125)
+      )
+  )
+
+  # Don't expect an error even in the unlikely case that a column
+  # name is close enough to `.data` (this is due to the use of the
+  # formula syntax)
+  expect_error(
+    regexp = NA,
+    dplyr::tribble(
+      ~a , ~.dat,
+      1, 4,
+      5, 8
+    ) %>%
+      gt() %>%
+      cols_width(
+        a ~ px(100),
+        .dat ~ px(125)
+      )
+  )
 })
 
 test_that("the function `cols_width()` works correctly with a complex table", {

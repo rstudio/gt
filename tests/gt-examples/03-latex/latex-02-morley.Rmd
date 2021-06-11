@@ -12,7 +12,7 @@ library(gt)
 Create a display table based on `morley` Michelson Speed of Light Data
 
 ```{r}
-gt(data = morley %>% dplyr::mutate(Speed = as.numeric(Speed))) %>%
+gt(morley %>% dplyr::mutate(Speed = as.numeric(Speed))) %>%
   fmt_number(
     columns = Speed,
     decimals = 0,

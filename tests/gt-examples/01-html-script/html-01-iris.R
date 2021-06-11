@@ -2,7 +2,7 @@ library(gt)
 
 # Create a display table based on `iris`
 iris_tbl <-
-  gt(data = iris) %>%
+  gt(iris) %>%
   tab_spanner_delim(delim = ".") %>%
   cols_move_to_start(columns = Species) %>%
   fmt_number(
