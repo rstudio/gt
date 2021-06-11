@@ -112,7 +112,11 @@ summary_rows <- function(data,
   stub_available <- dt_stub_df_exists(data = data)
 
   # Resolve the column names
-  columns <- resolve_cols_c(expr = {{ columns }}, data = data)
+  columns <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data
+    )
 
   # If there isn't a stub available, create an
   # 'empty' stub (populated with empty strings);
@@ -131,18 +135,24 @@ summary_rows <- function(data,
         add_where = "bottom"
       )
 
+    nrow_data <- nrow(data$`_data`)
+
     # Add the `"rowname"` column into `_data`
     data$`_data` <-
       data$`_data` %>%
-      dplyr::mutate(rowname = rep("", nrow(data$`_data`))) %>%
-      dplyr::select(dplyr::everything(), rowname)
+      dplyr::mutate(rowname = rep("", .env$nrow_data)) %>%
+      dplyr::select(dplyr::everything(), .data$rowname)
 
     # Place the `rowname` values into `stub_df$rowname`; these are
     # empty strings which will provide an empty stub for locations
     # adjacent to the body rows
     stub_df[["rowname"]] <- ""
 
-    data <- dt_stub_df_set(data = data, stub_df = stub_df)
+    data <-
+      dt_stub_df_set(
+        data = data,
+        stub_df = stub_df
+      )
   }
 
   # Derive the summary labels
@@ -170,9 +180,10 @@ summary_rows <- function(data,
       formatter_options = formatter_options
     )
 
-  data <- dt_summary_add(data = data, summary = summary_list)
-
-  data
+  dt_summary_add(
+    data = data,
+    summary = summary_list
+  )
 }
 
 #' Add grand summary rows using aggregation functions
@@ -242,11 +253,12 @@ grand_summary_rows <- function(data,
   stop_if_not_gt(data = data)
 
   summary_rows(
-    data,
+    data = data,
     groups = NULL,
     columns = {{ columns }},
     fns = fns,
     missing_text = missing_text,
     formatter = formatter,
-    ...)
+    ...
+  )
 }

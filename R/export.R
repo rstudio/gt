@@ -128,21 +128,23 @@ gtsave <- function(data,
 
   # Use the appropriate save function based
   # on the filename extension
-  switch(file_ext,
-          "htm" = ,
-         "html" = gt_save_html(data, filename, path, ...),
-          "ltx" = , # We don't verbally support using `ltx`
-          "rnw" = ,
-          "tex" = gt_save_latex(data, filename, path, ...),
-          "rtf" = gt_save_rtf(data, filename, path, ...),
-          "png" = ,
-          "pdf" = gt_save_webshot(data, filename, path, ...),
-         {
-           stop("The file extension used (`.", file_ext, "`) doesn't have an ",
-                "associated saving function. ",
-                ext_supported_text,
-                call. = FALSE)
-         }
+  switch(
+    file_ext,
+    "htm" = ,
+    "html" = gt_save_html(data = data, filename, path, ...),
+    "ltx" = , # We don't verbally support using `ltx`
+    "rnw" = ,
+    "tex" = gt_save_latex(data = data, filename, path, ...),
+    "rtf" = gt_save_rtf(data = data, filename, path, ...),
+    "png" = ,
+    "pdf" = gt_save_webshot(data = data, filename, path, ...),
+    {
+      stop(
+        "The file extension used (`.", file_ext, "`) doesn't have an ",
+        "associated saving function. ", ext_supported_text,
+        call. = FALSE
+      )
+    }
   )
 }
 
@@ -336,11 +338,12 @@ as_raw_html <- function(data,
 
     # Create inline styles
     html_table <-
-      html_table %>%
-      inline_html_styles(css_tbl = get_css_tbl(data))
+      inline_html_styles(
+        html = html_table,
+        css_tbl = get_css_tbl(data = data)
+      )
 
   } else {
-
     html_table <- as.character(as.tags.gt_tbl(data))
   }
 
@@ -394,7 +397,7 @@ as_latex <- function(data) {
   stop_if_not_gt(data = data)
 
   # Build all table data objects through a common pipeline
-  data <- data %>% build_data(context = "latex")
+  data <- build_data(data = data, context = "latex")
 
   # Composition of LaTeX ----------------------------------------------------
 
@@ -423,10 +426,7 @@ as_latex <- function(data) {
   # `latex_dependency()` function to load latex packages
   # without requiring the user to do so
   if (requireNamespace("rmarkdown", quietly = TRUE)) {
-
-    latex_packages <-
-      lapply(latex_packages(), rmarkdown::latex_dependency)
-
+    latex_packages <- lapply(latex_packages(), rmarkdown::latex_dependency)
   } else {
     latex_packages <- NULL
   }
@@ -486,7 +486,7 @@ as_rtf <- function(data,
   stop_if_not_gt(data = data)
 
   # Build all table data objects through a common pipeline
-  data <- data %>% build_data(context = "rtf")
+  data <- build_data(data = data, context = "rtf")
 
   # Composition of RTF ------------------------------------------------------
 
@@ -507,24 +507,25 @@ as_rtf <- function(data,
 
   # Compose the RTF table
   rtf_table <-
-    rtf_file(
-      document = {
-        rtf_table(
-          rows = c(
-            heading_component,
-            columns_component,
-            body_component,
-            footnotes_component,
-            source_notes_component
+    as_rtf_string(
+      rtf_file(
+        document = {
+          rtf_table(
+            rows = c(
+              heading_component,
+              columns_component,
+              body_component,
+              footnotes_component,
+              source_notes_component
+            )
           )
-        )
-      },
-      page_numbering = page_numbering
-    ) %>%
-    as_rtf_string()
+        },
+        page_numbering = page_numbering
+      )
+    )
 
   if (isTRUE(getOption('knitr.in.progress'))) {
-    rtf_table <- rtf_table %>% knitr::raw_output()
+    rtf_table <- knitr::raw_output(rtf_table)
   }
 
   rtf_table
@@ -603,9 +604,12 @@ extract_summary <- function(data) {
   # Stop function if there are no
   # directives to create summary rows
   if (!dt_summary_exists(data = data)) {
-    stop("There is no summary list to extract.\n",
-         "Use the `summary_rows()` function to generate summaries.",
-         call. = FALSE)
+
+    stop(
+      "There is no summary list to extract.\n",
+      "* Use the `summary_rows()` function to generate summaries.",
+      call. = FALSE
+    )
   }
 
   # Build the `data` using the standard
@@ -614,5 +618,5 @@ extract_summary <- function(data) {
 
   # Extract the list of summary data frames
   # that contains tidy, unformatted data
-  dt_summary_df_data_get(data = built_data) %>% as.list()
+  as.list(dt_summary_df_data_get(data = built_data))
 }
