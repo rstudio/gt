@@ -585,7 +585,7 @@ as_rtf <- function(data,
 #'   summary_extracted %>%
 #'   unlist(recursive = FALSE) %>%
 #'   dplyr::bind_rows() %>%
-#'   gt(groupname_col = "groupname")
+#'   gt(groupname_col = "group_id")
 #'
 #' @section Figures:
 #' \if{html}{\figure{man_extract_summary_1.png}{options: width=100\%}}
@@ -624,7 +624,7 @@ extract_summary <- function(data) {
         dplyr::rename(
           y,
           rowname = .env$rowname_col_private,
-          groupname = .env$group_id_col_private
+          group_id = .env$group_id_col_private
         )
       })
     })
