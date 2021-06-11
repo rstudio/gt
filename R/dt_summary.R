@@ -297,13 +297,12 @@ dt_summary_build <- function(data,
     summary_df_display_list[[i]] <-
       summary_df_display_list[[i]] %>%
       dplyr::select(-.env$group_id_col_private) %>%
-      dplyr::group_by(dplyr::across(1)) %>%
+      dplyr::group_by(.data[[rowname_col_private]]) %>%
       dplyr::summarize_all(last_non_na)
 
     summary_df_display_list[[i]] <-
       summary_df_display_list[[i]][
-        match(arrangement, summary_df_display_list[[i]][
-          , rowname_col_private, drop = TRUE]), ] %>%
+        match(arrangement, summary_df_display_list[[i]][[rowname_col_private]]), ] %>%
       replace(is.na(.), missing_text)
   }
 
