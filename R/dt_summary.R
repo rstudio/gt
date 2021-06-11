@@ -198,8 +198,8 @@ dt_summary_build <- function(data,
             group_label <- labels[j]
 
             select_data_tbl %>%
-              dplyr::filter(dplyr::across(1, ~ . %in% .env$groups)) %>%
-              dplyr::group_by(dplyr::across(1)) %>%
+              dplyr::filter(.data[[group_id_col_private]] %in% .env$groups) %>%
+              dplyr::group_by(.data[[group_id_col_private]]) %>%
               dplyr::summarize_all(.funs = agg_funs[[j]]) %>%
               dplyr::ungroup() %>%
               dplyr::mutate(!!rowname_col_private := .env$group_label) %>%
