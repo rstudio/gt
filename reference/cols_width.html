@@ -165,19 +165,19 @@ left-hand side defines the target columns and the right-hand side is a single
 dimension.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>cols_width</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>...</span>, .list <span class='op'>=</span> <span class='fu'>list2</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span><span class='op'>)</span></code></pre></div>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>cols_width</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span>, .list <span class='op'>=</span> <span class='fu'>list2</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
+      <th>.data</th>
       <td><p>A table object that is created using the <code><a href='gt.html'>gt()</a></code> function.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>Expressions for the assignment of column widths for the table
-columns in <code>data</code>. Two-sided formulas (e.g, <code>&lt;LHS&gt; ~ &lt;RHS&gt;</code>) can be used,
+columns in <code>.data</code>. Two-sided formulas (e.g, <code>&lt;LHS&gt; ~ &lt;RHS&gt;</code>) can be used,
 where the left-hand side corresponds to selections of columns and the
 right-hand side evaluates to single-length character values in the form
 <code>{##}px</code> (i.e., pixel dimensions); the <code><a href='px.html'>px()</a></code> helper function is best used
