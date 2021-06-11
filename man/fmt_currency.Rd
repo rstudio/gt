@@ -10,15 +10,16 @@ fmt_currency(
   rows = everything(),
   currency = "USD",
   use_subunits = TRUE,
-  accounting = FALSE,
   decimals = NULL,
   drop_trailing_dec_mark = TRUE,
   use_seps = TRUE,
+  accounting = FALSE,
   scale_by = 1,
   suffixing = FALSE,
   pattern = "{x}",
   sep_mark = ",",
   dec_mark = ".",
+  force_sign = FALSE,
   placement = "left",
   incl_space = FALSE,
   locale = NULL
@@ -65,10 +66,6 @@ used.}
 \item{use_subunits}{An option for whether the subunits portion of a currency
 value should be displayed. By default, this is \code{TRUE}.}
 
-\item{accounting}{An option to use accounting style for currency values. With
-\code{FALSE} (the default), negative values will be shown with a minus sign.
-Using \code{accounting = TRUE} will put negative values in parentheses.}
-
 \item{decimals}{An option to specify the exact number of decimal places to
 use. The default number of decimal places is \code{2}.}
 
@@ -80,6 +77,10 @@ which means that trailing decimal marks are not shown.}
 \item{use_seps}{An option to use digit group separators. The type of digit
 group separator is set by \code{sep_mark} and overridden if a locale ID is
 provided to \code{locale}. This setting is \code{TRUE} by default.}
+
+\item{accounting}{An option to use accounting style for values. With \code{FALSE}
+(the default), negative values will be shown with a minus sign. Using
+\code{accounting = TRUE} will put negative values in parentheses.}
 
 \item{scale_by}{A value to scale the input. The default is \code{1.0}. All numeric
 values will be multiplied by this value first before undergoing formatting.
@@ -112,6 +113,12 @@ characters are taken to be string literals.}
 of \verb{1,000}).}
 
 \item{dec_mark}{The character to use as a decimal mark (e.g., using \code{dec_mark = ","} with \code{0.152} would result in a formatted value of \verb{0,152}).}
+
+\item{force_sign}{Should the positive sign be shown for positive values
+(effectively showing a sign for all values except zero)? If so, use \code{TRUE}
+for this option. The default is \code{FALSE}, where only negative numbers will
+display a minus sign. This option is disregarded when using accounting
+notation with \code{accounting = TRUE}.}
 
 \item{placement}{The placement of the currency symbol. This can be either be
 \code{left} (the default) or \code{right}.}
@@ -158,13 +165,13 @@ currency values
 \item locale-based formatting: providing a locale ID will result in
 currency formatting specific to the chosen locale
 }
+
 We can use the \code{\link[=info_currencies]{info_currencies()}} function for a useful reference on all of
 the possible inputs to the \code{currency} argument.
 }
 \details{
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
-nothing is provided for \code{rows} then entire columns are selected). A number of
-helper functions exist to make targeting more effective. Conditional
+nothing is provided for \code{rows} then entire columns are selected). Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
 argument. See the Arguments section for more information on this.
 }
@@ -177,7 +184,7 @@ argument. See the Arguments section for more information on this.
 
 \section{Function ID}{
 
-3-4
+3-6
 }
 
 \examples{
@@ -213,8 +220,11 @@ tab_2 <-
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},
+\code{\link{fmt_bytes}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_engineering}()},
+\code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},

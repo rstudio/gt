@@ -1,26 +1,26 @@
 #' Format numeric values
 #'
+#' @description
 #' With numeric values in a **gt** table, we can perform number-based
 #' formatting so that the targeted values are rendered with a higher
 #' consideration for tabular presentation. Furthermore, there is finer control
 #' over numeric formatting with the following options:
-#' \itemize{
-#' \item decimals: choice of the number of decimal places, option to drop
-#' trailing zeros, and a choice of the decimal symbol
-#' \item digit grouping separators: options to enable/disable digit separators
-#' and provide a choice of separator symbol
-#' \item scaling: we can choose to scale targeted values by a multiplier value
-#' \item large-number suffixing: larger figures (thousands, millions, etc.) can
-#' be autoscaled and decorated with the appropriate suffixes
-#' \item pattern: option to use a text pattern for decoration of the formatted
-#' values
-#' \item locale-based formatting: providing a locale ID will result in number
-#' formatting specific to the chosen locale
-#' }
 #'
+#' - decimals: choice of the number of decimal places, option to drop
+#' trailing zeros, and a choice of the decimal symbol
+#' - digit grouping separators: options to enable/disable digit separators
+#' and provide a choice of separator symbol
+#' - scaling: we can choose to scale targeted values by a multiplier value
+#' - large-number suffixing: larger figures (thousands, millions, etc.) can
+#' be autoscaled and decorated with the appropriate suffixes
+#' - pattern: option to use a text pattern for decoration of the formatted
+#' values
+#' - locale-based formatting: providing a locale ID will result in number
+#' formatting specific to the chosen locale
+#'
+#' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the Arguments section for more information on this.
 #'
@@ -55,6 +55,9 @@
 #' @param use_seps An option to use digit group separators. The type of digit
 #'   group separator is set by `sep_mark` and overridden if a locale ID is
 #'   provided to `locale`. This setting is `TRUE` by default.
+#' @param accounting An option to use accounting style for values. With `FALSE`
+#'   (the default), negative values will be shown with a minus sign. Using
+#'   `accounting = TRUE` will put negative values in parentheses.
 #' @param scale_by A value to scale the input. The default is `1.0`. All numeric
 #'   values will be multiplied by this value first before undergoing formatting.
 #'   This value will be ignored if using any of the `suffixing` options (i.e.,
@@ -84,6 +87,11 @@
 #'   of `1,000`).
 #' @param dec_mark The character to use as a decimal mark (e.g., using `dec_mark
 #'   = ","` with `0.152` would result in a formatted value of `0,152`).
+#' @param force_sign Should the positive sign be shown for positive values
+#'   (effectively showing a sign for all values except zero)? If so, use `TRUE`
+#'   for this option. The default is `FALSE`, where only negative numbers will
+#'   display a minus sign. This option is disregarded when using accounting
+#'   notation with `accounting = TRUE`.
 #' @param locale An optional locale ID that can be used for formatting the value
 #'   according the locale's rules. Examples include `"en_US"` for English
 #'   (United States) and `"fr_FR"` for French (France). The use of a valid
@@ -148,11 +156,13 @@ fmt_number <- function(data,
                        drop_trailing_zeros = FALSE,
                        drop_trailing_dec_mark = TRUE,
                        use_seps = TRUE,
+                       accounting = FALSE,
                        scale_by = 1.0,
                        suffixing = FALSE,
                        pattern = "{x}",
                        sep_mark = ",",
                        dec_mark = ".",
+                       force_sign = FALSE,
                        locale = NULL) {
 
   # Perform input object validation
@@ -171,9 +181,18 @@ fmt_number <- function(data,
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(data, {{ columns }}, valid_classes = c("numeric", "integer"))) {
-    stop("The `fmt_number()` function can only be used on `columns` with numeric data",
-         call. = FALSE)
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = c("numeric", "integer")
+    )
+  ) {
+    stop(
+      "The `fmt_number()` and `fmt_integer()` functions can only be ",
+      "used on `columns` with numeric data",
+      call. = FALSE
+    )
   }
 
   # Set the `formatC_format` option according to whether number
@@ -199,49 +218,182 @@ fmt_number <- function(data,
       format_fn = function(x, context) {
 
         # Create the `suffix_df` object
-        suffix_df <- create_suffix_df(x, decimals, suffix_labels, scale_by)
+        suffix_df <-
+          create_suffix_df(
+            x,
+            decimals = decimals,
+            suffix_labels = suffix_labels,
+            scale_by = scale_by
+          )
 
-        x %>%
-          # Scale the `x_vals` by the `scale_by` values
-          scale_x_values(suffix_df$scale_by) %>%
-          # Format numeric values to character-based numbers
+        # Scale the `x` values by the `scale_by` values in `suffix_df`
+        x <- scale_x_values(x, scale_by = suffix_df$scale_by)
+
+        # Format numeric values to character-based numbers
+        x_str <-
           format_num_to_str(
-            context = context, decimals = decimals, n_sigfig = n_sigfig,
-            sep_mark = sep_mark, dec_mark = dec_mark,
+            x,
+            context = context,
+            decimals = decimals,
+            n_sigfig = n_sigfig,
+            sep_mark = sep_mark,
+            dec_mark = dec_mark,
             drop_trailing_zeros = drop_trailing_zeros,
             drop_trailing_dec_mark = drop_trailing_dec_mark,
             format = formatC_format
-          ) %>%
-          # With large-number suffixing support, we paste the
-          # vector of suffixes to the right of the values
-          paste_right(suffix_df$suffix)
+          )
+
+        # Paste the vector of suffixes to the right of the values
+        x_str <- paste_right(x_str, x_right = suffix_df$suffix)
+
+        # Format values in accounting notation (if `accounting = TRUE`)
+        x_str <-
+          format_as_accounting(
+            x_str,
+            x = x,
+            context = context,
+            accounting = accounting
+          )
+
+        # Force a positive sign on certain values if the option is taken
+        if (!accounting && force_sign) {
+
+          positive_x <- !is.na(x) & x > 0
+          x_str[positive_x] <- paste_left(x_str[positive_x], x_left = "+")
+        }
+
+        x_str
       }
     )
   )
 }
 
-#' Format values to scientific notation
+#' Format values as integers
 #'
-#' With numeric values in a **gt** table, we can perform formatting so that the
-#' targeted values are rendered in scientific notation. Furthermore, there is
-#' fine control with the following options:
-#' \itemize{
-#' \item decimals: choice of the number of decimal places, option to drop
-#' trailing zeros, and a choice of the decimal symbol
-#' \item scaling: we can choose to scale targeted values by a multiplier value
-#' \item pattern: option to use a text pattern for decoration of the formatted
+#' @description
+#' With numeric values in a **gt** table, we can perform number-based
+#' formatting so that the targeted values are always rendered as integer values.
+#' We can have fine control over integer formatting with the following options:
+#'
+#' - digit grouping separators: options to enable/disable digit separators
+#' and provide a choice of separator symbol
+#' - scaling: we can choose to scale targeted values by a multiplier value
+#' - large-number suffixing: larger figures (thousands, millions, etc.) can
+#' be autoscaled and decorated with the appropriate suffixes
+#' - pattern: option to use a text pattern for decoration of the formatted
 #' values
-#' \item locale-based formatting: providing a locale ID will result in
+#' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
-#' }
 #'
+#' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the Arguments section for more information on this.
 #'
 #' @inheritParams fmt_number
+#' @param suffixing An option to scale and apply suffixes to larger numbers
+#'   (e.g., `1924000` can be transformed to `2M`). This option can accept a
+#'   logical value, where `FALSE` (the default) will not perform this
+#'   transformation and `TRUE` will apply thousands (`K`), millions (`M`),
+#'   billions (`B`), and trillions (`T`) suffixes after automatic value scaling.
+#'   We can also specify which symbols to use for each of the value ranges by
+#'   using a character vector of the preferred symbols to replace the defaults
+#'   (e.g., `c("k", "Ml", "Bn", "Tr")`).
+#'
+#'   Including `NA` values in the vector will ensure that the particular range
+#'   will either not be included in the transformation (e.g, `c(NA, "M", "B",
+#'   "T")` won't modify numbers in the thousands range) or the range will
+#'   inherit a previous suffix (e.g., with `c("K", "M", NA, "T")`, all numbers
+#'   in the range of millions and billions will be in terms of millions).
+#'
+#'   Any use of `suffixing` (where it is not set expressly as `FALSE`) means
+#'   that any value provided to `scale_by` will be ignored.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @examples
+#' # Use `exibble` to create a gt table;
+#' # format the `num` column as integer
+#' # values having no digit separators
+#' tab_1 <-
+#'   exibble %>%
+#'   dplyr::select(num, char) %>%
+#'   gt() %>%
+#'   fmt_integer(
+#'     columns = num,
+#'     use_seps = FALSE
+#'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_fmt_integer_1.png}{options: width=100\%}}
+#'
+#' @family Format Data
+#' @section Function ID:
+#' 3-2
+#'
+#' @import rlang
+#' @export
+fmt_integer <- function(data,
+                        columns,
+                        rows = everything(),
+                        use_seps = TRUE,
+                        accounting = FALSE,
+                        scale_by = 1.0,
+                        suffixing = FALSE,
+                        pattern = "{x}",
+                        sep_mark = ",",
+                        force_sign = FALSE,
+                        locale = NULL) {
+
+  fmt_number(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    decimals = 0,
+    n_sigfig = NULL,
+    drop_trailing_zeros = FALSE,
+    drop_trailing_dec_mark = TRUE,
+    use_seps = use_seps,
+    accounting = accounting,
+    scale_by = scale_by,
+    suffixing = suffixing,
+    pattern = pattern,
+    sep_mark = sep_mark,
+    dec_mark = "not used",
+    force_sign = force_sign,
+    locale = locale
+  )
+}
+
+#' Format values to scientific notation
+#'
+#' @description
+#' With numeric values in a **gt** table, we can perform formatting so that the
+#' targeted values are rendered in scientific notation. Furthermore, there is
+#' fine control with the following options:
+#'
+#' - decimals: choice of the number of decimal places, option to drop
+#' trailing zeros, and a choice of the decimal symbol
+#' - scaling: we can choose to scale targeted values by a multiplier value
+#' - pattern: option to use a text pattern for decoration of the formatted
+#' values
+#' - locale-based formatting: providing a locale ID will result in
+#' formatting specific to the chosen locale
+#'
+#' @details
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the Arguments section for more information on this.
+#'
+#' @inheritParams fmt_number
+#' @param scale_by A value to scale the input. The default is `1.0`. All numeric
+#'   values will be multiplied by this value first before undergoing formatting.
+#' @param force_sign Should the positive sign be shown for positive values
+#'   (effectively showing a sign for all values except zero)? If so, use `TRUE`
+#'   for this option. The default is `FALSE`, where only negative numbers will
+#'   display a minus sign.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -271,7 +423,7 @@ fmt_number <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-2
+#' 3-3
 #'
 #' @import rlang
 #' @export
@@ -284,6 +436,7 @@ fmt_scientific <- function(data,
                            pattern = "{x}",
                            sep_mark = ",",
                            dec_mark = ".",
+                           force_sign = FALSE,
                            locale = NULL) {
 
   # Perform input object validation
@@ -298,7 +451,7 @@ fmt_scientific <- function(data,
   dec_mark <- get_locale_dec_mark(locale, dec_mark)
 
   # Stop function if `locale` does not have a valid value
-  validate_locale(locale)
+  validate_locale(locale = locale)
 
   # Normalize the `suffixing` input to either return a character vector
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
@@ -306,9 +459,17 @@ fmt_scientific <- function(data,
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(data, {{ columns }}, valid_classes = c("numeric", "integer"))) {
-    stop("The `fmt_scientific()` function can only be used on `columns` with numeric data",
-         call. = FALSE)
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = c("numeric", "integer")
+    )
+  ) {
+    stop(
+      "The `fmt_scientific()` function can only be used on `columns` with numeric data.",
+      call. = FALSE
+    )
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -331,16 +492,25 @@ fmt_scientific <- function(data,
         }
 
         # Create the `suffix_df` object
-        suffix_df <- create_suffix_df(x, decimals, suffix_labels, scale_by)
+        suffix_df <-
+          create_suffix_df(
+            x,
+            decimals = decimals,
+            suffix_labels = suffix_labels,
+            scale_by = scale_by
+          )
 
-        # Scale the `x_vals` by the `scale_by` values
-        x <- x %>% scale_x_values(suffix_df$scale_by)
+        # Scale the `x` values by the `scale_by` values in `suffix_df`
+        x <- scale_x_values(x, scale_by = suffix_df$scale_by)
 
         x_str <-
-          x %>%
           format_num_to_str(
-            context = context, decimals = decimals, n_sigfig = NULL,
-            sep_mark = sep_mark, dec_mark = dec_mark,
+            x,
+            context = context,
+            decimals = decimals,
+            n_sigfig = NULL,
+            sep_mark = sep_mark,
+            dec_mark = dec_mark,
             drop_trailing_zeros = drop_trailing_zeros,
             drop_trailing_dec_mark = FALSE,
             format = "e",
@@ -369,6 +539,193 @@ fmt_scientific <- function(data,
             exp_marks[2]
           )
 
+        # Force a positive sign on certain values if the option is taken
+        if (force_sign) {
+
+          positive_x <- !is.na(x) & x > 0
+          x_str[positive_x] <- paste_left(x_str[positive_x], x_left = "+")
+        }
+
+        x_str
+      }
+    )
+  )
+}
+
+#' Format values to engineering notation
+#'
+#' @description
+#' With numeric values in a **gt** table, we can perform formatting so that the
+#' targeted values are rendered in engineering notation.
+#'
+#' With this function, there is fine control over the formatted values with the
+#' following options:
+#'
+#' - decimals: choice of the number of decimal places, option to drop
+#' trailing zeros, and a choice of the decimal symbol
+#' - digit grouping separators: choice of separator symbol
+#' - scaling: we can choose to scale targeted values by a multiplier value
+#' - pattern: option to use a text pattern for decoration of the formatted
+#' values
+#' - locale-based formatting: providing a locale ID will result in
+#' formatting specific to the chosen locale
+#'
+#' @details
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). A number of
+#' helper functions exist to make targeting more effective. Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the Arguments section for more information on this.
+#'
+#' @inheritParams fmt_number
+#' @param scale_by A value to scale the input. The default is `1.0`. All numeric
+#'   values will be multiplied by this value first before undergoing formatting.
+#' @param force_sign Should the positive sign be shown for positive values
+#'   (effectively showing a sign for all values except zero)? If so, use `TRUE`
+#'   for this option. The default is `FALSE`, where only negative numbers will
+#'   display a minus sign.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @examples
+#' # Use `exibble` to create a gt table;
+#' # format the `num` column in
+#' # engineering notation
+#' tab_1 <-
+#'   exibble %>%
+#'   gt() %>%
+#'   fmt_engineering(columns = num)
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_fmt_engineering_1.png}{options: width=100\%}}
+#'
+#' @family Format Data
+#' @section Function ID:
+#' 3-4
+#'
+#' @export
+fmt_engineering <- function(data,
+                            columns,
+                            rows = everything(),
+                            decimals = 2,
+                            drop_trailing_zeros = FALSE,
+                            scale_by = 1.0,
+                            pattern = "{x}",
+                            sep_mark = ",",
+                            dec_mark = ".",
+                            force_sign = FALSE,
+                            locale = NULL) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  # Set default values
+  suffixing <- FALSE
+  use_seps <- TRUE
+
+  # Use locale-based marks if a locale ID is provided
+  sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
+  dec_mark <- get_locale_dec_mark(locale, dec_mark)
+
+  # Stop function if `locale` does not have a valid value
+  validate_locale(locale = locale)
+
+  # Normalize the `suffixing` input to either return a character vector
+  # of suffix labels, or NULL (the case where `suffixing` is FALSE)
+  suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by)
+
+  # Stop function if any columns have data that is incompatible
+  # with this formatter
+  if (!column_classes_are_valid(data, {{ columns }}, valid_classes = c("numeric", "integer"))) {
+    stop("The `fmt_scientific()` function can only be used on `columns` with numeric data",
+         call. = FALSE)
+  }
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    fns = num_fmt_factory_multi(
+      pattern = pattern,
+      format_fn = function(x, context) {
+        # Define the marks by context
+        exp_marks <- context_exp_marks(context)
+        minus_mark <- context_minus_mark(context)
+
+        # Define the `replace_minus()` function
+        replace_minus <- function(x) {
+          x %>% tidy_gsub("-", minus_mark, fixed = TRUE)
+        }
+
+        # Create the `suffix_df` object
+        suffix_df <-
+          create_suffix_df(
+            x,
+            decimals = decimals,
+            suffix_labels = suffix_labels,
+            scale_by = scale_by
+          )
+
+        # Scale the `x_vals` by the `scale_by` values
+        x <- scale_x_values(x, suffix_df$scale_by)
+
+        zero_x <- x == 0
+        negative_x <- x < 0
+        x_str_left <- x_str_right <- x_str <- character(length = length(x))
+
+        # Powers in engineering notation always in steps of 3; this
+        # calculation gets, for every value, the effective power value
+        power_3 <- floor(log(abs(x), base = 1000)) * 3
+
+        # Any zero values will return Inf from the previous calculation
+        # so we must replace these with a `0`
+        power_3[is.infinite(power_3)] <- 0L
+
+        # The numbers on the LHS must be scaled to correspond to the
+        # RHS 10^`power_level` values (i.e., `<LHS> x 10^(n * 3)`)
+        x <- x / 10^(power_3)
+
+        # With the scaled values for the LHS, format these according
+        # to the options set by the user
+        x_str_left <-
+          format_num_to_str(
+            x,
+            context = context,
+            decimals = decimals,
+            n_sigfig = NULL,
+            sep_mark = sep_mark,
+            dec_mark = dec_mark,
+            drop_trailing_zeros = drop_trailing_zeros,
+            drop_trailing_dec_mark = FALSE,
+            format = "f",
+            replace_minus_mark = FALSE
+          ) %>%
+          replace_minus()
+
+        # Generate the RHS of the formatted value (i.e., the `x 10^(n * 3)`)
+        x_str_right <-
+          paste0(
+            exp_marks[1],
+            as.character(power_3) %>% replace_minus(),
+            exp_marks[2]
+          )
+
+        # Replace elements from `x_str_right` where exponent values
+        # are zero with empty strings
+        x_str_right[power_3 == 0] <- ""
+
+        # Paste the LHS and RHS components to generate the formatted values
+        x_str <- paste0(x_str_left, x_str_right)
+
+        # Force a positive sign on certain values if the option is taken
+        if (force_sign) {
+
+          positive_x <- !is.na(x) & x > 0
+          x_str[positive_x] <- paste_left(x_str[positive_x], x_left = "+")
+        }
+
         x_str
       }
     )
@@ -395,6 +752,7 @@ fmt_symbol <- function(data,
                        pattern = "{x}",
                        sep_mark = ",",
                        dec_mark = ".",
+                       force_sign = FALSE,
                        placement = "left",
                        incl_space = FALSE,
                        locale = NULL) {
@@ -404,7 +762,7 @@ fmt_symbol <- function(data,
   dec_mark <- get_locale_dec_mark(locale, dec_mark)
 
   # Stop function if `locale` does not have a valid value
-  validate_locale(locale)
+  validate_locale(locale = locale)
 
   # Normalize the `suffixing` input to either return a character vector
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
@@ -424,22 +782,31 @@ fmt_symbol <- function(data,
         x_str <- character(length(x))
 
         # Create the `suffix_df` object
-        suffix_df <- create_suffix_df(x, decimals, suffix_labels, scale_by)
+        suffix_df <-
+          create_suffix_df(
+            x,
+            decimals = decimals,
+            suffix_labels = suffix_labels,
+            scale_by = scale_by
+          )
 
         # Scale the `x_vals` by the `scale_by` value
-        x <- x %>% scale_x_values(suffix_df$scale_by)
+        x <- scale_x_values(x, suffix_df$scale_by)
 
         is_negative_x <- x < 0
         is_not_negative_x <- !is_negative_x
 
         if (any(is_not_negative_x)) {
 
+          # Format numeric values to character-based numbers
           x_str[is_not_negative_x] <-
-            x[is_not_negative_x] %>%
-            # Format numeric values to character-based numbers
             format_num_to_str_c(
-              context = context, decimals = decimals, sep_mark = sep_mark,
-              dec_mark = dec_mark, drop_trailing_zeros = drop_trailing_zeros,
+              x[is_not_negative_x],
+              context = context,
+              decimals = decimals,
+              sep_mark = sep_mark,
+              dec_mark = dec_mark,
+              drop_trailing_zeros = drop_trailing_zeros,
               drop_trailing_dec_mark = drop_trailing_dec_mark
             )
         }
@@ -448,31 +815,48 @@ fmt_symbol <- function(data,
 
         if (any(is_negative_x)) {
 
+          # Format numeric values to character-based numbers
           x_abs_str[is_negative_x] <-
-            x[is_negative_x] %>%
-            abs() %>%
-            # Format numeric values to character-based numbers
             format_num_to_str_c(
-              context = context, decimals = decimals, sep_mark = sep_mark,
-              dec_mark = dec_mark, drop_trailing_zeros = drop_trailing_zeros,
+              abs(x[is_negative_x]),
+              context = context,
+              decimals = decimals,
+              sep_mark = sep_mark,
+              dec_mark = dec_mark,
+              drop_trailing_zeros = drop_trailing_zeros,
               drop_trailing_dec_mark = drop_trailing_dec_mark
             )
         }
 
+        # Format values with a symbol string
         x_str <-
-          # Format values with a symbol string
           format_symbol_str(
-            context = context, x_abs_str = x_abs_str, x = x,
-            symbol = symbol, incl_space = incl_space,
+            x_abs_str = x_abs_str,
+            x = x,
+            context = context,
+            symbol = symbol,
+            incl_space = incl_space,
             placement = placement
-          ) %>%
-          # Format values in accounting style
+          )
+
+        # Format values in accounting notation (if `accounting = TRUE`)
+        x_str <-
           format_as_accounting(
-            x = x, context = context, accounting = accounting
-          ) %>%
-          # With large-number suffixing support, we paste the
-          # vector of suffixes to the right of the values
-          paste_right(suffix_df$suffix)
+            x_str,
+            x = x,
+            context = context,
+            accounting = accounting
+          )
+
+        # Paste the vector of suffixes to the right of the values
+        x_str <- paste_right(x_str, x_right = suffix_df$suffix)
+
+        # Force a positive sign on certain values if the option is taken
+        if (!accounting && force_sign) {
+
+          positive_x <- !is.na(x) & x > 0
+          x_str[positive_x] <- paste_left(x_str[positive_x], x_left = "+")
+        }
 
         x_str
       }
@@ -482,29 +866,29 @@ fmt_symbol <- function(data,
 
 #' Format values as a percentage
 #'
+#' @description
 #' With numeric values in a **gt** table, we can perform percentage-based
 #' formatting. It is assumed the input numeric values are proportional values
 #' and, in this case, the values will be automatically multiplied by `100`
 #' before decorating with a percent sign (the other case is accommodated though
 #' setting the `scale_values` to `FALSE`) For more control over percentage
 #' formatting, we can use the following options:
-#' \itemize{
-#' \item percent sign placement: the percent sign can be placed after or
+#'
+#' - percent sign placement: the percent sign can be placed after or
 #' before the values and a space can be inserted between the symbol and the
 #' value.
-#' \item decimals: choice of the number of decimal places, option to drop
+#' - decimals: choice of the number of decimal places, option to drop
 #' trailing zeros, and a choice of the decimal symbol
-#' \item digit grouping separators: options to enable/disable digit separators
+#' - digit grouping separators: options to enable/disable digit separators
 #' and provide a choice of separator symbol
-#' \item pattern: option to use a text pattern for decoration of the formatted
+#' - pattern: option to use a text pattern for decoration of the formatted
 #' values
-#' \item locale-based formatting: providing a locale ID will result in number
+#' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
-#' }
 #'
+#' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the Arguments section for more information on this.
 #'
@@ -542,7 +926,7 @@ fmt_symbol <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-3
+#' 3-5
 #'
 #' @import rlang
 #' @export
@@ -554,9 +938,11 @@ fmt_percent <- function(data,
                         drop_trailing_dec_mark = TRUE,
                         scale_values = TRUE,
                         use_seps = TRUE,
+                        accounting = FALSE,
                         pattern = "{x}",
                         sep_mark = ",",
                         dec_mark = ".",
+                        force_sign = FALSE,
                         incl_space = FALSE,
                         placement = "right",
                         locale = NULL) {
@@ -566,9 +952,17 @@ fmt_percent <- function(data,
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(data, {{ columns }}, valid_classes = c("numeric", "integer"))) {
-    stop("The `fmt_percent()` function can only be used on `columns` with numeric data",
-         call. = FALSE)
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = c("numeric", "integer")
+    )
+  ) {
+    stop(
+      "The `fmt_percent()` function can only be used on `columns` with numeric data.",
+      call. = FALSE
+    )
   }
 
   if (scale_values) {
@@ -577,12 +971,13 @@ fmt_percent <- function(data,
     scale_by <- 1.0
   }
 
+  # Pass `data`, `columns`, `rows`, and other options to `fmt_symbol()`
   fmt_symbol(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
     symbol = "%",
-    accounting = FALSE,
+    accounting = accounting,
     decimals = decimals,
     drop_trailing_zeros = drop_trailing_zeros,
     drop_trailing_dec_mark = drop_trailing_dec_mark,
@@ -592,6 +987,7 @@ fmt_percent <- function(data,
     pattern = pattern,
     sep_mark = sep_mark,
     dec_mark = dec_mark,
+    force_sign = force_sign,
     placement = placement,
     incl_space = incl_space,
     locale = locale
@@ -959,6 +1355,7 @@ round_gt <- function(x, digits = 0) {
 
 #' Format values as currencies
 #'
+#' @description
 #' With numeric values in a **gt** table, we can perform currency-based
 #' formatting. This function supports both automatic formatting with a
 #' three-letter or numeric currency code. We can also specify a custom currency
@@ -966,33 +1363,33 @@ round_gt <- function(x, digits = 0) {
 #' helper function. Numeric formatting facilitated through the use of a locale
 #' ID. We have fine control over the conversion from numeric values to currency
 #' values, where we could take advantage of the following options:
-#' \itemize{
-#' \item the currency: providing a currency code or common currency name will
+#'
+#' - the currency: providing a currency code or common currency name will
 #' procure the correct currency symbol and number of currency subunits; we could
 #' also use the [currency()] helper function to specify a custom currency
-#' \item currency symbol placement: the currency symbol can be placed before
+#' - currency symbol placement: the currency symbol can be placed before
 #' or after the values
-#' \item decimals/subunits: choice of the number of decimal places, and a
+#' - decimals/subunits: choice of the number of decimal places, and a
 #' choice of the decimal symbol, and an option on whether to include or exclude
 #' the currency subunits (decimal portion)
-#' \item negative values: choice of a negative sign or parentheses for values
+#' - negative values: choice of a negative sign or parentheses for values
 #' less than zero
-#' \item digit grouping separators: options to enable/disable digit separators
+#' - digit grouping separators: options to enable/disable digit separators
 #' and provide a choice of separator symbol
-#' \item scaling: we can choose to scale targeted values by a multiplier value
-#' \item large-number suffixing: larger figures (thousands, millions, etc.) can
+#' - scaling: we can choose to scale targeted values by a multiplier value
+#' - large-number suffixing: larger figures (thousands, millions, etc.) can
 #' be autoscaled and decorated with the appropriate suffixes
-#' \item pattern: option to use a text pattern for decoration of the formatted
+#' - pattern: option to use a text pattern for decoration of the formatted
 #' currency values
-#' \item locale-based formatting: providing a locale ID will result in
+#' - locale-based formatting: providing a locale ID will result in
 #' currency formatting specific to the chosen locale
-#' }
+#'
 #' We can use the [info_currencies()] function for a useful reference on all of
 #' the possible inputs to the `currency` argument.
 #'
+#' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the Arguments section for more information on this.
 #'
@@ -1018,9 +1415,6 @@ round_gt <- function(x, digits = 0) {
 #'   used.
 #' @param use_subunits An option for whether the subunits portion of a currency
 #'   value should be displayed. By default, this is `TRUE`.
-#' @param accounting An option to use accounting style for currency values. With
-#'   `FALSE` (the default), negative values will be shown with a minus sign.
-#'   Using `accounting = TRUE` will put negative values in parentheses.
 #' @param placement The placement of the currency symbol. This can be either be
 #'   `left` (the default) or `right`.
 #' @param incl_space An option for whether to include a space between the value
@@ -1064,7 +1458,7 @@ round_gt <- function(x, digits = 0) {
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-4
+#' 3-6
 #'
 #' @import rlang
 #' @export
@@ -1073,15 +1467,16 @@ fmt_currency <- function(data,
                          rows = everything(),
                          currency = "USD",
                          use_subunits = TRUE,
-                         accounting = FALSE,
                          decimals = NULL,
                          drop_trailing_dec_mark = TRUE,
                          use_seps = TRUE,
+                         accounting = FALSE,
                          scale_by = 1.0,
                          suffixing = FALSE,
                          pattern = "{x}",
                          sep_mark = ",",
                          dec_mark = ".",
+                         force_sign = FALSE,
                          placement = "left",
                          incl_space = FALSE,
                          locale = NULL) {
@@ -1091,9 +1486,17 @@ fmt_currency <- function(data,
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(data, {{ columns }}, valid_classes = c("numeric", "integer"))) {
-    stop("The `fmt_currency()` function can only be used on `columns` with numeric data",
-         call. = FALSE)
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = c("numeric", "integer")
+    )
+  ) {
+    stop(
+      "The `fmt_currency()` function can only be used on `columns` with numeric data.",
+      call. = FALSE
+    )
   }
 
   # Stop function if `currency` does not have a valid value
@@ -1107,6 +1510,7 @@ fmt_currency <- function(data,
       use_subunits = use_subunits
     )
 
+  # Pass `data`, `columns`, `rows`, and other options to `fmt_symbol()`
   fmt_symbol(
     data = data,
     columns = {{ columns }},
@@ -1122,14 +1526,183 @@ fmt_currency <- function(data,
     pattern = pattern,
     sep_mark = sep_mark,
     dec_mark = dec_mark,
+    force_sign = force_sign,
     placement = placement,
     incl_space = incl_space,
     locale = locale
   )
 }
 
+#' Format values as bytes
+#'
+#' @description
+#' With numeric values in a **gt** table, we can transform those to values of
+#' bytes with human readable units. The `fmt_bytes()` function allows for the
+#' formatting of byte sizes to either of two common representations: (1) with
+#' decimal units (powers of 1000, examples being `"kB"` and `"MB"`), and (2)
+#' with binary units (powers of 1024, examples being `"KiB"` and `"MiB"`).
+#'
+#' It is assumed the input numeric values represent the number of bytes and
+#' automatic truncation of values will occur. The numeric values will be scaled
+#' to be in the range of 1 to <1000 and then decorated with the correct unit
+#' symbol according to the standard chosen. For more control over the formatting
+#' of byte sizes, we can use the following options:
+#'
+#' - decimals: choice of the number of decimal places, option to drop
+#' trailing zeros, and a choice of the decimal symbol
+#' - digit grouping separators: options to enable/disable digit separators
+#' and provide a choice of separator symbol
+#' - pattern: option to use a text pattern for decoration of the formatted
+#' values
+#' - locale-based formatting: providing a locale ID will result in number
+#' formatting specific to the chosen locale
+#'
+#' @details
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the Arguments section for more information on this.
+#'
+#' @inheritParams fmt_number
+#' @param standard The way to express large byte sizes.
+#' @param decimals An option to specify the exact number of decimal places to
+#'   use. The default number of decimal places is `1`.
+#' @param incl_space An option for whether to include a space between the value
+#'   and the units. The default of `TRUE` uses a space character for separation.
+#' @param force_sign Should the positive sign be shown for positive numbers
+#'   (effectively showing a sign for all numbers except zero)? If so, use `TRUE`
+#'   for this option. The default is `FALSE`, where only negative numbers will
+#'   display a minus sign.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @examples
+#' # Use `exibble` to create a gt table;
+#' # format the `num` column to have
+#' # byte sizes in the binary standard
+#' tab_1 <-
+#'   exibble %>%
+#'   dplyr::select(num) %>%
+#'   gt() %>%
+#'   fmt_bytes(columns = num)
+#'
+#' # Create a similar table with the
+#' # `fmt_bytes()` function, this time
+#' # showing byte sizes as binary values
+#' tab_2 <-
+#'   exibble %>%
+#'   dplyr::select(num) %>%
+#'   gt() %>%
+#'   fmt_bytes(
+#'     columns = num,
+#'     standard = "binary"
+#'   )
+#'
+#' @family Format Data
+#' @section Function ID:
+#' 3-7
+#'
+#' @import rlang
+#' @export
+fmt_bytes <- function(data,
+                      columns,
+                      rows = everything(),
+                      standard = c("decimal", "binary"),
+                      decimals = 1,
+                      n_sigfig = NULL,
+                      drop_trailing_zeros = TRUE,
+                      drop_trailing_dec_mark = TRUE,
+                      use_seps = TRUE,
+                      pattern = "{x}",
+                      sep_mark = ",",
+                      dec_mark = ".",
+                      force_sign = FALSE,
+                      incl_space = TRUE,
+                      locale = NULL) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  standard <- match.arg(standard)
+
+  # Use locale-based marks if a locale ID is provided
+  sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
+  dec_mark <- get_locale_dec_mark(locale, dec_mark)
+
+  # Set the `formatC_format` option according to whether number
+  # formatting with significant figures is to be performed
+  if (!is.null(n_sigfig)) {
+
+    # Stop function if `n_sigfig` does not have a valid value
+    validate_n_sigfig(n_sigfig = n_sigfig)
+
+    formatC_format <- "fg"
+
+  } else {
+    formatC_format <- "f"
+  }
+
+  if (standard == "decimal") {
+
+    base <- 1000
+    byte_units <- c("B", "kB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
+
+  } else {
+
+    base <- 1024
+    byte_units <- c("B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB")
+  }
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    fns = num_fmt_factory_multi(
+      pattern = pattern,
+      format_fn = function(x, context) {
+
+        # Truncate all byte values
+        x <- trunc(x)
+
+        num_power_idx <- floor(log(abs(x), base = base)) + 1
+        num_power_idx <- pmax(1, pmin(length(byte_units), num_power_idx))
+
+        units_str <- byte_units[num_power_idx]
+        x <- x / base^(num_power_idx-1)
+
+        # Format numeric values to character-based numbers
+        x_str <-
+          format_num_to_str(
+            x,
+            context = context,
+            decimals = decimals,
+            n_sigfig = n_sigfig,
+            sep_mark = sep_mark,
+            dec_mark = dec_mark,
+            drop_trailing_zeros = drop_trailing_zeros,
+            drop_trailing_dec_mark = drop_trailing_dec_mark,
+            format = formatC_format
+          ) %>%
+          paste_right(x_right = paste0(if (incl_space) " ", units_str))
+
+        # Force a positive sign on certain values if the option is taken
+        if (force_sign) {
+
+          positive_x <- !is.na(x) & x > 0
+          x_str[positive_x] <- paste_left(x_str[positive_x], x_left = "+")
+        }
+
+        x_str
+      }
+    )
+  )
+}
+
 #' Format values as dates
 #'
+#' @description
 #' Format input date values that are either of the `Date` type, or, are
 #' character-based and expressed according to the ISO 8601 date format
 #' (`YYYY-MM-DD`). Once the appropriate data cells are targeted with `columns`
@@ -1137,35 +1710,36 @@ fmt_currency <- function(data,
 #' the dates. The following date styles are available for simpler formatting of
 #' ISO dates (all using the input date of `2000-02-29` in the example output
 #' dates):
-#' \enumerate{
-#' \item iso: `2000-02-29`
-#' \item wday_month_day_year: `Tuesday, February 29, 2000`
-#' \item wd_m_day_year: `Tue, Feb 29, 2000`
-#' \item wday_day_month_year: `Tuesday 29 February 2000`
-#' \item month_day_year: `February 29, 2000`
-#' \item m_day_year: `Feb 29, 2000`
-#' \item day_m_year: `29 Feb 2000`
-#' \item day_month_year: `29 February 2000`
-#' \item day_month: `29 February`
-#' \item year: `2000`
-#' \item month: `February`
-#' \item day: `29`
-#' \item year.mn.day: `2000/02/29`
-#' \item y.mn.day: `0/02/29`
-#' }
+#'
+#' 1. `"iso"`: `2000-02-29`
+#' 2. `"wday_month_day_year"`: `Tuesday, February 29, 2000`
+#' 3. `"wd_m_day_year"`: `Tue, Feb 29, 2000`
+#' 4. `"wday_day_month_year"`: `Tuesday 29 February 2000`
+#' 5. `"month_day_year"`: `February 29, 2000`
+#' 6. `"m_day_year"`: `Feb 29, 2000`
+#' 7. `"day_m_year"`: `29 Feb 2000`
+#' 8. `"day_month_year"`: `29 February 2000`
+#' 9. `"day_month"`: `29 February`
+#' 10. `"year"`: `2000`
+#' 11. `"month"`: `February`
+#' 12. `"day"`: `29`
+#' 13. `"year.mn.day"`: `2000/02/29`
+#' 14. `"y.mn.day"`: `00/02/29`
+#'
 #' We can use the [info_date_style()] function for a useful reference on all of
 #' the possible inputs to `date_style`.
 #'
+#' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the Arguments section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param date_style The date style to use. Supply a number (from `1` to `14`)
-#'   that corresponds to the preferred date style. Use [info_date_style()] to
-#'   see the different numbered and named date presets.
+#'   that corresponds to the preferred date style, or, provide a named date
+#'   style (`"wday_month_day_year"`, `"m_day_year"`, `"year.mn.day"`, etc.). Use
+#'   [info_date_style()] to see the different numbered and named date presets.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -1197,13 +1771,13 @@ fmt_currency <- function(data,
 #'     columns = date,
 #'     rows =
 #'       as.Date(date) > as.Date("2015-04-01"),
-#'     date_style = 6
+#'     date_style = "m_day_year"
 #'   ) %>%
 #'   fmt_date(
 #'     columns = date,
 #'     rows =
 #'       as.Date(date) <= as.Date("2015-04-01"),
-#'     date_style = 7
+#'     date_style = "day_m_year"
 #'   )
 #'
 #' @section Figures:
@@ -1213,7 +1787,7 @@ fmt_currency <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-5
+#' 3-8
 #'
 #' @import rlang
 #' @export
@@ -1230,9 +1804,17 @@ fmt_date <- function(data,
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(data, {{ columns }}, valid_classes = c("Date", "character"))) {
-    stop("The `fmt_date()` function can only be used on `columns` with `character` or `Date` values",
-         call. = FALSE)
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = c("Date", "character")
+    )
+  ) {
+    stop(
+      "The `fmt_date()` function can only be used on `columns` with `character` or `Date` values.",
+      call. = FALSE
+    )
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -1269,32 +1851,34 @@ fmt_date <- function(data,
 
 #' Format values as times
 #'
+#' @description
 #' Format input time values that are character-based and expressed according to
 #' the ISO 8601 time format (`HH:MM:SS`). Once the appropriate data cells are
 #' targeted with `columns` (and, optionally, `rows`), we can simply apply a
 #' preset time style to format the times. The following time styles are
 #' available for simpler formatting of ISO times (all using the input time of
 #' `14:35:00` in the example output times):
-#' \enumerate{
-#' \item hms: `14:35:00`
-#' \item hm: `14:35`
-#' \item hms_p: `2:35:00 PM`
-#' \item hm_p: `2:35 PM`
-#' \item h_p: `2 PM`
-#' }
+#'
+#' 1. `"hms"`: `14:35:00`
+#' 2. `"hm"`: `14:35`
+#' 3. `"hms_p"`: `2:35:00 PM`
+#' 4. `"hm_p"`: `2:35 PM`
+#' 5. `"h_p"`: `2 PM`
+#'
 #' We can use the [info_time_style()] function for a useful reference on all of
 #' the possible inputs to `time_style`.
 #'
+#' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the Arguments section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param time_style The time style to use. Supply a number (from `1` to `5`)
-#'   that corresponds to the preferred time style. Use [info_time_style()] to
-#'   see the different numbered and named time presets.
+#'   that corresponds to the preferred time style, or, provide a named time
+#'   style (`"hms"`, `"hms_p"`, `"h_p"`, etc.). Use [info_time_style()] to see
+#'   the different numbered and named time presets.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -1342,7 +1926,7 @@ fmt_date <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-6
+#' 3-9
 #'
 #' @import rlang
 #' @export
@@ -1359,9 +1943,16 @@ fmt_time <- function(data,
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(data, {{ columns }}, valid_classes = "character")) {
-    stop("The `fmt_date()` function can only be used on `columns` with `character` values",
-         call. = FALSE)
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = "character")
+  ) {
+    stop(
+      "The `fmt_date()` function can only be used on `columns` with `character` values.",
+      call. = FALSE
+    )
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -1392,6 +1983,7 @@ fmt_time <- function(data,
 
 #' Format values as date-times
 #'
+#' @description
 #' Format input date-time values that are character-based and expressed
 #' according to the ISO 8601 date-time format (`YYYY-MM-DD HH:MM:SS`). Once the
 #' appropriate data cells are targeted with `columns` (and, optionally, `rows`),
@@ -1399,38 +1991,38 @@ fmt_time <- function(data,
 #' values. The following date styles are available for simpler formatting of the
 #' date portion (all using the input date of `2000-02-29` in the example output
 #' dates):
-#' \enumerate{
-#' \item iso: `2000-02-29`
-#' \item wday_month_day_year: `Tuesday, February 29, 2000`
-#' \item wd_m_day_year: `Tue, Feb 29, 2000`
-#' \item wday_day_month_year: `Tuesday 29 February 2000`
-#' \item month_day_year: `February 29, 2000`
-#' \item m_day_year: `Feb 29, 2000`
-#' \item day_m_year: `29 Feb 2000`
-#' \item day_month_year: `29 February 2000`
-#' \item day_month: `29 February`
-#' \item year: `2000`
-#' \item month: `February`
-#' \item day: `29`
-#' \item year.mn.day: `2000/02/29`
-#' \item y.mn.day: `0/02/29`
-#' }
+#'
+#' 1. `"iso"`: `2000-02-29`
+#' 2. `"wday_month_day_year"`: `Tuesday, February 29, 2000`
+#' 3. `"wd_m_day_year"`: `Tue, Feb 29, 2000`
+#' 4. `"wday_day_month_year"`: `Tuesday 29 February 2000`
+#' 5. `"month_day_year"`: `February 29, 2000`
+#' 6. `"m_day_year"`: `Feb 29, 2000`
+#' 7. `"day_m_year"`: `29 Feb 2000`
+#' 8. `"day_month_year"`: `29 February 2000`
+#' 9. `"day_month"`: `29 February`
+#' 10. `"year"`: `2000`
+#' 11. `"month"`: `February`
+#' 12. `"day"`: `29`
+#' 13. `"year.mn.day"`: `2000/02/29`
+#' 14. `"y.mn.day"`: `00/02/29`
+#'
 #' The following time styles are available for simpler formatting of the time
 #' portion (all using the input time of `14:35:00` in the example output times):
-#' \enumerate{
-#' \item hms: `14:35:00`
-#' \item hm: `14:35`
-#' \item hms_p: `2:35:00 PM`
-#' \item hm_p: `2:35 PM`
-#' \item h_p: `2 PM`
-#' }
+#'
+#' 1. `"hms"`: `14:35:00`
+#' 2. `"hm"`: `14:35`
+#' 3. `"hms_p"`: `2:35:00 PM`
+#' 4. `"hm_p"`: `2:35 PM`
+#' 5. `"h_p"`: `2 PM`
+#'
 #' We can use the [info_date_style()] and [info_time_style()] functions as
 #' useful references for all of the possible inputs to `date_style` and
 #' `time_style`.
 #'
+#' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the Arguments section for more information on this.
 #'
@@ -1461,7 +2053,7 @@ fmt_time <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-7
+#' 3-10
 #'
 #' @import rlang
 #' @export
@@ -1482,9 +2074,16 @@ fmt_datetime <- function(data,
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(data, {{ columns }}, valid_classes = "character")) {
-    stop("The `fmt_datetime()` function can only be used on `columns` with `character` values",
-         call. = FALSE)
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = "character"
+    )) {
+    stop(
+      "The `fmt_datetime()` function can only be used on `columns` with `character` values.",
+      call. = FALSE
+    )
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -1536,12 +2135,13 @@ fmt_datetime <- function(data,
 
 #' Format Markdown text
 #'
+#' @description
 #' Any Markdown-formatted text in the incoming cells will be transformed to the
 #' appropriate output type during render when using `fmt_markdown()`.
 #'
+#' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the Arguments section for more information on this.
 #'
@@ -1601,7 +2201,7 @@ fmt_datetime <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-8
+#' 3-11
 #'
 #' @import rlang
 #' @export
@@ -1643,6 +2243,7 @@ fmt_markdown <- function(data,
 
 #' Format by simply passing data through
 #'
+#' @description
 #' Format by passing data through no other transformation other than: (1)
 #' coercing to `character` (as all the `fmt_*()` functions do), and (2) applying
 #' text via the `pattern` argument (the default is to apply nothing). All of
@@ -1651,9 +2252,9 @@ fmt_markdown <- function(data,
 #' `formatter` function in the [summary_rows()] function, where the output may
 #' be text or useful as is.
 #'
+#' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the Arguments section for more information on this.
 #'
@@ -1687,7 +2288,7 @@ fmt_markdown <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-9
+#' 3-12
 #'
 #' @import rlang
 #' @export
@@ -1781,14 +2382,15 @@ fmt_passthrough <- function(data,
 
 #' Format missing values
 #'
+#' @description
 #' Wherever there is missing data (i.e., `NA` values) a customizable mark may
 #' present better than the standard `NA` text that would otherwise appear. The
 #' `fmt_missing()` function allows for this replacement through its
 #' `missing_text` argument (where an em dash serves as the default).
 #'
+#' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the Arguments section for more information on this.
 #'
@@ -1820,7 +2422,7 @@ fmt_passthrough <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-10
+#' 3-13
 #'
 #' @import rlang
 #' @export
@@ -1855,6 +2457,7 @@ fmt_missing <- function(data,
         ifelse(is.na(x), missing_text, NA_character_)
       },
       rtf = function(x) {
+
         missing_text <-
           context_missing_text(
             missing_text = missing_text,
@@ -1883,15 +2486,18 @@ fmt_missing <- function(data,
 
 #' Set a column format with a formatter function
 #'
+#' @description
 #' The `fmt()` function provides greater control in formatting raw data values
 #' than any of the specialized `fmt_*()` functions that are available in
 #' **gt**. Along with the `columns` and `rows` arguments that provide some
 #' precision in targeting data cells, the `fns` argument allows you to define
 #' one or more functions for manipulating the raw data.
+#'
 #' If providing a single function to `fns`, the recommended format is in the
 #' form: `fns = function(x) ...`. This single function will format the targeted
 #' data cells the same way regardless of the output format (e.g., HTML, LaTeX,
 #' RTF).
+#'
 #' If you require formatting of `x` that depends on the output format, a list of
 #' functions can be provided for the `html`, `latex`, and `default` contexts.
 #' This can be in the form of `fns = list(html = function(x) ..., latex =
@@ -1899,12 +2505,12 @@ fmt_missing <- function(data,
 #' we recommended including the `default` function as a fallback if all contexts
 #' aren't provided.
 #'
+#' @details
 #' As with all of the `fmt_*()` functions, targeting of values is done through
 #' `columns` and additionally by `rows` (if nothing is provided for `rows` then
-#' entire columns are selected). A number of helper functions exist to make
-#' targeting more effective. Conditional formatting is possible by providing a
-#' conditional expression to the `rows` argument. See the Arguments section for
-#' more information on this.
+#' entire columns are selected). Conditional formatting is possible by providing
+#' a conditional expression to the `rows` argument. See the Arguments section
+#' for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param fns Either a single formatting function or a named list of functions.
@@ -1932,7 +2538,7 @@ fmt_missing <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-11
+#' 3-14
 #'
 #' @import rlang
 #' @export

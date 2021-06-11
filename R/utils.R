@@ -48,14 +48,16 @@ get_date_format <- function(date_style) {
     return(
       date_formats() %>%
         dplyr::filter(format_number == as.character(date_style)) %>%
-        dplyr::pull(format_code))
+        dplyr::pull(format_code)
+    )
   }
 
   if (date_style %in% date_formats()$format_name) {
     return(
       date_formats() %>%
         dplyr::filter(format_name == date_style) %>%
-        dplyr::pull(format_code))
+        dplyr::pull(format_code)
+    )
   }
 }
 
@@ -1135,6 +1137,15 @@ process_footnote_marks <- function(x,
 is_gt <- function(data) {
 
   checkmate::test_class(data, "gt_tbl")
+}
+
+#' Determines whether a character vector is non-empty
+#'
+#' @param x A character vector.
+#' @noRd
+is_nonempty_string <- function(x) {
+
+  length(x) > 0 && any(grepl("\\S", x))
 }
 
 #' Stop any function if object is not a `gt_tbl` object

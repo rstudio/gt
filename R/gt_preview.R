@@ -1,5 +1,6 @@
 #' Preview a **gt** table object
 #'
+#' @description
 #' Sometimes you may want to see just a small portion of your input data. We can
 #' use `gt_preview()` in place of [gt()] to get the first x rows of data and the
 #' last y rows of data (which can be set by the `top_n` and `bottom_n`
@@ -7,6 +8,7 @@
 #' modify the output of `gt_preview()`. Furthermore, you cannot pass a **gt**
 #' object to `gt_preview()`.
 #'
+#' @details
 #' Any grouped data or magic columns such as `rowname` and `groupname` will be
 #' ignored by `gt_preview()` and, as such, one cannot add a stub or group rows
 #' in the output table. By default, the output table will include row numbers in

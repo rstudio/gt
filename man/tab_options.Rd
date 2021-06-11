@@ -240,7 +240,7 @@ of the the \code{column_labels}.}
 
 \item{column_labels.border.top.style, column_labels.border.top.width, column_labels.border.top.color}{The style, width, and color properties for the top border of the
 \code{column_labels} location. This border shares space with that of the
-\code{heading} location. If dthe \code{width} of this border is larger, then it will
+\code{heading} location. If the \code{width} of this border is larger, then it will
 be the visible border.}
 
 \item{column_labels.border.bottom.style, column_labels.border.bottom.width, column_labels.border.bottom.color}{The style, width, and color properties for the bottom border of the

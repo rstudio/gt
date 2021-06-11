@@ -14,7 +14,7 @@ data_tbl <-
 
 # Create a `gt_tbl` object with `gt()` and the
 # `data_tbl` dataset
-tab <- gt(data = data_tbl)
+tab <- gt(data_tbl)
 
 # Create an input data frame with dates, times, and date-times (all
 # as character)
@@ -28,7 +28,7 @@ time_tbl <-
 
 # Create a `gt_tbl` object with `gt()` and the
 # `data_tbl` dataset
-tab_time <- gt(data = time_tbl)
+tab_time <- gt(time_tbl)
 
 test_that("the `fmt_number()` function works with conditional `rows`", {
 

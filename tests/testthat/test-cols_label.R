@@ -133,4 +133,47 @@ test_that("the function `cols_label()` works correctly", {
   expect_error(
     gt(tbl) %>%
       cols_label(col_a = "col_1"))
+
+  # Expect no partial matching issues with column names and arguments
+  expect_error(
+    regexp = NA,
+    dplyr::tribble(
+      ~a , ~d,
+      1, 4,
+      5, 8
+    ) %>%
+      gt() %>%
+      cols_label(
+        a = "label a",
+        d = "label d"
+      )
+  )
+  expect_error(
+    regexp = NA,
+    dplyr::tribble(
+      ~a , ~dat,
+      1, 4,
+      5, 8
+    ) %>%
+      gt() %>%
+      cols_label(
+        a = "label a",
+        dat = "label dat"
+      )
+  )
+
+  # Do expect an error in the unlikely case that a column
+  # name is close enough to `.data`
+  expect_error(
+    dplyr::tribble(
+      ~a , ~.dat,
+      1, 4,
+      5, 8
+    ) %>%
+      gt() %>%
+      cols_label(
+        a = "label a",
+        .dat = "label dat"
+      )
+  )
 })

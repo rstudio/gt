@@ -13,9 +13,11 @@ fmt_percent(
   drop_trailing_dec_mark = TRUE,
   scale_values = TRUE,
   use_seps = TRUE,
+  accounting = FALSE,
   pattern = "{x}",
   sep_mark = ",",
   dec_mark = ".",
+  force_sign = FALSE,
   incl_space = FALSE,
   placement = "right",
   locale = NULL
@@ -59,6 +61,10 @@ already scaled and require only the percent sign when formatted.}
 group separator is set by \code{sep_mark} and overridden if a locale ID is
 provided to \code{locale}. This setting is \code{TRUE} by default.}
 
+\item{accounting}{An option to use accounting style for values. With \code{FALSE}
+(the default), negative values will be shown with a minus sign. Using
+\code{accounting = TRUE} will put negative values in parentheses.}
+
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other
 characters are taken to be string literals.}
@@ -68,6 +74,12 @@ characters are taken to be string literals.}
 of \verb{1,000}).}
 
 \item{dec_mark}{The character to use as a decimal mark (e.g., using \code{dec_mark = ","} with \code{0.152} would result in a formatted value of \verb{0,152}).}
+
+\item{force_sign}{Should the positive sign be shown for positive values
+(effectively showing a sign for all values except zero)? If so, use \code{TRUE}
+for this option. The default is \code{FALSE}, where only negative numbers will
+display a minus sign. This option is disregarded when using accounting
+notation with \code{accounting = TRUE}.}
 
 \item{incl_space}{An option for whether to include a space between the value
 and the percent sign. The default is to not introduce a space character.}
@@ -108,8 +120,7 @@ formatting specific to the chosen locale
 }
 \details{
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
-nothing is provided for \code{rows} then entire columns are selected). A number of
-helper functions exist to make targeting more effective. Conditional
+nothing is provided for \code{rows} then entire columns are selected). Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
 argument. See the Arguments section for more information on this.
 }
@@ -120,7 +131,7 @@ argument. See the Arguments section for more information on this.
 
 \section{Function ID}{
 
-3-3
+3-5
 }
 
 \examples{
@@ -144,9 +155,12 @@ tab_1 <-
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},
+\code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_engineering}()},
+\code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},

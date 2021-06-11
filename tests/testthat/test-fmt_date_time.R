@@ -10,19 +10,10 @@ test_that("the `fmt_date()` function works correctly", {
 
   # Create a `tab` object with `gt()` and the
   # `data_tbl` dataset
-  tab <- gt(data = data_tbl)
+  tab <- gt(data_tbl)
 
   # Expect that the object has the correct classes
   expect_is(tab, c("gt_tbl", "data.frame"))
-
-  # Expect certain named attributes
-  # expect_true(
-  #   all(
-  #     names(attributes(tab)) %in%
-  #       c("names", "class", "row.names",
-  #         "boxh_df", "stub_df", "footnotes_df", "styles_df",
-  #         "rows_df", "cols_df", "col_labels", "grp_labels",
-  #         "arrange_groups", "data_df", "opts_df", "formats", "transforms")))
 
   # Extract a vector from the table object for comparison
   # to the original dataset
@@ -139,9 +130,8 @@ test_that("the `fmt_date()` function works correctly", {
     dplyr::tibble(date = as.Date(c(
       "2017-10-15", "2013-02-22", "2014-09-22", "2018-01-10")))
 
-  # Create a `tab` object with `gt()` and the
-  # `data_tbl` dataset
-  tab <- gt(data = data_tbl)
+  # Create a `tab` object with `gt()` and the `data_tbl` dataset
+  tab <- gt(data_tbl)
 
   #
   # Format `date` in various date formats and verify the output
@@ -250,19 +240,10 @@ test_that("the `fmt_time()` function works correctly", {
 
   # Create a `gt_tbl` object with `gt()` and the
   # `data_tbl` dataset
-  tab <- gt(data = data_tbl)
+  tab <- gt(data_tbl)
 
   # Expect that the object has the correct classes
   expect_is(tab, c("gt_tbl", "data.frame"))
-
-  # Expect certain named attributes
-  # expect_true(
-  #   all(
-  #     names(attributes(tab)) %in%
-  #       c("names", "class", "row.names",
-  #         "boxh_df", "stub_df", "footnotes_df", "styles_df",
-  #         "rows_df", "cols_df", "col_labels", "grp_labels",
-  #         "arrange_groups", "data_df", "opts_df", "formats", "transforms")))
 
   # Extract a vector from the table object for comparison
   # to the original dataset
@@ -325,19 +306,10 @@ test_that("the `fmt_datetime()` function works correctly", {
 
   # Create a `gt_tbl` object with `gt()` and the
   # `data_tbl` dataset
-  tab <- gt(data = data_tbl)
+  tab <- gt(data_tbl)
 
   # Expect that the object has the correct classes
   expect_is(tab, c("gt_tbl", "data.frame"))
-
-  # Expect certain named attributes
-  # expect_true(
-  #   all(
-  #     names(attributes(tab)) %in%
-  #       c("names", "class", "row.names",
-  #         "boxh_df", "stub_df", "footnotes_df", "styles_df",
-  #         "rows_df", "cols_df", "col_labels", "grp_labels",
-  #         "arrange_groups", "data_df", "opts_df", "formats", "transforms")))
 
   # Extract a vector from the table object for comparison
   # to the original dataset

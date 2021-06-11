@@ -1,5 +1,6 @@
 #' Modify the ordering of any row groups
 #'
+#' @description
 #' We can modify the display order of any row groups in a **gt** object with the
 #' `row_group_order()` function. The `groups` argument takes a vector of row
 #' group ID values. After this function is invoked, the row groups will adhere
@@ -74,5 +75,8 @@ row_group_order <- function(data,
   groups <- c(unique(groups), base::setdiff(arrange_groups, unique(groups)))
 
   # Create and store a list of row groups in the intended ordering
-  dt_row_groups_set(data = data, row_groups = groups)
+  dt_row_groups_set(
+    data = data,
+    row_groups = groups
+  )
 }

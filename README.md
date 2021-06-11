@@ -161,10 +161,20 @@ pages:
 
 #### Code of Conduct
 
-Please note that this project is released with a [Contributor Code of
-Conduct](https://contributor-covenant.org/version/1/0/0).<br>By
+Please note that the gt project is released with a [contributor
+code of
+conduct](https://www.contributor-covenant.org/version/2/0/code_of_conduct/).<br>By
 participating in this project you agree to abide by its terms.
 
-#### License
+#### 📄 License
 
-MIT © RStudio, PBC
+**gt** is licensed under the MIT license. See the
+[`LICENSE.md`](LICENSE.md) file for more details.
+
+© RStudio, PBC.
+
+------------------------------------------------------------------------
+
+<p align="center">
+<img src="man/figures/gt_tables_footer.png" width="100%">
+</p>

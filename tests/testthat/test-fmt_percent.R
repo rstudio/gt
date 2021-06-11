@@ -1,6 +1,4 @@
-context("Ensuring that the `fmt_percent()` function works as expected")
-
-test_that("the `fmt_percent()` function works correctly", {
+test_that("the `fmt_percent()` function works correctly in the HTML context", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric
@@ -15,201 +13,315 @@ test_that("the `fmt_percent()` function works correctly", {
       stringsAsFactors = FALSE
     )
 
-  # Create a `gt_tbl` object with `gt()` and the
-  # `data_tbl` dataset
-  tab <- gt(data = data_tbl)
+  # Create a `gt_tbl` object with `gt()` and the `data_tbl` dataset
+  tab <- gt(data_tbl)
 
   # Expect an error when attempting to format a column
   # that does not exist
   expect_error(
     tab %>%
-      fmt_percent(columns = "num_3", decimals = 2)
+      fmt_percent(columns = num_3, decimals = 2)
   )
 
   # Expect an error when using a locale that does not exist
   expect_error(
     tab %>%
-      fmt_percent(columns = "num_2", decimals = 2, locale = "aa_bb")
+      fmt_percent(columns = num_2, decimals = 2, locale = "aa_bb")
   )
 
-  # Format the `num_1` column to 2 decimal places, use all
-  # other defaults; extract `output_df` and compare to expected values
+  # Format the `num_1` column to 2 decimal places, use all other defaults
   expect_equal(
     (tab %>%
-       fmt_percent(columns = "num_1", decimals = 2) %>%
+       fmt_percent(columns = num_1, decimals = 2) %>%
        render_formats_test("html"))[["num_1"]],
-    c("183,623.00&percnt;", "276,339.00&percnt;", "93,729.00&percnt;",
+    c(
+      "183,623.00&percnt;", "276,339.00&percnt;", "93,729.00&percnt;",
       "64,300.00&percnt;", "21,223.20&percnt;", "0.00&percnt;",
-      "&minus;2,324.00&percnt;")
+      "&minus;2,324.00&percnt;"
+    )
   )
 
-  # Format the `num_1` column to 5 decimal places, use all
-  # other defaults; extract `output_df` and compare to expected values
+  # Format the `num_1` column to 5 decimal places, use all other defaults
   expect_equal(
     (tab %>%
-       fmt_percent(columns = "num_1", decimals = 5) %>%
+       fmt_percent(columns = num_1, decimals = 5) %>%
        render_formats_test("html"))[["num_1"]],
-    c("183,623.00000&percnt;", "276,339.00000&percnt;", "93,729.00000&percnt;",
+    c(
+      "183,623.00000&percnt;", "276,339.00000&percnt;", "93,729.00000&percnt;",
       "64,300.00000&percnt;", "21,223.20000&percnt;", "0.00000&percnt;",
-      "&minus;2,324.00000&percnt;")
+      "&minus;2,324.00000&percnt;"
+    )
   )
 
   # Format the `num_1` column to 2 decimal places, drop the trailing
-  # zeros, use all other defaults; extract `output_df` and compare to
-  # expected values
+  # zeros, use all other defaults
   expect_equal(
     (tab %>%
-       fmt_percent(columns = "num_1", decimals = 2,
+       fmt_percent(columns = num_1, decimals = 2,
                    drop_trailing_zeros = TRUE) %>%
        render_formats_test("html"))[["num_1"]],
-    c("183,623&percnt;", "276,339&percnt;", "93,729&percnt;", "64,300&percnt;",
-      "21,223.2&percnt;", "0&percnt;", "&minus;2,324&percnt;")
+    c(
+      "183,623&percnt;", "276,339&percnt;", "93,729&percnt;", "64,300&percnt;",
+      "21,223.2&percnt;", "0&percnt;", "&minus;2,324&percnt;"
+    )
   )
 
   # Format the `num_1` column to 2 decimal places, don't use digit
-  # grouping separators, use all other defaults; extract `output_df`
-  # and compare to expected values
+  # grouping separators, use all other defaults
   expect_equal(
     (tab %>%
-       fmt_percent(columns = "num_1", decimals = 2, use_seps = FALSE) %>%
+       fmt_percent(columns = num_1, decimals = 2, use_seps = FALSE) %>%
        render_formats_test("html"))[["num_1"]],
-    c("183623.00&percnt;", "276339.00&percnt;", "93729.00&percnt;",
+    c(
+      "183623.00&percnt;", "276339.00&percnt;", "93729.00&percnt;",
       "64300.00&percnt;", "21223.20&percnt;", "0.00&percnt;",
-      "&minus;2324.00&percnt;")
+      "&minus;2324.00&percnt;"
+    )
   )
 
   # Format the `num_1` column to 2 decimal places, use a single space
-  # character as digit grouping separators, use all other defaults;
-  # extract `output_df` and compare to expected values
+  # character as digit grouping separators, use all other defaults
   expect_equal(
     (tab %>%
-       fmt_percent(columns = "num_1", decimals = 2, sep_mark = " ") %>%
+       fmt_percent(columns = num_1, decimals = 2, sep_mark = " ") %>%
        render_formats_test("html"))[["num_1"]],
-    c("183 623.00&percnt;", "276 339.00&percnt;", "93 729.00&percnt;",
+    c(
+      "183 623.00&percnt;", "276 339.00&percnt;", "93 729.00&percnt;",
       "64 300.00&percnt;", "21 223.20&percnt;", "0.00&percnt;",
-      "&minus;2 324.00&percnt;")
+      "&minus;2 324.00&percnt;"
+    )
   )
 
   # Format the `num_1` column to 2 decimal places, use a period for the
   # digit grouping separators and a comma for the decimal mark, use
-  # all other defaults; extract `output_df` and compare to expected values
+  # all other defaults
   expect_equal(
     (tab %>%
-       fmt_percent(columns = "num_1", decimals = 2,
+       fmt_percent(columns = num_1, decimals = 2,
                    sep_mark = ".", dec_mark = ",") %>%
        render_formats_test("html"))[["num_1"]],
-    c("183.623,00&percnt;", "276.339,00&percnt;", "93.729,00&percnt;",
+    c(
+      "183.623,00&percnt;", "276.339,00&percnt;", "93.729,00&percnt;",
       "64.300,00&percnt;", "21.223,20&percnt;", "0,00&percnt;",
-      "&minus;2.324,00&percnt;")
+      "&minus;2.324,00&percnt;"
+    )
   )
 
   # Format the `num_1` column to 2 decimal places, prepend and append
-  # all values by 2 different literals, use all other defaults; extract
-  # `output_df` and compare to expected values
+  # all values by 2 different literals, use all other defaults
   expect_equal(
     (tab %>%
-       fmt_percent(columns = "num_1", decimals = 2, pattern = "a {x}:n") %>%
+       fmt_percent(columns = num_1, decimals = 2, pattern = "a {x}:n") %>%
        render_formats_test("html"))[["num_1"]],
-    c("a 183,623.00&percnt;:n", "a 276,339.00&percnt;:n",
+    c(
+      "a 183,623.00&percnt;:n", "a 276,339.00&percnt;:n",
       "a 93,729.00&percnt;:n", "a 64,300.00&percnt;:n",
       "a 21,223.20&percnt;:n", "a 0.00&percnt;:n",
-      "a &minus;2,324.00&percnt;:n")
+      "a &minus;2,324.00&percnt;:n"
+    )
   )
 
   # Format the `num_1` column to 0 decimal places, place a space between
-  # the percent sign (on the right) and the value, use all other defaults;
-  # extract `output_df` and compare to expected values
+  # the percent sign (on the right) and the value, use all other defaults
   expect_equal(
     (tab %>%
-       fmt_percent(columns = "num_1", decimals = 0,
+       fmt_percent(columns = num_1, decimals = 0,
                    placement = "right", incl_space = TRUE) %>%
        render_formats_test("html"))[["num_1"]],
-    c("183,623 &percnt;", "276,339 &percnt;", "93,729 &percnt;",
+    c(
+      "183,623 &percnt;", "276,339 &percnt;", "93,729 &percnt;",
       "64,300 &percnt;", "21,223 &percnt;", "0 &percnt;",
-      "&minus;2,324 &percnt;")
+      "&minus;2,324 &percnt;"
+    )
   )
 
   # Format the `num_1` column to 0 decimal places, place a space between
-  # the percent sign (on the left) and the value, use all other defaults;
-  # extract `output_df` and compare to expected values
+  # the percent sign (on the left) and the value, use all other defaults
   expect_equal(
     (tab %>%
-       fmt_percent(columns = "num_1", decimals = 0,
+       fmt_percent(columns = num_1, decimals = 0,
                    placement = "left", incl_space = TRUE) %>%
        render_formats_test("html"))[["num_1"]],
-    c("&percnt; 183,623", "&percnt; 276,339", "&percnt; 93,729",
+    c(
+      "&percnt; 183,623", "&percnt; 276,339", "&percnt; 93,729",
       "&percnt; 64,300", "&percnt; 21,223", "&percnt; 0",
-      "&minus;&percnt; 2,324")
+      "&minus;&percnt; 2,324"
+    )
+  )
+
+  # Format the `num_1` column to 2 decimal places, use accounting style
+  expect_equal(
+    (tab %>%
+       fmt_percent(columns = num_1, accounting = TRUE) %>%
+       render_formats_test("html"))[["num_1"]],
+    c(
+      "183,623.00&percnt;", "276,339.00&percnt;", "93,729.00&percnt;",
+      "64,300.00&percnt;", "21,223.20&percnt;", "0.00&percnt;", "(2,324.00&percnt;)"
+    )
+  )
+
+  # Format the `num_1` column to 3 decimal places, use accounting style
+  expect_equal(
+    (tab %>%
+       fmt_percent(columns = num_1, decimals = 3, accounting = TRUE) %>%
+       render_formats_test("html"))[["num_1"]],
+    c(
+      "183,623.000&percnt;", "276,339.000&percnt;", "93,729.000&percnt;",
+      "64,300.000&percnt;", "21,223.200&percnt;", "0.000&percnt;",
+      "(2,324.000&percnt;)"
+    )
+  )
+
+  # Format the `num_1` column to 2 decimal places, use accounting style
+  # and a pattern around the values
+  expect_equal(
+    (tab %>%
+       fmt_percent(
+         columns = num_1, decimals = 3,
+         accounting = TRUE, pattern = "a{x}b") %>%
+       render_formats_test("html"))[["num_1"]],
+    c(
+      "a183,623.000&percnt;b", "a276,339.000&percnt;b", "a93,729.000&percnt;b",
+      "a64,300.000&percnt;b", "a21,223.200&percnt;b", "a0.000&percnt;b",
+      "a(2,324.000&percnt;)b"
+    )
+  )
+
+  # Format the `num_1` column to 2 decimal places, use accounting style
+  # and drop all trailing zeros
+  expect_equal(
+    (tab %>%
+       fmt_percent(
+         columns = num_1, decimals = 3,
+         accounting = TRUE, drop_trailing_zeros = TRUE) %>%
+       render_formats_test("html"))[["num_1"]],
+    c(
+      "183,623&percnt;", "276,339&percnt;", "93,729&percnt;", "64,300&percnt;",
+      "21,223.2&percnt;", "0&percnt;", "(2,324&percnt;)"
+    )
+  )
+
+  # Format the `num_1` column to 2 decimal places, force the sign
+  expect_equal(
+    (tab %>%
+       fmt_percent(
+         columns = num_1, decimals = 2,  drop_trailing_zeros = TRUE,
+         scale_values = FALSE, force_sign = TRUE
+       ) %>%
+       render_formats_test("html"))[["num_1"]],
+    c(
+      "+1,836.23&percnt;", "+2,763.39&percnt;", "+937.29&percnt;",
+      "+643&percnt;", "+212.23&percnt;", "0&percnt;", "&minus;23.24&percnt;"
+    )
+  )
+
+  # Expect that using `force_sign = TRUE` with `accounting = TRUE`
+  # will render values in accounting format
+  expect_equal(
+    (tab %>%
+       fmt_percent(
+         columns = num_1, decimals = 2, drop_trailing_zeros = TRUE,
+         scale_values = FALSE, accounting = TRUE, force_sign = TRUE
+       ) %>%
+       render_formats_test("html"))[["num_1"]],
+    (tab %>%
+       fmt_percent(
+         columns = num_1, decimals = 2,  drop_trailing_zeros = TRUE,
+         scale_values = FALSE, accounting = TRUE
+       ) %>%
+       render_formats_test("html"))[["num_1"]]
+  )
+
+  # Format the `num_1` column to 2 decimal places, force the sign and
+  # define a pattern for decorating values
+  expect_equal(
+    (tab %>%
+       fmt_percent(
+         columns = num_1, decimals = 2, drop_trailing_zeros = TRUE,
+         pattern = "*{x}*", force_sign = TRUE
+       ) %>%
+       render_formats_test("html"))[["num_1"]],
+    c(
+      "*+183,623&percnt;*", "*+276,339&percnt;*", "*+93,729&percnt;*",
+      "*+64,300&percnt;*", "*+21,223.2&percnt;*", "*0&percnt;*",
+      "*&minus;2,324&percnt;*"
+    )
   )
 
   # Format the `num_1` column to 2 decimal places, apply the `en_US`
-  # locale and use all other defaults; extract `output_df` and compare
-  # to expected values
+  # locale and use all other defaults
   expect_equal(
     (tab %>%
-       fmt_percent(columns = "num_1", decimals = 2, locale = "en_US") %>%
+       fmt_percent(columns = num_1, decimals = 2, locale = "en_US") %>%
        render_formats_test("html"))[["num_1"]],
-    c("183,623.00&percnt;", "276,339.00&percnt;", "93,729.00&percnt;",
+    c(
+      "183,623.00&percnt;", "276,339.00&percnt;", "93,729.00&percnt;",
       "64,300.00&percnt;", "21,223.20&percnt;", "0.00&percnt;",
-      "&minus;2,324.00&percnt;")
+      "&minus;2,324.00&percnt;"
+    )
   )
 
   # Format the `num_1` column to 2 decimal places, apply the `da_DK`
-  # locale and use all other defaults; extract `output_df` and compare
-  # to expected values
+  # locale and use all other defaults
   expect_equal(
     (tab %>%
-       fmt_percent(columns = "num_1", decimals = 2, locale = "da_DK") %>%
+       fmt_percent(columns = num_1, decimals = 2, locale = "da_DK") %>%
        render_formats_test("html"))[["num_1"]],
-    c("183.623,00&percnt;", "276.339,00&percnt;", "93.729,00&percnt;",
+    c(
+      "183.623,00&percnt;", "276.339,00&percnt;", "93.729,00&percnt;",
       "64.300,00&percnt;", "21.223,20&percnt;", "0,00&percnt;",
-      "&minus;2.324,00&percnt;")
+      "&minus;2.324,00&percnt;"
+    )
   )
 
   # Format the `num_1` column to 2 decimal places, apply the `de_AT`
-  # locale and use all other defaults; extract `output_df` and compare
-  # to expected values
+  # locale and use all other defaults
   expect_equal(
     (tab %>%
-       fmt_percent(columns = "num_1", decimals = 2, locale = "de_AT") %>%
+       fmt_percent(columns = num_1, decimals = 2, locale = "de_AT") %>%
        render_formats_test("html"))[["num_1"]],
-    c("183 623,00&percnt;", "276 339,00&percnt;", "93 729,00&percnt;",
+    c(
+      "183 623,00&percnt;", "276 339,00&percnt;", "93 729,00&percnt;",
       "64 300,00&percnt;", "21 223,20&percnt;", "0,00&percnt;",
-      "&minus;2 324,00&percnt;")
+      "&minus;2 324,00&percnt;"
+    )
   )
 
   # Format the `num_1` column to 2 decimal places, apply the `et_EE`
-  # locale and use all other defaults; extract `output_df` and compare
-  # to expected values
+  # locale and use all other defaults
   expect_equal(
     (tab %>%
-       fmt_percent(columns = "num_1", decimals = 2, locale = "et_EE") %>%
+       fmt_percent(columns = num_1, decimals = 2, locale = "et_EE") %>%
        render_formats_test("html"))[["num_1"]],
-    c("183 623,00&percnt;", "276 339,00&percnt;", "93 729,00&percnt;",
+    c(
+      "183 623,00&percnt;", "276 339,00&percnt;", "93 729,00&percnt;",
       "64 300,00&percnt;", "21 223,20&percnt;", "0,00&percnt;",
-      "&minus;2 324,00&percnt;")
+      "&minus;2 324,00&percnt;"
+    )
   )
 
   # Format the `num_1` column to 2 decimal places, apply the `gl_ES`
-  # locale and use all other defaults; extract `output_df` and compare
-  # to expected values
+  # locale and use all other defaults
   expect_equal(
     (tab %>%
-       fmt_percent(columns = "num_1", decimals = 2, locale = "gl_ES") %>%
+       fmt_percent(columns = num_1, decimals = 2, locale = "gl_ES") %>%
        render_formats_test("html"))[["num_1"]],
-    c("183.623,00&percnt;", "276.339,00&percnt;", "93.729,00&percnt;",
+    c(
+      "183.623,00&percnt;", "276.339,00&percnt;", "93.729,00&percnt;",
       "64.300,00&percnt;", "21.223,20&percnt;", "0,00&percnt;",
-      "&minus;2.324,00&percnt;")
+      "&minus;2.324,00&percnt;"
+    )
   )
 
   # Format the `num_2` column to 2 decimal places, expect that these
-  # values are prescaled and just require a percent mark; extract
-  # `output_df` and compare to expected values
+  # values are prescaled and just require a percent mark
   expect_equal(
     (tab %>%
-       fmt_percent(columns = "num_2", decimals = 2, scale_values = FALSE) %>%
+       fmt_percent(columns = num_2, decimals = 2, scale_values = FALSE) %>%
        render_formats_test("html"))[["num_2"]],
-    c("34.00&percnt;", "74.00&percnt;", "23.00&percnt;", "93.00&percnt;",
-      "35.00&percnt;", "76.00&percnt;", "57.00&percnt;")
+    c(
+      "34.00&percnt;", "74.00&percnt;", "23.00&percnt;", "93.00&percnt;",
+      "35.00&percnt;", "76.00&percnt;", "57.00&percnt;"
+    )
   )
 })

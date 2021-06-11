@@ -14,6 +14,7 @@ fmt_scientific(
   pattern = "{x}",
   sep_mark = ",",
   dec_mark = ".",
+  force_sign = FALSE,
   locale = NULL
 )
 }
@@ -42,9 +43,7 @@ use. The default number of decimal places is \code{2}.}
 trailing zeros (those redundant zeros after the decimal mark).}
 
 \item{scale_by}{A value to scale the input. The default is \code{1.0}. All numeric
-values will be multiplied by this value first before undergoing formatting.
-This value will be ignored if using any of the \code{suffixing} options (i.e.,
-where \code{suffixing} is not set to \code{FALSE}).}
+values will be multiplied by this value first before undergoing formatting.}
 
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other
@@ -55,6 +54,11 @@ characters are taken to be string literals.}
 of \verb{1,000}).}
 
 \item{dec_mark}{The character to use as a decimal mark (e.g., using \code{dec_mark = ","} with \code{0.152} would result in a formatted value of \verb{0,152}).}
+
+\item{force_sign}{Should the positive sign be shown for positive values
+(effectively showing a sign for all values except zero)? If so, use \code{TRUE}
+for this option. The default is \code{FALSE}, where only negative numbers will
+display a minus sign.}
 
 \item{locale}{An optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include \code{"en_US"} for English
@@ -82,8 +86,7 @@ formatting specific to the chosen locale
 }
 \details{
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
-nothing is provided for \code{rows} then entire columns are selected). A number of
-helper functions exist to make targeting more effective. Conditional
+nothing is provided for \code{rows} then entire columns are selected). Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
 argument. See the Arguments section for more information on this.
 }
@@ -94,7 +97,7 @@ argument. See the Arguments section for more information on this.
 
 \section{Function ID}{
 
-3-2
+3-3
 }
 
 \examples{
@@ -122,9 +125,12 @@ tab_1 <-
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},
+\code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_engineering}()},
+\code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},

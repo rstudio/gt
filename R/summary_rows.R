@@ -1,10 +1,12 @@
 #' Add groupwise summary rows using aggregation functions
 #'
+#' @description
 #' Add summary rows to one or more row groups by using the table data and any
 #' suitable aggregation functions. You choose how to format the values in the
 #' resulting summary cells by use of a `formatter` function (e.g, `fmt_number`,
 #' etc.) and any relevant options.
 #'
+#' @details
 #' Should we need to obtain the summary data for external purposes, the
 #' [extract_summary()] function can be used with a `gt_tbl` object where summary
 #' rows were added via `summary_rows()`.
@@ -110,7 +112,11 @@ summary_rows <- function(data,
   stub_available <- dt_stub_df_exists(data = data)
 
   # Resolve the column names
-  columns <- resolve_cols_c(expr = {{ columns }}, data = data)
+  columns <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data
+    )
 
   # If there isn't a stub available, create an
   # 'empty' stub (populated with empty strings);
@@ -120,27 +126,32 @@ summary_rows <- function(data,
     data <-
       dt_boxhead_add_var(
         data = data,
-        var = "rowname",
+        var = rowname_col_private,
         type = "stub",
-        column_label = list("rowname"),
+        column_label = list(rowname_col_private),
         column_align = "left",
         column_width = list(NULL),
         hidden_px = list(NULL),
         add_where = "bottom"
       )
 
-    # Add the `"rowname"` column into `_data`
+    # Add the `"::rowname::"` column into `_data`
     data$`_data` <-
       data$`_data` %>%
-      dplyr::mutate(rowname = rep("", nrow(data$`_data`))) %>%
-      dplyr::select(dplyr::everything(), rowname)
+      dplyr::mutate(!!rowname_col_private := rep("", nrow(data$`_data`))) %>%
+      dplyr::select(dplyr::everything(), .env$rowname_col_private)
 
-    # Place the `rowname` values into `stub_df$rowname`; these are
+
+    # Place the `::rowname::` values into `stub_df$rowname`; these are
     # empty strings which will provide an empty stub for locations
     # adjacent to the body rows
     stub_df[["rowname"]] <- ""
 
-    data <- dt_stub_df_set(data = data, stub_df = stub_df)
+    data <-
+      dt_stub_df_set(
+        data = data,
+        stub_df = stub_df
+      )
   }
 
   # Derive the summary labels
@@ -168,19 +179,22 @@ summary_rows <- function(data,
       formatter_options = formatter_options
     )
 
-  data <- dt_summary_add(data = data, summary = summary_list)
-
-  data
+  dt_summary_add(
+    data = data,
+    summary = summary_list
+  )
 }
 
 #' Add grand summary rows using aggregation functions
 #'
+#' @description
 #' Add grand summary rows to the **gt** table by using applying aggregation
 #' functions to the table data. The summary rows incorporate all of the
 #' available data, regardless of whether some of the data are part of row
 #' groups. You choose how to format the values in the resulting summary cells by
 #' use of a `formatter` function (e.g, `fmt_number`) and any relevant options.
 #'
+#' @details
 #' Should we need to obtain the summary data for external purposes, the
 #' [extract_summary()] function can be used with a `gt_tbl` object where grand
 #' summary rows were added via `grand_summary_rows()`.
@@ -238,11 +252,12 @@ grand_summary_rows <- function(data,
   stop_if_not_gt(data = data)
 
   summary_rows(
-    data,
+    data = data,
     groups = NULL,
     columns = {{ columns }},
     fns = fns,
     missing_text = missing_text,
     formatter = formatter,
-    ...)
+    ...
+  )
 }

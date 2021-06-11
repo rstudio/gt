@@ -25,8 +25,9 @@ to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{time_style}{The time style to use. Supply a number (from \code{1} to \code{5})
-that corresponds to the preferred time style. Use \code{\link[=info_time_style]{info_time_style()}} to
-see the different numbered and named time presets.}
+that corresponds to the preferred time style, or, provide a named time
+style (\code{"hms"}, \code{"hms_p"}, \code{"h_p"}, etc.). Use \code{\link[=info_time_style]{info_time_style()}} to see
+the different numbered and named time presets.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -39,19 +40,19 @@ preset time style to format the times. The following time styles are
 available for simpler formatting of ISO times (all using the input time of
 \code{14:35:00} in the example output times):
 \enumerate{
-\item hms: \code{14:35:00}
-\item hm: \code{14:35}
-\item hms_p: \verb{2:35:00 PM}
-\item hm_p: \verb{2:35 PM}
-\item h_p: \verb{2 PM}
+\item \code{"hms"}: \code{14:35:00}
+\item \code{"hm"}: \code{14:35}
+\item \code{"hms_p"}: \verb{2:35:00 PM}
+\item \code{"hm_p"}: \verb{2:35 PM}
+\item \code{"h_p"}: \verb{2 PM}
 }
+
 We can use the \code{\link[=info_time_style]{info_time_style()}} function for a useful reference on all of
 the possible inputs to \code{time_style}.
 }
 \details{
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
-nothing is provided for \code{rows} then entire columns are selected). A number of
-helper functions exist to make targeting more effective. Conditional
+nothing is provided for \code{rows} then entire columns are selected). Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
 argument. See the Arguments section for more information on this.
 }
@@ -64,7 +65,7 @@ argument. See the Arguments section for more information on this.
 
 \section{Function ID}{
 
-3-6
+3-9
 }
 
 \examples{
@@ -108,9 +109,12 @@ tab_2 <-
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},
+\code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_engineering}()},
+\code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
