@@ -226,10 +226,12 @@ absolute bottom borders.}
 \item{heading.align}{Controls the horizontal alignment of the heading title
 and subtitle. We can either use \code{"center"}, \code{"left"}, or \code{"right"}.}
 
-\item{heading.padding, column_labels.padding, data_row.padding, row_group.padding, summary_row.padding, grand_summary_row.padding, footnotes.padding, source_notes.padding}{The amount of vertical padding to incorporate in the \code{heading},
-\code{column_labels} (and \code{column_spanners}), \code{row_group}, \code{body}, \code{stub},
-\code{summary_row}, \code{grand_summary_row}, \code{footnotes}, and \code{source_notes}
-locations.}
+\item{heading.padding, column_labels.padding, data_row.padding, row_group.padding, summary_row.padding, grand_summary_row.padding, footnotes.padding, source_notes.padding}{The amount of vertical padding to incorporate in the \code{heading} (title and
+subtitle), the \code{column_labels} (this includes the column spanners), the row
+group labels (\code{row_group.padding}), in the body/stub rows
+(\code{data_row.padding}), in summary rows (\code{summary_row.padding} or
+\code{grand_summary_row.padding}), or in the footnotes and source notes
+(\code{footnotes.padding} and \code{source_notes.padding}).}
 
 \item{heading.border.bottom.style, heading.border.bottom.width, heading.border.bottom.color}{The style, width, and color properties of the header's bottom border. This
 border shares space with that of the \code{column_labels} location. If the

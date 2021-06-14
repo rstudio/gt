@@ -1451,10 +1451,12 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   `stub`, `summary_row`, and `grand_summary_row` text elements. Either of the
 #'   `"uppercase"`, `"lowercase"`, or `"capitalize"` keywords can be used.
 #' @param heading.padding,column_labels.padding,data_row.padding,row_group.padding,summary_row.padding,grand_summary_row.padding,footnotes.padding,source_notes.padding
-#'   The amount of vertical padding to incorporate in the `heading`,
-#'   `column_labels` (and `column_spanners`), `row_group`, `body`, `stub`,
-#'   `summary_row`, `grand_summary_row`, `footnotes`, and `source_notes`
-#'   locations.
+#'   The amount of vertical padding to incorporate in the `heading` (title and
+#'   subtitle), the `column_labels` (this includes the column spanners), the row
+#'   group labels (`row_group.padding`), in the body/stub rows
+#'   (`data_row.padding`), in summary rows (`summary_row.padding` or
+#'   `grand_summary_row.padding`), or in the footnotes and source notes
+#'   (`footnotes.padding` and `source_notes.padding`).
 #' @param table.border.top.style,table.border.top.width,table.border.top.color,table.border.right.style,table.border.right.width,table.border.right.color,table.border.bottom.style,table.border.bottom.width,table.border.bottom.color,table.border.left.style,table.border.left.width,table.border.left.color
 #'   The style, width, and color properties of the table's absolute top and
 #'   absolute bottom borders.
