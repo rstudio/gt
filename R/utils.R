@@ -40,25 +40,47 @@ time_formats <- function() {
 #' @noRd
 get_date_format <- function(date_style) {
 
-  # Create bindings for specific variables
-  format_number <- format_code <- format_name <- NULL
+  date_format_tbl <- date_formats()
+  date_format_num_range <- seq_len(nrow((date_format_tbl)))
 
-  if (date_style %in% 1:14 | date_style %in% as.character(1:14)) {
-
-    return(
-      date_formats() %>%
-        dplyr::filter(format_number == as.character(date_style)) %>%
-        dplyr::pull(format_code)
-    )
+  # In the rare instance that `date_style` consists of a character-based
+  # number in the valid range of numbers, cast the value as a number
+  if (is.character(date_style) &&
+      date_style %in% as.character(date_format_num_range)
+  ) {
+    date_style <- as.numeric(date_style)
   }
 
-  if (date_style %in% date_formats()$format_name) {
-    return(
-      date_formats() %>%
-        dplyr::filter(format_name == date_style) %>%
-        dplyr::pull(format_code)
-    )
+  # Stop function if a numeric `date_style` value is invalid
+  if (is.numeric(date_style)) {
+
+    if (!(date_style %in% date_format_num_range)) {
+      stop(
+        "If using a numeric value for a `date_style`, it must be ",
+        "between `1` and `", nrow((date_format_tbl)), "`:\n",
+        "* Use `info_date_style()` for a useful visual reference",
+        call. = FALSE
+      )
+    }
   }
+
+  # Stop function if a character-based `date_style` value is invalid
+  if (is.character(date_style)) {
+
+    if (!(date_style %in% date_format_tbl$format_name)) {
+      stop(
+        "If using a `date_style` name, it must be in the valid set:\n",
+        "* Use `info_date_style()` for a useful visual reference",
+        call. = FALSE
+      )
+    }
+
+    # Normalize `date_style` to be a numeric index value
+    date_style <- which(date_format_tbl$format_name == date_style)
+  }
+
+  # Obtain the correct date format code for use with `strptime()`
+  date_format_tbl[["format_code"]][date_style]
 }
 
 #' Transform a `time_style` to a `time_format`

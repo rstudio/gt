@@ -228,6 +228,34 @@ test_that("the `fmt_date()` function works correctly", {
        fmt_date(columns = "date", date_style = 14) %>%
        render_formats_test(context = "html"))[["date"]],
     c("17/10/15", "13/02/22", "14/09/22", "18/01/10"))
+
+  # Ensure that using named `date_style` values results in
+  # equivalent output as compared to using numbered `date_style`s
+  date_style_names <- date_formats()[["format_name"]]
+
+  for (i in 1:14) {
+    expect_equal(
+      (tab %>%
+         fmt_date(columns = "date", date_style = i) %>%
+         render_formats_test(context = "html"))[["date"]],
+      (tab %>%
+         fmt_date(columns = "date", date_style = date_style_names[i]) %>%
+         render_formats_test(context = "html"))[["date"]]
+    )
+
+    expect_equal(
+      (tab %>%
+         fmt_date(columns = "date", date_style = i) %>%
+         render_formats_test(context = "html"))[["date"]],
+      (tab %>%
+         fmt_date(columns = "date", date_style = as.character(i)) %>%
+         render_formats_test(context = "html"))[["date"]]
+    )
+  }
+
+  # Expect errors if invalid input is provided to `fmt_date()`
+  expect_error(tab %>% fmt_date(columns = "date", date_style = "none"))
+  expect_error(tab %>% fmt_date(columns = "date", date_style = 50))
 })
 
 test_that("the `fmt_time()` function works correctly", {

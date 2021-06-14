@@ -1374,7 +1374,7 @@ fmt_bytes <- function(data,
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param date_style The date style to use. Supply a number (from `1` to `14`)
@@ -1467,8 +1467,7 @@ fmt_date <- function(data,
     fns = list(
       default = function(x) {
 
-        # If `x` is of the `Date` type, simply make
-        # that a character vector
+        # If `x` is of the `Date` type, simply make that a character vector
         if (inherits(x, "Date")) {
           x <- as.character(x)
         }
@@ -1477,14 +1476,12 @@ fmt_date <- function(data,
           ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
           strftime(format = date_format_str)
 
-        if (date_style %in% 2:12) {
-          date <- date %>% tidy_gsub(., "^0", "")
-        }
+        date <- gsub(" 0([0-9])", " \\1", date)
+        date <- gsub("^0([0-9])[^/]", "\\1 ", date)
+        date <- gsub("pm$", "PM", date)
+        date <- gsub("am$", "AM", date)
 
-        date %>%
-          tidy_gsub(" 0([0-9])", " \\1") %>%
-          tidy_gsub("pm$", "PM") %>%
-          tidy_gsub("am$", "AM")
+        date
       }
     )
   )
