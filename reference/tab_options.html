@@ -192,6 +192,7 @@ components, the subcomponents, and the element that can adjusted.</p>
   heading.title.font.weight <span class='op'>=</span> <span class='cn'>NULL</span>,
   heading.subtitle.font.size <span class='op'>=</span> <span class='cn'>NULL</span>,
   heading.subtitle.font.weight <span class='op'>=</span> <span class='cn'>NULL</span>,
+  heading.padding <span class='op'>=</span> <span class='cn'>NULL</span>,
   heading.border.bottom.style <span class='op'>=</span> <span class='cn'>NULL</span>,
   heading.border.bottom.width <span class='op'>=</span> <span class='cn'>NULL</span>,
   heading.border.bottom.color <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -202,6 +203,7 @@ components, the subcomponents, and the element that can adjusted.</p>
   column_labels.font.size <span class='op'>=</span> <span class='cn'>NULL</span>,
   column_labels.font.weight <span class='op'>=</span> <span class='cn'>NULL</span>,
   column_labels.text_transform <span class='op'>=</span> <span class='cn'>NULL</span>,
+  column_labels.padding <span class='op'>=</span> <span class='cn'>NULL</span>,
   column_labels.vlines.style <span class='op'>=</span> <span class='cn'>NULL</span>,
   column_labels.vlines.width <span class='op'>=</span> <span class='cn'>NULL</span>,
   column_labels.vlines.color <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -410,6 +412,15 @@ absolute bottom borders.</p></td>
 and subtitle. We can either use <code>"center"</code>, <code>"left"</code>, or <code>"right"</code>.</p></td>
     </tr>
     <tr>
+      <th>heading.padding, column_labels.padding, data_row.padding, row_group.padding, summary_row.padding, grand_summary_row.padding, footnotes.padding, source_notes.padding</th>
+      <td><p>The amount of vertical padding to incorporate in the <code>heading</code> (title and
+subtitle), the <code>column_labels</code> (this includes the column spanners), the row
+group labels (<code>row_group.padding</code>), in the body/stub rows
+(<code>data_row.padding</code>), in summary rows (<code>summary_row.padding</code> or
+<code>grand_summary_row.padding</code>), or in the footnotes and source notes
+(<code>footnotes.padding</code> and <code>source_notes.padding</code>).</p></td>
+    </tr>
+    <tr>
       <th>heading.border.bottom.style, heading.border.bottom.width, heading.border.bottom.color</th>
       <td><p>The style, width, and color properties of the header's bottom border. This
 border shares space with that of the <code>column_labels</code> location. If the
@@ -482,12 +493,6 @@ the <code>table_body</code> location.</p></td>
       <th>stub.border.style, stub.border.width, stub.border.color</th>
       <td><p>The style, width, and color properties for the vertical border of the table
 stub.</p></td>
-    </tr>
-    <tr>
-      <th>data_row.padding, row_group.padding, summary_row.padding, grand_summary_row.padding, footnotes.padding, source_notes.padding</th>
-      <td><p>The amount of vertical padding to incorporate in the <code>data_row</code>,
-<code>row_group</code>, <code>summary_row</code>, <code>grand_summary_row</code>, <code>footnotes</code>, and
-<code>source_notes</code> locations.</p></td>
     </tr>
     <tr>
       <th>summary_row.border.style, summary_row.border.width, summary_row.border.color</th>
