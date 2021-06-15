@@ -45,8 +45,9 @@ get_date_format <- function(date_style) {
 
   # In the rare instance that `date_style` consists of a character-based
   # number in the valid range of numbers, cast the value as a number
-  if (is.character(date_style) &&
-      date_style %in% as.character(date_format_num_range)
+  if (
+    is.character(date_style) &&
+    date_style %in% as.character(date_format_num_range)
   ) {
     date_style <- as.numeric(date_style)
   }
@@ -88,23 +89,48 @@ get_date_format <- function(date_style) {
 #' @noRd
 get_time_format <- function(time_style) {
 
-  # Create bindings for specific variables
-  format_number <- format_code <- format_name <- NULL
+  time_format_tbl <- time_formats()
+  time_format_num_range <- seq_len(nrow((time_format_tbl)))
 
-  if (time_style %in% 1:5 | time_style %in% as.character(1:5)) {
-
-    return(
-      time_formats() %>%
-        dplyr::filter(format_number == as.character(time_style)) %>%
-        dplyr::pull(format_code))
+  # In the rare instance that `time_style` consists of a character-based
+  # number in the valid range of numbers, cast the value as a number
+  if (
+    is.character(time_style) &&
+    time_style %in% as.character(time_format_num_range)
+  ) {
+    time_style <- as.numeric(time_style)
   }
 
-  if (time_style %in% time_formats()$format_name) {
-    return(
-      time_formats() %>%
-        dplyr::filter(format_name == time_style) %>%
-        dplyr::pull(format_code))
+  # Stop function if a numeric `time_style` value is invalid
+  if (is.numeric(time_style)) {
+
+    if (!(time_style %in% time_format_num_range)) {
+      stop(
+        "If using a numeric value for a `time_style`, it must be ",
+        "between `1` and `", nrow((time_format_tbl)), "`:\n",
+        "* Use `info_time_style()` for a useful visual reference",
+        call. = FALSE
+      )
+    }
   }
+
+  # Stop function if a character-based `time_style` value is invalid
+  if (is.character(time_style)) {
+
+    if (!(time_style %in% time_format_tbl$format_name)) {
+      stop(
+        "If using a `time_style` name, it must be in the valid set:\n",
+        "* Use `info_time_style()` for a useful visual reference",
+        call. = FALSE
+      )
+    }
+
+    # Normalize `time_style` to be a numeric index value
+    time_style <- which(time_format_tbl$format_name == time_style)
+  }
+
+  # Obtain the correct time format code for use with `strptime()`
+  time_format_tbl[["format_code"]][time_style]
 }
 
 #' Transform a `currency` code to a currency string

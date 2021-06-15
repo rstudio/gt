@@ -1481,8 +1481,6 @@ fmt_date <- function(data,
         # Perform several cosmetic changes to the formatted date
         date <- gsub(" 0([0-9])", " \\1", date)
         date <- gsub("^0([0-9])[^/]", "\\1 ", date)
-        date <- gsub("pm$", "PM", date)
-        date <- gsub("am$", "AM", date)
 
         date
       }
@@ -1605,18 +1603,22 @@ fmt_time <- function(data,
     fns = list(
       default = function(x) {
 
-        time <-
-          ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
-          strftime(format = time_format_str)
+        # If the incoming string is a time then append the `1970-01-01` date
+        time <- ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x)
 
-        if (time_style %in% 3:5) {
-          time <- time %>% tidy_gsub(., "^0", "")
+        # Format the date string using `strftime()`
+        time <- strftime(time, format = time_format_str)
+
+        # Perform several cosmetic changes to the formatted time
+        if (grepl("%P$", time_format_str)) {
+
+          time <- gsub("^0", "", time)
+          time <- gsub(" 0([0-9])", " \\1", time)
+          time <- gsub("pm$", "PM", time)
+          time <- gsub("am$", "AM", time)
         }
 
-        time %>%
-          tidy_gsub(" 0([0-9])", " \\1") %>%
-          tidy_gsub("pm$", "PM") %>%
-          tidy_gsub("am$", "AM")
+        time
       }
     )
   )
