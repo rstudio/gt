@@ -1472,10 +1472,13 @@ fmt_date <- function(data,
           x <- as.character(x)
         }
 
-        date <-
-          ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
-          strftime(format = date_format_str)
+        # If the incoming string is a time then append the `1970-01-01` date
+        date <- ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x)
 
+        # Format the date string using `strftime()`
+        date <- strftime(date, format = date_format_str)
+
+        # Perform several cosmetic changes to the formatted date
         date <- gsub(" 0([0-9])", " \\1", date)
         date <- gsub("^0([0-9])[^/]", "\\1 ", date)
         date <- gsub("pm$", "PM", date)
