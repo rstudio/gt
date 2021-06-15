@@ -33,13 +33,15 @@ style (\code{"wday_month_day_year"}, \code{"m_day_year"}, \code{"year.mn.day"}, 
 An object of class \code{gt_tbl}.
 }
 \description{
-Format input date values that are either of the \code{Date} type, or, are
-character-based and expressed according to the ISO 8601 date format
-(\code{YYYY-MM-DD}). Once the appropriate data cells are targeted with \code{columns}
-(and, optionally, \code{rows}), we can simply apply a preset date style to format
-the dates. The following date styles are available for simpler formatting of
-ISO dates (all using the input date of \code{2000-02-29} in the example output
-dates):
+Format input values to time values using one of fourteen presets. Input can
+be in the form of \code{POSIXct} (i.e., date-times), the \code{Date} type, or
+\code{character} (must be in the ISO 8601 form of \verb{YYYY-MM-DD HH:MM:SS} or
+\code{YYYY-MM-DD}).
+
+Once the appropriate data cells are targeted with \code{columns} (and, optionally,
+\code{rows}), we can simply apply a preset date style to format the dates. The
+following date styles are available for use (all using the input date of
+\code{2000-02-29} in the example output dates):
 \enumerate{
 \item \code{"iso"}: \code{2000-02-29}
 \item \code{"wday_month_day_year"}: \verb{Tuesday, February 29, 2000}

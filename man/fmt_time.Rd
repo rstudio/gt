@@ -33,11 +33,14 @@ the different numbered and named time presets.}
 An object of class \code{gt_tbl}.
 }
 \description{
-Format input time values that are character-based and expressed according to
-the ISO 8601 time format (\code{HH:MM:SS}). Once the appropriate data cells are
-targeted with \code{columns} (and, optionally, \code{rows}), we can simply apply a
-preset time style to format the times. The following time styles are
-available for simpler formatting of ISO times (all using the input time of
+Format input values to time values using one of five presets. Input can be in
+the form of \code{POSIXct} (i.e., date-times), \code{character} (must be in the ISO
+8601 forms of \code{HH:MM:SS} or \verb{YYYY-MM-DD HH:MM:SS}), or \code{Date} (which always
+results in the formatting of \code{00:00:00}).
+
+Once the appropriate data cells are targeted with \code{columns} (and, optionally,
+\code{rows}), we can simply apply a preset time style to format the times. The
+following time styles are available for use (all using the input time of
 \code{14:35:00} in the example output times):
 \enumerate{
 \item \code{"hms"}: \code{14:35:00}
@@ -54,7 +57,7 @@ the possible inputs to \code{time_style}.
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
 nothing is provided for \code{rows} then entire columns are selected). Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the Arguments section for more information on this.
+argument. See the \emph{Arguments} section for more information on this.
 }
 \section{Figures}{
 

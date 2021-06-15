@@ -44,13 +44,16 @@ the different numbered and named time presets.}
 An object of class \code{gt_tbl}.
 }
 \description{
-Format input date-time values that are character-based and expressed
-according to the ISO 8601 date-time format (\verb{YYYY-MM-DD HH:MM:SS}). Once the
-appropriate data cells are targeted with \code{columns} (and, optionally, \code{rows}),
-we can simply apply preset date and time styles to format the date-time
-values. The following date styles are available for simpler formatting of the
-date portion (all using the input date of \code{2000-02-29} in the example output
-dates):
+Format input values to date-time values using one of fourteen presets for the
+date component and one of five presets for the time component. Input can be
+in the form of \code{POSIXct} (i.e., date-times), the \code{Date} type, or \code{character}
+(must be in the ISO 8601 form of \verb{YYYY-MM-DD HH:MM:SS} or \code{YYYY-MM-DD}).
+
+Once the appropriate data cells are targeted with \code{columns} (and, optionally,
+\code{rows}), we can simply apply preset date and time styles to format the
+date-time values. The following date styles are available for formatting of
+the date portion (all using the input date of \code{2000-02-29} in the example
+output dates):
 \enumerate{
 \item \code{"iso"}: \code{2000-02-29}
 \item \code{"wday_month_day_year"}: \verb{Tuesday, February 29, 2000}
@@ -68,8 +71,8 @@ dates):
 \item \code{"y.mn.day"}: \code{00/02/29}
 }
 
-The following time styles are available for simpler formatting of the time
-portion (all using the input time of \code{14:35:00} in the example output times):
+The following time styles are available for formatting of the time portion
+(all using the input time of \code{14:35:00} in the example output times):
 \enumerate{
 \item \code{"hms"}: \code{14:35:00}
 \item \code{"hm"}: \code{14:35}
@@ -86,7 +89,7 @@ useful references for all of the possible inputs to \code{date_style} and
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
 nothing is provided for \code{rows} then entire columns are selected). Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the Arguments section for more information on this.
+argument. See the \emph{Arguments} section for more information on this.
 }
 \section{Figures}{
 
