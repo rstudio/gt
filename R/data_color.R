@@ -288,6 +288,17 @@ is_rgba_col <- function(colors) {
   grepl("^rgba\\(\\s*(?:[0-9]+?\\s*,\\s*){3}[0-9\\.]+?\\s*\\)$", colors)
 }
 
+#' Are color values in hexadecimal format?
+#'
+#' This regex checks for valid hexadecimal colors in either the `#RRGGBB` and
+#' `#RRGGBBAA` forms (not including shortened form `#RGB` here)
+#'
+#' @noRd
+is_hex_col <- function(colors) {
+
+  grepl("^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$", colors)
+}
+
 #' For a background color, which foreground color provides better contrast?
 #'
 #' The input for this function is a single color value in rgba() format. The
