@@ -1450,10 +1450,13 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   Options to apply text transformations to the `column_labels`, `row_group`,
 #'   `stub`, `summary_row`, and `grand_summary_row` text elements. Either of the
 #'   `"uppercase"`, `"lowercase"`, or `"capitalize"` keywords can be used.
-#' @param data_row.padding,row_group.padding,summary_row.padding,grand_summary_row.padding,footnotes.padding,source_notes.padding
-#'   The amount of vertical padding to incorporate in the `data_row`,
-#'   `row_group`, `summary_row`, `grand_summary_row`, `footnotes`, and
-#'   `source_notes` locations.
+#' @param heading.padding,column_labels.padding,data_row.padding,row_group.padding,summary_row.padding,grand_summary_row.padding,footnotes.padding,source_notes.padding
+#'   The amount of vertical padding to incorporate in the `heading` (title and
+#'   subtitle), the `column_labels` (this includes the column spanners), the row
+#'   group labels (`row_group.padding`), in the body/stub rows
+#'   (`data_row.padding`), in summary rows (`summary_row.padding` or
+#'   `grand_summary_row.padding`), or in the footnotes and source notes
+#'   (`footnotes.padding` and `source_notes.padding`).
 #' @param table.border.top.style,table.border.top.width,table.border.top.color,table.border.right.style,table.border.right.width,table.border.right.color,table.border.bottom.style,table.border.bottom.width,table.border.bottom.color,table.border.left.style,table.border.left.width,table.border.left.color
 #'   The style, width, and color properties of the table's absolute top and
 #'   absolute bottom borders.
@@ -1675,6 +1678,7 @@ tab_options <- function(data,
                         heading.title.font.weight = NULL,
                         heading.subtitle.font.size = NULL,
                         heading.subtitle.font.weight = NULL,
+                        heading.padding = NULL,
                         heading.border.bottom.style = NULL,
                         heading.border.bottom.width = NULL,
                         heading.border.bottom.color = NULL,
@@ -1685,6 +1689,7 @@ tab_options <- function(data,
                         column_labels.font.size = NULL,
                         column_labels.font.weight = NULL,
                         column_labels.text_transform = NULL,
+                        column_labels.padding = NULL,
                         column_labels.vlines.style = NULL,
                         column_labels.vlines.width = NULL,
                         column_labels.vlines.color = NULL,
