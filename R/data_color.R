@@ -383,51 +383,34 @@ html_color <- function(colors, alpha = NULL) {
     stop("No values supplied in `colors` should be NA")
   }
 
-  # Ensure that all color names (assumed to be values not preceded
-  # with `#`) are in the set of X11/R color names or CSS color names;
-  # translate certain color names (CSS exclusive names) if necessary
-  if (!all(grepl("^#", colors))) {
+  is_rgba <- is_rgba_col(colors)
+  is_hex <- is_hex_col(colors)
+  is_named <- !is_rgba & !is_hex
 
-    named_colors <- tolower(colors[!grepl("^#", colors)])
+  named_colors <- tolower(colors[is_named])
 
-    if (!all(named_colors %in% valid_color_names())) {
+  if (length(named_colors) > 0) {
 
-      invalid_colors <- base::setdiff(unique(named_colors), valid_color_names())
-
-      stop(
-        ifelse(
-          length(invalid_colors) > 1,
-          "Several invalid color names were ",
-          "An invalid color name was "
-        ), "used (", str_catalog(invalid_colors, conj = "and"), "):\n",
-        " * Only R/X11 color names and CSS 3.0 color names can be used",
-        call. = FALSE
-      )
-    }
+    # Ensure that all color names are in the set of X11/R color
+    # names or CSS color names
+    check_named_colors(named_colors)
 
     # Translate any CSS exclusive colors to hexadecimal values;
     # there are nine CSS 3.0 named colors that don't belong to the
     # set of X11/R color names (not included numbered variants and
     # the numbered grays, those will be handled by `grDevices::col2rgb()`)
-    if (any(named_colors %in% css_exclusive_color_names())) {
+    is_css_excl_named <- tolower(colors) %in% css_exclusive_color_names()
 
-      colors <-
-        vapply(
-          colors,
-          FUN.VALUE = character(1),
-          USE.NAMES = FALSE,
-          FUN = function(x) {
+    if (any(is_css_excl_named)) {
 
-            if (!grepl("^#", x) && tolower(x) %in% css_exclusive_color_names()) {
-
-              x <-
-                css_colors[
-                  tolower(css_colors$color_name) == tolower(x),
-                ][, "hexadecimal", drop = TRUE]
-            }
-
-            x
-          }
+      # The `css_exclusive_color_names()` function returns a named vector
+      # of the CSS colors not in the X11/R set; the names are the hexadecimal
+      # color values
+      colors[is_css_excl_named] <-
+        names(
+          css_exclusive_color_names()[
+            match(tolower(colors[is_css_excl_named]), css_exclusive_color_names())
+          ]
         )
     }
   }
@@ -448,7 +431,7 @@ html_color <- function(colors, alpha = NULL) {
   }
 
   # Create a color matrix with an `alpha` column
-  color_matrix <- t(grDevices::col2rgb(col = colors, alpha = TRUE))
+  color_matrix <- t(grDevices::col2rgb(col = colors[!is_rgba], alpha = TRUE))
   color_matrix[, "alpha"] <- color_matrix[, "alpha"] / 255
 
   # If `alpha` has a value, replace all pre-existing
@@ -476,13 +459,43 @@ html_color <- function(colors, alpha = NULL) {
     color_matrix[!colors_alpha_1, , drop = FALSE] %>%
     col_matrix_to_rgba()
 
-  colors_html
+  # Combine these color values with any preexisting rgba() color values
+  colors[!is_rgba] <- colors_html
+
+  colors
 }
 
 css_exclusive_color_names <- function() {
-  tolower(css_colors[!css_colors$is_x11_color, ][, "color_name", drop = TRUE])
+
+  color_tbl_subset <- css_colors[!css_colors$is_x11_color, ]
+
+  color_names <- tolower(color_tbl_subset[["color_name"]])
+  color_names <- stats::setNames(color_names, color_tbl_subset[["hexadecimal"]])
+
+  color_names
 }
 
 valid_color_names <- function() {
-  c(tolower(grDevices::colors()), css_exclusive_color_names())
+  c(tolower(grDevices::colors()), unname(css_exclusive_color_names()))
 }
+
+check_named_colors <- function(named_colors) {
+
+  named_colors <- tolower(named_colors)
+
+  if (!all(named_colors %in% valid_color_names())) {
+
+    invalid_colors <- base::setdiff(unique(named_colors), valid_color_names())
+
+    stop(
+      ifelse(
+        length(invalid_colors) > 1,
+        "Several invalid color names were ",
+        "An invalid color name was "
+      ), "used (", str_catalog(invalid_colors, conj = "and"), "):\n",
+      " * Only R/X11 color names and CSS 3.0 color names can be used",
+      call. = FALSE
+    )
+  }
+}
+
