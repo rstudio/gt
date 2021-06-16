@@ -1099,9 +1099,8 @@ test_that("the various color utility functions work correctly", {
     )
   )
 
-  # Expect that the `html_color()` utility function will reliably return
-  # color strings entirely in the rgba() string format when `alpha` is non-NULL
-  # and less than `1`
+  # Expect that `html_color()` will reliably return color strings entirely
+  # in the rgba() string format when `alpha` is non-NULL and less than `1`
   expect_equal(
     html_color(colors = c(c_name, c_hex, c_hex_a), alpha = 0.5),
     c(
@@ -1113,6 +1112,17 @@ test_that("the various color utility functions work correctly", {
     )
   )
 
+  # Expect that `html_color()` won't alter any rgba() strings passed to it
+  expect_equal(
+    html_color(colors = c(c_name, c_hex, c_hex_a, c_rgba), alpha = 1),
+    c(
+      "#FF0000", "#FF6347", "#CD6889", "#32CD32", "#DBDBDB", "#0000FF",
+      c_hex,
+      "#FF235D", "#AA253A", "#F3F300", "#D2D721",
+      c_rgba
+    )
+  )
+
   # Furthermore, expect that all alpha values in the rgba() strings are of the
   # same value when `alpha` is non-NULL and less than `1`
   html_color(colors = c(c_name, c_hex, c_hex_a), alpha = 0.5) %>%
@@ -1121,27 +1131,45 @@ test_that("the various color utility functions work correctly", {
     length() %>%
     expect_equal(1)
 
-  # Expect that CSS color names not present as an R/X11 color will
-  # still work
+  # Expect that CSS color names not present as an R/X11 color will still work
   expect_equal(
-    html_color(colors = css_exclusive_color_names()),
+    html_color(colors = unname(css_exclusive_color_names())),
     c(
       "#DC143C", "#FF00FF", "#663399",
       "#4B0082", "#00FF00", "#808000",
       "#008080", "#00FFFF", "#C0C0C0"
     )
   )
+  expect_equal(
+    html_color(colors = rev(unname(css_exclusive_color_names()))),
+    c(
+      "#C0C0C0", "#00FFFF", "#008080",
+      "#808000", "#00FF00", "#4B0082",
+      "#663399", "#FF00FF", "#DC143C"
+    )
+  )
 
   # Expect that mixed names will work in `html_color()` (all the
-  # previous types plus the CSS exclusive names)
+  # previous types plus the CSS exclusive names here, which are
+  # 'rebeccapurple' and 'lime')
   expect_equal(
-    html_color(colors = c(c_name, c_hex, c_hex_a, css_exclusive_color_names())),
+    html_color(colors = c(c_name, c_hex, c_hex_a, "rebeccapurple", "lime")),
     c(
       "#FF0000", "#FF6347", "#CD6889", "#32CD32", "#DBDBDB", "#0000FF",
       "#FFAA00", "#FFBB34", "#AD552E", "#900019", "rgba(255,35,93,0.38)",
       "rgba(170,37,58,0.44)", "#F3F300", "rgba(210,215,33,0.06)",
-      "#DC143C", "#FF00FF", "#663399", "#4B0082", "#00FF00", "#808000",
-      "#008080", "#00FFFF", "#C0C0C0"
+      "#663399", "#00FF00"
+    )
+  )
+
+  # Expect that the CSS exclusive names will still work if names have mixed case
+  expect_equal(
+    html_color(colors = c(c_name, c_hex, c_hex_a, "RebeccaPurple", "Lime")),
+    c(
+      "#FF0000", "#FF6347", "#CD6889", "#32CD32", "#DBDBDB", "#0000FF",
+      "#FFAA00", "#FFBB34", "#AD552E", "#900019", "rgba(255,35,93,0.38)",
+      "rgba(170,37,58,0.44)", "#F3F300", "rgba(210,215,33,0.06)",
+      "#663399", "#00FF00"
     )
   )
 
@@ -1165,7 +1193,10 @@ test_that("the various color utility functions work correctly", {
   expect_error(
     html_color(colors = c(c_name, c_hex, "FF04E2", c_hex_a))
   )
+
+  # Don't expect an error if rgba()-format colors are passed to `html_color`
   expect_error(
+    regexp = NA,
     html_color(colors = c(c_name, c_hex, c_hex_a, "rgba(210,215,33,0.5)"))
   )
 

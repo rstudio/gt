@@ -1769,6 +1769,7 @@ test_that("certain X11 color names are replaced in HTML tables", {
       as_raw_html(inline_css = FALSE),
     "#D9D9D9"
   )
+})
 
 test_that("vertical padding across several table parts can be applied", {
 
