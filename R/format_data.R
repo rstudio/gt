@@ -1451,7 +1451,7 @@ fmt_date <- function(data,
     !column_classes_are_valid(
       data = data,
       columns = {{ columns }},
-      valid_classes = c("Date", "POSIXct", "character")
+      valid_classes = c("Date", "POSIXt", "character")
     )
   ) {
     stop(
@@ -1470,14 +1470,18 @@ fmt_date <- function(data,
     fns = list(
       default = function(x) {
 
-        # If `x` is of the `Date` or `POSIXct` types, simply transform
-        # `x` into a character vector
-        if (inherits(x, "Date") || inherits(x, "POSIXct")) {
-          x <- as.character(x)
-        }
-
-        # If the incoming string is a time then append the `1970-01-01` date
-        date <- ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x)
+        # Convert incoming values to POSIXlt but provide a friendly error
+        # if the values cannot be parsed by `as.POSIXlt()`
+        date <-
+          tryCatch(
+            as.POSIXlt(x),
+            error = function(cond) {
+              stop(
+                "One or more of the provided date/date-time values are invalid.",
+                call. = FALSE
+              )
+            }
+          )
 
         # Format the date string using `strftime()`
         date <- strftime(date, format = date_format_str)
@@ -1596,11 +1600,11 @@ fmt_time <- function(data,
     !column_classes_are_valid(
       data = data,
       columns = {{ columns }},
-      valid_classes = c("Date", "POSIXct", "character"))
+      valid_classes = c("Date", "POSIXt", "character"))
   ) {
     stop(
       "The `fmt_time()` function can only be used on `columns` of certain types:\n",
-      "* Allowed types are `Date`, `POSIXct`, and `character` (in `HH:MM:SS` format).",
+      "* Allowed types are `Date`, `POSIXt`, and `character` (in `HH:MM:SS` format).",
       call. = FALSE
     )
   }
@@ -1614,14 +1618,25 @@ fmt_time <- function(data,
     fns = list(
       default = function(x) {
 
-        # If `x` is of the `Date` or `POSIXct` types, simply transform
-        # `x` into a character vector
-        if (inherits(x, "Date") || inherits(x, "POSIXct")) {
-          x <- as.character(x)
+        # If the incoming values are strings that adequately represent time
+        # values, then prepend with the `1970-01-01` dummy date to create an
+        # input that will works with `strftime()`
+        if (all(is_string_time(x))) {
+          x <- paste("1970-01-01", x)
         }
 
-        # If the incoming string is a time then append the `1970-01-01` date
-        time <- ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x)
+        # Convert incoming values to POSIXlt but provide a friendly error
+        # if the values cannot be parsed by `as.POSIXlt()`
+        time <-
+          tryCatch(
+            as.POSIXlt(x),
+            error = function(cond) {
+              stop(
+                "One or more of the provided date/time/date-time values are invalid.",
+                call. = FALSE
+              )
+            }
+          )
 
         # Format the date string using `strftime()`
         time <- strftime(time, format = time_format_str)
@@ -1741,7 +1756,7 @@ fmt_datetime <- function(data,
     !column_classes_are_valid(
       data = data,
       columns = {{ columns }},
-      valid_classes = c("Date", "POSIXct", "character"))
+      valid_classes = c("Date", "POSIXt", "character"))
     ) {
       stop(
         "The `fmt_datetime()` function can only be used on `columns` of certain types:\n",
