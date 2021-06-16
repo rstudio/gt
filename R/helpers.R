@@ -1837,7 +1837,7 @@ cell_text <- function(color = NULL,
 
   # Transform the `color` value, if present, so that X11 color names
   # can be used in all output contexts
-  if ("color" %in% style_names && !is_rgba_col(color)) {
+  if ("color" %in% style_names) {
     style_vals$color <- html_color(colors = style_vals$color)
   }
 
@@ -1932,9 +1932,7 @@ cell_fill <- function(color = "#D3D3D3",
 
   # Transform the `color` value, if present, so that X11 color names
   # can be used in all output contexts
-  if (!is_rgba_col(color)) {
-    color <- html_color(colors = color, alpha = alpha)
-  }
+  color <- html_color(colors = color, alpha = alpha)
 
   style_vals <- list(color = color)
 
