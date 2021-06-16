@@ -133,6 +133,18 @@ get_time_format <- function(time_style) {
   time_format_tbl[["format_code"]][time_style]
 }
 
+#' Are string values 24 hour times?
+#'
+#' Determine whether string values are representative of ISO 8601 time parts
+#' (in 24 hour time). Valid strings can be in the folowing formats: `hh::mm`,
+#' `hh::mm:ss`, and `hh::mm:ss.sss`.
+#'
+#' @noRd
+is_string_time <- function(x) {
+
+  is.character(x) & grepl("^\\d{2}:\\d{2}(:\\d{2}(\\.\\d+)?)?$", x)
+}
+
 #' Transform a `currency` code to a currency string
 #'
 #' @noRd
