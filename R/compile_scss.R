@@ -14,10 +14,7 @@ compile_scss <- function(data, id = NULL) {
 
             option_value <- .[, "value", drop = TRUE][[x]]
 
-            if (
-              x %in% which(grepl("_color", .$parameter)) &&
-              !is_rgba_col(option_value)
-            ) {
+            if (x %in% which(grepl("_color", .$parameter))) {
               html_color(colors = option_value)
             } else {
               option_value
