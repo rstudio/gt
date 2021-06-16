@@ -200,6 +200,24 @@ test_that("the `fmt_date()` function works correctly", {
   # Expect errors if invalid input is provided to `fmt_date()`
   expect_error(tab_1 %>% fmt_date(columns = "date", date_style = "none"))
   expect_error(tab_1 %>% fmt_date(columns = "date", date_style = 50))
+
+  # Expect an error if providing a time as input for `fmt_date()`
+  expect_error(
+    dplyr::tibble(time = c(
+      "23:01", "15:30", "08:22"
+    )) %>%
+      gt() %>%
+      fmt_date(columns = "time") %>%
+      as_raw_html(inline_css = FALSE)
+  )
+
+  # Expect an error if any string-based dates are invalid
+  expect_error(
+    dplyr::tibble(date = c("2013-12-30", "2017-30-15")) %>%
+      gt() %>%
+      fmt_date(columns = "date") %>%
+      as_raw_html(inline_css = FALSE)
+  )
 })
 
 test_that("the `fmt_time()` function works correctly", {
@@ -372,6 +390,41 @@ test_that("the `fmt_time()` function works correctly", {
   # Expect errors if invalid input is provided to `fmt_time()`
   expect_error(tab_1 %>% fmt_time(columns = "time", time_style = "none"))
   expect_error(tab_1 %>% fmt_time(columns = "time", time_style = 50))
+
+  # Expect that mixed, string-based dates and date-times
+  # will result in the time value always being "00:00"
+  expect_equal(
+    (dplyr::tibble(date = c("2013-12-30 12:30", "2017-03-15")) %>%
+      gt() %>%
+      fmt_time(columns = "date") %>%
+      render_formats_test(context = "default"))[["date"]],
+    rep("00:00", 2)
+  )
+  expect_equal(
+    (dplyr::tibble(date = c("2013-12-30", "2017-03-15 12:30")) %>%
+       gt() %>%
+       fmt_time(columns = "date") %>%
+       render_formats_test(context = "default"))[["date"]],
+    rep("00:00", 2)
+  )
+
+  # Don't expect an error if any string-based date-times have invalid
+  # time components
+  expect_error(
+    regexp = NA,
+    dplyr::tibble(date = c("2013-12-30 25:30", "2017-03-15 02:32")) %>%
+      gt() %>%
+      fmt_time(columns = "date")
+  )
+
+  # Expect an error if any string-based date-times have invalid
+  # date components
+  expect_error(
+    dplyr::tibble(date = c("2013-14-30 22:30", "2017-03-15 02:32")) %>%
+      gt() %>%
+      fmt_time(columns = "date") %>%
+      as_raw_html(inline_css = FALSE)
+  )
 })
 
 test_that("the `fmt_datetime()` function works correctly", {
@@ -385,7 +438,7 @@ test_that("the `fmt_datetime()` function works correctly", {
       "2017-08-05 09:45:23",
       "2017-10-23 01:32:00",
       "2000-01-01 00:00:00"
-      ))
+    ))
 
   # Create a `gt_tbl` object with `gt()` and the
   # `data_tbl` dataset
