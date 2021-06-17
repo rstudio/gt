@@ -1,3 +1,5 @@
+# TODO: the `get_file_ext()` function overlaps greatly with `gtsave_file_ext()`;
+#       both are not vectorized
 # Get a file's extension
 get_file_ext <- function(file) {
 
@@ -22,15 +24,26 @@ get_mime_type <- function(file) {
 # as a vector Base64-encoded image strings
 get_image_uri <- function(file) {
 
+  # Create a list of `raw` objects
   image_raw <-
-    readBin(
-      con = file,
-      what = "raw",
-      n = file.info(file)$size
+    lapply(
+      file, FUN = function(x) {
+        readBin(
+          con = x,
+          what = "raw",
+          n = file.info(x)$size
+        )
+      }
     )
 
-  paste0(
-    "data:", get_mime_type(file),
-    ";base64,", base64enc::base64encode(image_raw)
+  vapply(
+    seq_along(image_raw),
+    FUN.VALUE = character(1),
+    USE.NAMES = FALSE, FUN = function(x) {
+      paste0(
+        "data:", get_mime_type(file[x]),
+        ";base64,", base64enc::base64encode(image_raw[[x]])
+      )
+    }
   )
 }
