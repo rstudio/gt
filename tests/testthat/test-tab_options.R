@@ -322,6 +322,15 @@ test_that("the internal `opts_df` table can be correctly modified", {
   # ) %>%
   #   expect_equal(c("normal", "bolder"))
 
+  # Modify the `heading.padding`
+  tbl_html <- data %>% tab_options(heading.padding = px(10))
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "heading_padding"),
+    dt_options_get_value(data = tbl_html, option = "heading_padding")
+  ) %>%
+    expect_equal(c("4px", "10px"))
+
   # Modify the `heading.border.bottom.style`
   tbl_html <- data %>% tab_options(heading.border.bottom.style = "dashed")
 
@@ -438,6 +447,15 @@ test_that("the internal `opts_df` table can be correctly modified", {
     dt_options_get_value(data = tbl_html, option = "column_labels_text_transform")
   ) %>%
     expect_equal(c("inherit", "uppercase"))
+
+  # Modify the `column_labels.padding`
+  tbl_html <- data %>% tab_options(column_labels.padding = px(10))
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "column_labels_padding"),
+    dt_options_get_value(data = tbl_html, option = "column_labels_padding")
+  ) %>%
+    expect_equal(c("5px", "10px"))
 
   # Modify the `column_labels.border.top.style`
   tbl_html <- data %>% tab_options(column_labels.border.top.style = "dashed")
@@ -1538,4 +1556,34 @@ test_that("the row striping options work correctly", {
         selection_text("[class='gt_row gt_right gt_striped']")
     ),
     0)
+})
+
+test_that("vertical padding across several table parts can be applied", {
+
+  testthat::local_edition(3)
+
+  snap_padded_tbl <- function(padding_px) {
+
+    mtcars[1:5, ] %>%
+      gt(rownames_to_stub = TRUE) %>%
+      tab_header(title = "The mtcars Dataset", subtitle = "What a great dataset this is") %>%
+      tab_spanner(label = "performance", columns = c(disp, hp, drat)) %>%
+      tab_footnote(footnote = "A table footnote", locations = cells_title("title")) %>%
+      tab_source_note(source_note = "Dataset is generally available in R") %>%
+      tab_options(
+        data_row.padding = padding_px,
+        column_labels.padding = padding_px,
+        heading.padding = padding_px,
+        footnotes.padding = padding_px,
+        source_notes.padding = padding_px
+      ) %>%
+      render_as_html() %>%
+      expect_snapshot()
+  }
+
+  # Generate a few snapshots at different `padding_px` amounts
+  snap_padded_tbl(padding_px = NULL)
+  snap_padded_tbl(padding_px = px(0))
+  snap_padded_tbl(padding_px = px(5))
+  snap_padded_tbl(padding_px = px(10))
 })
