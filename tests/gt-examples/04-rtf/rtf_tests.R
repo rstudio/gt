@@ -35,7 +35,7 @@ unicode_tbl %>% gtsave("tests/gt-examples/rtf_output/unicode.rtf")
 
 # Create a display table based on `iris`
 iris_tbl <-
-  gt(data = iris) %>%
+  gt(iris) %>%
   tab_spanner_delim(delim = ".") %>%
   cols_move_to_start(columns = Species) %>%
   fmt_number(
@@ -71,7 +71,7 @@ passthrough_tbl %>%  gtsave("tests/gt-examples/rtf_output/passthrough.rtf")
 
 # Create a display table based on `morley`
 morley_tbl <-
-  gt(data = morley) %>%
+  gt(morley) %>%
   fmt_number(
     columns = Speed,
     decimals = 0,
@@ -82,7 +82,7 @@ morley_tbl %>% gtsave("tests/gt-examples/rtf_output/morley.rtf")
 
 # Create a display table based on `pressure`
 pressure_tbl <-
-  gt(data = pressure) %>%
+  gt(pressure) %>%
   fmt_scientific(
     columns = pressure,
     decimals = 2
@@ -92,7 +92,7 @@ pressure_tbl %>% gtsave("tests/gt-examples/rtf_output/pressure.rtf")
 
 # Create a display table based on `sleep`
 sleep_tbl <-
-  gt(data = sleep) %>%
+  gt(sleep) %>%
   fmt_scientific(columns = extra) %>%
   tab_footnote(
     footnote = "This is a footnote",
@@ -103,7 +103,7 @@ sleep_tbl %>% gtsave("tests/gt-examples/rtf_output/sleep.rtf")
 
 # Create a display table based on `airquality`
 airquality_tbl <-
-  gt(data = airquality) %>%
+  gt(airquality) %>%
   cols_move_to_start(columns = c(Month, Day)) %>%
   cols_label(Solar.R = md("Solar  \nRadiation")) %>%
   fmt_number(
@@ -212,7 +212,7 @@ tbl <-
 
 # Create a display table with uncertainties
 uncert_tbl <-
-  gt(data = tbl) %>%
+  gt(tbl) %>%
   cols_merge_uncert(
     col_val = value_1,
     col_uncert = uncertainty
@@ -299,7 +299,7 @@ tbl <-
 
 # Create a display table
 footnotes_tbl <-
-  gt(data = tbl, groupname_col = "date") %>%
+  gt(tbl, groupname_col = "date") %>%
   tab_header(title = md("The Table `Title`"), subtitle = "The subtitle.") %>%
   tab_spanner(
     label = "values",
@@ -355,7 +355,7 @@ tbl <-
 
 # Create a display table
 spanner_tbl <-
-  gt(data = tbl) %>%
+  gt(tbl) %>%
   tab_spanner(
     label = "v_1_2",
     columns =  c("v_1", "v_2")

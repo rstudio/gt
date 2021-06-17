@@ -15,7 +15,7 @@ test_that("the `fmt_number()` function works correctly in the HTML context", {
 
   # Create a `gt_tbl` object with `gt()` and the
   # `data_tbl` dataset
-  tab <- gt(data = data_tbl)
+  tab <- gt(data_tbl)
 
   # Expect that the object has the correct classes
   expect_is(tab, c("gt_tbl", "data.frame"))
@@ -185,6 +185,41 @@ test_that("the `fmt_number()` function works correctly in the HTML context", {
     c("1,836.23", "2,763.39", "937.29", "643", "212.232", "0", "(23.24)")
   )
 
+  # Format the `num_1` column to 2 decimal places, force the sign
+  expect_equal(
+    (tab %>%
+       fmt_number(
+         columns = num_1, decimals = 3, force_sign = TRUE) %>%
+       render_formats_test("html"))[["num_1"]],
+    c("+1,836.230", "+2,763.390", "+937.290", "+643.000", "+212.232", "0.000", "&minus;23.240")
+  )
+
+  # Expect that using `force_sign = TRUE` with `accounting = TRUE`
+  # will render values in accounting format
+  expect_equal(
+    (tab %>%
+       fmt_number(
+         columns = num_1, decimals = 3, accounting = TRUE, force_sign = TRUE) %>%
+       render_formats_test("html"))[["num_1"]],
+    (tab %>%
+       fmt_number(
+         columns = num_1, decimals = 3, accounting = TRUE) %>%
+       render_formats_test("html"))[["num_1"]]
+  )
+
+  # Format the `num_1` column to 2 decimal places, force the sign and
+  # define a pattern for decorating values
+  expect_equal(
+    (tab %>%
+       fmt_number(
+         columns = num_1, pattern = "*{x}*", force_sign = TRUE) %>%
+       render_formats_test("html"))[["num_1"]],
+    c(
+      "*+1,836.23*", "*+2,763.39*", "*+937.29*", "*+643.00*", "*+212.23*",
+      "*0.00*", "*&minus;23.24*"
+    )
+  )
+
   # Format the `num_1` column to 2 decimal places, apply the `en_US`
   # locale and use all other defaults
   expect_equal(
@@ -289,7 +324,7 @@ test_that("the `fmt_number()` function can scale/suffix larger numbers", {
     )
 
   # Create a `gt_tbl` object with `gt()` and the `data_tbl` dataset
-  tab <- gt(data = data_tbl)
+  tab <- gt(data_tbl)
 
   # Format the `num` column to 2 decimal places, have the `suffixing` option
   # set to TRUE (default labels, all 4 ranges used)
@@ -407,9 +442,8 @@ test_that("the `fmt_number()` function can scale/suffix larger numbers", {
   # numeric column and with one row
   data_tbl_2 <- data.frame(num = 999.9999)
 
-  # Create a `gt_tbl` object with `gt()` and the
-  # `data_tbl_2` dataset
-  tab_2 <- gt(data = data_tbl_2)
+  # Create a `gt_tbl` object with `gt()` and the `data_tbl_2` dataset
+  tab_2 <- gt(data_tbl_2)
 
   #
   # Adjust the `decimals` value to verify that
@@ -493,7 +527,7 @@ test_that("the `fmt_number()` function format to specified significant figures",
   numbers_tbl <- dplyr::tibble(num = numbers)
 
   # Create a `gt_tbl` object with `gt()` and the `numbers_tbl` dataset
-  tab <- gt(data = numbers_tbl)
+  tab <- gt(numbers_tbl)
 
   # Format the `num` column to 5 significant figures
   expect_equal(
@@ -590,9 +624,8 @@ test_that("the `drop_trailing_dec_mark` option works in select `fmt_*()` functio
   # Create a single-column tibble with these values in `num`
   numbers_tbl <- dplyr::tibble(num = numbers)
 
-  # Create a `gt_tbl` object with `gt()` and the
-  # `numbers_tbl` dataset
-  tab <- gt(data = numbers_tbl)
+  # Create a `gt_tbl` object with `gt()` and the `numbers_tbl` dataset
+  tab <- gt(numbers_tbl)
 
   # Format the `num` column using `fmt_number()` with default options
   expect_equal(
@@ -731,7 +764,7 @@ test_that("`fmt_number()` with `suffixing = TRUE` works with small numbers", {
     )
 
   # Create a `gt_tbl` object with `gt()` and the `data_tbl` dataset
-  tab <- gt(data = data_tbl)
+  tab <- gt(data_tbl)
 
   # Format the `num` column to 2 decimal places, have the `suffixing` option
   # set to TRUE; we shouldn't expect to see any suffixes

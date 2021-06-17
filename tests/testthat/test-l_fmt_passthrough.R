@@ -16,7 +16,7 @@ test_that("the `fmt_passthrough()` function works correctly", {
 
   # Create a `tbl_latex` object with `gt()` and the
   # `data_tbl` dataset
-  tbl_latex <- gt(data = data_tbl)
+  tbl_latex <- gt(data_tbl)
 
   #
   # Format `fmt_passthrough()` with various options

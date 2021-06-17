@@ -1,19 +1,20 @@
 context("LaTeX -- Ensuring that the creation of tab components works as expected")
 
+testthat::local_edition(3)
+
 # Create a shorter version of `mtcars`
 mtcars_short <- mtcars[1:5, ]
 
 test_that("a gt table contains the expected heading components", {
 
-  # Create a `tbl_latex` object with `gt()`; this table
-  # contains a title
+  # Create a `tbl_latex` object with `gt()`; this table contains a title
   tbl_latex <-
-    gt(data = mtcars_short) %>%
+    gt(mtcars_short) %>%
     tab_header(title = "test title")
 
   # Expect a characteristic pattern
   grepl(
-    "\\caption*{\n\\large test title\\\\ \n} \\\\ \n\\toprule",
+    "\\caption*{\n{\\large test title}\n} \\\\ \n\\toprule",
     tbl_latex %>% as_latex() %>% as.character(),
     fixed = TRUE
   ) %>%
@@ -22,7 +23,7 @@ test_that("a gt table contains the expected heading components", {
   # Create a `tbl_latex` object with `gt()`; this table
   # contains a title and a subtitle
   tbl_latex <-
-    gt(data = mtcars_short) %>%
+    gt(mtcars_short) %>%
     tab_header(title = "test title", subtitle = "test subtitle")
 
   # Expect a characteristic pattern
@@ -35,6 +36,42 @@ test_that("a gt table contains the expected heading components", {
     tbl_latex %>% as_latex() %>% as.character()
   ) %>%
     expect_true()
+
+  # Perform a snapshot test where a LaTeX table
+  # contains only a title
+  mtcars_short %>%
+    gt() %>%
+    tab_header(title = "test title") %>%
+    as_latex() %>%
+    as.character() %>%
+    expect_snapshot()
+
+  # Perform a snapshot test where a LaTeX table
+  # contains a title and a subtitle
+  mtcars_short %>%
+    gt() %>%
+    tab_header(title = "test title", subtitle = "test subtitle") %>%
+    as_latex() %>%
+    as.character() %>%
+    expect_snapshot()
+
+  # Expect that providing a subtitle value with an empty
+  # string won't produce a subtitle line
+  mtcars_short %>%
+    gt() %>%
+    tab_header(title = "test title", subtitle = "") %>%
+    as_latex() %>%
+    as.character() %>%
+    expect_snapshot()
+
+  # Expect that providing a subtitle value with a series
+  # a space characters also won't produce a subtitle line
+  mtcars_short %>%
+    gt() %>%
+    tab_header(title = "test title", subtitle = "   ") %>%
+    as_latex() %>%
+    as.character() %>%
+    expect_snapshot()
 })
 
 test_that("a gt table contains the expected stubhead label", {
@@ -42,7 +79,7 @@ test_that("a gt table contains the expected stubhead label", {
   # Create a `tbl_latex` object with `gt()`; this table
   # contains a stub and a stubhead caption
   tbl_latex <-
-    gt(data = mtcars_short, rownames_to_stub = TRUE) %>%
+    gt(mtcars_short, rownames_to_stub = TRUE) %>%
     tab_stubhead(label = "the mtcars")
 
   # Expect a characteristic pattern
@@ -61,7 +98,7 @@ test_that("a gt table contains the expected column spanner labels", {
   # contains the spanner heading `perimeter` over the
   # `peri` and `shape` column labels
   tbl_latex <-
-    gt(data = rock) %>%
+    gt(rock) %>%
     tab_spanner(
       label = "perimeter",
       columns = c("peri", "shape")
@@ -83,7 +120,7 @@ test_that("a gt table contains the expected column spanner labels", {
   # `peri` and `shape` column labels (this time, using
   # `c()` to define the columns)
   tbl_latex <-
-    gt(data = rock) %>%
+    gt(rock) %>%
     tab_spanner(
       label = "perimeter",
       columns = c(peri, shape)
@@ -103,7 +140,7 @@ test_that("a gt table contains the expected column spanner labels", {
   # Expect an error when using column labels
   # that don't exist
   expect_error(
-    gt(data = rock) %>%
+    gt(rock) %>%
       tab_spanner(
         label = "perimeter",
         columns = c(peris, shapes)

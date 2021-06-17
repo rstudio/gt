@@ -198,31 +198,26 @@ create_caption_component_h <- function(data) {
 #' string.
 #'
 #' @noRd
-create_heading_component <- function(data,
-                                     context = "html") {
+create_heading_component_h <- function(data) {
 
-  # TODO: This should probably become `create_heading_component_h()`;
-  # The other 'part creation' functions follow this convention and this
-  # one is the last holdout (there is now a `create_heading_component_rtf()`)
-
-  heading <- dt_heading_get(data = data)
-
-  # If there is no heading component, then return an empty string
-  if (length(heading$title) == 0) {
+  # If there is no title or heading component, then return an empty string
+  if (!dt_heading_has_title(data = data)) {
     return("")
   }
 
+  heading <- dt_heading_get(data = data)
   footnotes_tbl <- dt_footnotes_get(data = data)
   styles_tbl <- dt_styles_get(data = data)
   stub_components <- dt_stub_components(data = data)
   subtitle_defined <- dt_heading_has_subtitle(data = data)
 
+  # Obtain the number of visible columns in the built table
   n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
 
-  # Determine whether the stub is available through analysis
-  # of the `stub_components`
+  # Determine whether the stub is available
   stub_available <- dt_stub_components_has_rowname(stub_components)
 
+  # If a stub is present then the effective number of columns increases by 1
   if (stub_available) {
     n_cols <- n_data_cols + 1
   } else {
@@ -239,163 +234,103 @@ create_heading_component <- function(data,
       )
 
     footnote_title_marks <-
-      switch(context,
-             html = footnote_mark_to_html(footnote_title_marks$fs_id_c),
-             latex = footnote_mark_to_latex(footnote_title_marks$fs_id_c),
-             rtf = footnote_mark_to_rtf(footnote_title_marks$fs_id_c),
-             stop("The context (`", context, "`) is invalid"))
+      footnote_mark_to_html(mark = footnote_title_marks$fs_id_c)
 
   } else {
     footnote_title_marks <- ""
   }
 
   # Get the style attrs for the title
-  if (context == "html" && "title" %in% styles_tbl$locname) {
+  if ("title" %in% styles_tbl$locname) {
 
-    title_style_rows <-
-      dplyr::filter(styles_tbl, locname == "title")
+    title_style_rows <- dplyr::filter(styles_tbl, locname == "title")
 
-    title_styles <-
-      if (nrow(title_style_rows) > 0) {
-        title_style_rows$html_style
-      } else {
-        NULL
-      }
+    if (nrow(title_style_rows) > 0) {
+      title_styles <- title_style_rows$html_style
+    } else {
+      title_styles <- NULL
+    }
 
   } else {
     title_styles <- NA_character_
   }
 
   # Get the footnote marks for the subtitle
-  if (subtitle_defined & "subtitle" %in% footnotes_tbl$locname) {
+  if (subtitle_defined && "subtitle" %in% footnotes_tbl$locname) {
 
     footnote_subtitle_marks <-
-      coalesce_marks(fn_tbl = footnotes_tbl, locname = "subtitle")
-
-    footnote_subtitle_marks <-
-      switch(
-        context,
-        html = footnote_mark_to_html(footnote_subtitle_marks$fs_id_c),
-        latex = footnote_mark_to_latex(footnote_subtitle_marks$fs_id_c),
-        rtf = footnote_mark_to_rtf(footnote_subtitle_marks$fs_id_c),
-        stop("The context (`", context, "`) is invalid")
+      coalesce_marks(
+        fn_tbl = footnotes_tbl,
+        locname = "subtitle"
       )
+
+    footnote_subtitle_marks <-
+      footnote_mark_to_html(mark = footnote_subtitle_marks$fs_id_c)
 
   } else {
     footnote_subtitle_marks <- ""
   }
 
   # Get the style attrs for the subtitle
-  if (context == "html" && "subtitle" %in% styles_tbl$locname) {
+  if (subtitle_defined && "subtitle" %in% styles_tbl$locname) {
 
     subtitle_style_rows <- dplyr::filter(styles_tbl, locname == "subtitle")
 
-    subtitle_styles <-
-      if (nrow(subtitle_style_rows) > 0) {
-        subtitle_style_rows$html_style
-      } else {
-        NULL
-      }
+    if (nrow(subtitle_style_rows) > 0) {
+      subtitle_styles <- subtitle_style_rows$html_style
+    } else {
+      subtitle_styles <- NULL
+    }
 
   } else {
     subtitle_styles <- NA_character_
   }
 
-  if (context == "html") {
+  title_classes <- c("gt_heading", "gt_title", "gt_font_normal")
 
-    title_classes <- c("gt_heading", "gt_title", "gt_font_normal")
+  subtitle_classes <- title_classes %>% tidy_sub("title", "subtitle")
 
-    subtitle_classes <- title_classes %>% tidy_sub("title", "subtitle")
+  if (!subtitle_defined) {
+    title_classes <- c(title_classes, "gt_bottom_border")
+  } else {
+    subtitle_classes <- c(subtitle_classes, "gt_bottom_border")
+  }
 
-    if (!subtitle_defined) {
-      title_classes <- c(title_classes, "gt_bottom_border")
-    } else {
-      subtitle_classes <- c(subtitle_classes, "gt_bottom_border")
-    }
+  title_row <-
+    htmltools::tags$tr(
+      htmltools::tags$th(
+        colspan = n_cols,
+        class = paste(title_classes, collapse = " "),
+        style = title_styles,
+        htmltools::HTML(
+          paste0(heading$title, footnote_title_marks)
+        )
+      )
+    )
 
-    title_row <-
+  if (subtitle_defined) {
+
+    subtitle_row <-
       htmltools::tags$tr(
         htmltools::tags$th(
           colspan = n_cols,
-          class = paste(title_classes, collapse = " "),
-          style = title_styles,
+          class = paste(subtitle_classes, collapse = " "),
+          style = subtitle_styles,
           htmltools::HTML(
-            heading$title %>% paste_right(footnote_title_marks)
+            paste0(heading$subtitle, footnote_subtitle_marks)
           )
         )
       )
 
-    if (subtitle_defined) {
-
-      subtitle_row <-
-        htmltools::tags$tr(
-          htmltools::tags$th(
-            colspan = n_cols,
-            class = paste(subtitle_classes, collapse = " "),
-            style = subtitle_styles,
-            htmltools::HTML(
-              heading$subtitle %>% paste_right(footnote_subtitle_marks)
-            )
-          )
-        )
-
-    } else {
-      subtitle_row <- ""
-    }
-
-    heading_component <-
-      htmltools::tags$thead(
-        class = "gt_header",
-        title_row,
-        subtitle_row
-      )
+  } else {
+    subtitle_row <- ""
   }
 
-  if (context == "latex") {
-
-    title_row <-
-      paste0(heading$title, footnote_title_marks) %>%
-      paste_left("\\large ") %>%
-      paste_right("\\\\ \n")
-
-    if (subtitle_defined) {
-
-      subtitle_row <-
-        paste0(heading$subtitle, footnote_subtitle_marks) %>%
-        paste_left("\\small ") %>%
-        paste_right("\\\\ \n")
-
-    } else {
-      subtitle_row <- ""
-    }
-
-    heading_component <-
-      paste0(title_row, subtitle_row) %>%
-      paste_between(x_2 = c("\\caption*{\n", "} \\\\ \n"))
-  }
-
-  # if (context == "rtf") {
-  #
-  #   if (subtitle_defined) {
-  #
-  #     heading_component <-
-  #       rtf_title_subtitle(
-  #         title = paste0(remove_html(heading$title), footnote_title_marks),
-  #         subtitle = paste0(remove_html(heading$subtitle), footnote_subtitle_marks),
-  #         n_cols = n_cols
-  #       )
-  #
-  #   } else {
-  #
-  #     heading_component <-
-  #       rtf_title(
-  #         title = paste0(remove_html(heading$heading), footnote_title_marks),
-  #         n_cols = n_cols
-  #       )
-  #   }
-  # }
-
-  heading_component
+  htmltools::tags$thead(
+    class = "gt_header",
+    title_row,
+    subtitle_row
+  )
 }
 
 #' Create the columns component of a table (HTML)
@@ -741,13 +676,12 @@ create_body_component_h <- function(data) {
   # doesn't include the stub alignment)
   col_alignment <- boxh[boxh$type == "default", ][["column_align"]]
 
-  # Get the column headings for the visible (e.g., `default`) columns
-  headings <- dt_boxhead_get_vars_default(data = data)
-
   # Determine whether the stub is available through analysis
   # of the `stub_components`
   stub_available <- dt_stub_components_has_rowname(stub_components)
 
+  # Obtain all of the visible (`"default"`), non-stub
+  # column names for the table
   default_vars <- dt_boxhead_get_vars_default(data = data)
 
   all_default_vals <- unname(as.matrix(body[, default_vars]))
@@ -807,13 +741,17 @@ create_body_component_h <- function(data) {
       option = "row_striping_include_table_body"
     )
 
-
   extra_classes_1 <- rep_len(list(NULL), n_cols)
+
   extra_classes_2 <-
     rep_len(list(if (table_body_striped) "gt_striped" else NULL), n_cols)
+
   if (stub_available) {
+
     extra_classes_1[[1]] <- "gt_stub"
-    extra_classes_2[[1]] <- c("gt_stub", if (table_stub_striped) "gt_striped" else NULL)
+
+    extra_classes_2[[1]] <-
+      c("gt_stub", if (table_stub_striped) "gt_striped" else NULL)
   }
 
   has_tbl_body_styles <- any(c("stub", "data") %in% styles_tbl$locname)
@@ -938,8 +876,7 @@ create_body_component_h <- function(data) {
         # Add groupwise summary rows
         #
 
-        if (stub_available &&
-            summaries_present &&
+        if (summaries_present &&
             i %in% groups_rows_df$row_end) {
 
           group_id <-
@@ -950,15 +887,14 @@ create_body_component_h <- function(data) {
 
           summary_section <-
             summary_row_tags(
+              list_of_summaries = list_of_summaries,
+              boxh = boxh,
               group_id = group_id,
+              styles_resolved = styles_tbl,
+              locname = "summary_cells",
               first_row_class = "gt_first_summary_row",
               summary_row_class = "gt_summary_row",
-              locname = "summary_cells",
-              list_of_summaries = list_of_summaries,
-              col_alignment = col_alignment,
-              boxh = boxh,
-              stub_available = stub_available,
-              styles_resolved = styles_tbl
+              col_alignment = col_alignment
             )
 
           body_section <- append(body_section, summary_section)
@@ -979,15 +915,14 @@ create_body_component_h <- function(data) {
 
     grand_summary_section <-
       summary_row_tags(
+        list_of_summaries = list_of_summaries,
+        boxh = boxh,
         group_id = grand_summary_col,
+        styles_resolved = styles_tbl,
+        locname = "grand_summary_cells",
         first_row_class = "gt_first_grand_summary_row",
         summary_row_class = "gt_grand_summary_row",
-        locname = "grand_summary_cells",
-        list_of_summaries = list_of_summaries,
-        col_alignment = col_alignment,
-        boxh = boxh,
-        stub_available = stub_available,
-        styles_resolved = styles_tbl
+        col_alignment = col_alignment
       )
 
     body_rows <- c(body_rows, grand_summary_section)
@@ -1016,9 +951,8 @@ create_source_notes_component_h <- function(data) {
 
   n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
 
-  # Determine whether the stub is available through analysis
-  # of the `stub_components`
-  stub_available <- dt_stub_components_has_rowname(stub_components)
+  # Determine whether the stub is available
+  stub_available <- dt_stub_components_has_rowname(stub_components = stub_components)
 
   if (stub_available) {
     n_cols <- n_data_cols + 1
@@ -1079,9 +1013,8 @@ create_footnotes_component_h <- function(data) {
 
   n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
 
-  # Determine whether the stub is available through analysis
-  # of the `stub_components`
-  stub_available <- dt_stub_components_has_rowname(stub_components)
+  # Determine whether the stub is available
+  stub_available <- dt_stub_components_has_rowname(stub_components = stub_components)
 
   if (stub_available) {
     n_cols <- n_data_cols + 1
@@ -1148,30 +1081,28 @@ create_footnotes_component_h <- function(data) {
   )
 }
 
-summary_row_tags <- function(group_id,
+summary_row_tags <- function(list_of_summaries,
+                             boxh,
+                             group_id,
+                             styles_resolved,
+                             locname,
                              first_row_class,
                              summary_row_class,
-                             locname,
-                             list_of_summaries,
-                             col_alignment,
-                             boxh,
-                             stub_available,
-                             styles_resolved) {
+                             col_alignment) {
 
-  default_vars <-
-    dplyr::filter(boxh, type == "default") %>%
-    dplyr::pull(var)
+  # Obtain all of the visible (`"default"`), non-stub column names
+  # for the table from the `boxh` object
+  default_vars <- boxh[boxh$type == "default", "var", drop = TRUE]
 
   summary_row_lines <- list()
 
-  locname_val <- locname
-
   if (group_id %in% names(list_of_summaries$summary_df_display_list)) {
 
+    # Obtain the summary data table specific to the group ID and
+    # select the column named `rowname` and all of the visible columns
     summary_df <-
       list_of_summaries$summary_df_display_list[[group_id]] %>%
-      dplyr::select(rowname, .env$default_vars) %>%
-      as.data.frame(stringsAsFactors = FALSE)
+      dplyr::select(.env$rowname_col_private, .env$default_vars)
 
     n_cols <- ncol(summary_df)
 
@@ -1180,35 +1111,38 @@ summary_row_tags <- function(group_id,
     }
 
     stub_classes <- rep_len(list(NULL), n_cols)
+    stub_classes[[1]] <- "gt_stub"
 
-    if (isTRUE(stub_available)) {
-
-      alignment_classes <- c("gt_right", paste0("gt_", col_alignment))
-      stub_classes[[1]] <- "gt_stub"
-    } else {
-      alignment_classes <- paste0("gt_", col_alignment)
-    }
+    alignment_classes <- c("gt_right", paste0("gt_", col_alignment))
 
     styles_resolved_group <-
-      styles_resolved %>%
-      dplyr::filter(grpname == group_id, locname == locname_val) %>%
-      dplyr::mutate(grprow = ceiling((rownum %% 1) * 100))
+      dplyr::filter(
+        styles_resolved,
+        grpname == .env$group_id,
+        locname == .env$locname
+      ) %>%
+      dplyr::mutate(grprow = round((rownum %% 1) * 100))
 
     for (j in seq_len(nrow(summary_df))) {
 
       if (group_id == grand_summary_col) {
 
-        styles_resolved_row <- dplyr::filter(styles_resolved_group, rownum == j)
+        # In the above condition, `grand_summary_col` is a global variable
+        # (`"::GRAND_SUMMARY"`) assigned in `dt_summary.R`)
+
+        styles_resolved_row <-
+          styles_resolved_group[styles_resolved_group$rownum == j, , drop = FALSE]
 
       } else {
 
-        styles_resolved_row <- dplyr::filter(styles_resolved_group, grprow == j)
+        styles_resolved_row <-
+          styles_resolved_group[styles_resolved_group$grprow == j, , drop = FALSE]
       }
 
       row_styles <-
         build_row_styles(
           styles_resolved_row = styles_resolved_row,
-          stub_available = stub_available,
+          stub_available = TRUE,
           n_cols = n_cols
         )
 
@@ -1224,14 +1158,14 @@ summary_row_tags <- function(group_id,
             FUN = function(x, stub_class, alignment_class, cell_style) {
 
               if (j == 1) {
-                summary_row_class <-
-                  c(summary_row_class, first_row_class)
+                summary_row_class <- c(summary_row_class, first_row_class)
               }
 
               htmltools::tags$td(
                 class = paste(
                   c("gt_row", stub_class, alignment_class, summary_row_class),
-                  collapse = " "),
+                  collapse = " "
+                ),
                 style = cell_style,
                 htmltools::HTML(x)
               )

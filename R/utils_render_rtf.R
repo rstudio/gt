@@ -1181,9 +1181,9 @@ create_body_component_rtf <- function(data) {
       n_cols = length(col_alignment)
     )
 
-  default_vars <-
-    dplyr::filter(boxh, type == "default") %>%
-    dplyr::pull(var)
+  # Obtain all of the visible (`"default"`), non-stub
+  # column names for the table
+  default_vars <- dt_boxhead_get_vars_default(data = data)
 
   row_list_body <- list()
 
@@ -1261,7 +1261,7 @@ create_body_component_rtf <- function(data) {
     # Add groupwise summary rows
     #
 
-    if (stub_available && summaries_present &&
+    if (summaries_present &&
         i %in% groups_rows_df$row_end) {
 
       group_id <-
@@ -1274,8 +1274,7 @@ create_body_component_rtf <- function(data) {
 
         summary_df <-
           list_of_summaries$summary_df_display_list[[group_id]] %>%
-          dplyr::select(rowname, .env$default_vars) %>%
-          as.data.frame(stringsAsFactors = FALSE)
+          dplyr::select(.env$rowname_col_private, .env$default_vars)
 
         for (j in seq_len(nrow(summary_df))) {
 
@@ -1325,11 +1324,11 @@ create_body_component_rtf <- function(data) {
   if (summaries_present &&
       grand_summary_col %in% names(list_of_summaries$summary_df_display_list)) {
 
-    summary_df <-
-      list_of_summaries$summary_df_display_list[["::GRAND_SUMMARY"]] %>%
-      as.data.frame(stringsAsFactors = FALSE)
+    grand_summary_df <-
+      list_of_summaries$summary_df_display_list[[grand_summary_col]] %>%
+      dplyr::select(.env$rowname_col_private, .env$default_vars)
 
-    for (j in seq_len(nrow(summary_df))) {
+    for (j in seq_len(nrow(grand_summary_df))) {
 
       cell_list <-
         lapply(
@@ -1338,14 +1337,14 @@ create_body_component_rtf <- function(data) {
             rtf_tbl_cell(
               rtf_font(
                 font_size = 10,
-                rtf_raw(summary_df[[j, x]])
+                rtf_raw(grand_summary_df[[j, x]])
               ),
               h_align = col_alignment[x],
               borders = list(
                 rtf_border(
                   "bottom",
                   color = table_body_hlines_color,
-                  width = ifelse(j == nrow(summary_df), 50, 10)
+                  width = ifelse(j == nrow(grand_summary_df), 50, 10)
                   ),
                 rtf_border("left", color = table_body_vlines_color, width = 10),
                 rtf_border("right", color = table_body_vlines_color, width = 10)

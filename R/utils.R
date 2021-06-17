@@ -1139,6 +1139,15 @@ is_gt <- function(data) {
   checkmate::test_class(data, "gt_tbl")
 }
 
+#' Determines whether a character vector is non-empty
+#'
+#' @param x A character vector.
+#' @noRd
+is_nonempty_string <- function(x) {
+
+  length(x) > 0 && any(grepl("\\S", x))
+}
+
 #' Stop any function if object is not a `gt_tbl` object
 #'
 #' @param data The input `data` object that is to be validated.

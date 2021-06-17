@@ -41,8 +41,8 @@
     color: font-color($heading_background_color);
     font-size: $heading_title_font_size; // heading.title.font.size
     font-weight: $heading_title_font_weight; // heading.title.font.weight
-    padding-top: 4px; // heading.top.padding - not yet used
-    padding-bottom: 4px;
+    padding-top: $heading_padding; // heading.padding
+    padding-bottom: $heading_padding; //heading.padding
     border-bottom-color: $table_background_color; // table.background.color
     border-bottom-width: 0;
   }
@@ -52,7 +52,7 @@
     font-size: $heading_subtitle_font_size; // heading.subtitle.font.size
     font-weight: $heading_subtitle_font_weight; // heading.subtitle.font.weight
     padding-top: 0;
-    padding-bottom: 4px; // heading.bottom.padding - not yet used
+    padding-bottom: $heading_padding + 2; // heading.padding
     border-top-color: $table_background_color; // table.background.color
     border-top-width: 0;
   }
@@ -91,8 +91,8 @@
     border-right-width: $column_labels_vlines_width; // column_labels.vlines.width
     border-right-color: $column_labels_vlines_color; // column_labels.vlines.color
     vertical-align: bottom;
-    padding-top: 5px;
-    padding-bottom: 6px;
+    padding-top: $column_labels_padding; // column_labels.padding
+    padding-bottom: $column_labels_padding + 1; // column_labels.padding
     padding-left: 5px;
     padding-right: 5px;
     overflow-x: hidden;
@@ -121,8 +121,8 @@
     border-bottom-width: $column_labels_border_bottom_width; // column_labels.border.bottom.width
     border-bottom-color: $column_labels_border_bottom_color; // column_labels.border.bottom.color
     vertical-align: bottom;
-    padding-top: 5px;
-    padding-bottom: 6px;
+    padding-top: $column_labels_padding; // column_labels.padding
+    padding-bottom: $column_labels_padding; // column_labels.padding
     overflow-x: hidden;
     display: inline-block;
     width: 100%;
