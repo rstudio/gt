@@ -1038,6 +1038,10 @@ fmt_percent <- function(data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @family Format Data
+#' @section Function ID:
+#' 3-6
+#'
 #' @import rlang
 #' @export
 fmt_fraction <- function(data,
@@ -1458,7 +1462,7 @@ round_gt <- function(x, digits = 0) {
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-6
+#' 3-7
 #'
 #' @import rlang
 #' @export
@@ -1600,7 +1604,7 @@ fmt_currency <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-7
+#' 3-8
 #'
 #' @import rlang
 #' @export
