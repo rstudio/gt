@@ -12,9 +12,9 @@
 #' [html()] helper function.
 #'
 #' By itself, the function creates an HTML image tag, so, the call
-#' `web_image("http://some.web.site/image.png")` evaluates to:
+#' `web_image("http://example.com/image.png")` evaluates to:
 #'
-#' `<img src=\"http://some.web.site/image.png\" style=\"height:30px;\">`
+#' `<img src=\"http://example.com/image.png\" style=\"height:30px;\">`
 #'
 #' where a height of `30px` is a default height chosen to work well within the
 #' heights of most table rows.
@@ -106,8 +106,7 @@ web_image <- function(url,
     height <- paste0(height, "px")
   }
 
-  glue::glue("<img src=\"{url}\" style=\"height:{height};\">") %>%
-    as.character()
+  paste0("<img src=\"", url, "\" style=\"height:", height, ";\">")
 }
 
 #' Helper function for adding a local image
@@ -128,7 +127,7 @@ web_image <- function(url,
 #' available in the **gt** package using the [test_image()] function. Using
 #' that, the call `local_image(file = test_image(type = "png"))` evaluates to:
 #'
-#' `<img cid=<random CID> src=<data URI> style=\"height:30px;\">`
+#' `<img src=<data URI> style=\"height:30px;\">`
 #'
 #' where a height of `30px` is a default height chosen to work well within the
 #' heights of most table rows.
@@ -173,6 +172,7 @@ web_image <- function(url,
 #' @export
 local_image <- function(filename,
                         height = 30) {
+
   # Normalize file path
   filename <- path_expand(filename)
 
@@ -180,21 +180,12 @@ local_image <- function(filename,
     height <- paste0(height, "px")
   }
 
-  # Construct a CID based on the filename
-  # with a random string prepended to it
-  cid <-
-    paste0(
-      sample(letters, 12) %>% paste(collapse = ""), "__",
-      basename(filename)
-    )
-
   # Create the image URI
   uri <- get_image_uri(filename)
 
   # Generate the Base64-encoded image and place it
   # within <img> tags
-  glue::glue("<img cid=\"{cid}\" src=\"{uri}\" style=\"height:{height};\">") %>%
-    as.character()
+  paste0("<img src=\"", uri, "\" style=\"height:", height, ";\">")
 }
 
 #' Helper function for adding a ggplot
@@ -215,7 +206,7 @@ local_image <- function(filename,
 #' object, and using it within `ggplot_image(plot_object = <plot object>`
 #' evaluates to:
 #'
-#' `<img cid=<random CID> src=<data URI> style=\"height:100px;\">`
+#' `<img src=<data URI> style=\"height:100px;\">`
 #'
 #' where a height of `100px` is a default height chosen to work well within the
 #' heights of most table rows. There is the option to modify the aspect ratio of
