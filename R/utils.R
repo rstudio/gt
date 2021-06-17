@@ -1179,7 +1179,8 @@ resolve_border_side <- function(side) {
          all = "all")
 }
 
-#' Expand a path using fs::path_ex
+#' Expand a path using fs::path_expand
+#'
 #' @noRd
 path_expand <- function(file) {
 

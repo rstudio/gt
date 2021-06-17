@@ -173,9 +173,8 @@ web_image <- function(url,
 #' @export
 local_image <- function(filename,
                         height = 30) {
-
   # Normalize file path
-  filename <- filename %>% path_expand()
+  filename <- path_expand(filename)
 
   if (is.numeric(height)) {
     height <- paste0(height, "px")
