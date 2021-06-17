@@ -1,5 +1,3 @@
-context("Ensuring that the Base64 functions work as expected")
-
 test_that("the `get_file_ext()` function works correctly", {
 
   # Expect that filenames with various extensions are
@@ -22,6 +20,8 @@ test_that("the `get_mime_type()` function works correctly", {
 
 test_that("the `get_image_uri()` function works correctly", {
 
+  testthat::local_edition(3)
+
   # Expect that the image URI string based on a PNG test image
   # matches a known good image URI created from that image
   expect_equal(
@@ -30,8 +30,15 @@ test_that("the `get_image_uri()` function works correctly", {
 
   # Expect that the beginning of the PNG-based image URI has the MIME
   # type and the encoding type
-  grepl(
-    "^data:image/png;base64,",
-    get_image_uri(file = system_file("./graphics/test_image.png"))) %>%
-    expect_true()
+  expect_true(
+    grepl(
+      "^data:image/png;base64,",
+      get_image_uri(file = system_file("./graphics/test_image.png"))
+    )
+  )
+
+  # Expect that the image URIs for the included test image
+  # produce the same URI strings
+  expect_snapshot(get_image_uri(file = test_image(type = "png")))
+  expect_snapshot(get_image_uri(file = test_image(type = "svg")))
 })
