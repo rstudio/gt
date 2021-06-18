@@ -1,6 +1,8 @@
 skip_on_cran()
 skip_on_os("windows")
 
+library(ggplot2)
+
 test_that("the `test_image()` function works correctly", {
 
   # Expect that the `test_image()` function returns paths for
@@ -53,6 +55,9 @@ test_that("the `local_image()` function works correctly", {
   # are correctly formed
   expect_snapshot(local_image(filename = test_image(type = "png")))
   expect_snapshot(local_image(filename = test_image(type = "svg")))
+
+  # Expect that `local_image()` can return multiple image tags
+  expect_snapshot(local_image(filename = rep(test_image(type = "png"), 2)))
 })
 
 test_that("the `web_image()` function works correctly", {
@@ -91,18 +96,31 @@ test_that("the `web_image()` function works correctly", {
   )
 })
 
-# # Create a `tbl_html` that contains local images in column `b`
-# tbl_html <-
-#   dplyr::tibble(
-#     a = 1:5,
-#     b = c(1.6, 9.6, 5.3, 3.5, 6.3)) %>%
-#   gt() %>%
-#   text_transform(
-#     locations = cells_body(columns = b),
-#     fn = function(x) {
-#       x <- as.numeric(x)
-#       ifelse(
-#         x >= 5,
-#         local_image(file = test_image(type = "svg"), height = px(x * 10)),
-#         local_image(file = test_image(type = "png"), height = px(x * 10)))
-#     })
+test_that("the `ggplot_image()` function works correctly", {
+
+  testthat::local_edition(3)
+
+  # Create a ggplot plot
+  gg <-
+    ggplot(
+      data = gtcars,
+      aes(x = hp, y = trq,
+          size = msrp)) +
+    geom_point(color = "blue") +
+    theme(legend.position = "none")
+
+  # Expect that the image tag generated for the ggplot is correctly formed
+  expect_snapshot(ggplot_image(plot_object = gg))
+
+  # Expect that a single plot object can be contained in a list
+  expect_equal(
+    ggplot_image(plot_object = gg),
+    ggplot_image(plot_object = list(gg))
+  )
+
+  # Expect that `ggplot_image()` can return multiple image tags
+  img_tags <- ggplot_image(plot_object = list(gg, gg))
+  expect_equal(length(img_tags), 2)
+  expect_equal(img_tags[1], img_tags[2])
+  expect_type(img_tags, "character")
+})
