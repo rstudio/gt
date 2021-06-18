@@ -41,10 +41,9 @@ test_that("the `get_image_uri()` function works correctly", {
     )
   )
 
-  # Expect that the image URIs for the included test image
-  # produce the same URI strings
+  # Expect that the image URI for the included test image (in PNG form)
+  # produces the same URI string
   expect_snapshot(get_image_uri(file = test_image(type = "png")))
-  expect_snapshot(get_image_uri(file = test_image(type = "svg")))
 })
 
 test_that("the `local_image()` function works correctly", {
