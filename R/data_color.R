@@ -387,7 +387,9 @@ html_color <- function(colors, alpha = NULL) {
   is_hex <- is_hex_col(colors)
   is_named <- !is_rgba & !is_hex
 
-  named_colors <- tolower(colors[is_named])
+  colors[is_named] <- tolower(colors[is_named])
+
+  named_colors <- colors[is_named]
 
   if (length(named_colors) > 0) {
 
@@ -399,7 +401,7 @@ html_color <- function(colors, alpha = NULL) {
     # there are nine CSS 3.0 named colors that don't belong to the
     # set of X11/R color names (not included numbered variants and
     # the numbered grays, those will be handled by `grDevices::col2rgb()`)
-    is_css_excl_named <- tolower(colors) %in% css_exclusive_color_names()
+    is_css_excl_named <- colors %in% css_exclusive_color_names()
 
     if (any(is_css_excl_named)) {
 
@@ -409,7 +411,7 @@ html_color <- function(colors, alpha = NULL) {
       colors[is_css_excl_named] <-
         names(
           css_exclusive_color_names()[
-            match(tolower(colors[is_css_excl_named]), css_exclusive_color_names())
+            match(colors[is_css_excl_named], css_exclusive_color_names())
           ]
         )
     }
