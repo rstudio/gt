@@ -262,7 +262,7 @@ test_that("the correct color values are obtained when defining a palette", {
     expect_equal(12)
 
   # Expect color values to be of either the #RRGGBB or the
-  # rgba() CSS value form
+  # 'rgba()' CSS value form
   tbl_html_rrggbbaa %>%
     selection_value("style") %>%
     gsub("(background-color: |; color: .*)", "", .) %>%
@@ -317,7 +317,7 @@ test_that("the correct color values are obtained when defining a palette", {
     expect_equal(12)
 
   # Expect color values to be of either the #RRGGBB or the
-  # rgba() CSS value form
+  # 'rgba()' CSS value form
   tbl_html_rrggbbaa_mixed %>%
     selection_value("style") %>%
     gsub("(background-color: |; color: .*)", "", .) %>%
@@ -373,7 +373,7 @@ test_that("the correct color values are obtained when defining a palette", {
     expect_equal(12)
 
   # Expect color values to be of either the #RRGGBB or the
-  # rgba() CSS value form
+  # 'rgba()' CSS value form
   tbl_html_rrggbbaa_mixed_2 %>%
     selection_value("style") %>%
     gsub("(background-color: |; color: .*)", "", .) %>%
@@ -500,7 +500,7 @@ test_that("the correct color values are obtained when defining a palette", {
     render_as_html() %>%
     xml2::read_html()
 
-  # Expect color values to be entirely in the rgba() CSS value form
+  # Expect color values to be entirely in the 'rgba()' CSS value form
   tbl_html_5 %>%
     selection_value("style") %>%
     gsub("(background-color: |; color: .*)", "", .) %>%
@@ -525,7 +525,7 @@ test_that("the correct color values are obtained when defining a palette", {
     unique() %>%
     expect_equal("80")
 
-  # Converting the rgba() values back into hexadecimal form and
+  # Converting the 'rgba()' values back into hexadecimal form and
   # removing the alpha channel (by use of `html_color()`) is expected
   # to give us color values in the `pal_12` #RRGGBB color vector
   (
@@ -717,7 +717,7 @@ test_that("the correct color values are obtained when using a color fn", {
     render_as_html() %>%
     xml2::read_html()
 
-  # Expect color values to be entirely in the rgba() CSS value form
+  # Expect color values to be entirely in the 'rgba()' CSS value form
   tbl_html_2 %>%
     selection_value("style") %>%
     gsub("(background-color: |; color: .*)", "", .) %>%
@@ -917,7 +917,7 @@ test_that("the correct color values are obtained when using a color fn", {
     render_as_html() %>%
     xml2::read_html()
 
-  # Expect color values to be entirely in the rgba() CSS value form
+  # Expect color values to be entirely in the 'rgba()' CSS value form
   tbl_html_6 %>%
     selection_value("style") %>%
     gsub("(background-color: |; color: .*)", "", .) %>%
@@ -1039,7 +1039,7 @@ test_that("the various color utility functions work correctly", {
   c_rgba <- c("rgba(255,170,0,0.5)", "rgba(255,187,52,1)", "rgba(20,255,0,1.0)")
 
   # Expect that the `is_rgba_col()` function will identify valid
-  # color strings in the rgba() CSS format
+  # color strings in the 'rgba()' CSS format
   is_rgba_col(
     colors = c(
       c_rgba,
@@ -1062,14 +1062,14 @@ test_that("the various color utility functions work correctly", {
 
   # Expect that the `rgba_to_hex()` function reliably returns
   # color strings in the hexadecimal format of #RRGGBBAA
-  # when supplied rgba() format strings
+  # when supplied 'rgba()' format strings
   expect_equal(
     rgba_to_hex(colors = c_rgba),
     c("#FFAA0080", "#FFBB34FF", "#14FF00FF")
   )
 
   # Expect that the `rgba_to_hex()` utility function will pass through *any*
-  # strings that don't conform to the rgba() string format
+  # strings that don't conform to the 'rgba()' string format
   expect_equal(
     rgba_to_hex(colors = c(c_rgba, c_hex, "test")),
     c("#FFAA0080", "#FFBB34FF", "#14FF00FF", c_hex, "test")
@@ -1077,7 +1077,7 @@ test_that("the various color utility functions work correctly", {
 
   # Expect that the `html_color()` utility function will reliably return
   # color strings in either the hexadecimal format of #RRGGBB or as
-  # rgba() format strings (when `alpha` is NULL, which is the default)
+  # 'rgba()' format strings (when `alpha` is NULL, which is the default)
   expect_equal(
     html_color(colors = c(c_name, c_hex, c_hex_a)),
     c(
@@ -1100,7 +1100,7 @@ test_that("the various color utility functions work correctly", {
   )
 
   # Expect that `html_color()` will reliably return color strings entirely
-  # in the rgba() string format when `alpha` is non-NULL and less than `1`
+  # in the 'rgba()' string format when `alpha` is non-NULL and less than `1`
   expect_equal(
     html_color(colors = c(c_name, c_hex, c_hex_a), alpha = 0.5),
     c(
@@ -1112,7 +1112,7 @@ test_that("the various color utility functions work correctly", {
     )
   )
 
-  # Expect that `html_color()` won't alter any rgba() strings passed to it
+  # Expect that `html_color()` won't alter any 'rgba()' strings passed to it
   expect_equal(
     html_color(colors = c(c_name, c_hex, c_hex_a, c_rgba), alpha = 1),
     c(
@@ -1123,7 +1123,7 @@ test_that("the various color utility functions work correctly", {
     )
   )
 
-  # Furthermore, expect that all alpha values in the rgba() strings are of the
+  # Furthermore, expect that all alpha values in the 'rgba()' strings are of the
   # same value when `alpha` is non-NULL and less than `1`
   html_color(colors = c(c_name, c_hex, c_hex_a), alpha = 0.5) %>%
     gsub("(?:^.*,|\\))", "", .) %>%
@@ -1194,10 +1194,53 @@ test_that("the various color utility functions work correctly", {
     html_color(colors = c(c_name, c_hex, "FF04E2", c_hex_a))
   )
 
-  # Don't expect an error if rgba()-format colors are passed to `html_color`
+  # Don't expect an error if 'rgba()'-format colors are passed to `html_color`
   expect_error(
     regexp = NA,
     html_color(colors = c(c_name, c_hex, c_hex_a, "rgba(210,215,33,0.5)"))
+  )
+
+  # Expect that the `normalize_colors()` utility function will reliably return
+  # color strings in the hexadecimal format of #RRGGBB when `alpha` is 1
+  # (which needs to be set)
+  expect_equal(
+    normalize_colors(colors = c(c_name, c_hex, c_hex_a), alpha = 1),
+    c(
+      "#FF0000", "#FF6347", "#CD6889", "#32CD32", "#DBDBDB", "#0000FF",
+      "#FFAA00", "#FFBB34", "#AD552E", "#900019", "#FF235D", "#AA253A",
+      "#F3F300", "#D2D721"
+    )
+  )
+
+  # Expect that the `normalize_colors()` utility function will reliably return
+  # color strings entirely in the 'rgba()' format of #RRGGBB when `alpha` is
+  # not `1`
+  expect_equal(
+    normalize_colors(colors = c(c_name, c_hex, c_hex_a), alpha = 0.5),
+    c(
+      "rgba(255,0,0,0.5)", "rgba(255,99,71,0.5)", "rgba(205,104,137,0.5)",
+      "rgba(50,205,50,0.5)", "rgba(219,219,219,0.5)", "rgba(0,0,255,0.5)",
+      "rgba(255,170,0,0.5)", "rgba(255,187,52,0.5)", "rgba(173,85,46,0.5)",
+      "rgba(144,0,25,0.5)", "rgba(255,35,93,0.5)", "rgba(170,37,58,0.5)",
+      "rgba(243,243,0,0.5)", "rgba(210,215,33,0.5)"
+    )
+  )
+
+  # Expect that the `normalize_colors()` utility function will reliably return
+  # color strings in either hexadecimal or in 'rgba()' when `alpha` is set
+  # to NULL (any #RRGGBBAA colors will move to 'rgba()')
+  expect_equal(
+    normalize_colors(colors = c(c_name, c_hex, c_hex_a), alpha = NULL),
+    c(
+      "#FF0000", "#FF6347", "#CD6889", "#32CD32", "#DBDBDB", "#0000FF",
+      "#FFAA00", "#FFBB34", "#AD552E", "#900019", "rgba(255,35,93,0.38)",
+      "rgba(170,37,58,0.44)", "#F3F300", "rgba(210,215,33,0.06)"
+    )
+  )
+
+  # Expect an error if 'rgba()'-format colors are passed to `normalize_colors()`
+  expect_error(
+    normalize_colors(colors = c(c_name, c_hex, c_hex_a, "rgba(210,215,33,0.5)"))
   )
 
   # Expect that the `ideal_fgnd_color()` function returns a vector containing
@@ -1453,7 +1496,7 @@ test_that("the `cell_fill()` function accepts colors of various types", {
     length() %>%
     expect_equal(1)
 
-  # Expect all color values to be of the rgba() string format
+  # Expect all color values to be of the 'rgba()' string format
   tbl_html_3 %>%
     selection_value("style") %>%
     gsub("(?:background-color: |;)", "", .) %>%
@@ -1481,7 +1524,7 @@ test_that("the `cell_fill()` function accepts colors of various types", {
     length() %>%
     expect_equal(1)
 
-  # Expect all color values to be of the rgba() string format
+  # Expect all color values to be of the 'rgba()' string format
   tbl_html_4 %>%
     selection_value("style") %>%
     gsub("(?:background-color: |;)", "", .) %>%
@@ -1521,7 +1564,7 @@ test_that("the `cell_fill()` function accepts colors of various types", {
     length() %>%
     expect_equal(1)
 
-  # Expect all color values to be of the rgba() string format
+  # Expect all color values to be of the 'rgba()' string format
   tbl_html_5 %>%
     selection_value("style") %>%
     gsub("(?:background-color: |;)", "", .) %>%
