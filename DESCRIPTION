@@ -58,7 +58,6 @@ Suggests:
 Roxygen: list(markdown = TRUE)
 Collate: 
     'as_data_frame.R'
-    'base64.R'
     'build_data.R'
     'compile_scss.R'
     'data_color.R'
