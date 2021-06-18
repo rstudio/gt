@@ -392,7 +392,6 @@ html_color <- function(colors, alpha = NULL) {
   named_colors <- colors[is_named]
 
   if (length(named_colors) > 0) {
-
     # Ensure that all color names are in the set of X11/R color
     # names or CSS color names
     check_named_colors(named_colors)
@@ -401,17 +400,17 @@ html_color <- function(colors, alpha = NULL) {
     # there are nine CSS 3.0 named colors that don't belong to the
     # set of X11/R color names (not included numbered variants and
     # the numbered grays, those will be handled by `grDevices::col2rgb()`)
-    is_css_excl_named <- colors %in% css_exclusive_color_names()
+    is_css_excl_named <- colors %in% names(css_exclusive_colors())
 
     if (any(is_css_excl_named)) {
 
-      # The `css_exclusive_color_names()` function returns a named vector
+      # The `css_exclusive_colors()` function returns a named vector
       # of the CSS colors not in the X11/R set; the names are the hexadecimal
       # color values
       colors[is_css_excl_named] <-
-        names(
-          css_exclusive_color_names()[
-            match(colors[is_css_excl_named], css_exclusive_color_names())
+        unname(
+          css_exclusive_colors()[
+            match(colors[is_css_excl_named], names(css_exclusive_colors()))
           ]
         )
     }
@@ -467,18 +466,23 @@ html_color <- function(colors, alpha = NULL) {
   colors
 }
 
-css_exclusive_color_names <- function() {
+css_exclusive_colors <- function() {
 
   color_tbl_subset <- css_colors[!css_colors$is_x11_color, ]
 
-  color_names <- tolower(color_tbl_subset[["color_name"]])
-  color_names <- stats::setNames(color_names, color_tbl_subset[["hexadecimal"]])
+  color_values <- color_tbl_subset[["hexadecimal"]]
 
-  color_names
+  color_values <-
+    stats::setNames(
+      color_values,
+      tolower(color_tbl_subset[["color_name"]])
+    )
+
+  color_values
 }
 
 valid_color_names <- function() {
-  c(tolower(grDevices::colors()), unname(css_exclusive_color_names()))
+  c(tolower(grDevices::colors()), names(css_exclusive_colors()))
 }
 
 check_named_colors <- function(named_colors) {

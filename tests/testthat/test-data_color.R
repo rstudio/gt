@@ -1133,7 +1133,7 @@ test_that("the various color utility functions work correctly", {
 
   # Expect that CSS color names not present as an R/X11 color will still work
   expect_equal(
-    html_color(colors = unname(css_exclusive_color_names())),
+    html_color(colors = names(css_exclusive_colors())),
     c(
       "#DC143C", "#FF00FF", "#663399",
       "#4B0082", "#00FF00", "#808000",
@@ -1141,7 +1141,7 @@ test_that("the various color utility functions work correctly", {
     )
   )
   expect_equal(
-    html_color(colors = rev(unname(css_exclusive_color_names()))),
+    html_color(colors = rev(names(css_exclusive_colors()))),
     c(
       "#C0C0C0", "#00FFFF", "#008080",
       "#808000", "#00FF00", "#4B0082",
