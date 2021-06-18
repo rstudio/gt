@@ -183,8 +183,7 @@ local_image <- function(filename,
   # Create the image URI
   uri <- get_image_uri(filename)
 
-  # Generate the Base64-encoded image and place it
-  # within <img> tags
+  # Generate the Base64-encoded image and place it within <img> tags
   paste0("<img src=\"", uri, "\" style=\"height:", height, ";\">")
 }
 
@@ -274,24 +273,41 @@ ggplot_image <- function(plot_object,
     height <- paste0(height, "px")
   }
 
-  # Save PNG file to disk
-  ggplot2::ggsave(
-    filename = "temp_ggplot.png",
-    plot = plot_object,
-    device = "png",
-    dpi = 100,
-    width = 5 * aspect_ratio,
-    height = 5
+  # Upgrade `plot_object` to a list if only a single ggplot object is provided
+  if (inherits(plot_object, "gg")) {
+    plot_object <- list(plot_object)
+  }
+
+  vapply(
+    seq_along(plot_object),
+    FUN.VALUE = character(1),
+    USE.NAMES = FALSE,
+    FUN = function(x) {
+
+      filename <-
+        paste0("temp_ggplot_", formatC(x, width = 4, flag = "0") , ".png")
+
+      # Save PNG file to disk
+      ggplot2::ggsave(
+        filename = filename,
+        plot = plot_object[[x]],
+        device = "png",
+        dpi = 100,
+        width = 5 * aspect_ratio,
+        height = 5
+      )
+
+      # Wait longer for file to be written on async filesystems
+      Sys.sleep(0.5)
+
+      image_html <-
+        local_image(filename = filename, height = height)
+
+      file.remove(filename)
+
+      image_html
+    }
   )
-
-  # Wait longer for file to be written on async filesystems
-  Sys.sleep(1)
-
-  image_html <- local_image(filename = "temp_ggplot.png", height = height)
-
-  file.remove("temp_ggplot.png")
-
-  image_html
 }
 
 #' Generate a path to a test image
