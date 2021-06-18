@@ -301,7 +301,7 @@ is_hex_col <- function(colors) {
 
 #' For a background color, which foreground color provides better contrast?
 #'
-#' The input for this function is a single color value in rgba() format. The
+#' The input for this function is a single color value in 'rgba()' format. The
 #' output is a single color value in #RRGGBB hexadecimal format
 #'
 #' @noRd
@@ -309,7 +309,7 @@ ideal_fgnd_color <- function(bgnd_color,
                              light = "#FFFFFF",
                              dark = "#000000") {
 
-  # Normalize color to hexadecimal color if it is in the rgba() string format
+  # Normalize color to hexadecimal color if it is in the 'rgba()' string format
   bgnd_color <- rgba_to_hex(colors = bgnd_color)
 
   # Normalize color to a #RRGGBB (stripping the alpha channel)
@@ -325,9 +325,9 @@ ideal_fgnd_color <- function(bgnd_color,
 #' Convert colors in mixed formats (incl. rgba() strings) format to hexadecimal
 #'
 #' This function will accept colors in mixed formats and convert any in the
-#' rgba() string format (e.g., "`rgba(255,170,0,0.5)`") to a hexadecimal format
-#' the preserves the alpha information (#RRGGBBAA). This function is required
-#' for the `ideal_fgnd_color()` function.
+#' 'rgba()' string format (e.g., "`rgba(255,170,0,0.5)`") to a hexadecimal
+#' format that preserves the alpha information (#RRGGBBAA). This function is
+#' required for the `ideal_fgnd_color()` function.
 #'
 #' @noRd
 rgba_to_hex <- function(colors) {
@@ -372,7 +372,7 @@ rgba_to_hex <- function(colors) {
 #' colors in hexadecimal format with or without an alpha component (either
 #' #RRGGBB or #RRGGBBAA). Output is the same length vector as the
 #' input but it will contain a mixture of either #RRGGBB colors (if the input
-#' alpha value for a color is 1) or rgba() string format colors (if the input
+#' alpha value for a color is 1) or 'rgba()' string format colors (if the input
 #' alpha value for a color is not 1).
 #'
 #' @noRd
@@ -392,6 +392,7 @@ html_color <- function(colors, alpha = NULL) {
   named_colors <- colors[is_named]
 
   if (length(named_colors) > 0) {
+
     # Ensure that all color names are in the set of X11/R color
     # names or CSS color names
     check_named_colors(named_colors)
@@ -416,23 +417,39 @@ html_color <- function(colors, alpha = NULL) {
     }
   }
 
-  # Utility function for creating rgba() color values
-  # from an RGBA color matrix (already subsetted to those
-  # rows where alpha < 1)
-  col_matrix_to_rgba <- function(color_matrix) {
-
-    paste0(
-      "rgba(",
-      color_matrix[, "red"], ",",
-      color_matrix[, "green"], ",",
-      color_matrix[, "blue"], ",",
-      round(color_matrix[, "alpha"], 2),
-      ")"
+  # Normalize all non-'rgba()' color values and combine
+  # with any preexisting 'rgba()' color values
+  colors[!is_rgba] <-
+    normalize_colors(
+      colors = colors[!is_rgba],
+      alpha = alpha
     )
-  }
+
+  colors
+}
+
+# Utility function for creating 'rgba()' color values
+# from an RGBA color matrix (already subsetted to those
+# rows where alpha < 1)
+col_matrix_to_rgba <- function(color_matrix) {
+
+  paste0(
+    "rgba(",
+    color_matrix[, "red"], ",",
+    color_matrix[, "green"], ",",
+    color_matrix[, "blue"], ",",
+    round(color_matrix[, "alpha"], 2),
+    ")"
+  )
+}
+
+# Utility function for generating hexadecimal or 'rgba()' colors (for IE11
+# compatibility with colors having some transparency) from hexadecimal color
+# values and X11/R color names
+normalize_colors <- function(colors, alpha) {
 
   # Create a color matrix with an `alpha` column
-  color_matrix <- t(grDevices::col2rgb(col = colors[!is_rgba], alpha = TRUE))
+  color_matrix <- t(grDevices::col2rgb(col = colors, alpha = TRUE))
   color_matrix[, "alpha"] <- color_matrix[, "alpha"] / 255
 
   # If `alpha` has a value, replace all pre-existing
@@ -460,10 +477,7 @@ html_color <- function(colors, alpha = NULL) {
     color_matrix[!colors_alpha_1, , drop = FALSE] %>%
     col_matrix_to_rgba()
 
-  # Combine these color values with any preexisting rgba() color values
-  colors[!is_rgba] <- colors_html
-
-  colors
+  colors_html
 }
 
 css_exclusive_colors <- function() {
