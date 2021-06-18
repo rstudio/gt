@@ -315,11 +315,7 @@ test_image <- function(type = c("png", "svg")) {
 
   type <- match.arg(type)
 
-  if (type == "png") {
-    system_file(file = "graphics/test_image.png")
-  } else {
-    system_file(file = "graphics/test_image.svg")
-  }
+  system_file(file = paste0("graphics/test_image.", type))
 }
 
 # Function for setting the MIME type
