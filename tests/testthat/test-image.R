@@ -1,3 +1,6 @@
+skip_on_cran()
+skip_on_os("windows")
+
 test_that("the `test_image()` function works correctly", {
 
   # Expect that the `test_image()` function returns paths for
