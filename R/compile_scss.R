@@ -7,20 +7,11 @@ compile_scss <- function(data, id = NULL) {
     dplyr::filter(scss) %>%
     dplyr::filter(!is.na(value)) %>%
     dplyr::mutate(
-      value =
-        lapply(
-          seq_len(nrow(.)),
-          FUN = function(x) {
-
-            option_value <- .[, "value", drop = TRUE][[x]]
-
-            if (x %in% which(grepl("_color", .$parameter))) {
-              html_color(colors = option_value)
-            } else {
-              option_value
-            }
-          }
-        )
+      value = {
+        color_rows <- grepl("_color", .data$parameter)
+        value[color_rows] <- lapply(value[color_rows], html_color)
+        value
+      }
     )
 
   has_id <- !is.null(id)
