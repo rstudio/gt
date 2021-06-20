@@ -9,7 +9,8 @@ fmt_datetime(
   columns,
   rows = everything(),
   date_style = 2,
-  time_style = 2
+  time_style = 2,
+  format = NULL
 )
 }
 \arguments{
@@ -39,6 +40,11 @@ style (\code{"wday_month_day_year"}, \code{"m_day_year"}, \code{"year.mn.day"}, 
 that corresponds to the preferred time style, or, provide a named time
 style (\code{"hms"}, \code{"hms_p"}, \code{"h_p"}, etc.). Use \code{\link[=info_time_style]{info_time_style()}} to see
 the different numbered and named time presets.}
+
+\item{format}{An optional format code used for generating custom dates/times.
+If used then the arguments governing preset styles (\code{date_style} and
+\code{time_style}) will be ignored in favor of formatting via the \code{format}
+string.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -91,6 +97,62 @@ nothing is provided for \code{rows} then entire columns are selected). Condition
 formatting is possible by providing a conditional expression to the \code{rows}
 argument. See the \emph{Arguments} section for more information on this.
 }
+\section{Date and Time Formats}{
+
+Using \code{format} to create custom time formats isn't so hard once we know about
+all of the different format codes. The formats are all indicated with a
+leading \verb{\%} and literal characters are any of those without the leading \verb{\%}.
+We'll use the date and time \code{"2015-06-08 23:05:37.48"} for all of the
+examples here.
+
+First off, let's look at a few format code combinations that work well
+together as format codes. This will give us an intuition on how these
+generally work.
+\itemize{
+\item \code{"\%m/\%d/\%Y"} -> \code{"06/08/2015"}
+\item \code{"\%A, \%B \%e, \%Y"} -> \code{"Monday, June 8, 2015"}
+\item \code{"\%b \%e \%a"} -> \code{"Jun 8 Mon"}
+\item \code{"\%H:\%M"} -> \code{"23:05"}
+\item \code{"\%I:\%M \%p"} -> \code{"11:05 pm"}
+}
+
+Here are the individual format codes for date components:
+\itemize{
+\item \code{"\%a"} -> \code{"Mon"} (abbreviated day of week name)
+\item \code{"\%A"} -> \code{"Monday"} (full day of week name)
+\item \code{"\%w"} -> \code{"1"} (day of week number in \verb{0..6}; Sunday is \code{0})
+\item \code{"\%u"} -> \code{"1"} (day of week number in \verb{1..7}; Monday is \code{1}, Sunday \code{7})
+\item \code{"\%y"} -> \code{"15"} (abbreviated year, using the final two digits)
+\item \code{"\%Y"} -> \code{"2015"} (full year)
+\item \code{"\%b"} -> \code{"Jun"} (abbreviated month name)
+\item \code{"\%B"} -> \code{"June"} (full month name)
+\item \code{"\%m"} -> \code{"06"} (month number)
+\item \code{"\%d"} -> \code{"08"} (day number, zero-padded)
+\item \code{"\%e"} -> \code{"8"} (day number without zero padding)
+}
+
+Here are the individual format codes for time components:
+\itemize{
+\item \code{"\%H"} -> \code{"23"} (24h hour)
+\item \code{"\%I"} -> \code{"11"} (12h hour)
+\item \code{"\%M"} -> \code{"05"} (minute)
+\item \code{"\%S"} -> \code{"37"} (second)
+\item \code{"\%OS3"} -> \code{"37.480"} (seconds with decimals; \code{3} decimal places here)
+\item \verb{\%p} -> \code{"pm"} (AM or PM indicator, may not appear in certain locales)
+}
+
+Here are some extra formats that you may find useful:
+\itemize{
+\item \code{"\%j"} -> \code{"159"} (day of the year, always zero-padded)
+\item \code{"\%W"} -> \code{"23"} (week number for the year, always zero-padded)
+\item \code{"\%V"} -> \code{"24"} (week number for the year, following ISO 8601 standard)
+\item \code{"\%C"} -> \code{"20"} (the century number)
+\item \code{"\%z"} -> \code{"+0000"} (signed time zone offset, here using UTC)
+\item \code{"\%F"} -> \code{"2015-06-08"} (the date in the ISO 8601 date format)
+\item \code{"\%\%"} -> \code{"\%"} (the literal "\verb{\%}" character, in case you need it)
+}
+}
+
 \section{Figures}{
 
 \if{html}{\figure{man_fmt_datetime_1.png}{options: width=100\%}}
