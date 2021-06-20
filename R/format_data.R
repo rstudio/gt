@@ -1739,16 +1739,25 @@ fmt_datetime <- function(data,
                          columns,
                          rows = everything(),
                          date_style = 2,
-                         time_style = 2) {
+                         time_style = 2,
+                         format = NULL) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Transform `date_style` to `date_format`
-  date_format_str <- get_date_format(date_style = date_style)
+  if (!is.null(format)) {
 
-  # Transform `time_style` to `time_format`
-  time_format_str <- get_time_format(time_style = time_style)
+    # Ensure that the format string meets some basic validation requirements
+    check_format_string(format = format)
+
+  } else {
+
+    # Transform `date_style` to `date_format`
+    date_format_str <- get_date_format(date_style = date_style)
+
+    # Transform `time_style` to `time_format`
+    time_format_str <- get_time_format(time_style = time_style)
+  }
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
