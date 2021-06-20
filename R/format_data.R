@@ -1704,9 +1704,64 @@ fmt_time <- function(data,
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the *Arguments* section for more information on this.
 #'
+#' @section Date and Time Formats:
+#' Using `format` to create custom time formats isn't so hard once we know about
+#' all of the different format codes. The formats are all indicated with a
+#' leading `%` and literal characters are any of those without the leading `%`.
+#' We'll use the date and time `"2015-06-08 23:05:37.48"` for all of the
+#' examples here.
+#'
+#' First off, let's look at a few format code combinations that work well
+#' together as format codes. This will give us an intuition on how these
+#' generally work.
+#'
+#' - `"%m/%d/%Y"` -> `"06/08/2015"`
+#' - `"%A, %B %e, %Y"` -> `"Monday, June 8, 2015"`
+#' - `"%b %e %a"` -> `"Jun 8 Mon"`
+#' - `"%H:%M"` -> `"23:05"`
+#' - `"%I:%M %p"` -> `"11:05 pm"`
+#'
+#' Here are the individual format codes for date components:
+#'
+#' - `"%a"` -> `"Mon"` (abbreviated day of week name)
+#' - `"%A"` -> `"Monday"` (full day of week name)
+#' - `"%w"` -> `"1"` (day of week number in `0..6`; Sunday is `0`)
+#' - `"%u"` -> `"1"` (day of week number in `1..7`; Monday is `1`, Sunday `7`)
+#' - `"%y"` -> `"15"` (abbreviated year, using the final two digits)
+#' - `"%Y"` -> `"2015"` (full year)
+#' - `"%b"` -> `"Jun"` (abbreviated month name)
+#' - `"%B"` -> `"June"` (full month name)
+#' - `"%m"` -> `"06"` (month number)
+#' - `"%d"` -> `"08"` (day number, zero-padded)
+#' - `"%e"` -> `"8"` (day number without zero padding)
+#'
+#' Here are the individual format codes for time components:
+#'
+#' - `"%H"` -> `"23"` (24h hour)
+#' - `"%I"` -> `"11"` (12h hour)
+#' - `"%M"` -> `"05"` (minute)
+#' - `"%S"` -> `"37"` (second)
+#' - `"%OS3"` -> `"37.480"` (seconds with decimals; `3` decimal places here)
+#' - `%p` -> `"pm"` (AM or PM indicator, may not appear in certain locales)
+#'
+#' Here are some extra formats that you may find useful:
+#'
+#' - `"%j"` -> `"159"` (day of the year, always zero-padded)
+#' - `"%W"` -> `"23"` (week number for the year, always zero-padded)
+#' - `"%V"` -> `"24"` (week number for the year, following ISO 8601 standard)
+#' - `"%C"` -> `"20"` (the century number)
+#' - `"%z"` -> `"+0000"` (signed time zone offset, here using UTC)
+#' - `"%F"` -> `"2015-06-08"` (the date in the ISO 8601 date format)
+#' - `"%%"` -> `"%"` (the literal "`%`" character, in case you need it)
+#'
+#'
 #' @inheritParams fmt_number
 #' @inheritParams fmt_date
 #' @inheritParams fmt_time
+#' @param format An optional format code used for generating custom dates/times.
+#'   If used then the arguments governing preset styles (`date_style` and
+#'   `time_style`) will be ignored in favor of formatting via the `format`
+#'   string.
 #'
 #' @return An object of class `gt_tbl`.
 #'
