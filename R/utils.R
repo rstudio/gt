@@ -145,6 +145,16 @@ is_string_time <- function(x) {
   is.character(x) & grepl("^\\d{2}:\\d{2}(:\\d{2}(\\.\\d+)?)?$", x)
 }
 
+check_format_string <- function(format) {
+
+  if (!is.character(format) || length(format) != 1) {
+    stop(
+      "The `format` code must be a character string of length 1.",
+      call. = FALSE
+    )
+  }
+}
+
 #' Transform a `currency` code to a currency string
 #'
 #' @noRd
