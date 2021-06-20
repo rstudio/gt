@@ -1774,6 +1774,19 @@ fmt_datetime <- function(data,
     fns = list(
       default = function(x) {
 
+        if (!is.null(format)) {
+
+          # If the incoming values are strings that adequately represent time
+          # values, then prepend with the `1970-01-01` dummy date to create an
+          # input that will works with `strftime()`
+          if (all(is_string_time(x))) {
+            x <- paste("1970-01-01", x)
+          }
+
+          # Format the date-time values using `strftime()`
+          return(strftime(x, format = format))
+        }
+
         if (inherits(x, "Date") || inherits(x, "POSIXct")) {
           x <- as.character(x)
         }
