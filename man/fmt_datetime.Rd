@@ -10,7 +10,8 @@ fmt_datetime(
   rows = everything(),
   date_style = 2,
   time_style = 2,
-  format = NULL
+  format = NULL,
+  tz = NULL
 )
 }
 \arguments{
@@ -45,6 +46,12 @@ the different numbered and named time presets.}
 If used then the arguments governing preset styles (\code{date_style} and
 \code{time_style}) will be ignored in favor of formatting via the \code{format}
 string.}
+
+\item{tz}{Specification of the time zone and only used internally when
+providing a \code{format} string. The default of \code{NULL} will use the system's
+current time zone but one can, for example, provide \code{"GMT"} for
+representing date-times in UTC (a vector of all valid \code{tz} values can be
+produced with \code{\link[=OlsonNames]{OlsonNames()}}).}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -114,6 +121,7 @@ generally work.
 \item \code{"\%b \%e \%a"} -> \code{"Jun 8 Mon"}
 \item \code{"\%H:\%M"} -> \code{"23:05"}
 \item \code{"\%I:\%M \%p"} -> \code{"11:05 pm"}
+\item \code{"\%A, \%B \%e, \%Y at \%I:\%M \%p"} -> \code{"Monday, June 8, 2015 at 11:05 pm"}
 }
 
 Here are the individual format codes for date components:

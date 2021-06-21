@@ -1720,6 +1720,7 @@ fmt_time <- function(data,
 #' - `"%b %e %a"` -> `"Jun 8 Mon"`
 #' - `"%H:%M"` -> `"23:05"`
 #' - `"%I:%M %p"` -> `"11:05 pm"`
+#' - `"%A, %B %e, %Y at %I:%M %p"` -> `"Monday, June 8, 2015 at 11:05 pm"`
 #'
 #' Here are the individual format codes for date components:
 #'
@@ -1753,7 +1754,6 @@ fmt_time <- function(data,
 #' - `"%z"` -> `"+0000"` (signed time zone offset, here using UTC)
 #' - `"%F"` -> `"2015-06-08"` (the date in the ISO 8601 date format)
 #' - `"%%"` -> `"%"` (the literal "`%`" character, in case you need it)
-#'
 #'
 #' @inheritParams fmt_number
 #' @inheritParams fmt_date
