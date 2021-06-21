@@ -1843,7 +1843,10 @@ cell_text <- function(color = NULL,
   validate_style_in(
     style_vals, style_names,
     arg_name = "whitespace",
-    in_vector = "pre"
+    in_vector = c(
+      "normal", "nowrap", "pre", "pre-wrap",
+      "pre-line", "break-spaces"
+    )
   )
 
   cell_style_structure(name = "cell_text", obj = style_vals)
