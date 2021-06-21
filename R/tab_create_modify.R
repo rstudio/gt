@@ -1438,6 +1438,11 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   it is assumed that the value is given in units of pixels. The [px()] and
 #'   [pct()] helper functions can also be used to pass in numeric values and
 #'   obtain values as pixel or percentage units.
+#' @param table.whitespace White-space preservation for all text in the table.
+#'   By default, or with the `"normal"` option, runs of white-space will be
+#'   collapsed into single spaces. The keyword options of `"nowrap"`, `"pre"`,
+#'   `"pre-wrap"`, `"pre-line"`, and `"break-spaces"` modify the white-space
+#'   collapsing and line-wrapping behavior.
 #' @param heading.align Controls the horizontal alignment of the heading title
 #'   and subtitle. We can either use `"center"`, `"left"`, or `"right"`.
 #' @param table.font.weight,heading.title.font.weight,heading.subtitle.font.weight,column_labels.font.weight,row_group.font.weight,stub.font.weight
@@ -1660,6 +1665,7 @@ tab_options <- function(data,
                         table.font.style = NULL,
                         table.font.color = NULL,
                         table.font.color.light = NULL,
+                        table.whitespace = NULL,
                         table.border.top.style = NULL,
                         table.border.top.width = NULL,
                         table.border.top.color = NULL,
