@@ -485,7 +485,6 @@ test_that("the `fmt_datetime()` function works correctly", {
   # Combine the gt tables into a list
   gt_tables <- list(tab_1, tab_2)
 
-
   #
   # Format `datetime` in various date formats and verify the output
   #
@@ -539,4 +538,79 @@ test_that("the `fmt_datetime()` function works correctly", {
   # Expect errors if invalid input is provided to `fmt_datetime()`
   expect_error(tab_1 %>% fmt_datetime(columns = "datetime", date_style = "none"))
   expect_error(tab_1 %>% fmt_datetime(columns = "datetime", date_style = 50))
+
+  #
+  # Format `datetime` using a custom `format` and verify the output
+  #
+
+  for (tab in gt_tables) {
+
+    expect_equal(
+      (tab %>%
+         fmt_datetime(
+           columns = "datetime", format = "%F", tz = "GMT"
+         ) %>%
+         render_formats_test(context = "default"))[["datetime"]],
+      c("2017-06-10", "2017-07-12", "2017-08-05", "2017-10-23", "2000-01-01")
+    )
+
+    expect_equal(
+      (tab %>%
+         fmt_datetime(
+           columns = "datetime", format = "%B %d, %Y %H:%M:%S", tz = "GMT"
+         ) %>%
+         render_formats_test(context = "default"))[["datetime"]],
+      c(
+        "June 10, 2017 12:35:23", "July 12, 2017 15:01:34",
+        "August 05, 2017 09:45:23", "October 23, 2017 01:32:00",
+        "January 01, 2000 00:00:00"
+      )
+    )
+
+    expect_equal(
+      (tab %>%
+         fmt_datetime(
+           columns = "datetime", date_style = 2, time_style = 2,
+           format = "%B %d, %Y %H:%M:%S", tz = "GMT"
+         ) %>%
+         render_formats_test(context = "default"))[["datetime"]],
+      c(
+        "June 10, 2017 12:35:23", "July 12, 2017 15:01:34",
+        "August 05, 2017 09:45:23", "October 23, 2017 01:32:00",
+        "January 01, 2000 00:00:00"
+      )
+    )
+
+    expect_equal(
+      (tab %>%
+         fmt_datetime(
+           columns = "datetime",
+           format = "%B %d, %Y %H:%M:%S (%z)", tz = "GMT"
+         ) %>%
+         render_formats_test(context = "default"))[["datetime"]],
+      c(
+        "June 10, 2017 12:35:23 (+0000)", "July 12, 2017 15:01:34 (+0000)",
+        "August 05, 2017 09:45:23 (+0000)", "October 23, 2017 01:32:00 (+0000)",
+        "January 01, 2000 00:00:00 (+0000)"
+      )
+    )
+  }
+
+  # Create a gt table with a `time` column containing valid time strings
+  tab_3 <-
+    dplyr::tibble(time = c(
+      "12:35:23", "15:01:34", "09:45:23", "01:32:00", "00:00:00"
+    )) %>%
+    gt()
+
+  #
+  # Format `time` with a time format and verify the output
+  #
+
+  expect_equal(
+    (tab_3 %>%
+       fmt_datetime(columns = "time", format = "%I:%M:%S %P") %>%
+       render_formats_test(context = "default"))[["time"]],
+    c("12:35:23 pm", "03:01:34 pm", "09:45:23 am", "01:32:00 am", "12:00:00 am")
+  )
 })
