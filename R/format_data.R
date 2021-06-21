@@ -1762,6 +1762,11 @@ fmt_time <- function(data,
 #'   If used then the arguments governing preset styles (`date_style` and
 #'   `time_style`) will be ignored in favor of formatting via the `format`
 #'   string.
+#' @param tz Specification of the time zone and only used internally when
+#'   providing a `format` string. The default of `NULL` will use the system's
+#'   current time zone but one can, for example, provide `"GMT"` for
+#'   representing date-times in UTC (a vector of all valid `tz` values can be
+#'   produced with [OlsonNames()]).
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -1795,7 +1800,8 @@ fmt_datetime <- function(data,
                          rows = everything(),
                          date_style = 2,
                          time_style = 2,
-                         format = NULL) {
+                         format = NULL,
+                         tz = NULL) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -1849,8 +1855,12 @@ fmt_datetime <- function(data,
             x <- paste("1970-01-01", x)
           }
 
+          if (is.null(tz)) {
+            tz <- ""
+          }
+
           # Format the date-time values using `strftime()`
-          return(strftime(x, format = format))
+          return(strftime(x, format = format, tz = tz))
         }
 
         #
