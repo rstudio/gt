@@ -1838,6 +1838,8 @@ fmt_datetime <- function(data,
     fns = list(
       default = function(x) {
 
+        # If a format string is provided then use that to generate the
+        # formatted date/time string
         if (!is.null(format)) {
 
           # If the incoming values are strings that adequately represent time
@@ -1851,19 +1853,26 @@ fmt_datetime <- function(data,
           return(strftime(x, format = format))
         }
 
-        if (inherits(x, "Date") || inherits(x, "POSIXct")) {
-          x <- as.character(x)
-        }
-
         #
         # Format the date portion of the datetime string
         #
 
-        # If the incoming string is a time then append the `1970-01-01` date
-        date <- ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x)
+        # Convert incoming values to POSIXlt but provide a friendly error
+        # if the values cannot be parsed by `as.POSIXlt()`
+        datetime <-
+          tryCatch(
+            as.POSIXlt(x),
+            error = function(cond) {
+              stop(
+                "One or more of the provided date/date-time values are invalid.",
+                call. = FALSE
+              )
+            }
+          )
 
-        # Format the date string using `strftime()`
-        date <- strftime(date, format = date_format_str)
+        # Format `datetime` into a date string using `strftime()` with
+        # the resolved formatting string
+        date <- strftime(datetime, format = date_format_str)
 
         # Perform several cosmetic changes to the formatted date
         if (date_format_str != "%F") {
@@ -1876,11 +1885,9 @@ fmt_datetime <- function(data,
         # Format the time portion of the datetime string
         #
 
-        # If the incoming string is a time then append the `1970-01-01` date
-        time <- ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x)
-
-        # Format the date string using `strftime()`
-        time <- strftime(time, format = time_format_str)
+        # Format `datetime` into a time string using `strftime()` with
+        # the resolved formatting string
+        time <- strftime(datetime, format = time_format_str)
 
         # Perform several cosmetic changes to the formatted time
         if (grepl("%P$", time_format_str)) {
@@ -1891,9 +1898,7 @@ fmt_datetime <- function(data,
           time <- gsub("am$", "AM", time)
         }
 
-        datetime <-
-          paste(date, time) %>%
-          tidy_gsub("NA NA", "NA")
+        datetime <- gsub("NA NA", "NA", paste(date, time))
 
         datetime
       }
