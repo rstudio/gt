@@ -63,6 +63,7 @@ dt_options_tbl <-
     "table_font_style",                   TRUE,   "table",           "value",   "normal",
     "table_font_color",                   TRUE,  "table",            "value",   "#333333",
     "table_font_color_light",             TRUE,  "table",            "value",   "#FFFFFF",
+    "table_whitespace",                   TRUE,  "table",            "value",   "normal",
     "table_border_top_include",          FALSE,  "table",            "logical", TRUE,
     "table_border_top_style",             TRUE,  "table",            "value",   "solid",
     "table_border_top_width",             TRUE,  "table",            "px",      "2px",
