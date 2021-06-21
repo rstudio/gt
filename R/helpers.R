@@ -1721,9 +1721,11 @@ currency <- function(...,
 #'   use `"overline"`, `"line-through"`, or `"underline"`.
 #' @param transform Allows for the transformation of text. Options are
 #'   `"uppercase"`, `"lowercase"`, or `"capitalize"`.
-#' @param whitespace A whitespace preservation option. By default, runs of
-#'   whitespace will be collapsed into single spaces. If we use `"pre"` here,
-#'   all whitespace will be preserved.
+#' @param whitespace A white-space preservation option. By default, runs of
+#'   white-space will be collapsed into single spaces but several options exist
+#'   to govern how white-space is collapsed and how lines might wrap at
+#'   soft-wrap opportunities. The keyword options are `"normal"`, `"nowrap"`,
+#'   `"pre"`, `"pre-wrap"`, `"pre-line"`, and `"break-spaces"`.
 #' @param indent The indentation of the text. Can be provided as a number that
 #'   is assumed to represent `px` values (or could be wrapped in the [px()])
 #'   helper function. Alternatively, this can be given as a percentage (easily

@@ -59,9 +59,11 @@ use \code{"overline"}, \code{"line-through"}, or \code{"underline"}.}
 \item{transform}{Allows for the transformation of text. Options are
 \code{"uppercase"}, \code{"lowercase"}, or \code{"capitalize"}.}
 
-\item{whitespace}{A whitespace preservation option. By default, runs of
-whitespace will be collapsed into single spaces. If we use \code{"pre"} here,
-all whitespace will be preserved.}
+\item{whitespace}{A white-space preservation option. By default, runs of
+white-space will be collapsed into single spaces but several options exist
+to govern how white-space is collapsed and how lines might wrap at
+soft-wrap opportunities. The keyword options are \code{"normal"}, \code{"nowrap"},
+\code{"pre"}, \code{"pre-wrap"}, \code{"pre-line"}, and \code{"break-spaces"}.}
 
 \item{indent}{The indentation of the text. Can be provided as a number that
 is assumed to represent \code{px} values (or could be wrapped in the \code{\link[=px]{px()}})
