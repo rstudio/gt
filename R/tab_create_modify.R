@@ -1036,36 +1036,38 @@ tab_style <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
+  # Upgrade `style` to be within a list if not provided as such
+  if (!inherits(style, "list")) {
+    style <- list(style)
+  }
+
   # Intercept font styles that require registration
-  if ("cell_text" %in% names(style)) {
+  if ("font" %in% names(unlist(style, recursive = FALSE)[["cell_text"]])) {
 
-    if ("font" %in% names(style[["cell_text"]])) {
+    font <- style[[1]][["cell_text"]][["font"]]
+    font <- normalize_font_input(font_input = font)
 
-      font <- style[["cell_text"]][["font"]]
-      font <- normalize_font_input(font_input = font)
+    existing_additional_css <-
+      dt_options_get_value(
+        data = data,
+        option = "table_additional_css"
+      )
 
-      existing_additional_css <-
-        dt_options_get_value(
-          data = data,
-          option = "table_additional_css"
-        )
+    additional_css <- c(font$import_stmt, existing_additional_css)
 
-      additional_css <- c(font$import_stmt, existing_additional_css)
+    data <-
+      tab_options(
+        data = data,
+        table.additional_css = additional_css
+      )
 
-      data <-
-        tab_options(
-          data = data,
-          table.additional_css = additional_css
-        )
+    font_names <- font$name
 
-      font_names <- font$name
-
-      style[["cell_text"]][["font"]] <-
-        as_css_font_family_attr(
-          font_vec = font_names,
-          value_only = TRUE
-        )
-    }
+    style[[1]][["cell_text"]][["font"]] <-
+      as_css_font_family_attr(
+        font_vec = font_names,
+        value_only = TRUE
+      )
   }
 
   # Resolve into a list of locations
