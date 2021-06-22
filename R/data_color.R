@@ -409,11 +409,7 @@ html_color <- function(colors, alpha = NULL) {
       # of the CSS colors not in the X11/R set; the names are the hexadecimal
       # color values
       colors[is_css_excl_named] <-
-        unname(
-          css_exclusive_colors()[
-            match(colors[is_css_excl_named], names(css_exclusive_colors()))
-          ]
-        )
+        unname(css_exclusive_colors()[colors[is_css_excl_named]])
     }
   }
 
