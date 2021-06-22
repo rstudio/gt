@@ -47,11 +47,11 @@ If used then the arguments governing preset styles (\code{date_style} and
 \code{time_style}) will be ignored in favor of formatting via the \code{format}
 string.}
 
-\item{tz}{Specification of the time zone and only used internally when
-providing a \code{format} string. The default of \code{NULL} will use the system's
-current time zone but one can, for example, provide \code{"GMT"} for
-representing date-times in UTC (a vector of all valid \code{tz} values can be
-produced with \code{\link[=OlsonNames]{OlsonNames()}}).}
+\item{tz}{The time zone for printing dates/times (i.e., the output) and only
+used internally when providing a \code{format} string. The default of \code{NULL}
+will use the system's current time zone but one can, for example, provide
+\code{"GMT"} for representing date-times in UTC (a vector of all valid \code{tz}
+values can be produced with \code{\link[=OlsonNames]{OlsonNames()}}).}
 }
 \value{
 An object of class \code{gt_tbl}.
