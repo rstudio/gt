@@ -4,8 +4,15 @@ compile_scss <- function(data, id = NULL) {
   # Obtain the SCSS options table from `data`
   gt_options_tbl <-
     dt_options_get(data = data) %>%
-    subset(scss) %>%
-    subset(!is.na(value))
+    dplyr::filter(scss) %>%
+    dplyr::filter(!is.na(value)) %>%
+    dplyr::mutate(
+      value = {
+        color_rows <- grepl("_color", .data$parameter)
+        value[color_rows] <- lapply(value[color_rows], html_color)
+        value
+      }
+    )
 
   has_id <- !is.null(id)
 
