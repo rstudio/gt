@@ -142,7 +142,7 @@ get_time_format <- function(time_style) {
 #' @noRd
 is_string_time <- function(x) {
 
-  is.character(x) & grepl("^\\d{2}:\\d{2}(:\\d{2}(\\.\\d+)?)?$", x)
+  is.character(x) & grepl("^\\d{1,2}:\\d{2}(:\\d{2}(\\.\\d+)?)?$", x)
 }
 
 check_format_string <- function(format) {
