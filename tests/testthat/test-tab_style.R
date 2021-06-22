@@ -132,7 +132,7 @@ test_that("a gt table can store the correct style statements", {
     .[[1]] %>%
     .$cell_text %>%
     .$color %>%
-    expect_equal("white")
+    expect_equal("#FFFFFF")
 
   # Apply left-alignment to the table title
   tbl_html <-

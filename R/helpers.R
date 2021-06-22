@@ -1790,16 +1790,15 @@ cell_text <- function(color = NULL,
                       transform = NULL) {
 
   # Get all assigned values for the functions' arguments
-  style_names <- formals(cell_text) %>% names()
-  style_names <- mget(style_names)
+  style_names <- mget(names(formals(cell_text)))
 
   # Filter list by only the non-NULL (e.g., assigned with
   # value) elements
-  style_vals <- style_names %>% .[!vapply(., is.null, logical(1))]
+  style_vals <- style_names[!vapply(style_names, is.null, logical(1))]
 
   # Get a vector of argument names (`style_names`) for
   # validation purposes
-  style_names <- style_vals %>% names()
+  style_names <- names(style_vals)
 
   #
   # Validate textual styles values with `validate_style_in()`
@@ -1851,12 +1850,18 @@ cell_text <- function(color = NULL,
     in_vector = c("uppercase", "lowercase", "capitalize")
   )
 
+  # Transform the `color` value, if present, so that X11 color names
+  # can be used in all output contexts
+  if ("color" %in% style_names) {
+    style_vals$color <- html_color(colors = style_vals$color)
+  }
+
   cell_style_structure(name = "cell_text", obj = style_vals)
 }
 
 cell_style_to_html.cell_text <- function(style) {
 
-  css <- style %>% unclass()
+  css <- unclass(style)
 
   css_names <-
     c(
@@ -1940,9 +1945,9 @@ cell_fill <- function(color = "#D3D3D3",
     stop("If provided, `alpha` must be a single value", call. = FALSE)
   }
 
-  if (!is_rgba_col(color)) {
-    color <- html_color(colors = color, alpha = alpha)
-  }
+  # Transform the `color` value, if present, so that X11 color names
+  # can be used in all output contexts
+  color <- html_color(colors = color, alpha = alpha)
 
   style_vals <- list(color = color)
 
@@ -2072,14 +2077,16 @@ cell_borders <- function(sides = "all",
     "bottom", "b",
     "all", "everything", "a"
   ))) {
-    stop("The `sides` vector for `cell_borders()` has to include one ",
-         "or more of the following keywords (or short forms):\n",
-         " * \"left\" (or: \"l\")\n",
-         " * \"right\" (or: \"r\")\n",
-         " * \"top\" (or: \"t\")\n",
-         " * \"bottom\" (or: \"b\")\n",
-         " * \"all\" (or: \"a\", \"everything\"",
-         call. = FALSE)
+    stop(
+      "The `sides` vector for `cell_borders()` has to include one ",
+      "or more of the following keywords (or short forms):\n",
+      " * \"left\" (or: \"l\")\n",
+      " * \"right\" (or: \"r\")\n",
+      " * \"top\" (or: \"t\")\n",
+      " * \"bottom\" (or: \"b\")\n",
+      " * \"all\" (or: \"a\", \"everything\"",
+      call. = FALSE
+    )
   }
 
   # Resolve the selection of borders into a vector of
