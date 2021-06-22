@@ -1882,7 +1882,7 @@ fmt_datetime <- function(data,
 
         # Format `datetime` into a date string using `strftime()` with
         # the resolved formatting string
-        date <- strftime(datetime, format = date_format_str)
+        date <- strftime(datetime, format = date_format_str, tz = tz)
 
         # Perform several cosmetic changes to the formatted date
         if (date_format_str != "%F") {
@@ -1897,7 +1897,7 @@ fmt_datetime <- function(data,
 
         # Format `datetime` into a time string using `strftime()` with
         # the resolved formatting string
-        time <- strftime(datetime, format = time_format_str)
+        time <- strftime(datetime, format = time_format_str, tz = tz)
 
         # Perform several cosmetic changes to the formatted time
         if (grepl("%P$", time_format_str)) {
