@@ -34,7 +34,7 @@ An object of class \code{gt_tbl}.
 }
 \description{
 Format input values to time values using one of five presets. Input can be in
-the form of \code{POSIXct} (i.e., date-times), \code{character} (must be in the ISO
+the form of \code{POSIXt} (i.e., date-times), \code{character} (must be in the ISO
 8601 forms of \code{HH:MM:SS} or \verb{YYYY-MM-DD HH:MM:SS}), or \code{Date} (which always
 results in the formatting of \code{00:00:00}).
 

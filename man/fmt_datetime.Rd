@@ -59,7 +59,7 @@ An object of class \code{gt_tbl}.
 \description{
 Format input values to date-time values using one of fourteen presets for the
 date component and one of five presets for the time component. Input can be
-in the form of \code{POSIXct} (i.e., date-times), the \code{Date} type, or \code{character}
+in the form of \code{POSIXt} (i.e., date-times), the \code{Date} type, or \code{character}
 (must be in the ISO 8601 form of \verb{YYYY-MM-DD HH:MM:SS} or \code{YYYY-MM-DD}).
 
 Once the appropriate data cells are targeted with \code{columns} (and, optionally,
