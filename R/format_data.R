@@ -1345,7 +1345,7 @@ fmt_bytes <- function(data,
 #'
 #' @description
 #' Format input values to time values using one of fourteen presets. Input can
-#' be in the form of `POSIXct` (i.e., date-times), the `Date` type, or
+#' be in the form of `POSIXt` (i.e., date-times), the `Date` type, or
 #' `character` (must be in the ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or
 #' `YYYY-MM-DD`).
 #'
@@ -1456,7 +1456,7 @@ fmt_date <- function(data,
   ) {
     stop(
       "The `fmt_date()` function can only be used on `columns` of certain types:\n",
-      "* Allowed types are `Date`, `POSIXct`, and `character` (in ISO 8601 format).",
+      "* Allowed types are `Date`, `POSIXt`, and `character` (in ISO 8601 format).",
       call. = FALSE
     )
   }
@@ -1503,7 +1503,7 @@ fmt_date <- function(data,
 #'
 #' @description
 #' Format input values to time values using one of five presets. Input can be in
-#' the form of `POSIXct` (i.e., date-times), `character` (must be in the ISO
+#' the form of `POSIXt` (i.e., date-times), `character` (must be in the ISO
 #' 8601 forms of `HH:MM:SS` or `YYYY-MM-DD HH:MM:SS`), or `Date` (which always
 #' results in the formatting of `00:00:00`).
 #'
@@ -1661,7 +1661,7 @@ fmt_time <- function(data,
 #' @description
 #' Format input values to date-time values using one of fourteen presets for the
 #' date component and one of five presets for the time component. Input can be
-#' in the form of `POSIXct` (i.e., date-times), the `Date` type, or `character`
+#' in the form of `POSIXt` (i.e., date-times), the `Date` type, or `character`
 #' (must be in the ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or `YYYY-MM-DD`).
 #'
 #' Once the appropriate data cells are targeted with `columns` (and, optionally,
@@ -1830,7 +1830,7 @@ fmt_datetime <- function(data,
     ) {
       stop(
         "The `fmt_datetime()` function can only be used on `columns` of certain types:\n",
-        "* Allowed types are `Date`, `POSIXct`, and `character` (in ISO 8601 format).",
+        "* Allowed types are `Date`, `POSIXt`, and `character` (in ISO 8601 format).",
         call. = FALSE
       )
   }
