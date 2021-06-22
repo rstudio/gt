@@ -1044,7 +1044,10 @@ tab_style <- function(data,
   # Intercept font styles that require registration
   if ("font" %in% names(unlist(style, recursive = FALSE)[["cell_text"]])) {
 
-    font <- style[[1]][["cell_text"]][["font"]]
+    cell_text_idx <-
+      which(names(unlist(style, recursive = FALSE)) == "cell_text")
+
+    font <- style[[cell_text_idx]][["cell_text"]][["font"]]
     font <- normalize_font_input(font_input = font)
 
     existing_additional_css <-
@@ -1063,7 +1066,7 @@ tab_style <- function(data,
 
     font_names <- font$name
 
-    style[[1]][["cell_text"]][["font"]] <-
+    style[[cell_text_idx]][["cell_text"]][["font"]] <-
       as_css_font_family_attr(
         font_vec = font_names,
         value_only = TRUE
