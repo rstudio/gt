@@ -4,7 +4,7 @@
 \alias{fmt_time}
 \title{Format values as times}
 \usage{
-fmt_time(data, columns, rows = everything(), time_style = 2)
+fmt_time(data, columns, rows = everything(), time_style = 2, pattern = "{x}")
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -28,6 +28,10 @@ to filter down to the rows we need (e.g.,
 that corresponds to the preferred time style, or, provide a named time
 style (\code{"hms"}, \code{"hms_p"}, \code{"h_p"}, etc.). Use \code{\link[=info_time_style]{info_time_style()}} to see
 the different numbered and named time presets.}
+
+\item{pattern}{A formatting pattern that allows for decoration of the
+formatted value. The value itself is represented by \code{{x}} and all other
+characters are taken to be string literals.}
 }
 \value{
 An object of class \code{gt_tbl}.

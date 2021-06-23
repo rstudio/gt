@@ -4,7 +4,7 @@
 \alias{fmt_date}
 \title{Format values as dates}
 \usage{
-fmt_date(data, columns, rows = everything(), date_style = 2)
+fmt_date(data, columns, rows = everything(), date_style = 2, pattern = "{x}")
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -28,6 +28,10 @@ to filter down to the rows we need (e.g.,
 that corresponds to the preferred date style, or, provide a named date
 style (\code{"wday_month_day_year"}, \code{"m_day_year"}, \code{"year.mn.day"}, etc.). Use
 \code{\link[=info_date_style]{info_date_style()}} to see the different numbered and named date presets.}
+
+\item{pattern}{A formatting pattern that allows for decoration of the
+formatted value. The value itself is represented by \code{{x}} and all other
+characters are taken to be string literals.}
 }
 \value{
 An object of class \code{gt_tbl}.

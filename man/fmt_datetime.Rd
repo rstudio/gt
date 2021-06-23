@@ -10,8 +10,10 @@ fmt_datetime(
   rows = everything(),
   date_style = 2,
   time_style = 2,
+  sep = " ",
   format = NULL,
-  tz = NULL
+  tz = "UTC",
+  pattern = "{x}"
 )
 }
 \arguments{
@@ -42,16 +44,23 @@ that corresponds to the preferred time style, or, provide a named time
 style (\code{"hms"}, \code{"hms_p"}, \code{"h_p"}, etc.). Use \code{\link[=info_time_style]{info_time_style()}} to see
 the different numbered and named time presets.}
 
+\item{sep}{The separator string to use between the date and time components.
+By default, this is a single space character (\code{" "}). Only used when not
+specifying a \code{format} code.}
+
 \item{format}{An optional format code used for generating custom dates/times.
 If used then the arguments governing preset styles (\code{date_style} and
 \code{time_style}) will be ignored in favor of formatting via the \code{format}
 string.}
 
-\item{tz}{The time zone for printing dates/times (i.e., the output) and only
-used internally when providing a \code{format} string. The default of \code{NULL}
-will use the system's current time zone but one can, for example, provide
-\code{"GMT"} for representing date-times in UTC (a vector of all valid \code{tz}
-values can be produced with \code{\link[=OlsonNames]{OlsonNames()}}).}
+\item{tz}{The time zone for printing dates/times (i.e., the output). The
+default of \code{NULL} will use the system's current time zone but one can, for
+example, provide \code{"GMT"} for representing date-times in UTC (a vector of
+all valid \code{tz} values can be produced with \code{\link[=OlsonNames]{OlsonNames()}}).}
+
+\item{pattern}{A formatting pattern that allows for decoration of the
+formatted value. The value itself is represented by \code{{x}} and all other
+characters are taken to be string literals.}
 }
 \value{
 An object of class \code{gt_tbl}.
