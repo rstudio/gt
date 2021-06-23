@@ -54,9 +54,11 @@ If used then the arguments governing preset styles (\code{date_style} and
 string.}
 
 \item{tz}{The time zone for printing dates/times (i.e., the output). The
-default of \code{NULL} will use the system's current time zone but one can, for
-example, provide \code{"GMT"} for representing date-times in UTC (a vector of
-all valid \code{tz} values can be produced with \code{\link[=OlsonNames]{OlsonNames()}}).}
+default of \code{"UTC"} will render dates/times in UTC (and this matches the
+\strong{lubridate} package default for parsing date-times). If providing a
+different time zone, it must be one that is recognized by the user's
+operating system (a vector of all valid \code{tz} values can be produced with
+\code{\link[=OlsonNames]{OlsonNames()}}).}
 
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other

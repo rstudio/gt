@@ -1772,9 +1772,11 @@ fmt_time <- function(data,
 #'   `time_style`) will be ignored in favor of formatting via the `format`
 #'   string.
 #' @param tz The time zone for printing dates/times (i.e., the output). The
-#'   default of `NULL` will use the system's current time zone but one can, for
-#'   example, provide `"GMT"` for representing date-times in UTC (a vector of
-#'   all valid `tz` values can be produced with [OlsonNames()]).
+#'   default of `"UTC"` will render dates/times in UTC (and this matches the
+#'   **lubridate** package default for parsing date-times). If providing a
+#'   different time zone, it must be one that is recognized by the user's
+#'   operating system (a vector of all valid `tz` values can be produced with
+#'   [OlsonNames()]).
 #'
 #' @return An object of class `gt_tbl`.
 #'
