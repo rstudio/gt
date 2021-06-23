@@ -313,9 +313,16 @@ format_num_to_str_c <- function(x,
 #'
 #' @param x Numeric values in `character` form.
 #' @param context The output context.
+#' @param active Whether or not this formatting should be active.
+#'
 #' @noRd
 to_latex_math_mode <- function(x,
-                               context) {
+                               context,
+                               active = TRUE) {
+
+  if (!active) {
+    return(x)
+  }
 
   if (context != "latex") {
     return(x)
@@ -697,6 +704,7 @@ create_suffix_df <- function(x,
 #' @param format_fn A function for formatting the numeric values.
 #' @noRd
 num_fmt_factory_multi <- function(pattern,
+                                  use_latex_math_mode = TRUE,
                                   format_fn) {
 
   # Generate a named list of factory functions, with one
@@ -704,7 +712,12 @@ num_fmt_factory_multi <- function(pattern,
   all_contexts %>%
     magrittr::set_names(all_contexts) %>%
     lapply(function(x) {
-      num_fmt_factory(context = x, pattern = pattern, format_fn = format_fn)
+      num_fmt_factory(
+        context = x,
+        pattern = pattern,
+        use_latex_math_mode = use_latex_math_mode,
+        format_fn = format_fn
+      )
     })
 }
 
@@ -717,6 +730,7 @@ num_fmt_factory_multi <- function(pattern,
 #' @noRd
 num_fmt_factory <- function(context,
                             pattern,
+                            use_latex_math_mode = TRUE,
                             format_fn) {
 
   # Force all arguments
@@ -740,11 +754,11 @@ num_fmt_factory <- function(context,
     x_str_vals <-
       x_vals %>%
       # Format all non-NA x values with a formatting function
-      format_fn(context) %>%
+      format_fn(context = context) %>%
       # If in a LaTeX context, wrap values in math mode
-      to_latex_math_mode(context) %>%
+      to_latex_math_mode(context = context, active = use_latex_math_mode) %>%
       # Handle formatting of pattern
-      apply_pattern_fmt_x(pattern)
+      apply_pattern_fmt_x(pattern = pattern)
 
     # Create `x_str` with the same length as `x`; place the
     # `x_str_vals` into `str` (at the non-NA indices)
