@@ -1800,8 +1800,10 @@ fmt_datetime <- function(data,
                          rows = everything(),
                          date_style = 2,
                          time_style = 2,
+                         sep = " ",
                          format = NULL,
-                         tz = NULL) {
+                         tz = "UTC",
+                         pattern = "{x}") {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
