@@ -1437,7 +1437,8 @@ fmt_bytes <- function(data,
 fmt_date <- function(data,
                      columns,
                      rows = everything(),
-                     date_style = 2) {
+                     date_style = 2,
+                     pattern = "{x}") {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -1467,8 +1468,10 @@ fmt_date <- function(data,
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    fns = list(
-      default = function(x) {
+    fns = num_fmt_factory_multi(
+      pattern = pattern,
+      use_latex_math_mode = FALSE,
+      format_fn = function(x, context) {
 
         # Convert incoming values to POSIXlt but provide a friendly error
         # if the values cannot be parsed by `as.POSIXlt()`
@@ -1586,7 +1589,8 @@ fmt_date <- function(data,
 fmt_time <- function(data,
                      columns,
                      rows = everything(),
-                     time_style = 2) {
+                     time_style = 2,
+                     pattern = "{x}") {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -1615,8 +1619,10 @@ fmt_time <- function(data,
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    fns = list(
-      default = function(x) {
+    fns = num_fmt_factory_multi(
+      pattern = pattern,
+      use_latex_math_mode = FALSE,
+      format_fn = function(x, context) {
 
         # If the incoming values are strings that adequately represent time
         # values, then prepend with the `1970-01-01` dummy date to create an
@@ -1758,15 +1764,17 @@ fmt_time <- function(data,
 #' @inheritParams fmt_number
 #' @inheritParams fmt_date
 #' @inheritParams fmt_time
+#' @param sep The separator string to use between the date and time components.
+#'   By default, this is a single space character (`" "`). Only used when not
+#'   specifying a `format` code.
 #' @param format An optional format code used for generating custom dates/times.
 #'   If used then the arguments governing preset styles (`date_style` and
 #'   `time_style`) will be ignored in favor of formatting via the `format`
 #'   string.
-#' @param tz The time zone for printing dates/times (i.e., the output) and only
-#'   used internally when providing a `format` string. The default of `NULL`
-#'   will use the system's current time zone but one can, for example, provide
-#'   `"GMT"` for representing date-times in UTC (a vector of all valid `tz`
-#'   values can be produced with [OlsonNames()]).
+#' @param tz The time zone for printing dates/times (i.e., the output). The
+#'   default of `NULL` will use the system's current time zone but one can, for
+#'   example, provide `"GMT"` for representing date-times in UTC (a vector of
+#'   all valid `tz` values can be produced with [OlsonNames()]).
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -1843,8 +1851,10 @@ fmt_datetime <- function(data,
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    fns = list(
-      default = function(x) {
+    fns = num_fmt_factory_multi(
+      pattern = pattern,
+      use_latex_math_mode = FALSE,
+      format_fn = function(x, context) {
 
         # If a format string is provided then use that to generate the
         # formatted date/time string
@@ -1855,10 +1865,6 @@ fmt_datetime <- function(data,
           # input that will works with `strftime()`
           if (all(is_string_time(x))) {
             x <- paste("1970-01-01", x)
-          }
-
-          if (is.null(tz)) {
-            tz <- ""
           }
 
           # Format the date-time values using `strftime()`
@@ -1873,7 +1879,7 @@ fmt_datetime <- function(data,
         # if the values cannot be parsed by `as.POSIXlt()`
         datetime <-
           tryCatch(
-            as.POSIXlt(x),
+            as.POSIXlt(x, tz = tz),
             error = function(cond) {
               stop(
                 "One or more of the provided date/date-time values are invalid.",
@@ -1910,9 +1916,7 @@ fmt_datetime <- function(data,
           time <- gsub("am$", "AM", time)
         }
 
-        datetime <- gsub("NA NA", "NA", paste(date, time))
-
-        datetime
+        paste(date, time, sep = sep)
       }
     )
   )
