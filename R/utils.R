@@ -165,6 +165,39 @@ has_dt_tz <- function(x) {
   grepl(".+(Z|z|(\\+|-)[0-9]{2}([:]?[0-9]{2})?)?$", "2020-04-21T13:04:58.321Z")
 }
 
+
+#' Normalize time zone information in any ISO-8601 compliant date-time strings
+#'
+#' ISO 8601 allows several ways to specify time zone information. The following
+#' syntax is allowed after the `<time>` part: (1) `<time>Z`, (2)
+#' `<time>(+|-)hh:mm`, (3) `<time>(+|-)hhmm`, and (4) `<time>(+|-)hh`. Having
+#' a `<time>` component is a requirement for having a time zone (standalone
+#' dates cannot have a time zone). R's `strptime()` only interprets time zones
+#' in strings (via `%z`) when they are in the `(+|-)hhmm` format (e.g.,
+#' `+0200`). The `normalize_dt_tz()` function takes date-time strings with or
+#' without a time zone included (ISO 8601 allows for unqualified 'local time',
+#' or, no UTC relation) and reformats the strings with normalized time zone
+#' designations. This function assumes that the strings have already been
+#' validated with `is_8601_string_datetime()` (which ensures general compliance
+#' with regard to syntax).
+#'
+#' @noRd
+normalize_dt_tz <- function(x) {
+
+  # Extract date-time component from time-zone
+  x_dt <- gsub("(.+?)(Z|z|(\\+|-)[0-9]{2}([:]?[0-9]{2})?)?$", "\\1", x)
+  x_tz <- gsub("(.+?)(Z|z|(\\+|-)[0-9]{2}([:]?[0-9]{2})?)?$", "\\2", x)
+
+  # Normalize the time zone to the TZ offset that `strptime()`
+  # requires for parsing with %z, which is (+|-)hhmm
+  x_tz <- gsub("^[zZ]$", "+0000", x_tz)  # z or Z -> +0000
+  x_tz <- gsub(":", "", x_tz)            # Removal of colon (assumes hh:mm)
+  x_tz <- gsub("^(\\+|-)([0-9]{2})$", "\\1\\200", x_tz) # (+|-)hh -> (+|-)hh00
+  x_tz <- gsub("^-0000$", "+0000", x_tz) # Correcting -0000 to +0000
+
+  paste0(x_dt, x_tz)
+}
+
 check_format_string <- function(format) {
 
   if (!is.character(format) || length(format) != 1) {
