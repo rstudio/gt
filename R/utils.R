@@ -145,6 +145,26 @@ is_string_time <- function(x) {
   is.character(x) & grepl("^\\d{1,2}:\\d{2}(:\\d{2}(\\.\\d+)?)?$", x)
 }
 
+is_8601_string_datetime <- function(x) {
+
+  is.character(x) & (is_extended_8601_dt(x) | is_basic_8601_dt(x))
+}
+
+is_extended_8601_dt <- function(x) {
+
+  grepl("^[0-9]{4}-[0-9]{2}-[0-9]{2}(T| |t)([0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?|[0-9]{2}:[0-9]{2}|[0-9]{2})(|Z|z|(\\+|-)[0-9]{2}([:]?[0-9]{2})?)?$", x)
+}
+
+is_basic_8601_dt <- function(x) {
+
+  grepl("^[0-9]{8}T([0-9]{6}(\\.[0-9]+)?|[0-9]{4}|[0-9]{2})(|Z|(\\+|-)[0-9]{2}([:]?[0-9]{2})?)?$", x)
+}
+
+has_dt_tz <- function(x) {
+
+  grepl(".+(Z|z|(\\+|-)[0-9]{2}([:]?[0-9]{2})?)?$", "2020-04-21T13:04:58.321Z")
+}
+
 check_format_string <- function(format) {
 
   if (!is.character(format) || length(format) != 1) {
