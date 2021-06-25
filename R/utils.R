@@ -198,6 +198,17 @@ normalize_dt_tz <- function(x) {
   paste0(x_dt, x_tz)
 }
 
+ordered_dt_formats <- function(x) {
+
+  c(
+    "%Y-%m-%dT%H:%M:%OS%z",
+    "%Y-%m-%d %H:%M:%OS%z",
+    "%Y-%m-%dt%H:%M:%OS%z",
+    "%Y-%m-%dT%H:%M:%OS",
+    "%Y-%m-%d %H:%M:%OS",
+    "%Y-%m-%dt%H:%M:%OS"
+  )
+}
 check_format_string <- function(format) {
 
   if (!is.character(format) || length(format) != 1) {
