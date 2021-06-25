@@ -211,18 +211,22 @@ test_that("the `is_string_datetime()` function works correctly", {
       "20200421T130458.321-01"
     )
 
-  for (dt in basic_time_formats) {
-    expect_true(is_basic_8601_dt(dt))
-  }
-
-  for (dt in extended_time_formats) {
-    expect_true(is_extended_8601_dt(dt))
-  }
-
   # Expect that all valid date-time string (by interpretation of
   # ISO 8601) will return `TRUE` by `is_8601_string_datetime()`
   for (dt in valid_datetimes) {
     expect_true(is_8601_string_datetime(dt))
+  }
+
+  # Expect that all of the 'basic' date-time strings will
+  # return `TRUE` by `is_basic_8601_dt()`
+  for (dt in basic_time_formats) {
+    expect_true(is_basic_8601_dt(dt))
+  }
+
+  # Expect that all of the 'extended' date-time strings will
+  # return `TRUE` by `is_extended_8601_dt()`
+  for (dt in extended_time_formats) {
+    expect_true(is_extended_8601_dt(dt))
   }
 
   # Expect that all date-time strings with a time zone will be
