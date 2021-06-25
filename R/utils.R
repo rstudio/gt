@@ -209,6 +209,30 @@ ordered_dt_formats <- function(x) {
     "%Y-%m-%dt%H:%M:%OS"
   )
 }
+
+parse_8601_datetime_str <- function(x) {
+
+  dt_list <- list()
+
+  x <- normalize_dt_tz(x)
+
+  for (i in seq_along(x)) {
+
+    for (fmt in ordered_dt_formats()) {
+
+      dt_parsed <- strptime(x[i], format = fmt, tz = "UTC")
+
+      if (!is.na(dt_parsed)) {
+
+        dt_list <- append(dt_list, as.list(dt_parsed))
+        break
+      }
+    }
+  }
+
+  dt_list
+}
+
 check_format_string <- function(format) {
 
   if (!is.character(format) || length(format) != 1) {
