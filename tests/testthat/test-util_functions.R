@@ -212,9 +212,9 @@ test_that("the `is_string_datetime()` function works correctly", {
     )
 
   # Expect that all valid date-time string (by interpretation of
-  # ISO 8601) will return `TRUE` by `is_8601_string_datetime()`
+  # ISO 8601) will return `TRUE` by `is_8601_datetime_str()`
   for (dt in valid_datetimes) {
-    expect_true(is_8601_string_datetime(dt))
+    expect_true(is_8601_datetime_str(dt))
   }
 
   # Expect that all of the 'basic' date-time strings will

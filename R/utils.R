@@ -145,7 +145,7 @@ is_string_time <- function(x) {
   is.character(x) & grepl("^\\d{1,2}:\\d{2}(:\\d{2}(\\.\\d+)?)?$", x)
 }
 
-is_8601_string_datetime <- function(x) {
+is_8601_datetime_str <- function(x) {
 
   is.character(x) & (is_extended_8601_dt(x) | is_basic_8601_dt(x))
 }
