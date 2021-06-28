@@ -1041,36 +1041,50 @@ tab_style <- function(data,
     style <- list(style)
   }
 
-  # Intercept font styles that require registration
-  if ("font" %in% names(unlist(style, recursive = FALSE)[["cell_text"]])) {
+  # Determine if there is a `cell_text` list within the main list;
+  # because we need to intercept any provided `font` inputs in `cell_text`
+  # this is the first thing we need to know
+  has_cell_text <- "cell_text" %in% names(unlist(style, recursive = FALSE))
 
-    cell_text_idx <-
-      which(names(unlist(style, recursive = FALSE)) == "cell_text")
+  # If the `cell_text` list is present we now need to determine if there
+  # is indeed a `font` input within that list
+  if (has_cell_text) {
 
-    font <- style[[cell_text_idx]][["cell_text"]][["font"]]
-    font <- normalize_font_input(font_input = font)
+    # The `style` list will itself contain several lists and it's
+    # important to identify which one represents `cell_text`
+    for (i in seq_along(style)) {
+      if ("cell_text" %in% names(style[[i]])) {
+        cell_text_idx <- i
+      }
+    }
 
-    existing_additional_css <-
-      dt_options_get_value(
-        data = data,
-        option = "table_additional_css"
-      )
+    # If the `cell_text` list contains a `font` input then intercept
+    # the font styles that require registration
+    if ("font" %in% names(style[[cell_text_idx]][["cell_text"]])) {
 
-    additional_css <- c(font$import_stmt, existing_additional_css)
+      font <- style[[cell_text_idx]][["cell_text"]][["font"]]
+      font <- normalize_font_input(font_input = font)
 
-    data <-
-      tab_options(
-        data = data,
-        table.additional_css = additional_css
-      )
+      existing_additional_css <-
+        dt_options_get_value(
+          data = data,
+          option = "table_additional_css"
+        )
 
-    font_names <- font$name
+      additional_css <- c(font$import_stmt, existing_additional_css)
 
-    style[[cell_text_idx]][["cell_text"]][["font"]] <-
-      as_css_font_family_attr(
-        font_vec = font_names,
-        value_only = TRUE
-      )
+      data <-
+        tab_options(
+          data = data,
+          table.additional_css = additional_css
+        )
+
+      style[[cell_text_idx]][["cell_text"]][["font"]] <-
+        as_css_font_family_attr(
+          font_vec = font$name,
+          value_only = TRUE
+        )
+    }
   }
 
   # Resolve into a list of locations
