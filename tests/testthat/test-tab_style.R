@@ -474,37 +474,29 @@ test_that("using fonts in `cell_text()` works", {
       "<td style=\"padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; text-align: left; font-family: 'Dancing Script', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;\">13:35</td>"
     )
 
+  gtcars_tbl <-
+    gtcars %>%
+    dplyr::filter(ctry_origin == "United Kingdom") %>%
+    dplyr::select(mfr, model, year, hp) %>%
+    gt()
+
   # Expect no difference in output when using styles within a list or without
   expect_equal(
-    gtcars %>%
-      dplyr::filter(ctry_origin == "United Kingdom") %>%
-      dplyr::select(mfr, model, year, hp) %>%
-      gt() %>%
+    gtcars_tbl %>%
       tab_style(
         style =
           cell_text(
-            align = "left",
-            indent = px(25),
-            font = c("sans-serif", default_fonts()),
-            size = px(50),
             weight = "bold",
             color = "red"
           ),
         locations = cells_body(columns = hp, rows = 1:2)
       ) %>%
       as_raw_html(),
-    gtcars %>%
-      dplyr::filter(ctry_origin == "United Kingdom") %>%
-      dplyr::select(mfr, model, year, hp) %>%
-      gt() %>%
+    gtcars_tbl %>%
       tab_style(
         style =
           list(
             cell_text(
-              align = "left",
-              indent = px(25),
-              font = c("sans-serif", default_fonts()),
-              size = px(50),
               weight = "bold",
               color = "red"
             )
@@ -512,5 +504,59 @@ test_that("using fonts in `cell_text()` works", {
         locations = cells_body(columns = hp, rows = 1:2)
       ) %>%
       as_raw_html()
+  )
+
+  # Don't expect any errors when styling with different fonts
+  expect_error(
+    regexp = NA,
+    gtcars_tbl %>%
+      tab_style(
+        style = list(cell_text(font = c("Helvetica", "serif")), "font-size: 14px;"),
+        locations = cells_body(columns = hp)
+      )
+  )
+  expect_error(
+    regexp = NA,
+    gtcars_tbl %>%
+      tab_style(
+        style = list("font-size: 14px;", cell_text(font = c("Helvetica", "serif"))),
+        locations = cells_body(columns = hp)
+      )
+  )
+  expect_error(
+    regexp = NA,
+    gtcars_tbl %>%
+      tab_style(
+        style = list(cell_text(font = c("Helvetica", "serif")), cell_borders()),
+        locations = cells_body(columns = hp)
+      )
+  )
+  expect_error(
+    regexp = NA,
+    gtcars_tbl %>%
+      tab_style(
+        style = list(cell_borders(), cell_text(font = c("Helvetica", "serif"))),
+        locations = cells_body(columns = hp)
+      )
+  )
+  expect_error(
+    regexp = NA,
+    gtcars_tbl %>%
+      tab_style(
+        style = list(
+          cell_borders(sides = "b", color = "blue", weight = px(3)),
+          cell_text(size = px(18), font = c("Helvetica", "serif"), weight = "bold"),
+          cell_fill(color = "red", alpha = 0.5)
+          ),
+        locations = cells_body(columns = hp)
+      )
+  )
+  expect_error(
+    regexp = NA,
+    gtcars_tbl %>%
+      tab_style(
+        style = cell_text(font = c("Times New Roman", "serif")),
+        locations = cells_body(columns = hp)
+      )
   )
 })
