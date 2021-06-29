@@ -387,7 +387,7 @@ test_that("the `inline_html_styles()` function works correctly", {
         "'Droid Sans', Arial, sans-serif; display: table; border-collapse: ",
         "collapse; margin-left: auto; margin-right: auto; color: #333333; ",
         "font-size: 16px; font-weight: normal; font-style: normal; ",
-        "white-space: normal; background-color: #FFFFFF; width: auto; ",
+        "background-color: #FFFFFF; width: auto; ",
         "border-top-style: solid; border-top-width: 2px; ",
         "border-top-color: #A8A8A8; border-right-style: none; ",
         "border-right-width: 2px; border-right-color: #D3D3D3; ",
