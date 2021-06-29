@@ -1402,11 +1402,6 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   default, this is `"center"`. Other options are `"left"` and `"right"`. This
 #'   will automatically set `table.margin.left` and `table.margin.right` to the
 #'   appropriate values.
-#' @param table.whitespace White-space preservation for all text in the table.
-#'   By default, or with the `"normal"` option, runs of white-space will be
-#'   collapsed into single spaces. The keyword options of `"nowrap"`, `"pre"`,
-#'   `"pre-wrap"`, `"pre-line"`, and `"break-spaces"` modify the white-space
-#'   collapsing and line-wrapping behavior.
 #' @param table.margin.left,table.margin.right The size of the margins on the
 #'   left and right of the table within the container. Can be specified as a
 #'   single-length character with units of pixels or as a percentage. If
@@ -1655,7 +1650,6 @@ tab_options <- function(data,
                         table.width = NULL,
                         table.layout = NULL,
                         table.align = NULL,
-                        table.whitespace = NULL,
                         table.margin.left = NULL,
                         table.margin.right = NULL,
                         table.background.color = NULL,

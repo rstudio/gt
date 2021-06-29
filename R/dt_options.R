@@ -53,7 +53,6 @@ dt_options_tbl <-
     "table_caption",                     FALSE,  "table",            "value",   NULL,
     "table_width",                        TRUE,  "table",            "px",      "auto",
     "table_layout",                       TRUE,  "table",            "value",   "fixed",
-    "table_whitespace",                   TRUE,  "table",            "value",   "normal",
     "table_margin_left",                  TRUE,  "table",            "px",      "auto",
     "table_margin_right",                 TRUE,  "table",            "px",      "auto",
     "table_background_color",             TRUE,  "table",            "value",   "#FFFFFF",

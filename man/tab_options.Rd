@@ -13,7 +13,6 @@ tab_options(
   table.width = NULL,
   table.layout = NULL,
   table.align = NULL,
-  table.whitespace = NULL,
   table.margin.left = NULL,
   table.margin.right = NULL,
   table.background.color = NULL,
@@ -174,12 +173,6 @@ output context. By default, this is \code{"fixed"} but another valid option is
 default, this is \code{"center"}. Other options are \code{"left"} and \code{"right"}. This
 will automatically set \code{table.margin.left} and \code{table.margin.right} to the
 appropriate values.}
-
-\item{table.whitespace}{White-space preservation for all text in the table.
-By default, or with the \code{"normal"} option, runs of white-space will be
-collapsed into single spaces. The keyword options of \code{"nowrap"}, \code{"pre"},
-\code{"pre-wrap"}, \code{"pre-line"}, and \code{"break-spaces"} modify the white-space
-collapsing and line-wrapping behavior.}
 
 \item{table.margin.left, table.margin.right}{The size of the margins on the
 left and right of the table within the container. Can be specified as a
