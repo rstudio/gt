@@ -210,6 +210,10 @@ gt_save_webshot <- function(data,
 
   } else {
 
+    if (gtsave_file_ext(filename) == "pdf") {
+      zoom <- 1
+    }
+
     # Save the image in the working directory
     webshot::webshot(
       url = paste0("file:///", tempfile_),
