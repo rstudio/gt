@@ -531,6 +531,390 @@ as_rtf <- function(data,
   rtf_table
 }
 
+#' Output a **gt** object as Word
+#'
+#' @description
+#' Get the Open Office XML table tag content from a `gt_tbl` object as as a
+#' single-element character vector.
+#'
+#' @param data A table object that is created using the `gt()` function.
+#'
+#' @examples
+#' # Use `gtcars` to create a gt table;
+#' # add a header and then export as
+#' # OOXML code for Word
+#' tab_rtf <-
+#'   gtcars %>%
+#'   dplyr::select(mfr, model) %>%
+#'   dplyr::slice(1:2) %>%
+#'   gt() %>%
+#'   tab_header(
+#'     title = md("Data listing from **gtcars**"),
+#'     subtitle = md("`gtcars` is an R dataset")
+#'   ) %>%
+#'   as_word()
+#'
+#' @family Export Functions
+#' @section Function ID:
+#' 13-5
+#'
+#' @export
+as_word <- function(data) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  # Build all table data objects through a common pipeline
+  data <- build_data(data = data, context = "rtf")
+
+  # Composition of Word OOXML -----------------------------------------------
+
+  # Create the heading component
+  heading_component <- create_heading_component_xml(data = data)
+
+  # Create the columns component
+  columns_component <- create_columns_component_xml(data = data)
+
+  # Create the body component
+  body_component <- create_body_component_xml(data = data)
+
+  # Create the footnotes component
+  footnotes_component <- create_footnotes_component_xml(data = data)
+
+  # Create the source notes component
+  source_notes_component <- create_source_notes_component_xml(data = data)
+
+  # Compose the Word OOXML table
+  word_tbl <-
+    paste0(
+      heading_component,
+      columns_component,
+      body_component,
+      footnotes_component,
+      source_notes_component,
+      collapse = ""
+    )
+
+  #word_tbl <- mtcars_word_xml()
+
+  word_tbl
+}
+
+#' @export
+mtcars_word_xml <- function() {
+
+  "<w:tbl>
+      <w:tblPr>
+          <w:tblStyle w:val=\"Table\" />
+          <w:tblW w:type=\"pct\" w:w=\"0.0\" />
+          <w:tblLook w:firstRow=\"1\" w:lastRow=\"0\" w:firstColumn=\"0\" w:lastColumn=\"0\" w:noHBand=\"0\" w:noVBand=\"0\" w:val=\"0020\" /></w:tblPr>
+      <w:tblGrid />
+      <w:tr>
+          <w:tc>
+              <w:p /></w:tc>
+          <w:tc>
+              <w:p>
+                  <w:pPr>
+                      <w:pStyle w:val=\"Compact\" />
+                      <w:jc w:val=\"right\" /></w:pPr>
+                  <w:r>
+                      <w:t xml:space=\"preserve\">mpg</w:t>
+                  </w:r>
+              </w:p>
+          </w:tc>
+          <w:tc>
+              <w:p>
+                  <w:pPr>
+                      <w:pStyle w:val=\"Compact\" />
+                      <w:jc w:val=\"right\" /></w:pPr>
+                  <w:r>
+                      <w:t xml:space=\"preserve\">cyl</w:t>
+                  </w:r>
+              </w:p>
+          </w:tc>
+          <w:tc>
+              <w:p>
+                  <w:pPr>
+                      <w:pStyle w:val=\"Compact\" />
+                      <w:jc w:val=\"right\" /></w:pPr>
+                  <w:r>
+                      <w:t xml:space=\"preserve\">disp</w:t>
+                  </w:r>
+              </w:p>
+          </w:tc>
+          <w:tc>
+              <w:p>
+                  <w:pPr>
+                      <w:pStyle w:val=\"Compact\" />
+                      <w:jc w:val=\"right\" /></w:pPr>
+                  <w:r>
+                      <w:t xml:space=\"preserve\">hp</w:t>
+                  </w:r>
+              </w:p>
+          </w:tc>
+      </w:tr>
+      <w:tr>
+          <w:tc>
+              <w:p>
+                  <w:pPr>
+                      <w:pStyle w:val=\"Compact\" />
+                      <w:jc w:val=\"left\" /></w:pPr>
+                  <w:r>
+                      <w:t xml:space=\"preserve\">Mazda RX4</w:t>
+                  </w:r>
+              </w:p>
+          </w:tc>
+          <w:tc>
+              <w:p>
+                  <w:pPr>
+                      <w:pStyle w:val=\"Compact\" />
+                      <w:jc w:val=\"right\" /></w:pPr>
+                  <w:r>
+                      <w:t xml:space=\"preserve\">21.0</w:t>
+                  </w:r>
+              </w:p>
+          </w:tc>
+          <w:tc>
+              <w:p>
+                  <w:pPr>
+                      <w:pStyle w:val=\"Compact\" />
+                      <w:jc w:val=\"right\" /></w:pPr>
+                  <w:r>
+                      <w:t xml:space=\"preserve\">6</w:t>
+                  </w:r>
+              </w:p>
+          </w:tc>
+          <w:tc>
+              <w:p>
+                  <w:pPr>
+                      <w:pStyle w:val=\"Compact\" />
+                      <w:jc w:val=\"right\" /></w:pPr>
+                  <w:r>
+                      <w:t xml:space=\"preserve\">160</w:t>
+                  </w:r>
+              </w:p>
+          </w:tc>
+          <w:tc>
+              <w:p>
+                  <w:pPr>
+                      <w:pStyle w:val=\"Compact\" />
+                      <w:jc w:val=\"right\" /></w:pPr>
+                  <w:r>
+                      <w:t xml:space=\"preserve\">110</w:t>
+                  </w:r>
+              </w:p>
+          </w:tc>
+      </w:tr>
+      <w:tr>
+          <w:tc>
+              <w:p>
+                  <w:pPr>
+                      <w:pStyle w:val=\"Compact\" />
+                      <w:jc w:val=\"left\" /></w:pPr>
+                  <w:r>
+                      <w:t xml:space=\"preserve\">Mazda RX4 Wag</w:t>
+                  </w:r>
+              </w:p>
+          </w:tc>
+          <w:tc>
+              <w:p>
+                  <w:pPr>
+                      <w:pStyle w:val=\"Compact\" />
+                      <w:jc w:val=\"right\" /></w:pPr>
+                  <w:r>
+                      <w:t xml:space=\"preserve\">21.0</w:t>
+                  </w:r>
+              </w:p>
+          </w:tc>
+          <w:tc>
+              <w:p>
+                  <w:pPr>
+                      <w:pStyle w:val=\"Compact\" />
+                      <w:jc w:val=\"right\" /></w:pPr>
+                  <w:r>
+                      <w:t xml:space=\"preserve\">6</w:t>
+                  </w:r>
+              </w:p>
+          </w:tc>
+          <w:tc>
+              <w:p>
+                  <w:pPr>
+                      <w:pStyle w:val=\"Compact\" />
+                      <w:jc w:val=\"right\" /></w:pPr>
+                  <w:r>
+                      <w:t xml:space=\"preserve\">160</w:t>
+                  </w:r>
+              </w:p>
+          </w:tc>
+          <w:tc>
+              <w:p>
+                  <w:pPr>
+                      <w:pStyle w:val=\"Compact\" />
+                      <w:jc w:val=\"right\" /></w:pPr>
+                  <w:r>
+                      <w:t xml:space=\"preserve\">110</w:t>
+                  </w:r>
+              </w:p>
+          </w:tc>
+      </w:tr>
+      <w:tr>
+          <w:tc>
+              <w:p>
+                  <w:pPr>
+                      <w:pStyle w:val=\"Compact\" />
+                      <w:jc w:val=\"left\" /></w:pPr>
+                  <w:r>
+                      <w:t xml:space=\"preserve\">Datsun 710</w:t>
+                  </w:r>
+              </w:p>
+          </w:tc>
+          <w:tc>
+              <w:p>
+                  <w:pPr>
+                      <w:pStyle w:val=\"Compact\" />
+                      <w:jc w:val=\"right\" /></w:pPr>
+                  <w:r>
+                      <w:t xml:space=\"preserve\">22.8</w:t>
+                  </w:r>
+              </w:p>
+          </w:tc>
+          <w:tc>
+              <w:p>
+                  <w:pPr>
+                      <w:pStyle w:val=\"Compact\" />
+                      <w:jc w:val=\"right\" /></w:pPr>
+                  <w:r>
+                      <w:t xml:space=\"preserve\">4</w:t>
+                  </w:r>
+              </w:p>
+          </w:tc>
+          <w:tc>
+              <w:p>
+                  <w:pPr>
+                      <w:pStyle w:val=\"Compact\" />
+                      <w:jc w:val=\"right\" /></w:pPr>
+                  <w:r>
+                      <w:t xml:space=\"preserve\">108</w:t>
+                  </w:r>
+              </w:p>
+          </w:tc>
+          <w:tc>
+              <w:p>
+                  <w:pPr>
+                      <w:pStyle w:val=\"Compact\" />
+                      <w:jc w:val=\"right\" /></w:pPr>
+                  <w:r>
+                      <w:t xml:space=\"preserve\">93</w:t>
+                  </w:r>
+              </w:p>
+          </w:tc>
+      </w:tr>
+      <w:tr>
+          <w:tc>
+              <w:p>
+                  <w:pPr>
+                      <w:pStyle w:val=\"Compact\" />
+                      <w:jc w:val=\"left\" /></w:pPr>
+                  <w:r>
+                      <w:t xml:space=\"preserve\">Hornet 4 Drive</w:t>
+                  </w:r>
+              </w:p>
+          </w:tc>
+          <w:tc>
+              <w:p>
+                  <w:pPr>
+                      <w:pStyle w:val=\"Compact\" />
+                      <w:jc w:val=\"right\" /></w:pPr>
+                  <w:r>
+                      <w:t xml:space=\"preserve\">21.4</w:t>
+                  </w:r>
+              </w:p>
+          </w:tc>
+          <w:tc>
+              <w:p>
+                  <w:pPr>
+                      <w:pStyle w:val=\"Compact\" />
+                      <w:jc w:val=\"right\" /></w:pPr>
+                  <w:r>
+                      <w:t xml:space=\"preserve\">6</w:t>
+                  </w:r>
+              </w:p>
+          </w:tc>
+          <w:tc>
+              <w:p>
+                  <w:pPr>
+                      <w:pStyle w:val=\"Compact\" />
+                      <w:jc w:val=\"right\" /></w:pPr>
+                  <w:r>
+                      <w:t xml:space=\"preserve\">258</w:t>
+                  </w:r>
+              </w:p>
+          </w:tc>
+          <w:tc>
+              <w:p>
+                  <w:pPr>
+                      <w:pStyle w:val=\"Compact\" />
+                      <w:jc w:val=\"right\" /></w:pPr>
+                  <w:r>
+                      <w:t xml:space=\"preserve\">110</w:t>
+                  </w:r>
+              </w:p>
+          </w:tc>
+      </w:tr>
+      <w:tr>
+          <w:tc>
+              <w:p>
+                  <w:pPr>
+                      <w:pStyle w:val=\"Compact\" />
+                      <w:jc w:val=\"left\" /></w:pPr>
+                  <w:r>
+                      <w:t xml:space=\"preserve\">Hornet Sportabout</w:t>
+                  </w:r>
+              </w:p>
+          </w:tc>
+          <w:tc>
+              <w:p>
+                  <w:pPr>
+                      <w:pStyle w:val=\"Compact\" />
+                      <w:jc w:val=\"right\" /></w:pPr>
+                  <w:r>
+                      <w:t xml:space=\"preserve\">18.7</w:t>
+                  </w:r>
+              </w:p>
+          </w:tc>
+          <w:tc>
+              <w:p>
+                  <w:pPr>
+                      <w:pStyle w:val=\"Compact\" />
+                      <w:jc w:val=\"right\" /></w:pPr>
+                  <w:r>
+                      <w:t xml:space=\"preserve\">8</w:t>
+                  </w:r>
+              </w:p>
+          </w:tc>
+          <w:tc>
+              <w:p>
+                  <w:pPr>
+                      <w:pStyle w:val=\"Compact\" />
+                      <w:jc w:val=\"right\" /></w:pPr>
+                  <w:r>
+                      <w:t xml:space=\"preserve\">360</w:t>
+                  </w:r>
+              </w:p>
+          </w:tc>
+          <w:tc>
+              <w:p>
+                  <w:pPr>
+                      <w:pStyle w:val=\"Compact\" />
+                      <w:jc w:val=\"right\" /></w:pPr>
+                  <w:r>
+                      <w:t xml:space=\"preserve\">175</w:t>
+                  </w:r>
+              </w:p>
+          </w:tc>
+      </w:tr>
+  </w:tbl>"
+}
 
 #' Extract a summary list from a **gt** object
 #'
@@ -593,7 +977,7 @@ as_rtf <- function(data,
 #'
 #' @family Export Functions
 #' @section Function ID:
-#' 13-5
+#' 13-6
 #'
 #' @export
 extract_summary <- function(data) {
