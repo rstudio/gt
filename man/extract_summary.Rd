@@ -25,7 +25,7 @@ descriptive stub labels for the summary rows.
 
 \section{Function ID}{
 
-13-5
+13-6
 }
 
 \examples{
@@ -78,6 +78,7 @@ Other Export Functions:
 \code{\link{as_latex}()},
 \code{\link{as_raw_html}()},
 \code{\link{as_rtf}()},
+\code{\link{as_word}()},
 \code{\link{gtsave}()}
 }
 \concept{Export Functions}

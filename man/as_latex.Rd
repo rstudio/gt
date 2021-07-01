@@ -51,6 +51,7 @@ tab_latex \%>\%
 Other Export Functions: 
 \code{\link{as_raw_html}()},
 \code{\link{as_rtf}()},
+\code{\link{as_word}()},
 \code{\link{extract_summary}()},
 \code{\link{gtsave}()}
 }
