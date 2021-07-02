@@ -466,15 +466,15 @@ create_columns_component_xml <- function(data) {
         }
 
       table_col_headings[[length(table_col_headings) + 1]] <-
-        htmltools::tags$th(
-          class = paste(
-            c("gt_col_heading", "gt_columns_bottom_border",
-              paste0("gt_", stubhead_label_alignment)),
-            collapse = " "),
-          rowspan = 1,
-          colspan = 1,
-          style = stubhead_style,
-          htmltools::HTML(headings_labels[1])
+        xml_tc(
+          xml_p(
+            xml_pPr(),
+            xml_r(
+              xml_t(
+                headings_labels[1]
+              )
+            )
+          )
         )
 
       headings_vars <- headings_vars[-1]
@@ -512,7 +512,8 @@ create_columns_component_xml <- function(data) {
             table_col_headings,
             FUN.VALUE = character(1),
             FUN = paste
-          ), collapse = ""
+          ),
+          collapse = ""
         )
       )
   }
