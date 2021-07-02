@@ -6,19 +6,19 @@ xml_tag_type <- function(tag_name, app) {
 }
 
 xml_tbl <- function(..., app = "word") {
-  htmltools::tag(`_tag_name` = xml_tag_type("tbl", app), varArgs = list(paste0(...)))
+  htmltools::tag(`_tag_name` = xml_tag_type("tbl", app), varArgs = list(htmltools::HTML(paste0(...))))
 }
 
 xml_tblPr <- function(..., app = "word") {
-  htmltools::tag(`_tag_name` = xml_tag_type("tblPr", app), varArgs = list(paste0(...)))
+  htmltools::tag(`_tag_name` = xml_tag_type("tblPr", app), varArgs = list(htmltools::HTML(paste0(...))))
 }
 
 xml_tblStyle <- function(..., app = "word") {
-  htmltools::tag(`_tag_name` = xml_tag_type("tblStyle", app), varArgs = list(paste0(...)))
+  htmltools::tag(`_tag_name` = xml_tag_type("tblStyle", app), varArgs = list(htmltools::HTML(paste0(...))))
 }
 
 xml_tblW <- function(..., type = "pct", w = "0.0", app = "word") {
-  tag <- htmltools::tag(`_tag_name` = xml_tag_type("tblW", app), varArgs = list(paste0(...)))
+  tag <- htmltools::tag(`_tag_name` = xml_tag_type("tblW", app), varArgs = list(htmltools::HTML(paste0(...))))
   tag <- htmltools::tagAppendAttributes(tag, type = type)
   tag <- htmltools::tagAppendAttributes(tag, w = w)
   tag
@@ -34,7 +34,7 @@ xml_tblLook <- function(...,
                         val = "0020",
                         app = "word") {
 
-  tag <- htmltools::tag(`_tag_name` = xml_tag_type("tblLook", app), varArgs = list(paste0(...)))
+  tag <- htmltools::tag(`_tag_name` = xml_tag_type("tblLook", app), varArgs = list(htmltools::HTML(paste0(...))))
   tag <-
     htmltools::tagAppendAttributes(
       tag,
@@ -51,28 +51,28 @@ xml_tblLook <- function(...,
 
 # TODO: should be self-closing
 xml_tblGrid <- function(..., app = "word") {
-  htmltools::tag(`_tag_name` = xml_tag_type("tblGrid", app), varArgs = list(paste0(...)))
+  htmltools::tag(`_tag_name` = xml_tag_type("tblGrid", app), varArgs = list(htmltools::HTML(paste0(...))))
 }
 
 xml_tr <- function(..., app = "word") {
-  htmltools::tag(`_tag_name` = xml_tag_type("tr", app), varArgs = list(paste0(...)))
+  htmltools::tag(`_tag_name` = xml_tag_type("tr", app), varArgs = list(htmltools::HTML(paste0(...))))
 }
 
 xml_tc <- function(..., app = "word") {
-  htmltools::tag(`_tag_name` = xml_tag_type("tc", app), varArgs = list(paste0(...)))
+  htmltools::tag(`_tag_name` = xml_tag_type("tc", app), varArgs = list(htmltools::HTML(paste0(...))))
 }
 
 xml_p <- function(..., app = "word") {
-  htmltools::tag(`_tag_name` = xml_tag_type("p", app), varArgs = list(paste0(...)))
+  htmltools::tag(`_tag_name` = xml_tag_type("p", app), varArgs = list(htmltools::HTML(paste0(...))))
 }
 
 xml_pPr <- function(..., app = "word") {
-  htmltools::tag(`_tag_name` = xml_tag_type("pPr", app), varArgs = list(paste0(...)))
+  htmltools::tag(`_tag_name` = xml_tag_type("pPr", app), varArgs = list(htmltools::HTML(paste0(...))))
 }
 
 # TODO: should be self-closing
 xml_pStyle <- function(..., app = "word", val = "Compact") {
-  tag <- htmltools::tag(`_tag_name` = xml_tag_type("pStyle", app), varArgs = list(paste0(...)))
+  tag <- htmltools::tag(`_tag_name` = xml_tag_type("pStyle", app), varArgs = list(htmltools::HTML(paste0(...))))
   tag <- htmltools::tagAppendAttributes(tag, val = val)
   tag
 }
@@ -80,17 +80,17 @@ xml_pStyle <- function(..., app = "word", val = "Compact") {
 # TODO: should be self-closing
 xml_jc <- function(..., app = "word", val = c("left", "center", "right")) {
   val <- match.arg(val)
-  tag <- htmltools::tag(`_tag_name` = xml_tag_type("jc", app), varArgs = list(paste0(...)))
+  tag <- htmltools::tag(`_tag_name` = xml_tag_type("jc", app), varArgs = list(htmltools::HTML(paste0(...))))
   tag <- htmltools::tagAppendAttributes(tag, val = val)
   tag
 }
 
 xml_r <- function(..., app = "word") {
-  htmltools::tag(`_tag_name` = xml_tag_type("r", app), varArgs = list(paste0(...)))
+  htmltools::tag(`_tag_name` = xml_tag_type("r", app), varArgs = list(htmltools::HTML(paste0(...))))
 }
 
 xml_t <- function(..., app = "word", xml_space = "preserve") {
-  tag <- htmltools::tag(`_tag_name` = xml_tag_type("t", app), varArgs = list(paste0(...)))
+  tag <- htmltools::tag(`_tag_name` = xml_tag_type("t", app), varArgs = list(htmltools::HTML(paste0(...))))
   tag <- htmltools::tagAppendAttributes(tag, `xml:space` = xml_space)
   tag
 }
