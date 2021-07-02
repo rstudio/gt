@@ -586,13 +586,17 @@ as_word <- function(data) {
 
   # Compose the Word OOXML table
   word_tbl <-
-    paste0(
-      heading_component,
-      columns_component,
-      body_component,
-      footnotes_component,
-      source_notes_component,
-      collapse = ""
+    as.character(
+      xml_tbl(
+        paste0(
+          heading_component,
+          columns_component,
+          body_component,
+          footnotes_component,
+          source_notes_component,
+          collapse = ""
+        )
+      )
     )
 
   word_tbl
