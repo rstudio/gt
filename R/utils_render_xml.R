@@ -1,78 +1,99 @@
 # XML tag functions
 
 
-xml_tag_type <- function(tag_name, type) {
-  paste0(substring(type, 1, 1), ":", tag_name)
+xml_tag_type <- function(tag_name, app) {
+  paste0(substring(app, 1, 1), ":", tag_name)
 }
 
-xml_tbl <- function(..., type = "word") {
-  htmltools::tag(`_tag_name` = xml_tag_type("tbl", type), varArgs = list(paste0(...)))
+xml_tbl <- function(..., app = "word") {
+  htmltools::tag(`_tag_name` = xml_tag_type("tbl", app), varArgs = list(paste0(...)))
 }
 
-xml_tblPr <- function(..., type = "word") {
-  htmltools::tag(`_tag_name` = xml_tag_type("tblPr", type), varArgs = list(paste0(...)))
+xml_tblPr <- function(..., app = "word") {
+  htmltools::tag(`_tag_name` = xml_tag_type("tblPr", app), varArgs = list(paste0(...)))
 }
 
-xml_tblStyle <- function(..., type = "word") {
-  htmltools::tag(`_tag_name` = xml_tag_type("tblStyle", type), varArgs = list(paste0(...)))
+xml_tblStyle <- function(..., app = "word") {
+  htmltools::tag(`_tag_name` = xml_tag_type("tblStyle", app), varArgs = list(paste0(...)))
 }
 
-# TODO: include attrs:
-# - `w:type`="pct"
-# - `w:w`="0.0"
-xml_tblW <- function(..., type = "word") {
-  htmltools::tag(`_tag_name` = xml_tag_type("tblW", type), varArgs = list(paste0(...)))
+xml_tblW <- function(..., type = "pct", w = "0.0", app = "word") {
+  tag <- htmltools::tag(`_tag_name` = xml_tag_type("tblW", app), varArgs = list(paste0(...)))
+  tag <- htmltools::tagAppendAttributes(tag, type = type)
+  tag <- htmltools::tagAppendAttributes(tag, w = w)
+  tag
 }
 
-# TODO: include attrs:
-# - w:firstRow="1"
-# - w:lastRow="0"
-# - w:firstColumn="0"
-# - w:lastColumn="0"
-# - w:noHBand="0"
-# - w:noVBand="0"
-# - w:val="0020"
-xml_tblLook <- function(..., type = "word") {
-  htmltools::tag(`_tag_name` = xml_tag_type("tblLook", type), varArgs = list(paste0(...)))
+xml_tblLook <- function(...,
+                        first_row = "1",
+                        last_row = "0",
+                        first_column = "0",
+                        last_column = "0",
+                        no_h_band = "0",
+                        no_v_band = "0",
+                        val = "0020",
+                        app = "word") {
+
+  tag <- htmltools::tag(`_tag_name` = xml_tag_type("tblLook", app), varArgs = list(paste0(...)))
+  tag <-
+    htmltools::tagAppendAttributes(
+      tag,
+      `w:firstRow` = first_row,
+      `w:lastRow` = last_row,
+      `w:firstColumn` = first_column,
+      `w:lastColumn` = last_column,
+      `w:noHBand` = no_h_band,
+      `w:noVBand` = no_v_band,
+      `w:val` = val
+    )
+  tag
 }
 
 # TODO: should be self-closing
-xml_tblGrid <- function(..., type = "word") {
-  htmltools::tag(`_tag_name` = xml_tag_type("tblGrid", type), varArgs = list(paste0(...)))
+xml_tblGrid <- function(..., app = "word") {
+  htmltools::tag(`_tag_name` = xml_tag_type("tblGrid", app), varArgs = list(paste0(...)))
 }
 
-xml_tr <- function(..., type = "word") {
-  htmltools::tag(`_tag_name` = xml_tag_type("tr", type), varArgs = list(paste0(...)))
+xml_tr <- function(..., app = "word") {
+  htmltools::tag(`_tag_name` = xml_tag_type("tr", app), varArgs = list(paste0(...)))
 }
 
-xml_tc <- function(..., type = "word") {
-  htmltools::tag(`_tag_name` = xml_tag_type("tc", type), varArgs = list(paste0(...)))
+xml_tc <- function(..., app = "word") {
+  htmltools::tag(`_tag_name` = xml_tag_type("tc", app), varArgs = list(paste0(...)))
 }
 
-xml_p <- function(..., type = "word") {
-  htmltools::tag(`_tag_name` = xml_tag_type("p", type), varArgs = list(paste0(...)))
+xml_p <- function(..., app = "word") {
+  htmltools::tag(`_tag_name` = xml_tag_type("p", app), varArgs = list(paste0(...)))
 }
 
-xml_pPr <- function(..., type = "word") {
-  htmltools::tag(`_tag_name` = xml_tag_type("pPr", type), varArgs = list(paste0(...)))
+xml_pPr <- function(..., app = "word") {
+  htmltools::tag(`_tag_name` = xml_tag_type("pPr", app), varArgs = list(paste0(...)))
 }
 
-# TODO: include attrs:
-# - w:val="Compact"
 # TODO: should be self-closing
-xml_pStyle <- function(..., type = "word") {
-  htmltools::tag(`_tag_name` = xml_tag_type("pStyle", type), varArgs = list(paste0(...)))
+xml_pStyle <- function(..., app = "word", val = "Compact") {
+  tag <- htmltools::tag(`_tag_name` = xml_tag_type("pStyle", app), varArgs = list(paste0(...)))
+  tag <- htmltools::tagAppendAttributes(tag, val = val)
+  tag
 }
 
-# TODO: include attrs:
-# - w:val="right"
 # TODO: should be self-closing
-xml_jc <- function(..., type = "word") {
-  htmltools::tag(`_tag_name` = xml_tag_type("jc", type), varArgs = list(paste0(...)))
+xml_jc <- function(..., app = "word", val = c("left", "center", "right")) {
+  val <- match.arg(val)
+  tag <- htmltools::tag(`_tag_name` = xml_tag_type("jc", app), varArgs = list(paste0(...)))
+  tag <- htmltools::tagAppendAttributes(tag, val = val)
+  tag
 }
 
+xml_r <- function(..., app = "word") {
+  htmltools::tag(`_tag_name` = xml_tag_type("r", app), varArgs = list(paste0(...)))
+}
 
-
+xml_t <- function(..., app = "word", xml_space = "preserve") {
+  tag <- htmltools::tag(`_tag_name` = xml_tag_type("t", app), varArgs = list(paste0(...)))
+  tag <- htmltools::tagAppendAttributes(tag, `xml:space` = xml_space)
+  tag
+}
 
 
 #' Transform a footnote mark to an XML representation
