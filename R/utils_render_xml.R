@@ -493,19 +493,28 @@ create_columns_component_xml <- function(data) {
         }
 
       table_col_headings[[length(table_col_headings) + 1]] <-
-        htmltools::tags$th(
-          class = paste(
-            c("gt_col_heading", "gt_columns_bottom_border",
-              paste0("gt_", col_alignment[i])),
-            collapse = " "),
-          rowspan = 1,
-          colspan = 1,
-          style = column_style,
-          htmltools::HTML(headings_labels[i])
+        xml_tc(
+          xml_p(
+            xml_pPr(),
+            xml_r(
+              xml_t(
+                headings_labels[i]
+              )
+            )
+          )
         )
     }
 
-    table_col_headings <- htmltools::tags$tr(table_col_headings)
+    table_col_headings <-
+      xml_tr(
+        paste(
+          vapply(
+            table_col_headings,
+            FUN.VALUE = character(1),
+            FUN = paste
+          ), collapse = ""
+        )
+      )
   }
 
   if (spanners_present) {
@@ -712,10 +721,7 @@ create_columns_component_xml <- function(data) {
     }
   }
 
-  htmltools::tags$thead(
-    class = "gt_col_headings",
-    table_col_headings
-  )
+  htmltools::tagList(table_col_headings)
 }
 
 #' Create the table body component (OOXML)
@@ -909,29 +915,32 @@ create_body_component_xml <- function(data) {
             )
         }
 
-        body_row <-
-          htmltools::tags$tr(
-            htmltools::HTML(paste0(collapse = "\n", mapply(
-              SIMPLIFY = FALSE,
-              USE.NAMES = FALSE,
-              output_df_row_as_vec(i),
-              alignment_classes,
-              extra_classes,
-              row_styles,
-              FUN = function(x, alignment_class, extra_class, cell_style) {
-                sprintf(
-                  "<td class=\"%s\"%s>%s</td>",
-                  paste(c("gt_row", alignment_class, extra_class),
-                        collapse = " "),
-                  if (is.null(cell_style)) {
-                    ""
-                  } else {
-                    paste0(" style=\"", cell_style, "\"")
-                  },
-                  as.character(x)
+        row_cells <- list()
+
+        for (y in seq_along(output_df_row_as_vec(i))) {
+
+          row_cells[[length(row_cells) + 1]] <-
+            xml_tc(
+              xml_p(
+                xml_pPr(),
+                xml_r(
+                  xml_t(
+                    output_df_row_as_vec(i)[y]
+                  )
                 )
-              }
-            )))
+              )
+            )
+        }
+
+        body_row <-
+          xml_tr(
+            paste(
+              vapply(
+                row_cells,
+                FUN.VALUE = character(1),
+                FUN = paste
+              ), collapse = ""
+            )
           )
 
         body_section <- append(body_section, list(body_row))
@@ -992,8 +1001,7 @@ create_body_component_xml <- function(data) {
     body_rows <- c(body_rows, grand_summary_section)
   }
 
-  htmltools::tags$tbody(
-    class = "gt_table_body",
+  htmltools::tagList(
     body_rows
   )
 }
