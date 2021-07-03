@@ -592,6 +592,7 @@ as_word <- function(data) {
     as.character(
       xml_tbl(
         paste0(
+          table_props_component,
           heading_component,
           columns_component,
           body_component,
