@@ -70,6 +70,12 @@ xml_pPr <- function(..., app = "word") {
   htmltools::tag(`_tag_name` = xml_tag_type("pPr", app), varArgs = list(htmltools::HTML(paste0(...))))
 }
 
+xml_gridSpan <- function(..., val = "1", app = "word") {
+  tag <- htmltools::tag(`_tag_name` = xml_tag_type("gridSpan", app), varArgs = list(htmltools::HTML(paste0(...))))
+  tag <- htmltools::tagAppendAttributes(tag, `w:val` = val)
+  tag
+}
+
 # TODO: should be self-closing
 xml_pStyle <- function(..., app = "word", val = "Compact") {
   tag <- htmltools::tag(`_tag_name` = xml_tag_type("pStyle", app), varArgs = list(htmltools::HTML(paste0(...))))
@@ -89,12 +95,22 @@ xml_r <- function(..., app = "word") {
   htmltools::tag(`_tag_name` = xml_tag_type("r", app), varArgs = list(htmltools::HTML(paste0(...))))
 }
 
+xml_rPr <- function(..., app = "word") {
+  htmltools::tag(`_tag_name` = xml_tag_type("rPr", app), varArgs = list(htmltools::HTML(paste0(...))))
+}
+
 xml_t <- function(..., app = "word", xml_space = "preserve") {
   tag <- htmltools::tag(`_tag_name` = xml_tag_type("t", app), varArgs = list(htmltools::HTML(paste0(...))))
   tag <- htmltools::tagAppendAttributes(tag, `xml:space` = xml_space)
   tag
 }
 
+xml_vert_align <- function(..., app = "word", val = c("superscript", "subscript", "baseline")) {
+  val <- match.arg(val)
+  tag <- htmltools::tag(`_tag_name` = xml_tag_type("vertAlign", app), varArgs = list(htmltools::HTML(paste0(...))))
+  tag <- htmltools::tagAppendAttributes(tag, `w:val` = val)
+  tag
+}
 
 #' Transform a footnote mark to an XML representation
 #'
