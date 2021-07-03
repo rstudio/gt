@@ -565,10 +565,12 @@ as_word <- function(data) {
   stop_if_not_gt(data = data)
 
   # Build all table data objects through a common pipeline
-  data <- build_data(data = data, context = "rtf")
   data <- build_data(data = data, context = "word")
 
   # Composition of Word OOXML -----------------------------------------------
+
+  # Create the table properties component
+  table_props_component <- create_table_props_component_xml(data = data)
 
   # Create the heading component
   heading_component <- create_heading_component_xml(data = data)
