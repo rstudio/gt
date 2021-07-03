@@ -566,6 +566,7 @@ as_word <- function(data) {
 
   # Build all table data objects through a common pipeline
   data <- build_data(data = data, context = "rtf")
+  data <- build_data(data = data, context = "word")
 
   # Composition of Word OOXML -----------------------------------------------
 
