@@ -362,6 +362,16 @@ context_missing_text <- function(missing_text,
         } else {
           process_text(missing_text, context)
         }
+      },
+    word =
+      {
+        if (!inherits(missing_text, "AsIs") && missing_text == "---") {
+          "---"
+        } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
+          "--"
+        } else {
+          process_text(missing_text, context)
+        }
       }
   )
 }
@@ -402,6 +412,15 @@ context_plusminus_mark <- function(plusminus_mark,
         } else {
           plusminus_mark
         }
+      },
+    word =
+      {
+        if (!inherits(plusminus_mark, "AsIs") &&
+            plusminus_mark == " +/- ") {
+          " +/- "
+        } else {
+          plusminus_mark
+        }
       }
   )
 }
@@ -412,9 +431,11 @@ context_plusminus_mark <- function(plusminus_mark,
 #' @noRd
 context_minus_mark <- function(context) {
 
-  switch(context,
-         html = "&minus;",
-         "-")
+  switch(
+    context,
+    html = "&minus;",
+    "-"
+  )
 }
 
 #' Obtain the contextually correct percent mark
@@ -423,10 +444,12 @@ context_minus_mark <- function(context) {
 #' @noRd
 context_percent_mark <- function(context) {
 
-  switch(context,
-         html = "&percnt;",
-         latex = "\\%",
-         "%")
+  switch(
+    context,
+    html = "&percnt;",
+    latex = "\\%",
+    "%"
+  )
 }
 
 #' Obtain the contextually correct pair of parentheses
@@ -435,9 +458,11 @@ context_percent_mark <- function(context) {
 #' @noRd
 context_parens_marks <- function(context) {
 
-  switch(context,
-         latex = c("(", ")"),
-         c("(", ")"))
+  switch(
+    context,
+    latex = c("(", ")"),
+    c("(", ")")
+  )
 }
 
 #' Obtain the contextually correct pair of opening/closing exponential strings
@@ -446,11 +471,14 @@ context_parens_marks <- function(context) {
 #' @noRd
 context_exp_marks <- function(context) {
 
-  switch(context,
-         html = c(" &times; 10<sup class='gt_super'>", "</sup>"),
-         latex = c(" \\times 10^{", "}"),
-         rtf = c(" \\'d7 10{\\super ", "}"),
-         c(" x 10(", ")"))
+  switch(
+    context,
+    html = c(" &times; 10<sup class='gt_super'>", "</sup>"),
+    latex = c(" \\times 10^{", "}"),
+    rtf = c(" \\'d7 10{\\super ", "}"),
+    word = c(" x 10^", ""),
+    c(" x 10(", ")")
+  )
 }
 
 
