@@ -170,8 +170,10 @@ footnote_mark_to_xml <- function(mark) {
 #   stop("Implement `cell_style_to_html()` for the object above.", call. = FALSE)
 # }
 
-# # Upgrade `_styles` to gain a `html_style` column with CSS style rules
-# add_css_styles <- function(data) {
+# TODO: Make this work for XML
+# TODO: Add the `styles_to_xml()` function
+# # Upgrade `_styles` to gain a `word_style` column with XML style rules
+# add_xml_styles <- function(data) {
 #
 #   styles_tbl <- dt_styles_get(data = data)
 #
@@ -180,34 +182,17 @@ footnote_mark_to_xml <- function(mark) {
 #       dplyr::mutate(
 #         styles_tbl,
 #         html_style = vapply(
-#           styles, function(x) styles_to_html(x), character(1))
+#           styles, function(x) styles_to_xml(x), character(1))
 #       )
 #   }
 #
 #   dt_styles_set(data = data, styles = styles_tbl)
 # }
 
-# #' For a given location, reduce the footnote marks to a single string
-# #'
-# #' @param fn_tbl The table containing all of the resolved footnote information.
-# #' @param locname The location name for the footnotes.
-# #' @param delimiter The delimiter to use for the coalesced footnote marks.
-# #' @noRd
-# coalesce_marks <- function(fn_tbl,
-#                            locname,
-#                            delimiter = ",") {
-#
-#   locname_enquo <- rlang::enquo(locname)
-#
-#   fn_tbl %>%
-#     dplyr::filter(locname == !!locname) %>%
-#     dplyr::summarize(fs_id_c = paste(fs_id, collapse = delimiter))
-# }
 
-
-# TODO: make this work for XML
+# TODO: make table widths work for XML
 # Get the attributes for the table tag
-get_table_defs_xml <- function(data) {
+create_table_props_component_xml <- function(data) {
 
   boxh <- dt_boxhead_get(data = data)
 
@@ -222,11 +207,13 @@ get_table_defs_xml <- function(data) {
       ";"
     )
 
+  doc_page_width <- getOption("gt.rtf_page_width")
+
   # In the case that column widths are not set for any columns,
   # there should not be a `<colgroup>` tag requirement
-  if (length(unlist(boxh$column_width)) < 1) {
-    return(list(table_style = NULL, table_colgroups = NULL))
-  }
+  # if (length(unlist(boxh$column_width)) < 1) {
+  #   return(list(table_style = NULL, table_colgroups = NULL))
+  # }
 
   # Get the table's width (which or may not have been set)
   table_width <-
@@ -261,20 +248,14 @@ get_table_defs_xml <- function(data) {
     table_style <- paste(table_style, paste0("width: ", table_width), sep = "; ")
   }
 
-  # Create the `<colgroup>` tag
-  table_colgroups <-
-    htmltools::tags$colgroup(
-      lapply(
-        widths,
-        FUN = function(width) {
-          htmltools::tags$col(style = htmltools::css(width = width))
-        })
+  table_properties <-
+    xml_tblPr(
+      xml_tblStyle(), # TODO: should be self-closing
+      xml_tblW(), # TODO: should be self-closing
+      xml_tblLook() # TODO: should be self-closing
     )
 
-  list(
-    table_style = table_style,
-    table_colgroups = table_colgroups
-  )
+  htmltools::tagList(table_properties)
 }
 
 #' Create the heading component of a table (OOXML)
@@ -320,7 +301,7 @@ create_heading_component_xml <- function(data) {
       )
 
     footnote_title_marks <-
-      footnote_mark_to_html(mark = footnote_title_marks$fs_id_c)
+      footnote_mark_to_xml(mark = footnote_title_marks$fs_id_c)
 
   } else {
     footnote_title_marks <- ""
@@ -351,7 +332,7 @@ create_heading_component_xml <- function(data) {
       )
 
     footnote_subtitle_marks <-
-      footnote_mark_to_html(mark = footnote_subtitle_marks$fs_id_c)
+      footnote_mark_to_xml(mark = footnote_subtitle_marks$fs_id_c)
 
   } else {
     footnote_subtitle_marks <- ""
@@ -371,7 +352,6 @@ create_heading_component_xml <- function(data) {
   } else {
     subtitle_styles <- NA_character_
   }
-
   title_classes <- c("gt_heading", "gt_title", "gt_font_normal")
 
   subtitle_classes <- title_classes %>% tidy_sub("title", "subtitle")
@@ -383,13 +363,15 @@ create_heading_component_xml <- function(data) {
   }
 
   title_row <-
-    htmltools::tags$tr(
-      htmltools::tags$th(
-        colspan = n_cols,
-        class = paste(title_classes, collapse = " "),
-        style = title_styles,
-        htmltools::HTML(
-          paste0(heading$title, footnote_title_marks)
+    xml_tr(
+      xml_tc(
+        xml_p(
+          xml_pPr(xml_gridSpan(val = as.character(n_cols))),
+          xml_r(
+            xml_t(
+              paste0(heading$title, footnote_title_marks)
+            )
+          )
         )
       )
     )
@@ -397,13 +379,15 @@ create_heading_component_xml <- function(data) {
   if (subtitle_defined) {
 
     subtitle_row <-
-      htmltools::tags$tr(
-        htmltools::tags$th(
-          colspan = n_cols,
-          class = paste(subtitle_classes, collapse = " "),
-          style = subtitle_styles,
-          htmltools::HTML(
-            paste0(heading$subtitle, footnote_subtitle_marks)
+      xml_tr(
+        xml_tc(
+          xml_p(
+            xml_pPr(xml_gridSpan(val = as.character(n_cols))),
+            xml_r(
+              xml_t(
+                paste0(heading$subtitle, footnote_subtitle_marks)
+              )
+            )
           )
         )
       )
@@ -412,11 +396,7 @@ create_heading_component_xml <- function(data) {
     subtitle_row <- ""
   }
 
-  htmltools::tags$thead(
-    class = "gt_header",
-    title_row,
-    subtitle_row
-  )
+  htmltools::tagList(title_row, subtitle_row)
 }
 
 #' Create the columns component of a table (OOXML)
@@ -906,13 +886,16 @@ create_body_component_xml <- function(data) {
             }
 
           group_heading_row <-
-            htmltools::tags$tr(
-              class = "gt_group_heading_row",
-              htmltools::tags$td(
-                colspan = n_cols,
-                class = group_class,
-                style = row_style,
-                htmltools::HTML(group_label)
+            xml_tr(
+              xml_tc(
+                xml_p(
+                  xml_pPr(xml_gridSpan(val = as.character(n_cols))),
+                  xml_r(
+                    xml_t(
+                      htmltools::HTML(group_label)
+                    )
+                  )
+                )
               )
             )
 
@@ -982,7 +965,7 @@ create_body_component_xml <- function(data) {
             ]
 
           summary_section <-
-            summary_row_tags(
+            summary_rows_xml(
               list_of_summaries = list_of_summaries,
               boxh = boxh,
               group_id = group_id,
@@ -1010,7 +993,7 @@ create_body_component_xml <- function(data) {
       grand_summary_col %in% names(list_of_summaries$summary_df_display_list)) {
 
     grand_summary_section <-
-      summary_row_tags(
+      summary_rows_xml(
         list_of_summaries = list_of_summaries,
         boxh = boxh,
         group_id = grand_summary_col,
@@ -1071,22 +1054,29 @@ create_source_notes_component_xml <- function(data) {
     source_notes_styles <- NULL
   }
 
-  htmltools::tags$tfoot(
-    class = "gt_sourcenotes",
+  source_note_rows <-
     lapply(
       source_note,
       function(x) {
-        htmltools::tags$tr(
-          htmltools::tags$td(
-            class = "gt_sourcenote",
-            style = source_notes_styles,
-            colspan = n_cols,
-            htmltools::HTML(x)
+
+        as.character(
+          xml_tr(
+            xml_tc(
+              xml_p(
+                xml_pPr(xml_gridSpan(val = as.character(n_cols))),
+                xml_r(
+                  xml_t(
+                    htmltools::HTML(x)
+                  )
+                )
+              )
+            )
           )
         )
       }
     )
-  )
+
+  paste0(unlist(source_note_rows), collapse = "\n")
 }
 
 #' Create the table footnote component (OOXML)
@@ -1143,40 +1133,39 @@ create_footnotes_component_xml <- function(data) {
   footnote_ids <- footnotes_tbl[["fs_id"]]
   footnote_text <- footnotes_tbl[["footnotes"]]
 
-  # Create the footnotes component
-  htmltools::tags$tfoot(
-    htmltools::tags$tr(
-      class = "gt_footnotes",
-      style = footnotes_styles,
-      htmltools::tags$td(
-        colspan = n_cols,
-        mapply(
-          SIMPLIFY = FALSE,
-          USE.NAMES = FALSE,
-          footnote_ids,
-          footnote_text,
-          FUN = function(x, footnote_text) {
+  footnote_rows <-
+    lapply(
+      seq_along(footnote_ids),
+      function(x) {
 
-            htmltools::tags$p(
-              class = "gt_footnote",
-              htmltools::tags$sup(
-                class = "gt_footnote_marks",
-                htmltools::tags$em(
-                  x
+        as.character(
+          xml_tr(
+            xml_tc(
+              xml_p(
+                xml_pPr(xml_gridSpan(val = as.character(n_cols))),
+                xml_r(
+                  xml_t(
+                    xml_rPr(
+                      xml_vert_align(val = "superscript"),
+                      xml_t(footnote_ids[x])
+                    ),
+                    xml_rPr(
+                      xml_vert_align(val = "baseline"),
+                      xml_t(footnote_text[x])
+                    )
+                  )
                 )
-              ),
-              " ",
-              htmltools::HTML(footnote_text),
-              htmltools::HTML(separator)
+              )
             )
-          }
+          )
         )
-      )
+      }
     )
-  )
+
+  paste0(unlist(footnote_rows), collapse = "<w:br/>")
 }
 
-summary_row_tags <- function(list_of_summaries,
+summary_rows_xml <- function(list_of_summaries,
                              boxh,
                              group_id,
                              styles_resolved,
@@ -1234,40 +1223,35 @@ summary_row_tags <- function(list_of_summaries,
           styles_resolved_group[styles_resolved_group$grprow == j, , drop = FALSE]
       }
 
-      # row_styles <-
-      #   build_row_styles(
-      #     styles_resolved_row = styles_resolved_row,
-      #     stub_available = TRUE,
-      #     n_cols = n_cols
-      #   )
+      summary_row_cells <- list()
 
-      summary_row_lines[[length(summary_row_lines) + 1]] <-
-        htmltools::tags$tr()
-        # htmltools::tags$tr(
-        #   mapply(
-        #     SIMPLIFY = FALSE,
-        #     USE.NAMES = FALSE,
-        #     summary_df_row(j),
-        #     stub_classes,
-        #     alignment_classes,
-        #     row_styles,
-        #     FUN = function(x, stub_class, alignment_class, cell_style) {
-        #
-        #       if (j == 1) {
-        #         summary_row_class <- c(summary_row_class, first_row_class)
-        #       }
-        #
-        #       htmltools::tags$td(
-        #         class = paste(
-        #           c("gt_row", stub_class, alignment_class, summary_row_class),
-        #           collapse = " "
-        #         ),
-        #         style = cell_style,
-        #         htmltools::HTML(x)
-        #       )
-        #     }
-        #   )
-        # )
+      for (y in seq_along(summary_df_row(j))) {
+
+        summary_row_cells[[length(summary_row_cells) + 1]] <-
+          xml_tc(
+            xml_p(
+              xml_pPr(),
+              xml_r(
+                xml_t(
+                  summary_df_row(j)[y]
+                )
+              )
+            )
+          )
+      }
+
+      summary_row <-
+        xml_tr(
+          paste(
+            vapply(
+              summary_row_cells,
+              FUN.VALUE = character(1),
+              FUN = paste
+            ), collapse = ""
+          )
+        )
+
+      summary_row_lines <- append(summary_row_lines, list(summary_row))
     }
   }
 
