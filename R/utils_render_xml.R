@@ -13,8 +13,10 @@ xml_tblPr <- function(..., app = "word") {
   htmltools::tag(`_tag_name` = xml_tag_type("tblPr", app), varArgs = list(htmltools::HTML(paste0(...))))
 }
 
-xml_tblStyle <- function(..., app = "word") {
-  htmltools::tag(`_tag_name` = xml_tag_type("tblStyle", app), varArgs = list(htmltools::HTML(paste0(...))))
+xml_tblStyle <- function(..., val = "Table", app = "word") {
+  tag <- htmltools::tag(`_tag_name` = xml_tag_type("tblStyle", app), varArgs = list(htmltools::HTML(paste0(...))))
+  tag <- htmltools::tagAppendAttributes(tag, `w:val` = val)
+  tag
 }
 
 xml_tblW <- function(..., type = "pct", w = "0.0", app = "word") {
@@ -79,7 +81,7 @@ xml_gridSpan <- function(..., val = "1", app = "word") {
 # TODO: should be self-closing
 xml_pStyle <- function(..., app = "word", val = "Compact") {
   tag <- htmltools::tag(`_tag_name` = xml_tag_type("pStyle", app), varArgs = list(htmltools::HTML(paste0(...))))
-  tag <- htmltools::tagAppendAttributes(tag, val = val)
+  tag <- htmltools::tagAppendAttributes(tag, `w:val` = val)
   tag
 }
 
@@ -87,7 +89,7 @@ xml_pStyle <- function(..., app = "word", val = "Compact") {
 xml_jc <- function(..., app = "word", val = c("left", "center", "right")) {
   val <- match.arg(val)
   tag <- htmltools::tag(`_tag_name` = xml_tag_type("jc", app), varArgs = list(htmltools::HTML(paste0(...))))
-  tag <- htmltools::tagAppendAttributes(tag, val = val)
+  tag <- htmltools::tagAppendAttributes(tag, `w:val` = val)
   tag
 }
 
@@ -117,9 +119,13 @@ xml_vert_align <- function(..., app = "word", val = c("superscript", "subscript"
 #' @noRd
 footnote_mark_to_xml <- function(mark) {
 
-  # TODO: modify to make this work in XML
   as.character(
-    htmltools::tagList(htmltools::tags$sup(class = "gt_footnote_marks", mark))
+    htmltools::tagList(
+      xml_rPr(
+        xml_vert_align(val = "superscript"),
+        xml_t(mark)
+      )
+    )
   )
 }
 
