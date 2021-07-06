@@ -487,6 +487,7 @@ test_that("using fonts in `cell_text()` works", {
         style =
           cell_text(
             weight = "bold",
+            font = c("Helvetica", "Times New Roman"),
             color = "red"
           ),
         locations = cells_body(columns = hp, rows = 1:2)
@@ -498,6 +499,7 @@ test_that("using fonts in `cell_text()` works", {
           list(
             cell_text(
               weight = "bold",
+              font = c("Helvetica", "Times New Roman"),
               color = "red"
             )
           ),
