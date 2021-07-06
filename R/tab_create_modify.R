@@ -1037,7 +1037,7 @@ tab_style <- function(data,
   stop_if_not_gt(data = data)
 
   # Upgrade `style` to be within a list if not provided as such
-  if (!inherits(style, "list")) {
+  if (inherits(style, "cell_styles")) {
     style <- list(style)
   }
 
