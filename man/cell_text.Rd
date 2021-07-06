@@ -13,9 +13,10 @@ cell_text(
   style = NULL,
   weight = NULL,
   stretch = NULL,
-  indent = NULL,
   decorate = NULL,
-  transform = NULL
+  transform = NULL,
+  whitespace = NULL,
+  indent = NULL
 )
 }
 \arguments{
@@ -52,16 +53,22 @@ condensation/expansion: \code{"ultra-condensed"}, \code{"extra-condensed"},
 can supply percentage values from \verb{0\\\%} to \verb{200\\\%}, inclusive. Negative
 percentage values are not allowed.}
 
-\item{indent}{The indentation of the text. Can be provided as a number that
-is assumed to represent \code{px} values (or could be wrapped in the \code{\link[=px]{px()}})
-helper function. Alternatively, this can be given as a percentage (easily
-constructed with \code{\link[=pct]{pct()}}).}
-
-\item{decorate}{allows for text decoration effect to be applied. Here, we can
+\item{decorate}{Allows for text decoration effect to be applied. Here, we can
 use \code{"overline"}, \code{"line-through"}, or \code{"underline"}.}
 
 \item{transform}{Allows for the transformation of text. Options are
 \code{"uppercase"}, \code{"lowercase"}, or \code{"capitalize"}.}
+
+\item{whitespace}{A white-space preservation option. By default, runs of
+white-space will be collapsed into single spaces but several options exist
+to govern how white-space is collapsed and how lines might wrap at
+soft-wrap opportunities. The keyword options are \code{"normal"}, \code{"nowrap"},
+\code{"pre"}, \code{"pre-wrap"}, \code{"pre-line"}, and \code{"break-spaces"}.}
+
+\item{indent}{The indentation of the text. Can be provided as a number that
+is assumed to represent \code{px} values (or could be wrapped in the \code{\link[=px]{px()}})
+helper function. Alternatively, this can be given as a percentage (easily
+constructed with \code{\link[=pct]{pct()}}).}
 }
 \value{
 A list object of class \code{cell_styles}.

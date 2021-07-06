@@ -474,3 +474,24 @@ test_that("using fonts in `cell_text()` works", {
       "<td style=\"padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; text-align: left; font-family: 'Dancing Script', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;\">13:35</td>"
     )
 })
+
+test_that("setting white-space options in `cell_text()` works", {
+
+  tbl_ws <-
+    dplyr::tibble(
+      ws = c("   space   ", "   space", "space   ", " a  b  c  d  e  f")
+    ) %>%
+    gt()
+
+  # Expect that the white space `"pre"` style option will be present
+  # when using `tab_style(style = cell_text(whitespace = "pre"), ... )`
+  tbl_ws %>%
+    tab_style(
+      style = cell_text(whitespace = "pre"),
+      locations = cells_body()
+    ) %>%
+    as_raw_html() %>%
+    expect_match(
+      "<td style=\"padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; text-align: left; white-space: pre;\">   space   </td>"
+    )
+})
