@@ -297,15 +297,9 @@ ggplot_image <- function(plot_object,
         height = 5
       )
 
-      # Wait longer for file to be written on async filesystems
-      Sys.sleep(0.5)
+      on.exit(file.remove(filename))
 
-      image_html <-
-        local_image(filename = filename, height = height)
-
-      file.remove(filename)
-
-      image_html
+      local_image(filename = filename, height = height)
     }
   )
 }

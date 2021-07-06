@@ -1,5 +1,4 @@
 skip_on_cran()
-skip_on_ci()
 
 library(ggplot2)
 
@@ -98,6 +97,7 @@ test_that("the `web_image()` function works correctly", {
 test_that("the `ggplot_image()` function works correctly", {
 
   testthat::local_edition(3)
+  skip_on_ci()
 
   # Create a ggplot plot
   gg <-
