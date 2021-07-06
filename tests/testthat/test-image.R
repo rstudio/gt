@@ -21,6 +21,7 @@ test_that("the `get_mime_type()` function works correctly", {
 test_that("the `get_image_uri()` function works correctly", {
 
   testthat::local_edition(3)
+  skip_on_os("windows")
 
   # Expect that the beginning of the PNG-based image URI has the
   # correct MIME and encoding types
@@ -48,6 +49,7 @@ test_that("the `get_image_uri()` function works correctly", {
 test_that("the `local_image()` function works correctly", {
 
   testthat::local_edition(3)
+  skip_on_os("windows")
 
   # Expect that the image tags generated for the included test image
   # are correctly formed
