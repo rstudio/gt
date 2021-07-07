@@ -249,7 +249,11 @@ reorder_styles <- function(data) {
     as.numeric()
 
   for (i in seq_len(nrow(styles_tbl))) {
-    if (!is.na(styles_tbl[i, ][["rownum"]])) {
+
+    if (
+      !is.na(styles_tbl[i, ][["rownum"]]) &&
+      !grepl("summary_cells", styles_tbl[i, ][["locname"]])
+    ) {
 
       styles_tbl[i, ][["rownum"]] <-
         which(rownum_final == styles_tbl[i, ][["rownum"]])
