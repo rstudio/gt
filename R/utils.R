@@ -1179,11 +1179,24 @@ resolve_border_side <- function(side) {
          all = "all")
 }
 
-#' Expand a path using fs::path_ex
+#' Expand a path using fs::path_expand
+#'
 #' @noRd
 path_expand <- function(file) {
 
   fs::path_expand(file)
+}
+
+# TODO: the `get_file_ext()` function overlaps greatly with `gtsave_file_ext()`;
+#       both are not vectorized
+
+#' Get a file's extension
+#'
+#' @noRd
+get_file_ext <- function(file) {
+
+  pos <- regexpr("\\.([[:alnum:]]+)$", file)
+  ifelse(pos > -1L, substring(file, pos + 1L), "")
 }
 
 validate_marks <- function(marks) {
