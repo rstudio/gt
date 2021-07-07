@@ -29,9 +29,9 @@ header, within footnote text, etc.) we need to use \code{web_image()} within the
 }
 \details{
 By itself, the function creates an HTML image tag, so, the call
-\code{web_image("http://some.web.site/image.png")} evaluates to:
+\code{web_image("http://example.com/image.png")} evaluates to:
 
-\verb{<img src=\\"http://some.web.site/image.png\\" style=\\"height:30px;\\">}
+\verb{<img src=\\"http://example.com/image.png\\" style=\\"height:30px;\\">}
 
 where a height of \verb{30px} is a default height chosen to work well within the
 heights of most table rows.

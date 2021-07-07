@@ -12,9 +12,9 @@
 #' [html()] helper function.
 #'
 #' By itself, the function creates an HTML image tag, so, the call
-#' `web_image("http://some.web.site/image.png")` evaluates to:
+#' `web_image("http://example.com/image.png")` evaluates to:
 #'
-#' `<img src=\"http://some.web.site/image.png\" style=\"height:30px;\">`
+#' `<img src=\"http://example.com/image.png\" style=\"height:30px;\">`
 #'
 #' where a height of `30px` is a default height chosen to work well within the
 #' heights of most table rows.
@@ -106,8 +106,7 @@ web_image <- function(url,
     height <- paste0(height, "px")
   }
 
-  glue::glue("<img src=\"{url}\" style=\"height:{height};\">") %>%
-    as.character()
+  paste0("<img src=\"", url, "\" style=\"height:", height, ";\">")
 }
 
 #' Helper function for adding a local image
@@ -128,7 +127,7 @@ web_image <- function(url,
 #' available in the **gt** package using the [test_image()] function. Using
 #' that, the call `local_image(file = test_image(type = "png"))` evaluates to:
 #'
-#' `<img cid=<random CID> src=<data URI> style=\"height:30px;\">`
+#' `<img src=<data URI> style=\"height:30px;\">`
 #'
 #' where a height of `30px` is a default height chosen to work well within the
 #' heights of most table rows.
@@ -175,27 +174,17 @@ local_image <- function(filename,
                         height = 30) {
 
   # Normalize file path
-  filename <- filename %>% path_expand()
+  filename <- path_expand(filename)
 
   if (is.numeric(height)) {
     height <- paste0(height, "px")
   }
 
-  # Construct a CID based on the filename
-  # with a random string prepended to it
-  cid <-
-    paste0(
-      sample(letters, 12) %>% paste(collapse = ""), "__",
-      basename(filename)
-    )
-
   # Create the image URI
   uri <- get_image_uri(filename)
 
-  # Generate the Base64-encoded image and place it
-  # within <img> tags
-  glue::glue("<img cid=\"{cid}\" src=\"{uri}\" style=\"height:{height};\">") %>%
-    as.character()
+  # Generate the Base64-encoded image and place it within <img> tags
+  paste0("<img src=\"", uri, "\" style=\"height:", height, ";\">")
 }
 
 #' Helper function for adding a ggplot
@@ -216,7 +205,7 @@ local_image <- function(filename,
 #' object, and using it within `ggplot_image(plot_object = <plot object>`
 #' evaluates to:
 #'
-#' `<img cid=<random CID> src=<data URI> style=\"height:100px;\">`
+#' `<img src=<data URI> style=\"height:100px;\">`
 #'
 #' where a height of `100px` is a default height chosen to work well within the
 #' heights of most table rows. There is the option to modify the aspect ratio of
@@ -284,24 +273,35 @@ ggplot_image <- function(plot_object,
     height <- paste0(height, "px")
   }
 
-  # Save PNG file to disk
-  ggplot2::ggsave(
-    filename = "temp_ggplot.png",
-    plot = plot_object,
-    device = "png",
-    dpi = 100,
-    width = 5 * aspect_ratio,
-    height = 5
+  # Upgrade `plot_object` to a list if only a single ggplot object is provided
+  if (inherits(plot_object, "gg")) {
+    plot_object <- list(plot_object)
+  }
+
+  vapply(
+    seq_along(plot_object),
+    FUN.VALUE = character(1),
+    USE.NAMES = FALSE,
+    FUN = function(x) {
+
+      filename <-
+        paste0("temp_ggplot_", formatC(x, width = 4, flag = "0") , ".png")
+
+      # Save PNG file to disk
+      ggplot2::ggsave(
+        filename = filename,
+        plot = plot_object[[x]],
+        device = "png",
+        dpi = 100,
+        width = 5 * aspect_ratio,
+        height = 5
+      )
+
+      on.exit(file.remove(filename))
+
+      local_image(filename = filename, height = height)
+    }
   )
-
-  # Wait longer for file to be written on async filesystems
-  Sys.sleep(1)
-
-  image_html <- local_image(filename = "temp_ggplot.png", height = height)
-
-  file.remove("temp_ggplot.png")
-
-  image_html
 }
 
 #' Generate a path to a test image
@@ -325,9 +325,46 @@ test_image <- function(type = c("png", "svg")) {
 
   type <- match.arg(type)
 
-  if (type == "png") {
-    system_file(file = "graphics/test_image.png")
-  } else {
-    system_file(file = "graphics/test_image.svg")
-  }
+  system_file(file = paste0("graphics/test_image.", type))
+}
+
+# Function for setting the MIME type
+get_mime_type <- function(file) {
+
+  extension <- tolower(get_file_ext(file))
+
+  switch(
+    extension,
+    svg = "image/svg+xml",
+    jpg = "image/jpeg",
+    paste("image", extension, sep = "/")
+  )
+}
+
+# Get image URIs from on-disk graphics files
+# as a vector Base64-encoded image strings
+get_image_uri <- function(file) {
+
+  # Create a list of `raw` objects
+  image_raw <-
+    lapply(
+      file, FUN = function(x) {
+        readBin(
+          con = x,
+          what = "raw",
+          n = file.info(x)$size
+        )
+      }
+    )
+
+  vapply(
+    seq_along(image_raw),
+    FUN.VALUE = character(1),
+    USE.NAMES = FALSE, FUN = function(x) {
+      paste0(
+        "data:", get_mime_type(file[x]),
+        ";base64,", base64enc::base64encode(image_raw[[x]])
+      )
+    }
+  )
 }
