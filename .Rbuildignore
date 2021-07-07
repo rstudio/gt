@@ -3,6 +3,7 @@
 ^pkgdown$
 ^scripts$
 ^\.github$
+^\.gitattributes$
 ^\.Rproj\.user$
 ^gt\.Rproj$
 ^_pkgdown\.yml$
