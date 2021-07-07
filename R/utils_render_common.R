@@ -243,10 +243,7 @@ reorder_styles <- function(data) {
   stub_df <- dt_stub_df_get(data = data)
   styles_tbl <- dt_styles_get(data = data)
 
-  rownum_final <-
-    stub_df %>%
-    dplyr::pull(rownum_i) %>%
-    as.numeric()
+  rownum_final <- as.numeric(stub_df[, "rownum_i", drop = TRUE])
 
   for (i in seq_len(nrow(styles_tbl))) {
 
@@ -260,9 +257,7 @@ reorder_styles <- function(data) {
     }
   }
 
-  data <- dt_styles_set(data = data, styles = styles_tbl)
-
-  data
+  dt_styles_set(data = data, styles = styles_tbl)
 }
 
 #' Perform merging of column contents
