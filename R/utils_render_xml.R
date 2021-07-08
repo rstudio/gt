@@ -147,11 +147,7 @@ xml_pPr <- function(..., app = "word") {
   htmltools::tag(`_tag_name` = xml_tag_type("pPr", app), varArgs = list(htmltools::HTML(paste0(...))))
 }
 
-xml_gridSpan <- function(..., val = "1", app = "word") {
 
-  tag <- htmltools::tag(`_tag_name` = xml_tag_type("gridSpan", app), varArgs = list(htmltools::HTML(paste0(...))))
-  htmltools::tagAppendAttributes(tag, `w:val` = val)
-}
 
 # Paragraph style
 # TODO: should be self-closing
@@ -630,28 +626,30 @@ create_columns_component_xml <- function(data) {
     # Create the cell for the stubhead label
     if (stub_available) {
 
-      stubhead_style <-
-        if (nrow(stubhead_style_attrs) > 0) {
-          stubhead_style_attrs$html_style
-        } else {
-          NULL
-        }
-
       # TODO: convert to XML
       first_set[[length(first_set) + 1]] <-
-        htmltools::tags$th(
-          class = paste(
-            c(
-              "gt_col_heading",
-              "gt_columns_bottom_border",
-              paste0("gt_", stubhead_label_alignment)
-            ),
-            collapse = " "),
-          rowspan = 2,
-          colspan = 1,
-          style = stubhead_style,
-          htmltools::HTML(headings_labels[1])
+        xml_tc(
+          xml_p(
+            xml_pPr(),
+            xml_r(
+              xml_t(
+                headings_labels[1]
+              )
+            )
+          )
         )
+        # htmltools::tags$th(
+        #   class = paste(
+        #     c(
+        #       "gt_col_heading",
+        #       "gt_columns_bottom_border",
+        #       paste0("gt_", stubhead_label_alignment)
+        #     ),
+        #     collapse = " "),
+        #   rowspan = 2,
+        #   colspan = 1,
+        #   htmltools::HTML(headings_labels[1])
+        # )
 
       headings_vars <- headings_vars[-1]
       headings_labels <- headings_labels[-1]
@@ -697,60 +695,80 @@ create_columns_component_xml <- function(data) {
 
         # TODO: convert to XML
         first_set[[length(first_set) + 1]] <-
-          htmltools::tags$th(
-            class = paste(
-              c(
-                "gt_col_heading",
-                "gt_columns_bottom_border",
-                paste0("gt_", first_set_alignment)
-              ),
-              collapse = " "),
-            rowspan = 2,
-            colspan = 1,
-            style = heading_style,
-            htmltools::HTML(headings_labels[i])
+          xml_tc(
+            xml_p(
+              xml_pPr(),
+              xml_r(
+                xml_t(
+                  headings_labels[1]
+                )
+              )
+            )
           )
+          # htmltools::tags$th(
+          #   class = paste(
+          #     c(
+          #       "gt_col_heading",
+          #       "gt_columns_bottom_border",
+          #       paste0("gt_", first_set_alignment)
+          #     ),
+          #     collapse = " "),
+          #   rowspan = 2,
+          #   colspan = 1,
+          #   style = heading_style,
+          #   htmltools::HTML(headings_labels[i])
+          # )
 
       } else if (!is.na(spanner_ids[i])) {
 
         # If colspans[i] == 0, it means that a previous cell's colspan
         # will cover us.
         if (colspans[i] > 0) {
-          class <- "gt_column_spanner"
+          #class <- "gt_column_spanner"
 
-          styles_spanners <-
-            dplyr::filter(
-              spanner_style_attrs,
-              locname == "columns_groups",
-              grpname == spanner_ids[i]
-            )
+          # styles_spanners <-
+          #   dplyr::filter(
+          #     spanner_style_attrs,
+          #     locname == "columns_groups",
+          #     grpname == spanner_ids[i]
+          #   )
 
-          spanner_style <-
-            if (nrow(styles_spanners) > 0) {
-              styles_spanners$html_style
-            } else {
-              NULL
-            }
+          # spanner_style <-
+          #   if (nrow(styles_spanners) > 0) {
+          #     styles_spanners$html_style
+          #   } else {
+          #     NULL
+          #   }
 
           # TODO: convert to XML
           first_set[[length(first_set) + 1]] <-
-            htmltools::tags$th(
-              class = paste(
-                c(
-                  "gt_center",
-                  "gt_columns_top_border",
-                  "gt_column_spanner_outer"
-                ),
-                collapse = " "
-              ),
-              rowspan = 1,
-              colspan = colspans[i],
-              style = spanner_style,
-              htmltools::tags$span(
-                class = "gt_column_spanner",
-                htmltools::HTML(spanners[i])
+            xml_tc(
+              xml_p(
+                xml_pPr(xml_gridSpan(val = as.character(colspans[i]))),
+                xml_r(
+                  xml_t(
+                    spanners[i]
+                  )
+                )
               )
             )
+            # htmltools::tags$th(
+            #   class = paste(
+            #     c(
+            #       "gt_center",
+            #       "gt_columns_top_border",
+            #       "gt_column_spanner_outer"
+            #     ),
+            #     collapse = " "
+            #   ),
+            #   rowspan = 1,
+            #   colspan = colspans[i],
+            #   style = spanner_style,
+            #   htmltools::tags$span(
+            #     class = "gt_column_spanner",
+            #     htmltools::HTML(spanners[i])
+            #   )
+            # )
         }
       }
     }
@@ -766,8 +784,8 @@ create_columns_component_xml <- function(data) {
       dplyr::pull(column_label) %>%
       unlist()
 
-    col_alignment <-
-      col_alignment[-1][!(headings_vars %in% solo_headings)]
+    # col_alignment <-
+    #   col_alignment[-1][!(headings_vars %in% solo_headings)]
 
     if (length(remaining_headings) > 0) {
 
@@ -775,49 +793,67 @@ create_columns_component_xml <- function(data) {
 
       for (j in seq(remaining_headings)) {
 
-        styles_remaining <-
-          dplyr::filter(
-            styles_tbl,
-            locname == "columns_columns",
-            colname == remaining_headings[j]
-          )
+        # styles_remaining <-
+        #   dplyr::filter(
+        #     styles_tbl,
+        #     locname == "columns_columns",
+        #     colname == remaining_headings[j]
+        #   )
+        #
+        # remaining_style <-
+        #   if (nrow(styles_remaining) > 0) {
+        #     styles_remaining$html_style
+        #   } else {
+        #     NULL
+        #   }
+        #
+        # remaining_alignment <-
+        #   dt_boxhead_get_alignment_by_var(data = data, remaining_headings[j])
 
-        remaining_style <-
-          if (nrow(styles_remaining) > 0) {
-            styles_remaining$html_style
-          } else {
-            NULL
-          }
-
-        remaining_alignment <-
-          dt_boxhead_get_alignment_by_var(data = data, remaining_headings[j])
-
+        # TODO: convert to XML
         second_set[[length(second_set) + 1]] <-
-          htmltools::tags$th(
-            class = paste(
-              c(
-                "gt_col_heading",
-                "gt_columns_bottom_border",
-                paste0("gt_", remaining_alignment)
-              ),
-              collapse = " "
-            ),
-            rowspan = 1, colspan = 1,
-            style = remaining_style,
-            htmltools::HTML(remaining_headings_labels[j])
+          xml_tc(
+            xml_p(
+              xml_pPr(),
+              xml_r(
+                xml_t(
+                  remaining_headings_labels[j]
+                )
+              )
+            )
           )
+
+
+          # htmltools::tags$th(
+          #   class = paste(
+          #     c(
+          #       "gt_col_heading",
+          #       "gt_columns_bottom_border",
+          #       paste0("gt_", remaining_alignment)
+          #     ),
+          #     collapse = " "
+          #   ),
+          #   rowspan = 1, colspan = 1,
+          #   style = remaining_style,
+          #   htmltools::HTML(remaining_headings_labels[j])
+          # )
       }
 
+      # TODO: convert to XML
       table_col_headings <-
         htmltools::tagList(
-          htmltools::tags$tr(first_set),
-          htmltools::tags$tr(second_set)
+          xml_tr(htmltools::tagList(first_set)),
+          xml_tr(htmltools::tagList(second_set))
         )
 
     } else {
 
+      # TODO: convert to XML
       # Create the `table_col_headings` HTML component
-      table_col_headings <- htmltools::tags$tr(first_set)
+      table_col_headings <-
+        htmltools::tagList(
+          xml_tr(htmltools::tagList(first_set))
+        )
     }
   }
 
@@ -1097,9 +1133,7 @@ create_body_component_xml <- function(data) {
     body_rows <- c(body_rows, grand_summary_section)
   }
 
-  htmltools::tagList(
-    body_rows
-  )
+  htmltools::tagList(body_rows)
 }
 
 #' Create the table source note component (OOXML)
