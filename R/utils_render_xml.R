@@ -37,7 +37,6 @@ xml_tblLook <- function(...,
                         last_column = "0",
                         no_h_band = "0",
                         no_v_band = "0",
-                        val = "0020",
                         app = "word") {
 
   tag <- htmltools::tag(`_tag_name` = xml_tag_type("tblLook", app), varArgs = list(htmltools::HTML(paste0(...))))
@@ -49,8 +48,7 @@ xml_tblLook <- function(...,
       `w:firstColumn` = first_column,
       `w:lastColumn` = last_column,
       `w:noHBand` = no_h_band,
-      `w:noVBand` = no_v_band,
-      `w:val` = val
+      `w:noVBand` = no_v_band
     )
   tag
 }
