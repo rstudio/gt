@@ -24,8 +24,8 @@ xml_tblStyle <- function(..., val = "Table", app = "word") {
 # Table width
 xml_tblW <- function(..., type = "pct", w = "0.0", app = "word") {
   tag <- htmltools::tag(`_tag_name` = xml_tag_type("tblW", app), varArgs = list(htmltools::HTML(paste0(...))))
-  tag <- htmltools::tagAppendAttributes(tag, type = type)
-  tag <- htmltools::tagAppendAttributes(tag, w = w)
+  tag <- htmltools::tagAppendAttributes(tag, `w:type` = type)
+  tag <- htmltools::tagAppendAttributes(tag, `w:w` = w)
   tag
 }
 
