@@ -90,6 +90,21 @@ xml_tcPr <- function(..., app = "word") {
   htmltools::tag(`_tag_name` = xml_tag_type("tcPr", app), varArgs = list(htmltools::HTML(paste0(...))))
 }
 
+# Span cells horizontally
+xml_gridSpan <- function(val = "1", app = "word") {
+
+  tag <- htmltools::tag(`_tag_name` = xml_tag_type("gridSpan", app), varArgs = list())
+  htmltools::tagAppendAttributes(tag, `w:val` = val)
+}
+
+# Span cells vertically
+xml_v_merge <- function(val = c("continue", "restart"), app = "word") {
+
+  val <- match.arg(val)
+  tag <- htmltools::tag(`_tag_name` = xml_tag_type("vMerge", app), varArgs = list())
+  htmltools::tagAppendAttributes(tag, `w:val` = val)
+}
+
 # Table cell borders
 xml_tc_borders <- function(..., app = "word") {
   htmltools::tag(`_tag_name` = xml_tag_type("tcBorders", app), varArgs = list(htmltools::HTML(paste0(...))))
