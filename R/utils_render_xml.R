@@ -14,24 +14,16 @@ xml_tblPr <- function(..., app = "word") {
   htmltools::tag(`_tag_name` = xml_tag_type("tblPr", app), varArgs = list(htmltools::HTML(paste0(...))))
 }
 
-# Table style
-xml_tblStyle <- function(..., val = "Table", app = "word") {
-  tag <- htmltools::tag(`_tag_name` = xml_tag_type("tblStyle", app), varArgs = list(htmltools::HTML(paste0(...))))
-  tag <- htmltools::tagAppendAttributes(tag, `w:val` = val)
-  tag
+# Table width (child of `tblPr`)
+xml_tblW <- function(type = c("pct", "auto", "dxa", "nil"), w = "100%", app = "word") {
+
+  type <- match.arg(type)
+  tag <- htmltools::tag(`_tag_name` = xml_tag_type("tblW", app), varArgs = list())
+  htmltools::tagAppendAttributes(tag, `w:type` = type, `w:w` = w)
 }
 
-# Table width
-xml_tblW <- function(..., type = "pct", w = "0.0", app = "word") {
-  tag <- htmltools::tag(`_tag_name` = xml_tag_type("tblW", app), varArgs = list(htmltools::HTML(paste0(...))))
-  tag <- htmltools::tagAppendAttributes(tag, `w:type` = type)
-  tag <- htmltools::tagAppendAttributes(tag, `w:w` = w)
-  tag
-}
-
-# Table look
-xml_tblLook <- function(...,
-                        first_row = "1",
+# Table look (child of `tblPr`)
+xml_tblLook <- function(first_row = "0",
                         last_row = "0",
                         first_column = "0",
                         last_column = "0",
@@ -39,9 +31,8 @@ xml_tblLook <- function(...,
                         no_v_band = "0",
                         app = "word") {
 
-  tag <- htmltools::tag(`_tag_name` = xml_tag_type("tblLook", app), varArgs = list(htmltools::HTML(paste0(...))))
-  tag <-
-    htmltools::tagAppendAttributes(
+  tag <- htmltools::tag(`_tag_name` = xml_tag_type("tblLook", app), varArgs = list())
+  htmltools::tagAppendAttributes(
       tag,
       `w:firstRow` = first_row,
       `w:lastRow` = last_row,
@@ -50,22 +41,59 @@ xml_tblLook <- function(...,
       `w:noHBand` = no_h_band,
       `w:noVBand` = no_v_band
     )
-  tag
+}
+
+# Table style (child of `tblPr`)
+xml_tblStyle <- function(val = "Table", app = "word") {
+
+  tag <- htmltools::tag(`_tag_name` = xml_tag_type("tblStyle", app), varArgs = list())
+  htmltools::tagAppendAttributes(tag, `w:val` = val)
+}
+
+# Table cell margins
+xml_tbl_cell_margins <- function(..., app = "word") {
+
+  htmltools::tag(`_tag_name` = xml_tag_type("tblCellMar", app), varArgs = list(htmltools::HTML(paste0(...))))
+}
+
+# Width specifiers (child of `tblCellMar`)
+xml_width <- function(dir = c("top", "bottom", "left", "right"),
+                      width = 0,
+                      type = c("dxa", "nil"),
+                      app = "word") {
+
+  dir <- match.arg(dir)
+  type <- match.arg(type)
+
+  dir <-
+    switch(
+      dir,
+      left = "start",
+      right = "end",
+      top = "top",
+      bottom = "bottom"
+    )
+
+  tag <- htmltools::tag(`_tag_name` = xml_tag_type(dir, app), varArgs = list())
+  htmltools::tagAppendAttributes(tag, `w:w` = width, `w:type` = type)
 }
 
 # Table grid
 # TODO: should be self-closing
 xml_tblGrid <- function(..., app = "word") {
+
   htmltools::tag(`_tag_name` = xml_tag_type("tblGrid", app), varArgs = list(htmltools::HTML(paste0(...))))
 }
 
 # Table row
 xml_tr <- function(..., app = "word") {
+
   htmltools::tag(`_tag_name` = xml_tag_type("tr", app), varArgs = list(htmltools::HTML(paste0(...))))
 }
 
 # Table row properties
 xml_trPr <- function(..., app = "word") {
+
   htmltools::tag(`_tag_name` = xml_tag_type("trPr", app), varArgs = list(htmltools::HTML(paste0(...))))
 }
 
@@ -83,16 +111,19 @@ xml_tr_height <- function(h_rule = c("auto", "exact", "atLeast"),
 # Indicator of row header
 # TODO: should be self-closing
 xml_tbl_header <- function(app = "word") {
+
   htmltools::tag(`_tag_name` = xml_tag_type("tblHeader", app), varArgs = list())
 }
 
 # Table cell
 xml_tc <- function(..., app = "word") {
+
   htmltools::tag(`_tag_name` = xml_tag_type("tc", app), varArgs = list(htmltools::HTML(paste0(...))))
 }
 
 # Table cell properties
 xml_tcPr <- function(..., app = "word") {
+
   htmltools::tag(`_tag_name` = xml_tag_type("tcPr", app), varArgs = list(htmltools::HTML(paste0(...))))
 }
 
@@ -113,11 +144,12 @@ xml_v_merge <- function(val = c("continue", "restart"), app = "word") {
 
 # Table cell borders
 xml_tc_borders <- function(..., app = "word") {
-  htmltools::tag(`_tag_name` = xml_tag_type("tcBorders", app), varArgs = list(htmltools::HTML(paste0(...))))
+
+  htmltools::tag(`_tag_name` = xml_tag_type("tcBorders", app), varArgs = list(...))
 }
 
-# Table cell top border
-# The `size` is exressed in eighths of a point (min: 2, max: 96)
+# Table cell border setting (child of `tcBorders`)
+# The `size` is expressed in eighths of a point (min: 2, max: 96)
 # TODO: should be self-closing
 xml_border <- function(dir = c("top", "bottom", "left", "right"),
                        type = "single",
@@ -178,6 +210,13 @@ xml_jc <- function(val = c("left", "center", "right"), app = "word") {
   htmltools::tagAppendAttributes(tag, `w:val` = val)
 }
 
+# Paragraph spacing
+xml_spacing <- function(before = 120, after = 120, app = "word") {
+
+  tag <- htmltools::tag(`_tag_name` = xml_tag_type("spacing", app), varArgs = list())
+  htmltools::tagAppendAttributes(tag, `w:before` = before, `w:after` = after)
+}
+
 # Text run
 xml_r <- function(..., app = "word") {
   htmltools::tag(`_tag_name` = xml_tag_type("r", app), varArgs = list(htmltools::HTML(paste0(...))))
@@ -186,6 +225,12 @@ xml_r <- function(..., app = "word") {
 # Text run properties
 xml_rPr <- function(..., app = "word") {
   htmltools::tag(`_tag_name` = xml_tag_type("rPr", app), varArgs = list(htmltools::HTML(paste0(...))))
+}
+
+# Font selection
+xml_r_font <- function(ascii_font = "Calibri", ansi_font = "Calibri", app = "word") {
+  tag <- htmltools::tag(`_tag_name` = xml_tag_type("rFonts", app), varArgs = list())
+  htmltools::tagAppendAttributes(tag, `w:ascii` = ascii_font, `w:hAnsi` = ansi_font)
 }
 
 # Literal text
@@ -253,7 +298,9 @@ footnote_mark_to_xml <- function(mark) {
     htmltools::tagList(
       xml_rPr(
         xml_vert_align(v_align = "superscript"),
+        xml_i(),
         xml_t(mark),
+        xml_i(),
         xml_vert_align(v_align = "baseline")
       )
     )
@@ -381,9 +428,16 @@ create_table_props_component_xml <- function(data) {
 
   table_properties <-
     xml_tblPr(
-      xml_tblStyle(), # TODO: should be self-closing
-      xml_tblW(), # TODO: should be self-closing
-      xml_tblLook() # TODO: should be self-closing
+      xml_tblStyle(
+        xml_tbl_cell_margins(
+          xml_width("top"),
+          xml_width("bottom"),
+          xml_width("left", width = 60),
+          xml_width("right", width = 60)
+        )
+      ),
+      xml_tblW(),
+      xml_tblLook()
     )
 
   htmltools::tagList(table_properties)
@@ -458,6 +512,7 @@ create_heading_component_xml <- function(data) {
   table_font_color <- dt_options_get_value(data, option = "table_font_color")
   table_border_top_include <- dt_options_get_value(data, option = "table_border_top_include")
   table_border_top_color <- dt_options_get_value(data, option = "table_border_top_color")
+  heading_border_bottom_color <- dt_options_get_value(data, option = "heading_border_bottom_color")
 
   title_row <-
     xml_tr(
@@ -466,7 +521,8 @@ create_heading_component_xml <- function(data) {
           if (table_border_top_include) {
             htmltools::tagList(
               xml_tc_borders(
-                xml_border(dir = "top", type = "single", size = 16, color = table_border_top_color)
+                xml_border(dir = "top", type = "single", size = 16, color = table_border_top_color),
+                xml_border(dir = "bottom", type = "single", size = 16, color = heading_border_bottom_color)
               )
             )
           }
@@ -475,17 +531,28 @@ create_heading_component_xml <- function(data) {
           xml_pPr(
             xml_gridSpan(val = as.character(n_cols)),
             xml_color(color = table_font_color),
-            xml_jc(val = "center")
+            xml_jc(val = "center"),
+            xml_spacing(before = 0, after = 30)
           ),
           xml_r(
+            xml_rPr(
+              xml_r_font(),
+              xml_sz(val = 24)
+            ),
             xml_t(
               paste0(heading$title, footnote_title_marks)
             ),
             if (subtitle_defined) {
               htmltools::tagList(
                 xml_br(),
-                xml_t(
-                  paste0(heading$subtitle, footnote_subtitle_marks)
+                xml_r(
+                  xml_rPr(
+                    xml_r_font(),
+                    xml_sz(val = 16)
+                  ),
+                  xml_t(
+                    paste0(heading$subtitle, footnote_subtitle_marks)
+                  )
                 )
               )
             }
@@ -554,18 +621,23 @@ create_columns_component_xml <- function(data) {
     # Create the cell for the stubhead label
     if (isTRUE(stub_available)) {
 
-      # stubhead_style <-
-      #   if (nrow(stubhead_style_attrs) > 0) {
-      #     stubhead_style_attrs$html_style
-      #   } else {
-      #     NULL
-      #   }
-
       table_col_headings[[length(table_col_headings) + 1]] <-
         xml_tc(
+          xml_tcPr(
+            xml_tc_borders(
+              xml_border("top", size = 16, color = column_labels_border_top_color),
+              xml_border("bottom", size = 16, color = column_labels_border_bottom_color),
+              xml_border("left", color = column_labels_vlines_color),
+              xml_border("right", color = column_labels_vlines_color)
+            )
+          ),
           xml_p(
-            xml_pPr(),
+            xml_pPr(xml_spacing(before = 0, after = 60)),
             xml_r(
+              xml_rPr(
+                xml_r_font(),
+                xml_sz(val = 20)
+              ),
               xml_t(
                 headings_labels[1]
               )
@@ -579,20 +651,23 @@ create_columns_component_xml <- function(data) {
 
     for (i in seq(headings_vars)) {
 
-      # styles_column <- subset(column_style_attrs, colnum == i)
-      #
-      # column_style <-
-      #   if (nrow(styles_column) > 0) {
-      #     styles_column$html_style
-      #   } else {
-      #     NULL
-      #   }
-
       table_col_headings[[length(table_col_headings) + 1]] <-
         xml_tc(
+          xml_tcPr(
+            xml_tc_borders(
+              xml_border("top", size = 16, color = column_labels_border_top_color),
+              xml_border("bottom", size = 16, color = column_labels_border_bottom_color),
+              xml_border("left", color = column_labels_vlines_color),
+              xml_border("right", color = column_labels_vlines_color)
+            )
+          ),
           xml_p(
-            xml_pPr(),
+            xml_pPr(xml_spacing(before = 0, after = 60)),
             xml_r(
+              xml_rPr(
+                xml_r_font(),
+                xml_sz(val = 20)
+              ),
               xml_t(
                 headings_labels[i]
               )
@@ -630,30 +705,21 @@ create_columns_component_xml <- function(data) {
     # Create the cell for the stubhead label
     if (stub_available) {
 
-      # TODO: convert to XML
       first_set[[length(first_set) + 1]] <-
         xml_tc(
           xml_p(
-            xml_pPr(),
+            xml_pPr(xml_spacing(before = 0, after = 60)),
             xml_r(
+              xml_rPr(
+                xml_r_font(),
+                xml_sz(val = 20)
+              ),
               xml_t(
                 headings_labels[1]
               )
             )
           )
         )
-        # htmltools::tags$th(
-        #   class = paste(
-        #     c(
-        #       "gt_col_heading",
-        #       "gt_columns_bottom_border",
-        #       paste0("gt_", stubhead_label_alignment)
-        #     ),
-        #     collapse = " "),
-        #   rowspan = 2,
-        #   colspan = 1,
-        #   htmltools::HTML(headings_labels[1])
-        # )
 
       headings_vars <- headings_vars[-1]
       headings_labels <- headings_labels[-1]
@@ -694,85 +760,46 @@ create_columns_component_xml <- function(data) {
             NULL
           }
 
-        first_set_alignment <-
-          dt_boxhead_get_alignment_by_var(data = data, headings_vars[i])
-
-        # TODO: convert to XML
         first_set[[length(first_set) + 1]] <-
           xml_tc(
             xml_p(
-              xml_pPr(),
+              xml_pPr(xml_spacing(before = 0, after = 60)),
               xml_r(
+                xml_rPr(
+                  xml_r_font(),
+                  xml_sz(val = 20)
+                ),
                 xml_t(
                   headings_labels[1]
                 )
               )
             )
           )
-          # htmltools::tags$th(
-          #   class = paste(
-          #     c(
-          #       "gt_col_heading",
-          #       "gt_columns_bottom_border",
-          #       paste0("gt_", first_set_alignment)
-          #     ),
-          #     collapse = " "),
-          #   rowspan = 2,
-          #   colspan = 1,
-          #   style = heading_style,
-          #   htmltools::HTML(headings_labels[i])
-          # )
 
       } else if (!is.na(spanner_ids[i])) {
 
         # If colspans[i] == 0, it means that a previous cell's colspan
         # will cover us.
         if (colspans[i] > 0) {
-          #class <- "gt_column_spanner"
 
-          # styles_spanners <-
-          #   dplyr::filter(
-          #     spanner_style_attrs,
-          #     locname == "columns_groups",
-          #     grpname == spanner_ids[i]
-          #   )
-
-          # spanner_style <-
-          #   if (nrow(styles_spanners) > 0) {
-          #     styles_spanners$html_style
-          #   } else {
-          #     NULL
-          #   }
-
-          # TODO: convert to XML
           first_set[[length(first_set) + 1]] <-
             xml_tc(
               xml_p(
-                xml_pPr(xml_gridSpan(val = as.character(colspans[i]))),
+                xml_pPr(
+                  xml_spacing(before = 0, after = 60),
+                  xml_gridSpan(val = as.character(colspans[i]))
+                ),
                 xml_r(
+                  xml_rPr(
+                    xml_r_font(),
+                    xml_sz(val = 20)
+                  ),
                   xml_t(
                     spanners[i]
                   )
                 )
               )
             )
-            # htmltools::tags$th(
-            #   class = paste(
-            #     c(
-            #       "gt_center",
-            #       "gt_columns_top_border",
-            #       "gt_column_spanner_outer"
-            #     ),
-            #     collapse = " "
-            #   ),
-            #   rowspan = 1,
-            #   colspan = colspans[i],
-            #   style = spanner_style,
-            #   htmltools::tags$span(
-            #     class = "gt_column_spanner",
-            #     htmltools::HTML(spanners[i])
-            #   )
-            # )
         }
       }
     }
@@ -797,29 +824,16 @@ create_columns_component_xml <- function(data) {
 
       for (j in seq(remaining_headings)) {
 
-        # styles_remaining <-
-        #   dplyr::filter(
-        #     styles_tbl,
-        #     locname == "columns_columns",
-        #     colname == remaining_headings[j]
-        #   )
-        #
-        # remaining_style <-
-        #   if (nrow(styles_remaining) > 0) {
-        #     styles_remaining$html_style
-        #   } else {
-        #     NULL
-        #   }
-        #
-        # remaining_alignment <-
-        #   dt_boxhead_get_alignment_by_var(data = data, remaining_headings[j])
-
         # TODO: convert to XML
         second_set[[length(second_set) + 1]] <-
           xml_tc(
             xml_p(
-              xml_pPr(),
+              xml_pPr(xml_spacing(before = 0, after = 60)),
               xml_r(
+                xml_rPr(
+                  xml_r_font(),
+                  xml_sz(val = 20)
+                ),
                 xml_t(
                   remaining_headings_labels[j]
                 )
@@ -827,20 +841,6 @@ create_columns_component_xml <- function(data) {
             )
           )
 
-
-          # htmltools::tags$th(
-          #   class = paste(
-          #     c(
-          #       "gt_col_heading",
-          #       "gt_columns_bottom_border",
-          #       paste0("gt_", remaining_alignment)
-          #     ),
-          #     collapse = " "
-          #   ),
-          #   rowspan = 1, colspan = 1,
-          #   style = remaining_style,
-          #   htmltools::HTML(remaining_headings_labels[j])
-          # )
       }
 
       # TODO: convert to XML
@@ -878,6 +878,15 @@ create_body_component_xml <- function(data) {
   stub_components <- dt_stub_components(data = data)
 
   styles_tbl <- dt_styles_get(data = data)
+
+  # Get table options
+  row_group_border_top_color <- dt_options_get_value(data = data, option = "row_group_border_top_color")
+  row_group_border_bottom_color <- dt_options_get_value(data = data, option = "row_group_border_bottom_color")
+  row_group_border_left_color <- dt_options_get_value(data = data, option = "row_group_border_left_color")
+  row_group_border_right_color <- dt_options_get_value(data = data, option = "row_group_border_right_color")
+  table_body_hlines_color <- dt_options_get_value(data = data, option = "table_body_hlines_color")
+  table_body_vlines_color <- dt_options_get_value(data = data, option = "table_body_vlines_color")
+  table_border_bottom_color <- dt_options_get_value(data, option = "table_border_bottom_color")
 
   n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
   n_rows <- nrow(body)
@@ -937,46 +946,6 @@ create_body_component_xml <- function(data) {
       dplyr::mutate(group_label = gsub("^NA", "\u2014", group_label))
   }
 
-  # # Is the stub to be striped?
-  # table_stub_striped <-
-  #   dt_options_get_value(
-  #     data = data,
-  #     option = "row_striping_include_stub"
-  #   )
-  #
-  # # Are the rows in the table body to be striped?
-  # table_body_striped <-
-  #   dt_options_get_value(
-  #     data = data,
-  #     option = "row_striping_include_table_body"
-  #   )
-
-  # extra_classes_1 <- rep_len(list(NULL), n_cols)
-  #
-  # extra_classes_2 <-
-  #   rep_len(list(if (table_body_striped) "gt_striped" else NULL), n_cols)
-  #
-  # if (stub_available) {
-  #
-  #   extra_classes_1[[1]] <- "gt_stub"
-  #
-  #   extra_classes_2[[1]] <-
-  #     c("gt_stub", if (table_stub_striped) "gt_striped" else NULL)
-  # }
-  #
-  # has_tbl_body_styles <- any(c("stub", "data") %in% styles_tbl$locname)
-  # has_row_group_styles <- "row_groups" %in% styles_tbl$locname
-  #
-  # if (has_tbl_body_styles) {
-  #   styles_tbl_body <- subset(styles_tbl, locname %in% c("stub", "data"))
-  # } else {
-  #   row_styles <- rep_len(list(NULL), n_cols)
-  # }
-  #
-  # if (has_row_group_styles) {
-  #   styles_tbl_row_groups <- subset(styles_tbl, locname == "row_groups")
-  # }
-
   body_rows <-
     lapply(
       seq_len(n_rows),
@@ -989,38 +958,33 @@ create_body_component_xml <- function(data) {
         #
         if (!is.null(groups_rows_df) && i %in% groups_rows_df$row_start) {
 
-          # group_id <-
-          #   groups_rows_df[
-          #     which(groups_rows_df$row_start %in% i), "group_id"
-          #   ][[1]]
-
           group_label <-
             groups_rows_df[
               which(groups_rows_df$row_start %in% i), "group_label"
             ][[1]]
 
-          # if (has_row_group_styles) {
-          #
-          #   styles_row <-
-          #     styles_tbl_row_groups[styles_tbl_row_groups$grpname == group_id, ]
-          #
-          #   row_style <-
-          #     if (nrow(styles_row) > 0) {
-          #       styles_row$html_style
-          #     } else {
-          #       NULL
-          #     }
-          #
-          # } else {
-          #   row_style <- NULL
-          # }
 
           group_heading_row <-
             xml_tr(
               xml_tc(
+                xml_tcPr(
+                  xml_tc_borders(
+                    xml_border("top", size = 16, color = row_group_border_top_color),
+                    xml_border("bottom", size = 16, color = row_group_border_bottom_color),
+                    xml_border("left", color = row_group_border_left_color),
+                    xml_border("right", color = row_group_border_right_color)
+                  )
+                ),
                 xml_p(
-                  xml_pPr(xml_gridSpan(val = as.character(n_cols))),
+                  xml_pPr(
+                    xml_gridSpan(val = as.character(n_cols)),
+                    xml_spacing(before = 0, after = 60)
+                  ),
                   xml_r(
+                    xml_rPr(
+                      xml_r_font(),
+                      xml_sz(val = 20)
+                    ),
                     xml_t(
                       htmltools::HTML(group_label)
                     )
@@ -1036,30 +1000,27 @@ create_body_component_xml <- function(data) {
         # Create a body row
         #
 
-        # extra_classes <- if (i %% 2 == 0) extra_classes_2 else extra_classes_1
-        #
-        # if (has_tbl_body_styles) {
-        #
-        #   styles_row <-
-        #     styles_tbl_body[styles_tbl_body$rownum == i, ]
-        #
-        #   row_styles <-
-        #     build_row_styles(
-        #       styles_resolved_row = styles_row,
-        #       stub_available = stub_available,
-        #       n_cols = n_cols
-        #     )
-        # }
-
         row_cells <- list()
 
         for (y in seq_along(output_df_row_as_vec(i))) {
 
           row_cells[[length(row_cells) + 1]] <-
             xml_tc(
+              xml_tcPr(
+                xml_tc_borders(
+                  xml_border("top", color = table_body_hlines_color),
+                  xml_border("bottom", color = table_body_hlines_color),
+                  xml_border("left", color = table_body_vlines_color),
+                  xml_border("right", color = table_body_vlines_color)
+                )
+              ),
               xml_p(
-                xml_pPr(),
+                xml_pPr(xml_spacing(before = 0, after = 60)),
                 xml_r(
+                  xml_rPr(
+                    xml_r_font(),
+                    xml_sz(val = 20)
+                  ),
                   xml_t(
                     output_df_row_as_vec(i)[y]
                   )
@@ -1099,11 +1060,10 @@ create_body_component_xml <- function(data) {
               list_of_summaries = list_of_summaries,
               boxh = boxh,
               group_id = group_id,
-              styles_resolved = styles_tbl,
               locname = "summary_cells",
-              first_row_class = "gt_first_summary_row",
-              summary_row_class = "gt_summary_row",
-              col_alignment = col_alignment
+              col_alignment = col_alignment,
+              table_body_hlines_color = table_body_hlines_color,
+              table_body_vlines_color = table_body_vlines_color
             )
 
           body_section <- append(body_section, summary_section)
@@ -1127,11 +1087,10 @@ create_body_component_xml <- function(data) {
         list_of_summaries = list_of_summaries,
         boxh = boxh,
         group_id = grand_summary_col,
-        styles_resolved = styles_tbl,
         locname = "grand_summary_cells",
-        first_row_class = "gt_first_grand_summary_row",
-        summary_row_class = "gt_grand_summary_row",
-        col_alignment = col_alignment
+        col_alignment = col_alignment,
+        table_body_hlines_color = table_body_hlines_color,
+        table_body_vlines_color = table_body_vlines_color
       )
 
     body_rows <- c(body_rows, grand_summary_section)
@@ -1166,22 +1125,6 @@ create_source_notes_component_xml <- function(data) {
     n_cols <- n_data_cols
   }
 
-  # # Get the style attrs for the source notes
-  # if ("source_notes" %in% styles_tbl$locname) {
-  #
-  #   source_notes_style <- dplyr::filter(styles_tbl, locname == "source_notes")
-  #
-  #   source_notes_styles <-
-  #     if (nrow(source_notes_style) > 0) {
-  #       paste(source_notes_style$html_style, collapse = " ")
-  #     } else {
-  #       NULL
-  #     }
-  #
-  # } else {
-  #   source_notes_styles <- NULL
-  # }
-
   source_note_rows <-
     lapply(
       source_note,
@@ -1191,8 +1134,15 @@ create_source_notes_component_xml <- function(data) {
           xml_tr(
             xml_tc(
               xml_p(
-                xml_pPr(xml_gridSpan(val = as.character(n_cols))),
+                xml_pPr(
+                  xml_gridSpan(val = as.character(n_cols)),
+                  xml_spacing(before = 0, after = 30)
+                ),
                 xml_r(
+                  xml_rPr(
+                    xml_r_font(),
+                    xml_sz(val = 20)
+                  ),
                   xml_t(
                     htmltools::HTML(x)
                   )
@@ -1270,18 +1220,26 @@ create_footnotes_component_xml <- function(data) {
           xml_tr(
             xml_tc(
               xml_p(
-                xml_pPr(xml_gridSpan(val = as.character(n_cols))),
+                xml_pPr(
+                  xml_gridSpan(val = as.character(n_cols)),
+                  xml_spacing(before = 0, after = 30)
+                ),
                 xml_r(
-                  xml_t(
-                    xml_rPr(
-                      xml_vert_align(v_align = "superscript"),
-                      xml_t(footnote_ids[x])
-                    ),
-                    xml_rPr(
-                      xml_vert_align(v_align = "baseline"),
-                      xml_t(footnote_text[x])
-                    )
-                  )
+                  xml_rPr(
+                    xml_r_font(),
+                    xml_sz(val = 20),
+                    xml_vert_align(v_align = "superscript"),
+                    xml_i()
+                  ),
+                  xml_t(footnote_ids[x])
+                ),
+                xml_r(
+                  xml_rPr(
+                    xml_r_font(),
+                    xml_sz(val = 20),
+                    xml_vert_align(v_align = "baseline")
+                  ),
+                  xml_t(footnote_text[x])
                 )
               )
             )
@@ -1296,11 +1254,10 @@ create_footnotes_component_xml <- function(data) {
 summary_rows_xml <- function(list_of_summaries,
                              boxh,
                              group_id,
-                             styles_resolved,
                              locname,
-                             first_row_class,
-                             summary_row_class,
-                             col_alignment) {
+                             col_alignment,
+                             table_body_hlines_color,
+                             table_body_vlines_color) {
 
   # Obtain all of the visible (`"default"`), non-stub column names
   # for the table from the `boxh` object
@@ -1322,34 +1279,7 @@ summary_rows_xml <- function(list_of_summaries,
       unname(unlist(summary_df[j, ]))
     }
 
-    stub_classes <- rep_len(list(NULL), n_cols)
-    stub_classes[[1]] <- "gt_stub"
-
-    alignment_classes <- c("gt_right", paste0("gt_", col_alignment))
-
-    styles_resolved_group <-
-      dplyr::filter(
-        styles_resolved,
-        grpname == .env$group_id,
-        locname == .env$locname
-      ) %>%
-      dplyr::mutate(grprow = round((rownum %% 1) * 100))
-
     for (j in seq_len(nrow(summary_df))) {
-
-      if (group_id == grand_summary_col) {
-
-        # In the above condition, `grand_summary_col` is a global variable
-        # (`"::GRAND_SUMMARY"`) assigned in `dt_summary.R`)
-
-        styles_resolved_row <-
-          styles_resolved_group[styles_resolved_group$rownum == j, , drop = FALSE]
-
-      } else {
-
-        styles_resolved_row <-
-          styles_resolved_group[styles_resolved_group$grprow == j, , drop = FALSE]
-      }
 
       summary_row_cells <- list()
 
@@ -1357,9 +1287,21 @@ summary_rows_xml <- function(list_of_summaries,
 
         summary_row_cells[[length(summary_row_cells) + 1]] <-
           xml_tc(
+            xml_tcPr(
+              xml_tc_borders(
+                xml_border("top", size = if (j == 1) 16 else 2, color = table_body_hlines_color),
+                xml_border("bottom", size = if (j == 1) 16 else 2, color = table_body_hlines_color),
+                xml_border("left", color = table_body_vlines_color),
+                xml_border("right", color = table_body_vlines_color)
+              )
+            ),
             xml_p(
-              xml_pPr(),
+              xml_pPr(xml_spacing(before = 0, after = 60)),
               xml_r(
+                xml_rPr(
+                  xml_r_font(),
+                  xml_sz(val = 20)
+                ),
                 xml_t(
                   summary_df_row(j)[y]
                 )
@@ -1385,22 +1327,3 @@ summary_rows_xml <- function(list_of_summaries,
 
   summary_row_lines
 }
-
-# build_row_styles <- function(styles_resolved_row,
-#                              stub_available,
-#                              n_cols) {
-#
-#   row_styles <- rep_len(list(NULL), n_cols)
-#
-#   if (nrow(styles_resolved_row) > 0) {
-#     if (!stub_available) {
-#       row_styles[styles_resolved_row$colnum] <-
-#         styles_resolved_row$html_style
-#     } else {
-#       row_styles[styles_resolved_row$colnum + 1] <-
-#         styles_resolved_row$html_style
-#     }
-#   }
-#
-#   row_styles
-# }
