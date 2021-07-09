@@ -1,5 +1,3 @@
-context("Ensuring that the creation of tab components works as expected")
-
 testthat::local_edition(3)
 
 # Create a shorter version of `mtcars`
