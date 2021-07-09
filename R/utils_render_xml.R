@@ -76,8 +76,14 @@ xml_tr_height <- function(h_rule = c("auto", "exact", "atLeast"),
                           app = "word") {
 
   h_rule <- match.arg(h_rule)
-  tag <- htmltools::tag(`_tag_name` = xml_tag_type(dir, app), varArgs = list())
+  tag <- htmltools::tag(`_tag_name` = xml_tag_type("trHeight", app), varArgs = list())
   htmltools::tagAppendAttributes(tag, `w:hRule` = h_rule, `w:val` = height_twips)
+}
+
+# Indicator of row header
+# TODO: should be self-closing
+xml_tbl_header <- function(app = "word") {
+  htmltools::tag(`_tag_name` = xml_tag_type("tblHeader", app), varArgs = list())
 }
 
 # Table cell
@@ -146,8 +152,6 @@ xml_pPr <- function(..., app = "word") {
 
   htmltools::tag(`_tag_name` = xml_tag_type("pPr", app), varArgs = list(htmltools::HTML(paste0(...))))
 }
-
-
 
 # Paragraph style
 # TODO: should be self-closing
