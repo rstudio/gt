@@ -1,4 +1,7 @@
+
+#
 # XML tag functions
+#
 
 xml_tag_type <- function(tag_name, app) {
   paste0(substring(app, 1, 1), ":", tag_name)
@@ -306,66 +309,6 @@ footnote_mark_to_xml <- function(mark) {
     )
   )
 }
-
-# styles_to_xml <- function(styles) {
-#
-#   vapply(
-#     styles,
-#     FUN.VALUE = character(1), USE.NAMES = FALSE,
-#     FUN = function(x) {
-#
-#       if (any(is.null(names(x)))) {
-#
-#         style <- gsub(":", ": ", x, fixed = TRUE)
-#
-#       } else if (all(names(x) != "")) {
-#
-#         x <- cell_style_to_html(x)
-#
-#         style <-
-#           paste0(names(x), ": ", x, ";", collapse = " ") %>%
-#           tidy_gsub(";;", ";")
-#
-#       } else {
-#         style <- as.character(x)
-#       }
-#
-#       style
-#     }
-#   ) %>%
-#     paste(collapse = " ") %>%
-#     tidy_gsub("\n", " ")
-# }
-
-# cell_style_to_html <- function(style) {
-#   UseMethod("cell_style_to_html")
-# }
-
-# cell_style_to_html.default <- function(style) {
-#
-#   utils::str(style)
-#
-#   stop("Implement `cell_style_to_html()` for the object above.", call. = FALSE)
-# }
-
-# TODO: Make this work for XML
-# TODO: Add the `styles_to_xml()` function
-# # Upgrade `_styles` to gain a `word_style` column with XML style rules
-# add_xml_styles <- function(data) {
-#
-#   styles_tbl <- dt_styles_get(data = data)
-#
-#   if (nrow(styles_tbl) > 0) {
-#     styles_tbl <-
-#       dplyr::mutate(
-#         styles_tbl,
-#         html_style = vapply(
-#           styles, function(x) styles_to_xml(x), character(1))
-#       )
-#   }
-#
-#   dt_styles_set(data = data, styles = styles_tbl)
-# }
 
 
 # TODO: make table widths work for XML
