@@ -95,6 +95,13 @@ is_rtf <- function(x) {
   inherits(x, "rtf_text")
 }
 
+#' Does an object have the `xml_text` class?
+#'
+#' @noRd
+is_xml <- function(x) {
+  inherits(x, "xml_text")
+}
+
 #' Helper for providing a numeric value as pixels value
 #'
 #' @description
