@@ -366,9 +366,9 @@ context_missing_text <- function(missing_text,
     word =
       {
         if (!inherits(missing_text, "AsIs") && missing_text == "---") {
-          "---"
+          "\u2014"
         } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
-          "--"
+          "\u2013"
         } else {
           process_text(missing_text, context)
         }
