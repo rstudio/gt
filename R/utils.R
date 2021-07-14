@@ -448,6 +448,7 @@ markdown_to_xml <- function(text) {
   text
 }
 
+# TODO: Make XML versions of these
 cmark_rules_xml <- list(
 
   heading = function(x, process) {
@@ -460,14 +461,14 @@ cmark_rules_xml <- list(
     )
   },
   thematic_break = function(x, process) {
-    rtf_raw("{\\qc \\f0 \\sa180 \\emdash\\emdash\\emdash\\emdash\\emdash}")
+    "<w:pict>
+      <v:rect style=\"width:500pt;height:1pt;\" o:hralign=\"center\" fillcolor=\"#bbbbbb\" stroked=\"f\"/>
+    </w:pict>"
   },
   link = function(x, process) {
-    # NOTE: RTF doesn't handle the `title` attr (Pandoc also ignores)
-    destination <- xml2::xml_attr(x, attr = "destination")
-    text <- process(xml2::xml_children(x))
-    if (text == "") text <- destination
-    rtf_raw("{\\field{\\*\\fldinst{HYPERLINK \"", destination, "\"}}{\\fldrslt{\\ul ", text, "}}}")
+    # NOTE: Links are difficult to insert in OOXML documents because
+    # a relationship must be provided in the document.xml.rels file
+    xml2::xml_text(x)
   },
   list = function(x, process) {
 
@@ -476,38 +477,35 @@ cmark_rules_xml <- list(
 
     # NOTE: `start`, `delim`, and `tight` attrs are ignored; we also
     # assume there is only `type` values of "ordered" and "bullet" (unordered)
-    rtf_raw(
+    htmltools::HTML(
       paste(
-        "\\pard\\intbl\\itap1\\li300\\fi-300",
-        paste(
-          vapply(
-            seq_len(n_items),
-            FUN.VALUE = character(1),
-            USE.NAMES = FALSE,
-            FUN = function(n) {
+        vapply(
+          seq_len(n_items),
+          FUN.VALUE = character(1),
+          USE.NAMES = FALSE,
+          FUN = function(n) {
 
-              paste0(
-                ifelse(n == 1, "\\ls1\\ilvl0\\cf0 \n", ""),
-                "{\\listtext\t}",
-                ifelse(type == "bullet", "\\u8226  ", ""),
-                process(xml2::xml_children(x)[n]),
-                "\\",
-                "\n"
-              )
-            }
-          ),
-          collapse = ""
+            paste(
+              ifelse(type == "bullet", "\u2022", ""),
+              process(xml2::xml_children(x)[n]),
+              collapse = ""
+            )
+          }
         ),
-        collapse = ""
+        collapse = "<w:br/>"
       )
     )
   },
   item = function(x, process) {
     # TODO: probably needs something like process_children()
-    rtf_escape(xml2::xml_text(x))
+    xml2::xml_text(x)
   },
   code_block = function(x, process) {
-    rtf_paste0(rtf_raw("{\\f1 "), xml2::xml_text(x), rtf_raw("}"))
+    htmltools::tagList(
+      xml_rPr(xml_r_font(ascii_font = "Courier", ansi_font = "Courier")),
+      xml_t(xml2::xml_text(x)),
+      xml_rPr(xml_r_font(ascii_font = "Calibri", ansi_font = "Calibri"))
+    )
   },
   html_inline = function(x, process) {
 
@@ -561,17 +559,21 @@ cmark_rules_xml <- list(
     return(rtf_raw(""))
   },
   softbreak = function(x, process) {
-    rtf_raw("\n ")
+    "\n "
   },
   linebreak = function(x, process) {
-    rtf_raw("\\line ")
+    "<w:br/>"
   },
   block_quote = function(x, process) {
     # TODO: Implement
     process(xml2::xml_children(x))
   },
   code = function(x, process) {
-    rtf_paste0(rtf_raw("{\\f1 "), xml2::xml_text(x), rtf_raw("}"))
+    htmltools::tagList(
+      xml_rPr(xml_r_font(ascii_font = "Courier", ansi_font = "Courier")),
+      xml_t(xml2::xml_text(x)),
+      xml_rPr(xml_r_font(ascii_font = "Calibri", ansi_font = "Calibri"))
+    )
   },
   strong = function(x, process) {
     htmltools::tagList(
@@ -579,21 +581,15 @@ cmark_rules_xml <- list(
     )
   },
   emph = function(x, process) {
-    rtf_raw(
-      "{\\i ", process(xml2::xml_children(x)), rtf_raw("}")
+    htmltools::tagList(
+      xml_rPr(xml_i(active = TRUE)), process(xml2::xml_children(x)), xml_rPr(xml_i(active = FALSE))
     )
   },
   text = function(x, process) {
-    rtf_escape(xml2::xml_text(x))
+    xml2::xml_text(x)
   },
   paragraph = function(x, process) {
-
-    rtf_paste0(
-      rtf_raw("{"),
-      process(xml2::xml_children(x)),
-      #if (!is_last(x)) rtf_raw("\\par"),
-      rtf_raw("}")
-    )
+    xml2::xml_text(x)
   }
 )
 
