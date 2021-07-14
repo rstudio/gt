@@ -306,9 +306,9 @@ footnote_mark_to_xml <- function(mark) {
     htmltools::tagList(
       xml_rPr(
         xml_vert_align(v_align = "superscript"),
-        xml_i(),
+        xml_i(active = TRUE),
         xml_t(mark),
-        xml_i(),
+        xml_i(active = FALSE),
         xml_vert_align(v_align = "baseline")
       )
     )
@@ -383,13 +383,11 @@ create_table_props_component_xml <- function(data) {
 
   table_properties <-
     xml_tblPr(
-      xml_tblStyle(
-        xml_tbl_cell_margins(
-          xml_width("top"),
-          xml_width("bottom"),
-          xml_width("left", width = 60),
-          xml_width("right", width = 60)
-        )
+      xml_tbl_cell_margins(
+        xml_width("top"),
+        xml_width("bottom"),
+        xml_width("left", width = 60),
+        xml_width("right", width = 60)
       ),
       xml_tblW(),
       xml_tblLook()
