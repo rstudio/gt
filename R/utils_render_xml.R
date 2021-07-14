@@ -47,6 +47,7 @@ xml_tblLook <- function(first_row = "0",
 }
 
 # Table style (child of `tblPr`)
+# TODO: should be self-closing
 xml_tblStyle <- function(val = "Table", app = "word") {
 
   tag <- htmltools::tag(`_tag_name` = xml_tag_type("tblStyle", app), varArgs = list())
@@ -245,21 +246,25 @@ xml_t <- function(..., xml_space = "preserve", app = "word") {
 
 # Bold text specifier (toggle property)
 # TODO: should be self-closing
-xml_b <- function(app = "word") {
-  htmltools::tag(`_tag_name` = xml_tag_type("b", app), varArgs = list())
+xml_b <- function(active = TRUE, app = "word") {
+
+  tag <- htmltools::tag(`_tag_name` = xml_tag_type("b", app), varArgs = list())
+  htmltools::tagAppendAttributes(tag, `w:val` = tolower(as.character(active)))
 }
 
 # Italics text specifier (toggle property)
 # TODO: should be self-closing
-xml_i <- function(app = "word") {
-  htmltools::tag(`_tag_name` = xml_tag_type("i", app), varArgs = list())
+xml_i <- function(active = TRUE, app = "word") {
+
+  tag <- htmltools::tag(`_tag_name` = xml_tag_type("i", app), varArgs = list())
+  htmltools::tagAppendAttributes(tag, `w:val` = tolower(as.character(active)))
 }
 
 # Font size in half points
 # TODO: should be self-closing
-xml_sz <- function(..., val = 24, app = "word") {
+xml_sz <- function(val = 24, app = "word") {
 
-  tag <- htmltools::tag(`_tag_name` = xml_tag_type("sz", app), varArgs = list(htmltools::HTML(paste0(...))))
+  tag <- htmltools::tag(`_tag_name` = xml_tag_type("sz", app), varArgs = list())
   htmltools::tagAppendAttributes(tag, `w:val` = val)
 }
 
@@ -310,6 +315,13 @@ footnote_mark_to_xml <- function(mark) {
   )
 }
 
+# Mark the given text as being XML, meaning, it should not be escaped if passed
+# to xml_text
+xml_raw <- function(...) {
+  text <- paste0(..., collapse = "")
+  class(text) <- "xml_text"
+  text
+}
 
 # TODO: make table widths work for XML
 # Get the attributes for the table tag
