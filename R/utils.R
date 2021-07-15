@@ -424,9 +424,9 @@ markdown_to_xml <- function(text) {
 
                 apply_rules(xml2::xml_contents(x))
 
-              } else if (is.character(rule)) {
-
-                xml_wrap(rule, x, apply_rules)
+              # } else if (is.character(rule)) {
+              #
+              #   xml_wrap(rule, x, apply_rules)
 
               } else if (is.function(rule)) {
 
@@ -508,6 +508,8 @@ cmark_rules_xml <- list(
     )
   },
   html_inline = function(x, process) {
+
+    # TODO: make this work for XML
 
     tag <- xml2::xml_text(x)
 
@@ -593,11 +595,10 @@ cmark_rules_xml <- list(
   }
 )
 
-# TODO: make this work for XML
-xml_wrap <- function(control, x, process) {
-  content <- paste0("", process(xml2::xml_contents(x))) # coerce even NULL to string
-  paste0("\\", control, " ", content, "\\", control, "0 ")
-}
+# xml_wrap <- function(control, x, process) {
+#   content <- paste0("", process(xml2::xml_contents(x))) # coerce even NULL to string
+#   paste0("\\", control, " ", content, "\\", control, "0 ")
+# }
 
 cmark_rules_rtf <- list(
 
