@@ -90,6 +90,20 @@ test_that("the `cells_title()` function works correctly", {
   helper_cells_title[[1]] %>%
     rlang::eval_tidy() %>%
     expect_equal("subtitle")
+
+  # Expect an error if the input to `cells_title()` is invalid
+  expect_error(cells_title(groups = NULL))
+  expect_error(cells_title(groups = 1:2))
+  expect_error(cells_title(groups = vars(title)))
+  expect_error(cells_title(groups = "titles"))
+  expect_error(cells_title(groups = c("title", "stubtitle")))
+  expect_error(cells_title(groups = c("title", "subtitle", "title")))
+  expect_error(cells_title(groups = c("title", "subtitle", "subtitle")))
+  expect_error(cells_title(groups = c("title", "title")))
+  expect_error(cells_title(groups = c("subtitle", "subtitle")))
+  expect_error(cells_title(groups = rep("title", 3)))
+  expect_error(cells_title(groups = ""))
+  expect_error(cells_title(groups = character(0)))
 })
 
 test_that("the `cells_column_labels()` function works correctly", {
