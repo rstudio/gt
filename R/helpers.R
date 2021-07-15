@@ -1717,14 +1717,19 @@ currency <- function(...,
 #'   `"expanded"`, `"extra-expanded"`, or `"ultra-expanded"`. Alternatively, we
 #'   can supply percentage values from `0\%` to `200\%`, inclusive. Negative
 #'   percentage values are not allowed.
+#' @param decorate Allows for text decoration effect to be applied. Here, we can
+#'   use `"overline"`, `"line-through"`, or `"underline"`.
+#' @param transform Allows for the transformation of text. Options are
+#'   `"uppercase"`, `"lowercase"`, or `"capitalize"`.
+#' @param whitespace A white-space preservation option. By default, runs of
+#'   white-space will be collapsed into single spaces but several options exist
+#'   to govern how white-space is collapsed and how lines might wrap at
+#'   soft-wrap opportunities. The keyword options are `"normal"`, `"nowrap"`,
+#'   `"pre"`, `"pre-wrap"`, `"pre-line"`, and `"break-spaces"`.
 #' @param indent The indentation of the text. Can be provided as a number that
 #'   is assumed to represent `px` values (or could be wrapped in the [px()])
 #'   helper function. Alternatively, this can be given as a percentage (easily
 #'   constructed with [pct()]).
-#' @param decorate allows for text decoration effect to be applied. Here, we can
-#'   use `"overline"`, `"line-through"`, or `"underline"`.
-#' @param transform Allows for the transformation of text. Options are
-#'   `"uppercase"`, `"lowercase"`, or `"capitalize"`.
 #'
 #' @return A list object of class `cell_styles`.
 #'
@@ -1770,21 +1775,21 @@ cell_text <- function(color = NULL,
                       style = NULL,
                       weight = NULL,
                       stretch = NULL,
-                      indent = NULL,
                       decorate = NULL,
-                      transform = NULL) {
+                      transform = NULL,
+                      whitespace = NULL,
+                      indent = NULL) {
 
   # Get all assigned values for the functions' arguments
-  style_names <- formals(cell_text) %>% names()
-  style_names <- mget(style_names)
+  style_names <- mget(names(formals(cell_text)))
 
   # Filter list by only the non-NULL (e.g., assigned with
   # value) elements
-  style_vals <- style_names %>% .[!vapply(., is.null, logical(1))]
+  style_vals <- style_names[!vapply(style_names, is.null, logical(1))]
 
   # Get a vector of argument names (`style_names`) for
   # validation purposes
-  style_names <- style_vals %>% names()
+  style_names <- names(style_vals)
 
   #
   # Validate textual styles values with `validate_style_in()`
@@ -1836,12 +1841,28 @@ cell_text <- function(color = NULL,
     in_vector = c("uppercase", "lowercase", "capitalize")
   )
 
+
+  validate_style_in(
+    style_vals, style_names,
+    arg_name = "whitespace",
+    in_vector = c(
+      "normal", "nowrap", "pre", "pre-wrap",
+      "pre-line", "break-spaces"
+    )
+  )
+
+  # Transform the `color` value, if present, so that X11 color names
+  # can be used in all output contexts
+  if ("color" %in% style_names) {
+    style_vals$color <- html_color(colors = style_vals$color)
+  }
+
   cell_style_structure(name = "cell_text", obj = style_vals)
 }
 
 cell_style_to_html.cell_text <- function(style) {
 
-  css <- style %>% unclass()
+  css <- unclass(style)
 
   css_names <-
     c(
@@ -1852,9 +1873,10 @@ cell_style_to_html.cell_text <- function(style) {
       style = "font-style",
       weight = "font-weight",
       stretch = "font-stretch",
-      indent = "text-indent",
       decorate = "text-decoration",
-      transform = "text-transform"
+      transform = "text-transform",
+      whitespace = "white-space",
+      indent = "text-indent"
     )
 
   html_names <- css_names[names(css)]
@@ -1925,9 +1947,9 @@ cell_fill <- function(color = "#D3D3D3",
     stop("If provided, `alpha` must be a single value", call. = FALSE)
   }
 
-  if (!is_rgba_col(color)) {
-    color <- html_color(colors = color, alpha = alpha)
-  }
+  # Transform the `color` value, if present, so that X11 color names
+  # can be used in all output contexts
+  color <- html_color(colors = color, alpha = alpha)
 
   style_vals <- list(color = color)
 
@@ -2057,14 +2079,16 @@ cell_borders <- function(sides = "all",
     "bottom", "b",
     "all", "everything", "a"
   ))) {
-    stop("The `sides` vector for `cell_borders()` has to include one ",
-         "or more of the following keywords (or short forms):\n",
-         " * \"left\" (or: \"l\")\n",
-         " * \"right\" (or: \"r\")\n",
-         " * \"top\" (or: \"t\")\n",
-         " * \"bottom\" (or: \"b\")\n",
-         " * \"all\" (or: \"a\", \"everything\"",
-         call. = FALSE)
+    stop(
+      "The `sides` vector for `cell_borders()` has to include one ",
+      "or more of the following keywords (or short forms):\n",
+      " * \"left\" (or: \"l\")\n",
+      " * \"right\" (or: \"r\")\n",
+      " * \"top\" (or: \"t\")\n",
+      " * \"bottom\" (or: \"b\")\n",
+      " * \"all\" (or: \"a\", \"everything\"",
+      call. = FALSE
+    )
   }
 
   # Resolve the selection of borders into a vector of

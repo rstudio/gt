@@ -1,5 +1,3 @@
-context("Ensuring that the creation of tab components works as expected")
-
 testthat::local_edition(3)
 
 # Create a shorter version of `mtcars`
@@ -881,7 +879,7 @@ test_that("a gt table contains custom styles at the correct locations", {
 
   # Expect that the stubhead label is styled
   tbl_html %>%
-    rvest::html_nodes("[style='background-color: #0000FF; color: white;']") %>%
+    rvest::html_nodes("[style='background-color: #0000FF; color: #FFFFFF;']") %>%
     rvest::html_text("[class='gt_col_heading gt_columns_bottom_border gt_left]") %>%
     expect_equal("cars")
 
@@ -899,13 +897,13 @@ test_that("a gt table contains custom styles at the correct locations", {
 
   # Expect that the summary cell (`Mercs`::`sum`/`hp`) is styled
   tbl_html %>%
-    rvest::html_nodes("[style='background-color: #00FF00; color: white;']") %>%
+    rvest::html_nodes("[style='background-color: #00FF00; color: #FFFFFF;']") %>%
     rvest::html_text("[class='gt_row gt_right gt_summary_row']") %>%
     expect_equal("943.00")
 
   # Expect that the grand summary cell (`sum`/`hp`) is styled
   tbl_html %>%
-    rvest::html_nodes("[style='background-color: #A020F0; color: white;']") %>%
+    rvest::html_nodes("[style='background-color: #A020F0; color: #FFFFFF;']") %>%
     rvest::html_text("[class='gt_row gt_grand_summary_row']") %>%
     expect_equal("4,694.00")
 
@@ -944,7 +942,7 @@ test_that("a gt table contains custom styles at the correct locations", {
   # Expect that the row caption `Merc 240D` has a cell background that
   # is ultimately steelblue, and, the font the white
   tbl_html %>%
-    rvest::html_nodes("[style='background-color: #4682B4; color: white;']") %>%
+    rvest::html_nodes("[style='background-color: #4682B4; color: #FFFFFF;']") %>%
     rvest::html_text() %>%
     expect_equal("Merc 240D")
 
@@ -959,7 +957,7 @@ test_that("a gt table contains custom styles at the correct locations", {
   # Expect that the `Mazdas` row group label
   # cell has a red background and white text
   tbl_html %>%
-    rvest::html_nodes("[style='background-color: #FF0000; color: white;']") %>%
+    rvest::html_nodes("[style='background-color: #FF0000; color: #FFFFFF;']") %>%
     rvest::html_text() %>%
     expect_equal("Mazdas")
 

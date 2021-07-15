@@ -5,7 +5,7 @@ source("data-raw/X02-currency_symbols.R")
 source("data-raw/X03-locales.R")
 source("data-raw/X04-palettes_strips.R")
 source("data-raw/X05-google_fonts.R")
-source("data-raw/X06-fractions.R")
+source("data-raw/X07-fractions.R")
 
 # Create internal datasets (`sysdata.rda`)
 usethis::use_data(
