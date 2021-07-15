@@ -131,15 +131,15 @@ xml_tcPr <- function(..., app = "word") {
   htmltools::tag(`_tag_name` = xml_tag_type("tcPr", app), varArgs = list(htmltools::HTML(paste0(...))))
 }
 
-# Span cells horizontally
+# Span cells horizontally (child of `tcPr`)
 xml_gridSpan <- function(val = "1", app = "word") {
 
   tag <- htmltools::tag(`_tag_name` = xml_tag_type("gridSpan", app), varArgs = list())
   htmltools::tagAppendAttributes(tag, `w:val` = val)
 }
 
-# Span cells vertically
-xml_v_merge <- function(val = c("continue", "restart"), app = "word") {
+# Span cells vertically (child of `tcPr`)
+xml_v_merge <- function(val = c("restart", "continue"), app = "word") {
 
   val <- match.arg(val)
   tag <- htmltools::tag(`_tag_name` = xml_tag_type("vMerge", app), varArgs = list())
@@ -647,12 +647,10 @@ create_columns_component_xml <- function(data) {
     spanners <- dt_spanners_print(data = data, include_hidden = FALSE)
     spanner_ids <- dt_spanners_print(data = data, include_hidden = FALSE, ids = TRUE)
 
-    # A list of <th> elements that will go in the top row. This includes
-    # spanner labels and column labels for solo columns (don't have spanner
-    # labels); in the latter case, rowspan=2 will be used.
+    # The list of elements that will go in the top row will be the spanners
     first_set <- list()
-    # A list of <th> elements that will go in the second row. This is all column
-    # labels that DO have spanners above them.
+
+    # The list of elements that will go in the second row
     second_set <- list()
 
     # Create the cell for the stubhead label
@@ -660,6 +658,7 @@ create_columns_component_xml <- function(data) {
 
       first_set[[length(first_set) + 1]] <-
         xml_tc(
+          xml_tcPr(xml_v_merge(val = "restart")),
           xml_p(
             xml_pPr(xml_spacing(before = 0, after = 60)),
             xml_r(
@@ -672,6 +671,12 @@ create_columns_component_xml <- function(data) {
               )
             )
           )
+        )
+
+      second_set[[length(second_set) + 1]] <-
+        xml_tc(
+          xml_tcPr(xml_v_merge(val = "continue")),
+          xml_p(xml_r(xml_t()))
         )
 
       headings_vars <- headings_vars[-1]
@@ -695,26 +700,15 @@ create_columns_component_xml <- function(data) {
       0
     )
 
-    for (i in seq(headings_vars)) {
+    for (i in seq_along(headings_vars)) {
 
       if (is.na(spanner_ids[i])) {
 
-        styles_heading <-
-          dplyr::filter(
-            styles_tbl,
-            locname == "columns_columns",
-            colname == headings_vars[i]
-          )
-
-        heading_style <-
-          if (nrow(styles_heading) > 0) {
-            styles_heading$html_style
-          } else {
-            NULL
-          }
-
+        # Case with no spanner labels in top row
+        # (merge both cells vertically and align text to bottom)
         first_set[[length(first_set) + 1]] <-
           xml_tc(
+            xml_tcPr(xml_v_merge(val = "restart")),
             xml_p(
               xml_pPr(xml_spacing(before = 0, after = 60)),
               xml_r(
@@ -723,16 +717,22 @@ create_columns_component_xml <- function(data) {
                   xml_sz(val = 20)
                 ),
                 xml_t(
-                  headings_labels[1]
+                  headings_labels[i]
                 )
               )
             )
           )
 
+        second_set[[length(second_set) + 1]] <-
+          xml_tc(
+            xml_tcPr(xml_v_merge(val = "continue")),
+            xml_p(xml_r(xml_t()))
+          )
+
       } else if (!is.na(spanner_ids[i])) {
 
-        # If colspans[i] == 0, it means that a previous cell's colspan
-        # will cover us.
+        # Case with no spanner labels are in top row
+        # (merge cells horizontally and align text to bottom)
         if (colspans[i] > 0) {
 
           first_set[[length(first_set) + 1]] <-
@@ -747,71 +747,39 @@ create_columns_component_xml <- function(data) {
                     xml_r_font(),
                     xml_sz(val = 20)
                   ),
-                  xml_t(
-                    spanners[i]
+                  xml_t(spanners[i])
+                )
+              )
+            )
+
+          for (j in seq_len(colspans[i])) {
+
+            second_set[[length(second_set) + 1]] <-
+              xml_tc(
+                xml_p(
+                  xml_pPr(
+                    xml_spacing(before = 0, after = 60)
+                  ),
+                  xml_r(
+                    xml_rPr(
+                      xml_r_font(),
+                      xml_sz(val = 20)
+                    ),
+                    xml_t(headings_labels[i + j - 1])
                   )
                 )
               )
-            )
+          }
         }
       }
+
     }
 
-    solo_headings <- headings_vars[is.na(spanner_ids)]
-    remaining_headings <- headings_vars[!(headings_vars %in% solo_headings)]
-
-    remaining_headings_indices <- which(remaining_headings %in% headings_vars)
-
-    remaining_headings_labels <-
-      boxh %>%
-      dplyr::filter(var %in% remaining_headings) %>%
-      dplyr::pull(column_label) %>%
-      unlist()
-
-    # col_alignment <-
-    #   col_alignment[-1][!(headings_vars %in% solo_headings)]
-
-    if (length(remaining_headings) > 0) {
-
-      second_set <- c()
-
-      for (j in seq(remaining_headings)) {
-
-        # TODO: convert to XML
-        second_set[[length(second_set) + 1]] <-
-          xml_tc(
-            xml_p(
-              xml_pPr(xml_spacing(before = 0, after = 60)),
-              xml_r(
-                xml_rPr(
-                  xml_r_font(),
-                  xml_sz(val = 20)
-                ),
-                xml_t(
-                  remaining_headings_labels[j]
-                )
-              )
-            )
-          )
-
-      }
-
-      # TODO: convert to XML
-      table_col_headings <-
-        htmltools::tagList(
-          xml_tr(htmltools::tagList(first_set)),
-          xml_tr(htmltools::tagList(second_set))
-        )
-
-    } else {
-
-      # TODO: convert to XML
-      # Create the `table_col_headings` HTML component
-      table_col_headings <-
-        htmltools::tagList(
-          xml_tr(htmltools::tagList(first_set))
-        )
-    }
+    table_col_headings <-
+      htmltools::tagList(
+        xml_tr(htmltools::tagList(first_set)),
+        xml_tr(htmltools::tagList(second_set))
+      )
   }
 
   htmltools::tagList(table_col_headings)
