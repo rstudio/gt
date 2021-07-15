@@ -994,6 +994,369 @@ fmt_percent <- function(data,
   )
 }
 
+#' Format values as a mixed fractions
+#'
+#' @description
+#' With numeric values in a **gt** table, we can perform mixed-fraction-based
+#' formatting. There are several options for setting the accuracy of the
+#' fractions (e.g., setting the number of desired figures in the denominator or
+#' expressing fractions with fixed denominators). The following options are
+#' available for controlling this type of formatting:
+#'
+#' - accuracy: how to express the fractional part of the mixed fractions; there
+#' are nine named options for this.
+#' - layout: for HTML output, we can choose to use diagonal or inline fractions
+#' - digit grouping separators: options to enable/disable digit separators
+#' and provide a choice of separator symbol for the whole number portion
+#' - pattern: option to use a text pattern for decoration of the formatted
+#' mixed fractions
+#' - locale-based formatting: providing a locale ID will result in number
+#' formatting specific to the chosen locale
+#'
+#' @details
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). A number of
+#' helper functions exist to make targeting more effective. Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the Arguments section for more information on this.
+#'
+#' @inheritParams fmt_number
+#' @param accuracy The type of fractions to generate. With either of `"1"`,
+#'   `"2"`, and `"3"` we can generate fractions with denominators comprising 1,
+#'   2, or 3 digits. Several options provide a fixed denominator: `"1/2"` (for
+#'   fractions as halves), `"1/4"` (quarters), `"1/8"` (eighths), `"1/16"`
+#'   (sixteenths), `"1/10"` (tenths), and `"1/100"` (hundreths).
+#' @param layout The `"diagonal"` layout (the default) will generate fractions
+#'   that are more aesthetically pleasing than the `"inline"` layout. The
+#'   diagonal layout is currently only supported for tables in the HTML output
+#'   format.
+#' @param incl_space An option for whether to include a space between the whole
+#'   value and the fraction (provided both are present). The default is to not
+#'   introduce a space character, however, if `layout = "inline"` then this
+#'   option is ignored since a space is required to distinguish the whole number
+#'   from the fraction.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @family Format Data
+#' @section Function ID:
+#' 3-6
+#'
+#' @import rlang
+#' @export
+fmt_fraction <- function(data,
+                         columns,
+                         rows = everything(),
+                         accuracy = c("1", "2", "3", "1/2", "1/4", "1/8", "1/16", "1/10", "1/100"),
+                         layout = c("diagonal", "inline"),
+                         use_seps = TRUE,
+                         pattern = "{x}",
+                         sep_mark = ",",
+                         dec_mark = ".",
+                         incl_space = FALSE,
+                         locale = NULL) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  accuracy <- match.arg(accuracy)
+  layout <- match.arg(layout)
+
+  # In the inline layout (where there is no special typesetting of the
+  # fraction part) we must include a space to distinguish between the
+  # whole number and fraction parts
+  if (layout == "inline") {
+    incl_space <- TRUE
+  }
+
+  # Use locale-based marks if a locale ID is provided
+  sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
+  dec_mark <- get_locale_dec_mark(locale, dec_mark)
+
+  # Stop function if `locale` does not have a valid value
+  validate_locale(locale)
+
+  # Stop function if any columns have data that is incompatible
+  # with this formatter
+  if (!column_classes_are_valid(data, {{ columns }}, valid_classes = c("numeric", "integer"))) {
+    stop("The `fmt_number()` function can only be used on `columns` with numeric data",
+         call. = FALSE)
+  }
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    fns = num_fmt_factory_multi(
+      pattern = pattern,
+      format_fn = function(x, context) {
+
+        # Round all values of x to the highest
+        # granularity required for this formatter
+        x <- round_gt(x, 3)
+
+        # Divide the `x` values in 'big' and 'small' components
+        big_x <- trunc(x)
+        small_x <- abs(x - big_x)
+
+        # Determine which of `x` are finite values
+        x_is_a_number <- is.finite(x)
+
+        # Determine which of `x` have the value zero
+        x_is_zero <- x == 0
+
+        # Get the correct minus mark based on the output context
+        minus_mark <- context_minus_mark(context = context)
+
+        # Get a table that contains the numerator and denominator
+        # parts for each value of `small_x`
+        frac_tbl <- get_frac_tbl(accuracy = accuracy, values = small_x)
+
+        # Determine which direction rounding should occur for certain values
+        up_down_vals <-
+          ifelse(x[!is.na(frac_tbl$one_up) & frac_tbl$one_up] > 0, 1, -1)
+
+        # Increase/decrease values by one where the `one_up` value is TRUE
+        big_x[!is.na(frac_tbl$one_up) & frac_tbl$one_up] <-
+          big_x[!is.na(frac_tbl$one_up) & frac_tbl$one_up] +
+          up_down_vals
+
+        # Format the 'big' portions of the numeric values
+        # to character-based numbers
+        big_x <-
+          format_num_to_str(
+            big_x,
+            context = context, decimals = 0, n_sigfig = NULL,
+            sep_mark = sep_mark, dec_mark = dec_mark,
+            drop_trailing_zeros = TRUE,
+            drop_trailing_dec_mark = TRUE,
+            format = "f"
+          )
+
+        # Eliminate the printing of solitary zeros (signed version as
+        # well); in mixed fractions between -1 and 1, we don't want to
+        # print the zero (we'll bring back zeros that stand alone in
+        # a later statement)
+        big_x <- gsub("^0$", "", big_x)
+        big_x <- gsub("^-0$", minus_mark, big_x)
+
+        # Generate the fractions based on the context
+        small_x_p <-
+          generate_fractions(
+            frac_tbl = frac_tbl,
+            layout = layout,
+            context = context
+          )
+
+        # Initialize a vector that will contain the finalized strings
+        x_str <- character(length(x))
+
+        # Generate mixed fractions
+        x_str[x_is_a_number] <-
+          paste0(
+            big_x[x_is_a_number],
+            if (incl_space) " ", "",
+            small_x_p[x_is_a_number]
+          )
+
+        # Trim whitespace
+        x_str <- gsub("(^ | $)", "", x_str)
+
+        # For values that are true zeros, ensure that
+        # only a single zero appears
+        x_str[x_is_zero] <- "0"
+
+        # Numbers that are rounded to zero will have empty strings
+        # for `x_str`; after ensuring these are real numbers and finite,
+        # display a zero
+        x_str[
+          (x_str == "" | x_str == " " | x_str == minus_mark ) &
+            x_is_a_number &
+            is.finite(x)
+        ] <- "0"
+
+        # In rare cases that Inf or -Inf appear, ensure that these
+        # special values are printed correctly
+        x_str[is.infinite(x)] <- x[is.infinite(x)]
+
+        # Replace any signed zeros with an undecorated zero; remove
+        # zeros where values are between -1 and 0; in situations where
+        # the `minus_mark` is separated from mixed fraction component
+        # by a space, eliminate the space
+        x_str <- gsub(paste0("^(", minus_mark, "|-)0$"), "0", x_str)
+        x_str <- gsub(paste0("^(", minus_mark, ")(0)(.+)$"), "\\1\\3", x_str)
+        x_str <- gsub(paste0(minus_mark, " "), minus_mark, x_str)
+
+        x_str
+      }
+    )
+  )
+}
+
+get_frac_tbl <- function(accuracy, values) {
+
+  lu_tbl <-
+    switch(
+      accuracy,
+      "1" = frac_1_d,
+      "2" = frac_10_d,
+      "3" = frac_100_d,
+      "1/2" = frac_1_2,
+      "1/4" = frac_1_4,
+      "1/8" = frac_1_8,
+      "1/16" = frac_1_16,
+      "1/10" = frac_1_10,
+      "1/100" = frac_1_100,
+      stop("Unknown `accuracy` value.")
+    )
+
+  digits <-
+    switch(
+      accuracy,
+      "1" = 1,
+      "2" = 2,
+      "3" = 3,
+      "1/2" =,
+      "1/4" =,
+      "1/8" =,
+      "1/16" =,
+      "1/10" =,
+      "1/100" = 2,
+      stop("Unknown `accuracy` value.")
+    )
+
+  values <- round_gt(values, digits = digits)
+
+  lookup_fractions(lu_tbl = lu_tbl, values = values)
+}
+
+lookup_fractions <- function(lu_tbl, values) {
+
+  precision <- floor(log10(nrow(lu_tbl) + 1))
+
+  frac_tbl <-
+    dplyr::tibble(num = integer(0), denom = integer(0), one_up = logical(0))
+
+  has_rounding <- "one_up" %in% names(lu_tbl)
+
+  for (value in values) {
+
+    if (is.na(value)) {
+
+      frac_tbl <-
+        dplyr::add_row(
+          frac_tbl,
+          num = NA_integer_,
+          denom = NA_integer_,
+          one_up = NA
+        )
+
+    } else if (value == 0) {
+
+      frac_tbl <-
+        dplyr::add_row(
+          frac_tbl,
+          num = 0L,
+          denom = 0L,
+          one_up = FALSE
+        )
+
+    } else if (value == 1) {
+
+      frac_tbl <-
+        dplyr::add_row(
+          frac_tbl,
+          num = 0L,
+          denom = 0L,
+          one_up = TRUE
+        )
+
+    } else {
+
+      idx <- round_gt(value, precision) == round_gt(lu_tbl$value, precision)
+
+      if (!has_rounding) {
+
+        frac_tbl <-
+          dplyr::add_row(
+            frac_tbl,
+            num = lu_tbl$num[idx][1],
+            denom = lu_tbl$denom[idx][1],
+            one_up = FALSE
+          )
+
+      } else {
+
+        frac_tbl <-
+          dplyr::add_row(
+            frac_tbl,
+            num = lu_tbl$num[idx][1],
+            denom = lu_tbl$denom[idx][1],
+            one_up = lu_tbl$one_up[idx][1]
+          )
+      }
+    }
+  }
+
+  frac_tbl
+}
+
+generate_fractions <- function(frac_tbl, layout, context) {
+
+  valid_frac <-
+    frac_tbl$num != 0 & !is.na(frac_tbl$num) &
+    frac_tbl$denom != 0 & !is.na(frac_tbl$denom)
+
+  zero_values <- frac_tbl$num == 0 & frac_tbl$denom == 0
+
+  if (context == "html" && layout == "diagonal") {
+
+    numerator_vec <-
+      paste0("<span class=\"gt_fraction_numerator\">", frac_tbl$num, "</span>")
+
+    denominator_vec <-
+      paste0("<span class=\"gt_fraction_denominator\">", frac_tbl$denom, "</span>")
+
+    slash_mark <-
+      htmltools::tags$span(
+        class = "gt_slash_mark",
+        htmltools::HTML(if (layout == "diagonal") "&frasl;" else "/")
+      )
+
+  } else {
+    numerator_vec <- frac_tbl$num
+    denominator_vec <- frac_tbl$denom
+    slash_mark <- "/"
+  }
+
+  fractions <-
+    paste0(
+      numerator_vec,
+      slash_mark,
+      denominator_vec
+    )
+
+  fractions[!valid_frac] <- ""
+  fractions[zero_values] <- ""
+
+  fractions
+}
+
+# The `round_gt()` function is used in gt over `base::round()` for consistency
+# in rounding across R versions; it uses the 'Round-Half-Up' (R-H-U) algorithm,
+# which is *not* used in R >= 4.0
+round_gt <- function(x, digits = 0) {
+
+  x_sign <- sign(x)
+  z <- abs(x) * 10^digits
+  z <- 0.5 + z + sqrt(.Machine$double.eps)
+  z <- trunc(z)
+  z <- z / 10^digits
+  z * x_sign
+}
+
 #' Format values as currencies
 #'
 #' @description
@@ -1099,7 +1462,7 @@ fmt_percent <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-6
+#' 3-7
 #'
 #' @import rlang
 #' @export
@@ -1241,7 +1604,7 @@ fmt_currency <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-7
+#' 3-8
 #'
 #' @import rlang
 #' @export

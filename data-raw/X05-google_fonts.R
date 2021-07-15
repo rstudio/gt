@@ -9,7 +9,7 @@ fs::dir_create(work_dir)
 
 # Download and extract the tarball for the google/font repository
 downloader::download(
-  "https://github.com/google/fonts/tarball/master",
+  "https://github.com/google/fonts/tarball/main",
   destfile = file.path(work_dir, "google_fonts.tar.gz")
 )
 utils::untar(file.path(work_dir, "google_fonts.tar.gz"), exdir = work_dir)
