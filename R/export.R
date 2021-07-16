@@ -531,6 +531,80 @@ as_rtf <- function(data,
   rtf_table
 }
 
+#' Output a **gt** object as Word
+#'
+#' @description
+#' Get the Open Office XML table tag content from a `gt_tbl` object as as a
+#' single-element character vector.
+#'
+#' @param data A table object that is created using the `gt()` function.
+#'
+#' @examples
+#' # Use `gtcars` to create a gt table;
+#' # add a header and then export as
+#' # OOXML code for Word
+#' tab_rtf <-
+#'   gtcars %>%
+#'   dplyr::select(mfr, model) %>%
+#'   dplyr::slice(1:2) %>%
+#'   gt() %>%
+#'   tab_header(
+#'     title = md("Data listing from **gtcars**"),
+#'     subtitle = md("`gtcars` is an R dataset")
+#'   ) %>%
+#'   as_word()
+#'
+#' @family Export Functions
+#' @section Function ID:
+#' 13-5
+#'
+#' @export
+as_word <- function(data) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  # Build all table data objects through a common pipeline
+  data <- build_data(data = data, context = "word")
+
+  # Composition of Word OOXML -----------------------------------------------
+
+  # Create the table properties component
+  table_props_component <- create_table_props_component_xml(data = data)
+
+  # Create the heading component
+  heading_component <- create_heading_component_xml(data = data)
+
+  # Create the columns component
+  columns_component <- create_columns_component_xml(data = data)
+
+  # Create the body component
+  body_component <- create_body_component_xml(data = data)
+
+  # Create the footnotes component
+  footnotes_component <- create_footnotes_component_xml(data = data)
+
+  # Create the source notes component
+  source_notes_component <- create_source_notes_component_xml(data = data)
+
+  # Compose the Word OOXML table
+  word_tbl <-
+    as.character(
+      xml_tbl(
+        paste0(
+          table_props_component,
+          heading_component,
+          columns_component,
+          body_component,
+          footnotes_component,
+          source_notes_component,
+          collapse = ""
+        )
+      )
+    )
+
+  word_tbl
+}
 
 #' Extract a summary list from a **gt** object
 #'
@@ -593,7 +667,7 @@ as_rtf <- function(data,
 #'
 #' @family Export Functions
 #' @section Function ID:
-#' 13-5
+#' 13-6
 #'
 #' @export
 extract_summary <- function(data) {

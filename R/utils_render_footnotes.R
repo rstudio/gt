@@ -388,6 +388,16 @@ set_footnote_marks_columns <- function(data,
               footnote_mark_to_latex(
                 footnotes_columns_group_marks$fs_id_coalesced[i])
             )
+
+        } else if (context == "word") {
+
+          text <-
+            paste0(
+              text,
+              footnote_mark_to_xml(
+                footnotes_columns_group_marks$fs_id_coalesced[i])
+            )
+
         }
 
         spanners_i <-
@@ -444,6 +454,15 @@ set_footnote_marks_columns <- function(data,
             paste0(
               text,
               footnote_mark_to_latex(
+                footnotes_columns_column_marks$fs_id_coalesced[i])
+            )
+
+        } else if (context == "word") {
+
+          text <-
+            paste0(
+              text,
+              footnote_mark_to_xml(
                 footnotes_columns_column_marks$fs_id_coalesced[i])
             )
         }
@@ -505,6 +524,11 @@ set_footnote_marks_stubhead <- function(data,
 
         label <-
           paste0(label, footnote_mark_to_latex(footnotes_stubhead_marks))
+
+      } else if (context == "word") {
+
+        label <-
+          paste0(label, footnote_mark_to_xml(footnotes_stubhead_marks))
       }
     }
   }
@@ -569,6 +593,13 @@ apply_footnotes_to_output <- function(data,
           paste0(text, footnote_mark_to_latex(
             footnotes_data_marks$fs_id_coalesced[i])
           )
+
+      } else if (context == "word") {
+
+        text <-
+          paste0(text, footnote_mark_to_xml(
+            footnotes_data_marks$fs_id_coalesced[i])
+          )
       }
 
       body[
@@ -631,6 +662,15 @@ set_footnote_marks_row_groups <- function(data,
           paste0(
             text,
             footnote_mark_to_latex(
+              footnotes_row_groups_marks$fs_id_coalesced[i])
+          )
+
+      } else if (context == "word") {
+
+        text <-
+          paste0(
+            text,
+            footnote_mark_to_xml(
               footnotes_row_groups_marks$fs_id_coalesced[i])
           )
       }
@@ -698,6 +738,11 @@ apply_footnotes_to_summary <- function(data,
 
         text <-
           paste0(text, footnote_mark_to_latex(footnotes_data_marks$fs_id_coalesced[i]))
+
+      } else if (context == "word") {
+
+        text <-
+          paste0(text, footnote_mark_to_xml(footnotes_data_marks$fs_id_coalesced[i]))
       }
 
       summary_df_list[[footnotes_data_marks[i, ][["grpname"]]]][[
@@ -740,6 +785,11 @@ apply_footnotes_to_summary <- function(data,
 
         text <-
           paste0(text, footnote_mark_to_latex(footnotes_data_marks$fs_id_coalesced[i]))
+
+      } else if (context == "word") {
+
+        text <-
+          paste0(text, footnote_mark_to_xml(footnotes_data_marks$fs_id_coalesced[i]))
       }
 
       summary_df_list[[grand_summary_col]][[

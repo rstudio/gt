@@ -111,4 +111,5 @@ Collate:
     'utils_render_html.R'
     'utils_render_latex.R'
     'utils_render_rtf.R'
+    'utils_render_xml.R'
     'zzz.R'

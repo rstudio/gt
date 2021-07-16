@@ -22,6 +22,11 @@ knitr_is_rtf_output <- function() {
   "rtf" %in% knitr::opts_knit$get("rmarkdown.pandoc.to")
 }
 
+knitr_is_word_output <- function() {
+
+  "word_document" %in% rmarkdown::all_output_formats(knitr::current_input())
+}
+
 #' Knit print the table
 #'
 #' This facilitates printing of the HTML table within a knitr code chunk.
@@ -34,10 +39,21 @@ knitr_is_rtf_output <- function() {
 knit_print.gt_tbl <- function(x, ...) {
 
   if (knitr_is_rtf_output()) {
+
     x <- as_rtf(x)
+
   } else if (knitr::is_latex_output()) {
+
     x <- as_latex(x)
+
+  } else if (knitr_is_word_output()) {
+
+    x <-
+      paste("```{=openxml}", as_word(x), "```\n\n", sep = "\n") %>%
+      knitr::asis_output()
+
   } else {
+
     # Default to HTML output
     x <- as.tags.gt_tbl(x, ...)
   }
