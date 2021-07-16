@@ -240,8 +240,13 @@ xml_r_font <- function(ascii_font = "Calibri", ansi_font = "Calibri", app = "wor
 # Literal text
 xml_t <- function(..., xml_space = "preserve", app = "word") {
 
-  tag <- htmltools::tag(`_tag_name` = xml_tag_type("t", app), varArgs = list(htmltools::HTML(paste0(...))))
-  htmltools::tagAppendAttributes(tag, `xml:space` = xml_space)
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("t", app),
+    varArgs = list(
+      htmltools::HTML(paste0(...)),
+      `xml:space` = xml_space
+      )
+    )
 }
 
 # Bold text specifier (toggle property)
