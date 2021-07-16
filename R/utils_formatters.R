@@ -429,15 +429,30 @@ context_percent_mark <- function(context) {
          "%")
 }
 
-#' Obtain the contextually correct pair of parentheses
+#' Obtain the contextually correct pair of parentheses and spacers
 #'
 #' @param context The output context.
 #' @noRd
 context_parens_marks <- function(context) {
 
   switch(context,
-         latex = c("(", ")"),
-         c("(", ")"))
+         latex = c("(", "\\rlap{)}"),
+         c("(", "<span style=\"position: absolute\">)</span>")
+	 )
+}
+
+context_pre_parens_spacer <- function(context) {
+
+  switch(context,
+         latex = "\\hphantom{(}",
+         "<span style=\"visibility: hidden;\">(</span>")
+}
+
+context_post_parens_spacer <- function(context) {
+
+  switch(context,
+         latex = "\\rlap{\\hphantom{)}}",
+         "<span style=\"visibility: hidden;position: absolute\">)</span>")
 }
 
 #' Obtain the contextually correct pair of opening/closing exponential strings
@@ -608,20 +623,29 @@ format_as_accounting <- function(x_str,
   # Store logical vector of `x` < 0
   x_lt0 <- x < 0
 
+  # Store logical vector `x` >= 0
+  x_gte0 <- x >= 0
+
   # Return values unchanged if there are no negative values
   if (!any(x_lt0)) {
     return(x_str)
   }
 
-  # Create the minus and parens marks for the context
+  # Create the minus and parens marks or placeholders for the context
   minus_mark <- context_minus_mark(context)
   parens_marks <- context_parens_marks(context)
+  pre_parens_spacer <- context_pre_parens_spacer(context)
+  post_parens_spacer <- context_post_parens_spacer(context)
 
   # Selectively remove minus sign and paste between parentheses
   x_str[x_lt0] <-
     x_str[x_lt0] %>%
     tidy_gsub(minus_mark, "", fixed = TRUE) %>%
     paste_between(x_2 = parens_marks)
+
+  x_str[x_gte0] <-
+    x_str[x_gte0] %>%
+    paste_between(x_2 = c(pre_parens_spacer, post_parens_spacer))
 
   x_str
 }
