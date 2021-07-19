@@ -131,6 +131,19 @@ xml_tcPr <- function(..., app = "word") {
   htmltools::tag(`_tag_name` = xml_tag_type("tcPr", app), varArgs = list(htmltools::HTML(paste0(...))))
 }
 
+# Vertical alignment of paragraph in cell (child of `tcPr`)
+xml_v_align <- function(v_align = c("center", "bottom", "top"), app = "word") {
+
+  v_align <- match.arg(v_align)
+
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("vAlign", app),
+    varArgs = list(
+      `w:val` = v_align
+    )
+  )
+}
+
 # Span cells horizontally (child of `tcPr`)
 xml_gridSpan <- function(val = "1", app = "word") {
 
