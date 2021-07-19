@@ -467,7 +467,7 @@ cmark_rules_xml <- list(
   },
   link = function(x, process) {
     # NOTE: Links are difficult to insert in OOXML documents because
-    # a relationship must be provided in the document.xml.rels file
+    # a relationship must be provided in the 'document.xml.rels' file
     xml2::xml_text(x)
   },
   list = function(x, process) {
@@ -503,7 +503,7 @@ cmark_rules_xml <- list(
   code_block = function(x, process) {
     htmltools::tagList(
       xml_rPr(xml_r_font(ascii_font = "Courier", ansi_font = "Courier")),
-      xml_t(xml2::xml_text(x)),
+      xml_t(xml2::xml_text(x), xml_space = "preserve"),
       xml_rPr(xml_r_font(ascii_font = "Calibri", ansi_font = "Calibri"))
     )
   },
@@ -573,7 +573,7 @@ cmark_rules_xml <- list(
   code = function(x, process) {
     htmltools::tagList(
       xml_rPr(xml_r_font(ascii_font = "Courier", ansi_font = "Courier")),
-      xml_t(xml2::xml_text(x)),
+      xml_t(xml2::xml_text(x), xml_space = "preserve"),
       xml_rPr(xml_r_font(ascii_font = "Calibri", ansi_font = "Calibri"))
     )
   },
