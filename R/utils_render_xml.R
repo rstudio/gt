@@ -244,10 +244,28 @@ xml_rPr <- function(..., app = "word") {
   htmltools::tag(`_tag_name` = xml_tag_type("rPr", app), varArgs = list(htmltools::HTML(paste0(...))))
 }
 
-# Font selection
+# Font selection (child of `rPr`)
+# TODO: should be self-closing
 xml_r_font <- function(ascii_font = "Calibri", ansi_font = "Calibri", app = "word") {
   tag <- htmltools::tag(`_tag_name` = xml_tag_type("rFonts", app), varArgs = list())
   htmltools::tagAppendAttributes(tag, `w:ascii` = ascii_font, `w:hAnsi` = ansi_font)
+}
+
+# Font size in half points (child of `rPr`)
+# TODO: should be self-closing
+xml_sz <- function(val = 24, app = "word") {
+
+  tag <- htmltools::tag(`_tag_name` = xml_tag_type("sz", app), varArgs = list())
+  htmltools::tagAppendAttributes(tag, `w:val` = val)
+}
+
+# Baseline adjustment of text (subscript, superscript) (child of `rPr`)
+# TODO: should be self-closing
+xml_baseline_adj <- function(v_align = c("superscript", "subscript", "baseline"), app = "word") {
+
+  v_align <- match.arg(v_align)
+  tag <- htmltools::tag(`_tag_name` = xml_tag_type("vertAlign", app), varArgs = list())
+  htmltools::tagAppendAttributes(tag, `w:val` = v_align)
 }
 
 # Literal text
@@ -278,13 +296,7 @@ xml_i <- function(active = TRUE, app = "word") {
   htmltools::tagAppendAttributes(tag, `w:val` = tolower(as.character(active)))
 }
 
-# Font size in half points
-# TODO: should be self-closing
-xml_sz <- function(val = 24, app = "word") {
 
-  tag <- htmltools::tag(`_tag_name` = xml_tag_type("sz", app), varArgs = list())
-  htmltools::tagAppendAttributes(tag, `w:val` = val)
-}
 
 # Specification of text color
 # TODO: should be self-closing
@@ -293,14 +305,6 @@ xml_color <- function(color = "D3D3D3", app = "word") {
   color <- toupper(gsub("#", "", color))
   tag <- htmltools::tag(`_tag_name` = xml_tag_type("color", app), varArgs = list())
   htmltools::tagAppendAttributes(tag, `w:val` = color)
-}
-
-# Vertical alignment of text
-xml_vert_align <- function(v_align = c("superscript", "subscript", "baseline"), app = "word") {
-
-  v_align <- match.arg(v_align)
-  tag <- htmltools::tag(`_tag_name` = xml_tag_type("vertAlign", app), varArgs = list())
-  htmltools::tagAppendAttributes(tag, `w:val` = v_align)
 }
 
 # Text break
@@ -323,11 +327,11 @@ footnote_mark_to_xml <- function(mark) {
   as.character(
     htmltools::tagList(
       xml_rPr(
-        xml_vert_align(v_align = "superscript"),
+        xml_baseline_adj(v_align = "superscript"),
         xml_i(active = TRUE),
         xml_t(mark),
         xml_i(active = FALSE),
-        xml_vert_align(v_align = "baseline")
+        xml_baseline_adj(v_align = "baseline")
       )
     )
   )
@@ -676,7 +680,14 @@ create_columns_component_xml <- function(data) {
 
       first_set[[length(first_set) + 1]] <-
         xml_tc(
-          xml_tcPr(xml_v_merge(val = "restart")),
+          xml_tcPr(
+            xml_v_merge(val = "restart"),
+            xml_v_align(v_align = "bottom"),
+            xml_tc_borders(
+              xml_border("left", color = column_labels_vlines_color),
+              xml_border("right", color = column_labels_vlines_color)
+            )
+          ),
           xml_p(
             xml_pPr(xml_spacing(before = 0, after = 60)),
             xml_r(
@@ -693,7 +704,13 @@ create_columns_component_xml <- function(data) {
 
       second_set[[length(second_set) + 1]] <-
         xml_tc(
-          xml_tcPr(xml_v_merge(val = "continue")),
+          xml_tcPr(
+            xml_v_merge(val = "continue"),
+            xml_tc_borders(
+              xml_border("left", color = column_labels_vlines_color),
+              xml_border("right", color = column_labels_vlines_color)
+            )
+          ),
           xml_p(xml_r(xml_t()))
         )
 
@@ -726,7 +743,14 @@ create_columns_component_xml <- function(data) {
         # (merge both cells vertically and align text to bottom)
         first_set[[length(first_set) + 1]] <-
           xml_tc(
-            xml_tcPr(xml_v_merge(val = "restart")),
+            xml_tcPr(
+              xml_v_merge(val = "restart"),
+              xml_v_align(v_align = "bottom"),
+              xml_tc_borders(
+                xml_border("left", color = column_labels_vlines_color),
+                xml_border("right", color = column_labels_vlines_color)
+              )
+            ),
             xml_p(
               xml_pPr(xml_spacing(before = 0, after = 60)),
               xml_r(
@@ -741,9 +765,17 @@ create_columns_component_xml <- function(data) {
             )
           )
 
+
         second_set[[length(second_set) + 1]] <-
           xml_tc(
-            xml_tcPr(xml_v_merge(val = "continue")),
+            xml_tcPr(
+              xml_v_merge(val = "continue"),
+              xml_tc_borders(
+                xml_border("left", color = column_labels_vlines_color),
+                xml_border("right", color = column_labels_vlines_color),
+                xml_border("bottom", size = 16, color = column_labels_border_bottom_color)
+              )
+            ),
             xml_p(xml_r(xml_t()))
           )
 
@@ -755,9 +787,17 @@ create_columns_component_xml <- function(data) {
 
           first_set[[length(first_set) + 1]] <-
             xml_tc(
+              xml_tcPr(
+                xml_tc_borders(
+                  xml_border("left", color = column_labels_vlines_color),
+                  xml_border("right", color = column_labels_vlines_color),
+                  xml_border("bottom", size = 16, color = column_labels_border_bottom_color)
+                )
+              ),
               xml_p(
                 xml_pPr(
                   xml_spacing(before = 0, after = 60),
+                  xml_jc(val = "center"),
                   xml_gridSpan(val = as.character(colspans[i]))
                 ),
                 xml_r(
@@ -774,6 +814,12 @@ create_columns_component_xml <- function(data) {
 
             second_set[[length(second_set) + 1]] <-
               xml_tc(
+                xml_tcPr(
+                  xml_tc_borders(
+                    xml_border("left", color = column_labels_vlines_color),
+                    xml_border("right", color = column_labels_vlines_color)
+                  )
+                ),
                 xml_p(
                   xml_pPr(
                     xml_spacing(before = 0, after = 60)
@@ -1167,7 +1213,7 @@ create_footnotes_component_xml <- function(data) {
                   xml_rPr(
                     xml_r_font(),
                     xml_sz(val = 20),
-                    xml_vert_align(v_align = "superscript"),
+                    xml_baseline_adj(v_align = "superscript"),
                     xml_i()
                   ),
                   xml_t(footnote_ids[x])
@@ -1176,7 +1222,7 @@ create_footnotes_component_xml <- function(data) {
                   xml_rPr(
                     xml_r_font(),
                     xml_sz(val = 20),
-                    xml_vert_align(v_align = "baseline")
+                    xml_baseline_adj(v_align = "baseline")
                   ),
                   xml_t(footnote_text[x])
                 )
