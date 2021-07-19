@@ -269,7 +269,9 @@ xml_baseline_adj <- function(v_align = c("superscript", "subscript", "baseline")
 }
 
 # Literal text
-xml_t <- function(..., xml_space = "preserve", app = "word") {
+xml_t <- function(..., xml_space = c("default", "preserve"), app = "word") {
+
+  xml_space <- match.arg(xml_space)
 
   htmltools::tag(
     `_tag_name` = xml_tag_type("t", app),
