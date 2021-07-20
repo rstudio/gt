@@ -1076,7 +1076,6 @@ create_body_component_xml <- function(data) {
               which(groups_rows_df$row_start %in% i), "group_label"
             ][[1]]
 
-
           group_heading_row <-
             xml_tr(
               xml_tc(
@@ -1086,6 +1085,9 @@ create_body_component_xml <- function(data) {
                     xml_border("bottom", size = 16, color = row_group_border_bottom_color),
                     xml_border("left", color = row_group_border_left_color),
                     xml_border("right", color = row_group_border_right_color)
+                  ),
+                  xml_tc_margins(
+                    xml_width("top", width = 25)
                   )
                 ),
                 xml_p(
@@ -1125,6 +1127,9 @@ create_body_component_xml <- function(data) {
                   xml_border("bottom", color = table_body_hlines_color),
                   xml_border("left", color = table_body_vlines_color),
                   xml_border("right", color = table_body_vlines_color)
+                ),
+                xml_tc_margins(
+                  xml_width("top", width = 50)
                 )
               ),
               xml_p(
@@ -1406,6 +1411,9 @@ summary_rows_xml <- function(list_of_summaries,
                 xml_border("bottom", size = if (j == 1) 16 else 2, color = table_body_hlines_color),
                 xml_border("left", color = table_body_vlines_color),
                 xml_border("right", color = table_body_vlines_color)
+              ),
+              xml_tc_margins(
+                xml_width("top", width = 50)
               )
             ),
             xml_p(
