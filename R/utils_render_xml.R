@@ -1,4 +1,3 @@
-
 #
 # XML tag functions
 #
@@ -47,7 +46,6 @@ xml_tblLook <- function(first_row = "0",
 }
 
 # Table style (child of `tblPr`)
-# TODO: should be self-closing
 xml_tblStyle <- function(val = "Table", app = "word") {
 
   tag <- htmltools::tag(`_tag_name` = xml_tag_type("tblStyle", app), varArgs = list())
@@ -83,7 +81,7 @@ xml_width <- function(dir = c("top", "bottom", "left", "right"),
 }
 
 # Table grid
-# TODO: should be self-closing
+
 xml_tblGrid <- function(..., app = "word") {
 
   htmltools::tag(`_tag_name` = xml_tag_type("tblGrid", app), varArgs = list(htmltools::HTML(paste0(...))))
@@ -102,7 +100,6 @@ xml_trPr <- function(..., app = "word") {
 }
 
 # Table row height
-# TODO: should be self-closing
 xml_tr_height <- function(h_rule = c("auto", "exact", "atLeast"),
                           height_twips = "150",
                           app = "word") {
@@ -113,7 +110,6 @@ xml_tr_height <- function(h_rule = c("auto", "exact", "atLeast"),
 }
 
 # Indicator of row header
-# TODO: should be self-closing
 xml_tbl_header <- function(app = "word") {
 
   htmltools::tag(`_tag_name` = xml_tag_type("tblHeader", app), varArgs = list())
@@ -167,7 +163,6 @@ xml_tc_borders <- function(..., app = "word") {
 
 # Table cell border setting (child of `tcBorders`)
 # The `size` is expressed in eighths of a point (min: 2, max: 96)
-# TODO: should be self-closing
 xml_border <- function(dir = c("top", "bottom", "left", "right"),
                        type = "single",
                        size = 2,
@@ -203,7 +198,6 @@ xml_pPr <- function(..., app = "word") {
 }
 
 # Paragraph style
-# TODO: should be self-closing
 xml_pStyle <- function(..., val = "Compact", app = "word") {
 
   tag <- htmltools::tag(`_tag_name` = xml_tag_type("pStyle", app), varArgs = list(htmltools::HTML(paste0(...))))
@@ -211,7 +205,6 @@ xml_pStyle <- function(..., val = "Compact", app = "word") {
 }
 
 # Paragraph alignment
-# TODO: should be self-closing
 xml_jc <- function(val = c("left", "center", "right"), app = "word") {
 
   val <- match.arg(val)
@@ -245,14 +238,12 @@ xml_rPr <- function(..., app = "word") {
 }
 
 # Font selection (child of `rPr`)
-# TODO: should be self-closing
 xml_r_font <- function(ascii_font = "Calibri", ansi_font = "Calibri", app = "word") {
   tag <- htmltools::tag(`_tag_name` = xml_tag_type("rFonts", app), varArgs = list())
   htmltools::tagAppendAttributes(tag, `w:ascii` = ascii_font, `w:hAnsi` = ansi_font)
 }
 
 # Font size in half points (child of `rPr`)
-# TODO: should be self-closing
 xml_sz <- function(val = 24, app = "word") {
 
   tag <- htmltools::tag(`_tag_name` = xml_tag_type("sz", app), varArgs = list())
@@ -260,7 +251,6 @@ xml_sz <- function(val = 24, app = "word") {
 }
 
 # Baseline adjustment of text (subscript, superscript) (child of `rPr`)
-# TODO: should be self-closing
 xml_baseline_adj <- function(v_align = c("superscript", "subscript", "baseline"), app = "word") {
 
   v_align <- match.arg(v_align)
@@ -283,7 +273,6 @@ xml_t <- function(..., xml_space = c("default", "preserve"), app = "word") {
 }
 
 # Bold text specifier (toggle property)
-# TODO: should be self-closing
 xml_b <- function(active = TRUE, app = "word") {
 
   tag <- htmltools::tag(`_tag_name` = xml_tag_type("b", app), varArgs = list())
@@ -291,17 +280,13 @@ xml_b <- function(active = TRUE, app = "word") {
 }
 
 # Italics text specifier (toggle property)
-# TODO: should be self-closing
 xml_i <- function(active = TRUE, app = "word") {
 
   tag <- htmltools::tag(`_tag_name` = xml_tag_type("i", app), varArgs = list())
   htmltools::tagAppendAttributes(tag, `w:val` = tolower(as.character(active)))
 }
 
-
-
 # Specification of text color
-# TODO: should be self-closing
 xml_color <- function(color = "D3D3D3", app = "word") {
 
   color <- toupper(gsub("#", "", color))
@@ -310,13 +295,11 @@ xml_color <- function(color = "D3D3D3", app = "word") {
 }
 
 # Text break
-# TODO: should be self-closing
 xml_br <- function(app = "word") {
   htmltools::tag(`_tag_name` = xml_tag_type("br", app), varArgs = list())
 }
 
 # Carriage return
-# TODO: should be self-closing
 xml_cr <- function(app = "word") {
   htmltools::tag(`_tag_name` = xml_tag_type("cr", app), varArgs = list())
 }
