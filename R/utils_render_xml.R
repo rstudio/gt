@@ -84,7 +84,7 @@ xml_tbl_cell_margins <- function(...,
   )
 }
 
-# Width specifiers (child of `tblCellMar`)
+# Width specifiers (child of `tblCellMar` or `tcMar`)
 xml_width <- function(dir = c("top", "bottom", "left", "right"),
                       width = 0,
                       type = c("dxa", "nil"),
@@ -180,6 +180,16 @@ xml_tcPr <- function(..., app = "word") {
 
   htmltools::tag(
     `_tag_name` = xml_tag_type("tcPr", app),
+    varArgs = list(htmltools::HTML(paste0(...)))
+  )
+}
+
+# Table cell margins (child of `tcPr`)
+xml_tc_margins <- function(...,
+                           app = "word") {
+
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("tcMar", app),
     varArgs = list(htmltools::HTML(paste0(...)))
   )
 }
