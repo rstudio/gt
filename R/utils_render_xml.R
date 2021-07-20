@@ -7,21 +7,39 @@ xml_tag_type <- function(tag_name, app) {
 }
 
 # Table
-xml_tbl <- function(..., app = "word") {
-  htmltools::tag(`_tag_name` = xml_tag_type("tbl", app), varArgs = list(htmltools::HTML(paste0(...))))
+xml_tbl <- function(...,
+                    app = "word") {
+
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("tbl", app),
+    varArgs = list(htmltools::HTML(paste0(...)))
+  )
 }
 
 # Table properties
-xml_tblPr <- function(..., app = "word") {
-  htmltools::tag(`_tag_name` = xml_tag_type("tblPr", app), varArgs = list(htmltools::HTML(paste0(...))))
+xml_tblPr <- function(...,
+                      app = "word") {
+
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("tblPr", app),
+    varArgs = list(htmltools::HTML(paste0(...)))
+  )
 }
 
 # Table width (child of `tblPr`)
-xml_tblW <- function(type = c("pct", "auto", "dxa", "nil"), w = "100%", app = "word") {
+xml_tblW <- function(type = c("pct", "auto", "dxa", "nil"),
+                     w = "100%",
+                     app = "word") {
 
   type <- match.arg(type)
-  tag <- htmltools::tag(`_tag_name` = xml_tag_type("tblW", app), varArgs = list())
-  htmltools::tagAppendAttributes(tag, `w:type` = type, `w:w` = w)
+
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("tblW", app),
+    varArgs = list(
+      `w:type` = type,
+      `w:w` = w
+    )
+  )
 }
 
 # Table look (child of `tblPr`)
@@ -33,9 +51,9 @@ xml_tblLook <- function(first_row = "0",
                         no_v_band = "0",
                         app = "word") {
 
-  tag <- htmltools::tag(`_tag_name` = xml_tag_type("tblLook", app), varArgs = list())
-  htmltools::tagAppendAttributes(
-      tag,
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("tblLook", app),
+    varArgs = list(
       `w:firstRow` = first_row,
       `w:lastRow` = last_row,
       `w:firstColumn` = first_column,
@@ -43,19 +61,27 @@ xml_tblLook <- function(first_row = "0",
       `w:noHBand` = no_h_band,
       `w:noVBand` = no_v_band
     )
+  )
 }
 
 # Table style (child of `tblPr`)
-xml_tblStyle <- function(val = "Table", app = "word") {
+xml_tblStyle <- function(val = "Table",
+                         app = "word") {
 
-  tag <- htmltools::tag(`_tag_name` = xml_tag_type("tblStyle", app), varArgs = list())
-  htmltools::tagAppendAttributes(tag, `w:val` = val)
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("tblStyle", app),
+    varArgs = list(`w:val` = val)
+  )
 }
 
 # Table cell margins
-xml_tbl_cell_margins <- function(..., app = "word") {
+xml_tbl_cell_margins <- function(...,
+                                 app = "word") {
 
-  htmltools::tag(`_tag_name` = xml_tag_type("tblCellMar", app), varArgs = list(htmltools::HTML(paste0(...))))
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("tblCellMar", app),
+    varArgs = list(htmltools::HTML(paste0(...)))
+  )
 }
 
 # Width specifiers (child of `tblCellMar`)
@@ -76,27 +102,43 @@ xml_width <- function(dir = c("top", "bottom", "left", "right"),
       bottom = "bottom"
     )
 
-  tag <- htmltools::tag(`_tag_name` = xml_tag_type(dir, app), varArgs = list())
-  htmltools::tagAppendAttributes(tag, `w:w` = width, `w:type` = type)
+  htmltools::tag(
+    `_tag_name` = xml_tag_type(dir, app),
+    varArgs = list(
+      `w:w` = width,
+      `w:type` = type
+    )
+  )
 }
 
 # Table grid
+xml_tblGrid <- function(...,
+                        app = "word") {
 
-xml_tblGrid <- function(..., app = "word") {
-
-  htmltools::tag(`_tag_name` = xml_tag_type("tblGrid", app), varArgs = list(htmltools::HTML(paste0(...))))
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("tblGrid", app),
+    varArgs = list(htmltools::HTML(paste0(...)))
+  )
 }
 
 # Table row
-xml_tr <- function(..., app = "word") {
+xml_tr <- function(...,
+                   app = "word") {
 
-  htmltools::tag(`_tag_name` = xml_tag_type("tr", app), varArgs = list(htmltools::HTML(paste0(...))))
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("tr", app),
+    varArgs = list(htmltools::HTML(paste0(...)))
+  )
 }
 
 # Table row properties
-xml_trPr <- function(..., app = "word") {
+xml_trPr <- function(...,
+                     app = "word") {
 
-  htmltools::tag(`_tag_name` = xml_tag_type("trPr", app), varArgs = list(htmltools::HTML(paste0(...))))
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("trPr", app),
+    varArgs = list(htmltools::HTML(paste0(...)))
+  )
 }
 
 # Table row height
@@ -105,26 +147,41 @@ xml_tr_height <- function(h_rule = c("auto", "exact", "atLeast"),
                           app = "word") {
 
   h_rule <- match.arg(h_rule)
-  tag <- htmltools::tag(`_tag_name` = xml_tag_type("trHeight", app), varArgs = list())
-  htmltools::tagAppendAttributes(tag, `w:hRule` = h_rule, `w:val` = height_twips)
+
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("trHeight", app),
+    varArgs = list(
+      `w:hRule` = h_rule,
+      `w:val` = height_twips
+    )
+  )
 }
 
 # Indicator of row header
 xml_tbl_header <- function(app = "word") {
 
-  htmltools::tag(`_tag_name` = xml_tag_type("tblHeader", app), varArgs = list())
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("tblHeader", app),
+    varArgs = list()
+  )
 }
 
 # Table cell
 xml_tc <- function(..., app = "word") {
 
-  htmltools::tag(`_tag_name` = xml_tag_type("tc", app), varArgs = list(htmltools::HTML(paste0(...))))
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("tc", app),
+    varArgs = list(htmltools::HTML(paste0(...)))
+  )
 }
 
 # Table cell properties
 xml_tcPr <- function(..., app = "word") {
 
-  htmltools::tag(`_tag_name` = xml_tag_type("tcPr", app), varArgs = list(htmltools::HTML(paste0(...))))
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("tcPr", app),
+    varArgs = list(htmltools::HTML(paste0(...)))
+  )
 }
 
 # Vertical alignment of paragraph in cell (child of `tcPr`)
@@ -134,31 +191,37 @@ xml_v_align <- function(v_align = c("center", "bottom", "top"), app = "word") {
 
   htmltools::tag(
     `_tag_name` = xml_tag_type("vAlign", app),
-    varArgs = list(
-      `w:val` = v_align
-    )
+    varArgs = list(`w:val` = v_align)
   )
 }
 
 # Span cells horizontally (child of `tcPr`)
 xml_gridSpan <- function(val = "1", app = "word") {
 
-  tag <- htmltools::tag(`_tag_name` = xml_tag_type("gridSpan", app), varArgs = list())
-  htmltools::tagAppendAttributes(tag, `w:val` = val)
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("gridSpan", app),
+    varArgs = list(`w:val` = val)
+  )
 }
 
 # Span cells vertically (child of `tcPr`)
 xml_v_merge <- function(val = c("restart", "continue"), app = "word") {
 
   val <- match.arg(val)
-  tag <- htmltools::tag(`_tag_name` = xml_tag_type("vMerge", app), varArgs = list())
-  htmltools::tagAppendAttributes(tag, `w:val` = val)
+
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("vMerge", app),
+    varArgs = list(`w:val` = val)
+  )
 }
 
 # Table cell borders
 xml_tc_borders <- function(..., app = "word") {
 
-  htmltools::tag(`_tag_name` = xml_tag_type("tcBorders", app), varArgs = list(...))
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("tcBorders", app),
+    varArgs = list(htmltools::HTML(paste0(...)))
+  )
 }
 
 # Table cell border setting (child of `tcBorders`)
@@ -171,6 +234,7 @@ xml_border <- function(dir = c("top", "bottom", "left", "right"),
                        app = "word") {
 
   dir <- match.arg(dir)
+
   dir <-
     switch(
       dir,
@@ -181,33 +245,53 @@ xml_border <- function(dir = c("top", "bottom", "left", "right"),
     )
 
   color <- toupper(gsub("#", "", color))
-  tag <- htmltools::tag(`_tag_name` = xml_tag_type(dir, app), varArgs = list())
-  htmltools::tagAppendAttributes(tag, `w:val` = type, `w:sz` = size, `w:space` = space, `w:color` = color)
+
+  htmltools::tag(
+    `_tag_name` = xml_tag_type(dir, app),
+    varArgs = list(
+      `w:val` = type,
+      `w:sz` = size,
+      `w:space` = space,
+      `w:color` = color
+    )
+  )
 }
 
 # Paragraph
 xml_p <- function(..., app = "word") {
 
-  htmltools::tag(`_tag_name` = xml_tag_type("p", app), varArgs = list(htmltools::HTML(paste0(...))))
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("p", app),
+    varArgs = list(htmltools::HTML(paste0(...)))
+  )
 }
 
 # Paragraph properties
 xml_pPr <- function(..., app = "word") {
 
-  htmltools::tag(`_tag_name` = xml_tag_type("pPr", app), varArgs = list(htmltools::HTML(paste0(...))))
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("pPr", app),
+    varArgs = list(htmltools::HTML(paste0(...)))
+  )
 }
 
 # Paragraph style
 xml_pStyle <- function(..., val = "Compact", app = "word") {
 
-  tag <- htmltools::tag(`_tag_name` = xml_tag_type("pStyle", app), varArgs = list(htmltools::HTML(paste0(...))))
-  htmltools::tagAppendAttributes(tag, `w:val` = val)
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("pStyle", app),
+    varArgs = list(
+      htmltools::HTML(paste0(...)),
+      `w:val` = val
+    )
+  )
 }
 
 # Paragraph alignment
 xml_jc <- function(val = c("left", "center", "right"), app = "word") {
 
   val <- match.arg(val)
+
   val <-
     switch(
       val,
@@ -216,50 +300,82 @@ xml_jc <- function(val = c("left", "center", "right"), app = "word") {
       center = "center"
     )
 
-  tag <- htmltools::tag(`_tag_name` = xml_tag_type("jc", app), varArgs = list())
-  htmltools::tagAppendAttributes(tag, `w:val` = val)
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("jc", app),
+    varArgs = list(`w:val` = val)
+  )
 }
 
 # Paragraph spacing
 xml_spacing <- function(before = 120, after = 120, app = "word") {
 
-  tag <- htmltools::tag(`_tag_name` = xml_tag_type("spacing", app), varArgs = list())
-  htmltools::tagAppendAttributes(tag, `w:before` = before, `w:after` = after)
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("spacing", app),
+    varArgs = list(
+      `w:before` = before,
+      `w:after` = after
+    )
+  )
 }
 
 # Text run
 xml_r <- function(..., app = "word") {
-  htmltools::tag(`_tag_name` = xml_tag_type("r", app), varArgs = list(htmltools::HTML(paste0(...))))
+
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("r", app),
+    varArgs = list(htmltools::HTML(paste0(...)))
+  )
 }
 
 # Text run properties
 xml_rPr <- function(..., app = "word") {
-  htmltools::tag(`_tag_name` = xml_tag_type("rPr", app), varArgs = list(htmltools::HTML(paste0(...))))
+
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("rPr", app),
+    varArgs = list(htmltools::HTML(paste0(...)))
+  )
 }
 
 # Font selection (child of `rPr`)
-xml_r_font <- function(ascii_font = "Calibri", ansi_font = "Calibri", app = "word") {
-  tag <- htmltools::tag(`_tag_name` = xml_tag_type("rFonts", app), varArgs = list())
-  htmltools::tagAppendAttributes(tag, `w:ascii` = ascii_font, `w:hAnsi` = ansi_font)
+xml_r_font <- function(ascii_font = "Calibri",
+                       ansi_font = "Calibri",
+                       app = "word") {
+
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("rFonts", app),
+    varArgs = list(
+      `w:ascii` = ascii_font,
+      `w:hAnsi` = ansi_font
+    )
+  )
 }
 
 # Font size in half points (child of `rPr`)
-xml_sz <- function(val = 24, app = "word") {
+xml_sz <- function(val = 24,
+                   app = "word") {
 
-  tag <- htmltools::tag(`_tag_name` = xml_tag_type("sz", app), varArgs = list())
-  htmltools::tagAppendAttributes(tag, `w:val` = val)
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("sz", app),
+    varArgs = list(`w:val` = val)
+  )
 }
 
 # Baseline adjustment of text (subscript, superscript) (child of `rPr`)
-xml_baseline_adj <- function(v_align = c("superscript", "subscript", "baseline"), app = "word") {
+xml_baseline_adj <- function(v_align = c("superscript", "subscript", "baseline"),
+                             app = "word") {
 
   v_align <- match.arg(v_align)
-  tag <- htmltools::tag(`_tag_name` = xml_tag_type("vertAlign", app), varArgs = list())
-  htmltools::tagAppendAttributes(tag, `w:val` = v_align)
+
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("vertAlign", app),
+    varArgs = list(`w:val` = v_align)
+  )
 }
 
 # Literal text
-xml_t <- function(..., xml_space = c("default", "preserve"), app = "word") {
+xml_t <- function(...,
+                  xml_space = c("default", "preserve"),
+                  app = "word") {
 
   xml_space <- match.arg(xml_space)
 
@@ -268,40 +384,57 @@ xml_t <- function(..., xml_space = c("default", "preserve"), app = "word") {
     varArgs = list(
       htmltools::HTML(paste0(...)),
       `xml:space` = xml_space
-      )
     )
+  )
 }
 
 # Bold text specifier (toggle property)
-xml_b <- function(active = TRUE, app = "word") {
+xml_b <- function(active = TRUE,
+                  app = "word") {
 
-  tag <- htmltools::tag(`_tag_name` = xml_tag_type("b", app), varArgs = list())
-  htmltools::tagAppendAttributes(tag, `w:val` = tolower(as.character(active)))
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("b", app),
+    varArgs = list(`w:val` = tolower(as.character(active)))
+  )
 }
 
 # Italics text specifier (toggle property)
-xml_i <- function(active = TRUE, app = "word") {
+xml_i <- function(active = TRUE,
+                  app = "word") {
 
-  tag <- htmltools::tag(`_tag_name` = xml_tag_type("i", app), varArgs = list())
-  htmltools::tagAppendAttributes(tag, `w:val` = tolower(as.character(active)))
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("i", app),
+    varArgs = list(tolower(as.character(active)))
+  )
 }
 
 # Specification of text color
 xml_color <- function(color = "D3D3D3", app = "word") {
 
   color <- toupper(gsub("#", "", color))
-  tag <- htmltools::tag(`_tag_name` = xml_tag_type("color", app), varArgs = list())
-  htmltools::tagAppendAttributes(tag, `w:val` = color)
+
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("color", app),
+    varArgs = list(`w:val` = color)
+  )
 }
 
 # Text break
 xml_br <- function(app = "word") {
-  htmltools::tag(`_tag_name` = xml_tag_type("br", app), varArgs = list())
+
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("br", app),
+    varArgs = list()
+  )
 }
 
 # Carriage return
 xml_cr <- function(app = "word") {
-  htmltools::tag(`_tag_name` = xml_tag_type("cr", app), varArgs = list())
+
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("cr", app),
+    varArgs = list()
+  )
 }
 
 #' Transform a footnote mark to an XML representation
