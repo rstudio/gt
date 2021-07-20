@@ -269,15 +269,9 @@ process_text <- function(text,
 
       return(markdown_to_xml(text))
 
-    } else if (inherits(text, "xml_text")) {
-
-      text <- as.character(text)
-
-      return(text)
-
     } else {
 
-      return(text)
+      return(as.character(text))
     }
 
   } else {
