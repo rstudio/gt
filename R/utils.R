@@ -578,13 +578,21 @@ cmark_rules_xml <- list(
     )
   },
   strong = function(x, process) {
-    htmltools::tagList(
-      xml_rPr(xml_b(active = TRUE)), process(xml2::xml_children(x)), xml_rPr(xml_b(active = FALSE))
+    htmltools::HTML(
+      paste0(
+        xml_rPr(xml_b(active = TRUE)),
+        as.character(process(xml2::xml_children(x))),
+        xml_rPr(xml_b(active = FALSE))
+      )
     )
   },
   emph = function(x, process) {
-    htmltools::tagList(
-      xml_rPr(xml_i(active = TRUE)), process(xml2::xml_children(x)), xml_rPr(xml_i(active = FALSE))
+    htmltools::HTML(
+      paste0(
+        xml_rPr(xml_i(active = TRUE)),
+        as.character(process(xml2::xml_children(x))),
+        xml_rPr(xml_i(active = FALSE))
+      )
     )
   },
   text = function(x, process) {
