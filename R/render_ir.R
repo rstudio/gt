@@ -19,11 +19,8 @@ render_to_ir <- function(data,
   # Upgrade `_styles` to gain a `html_style` column with CSS style rules
   data <- add_css_styles(data = data)
 
-  # Get attributes for the gt table
-  table_defs <- get_table_defs(data = data)
-
   # Create the column group component
-  colgroup_component <- get_table_col_group(table_colgroups = table_defs$table_colgroups)
+  colgroup_component <- create_col_group_ir(data = data)
 
   # Create the caption component
   caption_component <- create_caption_ir(data = data)
