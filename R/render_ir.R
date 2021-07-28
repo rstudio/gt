@@ -7,7 +7,8 @@
 #' @return A character object.
 #'
 #' @noRd
-render_to_ir <- function(data, target = c("html", "latex", "rtf")) {
+render_to_ir <- function(data,
+                         target = c("html", "latex", "rtf")) {
 
   target <- match.arg(target)
 
