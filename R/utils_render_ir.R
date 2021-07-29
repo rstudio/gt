@@ -288,3 +288,377 @@ create_columns_ir <- function(data) {
 
   htmltools::tagList(spanners_tr_element, columns_tr_element)
 }
+
+create_body_ir <- function(data) {
+
+  boxh <- dt_boxhead_get(data = data)
+  body <- dt_body_get(data = data)
+
+  summaries_present <- dt_summary_exists(data = data)
+  list_of_summaries <- dt_summary_df_get(data = data)
+  groups_rows_df <- dt_groups_rows_get(data = data)
+  stub_components <- dt_stub_components(data = data)
+
+  styles_tbl <- dt_styles_get(data = data)
+
+  n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
+  n_rows <- nrow(body)
+
+  # Get the column alignments for the data columns (this
+  # doesn't include the stub alignment)
+  col_alignment <- boxh[boxh$type == "default", ][["column_align"]]
+
+  # Determine whether the stub is available through analysis
+  # of the `stub_components`
+  stub_available <- dt_stub_components_has_rowname(stub_components)
+
+  # Obtain all of the visible (`"default"`), non-stub
+  # column names for the table
+  default_vars <- dt_boxhead_get_vars_default(data = data)
+
+  all_default_vals <- unname(as.matrix(body[, default_vars]))
+
+  alignment_classes <- paste0("gt_", col_alignment)
+
+  if (stub_available) {
+
+    n_cols <- n_data_cols + 1
+
+    alignment_classes <- c("gt_left", alignment_classes)
+
+    stub_var <- dt_boxhead_get_var_stub(data = data)
+    all_stub_vals <- as.matrix(body[, stub_var])
+
+  } else {
+    n_cols <- n_data_cols
+  }
+
+  # Define function to get a character vector of formatted cell
+  # data (this includes the stub, if it is present)
+  output_df_row_as_vec <- function(i) {
+
+    default_vals <- all_default_vals[i, ]
+
+    if (stub_available) {
+      default_vals <- c(all_stub_vals[i], default_vals)
+    }
+
+    default_vals
+  }
+
+  # Get the sequence of column numbers in the table body (these
+  # are the visible columns in the table exclusive of the stub)
+  column_series <- seq(n_cols)
+
+  # Replace an NA group with an empty string
+  if (any(is.na(groups_rows_df$group_label))) {
+
+    groups_rows_df <-
+      groups_rows_df %>%
+      dplyr::mutate(group_label = ifelse(is.na(group_label), "", group_label)) %>%
+      dplyr::mutate(group_label = gsub("^NA", "\u2014", group_label))
+  }
+
+  # Is the stub to be striped?
+  table_stub_striped <-
+    dt_options_get_value(
+      data = data,
+      option = "row_striping_include_stub"
+    )
+
+  # Are the rows in the table body to be striped?
+  table_body_striped <-
+    dt_options_get_value(
+      data = data,
+      option = "row_striping_include_table_body"
+    )
+
+  extra_classes_1 <- rep_len(list(NULL), n_cols)
+
+  extra_classes_2 <-
+    rep_len(list(if (table_body_striped) "gt_striped" else NULL), n_cols)
+
+  if (stub_available) {
+
+    extra_classes_1[[1]] <- "gt_stub"
+
+    extra_classes_2[[1]] <-
+      c("gt_stub", if (table_stub_striped) "gt_striped" else NULL)
+  }
+
+  has_tbl_body_styles <- any(c("stub", "data") %in% styles_tbl$locname)
+  has_row_group_styles <- "row_groups" %in% styles_tbl$locname
+
+  if (has_tbl_body_styles) {
+    styles_tbl_body <- subset(styles_tbl, locname %in% c("stub", "data"))
+  } else {
+    row_styles <- rep_len(list(NULL), n_cols)
+  }
+
+  if (has_row_group_styles) {
+    styles_tbl_row_groups <- subset(styles_tbl, locname == "row_groups")
+  }
+
+  body_section <- htmltools::tagList()
+
+  for (i in seq_len(n_rows)) {
+
+    #
+    # Create a group heading row
+    #
+    if (!is.null(groups_rows_df) && i %in% groups_rows_df$row_start) {
+
+      group_id <-
+        groups_rows_df[
+          which(groups_rows_df$row_start %in% i), "group_id"
+        ][[1]]
+
+      group_label <-
+        groups_rows_df[
+          which(groups_rows_df$row_start %in% i), "group_label"
+        ][[1]]
+
+      if (has_row_group_styles) {
+
+        styles_row <-
+          styles_tbl_row_groups[styles_tbl_row_groups$grpname == group_id, ]
+
+        row_style <-
+          if (nrow(styles_row) > 0) {
+            styles_row$html_style
+          } else {
+            NULL
+          }
+
+      } else {
+        row_style <- NULL
+      }
+
+      group_class <-
+        if (group_label == "") {
+          "gt_empty_group_heading"
+        } else {
+          "gt_group_heading"
+        }
+
+      group_heading_row <-
+        htmltools::tagList(
+          htmltools::tag(
+            `_tag_name` = "row",
+            varArgs = htmltools::tagList(
+              # class = "gt_group_heading_row",
+              htmltools::tag(
+                `_tag_name` = "cell",
+                varArgs = list(
+                  colspan = n_cols,
+                  #class = group_class,
+                  #style = row_style,
+                  htmltools::HTML(group_label)
+                )
+              )
+            )
+          )
+        )
+
+      body_section <- htmltools::tagList(body_section, group_heading_row)
+    }
+
+    #
+    # Create a body row
+    #
+
+    extra_classes <- if (i %% 2 == 0) extra_classes_2 else extra_classes_1
+
+    if (has_tbl_body_styles) {
+
+      styles_row <-
+        styles_tbl_body[styles_tbl_body$rownum == i, ]
+
+      row_styles <-
+        build_row_styles(
+          styles_resolved_row = styles_row,
+          stub_available = stub_available,
+          n_cols = n_cols
+        )
+    }
+
+    body_row <-
+      htmltools::tagList(
+        htmltools::HTML(
+          paste0(
+            "<row>",
+            htmltools::tagList(
+              htmltools::HTML(
+                paste0(
+                  collapse = "",
+                  mapply(
+                    SIMPLIFY = FALSE,
+                    USE.NAMES = FALSE,
+                    output_df_row_as_vec(i),
+                    alignment_classes,
+                    extra_classes,
+                    row_styles,
+                    FUN = function(x, alignment_class, extra_class, cell_style) {
+
+                      sprintf(
+                        "\n  <cell class=\"%s\"%s>%s</cell>",
+                        paste(c("gt_row", alignment_class, extra_class),
+                              collapse = " "),
+                        if (is.null(cell_style)) {
+                          ""
+                        } else {
+                          paste0(" style=\"", cell_style, "\"")
+                        },
+                        as.character(x)
+                      )
+                    }
+                  )
+                )
+              )
+            ),
+            "\n</row>"
+          )
+        )
+      )
+
+    body_section <- htmltools::tagList(body_section, body_row)
+
+    #
+    # Add groupwise summary rows
+    #
+
+    if (summaries_present &&
+        i %in% groups_rows_df$row_end) {
+
+      group_id <-
+        groups_rows_df[
+          stats::na.omit(groups_rows_df$row_end == i),
+          "group_id", drop = TRUE
+        ]
+
+      summary_section <-
+        summary_row_tags_ir(
+          list_of_summaries = list_of_summaries,
+          boxh = boxh,
+          group_id = group_id,
+          styles_resolved = styles_tbl,
+          locname = "summary_cells"
+        )
+
+      body_section <- htmltools::tagList(body_section, summary_section)
+    }
+  }
+
+  #
+  # Add grand summary rows
+  #
+
+  if (summaries_present &&
+      grand_summary_col %in% names(list_of_summaries$summary_df_display_list)) {
+
+    grand_summary_section <-
+      summary_row_tags_ir(
+        list_of_summaries = list_of_summaries,
+        boxh = boxh,
+        group_id = grand_summary_col,
+        styles_resolved = styles_tbl,
+        locname = "grand_summary_cells"
+      )
+
+    body_section <- htmltools::tagList(body_section, grand_summary_section)
+  }
+
+
+  htmltools::tag(`_tag_name` = "body", varArgs = body_section)
+}
+
+summary_row_tags_ir <- function(list_of_summaries,
+                                boxh,
+                                group_id,
+                                styles_resolved,
+                                locname) {
+
+  # Obtain all of the visible (`"default"`), non-stub column names
+  # for the table from the `boxh` object
+  default_vars <- boxh[boxh$type == "default", "var", drop = TRUE]
+
+  summary_row_lines <- htmltools::tagList()
+
+  if (group_id %in% names(list_of_summaries$summary_df_display_list)) {
+
+    # Obtain the summary data table specific to the group ID and
+    # select the column named `rowname` and all of the visible columns
+    summary_df <-
+      list_of_summaries$summary_df_display_list[[group_id]] %>%
+      dplyr::select(.env$rowname_col_private, .env$default_vars)
+
+    n_cols <- ncol(summary_df)
+
+    summary_df_row <- function(j) {
+      unname(unlist(summary_df[j, ]))
+    }
+
+    styles_resolved_group <-
+      dplyr::filter(
+        styles_resolved,
+        grpname == .env$group_id,
+        locname == .env$locname
+      ) %>%
+      dplyr::mutate(grprow = round((rownum %% 1) * 100))
+
+    for (j in seq_len(nrow(summary_df))) {
+
+      if (group_id == grand_summary_col) {
+
+        # In the above condition, `grand_summary_col` is a global variable
+        # (`"::GRAND_SUMMARY"`) assigned in `dt_summary.R`)
+
+        styles_resolved_row <-
+          styles_resolved_group[styles_resolved_group$rownum == j, , drop = FALSE]
+
+      } else {
+
+        styles_resolved_row <-
+          styles_resolved_group[styles_resolved_group$grprow == j, , drop = FALSE]
+      }
+
+      row_styles <-
+        build_row_styles(
+          styles_resolved_row = styles_resolved_row,
+          stub_available = TRUE,
+          n_cols = n_cols
+        )
+
+      summary_row <-
+        htmltools::tagList(
+          htmltools::tag(
+            `_tag_name` = "row",
+            varArgs =
+              htmltools::tagList(
+                mapply(
+                  SIMPLIFY = FALSE,
+                  USE.NAMES = FALSE,
+                  summary_df_row(j),
+                  row_styles,
+                  FUN = function(x, cell_style) {
+
+                    htmltools::tag(
+                      `_tag_name` = "cell",
+                      varArgs =
+                        list(
+                          style = cell_style,
+                          htmltools::HTML(x)
+                        )
+                    )
+                  }
+                )
+              )
+          )
+        )
+
+      summary_row_lines <- htmltools::tagList(summary_row_lines, summary_row)
+    }
+  }
+
+  summary_row_lines
+}
