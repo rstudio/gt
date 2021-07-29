@@ -212,7 +212,7 @@ create_columns_ir <- function(data) {
     )
 
   if (column_labels_hidden) {
-    return("")
+    return(htmltools::tagList())
   }
 
   columns_tr_element <-
