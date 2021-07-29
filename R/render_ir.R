@@ -29,7 +29,7 @@ render_to_ir <- function(data,
   columns_component <- create_columns_ir(data = data)
 
   # Create the body component
-  body_component <- create_body_ir(data = data) # TODO
+  body_component <- create_body_ir(data = data)
 
   # Create the footer component
   footer_component <- create_footer_ir(data = data) # TODO
