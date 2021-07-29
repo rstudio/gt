@@ -55,5 +55,6 @@ create_col_group_ir <- function(data) {
       )
   }
 
-  colgroup_element
+  htmltools::tagList(colgroup_element)
+}
 }
