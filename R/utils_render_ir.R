@@ -216,11 +216,13 @@ create_columns_ir <- function(data) {
   }
 
   columns_tr_element <-
-    htmltools::tags$tr(
+    htmltools::tag(
+      `_tag_name` = "row",
+      varArgs =
       lapply(
         headings_labels,
         FUN = function(x) {
-          htmltools::tags$th(x)
+          htmltools::tag(`_tag_name` = "cell", varArgs = x)
         }
       )
     )
@@ -256,19 +258,25 @@ create_columns_ir <- function(data) {
     spanners_rle$labels <- spanners[cumsum(spanners_rle$lengths)]
 
     spanners_tr_element <-
-      htmltools::tags$tr(
+      htmltools::tag(
+        `_tag_name` = "row",
+        varArgs =
         mapply(
           SIMPLIFY = FALSE,
           USE.NAMES = FALSE,
           spanners_rle$labels,
           spanners_rle$lengths,
           FUN = function(x, length) {
-            htmltools::tags$th(
-              colspan = if (length > 1) length else NULL,
-              style = htmltools::css(
-                `text-align` = if (is.na(x)) NULL else "center"
-              ),
-              if (!is.na(x)) x else NULL
+
+            htmltools::tag(
+              `_tag_name` = "cell",
+              varArgs = list(
+                colspan = if (length > 1) length else NULL,
+                style = htmltools::css(
+                  `text-align` = if (is.na(x)) NULL else "center"
+                ),
+                if (!is.na(x)) x else NULL
+              )
             )
           }
         )
