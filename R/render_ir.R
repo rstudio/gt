@@ -22,9 +22,6 @@ render_to_ir <- function(data,
   # Create the column group component
   colgroup_component <- create_col_group_ir(data = data)
 
-  # Create the caption component
-  caption_component <- create_caption_ir(data = data)
-
   # Create the heading component
   heading_component <- create_heading_ir(data = data)
 
@@ -32,10 +29,10 @@ render_to_ir <- function(data,
   columns_component <- create_columns_ir(data = data)
 
   # Create the body component
-  body_component <- create_body_ir(data = data)
+  body_component <- create_body_ir(data = data) # TODO
 
   # Create the footer component
-  footer_component <- create_footer_ir(data = data)
+  footer_component <- create_footer_ir(data = data) # TODO
 
   # Compose the IR
   ir <-
