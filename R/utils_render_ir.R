@@ -21,15 +21,17 @@ create_col_group_ir <- function(data) {
     # element contains the default alignment for each column
 
     colgroup_element <-
-      htmltools::tags$colgroup(
-        lapply(
-          col_alignments,
-          FUN = function(align) {
-            htmltools::tags$col(
-              align = align
-            )
-          }
-        )
+      htmltools::tag(
+        `_tag_name` = "coldefs",
+        varArgs =
+          lapply(
+            col_alignments,
+            FUN = function(align) {
+              htmltools::tags$col(
+                align = align
+              )
+            }
+          )
       )
 
   } else {
@@ -39,19 +41,21 @@ create_col_group_ir <- function(data) {
     # and the width as well
 
     colgroup_element <-
-      htmltools::tags$colgroup(
-        mapply(
-          SIMPLIFY = FALSE,
-          USE.NAMES = FALSE,
-          col_alignments,
-          col_widths,
-          FUN = function(x, width) {
-            htmltools::tags$col(
-              align = x,
-              width = width
-            )
-          }
-        )
+      htmltools::tag(
+        `_tag_name` = "coldefs",
+        varArgs =
+          mapply(
+            SIMPLIFY = FALSE,
+            USE.NAMES = FALSE,
+            col_alignments,
+            col_widths,
+            FUN = function(x, width) {
+              htmltools::tags$col(
+                align = x,
+                width = width
+              )
+            }
+          )
       )
   }
 
@@ -146,11 +150,16 @@ create_heading_ir <- function(data) {
 
     caption_element <-
       htmltools::tagList(
-        htmltools::tags$caption(
-          htmltools::tags$p(
-            style = if (!is.na(title_styles)) title_styles else NULL,
-            htmltools::HTML(paste0(heading$title, footnote_title_marks))
-          )
+        htmltools::tag(
+          `_tag_name` = "heading",
+          varArgs =
+            htmltools::tagList(
+              htmltools::tag(
+                `_tag_name` = "cell",
+                varArgs =
+                  htmltools::HTML(paste0(heading$title, footnote_title_marks))
+              )
+            )
         )
       )
 
@@ -158,13 +167,19 @@ create_heading_ir <- function(data) {
 
     caption_element <-
       htmltools::tagList(
-        htmltools::tags$caption(
-          htmltools::tags$p(
-            htmltools::HTML(paste0(heading$title, footnote_title_marks))
-          ),
-          htmltools::tags$p(
-            htmltools::HTML(paste0(heading$subtitle, footnote_subtitle_marks))
-          )
+        htmltools::tag(
+          `_tag_name` = "heading",
+          varArgs =
+            htmltools::tagList(
+              htmltools::tag(
+                `_tag_name` = "cell",
+                varArgs = htmltools::HTML(paste0(heading$title, footnote_title_marks))
+              ),
+              htmltools::tag(
+                `_tag_name` = "cell",
+                varArgs = htmltools::HTML(paste0(heading$subtitle, footnote_subtitle_marks))
+              )
+            )
         )
       )
 
