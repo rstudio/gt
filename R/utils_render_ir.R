@@ -172,4 +172,96 @@ create_heading_ir <- function(data) {
 
   caption_element
 }
+
+create_columns_ir <- function(data) {
+
+  boxh <- dt_boxhead_get(data = data)
+  stubh <- dt_stubhead_get(data = data)
+
+  styles_tbl <- dt_styles_get(data = data)
+  stub_available <- dt_stub_df_exists(data = data)
+  spanners_present <- dt_spanners_exists(data = data)
+
+  # Get the column alignments for all visible columns
+  col_alignment <- dplyr::pull(subset(boxh, type == "default"), column_align)
+
+  # Get the column headings
+  headings_vars <- dplyr::pull(subset(boxh, type == "default"), var)
+  headings_labels <- dt_boxhead_get_vars_labels_default(data = data)
+
+  # Should the column labels be hidden?
+  column_labels_hidden <-
+    dt_options_get_value(
+      data = data,
+      option = "column_labels_hidden"
+    )
+
+  if (column_labels_hidden) {
+    return("")
+  }
+
+  columns_tr_element <-
+    htmltools::tags$tr(
+      lapply(
+        headings_labels,
+        FUN = function(x) {
+          htmltools::tags$th(x)
+        }
+      )
+    )
+
+  # If `stub_available` == TRUE, then replace with a set stubhead
+  # label or nothing
+  if (isTRUE(stub_available) && length(stubh$label) > 0) {
+
+    headings_labels <- prepend_vec(headings_labels, stubh$label)
+    headings_vars <- prepend_vec(headings_vars, "::stub")
+
+  } else if (isTRUE(stub_available)) {
+
+    headings_labels <- prepend_vec(headings_labels, "")
+    headings_vars <- prepend_vec(headings_vars, "::stub")
+  }
+
+  if (spanners_present) {
+
+    # Get vector of group labels (spanners)
+    spanners <- dt_spanners_print(data = data, include_hidden = FALSE)
+    spanner_ids <- dt_spanners_print(data = data, include_hidden = FALSE, ids = TRUE)
+
+    if (stub_available) {
+      spanners <- c(NA_character_, spanners)
+      spanner_ids <- c(NA_character_, spanner_ids)
+    }
+
+    spanners_rle <- unclass(rle(spanner_ids))
+
+    # We need a parallel vector of spanner labels and this could
+    # be part of the `spanners_rle` list
+    spanners_rle$labels <- spanners[cumsum(spanners_rle$lengths)]
+
+    spanners_tr_element <-
+      htmltools::tags$tr(
+        mapply(
+          SIMPLIFY = FALSE,
+          USE.NAMES = FALSE,
+          spanners_rle$labels,
+          spanners_rle$lengths,
+          FUN = function(x, length) {
+            htmltools::tags$th(
+              colspan = if (length > 1) length else NULL,
+              style = htmltools::css(
+                `text-align` = if (is.na(x)) NULL else "center"
+              ),
+              if (!is.na(x)) x else NULL
+            )
+          }
+        )
+      )
+
+  } else {
+    spanners_tr_element <- NULL
+  }
+
+  htmltools::tagList(spanners_tr_element, columns_tr_element)
 }
