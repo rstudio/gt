@@ -1,61 +1,61 @@
+<header>
+  <p>Title</p>
+  <p>Subtitle</p>
+</header>
 <table
   target="html"
   cols="9"
   body-rows="4"
   caption="A Table Caption"
   >
-    <heading>
-      <cell>Title</cell>
-      <cell>Subtitle</cell>
-    </heading>
-    <boxhead>
-      <coldefs>
-        <col align="right"></col>
-        <col align="left"></col>
-        <col align="center"></col>
-        <col align="left"></col>
-        <col align="left"></col>
-        <col align="left"></col>
-        <col align="right"></col>
-        <col align="left"></col>
-        <col align="left"></col>
-      </coldefs>
-      <row>
-        <cell></cell>
-        <cell colspan="3" align="center">char-fctr</cell>
-        <cell></cell>
-        <cell></cell>
-        <cell></cell>
-        <cell></cell>
-        <cell></cell>
-      </row>
-      <row>
-         <cell>num</p>
-         <cell>char</p>
-         <cell>fctr</p>
-         <cell>date</p>
-         <cell>time</p>
-         <cell>datetime</p>
-         <cell>currency</p>
-         <cell>row</p>
-         <cell>group</p>
-      </row>
-    </boxhead>
-    <body>
-      <row>
-        <cell>0.1111</cell>
-        <cell>apricot</cell>
-        <cell>one</cell>
-        <cell>2015-01-15</cell>
-        <cell>13:35</cell>
-        <cell>2018-01-01 02:22</cell>
-        <cell>49.95</cell>
-        <cell>row_1</cell>
-        <cell>grp_a</cell>
-      </row>
-    </body>
-    <notes>
-      <cell>Source Note</cell>
-      <cell>Footnote</cell>
-    </notes>
+  <thead>
+    <colgroup>
+      <col align="right"></col>
+      <col align="left"></col>
+      <col align="center"></col>
+      <col align="left"></col>
+      <col align="left"></col>
+      <col align="left"></col>
+      <col align="right"></col>
+      <col align="left"></col>
+      <col align="left"></col>
+    </colgroup>
+    <tr>
+      <td></td>
+      <td colspan="3" align="center">char-fctr</cell>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+       <td>num</td>
+       <td>char</td>
+       <td>fctr</td>
+       <td>date</td>
+       <td>time</td>
+       <td>datetime</td>
+       <td>currency</td>
+       <td>row</td>
+       <td>group</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0.1111</td>
+      <td>apricot</td>
+      <td>one</td>
+      <td>2015-01-15</td>
+      <td>13:35</td>
+      <td>2018-01-01 02:22</td>
+      <td>49.95</td>
+      <td>row_1</td>
+      <td>grp_a</td>
+    </tr>
+  </tbody>
 </table>
+<footer>
+  <p>Source Note</p>
+  <p>Footnote</p>
+</footer>
