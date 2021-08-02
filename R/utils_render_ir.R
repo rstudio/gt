@@ -21,17 +21,15 @@ create_col_group_ir <- function(data) {
     # element contains the default alignment for each column
 
     colgroup_element <-
-      htmltools::tag(
-        `_tag_name` = "coldefs",
-        varArgs =
-          lapply(
-            col_alignments,
-            FUN = function(align) {
-              htmltools::tags$col(
-                align = align
-              )
-            }
-          )
+      htmltools::tags$colgroup(
+        lapply(
+          col_alignments,
+          FUN = function(align) {
+            htmltools::tags$col(
+              align = align
+            )
+          }
+        )
       )
 
   } else {
@@ -41,21 +39,19 @@ create_col_group_ir <- function(data) {
     # and the width as well
 
     colgroup_element <-
-      htmltools::tag(
-        `_tag_name` = "coldefs",
-        varArgs =
-          mapply(
-            SIMPLIFY = FALSE,
-            USE.NAMES = FALSE,
-            col_alignments,
-            col_widths,
-            FUN = function(x, width) {
-              htmltools::tags$col(
-                align = x,
-                width = width
-              )
-            }
-          )
+      htmltools::tags$colgroup(
+        mapply(
+          SIMPLIFY = FALSE,
+          USE.NAMES = FALSE,
+          col_alignments,
+          col_widths,
+          FUN = function(x, width) {
+            htmltools::tags$col(
+              align = x,
+              width = width
+            )
+          }
+        )
       )
   }
 
@@ -150,16 +146,11 @@ create_heading_ir <- function(data) {
 
     caption_element <-
       htmltools::tagList(
-        htmltools::tag(
-          `_tag_name` = "heading",
-          varArgs =
-            htmltools::tagList(
-              htmltools::tag(
-                `_tag_name` = "cell",
-                varArgs =
-                  htmltools::HTML(paste0(heading$title, footnote_title_marks))
-              )
-            )
+        htmltools::tags$header(
+          htmltools::tags$p(
+            style = if (!is.na(title_styles)) title_styles else NULL,
+            htmltools::HTML(paste0(heading$title, footnote_title_marks))
+          )
         )
       )
 
@@ -167,22 +158,17 @@ create_heading_ir <- function(data) {
 
     caption_element <-
       htmltools::tagList(
-        htmltools::tag(
-          `_tag_name` = "heading",
-          varArgs =
-            htmltools::tagList(
-              htmltools::tag(
-                `_tag_name` = "cell",
-                varArgs = htmltools::HTML(paste0(heading$title, footnote_title_marks))
-              ),
-              htmltools::tag(
-                `_tag_name` = "cell",
-                varArgs = htmltools::HTML(paste0(heading$subtitle, footnote_subtitle_marks))
-              )
-            )
+        htmltools::tags$header(
+          htmltools::tags$p(
+            style = if (!is.na(title_styles)) title_styles else NULL,
+            htmltools::HTML(paste0(heading$title, footnote_title_marks))
+          ),
+          htmltools::tags$p(
+            style = if (!is.na(subtitle_styles)) subtitle_styles else NULL,
+            htmltools::HTML(paste0(heading$subtitle, footnote_subtitle_marks))
+          )
         )
       )
-
   }
 
   caption_element
@@ -216,13 +202,11 @@ create_columns_ir <- function(data) {
   }
 
   columns_tr_element <-
-    htmltools::tag(
-      `_tag_name` = "row",
-      varArgs =
+    htmltools::tags$tr(
       lapply(
         headings_labels,
         FUN = function(x) {
-          htmltools::tag(`_tag_name` = "cell", varArgs = x)
+          htmltools::tags$th(x)
         }
       )
     )
@@ -258,9 +242,7 @@ create_columns_ir <- function(data) {
     spanners_rle$labels <- spanners[cumsum(spanners_rle$lengths)]
 
     spanners_tr_element <-
-      htmltools::tag(
-        `_tag_name` = "row",
-        varArgs =
+      htmltools::tags$tr(
         mapply(
           SIMPLIFY = FALSE,
           USE.NAMES = FALSE,
@@ -268,15 +250,12 @@ create_columns_ir <- function(data) {
           spanners_rle$lengths,
           FUN = function(x, length) {
 
-            htmltools::tag(
-              `_tag_name` = "cell",
-              varArgs = list(
-                colspan = if (length > 1) length else NULL,
-                style = htmltools::css(
-                  `text-align` = if (is.na(x)) NULL else "center"
-                ),
-                if (!is.na(x)) x else NULL
-              )
+            htmltools::tags$th(
+              colspan = if (length > 1) length else NULL,
+              # style = htmltools::css(
+              #   `text-align` = if (is.na(x)) NULL else "center"
+              # ),
+              if (!is.na(x)) x else NULL
             )
           }
         )
@@ -434,27 +413,21 @@ create_body_ir <- function(data) {
         row_style <- NULL
       }
 
-      group_class <-
-        if (group_label == "") {
-          "gt_empty_group_heading"
-        } else {
-          "gt_group_heading"
-        }
+      # group_class <-
+      #   if (group_label == "") {
+      #     "gt_empty_group_heading"
+      #   } else {
+      #     "gt_group_heading"
+      #   }
 
       group_heading_row <-
         htmltools::tagList(
-          htmltools::tag(
-            `_tag_name` = "row",
-            varArgs = htmltools::tagList(
-              # class = "gt_group_heading_row",
-              htmltools::tag(
-                `_tag_name` = "cell",
-                varArgs = list(
-                  colspan = n_cols,
-                  #class = group_class,
-                  #style = row_style,
-                  htmltools::HTML(group_label)
-                )
+          htmltools::tags$tr(
+            htmltools::tagList(
+              htmltools::tags$td(
+                colspan = n_cols,
+                #style = row_style,
+                htmltools::HTML(group_label)
               )
             )
           )
@@ -484,39 +457,33 @@ create_body_ir <- function(data) {
 
     body_row <-
       htmltools::tagList(
-        htmltools::HTML(
-          paste0(
-            "<row>",
-            htmltools::tagList(
-              htmltools::HTML(
-                paste0(
-                  collapse = "",
-                  mapply(
-                    SIMPLIFY = FALSE,
-                    USE.NAMES = FALSE,
-                    output_df_row_as_vec(i),
-                    alignment_classes,
-                    extra_classes,
-                    row_styles,
-                    FUN = function(x, alignment_class, extra_class, cell_style) {
+        htmltools::tags$tr(
+          htmltools::HTML(
+            paste0(
+              collapse = "",
+              mapply(
+                SIMPLIFY = FALSE,
+                USE.NAMES = FALSE,
+                output_df_row_as_vec(i),
+                alignment_classes,
+                extra_classes,
+                row_styles,
+                FUN = function(x, alignment_class, extra_class, cell_style) {
 
-                      sprintf(
-                        "\n  <cell class=\"%s\"%s>%s</cell>",
-                        paste(c("gt_row", alignment_class, extra_class),
-                              collapse = " "),
-                        if (is.null(cell_style)) {
-                          ""
-                        } else {
-                          paste0(" style=\"", cell_style, "\"")
-                        },
-                        as.character(x)
-                      )
-                    }
+                  sprintf(
+                    "\n  <td class=\"%s\"%s>%s</td>",
+                    paste(c("gt_row", alignment_class, extra_class),
+                          collapse = " "),
+                    if (is.null(cell_style)) {
+                      ""
+                    } else {
+                      paste0(" style=\"", cell_style, "\"")
+                    },
+                    as.character(x)
                   )
-                )
+                }
               )
-            ),
-            "\n</row>"
+            )
           )
         )
       )
@@ -569,7 +536,7 @@ create_body_ir <- function(data) {
   }
 
 
-  htmltools::tag(`_tag_name` = "body", varArgs = body_section)
+  htmltools::tags$tbody(body_section)
 }
 
 summary_row_tags_ir <- function(list_of_summaries,
@@ -631,28 +598,20 @@ summary_row_tags_ir <- function(list_of_summaries,
 
       summary_row <-
         htmltools::tagList(
-          htmltools::tag(
-            `_tag_name` = "row",
-            varArgs =
-              htmltools::tagList(
-                mapply(
-                  SIMPLIFY = FALSE,
-                  USE.NAMES = FALSE,
-                  summary_df_row(j),
-                  row_styles,
-                  FUN = function(x, cell_style) {
+          htmltools::tags$tr(
+            mapply(
+              SIMPLIFY = FALSE,
+              USE.NAMES = FALSE,
+              summary_df_row(j),
+              row_styles,
+              FUN = function(x, cell_style) {
 
-                    htmltools::tag(
-                      `_tag_name` = "cell",
-                      varArgs =
-                        list(
-                          style = cell_style,
-                          htmltools::HTML(x)
-                        )
-                    )
-                  }
+                htmltools::tags$td(
+                  style = cell_style,
+                  htmltools::HTML(x)
                 )
-              )
+              }
+            )
           )
         )
 
@@ -661,4 +620,117 @@ summary_row_tags_ir <- function(list_of_summaries,
   }
 
   summary_row_lines
+}
+
+#' Create the source notes component
+#'
+#' @noRd
+create_source_notes_ir <- function(data) {
+
+  source_notes <- dt_source_notes_get(data = data)
+
+  # If the `source_notes` object is empty, then return an empty tagList
+  if (is.null(source_notes)) {
+    return(htmltools::tagList())
+  }
+
+  styles_tbl <- dt_styles_get(data = data)
+
+  # Get the style attrs for the source notes
+  if ("source_notes" %in% styles_tbl$locname) {
+
+    source_notes_styles <- dplyr::filter(styles_tbl, locname == "source_notes")
+
+    source_notes_styles <-
+      if (nrow(source_notes_styles) > 0) {
+        paste(source_notes_styles$html_style, collapse = " ")
+      } else {
+        NULL
+      }
+
+  } else {
+    source_notes_styles <- NULL
+  }
+
+  # Create the source notes component
+  htmltools::tagList(
+    lapply(
+      source_notes,
+      function(x) {
+        htmltools::tags$p(
+          role = "source note",
+          style = source_notes_styles,
+          htmltools::HTML(x)
+        )
+      }
+    )
+  )
+}
+
+#' Create the footnotes component
+#'
+#' @noRd
+create_footnotes_ir <- function(data) {
+
+  footnotes_tbl <- dt_footnotes_get(data = data)
+
+  # If the `footnotes_resolved` object has no
+  # rows, then return an empty tagList
+  if (nrow(footnotes_tbl) == 0) {
+    return(htmltools::tagList())
+  }
+
+  styles_tbl <- dt_styles_get(data = data)
+
+  footnotes_tbl <-
+    footnotes_tbl %>%
+    dplyr::select(fs_id, footnotes) %>%
+    dplyr::distinct()
+
+  # Get the style attrs for the footnotes
+  if ("footnotes" %in% styles_tbl$locname) {
+
+    footnotes_styles <- dplyr::filter(styles_tbl, locname == "footnotes")
+
+    footnotes_styles <-
+      if (nrow(footnotes_styles) > 0) {
+        paste(footnotes_styles$html_style, collapse = " ")
+      } else {
+        NULL
+      }
+
+  } else {
+    footnotes_styles <- NULL
+  }
+
+  # Get the footnote separator option
+  separator <- dt_options_get_value(data = data, option = "footnotes_sep")
+
+  footnote_ids <- footnotes_tbl[["fs_id"]]
+  footnote_text <- footnotes_tbl[["footnotes"]]
+
+  # Create the footnotes component
+  htmltools::tagList(
+    mapply(
+      SIMPLIFY = FALSE,
+      USE.NAMES = FALSE,
+      footnote_ids,
+      footnote_text,
+      FUN = function(x, footnote_text) {
+
+        htmltools::tags$p(
+          class = "gt_footnote",
+          htmltools::tags$sup(
+            class = "gt_footnote_marks",
+            htmltools::tags$em(
+              x
+            )
+          ),
+          " ",
+          htmltools::HTML(footnote_text),
+          htmltools::HTML(separator)
+        )
+      }
+    )
+  )
 }
