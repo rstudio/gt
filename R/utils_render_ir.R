@@ -201,16 +201,6 @@ create_columns_ir <- function(data) {
     return(htmltools::tagList())
   }
 
-  columns_tr_element <-
-    htmltools::tags$tr(
-      lapply(
-        headings_labels,
-        FUN = function(x) {
-          htmltools::tags$th(x)
-        }
-      )
-    )
-
   # If `stub_available` == TRUE, then replace with a set stubhead
   # label or nothing
   if (isTRUE(stub_available) && length(stubh$label) > 0) {
@@ -222,6 +212,28 @@ create_columns_ir <- function(data) {
 
     headings_labels <- prepend_vec(headings_labels, "")
     headings_vars <- prepend_vec(headings_vars, "::stub")
+  }
+
+  # Create the column labels <tr> element
+  columns_tr_element <-
+    htmltools::tags$tr(
+      lapply(
+        headings_labels,
+        FUN = function(x) {
+          htmltools::tags$th(x)
+        }
+      )
+    )
+
+  if (stub_available) {
+
+    # Add a `role="stub"` attribute to the first child
+    # of the `columns_tr_element` <tr>
+    columns_tr_element$children[[1]][[1]] <-
+      htmltools::tagAppendAttributes(
+        columns_tr_element$children[[1]][[1]],
+        role = "stub"
+      )
   }
 
   if (spanners_present) {
@@ -260,6 +272,17 @@ create_columns_ir <- function(data) {
           }
         )
       )
+
+    if (stub_available) {
+
+      # Add a `role="stub"` attribute to the first child
+      # of the `spanners_tr_element` <tr>
+      spanners_tr_element$children[[1]][[1]] <-
+        htmltools::tagAppendAttributes(
+          spanners_tr_element$children[[1]][[1]],
+          role = "stub"
+        )
+    }
 
   } else {
     spanners_tr_element <- NULL
@@ -476,6 +499,14 @@ create_body_ir <- function(data) {
           )
         )
       )
+
+    if (stub_available) {
+
+      body_row[[1]]$children[[1]][[1]] <-
+        gsub("^\n\\s+?<td>", "\n      <td role=\"stub\">",
+          body_row[[1]]$children[[1]][[1]]
+        )
+    }
 
     body_section <- htmltools::tagList(body_section, body_row)
 
