@@ -615,6 +615,15 @@ summary_row_tags_ir <- function(list_of_summaries,
           )
         )
 
+      # Add a `role="stub"` attribute to the first child
+      # of the summary row <tr>; each summary row unconditionally
+      # has a stub cell as the first <td>
+      summary_row[[1]]$children[[1]][[1]] <-
+        htmltools::tagAppendAttributes(
+          summary_row[[1]]$children[[1]][[1]],
+          role = "stub"
+        )
+
       summary_row_lines <- htmltools::tagList(summary_row_lines, summary_row)
     }
   }
