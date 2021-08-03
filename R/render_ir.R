@@ -19,6 +19,9 @@ render_to_ir <- function(data,
   # Upgrade `_styles` to gain a `html_style` column with CSS style rules
   data <- add_css_styles(data = data)
 
+  # Create the table defs component
+  table_defs <- list()
+
   # Create the column group component
   colgroup_component <- create_col_group_ir(data = data)
 
@@ -31,19 +34,22 @@ render_to_ir <- function(data,
   # Create the body component
   body_component <- create_body_ir(data = data)
 
-  # Create the footer component
-  footer_component <- create_footer_ir(data = data) # TODO
+  # Create the source notes component
+  source_notes_component <- create_source_notes_ir(data = data)
+
+  # Create the footnotes component
+  footnotes_component <- create_footnotes_ir(data = data)
 
   # Compose the IR
   ir <-
     combine_as_ir(
       table_defs = table_defs,
       colgroup_component = colgroup_component,
-      caption_component = caption_component,
       heading_component = heading_component,
       columns_component = columns_component,
       body_component = body_component,
-      footer_component = footer_component
+      source_notes_component = source_notes_component,
+      footnotes_component = footnotes_component
     )
 
   ir
