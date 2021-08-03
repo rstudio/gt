@@ -770,6 +770,24 @@ combine_as_ir <- function(table_defs,
                           source_notes_component,
                           footnotes_component) {
 
+  config_element <-
+    htmltools::tag(
+      `_tag_name` = "config",
+      varArgs = list(
+        target = table_defs$target,
+        `table-cols` = table_defs$table_cols,
+        `header-rows` = table_defs$header_rows,
+        `body-rows` = table_defs$body_rows
+      )
+    )
+
+  # Reformat the `config` tag for a better layout
+  config_element <-
+    as.character(config_element) %>%
+    gsub("></config>", "\n/>", ., fixed = TRUE) %>%
+    gsub(" ", "\n  ", .) %>%
+    htmltools::HTML()
+
   header_element <-
     htmltools::tagList(
       htmltools::tags$header(
@@ -794,6 +812,6 @@ combine_as_ir <- function(table_defs,
     )
 
   htmltools::tagList(
-    header_element, table_element, footer_element
+    config_element, header_element, table_element, footer_element
   )
 }
