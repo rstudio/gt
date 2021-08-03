@@ -64,6 +64,7 @@ create_heading_ir <- function(data) {
   if (!dt_heading_has_title(data = data)) {
     return(htmltools::tagList())
   }
+
   heading <- dt_heading_get(data = data)
   footnotes_tbl <- dt_footnotes_get(data = data)
   styles_tbl <- dt_styles_get(data = data)
@@ -144,34 +145,33 @@ create_heading_ir <- function(data) {
 
   if (!subtitle_defined) {
 
-    caption_element <-
+    title_component <-
       htmltools::tagList(
-        htmltools::tags$header(
-          htmltools::tags$p(
-            style = if (!is.na(title_styles)) title_styles else NULL,
-            htmltools::HTML(paste0(heading$title, footnote_title_marks))
-          )
+        htmltools::tags$p(
+          role = "title",
+          style = if (!is.na(title_styles)) title_styles else NULL,
+          htmltools::HTML(paste0(heading$title, footnote_title_marks))
         )
       )
 
   } else {
 
-    caption_element <-
+    title_component <-
       htmltools::tagList(
-        htmltools::tags$header(
-          htmltools::tags$p(
-            style = if (!is.na(title_styles)) title_styles else NULL,
-            htmltools::HTML(paste0(heading$title, footnote_title_marks))
-          ),
-          htmltools::tags$p(
-            style = if (!is.na(subtitle_styles)) subtitle_styles else NULL,
-            htmltools::HTML(paste0(heading$subtitle, footnote_subtitle_marks))
-          )
+        htmltools::tags$p(
+          role = "title",
+          style = if (!is.na(title_styles)) title_styles else NULL,
+          htmltools::HTML(paste0(heading$title, footnote_title_marks))
+        ),
+        htmltools::tags$p(
+          role = "subtitle",
+          style = if (!is.na(subtitle_styles)) subtitle_styles else NULL,
+          htmltools::HTML(paste0(heading$subtitle, footnote_subtitle_marks))
         )
       )
   }
 
-  caption_element
+  title_component
 }
 
 create_columns_ir <- function(data) {
