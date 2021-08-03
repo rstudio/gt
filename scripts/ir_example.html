@@ -1,13 +1,15 @@
-<header>
-  <p>Title</p>
-  <p>Subtitle</p>
-</header>
-<table
+// exibble[1, ] %>% gt(rowname_col = "row", groupname_col = "group")
+<config
   target="html"
   cols="9"
   body-rows="4"
   caption="A Table Caption"
-  >
+>
+<header>
+  <p role="title">Title</p>
+  <p role="subtitle">Subtitle</p>
+</header>
+<table>
   <thead>
     <colgroup>
       <col align="right"></col>
@@ -20,7 +22,7 @@
       <col align="left"></col>
       <col align="left"></col>
     </colgroup>
-    <tr>
+    <tr role="spanners">
       <td></td>
       <td colspan="3">char-fctr</cell>
       <td></td>
@@ -29,7 +31,7 @@
       <td></td>
       <td></td>
     </tr>
-    <tr>
+    <tr role="column_labels">
        <td>num</td>
        <td>char</td>
        <td>fctr</td>
@@ -56,6 +58,6 @@
   </tbody>
 </table>
 <footer>
-  <p>Source Note</p>
-  <p>Footnote</p>
+  <p role="source_note">Source Note</p>
+  <p role="footnote">Footnote</p>
 </footer>
