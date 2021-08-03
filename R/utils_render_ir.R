@@ -413,20 +413,13 @@ create_body_ir <- function(data) {
         row_style <- NULL
       }
 
-      # group_class <-
-      #   if (group_label == "") {
-      #     "gt_empty_group_heading"
-      #   } else {
-      #     "gt_group_heading"
-      #   }
-
       group_heading_row <-
         htmltools::tagList(
           htmltools::tags$tr(
+            role = "row_group_label",
             htmltools::tagList(
               htmltools::tags$td(
-                colspan = n_cols,
-                #style = row_style,
+                style = row_style,
                 htmltools::HTML(group_label)
               )
             )
@@ -465,15 +458,11 @@ create_body_ir <- function(data) {
                 SIMPLIFY = FALSE,
                 USE.NAMES = FALSE,
                 output_df_row_as_vec(i),
-                alignment_classes,
-                extra_classes,
                 row_styles,
-                FUN = function(x, alignment_class, extra_class, cell_style) {
+                FUN = function(x, cell_style) {
 
                   sprintf(
-                    "\n  <td class=\"%s\"%s>%s</td>",
-                    paste(c("gt_row", alignment_class, extra_class),
-                          collapse = " "),
+                    "\n      <td%s>%s</td>",
                     if (is.null(cell_style)) {
                       ""
                     } else {
@@ -536,7 +525,7 @@ create_body_ir <- function(data) {
   }
 
 
-  htmltools::tags$tbody(body_section)
+  body_section
 }
 
 summary_row_tags_ir <- function(list_of_summaries,
@@ -583,10 +572,14 @@ summary_row_tags_ir <- function(list_of_summaries,
         styles_resolved_row <-
           styles_resolved_group[styles_resolved_group$rownum == j, , drop = FALSE]
 
+        role <- "grand_summary"
+
       } else {
 
         styles_resolved_row <-
           styles_resolved_group[styles_resolved_group$grprow == j, , drop = FALSE]
+
+        role <- "group_summary"
       }
 
       row_styles <-
@@ -599,13 +592,13 @@ summary_row_tags_ir <- function(list_of_summaries,
       summary_row <-
         htmltools::tagList(
           htmltools::tags$tr(
+            role = role,
             mapply(
               SIMPLIFY = FALSE,
               USE.NAMES = FALSE,
               summary_df_row(j),
               row_styles,
               FUN = function(x, cell_style) {
-
                 htmltools::tags$td(
                   style = cell_style,
                   htmltools::HTML(x)
@@ -667,7 +660,7 @@ create_source_notes_ir <- function(data) {
       source_notes,
       function(x) {
         htmltools::tags$p(
-          role = "source note",
+          role = "source_note",
           style = source_notes_styles,
           htmltools::HTML(x)
         )
@@ -728,12 +721,9 @@ create_footnotes_ir <- function(data) {
       FUN = function(x, footnote_text) {
 
         htmltools::tags$p(
-          class = "gt_footnote",
+          role = "footnote",
           htmltools::tags$sup(
-            class = "gt_footnote_marks",
-            htmltools::tags$em(
-              x
-            )
+            htmltools::tags$em(x)
           ),
           " ",
           htmltools::HTML(footnote_text),
