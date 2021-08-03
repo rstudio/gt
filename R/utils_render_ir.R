@@ -734,3 +734,39 @@ create_footnotes_ir <- function(data) {
     )
   )
 }
+
+combine_as_ir <- function(table_defs,
+                          colgroup_component,
+                          heading_component,
+                          columns_component,
+                          body_component,
+                          source_notes_component,
+                          footnotes_component) {
+
+  header_element <-
+    htmltools::tagList(
+      htmltools::tags$header(
+        heading_component
+      )
+    )
+
+  table_element <-
+    htmltools::tagList(
+      htmltools::tags$table(
+        htmltools::tags$thead(colgroup_component, columns_component),
+        htmltools::tags$tbody(body_component)
+      )
+    )
+
+  footer_element <-
+    htmltools::tagList(
+      htmltools::tags$footer(
+        source_notes_component,
+        footnotes_component
+      )
+    )
+
+  htmltools::tagList(
+    header_element, table_element, footer_element
+  )
+}
