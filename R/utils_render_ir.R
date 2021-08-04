@@ -493,18 +493,22 @@ create_body_ir <- function(data) {
               mapply(
                 SIMPLIFY = FALSE,
                 USE.NAMES = FALSE,
-                output_df_row_as_vec(i),
+                seq_along(output_df_row_as_vec(i)),
                 row_styles,
                 FUN = function(x, cell_style) {
 
                   sprintf(
-                    "\n      <td%s>%s</td>",
+                    if (x == 1 && stub_available) {
+                      "\n      <td role=\"stub\"%s>%s</td>"
+                    } else {
+                      "\n      <td%s>%s</td>"
+                    },
                     if (is.null(cell_style)) {
                       ""
                     } else {
                       paste0(" style=\"", cell_style, "\"")
                     },
-                    as.character(x)
+                    as.character(output_df_row_as_vec(i)[x])
                   )
                 }
               )
@@ -512,14 +516,6 @@ create_body_ir <- function(data) {
           )
         )
       )
-
-    if (stub_available) {
-
-      body_row[[1]]$children[[1]][[1]] <-
-        gsub("^\n\\s+?<td>", "\n      <td role=\"stub\">",
-          body_row[[1]]$children[[1]][[1]]
-        )
-    }
 
     body_section <- htmltools::tagList(body_section, body_row)
 
