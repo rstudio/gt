@@ -133,16 +133,6 @@ create_heading_ir <- function(data) {
     subtitle_styles <- NA_character_
   }
 
-  # title_classes <- c("gt_heading", "gt_title", "gt_font_normal")
-  #
-  # subtitle_classes <- title_classes %>% tidy_sub("title", "subtitle")
-  #
-  # if (!subtitle_defined) {
-  #   title_classes <- c(title_classes, "gt_bottom_border")
-  # } else {
-  #   subtitle_classes <- c(subtitle_classes, "gt_bottom_border")
-  # }
-
   if (!subtitle_defined) {
 
     title_component <-
