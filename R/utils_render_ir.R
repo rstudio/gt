@@ -798,23 +798,83 @@ combine_as_ir <- function(data,
 
   # TODO: include various table options in the `config_element`
   options_tbl <- dt_options_get(data = data)
+  options_tbl <- options_tbl[!options_tbl$scss, ][c("parameter", "value")]
 
-  config_element <-
-    htmltools::tag(
-      `_tag_name` = "config",
-      varArgs = list(
-        target = table_defs$target,
-        `table-cols` = table_defs$table_cols,
-        `header-rows` = table_defs$header_rows,
-        `body-rows` = table_defs$body_rows
+  append_option_to_list <- function(data, option, options_list) {
+
+    option_val <- dt_options_get_value(data = data, option = option)
+    option_default <- dt_options_get_default_value(option = option)
+
+    if (!identical(option_val, option_default)) {
+
+      if (is.logical(option_val)) {
+        option_val <- tolower(as.character(option_val))
+      }
+
+      list_item <- list(option = option_val)
+      names(list_item) <- option
+      options_list <- c(options_list, list_item)
+    }
+
+    return(options_list)
+  }
+
+  get_optional_config_elements_for_target <- function(data) {
+
+    option_names <-
+      c(
+        "container_width",
+        "container_height",
+        "container_overflow_x",
+        "container_overflow_y",
+        "table_id",
+        "table_caption",
+        "table_additional_css",
+        "table_font_names",
+        "column_labels_hidden",
+        "footnotes_sep",
+        "row_striping_include_stub",
+        "row_striping_include_table_body"
       )
-    )
 
-  # Reformat the `config` tag for a better layout
+    options_list <- list()
+
+    for (opt_name in option_names) {
+
+      options_list <-
+        append_option_to_list(
+          data = data,
+          option = opt_name,
+          options_list = options_list
+        )
+    }
+
+    options_list
+  }
+
+  options_list <- get_optional_config_elements_for_target(data = data)
+
+  options_list <-
+    c(list(
+      target = table_defs$target,
+      `table-cols` = table_defs$table_cols,
+      `header-rows` = table_defs$header_rows,
+      `body-rows` = table_defs$body_rows
+    ),
+    options_list)
+
   config_element <-
-    as.character(config_element) %>%
-    gsub("></config>", "\n/>", ., fixed = TRUE) %>%
-    gsub(" ", "\n  ", .) %>%
+    paste0(
+      "<config\n",
+      vapply(
+        seq_along(options_list),
+        FUN.VALUE = character(1),
+        FUN = function(x) {
+          paste0("  ", names(options_list[x]), "=\"", options_list[x], "\"")
+        }) %>%
+        paste(collapse = "\n"),
+      "\n/>"
+    ) %>%
     htmltools::HTML()
 
   header_element <-
