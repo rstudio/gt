@@ -787,13 +787,17 @@ create_footnotes_ir <- function(data) {
   )
 }
 
-combine_as_ir <- function(table_defs,
+combine_as_ir <- function(data,
+                          table_defs,
                           colgroup_component,
                           heading_component,
                           columns_component,
                           body_component,
                           source_notes_component,
                           footnotes_component) {
+
+  # TODO: include various table options in the `config_element`
+  options_tbl <- dt_options_get(data = data)
 
   config_element <-
     htmltools::tag(
