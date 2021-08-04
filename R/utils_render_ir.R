@@ -636,25 +636,17 @@ summary_row_tags_ir <- function(list_of_summaries,
             mapply(
               SIMPLIFY = FALSE,
               USE.NAMES = FALSE,
-              summary_df_row(j),
+              seq_along(summary_df_row(j)),
               row_styles,
               FUN = function(x, cell_style) {
                 htmltools::tags$td(
+                  role = if (x == 1) "stub" else NULL,
                   style = cell_style,
-                  htmltools::HTML(x)
+                  htmltools::HTML(summary_df_row(j)[x])
                 )
               }
             )
           )
-        )
-
-      # Add a `role="stub"` attribute to the first child
-      # of the summary row <tr>; each summary row unconditionally
-      # has a stub cell as the first <td>
-      summary_row[[1]]$children[[1]][[1]] <-
-        htmltools::tagAppendAttributes(
-          summary_row[[1]]$children[[1]][[1]],
-          role = "stub"
         )
 
       summary_row_lines <- htmltools::tagList(summary_row_lines, summary_row)
