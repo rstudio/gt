@@ -218,15 +218,21 @@ create_columns_ir <- function(data) {
 
   for (i in seq_along(headings_vars)) {
 
-    styles_column <- subset(column_style_attrs, colnum == i)
+    if (stub_available && i == 1) {
 
+      styles_column_labels <- stubhead_style_attrs
 
-    styles_column_labels <-
-      dplyr::filter(
-        column_style_attrs,
-        locname == "columns_columns",
-        colnum == i
-      )
+    } else {
+
+      styles_column <- subset(column_style_attrs, colnum == i)
+
+      styles_column_labels <-
+        dplyr::filter(
+          column_style_attrs,
+          locname == "columns_columns",
+          colnum == i
+        )
+    }
 
     column_label_style <-
       if (nrow(styles_column_labels) > 0) {
