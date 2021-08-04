@@ -180,17 +180,6 @@ create_columns_ir <- function(data) {
   headings_vars <- dplyr::pull(subset(boxh, type == "default"), var)
   headings_labels <- dt_boxhead_get_vars_labels_default(data = data)
 
-  # Should the column labels be hidden?
-  column_labels_hidden <-
-    dt_options_get_value(
-      data = data,
-      option = "column_labels_hidden"
-    )
-
-  if (column_labels_hidden) {
-    return(htmltools::tagList())
-  }
-
   # Get the style attrs for the stubhead label
   stubhead_style_attrs <- subset(styles_tbl, locname == "stubhead")
 
