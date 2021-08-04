@@ -785,62 +785,6 @@ combine_as_ir <- function(data,
                           source_notes_component,
                           footnotes_component) {
 
-  # TODO: include various table options in the `config_element`
-  options_tbl <- dt_options_get(data = data)
-  options_tbl <- options_tbl[!options_tbl$scss, ][c("parameter", "value")]
-
-  append_option_to_list <- function(data, option, options_list) {
-
-    option_val <- dt_options_get_value(data = data, option = option)
-    option_default <- dt_options_get_default_value(option = option)
-
-    if (!identical(option_val, option_default)) {
-
-      if (is.logical(option_val)) {
-        option_val <- tolower(as.character(option_val))
-      }
-
-      list_item <- list(option = option_val)
-      names(list_item) <- option
-      options_list <- c(options_list, list_item)
-    }
-
-    return(options_list)
-  }
-
-  get_optional_config_elements_for_target <- function(data) {
-
-    option_names <-
-      c(
-        "container_width",
-        "container_height",
-        "container_overflow_x",
-        "container_overflow_y",
-        "table_id",
-        "table_caption",
-        "table_additional_css",
-        "table_font_names",
-        "column_labels_hidden",
-        "footnotes_sep",
-        "row_striping_include_stub",
-        "row_striping_include_table_body"
-      )
-
-    options_list <- list()
-
-    for (opt_name in option_names) {
-
-      options_list <-
-        append_option_to_list(
-          data = data,
-          option = opt_name,
-          options_list = options_list
-        )
-    }
-
-    options_list
-  }
-
   options_list <- get_optional_config_elements_for_target(data = data)
 
   options_list <-
@@ -892,4 +836,56 @@ combine_as_ir <- function(data,
   htmltools::tagList(
     config_element, header_element, table_element, footer_element
   )
+}
+
+append_option_to_list <- function(data, option, options_list) {
+
+  option_val <- dt_options_get_value(data = data, option = option)
+  option_default <- dt_options_get_default_value(option = option)
+
+  if (!identical(option_val, option_default)) {
+
+    if (is.logical(option_val)) {
+      option_val <- tolower(as.character(option_val))
+    }
+
+    list_item <- list(option = option_val)
+    names(list_item) <- option
+    options_list <- c(options_list, list_item)
+  }
+
+  return(options_list)
+}
+
+get_optional_config_elements_for_target <- function(data) {
+
+  option_names <-
+    c(
+      "container_width",
+      "container_height",
+      "container_overflow_x",
+      "container_overflow_y",
+      "table_id",
+      "table_caption",
+      "table_additional_css",
+      "table_font_names",
+      "column_labels_hidden",
+      "footnotes_sep",
+      "row_striping_include_stub",
+      "row_striping_include_table_body"
+    )
+
+  options_list <- list()
+
+  for (opt_name in option_names) {
+
+    options_list <-
+      append_option_to_list(
+        data = data,
+        option = opt_name,
+        options_list = options_list
+      )
+  }
+
+  options_list
 }
