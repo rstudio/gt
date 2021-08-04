@@ -777,6 +777,7 @@ create_footnotes_ir <- function(data) {
 
         htmltools::tags$p(
           role = "footnote",
+          style = footnotes_styles,
           htmltools::HTML(
             paste0(htmltools::tags$i(x), htmltools::HTML(footnote_text))
           )
