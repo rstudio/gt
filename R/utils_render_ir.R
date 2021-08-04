@@ -192,13 +192,13 @@ create_columns_ir <- function(data) {
   }
 
   # Get the style attrs for the stubhead label
-  #stubhead_style_attrs <- subset(styles_tbl, locname == "stubhead")
+  stubhead_style_attrs <- subset(styles_tbl, locname == "stubhead")
 
   # Get the style attrs for the spanner column headings
   spanner_style_attrs <- subset(styles_tbl, locname == "columns_groups")
 
   # Get the style attrs for the spanner column headings
-  #column_style_attrs <- subset(styles_tbl, locname == "columns_columns")
+  column_style_attrs <- subset(styles_tbl, locname == "columns_columns")
 
   # If `stub_available` == TRUE, then replace with a set stubhead
   # label or nothing
@@ -213,27 +213,42 @@ create_columns_ir <- function(data) {
     headings_vars <- prepend_vec(headings_vars, "::stub")
   }
 
-  # Create the column labels <tr> element
-  columns_tr_element <-
-    htmltools::tags$tr(
-      lapply(
-        headings_labels,
-        FUN = function(x) {
-          htmltools::tags$th(x)
-        }
-      )
-    )
+  # Initialize empty tagList for the column label <th> elements
+  column_labels_tagList <- htmltools::tagList()
 
-  if (stub_available) {
+  for (i in seq_along(headings_vars)) {
 
-    # Add a `role="stub"` attribute to the first child
-    # of the `columns_tr_element` <tr>
-    columns_tr_element$children[[1]][[1]] <-
-      htmltools::tagAppendAttributes(
-        columns_tr_element$children[[1]][[1]],
-        role = "stub"
+    styles_column <- subset(column_style_attrs, colnum == i)
+
+
+    styles_column_labels <-
+      dplyr::filter(
+        column_style_attrs,
+        locname == "columns_columns",
+        colnum == i
       )
+
+    column_label_style <-
+      if (nrow(styles_column_labels) > 0) {
+        styles_column_labels$html_style
+      } else {
+        NULL
+      }
+
+    column_labels_th_element <-
+      htmltools::tags$th(
+        role = if (i == 1 && stub_available) "stub" else NULL,
+        style = if (is.null(column_label_style)) NULL else column_label_style,
+        headings_labels[i]
+      )
+
+    # Append the `column_labels_th_element` to the end of the `column_labels_tagList`
+    column_labels_tagList[[i]] <- column_labels_th_element
   }
+
+  # Create <tr> element for the column labels
+  column_labels_tr_element <-
+    htmltools::tags$tr(role = "column_labels", column_labels_tagList)
 
   if (spanners_present) {
 
@@ -291,7 +306,7 @@ create_columns_ir <- function(data) {
     spanners_tr_element <- NULL
   }
 
-  htmltools::tagList(spanners_tr_element, columns_tr_element)
+  htmltools::tagList(spanners_tr_element, column_labels_tr_element)
 }
 
 create_body_ir <- function(data) {
