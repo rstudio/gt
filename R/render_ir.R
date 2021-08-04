@@ -77,6 +77,7 @@ render_to_ir <- function(data,
 
   # Compose the IR
   combine_as_ir(
+    data = data,
     table_defs = table_defs,
     colgroup_component = colgroup_component,
     heading_component = heading_component,
