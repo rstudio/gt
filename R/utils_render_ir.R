@@ -833,8 +833,10 @@ combine_as_ir <- function(data,
       )
     )
 
-  htmltools::tagList(
-    config_element, header_element, table_element, footer_element
+  as.character(
+    htmltools::tagList(
+      config_element, header_element, table_element, footer_element
+    )
   )
 }
 
