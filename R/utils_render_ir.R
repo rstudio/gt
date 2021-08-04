@@ -191,6 +191,15 @@ create_columns_ir <- function(data) {
     return(htmltools::tagList())
   }
 
+  # Get the style attrs for the stubhead label
+  #stubhead_style_attrs <- subset(styles_tbl, locname == "stubhead")
+
+  # Get the style attrs for the spanner column headings
+  spanner_style_attrs <- subset(styles_tbl, locname == "columns_groups")
+
+  # Get the style attrs for the spanner column headings
+  #column_style_attrs <- subset(styles_tbl, locname == "columns_columns")
+
   # If `stub_available` == TRUE, then replace with a set stubhead
   # label or nothing
   if (isTRUE(stub_available) && length(stubh$label) > 0) {
@@ -228,6 +237,9 @@ create_columns_ir <- function(data) {
 
   if (spanners_present) {
 
+    # Initialize empty tagList for the spanner <th> elements
+    spanners_tagList <- htmltools::tagList()
+
     # Get vector of group labels (spanners)
     spanners <- dt_spanners_print(data = data, include_hidden = FALSE)
     spanner_ids <- dt_spanners_print(data = data, include_hidden = FALSE, ids = TRUE)
@@ -243,36 +255,37 @@ create_columns_ir <- function(data) {
     # be part of the `spanners_rle` list
     spanners_rle$labels <- spanners[cumsum(spanners_rle$lengths)]
 
-    spanners_tr_element <-
-      htmltools::tags$tr(
-        mapply(
-          SIMPLIFY = FALSE,
-          USE.NAMES = FALSE,
-          spanners_rle$labels,
-          spanners_rle$lengths,
-          FUN = function(x, length) {
+    for (i in seq_along(spanners_rle$labels)) {
 
-            htmltools::tags$th(
-              colspan = if (length > 1) length else NULL,
-              # style = htmltools::css(
-              #   `text-align` = if (is.na(x)) NULL else "center"
-              # ),
-              if (!is.na(x)) x else NULL
-            )
-          }
+      styles_spanners <-
+        dplyr::filter(
+          spanner_style_attrs,
+          locname == "columns_groups",
+          grpname == spanners_rle$values[i]
         )
-      )
 
-    if (stub_available) {
+      spanner_style <-
+        if (nrow(styles_spanners) > 0) {
+          styles_spanners$html_style
+        } else {
+          NULL
+        }
 
-      # Add a `role="stub"` attribute to the first child
-      # of the `spanners_tr_element` <tr>
-      spanners_tr_element$children[[1]][[1]] <-
-        htmltools::tagAppendAttributes(
-          spanners_tr_element$children[[1]][[1]],
-          role = "stub"
+      spanners_th_element <-
+        htmltools::tags$th(
+          role = if (i == 1 && stub_available) "stub" else NULL,
+          colspan = if (spanners_rle$lengths[i] > 1) spanners_rle$lengths[i] else NULL,
+          style = if (is.null(spanner_style)) NULL else spanner_style,
+          if (!is.na(spanners_rle$labels[i])) spanners_rle$labels[i] else NULL
         )
+
+      # Append the `spanners_th_element` to the end of the `spanners_tagList`
+      spanners_tagList[[i]] <- spanners_th_element
     }
+
+    # Create <tr> element for spanner
+    spanners_tr_element <-
+      htmltools::tags$tr(role = "spanners", spanners_tagList)
 
   } else {
     spanners_tr_element <- NULL
