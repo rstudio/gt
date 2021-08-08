@@ -17,23 +17,10 @@ test_that("the `fmt_scientific()` function works correctly", {
 
   # Create a `gt_tbl` object with `gt()` and the
   # `data_tbl` dataset
-  tab <- gt(data = data_tbl)
+  tab <- gt(data_tbl)
 
   # Expect that the object has the correct classes
   expect_is(tab, c("gt_tbl", "data.frame"))
-
-  # # Expect certain named attributes
-  # expect_true(
-  #   all(
-  #     names(attributes(tab)) %in%
-  #       c(
-  #         "names", "class", "row.names",
-  #         "boxh_df", "stub_df", "footnotes_df", "styles_df",
-  #         "rows_df", "cols_df", "col_labels", "grp_labels",
-  #         "arrange_groups", "data_df", "opts_df", "formats", "transforms"
-  #       )
-  #   )
-  # )
 
   # Extract vectors from the table object for comparison
   # to the original dataset
@@ -239,6 +226,38 @@ test_that("the `fmt_scientific()` function works correctly", {
     )
   )
 
+  # Format the `num_1` column to 2 decimal places, force the sign
+  expect_equal(
+    (tab %>%
+       fmt_scientific(
+         columns = num_1, decimals = 3, force_sign = TRUE) %>%
+       render_formats_test("html"))[["num_1"]],
+    c(
+      "+1.836 &times; 10<sup class='gt_super'>3</sup>",
+      "+2.763 &times; 10<sup class='gt_super'>3</sup>",
+      "+9.373 &times; 10<sup class='gt_super'>2</sup>",
+      "+6.430 &times; 10<sup class='gt_super'>2</sup>",
+      "+2.232", "0.000", "&minus;2.324 &times; 10<sup class='gt_super'>1</sup>"
+    )
+  )
+
+  # Format the `num_1` column to 2 decimal places, force the sign and
+  # define a pattern for decorating values
+  expect_equal(
+    (tab %>%
+       fmt_scientific(
+         columns = num_1, pattern = "*{x}*", force_sign = TRUE) %>%
+       render_formats_test("html"))[["num_1"]],
+    c(
+      "*+1.84 &times; 10<sup class='gt_super'>3</sup>*",
+      "*+2.76 &times; 10<sup class='gt_super'>3</sup>*",
+      "*+9.37 &times; 10<sup class='gt_super'>2</sup>*",
+      "*+6.43 &times; 10<sup class='gt_super'>2</sup>*",
+      "*+2.23*", "*0.00*",
+      "*&minus;2.32 &times; 10<sup class='gt_super'>1</sup>*"
+    )
+  )
+
   # Format the `num_1` column to 2 decimal places, apply the `en_US`
   # locale and use all other defaults; extract `output_df` in the HTML
   # context and compare to expected values
@@ -340,7 +359,7 @@ test_that("`fmt_scientific()` can handle extremely large and small values", {
 
   # Create a `gt_tbl` object with `gt()` and the
   # `data_tbl` dataset
-  tab <- gt(data = data_tbl)
+  tab <- gt(data_tbl)
 
   # Format the `num` column to 5 decimal places, use all
   # other defaults; extract values in the default context

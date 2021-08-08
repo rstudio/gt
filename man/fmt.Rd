@@ -35,6 +35,7 @@ than any of the specialized \verb{fmt_*()} functions that are available in
 \strong{gt}. Along with the \code{columns} and \code{rows} arguments that provide some
 precision in targeting data cells, the \code{fns} argument allows you to define
 one or more functions for manipulating the raw data.
+
 If providing a single function to \code{fns}, the recommended format is in the
 form: \code{fns = function(x) ...}. This single function will format the targeted
 data cells the same way regardless of the output format (e.g., HTML, LaTeX,
@@ -60,7 +61,7 @@ for more information on this.
 
 \section{Function ID}{
 
-3-12
+3-14
 }
 
 \examples{
@@ -87,6 +88,8 @@ Other Format Data:
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_engineering}()},
+\code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},

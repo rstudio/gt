@@ -2,7 +2,7 @@ library(gt)
 
 # Create a display table based on `airquality`
 airquality_tbl <-
-  gt(data = airquality) %>%
+  gt(airquality) %>%
   cols_move_to_start(columns = c(Month, Day)) %>%
   cols_label(Solar.R = html("Solar<br>Radiation")) %>%
   fmt_number(

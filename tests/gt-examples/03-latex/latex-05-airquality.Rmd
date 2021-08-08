@@ -12,7 +12,7 @@ library(gt)
 Create a display table based on `airquality`.
 
 ```{r}
-gt(data = airquality) %>%
+gt(airquality) %>%
   cols_move_to_start(columns = c(Month, Day)) %>%
   fmt_number(
     columns = Wind,

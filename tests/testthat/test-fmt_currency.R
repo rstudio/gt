@@ -17,21 +17,10 @@ test_that("the `fmt_currency()` function works correctly", {
 
   # Create a `gt_tbl` object with `gt()` and the
   # `data_tbl` dataset
-  tab <- gt(data = data_tbl)
+  tab <- gt(data_tbl)
 
   # Expect that the object has the correct classes
   expect_is(tab, c("gt_tbl", "data.frame"))
-
-  # Expect certain named attributes
-  # expect_true(
-  #   all(
-  #     names(attributes(tab)) %in%
-  #       c("names", "class", "row.names",
-  #         "boxh_df", "stub_df", "footnotes_df", "styles_df",
-  #         "rows_df", "cols_df", "col_labels", "grp_labels",
-  #         "arrange_groups", "data_df", "opts_df", "formats", "transforms")
-  #   )
-  # )
 
   # Extract vectors from the table object for comparison
   # to the original dataset
@@ -283,7 +272,7 @@ test_that("the `fmt_currency()` function can scale/suffix larger numbers", {
 
   # Create a `gt_tbl` object with `gt()` and the
   # `data_tbl` dataset
-  tab <- gt(data = data_tbl)
+  tab <- gt(data_tbl)
 
   # Format the `num` column to 2 decimal places, have the
   # `suffixing` option set to TRUE (default labels, all
@@ -400,7 +389,7 @@ test_that("the `fmt_currency()` function can scale/suffix larger numbers", {
 
   # Create a `gt_tbl` object with `gt()` and the
   # `data_tbl_2` dataset
-  tab_2 <- gt(data = data_tbl_2)
+  tab_2 <- gt(data_tbl_2)
 
   #
   # Adjust the `decimals` value to verify that
@@ -517,7 +506,7 @@ test_that("the `currency()` helper function works correctly", {
 
   # Create a `gt_tbl` object with `gt()` and the
   # `data_tbl` dataset
-  tab <- gt(data = data_tbl)
+  tab <- gt(data_tbl)
 
   # Format the `num_1` column using the `currency()` helper function;
   # extract `output_df` in the HTML context and compare to expected values

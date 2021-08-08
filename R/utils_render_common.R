@@ -1,6 +1,3 @@
-
-grand_summary_col <- "::GRAND_SUMMARY"
-
 # Define the contexts
 all_contexts <- c("html", "latex", "rtf", "default")
 
@@ -246,22 +243,21 @@ reorder_styles <- function(data) {
   stub_df <- dt_stub_df_get(data = data)
   styles_tbl <- dt_styles_get(data = data)
 
-  rownum_final <-
-    stub_df %>%
-    dplyr::pull(rownum_i) %>%
-    as.numeric()
+  rownum_final <- as.numeric(stub_df[, "rownum_i", drop = TRUE])
 
   for (i in seq_len(nrow(styles_tbl))) {
-    if (!is.na(styles_tbl[i, ][["rownum"]])) {
+
+    if (
+      !is.na(styles_tbl[i, ][["rownum"]]) &&
+      !grepl("summary_cells", styles_tbl[i, ][["locname"]])
+    ) {
 
       styles_tbl[i, ][["rownum"]] <-
         which(rownum_final == styles_tbl[i, ][["rownum"]])
     }
   }
 
-  data <- dt_styles_set(data = data, styles = styles_tbl)
-
-  data
+  dt_styles_set(data = data, styles = styles_tbl)
 }
 
 #' Perform merging of column contents

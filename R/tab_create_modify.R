@@ -152,8 +152,8 @@ tab_spanner <- function(data,
 
     # Move columns into place
     data <-
-      data %>%
       cols_move(
+        data = data,
         columns = column_names,
         after = column_names[1]
       )
@@ -418,7 +418,11 @@ tab_row_group <- function(data,
   # Warn user about `others_label` deprecation
   if (!is.null(others_label)) {
 
-    data <- tab_options(data = data, row_group.default_label = others_label)
+    data <-
+      tab_options(
+        data = data,
+        row_group.default_label = others_label
+      )
 
     warning(
       "The `others_label` argument has been deprecated in gt 0.3.0:\n",
@@ -461,6 +465,7 @@ tab_row_group <- function(data,
   arrange_groups_vars <- c(id, stats::na.omit(arrange_groups_vars))
   arrange_groups_vars <- unique(arrange_groups_vars)
   arrange_groups_vars <- arrange_groups_vars[arrange_groups_vars %in% stub_df$group_id]
+
   if (dt_stub_groupname_has_na(data = data)) {
     arrange_groups_vars <- c(arrange_groups_vars, NA_character_)
   }
@@ -469,13 +474,10 @@ tab_row_group <- function(data,
     arrange_groups_vars <- character(0)
   }
 
-  data <-
-    dt_row_groups_set(
-      data = data,
-      row_groups = arrange_groups_vars
-    )
-
-  data
+  dt_row_groups_set(
+    data = data,
+    row_groups = arrange_groups_vars
+  )
 }
 
 #' Add label text to the stubhead
@@ -612,6 +614,7 @@ tab_footnote <- function(data,
   # Resolve the locations of the targeted data cells and append
   # the footnotes
   for (loc in locations) {
+
     data <-
       set_footnote(
         loc = loc,
@@ -1033,12 +1036,33 @@ tab_style <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Intercept font styles that require registration
-  if ("cell_text" %in% names(style)) {
+  # Upgrade `style` to be within a list if not provided as such
+  if (inherits(style, "cell_styles")) {
+    style <- list(style)
+  }
 
-    if ("font" %in% names(style[["cell_text"]])) {
+  # Determine if there is a `cell_text` list within the main list;
+  # because we need to intercept any provided `font` inputs in `cell_text`
+  # this is the first thing we need to know
+  has_cell_text <- "cell_text" %in% names(unlist(style, recursive = FALSE))
 
-      font <- style[["cell_text"]][["font"]]
+  # If the `cell_text` list is present we now need to determine if there
+  # is indeed a `font` input within that list
+  if (has_cell_text) {
+
+    # The `style` list will itself contain several lists and it's
+    # important to identify which one represents `cell_text`
+    for (i in seq_along(style)) {
+      if ("cell_text" %in% names(style[[i]])) {
+        cell_text_idx <- i
+      }
+    }
+
+    # If the `cell_text` list contains a `font` input then intercept
+    # the font styles that require registration
+    if ("font" %in% names(style[[cell_text_idx]][["cell_text"]])) {
+
+      font <- style[[cell_text_idx]][["cell_text"]][["font"]]
       font <- normalize_font_input(font_input = font)
 
       existing_additional_css <-
@@ -1055,11 +1079,9 @@ tab_style <- function(data,
           table.additional_css = additional_css
         )
 
-      font_names <- font$name
-
-      style[["cell_text"]][["font"]] <-
+      style[[cell_text_idx]][["cell_text"]][["font"]] <-
         as_css_font_family_attr(
-          font_vec = font_names,
+          font_vec = font$name,
           value_only = TRUE
         )
     }
@@ -1447,10 +1469,13 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   Options to apply text transformations to the `column_labels`, `row_group`,
 #'   `stub`, `summary_row`, and `grand_summary_row` text elements. Either of the
 #'   `"uppercase"`, `"lowercase"`, or `"capitalize"` keywords can be used.
-#' @param data_row.padding,row_group.padding,summary_row.padding,grand_summary_row.padding,footnotes.padding,source_notes.padding
-#'   The amount of vertical padding to incorporate in the `data_row`,
-#'   `row_group`, `summary_row`, `grand_summary_row`, `footnotes`, and
-#'   `source_notes` locations.
+#' @param heading.padding,column_labels.padding,data_row.padding,row_group.padding,summary_row.padding,grand_summary_row.padding,footnotes.padding,source_notes.padding
+#'   The amount of vertical padding to incorporate in the `heading` (title and
+#'   subtitle), the `column_labels` (this includes the column spanners), the row
+#'   group labels (`row_group.padding`), in the body/stub rows
+#'   (`data_row.padding`), in summary rows (`summary_row.padding` or
+#'   `grand_summary_row.padding`), or in the footnotes and source notes
+#'   (`footnotes.padding` and `source_notes.padding`).
 #' @param table.border.top.style,table.border.top.width,table.border.top.color,table.border.right.style,table.border.right.width,table.border.right.color,table.border.bottom.style,table.border.bottom.width,table.border.bottom.color,table.border.left.style,table.border.left.width,table.border.left.color
 #'   The style, width, and color properties of the table's absolute top and
 #'   absolute bottom borders.
@@ -1672,6 +1697,7 @@ tab_options <- function(data,
                         heading.title.font.weight = NULL,
                         heading.subtitle.font.size = NULL,
                         heading.subtitle.font.weight = NULL,
+                        heading.padding = NULL,
                         heading.border.bottom.style = NULL,
                         heading.border.bottom.width = NULL,
                         heading.border.bottom.color = NULL,
@@ -1682,6 +1708,7 @@ tab_options <- function(data,
                         column_labels.font.size = NULL,
                         column_labels.font.weight = NULL,
                         column_labels.text_transform = NULL,
+                        column_labels.padding = NULL,
                         column_labels.vlines.style = NULL,
                         column_labels.vlines.width = NULL,
                         column_labels.vlines.color = NULL,
@@ -1813,9 +1840,10 @@ tab_options <- function(data,
     )
 
   # Write the modified options table back to `data`
-  data <- dt_options_set(data = data, options = opts_df)
-
-  data
+  dt_options_set(
+    data = data,
+    options = opts_df
+  )
 }
 
 preprocess_tab_option <- function(option, var_name, type) {

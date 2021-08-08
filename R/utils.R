@@ -1139,6 +1139,15 @@ is_gt <- function(data) {
   checkmate::test_class(data, "gt_tbl")
 }
 
+#' Determines whether a character vector is non-empty
+#'
+#' @param x A character vector.
+#' @noRd
+is_nonempty_string <- function(x) {
+
+  length(x) > 0 && any(grepl("\\S", x))
+}
+
 #' Stop any function if object is not a `gt_tbl` object
 #'
 #' @param data The input `data` object that is to be validated.
@@ -1170,11 +1179,24 @@ resolve_border_side <- function(side) {
          all = "all")
 }
 
-#' Expand a path using fs::path_ex
+#' Expand a path using fs::path_expand
+#'
 #' @noRd
 path_expand <- function(file) {
 
   fs::path_expand(file)
+}
+
+# TODO: the `get_file_ext()` function overlaps greatly with `gtsave_file_ext()`;
+#       both are not vectorized
+
+#' Get a file's extension
+#'
+#' @noRd
+get_file_ext <- function(file) {
+
+  pos <- regexpr("\\.([[:alnum:]]+)$", file)
+  ifelse(pos > -1L, substring(file, pos + 1L), "")
 }
 
 validate_marks <- function(marks) {

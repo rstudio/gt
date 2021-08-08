@@ -1,5 +1,7 @@
 ---
-output: pdf_document
+output: 
+  pdf_document:
+    extra_dependencies: ["longtable", "caption", "amsmath", "booktabs"]
 ---
 
 ```{r setup, include=FALSE}

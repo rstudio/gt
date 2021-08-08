@@ -23,7 +23,7 @@ test_that("the `cols_align()` function works correctly", {
   # Create a `tbl_html` object with `gt()`; the `mpg`,
   # `cyl`, and `drat` columns are aligned left
   tbl_html <-
-    gt(data = mtcars_short) %>%
+    gt(mtcars_short) %>%
     cols_align(align = "left", columns = c(mpg, cyl, drat)) %>%
     render_as_html() %>%
     xml2::read_html()
@@ -44,7 +44,7 @@ test_that("the `cols_align()` function works correctly", {
   # Create a `tbl_html` object with `gt()`; columns `1` (`mpg`),
   # `2` (`cyl`), and `3` (`disp`) are aligned left
   tbl_html <-
-    gt(data = mtcars_short) %>%
+    gt(mtcars_short) %>%
     cols_align(align = "left", columns = 1:3) %>%
     render_as_html() %>%
     xml2::read_html()
@@ -65,25 +65,25 @@ test_that("the `cols_align()` function works correctly", {
   # Expect that supplying an `align` value that is not `left`, `center`,
   # or `right` will result in an error
   expect_error(
-    gt(data = mtcars_short) %>%
+    gt(mtcars_short) %>%
       cols_align(align = "righter", columns = c(mpg, cyl, drat)))
 
   # Expect that supplying a column name that doesn't exist in the
   # table columns will result in an error
   expect_error(
-    gt(data = mtcars_short) %>%
+    gt(mtcars_short) %>%
       cols_align(align = "right", columns = car))
 
   # Expect that supplying any column index that doesn't exist in the
   # table will result in an error
   expect_error(
-    gt(data = mtcars_short) %>%
+    gt(mtcars_short) %>%
       cols_align(align = "right", columns = c(1, 20)))
 
   # Create a `tbl_html` object with `gt()`; align all
   # columns to the left
   tbl_html <-
-    gt(data = mtcars_short) %>%
+    gt(mtcars_short) %>%
     cols_align(align = "left") %>%
     render_as_html() %>%
     xml2::read_html()
@@ -98,7 +98,7 @@ test_that("the `cols_align()` function works correctly", {
   # Create a `tbl_html` object with `gt()`; align all
   # columns (using `columns = everything()`) to the left
   tbl_html <-
-    gt(data = mtcars_short) %>%
+    gt(mtcars_short) %>%
     cols_align(align = "left", columns = everything()) %>%
     render_as_html() %>%
     xml2::read_html()
@@ -113,7 +113,7 @@ test_that("the `cols_align()` function works correctly", {
   # Create a `tbl_html` object with the `sp500` data
   # frame and `auto`-align all columns
   tbl_html <-
-    gt(data = sp500) %>%
+    gt(sp500) %>%
     cols_align(align = "auto") %>%
     render_as_html() %>%
     xml2::read_html()
