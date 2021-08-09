@@ -50,4 +50,4 @@ exibble %>%
     row.striping.include_stub = TRUE,
     row.striping.include_table_body = TRUE
   ) %>%
-  render_to_ir() %>% cat()
+  render_to_ir()
