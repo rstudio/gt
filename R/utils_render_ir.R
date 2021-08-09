@@ -857,12 +857,14 @@ get_optional_config_elements_for_target <- function(data) {
       "container_overflow_y",
       "table_id",
       "table_caption",
-      "table_additional_css",
       "table_font_names",
+      "table_additional_css",
+      "table_border_top_include",
+      "table_border_bottom_include",
       "column_labels_hidden",
-      "footnotes_sep",
       "row_striping_include_stub",
-      "row_striping_include_table_body"
+      "row_striping_include_table_body",
+      "footnotes_sep"
     )
 
   options_list <- list()
