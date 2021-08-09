@@ -16,8 +16,6 @@ knitr::opts_chunk$set(
 # gt <img src="man/figures/logo.svg" align="right" height="250px" />
 
 <!-- badges: start -->
-[![Lifecycle:
-maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/gt)](https://cran.r-project.org/package=gt)
 [![R build 
@@ -30,7 +28,7 @@ With the **gt** package, anyone can make wonderful-looking tables using the **R*
 
 <p align="center"><img src="man/figures/gt_parts_of_a_table.svg" width="800px"></p>
 
-It all begins with preprocessed **table data** (be it a tibble or a data frame). You then decide how to compose your **gt table** with the elements and formatting you need for the task at hand. Finally, the table is rendered by printing it at the console, including it in an R Markdown document, or exporting to a file using `gtsave()`. Currently, **gt** supports **HTML** output, with **LaTeX** and **RTF** planned for the future.
+It all begins with **table data** (be it a tibble or a data frame). You then decide how to compose your **gt table** with the elements and formatting you need for the task at hand. Finally, the table is rendered by printing it at the console, including it in an R Markdown document, or exporting to a file using `gtsave()`. Currently, **gt** supports the **HTML**, **LaTeX**, and **RTF** output formats.
 
 <p align="center"><img src="man/figures/gt_workflow_diagram.svg" width="800px"></p>
 
@@ -53,7 +51,7 @@ sp500 %>%
   gt() %>%
   tab_header(
     title = "S&P 500",
-    subtitle = glue::glue("{start_date} to {end_date}")
+    subtitle = glue("{start_date} to {end_date}")
   ) %>%
   fmt_date(
     columns = date,
@@ -107,9 +105,9 @@ The **gt** package joins a burgeoning collection of packages for display table g
 - the formatting options are 'batteries included' (scientific notation, uncertainty, ranges, percentages, suffixes, localized currency, dates/times + much more)
 - there is excellent, pain-free support for footnotes
 - the output is 'camera-ready'
-- it will eventually support multiple output formats (including LaTeX) with the same declarative interface
+- multiple output formats are supported with the same declarative interface
 - the API closely follows tidyverse conventions by adhering to the [tidyverse style guide](https://style.tidyverse.org)
-- a focus on making the package documentation and examples the best they can be
+- there's a focus on making the package documentation and examples the best they can be
 - rigorous QA/QC measures: high test coverage for automated tests, and thorough manual testing by QA engineers (with every proposed code change)
 
 While **gt** is trying to do something different with its own interface, it may not suit your specific needs. Here is a listing of other leading table-making **R** packages, with links to their respective project pages:
@@ -132,10 +130,7 @@ While **gt** is trying to do something different with its own interface, it may 
 
 #### Code of Conduct
 
-Please note that the gt project is released with a [contributor
-code of
-conduct](https://www.contributor-covenant.org/version/2/0/code_of_conduct/).<br>By
-participating in this project you agree to abide by its terms.
+Please note that the gt project is released with a [contributor code of conduct](https://www.contributor-covenant.org/version/2/0/code_of_conduct/).<br>By participating in this project you agree to abide by its terms.
 
 #### 📄 License
 
