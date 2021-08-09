@@ -1773,30 +1773,30 @@ test_that("certain X11 color names are replaced in HTML tables", {
 
 test_that("vertical padding across several table parts can be applied", {
 
-  testthat::local_edition(3)
-
-  snap_padded_tbl <- function(padding_px) {
-
-    mtcars[1:5, ] %>%
-      gt(rownames_to_stub = TRUE) %>%
-      tab_header(title = "The mtcars Dataset", subtitle = "What a great dataset this is") %>%
-      tab_spanner(label = "performance", columns = c(disp, hp, drat)) %>%
-      tab_footnote(footnote = "A table footnote", locations = cells_title("title")) %>%
-      tab_source_note(source_note = "Dataset is generally available in R") %>%
-      tab_options(
-        data_row.padding = padding_px,
-        column_labels.padding = padding_px,
-        heading.padding = padding_px,
-        footnotes.padding = padding_px,
-        source_notes.padding = padding_px
-      ) %>%
-      render_as_html() %>%
-      expect_snapshot()
-  }
-
-  # Generate a few snapshots at different `padding_px` amounts
-  snap_padded_tbl(padding_px = NULL)
-  snap_padded_tbl(padding_px = px(0))
-  snap_padded_tbl(padding_px = px(5))
-  snap_padded_tbl(padding_px = px(10))
+  # testthat::local_edition(3)
+  #
+  # snap_padded_tbl <- function(padding_px) {
+  #
+  #   mtcars[1:5, ] %>%
+  #     gt(rownames_to_stub = TRUE) %>%
+  #     tab_header(title = "The mtcars Dataset", subtitle = "What a great dataset this is") %>%
+  #     tab_spanner(label = "performance", columns = c(disp, hp, drat)) %>%
+  #     tab_footnote(footnote = "A table footnote", locations = cells_title("title")) %>%
+  #     tab_source_note(source_note = "Dataset is generally available in R") %>%
+  #     tab_options(
+  #       data_row.padding = padding_px,
+  #       column_labels.padding = padding_px,
+  #       heading.padding = padding_px,
+  #       footnotes.padding = padding_px,
+  #       source_notes.padding = padding_px
+  #     ) %>%
+  #     render_as_html() %>%
+  #     expect_snapshot()
+  # }
+  #
+  # # Generate a few snapshots at different `padding_px` amounts
+  # snap_padded_tbl(padding_px = NULL)
+  # snap_padded_tbl(padding_px = px(0))
+  # snap_padded_tbl(padding_px = px(5))
+  # snap_padded_tbl(padding_px = px(10))
 })
