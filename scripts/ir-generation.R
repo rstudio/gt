@@ -23,7 +23,8 @@ exibble %>%
   tab_source_note("source_note 1") %>%
   tab_source_note("source_note 2") %>%
   tab_footnote("footnote 1", locations = cells_body(1, 1)) %>%
-  tab_footnote("footnote 2", locations = cells_body(1, 2)) %>%
+  tab_footnote("footnote 1b", locations = cells_body(1, 1)) %>%
+  tab_footnote("The third footnote.", locations = cells_body(1, 2)) %>%
   tab_spanner("spanner", c(num, char)) %>%
   tab_style(cell_text("blue"), locations = cells_title("title")) %>%
   tab_style(cell_text("red"), locations = cells_title("subtitle")) %>%
