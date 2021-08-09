@@ -840,7 +840,7 @@ append_option_to_list <- function(data, option, options_list) {
     }
 
     list_item <- list(option = option_val)
-    names(list_item) <- option
+    names(list_item) <- gsub("_", "-", option)
     options_list <- c(options_list, list_item)
   }
 
