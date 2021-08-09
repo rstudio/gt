@@ -243,7 +243,7 @@ create_columns_ir <- function(data) {
 
   # Create <tr> element for the column labels
   column_labels_tr_element <-
-    htmltools::tags$tr(role = "column_labels", column_labels_tagList)
+    htmltools::tags$tr(role = "column-labels", column_labels_tagList)
 
   if (spanners_present) {
 
@@ -452,7 +452,7 @@ create_body_ir <- function(data) {
       group_heading_row <-
         htmltools::tagList(
           htmltools::tags$tr(
-            role = "row_group_label",
+            role = "row-group-label",
             htmltools::tagList(
               htmltools::tags$td(
                 style = row_style,
@@ -612,14 +612,14 @@ summary_row_tags_ir <- function(list_of_summaries,
         styles_resolved_row <-
           styles_resolved_group[styles_resolved_group$rownum == j, , drop = FALSE]
 
-        role <- "grand_summary"
+        role <- "grand-summary"
 
       } else {
 
         styles_resolved_row <-
           styles_resolved_group[styles_resolved_group$grprow == j, , drop = FALSE]
 
-        role <- "group_summary"
+        role <- "group-summary"
       }
 
       row_styles <-
@@ -692,7 +692,7 @@ create_source_notes_ir <- function(data) {
       source_notes,
       function(x) {
         htmltools::tags$p(
-          role = "source_note",
+          role = "source-note",
           style = source_notes_styles,
           htmltools::HTML(x)
         )
