@@ -297,6 +297,8 @@ gtsave_filename <- function(path, filename) {
 #'   clients over using CSS in a `<style>` block.
 #'
 #' @examples
+#' if (interactive()) {
+#'
 #' # Use `gtcars` to create a gt table;
 #' # add a header and then export as
 #' # HTML code with CSS inlined
@@ -319,6 +321,8 @@ gtsave_filename <- function(path, filename) {
 #' tab_html %>%
 #'   substr(1, 700) %>%
 #'   cat()
+#'
+#' }
 #'
 #' @family Export Functions
 #' @section Function ID:
@@ -362,6 +366,8 @@ as_raw_html <- function(data,
 #' @param data A table object that is created using the [gt()] function.
 #'
 #' @examples
+#' if (interactive()) {
+#'
 #' # Use `gtcars` to create a gt table;
 #' # add a header and then export as
 #' # an object with LaTeX code
@@ -385,6 +391,8 @@ as_raw_html <- function(data,
 #' tab_latex %>%
 #'   as.character() %>%
 #'   cat()
+#'
+#' }
 #'
 #' @family Export Functions
 #' @section Function ID:
@@ -458,6 +466,8 @@ as_latex <- function(data) {
 #'   or `"header"`. By default, page numbering is not active (`"none"`).
 #'
 #' @examples
+#' if (interactive()) {
+#'
 #' # Use `gtcars` to create a gt table;
 #' # add a header and then export as
 #' # RTF code
@@ -471,6 +481,8 @@ as_latex <- function(data) {
 #'     subtitle = md("`gtcars` is an R dataset")
 #'   ) %>%
 #'   as_rtf()
+#'
+#' }
 #'
 #' @family Export Functions
 #' @section Function ID:

@@ -22,6 +22,8 @@ containing the LaTeX code.
 }
 
 \examples{
+if (interactive()) {
+
 # Use `gtcars` to create a gt table;
 # add a header and then export as
 # an object with LaTeX code
@@ -45,6 +47,8 @@ tab_latex <-
 tab_latex \%>\%
   as.character() \%>\%
   cat()
+
+}
 
 }
 \seealso{

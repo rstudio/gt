@@ -11,7 +11,7 @@
 ^README\.Rmd$
 ^README\.md$
 ^LICENSE\.md$
-tests/gt-examples
 vignettes
 man/figures/.*svg$
 man/figures/[^m].*png$
+tests/gt-examples
