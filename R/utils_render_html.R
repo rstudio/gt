@@ -3,9 +3,9 @@
 #' @noRd
 footnote_mark_to_html <- function(mark) {
 
-  as.character(
-    htmltools::tagList(htmltools::tags$mark(mark))
-  )
+  space_sep_marks <- paste(unlist(strsplit(mark, ",")), collapse = " ")
+
+  as.character(htmltools::tags$mark(`footnote-id` = space_sep_marks, mark))
 }
 
 styles_to_html <- function(styles) {
