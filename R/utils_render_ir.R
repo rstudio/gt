@@ -692,7 +692,6 @@ create_source_notes_ir <- function(data) {
       source_notes,
       function(x) {
         htmltools::tags$div(
-          loc = "source-note",
           style = source_notes_styles,
           htmltools::HTML(x)
         )
@@ -753,10 +752,12 @@ create_footnotes_ir <- function(data) {
       FUN = function(x, footnote_text) {
 
         htmltools::tags$div(
-          loc = "footnote",
           style = footnotes_styles,
           htmltools::HTML(
-            paste0(htmltools::tags$mark(x), htmltools::HTML(footnote_text))
+            paste0(
+              htmltools::tags$sup(x),
+              htmltools::HTML(footnote_text)
+            )
           )
         )
       }
