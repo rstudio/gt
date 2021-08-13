@@ -4,7 +4,7 @@
 footnote_mark_to_html <- function(mark) {
 
   as.character(
-    htmltools::tags$sup(loc = "footnotes", mark)
+    htmltools::tags$sup(mark)
   )
 }
 
