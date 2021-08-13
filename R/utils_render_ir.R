@@ -137,8 +137,8 @@ create_heading_ir <- function(data) {
 
     title_component <-
       htmltools::tagList(
-        htmltools::tags$p(
-          role = "title",
+        htmltools::tags$div(
+          loc = "title",
           style = if (!is.na(title_styles)) title_styles else NULL,
           htmltools::HTML(paste0(heading$title, footnote_title_marks))
         )
@@ -148,13 +148,13 @@ create_heading_ir <- function(data) {
 
     title_component <-
       htmltools::tagList(
-        htmltools::tags$p(
-          role = "title",
+        htmltools::tags$div(
+          loc = "title",
           style = if (!is.na(title_styles)) title_styles else NULL,
           htmltools::HTML(paste0(heading$title, footnote_title_marks))
         ),
-        htmltools::tags$p(
-          role = "subtitle",
+        htmltools::tags$div(
+          loc = "subtitle",
           style = if (!is.na(subtitle_styles)) subtitle_styles else NULL,
           htmltools::HTML(paste0(heading$subtitle, footnote_subtitle_marks))
         )
@@ -231,8 +231,8 @@ create_columns_ir <- function(data) {
       }
 
     column_labels_th_element <-
-      htmltools::tags$th(
-        role = if (i == 1 && stub_available) "stub" else NULL,
+      htmltools::tags$div(
+        loc = if (i == 1 && stub_available) "stub" else NULL,
         style = if (is.null(column_label_style)) NULL else column_label_style,
         headings_labels[i]
       )
@@ -243,7 +243,7 @@ create_columns_ir <- function(data) {
 
   # Create <tr> element for the column labels
   column_labels_tr_element <-
-    htmltools::tags$tr(role = "column-labels", column_labels_tagList)
+    htmltools::tags$tr(loc = "column-labels", column_labels_tagList)
 
   if (spanners_present) {
 
@@ -282,8 +282,8 @@ create_columns_ir <- function(data) {
         }
 
       spanners_th_element <-
-        htmltools::tags$th(
-          role = if (i == 1 && stub_available) "stub" else NULL,
+        htmltools::tags$div(
+          loc = if (i == 1 && stub_available) "stub" else NULL,
           colspan = if (spanners_rle$lengths[i] > 1) spanners_rle$lengths[i] else NULL,
           style = if (is.null(spanner_style)) NULL else spanner_style,
           if (!is.na(spanners_rle$labels[i])) spanners_rle$labels[i] else NULL
@@ -295,7 +295,7 @@ create_columns_ir <- function(data) {
 
     # Create <tr> element for spanner
     spanners_tr_element <-
-      htmltools::tags$tr(role = "spanners", spanners_tagList)
+      htmltools::tags$tr(loc = "spanners", spanners_tagList)
 
   } else {
     spanners_tr_element <- NULL
@@ -452,9 +452,9 @@ create_body_ir <- function(data) {
       group_heading_row <-
         htmltools::tagList(
           htmltools::tags$tr(
-            role = "row-group-label",
+            loc = "row-group-label",
             htmltools::tagList(
-              htmltools::tags$td(
+              htmltools::tags$div(
                 style = row_style,
                 htmltools::HTML(group_label)
               )
@@ -499,9 +499,9 @@ create_body_ir <- function(data) {
 
                   sprintf(
                     if (x == 1 && stub_available) {
-                      "\n      <td role=\"stub\"%s>%s</td>"
+                      "\n      <div loc=\"stub\"%s>%s</div>"
                     } else {
-                      "\n      <td%s>%s</td>"
+                      "\n      <div%s>%s</div>"
                     },
                     if (is.null(cell_style)) {
                       ""
@@ -612,14 +612,14 @@ summary_row_tags_ir <- function(list_of_summaries,
         styles_resolved_row <-
           styles_resolved_group[styles_resolved_group$rownum == j, , drop = FALSE]
 
-        role <- "grand-summary"
+        loc <- "grand-summary"
 
       } else {
 
         styles_resolved_row <-
           styles_resolved_group[styles_resolved_group$grprow == j, , drop = FALSE]
 
-        role <- "group-summary"
+        loc <- "group-summary"
       }
 
       row_styles <-
@@ -632,15 +632,15 @@ summary_row_tags_ir <- function(list_of_summaries,
       summary_row <-
         htmltools::tagList(
           htmltools::tags$tr(
-            role = role,
+            loc = loc,
             mapply(
               SIMPLIFY = FALSE,
               USE.NAMES = FALSE,
               seq_along(summary_df_row(j)),
               row_styles,
               FUN = function(x, cell_style) {
-                htmltools::tags$td(
-                  role = if (x == 1) "stub" else NULL,
+                htmltools::tags$div(
+                  loc = if (x == 1) "stub" else NULL,
                   style = cell_style,
                   htmltools::HTML(summary_df_row(j)[x])
                 )
@@ -691,8 +691,8 @@ create_source_notes_ir <- function(data) {
     lapply(
       source_notes,
       function(x) {
-        htmltools::tags$p(
-          role = "source-note",
+        htmltools::tags$div(
+          loc = "source-note",
           style = source_notes_styles,
           htmltools::HTML(x)
         )
@@ -752,11 +752,11 @@ create_footnotes_ir <- function(data) {
       footnote_text,
       FUN = function(x, footnote_text) {
 
-        htmltools::tags$p(
-          role = "footnote",
+        htmltools::tags$div(
+          loc = "footnote",
           style = footnotes_styles,
           htmltools::HTML(
-            paste0(htmltools::tags$mark(`footnote-id` = x, x), htmltools::HTML(footnote_text))
+            paste0(htmltools::tags$mark(x), htmltools::HTML(footnote_text))
           )
         )
       }
