@@ -41,28 +41,15 @@ render_to_ir <- function(data,
   # (1) the number of header rows in the table
   # (2) the number of body rows
   # (3) the number of columns
-  header_tr_elements <-
-    (columns_component %>%
-       as.character() %>%
-       xml2::read_html() %>%
-       xml2::xml_children()
-    )[[1]]
+  header_rows <- get_tr_count_from_component(columns_component)
 
-  header_rows <- length(header_tr_elements)
-
-  body_rows <-
-    length(
-      xml2::xml_find_all(
-        xml2::read_html(
-          as.character(body_component)),
-        xpath = ".//tr"
-      )
-    )
+  body_rows <- get_tr_count_from_component(body_component)
 
   table_cols <-
-    header_tr_elements %>%
-    xml2::xml_children() %>%
-    .[header_rows] %>%
+    columns_component %>%
+    as.character() %>%
+    xml2::read_html() %>%
+    xml2::xml_find_all("//*[@loc='column-labels']") %>%
     xml2::xml_children() %>%
     length()
 
@@ -85,5 +72,16 @@ render_to_ir <- function(data,
     body_component = body_component,
     source_notes_component = source_notes_component,
     footnotes_component = footnotes_component
+  )
+}
+
+get_tr_count_from_component <- function(html_string) {
+
+  length(
+    xml2::xml_find_all(
+      xml2::read_html(
+        as.character(html_string)),
+      xpath = ".//tr"
+    )
   )
 }
