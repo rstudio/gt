@@ -62,7 +62,7 @@ create_heading_ir <- function(data) {
 
   # If there is no title or heading component, then return an empty string
   if (!dt_heading_has_title(data = data)) {
-    return(htmltools::tagList())
+    return(NULL)
   }
 
   heading <- dt_heading_get(data = data)
@@ -665,7 +665,7 @@ create_source_notes_ir <- function(data) {
 
   # If the `source_notes` object is empty, then return an empty tagList
   if (is.null(source_notes)) {
-    return(htmltools::tagList())
+    return(NULL)
   }
 
   styles_tbl <- dt_styles_get(data = data)
@@ -710,7 +710,7 @@ create_footnotes_ir <- function(data) {
   # If the `footnotes_resolved` object has no
   # rows, then return an empty tagList
   if (nrow(footnotes_tbl) == 0) {
-    return(htmltools::tagList())
+    return(NULL)
   }
 
   styles_tbl <- dt_styles_get(data = data)
@@ -799,12 +799,18 @@ combine_as_ir <- function(data,
     ) %>%
     htmltools::HTML()
 
-  header_element <-
-    htmltools::tagList(
-      htmltools::tags$header(
-        heading_component
+  if (!is.null(heading_component)) {
+
+    header_element <-
+      htmltools::tagList(
+        htmltools::tags$header(
+          heading_component
+        )
       )
-    )
+
+  } else {
+    header_element <- NULL
+  }
 
   table_element <-
     htmltools::tagList(
@@ -814,13 +820,19 @@ combine_as_ir <- function(data,
       )
     )
 
-  footer_element <-
-    htmltools::tagList(
-      htmltools::tags$footer(
-        source_notes_component,
-        footnotes_component
+  if (!is.null(source_notes_component) || !is.null(footnotes_component)) {
+
+    footer_element <-
+      htmltools::tagList(
+        htmltools::tags$footer(
+          source_notes_component,
+          footnotes_component
+        )
       )
-    )
+
+  } else {
+    footer_element <- NULL
+  }
 
   as.character(
     htmltools::tagList(
