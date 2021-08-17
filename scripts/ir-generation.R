@@ -1,8 +1,77 @@
 # Example 01: Simple table
 exibble %>%
   gt() %>%
+  render_to_ir()
+
+# Example 02: Table with title
+exibble %>%
+  gt() %>%
+  tab_header(
+    title = "The title of the table",
+    subtitle = "The table's subtitle"
+  ) %>%
   render_to_ir() %>% cat()
 
+# Example 03: Table with column spanners
+exibble %>%
+  gt() %>%
+  tab_header(
+    title = "The title of the table",
+    subtitle = "The table's subtitle"
+  ) %>%
+  render_to_ir()
+
+# Example 04: Table with a title and source notes
+exibble %>%
+  gt() %>%
+  tab_header(
+    title = "The title of the table",
+    subtitle = "The table's subtitle"
+  ) %>%
+  tab_source_note("This is the first source note.") %>%
+  tab_source_note("The second source note") %>%
+  render_to_ir()
+
+# Example 05: Table with stub column
+exibble %>%
+  gt(rowname_col = "row") %>%
+  render_to_ir()
+
+# Example 06: Table with stub and row groups
+exibble %>%
+  gt(rowname_col = "row", groupname_col = "group") %>%
+  render_to_ir() %>% cat()
+
+# Example 07: Table with summary rows
+exibble %>%
+  gt(rowname_col = "row", groupname_col = "group") %>%
+  summary_rows(
+    columns = num,
+    fns = list(
+      min = ~min(., na.rm = TRUE),
+      max = ~max(., na.rm = TRUE),
+      avg = ~mean(., na.rm = TRUE)
+    )
+  ) %>%
+  summary_rows(
+    groups = "grp_a",
+    columns = currency,
+    fns = list(
+      min = ~min(., na.rm = TRUE),
+      max = ~max(., na.rm = TRUE)
+    )
+  ) %>%
+  render_to_ir()
+
+# Example 08: Table with additional options
+exibble %>%
+  gt() %>%
+  tab_options(
+    footnotes.sep = "<br />",
+    row.striping.include_stub = TRUE,
+    row.striping.include_table_body = TRUE
+  ) %>%
+  render_to_ir()
 
 # Example z: All locations with styling and several options
 exibble %>%
@@ -50,4 +119,4 @@ exibble %>%
     row.striping.include_stub = TRUE,
     row.striping.include_table_body = TRUE
   ) %>%
-  render_to_ir() %>% cat()
+  render_to_ir()
