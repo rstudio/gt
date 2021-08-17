@@ -10,15 +10,12 @@ exibble %>%
     title = "The title of the table",
     subtitle = "The table's subtitle"
   ) %>%
-  render_to_ir() %>% cat()
+  render_to_ir()
 
 # Example 03: Table with column spanners
 exibble %>%
   gt() %>%
-  tab_header(
-    title = "The title of the table",
-    subtitle = "The table's subtitle"
-  ) %>%
+  tab_spanner(label = "Spanner Label", columns = c(num, char)) %>%
   render_to_ir()
 
 # Example 04: Table with a title and source notes
@@ -40,7 +37,7 @@ exibble %>%
 # Example 06: Table with stub and row groups
 exibble %>%
   gt(rowname_col = "row", groupname_col = "group") %>%
-  render_to_ir() %>% cat()
+  render_to_ir()
 
 # Example 07: Table with summary rows
 exibble %>%
@@ -71,6 +68,29 @@ exibble %>%
     row.striping.include_stub = TRUE,
     row.striping.include_table_body = TRUE
   ) %>%
+  render_to_ir()
+
+# Example 09: Table with cell styles
+exibble %>%
+  gt(rowname_col = "row", groupname_col = "group") %>%
+  tab_stubhead("stubhead label") %>%
+  tab_header(
+    title = "The title of the table",
+    subtitle = "The table's subtitle"
+  ) %>%
+  tab_spanner(
+    label = "Spanner Label",
+    columns = c(num, char),
+    id = "spanner"
+  ) %>%
+  tab_style(cell_text("blue"), locations = cells_title("title")) %>%
+  tab_style(cell_text("red"), locations = cells_title("subtitle")) %>%
+  tab_style(cell_text("green"), locations = cells_column_spanners(spanners = "spanner")) %>%
+  tab_style(cell_text("purple"), locations = cells_column_labels(columns = char)) %>%
+  tab_style(cell_text("crimson"), locations = cells_stubhead()) %>%
+  tab_style(cell_text("orange"), locations = cells_body(columns = num)) %>%
+  tab_style(cell_text("brown"), locations = cells_row_groups()) %>%
+  tab_style(cell_text("gray50"), locations = cells_stub()) %>%
   render_to_ir()
 
 # Example z: All locations with styling and several options
