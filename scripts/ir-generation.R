@@ -1,5 +1,10 @@
+# Example 01: Simple table
+exibble %>%
+  gt() %>%
+  render_to_ir() %>% cat()
 
-# Example 1: All locations with styling and several options
+
+# Example z: All locations with styling and several options
 exibble %>%
   gt(rowname_col = "row", groupname_col = "group") %>%
   tab_header("title", "subtitle") %>%
@@ -41,13 +46,8 @@ exibble %>%
   tab_style(cell_fill("lightgreen"), locations = cells_footnotes()) %>%
   tab_style(list(cell_fill("rebeccapurple"), cell_text("white")), locations = cells_source_notes()) %>%
   tab_options(
-    # container.width = px(520),
-    # container.height = px(720),
-    # container.overflow.x = "hidden",
-    # container.overflow.y = NULL,
-    # column_labels.hidden = TRUE,
     footnotes.sep = "<br />",
     row.striping.include_stub = TRUE,
     row.striping.include_table_body = TRUE
   ) %>%
-  render_to_ir()
+  render_to_ir() %>% cat()
