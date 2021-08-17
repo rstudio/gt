@@ -231,7 +231,7 @@ create_columns_ir <- function(data) {
       }
 
     column_labels_th_element <-
-      htmltools::tags$div(
+      htmltools::tags$th(
         loc = if (i == 1 && stub_available) "stub" else NULL,
         style = if (is.null(column_label_style)) NULL else column_label_style,
         headings_labels[i]
@@ -282,7 +282,7 @@ create_columns_ir <- function(data) {
         }
 
       spanners_th_element <-
-        htmltools::tags$div(
+        htmltools::tags$th(
           loc = if (i == 1 && stub_available) "stub" else NULL,
           colspan = if (spanners_rle$lengths[i] > 1) spanners_rle$lengths[i] else NULL,
           style = if (is.null(spanner_style)) NULL else spanner_style,
@@ -454,7 +454,7 @@ create_body_ir <- function(data) {
           htmltools::tags$tr(
             loc = "row-group-label",
             htmltools::tagList(
-              htmltools::tags$div(
+              htmltools::tags$td(
                 style = row_style,
                 htmltools::HTML(group_label)
               )
@@ -499,9 +499,9 @@ create_body_ir <- function(data) {
 
                   sprintf(
                     if (x == 1 && stub_available) {
-                      "\n      <div loc=\"stub\"%s>%s</div>"
+                      "\n      <td loc=\"stub\"%s>%s</td>"
                     } else {
-                      "\n      <div%s>%s</div>"
+                      "\n      <td%s>%s</td>"
                     },
                     if (is.null(cell_style)) {
                       ""
@@ -639,7 +639,7 @@ summary_row_tags_ir <- function(list_of_summaries,
               seq_along(summary_df_row(j)),
               row_styles,
               FUN = function(x, cell_style) {
-                htmltools::tags$div(
+                htmltools::tags$td(
                   loc = if (x == 1) "stub" else NULL,
                   style = cell_style,
                   htmltools::HTML(summary_df_row(j)[x])
@@ -815,7 +815,8 @@ combine_as_ir <- function(data,
   table_element <-
     htmltools::tagList(
       htmltools::tags$table(
-        htmltools::tags$thead(colgroup_component, columns_component),
+        colgroup_component,
+        htmltools::tags$thead(columns_component),
         htmltools::tags$tbody(body_component)
       )
     )
