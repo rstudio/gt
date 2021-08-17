@@ -795,7 +795,7 @@ combine_as_ir <- function(data,
           paste0("  ", names(options_list[x]), "=\"", options_list[x], "\"")
         }) %>%
         paste(collapse = "\n"),
-      "\n/>"
+      "\n/></config>"
     ) %>%
     htmltools::HTML()
 
