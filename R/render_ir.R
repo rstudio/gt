@@ -49,7 +49,7 @@ render_to_ir <- function(data,
     columns_component %>%
     as.character() %>%
     xml2::read_html() %>%
-    xml2::xml_find_all("//*[@loc='column-labels']") %>%
+    xml2::xml_find_all("//*[@class='column-labels']") %>%
     xml2::xml_children() %>%
     length()
 
