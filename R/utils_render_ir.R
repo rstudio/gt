@@ -138,7 +138,7 @@ create_heading_ir <- function(data) {
     title_component <-
       htmltools::tagList(
         htmltools::tags$div(
-          loc = "title",
+          class = "title",
           style = if (!is.na(title_styles)) title_styles else NULL,
           htmltools::HTML(paste0(heading$title, footnote_title_marks))
         )
@@ -149,12 +149,12 @@ create_heading_ir <- function(data) {
     title_component <-
       htmltools::tagList(
         htmltools::tags$div(
-          loc = "title",
+          class = "title",
           style = if (!is.na(title_styles)) title_styles else NULL,
           htmltools::HTML(paste0(heading$title, footnote_title_marks))
         ),
         htmltools::tags$div(
-          loc = "subtitle",
+          class = "subtitle",
           style = if (!is.na(subtitle_styles)) subtitle_styles else NULL,
           htmltools::HTML(paste0(heading$subtitle, footnote_subtitle_marks))
         )
@@ -232,7 +232,7 @@ create_columns_ir <- function(data) {
 
     column_labels_th_element <-
       htmltools::tags$th(
-        loc = if (i == 1 && stub_available) "stub" else NULL,
+        class = if (i == 1 && stub_available) "stub" else NULL,
         style = if (is.null(column_label_style)) NULL else column_label_style,
         headings_labels[i]
       )
@@ -243,7 +243,7 @@ create_columns_ir <- function(data) {
 
   # Create <tr> element for the column labels
   column_labels_tr_element <-
-    htmltools::tags$tr(loc = "column-labels", column_labels_tagList)
+    htmltools::tags$tr(class = "column-labels", column_labels_tagList)
 
   if (spanners_present) {
 
@@ -283,7 +283,7 @@ create_columns_ir <- function(data) {
 
       spanners_th_element <-
         htmltools::tags$th(
-          loc = if (i == 1 && stub_available) "stub" else NULL,
+          class = if (i == 1 && stub_available) "stub" else NULL,
           colspan = if (spanners_rle$lengths[i] > 1) spanners_rle$lengths[i] else NULL,
           style = if (is.null(spanner_style)) NULL else spanner_style,
           if (!is.na(spanners_rle$labels[i])) spanners_rle$labels[i] else NULL
@@ -295,7 +295,7 @@ create_columns_ir <- function(data) {
 
     # Create <tr> element for spanner
     spanners_tr_element <-
-      htmltools::tags$tr(loc = "spanners", spanners_tagList)
+      htmltools::tags$tr(class = "spanners", spanners_tagList)
 
   } else {
     spanners_tr_element <- NULL
@@ -452,7 +452,7 @@ create_body_ir <- function(data) {
       group_heading_row <-
         htmltools::tagList(
           htmltools::tags$tr(
-            loc = "row-group-label",
+            class = "row-group-label",
             htmltools::tagList(
               htmltools::tags$td(
                 style = row_style,
@@ -499,7 +499,7 @@ create_body_ir <- function(data) {
 
                   sprintf(
                     if (x == 1 && stub_available) {
-                      "\n      <td loc=\"stub\"%s>%s</td>"
+                      "\n      <td class=\"stub\"%s>%s</td>"
                     } else {
                       "\n      <td%s>%s</td>"
                     },
@@ -612,14 +612,14 @@ summary_row_tags_ir <- function(list_of_summaries,
         styles_resolved_row <-
           styles_resolved_group[styles_resolved_group$rownum == j, , drop = FALSE]
 
-        loc <- "grand-summary"
+        class <- "grand-summary"
 
       } else {
 
         styles_resolved_row <-
           styles_resolved_group[styles_resolved_group$grprow == j, , drop = FALSE]
 
-        loc <- "group-summary"
+        class <- "group-summary"
       }
 
       row_styles <-
@@ -632,7 +632,7 @@ summary_row_tags_ir <- function(list_of_summaries,
       summary_row <-
         htmltools::tagList(
           htmltools::tags$tr(
-            loc = loc,
+            class = class,
             mapply(
               SIMPLIFY = FALSE,
               USE.NAMES = FALSE,
@@ -640,7 +640,7 @@ summary_row_tags_ir <- function(list_of_summaries,
               row_styles,
               FUN = function(x, cell_style) {
                 htmltools::tags$td(
-                  loc = if (x == 1) "stub" else NULL,
+                  class = if (x == 1) "stub" else NULL,
                   style = cell_style,
                   htmltools::HTML(summary_df_row(j)[x])
                 )
