@@ -37,35 +37,10 @@ render_to_ir <- function(data,
   # Create the footnotes component
   footnotes_component <- create_footnotes_ir(data = data)
 
-  # Using the `columns_component` and the `body_component` obtain:
-  # (1) the number of header rows in the table
-  # (2) the number of body rows
-  # (3) the number of columns
-  header_rows <- get_tr_count_from_component(columns_component)
-
-  body_rows <- get_tr_count_from_component(body_component)
-
-  table_cols <-
-    columns_component %>%
-    as.character() %>%
-    xml2::read_html() %>%
-    xml2::xml_find_all("//*[@class='column-labels']") %>%
-    xml2::xml_children() %>%
-    length()
-
-  # Create the table defs component
-  table_defs <-
-    list(
-      target = target,
-      table_cols = table_cols,
-      header_rows = header_rows,
-      body_rows = body_rows
-    )
-
   # Compose the IR
   combine_as_ir(
     data = data,
-    table_defs = table_defs,
+    target = target,
     colgroup_component = colgroup_component,
     heading_component = heading_component,
     columns_component = columns_component,
