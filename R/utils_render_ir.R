@@ -766,7 +766,7 @@ create_footnotes_ir <- function(data) {
 }
 
 combine_as_ir <- function(data,
-                          table_defs,
+                          target,
                           colgroup_component,
                           heading_component,
                           columns_component,
@@ -776,14 +776,7 @@ combine_as_ir <- function(data,
 
   options_list <- get_optional_config_elements_for_target(data = data)
 
-  options_list <-
-    c(list(
-      target = table_defs$target,
-      `table-cols` = table_defs$table_cols,
-      `header-rows` = table_defs$header_rows,
-      `body-rows` = table_defs$body_rows
-    ),
-    options_list)
+  options_list <- c(list(target = target), options_list)
 
   config_element <-
     paste0(
