@@ -308,6 +308,9 @@ cols_width <- function(.data,
 #'   optionally wrap the column labels with [md()] (to interpret text as
 #'   Markdown) or [html()] (to interpret text as HTML).
 #' @param .list Allows for the use of a list as an input alternative to `...`.
+#' @param col_names Allows for the use of an unnamed vector of the same length
+#'   as the number of column in the data.  This cannot be used with `...` or
+#'   `.list`
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -355,7 +358,32 @@ cols_width <- function(.data,
 #' @export
 cols_label <- function(.data,
                        ...,
-                       .list = list2(...)) {
+                       .list = list2(...),
+                       .col_names = NULL
+  ) {
+
+  # use .col_names if present
+  if (!is_null(.col_names)) {
+    if (length(.list)) {
+      stop(
+        "col_names cannot be used in combination with ... or .list params",
+        call. = FALSE
+        )
+    }
+
+    cn <- colnames(.data$`_data`)
+
+    if (length(.col_names) != length(cn)) {
+      stop("col_names must be the same length as the number of columns", call. = FALSE)
+    }
+
+    if (!is_null(names(.col_names))) {
+      warning("names in col_names are ignored", call. = FALSE)
+    }
+
+    # override
+    .list <- set_names(.col_names, cn)
+  }
 
   # Collect a named list of column labels
   labels_list <- .list
