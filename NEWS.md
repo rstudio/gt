@@ -1,3 +1,9 @@
+# gt (development version)
+
+## New features
+
+* `cols_label()` gains a new argument `.col_names()` to allow for an unnamed vector (of equal length as the column names in the original data) to be used as new labels (@jmbarbone, #830)
+
 # gt 0.3.1
 
 ## New features
