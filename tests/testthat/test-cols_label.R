@@ -124,6 +124,22 @@ test_that("the function `cols_label()` works correctly", {
     selection_text("[class='gt_col_heading gt_columns_bottom_border gt_right']") %>%
     expect_equal(c("col_a", "col_b", "col_c", "col_d"))
 
+  # Expect that .col_names can be used as an unnamed character vector
+  gt(tbl) %>%
+    cols_label(.col_names = c("col_a", "col_b", "col_c", "col_d")) %>%
+    .$`_boxh` %>%
+    .$column_label %>%
+    unlist() %>%
+    expect_equal(c("col_a", "col_b", "col_c", "col_d"))
+
+  gt(tbl) %>%
+    # list is fine?
+    cols_label(.col_names = list("col_a", "col_b", "col_c", "col_d")) %>%
+    .$`_boxh` %>%
+    .$column_label %>%
+    unlist() %>%
+    expect_equal(c("col_a", "col_b", "col_c", "col_d"))
+
   # Expect an error if any names are missing
   expect_error(
     gt(tbl) %>%
@@ -174,6 +190,50 @@ test_that("the function `cols_label()` works correctly", {
       cols_label(
         a = "label a",
         .dat = "label dat"
+      )
+  )
+
+  # expect error of .col_names and ... or .list are used
+  expect_error(
+    gt(tbl) %>%
+      cols_label(
+        col_1 = "col_a",
+        col_2 = "col_b",
+        col_3 = "col_c",
+        col_4 = "col_d",
+        .col_names = c("col_a", "col_b", "col_c", "col_d")
+      )
+  )
+
+  expect_error(
+    gt(tbl) %>%
+      cols_label(
+        .list = list(
+          col_1 = "col_a",
+          col_2 = "col_b",
+          col_3 = "col_c",
+          col_4 = "col_d"
+        ),
+        .col_names = c("col_a", "col_b", "col_c", "col_d")
+      )
+  )
+
+  # expect error if .col_names isn't the right length
+  expect_error(
+    gt(tbl) %>%
+      cols_label(.col_names = "col_a")
+  )
+
+  # expect warning if .col_names have names
+  expect_warning(
+    gt(tbl) %>%
+      cols_label(
+        .col_names = c(
+          col_1 = "col_a",
+          col_2 = "col_b",
+          col_3 = "col_c",
+          col_4 = "col_d"
+        )
       )
   )
 })
