@@ -308,7 +308,7 @@ cols_width <- function(.data,
 #'   optionally wrap the column labels with [md()] (to interpret text as
 #'   Markdown) or [html()] (to interpret text as HTML).
 #' @param .list Allows for the use of a list as an input alternative to `...`.
-#' @param col_names Allows for the use of an unnamed vector of the same length
+#' @param .col_names Allows for the use of an unnamed vector of the same length
 #'   as the number of column in the data.  This cannot be used with `...` or
 #'   `.list`
 #'

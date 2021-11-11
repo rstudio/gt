@@ -16,7 +16,7 @@ Markdown) or \code{\link[=html]{html()}} (to interpret text as HTML).}
 
 \item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
 
-\item{col_names}{Allows for the use of an unnamed vector of the same length
+\item{.col_names}{Allows for the use of an unnamed vector of the same length
 as the number of column in the data.  This cannot be used with \code{...} or
 \code{.list}}
 }
