@@ -18,8 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![CRAN
 status](https://www.r-pkg.org/badges/version/gt)](https://cran.r-project.org/package=gt)
-[![R build 
-status](https://github.com/rstudio/gt/workflows/R-CMD-check/badge.svg)](https://github.com/rstudio/gt/actions?workflow=R-CMD-check)
+[![R build status](https://github.com/rstudio/gt/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rstudio/gt/actions)
 [![Coverage
 status](https://codecov.io/gh/rstudio/gt/branch/master/graph/badge.svg)](https://codecov.io/github/rstudio/gt?branch=master)
 <!-- badges: end -->
@@ -32,7 +31,7 @@ It all begins with **table data** (be it a tibble or a data frame). You then dec
 
 <p align="center"><img src="man/figures/gt_workflow_diagram.svg" width="800px"></p>
 
-The **gt** package is designed to be both straightforward yet powerful. The emphasis is on simple functions for the everyday display table needs. Here is a brief example of how to use **gt** to create a table from the included `sp500` dataset: 
+The **gt** package is designed to be both straightforward yet powerful. The emphasis is on simple functions for the everyday display table needs. Here is a brief example of how to use **gt** to create a table from the included `sp500` dataset:
 
 ```{r sp500_example, eval=FALSE}
 library(gt)
@@ -94,7 +93,7 @@ devtools::install_github("rstudio/gt")
 ```
 
 If you encounter a bug, have usage questions, or want to share ideas to make this package better, please feel free to file an [issue](https://github.com/rstudio/gt/issues).
- 
+
 ***
 
 #### How **gt** fits in with Other Packages that Generate Display Tables
@@ -121,11 +120,11 @@ While **gt** is trying to do something different with its own interface, it may 
 - **reactable**&nbsp;([GITHUB](https://github.com/glin/reactable),&nbsp;[WEBSITE](https://glin.github.io/reactable/))
 - **flextable**&nbsp;([GITHUB](https://github.com/davidgohel/flextable),&nbsp;[WEBSITE](https://davidgohel.github.io/flextable/))
 - **ftextra**&nbsp;([GITHUB](https://github.com/atusy/ftExtra),&nbsp;[WEBSITE](https://ftextra.atusy.net/))
-- **pixiedust**&nbsp;([GITHUB](https://github.com/nutterb/pixiedust)) 
-- **tangram**&nbsp;([GITHUB](https://github.com/spgarbet/tangram)) 
+- **pixiedust**&nbsp;([GITHUB](https://github.com/nutterb/pixiedust))
+- **tangram**&nbsp;([GITHUB](https://github.com/spgarbet/tangram))
 - **ztable**&nbsp;([GITHUB](https://github.com/cardiomoon/ztable))
-- **condformat**&nbsp;([GITHUB](https://github.com/zeehio/condformat)) 
-- **stargazer**&nbsp;([CRAN](https://CRAN.R-project.org/package=stargazer)) 
+- **condformat**&nbsp;([GITHUB](https://github.com/zeehio/condformat))
+- **stargazer**&nbsp;([CRAN](https://CRAN.R-project.org/package=stargazer))
 - **xtable**&nbsp;([CRAN](https://CRAN.R-project.org/package=xtable))
 
 #### Code of Conduct
