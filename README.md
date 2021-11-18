@@ -7,7 +7,8 @@
 
 [![CRAN
 status](https://www.r-pkg.org/badges/version/gt)](https://cran.r-project.org/package=gt)
-[![R build status](https://github.com/rstudio/gt/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rstudio/gt/actions)
+[![R build
+status](https://github.com/rstudio/gt/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rstudio/gt/actions)
 [![Coverage
 status](https://codecov.io/gh/rstudio/gt/branch/master/graph/badge.svg)](https://codecov.io/github/rstudio/gt?branch=master)
 <!-- badges: end -->
