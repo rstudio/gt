@@ -32,8 +32,6 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -46,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">gt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Development version">0.3.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Development version">0.3.1.9000</span>
       </span>
     </div>
 
@@ -107,15 +105,19 @@
 
 <p>With the <strong>gt</strong> package, anyone can make wonderful-looking tables using the <strong>R</strong> programming language. The <strong>gt</strong> philosophy: we can construct a wide variety of useful tables with a cohesive set of table parts. These include the <em>table header</em>, the <em>stub</em>, the <em>column labels</em> and <em>spanner column labels</em>, the <em>table body</em>, and the <em>table footer</em>.</p>
 <p align="center">
-<img src="reference/figures/gt_parts_of_a_table.svg" width="800px"></p>
-<p>It all begins with preprocessed <strong>table data</strong> (be it a tibble or a data frame). You then decide how to compose your <strong>gt table</strong> with the elements and formatting you need for the task at hand. Finally, the table is rendered by printing it at the console, including it in an R Markdown document, or exporting to a file using <code><a href="reference/gtsave.html">gtsave()</a></code>. Currently, <strong>gt</strong> supports <strong>HTML</strong> output, with <strong>LaTeX</strong> and <strong>RTF</strong> planned for the future.</p>
+</p>
+<p><img src="reference/figures/gt_parts_of_a_table.svg" width="800px"></p>
+
+<p>It all begins with <strong>table data</strong> (be it a tibble or a data frame). You then decide how to compose your <strong>gt table</strong> with the elements and formatting you need for the task at hand. Finally, the table is rendered by printing it at the console, including it in an R Markdown document, or exporting to a file using <code><a href="reference/gtsave.html">gtsave()</a></code>. Currently, <strong>gt</strong> supports the <strong>HTML</strong>, <strong>LaTeX</strong>, and <strong>RTF</strong> output formats.</p>
 <p align="center">
-<img src="reference/figures/gt_workflow_diagram.svg" width="800px"></p>
+</p>
+<p><img src="reference/figures/gt_workflow_diagram.svg" width="800px"></p>
+
 <p>The <strong>gt</strong> package is designed to be both straightforward yet powerful. The emphasis is on simple functions for the everyday display table needs. Here is a brief example of how to use <strong>gt</strong> to create a table from the included <code>sp500</code> dataset:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://gt.rstudio.com/">gt</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">tidyverse</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidyverse/glue" class="external-link">glue</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://gt.rstudio.com/">gt</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidyverse/glue">glue</a></span><span class="op">)</span>
 
 <span class="co"># Define the start and end dates for the data range</span>
 <span class="va">start_date</span> <span class="op">&lt;-</span> <span class="st">"2010-06-07"</span>
@@ -123,111 +125,116 @@
 
 <span class="co"># Create a gt table based on preprocessed</span>
 <span class="co"># `sp500` table data</span>
-<span class="va">sp500</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">date</span> <span class="op">&gt;=</span> <span class="va">start_date</span> <span class="op">&amp;</span> <span class="va">date</span> <span class="op">&lt;=</span> <span class="va">end_date</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">adj_close</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
+<span class="va">sp500</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">date</span> <span class="op">&gt;=</span> <span class="va">start_date</span> <span class="op">&amp;</span> <span class="va">date</span> <span class="op">&lt;=</span> <span class="va">end_date</span><span class="op">)</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span>
+  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">adj_close</span><span class="op">)</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span>
+  <span class="fu"><a href="reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span>
   <span class="fu"><a href="reference/tab_header.html">tab_header</a></span><span class="op">(</span>
     title <span class="op">=</span> <span class="st">"S&amp;P 500"</span>,
-    subtitle <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"{start_date} to {end_date}"</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
+    subtitle <span class="op">=</span> <span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html">glue</a></span><span class="op">(</span><span class="st">"{start_date} to {end_date}"</span><span class="op">)</span>
+  <span class="op">)</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span>
   <span class="fu"><a href="reference/fmt_date.html">fmt_date</a></span><span class="op">(</span>
     columns <span class="op">=</span> <span class="va">date</span>,
     date_style <span class="op">=</span> <span class="fl">3</span>
-  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
+  <span class="op">)</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span>
   <span class="fu"><a href="reference/fmt_currency.html">fmt_currency</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">open</span>, <span class="va">high</span>, <span class="va">low</span>, <span class="va">close</span><span class="op">)</span>,
+    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">open</span>, <span class="va">high</span>, <span class="va">low</span>, <span class="va">close</span><span class="op">)</span>,
     currency <span class="op">=</span> <span class="st">"USD"</span>
-  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
+  <span class="op">)</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span>
   <span class="fu"><a href="reference/fmt_number.html">fmt_number</a></span><span class="op">(</span>
     columns <span class="op">=</span> <span class="va">volume</span>,
     suffixing <span class="op">=</span> <span class="cn">TRUE</span>
   <span class="op">)</span></code></pre></div>
 <p align="center">
-<img src="reference/figures/gt_sp500_table.svg" width="1200px"></p>
+</p>
+<p><img src="reference/figures/gt_sp500_table.svg" width="1200px"></p>
+
 <p>There are six datasets included in <strong>gt</strong>: <code>countrypops</code>, <code>sza</code>, <code>gtcars</code>, <code>sp500</code>, <code>pizzaplace</code>, and <code>exibble</code>. All of them are useful for experimenting with <strong>gt</strong>’s functions.</p>
 <p>Beyond this simple example, there are many functions available in <strong>gt</strong> for creating super-customized tables.</p>
 <p>Want to try this out? Then, take the <strong>gt</strong> Test Drive on <strong>RStudio Cloud</strong>. It’s full of ready-to-run examples.</p>
 <p align="center">
-<a href="https://rstudio.cloud/project/779965" class="external-link"> <img src="reference/figures/gt-test-drive.svg" alt="RStudio Cloud Example" height="80px"></a>
 </p>
+<p><a href="https://rstudio.cloud/project/779965"> <img src="reference/figures/gt-test-drive.svg" alt="RStudio Cloud Example" height="80px"></a></p>
+
 <p>The <strong>gt</strong> package can be installed from <strong>CRAN</strong> with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"gt"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"gt"</span><span class="op">)</span></code></pre></div>
 <p>You can also choose to install the development version of <strong>gt</strong> from <strong>GitHub</strong>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"rstudio/gt"</span><span class="op">)</span></code></pre></div>
-<p>If you encounter a bug, have usage questions, or want to share ideas to make this package better, please feel free to file an <a href="https://github.com/rstudio/gt/issues" class="external-link">issue</a>.</p>
+<p>If you encounter a bug, have usage questions, or want to share ideas to make this package better, please feel free to file an <a href="https://github.com/rstudio/gt/issues">issue</a>.</p>
 <hr>
 <div id="how-gt-fits-in-with-other-packages-that-generate-display-tables" class="section level4">
 <h4 class="hasAnchor">
-<a href="#how-gt-fits-in-with-other-packages-that-generate-display-tables" class="anchor" aria-hidden="true"></a>How <strong>gt</strong> fits in with Other Packages that Generate Display Tables</h4>
+<a href="#how-gt-fits-in-with-other-packages-that-generate-display-tables" class="anchor"></a>How <strong>gt</strong> fits in with Other Packages that Generate Display Tables</h4>
 <p>The <strong>gt</strong> package joins a burgeoning collection of packages for display table generation. Why another? We feel that there is enough room in this space to innovate further. Here are some of the ways that <strong>gt</strong> contributes to this ecosystem:</p>
 <ul>
 <li>the interface is high-level and declarative (general instructions versus very specific)</li>
 <li>the formatting options are ‘batteries included’ (scientific notation, uncertainty, ranges, percentages, suffixes, localized currency, dates/times + much more)</li>
 <li>there is excellent, pain-free support for footnotes</li>
 <li>the output is ‘camera-ready’</li>
-<li>it will eventually support multiple output formats (including LaTeX) with the same declarative interface</li>
-<li>the API closely follows tidyverse conventions by adhering to the <a href="https://style.tidyverse.org" class="external-link">tidyverse style guide</a>
+<li>multiple output formats are supported with the same declarative interface</li>
+<li>the API closely follows tidyverse conventions by adhering to the <a href="https://style.tidyverse.org">tidyverse style guide</a>
 </li>
-<li>a focus on making the package documentation and examples the best they can be</li>
+<li>there’s a focus on making the package documentation and examples the best they can be</li>
 <li>rigorous QA/QC measures: high test coverage for automated tests, and thorough manual testing by QA engineers (with every proposed code change)</li>
 </ul>
 <p>While <strong>gt</strong> is trying to do something different with its own interface, it may not suit your specific needs. Here is a listing of other leading table-making <strong>R</strong> packages, with links to their respective project pages:</p>
 <ul>
 <li>
-<strong>knitr</strong> (<a href="https://github.com/yihui/knitr" class="external-link">GITHUB</a>, <a href="https://yihui.org/knitr/" class="external-link">WEBSITE</a>)</li>
+<strong>knitr</strong> (<a href="https://github.com/yihui/knitr">GITHUB</a>, <a href="https://yihui.org/knitr/">WEBSITE</a>)</li>
 <li>
-<strong>kableExtra</strong> (<a href="https://github.com/haozhu233/kableExtra" class="external-link">GITHUB</a>, <a href="https://haozhu233.github.io/kableExtra/" class="external-link">WEBSITE</a>)</li>
+<strong>kableExtra</strong> (<a href="https://github.com/haozhu233/kableExtra">GITHUB</a>, <a href="https://haozhu233.github.io/kableExtra/">WEBSITE</a>)</li>
 <li>
-<strong>formattable</strong> (<a href="https://github.com/renkun-ken/formattable" class="external-link">GITHUB</a>, <a href="https://renkun-ken.github.io/formattable/" class="external-link">WEBSITE</a>)</li>
+<strong>formattable</strong> (<a href="https://github.com/renkun-ken/formattable">GITHUB</a>, <a href="https://renkun-ken.github.io/formattable/">WEBSITE</a>)</li>
 <li>
-<strong>DT</strong> (<a href="https://github.com/rstudio/DT" class="external-link">GITHUB</a>, <a href="https://rstudio.github.io/DT/" class="external-link">WEBSITE</a>)</li>
+<strong>DT</strong> (<a href="https://github.com/rstudio/DT">GITHUB</a>, <a href="https://rstudio.github.io/DT/">WEBSITE</a>)</li>
 <li>
-<strong>pander</strong> (<a href="https://github.com/Rapporter/pander" class="external-link">GITHUB</a>, <a href="http://rapporter.github.io/pander" class="external-link">WEBSITE</a>)</li>
+<strong>pander</strong> (<a href="https://github.com/Rapporter/pander">GITHUB</a>, <a href="http://rapporter.github.io/pander">WEBSITE</a>)</li>
 <li>
-<strong>huxtable</strong> (<a href="https://github.com/hughjonesd/huxtable" class="external-link">GITHUB</a>, <a href="https://hughjonesd.github.io/huxtable/" class="external-link">WEBSITE</a>)</li>
+<strong>huxtable</strong> (<a href="https://github.com/hughjonesd/huxtable">GITHUB</a>, <a href="https://hughjonesd.github.io/huxtable/">WEBSITE</a>)</li>
 <li>
-<strong>reactable</strong> (<a href="https://github.com/glin/reactable" class="external-link">GITHUB</a>, <a href="https://glin.github.io/reactable/" class="external-link">WEBSITE</a>)</li>
+<strong>reactable</strong> (<a href="https://github.com/glin/reactable">GITHUB</a>, <a href="https://glin.github.io/reactable/">WEBSITE</a>)</li>
 <li>
-<strong>flextable</strong> (<a href="https://github.com/davidgohel/flextable" class="external-link">GITHUB</a>, <a href="https://davidgohel.github.io/flextable/" class="external-link">WEBSITE</a>)</li>
+<strong>flextable</strong> (<a href="https://github.com/davidgohel/flextable">GITHUB</a>, <a href="https://davidgohel.github.io/flextable/">WEBSITE</a>)</li>
 <li>
-<strong>ftextra</strong> (<a href="https://github.com/atusy/ftExtra" class="external-link">GITHUB</a>, <a href="https://ftextra.atusy.net/" class="external-link">WEBSITE</a>)</li>
+<strong>ftextra</strong> (<a href="https://github.com/atusy/ftExtra">GITHUB</a>, <a href="https://ftextra.atusy.net/">WEBSITE</a>)</li>
 <li>
-<strong>pixiedust</strong> (<a href="https://github.com/nutterb/pixiedust" class="external-link">GITHUB</a>)</li>
+<strong>pixiedust</strong> (<a href="https://github.com/nutterb/pixiedust">GITHUB</a>)</li>
 <li>
-<strong>tangram</strong> (<a href="https://github.com/spgarbet/tangram" class="external-link">GITHUB</a>)</li>
+<strong>tangram</strong> (<a href="https://github.com/spgarbet/tangram">GITHUB</a>)</li>
 <li>
-<strong>ztable</strong> (<a href="https://github.com/cardiomoon/ztable" class="external-link">GITHUB</a>)</li>
+<strong>ztable</strong> (<a href="https://github.com/cardiomoon/ztable">GITHUB</a>)</li>
 <li>
-<strong>condformat</strong> (<a href="https://github.com/zeehio/condformat" class="external-link">GITHUB</a>)</li>
+<strong>condformat</strong> (<a href="https://github.com/zeehio/condformat">GITHUB</a>)</li>
 <li>
-<strong>stargazer</strong> (<a href="https://CRAN.R-project.org/package=stargazer" class="external-link">CRAN</a>)</li>
+<strong>stargazer</strong> (<a href="https://CRAN.R-project.org/package=stargazer">CRAN</a>)</li>
 <li>
-<strong>xtable</strong> (<a href="https://CRAN.R-project.org/package=xtable" class="external-link">CRAN</a>)</li>
+<strong>xtable</strong> (<a href="https://CRAN.R-project.org/package=xtable">CRAN</a>)</li>
 </ul>
 </div>
 <div id="code-of-conduct" class="section level4">
 <h4 class="hasAnchor">
-<a href="#code-of-conduct" class="anchor" aria-hidden="true"></a>Code of Conduct</h4>
-<p>Please note that the gt project is released with a <a href="https://www.contributor-covenant.org/version/2/0/code_of_conduct/" class="external-link">contributor code of conduct</a>.<br>By participating in this project you agree to abide by its terms.</p>
+<a href="#code-of-conduct" class="anchor"></a>Code of Conduct</h4>
+<p>Please note that the gt project is released with a <a href="https://www.contributor-covenant.org/version/2/0/code_of_conduct/">contributor code of conduct</a>.<br>By participating in this project you agree to abide by its terms.</p>
 </div>
 <div id="-license" class="section level4">
 <h4 class="hasAnchor">
-<a href="#-license" class="anchor" aria-hidden="true"></a>📄 License</h4>
+<a href="#-license" class="anchor"></a>📄 License</h4>
 <p><strong>gt</strong> is licensed under the MIT license. See the <a href="LICENSE.html"><code>LICENSE.md</code></a> file for more details.</p>
 <p>© RStudio, PBC.</p>
 <hr>
 <p align="center">
-<img src="reference/figures/gt_tables_footer.png" width="100%"></p>
+</p>
+<p><img src="reference/figures/gt_tables_footer.png" width="100%"></p>
+
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2 data-toc-skip>Links</h2>
+<h2>Links</h2>
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=gt">https://​cloud.r-project.org/​package=gt</a>
 </li>
@@ -237,25 +244,22 @@
 </li>
 </ul>
 </div>
-
 <div class="license">
-<h2 data-toc-skip>License</h2>
+<h2>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
 <li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
-
 <div class="community">
-<h2 data-toc-skip>Community</h2>
+<h2>Community</h2>
 <ul class="list-unstyled">
 <li><a href="CONTRIBUTING.html">Contributing guide</a></li>
 <li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
 </ul>
 </div>
-
 <div class="developers">
-<h2 data-toc-skip>Developers</h2>
+<h2>Developers</h2>
 <ul class="list-unstyled">
 <li>Richard Iannone <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-3925-190X" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Joe Cheng <br><small class="roles"> Author </small>  </li>
@@ -265,28 +269,24 @@
 </ul>
 </div>
 
-<div class="dev-status">
-<h2 data-toc-skip>Dev status</h2>
+  <div class="dev-status">
+<h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.tidyverse.org/lifecycle/#maturing" class="external-link"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="Lifecycle: maturing"></a></li>
-<li><a href="https://cran.r-project.org/package=gt" class="external-link"><img src="https://www.r-pkg.org/badges/version/gt" alt="CRAN status"></a></li>
-<li><a href="https://github.com/rstudio/gt/actions?workflow=R-CMD-check" class="external-link"><img src="https://github.com/rstudio/gt/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
-<li><a href="https://codecov.io/github/rstudio/gt?branch=master" class="external-link"><img src="https://codecov.io/gh/rstudio/gt/branch/master/graph/badge.svg" alt="Coverage status"></a></li>
+<li><a href="https://cran.r-project.org/package=gt"><img src="https://www.r-pkg.org/badges/version/gt" alt="CRAN status"></a></li>
+<li><a href="https://github.com/rstudio/gt/actions"><img src="https://github.com/rstudio/gt/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R build status"></a></li>
+<li><a href="https://codecov.io/github/rstudio/gt?branch=master"><img src="https://codecov.io/gh/rstudio/gt/branch/master/graph/badge.svg" alt="Coverage status"></a></li>
 </ul>
 </div>
-
-  </div>
+</div>
 </div>
 
 
       <footer><div class="copyright">
-  <p></p>
-<p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, <a href="https://www.rstudio.com" class="external-link"><img src="https://www.tidyverse.org/rstudio-logo.svg" alt="RStudio" height="24"></a>.</p>
+  <p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, <a href="https://www.rstudio.com"><img src="https://www.tidyverse.org/rstudio-logo.svg" alt="RStudio" height="24"></a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
@@ -294,8 +294,6 @@
 
   
 
-
-  
 
   </body>
 </html>
