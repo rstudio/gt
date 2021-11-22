@@ -208,21 +208,10 @@ create_heading_component_h <- function(data) {
   heading <- dt_heading_get(data = data)
   footnotes_tbl <- dt_footnotes_get(data = data)
   styles_tbl <- dt_styles_get(data = data)
-  stub_components <- dt_stub_components(data = data)
   subtitle_defined <- dt_heading_has_subtitle(data = data)
 
-  # Obtain the number of visible columns in the built table
-  n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
-
-  # Determine whether the stub is available
-  stub_available <- dt_stub_components_has_rowname(stub_components)
-
-  # If a stub is present then the effective number of columns increases by 1
-  if (stub_available) {
-    n_cols <- n_data_cols + 1
-  } else {
-    n_cols <- n_data_cols
-  }
+  # Get effective number of columns
+  n_cols_total <- get_effective_number_of_columns(data = data)
 
   # Get the footnote marks for the title
   if ("title" %in% footnotes_tbl$locname) {
@@ -299,7 +288,7 @@ create_heading_component_h <- function(data) {
   title_row <-
     htmltools::tags$tr(
       htmltools::tags$th(
-        colspan = n_cols,
+        colspan = n_cols_total,
         class = paste(title_classes, collapse = " "),
         style = title_styles,
         htmltools::HTML(
@@ -313,7 +302,7 @@ create_heading_component_h <- function(data) {
     subtitle_row <-
       htmltools::tags$tr(
         htmltools::tags$th(
-          colspan = n_cols,
+          colspan = n_cols_total,
           class = paste(subtitle_classes, collapse = " "),
           style = subtitle_styles,
           htmltools::HTML(
@@ -341,7 +330,11 @@ create_columns_component_h <- function(data) {
   boxh <- dt_boxhead_get(data = data)
   stubh <- dt_stubhead_get(data = data)
   body <- dt_body_get(data = data)
+  groups_rows_df <- dt_groups_rows_get(data = data)
   styles_tbl <- dt_styles_get(data = data)
+
+  # TODO: `dt_stub_df_exists()` should be modified to determine
+  # whether there is a row group label column
   stub_available <- dt_stub_df_exists(data = data)
   spanners_present <- dt_spanners_exists(data = data)
 
@@ -362,6 +355,17 @@ create_columns_component_h <- function(data) {
   if (column_labels_hidden) {
     return("")
   }
+
+  # Should the row groups form a LHS column?
+  row_group_as_column <-
+    dt_options_get_value(
+      data = data,
+      option = "row_group_as_column"
+    )
+
+  # TODO: Wrap these lines into a function
+  has_row_groups <- !is.null(groups_rows_df)
+  has_row_group_column <- row_group_as_column && has_row_groups
 
   # Get the style attrs for the stubhead label
   stubhead_style_attrs <- subset(styles_tbl, locname == "stubhead")
@@ -408,7 +412,7 @@ create_columns_component_h <- function(data) {
               paste0("gt_", stubhead_label_alignment)),
             collapse = " "),
           rowspan = 1,
-          colspan = 1,
+          colspan = if (has_row_group_column) 2 else 1,
           style = stubhead_style,
           htmltools::HTML(headings_labels[1])
         )
@@ -477,7 +481,7 @@ create_columns_component_h <- function(data) {
             ),
             collapse = " "),
           rowspan = 2,
-          colspan = 1,
+          colspan = if (has_row_group_column) 2 else 1,
           style = stubhead_style,
           htmltools::HTML(headings_labels[1])
         )
@@ -680,6 +684,17 @@ create_body_component_h <- function(data) {
   # of the `stub_components`
   stub_available <- dt_stub_components_has_rowname(stub_components)
 
+  # Should the row groups form a LHS column?
+  row_group_as_column <-
+    dt_options_get_value(
+      data = data,
+      option = "row_group_as_column"
+    )
+
+  # TODO: Wrap these lines into a function
+  has_row_groups <- !is.null(groups_rows_df)
+  has_row_group_column <- row_group_as_column && has_row_groups
+
   # Obtain all of the visible (`"default"`), non-stub
   # column names for the table
   default_vars <- dt_boxhead_get_vars_default(data = data)
@@ -688,17 +703,33 @@ create_body_component_h <- function(data) {
 
   alignment_classes <- paste0("gt_", col_alignment)
 
-  if (stub_available) {
+  if (any(stub_available, has_row_group_column)) {
 
-    n_cols <- n_data_cols + 1
+    additional_cols <- stub_available + has_row_group_column
 
-    alignment_classes <- c("gt_left", alignment_classes)
+    n_cols <- n_data_cols + additional_cols
+
+    alignment_classes <- c(rep("gt_left", additional_cols), alignment_classes)
 
     stub_var <- dt_boxhead_get_var_stub(data = data)
+
+    group_var <- dt_boxhead_get_vars_groups(data = data)
+
     all_stub_vals <- as.matrix(body[, stub_var])
+
+    all_group_vals <- as.matrix(body[, group_var])
+
+    if (stub_available && has_row_group_column) {
+      stub_column <- 2L
+    } else if (stub_available && !has_row_group_column) {
+      stub_column <- 1L
+    } else {
+      stub_column <- NA_integer_
+    }
 
   } else {
     n_cols <- n_data_cols
+    stub_column <- NA_integer_
   }
 
   # Define function to get a character vector of formatted cell
@@ -709,6 +740,10 @@ create_body_component_h <- function(data) {
 
     if (stub_available) {
       default_vals <- c(all_stub_vals[i], default_vals)
+    }
+
+    if (has_row_group_column) {
+      default_vals <- c(all_group_vals[i], default_vals)
     }
 
     default_vals
@@ -748,9 +783,9 @@ create_body_component_h <- function(data) {
 
   if (stub_available) {
 
-    extra_classes_1[[1]] <- "gt_stub"
+    extra_classes_1[[stub_column]] <- "gt_stub"
 
-    extra_classes_2[[1]] <-
+    extra_classes_2[[stub_column]] <-
       c("gt_stub", if (table_stub_striped) "gt_striped" else NULL)
   }
 
@@ -777,7 +812,11 @@ create_body_component_h <- function(data) {
         #
         # Create a group heading row
         #
-        if (!is.null(groups_rows_df) && i %in% groups_rows_df$row_start) {
+        if (
+          !has_row_group_column &&
+          !is.null(groups_rows_df) &&
+          i %in% groups_rows_df$row_start
+        ) {
 
           group_id <-
             groups_rows_df[
@@ -832,6 +871,7 @@ create_body_component_h <- function(data) {
 
         extra_classes <- if (i %% 2 == 0) extra_classes_2 else extra_classes_1
 
+
         if (has_tbl_body_styles) {
 
           styles_row <-
@@ -845,29 +885,60 @@ create_body_component_h <- function(data) {
             )
         }
 
+        if (has_row_group_styles) {
+
+          group_id <-
+            groups_rows_df[
+              which(groups_rows_df$row_start %in% i), "group_id"
+            ][[1]]
+
+          group_label <-
+            groups_rows_df[
+              which(groups_rows_df$row_start %in% i), "group_label"
+            ][[1]]
+
+          styles_row <-
+            styles_tbl_row_groups[styles_tbl_row_groups$grpname == group_id, ]
+
+          row_style <-
+            if (nrow(styles_row) > 0) {
+              styles_row$html_style
+            } else {
+              NULL
+            }
+
+        } else {
+          row_style <- NULL
+        }
+
         body_row <-
           htmltools::tags$tr(
-            htmltools::HTML(paste0(collapse = "\n", mapply(
-              SIMPLIFY = FALSE,
-              USE.NAMES = FALSE,
-              output_df_row_as_vec(i),
-              alignment_classes,
-              extra_classes,
-              row_styles,
-              FUN = function(x, alignment_class, extra_class, cell_style) {
-                sprintf(
-                  "<td class=\"%s\"%s>%s</td>",
-                  paste(c("gt_row", alignment_class, extra_class),
-                        collapse = " "),
-                  if (is.null(cell_style)) {
-                    ""
-                  } else {
-                    paste0(" style=\"", cell_style, "\"")
-                  },
-                  as.character(x)
-                )
-              }
-            )))
+            htmltools::HTML(
+              paste0(
+                mapply(
+                  SIMPLIFY = FALSE,
+                  USE.NAMES = FALSE,
+                  output_df_row_as_vec(i = i),
+                  alignment_classes,
+                  extra_classes,
+                  row_styles,
+                  FUN = function(x, alignment_class, extra_class, cell_style) {
+                    sprintf(
+                      "<td class=\"%s\"%s>%s</td>",
+                      paste(c("gt_row", alignment_class, extra_class),
+                            collapse = " "),
+                      if (is.null(cell_style)) {
+                        ""
+                      } else {
+                        paste0(" style=\"", cell_style, "\"")
+                      },
+                      as.character(x)
+                    )
+                  }
+                ),
+                collapse = "\n"
+              )
+            )
           )
 
         body_section <- append(body_section, list(body_row))

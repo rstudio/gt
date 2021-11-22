@@ -1521,6 +1521,10 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   haven't been placed into a row group (where one or more row groups already
 #'   exist), those rows will be automatically placed into a row group without a
 #'   label.
+#' @param row_group.as_column How should row groups be structured? By default,
+#'   they are separate rows that lie above the each of the groups. Setting this
+#'   to `TRUE` will structure row group labels are columns to the far left of
+#'   the table.
 #' @param summary_row.border.style,summary_row.border.width,summary_row.border.color
 #'   The style, width, and color properties for all horizontal borders of the
 #'   `summary_row` location.
@@ -1740,6 +1744,7 @@ tab_options <- function(data,
                         row_group.border.right.width = NULL,
                         row_group.border.right.color = NULL,
                         row_group.default_label = NULL,
+                        row_group.as_column = NULL,
                         table_body.hlines.style = NULL,
                         table_body.hlines.width = NULL,
                         table_body.hlines.color = NULL,

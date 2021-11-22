@@ -126,6 +126,7 @@ dt_options_tbl <-
     "row_group_border_left_width",        TRUE,  "row_group",        "px",      "1px",
     "row_group_border_left_color",        TRUE,  "row_group",        "value",   "#D3D3D3",
     "row_group_default_label",           FALSE,  "row_group",        "value",   NA_character_,
+    "row_group_as_column",               FALSE,  "row_group",        "logical", FALSE,
     "table_body_hlines_style",            TRUE,  "table_body",       "value",   "solid",
     "table_body_hlines_width",            TRUE,  "table_body",       "px",      "1px",
     "table_body_hlines_color",            TRUE,  "table_body",       "value",   "#D3D3D3",

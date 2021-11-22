@@ -425,3 +425,42 @@ last_non_na <- function(vect) {
     return(vect[max(positions)])
   }
 }
+
+get_effective_number_of_columns <- function(data) {
+
+  # Check if the table has been built, return an error if that's not the case
+  if (!dt_has_built(data)) {
+    stop(
+      "The `get_effective_number_of_columns()` function can only be used on ",
+      "gt objects that have tables 'built'."
+    )
+  }
+
+  # Obtain the number of visible columns in the built table
+  n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
+
+  # Determine whether the stub is available through analysis
+  # of the `stub_components`
+  stub_available <-
+    dt_stub_components_has_rowname(dt_stub_components(data = data))
+
+  # Determine whether the table has row groups structured
+  # within a column
+  has_row_groups <- !is.null(dt_groups_rows_get(data = data))
+
+  # Should the row groups form a LHS column?
+  row_group_as_column <-
+    dt_options_get_value(
+      data = data,
+      option = "row_group_as_column"
+    )
+
+  # Does the table have row groups?
+  has_row_group_column <- row_group_as_column && has_row_groups
+
+  if (!any(stub_available, has_row_group_column)) {
+    return(n_data_cols)
+  } else {
+    return(n_data_cols + stub_available + has_row_group_column)
+  }
+}
