@@ -204,6 +204,18 @@
     padding-left: 12px;
   }
 
+  .gt_stub_row_group {
+    color: font-color($stub_row_group_background_color);
+    background-color: $stub_row_group_background_color; // stub_row_group.background.color
+    font-size: $stub_row_group_font_size; // stub_row_group.font.size
+    font-weight: $stub_row_group_font_weight; // stub_row_group.font.weight
+    text-transform: $stub_row_group_text_transform; // stub_row_group.text_transform
+    border-right-style: $stub_row_group_border_style; // stub_row_group.border.style
+    border-right-width: $stub_row_group_border_width; // stub_row_group.border.width
+    border-right-color: $stub_row_group_border_color; // stub_row_group.border.color
+    padding-left: 12px;
+  }
+
   .gt_summary_row {
     color: font-color($summary_row_background_color);
     background-color: $summary_row_background_color; // summary_row.background.color
