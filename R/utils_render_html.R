@@ -742,7 +742,7 @@ create_body_component_h <- function(data) {
       default_vals <- c(all_stub_vals[i], default_vals)
     }
 
-    if (has_row_group_column) {
+    if (has_row_group_column && i %in% groups_rows_df$row_start) {
       default_vals <- c(all_group_vals[i], default_vals)
     }
 
@@ -871,7 +871,6 @@ create_body_component_h <- function(data) {
 
         extra_classes <- if (i %% 2 == 0) extra_classes_2 else extra_classes_1
 
-
         if (has_tbl_body_styles) {
 
           styles_row <-
@@ -885,30 +884,48 @@ create_body_component_h <- function(data) {
             )
         }
 
-        if (has_row_group_styles) {
+        if (has_row_group_column && has_row_group_styles) {
 
-          group_id <-
-            groups_rows_df[
-              which(groups_rows_df$row_start %in% i), "group_id"
-            ][[1]]
+          if (i %in% groups_rows_df$row_start) {
 
-          group_label <-
-            groups_rows_df[
-              which(groups_rows_df$row_start %in% i), "group_label"
-            ][[1]]
+            group_id <-
+              groups_rows_df[
+                which(groups_rows_df$row_start %in% i), "group_id"
+              ][[1]]
 
-          styles_row <-
-            styles_tbl_row_groups[styles_tbl_row_groups$grpname == group_id, ]
+            group_label <-
+              groups_rows_df[
+                which(groups_rows_df$row_start %in% i), "group_label"
+              ][[1]]
 
-          row_style <-
-            if (nrow(styles_row) > 0) {
-              styles_row$html_style
-            } else {
-              NULL
+            styles_row <-
+              styles_tbl_row_groups[styles_tbl_row_groups$grpname == group_id, ]
+
+            row_group_style <-
+              if (nrow(styles_row) > 0) {
+                styles_row$html_style
+              } else {
+                NULL
+              }
+
+            # Add style of row group cell to vector
+            if (!is.null(row_group_style)) {
+              row_styles[[1]] <- row_group_style
             }
 
+            extra_classes[[1]] <- "gt_stub_row_group"
+            row_span_vals <- c(list(4L), rep_len(list(NULL), n_cols - 1))
+
+          } else {
+
+            extra_classes[[1]] <- NULL
+            row_styles[[1]] <- NULL
+            alignment_classes <- alignment_classes[2:length(alignment_classes)]
+            row_span_vals <- rep_len(list(NULL), n_cols - 1)
+          }
+
         } else {
-          row_style <- NULL
+          row_span_vals <- rep_len(list(NULL), n_cols)
         }
 
         body_row <-
@@ -919,14 +936,23 @@ create_body_component_h <- function(data) {
                   SIMPLIFY = FALSE,
                   USE.NAMES = FALSE,
                   output_df_row_as_vec(i = i),
+                  row_span_vals,
                   alignment_classes,
                   extra_classes,
                   row_styles,
-                  FUN = function(x, alignment_class, extra_class, cell_style) {
+                  FUN = function(x, row_span, alignment_class, extra_class, cell_style) {
+
                     sprintf(
-                      "<td class=\"%s\"%s>%s</td>",
-                      paste(c("gt_row", alignment_class, extra_class),
-                            collapse = " "),
+                      "<td %sclass=\"%s\"%s>%s</td>",
+                      if (is.null(row_span)) {
+                        ""
+                      } else {
+                        paste0("rowspan=\"", row_span, "\" ")
+                      },
+                      paste(
+                        c("gt_row", alignment_class, extra_class),
+                        collapse = " "
+                      ),
                       if (is.null(cell_style)) {
                         ""
                       } else {
@@ -965,7 +991,8 @@ create_body_component_h <- function(data) {
               locname = "summary_cells",
               first_row_class = "gt_first_summary_row",
               summary_row_class = "gt_summary_row",
-              col_alignment = col_alignment
+              col_alignment = col_alignment,
+              group_col_present = has_row_group_column
             )
 
           body_section <- append(body_section, summary_section)
@@ -993,7 +1020,8 @@ create_body_component_h <- function(data) {
         locname = "grand_summary_cells",
         first_row_class = "gt_first_grand_summary_row",
         summary_row_class = "gt_grand_summary_row",
-        col_alignment = col_alignment
+        col_alignment = col_alignment,
+        group_col_present = has_row_group_column
       )
 
     body_rows <- c(body_rows, grand_summary_section)
@@ -1159,7 +1187,8 @@ summary_row_tags <- function(list_of_summaries,
                              locname,
                              first_row_class,
                              summary_row_class,
-                             col_alignment) {
+                             col_alignment,
+                             group_col_present = FALSE) {
 
   # Obtain all of the visible (`"default"`), non-stub column names
   # for the table from the `boxh` object
@@ -1178,13 +1207,24 @@ summary_row_tags <- function(list_of_summaries,
     n_cols <- ncol(summary_df)
 
     summary_df_row <- function(j) {
-      unname(unlist(summary_df[j, ]))
+      row_vec <- unname(unlist(summary_df[j, ]))
+
+      if (group_col_present) {
+        row_vec <- c("", row_vec)
+      }
+
+      row_vec
     }
 
     stub_classes <- rep_len(list(NULL), n_cols)
     stub_classes[[1]] <- "gt_stub"
 
     alignment_classes <- c("gt_right", paste0("gt_", col_alignment))
+
+    if (group_col_present) {
+      stub_classes <- c(list(NULL), stub_classes)
+      alignment_classes <- c("gt_right", alignment_classes)
+    }
 
     styles_resolved_group <-
       dplyr::filter(
@@ -1216,6 +1256,13 @@ summary_row_tags <- function(list_of_summaries,
           stub_available = TRUE,
           n_cols = n_cols
         )
+
+      if (group_col_present) {
+        row_styles <- c(list(NULL), row_styles)
+      }
+
+      # TODO: Make the summary row label a merged cell (if group row column)
+      #       is present
 
       summary_row_lines[[length(summary_row_lines) + 1]] <-
         htmltools::tags$tr(
