@@ -472,7 +472,7 @@ create_columns_component_h <- function(data) {
           NULL
         }
 
-      table_col_headings[[length(table_col_headings) + 1]] <-
+      first_set[[length(first_set) + 1]] <-
         htmltools::tags$th(
           class = paste(
             c("gt_col_heading", "gt_columns_bottom_border",
