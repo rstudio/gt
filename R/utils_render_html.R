@@ -505,7 +505,7 @@ create_columns_component_h <- function(data) {
       0
     )
 
-    for (i in seq(headings_vars)) {
+    for (i in seq_along(headings_vars)) {
 
       if (is.na(spanner_ids[i])) {
 
