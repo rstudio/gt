@@ -973,10 +973,7 @@ create_body_component_h <- function(data) {
           summary_section <-
             summary_row_tags_i(
               data = data,
-              group_id = group_id,
-              locname = "summary_cells",
-              first_row_class = "gt_first_summary_row",
-              summary_row_class = "gt_summary_row"
+              group_id = group_id
             )
 
           body_section <- append(body_section, summary_section)
@@ -998,10 +995,7 @@ create_body_component_h <- function(data) {
     grand_summary_section <-
       summary_row_tags_i(
         data = data,
-        group_id = grand_summary_col,
-        locname = "grand_summary_cells",
-        first_row_class = "gt_first_grand_summary_row",
-        summary_row_class = "gt_grand_summary_row"
+        group_id = grand_summary_col
       )
 
     body_rows <- c(body_rows, grand_summary_section)
@@ -1180,9 +1174,7 @@ get_body_component_cell_matrix <- function(data) {
 
 summary_row_tags_i <- function(data,
                                group_id,
-                               locname,
-                               first_row_class,
-                               summary_row_class) {
+                               locname) {
 
   list_of_summaries <- dt_summary_df_get(data = data)
   styles_tbl <- dt_styles_get(data = data)
@@ -1197,144 +1189,144 @@ summary_row_tags_i <- function(data,
 
   summary_row_lines <- list()
 
-  if (group_id %in% names(list_of_summaries$summary_df_display_list)) {
+  # In the below conditions, `grand_summary_col` is a global variable
+  # (`"::GRAND_SUMMARY"`) assigned in `dt_summary.R`)
+  if (
+    group_id %in% names(list_of_summaries$summary_df_display_list) &&
+    group_id != grand_summary_col
+  ) {
+    summary_row_type <- "group"
+  } else if (group_id == grand_summary_col) {
+    summary_row_type <- "grand"
+  } else {
+    return(summary_row_lines)
+  }
 
-    # Obtain the summary data table specific to the group ID and
-    # select the column named `rowname` and all of the visible columns
-    summary_df <-
-      list_of_summaries$summary_df_display_list[[group_id]] %>%
-      dplyr::select(.env$rowname_col_private, .env$default_vars)
+  # Obtain the summary data table specific to the group ID and
+  # select the column named `rowname` and all of the visible columns
+  summary_df <-
+    list_of_summaries$summary_df_display_list[[group_id]] %>%
+    dplyr::select(.env$rowname_col_private, .env$default_vars)
 
-    # Get effective number of columns
-    n_cols_total <- get_effective_number_of_columns(data = data)
+  # Get effective number of columns
+  n_cols_total <- get_effective_number_of_columns(data = data)
 
-    # Get the number of columns for the body cells only
-    n_data_cols <- get_number_of_visible_data_columns(data = data)
+  # Get the number of columns for the body cells only
+  n_data_cols <- get_number_of_visible_data_columns(data = data)
 
-    if (stub_is_2) {
-      n_cols_total <- n_cols_total - 1
+  if (stub_is_2) {
+    n_cols_total <- n_cols_total - 1
+  }
+
+  extra_classes <- rep_len(list(NULL), n_cols_total)
+  extra_classes[[1]] <- "gt_stub"
+
+  # Create a default vector of row span values for group labels as a column
+  col_span_vals <- rep_len(list(NULL), n_cols_total)
+
+  if (stub_is_2) {
+    col_span_vals[[1]] <- 2L
+  }
+
+  # Get the column alignments and also the alignment class names
+  col_alignment <-
+    c("right", dt_boxhead_get_vars_align_default(data = data))
+  alignment_classes <- paste0("gt_", col_alignment)
+
+  for (j in seq_len(nrow(summary_df))) {
+
+    last_row_class <- "gt_last_summary_row"
+
+    if (summary_row_type == "grand") {
+
+      styles_resolved_group <-
+        dplyr::filter(
+          styles_tbl,
+          grpname == .env$group_id,
+          locname == "grand_summary_cells"
+        ) %>%
+        dplyr::mutate(grprow = round((rownum %% 1) * 100))
+
+      styles_resolved_row <-
+        styles_resolved_group[styles_resolved_group$rownum == j, , drop = FALSE]
+
+      summary_row_class <- "gt_grand_summary_row"
+      first_row_class <- "gt_first_grand_summary_row"
+
+    } else {
+
+      styles_resolved_group <-
+        dplyr::filter(
+          styles_tbl,
+          grpname == .env$group_id,
+          locname == "summary_cells"
+        ) %>%
+        dplyr::mutate(grprow = round((rownum %% 1) * 100))
+
+      styles_resolved_row <-
+        styles_resolved_group[styles_resolved_group$grprow == j, , drop = FALSE]
+
+      summary_row_class <- "gt_summary_row"
+      first_row_class <- "gt_first_summary_row"
     }
 
-    extra_classes <- rep_len(list(NULL), n_cols_total)
-    extra_classes[[1]] <- "gt_stub"
+    row_styles <-
+      build_row_styles(
+        styles_resolved_row = styles_resolved_row,
+        stub_available = TRUE,
+        n_cols = n_data_cols
+      )
 
-    # Create a default vector of row span values for group labels as a column
-    col_span_vals <- rep_len(list(NULL), n_cols_total)
+    summary_row_lines[[length(summary_row_lines) + 1]] <-
+      htmltools::tags$tr(
+        htmltools::HTML(
+          paste0(
+            mapply(
+              SIMPLIFY = FALSE,
+              USE.NAMES = FALSE,
+              unname(unlist(summary_df[j, ])),
+              col_span_vals,
+              alignment_classes,
+              extra_classes,
+              row_styles,
+              FUN = function(x, col_span, alignment_class, extra_class, cell_style) {
 
-    if (stub_is_2) {
-      col_span_vals[[1]] <- 2L
-    }
-
-    # Get the column alignments and also the alignment class names
-    col_alignment <-
-      c("right", dt_boxhead_get_vars_align_default(data = data))
-    alignment_classes <- paste0("gt_", col_alignment)
-
-    styles_resolved_group <-
-      dplyr::filter(
-        styles_tbl,
-        grpname == .env$group_id,
-        locname == .env$locname
-      ) %>%
-      dplyr::mutate(grprow = round((rownum %% 1) * 100))
-
-    for (j in seq_len(nrow(summary_df))) {
-
-      if (group_id == grand_summary_col) {
-
-        # In the above condition, `grand_summary_col` is a global variable
-        # (`"::GRAND_SUMMARY"`) assigned in `dt_summary.R`)
-
-        styles_resolved_row <-
-          styles_resolved_group[styles_resolved_group$rownum == j, , drop = FALSE]
-
-      } else {
-
-        styles_resolved_row <-
-          styles_resolved_group[styles_resolved_group$grprow == j, , drop = FALSE]
-      }
-
-      row_styles <-
-        build_row_styles(
-          styles_resolved_row = styles_resolved_row,
-          stub_available = TRUE,
-          n_cols = n_data_cols
-        )
-
-      summary_row_lines[[length(summary_row_lines) + 1]] <-
-        htmltools::tags$tr(
-          htmltools::HTML(
-            paste0(
-              mapply(
-                SIMPLIFY = FALSE,
-                USE.NAMES = FALSE,
-                unname(unlist(summary_df[j, ])),
-                col_span_vals,
-                alignment_classes,
-                extra_classes,
-                row_styles,
-                FUN = function(x, col_span, alignment_class, extra_class, cell_style) {
-
-                  if (j == 1) {
-                    extra_class <- c(extra_class, first_row_class)
-                  }
-
-                  sprintf(
-                    "<td %sclass=\"%s\"%s>%s</td>",
-                    if (is.null(col_span)) {
-                      ""
-                    } else {
-                      paste0("colspan=\"", col_span, "\" ")
-                    },
-                    paste(
-                      c("gt_row", alignment_class, extra_class),
-                      collapse = " "
-                    ),
-                    if (is.null(cell_style)) {
-                      ""
-                    } else {
-                      paste0(" style=\"", cell_style, "\"")
-                    },
-                    as.character(x)
-                  )
+                if (j == 1) {
+                  extra_class <- c(extra_class, summary_row_class, first_row_class)
                 }
-              ),
-              collapse = "\n"
-            )
+
+                if (j == nrow(summary_df)) {
+                  extra_class <- c(extra_class, summary_row_class, last_row_class)
+                }
+
+                sprintf(
+                  "<td %sclass=\"%s\"%s>%s</td>",
+                  if (is.null(col_span)) {
+                    ""
+                  } else {
+                    paste0("colspan=\"", col_span, "\" ")
+                  },
+                  paste(
+                    c("gt_row", alignment_class, extra_class),
+                    collapse = " "
+                  ),
+                  if (is.null(cell_style)) {
+                    ""
+                  } else {
+                    paste0(" style=\"", cell_style, "\"")
+                  },
+                  as.character(x)
+                )
+              }
+            ),
+            collapse = "\n"
           )
         )
-    }
+      )
   }
 
   summary_row_lines
 }
-
-# TODO: WIP fix of build_row_styles()
-# build_row_styles <- function(styles_resolved_row,
-#                              stub_available,
-#                              n_cols) {
-#
-#   row_styles <- rep_len(list(NULL), n_cols)
-#
-#   if (nrow(styles_resolved_row) < 1) {
-#     return(row_styles)
-#   }
-#
-#   html_styles <- styles_resolved_row$html_style
-#
-#   place_after <- n_cols - length(html_styles)
-#
-#   if (stub_available) {
-#     row_styles[(place_after + 1):length(row_styles)][styles_resolved_row$colnum + 1] <-
-#       styles_resolved_row$html_style
-#   } else {
-#     row_styles[(place_after + 1):length(row_styles)][styles_resolved_row$colnum] <-
-#       styles_resolved_row$html_style
-#   }
-#
-#   row_styles
-# }
-
 
 build_row_styles <- function(styles_resolved_row,
                              stub_available,
