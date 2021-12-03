@@ -165,7 +165,7 @@ dt_boxhead_get_vars_default <- function(data) {
 dt_boxhead_get_var_stub <- function(data) {
 
   res <- dt_boxhead_get_var_by_type(data = data, type = "stub")
-
+  # FIXME: don't return NA_character_ here, just return res or NULL
   if (length(res) == 0) {
     NA_character_
   } else {
@@ -176,7 +176,7 @@ dt_boxhead_get_var_stub <- function(data) {
 dt_boxhead_get_vars_groups <- function(data) {
 
   res <- dt_boxhead_get_var_by_type(data = data, type = "row_group")
-
+  # FIXME: don't return NA_character_ here, just return res or NULL
   if (length(res) == 0) {
     NA_character_
   } else {

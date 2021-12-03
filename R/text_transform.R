@@ -110,7 +110,7 @@ text_transform_at_location.cells_stub <- function(loc,
   stub_df <- dt_stub_df_get(data = data)
 
   stub_var <- dt_boxhead_get_var_stub(data = data)
-  # TODO: Check if we actually have a stub_var before doing the next line
+  # FIXME: Check for zero-length stub_var before continuing.
   body[[stub_var]][stub_df$rownum_i %in% loc$rows] <-
     fn(body[[stub_var]][stub_df$rownum_i %in% loc$rows])
 
