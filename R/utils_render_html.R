@@ -365,7 +365,6 @@ create_columns_component_h <- function(data) {
   headings_vars <- dt_boxhead_get_vars_default(data = data)
   headings_labels <- dt_boxhead_get_vars_labels_default(data = data)
 
-  # TODO: Wrap these lines into a function
   has_row_group_column <- "group_label" %in% stub_layout
 
   # Get the style attrs for the stubhead label
@@ -379,12 +378,12 @@ create_columns_component_h <- function(data) {
 
   # If `stub_available` == TRUE, then replace with a set stubhead
   # label or nothing
-  if (!any(is.na(stub_layout)) && length(stubh$label) > 0) {
+  if (length(stub_layout) > 0 && length(stubh$label) > 0) {
 
     headings_labels <- prepend_vec(headings_labels, stubh$label)
     headings_vars <- prepend_vec(headings_vars, "::stub")
 
-  } else if (!any(is.na(stub_layout))) {
+  } else if (length(stub_layout) > 0) {
 
     headings_labels <- prepend_vec(headings_labels, "")
     headings_vars <- prepend_vec(headings_vars, "::stub")
@@ -397,7 +396,7 @@ create_columns_component_h <- function(data) {
   if (!spanners_present) {
 
     # Create the cell for the stubhead label
-    if (!any(is.na(stub_layout))) {
+    if (length(stub_layout) > 0) {
 
       stubhead_style <-
         if (nrow(stubhead_style_attrs) > 0) {
@@ -463,7 +462,7 @@ create_columns_component_h <- function(data) {
     second_set <- list()
 
     # Create the cell for the stubhead label
-    if (!any(is.na(stub_layout))) {
+    if (length(stub_layout) > 0) {
 
       stubhead_style <-
         if (nrow(stubhead_style_attrs) > 0) {
@@ -745,7 +744,7 @@ create_body_component_h <- function(data) {
   extra_classes_2 <-
     rep_len(list(if (table_body_striped) "gt_striped" else NULL), n_cols_total)
 
-  if (!all(is.na(stub_layout))) {
+  if (length(stub_layout) > 0) {
 
     if ("rowname" %in% stub_layout) {
       row_label_col <- which(stub_layout == "rowname")
@@ -1143,7 +1142,7 @@ get_body_component_cell_matrix <- function(data) {
 
   body_matrix <- unname(as.matrix(body[, default_vars]))
 
-  if (all(is.na(stub_layout))) {
+  if (length(stub_layout) == 0) {
     return(body_matrix)
   }
 
@@ -1185,7 +1184,7 @@ summary_row_tags_i <- function(data,
 
   stub_layout <- get_stub_layout(data = data)
 
-  stub_is_2 <- !all(is.na(stub_layout)) && length(stub_layout) > 1
+  stub_is_2 <- length(stub_layout) > 1
 
   summary_row_lines <- list()
 

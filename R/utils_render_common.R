@@ -503,17 +503,12 @@ get_stub_layout <- function(data) {
     if (dt_summary_exists(data = data)) {
       return("rowname")
     } else {
-      return(NA_character_)
+      return(NULL)
     }
-  } else if (n_stub_cols == 1) {
-    if (stub_rownames_is_column) {
-      return("rowname")
-    } else {
-      return("group_label")
-    }
-  } else if (n_stub_cols == 2) {
-    return(c("group_label", "rowname"))
   } else {
-    stop("Invalid number of columns.")
+    c(
+      if (stub_groupnames_is_column) "group_label",
+      if (stub_rownames_is_column) "rowname"
+    )
   }
 }
