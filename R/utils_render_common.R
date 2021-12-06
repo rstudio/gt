@@ -467,24 +467,7 @@ get_effective_number_of_columns <- function(data) {
 
   # Obtain the number of visible columns in the built table
   n_data_cols <- get_number_of_visible_data_columns(data = data)
-
-  # Determine whether summary rows are present (these require a minimum)
-  # of one stub column to render summary row labels
-  summaries_present <- dt_summary_exists(data = data)
-
-  # Determine which stub components are potentially present as columns
-  stub_rownames_is_column <- stub_rownames_has_column(data)
-  stub_groupnames_is_column <- stub_group_names_has_column(data)
-
-  n_stub_cols <- stub_rownames_is_column + stub_groupnames_is_column
-
-  # If there are no stub columns but summaries are present, we need to
-  # introduce a column in the stub that will hold the summary row labels
-  if (n_stub_cols == 0 && summaries_present) {
-    n_stub_cols <- n_stub_cols + 1
-  }
-
-  n_data_cols + n_stub_cols
+  n_data_cols + length(get_stub_layout(data))
 }
 
 get_stub_layout <- function(data) {

@@ -909,6 +909,7 @@ create_body_component_h <- function(data) {
             row_span_vals[[1]] <- NULL
             extra_classes[[1]] <- NULL
 
+            # FIXME: Why is this only sometimes?
             if (length(row_styles) > length(extra_classes)) {
               row_styles[[1]] <- NULL
             }
@@ -1220,7 +1221,7 @@ summary_row_tags_i <- function(data,
   extra_classes <- rep_len(list(NULL), n_cols_total)
   extra_classes[[1]] <- "gt_stub"
 
-  # Create a default vector of row span values for group labels as a column
+  # Create a default list of colspan values for the summary row
   col_span_vals <- rep_len(list(NULL), n_cols_total)
 
   if (stub_is_2) {
@@ -1243,8 +1244,7 @@ summary_row_tags_i <- function(data,
           styles_tbl,
           grpname == .env$group_id,
           locname == "grand_summary_cells"
-        ) %>%
-        dplyr::mutate(grprow = round((rownum %% 1) * 100))
+        )
 
       styles_resolved_row <-
         styles_resolved_group[styles_resolved_group$rownum == j, , drop = FALSE]
