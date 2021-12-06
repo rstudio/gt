@@ -1290,12 +1290,14 @@ summary_row_tags_i <- function(data,
               row_styles,
               FUN = function(x, col_span, alignment_class, extra_class, cell_style) {
 
+                extra_class <- c(extra_class, summary_row_class)
+
                 if (j == 1) {
-                  extra_class <- c(extra_class, summary_row_class, first_row_class)
+                  extra_class <- c(extra_class, first_row_class)
                 }
 
                 if (j == nrow(summary_df)) {
-                  extra_class <- c(extra_class, summary_row_class, last_row_class)
+                  extra_class <- c(extra_class, last_row_class)
                 }
 
                 sprintf(
