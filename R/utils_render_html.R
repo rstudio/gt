@@ -1173,8 +1173,12 @@ get_body_component_cell_matrix <- function(data) {
 }
 
 summary_row_tags_i <- function(data,
-                               group_id,
-                               locname) {
+                               group_id) {
+
+  # Check that `group_id` isn't NULL and that length is exactly 1
+  if (is.null(group_id) || length(group_id) != 1) {
+    stop("`group_id` cannot be NULL and must be of length 1.")
+  }
 
   list_of_summaries <- dt_summary_df_get(data = data)
   styles_tbl <- dt_styles_get(data = data)
@@ -1189,11 +1193,17 @@ summary_row_tags_i <- function(data,
 
   summary_row_lines <- list()
 
-  # In the below conditions, `grand_summary_col` is a global variable
-  # (`"::GRAND_SUMMARY"`) assigned in `dt_summary.R`)
-  if (
-    group_id %in% names(list_of_summaries$summary_df_display_list) &&
-    group_id != grand_summary_col
+  # In the below conditions
+  # - `grand_summary_col` is a global variable (`"::GRAND_SUMMARY"`, assigned
+  #   in `dt_summary.R`)
+  # - `group_id` might be passed in as NA when there are unnamed groups (this
+  #   can happen usually when using `tab_row_group()` to build these row groups)
+  #   and you cannot create summary rows for unnamed groups
+  if (is.na(group_id)) {
+    return(summary_row_lines)
+  } else if (
+      group_id %in% names(list_of_summaries$summary_df_display_list) &&
+      group_id != grand_summary_col
   ) {
     summary_row_type <- "group"
   } else if (group_id == grand_summary_col) {
