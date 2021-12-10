@@ -54,14 +54,7 @@ add_css_styles <- function(data) {
 
   styles_tbl <- dt_styles_get(data = data)
 
-  if (nrow(styles_tbl) > 0) {
-    styles_tbl <-
-      dplyr::mutate(
-        styles_tbl,
-        html_style = vapply(
-          styles, function(x) styles_to_html(x), character(1))
-      )
-  }
+  styles_tbl$html_style <- vapply(styles_tbl$styles, styles_to_html, character(1))
 
   dt_styles_set(data = data, styles = styles_tbl)
 }
@@ -376,7 +369,7 @@ create_columns_component_h <- function(data) {
   # Get the style attrs for the spanner column headings
   column_style_attrs <- subset(styles_tbl, locname == "columns_columns")
 
-  # If `stub_available` == TRUE, then replace with a set stubhead
+  # If columns are present in the stub, then replace with a set stubhead
   # label or nothing
   if (length(stub_layout) > 0 && length(stubh$label) > 0) {
 
@@ -741,6 +734,7 @@ create_body_component_h <- function(data) {
   extra_classes_1 <- rep_len(list(NULL), n_cols_total)
 
   # TODO: Ensure that only the table body is striped here
+  # FIXME: Is it possible the group label ends up striped?
   extra_classes_2 <-
     rep_len(list(if (table_body_striped) "gt_striped" else NULL), n_cols_total)
 
@@ -755,19 +749,6 @@ create_body_component_h <- function(data) {
     }
   }
 
-  has_tbl_body_styles <- any(c("stub", "data") %in% styles_tbl$locname)
-  has_row_group_styles <- "row_groups" %in% styles_tbl$locname
-
-  if (has_tbl_body_styles) {
-    styles_tbl_body <- subset(styles_tbl, locname %in% c("stub", "data"))
-  } else {
-    row_styles <- rep_len(list(NULL), n_cols_total)
-  }
-
-  if (has_row_group_styles) {
-    styles_tbl_row_groups <- subset(styles_tbl, locname == "row_groups")
-  }
-
   # Create a default vector of row span values for group labels as a column
   row_span_vals <- rep_len(list(NULL), n_cols_total)
 
@@ -778,40 +759,21 @@ create_body_component_h <- function(data) {
 
         body_section <- list()
 
+        group_info <- groups_rows_df[groups_rows_df$row_start == i, c("group_id", "group_label")]
+        if (nrow(group_info) == 0) {
+          group_info <- NULL
+        }
+        group_id <- group_info[["group_id"]]
+        group_label <- group_info[["group_label"]]
+
         #
         # Create a group heading row
         #
         if (
-          !is.null(groups_rows_df) &&
-          i %in% groups_rows_df$row_start &&
+          !is.null(group_id) &&
           !("group_label" %in% stub_layout)
         ) {
-
-          group_id <-
-            groups_rows_df[
-              which(groups_rows_df$row_start %in% i), "group_id"
-            ][[1]]
-
-          group_label <-
-            groups_rows_df[
-              which(groups_rows_df$row_start %in% i), "group_label"
-            ][[1]]
-
-          if (has_row_group_styles) {
-
-            styles_row <-
-              styles_tbl_row_groups[styles_tbl_row_groups$grpname == group_id, ]
-
-            row_style <-
-              if (nrow(styles_row) > 0) {
-                styles_row$html_style
-              } else {
-                NULL
-              }
-
-          } else {
-            row_style <- NULL
-          }
+          row_style <- dt_styles_pluck(styles_tbl, locname = "row_groups", grpname = group_id)$html_style
 
           group_class <-
             if (group_label == "") {
@@ -840,18 +802,14 @@ create_body_component_h <- function(data) {
 
         extra_classes <- if (i %% 2 == 0) extra_classes_2 else extra_classes_1
 
-        if (has_tbl_body_styles) {
+        styles_row <- dt_styles_pluck(styles_tbl, locname = c("data", "stub"), rownum = i)
 
-          styles_row <-
-            styles_tbl_body[styles_tbl_body$rownum == i, ]
-
-          row_styles <-
-            build_row_styles(
-              styles_resolved_row = styles_row,
-              stub_available = has_stub_column,
-              n_cols = n_data_cols
-            )
-        }
+        row_styles <-
+          build_row_styles(
+            styles_resolved_row = styles_row,
+            include_stub = has_stub_column,
+            n_cols = n_data_cols
+          )
 
         if ("group_label" %in% stub_layout) {
 
@@ -874,34 +832,9 @@ create_body_component_h <- function(data) {
 
             # Process row group styles if there is an indication that some
             # are present
-            if (has_row_group_styles) {
-
-              group_id <-
-                groups_rows_df[
-                  which(groups_rows_df$row_start %in% i), "group_id"
-                ][[1]]
-
-              group_label <-
-                groups_rows_df[
-                  which(groups_rows_df$row_start %in% i), "group_label"
-                ][[1]]
-
-              styles_row <-
-                styles_tbl_row_groups[styles_tbl_row_groups$grpname == group_id, ]
-
-              row_group_style <-
-                if (nrow(styles_row) > 0) {
-                  styles_row$html_style
-                } else {
-                  NULL
-                }
-
-              # Add style of row group cell to vector
-              if (!is.null(row_group_style)) {
-                row_styles <- c(list(row_group_style), row_styles)
-              }
-            }
-
+            row_group_style <- dt_styles_pluck(styles_tbl, locname = "row_groups", grpname = group_id)$html_style
+            # Add style of row group cell to vector
+            row_styles <- c(list(row_group_style), row_styles)
           } else {
 
             # Remove first element of `alignment_classes` vector
@@ -909,7 +842,7 @@ create_body_component_h <- function(data) {
             row_span_vals[[1]] <- NULL
             extra_classes[[1]] <- NULL
 
-            # FIXME: Why is this only sometimes?
+            # FIXME: Can this really happen?
             if (length(row_styles) > length(extra_classes)) {
               row_styles[[1]] <- NULL
             }
@@ -941,7 +874,7 @@ create_body_component_h <- function(data) {
                         c("gt_row", alignment_class, extra_class),
                         collapse = " "
                       ),
-                      if (is.null(cell_style)) {
+                      if (!any(nzchar(cell_style))) {
                         ""
                       } else {
                         paste0(" style=\"", cell_style, "\"")
@@ -1248,33 +1181,12 @@ summary_row_tags_i <- function(data,
     last_row_class <- "gt_last_summary_row"
 
     if (summary_row_type == "grand") {
-
-      styles_resolved_group <-
-        dplyr::filter(
-          styles_tbl,
-          grpname == .env$group_id,
-          locname == "grand_summary_cells"
-        )
-
-      styles_resolved_row <-
-        styles_resolved_group[styles_resolved_group$rownum == j, , drop = FALSE]
-
+      styles_resolved_row <- dt_styles_pluck(styles_tbl, locname = "grand_summary_cells", grpname = group_id, rownum = j)
       summary_row_class <- "gt_grand_summary_row"
       first_row_class <- "gt_first_grand_summary_row"
 
     } else {
-
-      styles_resolved_group <-
-        dplyr::filter(
-          styles_tbl,
-          grpname == .env$group_id,
-          locname == "summary_cells"
-        ) %>%
-        dplyr::mutate(grprow = round((rownum %% 1) * 100))
-
-      styles_resolved_row <-
-        styles_resolved_group[styles_resolved_group$grprow == j, , drop = FALSE]
-
+      styles_resolved_row <- dt_styles_pluck(styles_tbl, locname = "summary_cells", grpname = group_id, grprow = j)
       summary_row_class <- "gt_summary_row"
       first_row_class <- "gt_first_summary_row"
     }
@@ -1282,7 +1194,7 @@ summary_row_tags_i <- function(data,
     row_styles <-
       build_row_styles(
         styles_resolved_row = styles_resolved_row,
-        stub_available = TRUE,
+        include_stub = TRUE,
         n_cols = n_data_cols
       )
 
@@ -1321,7 +1233,7 @@ summary_row_tags_i <- function(data,
                     c("gt_row", alignment_class, extra_class),
                     collapse = " "
                   ),
-                  if (is.null(cell_style)) {
+                  if (!any(nzchar(cell_style))) {
                     ""
                   } else {
                     paste0(" style=\"", cell_style, "\"")
@@ -1340,28 +1252,38 @@ summary_row_tags_i <- function(data,
 }
 
 build_row_styles <- function(styles_resolved_row,
-                             stub_available,
+                             include_stub,
                              n_cols) {
+  # The styles_resolved_row data frame should contain the columns `colnum` and
+  # `html_style`. Each colnum should match the number of a data column in the
+  # output table; the first data column is number 1. No colnum should appear
+  # more than once in styles_resolved_row. It's OK for a column not to appear in
+  # styles_resolved_row, and it's OK for styles_resolved_row to have 0 rows.
+  #
+  # If `include_stub` is TRUE, then a row with column==0 will be used as the
+  # stub style.
 
-  row_styles <- rep_len(list(NULL), n_cols + stub_available)
-
-  if (nrow(styles_resolved_row) > 0) {
-
-    if (!stub_available) {
-
-      row_styles[styles_resolved_row$colnum] <-
-        styles_resolved_row %>%
-        dplyr::filter(locname == "data") %>%
-        dplyr::pull(html_style)
-
-    } else {
-
-      row_styles[styles_resolved_row$colnum + 1] <-
-        styles_resolved_row$html_style
-    }
+  # This function's implementation can't tolerate colnum of NA, or illegal
+  # colnum values. Check and throw early.
+  if (!isTRUE(all(styles_resolved_row$colnum %in% c(0, seq_len(n_cols)))) ||
+      any(duplicated(styles_resolved_row$colnum))) {
+    stop("build_row_styles was called with invalid colnum values")
   }
 
-  row_styles
+  # This will hold the resulting styles
+  result <- rep_len(list(NULL), n_cols)
+
+  # The subset of styles_resolved_row that applies to data
+  data_styles <- styles_resolved_row[styles_resolved_row$colnum > 0,]
+  result[data_styles$colnum] <- data_styles$html_style
+
+  # If a stub exists, we need to prepend a style (or NULL) to the result.
+  if (include_stub) {
+    stub_style <- styles_resolved_row[styles_resolved_row$colnum == 0,]
+    result <- c(list(stub_style$html_style), result)
+  }
+
+  result
 }
 
 as_css_font_family_attr <- function(font_vec, value_only = FALSE) {
