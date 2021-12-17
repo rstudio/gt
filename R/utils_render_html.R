@@ -342,13 +342,10 @@ create_columns_component_h <- function(data) {
 
   # Get the column alignments and also the alignment class names
   col_alignment <- dt_boxhead_get_vars_align_default(data = data)
-  alignment_classes <- paste0("gt_", col_alignment)
 
   # Get the column headings
   headings_vars <- dt_boxhead_get_vars_default(data = data)
   headings_labels <- dt_boxhead_get_vars_labels_default(data = data)
-
-  has_row_group_column <- "group_label" %in% stub_layout
 
   # Get the style attrs for the stubhead label
   stubhead_style_attrs <- subset(styles_tbl, locname == "stubhead")
@@ -568,8 +565,6 @@ create_columns_component_h <- function(data) {
 
     solo_headings <- headings_vars[is.na(spanner_ids)]
     remaining_headings <- headings_vars[!(headings_vars %in% solo_headings)]
-
-    remaining_headings_indices <- which(remaining_headings %in% headings_vars)
 
     remaining_headings_labels <-
       dt_boxhead_get(data = data) %>%
