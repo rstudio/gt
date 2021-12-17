@@ -334,15 +334,6 @@ create_columns_component_h <- function(data) {
   stubh <- dt_stubhead_get(data = data)
   styles_tbl <- dt_styles_get(data = data)
 
-  # Get effective number of columns
-  n_cols_total <- get_effective_number_of_columns(data = data)
-
-  # Get the number of columns for the body cells only
-  n_data_cols <- get_number_of_visible_data_columns(data = data)
-
-  # Get the resolved number of columns required for the stub
-  n_stub_cols <- n_cols_total - n_data_cols
-
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
 
