@@ -331,7 +331,6 @@ create_columns_component_h <- function(data) {
     return("")
   }
 
-  boxh <- dt_boxhead_get(data = data)
   stubh <- dt_stubhead_get(data = data)
   styles_tbl <- dt_styles_get(data = data)
 
@@ -582,7 +581,7 @@ create_columns_component_h <- function(data) {
     remaining_headings_indices <- which(remaining_headings %in% headings_vars)
 
     remaining_headings_labels <-
-      boxh %>%
+      dt_boxhead_get(data = data) %>%
       dplyr::filter(var %in% remaining_headings) %>%
       dplyr::pull(column_label) %>%
       unlist()
