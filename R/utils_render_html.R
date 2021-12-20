@@ -1078,8 +1078,8 @@ get_body_component_cell_matrix <- function(data) {
 
     group_label_matrix <-
       body[, dt_boxhead_get_vars_groups(data = data)] %>%
-      dplyr::rename(group_id = 1) %>%
-      dplyr::inner_join(data$`_groups_rows`, by = "group_id") %>%
+      dplyr::rename(group_label = 1) %>%
+      dplyr::inner_join(data$`_groups_rows`, by = "group_label") %>%
       dplyr::select(group_label) %>%
       as.matrix %>%
       unname()
