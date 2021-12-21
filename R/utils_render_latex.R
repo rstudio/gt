@@ -58,10 +58,7 @@ create_table_start_l <- function(data) {
   stub_layout <- get_stub_layout(data = data)
 
   # Get default alignments for body columns
-  col_alignment <-
-    dt_boxhead_get(data = data) %>%
-    dplyr::filter(type == "default") %>%
-    dplyr::pull(column_align)
+  col_alignment <- dt_boxhead_get_vars_align_default(data = data)
 
   # Prepend default right alignments for stub columns
   if (length(stub_layout) > 0) {
