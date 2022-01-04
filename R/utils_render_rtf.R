@@ -837,6 +837,7 @@ create_heading_component_rtf <- function(data) {
       !dt_heading_has_subtitle(data = data)) {
     return(list())
   }
+
   # Get table components and metadata using the `data`
   boxh <- dt_boxhead_get(data)
   heading <- dt_heading_get(data)
@@ -947,50 +948,68 @@ create_heading_component_rtf <- function(data) {
 #
 create_columns_component_rtf <- function(data) {
 
-  # Get table components and metadata using the `data`
-  boxh <- dt_boxhead_get(data)
-  spanners_present <- dt_spanners_exists(data)
+  # Should the column labels be hidden?
   column_labels_hidden <- dt_options_get_value(data, option = "column_labels_hidden")
-  headings_labels <- dt_boxhead_get_vars_labels_default(data = data)
-  stub_available <- dt_stub_df_exists(data)
-  stubh_available <- dt_stubhead_has_label(data)
-
-  footnotes_tbl <- dt_footnotes_get(data) # not used currently
-
-  # Get table options
-  column_labels_border_top_color <- dt_options_get_value(data = data, option = "column_labels_border_top_color")
-  column_labels_border_bottom_color <- dt_options_get_value(data = data, option = "column_labels_border_bottom_color")
-  column_labels_vlines_color <- dt_options_get_value(data = data, option = "column_labels_vlines_color")
-  column_labels_border_lr_color <- dt_options_get_value(data = data, option = "column_labels_border_lr_color") # not used currently
-
-  # Obtain alignments for each visible column label
-  col_alignment <-
-    boxh %>%
-    dplyr::filter(type == "default") %>%
-    dplyr::pull(column_align)
-
-  # Obtain widths for each visible column label
-  col_widths <-
-    boxh %>%
-    dplyr::filter(type %in% c("default", "stub")) %>%
-    dplyr::arrange(dplyr::desc(type)) %>%
-    dplyr::pull(column_width) %>%
-    unlist()
 
   if (column_labels_hidden) {
     return(list())
   }
 
-  if (stub_available) {
-    headings_labels <- c("", headings_labels)
-    col_alignment <- c("left", col_alignment)
+  stubh <- dt_stubhead_get(data = data)
+
+  # Get vector representation of stub layout
+  stub_layout <- get_stub_layout(data = data)
+
+  # Determine if there are any spanners present
+  spanners_present <- dt_spanners_exists(data)
+
+  # Get options related to column label border colors
+  column_labels_border_top_color <- dt_options_get_value(data = data, option = "column_labels_border_top_color")
+  column_labels_border_bottom_color <- dt_options_get_value(data = data, option = "column_labels_border_bottom_color")
+  column_labels_vlines_color <- dt_options_get_value(data = data, option = "column_labels_vlines_color")
+  column_labels_border_lr_color <- dt_options_get_value(data = data, option = "column_labels_border_lr_color") # not used currently
+
+  # Get the column headings
+  headings_vars <- dt_boxhead_get_vars_default(data = data)
+  headings_labels <- dt_boxhead_get_vars_labels_default(data = data)
+
+  # Obtain alignments for each visible column label
+  col_alignment <- dt_boxhead_get_vars_align_default(data = data)
+
+  # Obtain widths for each visible column label in units of twips
+  col_widths <-
+    dt_boxhead_get(data = data) %>%
+    dplyr::filter(type %in% c("default", "stub")) %>%
+    dplyr::arrange(dplyr::desc(type)) %>%
+    dplyr::pull(column_width) %>%
+    unlist() %>%
+    col_width_resolver_rtf(
+      table_width = dt_options_get_value(data = data, option = "table_width"),
+      col_widths = .,
+      n_cols = get_effective_number_of_columns(data = data)
+    )
+
+  # Get the column headings
+  headings_labels <- dt_boxhead_get_vars_labels_default(data = data)
+
+  if (length(stub_layout) > 0) {
+
+    headings_labels <-
+      prepend_vec(
+        headings_labels,
+        c(
+          if (length(stubh$label) > 0) stubh$label else "",
+          rep("", length(stub_layout) - 1)
+        )
+      )
   }
 
-  if (stubh_available) {
-    headings_labels[1] <-
-      dt_stubhead_get(data = data) %>%
-      .$label
-  }
+  # Get the column alignments
+  col_alignment <-
+    c(
+      rep("left", length(stub_layout)),
+      dt_boxhead_get_vars_align_default(data = data)
+    )
 
   if (spanners_present) {
 
@@ -999,18 +1018,20 @@ create_columns_component_rtf <- function(data) {
 
     spanners[is.na(spanners)] <- ""
 
-    if (stub_available) {
-      spanners <- c("", spanners)
-      spanner_ids <- c("", spanner_ids)
+    if (length(stub_layout) > 0) {
+      spanners <- c(rep("", length(stub_layout)), spanners)
+      spanner_ids <- c(rep("", length(stub_layout)), spanner_ids)
     }
+
     spanners_lengths <- unclass(rle(spanner_ids))
 
-    merge_keys <- c()
+    merge_keys_spanners <- c()
+
     for (i in seq_along(spanners_lengths$lengths)) {
       if (spanners_lengths$lengths[i] == 1) {
-        merge_keys <- c(merge_keys, 0)
+        merge_keys_spanners <- c(merge_keys_spanners, 0)
       } else {
-        merge_keys <- c(merge_keys, 1, rep(2, spanners_lengths$lengths[i] - 1))
+        merge_keys_spanners <- c(merge_keys_spanners, 1, rep(2, spanners_lengths$lengths[i] - 1))
       }
     }
 
@@ -1024,7 +1045,7 @@ create_columns_component_rtf <- function(data) {
               rtf_raw(spanners[x])
             ),
             h_align = "center",
-            h_merge = merge_keys[x],
+            h_merge = merge_keys_spanners[x],
             borders = list(
               rtf_border("top", color = column_labels_border_top_color, width = 40),
               rtf_border("bottom", color = column_labels_border_bottom_color),
@@ -1038,15 +1059,13 @@ create_columns_component_rtf <- function(data) {
     spanners_list <- list()
   }
 
-  table_width <- dt_options_get_value(data = data, option = "table_width")
+  merge_keys_cells <- rep(0, get_effective_number_of_columns(data = data))
 
-  col_widths <-
-    col_width_resolver_rtf(
-      table_width = table_width,
-      col_widths = col_widths,
-      n_cols = length(headings_labels)
-    )
+  if (length(stub_layout) == 2) {
 
+    merge_keys_cells <-
+      c(1, 2, rep(0, get_effective_number_of_columns(data = data) - 2))
+  }
 
   cell_list <-
     lapply(
@@ -1058,6 +1077,7 @@ create_columns_component_rtf <- function(data) {
             rtf_raw(headings_labels[x])
           ),
           h_align = col_alignment[x],
+          h_merge = merge_keys_cells[x],
           borders = list(
             rtf_border("top", color = column_labels_border_top_color, width = 40),
             rtf_border("bottom", color = column_labels_border_bottom_color, width = 40),
@@ -1108,21 +1128,9 @@ create_columns_component_rtf <- function(data) {
 #
 create_body_component_rtf <- function(data) {
 
-  # Get table components and metadata using the `data`
-  body <- dt_body_get(data)
-  boxh <- dt_boxhead_get(data)
-  stubh <- dt_stubhead_get(data)
-  opts_df <- dt_options_get(data)
-  stub_available <- dt_stub_df_exists(data)
-  stub_df <- dt_stub_df_get(data)
-  groups_rows <- dt_groups_rows_get(data)
   summaries_present <- dt_summary_exists(data = data)
   list_of_summaries <- dt_summary_df_get(data = data)
   groups_rows_df <- dt_groups_rows_get(data = data)
-  stub_components <- dt_stub_components(data = data)
-
-  # Get the table width
-  table_width <- dt_options_get_value(data = data, option = "table_width")
 
   # Get table options
   row_group_border_top_color <- dt_options_get_value(data = data, option = "row_group_border_top_color")
@@ -1133,64 +1141,71 @@ create_body_component_rtf <- function(data) {
   table_body_vlines_color <- dt_options_get_value(data = data, option = "table_body_vlines_color")
   table_border_bottom_color <- dt_options_get_value(data, option = "table_border_bottom_color")
 
-  headings_vars <- boxh %>% dplyr::filter(type == "default") %>% dplyr::pull(var)
-  row_groups_present <- nrow(groups_rows) > 0
-  row_group_rows <- groups_rows$row_start
-  row_group_labels <- groups_rows$group_label
-  row_group_labels[is.na(row_group_labels)] <- ""
+  # Obtain all of the visible (`"default"`), non-stub
+  # column names for the table
+  default_vars <- dt_boxhead_get_vars_labels_default(data = data)
 
-  # Ensure that the columns are only the visible ones, and,
-  # that they are in order
-  body <- body %>% dplyr::select(dplyr::all_of(headings_vars))
+  # Get a matrix of all cell content for the body
+  cell_matrix <- get_body_component_cell_matrix(data = data)
 
-  n_cols <- ncol(body)
-  n_rows <- nrow(body)
+  # Get vector representation of stub layout
+  stub_layout <- get_stub_layout(data = data)
 
-  # Obtain alignments for each values in each visible column label
+  # Get the column alignments
   col_alignment <-
-    boxh %>%
-    dplyr::filter(type == "default") %>%
-    dplyr::pull(column_align)
+    c(
+      rep("right", length(stub_layout)),
+      dt_boxhead_get_vars_align_default(data = data)
+    )
 
-  if (stub_available) {
+  # Replace an NA group with an empty string
+  if (any(is.na(groups_rows_df$group_label))) {
 
-    stub_var <- dt_boxhead_get_var_stub(data = data)
-
-    body <-
-      dplyr::bind_cols(
-        dt_body_get(data) %>% dplyr::select(dplyr::one_of(stub_var)),
-        body
-      )
-
-    col_alignment <- c("left", col_alignment)
-    n_cols <- n_cols + 1
+    groups_rows_df <-
+      groups_rows_df %>%
+      dplyr::mutate(group_label = ifelse(is.na(group_label), "", group_label)) %>%
+      dplyr::mutate(group_label = gsub("^NA", "\u2014", group_label))
   }
 
-  # Obtain widths for each visible column label
+  row_groups_present <- nrow(groups_rows_df) > 0
+  row_group_rows <- groups_rows_df$row_start
+  row_group_labels <- groups_rows_df$group_label
+  row_group_labels[is.na(row_group_labels)] <- ""
+
+  n_cols <- ncol(cell_matrix)
+  n_rows <- nrow(cell_matrix)
+
+  # Obtain widths for each visible column label in units of twips
   col_widths <-
-    boxh %>%
+    dt_boxhead_get(data = data) %>%
     dplyr::filter(type %in% c("default", "stub")) %>%
     dplyr::arrange(dplyr::desc(type)) %>%
     dplyr::pull(column_width) %>%
-    unlist()
-
-  col_widths <-
+    unlist() %>%
     col_width_resolver_rtf(
-      table_width = table_width,
-      col_widths = col_widths,
-      n_cols = length(col_alignment)
+      table_width = dt_options_get_value(data = data, option = "table_width"),
+      col_widths = .,
+      n_cols = n_cols
     )
-
-  # Obtain all of the visible (`"default"`), non-stub
-  # column names for the table
-  default_vars <- dt_boxhead_get_vars_default(data = data)
 
   row_list_body <- list()
 
   for (i in seq_len(n_rows)) {
 
-    # Add group rows where necessary
-    if (row_groups_present && i %in% row_group_rows) {
+    group_info <- groups_rows_df[groups_rows_df$row_start == i, c("group_id", "group_label")]
+    if (nrow(group_info) == 0) {
+      group_info <- NULL
+    }
+    group_id <- group_info[["group_id"]]
+    group_label <- group_info[["group_label"]]
+
+    #
+    # Create a group heading row
+    #
+    if (
+      !is.null(group_id) &&
+      !("group_label" %in% stub_layout)
+    ) {
 
       row_list_body <-
         c(
@@ -1217,12 +1232,13 @@ create_body_component_rtf <- function(data) {
 
     cell_list <-
       lapply(
-        seq_len(n_cols), FUN = function(x) {
+        seq_len(n_cols),
+        FUN = function(x) {
 
           rtf_tbl_cell(
             rtf_font(
               font_size = 10,
-              rtf_raw(body[[i, x]])
+              rtf_raw(cell_matrix[[i, x]])
             ),
             h_align = col_alignment[x],
             borders = list(
@@ -1278,6 +1294,15 @@ create_body_component_rtf <- function(data) {
 
         for (j in seq_len(nrow(summary_df))) {
 
+          summary_row <- as.matrix(summary_df)[j, ]
+          merge_keys_cells <- rep(0, length(summary_row))
+
+          if (length(stub_layout) > 1) {
+
+            summary_row <- c(summary_row[1], "", summary_row[-1])
+            merge_keys_cells <- c(1, 2, rep(0, length(summary_row) - 2))
+          }
+
           cell_list <-
             lapply(
               seq_len(n_cols), FUN = function(x) {
@@ -1285,9 +1310,10 @@ create_body_component_rtf <- function(data) {
                 rtf_tbl_cell(
                   rtf_font(
                     font_size = 10,
-                    rtf_raw(summary_df[[j, x]])
+                    rtf_raw(summary_row[x])
                   ),
                   h_align = col_alignment[x],
+                  h_merge = merge_keys_cells[x],
                   borders = list(
                     rtf_border(
                       "top",
@@ -1330,6 +1356,16 @@ create_body_component_rtf <- function(data) {
 
     for (j in seq_len(nrow(grand_summary_df))) {
 
+      grand_summary_row <- as.matrix(grand_summary_df)[j, ]
+
+      merge_keys_cells <- rep(0, length(grand_summary_row))
+
+      if (length(stub_layout) > 1) {
+
+        grand_summary_row <- c(grand_summary_row[1], "", grand_summary_row[-1])
+        merge_keys_cells <- c(1, 2, rep(0, length(grand_summary_row) - 2))
+      }
+
       cell_list <-
         lapply(
           seq_len(n_cols), FUN = function(x) {
@@ -1337,9 +1373,10 @@ create_body_component_rtf <- function(data) {
             rtf_tbl_cell(
               rtf_font(
                 font_size = 10,
-                rtf_raw(grand_summary_df[[j, x]])
+                rtf_raw(grand_summary_row[x])
               ),
               h_align = col_alignment[x],
+              h_merge = merge_keys_cells[x],
               borders = list(
                 rtf_border(
                   "bottom",
