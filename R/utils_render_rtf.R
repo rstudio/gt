@@ -1170,7 +1170,6 @@ create_body_component_rtf <- function(data) {
   row_groups_present <- nrow(groups_rows_df) > 0
   row_group_rows <- groups_rows_df$row_start
   row_group_labels <- groups_rows_df$group_label
-  row_group_labels[is.na(row_group_labels)] <- ""
 
   n_cols <- ncol(cell_matrix)
   n_rows <- nrow(cell_matrix)
