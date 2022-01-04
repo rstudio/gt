@@ -813,17 +813,13 @@ create_body_component_h <- function(data) {
             row_group_style <- dt_styles_pluck(styles_tbl, locname = "row_groups", grpname = group_id)$html_style
             # Add style of row group cell to vector
             row_styles <- c(list(row_group_style), row_styles)
+
           } else {
 
             # Remove first element of `alignment_classes` vector
             alignment_classes <- alignment_classes[-1]
             row_span_vals[[1]] <- NULL
             extra_classes[[1]] <- NULL
-
-            # FIXME: Can this really happen?
-            if (length(row_styles) > length(extra_classes)) {
-              row_styles[[1]] <- NULL
-            }
           }
         }
 
