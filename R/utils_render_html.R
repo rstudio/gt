@@ -638,9 +638,6 @@ create_columns_component_h <- function(data) {
 #' @noRd
 create_body_component_h <- function(data) {
 
-  boxh <- dt_boxhead_get(data = data)
-  body <- dt_body_get(data = data)
-
   summaries_present <- dt_summary_exists(data = data)
   list_of_summaries <- dt_summary_df_get(data = data)
   groups_rows_df <- dt_groups_rows_get(data = data)
@@ -653,13 +650,9 @@ create_body_component_h <- function(data) {
   # Get the number of columns for the body cells only
   n_data_cols <- get_number_of_visible_data_columns(data = data)
 
-  # Get the resolved number of columns required for the stub
-  n_stub_cols <- n_cols_total - n_data_cols
-
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
 
-  has_row_group_column <- "group_id" %in% stub_layout
   has_stub_column <- "rowname" %in% stub_layout
 
   # Get a matrix of all cells in the body (not including summary cells)
@@ -670,7 +663,11 @@ create_body_component_h <- function(data) {
 
   # Get the column alignments and also the alignment class names
   col_alignment <-
-    c(rep("left", n_stub_cols), dt_boxhead_get_vars_align_default(data = data))
+    c(
+      rep("right", length(stub_layout)),
+      dt_boxhead_get_vars_align_default(data = data)
+    )
+
   alignment_classes <- paste0("gt_", col_alignment)
 
   # Define function to get a character vector of formatted cell
@@ -688,10 +685,6 @@ create_body_component_h <- function(data) {
 
     cell_matrix
   }
-
-  # Get the sequence of column numbers in the table body (these
-  # are the visible columns in the table exclusive of the stub)
-  column_series <- seq(n_cols_total)
 
   # Replace an NA group with an empty string
   if (any(is.na(groups_rows_df$group_label))) {
