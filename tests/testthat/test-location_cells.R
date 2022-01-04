@@ -638,8 +638,8 @@ test_that("styles are correctly applied to HTML output with location functions",
     render_as_html() %>%
     tidy_grepl(
       paste0(
-        "<td class=\"gt_row gt_left gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">1</td>.*",
-        "<td class=\"gt_row gt_left gt_stub\">2</td>"
+        "<td class=\"gt_row gt_right gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">1</td>.*",
+        "<td class=\"gt_row gt_right gt_stub\">2</td>"
       )
     ) %>%
     expect_true()
@@ -661,8 +661,8 @@ test_that("styles are correctly applied to HTML output with location functions",
     render_as_html() %>%
     tidy_grepl(
       paste0(
-        "<td class=\"gt_row gt_left gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">1</td>.*",
-        "<td class=\"gt_row gt_left gt_stub\">2</td>"
+        "<td class=\"gt_row gt_right gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">1</td>.*",
+        "<td class=\"gt_row gt_right gt_stub\">2</td>"
       )
     ) %>%
     expect_true()
@@ -684,8 +684,8 @@ test_that("styles are correctly applied to HTML output with location functions",
     render_as_html() %>%
     tidy_grepl(
       paste0(
-        "<td class=\"gt_row gt_left gt_stub\">1</td>.*",
-        "<td class=\"gt_row gt_left gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">2</td>"
+        "<td class=\"gt_row gt_right gt_stub\">1</td>.*",
+        "<td class=\"gt_row gt_right gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">2</td>"
       )
     ) %>%
     expect_true()
@@ -707,8 +707,8 @@ test_that("styles are correctly applied to HTML output with location functions",
     render_as_html() %>%
     tidy_grepl(
       paste0(
-        "<td class=\"gt_row gt_left gt_stub\">1</td>.*",
-        "<td class=\"gt_row gt_left gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">2</td>"
+        "<td class=\"gt_row gt_right gt_stub\">1</td>.*",
+        "<td class=\"gt_row gt_right gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">2</td>"
       )
     ) %>%
     expect_true()
@@ -730,8 +730,8 @@ test_that("styles are correctly applied to HTML output with location functions",
     render_as_html() %>%
     tidy_grepl(
       paste0(
-        "<td class=\"gt_row gt_left gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">1</td>.*",
-        "<td class=\"gt_row gt_left gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">2</td>"
+        "<td class=\"gt_row gt_right gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">1</td>.*",
+        "<td class=\"gt_row gt_right gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">2</td>"
       )
     ) %>%
     expect_true()

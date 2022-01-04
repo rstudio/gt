@@ -1514,13 +1514,14 @@ test_that("the row striping options work correctly", {
   expect_length(
     c(
       tbl %>%
-      gt() %>%
-      tab_options(
-        row.striping.include_stub = TRUE,
-        row.striping.include_table_body = TRUE) %>%
-      render_as_html() %>%
-      xml2::read_html() %>%
-      selection_text("[class='gt_row gt_left gt_stub gt_striped']"),
+        gt() %>%
+        tab_options(
+          row.striping.include_stub = TRUE,
+          row.striping.include_table_body = TRUE
+        ) %>%
+        render_as_html() %>%
+        xml2::read_html() %>%
+        selection_text("[class='gt_row gt_right gt_stub gt_striped']"),
       tbl %>%
         gt() %>%
         tab_options(
@@ -1529,8 +1530,9 @@ test_that("the row striping options work correctly", {
         render_as_html() %>%
         xml2::read_html() %>%
         selection_text("[class='gt_row gt_right gt_striped']")
-      ),
-    25)
+    ),
+    25
+  )
 
   # Expect that the options `row.striping.include_table_body = FALSE`
   # and `row.striping.include_stub = FALSE` will result in cells that
@@ -1555,7 +1557,8 @@ test_that("the row striping options work correctly", {
         xml2::read_html() %>%
         selection_text("[class='gt_row gt_right gt_striped']")
     ),
-    0)
+    0
+  )
 })
 
 test_that("certain X11 color names are replaced in HTML tables", {

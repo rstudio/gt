@@ -3,7 +3,7 @@
     Code
       .
     Output
-      [1] "<table class=\"gt_table\">\n  \n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\"></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\">num</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">char</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_center\" rowspan=\"1\" colspan=\"1\">fctr</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">date</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">time</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">datetime</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\">currency</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">group</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td class=\"gt_row gt_left gt_stub\">row_1</td>\n<td class=\"gt_row gt_right\">1.111e-01</td>\n<td class=\"gt_row gt_left\">apricot</td>\n<td class=\"gt_row gt_center\">one</td>\n<td class=\"gt_row gt_left\">2015-01-15</td>\n<td class=\"gt_row gt_left\">13:35</td>\n<td class=\"gt_row gt_left\">2018-01-01 02:22</td>\n<td class=\"gt_row gt_right\">49.950</td>\n<td class=\"gt_row gt_left\">grp_a</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\">row_2</td>\n<td class=\"gt_row gt_right\">2.222e+00</td>\n<td class=\"gt_row gt_left\">banana</td>\n<td class=\"gt_row gt_center\">two</td>\n<td class=\"gt_row gt_left\">2015-02-15</td>\n<td class=\"gt_row gt_left\">14:40</td>\n<td class=\"gt_row gt_left\">2018-02-02 14:33</td>\n<td class=\"gt_row gt_right\">17.950</td>\n<td class=\"gt_row gt_left\">grp_a</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\">row_3</td>\n<td class=\"gt_row gt_right\">3.333e+01</td>\n<td class=\"gt_row gt_left\">coconut</td>\n<td class=\"gt_row gt_center\">three</td>\n<td class=\"gt_row gt_left\">2015-03-15</td>\n<td class=\"gt_row gt_left\">15:45</td>\n<td class=\"gt_row gt_left\">2018-03-03 03:44</td>\n<td class=\"gt_row gt_right\">1.390</td>\n<td class=\"gt_row gt_left\">grp_a</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\">row_4</td>\n<td class=\"gt_row gt_right\">4.444e+02</td>\n<td class=\"gt_row gt_left\">durian</td>\n<td class=\"gt_row gt_center\">four</td>\n<td class=\"gt_row gt_left\">2015-04-15</td>\n<td class=\"gt_row gt_left\">16:50</td>\n<td class=\"gt_row gt_left\">2018-04-04 15:55</td>\n<td class=\"gt_row gt_right\">65100.000</td>\n<td class=\"gt_row gt_left\">grp_a</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\">row_5</td>\n<td class=\"gt_row gt_right\">5.550e+03</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_center\">five</td>\n<td class=\"gt_row gt_left\">2015-05-15</td>\n<td class=\"gt_row gt_left\">17:55</td>\n<td class=\"gt_row gt_left\">2018-05-05 04:00</td>\n<td class=\"gt_row gt_right\">1325.810</td>\n<td class=\"gt_row gt_left\">grp_b</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\">row_6</td>\n<td class=\"gt_row gt_right\">NA</td>\n<td class=\"gt_row gt_left\">fig</td>\n<td class=\"gt_row gt_center\">six</td>\n<td class=\"gt_row gt_left\">2015-06-15</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_left\">2018-06-06 16:11</td>\n<td class=\"gt_row gt_right\">13.255</td>\n<td class=\"gt_row gt_left\">grp_b</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\">row_7</td>\n<td class=\"gt_row gt_right\">7.770e+05</td>\n<td class=\"gt_row gt_left\">grapefruit</td>\n<td class=\"gt_row gt_center\">seven</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_left\">19:10</td>\n<td class=\"gt_row gt_left\">2018-07-07 05:22</td>\n<td class=\"gt_row gt_right\">NA</td>\n<td class=\"gt_row gt_left\">grp_b</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\">row_8</td>\n<td class=\"gt_row gt_right\">8.880e+06</td>\n<td class=\"gt_row gt_left\">honeydew</td>\n<td class=\"gt_row gt_center\">eight</td>\n<td class=\"gt_row gt_left\">2015-08-15</td>\n<td class=\"gt_row gt_left\">20:20</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_right\">0.440</td>\n<td class=\"gt_row gt_left\">grp_b</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_first_grand_summary_row\">min</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row\">0.11</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_center gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row\">0.44</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row\">max</td>\n<td class=\"gt_row gt_right gt_grand_summary_row\">8,880,000.00</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_center gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row\">65,100.00</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_last_summary_row\">avg</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\">1,380,432.87</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_center gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\">9,501.26</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td></tr>\n  </tbody>\n  \n  \n</table>"
+      [1] "<table class=\"gt_table\">\n  \n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\"></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\">num</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">char</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_center\" rowspan=\"1\" colspan=\"1\">fctr</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">date</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">time</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">datetime</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\">currency</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">group</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td class=\"gt_row gt_right gt_stub\">row_1</td>\n<td class=\"gt_row gt_right\">1.111e-01</td>\n<td class=\"gt_row gt_left\">apricot</td>\n<td class=\"gt_row gt_center\">one</td>\n<td class=\"gt_row gt_left\">2015-01-15</td>\n<td class=\"gt_row gt_left\">13:35</td>\n<td class=\"gt_row gt_left\">2018-01-01 02:22</td>\n<td class=\"gt_row gt_right\">49.950</td>\n<td class=\"gt_row gt_left\">grp_a</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\">row_2</td>\n<td class=\"gt_row gt_right\">2.222e+00</td>\n<td class=\"gt_row gt_left\">banana</td>\n<td class=\"gt_row gt_center\">two</td>\n<td class=\"gt_row gt_left\">2015-02-15</td>\n<td class=\"gt_row gt_left\">14:40</td>\n<td class=\"gt_row gt_left\">2018-02-02 14:33</td>\n<td class=\"gt_row gt_right\">17.950</td>\n<td class=\"gt_row gt_left\">grp_a</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\">row_3</td>\n<td class=\"gt_row gt_right\">3.333e+01</td>\n<td class=\"gt_row gt_left\">coconut</td>\n<td class=\"gt_row gt_center\">three</td>\n<td class=\"gt_row gt_left\">2015-03-15</td>\n<td class=\"gt_row gt_left\">15:45</td>\n<td class=\"gt_row gt_left\">2018-03-03 03:44</td>\n<td class=\"gt_row gt_right\">1.390</td>\n<td class=\"gt_row gt_left\">grp_a</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\">row_4</td>\n<td class=\"gt_row gt_right\">4.444e+02</td>\n<td class=\"gt_row gt_left\">durian</td>\n<td class=\"gt_row gt_center\">four</td>\n<td class=\"gt_row gt_left\">2015-04-15</td>\n<td class=\"gt_row gt_left\">16:50</td>\n<td class=\"gt_row gt_left\">2018-04-04 15:55</td>\n<td class=\"gt_row gt_right\">65100.000</td>\n<td class=\"gt_row gt_left\">grp_a</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\">row_5</td>\n<td class=\"gt_row gt_right\">5.550e+03</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_center\">five</td>\n<td class=\"gt_row gt_left\">2015-05-15</td>\n<td class=\"gt_row gt_left\">17:55</td>\n<td class=\"gt_row gt_left\">2018-05-05 04:00</td>\n<td class=\"gt_row gt_right\">1325.810</td>\n<td class=\"gt_row gt_left\">grp_b</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\">row_6</td>\n<td class=\"gt_row gt_right\">NA</td>\n<td class=\"gt_row gt_left\">fig</td>\n<td class=\"gt_row gt_center\">six</td>\n<td class=\"gt_row gt_left\">2015-06-15</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_left\">2018-06-06 16:11</td>\n<td class=\"gt_row gt_right\">13.255</td>\n<td class=\"gt_row gt_left\">grp_b</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\">row_7</td>\n<td class=\"gt_row gt_right\">7.770e+05</td>\n<td class=\"gt_row gt_left\">grapefruit</td>\n<td class=\"gt_row gt_center\">seven</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_left\">19:10</td>\n<td class=\"gt_row gt_left\">2018-07-07 05:22</td>\n<td class=\"gt_row gt_right\">NA</td>\n<td class=\"gt_row gt_left\">grp_b</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\">row_8</td>\n<td class=\"gt_row gt_right\">8.880e+06</td>\n<td class=\"gt_row gt_left\">honeydew</td>\n<td class=\"gt_row gt_center\">eight</td>\n<td class=\"gt_row gt_left\">2015-08-15</td>\n<td class=\"gt_row gt_left\">20:20</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_right\">0.440</td>\n<td class=\"gt_row gt_left\">grp_b</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_first_grand_summary_row\">min</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row\">0.11</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_center gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row\">0.44</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row\">max</td>\n<td class=\"gt_row gt_right gt_grand_summary_row\">8,880,000.00</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_center gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row\">65,100.00</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_last_summary_row\">avg</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\">1,380,432.87</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_center gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\">9,501.26</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td></tr>\n  </tbody>\n  \n  \n</table>"
 
 ---
 
@@ -61,7 +61,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 row_1}}\cell
       \pard\plain
       
@@ -101,7 +101,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 row_2}}\cell
       \pard\plain
       
@@ -141,7 +141,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 row_3}}\cell
       \pard\plain
       
@@ -181,7 +181,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 row_4}}\cell
       \pard\plain
       
@@ -221,7 +221,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 row_5}}\cell
       \pard\plain
       
@@ -261,7 +261,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 row_6}}\cell
       \pard\plain
       
@@ -301,7 +301,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 row_7}}\cell
       \pard\plain
       
@@ -341,7 +341,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 row_8}}\cell
       \pard\plain
       
@@ -381,7 +381,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrdb\brdrw50\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrdb\brdrw50\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 min}}\cell
       \pard\plain
       
@@ -421,7 +421,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrs\brdrw10\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrs\brdrw10\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 max}}\cell
       \pard\plain
       
@@ -461,7 +461,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw50\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrs\brdrw10\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw50\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrs\brdrw10\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 avg}}\cell
       \pard\plain
       
@@ -506,7 +506,7 @@
     Code
       .
     Output
-      [1] "<table class=\"gt_table\">\n  \n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\"></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\">num</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">char</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_center\" rowspan=\"1\" colspan=\"1\">fctr</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">date</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">time</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">datetime</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\">currency</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">rowname</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">group</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td class=\"gt_row gt_left gt_stub\"></td>\n<td class=\"gt_row gt_right\">1.111e-01</td>\n<td class=\"gt_row gt_left\">apricot</td>\n<td class=\"gt_row gt_center\">one</td>\n<td class=\"gt_row gt_left\">2015-01-15</td>\n<td class=\"gt_row gt_left\">13:35</td>\n<td class=\"gt_row gt_left\">2018-01-01 02:22</td>\n<td class=\"gt_row gt_right\">49.950</td>\n<td class=\"gt_row gt_left\">row_1</td>\n<td class=\"gt_row gt_left\">grp_a</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\"></td>\n<td class=\"gt_row gt_right\">2.222e+00</td>\n<td class=\"gt_row gt_left\">banana</td>\n<td class=\"gt_row gt_center\">two</td>\n<td class=\"gt_row gt_left\">2015-02-15</td>\n<td class=\"gt_row gt_left\">14:40</td>\n<td class=\"gt_row gt_left\">2018-02-02 14:33</td>\n<td class=\"gt_row gt_right\">17.950</td>\n<td class=\"gt_row gt_left\">row_2</td>\n<td class=\"gt_row gt_left\">grp_a</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\"></td>\n<td class=\"gt_row gt_right\">3.333e+01</td>\n<td class=\"gt_row gt_left\">coconut</td>\n<td class=\"gt_row gt_center\">three</td>\n<td class=\"gt_row gt_left\">2015-03-15</td>\n<td class=\"gt_row gt_left\">15:45</td>\n<td class=\"gt_row gt_left\">2018-03-03 03:44</td>\n<td class=\"gt_row gt_right\">1.390</td>\n<td class=\"gt_row gt_left\">row_3</td>\n<td class=\"gt_row gt_left\">grp_a</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\"></td>\n<td class=\"gt_row gt_right\">4.444e+02</td>\n<td class=\"gt_row gt_left\">durian</td>\n<td class=\"gt_row gt_center\">four</td>\n<td class=\"gt_row gt_left\">2015-04-15</td>\n<td class=\"gt_row gt_left\">16:50</td>\n<td class=\"gt_row gt_left\">2018-04-04 15:55</td>\n<td class=\"gt_row gt_right\">65100.000</td>\n<td class=\"gt_row gt_left\">row_4</td>\n<td class=\"gt_row gt_left\">grp_a</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\"></td>\n<td class=\"gt_row gt_right\">5.550e+03</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_center\">five</td>\n<td class=\"gt_row gt_left\">2015-05-15</td>\n<td class=\"gt_row gt_left\">17:55</td>\n<td class=\"gt_row gt_left\">2018-05-05 04:00</td>\n<td class=\"gt_row gt_right\">1325.810</td>\n<td class=\"gt_row gt_left\">row_5</td>\n<td class=\"gt_row gt_left\">grp_b</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\"></td>\n<td class=\"gt_row gt_right\">NA</td>\n<td class=\"gt_row gt_left\">fig</td>\n<td class=\"gt_row gt_center\">six</td>\n<td class=\"gt_row gt_left\">2015-06-15</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_left\">2018-06-06 16:11</td>\n<td class=\"gt_row gt_right\">13.255</td>\n<td class=\"gt_row gt_left\">row_6</td>\n<td class=\"gt_row gt_left\">grp_b</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\"></td>\n<td class=\"gt_row gt_right\">7.770e+05</td>\n<td class=\"gt_row gt_left\">grapefruit</td>\n<td class=\"gt_row gt_center\">seven</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_left\">19:10</td>\n<td class=\"gt_row gt_left\">2018-07-07 05:22</td>\n<td class=\"gt_row gt_right\">NA</td>\n<td class=\"gt_row gt_left\">row_7</td>\n<td class=\"gt_row gt_left\">grp_b</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\"></td>\n<td class=\"gt_row gt_right\">8.880e+06</td>\n<td class=\"gt_row gt_left\">honeydew</td>\n<td class=\"gt_row gt_center\">eight</td>\n<td class=\"gt_row gt_left\">2015-08-15</td>\n<td class=\"gt_row gt_left\">20:20</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_right\">0.440</td>\n<td class=\"gt_row gt_left\">row_8</td>\n<td class=\"gt_row gt_left\">grp_b</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_first_grand_summary_row\">min</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row\">0.11</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_center gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row\">0.44</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row\">max</td>\n<td class=\"gt_row gt_right gt_grand_summary_row\">8,880,000.00</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_center gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row\">65,100.00</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_last_summary_row\">avg</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\">1,380,432.87</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_center gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\">9,501.26</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td></tr>\n  </tbody>\n  \n  \n</table>"
+      [1] "<table class=\"gt_table\">\n  \n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\"></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\">num</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">char</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_center\" rowspan=\"1\" colspan=\"1\">fctr</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">date</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">time</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">datetime</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\">currency</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">rowname</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">group</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td class=\"gt_row gt_right gt_stub\"></td>\n<td class=\"gt_row gt_right\">1.111e-01</td>\n<td class=\"gt_row gt_left\">apricot</td>\n<td class=\"gt_row gt_center\">one</td>\n<td class=\"gt_row gt_left\">2015-01-15</td>\n<td class=\"gt_row gt_left\">13:35</td>\n<td class=\"gt_row gt_left\">2018-01-01 02:22</td>\n<td class=\"gt_row gt_right\">49.950</td>\n<td class=\"gt_row gt_left\">row_1</td>\n<td class=\"gt_row gt_left\">grp_a</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\"></td>\n<td class=\"gt_row gt_right\">2.222e+00</td>\n<td class=\"gt_row gt_left\">banana</td>\n<td class=\"gt_row gt_center\">two</td>\n<td class=\"gt_row gt_left\">2015-02-15</td>\n<td class=\"gt_row gt_left\">14:40</td>\n<td class=\"gt_row gt_left\">2018-02-02 14:33</td>\n<td class=\"gt_row gt_right\">17.950</td>\n<td class=\"gt_row gt_left\">row_2</td>\n<td class=\"gt_row gt_left\">grp_a</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\"></td>\n<td class=\"gt_row gt_right\">3.333e+01</td>\n<td class=\"gt_row gt_left\">coconut</td>\n<td class=\"gt_row gt_center\">three</td>\n<td class=\"gt_row gt_left\">2015-03-15</td>\n<td class=\"gt_row gt_left\">15:45</td>\n<td class=\"gt_row gt_left\">2018-03-03 03:44</td>\n<td class=\"gt_row gt_right\">1.390</td>\n<td class=\"gt_row gt_left\">row_3</td>\n<td class=\"gt_row gt_left\">grp_a</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\"></td>\n<td class=\"gt_row gt_right\">4.444e+02</td>\n<td class=\"gt_row gt_left\">durian</td>\n<td class=\"gt_row gt_center\">four</td>\n<td class=\"gt_row gt_left\">2015-04-15</td>\n<td class=\"gt_row gt_left\">16:50</td>\n<td class=\"gt_row gt_left\">2018-04-04 15:55</td>\n<td class=\"gt_row gt_right\">65100.000</td>\n<td class=\"gt_row gt_left\">row_4</td>\n<td class=\"gt_row gt_left\">grp_a</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\"></td>\n<td class=\"gt_row gt_right\">5.550e+03</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_center\">five</td>\n<td class=\"gt_row gt_left\">2015-05-15</td>\n<td class=\"gt_row gt_left\">17:55</td>\n<td class=\"gt_row gt_left\">2018-05-05 04:00</td>\n<td class=\"gt_row gt_right\">1325.810</td>\n<td class=\"gt_row gt_left\">row_5</td>\n<td class=\"gt_row gt_left\">grp_b</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\"></td>\n<td class=\"gt_row gt_right\">NA</td>\n<td class=\"gt_row gt_left\">fig</td>\n<td class=\"gt_row gt_center\">six</td>\n<td class=\"gt_row gt_left\">2015-06-15</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_left\">2018-06-06 16:11</td>\n<td class=\"gt_row gt_right\">13.255</td>\n<td class=\"gt_row gt_left\">row_6</td>\n<td class=\"gt_row gt_left\">grp_b</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\"></td>\n<td class=\"gt_row gt_right\">7.770e+05</td>\n<td class=\"gt_row gt_left\">grapefruit</td>\n<td class=\"gt_row gt_center\">seven</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_left\">19:10</td>\n<td class=\"gt_row gt_left\">2018-07-07 05:22</td>\n<td class=\"gt_row gt_right\">NA</td>\n<td class=\"gt_row gt_left\">row_7</td>\n<td class=\"gt_row gt_left\">grp_b</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\"></td>\n<td class=\"gt_row gt_right\">8.880e+06</td>\n<td class=\"gt_row gt_left\">honeydew</td>\n<td class=\"gt_row gt_center\">eight</td>\n<td class=\"gt_row gt_left\">2015-08-15</td>\n<td class=\"gt_row gt_left\">20:20</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_right\">0.440</td>\n<td class=\"gt_row gt_left\">row_8</td>\n<td class=\"gt_row gt_left\">grp_b</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_first_grand_summary_row\">min</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row\">0.11</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_center gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row\">0.44</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row\">max</td>\n<td class=\"gt_row gt_right gt_grand_summary_row\">8,880,000.00</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_center gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row\">65,100.00</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_last_summary_row\">avg</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\">1,380,432.87</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_center gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\">9,501.26</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td></tr>\n  </tbody>\n  \n  \n</table>"
 
 ---
 
@@ -568,7 +568,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx947
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx947
       \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
@@ -612,7 +612,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx947
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx947
       \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
@@ -656,7 +656,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx947
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx947
       \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
@@ -700,7 +700,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx947
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx947
       \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
@@ -744,7 +744,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx947
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx947
       \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
@@ -788,7 +788,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx947
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx947
       \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
@@ -832,7 +832,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx947
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx947
       \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
@@ -876,7 +876,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx947
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx947
       \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
@@ -920,7 +920,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrdb\brdrw50\brdrcf1\cellx947
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrdb\brdrw50\brdrcf1\cellx947
       \intbl {\f0 {\f0\fs20 min}}\cell
       \pard\plain
       
@@ -964,7 +964,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrs\brdrw10\brdrcf1\cellx947
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrs\brdrw10\brdrcf1\cellx947
       \intbl {\f0 {\f0\fs20 max}}\cell
       \pard\plain
       
@@ -1008,7 +1008,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw50\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrs\brdrw10\brdrcf1\cellx947
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw50\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrs\brdrw10\brdrcf1\cellx947
       \intbl {\f0 {\f0\fs20 avg}}\cell
       \pard\plain
       
@@ -1057,7 +1057,7 @@
     Code
       .
     Output
-      [1] "<table class=\"gt_table\">\n  \n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\"></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\">num</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">char</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_center\" rowspan=\"1\" colspan=\"1\">fctr</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">date</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">time</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">datetime</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\">currency</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">rowname</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr class=\"gt_group_heading_row\">\n      <td colspan=\"9\" class=\"gt_group_heading\">grp_a</td>\n    </tr>\n    <tr><td class=\"gt_row gt_left gt_stub\"></td>\n<td class=\"gt_row gt_right\">1.111e-01</td>\n<td class=\"gt_row gt_left\">apricot</td>\n<td class=\"gt_row gt_center\">one</td>\n<td class=\"gt_row gt_left\">2015-01-15</td>\n<td class=\"gt_row gt_left\">13:35</td>\n<td class=\"gt_row gt_left\">2018-01-01 02:22</td>\n<td class=\"gt_row gt_right\">49.950</td>\n<td class=\"gt_row gt_left\">row_1</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\"></td>\n<td class=\"gt_row gt_right\">2.222e+00</td>\n<td class=\"gt_row gt_left\">banana</td>\n<td class=\"gt_row gt_center\">two</td>\n<td class=\"gt_row gt_left\">2015-02-15</td>\n<td class=\"gt_row gt_left\">14:40</td>\n<td class=\"gt_row gt_left\">2018-02-02 14:33</td>\n<td class=\"gt_row gt_right\">17.950</td>\n<td class=\"gt_row gt_left\">row_2</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\"></td>\n<td class=\"gt_row gt_right\">3.333e+01</td>\n<td class=\"gt_row gt_left\">coconut</td>\n<td class=\"gt_row gt_center\">three</td>\n<td class=\"gt_row gt_left\">2015-03-15</td>\n<td class=\"gt_row gt_left\">15:45</td>\n<td class=\"gt_row gt_left\">2018-03-03 03:44</td>\n<td class=\"gt_row gt_right\">1.390</td>\n<td class=\"gt_row gt_left\">row_3</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\"></td>\n<td class=\"gt_row gt_right\">4.444e+02</td>\n<td class=\"gt_row gt_left\">durian</td>\n<td class=\"gt_row gt_center\">four</td>\n<td class=\"gt_row gt_left\">2015-04-15</td>\n<td class=\"gt_row gt_left\">16:50</td>\n<td class=\"gt_row gt_left\">2018-04-04 15:55</td>\n<td class=\"gt_row gt_right\">65100.000</td>\n<td class=\"gt_row gt_left\">row_4</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_summary_row gt_first_summary_row gt_last_summary_row\">median</td>\n<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row gt_last_summary_row\">17.78</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_center gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row gt_last_summary_row\">33.95</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td></tr>\n    <tr class=\"gt_group_heading_row\">\n      <td colspan=\"9\" class=\"gt_group_heading\">grp_b</td>\n    </tr>\n    <tr><td class=\"gt_row gt_left gt_stub\"></td>\n<td class=\"gt_row gt_right\">5.550e+03</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_center\">five</td>\n<td class=\"gt_row gt_left\">2015-05-15</td>\n<td class=\"gt_row gt_left\">17:55</td>\n<td class=\"gt_row gt_left\">2018-05-05 04:00</td>\n<td class=\"gt_row gt_right\">1325.810</td>\n<td class=\"gt_row gt_left\">row_5</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\"></td>\n<td class=\"gt_row gt_right\">NA</td>\n<td class=\"gt_row gt_left\">fig</td>\n<td class=\"gt_row gt_center\">six</td>\n<td class=\"gt_row gt_left\">2015-06-15</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_left\">2018-06-06 16:11</td>\n<td class=\"gt_row gt_right\">13.255</td>\n<td class=\"gt_row gt_left\">row_6</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\"></td>\n<td class=\"gt_row gt_right\">7.770e+05</td>\n<td class=\"gt_row gt_left\">grapefruit</td>\n<td class=\"gt_row gt_center\">seven</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_left\">19:10</td>\n<td class=\"gt_row gt_left\">2018-07-07 05:22</td>\n<td class=\"gt_row gt_right\">NA</td>\n<td class=\"gt_row gt_left\">row_7</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\"></td>\n<td class=\"gt_row gt_right\">8.880e+06</td>\n<td class=\"gt_row gt_left\">honeydew</td>\n<td class=\"gt_row gt_center\">eight</td>\n<td class=\"gt_row gt_left\">2015-08-15</td>\n<td class=\"gt_row gt_left\">20:20</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_right\">0.440</td>\n<td class=\"gt_row gt_left\">row_8</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_summary_row gt_first_summary_row gt_last_summary_row\">median</td>\n<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row gt_last_summary_row\">777,000.00</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_center gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row gt_last_summary_row\">13.26</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_first_grand_summary_row\">min</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row\">0.11</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_center gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row\">0.44</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row\">max</td>\n<td class=\"gt_row gt_right gt_grand_summary_row\">8,880,000.00</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_center gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row\">65,100.00</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_last_summary_row\">avg</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\">1,380,432.87</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_center gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\">9,501.26</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td></tr>\n  </tbody>\n  \n  \n</table>"
+      [1] "<table class=\"gt_table\">\n  \n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\"></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\">num</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">char</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_center\" rowspan=\"1\" colspan=\"1\">fctr</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">date</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">time</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">datetime</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\">currency</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">rowname</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr class=\"gt_group_heading_row\">\n      <td colspan=\"9\" class=\"gt_group_heading\">grp_a</td>\n    </tr>\n    <tr><td class=\"gt_row gt_right gt_stub\"></td>\n<td class=\"gt_row gt_right\">1.111e-01</td>\n<td class=\"gt_row gt_left\">apricot</td>\n<td class=\"gt_row gt_center\">one</td>\n<td class=\"gt_row gt_left\">2015-01-15</td>\n<td class=\"gt_row gt_left\">13:35</td>\n<td class=\"gt_row gt_left\">2018-01-01 02:22</td>\n<td class=\"gt_row gt_right\">49.950</td>\n<td class=\"gt_row gt_left\">row_1</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\"></td>\n<td class=\"gt_row gt_right\">2.222e+00</td>\n<td class=\"gt_row gt_left\">banana</td>\n<td class=\"gt_row gt_center\">two</td>\n<td class=\"gt_row gt_left\">2015-02-15</td>\n<td class=\"gt_row gt_left\">14:40</td>\n<td class=\"gt_row gt_left\">2018-02-02 14:33</td>\n<td class=\"gt_row gt_right\">17.950</td>\n<td class=\"gt_row gt_left\">row_2</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\"></td>\n<td class=\"gt_row gt_right\">3.333e+01</td>\n<td class=\"gt_row gt_left\">coconut</td>\n<td class=\"gt_row gt_center\">three</td>\n<td class=\"gt_row gt_left\">2015-03-15</td>\n<td class=\"gt_row gt_left\">15:45</td>\n<td class=\"gt_row gt_left\">2018-03-03 03:44</td>\n<td class=\"gt_row gt_right\">1.390</td>\n<td class=\"gt_row gt_left\">row_3</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\"></td>\n<td class=\"gt_row gt_right\">4.444e+02</td>\n<td class=\"gt_row gt_left\">durian</td>\n<td class=\"gt_row gt_center\">four</td>\n<td class=\"gt_row gt_left\">2015-04-15</td>\n<td class=\"gt_row gt_left\">16:50</td>\n<td class=\"gt_row gt_left\">2018-04-04 15:55</td>\n<td class=\"gt_row gt_right\">65100.000</td>\n<td class=\"gt_row gt_left\">row_4</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_summary_row gt_first_summary_row gt_last_summary_row\">median</td>\n<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row gt_last_summary_row\">17.78</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_center gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row gt_last_summary_row\">33.95</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td></tr>\n    <tr class=\"gt_group_heading_row\">\n      <td colspan=\"9\" class=\"gt_group_heading\">grp_b</td>\n    </tr>\n    <tr><td class=\"gt_row gt_right gt_stub\"></td>\n<td class=\"gt_row gt_right\">5.550e+03</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_center\">five</td>\n<td class=\"gt_row gt_left\">2015-05-15</td>\n<td class=\"gt_row gt_left\">17:55</td>\n<td class=\"gt_row gt_left\">2018-05-05 04:00</td>\n<td class=\"gt_row gt_right\">1325.810</td>\n<td class=\"gt_row gt_left\">row_5</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\"></td>\n<td class=\"gt_row gt_right\">NA</td>\n<td class=\"gt_row gt_left\">fig</td>\n<td class=\"gt_row gt_center\">six</td>\n<td class=\"gt_row gt_left\">2015-06-15</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_left\">2018-06-06 16:11</td>\n<td class=\"gt_row gt_right\">13.255</td>\n<td class=\"gt_row gt_left\">row_6</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\"></td>\n<td class=\"gt_row gt_right\">7.770e+05</td>\n<td class=\"gt_row gt_left\">grapefruit</td>\n<td class=\"gt_row gt_center\">seven</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_left\">19:10</td>\n<td class=\"gt_row gt_left\">2018-07-07 05:22</td>\n<td class=\"gt_row gt_right\">NA</td>\n<td class=\"gt_row gt_left\">row_7</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\"></td>\n<td class=\"gt_row gt_right\">8.880e+06</td>\n<td class=\"gt_row gt_left\">honeydew</td>\n<td class=\"gt_row gt_center\">eight</td>\n<td class=\"gt_row gt_left\">2015-08-15</td>\n<td class=\"gt_row gt_left\">20:20</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_right\">0.440</td>\n<td class=\"gt_row gt_left\">row_8</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_summary_row gt_first_summary_row gt_last_summary_row\">median</td>\n<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row gt_last_summary_row\">777,000.00</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_center gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row gt_last_summary_row\">13.26</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_first_grand_summary_row\">min</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row\">0.11</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_center gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row\">0.44</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row\">max</td>\n<td class=\"gt_row gt_right gt_grand_summary_row\">8,880,000.00</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_center gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row\">65,100.00</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_last_summary_row\">avg</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\">1,380,432.87</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_center gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\">9,501.26</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td></tr>\n  </tbody>\n  \n  \n</table>"
 
 ---
 
@@ -1123,7 +1123,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
@@ -1163,7 +1163,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
@@ -1203,7 +1203,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
@@ -1243,7 +1243,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
@@ -1283,7 +1283,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrt\brdrdb\brdrw20\brdrcf1\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrt\brdrdb\brdrw20\brdrcf1\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 median}}\cell
       \pard\plain
       
@@ -1331,7 +1331,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
@@ -1371,7 +1371,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
@@ -1411,7 +1411,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
@@ -1451,7 +1451,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
@@ -1491,7 +1491,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrt\brdrdb\brdrw20\brdrcf1\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrt\brdrdb\brdrw20\brdrcf1\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 median}}\cell
       \pard\plain
       
@@ -1531,7 +1531,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrdb\brdrw50\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrdb\brdrw50\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 min}}\cell
       \pard\plain
       
@@ -1571,7 +1571,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrs\brdrw10\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrs\brdrw10\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 max}}\cell
       \pard\plain
       
@@ -1611,7 +1611,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw50\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrs\brdrw10\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw50\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrs\brdrw10\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 avg}}\cell
       \pard\plain
       
@@ -1656,7 +1656,7 @@
     Code
       .
     Output
-      [1] "<table class=\"gt_table\">\n  \n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\"></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\">num</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_center\" rowspan=\"1\" colspan=\"1\">fctr</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">date</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">time</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">datetime</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\">currency</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">rowname</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">group</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td class=\"gt_row gt_left gt_stub\">apricot</td>\n<td class=\"gt_row gt_right\">1.111e-01</td>\n<td class=\"gt_row gt_center\">one</td>\n<td class=\"gt_row gt_left\">2015-01-15</td>\n<td class=\"gt_row gt_left\">13:35</td>\n<td class=\"gt_row gt_left\">2018-01-01 02:22</td>\n<td class=\"gt_row gt_right\">49.950</td>\n<td class=\"gt_row gt_left\">row_1</td>\n<td class=\"gt_row gt_left\">grp_a</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\">banana</td>\n<td class=\"gt_row gt_right\">2.222e+00</td>\n<td class=\"gt_row gt_center\">two</td>\n<td class=\"gt_row gt_left\">2015-02-15</td>\n<td class=\"gt_row gt_left\">14:40</td>\n<td class=\"gt_row gt_left\">2018-02-02 14:33</td>\n<td class=\"gt_row gt_right\">17.950</td>\n<td class=\"gt_row gt_left\">row_2</td>\n<td class=\"gt_row gt_left\">grp_a</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\">coconut</td>\n<td class=\"gt_row gt_right\">3.333e+01</td>\n<td class=\"gt_row gt_center\">three</td>\n<td class=\"gt_row gt_left\">2015-03-15</td>\n<td class=\"gt_row gt_left\">15:45</td>\n<td class=\"gt_row gt_left\">2018-03-03 03:44</td>\n<td class=\"gt_row gt_right\">1.390</td>\n<td class=\"gt_row gt_left\">row_3</td>\n<td class=\"gt_row gt_left\">grp_a</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\">durian</td>\n<td class=\"gt_row gt_right\">4.444e+02</td>\n<td class=\"gt_row gt_center\">four</td>\n<td class=\"gt_row gt_left\">2015-04-15</td>\n<td class=\"gt_row gt_left\">16:50</td>\n<td class=\"gt_row gt_left\">2018-04-04 15:55</td>\n<td class=\"gt_row gt_right\">65100.000</td>\n<td class=\"gt_row gt_left\">row_4</td>\n<td class=\"gt_row gt_left\">grp_a</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\">NA</td>\n<td class=\"gt_row gt_right\">5.550e+03</td>\n<td class=\"gt_row gt_center\">five</td>\n<td class=\"gt_row gt_left\">2015-05-15</td>\n<td class=\"gt_row gt_left\">17:55</td>\n<td class=\"gt_row gt_left\">2018-05-05 04:00</td>\n<td class=\"gt_row gt_right\">1325.810</td>\n<td class=\"gt_row gt_left\">row_5</td>\n<td class=\"gt_row gt_left\">grp_b</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\">fig</td>\n<td class=\"gt_row gt_right\">NA</td>\n<td class=\"gt_row gt_center\">six</td>\n<td class=\"gt_row gt_left\">2015-06-15</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_left\">2018-06-06 16:11</td>\n<td class=\"gt_row gt_right\">13.255</td>\n<td class=\"gt_row gt_left\">row_6</td>\n<td class=\"gt_row gt_left\">grp_b</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\">grapefruit</td>\n<td class=\"gt_row gt_right\">7.770e+05</td>\n<td class=\"gt_row gt_center\">seven</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_left\">19:10</td>\n<td class=\"gt_row gt_left\">2018-07-07 05:22</td>\n<td class=\"gt_row gt_right\">NA</td>\n<td class=\"gt_row gt_left\">row_7</td>\n<td class=\"gt_row gt_left\">grp_b</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\">honeydew</td>\n<td class=\"gt_row gt_right\">8.880e+06</td>\n<td class=\"gt_row gt_center\">eight</td>\n<td class=\"gt_row gt_left\">2015-08-15</td>\n<td class=\"gt_row gt_left\">20:20</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_right\">0.440</td>\n<td class=\"gt_row gt_left\">row_8</td>\n<td class=\"gt_row gt_left\">grp_b</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_first_grand_summary_row\">min</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row\">0.11</td>\n<td class=\"gt_row gt_center gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row\">0.44</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row\">max</td>\n<td class=\"gt_row gt_right gt_grand_summary_row\">8,880,000.00</td>\n<td class=\"gt_row gt_center gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row\">65,100.00</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_last_summary_row\">avg</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\">1,380,432.87</td>\n<td class=\"gt_row gt_center gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\">9,501.26</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td></tr>\n  </tbody>\n  \n  \n</table>"
+      [1] "<table class=\"gt_table\">\n  \n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\"></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\">num</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_center\" rowspan=\"1\" colspan=\"1\">fctr</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">date</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">time</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">datetime</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\">currency</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">rowname</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">group</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td class=\"gt_row gt_right gt_stub\">apricot</td>\n<td class=\"gt_row gt_right\">1.111e-01</td>\n<td class=\"gt_row gt_center\">one</td>\n<td class=\"gt_row gt_left\">2015-01-15</td>\n<td class=\"gt_row gt_left\">13:35</td>\n<td class=\"gt_row gt_left\">2018-01-01 02:22</td>\n<td class=\"gt_row gt_right\">49.950</td>\n<td class=\"gt_row gt_left\">row_1</td>\n<td class=\"gt_row gt_left\">grp_a</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\">banana</td>\n<td class=\"gt_row gt_right\">2.222e+00</td>\n<td class=\"gt_row gt_center\">two</td>\n<td class=\"gt_row gt_left\">2015-02-15</td>\n<td class=\"gt_row gt_left\">14:40</td>\n<td class=\"gt_row gt_left\">2018-02-02 14:33</td>\n<td class=\"gt_row gt_right\">17.950</td>\n<td class=\"gt_row gt_left\">row_2</td>\n<td class=\"gt_row gt_left\">grp_a</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\">coconut</td>\n<td class=\"gt_row gt_right\">3.333e+01</td>\n<td class=\"gt_row gt_center\">three</td>\n<td class=\"gt_row gt_left\">2015-03-15</td>\n<td class=\"gt_row gt_left\">15:45</td>\n<td class=\"gt_row gt_left\">2018-03-03 03:44</td>\n<td class=\"gt_row gt_right\">1.390</td>\n<td class=\"gt_row gt_left\">row_3</td>\n<td class=\"gt_row gt_left\">grp_a</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\">durian</td>\n<td class=\"gt_row gt_right\">4.444e+02</td>\n<td class=\"gt_row gt_center\">four</td>\n<td class=\"gt_row gt_left\">2015-04-15</td>\n<td class=\"gt_row gt_left\">16:50</td>\n<td class=\"gt_row gt_left\">2018-04-04 15:55</td>\n<td class=\"gt_row gt_right\">65100.000</td>\n<td class=\"gt_row gt_left\">row_4</td>\n<td class=\"gt_row gt_left\">grp_a</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\">NA</td>\n<td class=\"gt_row gt_right\">5.550e+03</td>\n<td class=\"gt_row gt_center\">five</td>\n<td class=\"gt_row gt_left\">2015-05-15</td>\n<td class=\"gt_row gt_left\">17:55</td>\n<td class=\"gt_row gt_left\">2018-05-05 04:00</td>\n<td class=\"gt_row gt_right\">1325.810</td>\n<td class=\"gt_row gt_left\">row_5</td>\n<td class=\"gt_row gt_left\">grp_b</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\">fig</td>\n<td class=\"gt_row gt_right\">NA</td>\n<td class=\"gt_row gt_center\">six</td>\n<td class=\"gt_row gt_left\">2015-06-15</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_left\">2018-06-06 16:11</td>\n<td class=\"gt_row gt_right\">13.255</td>\n<td class=\"gt_row gt_left\">row_6</td>\n<td class=\"gt_row gt_left\">grp_b</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\">grapefruit</td>\n<td class=\"gt_row gt_right\">7.770e+05</td>\n<td class=\"gt_row gt_center\">seven</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_left\">19:10</td>\n<td class=\"gt_row gt_left\">2018-07-07 05:22</td>\n<td class=\"gt_row gt_right\">NA</td>\n<td class=\"gt_row gt_left\">row_7</td>\n<td class=\"gt_row gt_left\">grp_b</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\">honeydew</td>\n<td class=\"gt_row gt_right\">8.880e+06</td>\n<td class=\"gt_row gt_center\">eight</td>\n<td class=\"gt_row gt_left\">2015-08-15</td>\n<td class=\"gt_row gt_left\">20:20</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_right\">0.440</td>\n<td class=\"gt_row gt_left\">row_8</td>\n<td class=\"gt_row gt_left\">grp_b</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_first_grand_summary_row\">min</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row\">0.11</td>\n<td class=\"gt_row gt_center gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row\">0.44</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row\">max</td>\n<td class=\"gt_row gt_right gt_grand_summary_row\">8,880,000.00</td>\n<td class=\"gt_row gt_center gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row\">65,100.00</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_last_summary_row\">avg</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\">1,380,432.87</td>\n<td class=\"gt_row gt_center gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\">9,501.26</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td></tr>\n  </tbody>\n  \n  \n</table>"
 
 ---
 
@@ -1714,7 +1714,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 apricot}}\cell
       \pard\plain
       
@@ -1754,7 +1754,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 banana}}\cell
       \pard\plain
       
@@ -1794,7 +1794,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 coconut}}\cell
       \pard\plain
       
@@ -1834,7 +1834,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 durian}}\cell
       \pard\plain
       
@@ -1874,7 +1874,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 NA}}\cell
       \pard\plain
       
@@ -1914,7 +1914,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 fig}}\cell
       \pard\plain
       
@@ -1954,7 +1954,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 grapefruit}}\cell
       \pard\plain
       
@@ -1994,7 +1994,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 honeydew}}\cell
       \pard\plain
       
@@ -2034,7 +2034,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrdb\brdrw50\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrdb\brdrw50\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 min}}\cell
       \pard\plain
       
@@ -2074,7 +2074,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrs\brdrw10\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrs\brdrw10\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 max}}\cell
       \pard\plain
       
@@ -2114,7 +2114,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw50\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrs\brdrw10\brdrcf1\cellx1052
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw50\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrs\brdrw10\brdrcf1\cellx1052
       \intbl {\f0 {\f0\fs20 avg}}\cell
       \pard\plain
       
@@ -2159,7 +2159,7 @@
     Code
       .
     Output
-      [1] "<table class=\"gt_table\">\n  \n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\"></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\">num</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_center\" rowspan=\"1\" colspan=\"1\">fctr</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">date</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">time</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">datetime</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\">currency</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">rowname</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr class=\"gt_group_heading_row\">\n      <td colspan=\"8\" class=\"gt_group_heading\">grp_a</td>\n    </tr>\n    <tr><td class=\"gt_row gt_left gt_stub\">apricot</td>\n<td class=\"gt_row gt_right\">1.111e-01</td>\n<td class=\"gt_row gt_center\">one</td>\n<td class=\"gt_row gt_left\">2015-01-15</td>\n<td class=\"gt_row gt_left\">13:35</td>\n<td class=\"gt_row gt_left\">2018-01-01 02:22</td>\n<td class=\"gt_row gt_right\">49.950</td>\n<td class=\"gt_row gt_left\">row_1</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\">banana</td>\n<td class=\"gt_row gt_right\">2.222e+00</td>\n<td class=\"gt_row gt_center\">two</td>\n<td class=\"gt_row gt_left\">2015-02-15</td>\n<td class=\"gt_row gt_left\">14:40</td>\n<td class=\"gt_row gt_left\">2018-02-02 14:33</td>\n<td class=\"gt_row gt_right\">17.950</td>\n<td class=\"gt_row gt_left\">row_2</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\">coconut</td>\n<td class=\"gt_row gt_right\">3.333e+01</td>\n<td class=\"gt_row gt_center\">three</td>\n<td class=\"gt_row gt_left\">2015-03-15</td>\n<td class=\"gt_row gt_left\">15:45</td>\n<td class=\"gt_row gt_left\">2018-03-03 03:44</td>\n<td class=\"gt_row gt_right\">1.390</td>\n<td class=\"gt_row gt_left\">row_3</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\">durian</td>\n<td class=\"gt_row gt_right\">4.444e+02</td>\n<td class=\"gt_row gt_center\">four</td>\n<td class=\"gt_row gt_left\">2015-04-15</td>\n<td class=\"gt_row gt_left\">16:50</td>\n<td class=\"gt_row gt_left\">2018-04-04 15:55</td>\n<td class=\"gt_row gt_right\">65100.000</td>\n<td class=\"gt_row gt_left\">row_4</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_summary_row gt_first_summary_row gt_last_summary_row\">median</td>\n<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row gt_last_summary_row\">17.78</td>\n<td class=\"gt_row gt_center gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row gt_last_summary_row\">33.95</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td></tr>\n    <tr class=\"gt_group_heading_row\">\n      <td colspan=\"8\" class=\"gt_group_heading\">grp_b</td>\n    </tr>\n    <tr><td class=\"gt_row gt_left gt_stub\">NA</td>\n<td class=\"gt_row gt_right\">5.550e+03</td>\n<td class=\"gt_row gt_center\">five</td>\n<td class=\"gt_row gt_left\">2015-05-15</td>\n<td class=\"gt_row gt_left\">17:55</td>\n<td class=\"gt_row gt_left\">2018-05-05 04:00</td>\n<td class=\"gt_row gt_right\">1325.810</td>\n<td class=\"gt_row gt_left\">row_5</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\">fig</td>\n<td class=\"gt_row gt_right\">NA</td>\n<td class=\"gt_row gt_center\">six</td>\n<td class=\"gt_row gt_left\">2015-06-15</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_left\">2018-06-06 16:11</td>\n<td class=\"gt_row gt_right\">13.255</td>\n<td class=\"gt_row gt_left\">row_6</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\">grapefruit</td>\n<td class=\"gt_row gt_right\">7.770e+05</td>\n<td class=\"gt_row gt_center\">seven</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_left\">19:10</td>\n<td class=\"gt_row gt_left\">2018-07-07 05:22</td>\n<td class=\"gt_row gt_right\">NA</td>\n<td class=\"gt_row gt_left\">row_7</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\">honeydew</td>\n<td class=\"gt_row gt_right\">8.880e+06</td>\n<td class=\"gt_row gt_center\">eight</td>\n<td class=\"gt_row gt_left\">2015-08-15</td>\n<td class=\"gt_row gt_left\">20:20</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_right\">0.440</td>\n<td class=\"gt_row gt_left\">row_8</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_summary_row gt_first_summary_row gt_last_summary_row\">median</td>\n<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row gt_last_summary_row\">777,000.00</td>\n<td class=\"gt_row gt_center gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row gt_last_summary_row\">13.26</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_first_grand_summary_row\">min</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row\">0.11</td>\n<td class=\"gt_row gt_center gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row\">0.44</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row\">max</td>\n<td class=\"gt_row gt_right gt_grand_summary_row\">8,880,000.00</td>\n<td class=\"gt_row gt_center gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row\">65,100.00</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_last_summary_row\">avg</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\">1,380,432.87</td>\n<td class=\"gt_row gt_center gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\">9,501.26</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td></tr>\n  </tbody>\n  \n  \n</table>"
+      [1] "<table class=\"gt_table\">\n  \n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\"></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\">num</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_center\" rowspan=\"1\" colspan=\"1\">fctr</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">date</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">time</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">datetime</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\">currency</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">rowname</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr class=\"gt_group_heading_row\">\n      <td colspan=\"8\" class=\"gt_group_heading\">grp_a</td>\n    </tr>\n    <tr><td class=\"gt_row gt_right gt_stub\">apricot</td>\n<td class=\"gt_row gt_right\">1.111e-01</td>\n<td class=\"gt_row gt_center\">one</td>\n<td class=\"gt_row gt_left\">2015-01-15</td>\n<td class=\"gt_row gt_left\">13:35</td>\n<td class=\"gt_row gt_left\">2018-01-01 02:22</td>\n<td class=\"gt_row gt_right\">49.950</td>\n<td class=\"gt_row gt_left\">row_1</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\">banana</td>\n<td class=\"gt_row gt_right\">2.222e+00</td>\n<td class=\"gt_row gt_center\">two</td>\n<td class=\"gt_row gt_left\">2015-02-15</td>\n<td class=\"gt_row gt_left\">14:40</td>\n<td class=\"gt_row gt_left\">2018-02-02 14:33</td>\n<td class=\"gt_row gt_right\">17.950</td>\n<td class=\"gt_row gt_left\">row_2</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\">coconut</td>\n<td class=\"gt_row gt_right\">3.333e+01</td>\n<td class=\"gt_row gt_center\">three</td>\n<td class=\"gt_row gt_left\">2015-03-15</td>\n<td class=\"gt_row gt_left\">15:45</td>\n<td class=\"gt_row gt_left\">2018-03-03 03:44</td>\n<td class=\"gt_row gt_right\">1.390</td>\n<td class=\"gt_row gt_left\">row_3</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\">durian</td>\n<td class=\"gt_row gt_right\">4.444e+02</td>\n<td class=\"gt_row gt_center\">four</td>\n<td class=\"gt_row gt_left\">2015-04-15</td>\n<td class=\"gt_row gt_left\">16:50</td>\n<td class=\"gt_row gt_left\">2018-04-04 15:55</td>\n<td class=\"gt_row gt_right\">65100.000</td>\n<td class=\"gt_row gt_left\">row_4</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_summary_row gt_first_summary_row gt_last_summary_row\">median</td>\n<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row gt_last_summary_row\">17.78</td>\n<td class=\"gt_row gt_center gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row gt_last_summary_row\">33.95</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td></tr>\n    <tr class=\"gt_group_heading_row\">\n      <td colspan=\"8\" class=\"gt_group_heading\">grp_b</td>\n    </tr>\n    <tr><td class=\"gt_row gt_right gt_stub\">NA</td>\n<td class=\"gt_row gt_right\">5.550e+03</td>\n<td class=\"gt_row gt_center\">five</td>\n<td class=\"gt_row gt_left\">2015-05-15</td>\n<td class=\"gt_row gt_left\">17:55</td>\n<td class=\"gt_row gt_left\">2018-05-05 04:00</td>\n<td class=\"gt_row gt_right\">1325.810</td>\n<td class=\"gt_row gt_left\">row_5</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\">fig</td>\n<td class=\"gt_row gt_right\">NA</td>\n<td class=\"gt_row gt_center\">six</td>\n<td class=\"gt_row gt_left\">2015-06-15</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_left\">2018-06-06 16:11</td>\n<td class=\"gt_row gt_right\">13.255</td>\n<td class=\"gt_row gt_left\">row_6</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\">grapefruit</td>\n<td class=\"gt_row gt_right\">7.770e+05</td>\n<td class=\"gt_row gt_center\">seven</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_left\">19:10</td>\n<td class=\"gt_row gt_left\">2018-07-07 05:22</td>\n<td class=\"gt_row gt_right\">NA</td>\n<td class=\"gt_row gt_left\">row_7</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\">honeydew</td>\n<td class=\"gt_row gt_right\">8.880e+06</td>\n<td class=\"gt_row gt_center\">eight</td>\n<td class=\"gt_row gt_left\">2015-08-15</td>\n<td class=\"gt_row gt_left\">20:20</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_right\">0.440</td>\n<td class=\"gt_row gt_left\">row_8</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_summary_row gt_first_summary_row gt_last_summary_row\">median</td>\n<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row gt_last_summary_row\">777,000.00</td>\n<td class=\"gt_row gt_center gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row gt_last_summary_row\">13.26</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_first_grand_summary_row\">min</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row\">0.11</td>\n<td class=\"gt_row gt_center gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row\">0.44</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row\">max</td>\n<td class=\"gt_row gt_right gt_grand_summary_row\">8,880,000.00</td>\n<td class=\"gt_row gt_center gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row\">65,100.00</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_last_summary_row\">avg</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\">1,380,432.87</td>\n<td class=\"gt_row gt_center gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\">9,501.26</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td></tr>\n  </tbody>\n  \n  \n</table>"
 
 ---
 
@@ -2221,7 +2221,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
       \intbl {\f0 {\f0\fs20 apricot}}\cell
       \pard\plain
       
@@ -2257,7 +2257,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
       \intbl {\f0 {\f0\fs20 banana}}\cell
       \pard\plain
       
@@ -2293,7 +2293,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
       \intbl {\f0 {\f0\fs20 coconut}}\cell
       \pard\plain
       
@@ -2329,7 +2329,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
       \intbl {\f0 {\f0\fs20 durian}}\cell
       \pard\plain
       
@@ -2365,7 +2365,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrt\brdrdb\brdrw20\brdrcf1\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrt\brdrdb\brdrw20\brdrcf1\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
       \intbl {\f0 {\f0\fs20 median}}\cell
       \pard\plain
       
@@ -2409,7 +2409,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
       \intbl {\f0 {\f0\fs20 NA}}\cell
       \pard\plain
       
@@ -2445,7 +2445,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
       \intbl {\f0 {\f0\fs20 fig}}\cell
       \pard\plain
       
@@ -2481,7 +2481,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
       \intbl {\f0 {\f0\fs20 grapefruit}}\cell
       \pard\plain
       
@@ -2517,7 +2517,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
       \intbl {\f0 {\f0\fs20 honeydew}}\cell
       \pard\plain
       
@@ -2553,7 +2553,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrt\brdrdb\brdrw20\brdrcf1\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrt\brdrdb\brdrw20\brdrcf1\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
       \intbl {\f0 {\f0\fs20 median}}\cell
       \pard\plain
       
@@ -2589,7 +2589,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrdb\brdrw50\brdrcf1\cellx1184
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrdb\brdrw50\brdrcf1\cellx1184
       \intbl {\f0 {\f0\fs20 min}}\cell
       \pard\plain
       
@@ -2625,7 +2625,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrs\brdrw10\brdrcf1\cellx1184
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrs\brdrw10\brdrcf1\cellx1184
       \intbl {\f0 {\f0\fs20 max}}\cell
       \pard\plain
       
@@ -2661,7 +2661,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw50\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrs\brdrw10\brdrcf1\cellx1184
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw50\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrs\brdrw10\brdrcf1\cellx1184
       \intbl {\f0 {\f0\fs20 avg}}\cell
       \pard\plain
       
@@ -2702,7 +2702,7 @@
     Code
       .
     Output
-      [1] "<table class=\"gt_table\">\n  \n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\"></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\">num</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">char</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_center\" rowspan=\"1\" colspan=\"1\">fctr</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">date</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">time</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">datetime</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\">currency</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr class=\"gt_group_heading_row\">\n      <td colspan=\"8\" class=\"gt_group_heading\">grp_a</td>\n    </tr>\n    <tr><td class=\"gt_row gt_left gt_stub\">row_1</td>\n<td class=\"gt_row gt_right\">1.111e-01</td>\n<td class=\"gt_row gt_left\">apricot</td>\n<td class=\"gt_row gt_center\">one</td>\n<td class=\"gt_row gt_left\">2015-01-15</td>\n<td class=\"gt_row gt_left\">13:35</td>\n<td class=\"gt_row gt_left\">2018-01-01 02:22</td>\n<td class=\"gt_row gt_right\">49.950</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\">row_2</td>\n<td class=\"gt_row gt_right\">2.222e+00</td>\n<td class=\"gt_row gt_left\">banana</td>\n<td class=\"gt_row gt_center\">two</td>\n<td class=\"gt_row gt_left\">2015-02-15</td>\n<td class=\"gt_row gt_left\">14:40</td>\n<td class=\"gt_row gt_left\">2018-02-02 14:33</td>\n<td class=\"gt_row gt_right\">17.950</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\">row_3</td>\n<td class=\"gt_row gt_right\">3.333e+01</td>\n<td class=\"gt_row gt_left\">coconut</td>\n<td class=\"gt_row gt_center\">three</td>\n<td class=\"gt_row gt_left\">2015-03-15</td>\n<td class=\"gt_row gt_left\">15:45</td>\n<td class=\"gt_row gt_left\">2018-03-03 03:44</td>\n<td class=\"gt_row gt_right\">1.390</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\">row_4</td>\n<td class=\"gt_row gt_right\">4.444e+02</td>\n<td class=\"gt_row gt_left\">durian</td>\n<td class=\"gt_row gt_center\">four</td>\n<td class=\"gt_row gt_left\">2015-04-15</td>\n<td class=\"gt_row gt_left\">16:50</td>\n<td class=\"gt_row gt_left\">2018-04-04 15:55</td>\n<td class=\"gt_row gt_right\">65100.000</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_summary_row gt_first_summary_row gt_last_summary_row\">median</td>\n<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row gt_last_summary_row\">17.78</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_center gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row gt_last_summary_row\">33.95</td></tr>\n    <tr class=\"gt_group_heading_row\">\n      <td colspan=\"8\" class=\"gt_group_heading\">grp_b</td>\n    </tr>\n    <tr><td class=\"gt_row gt_left gt_stub\">row_5</td>\n<td class=\"gt_row gt_right\">5.550e+03</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_center\">five</td>\n<td class=\"gt_row gt_left\">2015-05-15</td>\n<td class=\"gt_row gt_left\">17:55</td>\n<td class=\"gt_row gt_left\">2018-05-05 04:00</td>\n<td class=\"gt_row gt_right\">1325.810</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\">row_6</td>\n<td class=\"gt_row gt_right\">NA</td>\n<td class=\"gt_row gt_left\">fig</td>\n<td class=\"gt_row gt_center\">six</td>\n<td class=\"gt_row gt_left\">2015-06-15</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_left\">2018-06-06 16:11</td>\n<td class=\"gt_row gt_right\">13.255</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\">row_7</td>\n<td class=\"gt_row gt_right\">7.770e+05</td>\n<td class=\"gt_row gt_left\">grapefruit</td>\n<td class=\"gt_row gt_center\">seven</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_left\">19:10</td>\n<td class=\"gt_row gt_left\">2018-07-07 05:22</td>\n<td class=\"gt_row gt_right\">NA</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub\">row_8</td>\n<td class=\"gt_row gt_right\">8.880e+06</td>\n<td class=\"gt_row gt_left\">honeydew</td>\n<td class=\"gt_row gt_center\">eight</td>\n<td class=\"gt_row gt_left\">2015-08-15</td>\n<td class=\"gt_row gt_left\">20:20</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_right\">0.440</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_summary_row gt_first_summary_row gt_last_summary_row\">median</td>\n<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row gt_last_summary_row\">777,000.00</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_center gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row gt_last_summary_row\">13.26</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_first_grand_summary_row\">min</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row\">0.11</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_center gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row\">0.44</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row\">max</td>\n<td class=\"gt_row gt_right gt_grand_summary_row\">8,880,000.00</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_center gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row\">65,100.00</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_last_summary_row\">avg</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\">1,380,432.87</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_center gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\">9,501.26</td></tr>\n  </tbody>\n  \n  \n</table>"
+      [1] "<table class=\"gt_table\">\n  \n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\"></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\">num</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">char</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_center\" rowspan=\"1\" colspan=\"1\">fctr</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">date</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">time</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">datetime</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\">currency</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr class=\"gt_group_heading_row\">\n      <td colspan=\"8\" class=\"gt_group_heading\">grp_a</td>\n    </tr>\n    <tr><td class=\"gt_row gt_right gt_stub\">row_1</td>\n<td class=\"gt_row gt_right\">1.111e-01</td>\n<td class=\"gt_row gt_left\">apricot</td>\n<td class=\"gt_row gt_center\">one</td>\n<td class=\"gt_row gt_left\">2015-01-15</td>\n<td class=\"gt_row gt_left\">13:35</td>\n<td class=\"gt_row gt_left\">2018-01-01 02:22</td>\n<td class=\"gt_row gt_right\">49.950</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\">row_2</td>\n<td class=\"gt_row gt_right\">2.222e+00</td>\n<td class=\"gt_row gt_left\">banana</td>\n<td class=\"gt_row gt_center\">two</td>\n<td class=\"gt_row gt_left\">2015-02-15</td>\n<td class=\"gt_row gt_left\">14:40</td>\n<td class=\"gt_row gt_left\">2018-02-02 14:33</td>\n<td class=\"gt_row gt_right\">17.950</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\">row_3</td>\n<td class=\"gt_row gt_right\">3.333e+01</td>\n<td class=\"gt_row gt_left\">coconut</td>\n<td class=\"gt_row gt_center\">three</td>\n<td class=\"gt_row gt_left\">2015-03-15</td>\n<td class=\"gt_row gt_left\">15:45</td>\n<td class=\"gt_row gt_left\">2018-03-03 03:44</td>\n<td class=\"gt_row gt_right\">1.390</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\">row_4</td>\n<td class=\"gt_row gt_right\">4.444e+02</td>\n<td class=\"gt_row gt_left\">durian</td>\n<td class=\"gt_row gt_center\">four</td>\n<td class=\"gt_row gt_left\">2015-04-15</td>\n<td class=\"gt_row gt_left\">16:50</td>\n<td class=\"gt_row gt_left\">2018-04-04 15:55</td>\n<td class=\"gt_row gt_right\">65100.000</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_summary_row gt_first_summary_row gt_last_summary_row\">median</td>\n<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row gt_last_summary_row\">17.78</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_center gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row gt_last_summary_row\">33.95</td></tr>\n    <tr class=\"gt_group_heading_row\">\n      <td colspan=\"8\" class=\"gt_group_heading\">grp_b</td>\n    </tr>\n    <tr><td class=\"gt_row gt_right gt_stub\">row_5</td>\n<td class=\"gt_row gt_right\">5.550e+03</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_center\">five</td>\n<td class=\"gt_row gt_left\">2015-05-15</td>\n<td class=\"gt_row gt_left\">17:55</td>\n<td class=\"gt_row gt_left\">2018-05-05 04:00</td>\n<td class=\"gt_row gt_right\">1325.810</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\">row_6</td>\n<td class=\"gt_row gt_right\">NA</td>\n<td class=\"gt_row gt_left\">fig</td>\n<td class=\"gt_row gt_center\">six</td>\n<td class=\"gt_row gt_left\">2015-06-15</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_left\">2018-06-06 16:11</td>\n<td class=\"gt_row gt_right\">13.255</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\">row_7</td>\n<td class=\"gt_row gt_right\">7.770e+05</td>\n<td class=\"gt_row gt_left\">grapefruit</td>\n<td class=\"gt_row gt_center\">seven</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_left\">19:10</td>\n<td class=\"gt_row gt_left\">2018-07-07 05:22</td>\n<td class=\"gt_row gt_right\">NA</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub\">row_8</td>\n<td class=\"gt_row gt_right\">8.880e+06</td>\n<td class=\"gt_row gt_left\">honeydew</td>\n<td class=\"gt_row gt_center\">eight</td>\n<td class=\"gt_row gt_left\">2015-08-15</td>\n<td class=\"gt_row gt_left\">20:20</td>\n<td class=\"gt_row gt_left\">NA</td>\n<td class=\"gt_row gt_right\">0.440</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_summary_row gt_first_summary_row gt_last_summary_row\">median</td>\n<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row gt_last_summary_row\">777,000.00</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_center gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row gt_last_summary_row\">13.26</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_first_grand_summary_row\">min</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row\">0.11</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_center gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row\">0.44</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row\">max</td>\n<td class=\"gt_row gt_right gt_grand_summary_row\">8,880,000.00</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_center gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row\">65,100.00</td></tr>\n    <tr><td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_last_summary_row\">avg</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\">1,380,432.87</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_center gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\">&mdash;</td>\n<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\">9,501.26</td></tr>\n  </tbody>\n  \n  \n</table>"
 
 ---
 
@@ -2764,7 +2764,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
       \intbl {\f0 {\f0\fs20 row_1}}\cell
       \pard\plain
       
@@ -2800,7 +2800,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
       \intbl {\f0 {\f0\fs20 row_2}}\cell
       \pard\plain
       
@@ -2836,7 +2836,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
       \intbl {\f0 {\f0\fs20 row_3}}\cell
       \pard\plain
       
@@ -2872,7 +2872,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
       \intbl {\f0 {\f0\fs20 row_4}}\cell
       \pard\plain
       
@@ -2908,7 +2908,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrt\brdrdb\brdrw20\brdrcf1\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrt\brdrdb\brdrw20\brdrcf1\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
       \intbl {\f0 {\f0\fs20 median}}\cell
       \pard\plain
       
@@ -2952,7 +2952,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
       \intbl {\f0 {\f0\fs20 row_5}}\cell
       \pard\plain
       
@@ -2988,7 +2988,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
       \intbl {\f0 {\f0\fs20 row_6}}\cell
       \pard\plain
       
@@ -3024,7 +3024,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
       \intbl {\f0 {\f0\fs20 row_7}}\cell
       \pard\plain
       
@@ -3060,7 +3060,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
       \intbl {\f0 {\f0\fs20 row_8}}\cell
       \pard\plain
       
@@ -3096,7 +3096,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrt\brdrdb\brdrw20\brdrcf1\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrt\brdrdb\brdrw20\brdrcf1\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\cellx1184
       \intbl {\f0 {\f0\fs20 median}}\cell
       \pard\plain
       
@@ -3132,7 +3132,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrdb\brdrw50\brdrcf1\cellx1184
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrdb\brdrw50\brdrcf1\cellx1184
       \intbl {\f0 {\f0\fs20 min}}\cell
       \pard\plain
       
@@ -3168,7 +3168,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrs\brdrw10\brdrcf1\cellx1184
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrs\brdrw10\brdrcf1\cellx1184
       \intbl {\f0 {\f0\fs20 max}}\cell
       \pard\plain
       
@@ -3204,7 +3204,7 @@
       
       \trowd\trrh0
       
-      \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw50\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrs\brdrw10\brdrcf1\cellx1184
+      \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw50\brdrcf1\clbrdrl\brdrs\brdrw10\brdrcf1\clbrdrr\brdrs\brdrw10\brdrcf1\clbrdrt\brdrs\brdrw10\brdrcf1\cellx1184
       \intbl {\f0 {\f0\fs20 avg}}\cell
       \pard\plain
       

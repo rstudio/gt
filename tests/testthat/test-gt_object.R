@@ -705,7 +705,7 @@ test_that("Escapable characters in rownames are handled correctly in each output
   expect_match( # stub from data frame's row names
     gt(tbl, rownames_to_stub = TRUE) %>%
       render_as_html(),
-    "<tr><td class=\"gt_row gt_left gt_stub\">&lt;em&gt;row_html&lt;/em&gt;</td>",
+    "<tr><td class=\"gt_row gt_right gt_stub\">&lt;em&gt;row_html&lt;/em&gt;</td>",
     fixed = TRUE
   )
   expect_match( # `column_1`
@@ -725,7 +725,7 @@ test_that("Escapable characters in rownames are handled correctly in each output
   expect_match( # stub from `column_1`
     gt(dplyr::as_tibble(tbl), rowname_col = "column_1") %>%
       render_as_html(),
-    "<tr><td class=\"gt_row gt_left gt_stub\">&lt;em&gt;html&lt;/em&gt;</td>",
+    "<tr><td class=\"gt_row gt_right gt_stub\">&lt;em&gt;html&lt;/em&gt;</td>",
     fixed = TRUE
   )
   expect_match( # `column_2`
