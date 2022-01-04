@@ -152,7 +152,7 @@ dt_options_tbl <-
     "stub_row_group_font_weight",         TRUE,  "stub",             "value",   "initial",
     "stub_row_group_text_transform",      TRUE,  "stub",             "value",   "inherit",
     "stub_row_group_border_style",        TRUE,  "stub",             "value",   "solid",
-    "stub_row_group_border_width",        TRUE,  "stub",             "px",      "1px",
+    "stub_row_group_border_width",        TRUE,  "stub",             "px",      "2px",
     "stub_row_group_border_color",        TRUE,  "stub",             "value",   "#D3D3D3",
     "summary_row_padding",                TRUE,  "summary_row",      "px",      "8px",
     "summary_row_background_color",       TRUE,  "summary_row",      "value",   NA_character_,
