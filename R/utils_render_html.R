@@ -711,8 +711,6 @@ create_body_component_h <- function(data) {
 
   extra_classes_1 <- rep_len(list(NULL), n_cols_total)
 
-  # TODO: Ensure that only the table body is striped here
-  # FIXME: Is it possible the group label ends up striped?
   extra_classes_2 <-
     rep_len(list(if (table_body_striped) "gt_striped" else NULL), n_cols_total)
 
