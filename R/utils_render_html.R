@@ -840,16 +840,28 @@ create_body_component_h <- function(data) {
                       if (is.null(row_span)) {
                         ""
                       } else {
-                        paste0("rowspan=\"", row_span, "\" ")
+                        paste0(
+                          "rowspan=\"",
+                          htmltools::htmlEscape(row_span, attribute = TRUE),
+                          "\" "
+                        )
                       },
                       paste(
-                        c("gt_row", alignment_class, extra_class),
+                        c(
+                          "gt_row",
+                          htmltools::htmlEscape(alignment_class, attribute = TRUE),
+                          htmltools::htmlEscape(extra_class, attribute = TRUE)
+                        ),
                         collapse = " "
                       ),
                       if (!any(nzchar(cell_style))) {
                         ""
                       } else {
-                        paste0(" style=\"", cell_style, "\"")
+                        paste0(
+                          " style=\"",
+                          htmltools::htmlEscape(cell_style, attribute = TRUE),
+                          "\""
+                        )
                       },
                       as.character(x)
                     )
@@ -1207,16 +1219,26 @@ summary_row_tags_i <- function(data,
                   if (is.null(col_span)) {
                     ""
                   } else {
-                    paste0("colspan=\"", col_span, "\" ")
+                    paste0(
+                      "colspan=\"",
+                      htmltools::htmlEscape(col_span, attribute = TRUE),
+                      "\" ")
                   },
-                  paste(
-                    c("gt_row", alignment_class, extra_class),
-                    collapse = " "
+                  htmltools::htmlEscape(
+                    paste(
+                      c("gt_row", alignment_class, extra_class),
+                      collapse = " "
+                    ),
+                    attribute = TRUE
                   ),
                   if (!any(nzchar(cell_style))) {
                     ""
                   } else {
-                    paste0(" style=\"", cell_style, "\"")
+                    paste0(
+                      " style=\"",
+                      htmltools::htmlEscape(cell_style, attribute = TRUE),
+                      "\""
+                    )
                   },
                   as.character(x)
                 )
