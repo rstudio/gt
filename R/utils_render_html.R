@@ -1063,10 +1063,18 @@ get_body_component_cell_matrix <- function(data) {
 
   if ("group_label" %in% stub_layout) {
 
+    groups_rows_df <-
+      dt_groups_rows_get(data = data) %>%
+      dplyr::select(group_id, group_label, row_start)
+
     group_label_matrix <-
       body[, dt_boxhead_get_vars_groups(data = data)] %>%
       dplyr::rename(group_label = 1) %>%
-      dplyr::inner_join(data$`_groups_rows`, by = "group_label") %>%
+      dplyr::inner_join(groups_rows_df, by = "group_label") %>%
+      dplyr::mutate(
+        row = dplyr::row_number(),
+        group_label = dplyr::if_else(row_start != row, "", group_label)
+      ) %>%
       dplyr::select(group_label) %>%
       as.matrix %>%
       unname()
