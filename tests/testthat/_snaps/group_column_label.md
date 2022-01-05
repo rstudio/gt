@@ -1303,7 +1303,7 @@
     Code
       .
     Output
-      [1] "\\captionsetup[table]{labelformat=empty,skip=1pt}\n\\begin{longtable}{rrlclllrl}\n\\caption*{\n{\\large Data listing from \\textbf{exibble}} \\\\ \n{\\small \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  &  & \\multicolumn{3}{c}{timing} &  &  \\\\ \n\\cmidrule(lr){5-7}\nS.L. & num & char & fctr & date & time & datetime & currency & row \\\\ \n\\midrule\ngrp\\_a & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & row\\_1 \\\\ \ngrp\\_a & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & row\\_2 \\\\ \ngrp\\_a & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & row\\_3 \\\\ \ngrp\\_a & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & row\\_4 \\\\ \ngrp\\_b & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & row\\_5 \\\\ \ngrp\\_b & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & row\\_6 \\\\ \ngrp\\_b & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & row\\_7 \\\\ \ngrp\\_b & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & row\\_8 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\ \n\\end{minipage}\n"
+      [1] "\\captionsetup[table]{labelformat=empty,skip=1pt}\n\\begin{longtable}{rrlclllrl}\n\\caption*{\n{\\large Data listing from \\textbf{exibble}} \\\\ \n{\\small \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  &  & \\multicolumn{3}{c}{timing} &  &  \\\\ \n\\cmidrule(lr){5-7}\nS.L. & num & char & fctr & date & time & datetime & currency & row \\\\ \n\\midrule\ngrp\\_a & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & row\\_1 \\\\ \n & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & row\\_2 \\\\ \n & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & row\\_3 \\\\ \n & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & row\\_4 \\\\ \ngrp\\_b & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & row\\_5 \\\\ \n & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & row\\_6 \\\\ \n & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & row\\_7 \\\\ \n & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & row\\_8 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\ \n\\end{minipage}\n"
 
 ---
 
@@ -1443,7 +1443,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx1052
-      \intbl {\f0 {\f0\fs20 grp_a}}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx2104
@@ -1483,7 +1483,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx1052
-      \intbl {\f0 {\f0\fs20 grp_a}}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx2104
@@ -1523,7 +1523,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx1052
-      \intbl {\f0 {\f0\fs20 grp_a}}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx2104
@@ -1603,7 +1603,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx1052
-      \intbl {\f0 {\f0\fs20 grp_b}}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx2104
@@ -1643,7 +1643,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx1052
-      \intbl {\f0 {\f0\fs20 grp_b}}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx2104
@@ -1683,7 +1683,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx1052
-      \intbl {\f0 {\f0\fs20 grp_b}}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx2104
@@ -3035,7 +3035,7 @@
     Code
       .
     Output
-      [1] "\\captionsetup[table]{labelformat=empty,skip=1pt}\n\\begin{longtable}{rrrlclllr}\n\\caption*{\n{\\large Data listing from \\textbf{exibble}} \\\\ \n{\\small \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  &  &  & \\multicolumn{3}{c}{timing} &  \\\\ \n\\cmidrule(lr){6-8}\n\\multicolumn{2}{l}{S.L.} & num & char & fctr & date & time & datetime & currency \\\\ \n\\midrule\ngrp\\_a & row\\_1 & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 \\\\ \ngrp\\_a & row\\_2 & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 \\\\ \ngrp\\_a & row\\_3 & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 \\\\ \ngrp\\_a & row\\_4 & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 \\\\ \ngrp\\_b & row\\_5 & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 \\\\ \ngrp\\_b & row\\_6 & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 \\\\ \ngrp\\_b & row\\_7 & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA \\\\ \ngrp\\_b & row\\_8 & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\ \n\\end{minipage}\n"
+      [1] "\\captionsetup[table]{labelformat=empty,skip=1pt}\n\\begin{longtable}{rrrlclllr}\n\\caption*{\n{\\large Data listing from \\textbf{exibble}} \\\\ \n{\\small \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  &  &  & \\multicolumn{3}{c}{timing} &  \\\\ \n\\cmidrule(lr){6-8}\n\\multicolumn{2}{l}{S.L.} & num & char & fctr & date & time & datetime & currency \\\\ \n\\midrule\ngrp\\_a & row\\_1 & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 \\\\ \n & row\\_2 & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 \\\\ \n & row\\_3 & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 \\\\ \n & row\\_4 & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 \\\\ \ngrp\\_b & row\\_5 & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 \\\\ \n & row\\_6 & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 \\\\ \n & row\\_7 & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA \\\\ \n & row\\_8 & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\ \n\\end{minipage}\n"
 
 ---
 
@@ -3175,7 +3175,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx1052
-      \intbl {\f0 {\f0\fs20 grp_a}}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx2104
@@ -3215,7 +3215,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx1052
-      \intbl {\f0 {\f0\fs20 grp_a}}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx2104
@@ -3255,7 +3255,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx1052
-      \intbl {\f0 {\f0\fs20 grp_a}}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx2104
@@ -3335,7 +3335,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx1052
-      \intbl {\f0 {\f0\fs20 grp_b}}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx2104
@@ -3375,7 +3375,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx1052
-      \intbl {\f0 {\f0\fs20 grp_b}}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx2104
@@ -3415,7 +3415,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx1052
-      \intbl {\f0 {\f0\fs20 grp_b}}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx2104
@@ -5511,7 +5511,7 @@
     Code
       .
     Output
-      [1] "\\captionsetup[table]{labelformat=empty,skip=1pt}\n\\begin{longtable}{rrlclllrl}\n\\caption*{\n{\\large Data listing from \\textbf{exibble}} \\\\ \n{\\small \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  &  & \\multicolumn{3}{c}{timing} &  &  \\\\ \n\\cmidrule(lr){5-7}\nS.L. & num & char & fctr & date & time & datetime & currency & row \\\\ \n\\midrule\ngrp\\_a & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & row\\_1 \\\\ \ngrp\\_a & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & row\\_2 \\\\ \ngrp\\_a & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & row\\_3 \\\\ \ngrp\\_a & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & row\\_4 \\\\ \n\\midrule \nmin & $0.11$ & — & — & — & — & — & $1.39$ & — \\\\ \nmax & $444.40$ & — & — & — & — & — & $65100.00$ & — \\\\ \navg & $120.02$ & — & — & — & — & — & $16292.32$ & — \\\\ \n\\midrule \ngrp\\_b & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & row\\_5 \\\\ \ngrp\\_b & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & row\\_6 \\\\ \ngrp\\_b & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & row\\_7 \\\\ \ngrp\\_b & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & row\\_8 \\\\ \n\\midrule \nmin & $5550.00$ & — & — & — & — & — & $0.44$ & — \\\\ \nmax & $8880000.00$ & — & — & — & — & — & $1325.81$ & — \\\\ \navg & $3220850.00$ & — & — & — & — & — & $446.50$ & — \\\\ \n\\midrule \n\\midrule \nmin & $0.11$ & — & — & — & — & — & $0.44$ & — \\\\ \nmax & $8880000.00$ & — & — & — & — & — & $65100.00$ & — \\\\ \navg & $1380432.87$ & — & — & — & — & — & $9501.26$ & — \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\ \n\\end{minipage}\n"
+      [1] "\\captionsetup[table]{labelformat=empty,skip=1pt}\n\\begin{longtable}{rrlclllrl}\n\\caption*{\n{\\large Data listing from \\textbf{exibble}} \\\\ \n{\\small \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  &  & \\multicolumn{3}{c}{timing} &  &  \\\\ \n\\cmidrule(lr){5-7}\nS.L. & num & char & fctr & date & time & datetime & currency & row \\\\ \n\\midrule\ngrp\\_a & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & row\\_1 \\\\ \n & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & row\\_2 \\\\ \n & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & row\\_3 \\\\ \n & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & row\\_4 \\\\ \n\\midrule \nmin & $0.11$ & — & — & — & — & — & $1.39$ & — \\\\ \nmax & $444.40$ & — & — & — & — & — & $65100.00$ & — \\\\ \navg & $120.02$ & — & — & — & — & — & $16292.32$ & — \\\\ \n\\midrule \ngrp\\_b & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & row\\_5 \\\\ \n & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & row\\_6 \\\\ \n & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & row\\_7 \\\\ \n & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & row\\_8 \\\\ \n\\midrule \nmin & $5550.00$ & — & — & — & — & — & $0.44$ & — \\\\ \nmax & $8880000.00$ & — & — & — & — & — & $1325.81$ & — \\\\ \navg & $3220850.00$ & — & — & — & — & — & $446.50$ & — \\\\ \n\\midrule \n\\midrule \nmin & $0.11$ & — & — & — & — & — & $0.44$ & — \\\\ \nmax & $8880000.00$ & — & — & — & — & — & $65100.00$ & — \\\\ \navg & $1380432.87$ & — & — & — & — & — & $9501.26$ & — \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\ \n\\end{minipage}\n"
 
 ---
 
@@ -5651,7 +5651,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx1052
-      \intbl {\f0 {\f0\fs20 grp_a}}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx2104
@@ -5691,7 +5691,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx1052
-      \intbl {\f0 {\f0\fs20 grp_a}}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx2104
@@ -5731,7 +5731,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx1052
-      \intbl {\f0 {\f0\fs20 grp_a}}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx2104
@@ -5931,7 +5931,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx1052
-      \intbl {\f0 {\f0\fs20 grp_b}}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx2104
@@ -5971,7 +5971,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx1052
-      \intbl {\f0 {\f0\fs20 grp_b}}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx2104
@@ -6011,7 +6011,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx1052
-      \intbl {\f0 {\f0\fs20 grp_b}}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx2104
@@ -8167,7 +8167,7 @@
     Code
       .
     Output
-      [1] "\\captionsetup[table]{labelformat=empty,skip=1pt}\n\\begin{longtable}{rrrlclllr}\n\\caption*{\n{\\large Data listing from \\textbf{exibble}} \\\\ \n{\\small \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  &  &  & \\multicolumn{3}{c}{timing} &  \\\\ \n\\cmidrule(lr){6-8}\n\\multicolumn{2}{l}{S.L.} & num & char & fctr & date & time & datetime & currency \\\\ \n\\midrule\ngrp\\_a & row\\_1 & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 \\\\ \ngrp\\_a & row\\_2 & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 \\\\ \ngrp\\_a & row\\_3 & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 \\\\ \ngrp\\_a & row\\_4 & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 \\\\ \n\\midrule \n\\multicolumn{2}{r}{min} & $0.11$ & — & — & — & — & — & $1.39$ \\\\ \n\\multicolumn{2}{r}{max} & $444.40$ & — & — & — & — & — & $65100.00$ \\\\ \n\\multicolumn{2}{r}{avg} & $120.02$ & — & — & — & — & — & $16292.32$ \\\\ \n\\midrule \ngrp\\_b & row\\_5 & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 \\\\ \ngrp\\_b & row\\_6 & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 \\\\ \ngrp\\_b & row\\_7 & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA \\\\ \ngrp\\_b & row\\_8 & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 \\\\ \n\\midrule \n\\multicolumn{2}{r}{min} & $5550.00$ & — & — & — & — & — & $0.44$ \\\\ \n\\multicolumn{2}{r}{max} & $8880000.00$ & — & — & — & — & — & $1325.81$ \\\\ \n\\multicolumn{2}{r}{avg} & $3220850.00$ & — & — & — & — & — & $446.50$ \\\\ \n\\midrule \n\\midrule \n\\multicolumn{2}{r}{min} & $0.11$ & — & — & — & — & — & $0.44$ \\\\ \n\\multicolumn{2}{r}{max} & $8880000.00$ & — & — & — & — & — & $65100.00$ \\\\ \n\\multicolumn{2}{r}{avg} & $1380432.87$ & — & — & — & — & — & $9501.26$ \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\ \n\\end{minipage}\n"
+      [1] "\\captionsetup[table]{labelformat=empty,skip=1pt}\n\\begin{longtable}{rrrlclllr}\n\\caption*{\n{\\large Data listing from \\textbf{exibble}} \\\\ \n{\\small \\texttt{exibble} is an R dataset}\n} \\\\ \n\\toprule\n &  &  &  &  & \\multicolumn{3}{c}{timing} &  \\\\ \n\\cmidrule(lr){6-8}\n\\multicolumn{2}{l}{S.L.} & num & char & fctr & date & time & datetime & currency \\\\ \n\\midrule\ngrp\\_a & row\\_1 & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 \\\\ \n & row\\_2 & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 \\\\ \n & row\\_3 & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 \\\\ \n & row\\_4 & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 \\\\ \n\\midrule \n\\multicolumn{2}{r}{min} & $0.11$ & — & — & — & — & — & $1.39$ \\\\ \n\\multicolumn{2}{r}{max} & $444.40$ & — & — & — & — & — & $65100.00$ \\\\ \n\\multicolumn{2}{r}{avg} & $120.02$ & — & — & — & — & — & $16292.32$ \\\\ \n\\midrule \ngrp\\_b & row\\_5 & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 \\\\ \n & row\\_6 & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 \\\\ \n & row\\_7 & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA \\\\ \n & row\\_8 & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 \\\\ \n\\midrule \n\\multicolumn{2}{r}{min} & $5550.00$ & — & — & — & — & — & $0.44$ \\\\ \n\\multicolumn{2}{r}{max} & $8880000.00$ & — & — & — & — & — & $1325.81$ \\\\ \n\\multicolumn{2}{r}{avg} & $3220850.00$ & — & — & — & — & — & $446.50$ \\\\ \n\\midrule \n\\midrule \n\\multicolumn{2}{r}{min} & $0.11$ & — & — & — & — & — & $0.44$ \\\\ \n\\multicolumn{2}{r}{max} & $8880000.00$ & — & — & — & — & — & $65100.00$ \\\\ \n\\multicolumn{2}{r}{avg} & $1380432.87$ & — & — & — & — & — & $9501.26$ \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nSource note \\#1\\\\ \n\\end{minipage}\n"
 
 ---
 
@@ -8307,7 +8307,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx1052
-      \intbl {\f0 {\f0\fs20 grp_a}}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx2104
@@ -8347,7 +8347,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx1052
-      \intbl {\f0 {\f0\fs20 grp_a}}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx2104
@@ -8387,7 +8387,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx1052
-      \intbl {\f0 {\f0\fs20 grp_a}}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx2104
@@ -8587,7 +8587,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx1052
-      \intbl {\f0 {\f0\fs20 grp_b}}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx2104
@@ -8627,7 +8627,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx1052
-      \intbl {\f0 {\f0\fs20 grp_b}}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx2104
@@ -8667,7 +8667,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx1052
-      \intbl {\f0 {\f0\fs20 grp_b}}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
       \pard\plain\uc0\qr\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrb\brdrs\brdrw10\brdrcf3\clbrdrl\brdrs\brdrw10\brdrcf3\clbrdrr\brdrs\brdrw10\brdrcf3\cellx2104
