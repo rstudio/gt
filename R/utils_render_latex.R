@@ -244,19 +244,10 @@ create_body_component_l <- function(data) {
   # column names for the table
   default_vars <- dt_boxhead_get_vars_default(data = data)
 
-  # Split `body_content` by slices of rows in cases where there is
-  # and isn't a stub present
-  if (length(stub_layout) > 0) {
-
-    cell_matrix <- get_body_component_cell_matrix(data = data)
-    row_splits_body <- split_row_content(cell_matrix)
-
-  } else {
-
-    row_splits_body <- split_row_content(body[, default_vars])
-  }
-
-  # Create a vector body rows
+  # Get a matrix of body cells to render, split into a list of
+  # character vectors by row, and create a vector of LaTeX body rows
+  cell_matrix <- get_body_component_cell_matrix(data = data)
+  row_splits_body <- split_row_content(cell_matrix)
   body_rows <- create_body_rows_l(row_splits_body = row_splits_body)
 
   # Replace an NA group with an empty string
