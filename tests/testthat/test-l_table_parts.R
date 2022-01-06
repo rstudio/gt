@@ -85,7 +85,7 @@ test_that("a gt table contains the expected stubhead label", {
   # Expect a characteristic pattern
   grepl(
     paste0(
-      ".*the mtcars & mpg & cyl & disp & hp & drat & wt & qsec & vs & am & gear & carb",
+      ".*multicolumn\\{1\\}\\{l\\}\\{the mtcars\\} & mpg & cyl & disp & hp & drat & wt & qsec & vs & am & gear & carb",
       ".*"),
     tbl_latex %>% as_latex() %>% as.character()
   ) %>%
