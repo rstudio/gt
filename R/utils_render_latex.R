@@ -60,14 +60,14 @@ create_table_start_l <- function(data) {
   # Get default alignments for body columns
   col_alignment <- dt_boxhead_get_vars_align_default(data = data)
 
-  # Prepend default right alignments for stub columns
-  if (length(stub_layout) > 0) {
-    col_alignment <- c(rep("right", length(stub_layout)), col_alignment)
-  }
-
+  # Generate setup statements for table including default right
+  # alignments and vertical lines for any stub columns
   paste0(
     "\\captionsetup[table]{labelformat=empty,skip=1pt}\n",
     "\\begin{longtable}{",
+    if (length(stub_layout) > 0) {
+      paste0(rep("r|", length(stub_layout)), collapse = "")
+    },
     col_alignment %>% substr(1, 1) %>% paste(collapse = ""),
     "}\n",
     collapse = ""
@@ -168,7 +168,7 @@ create_columns_component_l <- function(data) {
 
     stub_label <- ifelse(length(stubh$label) > 0, stubh$label, "")
 
-    if (length(stub_layout) > 1) {
+    if (length(stub_layout) > 0) {
 
       stub_label <-
         paste0("\\multicolumn{", length(stub_layout), "}{l}{", stub_label, "}")
@@ -215,10 +215,24 @@ create_columns_component_l <- function(data) {
         )
       )
 
+    # If there is a stub we need to tweak the spanners row with a blank
+    # multicolumn statement that's the same width as that in the columns
+    # row; this is to prevent the automatic vertical line that would otherwise
+    # appear here
+    if (length(stub_layout) > 0) {
+
+      multicol <-
+        c(
+          paste0("\\multicolumn{", length(stub_layout), "}{l}{}"),
+          multicol[-seq_along(stub_layout)]
+        )
+    }
+
     multicol <- paste0(paste(multicol, collapse = " & "), " \\\\ \n")
     cmidrule <- paste0(paste(cmidrule, collapse = " "), "\n")
 
     table_col_spanners <- paste0(multicol, cmidrule, collapse = "")
+
 
   } else {
     table_col_spanners <- ""
@@ -271,6 +285,12 @@ create_body_component_l <- function(data) {
       n_rows = n_rows
     )
 
+  group_dividers <-
+    create_group_dividers_l(
+      groups_rows_df = groups_rows_df,
+      n_rows = n_rows
+    )
+
   summary_rows <-
     create_summary_rows_l(
       data = data,
@@ -283,9 +303,10 @@ create_body_component_l <- function(data) {
   paste0(
     paste0(
       if (!dt_options_get_value(data = data, option = "row_group_as_column")) {
+
         paste0(group_rows, body_rows, summary_rows)
       } else {
-        paste0(body_rows, summary_rows)
+        paste0(group_dividers, body_rows, summary_rows)
       },
       collapse = ""
     ),
@@ -395,6 +416,20 @@ create_group_rows_l <- function(groups_rows_df,
   )
 }
 
+create_group_dividers_l <- function(groups_rows_df,
+                                    n_rows) {
+
+  unlist(
+    lapply(
+      seq_len(n_rows),
+      FUN = function(x) {
+        x <- x - 1
+        if (!(x %in% groups_rows_df$row_end)) "" else "\\midrule\n"
+      }
+    )
+  )
+}
+
 # Function to build a vector of `body` rows
 create_body_rows_l <- function(row_splits_body) {
 
@@ -466,7 +501,8 @@ create_summary_rows_l <- function(data,
               lapply(
                 row_splits_summary,
                 function(x) {
-                  x[[1]] <- paste0("\\multicolumn{", stub_width, "}{r}{", x[1], "}")
+                  x[[1]] <-
+                    paste0("\\multicolumn{", stub_width, "}{r|}{", x[1], "}")
                   x
                 }
               )
@@ -483,7 +519,7 @@ create_summary_rows_l <- function(data,
               collapse = ""
             )
 
-          paste0(summary_h_border, summary_rows, summary_h_border)
+          paste0(summary_h_border, summary_rows)
         }
       )
     )
@@ -522,7 +558,7 @@ create_grand_summary_rows_l <- function(data) {
       lapply(
         row_splits_summary,
         function(x) {
-          x[[1]] <- paste0("\\multicolumn{", stub_width, "}{r}{", x[1], "}")
+          x[[1]] <- paste0("\\multicolumn{", stub_width, "}{r|}{", x[1], "}")
           x
         }
       )
@@ -545,7 +581,7 @@ create_grand_summary_rows_l <- function(data) {
 # Define horizontal border line types for
 # summary rows and for grand summary rows
 summary_h_border <- "\\midrule \n"
-grand_summary_h_border <- "\\midrule \n"
+grand_summary_h_border <- "\\midrule \n\\midrule \n"
 
 #' Split data frame or matrix row content into a list structure
 #'
