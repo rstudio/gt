@@ -1229,10 +1229,32 @@ create_body_component_rtf <- function(data) {
         )
     }
 
+
+    #
+    # Create a body row
+    #
     cell_list <-
       lapply(
         seq_len(n_cols),
         FUN = function(x) {
+
+          # If we are in row group column and the cell is blank (only the first
+          # value is shown) then we need to ensure that there is no top border
+          top_bottom_borders <-
+            c(
+              rtf_border("top", color = table_body_hlines_color, width = 10),
+              rtf_border("bottom", color = table_body_hlines_color, width = 10)
+            )
+
+          if ("group_label" %in% stub_layout && x == 1) {
+            if (i %in% groups_rows_df$row_start) {
+              top_bottom_borders[[2]] <- NULL
+            } else if (i %in% groups_rows_df$row_end) {
+              top_bottom_borders[[1]] <- NULL
+            } else {
+              top_bottom_borders <- NULL
+            }
+          }
 
           rtf_tbl_cell(
             rtf_font(
@@ -1241,7 +1263,7 @@ create_body_component_rtf <- function(data) {
             ),
             h_align = col_alignment[x],
             borders = list(
-              rtf_border("bottom", color = table_body_hlines_color, width = 10),
+              top_bottom_borders,
               rtf_border("left", color = table_body_vlines_color, width = 10),
               rtf_border("right", color = table_body_vlines_color, width = 10)
             )
