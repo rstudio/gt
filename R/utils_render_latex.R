@@ -418,16 +418,11 @@ create_group_rows_l <- function(groups_rows_df,
 
 create_group_dividers_l <- function(groups_rows_df,
                                     n_rows) {
-
-  unlist(
-    lapply(
-      seq_len(n_rows),
-      FUN = function(x) {
-        x <- x - 1
-        if (!(x %in% groups_rows_df$row_end)) "" else "\\midrule\n"
-      }
-    )
-  )
+  result <- rep_len("", n_rows)
+  # Subtract 1 so that the row *after* each group end is prepended
+  # with a midrule
+  result[setdiff(groups_rows_df$row_end, 1) - 1)] <- "\\midrule\n"
+  result
 }
 
 # Function to build a vector of `body` rows
