@@ -279,18 +279,6 @@ create_body_component_l <- function(data) {
       )
   }
 
-  group_rows <-
-    create_group_rows_l(
-      groups_rows_df = groups_rows_df,
-      n_rows = n_rows
-    )
-
-  group_dividers <-
-    create_group_dividers_l(
-      groups_rows_df = groups_rows_df,
-      n_rows = n_rows
-    )
-
   summary_rows <-
     create_summary_rows_l(
       data = data,
@@ -303,9 +291,20 @@ create_body_component_l <- function(data) {
   paste0(
     paste0(
       if (!dt_options_get_value(data = data, option = "row_group_as_column")) {
+        group_rows <-
+          create_group_rows_l(
+            groups_rows_df = groups_rows_df,
+            n_rows = n_rows
+          )
 
         paste0(group_rows, body_rows, summary_rows)
       } else {
+        group_dividers <-
+          create_group_dividers_l(
+            groups_rows_df = groups_rows_df,
+            n_rows = n_rows
+          )
+
         paste0(group_dividers, body_rows, summary_rows)
       },
       collapse = ""
