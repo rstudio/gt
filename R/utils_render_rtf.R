@@ -1313,7 +1313,9 @@ create_body_component_rtf <- function(data) {
           list_of_summaries$summary_df_display_list[[group_id]] %>%
           dplyr::select(.env$rowname_col_private, .env$default_vars)
 
-        for (j in seq_len(nrow(summary_df))) {
+        n_summary_rows <- seq_len(nrow(summary_df))
+
+        for (j in n_summary_rows) {
 
           summary_row <- as.matrix(summary_df)[j, ]
           merge_keys_cells <- rep(0, length(summary_row))
@@ -1327,6 +1329,14 @@ create_body_component_rtf <- function(data) {
           cell_list <-
             lapply(
               seq_len(n_cols), FUN = function(x) {
+
+                if (j == length(n_summary_rows) && "group_label" %in% stub_layout) {
+                  bottom_line_style <- "db"
+                  bottom_line_width <- 20
+                } else {
+                  bottom_line_style <- "s"
+                  bottom_line_width <- 10
+                }
 
                 rtf_tbl_cell(
                   rtf_font(
@@ -1342,7 +1352,12 @@ create_body_component_rtf <- function(data) {
                       color = table_body_hlines_color,
                       width = ifelse(j == 1, 20, 10)
                     ),
-                    rtf_border("bottom", color = table_body_hlines_color, width = 10),
+                    rtf_border(
+                      "bottom",
+                      style = bottom_line_style,
+                      color = table_body_hlines_color,
+                      width = bottom_line_width
+                    ),
                     rtf_border("left", color = table_body_vlines_color, width = 10),
                     rtf_border("right", color = table_body_vlines_color, width = 10)
                   )
