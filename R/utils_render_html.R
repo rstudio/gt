@@ -1080,14 +1080,14 @@ get_body_component_cell_matrix <- function(data) {
       dplyr::select(group_id, group_label, row_start)
 
     group_label_matrix <-
-      body[, dt_boxhead_get_vars_groups(data = data)] %>%
-      dplyr::rename(group_label = 1) %>%
-      dplyr::inner_join(groups_rows_df, by = "group_label") %>%
+      dt_stub_df_get(data = data) %>%
+      dplyr::select(-rowname, -group_label) %>%
+      dplyr::inner_join(groups_rows_df, by = "group_id") %>%
       dplyr::mutate(
         row = dplyr::row_number(),
-        group_label = dplyr::if_else(row_start != row, "", group_label)
+        built = dplyr::if_else(row_start != row, "", built)
       ) %>%
-      dplyr::select(group_label) %>%
+      dplyr::select(built) %>%
       as.matrix %>%
       unname()
 
