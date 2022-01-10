@@ -513,7 +513,14 @@ create_summary_rows_l <- function(data,
               collapse = ""
             )
 
-          paste0(summary_h_border, summary_rows)
+          paste0(
+            if (!("group_label" %in% stub_layout)) {
+              summary_h_border
+            } else {
+              ""
+            },
+            summary_rows
+          )
         }
       )
     )
