@@ -290,7 +290,8 @@ create_body_component_l <- function(data) {
 
   paste0(
     paste0(
-      if (!dt_options_get_value(data = data, option = "row_group_as_column")) {
+      if (!("group_label" %in% stub_layout)) {
+
         group_rows <-
           create_group_rows_l(
             groups_rows_df = groups_rows_df,
