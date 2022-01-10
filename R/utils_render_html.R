@@ -1180,7 +1180,7 @@ summary_row_tags_i <- function(data,
     } else {
       styles_resolved_row <- dt_styles_pluck(styles_tbl, locname = "summary_cells", grpname = group_id, grprow = j)
       summary_row_class <- "gt_summary_row"
-      first_row_class <- "gt_first_summary_row"
+      first_row_class <- NULL
     }
 
     row_styles <-
