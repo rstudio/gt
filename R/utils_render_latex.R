@@ -299,7 +299,9 @@ create_body_component_l <- function(data) {
           )
 
         paste0(group_rows, body_rows, summary_rows)
+
       } else {
+
         group_dividers <-
           create_group_dividers_l(
             groups_rows_df = groups_rows_df,
@@ -418,11 +420,18 @@ create_group_rows_l <- function(groups_rows_df,
 
 create_group_dividers_l <- function(groups_rows_df,
                                     n_rows) {
-  result <- rep_len("", n_rows)
-  # Subtract 1 so that the row *after* each group end is prepended
-  # with a midrule
-  result[setdiff(groups_rows_df$row_end, 1) - 1)] <- "\\midrule\n"
-  result
+
+  dividers <- rep_len("", n_rows)
+
+  # Dividing line is inserted *after* last row of each group
+  # so add 1 to `groups_rows_df$row_end`; bottom of series (outside
+  # row range) shouldn't have a dividing line
+  divider_idx <- groups_rows_df$row_end + 1
+  divider_idx <- divider_idx[divider_idx <= n_rows]
+
+  dividers[divider_idx] <- "\\midrule\n"
+
+  dividers
 }
 
 # Function to build a vector of `body` rows
