@@ -1347,12 +1347,6 @@ create_body_component_rtf <- function(data) {
                   h_merge = merge_keys_cells[x],
                   borders = list(
                     rtf_border(
-                      "top",
-                      style = ifelse(j == 1, "db", "s"),
-                      color = table_body_hlines_color,
-                      width = ifelse(j == 1, 20, 10)
-                    ),
-                    rtf_border(
                       "bottom",
                       style = bottom_line_style,
                       color = table_body_hlines_color,
