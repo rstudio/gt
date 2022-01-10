@@ -800,11 +800,20 @@ create_body_component_h <- function(data) {
             row_limits <-
               groups_rows_df %>%
               dplyr::filter(row_start == i) %>%
-              dplyr::select(row_start, row_end)
+              dplyr::select(group_id, row_start, row_end)
+
+            summary_rows_group_df <-
+              list_of_summaries[["summary_df_display_list"]][[row_limits$group_id]]
+
+            if (!is.null(summary_rows_group_df) && "rowname" %in% stub_layout) {
+              summary_row_count <- nrow(summary_rows_group_df)
+            } else {
+              summary_row_count <- 0L
+            }
 
             # Modify the `row_span_vals` list such that the first
             # element (the row group column) contains the number of rows to span
-            row_span_vals[[1]] <- row_limits$row_end - row_limits$row_start + 1
+            row_span_vals[[1]] <- row_limits$row_end - row_limits$row_start + 1 + summary_row_count
 
             # Process row group styles if there is an indication that some
             # are present
@@ -823,6 +832,7 @@ create_body_component_h <- function(data) {
 
         body_row <-
           htmltools::tags$tr(
+            class = if (!is.null(group_info)) "gt_row_group_first",
             htmltools::HTML(
               paste0(
                 mapply(
@@ -1159,7 +1169,7 @@ summary_row_tags_i <- function(data,
   # Create a default list of colspan values for the summary row
   col_span_vals <- rep_len(list(NULL), n_cols_total)
 
-  if (stub_is_2) {
+  if (stub_is_2 && summary_row_type == "grand") {
     col_span_vals[[1]] <- 2L
   }
 
@@ -1173,14 +1183,16 @@ summary_row_tags_i <- function(data,
     last_row_class <- "gt_last_summary_row"
 
     if (summary_row_type == "grand") {
+
       styles_resolved_row <- dt_styles_pluck(styles_tbl, locname = "grand_summary_cells", grpname = group_id, rownum = j)
       summary_row_class <- "gt_grand_summary_row"
       first_row_class <- "gt_first_grand_summary_row"
 
     } else {
+
       styles_resolved_row <- dt_styles_pluck(styles_tbl, locname = "summary_cells", grpname = group_id, grprow = j)
       summary_row_class <- "gt_summary_row"
-      first_row_class <- NULL
+      first_row_class <- if ("rowname" %in% stub_layout) "gt_first_summary_row thick" else "gt_first_summary_row"
     }
 
     row_styles <-
