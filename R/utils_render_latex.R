@@ -505,8 +505,12 @@ create_summary_rows_l <- function(data,
               lapply(
                 row_splits_summary,
                 function(x) {
-                  x[[1]] <-
-                    paste0("\\multicolumn{", stub_width, "}{r|}{", x[1], "}")
+
+                  x <- c(rep("", stub_width - 1), x)
+
+                  x[seq_len(stub_width)] <-
+                    paste0("\\multicolumn{1}{r|}{", x[seq_len(stub_width)], "}")
+
                   x
                 }
               )
