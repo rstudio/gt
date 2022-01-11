@@ -1229,7 +1229,6 @@ create_body_component_rtf <- function(data) {
         )
     }
 
-
     #
     # Create a body row
     #
@@ -1253,6 +1252,26 @@ create_body_component_rtf <- function(data) {
               top_bottom_borders[[1]] <- NULL
             } else {
               top_bottom_borders <- NULL
+            }
+          }
+
+          # This performs a removal of top and bottom borders in the two-column
+          # stub case where summary rows follow
+          if (x == 1) {
+
+            row_limits <-
+              groups_rows_df %>%
+              dplyr::filter(row_end == i) %>%
+              dplyr::select(group_id)
+
+            if (nrow(row_limits) > 0) {
+
+              summary_rows_group_df <-
+                list_of_summaries[["summary_df_display_list"]][[row_limits$group_id]]
+
+              if (!is.null(summary_rows_group_df) && "rowname" %in% stub_layout && length(stub_layout) > 1) {
+                top_bottom_borders <- NULL
+              }
             }
           }
 
@@ -1318,13 +1337,8 @@ create_body_component_rtf <- function(data) {
         for (j in n_summary_rows) {
 
           summary_row <- as.matrix(summary_df)[j, ]
-          merge_keys_cells <- rep(0, length(summary_row))
 
-          if (length(stub_layout) > 1) {
-
-            summary_row <- c(summary_row[1], "", summary_row[-1])
-            merge_keys_cells <- c(1, 2, rep(0, length(summary_row) - 2))
-          }
+          if (length(stub_layout) > 1) summary_row <- c("", summary_row)
 
           cell_list <-
             lapply(
@@ -1338,20 +1352,26 @@ create_body_component_rtf <- function(data) {
                   bottom_line_width <- 10
                 }
 
+                bottom_border <-
+                  rtf_border(
+                    "bottom",
+                    style = bottom_line_style,
+                    color = table_body_hlines_color,
+                    width = bottom_line_width
+                  )
+
+                if ("group_label" %in% stub_layout && x == 1 && length(stub_layout) > 1) {
+                  bottom_border <- NULL
+                }
+
                 rtf_tbl_cell(
                   rtf_font(
                     font_size = 10,
                     rtf_raw(summary_row[x])
                   ),
                   h_align = col_alignment[x],
-                  h_merge = merge_keys_cells[x],
                   borders = list(
-                    rtf_border(
-                      "bottom",
-                      style = bottom_line_style,
-                      color = table_body_hlines_color,
-                      width = bottom_line_width
-                    ),
+                    bottom_border,
                     rtf_border("left", color = table_body_vlines_color, width = 10),
                     rtf_border("right", color = table_body_vlines_color, width = 10)
                   )
