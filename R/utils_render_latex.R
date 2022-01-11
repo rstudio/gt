@@ -530,7 +530,7 @@ create_summary_rows_l <- function(data,
           paste0(
             if ("group_label" %in% stub_layout && stub_width > 1) {
               paste0(
-                "\\cmidrule(lr){2-",
+                "\\cmidrule(l{-0.05em}r){2-",
                 ncol(summary_df) + stub_width - 1,
                 "}"
               )
