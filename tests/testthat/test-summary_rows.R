@@ -870,7 +870,7 @@ test_that("the ordering of groups shouldn't affect group/grand summary calcs", {
 
   # Expect the correct values in summary rows of `gt_tbl`
   gt_tbl_1 %>% render_as_html() %>% xml2::read_html() %>%
-    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row gt_last_summary_row']") %>%
+    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row']") %>%
     expect_equal(c("3.00", "20.00", "99.00"))
 
   # Expect the HTML output tables of `gt_tbl_1` and `gt_tbl_1b` to be the same
@@ -881,12 +881,12 @@ test_that("the ordering of groups shouldn't affect group/grand summary calcs", {
 
   # Expect the correct values in summary rows of `gt_tbl_2`
   gt_tbl_2 %>% render_as_html() %>% xml2::read_html() %>%
-    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row gt_last_summary_row']") %>%
+    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row']") %>%
     expect_equal(c("3.00", "99.00", "20.00"))
 
   # Expect the correct values in summary rows of `gt_tbl_3`
   gt_tbl_3 %>% render_as_html() %>% xml2::read_html() %>%
-    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row gt_last_summary_row']") %>%
+    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row']") %>%
     expect_equal(c("20.00", "3.00", "99.00"))
 
   # Prepare a set gt tables with a grand summary (using the same
@@ -951,7 +951,7 @@ test_that("the ordering of groups shouldn't affect group/grand summary calcs", {
 
   # Expect the correct values in summary rows of `gt_tbl_4`
   gt_tbl_4 %>% render_as_html() %>% xml2::read_html() %>%
-    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row gt_last_summary_row']") %>%
+    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row']") %>%
     expect_equal(c("3.00", "6.00", "20.00", "40.00", "99.00", "198.00"))
 
   # Expect the correct values in the grand summary row of `gt_tbl_4`
@@ -969,7 +969,7 @@ test_that("the ordering of groups shouldn't affect group/grand summary calcs", {
 
   # Expect the correct values in summary rows of `gt_tbl_4`
   gt_tbl_5 %>% render_as_html() %>% xml2::read_html() %>%
-    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row gt_last_summary_row']") %>%
+    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row']") %>%
     expect_equal(c("3.00", "6.00", "20.00", "40.00", "99.00", "198.00"))
 
   # Expect the correct values in the grand summary row of `gt_tbl_4`
@@ -1127,7 +1127,7 @@ test_that("summary row labels are added in narrow and wide tables", {
     narrow_gt_tbl %>%
       as_raw_html(inline_css = FALSE),
     paste0(
-      "<td class=\"gt_row gt_right gt_stub gt_summary_row gt_first_summary_row\">the_sum</td>.*?",
+      "<td class=\"gt_row gt_right gt_stub gt_summary_row gt_first_summary_row thick\">the_sum</td>.*?",
       "<td class=\"gt_row gt_right gt_stub gt_summary_row gt_last_summary_row\">mean</td>.*?",
       "<td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_first_grand_summary_row\">the_sum</td>.*?",
       "<td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_last_summary_row\">mean</td>.*?"
@@ -1138,7 +1138,7 @@ test_that("summary row labels are added in narrow and wide tables", {
     wide_gt_tbl %>%
       as_raw_html(inline_css = FALSE),
     paste0(
-      "<td class=\"gt_row gt_right gt_stub gt_summary_row gt_first_summary_row\">the_sum</td>.*?",
+      "<td class=\"gt_row gt_right gt_stub gt_summary_row gt_first_summary_row thick\">the_sum</td>.*?",
       "<td class=\"gt_row gt_right gt_stub gt_summary_row gt_last_summary_row\">mean</td>.*?",
       "<td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_first_grand_summary_row\">the_sum</td>.*?",
       "<td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_last_summary_row\">mean</td>.*?"
