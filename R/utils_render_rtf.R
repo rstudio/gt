@@ -1244,8 +1244,8 @@ create_body_component_rtf <- function(data) {
               rtf_border("top", color = table_body_hlines_color, width = 10),
               rtf_border("bottom", color = table_body_hlines_color, width = 10)
             )
-
           if ("group_label" %in% stub_layout && x == 1) {
+
             if (i %in% groups_rows_df$row_start) {
               top_bottom_borders[[2]] <- NULL
             } else if (i %in% groups_rows_df$row_end) {
@@ -1360,7 +1360,9 @@ create_body_component_rtf <- function(data) {
                     width = bottom_line_width
                   )
 
-                if ("group_label" %in% stub_layout && x == 1 && length(stub_layout) > 1) {
+                # Remove all (but the last) bottom borders for first column
+                # inside summary rows where there is a two-column stub
+                if (length(stub_layout) > 1 && x == 1 && j != length(n_summary_rows)) {
                   bottom_border <- NULL
                 }
 
