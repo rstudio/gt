@@ -100,6 +100,7 @@ Collate:
     'render_as_html.R'
     'resolver.R'
     'shiny.R'
+    'spec.R'
     'summary_rows.R'
     'text_transform.R'
     'utils.R'
@@ -111,4 +112,5 @@ Collate:
     'utils_render_html.R'
     'utils_render_latex.R'
     'utils_render_rtf.R'
+    'utils_spec.R'
     'zzz.R'
