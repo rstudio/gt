@@ -1268,7 +1268,7 @@ create_body_component_rtf <- function(data) {
               summary_rows_group_df <-
                 list_of_summaries[["summary_df_display_list"]][[row_limits$group_id]]
 
-              if (!is.null(summary_rows_group_df) && "rowname" %in% stub_layout && length(stub_layout) > 1) {
+              if (!is.null(summary_rows_group_df) && length(stub_layout) > 1) {
                 top_bottom_borders <- NULL
               }
             }
