@@ -273,9 +273,6 @@ create_body_component_l <- function(data) {
         group_label = ifelse(
           is.na(group_label), "\\vspace*{-5mm}", group_label
         )
-      ) %>%
-      dplyr::mutate(
-        group_label = gsub("^NA", "\\textemdash", group_label)
       )
   }
 

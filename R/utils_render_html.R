@@ -691,8 +691,7 @@ create_body_component_h <- function(data) {
 
     groups_rows_df <-
       groups_rows_df %>%
-      dplyr::mutate(group_label = ifelse(is.na(group_label), "", group_label)) %>%
-      dplyr::mutate(group_label = gsub("^NA", "\u2014", group_label))
+      dplyr::mutate(group_label = ifelse(is.na(group_label), "", group_label))
   }
 
   # Is the stub to be striped?
