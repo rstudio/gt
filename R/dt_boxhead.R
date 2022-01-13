@@ -164,8 +164,8 @@ dt_boxhead_get_vars_default <- function(data) {
 
 dt_boxhead_get_var_stub <- function(data) {
 
-  res <- dt_boxhead_get_var_by_type(data = data, "stub")
-
+  res <- dt_boxhead_get_var_by_type(data = data, type = "stub")
+  # FIXME: don't return NA_character_ here, just return res or NULL
   if (length(res) == 0) {
     NA_character_
   } else {
@@ -174,7 +174,14 @@ dt_boxhead_get_var_stub <- function(data) {
 }
 
 dt_boxhead_get_vars_groups <- function(data) {
-  dt_boxhead_get_var_by_type(data = data, "row_group")
+
+  res <- dt_boxhead_get_var_by_type(data = data, type = "row_group")
+  # FIXME: don't return NA_character_ here, just return res or NULL
+  if (length(res) == 0) {
+    NA_character_
+  } else {
+    res
+  }
 }
 
 dt_boxhead_get_var_by_type <- function(data, type) {
@@ -188,6 +195,14 @@ dt_boxhead_get_vars_labels_default <- function(data) {
   unlist(
     subset(dt_boxhead_get(data = data), type == "default") %>%
       magrittr::extract2("column_label")
+  )
+}
+
+dt_boxhead_get_vars_align_default <- function(data) {
+
+  unlist(
+    subset(dt_boxhead_get(data = data), type == "default") %>%
+      magrittr::extract2("column_align")
   )
 }
 
