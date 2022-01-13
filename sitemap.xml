@@ -1,7 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://gt.rstudio.com/404.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/CODE_OF_CONDUCT.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/CONTRIBUTING.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/ISSUE_TEMPLATE.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/LICENSE-text.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/LICENSE.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/articles/case-study-gtcars.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/articles/creating-summary-lines.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/articles/gt-datasets.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/articles/intro-creating-gt-tables.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/authors.html</loc>
+  </url>
+  <url>
     <loc>https://gt.rstudio.com/index.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/news/index.html</loc>
   </url>
   <url>
     <loc>https://gt.rstudio.com/reference/adjust_luminance.html</loc>
@@ -205,6 +244,9 @@
     <loc>https://gt.rstudio.com/reference/html.html</loc>
   </url>
   <url>
+    <loc>https://gt.rstudio.com/reference/index.html</loc>
+  </url>
+  <url>
     <loc>https://gt.rstudio.com/reference/info_currencies.html</loc>
   </url>
   <url>
@@ -326,17 +368,5 @@
   </url>
   <url>
     <loc>https://gt.rstudio.com/reference/web_image.html</loc>
-  </url>
-  <url>
-    <loc>https://gt.rstudio.com/articles/case-study-gtcars.html</loc>
-  </url>
-  <url>
-    <loc>https://gt.rstudio.com/articles/creating-summary-lines.html</loc>
-  </url>
-  <url>
-    <loc>https://gt.rstudio.com/articles/gt-datasets.html</loc>
-  </url>
-  <url>
-    <loc>https://gt.rstudio.com/articles/intro-creating-gt-tables.html</loc>
   </url>
 </urlset>
