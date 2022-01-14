@@ -421,11 +421,8 @@ as_latex <- function(data) {
   # Create the body component
   body_component <- create_body_component_l(data = data)
 
-  # Create the source notes component
-  source_notes_component <- create_source_note_component_l(data = data)
-
   # Create the footnotes component
-  footnotes_component <- create_footnotes_component_l(data = data)
+  footer_component <- create_footer_component_l(data = data)
 
   # Create a LaTeX fragment for the ending tabular statement
   table_end <- create_table_end_l()
@@ -446,8 +443,7 @@ as_latex <- function(data) {
     columns_component,
     body_component,
     table_end,
-    footnotes_component,
-    source_notes_component,
+    footer_component,
     collapse = ""
   ) %>%
     knitr::asis_output(meta = latex_packages)
