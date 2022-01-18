@@ -1024,36 +1024,79 @@ create_footnotes_component_h <- function(data) {
   # Get the footnote separator option
   separator <- dt_options_get_value(data = data, option = "footnotes_sep")
 
+  # Normalize an HTML break tag to a Latex line break
+  separator <- gsub("<br\\s*?(/|)>", "<br />", separator)
+
   footnote_ids <- footnotes_tbl[["fs_id"]]
   footnote_text <- footnotes_tbl[["footnotes"]]
 
-  # Create the footnotes component
+  # Create a vector of HTML footnotes
+  footnotes <-
+    unlist(
+      mapply(
+        SIMPLIFY = FALSE,
+        USE.NAMES = FALSE,
+        footnote_ids,
+        footnote_text,
+        FUN = function(x, footnote_text) {
+          as.character(
+            htmltools::tagList(
+              htmltools::tags$sup(
+                .noWS = c("after", "before"),
+                class = "gt_footnote_marks",
+                htmltools::tags$em(
+                  .noWS = c("after", "before"),
+                  paste0(x, " ")
+                )
+              ),
+              htmltools::HTML(footnote_text)
+            )
+          )
+        }
+      )
+    )
+
+  # Handle default case where each footnote takes up one line
+  if (separator == "<br />") {
+
+    # Create the footnotes component as a series of `<tr><td>` (one per
+    # footnote) inside of a `<tfoot>`
+    return(
+      htmltools::tags$tfoot(
+        class = "gt_footnotes",
+        lapply(
+          footnotes,
+          function(x) {
+            htmltools::tags$tr(
+              htmltools::tags$td(
+                class = "gt_footnote",
+                style = footnotes_styles,
+                colspan = n_cols_total,
+                htmltools::HTML(x)
+              )
+            )
+          }
+        )
+      )
+    )
+  }
+
+  # Perform HTML escaping on the separator text and transform space
+  # characters to non-breaking spaces
+  separator <- htmltools::htmlEscape(separator) %>% tidy_gsub(" ", "&nbsp;")
+
+  # Create the footnotes component as a single `<tr><td>` inside
+  # of a `<tfoot>`
   htmltools::tags$tfoot(
     htmltools::tags$tr(
       class = "gt_footnotes",
       style = footnotes_styles,
       htmltools::tags$td(
+        class = "gt_footnote",
         colspan = n_cols_total,
-        mapply(
-          SIMPLIFY = FALSE,
-          USE.NAMES = FALSE,
-          footnote_ids,
-          footnote_text,
-          FUN = function(x, footnote_text) {
-
-            htmltools::tags$p(
-              class = "gt_footnote",
-              htmltools::tags$sup(
-                class = "gt_footnote_marks",
-                htmltools::tags$em(
-                  x
-                )
-              ),
-              " ",
-              htmltools::HTML(footnote_text),
-              htmltools::HTML(separator)
-            )
-          }
+        htmltools::tags$div(
+          style = htmltools::css(`padding-bottom` = "2px"),
+          htmltools::HTML(paste(footnotes, collapse = separator))
         )
       )
     )
