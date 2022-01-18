@@ -636,7 +636,7 @@ test_that("the `tab_footnote()` function works correctly", {
   # the correct order
   tbl_html %>%
     selection_text(selection = "[class='gt_footnote_marks']") %>%
-    tidy_gsub("\n          ", "") %>%
+    tidy_gsub("\\s+", "") %>%
     expect_equal(rep(as.character(1:4), 2))
 })
 
