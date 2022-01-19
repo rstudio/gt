@@ -132,8 +132,9 @@ tab_options(
   footnotes.border.lr.style = NULL,
   footnotes.border.lr.width = NULL,
   footnotes.border.lr.color = NULL,
-  footnotes.sep = NULL,
   footnotes.marks = NULL,
+  footnotes.multiline = NULL,
+  footnotes.sep = NULL,
   source_notes.background.color = NULL,
   source_notes.font.size = NULL,
   source_notes.padding = NULL,
@@ -143,6 +144,8 @@ tab_options(
   source_notes.border.lr.style = NULL,
   source_notes.border.lr.width = NULL,
   source_notes.border.lr.color = NULL,
+  source_notes.multiline = NULL,
+  source_notes.sep = NULL,
   row.striping.background_color = NULL,
   row.striping.include_stub = NULL,
   row.striping.include_table_body = NULL
@@ -310,9 +313,6 @@ is \code{"1px"} instead of \code{"2px"}).}
 \item{footnotes.border.lr.style, footnotes.border.lr.width, footnotes.border.lr.color}{The style, width, and color properties for the left and right borders of
 the \code{footnotes} location.}
 
-\item{footnotes.sep}{The separating characters between adjacent footnotes in
-the footnotes section. The default value produces a linebreak.}
-
 \item{footnotes.marks}{The set of sequential marks used to reference and
 identify each of the footnotes (same input as the \code{\link[=opt_footnote_marks]{opt_footnote_marks()}}
 function. We can supply a vector that represents the series of footnote
@@ -324,6 +324,17 @@ want to use numeric marks). We can use lowercase \code{"letters"} or uppercase
 \code{"LETTERS"}. There is the option for using a traditional symbol set where
 \code{"standard"} provides four symbols, and, \code{"extended"} adds two more
 symbols, making six.}
+
+\item{footnotes.multiline, source_notes.multiline}{An option to either put
+footnotes and source notes in separate lines (the default, or \code{TRUE}) or
+render them as a continuous line of text with \code{footnotes.sep} providing the
+separator (by default \code{" "}) between notes.}
+
+\item{footnotes.sep, source_notes.sep}{The separating characters between
+adjacent footnotes and source notes in their respective footer sections
+when rendered as a continuous line of text (when
+\code{footnotes.multiline == FALSE}). The default value is a single space
+character (\code{" "}).}
 
 \item{source_notes.border.bottom.style, source_notes.border.bottom.width, source_notes.border.bottom.color}{The style, width, and color properties for the bottom border of the
 \code{source_notes} location.}
