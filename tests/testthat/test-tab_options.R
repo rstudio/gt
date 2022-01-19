@@ -1402,15 +1402,6 @@ test_that("the internal `opts_df` table can be correctly modified", {
   ) %>%
     expect_equal(c(FALSE, TRUE))
 
-  # Modify the `footnotes.sep` option
-  tbl_html <- data %>% tab_options(footnotes.sep = " ")
-
-  # Compare before and after values
-  c(dt_options_get_value(data = data, option = "footnotes_sep"),
-    dt_options_get_value(data = tbl_html, option = "footnotes_sep")
-  ) %>%
-    expect_equal(c("<br />", " "))
-
   # Modify the `footnotes.marks` option
   tbl_html <- data %>% tab_options(footnotes.marks = "LETTERS")
 
@@ -1419,6 +1410,42 @@ test_that("the internal `opts_df` table can be correctly modified", {
     dt_options_get_value(data = tbl_html, option = "footnotes_marks")
   ) %>%
     expect_equal(c("numbers", "LETTERS"))
+
+  # Modify the `footnotes.multiline` option
+  tbl_html <- data %>% tab_options(footnotes.multiline = FALSE)
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "footnotes_multiline"),
+    dt_options_get_value(data = tbl_html, option = "footnotes_multiline")
+  ) %>%
+    expect_equal(c(TRUE, FALSE))
+
+  # Modify the `footnotes.sep` option
+  tbl_html <- data %>% tab_options(footnotes.sep = "  ")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "footnotes_sep"),
+    dt_options_get_value(data = tbl_html, option = "footnotes_sep")
+  ) %>%
+    expect_equal(c(" ", "  "))
+
+  # Modify the `source_notes.multiline` option
+  tbl_html <- data %>% tab_options(source_notes.multiline = FALSE)
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "source_notes_multiline"),
+    dt_options_get_value(data = tbl_html, option = "source_notes_multiline")
+  ) %>%
+    expect_equal(c(TRUE, FALSE))
+
+  # Modify the `source_notes.sep` option
+  tbl_html <- data %>% tab_options(source_notes.sep = "  ")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "source_notes_sep"),
+    dt_options_get_value(data = tbl_html, option = "source_notes_sep")
+  ) %>%
+    expect_equal(c(" ", "  "))
 })
 
 test_that("the `opts_df` getter/setter functions properly", {
