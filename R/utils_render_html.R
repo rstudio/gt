@@ -1021,12 +1021,14 @@ create_footnotes_component_h <- function(data) {
     footnotes_styles <- NULL
   }
 
+  # Get the footnote multiline option
+  multiline <- dt_options_get_value(data = data, option = "footnotes_multiline")
+
   # Get the footnote separator option
   separator <- dt_options_get_value(data = data, option = "footnotes_sep")
 
-  # Normalize an HTML break tag to a Latex line break
-  separator <- gsub("<br\\s*?(/|)>", "<br />", separator)
-
+  # Obtain vectors of footnote ID values (prerendered glyphs) and
+  # the associated text
   footnote_ids <- footnotes_tbl[["fs_id"]]
   footnote_text <- footnotes_tbl[["footnotes"]]
 
@@ -1056,8 +1058,8 @@ create_footnotes_component_h <- function(data) {
       )
     )
 
-  # Handle default case where each footnote takes up one line
-  if (separator == "<br />") {
+  # Handle multiline footnotes case (each footnote takes up one line)
+  if (multiline) {
 
     # Create the footnotes component as a series of `<tr><td>` (one per
     # footnote) inside of a `<tfoot>`
@@ -1083,7 +1085,7 @@ create_footnotes_component_h <- function(data) {
 
   # Perform HTML escaping on the separator text and transform space
   # characters to non-breaking spaces
-  separator <- htmltools::htmlEscape(separator) %>% tidy_gsub(" ", "&nbsp;")
+  separator <- gsub(" (?= )", "&nbsp;", separator, perl = TRUE)
 
   # Create the footnotes component as a single `<tr><td>` inside
   # of a `<tfoot>`
