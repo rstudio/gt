@@ -430,7 +430,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\cellx9468
-      \intbl {\f0 {\f0\fs20 Source note #1}{\f0\fs20 Source note #2}}\cell
+      \intbl {\f0 {\f0\fs20 {\f0\fs20 Source note #1}\line{\f0\fs20 Source note #2}}}\cell
       \pard\plain
       
       \row
@@ -869,7 +869,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\cellx9468
-      \intbl {\f0 {\f0\fs20 Source note #1}{\f0\fs20 Source note #2}}\cell
+      \intbl {\f0 {\f0\fs20 {\f0\fs20 Source note #1}\line{\f0\fs20 Source note #2}}}\cell
       \pard\plain
       
       \row
@@ -1284,7 +1284,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\cellx9472
-      \intbl {\f0 {\f0\fs20 Source note #1}{\f0\fs20 Source note #2}}\cell
+      \intbl {\f0 {\f0\fs20 {\f0\fs20 Source note #1}\line{\f0\fs20 Source note #2}}}\cell
       \pard\plain
       
       \row
@@ -1723,7 +1723,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\cellx9472
-      \intbl {\f0 {\f0\fs20 Source note #1}{\f0\fs20 Source note #2}}\cell
+      \intbl {\f0 {\f0\fs20 {\f0\fs20 Source note #1}\line{\f0\fs20 Source note #2}}}\cell
       \pard\plain
       
       \row
@@ -2162,7 +2162,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\cellx9468
-      \intbl {\f0 {\f0\fs20 Source note #1}{\f0\fs20 Source note #2}}\cell
+      \intbl {\f0 {\f0\fs20 {\f0\fs20 Source note #1}\line{\f0\fs20 Source note #2}}}\cell
       \pard\plain
       
       \row
@@ -2601,7 +2601,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\cellx9468
-      \intbl {\f0 {\f0\fs20 Source note #1}{\f0\fs20 Source note #2}}\cell
+      \intbl {\f0 {\f0\fs20 {\f0\fs20 Source note #1}\line{\f0\fs20 Source note #2}}}\cell
       \pard\plain
       
       \row
@@ -3016,7 +3016,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\cellx9472
-      \intbl {\f0 {\f0\fs20 Source note #1}{\f0\fs20 Source note #2}}\cell
+      \intbl {\f0 {\f0\fs20 {\f0\fs20 Source note #1}\line{\f0\fs20 Source note #2}}}\cell
       \pard\plain
       
       \row
@@ -3455,7 +3455,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\cellx9472
-      \intbl {\f0 {\f0\fs20 Source note #1}{\f0\fs20 Source note #2}}\cell
+      \intbl {\f0 {\f0\fs20 {\f0\fs20 Source note #1}\line{\f0\fs20 Source note #2}}}\cell
       \pard\plain
       
       \row
@@ -4066,7 +4066,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\cellx9470
-      \intbl {\f0 {\f0\fs20 Source note #1}{\f0\fs20 Source note #2}}\cell
+      \intbl {\f0 {\f0\fs20 {\f0\fs20 Source note #1}\line{\f0\fs20 Source note #2}}}\cell
       \pard\plain
       
       \row
@@ -4677,7 +4677,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\cellx9470
-      \intbl {\f0 {\f0\fs20 Source note #1}{\f0\fs20 Source note #2}}\cell
+      \intbl {\f0 {\f0\fs20 {\f0\fs20 Source note #1}\line{\f0\fs20 Source note #2}}}\cell
       \pard\plain
       
       \row
@@ -5492,7 +5492,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\cellx9468
-      \intbl {\f0 {\f0\fs20 Source note #1}{\f0\fs20 Source note #2}}\cell
+      \intbl {\f0 {\f0\fs20 {\f0\fs20 Source note #1}\line{\f0\fs20 Source note #2}}}\cell
       \pard\plain
       
       \row
@@ -6291,7 +6291,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\cellx9468
-      \intbl {\f0 {\f0\fs20 Source note #1}{\f0\fs20 Source note #2}}\cell
+      \intbl {\f0 {\f0\fs20 {\f0\fs20 Source note #1}\line{\f0\fs20 Source note #2}}}\cell
       \pard\plain
       
       \row
@@ -6850,7 +6850,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\cellx9468
-      \intbl {\f0 {\f0\fs20 Source note #1}{\f0\fs20 Source note #2}}\cell
+      \intbl {\f0 {\f0\fs20 {\f0\fs20 Source note #1}\line{\f0\fs20 Source note #2}}}\cell
       \pard\plain
       
       \row
@@ -7409,7 +7409,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\cellx9468
-      \intbl {\f0 {\f0\fs20 Source note #1}{\f0\fs20 Source note #2}}\cell
+      \intbl {\f0 {\f0\fs20 {\f0\fs20 Source note #1}\line{\f0\fs20 Source note #2}}}\cell
       \pard\plain
       
       \row
@@ -8148,7 +8148,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\cellx9472
-      \intbl {\f0 {\f0\fs20 Source note #1}{\f0\fs20 Source note #2}}\cell
+      \intbl {\f0 {\f0\fs20 {\f0\fs20 Source note #1}\line{\f0\fs20 Source note #2}}}\cell
       \pard\plain
       
       \row
@@ -8947,7 +8947,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\cellx9472
-      \intbl {\f0 {\f0\fs20 Source note #1}{\f0\fs20 Source note #2}}\cell
+      \intbl {\f0 {\f0\fs20 {\f0\fs20 Source note #1}\line{\f0\fs20 Source note #2}}}\cell
       \pard\plain
       
       \row
