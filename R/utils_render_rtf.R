@@ -1466,113 +1466,22 @@ create_body_component_rtf <- function(data) {
 }
 
 #
-# Table Footnotes
+# Table Footer Section
 #
-create_footnotes_component_rtf <- function(data) {
-
-  boxh <- dt_boxhead_get(data)
-
-  # Get table components and metadata using the `data`
-  footnotes_tbl <- dt_footnotes_get(data)
-
-  # If the `footnotes_tbl` object has no
-  # rows, then return an empty footnotes component
-  if (nrow(footnotes_tbl) == 0) {
-    row_list_footnotes <- list()
-    return(row_list_footnotes)
-  }
-
-  # Get table width
-  table_width <- dt_options_get_value(data = data, option = "table_width")
-
-  # Obtain widths for each visible column label
-  col_widths <-
-    boxh %>%
-    dplyr::filter(type %in% c("default", "stub")) %>%
-    dplyr::arrange(dplyr::desc(type)) %>%
-    dplyr::pull(column_width) %>%
-    unlist()
-
-  if (is.null(col_widths)) {
-
-    n_cols <-
-      boxh %>%
-      dplyr::filter(type %in% c("default", "stub")) %>%
-      nrow()
-
-    col_widths <- rep("100%", n_cols)
-  }
-
-  col_widths <-
-    col_width_resolver_rtf(
-      table_width = table_width,
-      col_widths = col_widths,
-      n_cols = length(col_widths)
-    )
-
-  table_width <- sum(col_widths)
-
-  footnotes_tbl <-
-    footnotes_tbl %>%
-    dplyr::select(fs_id, footnotes) %>%
-    dplyr::distinct()
-
-  n_footnotes <- nrow(footnotes_tbl)
-
-  footnote_text <- footnotes_tbl$footnotes
-  footnote_mark <- footnotes_tbl[["fs_id"]]
-
-  footnote_text <-
-    vapply(
-      footnote_text, FUN.VALUE = character(1), USE.NAMES = FALSE,
-      FUN = markdown_to_rtf
-    )
-
-  cell_list <- ""
-
-  for (i in seq_len(n_footnotes)) {
-
-    use_newline <- i != n_footnotes
-
-    cell_list <-
-      rtf_paste0(
-        cell_list,
-        rtf_font(
-          italic = TRUE,
-          super_sub = "super",
-          font_size = 10,
-          rtf_raw(footnote_mark[i])
-        ),
-        rtf_font(
-          font_size = 10,
-          rtf_raw(footnote_text[i], " ")
-        )
-      )
-  }
-
-  # Return a list of RTF table rows (a single row) for the footnotes section
-  rtf_tbl_row(
-    list(rtf_tbl_cell(cell_list)),
-    widths = table_width,
-    height = 0
-  )
-}
-
-#
-# Table Source Notes
-#
-create_source_notes_component_rtf <- function(data) {
-
-  boxh <- dt_boxhead_get(data)
+create_footer_component_rtf <- function(data) {
 
   # Get table components and metadata using the `data`
   source_notes <- dt_source_notes_get(data)
 
-  # If there are no source notes then return an empty list
-  if (length(source_notes) == 0) {
-    row_list_source_notes <- list()
-    return(row_list_source_notes)
+  footnotes_tbl <- dt_footnotes_get(data = data)
+  source_notes_vec <- dt_source_notes_get(data = data)
+
+  # If there are no footnotes or source notes, return an empty list
+  if (nrow(footnotes_tbl) == 0 && length(source_notes_vec) == 0) {
+    return(list())
   }
+
+  boxh <- dt_boxhead_get(data)
 
   # Get table width
   table_width <- dt_options_get_value(data = data, option = "table_width")
@@ -1604,27 +1513,129 @@ create_source_notes_component_rtf <- function(data) {
 
   table_width <- sum(col_widths)
 
-  n_source_notes <- length(source_notes)
-  row_list_source_notes <- list()
-
   cell_list <- ""
 
-  for (i in seq_len(n_source_notes)) {
+  # Get the multiline and separator options for footnotes and source notes
+  footnotes_multiline <- dt_options_get_value(data = data, option = "footnotes_multiline")
+  footnotes_sep <- dt_options_get_value(data = data, option = "footnotes_sep")
+  source_notes_multiline <- dt_options_get_value(data = data, option = "source_notes_multiline")
+  source_notes_sep <- dt_options_get_value(data = data, option = "source_notes_sep")
 
-    cell_list <-
-      rtf_paste0(
-        cell_list,
-        rtf_font(
-          font_size = 10,
-          rtf_raw(source_notes[i])
-        )
+  # Create a formatted footnotes string
+  if (nrow(footnotes_tbl) > 0) {
+
+    footnotes_tbl <-
+      footnotes_tbl %>%
+      dplyr::select(fs_id, footnotes) %>%
+      dplyr::distinct()
+
+    footnote_text <- footnotes_tbl[["footnotes"]]
+    footnote_mark <- footnotes_tbl[["fs_id"]]
+
+    footnote_text <-
+      vapply(
+        footnote_text, FUN.VALUE = character(1), USE.NAMES = FALSE,
+        FUN = markdown_to_rtf
       )
+
+    footnotes <- c()
+
+    for (i in seq_along(footnote_mark)) {
+
+      footnotes <-
+        c(
+          footnotes,
+          rtf_paste0(
+            cell_list,
+            rtf_font(
+              italic = TRUE,
+              super_sub = "super",
+              font_size = 10,
+              rtf_raw(markdown_to_rtf(footnote_mark[i]))
+            ),
+            rtf_font(
+              font_size = 10,
+              rtf_raw(footnote_text[i])
+            )
+          )
+        )
+    }
+
+    if (footnotes_multiline) {
+      footnotes <- paste(footnotes, collapse = rtf_raw("\\line"))
+    } else {
+      footnotes <- paste(footnotes, collapse = footnotes_sep)
+    }
+  } else {
+    footnotes <- ""
   }
 
-  # Return a list of RTF table rows (a single row) for the source notes section
-  rtf_tbl_row(
-    list(rtf_tbl_cell(cell_list)),
-    widths = table_width,
-    height = 0
+  # Create a formatted source notes string
+  if (length(source_notes_vec) > 0) {
+
+    source_notes_vec <-
+      vapply(
+        source_notes_vec, FUN.VALUE = character(1), USE.NAMES = FALSE,
+        FUN = markdown_to_rtf
+      )
+
+    source_notes <- c()
+
+    for (i in seq_along(source_notes_vec)) {
+
+      source_notes <-
+        c(
+          source_notes,
+          rtf_paste0(
+            cell_list,
+            rtf_font(
+              font_size = 10,
+              rtf_raw(source_notes_vec[i])
+            )
+          )
+        )
+    }
+
+    if (source_notes_multiline) {
+      source_notes <- paste(source_notes, collapse = rtf_raw("\\line"))
+    } else {
+      source_notes <- paste(source_notes, collapse = source_notes_sep)
+    }
+  } else {
+    source_notes <- ""
+  }
+
+  # Return a list of RTF table rows (up to two rows) for the footer
+  list(
+    if (footnotes != "") {
+      rtf_tbl_row(
+        rtf_tbl_cell(
+          rtf_paste0(
+            cell_list,
+            rtf_font(
+              font_size = 10,
+              rtf_raw(footnotes)
+            )
+          )
+        ),
+        widths = table_width,
+        height = 0
+      )
+    },
+    if (source_notes != "") {
+      rtf_tbl_row(
+        rtf_tbl_cell(
+          rtf_paste0(
+            cell_list,
+            rtf_font(
+              font_size = 10,
+              rtf_raw(source_notes)
+            )
+          )
+        ),
+        widths = table_width,
+        height = 0
+      )
+    }
   )
 }
