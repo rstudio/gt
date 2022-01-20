@@ -190,7 +190,7 @@ fmt_number <- function(data,
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    fns = gt_number(
+    fns = gt_spec_number(
       decimals = decimals,
       n_sigfig = n_sigfig,
       drop_trailing_zeros = drop_trailing_zeros,
