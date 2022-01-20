@@ -346,7 +346,7 @@ test_that("`text_transform()` works on row labels in the stub", {
   tbl_html %>%
     render_as_html() %>%
     xml2::read_html() %>%
-    selection_text("[class='gt_row gt_left gt_stub']") %>%
+    selection_text("[class='gt_row gt_right gt_stub']") %>%
     expect_equal(
       c(
         "Datsun 710", "Hornet 4 Drive", "HORNET SPORTABOUT",

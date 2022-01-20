@@ -84,6 +84,7 @@ tab_options(
   row_group.border.right.width = NULL,
   row_group.border.right.color = NULL,
   row_group.default_label = NULL,
+  row_group.as_column = NULL,
   table_body.hlines.style = NULL,
   table_body.hlines.width = NULL,
   table_body.hlines.color = NULL,
@@ -103,6 +104,12 @@ tab_options(
   stub.border.style = NULL,
   stub.border.width = NULL,
   stub.border.color = NULL,
+  stub_row_group.font.size = NULL,
+  stub_row_group.font.weight = NULL,
+  stub_row_group.text_transform = NULL,
+  stub_row_group.border.style = NULL,
+  stub_row_group.border.width = NULL,
+  stub_row_group.border.color = NULL,
   data_row.padding = NULL,
   summary_row.background.color = NULL,
   summary_row.text_transform = NULL,
@@ -272,6 +279,11 @@ haven't been placed into a row group (where one or more row groups already
 exist), those rows will be automatically placed into a row group without a
 label.}
 
+\item{row_group.as_column}{How should row groups be structured? By default,
+they are separate rows that lie above the each of the groups. Setting this
+to \code{TRUE} will structure row group labels are columns to the far left of
+the table.}
+
 \item{table_body.hlines.style, table_body.hlines.width, table_body.hlines.color, table_body.vlines.style, table_body.vlines.width, table_body.vlines.color}{The style, width, and color properties for all horizontal lines ('hlines')
 and vertical lines ('vlines') in the \code{table_body}.}
 
@@ -280,6 +292,11 @@ the \code{table_body} location.}
 
 \item{stub.border.style, stub.border.width, stub.border.color}{The style, width, and color properties for the vertical border of the table
 stub.}
+
+\item{stub_row_group.font.size, stub_row_group.font.weight, stub_row_group.text_transform, stub_row_group.border.style, stub_row_group.border.width, stub_row_group.border.color}{Options for the row group column in the stub (made possible when using
+\code{row_group.as_column = TRUE}). The defaults for these options mirror that
+of the \verb{stub.*} variants (except for \code{stub_row_group.border.width}, which
+is \code{"1px"} instead of \code{"2px"}).}
 
 \item{summary_row.border.style, summary_row.border.width, summary_row.border.color}{The style, width, and color properties for all horizontal borders of the
 \code{summary_row} location.}
