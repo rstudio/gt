@@ -339,62 +339,63 @@ create_table_end_l <- function() {
 #' @noRd
 create_footer_component_l <- function(data) {
 
+  footnotes_tbl <- dt_footnotes_get(data = data)
+  source_notes_vec <- dt_source_notes_get(data = data)
+
   # If there are no footnotes or source notes, return an empty string
-  if (
-    nrow(dt_footnotes_get(data = data)) == 0 &&
-    length(dt_source_notes_get(data = data)) == 0
-  ) {
+  if (nrow(footnotes_tbl) == 0 && length(source_notes_vec) == 0) {
     return("")
   }
 
-  # Get the `footnotes_sep` separator option
-  separator <- dt_options_get_value(data = data, option = "footnotes_sep")
+  # Get the multiline and separator options for footnotes and source notes
+  footnotes_multiline <- dt_options_get_value(data = data, option = "footnotes_multiline")
+  footnotes_sep <- dt_options_get_value(data = data, option = "footnotes_sep")
+  source_notes_multiline <- dt_options_get_value(data = data, option = "source_notes_multiline")
+  source_notes_sep <- dt_options_get_value(data = data, option = "source_notes_sep")
 
-  if (nrow(dt_footnotes_get(data = data)) > 0) {
+  # Create a formatted footnotes string
+  if (nrow(footnotes_tbl) > 0) {
 
     footnotes_tbl <-
-      dt_footnotes_get(data = data) %>%
+      footnotes_tbl %>%
       dplyr::select(fs_id, footnotes) %>%
       dplyr::distinct()
 
-    # Convert an HTML break tag to a Latex line break
-    separator <-
-      separator %>%
-      tidy_gsub("<br\\s*?(/|)>", "\\\\newline\n") %>%
-      tidy_gsub("&nbsp;", " ")
+    # Create a vector of formatted footnotes
+    footnotes <-
+      paste0(
+        footnote_mark_to_latex(footnotes_tbl[["fs_id"]]),
+        footnotes_tbl[["footnotes"]] %>%
+          unescape_html() %>%
+          markdown_to_latex()
+      )
 
-    # Create the footnotes lines
-    footnotes_lines <-
-      paste(
-        paste0(
-          footnote_mark_to_latex(footnotes_tbl[["fs_id"]]),
-          footnotes_tbl[["footnotes"]] %>%
-            unescape_html() %>%
-            markdown_to_latex()
-        ),
-        collapse = separator
-      ) %>%
-      paste_right("\\\\ \n")
-
+    if (footnotes_multiline) {
+      footnotes <- paste(footnotes, collapse = "\\\\\n") %>% paste_right("\\\\\n")
+    } else {
+      footnotes <- paste(footnotes, collapse = footnotes_sep) %>% paste_right("\\\\\n")
+    }
   } else {
-    footnotes_lines <- ""
+    footnotes <- ""
   }
 
-  source_notes <- dt_source_notes_get(data = data)
+  # Create a formatted source notes string
+  if (length(source_notes_vec) > 0) {
 
-  if (length(source_notes) > 0) {
-
-    # Create the footnotes lines
-    source_notes_lines <- paste0(source_notes, "\\\\ \n", collapse = "")
+    if (source_notes_multiline) {
+      source_notes <- paste(source_notes_vec, collapse = "\\\\\n") %>% paste_right("\\\\\n")
+    } else {
+      source_notes <- paste(source_notes_vec, collapse = source_notes_sep) %>% paste_right("\\\\\n")
+    }
 
   } else {
-    source_notes_lines <- ""
+    source_notes <- ""
   }
 
   # Create the footer block
   paste0(
     "\\begin{minipage}{\\linewidth}\n",
-    paste0(footnotes_lines, source_notes_lines),
+    paste0(footnotes, source_notes),
     "\\end{minipage}\n",
     collapse = ""
   )
