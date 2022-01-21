@@ -108,6 +108,11 @@ The following time styles are available for formatting of the time portion
 We can use the \code{\link[=info_date_style]{info_date_style()}} and \code{\link[=info_time_style]{info_time_style()}} functions as
 useful references for all of the possible inputs to \code{date_style} and
 \code{time_style}.
+
+Alternatively, we can supply a \code{format} string and customize the date and
+time output (this bypasses the \code{date_style} and \code{time_style} arguments).
+Please refer to the \emph{Date and Time Formats} section for help on constructing
+a valid format string.
 }
 \details{
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
