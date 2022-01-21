@@ -136,101 +136,13 @@ get_time_format <- function(time_style) {
 #' Are string values 24 hour times?
 #'
 #' Determine whether string values are representative of ISO 8601 time parts
-#' (in 24 hour time). Valid strings can be in the folowing formats: `hh::mm`,
+#' (in 24 hour time). Valid strings can be in the following formats: `hh::mm`,
 #' `hh::mm:ss`, and `hh::mm:ss.sss`.
 #'
 #' @noRd
 is_string_time <- function(x) {
 
   is.character(x) & grepl("^\\d{1,2}:\\d{2}(:\\d{2}(\\.\\d+)?)?$", x)
-}
-
-is_8601_datetime_str <- function(x) {
-
-  is.character(x) & (is_extended_8601_dt(x) | is_basic_8601_dt(x))
-}
-
-is_extended_8601_dt <- function(x) {
-
-  grepl("^[0-9]{4}-[0-9]{2}-[0-9]{2}(T| |t)([0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?|[0-9]{2}:[0-9]{2}|[0-9]{2})(|Z|z|(\\+|-)[0-9]{2}([:]?[0-9]{2})?)?$", x)
-}
-
-is_basic_8601_dt <- function(x) {
-
-  grepl("^[0-9]{8}T([0-9]{6}(\\.[0-9]+)?|[0-9]{4}|[0-9]{2})(|Z|(\\+|-)[0-9]{2}([:]?[0-9]{2})?)?$", x)
-}
-
-has_dt_tz <- function(x) {
-
-  grepl(".+(Z|z|(\\+|-)[0-9]{2}([:]?[0-9]{2})?)?$", x)
-}
-
-
-#' Normalize time zone information in any ISO-8601 compliant date-time strings
-#'
-#' ISO 8601 allows several ways to specify time zone information. The following
-#' syntax is allowed after the `<time>` part: (1) `<time>Z`, (2)
-#' `<time>(+|-)hh:mm`, (3) `<time>(+|-)hhmm`, and (4) `<time>(+|-)hh`. Having
-#' a `<time>` component is a requirement for having a time zone (standalone
-#' dates cannot have a time zone). R's `strptime()` only interprets time zones
-#' in strings (via `%z`) when they are in the `(+|-)hhmm` format (e.g.,
-#' `+0200`). The `normalize_dt_tz()` function takes date-time strings with or
-#' without a time zone included (ISO 8601 allows for unqualified 'local time',
-#' or, no UTC relation) and reformats the strings with normalized time zone
-#' designations. This function assumes that the strings have already been
-#' validated with `is_8601_string_datetime()` (which ensures general compliance
-#' with regard to syntax).
-#'
-#' @noRd
-normalize_dt_tz <- function(x) {
-
-  # Extract date-time component from time-zone
-  x_dt <- gsub("(.+?)(Z|z|(\\+|-)[0-9]{2}([:]?[0-9]{2})?)?$", "\\1", x)
-  x_tz <- gsub("(.+?)(Z|z|(\\+|-)[0-9]{2}([:]?[0-9]{2})?)?$", "\\2", x)
-
-  # Normalize the time zone to the TZ offset that `strptime()`
-  # requires for parsing with %z, which is (+|-)hhmm
-  x_tz <- gsub("^[zZ]$", "+0000", x_tz)  # z or Z -> +0000
-  x_tz <- gsub(":", "", x_tz)            # Removal of colon (assumes hh:mm)
-  x_tz <- gsub("^(\\+|-)([0-9]{2})$", "\\1\\200", x_tz) # (+|-)hh -> (+|-)hh00
-  x_tz <- gsub("^-0000$", "+0000", x_tz) # Correcting -0000 to +0000
-
-  paste0(x_dt, x_tz)
-}
-
-ordered_dt_formats <- function(x) {
-
-  c(
-    "%Y-%m-%dT%H:%M:%OS%z",
-    "%Y-%m-%d %H:%M:%OS%z",
-    "%Y-%m-%dt%H:%M:%OS%z",
-    "%Y-%m-%dT%H:%M:%OS",
-    "%Y-%m-%d %H:%M:%OS",
-    "%Y-%m-%dt%H:%M:%OS"
-  )
-}
-
-parse_8601_datetime_str <- function(x) {
-
-  dt_list <- list()
-
-  x <- normalize_dt_tz(x)
-
-  for (i in seq_along(x)) {
-
-    for (fmt in ordered_dt_formats()) {
-
-      dt_parsed <- strptime(x[i], format = fmt, tz = "UTC")
-
-      if (!is.na(dt_parsed)) {
-
-        dt_list <- append(dt_list, as.list(dt_parsed))
-        break
-      }
-    }
-  }
-
-  dt_list
 }
 
 check_format_string <- function(format) {
