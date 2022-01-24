@@ -207,6 +207,7 @@ test_that("the `tab_footnote()` function works correctly", {
   # its `text` column entirely populated with the footnote text
   dt_footnotes_get(data = tab) %>%
     dplyr::pull(footnotes) %>%
+    unlist() %>%
     unique() %>%
     expect_equal("Column labels and stub footnote.")
 
@@ -524,6 +525,7 @@ test_that("the `tab_footnote()` function works correctly", {
   # all five rows
   dt_footnotes_get(data = tab) %>%
     dplyr::pull(footnotes) %>%
+    unlist() %>%
     unique() %>%
     expect_equal("Five rows footnote.")
 
@@ -671,7 +673,7 @@ test_that("the footnotes table is structured correctly", {
   expect_equal(footnotes_tbl$colname, rep("msrp", 4))
   expect_equal(footnotes_tbl$colnum, rep(NA_integer_, 4))
   expect_equal(
-    footnotes_tbl$footnotes,
+    unlist(footnotes_tbl$footnotes),
     c("Average price for BMW and Audi.", "Average price for BMW and Audi.",
       "Maximum price across all cars.", "Minimum price across all cars.")
   )
@@ -702,7 +704,7 @@ test_that("the footnotes table is structured correctly", {
   expect_equal(footnotes_tbl$rownum, c(NA_integer_, NA_integer_))
   expect_equal(footnotes_tbl$colnum, c(NA_integer_, NA_integer_))
   expect_equal(
-    footnotes_tbl$footnotes,
+    unlist(footnotes_tbl$footnotes),
     c("All values in USD.", "Standard and Poor 500.")
   )
 

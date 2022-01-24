@@ -1086,7 +1086,7 @@ create_footnotes_component_h <- function(data) {
                   paste0(x, " ")
                 )
               ),
-              htmltools::HTML(footnote_text)
+              htmltools::HTML(process_text(footnote_text, context = "html"))
             )
           )
         }

@@ -619,7 +619,7 @@ tab_footnote <- function(data,
       set_footnote(
         loc = loc,
         data = data,
-        footnote = process_text(footnote)
+        footnote = footnote
       )
   }
 

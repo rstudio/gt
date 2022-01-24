@@ -1535,7 +1535,7 @@ create_footer_component_rtf <- function(data) {
     footnote_text <-
       vapply(
         footnote_text, FUN.VALUE = character(1), USE.NAMES = FALSE,
-        FUN = markdown_to_rtf
+        FUN = process_text, context = "rtf"
       )
 
     footnotes <- c()
@@ -1551,7 +1551,7 @@ create_footer_component_rtf <- function(data) {
               italic = TRUE,
               super_sub = "super",
               font_size = 10,
-              rtf_raw(markdown_to_rtf(footnote_mark[i]))
+              rtf_raw(footnote_mark[i])
             ),
             rtf_font(
               font_size = 10,
@@ -1573,12 +1573,6 @@ create_footer_component_rtf <- function(data) {
   # Create a formatted source notes string
   if (length(source_notes_vec) > 0) {
 
-    source_notes_vec <-
-      vapply(
-        source_notes_vec, FUN.VALUE = character(1), USE.NAMES = FALSE,
-        FUN = markdown_to_rtf
-      )
-
     source_notes <- c()
 
     for (i in seq_along(source_notes_vec)) {
@@ -1597,7 +1591,7 @@ create_footer_component_rtf <- function(data) {
     }
 
     if (source_notes_multiline) {
-      source_notes <- paste(source_notes, collapse = rtf_raw("\\line"))
+      source_notes <- paste(source_notes, collapse = "\\line")
     } else {
       source_notes <- paste(source_notes, collapse = source_notes_sep)
     }
