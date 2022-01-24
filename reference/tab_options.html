@@ -204,8 +204,9 @@ components, the subcomponents, and the element that can adjusted.</p>
   footnotes.border.lr.style <span class="op">=</span> <span class="cn">NULL</span>,
   footnotes.border.lr.width <span class="op">=</span> <span class="cn">NULL</span>,
   footnotes.border.lr.color <span class="op">=</span> <span class="cn">NULL</span>,
-  footnotes.sep <span class="op">=</span> <span class="cn">NULL</span>,
   footnotes.marks <span class="op">=</span> <span class="cn">NULL</span>,
+  footnotes.multiline <span class="op">=</span> <span class="cn">NULL</span>,
+  footnotes.sep <span class="op">=</span> <span class="cn">NULL</span>,
   source_notes.background.color <span class="op">=</span> <span class="cn">NULL</span>,
   source_notes.font.size <span class="op">=</span> <span class="cn">NULL</span>,
   source_notes.padding <span class="op">=</span> <span class="cn">NULL</span>,
@@ -215,6 +216,8 @@ components, the subcomponents, and the element that can adjusted.</p>
   source_notes.border.lr.style <span class="op">=</span> <span class="cn">NULL</span>,
   source_notes.border.lr.width <span class="op">=</span> <span class="cn">NULL</span>,
   source_notes.border.lr.color <span class="op">=</span> <span class="cn">NULL</span>,
+  source_notes.multiline <span class="op">=</span> <span class="cn">NULL</span>,
+  source_notes.sep <span class="op">=</span> <span class="cn">NULL</span>,
   row.striping.background_color <span class="op">=</span> <span class="cn">NULL</span>,
   row.striping.include_stub <span class="op">=</span> <span class="cn">NULL</span>,
   row.striping.include_table_body <span class="op">=</span> <span class="cn">NULL</span>
@@ -384,9 +387,6 @@ is <code>"1px"</code> instead of <code>"2px"</code>).</p></dd>
 <dt>footnotes.border.lr.style, footnotes.border.lr.width, footnotes.border.lr.color</dt>
 <dd><p>The style, width, and color properties for the left and right borders of
 the <code>footnotes</code> location.</p></dd>
-<dt>footnotes.sep</dt>
-<dd><p>The separating characters between adjacent footnotes in
-the footnotes section. The default value produces a linebreak.</p></dd>
 <dt>footnotes.marks</dt>
 <dd><p>The set of sequential marks used to reference and
 identify each of the footnotes (same input as the <code><a href="opt_footnote_marks.html">opt_footnote_marks()</a></code>
@@ -399,6 +399,17 @@ want to use numeric marks). We can use lowercase <code>"letters"</code> or upper
 <code>"LETTERS"</code>. There is the option for using a traditional symbol set where
 <code>"standard"</code> provides four symbols, and, <code>"extended"</code> adds two more
 symbols, making six.</p></dd>
+<dt>footnotes.multiline, source_notes.multiline</dt>
+<dd><p>An option to either put
+footnotes and source notes in separate lines (the default, or <code>TRUE</code>) or
+render them as a continuous line of text with <code>footnotes.sep</code> providing the
+separator (by default <code>" "</code>) between notes.</p></dd>
+<dt>footnotes.sep, source_notes.sep</dt>
+<dd><p>The separating characters between
+adjacent footnotes and source notes in their respective footer sections
+when rendered as a continuous line of text (when
+<code>footnotes.multiline == FALSE</code>). The default value is a single space
+character (<code>" "</code>).</p></dd>
 <dt>source_notes.border.bottom.style, source_notes.border.bottom.width, source_notes.border.bottom.color</dt>
 <dd><p>The style, width, and color properties for the bottom border of the
 <code>source_notes</code> location.</p></dd>
@@ -542,11 +553,11 @@ table body when striping rows.</p></dd>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, <a href="https://www.rstudio.com" class="external-link"><img src="https://www.tidyverse.org/rstudio-logo.svg" alt="RStudio" width="72"></a>.</p>
+  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, RStudio.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer></div>
