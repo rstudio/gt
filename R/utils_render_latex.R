@@ -365,7 +365,12 @@ create_footer_component_l <- function(data) {
     footnotes <-
       paste0(
         footnote_mark_to_latex(footnotes_tbl[["fs_id"]]),
-        unlist(lapply(footnotes_tbl[["footnotes"]], process_text, context = "latex"))
+        vapply(
+          footnotes_tbl[["footnotes"]],
+          FUN.VALUE = character(1),
+          FUN = process_text,
+          context = "latex"
+        )
       )
 
     if (footnotes_multiline) {
