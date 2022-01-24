@@ -16,7 +16,7 @@ Create a display table with summary rows.
 # Input table
 tbl <-
   dplyr::tribble(
-    ~groupname, ~rowname, ~value,  ~value_2,
+    ~group, ~rowname, ~value,  ~value_2,
     "A",        "1",      NA,      260.1,
     "A",        "2",      184.3,   84.4,
     "A",        "3",      342.3,   126.3,
@@ -26,13 +26,14 @@ tbl <-
     "B",        "3",      252.3,   732.5,
     "B",        "4",      344.7,   NA,
     "C",        "1",      197.2,   818.0,
-    "C",        "2",      284.3,   394.4)
+    "C",        "2",      284.3,   394.4
+  )
 ```
 
 Create a display table with summary rows.
 
 ```{r}
-gt(tbl) %>%
+gt(tbl, groupname_col = "group") %>%
   summary_rows(
     groups = c("A", "C"),
     columns = value,

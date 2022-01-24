@@ -5,12 +5,10 @@
 
 <!-- badges: start -->
 
-[![Lifecycle:
-maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/gt)](https://cran.r-project.org/package=gt)
 [![R build
-status](https://github.com/rstudio/gt/workflows/R-CMD-check/badge.svg)](https://github.com/rstudio/gt/actions?workflow=R-CMD-check)
+status](https://github.com/rstudio/gt/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rstudio/gt/actions)
 [![Coverage
 status](https://codecov.io/gh/rstudio/gt/branch/master/graph/badge.svg)](https://codecov.io/github/rstudio/gt?branch=master)
 <!-- badges: end -->
@@ -27,13 +25,12 @@ These include the *table header*, the *stub*, the *column labels* and
 
 </p>
 
-It all begins with preprocessed **table data** (be it a tibble or a data
-frame). You then decide how to compose your **gt table** with the
-elements and formatting you need for the task at hand. Finally, the
-table is rendered by printing it at the console, including it in an R
-Markdown document, or exporting to a file using `gtsave()`. Currently,
-**gt** supports **HTML** output, with **LaTeX** and **RTF** planned for
-the future.
+It all begins with **table data** (be it a tibble or a data frame). You
+then decide how to compose your **gt table** with the elements and
+formatting you need for the task at hand. Finally, the table is rendered
+by printing it at the console, including it in an R Markdown document,
+or exporting to a file using `gtsave()`. Currently, **gt** supports the
+**HTML**, **LaTeX**, and **RTF** output formats.
 
 <p align="center">
 
@@ -63,7 +60,7 @@ sp500 %>%
   gt() %>%
   tab_header(
     title = "S&P 500",
-    subtitle = glue::glue("{start_date} to {end_date}")
+    subtitle = glue("{start_date} to {end_date}")
   ) %>%
   fmt_date(
     columns = date,
@@ -136,12 +133,12 @@ contributes to this ecosystem:
     currency, dates/times + much more)
   - there is excellent, pain-free support for footnotes
   - the output is ‘camera-ready’
-  - it will eventually support multiple output formats (including LaTeX)
-    with the same declarative interface
+  - multiple output formats are supported with the same declarative
+    interface
   - the API closely follows tidyverse conventions by adhering to the
     [tidyverse style guide](https://style.tidyverse.org)
-  - a focus on making the package documentation and examples the best
-    they can be
+  - there’s a focus on making the package documentation and examples the
+    best they can be
   - rigorous QA/QC measures: high test coverage for automated tests, and
     thorough manual testing by QA engineers (with every proposed code
     change)

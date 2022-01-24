@@ -39,7 +39,7 @@ within (a 100 dpi PNG). We can easily experiment with any \code{ggplot2} plot
 object, and using it within \verb{ggplot_image(plot_object = <plot object>}
 evaluates to:
 
-\verb{<img cid=<random CID> src=<data URI> style=\\"height:100px;\\">}
+\verb{<img src=<data URI> style=\\"height:100px;\\">}
 
 where a height of \verb{100px} is a default height chosen to work well within the
 heights of most table rows. There is the option to modify the aspect ratio of

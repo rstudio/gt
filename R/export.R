@@ -297,6 +297,8 @@ gtsave_filename <- function(path, filename) {
 #'   clients over using CSS in a `<style>` block.
 #'
 #' @examples
+#' if (interactive()) {
+#'
 #' # Use `gtcars` to create a gt table;
 #' # add a header and then export as
 #' # HTML code with CSS inlined
@@ -319,6 +321,8 @@ gtsave_filename <- function(path, filename) {
 #' tab_html %>%
 #'   substr(1, 700) %>%
 #'   cat()
+#'
+#' }
 #'
 #' @family Export Functions
 #' @section Function ID:
@@ -362,6 +366,8 @@ as_raw_html <- function(data,
 #' @param data A table object that is created using the [gt()] function.
 #'
 #' @examples
+#' if (interactive()) {
+#'
 #' # Use `gtcars` to create a gt table;
 #' # add a header and then export as
 #' # an object with LaTeX code
@@ -385,6 +391,8 @@ as_raw_html <- function(data,
 #' tab_latex %>%
 #'   as.character() %>%
 #'   cat()
+#'
+#' }
 #'
 #' @family Export Functions
 #' @section Function ID:
@@ -413,11 +421,8 @@ as_latex <- function(data) {
   # Create the body component
   body_component <- create_body_component_l(data = data)
 
-  # Create the source notes component
-  source_notes_component <- create_source_note_component_l(data = data)
-
   # Create the footnotes component
-  footnotes_component <- create_footnotes_component_l(data = data)
+  footer_component <- create_footer_component_l(data = data)
 
   # Create a LaTeX fragment for the ending tabular statement
   table_end <- create_table_end_l()
@@ -438,8 +443,7 @@ as_latex <- function(data) {
     columns_component,
     body_component,
     table_end,
-    footnotes_component,
-    source_notes_component,
+    footer_component,
     collapse = ""
   ) %>%
     knitr::asis_output(meta = latex_packages)
@@ -458,6 +462,8 @@ as_latex <- function(data) {
 #'   or `"header"`. By default, page numbering is not active (`"none"`).
 #'
 #' @examples
+#' if (interactive()) {
+#'
 #' # Use `gtcars` to create a gt table;
 #' # add a header and then export as
 #' # RTF code
@@ -471,6 +477,8 @@ as_latex <- function(data) {
 #'     subtitle = md("`gtcars` is an R dataset")
 #'   ) %>%
 #'   as_rtf()
+#'
+#' }
 #'
 #' @family Export Functions
 #' @section Function ID:
@@ -499,11 +507,8 @@ as_rtf <- function(data,
   # Create the body component
   body_component <- create_body_component_rtf(data = data)
 
-  # Create the footnotes component
-  footnotes_component <- create_footnotes_component_rtf(data = data)
-
-  # Create the source notes component
-  source_notes_component <- create_source_notes_component_rtf(data = data)
+  # Create the footer component
+  footer_component <- create_footer_component_rtf(data = data)
 
   # Compose the RTF table
   rtf_table <-
@@ -515,8 +520,7 @@ as_rtf <- function(data,
               heading_component,
               columns_component,
               body_component,
-              footnotes_component,
-              source_notes_component
+              footer_component
             )
           )
         },

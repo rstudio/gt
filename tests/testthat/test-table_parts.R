@@ -1,5 +1,3 @@
-context("Ensuring that the creation of tab components works as expected")
-
 testthat::local_edition(3)
 
 # Create a shorter version of `mtcars`
@@ -924,7 +922,7 @@ test_that("a gt table contains custom styles at the correct locations", {
 
   # Expect that most stub cells are styled with a lightgray background
   tbl_html %>%
-    rvest::html_nodes("[class='gt_row gt_left gt_stub'][style='background-color: #D3D3D3;']") %>%
+    rvest::html_nodes("[class='gt_row gt_right gt_stub'][style='background-color: #D3D3D3;']") %>%
     rvest::html_text() %>%
     length() %>%
     expect_equal(31)

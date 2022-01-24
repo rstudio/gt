@@ -243,22 +243,21 @@ reorder_styles <- function(data) {
   stub_df <- dt_stub_df_get(data = data)
   styles_tbl <- dt_styles_get(data = data)
 
-  rownum_final <-
-    stub_df %>%
-    dplyr::pull(rownum_i) %>%
-    as.numeric()
+  rownum_final <- as.numeric(stub_df[, "rownum_i", drop = TRUE])
 
   for (i in seq_len(nrow(styles_tbl))) {
-    if (!is.na(styles_tbl[i, ][["rownum"]])) {
+
+    if (
+      !is.na(styles_tbl[i, ][["rownum"]]) &&
+      !grepl("summary_cells", styles_tbl[i, ][["locname"]])
+    ) {
 
       styles_tbl[i, ][["rownum"]] <-
         which(rownum_final == styles_tbl[i, ][["rownum"]])
     }
   }
 
-  data <- dt_styles_set(data = data, styles = styles_tbl)
-
-  data
+  dt_styles_set(data = data, styles = styles_tbl)
 }
 
 #' Perform merging of column contents
@@ -424,5 +423,75 @@ last_non_na <- function(vect) {
     return(NA_character_)
   } else {
     return(vect[max(positions)])
+  }
+}
+
+# Determine whether the table should have row labels
+# set within a column in the stub
+stub_rownames_has_column <- function(data) {
+
+  isTRUE("rowname" %in% dt_stub_components(data = data))
+}
+
+# Determine whether the table should have row group labels
+# set within a column in the stub
+stub_group_names_has_column <- function(data) {
+
+  # If there aren't any row groups then the result is always FALSE
+  if (nrow(dt_groups_rows_get(data = data)) < 1) {
+    return(FALSE)
+  }
+
+  # Given that there are row groups, we need to look at the option
+  # `row_group_as_column` to determine whether they populate a column
+  # located in the stub; if set as TRUE then that's the return value
+  dt_options_get_value(data = data, option = "row_group_as_column")
+}
+
+
+# Get the number of columns for the visible (not hidden) data; this
+# excludes the number of columns required for the table stub
+get_number_of_visible_data_columns <- function(data) {
+  length(dt_boxhead_get_vars_default(data = data))
+}
+
+get_effective_number_of_columns <- function(data) {
+
+  # Check if the table has been built, return an error if that's not the case
+  if (!dt_has_built(data)) {
+    stop(
+      "The `get_effective_number_of_columns()` function can only be used on ",
+      "gt objects that have tables 'built'."
+    )
+  }
+
+  # Obtain the number of visible columns in the built table
+  n_data_cols <- get_number_of_visible_data_columns(data = data)
+  n_data_cols + length(get_stub_layout(data))
+}
+
+get_stub_layout <- function(data) {
+
+  # Determine which stub components are potentially present as columns
+  stub_rownames_is_column <- stub_rownames_has_column(data = data)
+  stub_groupnames_is_column <- stub_group_names_has_column(data = data)
+
+  # Get the potential total number of columns in the table stub
+  n_stub_cols <- stub_rownames_is_column + stub_groupnames_is_column
+
+  # Resolve the layout of the stub (i.e., the roles of columns if present)
+  if (n_stub_cols == 0) {
+    # If summary rows are present, we will use the `rowname` column
+    # for the summary row labels
+    if (dt_summary_exists(data = data)) {
+      return("rowname")
+    } else {
+      return(NULL)
+    }
+  } else {
+    c(
+      if (stub_groupnames_is_column) "group_label",
+      if (stub_rownames_is_column) "rowname"
+    )
   }
 }
