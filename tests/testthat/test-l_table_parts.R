@@ -210,7 +210,7 @@ test_that("a gt table contains the expected column spanner labels", {
     expect_snapshot()
 })
 
-# test_that("a gt table contains the expected source note", {
+test_that("a gt table contains the expected source note", {
 
   # Create a `tbl_latex` object with `gt()`; this table
   # contains a source note
@@ -238,18 +238,12 @@ test_that("a gt table contains the expected column spanner labels", {
       source_note = "This was in Motor Trend magazine, hence the `mt`."
     )
 
-  # Expect a characteristic pattern
-  # grepl(
-  #   paste0(
-  #     ".*begin\\{minipage\\}",
-  #     ".*emph\\{Henderson and Velleman\\} \\(1981\\)\\.",
-  #     ".*This was in Motor Trend magazine, hence the `mt`.",
-  #     ".*end\\{minipage\\}",
-  #     ".*"),
-  #   tbl_latex %>% as_latex() %>% as.character()
-  # ) %>%
-  #   expect_true()
-# })
+  # Expect that both source notes will be correctly produced
+  tbl_latex %>%
+    as_latex() %>%
+    as.character() %>%
+    expect_snapshot()
+})
 
 test_that("a gt table contains the correct placement of row groups", {
 

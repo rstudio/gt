@@ -923,7 +923,7 @@ test_that("styles are correctly applied to HTML output with location functions",
   gt_tbl_cells_footnotes_1 %>%
     render_as_html() %>%
     tidy_grepl(
-      "<tr class=\"gt_footnotes\" style=\"background-color: #FF0000;\">"
+      "<td class=\"gt_footnote\" style=\"background-color: #FF0000;\""
     ) %>%
     expect_true()
 

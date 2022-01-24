@@ -60,10 +60,23 @@ create_table_start_l <- function(data) {
   # Get default alignments for body columns
   col_alignment <- dt_boxhead_get_vars_align_default(data = data)
 
+  # Determine if there are any footnotes or source notes; if any,
+  # add a `\setlength` command that will pull up the minipage environment
+  # for the footnotes block
+  if (
+    nrow(dt_footnotes_get(data = data)) > 0 ||
+    length(dt_source_notes_get(data = data)) > 0
+  ) {
+    longtable_post_length <- "\\setlength{\\LTpost}{0mm}\n"
+  } else {
+    longtable_post_length <- ""
+  }
+
   # Generate setup statements for table including default right
   # alignments and vertical lines for any stub columns
   paste0(
     "\\captionsetup[table]{labelformat=empty,skip=1pt}\n",
+    longtable_post_length,
     "\\begin{longtable}{",
     if (length(stub_layout) > 0) {
       paste0(rep("r|", length(stub_layout)), collapse = "")
@@ -324,70 +337,71 @@ create_table_end_l <- function() {
 }
 
 #' @noRd
-create_footnotes_component_l <- function(data) {
+create_footer_component_l <- function(data) {
 
   footnotes_tbl <- dt_footnotes_get(data = data)
-  opts_df <- dt_options_get(data = data)
+  source_notes_vec <- dt_source_notes_get(data = data)
 
-  # If the `footnotes_resolved` object has no
-  # rows, then return an empty footnotes component
-  if (nrow(footnotes_tbl) == 0) {
+  # If there are no footnotes or source notes, return an empty string
+  if (nrow(footnotes_tbl) == 0 && length(source_notes_vec) == 0) {
     return("")
   }
 
-  footnotes_tbl <-
-    footnotes_tbl %>%
-    dplyr::select(fs_id, footnotes) %>%
-    dplyr::distinct()
+  # Get the multiline and separator options for footnotes and source notes
+  footnotes_multiline <- dt_options_get_value(data = data, option = "footnotes_multiline")
+  footnotes_sep <- dt_options_get_value(data = data, option = "footnotes_sep")
+  source_notes_multiline <- dt_options_get_value(data = data, option = "source_notes_multiline")
+  source_notes_sep <- dt_options_get_value(data = data, option = "source_notes_sep")
 
-  # Get the separator option from `opts_df`
-  separator <-
-    opts_df %>%
-    dplyr::filter(parameter == "footnotes_sep") %>%
-    dplyr::pull(value)
+  # Create a formatted footnotes string
+  if (nrow(footnotes_tbl) > 0) {
 
-  # Convert an HTML break tag to a Latex line break
-  separator <-
-    separator %>%
-    tidy_gsub("<br\\s*?(/|)>", "\\newline") %>%
-    tidy_gsub("&nbsp;", " ")
+    footnotes_tbl <-
+      footnotes_tbl %>%
+      dplyr::select(fs_id, footnotes) %>%
+      dplyr::distinct()
 
-  # Create the footnotes block
+    # Create a vector of formatted footnotes
+    footnotes <-
+      paste0(
+        footnote_mark_to_latex(footnotes_tbl[["fs_id"]]),
+        vapply(
+          footnotes_tbl[["footnotes"]],
+          FUN.VALUE = character(1),
+          FUN = process_text,
+          context = "latex"
+        )
+      )
+
+    if (footnotes_multiline) {
+      footnotes <- paste(footnotes, collapse = "\\\\\n") %>% paste_right("\\\\\n")
+    } else {
+      footnotes <- paste(footnotes, collapse = footnotes_sep) %>% paste_right("\\\\\n")
+    }
+  } else {
+    footnotes <- ""
+  }
+
+  # Create a formatted source notes string
+  if (length(source_notes_vec) > 0) {
+
+    if (source_notes_multiline) {
+      source_notes <- paste(source_notes_vec, collapse = "\\\\\n") %>% paste_right("\\\\\n")
+    } else {
+      source_notes <- paste(source_notes_vec, collapse = source_notes_sep) %>% paste_right("\\\\\n")
+    }
+
+  } else {
+    source_notes <- ""
+  }
+
+  # Create the footer block
   paste0(
-    "\\vspace{-5mm}\n",
     "\\begin{minipage}{\\linewidth}\n",
-    paste0(
-      footnote_mark_to_latex(footnotes_tbl[["fs_id"]]),
-      footnotes_tbl[["footnotes"]] %>%
-        unescape_html() %>%
-        markdown_to_latex(), " \\\\ \n", collapse = ""),
+    paste0(footnotes, source_notes),
     "\\end{minipage}\n",
     collapse = ""
   )
-}
-
-#' @noRd
-create_source_note_component_l <- function(data) {
-
-  source_note <- dt_source_notes_get(data = data)
-
-  # If the `footnotes_resolved` object has no
-  # rows, then return an empty footnotes component
-  if (length(source_note) == 0) {
-    return("")
-  }
-
-  source_note <- source_note[[1]]
-
-  # Create the source notes block
-  source_note_component <-
-    paste0(
-      "\\begin{minipage}{\\linewidth}\n",
-      paste0(
-        source_note %>% as.character(), "\\\\ \n", collapse = ""),
-      "\\end{minipage}\n", collapse = "")
-
-  source_note_component
 }
 
 # Function to build a vector of `group` rows in the table body
