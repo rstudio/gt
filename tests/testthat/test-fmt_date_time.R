@@ -596,6 +596,50 @@ test_that("the `fmt_datetime()` function works correctly", {
     )
   }
 
+  # Using a string to represent a date or date-time doesn't allow the
+  # output time to be altered by `tz`
+  expect_equivalent(
+    gt_tables[[1]] %>% # table where `datetime` column was `character`
+      fmt_datetime(
+        columns = "datetime",
+        format = "%B %d, %Y %H:%M:%S (%z)", tz = "GMT"
+      ) %>% render_formats_test(context = "default"),
+    gt_tables[[1]] %>%
+      fmt_datetime(
+        columns = "datetime",
+        format = "%B %d, %Y %H:%M:%S (%z)", tz = "America/Toronto"
+      ) %>% render_formats_test(context = "default")
+  )
+
+  # Using a POSIXct-formatted date-time *does* allow
+  # the output time to be altered by changing `tz`
+  expect_equal(
+    (gt_tables[[2]] %>%
+       fmt_datetime(
+         columns = "datetime",
+         format = "%B %d, %Y %H:%M:%S (%z)", tz = "America/Toronto"
+       ) %>%
+       render_formats_test(context = "default"))[["datetime"]],
+    c(
+      "June 10, 2017 08:35:23 (-0400)", "July 12, 2017 11:01:34 (-0400)",
+      "August 05, 2017 05:45:23 (-0400)", "October 22, 2017 21:32:00 (-0400)",
+      "December 31, 1999 19:00:00 (-0500)"
+    )
+  )
+  expect_equal(
+    (gt_tables[[2]] %>%
+       fmt_datetime(
+         columns = "datetime",
+         format = "%B %d, %Y %H:%M:%S (%z)", tz = "Asia/Tokyo"
+       ) %>%
+       render_formats_test(context = "default"))[["datetime"]],
+    c(
+      "June 10, 2017 21:35:23 (+0900)", "July 13, 2017 00:01:34 (+0900)",
+      "August 05, 2017 18:45:23 (+0900)", "October 23, 2017 10:32:00 (+0900)",
+      "January 01, 2000 09:00:00 (+0900)"
+    )
+  )
+
   # Create a gt table with a `time` column containing valid time strings
   tab_3 <-
     dplyr::tibble(time = c(
