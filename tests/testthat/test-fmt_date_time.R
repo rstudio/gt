@@ -640,6 +640,58 @@ test_that("the `fmt_datetime()` function works correctly", {
     )
   )
 
+  # Create a table with datetime values set in JST
+  datetime_jst_tbl <-
+    dplyr::tibble(datetime = c(
+      "2017-10-15 12:35:23", "2013-02-22 15:01:34",
+      "2014-09-22 09:45:23", "2018-01-10 01:32:00"
+    )) %>%
+    dplyr::mutate(datetime = lubridate::ymd_hms(datetime, tz = "Asia/Tokyo"))
+
+  # Expect that the default display of date-time values matches the input
+  # date-time values
+  expect_equal(
+    (datetime_jst_tbl %>%
+       gt() %>%
+       render_formats_test(context = "default"))[["datetime"]],
+    c(
+      "2017-10-15 12:35:23", "2013-02-22 15:01:34",
+      "2014-09-22 09:45:23", "2018-01-10 01:32:00"
+    )
+  )
+
+  # Expect that the display of date-time values and time zone is correct
+  # since the `tz` matches the input time zone
+  expect_equal(
+    (datetime_jst_tbl %>%
+       gt() %>%
+       fmt_datetime(
+         columns = "datetime",
+         format = "%B %d, %Y %H:%M:%S (%z)", tz = "Asia/Tokyo"
+       ) %>%
+       render_formats_test(context = "default"))[["datetime"]],
+    c(
+      "October 15, 2017 12:35:23 (+0900)", "February 22, 2013 15:01:34 (+0900)",
+      "September 22, 2014 09:45:23 (+0900)", "January 10, 2018 01:32:00 (+0900)"
+    )
+  )
+
+  # Expect that the display of date-time values can be moved to a different
+  # time zone using the output `tz` of "America/Toronto"
+  expect_equal(
+    (datetime_jst_tbl %>%
+       gt() %>%
+       fmt_datetime(
+         columns = "datetime",
+         format = "%B %d, %Y %H:%M:%S (%z)", tz = "America/Toronto"
+       ) %>%
+       render_formats_test(context = "default"))[["datetime"]],
+    c(
+      "October 14, 2017 23:35:23 (-0400)", "February 22, 2013 01:01:34 (-0500)",
+      "September 21, 2014 20:45:23 (-0400)", "January 09, 2018 11:32:00 (-0500)"
+    )
+  )
+
   # Create a gt table with a `time` column containing valid time strings
   tab_3 <-
     dplyr::tibble(time = c(
