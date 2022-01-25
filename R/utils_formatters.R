@@ -313,16 +313,10 @@ format_num_to_str_c <- function(x,
 #'
 #' @param x Numeric values in `character` form.
 #' @param context The output context.
-#' @param active Whether or not this formatting should be active.
 #'
 #' @noRd
 to_latex_math_mode <- function(x,
-                               context,
-                               active = TRUE) {
-
-  if (!active) {
-    return(x)
-  }
+                               context) {
 
   if (context != "latex") {
     return(x)
@@ -756,7 +750,7 @@ num_fmt_factory <- function(context,
       # Format all non-NA x values with a formatting function
       format_fn(context = context) %>%
       # If in a LaTeX context, wrap values in math mode
-      to_latex_math_mode(context = context, active = use_latex_math_mode) %>%
+      { if (use_latex_math_mode) to_latex_math_mode(., context = context) else . } %>%
       # Handle formatting of pattern
       apply_pattern_fmt_x(pattern = pattern)
 

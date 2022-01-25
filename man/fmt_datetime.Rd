@@ -12,7 +12,7 @@ fmt_datetime(
   time_style = 2,
   sep = " ",
   format = NULL,
-  tz = "UTC",
+  tz = NULL,
   pattern = "{x}"
 )
 }
@@ -54,11 +54,10 @@ If used then the arguments governing preset styles (\code{date_style} and
 string.}
 
 \item{tz}{The time zone for printing dates/times (i.e., the output). The
-default of \code{"UTC"} will render dates/times in UTC (and this matches the
-\strong{lubridate} package default for parsing date-times). If providing a
-different time zone, it must be one that is recognized by the user's
-operating system (a vector of all valid \code{tz} values can be produced with
-\code{\link[=OlsonNames]{OlsonNames()}}).}
+default of \code{NULL} will preserve the time zone of the input data in the
+output. If providing a time zone, it must be one that is recognized by the
+user's operating system (a vector of all valid \code{tz} values can be produced
+with \code{\link[=OlsonNames]{OlsonNames()}}).}
 
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other
@@ -70,7 +69,7 @@ An object of class \code{gt_tbl}.
 \description{
 Format input values to date-time values using one of fourteen presets for the
 date component and one of five presets for the time component. Input can be
-in the form of \code{POSIXt} (i.e., date-times), the \code{Date} type, or \code{character}
+in the form of \code{POSIXct} (i.e., date-times), the \code{Date} type, or \code{character}
 (must be in the ISO 8601 form of \verb{YYYY-MM-DD HH:MM:SS} or \code{YYYY-MM-DD}).
 
 Once the appropriate data cells are targeted with \code{columns} (and, optionally,

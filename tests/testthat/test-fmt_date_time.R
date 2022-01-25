@@ -548,7 +548,7 @@ test_that("the `fmt_datetime()` function works correctly", {
     expect_equal(
       (tab %>%
          fmt_datetime(
-           columns = "datetime", format = "%F", tz = "GMT"
+           columns = "datetime", format = "%F", tz = NULL
          ) %>%
          render_formats_test(context = "default"))[["datetime"]],
       c("2017-06-10", "2017-07-12", "2017-08-05", "2017-10-23", "2000-01-01")
@@ -557,7 +557,7 @@ test_that("the `fmt_datetime()` function works correctly", {
     expect_equal(
       (tab %>%
          fmt_datetime(
-           columns = "datetime", format = "%B %d, %Y %H:%M:%S", tz = "GMT"
+           columns = "datetime", format = "%B %d, %Y %H:%M:%S", tz = NULL
          ) %>%
          render_formats_test(context = "default"))[["datetime"]],
       c(
@@ -571,7 +571,7 @@ test_that("the `fmt_datetime()` function works correctly", {
       (tab %>%
          fmt_datetime(
            columns = "datetime", date_style = 2, time_style = 2,
-           format = "%B %d, %Y %H:%M:%S", tz = "GMT"
+           format = "%B %d, %Y %H:%M:%S", tz = NULL
          ) %>%
          render_formats_test(context = "default"))[["datetime"]],
       c(
@@ -585,7 +585,7 @@ test_that("the `fmt_datetime()` function works correctly", {
       (tab %>%
          fmt_datetime(
            columns = "datetime",
-           format = "%B %d, %Y %H:%M:%S (%z)", tz = "GMT"
+           format = "%B %d, %Y %H:%M:%S (%z)", tz = NULL
          ) %>%
          render_formats_test(context = "default"))[["datetime"]],
       c(

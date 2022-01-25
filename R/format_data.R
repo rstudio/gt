@@ -1652,8 +1652,8 @@ fmt_time <- function(data,
 
           time <- gsub("^0", "", time)
           time <- gsub(" 0([0-9])", " \\1", time)
-          time <- gsub("pm$", "PM", time)
-          time <- gsub("am$", "AM", time)
+          time <- gsub("\\bpm\\b$", "PM", time)
+          time <- gsub("\\bam\\b$", "AM", time)
         }
 
         time
@@ -1667,7 +1667,7 @@ fmt_time <- function(data,
 #' @description
 #' Format input values to date-time values using one of fourteen presets for the
 #' date component and one of five presets for the time component. Input can be
-#' in the form of `POSIXt` (i.e., date-times), the `Date` type, or `character`
+#' in the form of `POSIXct` (i.e., date-times), the `Date` type, or `character`
 #' (must be in the ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or `YYYY-MM-DD`).
 #'
 #' Once the appropriate data cells are targeted with `columns` (and, optionally,
@@ -1772,11 +1772,10 @@ fmt_time <- function(data,
 #'   `time_style`) will be ignored in favor of formatting via the `format`
 #'   string.
 #' @param tz The time zone for printing dates/times (i.e., the output). The
-#'   default of `"UTC"` will render dates/times in UTC (and this matches the
-#'   **lubridate** package default for parsing date-times). If providing a
-#'   different time zone, it must be one that is recognized by the user's
-#'   operating system (a vector of all valid `tz` values can be produced with
-#'   [OlsonNames()]).
+#'   default of `NULL` will preserve the time zone of the input data in the
+#'   output. If providing a time zone, it must be one that is recognized by the
+#'   user's operating system (a vector of all valid `tz` values can be produced
+#'   with [OlsonNames()]).
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -1812,7 +1811,7 @@ fmt_datetime <- function(data,
                          time_style = 2,
                          sep = " ",
                          format = NULL,
-                         tz = "UTC",
+                         tz = NULL,
                          pattern = "{x}") {
 
   # Perform input object validation
@@ -1838,11 +1837,11 @@ fmt_datetime <- function(data,
     !column_classes_are_valid(
       data = data,
       columns = {{ columns }},
-      valid_classes = c("Date", "POSIXt", "character"))
+      valid_classes = c("Date", "POSIXct", "character"))
     ) {
       stop(
         "The `fmt_datetime()` function can only be used on `columns` of certain types:\n",
-        "* Allowed types are `Date`, `POSIXt`, and `character` (in ISO 8601 format).",
+        "* Allowed types are `Date`, `POSIXct`, and `character` (in ISO 8601 format).",
         call. = FALSE
       )
   }
@@ -1867,6 +1866,11 @@ fmt_datetime <- function(data,
           # input that will works with `strftime()`
           if (all(is_string_time(x))) {
             x <- paste("1970-01-01", x)
+
+          }
+
+          if (is.character(x) && is.null(tz)) {
+            tz <- ""
           }
 
           # Format the date-time values using `strftime()`
@@ -1881,7 +1885,7 @@ fmt_datetime <- function(data,
         # if the values cannot be parsed by `as.POSIXlt()`
         datetime <-
           tryCatch(
-            as.POSIXlt(x, tz = tz),
+            as.POSIXlt(x),
             error = function(cond) {
               stop(
                 "One or more of the provided date/date-time values are invalid.",
@@ -1914,8 +1918,8 @@ fmt_datetime <- function(data,
 
           time <- gsub("^0", "", time)
           time <- gsub(" 0([0-9])", " \\1", time)
-          time <- gsub("pm$", "PM", time)
-          time <- gsub("am$", "AM", time)
+          time <- gsub("\\bpm\\b$", "PM", time)
+          time <- gsub("\\bam\\b$", "AM", time)
         }
 
         paste(date, time, sep = sep)
