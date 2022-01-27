@@ -131,7 +131,9 @@ according the locale's rules. Examples include \code{"en_US"} for English
 (United States) and \code{"fr_FR"} for French (France). The use of a valid
 locale ID will override any values provided in \code{sep_mark} and \code{dec_mark}.
 We can use the \code{\link[=info_locales]{info_locales()}} function as a useful reference for all of
-the locales that are supported.}
+the locales that are supported. Any \code{locale} value provided here will
+override any global locale setting performed in \code{\link[=gt]{gt()}}'s own \code{locale}
+argument.}
 }
 \value{
 An object of class \code{gt_tbl}.

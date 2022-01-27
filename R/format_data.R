@@ -97,7 +97,9 @@
 #'   (United States) and `"fr_FR"` for French (France). The use of a valid
 #'   locale ID will override any values provided in `sep_mark` and `dec_mark`.
 #'   We can use the [info_locales()] function as a useful reference for all of
-#'   the locales that are supported.
+#'   the locales that are supported. Any `locale` value provided here will
+#'   override any global locale setting performed in [gt()]'s own `locale`
+#'   argument.
 #'
 #' @return An object of class `gt_tbl`.
 #'
