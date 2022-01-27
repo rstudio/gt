@@ -72,6 +72,7 @@ Collate:
     'dt_groups_rows.R'
     'dt_has_built.R'
     'dt_heading.R'
+    'dt_locale.R'
     'dt_options.R'
     'dt_row_groups.R'
     'dt_source_notes.R'

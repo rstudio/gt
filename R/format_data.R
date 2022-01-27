@@ -168,12 +168,16 @@ fmt_number <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
+  # Resolve the `locale` by choosing the default (possibly set in `gt()`) or
+  # overriding with the `locale` set here
+  locale <- resolve_locale(data = data, locale = locale)
+
+  # Stop function if `locale` does not have a valid value
+  validate_locale(locale = locale)
+
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
   dec_mark <- get_locale_dec_mark(locale, dec_mark)
-
-  # Stop function if `locale` does not have a valid value
-  validate_locale(locale)
 
   # Normalize the `suffixing` input to either return a character vector
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
@@ -446,12 +450,16 @@ fmt_scientific <- function(data,
   suffixing <- FALSE
   use_seps <- TRUE
 
-  # Use locale-based marks if a locale ID is provided
-  sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
-  dec_mark <- get_locale_dec_mark(locale, dec_mark)
+  # Resolve the `locale` by choosing the default (possibly set in `gt()`) or
+  # overriding with the `locale` set here
+  locale <- resolve_locale(data = data, locale = locale)
 
   # Stop function if `locale` does not have a valid value
   validate_locale(locale = locale)
+
+  # Use locale-based marks if a locale ID is provided
+  sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
+  dec_mark <- get_locale_dec_mark(locale, dec_mark)
 
   # Normalize the `suffixing` input to either return a character vector
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
@@ -623,12 +631,16 @@ fmt_engineering <- function(data,
   suffixing <- FALSE
   use_seps <- TRUE
 
-  # Use locale-based marks if a locale ID is provided
-  sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
-  dec_mark <- get_locale_dec_mark(locale, dec_mark)
+  # Resolve the `locale` by choosing the default (possibly set in `gt()`) or
+  # overriding with the `locale` set here
+  locale <- resolve_locale(data = data, locale = locale)
 
   # Stop function if `locale` does not have a valid value
   validate_locale(locale = locale)
+
+  # Use locale-based marks if a locale ID is provided
+  sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
+  dec_mark <- get_locale_dec_mark(locale, dec_mark)
 
   # Normalize the `suffixing` input to either return a character vector
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
@@ -760,9 +772,6 @@ fmt_symbol <- function(data,
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
   dec_mark <- get_locale_dec_mark(locale, dec_mark)
-
-  # Stop function if `locale` does not have a valid value
-  validate_locale(locale = locale)
 
   # Normalize the `suffixing` input to either return a character vector
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
@@ -950,6 +959,13 @@ fmt_percent <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
+  # Resolve the `locale` by choosing the default (possibly set in `gt()`) or
+  # overriding with the `locale` set here
+  locale <- resolve_locale(data = data, locale = locale)
+
+  # Stop function if `locale` does not have a valid value
+  validate_locale(locale = locale)
+
   # Stop function if any columns have data that is incompatible
   # with this formatter
   if (
@@ -1125,6 +1141,13 @@ fmt_currency <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
+  # Resolve the `locale` by choosing the default (possibly set in `gt()`) or
+  # overriding with the `locale` set here
+  locale <- resolve_locale(data = data, locale = locale)
+
+  # Stop function if `locale` does not have a valid value
+  validate_locale(locale = locale)
+
   # Stop function if any columns have data that is incompatible
   # with this formatter
   if (
@@ -1265,6 +1288,13 @@ fmt_bytes <- function(data,
   stop_if_not_gt(data = data)
 
   standard <- match.arg(standard)
+
+  # Resolve the `locale` by choosing the default (possibly set in `gt()`) or
+  # overriding with the `locale` set here
+  locale <- resolve_locale(data = data, locale = locale)
+
+  # Stop function if `locale` does not have a valid value
+  validate_locale(locale = locale)
 
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)

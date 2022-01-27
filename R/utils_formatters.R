@@ -34,9 +34,11 @@ validate_locale <- function(locale) {
   # Stop function if the `locale` provided
   # isn't a valid one
   if (!is.null(locale) && !(locale %in% locales$base_locale_id)) {
-    stop("The supplied `locale` is not available in the list of supported locales.\n",
-         " * Use the `info_locales()` function to see which locales can be used.",
-         call. = FALSE)
+    stop(
+      "The supplied `locale` is not available in the list of supported locales.\n",
+      " * Use the `info_locales()` function to see which locales can be used.",
+      call. = FALSE
+    )
   }
 }
 
@@ -121,6 +123,15 @@ get_locale_dec_mark <- function(locale = NULL,
   # Get the correct `dec_sep` value from the
   # `gt:::locales` lookup table
   filter_table_to_value(locales, dec_sep, base_locale_id == locale)
+}
+
+resolve_locale <- function(data, locale) {
+
+  if (is.null(locale)) {
+    locale <- dt_locale_get_value(data = data)
+  }
+
+  locale
 }
 
 #' Determine which numbers in scientific notation would be zero order
