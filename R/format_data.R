@@ -170,12 +170,8 @@ fmt_number <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Resolve the `locale` by choosing the default (possibly set in `gt()`) or
-  # overriding with the `locale` set here
+  # Resolve the `locale` value here with the global locale value
   locale <- resolve_locale(data = data, locale = locale)
-
-  # Stop function if `locale` does not have a valid value
-  validate_locale(locale = locale)
 
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
@@ -452,12 +448,8 @@ fmt_scientific <- function(data,
   suffixing <- FALSE
   use_seps <- TRUE
 
-  # Resolve the `locale` by choosing the default (possibly set in `gt()`) or
-  # overriding with the `locale` set here
+  # Resolve the `locale` value here with the global locale value
   locale <- resolve_locale(data = data, locale = locale)
-
-  # Stop function if `locale` does not have a valid value
-  validate_locale(locale = locale)
 
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
@@ -633,12 +625,8 @@ fmt_engineering <- function(data,
   suffixing <- FALSE
   use_seps <- TRUE
 
-  # Resolve the `locale` by choosing the default (possibly set in `gt()`) or
-  # overriding with the `locale` set here
+  # Resolve the `locale` value here with the global locale value
   locale <- resolve_locale(data = data, locale = locale)
-
-  # Stop function if `locale` does not have a valid value
-  validate_locale(locale = locale)
 
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
@@ -961,12 +949,8 @@ fmt_percent <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Resolve the `locale` by choosing the default (possibly set in `gt()`) or
-  # overriding with the `locale` set here
+  # Resolve the `locale` value here with the global locale value
   locale <- resolve_locale(data = data, locale = locale)
-
-  # Stop function if `locale` does not have a valid value
-  validate_locale(locale = locale)
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
@@ -1143,12 +1127,8 @@ fmt_currency <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Resolve the `locale` by choosing the default (possibly set in `gt()`) or
-  # overriding with the `locale` set here
+  # Resolve the `locale` value here with the global locale value
   locale <- resolve_locale(data = data, locale = locale)
-
-  # Stop function if `locale` does not have a valid value
-  validate_locale(locale = locale)
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
@@ -1291,12 +1271,8 @@ fmt_bytes <- function(data,
 
   standard <- match.arg(standard)
 
-  # Resolve the `locale` by choosing the default (possibly set in `gt()`) or
-  # overriding with the `locale` set here
+  # Resolve the `locale` value here with the global locale value
   locale <- resolve_locale(data = data, locale = locale)
-
-  # Stop function if `locale` does not have a valid value
-  validate_locale(locale = locale)
 
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)

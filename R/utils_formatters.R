@@ -125,11 +125,25 @@ get_locale_dec_mark <- function(locale = NULL,
   filter_table_to_value(locales, dec_sep, base_locale_id == locale)
 }
 
+#' Resolve the locale in functions with a `locale` argument
+#'
+#' This performs locale resolution since the default locale (possibly set in
+#' `gt()`) can be overridden with a `locale` set in a downstream function.
+#' This performs a final validation of the resolved locale to ensure it has a
+#' supported value.
+#'
+#' @param data The gt object.
+#' @param locale The user-supplied `locale` value, found in several `fmt_*()`
+#'   functions. This is expected as `NULL` if not supplied by the user.
+#'
+#' @noRd
 resolve_locale <- function(data, locale) {
 
   if (is.null(locale)) {
     locale <- dt_locale_get_value(data = data)
   }
+
+  validate_locale(locale = locale)
 
   locale
 }
