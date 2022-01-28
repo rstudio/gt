@@ -1,6 +1,4 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
 # gt <img src="man/figures/logo.svg" align="right" height="250px" />
 
 <!-- badges: start -->
