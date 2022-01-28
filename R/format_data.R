@@ -30,9 +30,9 @@
 #'   focused on selections. The select helper functions are: [starts_with()],
 #'   [ends_with()], [contains()], [matches()], [one_of()], [num_range()], and
 #'   [everything()].
-#' @param rows Optional rows to format. Providing either [everything()] (the
-#'   default) or `TRUE` results in all rows in `columns` being formatted. Can
-#'   either be a vector of row captions provided in [c()], a vector of row
+#' @param rows Optional rows to format. Providing [everything()] (the
+#'   default) results in all rows in `columns` being formatted. Alternatively,
+#'   we can supply a vector of row captions within [c()], a vector of row
 #'   indices, or a helper function focused on selections. The select helper
 #'   functions are: [starts_with()], [ends_with()], [contains()], [matches()],
 #'   [one_of()], [num_range()], and [everything()]. We can also use expressions
