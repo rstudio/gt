@@ -65,6 +65,17 @@ reference:
     - text_transform
     - data_color
 
+  - title: Data Format Specifications
+    desc: >
+      Each `fmt_*()` function uses a corresponding `gt_spec_*()` function under
+      the hood. Columns in the raw data can choose their formatting early
+      using `gt_vctr()` with a data format specification, it will be picked up
+      automatically by `gt()` and also when such a column is used in a ggplot2
+      scale.
+    contents:
+    - gt_spec_number
+    - gt_vctr
+
   - title: Modify Columns
     desc: >
       The `cols_*()` functions allow for modifications that act on entire
