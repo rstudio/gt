@@ -792,3 +792,81 @@ test_that("Escapable characters in rownames are handled correctly in each output
     fixed = TRUE
   )
 })
+
+
+test_that("Default locale settings are honored by formatting functions", {
+
+  exibble_1 <- exibble[7, 1]
+
+  # `fmt_number()`
+  (exibble_1 %>% gt() %>% fmt_number(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
+    expect_equal("777,000.00")
+  (exibble_1 %>% gt(locale = "fr") %>% fmt_number(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
+    expect_equal("777 000,00")
+  (exibble_1 %>% gt(locale = "en") %>% fmt_number(num, locale = "fr") %>% render_formats_test(context = "plain"))[["num"]] %>%
+    expect_equal("777 000,00")
+  (exibble_1 %>% gt(locale = "fr") %>% fmt_number(num, locale = "de") %>% render_formats_test(context = "plain"))[["num"]] %>%
+    expect_equal("777.000,00")
+
+  # `fmt_integer()`
+  (exibble_1 %>% gt() %>% fmt_integer(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
+    expect_equal("777,000")
+  (exibble_1 %>% gt(locale = "fr") %>% fmt_integer(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
+    expect_equal("777 000")
+  (exibble_1 %>% gt(locale = "en") %>% fmt_integer(num, locale = "fr") %>% render_formats_test(context = "plain"))[["num"]] %>%
+    expect_equal("777 000")
+  (exibble_1 %>% gt(locale = "fr") %>% fmt_integer(num, locale = "de") %>% render_formats_test(context = "plain"))[["num"]] %>%
+    expect_equal("777.000")
+
+  # `fmt_scientific()`
+  (exibble_1 %>% gt() %>% fmt_scientific(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
+    expect_equal("7.77 x 10(5)")
+  (exibble_1 %>% gt(locale = "fr") %>% fmt_scientific(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
+    expect_equal("7,77 x 10(5)")
+  (exibble_1 %>% gt(locale = "en") %>% fmt_scientific(num, locale = "fr") %>% render_formats_test(context = "plain"))[["num"]] %>%
+    expect_equal("7,77 x 10(5)")
+  (exibble_1 %>% gt(locale = "fr") %>% fmt_scientific(num, locale = "de") %>% render_formats_test(context = "plain"))[["num"]] %>%
+    expect_equal("7,77 x 10(5)")
+
+  # `fmt_engineering()`
+  (exibble_1 %>% gt() %>% fmt_engineering(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
+    expect_equal("777.00 x 10(3)")
+  (exibble_1 %>% gt(locale = "fr") %>% fmt_engineering(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
+    expect_equal("777,00 x 10(3)")
+  (exibble_1 %>% gt(locale = "en") %>% fmt_engineering(num, locale = "fr") %>% render_formats_test(context = "plain"))[["num"]] %>%
+    expect_equal("777,00 x 10(3)")
+  (exibble_1 %>% gt(locale = "fr") %>% fmt_engineering(num, locale = "de") %>% render_formats_test(context = "plain"))[["num"]] %>%
+    expect_equal("777,00 x 10(3)")
+
+  # `fmt_percent()`
+  (exibble_1 %>% gt() %>% fmt_percent(num, scale_values = FALSE) %>% render_formats_test(context = "plain"))[["num"]] %>%
+    expect_equal("777,000.00%")
+  (exibble_1 %>% gt(locale = "fr") %>% fmt_percent(num, scale_values = FALSE) %>% render_formats_test(context = "plain"))[["num"]] %>%
+    expect_equal("777 000,00%")
+  (exibble_1 %>% gt(locale = "en") %>% fmt_percent(num, scale_values = FALSE, locale = "fr") %>% render_formats_test(context = "plain"))[["num"]] %>%
+    expect_equal("777 000,00%")
+  (exibble_1 %>% gt(locale = "fr") %>% fmt_percent(num, scale_values = FALSE, locale = "de") %>% render_formats_test(context = "plain"))[["num"]] %>%
+    expect_equal("777.000,00%")
+
+  # `fmt_currency()`
+  (exibble_1 %>% gt() %>% fmt_currency(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
+    expect_equal("$777,000.00")
+  (exibble_1 %>% gt(locale = "fr") %>% fmt_currency(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
+    expect_equal("$777 000,00")
+  (exibble_1 %>% gt(locale = "en") %>% fmt_currency(num, locale = "fr") %>% render_formats_test(context = "plain"))[["num"]] %>%
+    expect_equal("$777 000,00")
+  (exibble_1 %>% gt(locale = "fr") %>% fmt_currency(num, locale = "de") %>% render_formats_test(context = "plain"))[["num"]] %>%
+    expect_equal("$777.000,00")
+
+  exibble_1 <- exibble[8, 1]
+
+  # `fmt_bytes()`
+  (exibble_1 %>% gt() %>% fmt_bytes(num, ) %>% render_formats_test(context = "plain"))[["num"]] %>%
+    expect_equal("8.9 MB")
+  (exibble_1 %>% gt(locale = "fr") %>% fmt_bytes(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
+    expect_equal("8,9 MB")
+  (exibble_1 %>% gt(locale = "en") %>% fmt_bytes(num, locale = "fr") %>% render_formats_test(context = "plain"))[["num"]] %>%
+    expect_equal("8,9 MB")
+  (exibble_1 %>% gt(locale = "fr") %>% fmt_bytes(num, locale = "de") %>% render_formats_test(context = "plain"))[["num"]] %>%
+    expect_equal("8,9 MB")
+})

@@ -34,9 +34,11 @@ validate_locale <- function(locale) {
   # Stop function if the `locale` provided
   # isn't a valid one
   if (!is.null(locale) && !(locale %in% locales$base_locale_id)) {
-    stop("The supplied `locale` is not available in the list of supported locales.\n",
-         " * Use the `info_locales()` function to see which locales can be used.",
-         call. = FALSE)
+    stop(
+      "The supplied `locale` is not available in the list of supported locales.\n",
+      " * Use the `info_locales()` function to see which locales can be used.",
+      call. = FALSE
+    )
   }
 }
 
@@ -121,6 +123,29 @@ get_locale_dec_mark <- function(locale = NULL,
   # Get the correct `dec_sep` value from the
   # `gt:::locales` lookup table
   filter_table_to_value(locales, dec_sep, base_locale_id == locale)
+}
+
+#' Resolve the locale in functions with a `locale` argument
+#'
+#' This performs locale resolution since the default locale (possibly set in
+#' `gt()`) can be overridden with a `locale` set in a downstream function.
+#' This performs a final validation of the resolved locale to ensure it has a
+#' supported value.
+#'
+#' @param data The gt object.
+#' @param locale The user-supplied `locale` value, found in several `fmt_*()`
+#'   functions. This is expected as `NULL` if not supplied by the user.
+#'
+#' @noRd
+resolve_locale <- function(data, locale) {
+
+  if (is.null(locale)) {
+    locale <- dt_locale_get_value(data = data)
+  }
+
+  validate_locale(locale = locale)
+
+  locale
 }
 
 #' Determine which numbers in scientific notation would be zero order
@@ -313,6 +338,7 @@ format_num_to_str_c <- function(x,
 #'
 #' @param x Numeric values in `character` form.
 #' @param context The output context.
+#'
 #' @noRd
 to_latex_math_mode <- function(x,
                                context) {
@@ -697,6 +723,7 @@ create_suffix_df <- function(x,
 #' @param format_fn A function for formatting the numeric values.
 #' @noRd
 num_fmt_factory_multi <- function(pattern,
+                                  use_latex_math_mode = TRUE,
                                   format_fn) {
 
   # Generate a named list of factory functions, with one
@@ -704,7 +731,12 @@ num_fmt_factory_multi <- function(pattern,
   all_contexts %>%
     magrittr::set_names(all_contexts) %>%
     lapply(function(x) {
-      num_fmt_factory(context = x, pattern = pattern, format_fn = format_fn)
+      num_fmt_factory(
+        context = x,
+        pattern = pattern,
+        use_latex_math_mode = use_latex_math_mode,
+        format_fn = format_fn
+      )
     })
 }
 
@@ -717,6 +749,7 @@ num_fmt_factory_multi <- function(pattern,
 #' @noRd
 num_fmt_factory <- function(context,
                             pattern,
+                            use_latex_math_mode = TRUE,
                             format_fn) {
 
   # Force all arguments
@@ -740,11 +773,11 @@ num_fmt_factory <- function(context,
     x_str_vals <-
       x_vals %>%
       # Format all non-NA x values with a formatting function
-      format_fn(context) %>%
+      format_fn(context = context) %>%
       # If in a LaTeX context, wrap values in math mode
-      to_latex_math_mode(context) %>%
+      { if (use_latex_math_mode) to_latex_math_mode(., context = context) else . } %>%
       # Handle formatting of pattern
-      apply_pattern_fmt_x(pattern)
+      apply_pattern_fmt_x(pattern = pattern)
 
     # Create `x_str` with the same length as `x`; place the
     # `x_str_vals` into `str` (at the non-NA indices)
