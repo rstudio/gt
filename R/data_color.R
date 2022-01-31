@@ -282,21 +282,60 @@ generate_data_color_styles_tbl <- function(column, rows, color_styles) {
 #' `is_rgba_col()` is a vector of logical values (the same length as the input
 #' `colors` vector).
 #'
+#' @param colors A vector of color values.
+#'
 #' @noRd
 is_rgba_col <- function(colors) {
-
   grepl("^rgba\\(\\s*(?:[0-9]+?\\s*,\\s*){3}[0-9\\.]+?\\s*\\)$", colors)
 }
 
 #' Are color values in hexadecimal format?
 #'
 #' This regex checks for valid hexadecimal colors in either the `#RRGGBB` and
-#' `#RRGGBBAA` forms (not including shortened form `#RGB` here)
+#' `#RRGGBBAA` forms (not including shortened form `#RGB` here,
+#' `is_short_hex()` handles this case).
+#'
+#' @param colors A vector of color values.
 #'
 #' @noRd
 is_hex_col <- function(colors) {
-
   grepl("^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$", colors)
+}
+
+#' Are color values in the shorthand hexadecimal format?
+#'
+#' This regex checks for valid hexadecimal colors in the `#RGB` shorthand form.
+#'
+#' @param colors A vector of color values.
+#'
+#' @noRd
+is_short_hex <- function(colors) {
+  grepl("^#[0-9a-fA-F]{3}$", colors)
+}
+
+#' Are color values in the shorthand hexadecimal format?
+#'
+#' This regex checks for valid hexadecimal colors in the `#RGB` shorthand form.
+#'
+#' @param colors A vector of color values.
+#'
+#' @noRd
+expand_short_hex <- function(colors) {
+
+  colors <- substr(colors, 2, 4)
+
+  colors <-
+    vapply(
+      colors,
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
+      FUN = function(x) {
+        x <- unlist(strsplit(x, ""))
+        paste0("#", x[1], x[1], x[2], x[2], x[3], x[3])
+      }
+    )
+
+  toupper(colors)
 }
 
 #' For a background color, which foreground color provides better contrast?
@@ -383,8 +422,16 @@ html_color <- function(colors, alpha = NULL) {
     stop("No values supplied in `colors` should be NA")
   }
 
-  is_rgba <- is_rgba_col(colors)
-  is_hex <- is_hex_col(colors)
+  is_rgba <- is_rgba_col(colors = colors)
+  is_short_hex <- is_short_hex(colors = colors)
+
+  # Expand any shorthand hexadecimal color values to the `RRGGBB` form
+  colors[is_short_hex] <- expand_short_hex(colors = colors[is_short_hex])
+
+  is_hex <- is_hex_col(colors = colors)
+
+  # If not classified as RGBA or hexadecimal, assume other values are named
+  # colors to be handled separately
   is_named <- !is_rgba & !is_hex
 
   colors[is_named] <- tolower(colors[is_named])
@@ -396,6 +443,9 @@ html_color <- function(colors, alpha = NULL) {
     # Ensure that all color names are in the set of X11/R color
     # names or CSS color names
     check_named_colors(named_colors)
+
+    # Translate the `transparent` color to #FFFFFF00
+    named_colors[named_colors == "transparent"] <- "#FFFFFF00"
 
     # Translate any CSS exclusive colors to hexadecimal values;
     # there are nine CSS 3.0 named colors that don't belong to the
@@ -492,7 +542,7 @@ css_exclusive_colors <- function() {
 }
 
 valid_color_names <- function() {
-  c(tolower(grDevices::colors()), names(css_exclusive_colors()))
+  c(tolower(grDevices::colors()), names(css_exclusive_colors()), "transparent")
 }
 
 check_named_colors <- function(named_colors) {
