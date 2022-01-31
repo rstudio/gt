@@ -304,25 +304,30 @@ is_hex_col <- function(colors) {
 
 #' Are color values in the shorthand hexadecimal format?
 #'
-#' This regex checks for valid hexadecimal colors in the `#RGB` shorthand form.
+#' This regex checks for valid hexadecimal colors in the `#RGB` or `#RGBA`
+#' shorthand forms.
 #'
 #' @param colors A vector of color values.
 #'
 #' @noRd
 is_short_hex <- function(colors) {
-  grepl("^#[0-9a-fA-F]{3}$", colors)
+  grepl("^#[0-9a-fA-F]{3}([0-9a-fA-F])?$", colors)
 }
 
-#' Are color values in the shorthand hexadecimal format?
+#' Expand shorthand hexadecimal colors to the normal form
 #'
-#' This regex checks for valid hexadecimal colors in the `#RGB` shorthand form.
+#' This function takes a vector of colors in the `#RGB` or `#RGBA`
+#' shorthand forms and transforms them to their respective normal forms
+#' (`#RRGGBB` and `#RRGGBBAA`). This only works with a vector of `#RGB`- and
+#' `#RGBA`-formatted color values so `is_short_hex()` should be used to ensure
+#' the any input `colors` vector conforms to this expectation.
 #'
 #' @param colors A vector of color values.
 #'
 #' @noRd
 expand_short_hex <- function(colors) {
 
-  colors <- substr(colors, 2, 4)
+  colors <- gsub("^#", "", colors)
 
   colors <-
     vapply(
@@ -330,8 +335,12 @@ expand_short_hex <- function(colors) {
       FUN.VALUE = character(1),
       USE.NAMES = FALSE,
       FUN = function(x) {
+
         x <- unlist(strsplit(x, ""))
-        paste0("#", x[1], x[1], x[2], x[2], x[3], x[3])
+        paste0(
+          "#", x[1], x[1], x[2], x[2], x[3], x[3],
+          if (length(x) == 4) paste0(x[4], x[4]) else NULL
+        )
       }
     )
 

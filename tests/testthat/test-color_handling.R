@@ -30,6 +30,7 @@ test_that("the various color utility functions work correctly", {
   c_hex <- c("#FFAA00", "#FFBB34", "#AD552E", "#900019")
   c_hex_a <- c("#FF235D60", "#AA253A70", "#F3F300FF", "#D2D72110")
   c_s_hex <- c("#f0A", "#000", "#32b")
+  c_s_hex_a <- c("#f0A1", "#000F", "#32ba")
   c_rgba <- c("rgba(255,170,0,0.5)", "rgba(255,187,52,1)", "rgba(20,255,0,1.0)")
 
   # Expect that the `is_rgba_col()` function will identify valid
@@ -54,6 +55,17 @@ test_that("the various color utility functions work correctly", {
     any() %>%
     expect_false()
 
+  # Expect that `expand_short_hex()` reliably transforms shorthand hexadecimal
+  # colors (`#RGB` and `#RGBA`) to their expanded counterparts
+  expect_equal(
+    expand_short_hex(colors = c_s_hex),
+    c("#FF00AA", "#000000", "#3322BB")
+  )
+  expect_equal(
+    expand_short_hex(colors = c_s_hex_a),
+    c("#FF00AA11", "#000000FF", "#3322BBAA")
+  )
+
   # Expect that the `rgba_to_hex()` function reliably returns
   # color strings in the hexadecimal format of #RRGGBBAA
   # when supplied 'rgba()' format strings
@@ -65,21 +77,22 @@ test_that("the various color utility functions work correctly", {
   # Expect that the `rgba_to_hex()` utility function will pass through *any*
   # strings that don't conform to the 'rgba()' string format
   expect_equal(
-    rgba_to_hex(colors = c(c_rgba, c_hex, c_hex_a, c_s_hex, "test")),
-    c("#FFAA0080", "#FFBB34FF", "#14FF00FF", c_hex, c_hex_a, c_s_hex, "test")
+    rgba_to_hex(colors = c(c_rgba, c_hex, c_hex_a, c_s_hex, c_s_hex_a, "test")),
+    c("#FFAA0080", "#FFBB34FF", "#14FF00FF", c_hex, c_hex_a, c_s_hex, c_s_hex_a, "test")
   )
 
   # Expect that the `html_color()` utility function will reliably return
   # color strings in either the hexadecimal format of #RRGGBB or as
   # 'rgba()' format strings (when `alpha` is NULL, which is the default)
   expect_equal(
-    html_color(colors = c(c_name, c_hex, c_hex_a, c_s_hex)),
+    html_color(colors = c(c_name, c_hex, c_hex_a, c_s_hex, c_s_hex_a)),
     c(
       "#FF0000", "#FF6347", "#CD6889", "#32CD32", "#DBDBDB", "#0000FF",
       "rgba(255,255,255,0)",
       c_hex,
       "rgba(255,35,93,0.38)", "rgba(170,37,58,0.44)", "#F3F300", "rgba(210,215,33,0.06)",
-      "#FF00AA", "#000000", "#3322BB"
+      "#FF00AA", "#000000", "#3322BB",
+      "rgba(255,0,170,0.07)", "#000000", "rgba(51,34,187,0.67)"
     )
   )
 
@@ -87,12 +100,13 @@ test_that("the various color utility functions work correctly", {
   # color strings entirely in the hexadecimal format of #RRGGBB when `alpha` is
   # equal to `1`
   expect_equal(
-    html_color(colors = c(c_name, c_hex, c_hex_a, c_s_hex), alpha = 1),
+    html_color(colors = c(c_name, c_hex, c_hex_a, c_s_hex, c_s_hex_a), alpha = 1),
     c(
       "#FF0000", "#FF6347", "#CD6889", "#32CD32", "#DBDBDB", "#0000FF",
       "#FFFFFF",
       c_hex,
       "#FF235D", "#AA253A", "#F3F300", "#D2D721",
+      "#FF00AA", "#000000", "#3322BB",
       "#FF00AA", "#000000", "#3322BB"
     )
   )
@@ -100,7 +114,7 @@ test_that("the various color utility functions work correctly", {
   # Expect that `html_color()` will reliably return color strings entirely
   # in the 'rgba()' string format when `alpha` is non-NULL and less than `1`
   expect_equal(
-    html_color(colors = c(c_name, c_hex, c_hex_a, c_s_hex), alpha = 0.5),
+    html_color(colors = c(c_name, c_hex, c_hex_a, c_s_hex, c_s_hex_a), alpha = 0.5),
     c(
       "rgba(255,0,0,0.5)", "rgba(255,99,71,0.5)", "rgba(205,104,137,0.5)",
       "rgba(50,205,50,0.5)", "rgba(219,219,219,0.5)", "rgba(0,0,255,0.5)",
@@ -108,26 +122,31 @@ test_that("the various color utility functions work correctly", {
       "rgba(255,170,0,0.5)", "rgba(255,187,52,0.5)", "rgba(173,85,46,0.5)",
       "rgba(144,0,25,0.5)", "rgba(255,35,93,0.5)", "rgba(170,37,58,0.5)",
       "rgba(243,243,0,0.5)", "rgba(210,215,33,0.5)",
+      "rgba(255,0,170,0.5)", "rgba(0,0,0,0.5)", "rgba(51,34,187,0.5)",
       "rgba(255,0,170,0.5)", "rgba(0,0,0,0.5)", "rgba(51,34,187,0.5)"
     )
   )
 
   # Expect that `html_color()` won't alter any 'rgba()' strings passed to it
   expect_equal(
-    html_color(colors = c(c_name, c_hex, c_hex_a, c_rgba, c_s_hex), alpha = 1),
+    html_color(
+      colors = c(c_name, c_hex, c_hex_a, c_rgba, c_s_hex, c_s_hex_a),
+      alpha = 1
+    ),
     c(
       "#FF0000", "#FF6347", "#CD6889", "#32CD32", "#DBDBDB", "#0000FF",
       "#FFFFFF",
       c_hex,
       "#FF235D", "#AA253A", "#F3F300", "#D2D721",
       c_rgba,
+      "#FF00AA", "#000000", "#3322BB",
       "#FF00AA", "#000000", "#3322BB"
     )
   )
 
   # Furthermore, expect that all alpha values in the 'rgba()' strings are of the
   # same value when `alpha` is non-NULL and less than `1`
-  html_color(colors = c(c_name, c_hex, c_hex_a, c_s_hex), alpha = 0.5) %>%
+  html_color(colors = c(c_name, c_hex, c_hex_a, c_s_hex, c_s_hex_a), alpha = 0.5) %>%
     gsub("(?:^.*,|\\))", "", .) %>%
     unique() %>%
     length() %>%
@@ -155,49 +174,55 @@ test_that("the various color utility functions work correctly", {
   # previous types plus the CSS exclusive names here, which are
   # 'rebeccapurple' and 'lime')
   expect_equal(
-    html_color(colors = c(c_name, c_hex, c_hex_a, c_s_hex, "rebeccapurple", "lime")),
+    html_color(
+      colors = c(c_name, c_hex, c_hex_a, c_s_hex, c_s_hex_a, "rebeccapurple", "lime")
+    ),
     c(
       "#FF0000", "#FF6347", "#CD6889", "#32CD32", "#DBDBDB", "#0000FF",
       "rgba(255,255,255,0)",
       "#FFAA00", "#FFBB34", "#AD552E", "#900019", "rgba(255,35,93,0.38)",
       "rgba(170,37,58,0.44)", "#F3F300", "rgba(210,215,33,0.06)",
       "#FF00AA", "#000000", "#3322BB",
+      "rgba(255,0,170,0.07)", "#000000", "rgba(51,34,187,0.67)",
       "#663399", "#00FF00"
     )
   )
 
   # Expect that the CSS exclusive names will still work if names have mixed case
   expect_equal(
-    html_color(colors = c(c_name, c_hex, c_hex_a, c_s_hex, "RebeccaPurple", "Lime")),
+    html_color(
+      colors = c(c_name, c_hex, c_hex_a, c_s_hex, c_s_hex_a, "RebeccaPurple", "Lime")
+      ),
     c(
       "#FF0000", "#FF6347", "#CD6889", "#32CD32", "#DBDBDB", "#0000FF",
       "rgba(255,255,255,0)",
       "#FFAA00", "#FFBB34", "#AD552E", "#900019", "rgba(255,35,93,0.38)",
       "rgba(170,37,58,0.44)", "#F3F300", "rgba(210,215,33,0.06)",
       "#FF00AA", "#000000", "#3322BB",
+      "rgba(255,0,170,0.07)", "#000000", "rgba(51,34,187,0.67)",
       "#663399", "#00FF00"
     )
   )
 
   # Expect an error if an NA value is provided anywhere as input
   expect_error(
-    html_color(colors = c(c_name, c_hex, c_hex_a, c_s_hex, NA_character_))
+    html_color(colors = c(c_name, c_hex, c_hex_a, c_s_hex, c_s_hex_a, NA_character_))
   )
 
   # Expect an error if an invalid color name is provided
   expect_error(
-    html_color(colors = c(c_name, "blau", c_hex, c_hex_a, c_s_hex))
+    html_color(colors = c(c_name, c_hex, c_hex_a, c_s_hex, c_s_hex_a, "blau"))
   )
 
   # Expect an error if an invalid color format is provided
   expect_error(
-    html_color(colors = c(c_name, c_hex, "#FF04JJ", c_hex_a, c_s_hex))
+    html_color(colors = c(c_name, c_hex, c_hex_a, c_s_hex, "#FF04JJ"))
   )
   expect_error(
-    html_color(colors = c(c_name, c_hex, c_hex_a, "#FF0033100", c_s_hex))
+    html_color(colors = c(c_name, c_hex, c_hex_a, c_s_hex, "#FF0033100"))
   )
   expect_error(
-    html_color(colors = c(c_name, c_hex, "FF04E2", c_hex_a, c_s_hex))
+    html_color(colors = c(c_name, c_hex, c_hex_a, c_s_hex, "FF04E2"))
   )
 
   # Don't expect an error if 'rgba()'-format colors are passed to `html_color`
@@ -292,6 +317,13 @@ test_that("the various color utility functions work correctly", {
   expect_equal(
     ideal_fgnd_color(bgnd_color = s_hex_colors),
     ideal_fgnd_color(bgnd_color = hex_colors)
+  )
+
+  # Expect that the above equivalency should also hold if there are alpha
+  # values in the shorthand and normal hexadecimal color forms
+  expect_equal(
+    ideal_fgnd_color(bgnd_color = paste0(s_hex_colors, "8")),
+    ideal_fgnd_color(bgnd_color = paste0(hex_colors, "88"))
   )
 
   # Expect that the vector of light and dark colors returned is not affected
@@ -667,6 +699,23 @@ test_that("the `cell_fill()` function accepts colors of various types", {
       gt() %>%
       tab_style(
         style = cell_text(color = "#888888"),
+        locations = cells_body(columns = "month")
+      ) %>%
+      render_as_html()
+  )
+
+  expect_equal(
+    test_tbl %>%
+      gt() %>%
+      tab_style(
+        style = cell_text(color = "#888A"),
+        locations = cells_body(columns = "month")
+      ) %>%
+      render_as_html(),
+    test_tbl %>%
+      gt() %>%
+      tab_style(
+        style = cell_text(color = "#888888AA"),
         locations = cells_body(columns = "month")
       ) %>%
       render_as_html()
