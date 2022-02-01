@@ -1,17 +1,24 @@
+<div align="center">
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
-# gt <img src="man/figures/logo.svg" align="right" height="250px" />
+<a href='https://gt.rstudio.com/'><img src="man/figures/logo.svg" height="350px"/></a>
+<hr />
 
 <!-- badges: start -->
+<a href="https://cran.r-project.org/package=gt"><img src="https://www.r-pkg.org/badges/version/gt" alt="CRAN status" /></a>
+<a href="https://github.com/rstudio/gt/actions"><img src="https://github.com/rich-iannone/pointblank/workflows/R-CMD-check/badge.svg" alt="R build status" /></a>
+<a href="https://app.codecov.io/gh/rstudio/gt?branch=master"><img src="https://codecov.io/gh/rstudio/gt/branch/master/graph/badge.svg" alt="Coverage status" /></a>
 
-[![CRAN
-status](https://www.r-pkg.org/badges/version/gt)](https://cran.r-project.org/package=gt)
-[![R build
-status](https://github.com/rstudio/gt/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rstudio/gt/actions)
-[![Coverage
-status](https://codecov.io/gh/rstudio/gt/branch/master/graph/badge.svg)](https://codecov.io/github/rstudio/gt?branch=master)
+<a href="https://www.repostatus.org/#active"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="The project has reached a stable, usable state and is being actively developed." /></a>
+<a href="https://CRAN.R-project.org/package=gt"><img src="https://cranlogs.r-pkg.org/badges/gt" alt="Monthly Downloads"></a>
+<a href="https://CRAN.R-project.org/package=gt"><img src="https://cranlogs.r-pkg.org/badges/grand-total/gt" alt="Total Downloads"></a>
+
+[![RStudio community](https://img.shields.io/badge/RStudio%20Cloud-gt%20Test%20Drive-blue?style=social&logo=rstudio&logoColor=75AADB)](https://rstudio.cloud/project/779965)
+
+<a href="https://www.contributor-covenant.org/version/2/0/code_of_conduct/"><img src="https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg" alt="Contributor Covenant" /></a>
 <!-- badges: end -->
+<hr />
+<br />
+</div>
 
 With the **gt** package, anyone can make wonderful-looking tables using
 the **R** programming language. The **gt** philosophy: we can construct
@@ -19,11 +26,9 @@ a wide variety of useful tables with a cohesive set of table parts.
 These include the *table header*, the *stub*, the *column labels* and
 *spanner column labels*, the *table body*, and the *table footer*.
 
-<p align="center">
-
+<div align="center">
 <img src="man/figures/gt_parts_of_a_table.svg" width="800px">
-
-</p>
+</div>
 
 It all begins with **table data** (be it a tibble or a data frame). You
 then decide how to compose your **gt table** with the elements and
@@ -32,11 +37,11 @@ by printing it at the console, including it in an R Markdown document,
 or exporting to a file using `gtsave()`. Currently, **gt** supports the
 **HTML**, **LaTeX**, and **RTF** output formats.
 
-<p align="center">
-
+<div align="center">
 <img src="man/figures/gt_workflow_diagram.svg" width="800px">
+</div>
 
-</p>
+<hr />
 
 The **gt** package is designed to be both straightforward yet powerful.
 The emphasis is on simple functions for the everyday display table
@@ -76,29 +81,27 @@ sp500 %>%
   )
 ```
 
-<p align="center">
-
-<img src="man/figures/gt_sp500_table.svg" width="1200px">
-
-</p>
+<div align="center">
+<img src="man/figures/gt_sp500_table.svg" width="800px">
+</div>
 
 There are six datasets included in **gt**: `countrypops`, `sza`,
 `gtcars`, `sp500`, `pizzaplace`, and `exibble`. All of them are useful
 for experimenting with **gt**’s functions.
 
 Beyond this simple example, there are many functions available in **gt**
-for creating super-customized tables.
+for creating super-customized tables. For much more information on these, visit the
+[documentation website](https://gt.rstudio.com/) or take
+a *Test Drive* in the [RStudio Cloud project](https://rstudio.cloud/project/779965).
 
-Want to try this out? Then, take the **gt** Test Drive on **RStudio
-Cloud**. It’s full of ready-to-run examples.
+## DISCUSSIONS
 
-<p align="center">
+Let's talk about making tables with **gt** in
+[*Discussions*](https://github.com/rstudio/gt/discussions)!
+It's a great place to ask questions about how to use the package, discuss
+some ideas, engage with others, and much more!
 
-<a href="https://rstudio.cloud/project/779965">
-<img src="man/figures/gt-test-drive.svg" alt="RStudio Cloud Example" height="80px">
-</a>
-
-</p>
+## INSTALLATION
 
 The **gt** package can be installed from **CRAN** with:
 
@@ -119,7 +122,7 @@ make this package better, please feel free to file an
 
 -----
 
-#### How **gt** fits in with Other Packages that Generate Display Tables
+## How **gt** fits in with Other Packages that Generate Display Tables
 
 The **gt** package joins a burgeoning collection of packages for display
 table generation. Why another? We feel that there is enough room in this
@@ -164,23 +167,27 @@ pages:
   - **stargazer** ([CRAN](https://CRAN.R-project.org/package=stargazer))
   - **xtable** ([CRAN](https://CRAN.R-project.org/package=xtable))
 
-#### Code of Conduct
+## Code of Conduct
 
 Please note that the gt project is released with a [contributor code of
 conduct](https://www.contributor-covenant.org/version/2/0/code_of_conduct/).<br>By
 participating in this project you agree to abide by its terms.
 
-#### 📄 License
+## 📄 License
 
 **gt** is licensed under the MIT license. See the
 [`LICENSE.md`](LICENSE.md) file for more details.
 
 © RStudio, PBC.
 
------
+## 🏛️ Governance
 
-<p align="center">
+This project is primarily maintained by [Rich Iannone](https://twitter.com/riannone). Other authors may occasionally assist with some of these duties.
 
+<hr>
+
+<div align="center">
 <img src="man/figures/gt_tables_footer.png" width="100%">
+</div>
 
-</p>
+<hr>
