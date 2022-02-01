@@ -450,7 +450,7 @@ context_minus_mark <- function(context) {
 context_percent_mark <- function(context) {
 
   switch(context,
-         html = "&percnt;",
+         html = "%",
          latex = "\\%",
          "%")
 }
