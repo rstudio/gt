@@ -318,33 +318,15 @@ is_short_hex <- function(colors) {
 #'
 #' This function takes a vector of colors in the `#RGB` or `#RGBA`
 #' shorthand forms and transforms them to their respective normal forms
-#' (`#RRGGBB` and `#RRGGBBAA`). This only works with a vector of `#RGB`- and
-#' `#RGBA`-formatted color values so `is_short_hex()` should be used to ensure
-#' the any input `colors` vector conforms to this expectation.
+#' (`#RRGGBB` and `#RRGGBBAA`). This should only be used with a vector of
+#' `#RGB`- and `#RGBA`-formatted color values; `is_short_hex()` should be used
+#' beforehand to ensure that input `colors` vector conforms to this expectation.
 #'
 #' @param colors A vector of color values.
 #'
 #' @noRd
 expand_short_hex <- function(colors) {
-
-  colors <- gsub("^#", "", colors)
-
-  colors <-
-    vapply(
-      colors,
-      FUN.VALUE = character(1),
-      USE.NAMES = FALSE,
-      FUN = function(x) {
-
-        x <- unlist(strsplit(x, ""))
-        paste0(
-          "#", x[1], x[1], x[2], x[2], x[3], x[3],
-          if (length(x) == 4) paste0(x[4], x[4]) else NULL
-        )
-      }
-    )
-
-  toupper(colors)
+  gsub("^#(.)(.)(.)(.?)$", "#\\1\\1\\2\\2\\3\\3\\4\\4", toupper(colors))
 }
 
 #' For a background color, which foreground color provides better contrast?
@@ -453,7 +435,7 @@ html_color <- function(colors, alpha = NULL) {
     # names or CSS color names
     check_named_colors(named_colors)
 
-    # Translate the `transparent` color to #FFFFFF00
+    # Translate the `transparent` color to #FFFFFF00 (white, transparent)
     named_colors[named_colors == "transparent"] <- "#FFFFFF00"
 
     # Translate any CSS exclusive colors to hexadecimal values;
