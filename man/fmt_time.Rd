@@ -15,9 +15,9 @@ focused on selections. The select helper functions are: \code{\link[=starts_with
 \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
 \code{\link[=everything]{everything()}}.}
 
-\item{rows}{Optional rows to format. Providing either \code{\link[=everything]{everything()}} (the
-default) or \code{TRUE} results in all rows in \code{columns} being formatted. Can
-either be a vector of row captions provided in \code{\link[=c]{c()}}, a vector of row
+\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
+default) results in all rows in \code{columns} being formatted. Alternatively,
+we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
 indices, or a helper function focused on selections. The select helper
 functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
 \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
