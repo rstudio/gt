@@ -8,13 +8,12 @@ fmt_fraction(
   data,
   columns,
   rows = everything(),
-  accuracy = c("1", "2", "3", "1/2", "1/4", "1/8", "1/16", "1/10", "1/100"),
+  accuracy = c("low", "med", "high", "/2", "/4", "/8", "/16", "/100"),
   layout = c("diagonal", "inline"),
   use_seps = TRUE,
   pattern = "{x}",
   sep_mark = ",",
   dec_mark = ".",
-  incl_space = FALSE,
   locale = NULL
 )
 }
@@ -36,16 +35,16 @@ functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with
 to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{accuracy}{The type of fractions to generate. With either of \code{"1"},
-\code{"2"}, and \code{"3"} we can generate fractions with denominators comprising 1,
-2, or 3 digits. Several options provide a fixed denominator: \code{"1/2"} (for
-fractions as halves), \code{"1/4"} (quarters), \code{"1/8"} (eighths), \code{"1/16"}
-(sixteenths), \code{"1/10"} (tenths), and \code{"1/100"} (hundreths).}
+\item{accuracy}{The type of fractions to generate. With either of \code{"low"},
+\code{"med"}, and \code{"high"} we can generate fractions with denominators of up to
+1, 2, or 3 digits. Several options provide a fixed denominator: \code{"/2"} (for
+fractions as halves), \code{"/4"} (quarters), \code{"/8"} (eighths), \code{"/16"}
+(sixteenths), and \code{"1/100"} (hundredths).}
 
-\item{layout}{The \code{"diagonal"} layout (the default) will generate fractions
-that are more aesthetically pleasing than the \code{"inline"} layout. The
-diagonal layout is currently only supported for tables in the HTML output
-format.}
+\item{layout}{For HTML output, the \code{"diagonal"} layout is the default. This
+will generate fractions that are typeset with raised/lowered numerals and a
+virgule. The \code{"inline"} layout places the numerals of the fraction on the
+baseline and uses a standard slash character.}
 
 \item{use_seps}{An option to use digit group separators. The type of digit
 group separator is set by \code{sep_mark} and overridden if a locale ID is
@@ -60,12 +59,6 @@ characters are taken to be string literals.}
 of \verb{1,000}).}
 
 \item{dec_mark}{The character to use as a decimal mark (e.g., using \code{dec_mark = ","} with \code{0.152} would result in a formatted value of \verb{0,152}).}
-
-\item{incl_space}{An option for whether to include a space between the whole
-value and the fraction (provided both are present). The default is to not
-introduce a space character, however, if \code{layout = "inline"} then this
-option is ignored since a space is required to distinguish the whole number
-from the fraction.}
 
 \item{locale}{An optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include \code{"en_US"} for English
