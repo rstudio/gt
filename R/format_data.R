@@ -97,7 +97,9 @@
 #'   (United States) and `"fr_FR"` for French (France). The use of a valid
 #'   locale ID will override any values provided in `sep_mark` and `dec_mark`.
 #'   We can use the [info_locales()] function as a useful reference for all of
-#'   the locales that are supported.
+#'   the locales that are supported. Any `locale` value provided here will
+#'   override any global locale setting performed in [gt()]'s own `locale`
+#'   argument.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -168,12 +170,12 @@ fmt_number <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
+  # Resolve the `locale` value here with the global locale value
+  locale <- resolve_locale(data = data, locale = locale)
+
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
   dec_mark <- get_locale_dec_mark(locale, dec_mark)
-
-  # Stop function if `locale` does not have a valid value
-  validate_locale(locale)
 
   # Normalize the `suffixing` input to either return a character vector
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
@@ -446,12 +448,12 @@ fmt_scientific <- function(data,
   suffixing <- FALSE
   use_seps <- TRUE
 
+  # Resolve the `locale` value here with the global locale value
+  locale <- resolve_locale(data = data, locale = locale)
+
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
   dec_mark <- get_locale_dec_mark(locale, dec_mark)
-
-  # Stop function if `locale` does not have a valid value
-  validate_locale(locale = locale)
 
   # Normalize the `suffixing` input to either return a character vector
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
@@ -623,12 +625,12 @@ fmt_engineering <- function(data,
   suffixing <- FALSE
   use_seps <- TRUE
 
+  # Resolve the `locale` value here with the global locale value
+  locale <- resolve_locale(data = data, locale = locale)
+
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
   dec_mark <- get_locale_dec_mark(locale, dec_mark)
-
-  # Stop function if `locale` does not have a valid value
-  validate_locale(locale = locale)
 
   # Normalize the `suffixing` input to either return a character vector
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
@@ -760,9 +762,6 @@ fmt_symbol <- function(data,
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
   dec_mark <- get_locale_dec_mark(locale, dec_mark)
-
-  # Stop function if `locale` does not have a valid value
-  validate_locale(locale = locale)
 
   # Normalize the `suffixing` input to either return a character vector
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
@@ -949,6 +948,9 @@ fmt_percent <- function(data,
 
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  # Resolve the `locale` value here with the global locale value
+  locale <- resolve_locale(data = data, locale = locale)
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
@@ -1488,6 +1490,9 @@ fmt_currency <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
+  # Resolve the `locale` value here with the global locale value
+  locale <- resolve_locale(data = data, locale = locale)
+
   # Stop function if any columns have data that is incompatible
   # with this formatter
   if (
@@ -1629,6 +1634,9 @@ fmt_bytes <- function(data,
 
   standard <- match.arg(standard)
 
+  # Resolve the `locale` value here with the global locale value
+  locale <- resolve_locale(data = data, locale = locale)
+
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
   dec_mark <- get_locale_dec_mark(locale, dec_mark)
@@ -1707,13 +1715,15 @@ fmt_bytes <- function(data,
 #' Format values as dates
 #'
 #' @description
-#' Format input date values that are either of the `Date` type, or, are
-#' character-based and expressed according to the ISO 8601 date format
-#' (`YYYY-MM-DD`). Once the appropriate data cells are targeted with `columns`
-#' (and, optionally, `rows`), we can simply apply a preset date style to format
-#' the dates. The following date styles are available for simpler formatting of
-#' ISO dates (all using the input date of `2000-02-29` in the example output
-#' dates):
+#' Format input values to time values using one of fourteen presets. Input can
+#' be in the form of `POSIXt` (i.e., date-times), the `Date` type, or
+#' `character` (must be in the ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or
+#' `YYYY-MM-DD`).
+#'
+#' Once the appropriate data cells are targeted with `columns` (and, optionally,
+#' `rows`), we can simply apply a preset date style to format the dates. The
+#' following date styles are available for use (all using the input date of
+#' `2000-02-29` in the example output dates):
 #'
 #' 1. `"iso"`: `2000-02-29`
 #' 2. `"wday_month_day_year"`: `Tuesday, February 29, 2000`
@@ -1737,7 +1747,7 @@ fmt_bytes <- function(data,
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param date_style The date style to use. Supply a number (from `1` to `14`)
@@ -1798,7 +1808,8 @@ fmt_bytes <- function(data,
 fmt_date <- function(data,
                      columns,
                      rows = everything(),
-                     date_style = 2) {
+                     date_style = 2,
+                     pattern = "{x}") {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -1812,11 +1823,12 @@ fmt_date <- function(data,
     !column_classes_are_valid(
       data = data,
       columns = {{ columns }},
-      valid_classes = c("Date", "character")
+      valid_classes = c("Date", "POSIXt", "character")
     )
   ) {
     stop(
-      "The `fmt_date()` function can only be used on `columns` with `character` or `Date` values.",
+      "The `fmt_date()` function can only be used on `columns` of certain types:\n",
+      "* Allowed types are `Date`, `POSIXt`, and `character` (in ISO 8601 format).",
       call. = FALSE
     )
   }
@@ -1827,27 +1839,35 @@ fmt_date <- function(data,
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    fns = list(
-      default = function(x) {
+    fns = num_fmt_factory_multi(
+      pattern = pattern,
+      use_latex_math_mode = FALSE,
+      format_fn = function(x, context) {
 
-        # If `x` is of the `Date` type, simply make
-        # that a character vector
-        if (inherits(x, "Date")) {
-          x <- as.character(x)
-        }
-
+        # Convert incoming values to POSIXlt but provide a friendly error
+        # if the values cannot be parsed by `as.POSIXlt()`
         date <-
-          ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
-          strftime(format = date_format_str)
+          tryCatch(
+            as.POSIXlt(x),
+            error = function(cond) {
+              stop(
+                "One or more of the provided date/date-time values are invalid.",
+                call. = FALSE
+              )
+            }
+          )
 
-        if (date_style %in% 2:12) {
-          date <- date %>% tidy_gsub(., "^0", "")
+        # Format the date string using `strftime()`
+        date <- strftime(date, format = date_format_str)
+
+        # Perform several cosmetic changes to the formatted date
+        if (date_format_str != "%F") {
+
+          date <- gsub(" 0([0-9])", " \\1", date)
+          date <- gsub("^0([0-9])[^/]", "\\1 ", date)
         }
 
-        date %>%
-          tidy_gsub(" 0([0-9])", " \\1") %>%
-          tidy_gsub("pm$", "PM") %>%
-          tidy_gsub("am$", "AM")
+        date
       }
     )
   )
@@ -1856,11 +1876,14 @@ fmt_date <- function(data,
 #' Format values as times
 #'
 #' @description
-#' Format input time values that are character-based and expressed according to
-#' the ISO 8601 time format (`HH:MM:SS`). Once the appropriate data cells are
-#' targeted with `columns` (and, optionally, `rows`), we can simply apply a
-#' preset time style to format the times. The following time styles are
-#' available for simpler formatting of ISO times (all using the input time of
+#' Format input values to time values using one of five presets. Input can be in
+#' the form of `POSIXt` (i.e., date-times), `character` (must be in the ISO
+#' 8601 forms of `HH:MM:SS` or `YYYY-MM-DD HH:MM:SS`), or `Date` (which always
+#' results in the formatting of `00:00:00`).
+#'
+#' Once the appropriate data cells are targeted with `columns` (and, optionally,
+#' `rows`), we can simply apply a preset time style to format the times. The
+#' following time styles are available for use (all using the input time of
 #' `14:35:00` in the example output times):
 #'
 #' 1. `"hms"`: `14:35:00`
@@ -1876,7 +1899,7 @@ fmt_date <- function(data,
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param time_style The time style to use. Supply a number (from `1` to `5`)
@@ -1937,7 +1960,8 @@ fmt_date <- function(data,
 fmt_time <- function(data,
                      columns,
                      rows = everything(),
-                     time_style = 2) {
+                     time_style = 2,
+                     pattern = "{x}") {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -1951,10 +1975,11 @@ fmt_time <- function(data,
     !column_classes_are_valid(
       data = data,
       columns = {{ columns }},
-      valid_classes = "character")
+      valid_classes = c("Date", "POSIXt", "character"))
   ) {
     stop(
-      "The `fmt_date()` function can only be used on `columns` with `character` values.",
+      "The `fmt_time()` function can only be used on `columns` of certain types:\n",
+      "* Allowed types are `Date`, `POSIXt`, and `character` (in `HH:MM:SS` format).",
       call. = FALSE
     )
   }
@@ -1965,21 +1990,44 @@ fmt_time <- function(data,
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    fns = list(
-      default = function(x) {
+    fns = num_fmt_factory_multi(
+      pattern = pattern,
+      use_latex_math_mode = FALSE,
+      format_fn = function(x, context) {
 
-        time <-
-          ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
-          strftime(format = time_format_str)
-
-        if (time_style %in% 3:5) {
-          time <- time %>% tidy_gsub(., "^0", "")
+        # If the incoming values are strings that adequately represent time
+        # values, then prepend with the `1970-01-01` dummy date to create an
+        # input that will works with `strftime()`
+        if (all(is_string_time(x))) {
+          x <- paste("1970-01-01", x)
         }
 
-        time %>%
-          tidy_gsub(" 0([0-9])", " \\1") %>%
-          tidy_gsub("pm$", "PM") %>%
-          tidy_gsub("am$", "AM")
+        # Convert incoming values to POSIXlt but provide a friendly error
+        # if the values cannot be parsed by `as.POSIXlt()`
+        time <-
+          tryCatch(
+            as.POSIXlt(x),
+            error = function(cond) {
+              stop(
+                "One or more of the provided date/time/date-time values are invalid.",
+                call. = FALSE
+              )
+            }
+          )
+
+        # Format the date string using `strftime()`
+        time <- strftime(time, format = time_format_str)
+
+        # Perform several cosmetic changes to the formatted time
+        if (grepl("%P$", time_format_str)) {
+
+          time <- gsub("^0", "", time)
+          time <- gsub(" 0([0-9])", " \\1", time)
+          time <- gsub("\\bpm\\b$", "PM", time)
+          time <- gsub("\\bam\\b$", "AM", time)
+        }
+
+        time
       }
     )
   )
@@ -1988,13 +2036,16 @@ fmt_time <- function(data,
 #' Format values as date-times
 #'
 #' @description
-#' Format input date-time values that are character-based and expressed
-#' according to the ISO 8601 date-time format (`YYYY-MM-DD HH:MM:SS`). Once the
-#' appropriate data cells are targeted with `columns` (and, optionally, `rows`),
-#' we can simply apply preset date and time styles to format the date-time
-#' values. The following date styles are available for simpler formatting of the
-#' date portion (all using the input date of `2000-02-29` in the example output
-#' dates):
+#' Format input values to date-time values using one of fourteen presets for the
+#' date component and one of five presets for the time component. Input can be
+#' in the form of `POSIXct` (i.e., date-times), the `Date` type, or `character`
+#' (must be in the ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or `YYYY-MM-DD`).
+#'
+#' Once the appropriate data cells are targeted with `columns` (and, optionally,
+#' `rows`), we can simply apply preset date and time styles to format the
+#' date-time values. The following date styles are available for formatting of
+#' the date portion (all using the input date of `2000-02-29` in the example
+#' output dates):
 #'
 #' 1. `"iso"`: `2000-02-29`
 #' 2. `"wday_month_day_year"`: `Tuesday, February 29, 2000`
@@ -2011,8 +2062,8 @@ fmt_time <- function(data,
 #' 13. `"year.mn.day"`: `2000/02/29`
 #' 14. `"y.mn.day"`: `00/02/29`
 #'
-#' The following time styles are available for simpler formatting of the time
-#' portion (all using the input time of `14:35:00` in the example output times):
+#' The following time styles are available for formatting of the time portion
+#' (all using the input time of `14:35:00` in the example output times):
 #'
 #' 1. `"hms"`: `14:35:00`
 #' 2. `"hm"`: `14:35`
@@ -2028,11 +2079,74 @@ fmt_time <- function(data,
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
+#'
+#' @section Date and Time Formats:
+#' Using `format` to create custom time formats isn't so hard once we know about
+#' all of the different format codes. The formats are all indicated with a
+#' leading `%` and literal characters are any of those without the leading `%`.
+#' We'll use the date and time `"2015-06-08 23:05:37.48"` for all of the
+#' examples here.
+#'
+#' First off, let's look at a few format code combinations that work well
+#' together as format codes. This will give us an intuition on how these
+#' generally work.
+#'
+#' - `"%m/%d/%Y"` -> `"06/08/2015"`
+#' - `"%A, %B %e, %Y"` -> `"Monday, June 8, 2015"`
+#' - `"%b %e %a"` -> `"Jun 8 Mon"`
+#' - `"%H:%M"` -> `"23:05"`
+#' - `"%I:%M %p"` -> `"11:05 pm"`
+#' - `"%A, %B %e, %Y at %I:%M %p"` -> `"Monday, June 8, 2015 at 11:05 pm"`
+#'
+#' Here are the individual format codes for date components:
+#'
+#' - `"%a"` -> `"Mon"` (abbreviated day of week name)
+#' - `"%A"` -> `"Monday"` (full day of week name)
+#' - `"%w"` -> `"1"` (day of week number in `0..6`; Sunday is `0`)
+#' - `"%u"` -> `"1"` (day of week number in `1..7`; Monday is `1`, Sunday `7`)
+#' - `"%y"` -> `"15"` (abbreviated year, using the final two digits)
+#' - `"%Y"` -> `"2015"` (full year)
+#' - `"%b"` -> `"Jun"` (abbreviated month name)
+#' - `"%B"` -> `"June"` (full month name)
+#' - `"%m"` -> `"06"` (month number)
+#' - `"%d"` -> `"08"` (day number, zero-padded)
+#' - `"%e"` -> `"8"` (day number without zero padding)
+#'
+#' Here are the individual format codes for time components:
+#'
+#' - `"%H"` -> `"23"` (24h hour)
+#' - `"%I"` -> `"11"` (12h hour)
+#' - `"%M"` -> `"05"` (minute)
+#' - `"%S"` -> `"37"` (second)
+#' - `"%OS3"` -> `"37.480"` (seconds with decimals; `3` decimal places here)
+#' - `%p` -> `"pm"` (AM or PM indicator, may not appear in certain locales)
+#'
+#' Here are some extra formats that you may find useful:
+#'
+#' - `"%j"` -> `"159"` (day of the year, always zero-padded)
+#' - `"%W"` -> `"23"` (week number for the year, always zero-padded)
+#' - `"%V"` -> `"24"` (week number for the year, following ISO 8601 standard)
+#' - `"%C"` -> `"20"` (the century number)
+#' - `"%z"` -> `"+0000"` (signed time zone offset, here using UTC)
+#' - `"%F"` -> `"2015-06-08"` (the date in the ISO 8601 date format)
+#' - `"%%"` -> `"%"` (the literal "`%`" character, in case you need it)
 #'
 #' @inheritParams fmt_number
 #' @inheritParams fmt_date
 #' @inheritParams fmt_time
+#' @param sep The separator string to use between the date and time components.
+#'   By default, this is a single space character (`" "`). Only used when not
+#'   specifying a `format` code.
+#' @param format An optional format code used for generating custom dates/times.
+#'   If used then the arguments governing preset styles (`date_style` and
+#'   `time_style`) will be ignored in favor of formatting via the `format`
+#'   string.
+#' @param tz The time zone for printing dates/times (i.e., the output). The
+#'   default of `NULL` will preserve the time zone of the input data in the
+#'   output. If providing a time zone, it must be one that is recognized by the
+#'   user's operating system (a vector of all valid `tz` values can be produced
+#'   with [OlsonNames()]).
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -2065,16 +2179,28 @@ fmt_datetime <- function(data,
                          columns,
                          rows = everything(),
                          date_style = 2,
-                         time_style = 2) {
+                         time_style = 2,
+                         sep = " ",
+                         format = NULL,
+                         tz = NULL,
+                         pattern = "{x}") {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Transform `date_style` to `date_format`
-  date_format_str <- get_date_format(date_style = date_style)
+  if (!is.null(format)) {
 
-  # Transform `time_style` to `time_format`
-  time_format_str <- get_time_format(time_style = time_style)
+    # Ensure that the format string meets some basic validation requirements
+    check_format_string(format = format)
+
+  } else {
+
+    # Transform `date_style` to `date_format`
+    date_format_str <- get_date_format(date_style = date_style)
+
+    # Transform `time_style` to `time_format`
+    time_format_str <- get_time_format(time_style = time_style)
+  }
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
@@ -2082,12 +2208,13 @@ fmt_datetime <- function(data,
     !column_classes_are_valid(
       data = data,
       columns = {{ columns }},
-      valid_classes = "character"
-    )) {
-    stop(
-      "The `fmt_datetime()` function can only be used on `columns` with `character` values.",
-      call. = FALSE
-    )
+      valid_classes = c("Date", "POSIXct", "character"))
+    ) {
+      stop(
+        "The `fmt_datetime()` function can only be used on `columns` of certain types:\n",
+        "* Allowed types are `Date`, `POSIXct`, and `character` (in ISO 8601 format).",
+        call. = FALSE
+      )
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -2096,42 +2223,77 @@ fmt_datetime <- function(data,
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    fns = list(
-      default = function(x) {
+    fns = num_fmt_factory_multi(
+      pattern = pattern,
+      use_latex_math_mode = FALSE,
+      format_fn = function(x, context) {
 
-        date <-
-          ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
-          strftime(format = date_format_str)
+        # If a format string is provided then use that to generate the
+        # formatted date/time string
+        if (!is.null(format)) {
 
-        if (date_style %in% 2:12) {
-          date <- date %>% tidy_gsub(., "^0", "")
+          # If the incoming values are strings that adequately represent time
+          # values, then prepend with the `1970-01-01` dummy date to create an
+          # input that will works with `strftime()`
+          if (all(is_string_time(x))) {
+            x <- paste("1970-01-01", x)
+
+          }
+
+          if (is.character(x) && is.null(tz)) {
+            tz <- ""
+          }
+
+          # Format the date-time values using `strftime()`
+          return(strftime(x, format = format, tz = tz))
         }
 
-        date <-
-          date %>%
-          tidy_gsub(" 0([0-9])", " \\1") %>%
-          tidy_gsub("pm$", "PM") %>%
-          tidy_gsub("am$", "AM")
+        #
+        # Format the date portion of the datetime string
+        #
 
-        time <-
-          ifelse(grepl("^[0-9]*?\\:[0-9]*?", x), paste("1970-01-01", x), x) %>%
-          strftime(format = time_format_str)
-
-        if (time_style %in% 3:5) {
-          time <- time %>% tidy_gsub(., "^0", "")
-        }
-
-        time <-
-          time %>%
-          tidy_gsub(" 0([0-9])", " \\1") %>%
-          tidy_gsub("pm$", "PM") %>%
-          tidy_gsub("am$", "AM")
-
+        # Convert incoming values to POSIXlt but provide a friendly error
+        # if the values cannot be parsed by `as.POSIXlt()`
         datetime <-
-          paste(date, time) %>%
-          tidy_gsub("NA NA", "NA")
+          tryCatch(
+            as.POSIXlt(x),
+            error = function(cond) {
+              stop(
+                "One or more of the provided date/date-time values are invalid.",
+                call. = FALSE
+              )
+            }
+          )
 
-        datetime
+        # Format `datetime` into a date string using `strftime()` with
+        # the resolved formatting string
+        date <- strftime(datetime, format = date_format_str, tz = tz)
+
+        # Perform several cosmetic changes to the formatted date
+        if (date_format_str != "%F") {
+
+          date <- gsub(" 0([0-9])", " \\1", date)
+          date <- gsub("^0([0-9])[^/]", "\\1 ", date)
+        }
+
+        #
+        # Format the time portion of the datetime string
+        #
+
+        # Format `datetime` into a time string using `strftime()` with
+        # the resolved formatting string
+        time <- strftime(datetime, format = time_format_str, tz = tz)
+
+        # Perform several cosmetic changes to the formatted time
+        if (grepl("%P$", time_format_str)) {
+
+          time <- gsub("^0", "", time)
+          time <- gsub(" 0([0-9])", " \\1", time)
+          time <- gsub("\\bpm\\b$", "PM", time)
+          time <- gsub("\\bam\\b$", "AM", time)
+        }
+
+        paste(date, time, sep = sep)
       }
     )
   )

@@ -1,6 +1,6 @@
 Type: Package
 Package: gt
-Version: 0.3.0.9000
+Version: 0.3.1.9000
 Title: Easily Create Presentation-Ready Display Tables
 Description: Build display tables from tabular data with an easy-to-use set of
     functions. With its progressive approach, we can construct display tables
@@ -23,7 +23,7 @@ BugReports: https://github.com/rstudio/gt/issues
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Depends:
     R (>= 3.2.0)
 Imports:
@@ -49,6 +49,7 @@ Suggests:
     paletteer,
     testthat (>= 2.1.0),
     RColorBrewer,
+    lubridate,
     rmarkdown,
     rvest,
     shiny,
@@ -72,6 +73,7 @@ Collate:
     'dt_groups_rows.R'
     'dt_has_built.R'
     'dt_heading.R'
+    'dt_locale.R'
     'dt_options.R'
     'dt_row_groups.R'
     'dt_source_notes.R'

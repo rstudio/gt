@@ -24,6 +24,8 @@ file that can be opened by RTF readers.
 }
 
 \examples{
+if (interactive()) {
+
 # Use `gtcars` to create a gt table;
 # add a header and then export as
 # RTF code
@@ -37,6 +39,8 @@ tab_rtf <-
     subtitle = md("`gtcars` is an R dataset")
   ) \%>\%
   as_rtf()
+
+}
 
 }
 \seealso{
