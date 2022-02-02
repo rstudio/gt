@@ -324,4 +324,8 @@ test_that("the `fmt_fraction()` function produces reproducible results for HTML 
   # Perform snapshot tests for LaTeX outputs
   fraction_tbl_diagonal %>% as_latex() %>% as.character() %>% expect_snapshot()
   fraction_tbl_inline %>% as_latex() %>% as.character() %>% expect_snapshot()
+
+  # Perform snapshot tests for RTF outputs
+  fraction_tbl_diagonal %>% as_rtf() %>% expect_snapshot()
+  fraction_tbl_inline %>% as_rtf() %>% expect_snapshot()
 })
