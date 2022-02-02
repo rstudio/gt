@@ -320,4 +320,8 @@ test_that("the `fmt_fraction()` function produces reproducible results for HTML 
   # Perform snapshot tests for HTML outputs
   fraction_tbl_diagonal %>% render_as_html() %>% expect_snapshot()
   fraction_tbl_inline %>% render_as_html() %>% expect_snapshot()
+
+  # Perform snapshot tests for LaTeX outputs
+  fraction_tbl_diagonal %>% as_latex() %>% as.character() %>% expect_snapshot()
+  fraction_tbl_inline %>% as_latex() %>% as.character() %>% expect_snapshot()
 })
