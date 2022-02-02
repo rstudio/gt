@@ -1204,9 +1204,8 @@ fmt_fraction <- function(
 
         x_str[x_needs_minus_mark] <- paste0(minus_mark, x_str[x_needs_minus_mark])
 
-        # Generate diagonal fractions if the context is HTML output and
-        # `layout = "diagonal"` option was chosen
-        if (context == "html" && layout == "diagonal") {
+        # Generate diagonal fractions if the `layout = "diagonal"` option was chosen
+        if (layout == "diagonal") {
 
           has_a_fraction <- grepl("/", x_str)
 
@@ -1217,45 +1216,48 @@ fmt_fraction <- function(
           num_vec <- strsplit(fraction_part, "/") %>% lapply(`[[`, 1) %>% unlist()
           denom_vec <- strsplit(fraction_part, "/") %>% lapply(`[[`, 2) %>% unlist()
 
-          num_vec <-
-            paste0("<span class=\"gt_fraction_numerator\">", num_vec, "</span>")
+          if (context == "html") {
 
-          denom_vec <-
-            paste0("<span class=\"gt_fraction_denominator\">", denom_vec, "</span>")
+            num_vec <-
+              paste0("<span class=\"gt_fraction_numerator\">", num_vec, "</span>")
 
-          slash_mark <-
-            htmltools::tags$span(
-              class = "gt_slash_mark",
-              htmltools::HTML("&frasl;")
-            )
+            denom_vec <-
+              paste0("<span class=\"gt_fraction_denominator\">", denom_vec, "</span>")
 
-          x_str[has_a_fraction] <-
-            paste0(
-              gsub(" ", "&#8239;", non_fraction_part),
-              num_vec, slash_mark, denom_vec
-            )
+            slash_mark <-
+              htmltools::tags$span(
+                class = "gt_slash_mark",
+                htmltools::HTML("&frasl;")
+              )
+
+            x_str[has_a_fraction] <-
+              paste0(
+                gsub(" ", "&#8239;", non_fraction_part),
+                num_vec, slash_mark, denom_vec
+              )
+
+          } else if (context == "latex") {
+
+            x_str[has_a_fraction] <-
+              paste0(
+                gsub(" ", "\\\\, ", non_fraction_part),
+                paste0("{{}^{", num_vec, "}\\!/_{", denom_vec, "}}")
+              )
+
+          } else if (context == "rtf") {
+
+            x_str[has_a_fraction] <-
+              paste0(
+                gsub(" ", "", non_fraction_part),
+                paste0("{\\super ", num_vec, "}/{\\sub ", denom_vec, "}")
+              )
+          }
         }
 
-        if (context == "latex" && layout == "inline") {
+        # For the `layout = "inline"` option, LaTeX outputs in math mode
+        # disregard space characters so the `\ ` spacing command must used
+        if (layout == "inline" && context == "latex") {
           x_str <- gsub(" ", "\\\\ ", x_str)
-        }
-
-        if (context == "latex" && layout == "diagonal") {
-
-          has_a_fraction <- grepl("/", x_str)
-
-          non_fraction_part <- gsub("^(.*?)[0-9]*/[0-9]*", "\\1", x_str[has_a_fraction])
-
-          fraction_part <- gsub("^(.*?)([0-9]*/[0-9]*)", "\\2", x_str[has_a_fraction])
-
-          num_vec <- strsplit(fraction_part, "/") %>% lapply(`[[`, 1) %>% unlist()
-          denom_vec <- strsplit(fraction_part, "/") %>% lapply(`[[`, 2) %>% unlist()
-
-          x_str[has_a_fraction] <-
-            paste0(
-              gsub(" ", "\\\\, ", non_fraction_part),
-              paste0("{{}^{", num_vec, "}\\!/_{", denom_vec, "}}")
-            )
         }
 
         # In rare cases that Inf or -Inf appear, ensure that these
