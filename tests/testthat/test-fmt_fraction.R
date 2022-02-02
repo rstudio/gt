@@ -1,3 +1,6 @@
+testthat::local_edition(3)
+skip_on_cran()
+
 test_that("the `fmt_fraction()` function works correctly", {
 
   # Create an input data frame two columns: one
@@ -36,9 +39,6 @@ test_that("the `fmt_fraction()` function works correctly", {
   # Create a `gt_tbl` object with `gt()` and the
   # `data_tbl` dataset
   tab <- gt(data = data_tbl)
-
-  # Expect that the object has the correct classes
-  expect_is(tab, c("gt_tbl", "data.frame"))
 
   # Extract vectors from the table object for comparison
   # to the original dataset
@@ -246,4 +246,52 @@ test_that("the `fmt_fraction()` function works correctly", {
        fmt_fraction(columns = b) %>% render_formats_test("html"))[["b"]],
     c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
   )
+})
+
+test_that("the `fmt_fraction()` function produces reproducible results for HTML output", {
+
+  # Define values
+  range_0_1 <- c(0.0001, 0.001, 0.01, 0.1, 0.25, 0.4, 0.5, 0.6, 0.75, 0.9, 0.99, 0.999, 0.9999)
+  range_0_1_minus <- range_0_1 * -1
+  range_1_2 <- range_0_1 + 1
+  range_1_2_minus <- range_0_1_minus - 1
+  exact_numbers <- c(-1, 0, 1)
+  not_numbers <- c(NA_real_, NaN, Inf, -Inf)
+
+  # Generate a gt table that demonstrate use of `fmt_fraction()`
+  dplyr::tibble(
+    x = c(
+      range_0_1, range_0_1_minus, range_1_2, range_1_2_minus,
+      exact_numbers, not_numbers
+    ),
+    category = c(
+      rep("0 to 1", length(range_0_1)),
+      rep("0 to -1", length(range_0_1_minus)),
+      rep("1 to 2", length(range_1_2)),
+      rep("-1 to -2", length(range_1_2_minus)),
+      rep("Exact Numbers", length(exact_numbers)),
+      rep("Not Numbers", length(not_numbers))
+    ),
+    low = x,
+    med = x,
+    high = x,
+    halves = x,
+    quarters = x,
+    eighths = x,
+    sixteenths = x,
+    hundredths = x
+  ) %>%
+    gt(rowname_col = "x", groupname_col = "category") %>%
+    fmt_fraction(columns = low, accuracy = "low") %>%
+    fmt_fraction(columns = med, accuracy = "med") %>%
+    fmt_fraction(columns = high, accuracy = "high") %>%
+    fmt_fraction(columns = halves, accuracy = "/2") %>%
+    fmt_fraction(columns = quarters, accuracy = "/4") %>%
+    fmt_fraction(columns = eighths, accuracy = "/8") %>%
+    fmt_fraction(columns = sixteenths, accuracy = "/16") %>%
+    fmt_fraction(columns = hundredths, accuracy = "/100") %>%
+    cols_width(everything() ~ px(100)) %>%
+    opt_all_caps() %>%
+    render_as_html() %>%
+    expect_snapshot()
 })
