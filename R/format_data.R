@@ -1098,19 +1098,70 @@ fmt_fraction <- function(
       pattern = pattern,
       format_fn = function(x, context) {
 
-        # Round all values of x to the highest
-        # granularity required for this formatter
+        # Round all values of x to 3 digits with the R-H-U method of
+        # rounding (for reproducibility purposes)
         x <- round_gt(x, 3)
-
-        # Divide the `x` values in 'big' and 'small' components
-        big_x <- trunc(x)
-        small_x <- abs(x - big_x)
 
         # Determine which of `x` are finite values
         x_is_a_number <- is.finite(x)
 
+        # Divide the `x` values in 'big' and 'small' components; delay the
+        # formatting of `big_x` until it is appropriately rounded on the
+        # basis of the fractions obtained at the desired accuracy
+        big_x <- trunc(x)
+        small_x <- abs(x - big_x)
+
         # Get the correct minus mark based on the output context
         minus_mark <- context_minus_mark(context = context)
+
+        # Format the 'small' portion of the numeric values
+        # to character-based numbers with exactly 3 decimal places
+        small_x[x_is_a_number] <-
+          format_num_to_str(
+            small_x[x_is_a_number],
+            context = context, decimals = 3, n_sigfig = NULL,
+            sep_mark = sep_mark, dec_mark = dec_mark,
+            drop_trailing_zeros = FALSE,
+            drop_trailing_dec_mark = TRUE,
+            format = "f"
+          )
+
+        # Map the `accuracy` keyword to a column index in the
+        # internal `fractions` dataset
+        fractions_col_idx <-
+          which(c("low", "med", "high", "/2", "/4", "/8", "/16", "/100") %in% accuracy) + 1
+
+        # Generate an vector of empty strings that will eventually contain
+        # all of the fractional parts of the finalized numbers
+        fraction_x <- rep("", length(x))
+
+        # For every `small_x` value that corresponds to a number
+        # (i.e., not Inf), get the fractional part from the `fractions`
+        # lookup table
+        fraction_x[x_is_a_number] <-
+          vapply(
+            small_x[x_is_a_number],
+            FUN.VALUE = character(1),
+            USE.NAMES = FALSE,
+            FUN = function(x) {
+              fractions[fractions[["x"]] == x, ][[fractions_col_idx]]
+            }
+          )
+
+        # Round up or down the `big_x` values when necessary; values
+        # of exactly "1" indicate a requirement for rounding and this
+        # is a two-pass operation to handle positive and then negative
+        # values of `big_x`
+        big_x[big_x >= 0 & fraction_x == "1"] <-
+          big_x[big_x >= 0 & fraction_x == "1"] + 1
+
+        big_x[big_x <= 0 & fraction_x == "1"] <-
+          big_x[big_x <= 0 & fraction_x == "1"] - 1
+
+        # Remove whole number values from `fraction_x`; they were only
+        # needed for rounding guidance and they signal the lack of a
+        # fractional part
+        fraction_x[fraction_x %in% c("0", "1")] <- ""
 
         # Format the 'big' portion of the numeric values
         # to character-based numbers
@@ -1124,50 +1175,34 @@ fmt_fraction <- function(
             format = "f"
           )
 
-        # # Determine which of `x` are negative and have solely a fraction
-        # # for a value
-        # x_is_negative <- x < 0
-        # x_is_fractional <- x > -1 & x < 1 & big_x == "0"
-        # x_is_zero <- x == 0
-        #
-        # # Ensure that negative big components greater than -1 and less than 0
-        # # only consist of a minus mark
-        # big_x[x_is_negative & x_is_fractional & !x_is_zero] <- minus_mark
-
-        # Format the 'small' portion of the numeric values
-        # to character-based numbers with exactly 3 decimal places
-        small_x[x_is_a_number] <-
-          format_num_to_str(
-            small_x[x_is_a_number],
-            context = context, decimals = 3, n_sigfig = NULL,
-            sep_mark = sep_mark, dec_mark = dec_mark,
-            drop_trailing_zeros = FALSE,
-            drop_trailing_dec_mark = TRUE,
-            format = "f"
-          )
-        fraction_x <- rep("", length(small_x))
-
-        fraction_x[x_is_a_number] <-
-          get_fractions(
-            small_x = small_x[x_is_a_number],
-            accuracy = accuracy
-          )
-
         # Initialize a vector that will contain the finalized strings
         x_str <- character(length(x))
 
-        # Generate mixed fractions
+        # Generate the mixed fractions by pasting `big_x` and `small_x`
+        # while ensuring there is a single space between these components
         x_str[x_is_a_number] <-
           paste(
             big_x[x_is_a_number],
             fraction_x[x_is_a_number],
             sep = " "
           )
-        # Trim whitespace
+
+        # Trim any whitespace
         x_str <- gsub("(^ | $)", "", x_str)
 
         # Eliminate the display of leading zeros in mixed fractions
         x_str <- gsub("^0\\s+?", "", x_str)
+
+        # There are situations where small fractions (not mixed) require
+        # a minus mark; these conditions are specific so we need to ascertain
+        # which values in `x_str` require this and then apply the mark to
+        # the targets
+        x_is_negative <- x < 0
+        x_is_zero <- x_str == "0"
+        x_has_minus_mark <- grepl(minus_mark, big_x)
+        x_needs_minus_mark <- x_is_negative & !x_is_zero & !x_has_minus_mark
+
+        x_str[x_needs_minus_mark] <- paste0(minus_mark, x_str[x_needs_minus_mark])
 
         # Generate diagonal fractions if the context is HTML output and
         # `layout = "diagonal"` option was chosen
@@ -1194,7 +1229,11 @@ fmt_fraction <- function(
               htmltools::HTML("&frasl;")
             )
 
-          x_str[has_a_fraction] <- paste0(non_fraction_part, num_vec, slash_mark, denom_vec)
+          x_str[has_a_fraction] <-
+            paste0(
+              gsub(" ", "&#8239;", non_fraction_part),
+              num_vec, slash_mark, denom_vec
+            )
         }
 
         # In rare cases that Inf or -Inf appear, ensure that these
