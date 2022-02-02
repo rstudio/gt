@@ -1236,6 +1236,28 @@ fmt_fraction <- function(
             )
         }
 
+        if (context == "latex" && layout == "inline") {
+          x_str <- gsub(" ", "\\\\ ", x_str)
+        }
+
+        if (context == "latex" && layout == "diagonal") {
+
+          has_a_fraction <- grepl("/", x_str)
+
+          non_fraction_part <- gsub("^(.*?)[0-9]*/[0-9]*", "\\1", x_str[has_a_fraction])
+
+          fraction_part <- gsub("^(.*?)([0-9]*/[0-9]*)", "\\2", x_str[has_a_fraction])
+
+          num_vec <- strsplit(fraction_part, "/") %>% lapply(`[[`, 1) %>% unlist()
+          denom_vec <- strsplit(fraction_part, "/") %>% lapply(`[[`, 2) %>% unlist()
+
+          x_str[has_a_fraction] <-
+            paste0(
+              gsub(" ", "\\\\, ", non_fraction_part),
+              paste0("{{}^{", num_vec, "}\\!/_{", denom_vec, "}}")
+            )
+        }
+
         # In rare cases that Inf or -Inf appear, ensure that these
         # special values are printed correctly
         x_str[is.infinite(x)] <- x[is.infinite(x)]
