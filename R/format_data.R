@@ -1120,7 +1120,7 @@ fmt_fraction <- function(
           format_num_to_str(
             small_x[x_is_a_number],
             context = context, decimals = 3, n_sigfig = NULL,
-            sep_mark = sep_mark, dec_mark = dec_mark,
+            sep_mark = ",", dec_mark = ".",
             drop_trailing_zeros = FALSE,
             drop_trailing_dec_mark = TRUE,
             format = "f"
