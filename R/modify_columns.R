@@ -146,7 +146,7 @@ cols_align <- function(data,
 #'   Subsequent expressions that operate on the columns assigned previously will
 #'   result in overwriting column width values (both in the same `cols_width()`
 #'   call and across separate calls). All other columns can be assigned a
-#'   default width value by using `TRUE` or `everything()` on the left-hand
+#'   default width value by using `everything()` on the left-hand
 #'   side.
 #' @param .list Allows for the use of a list as an input alternative to `...`.
 #'
@@ -157,8 +157,8 @@ cols_align <- function(data,
 #' # with named arguments in `...`, we
 #' # can specify the exact widths for
 #' # table columns (using `everything()`
-#' # or `TRUE` at the end will capture
-#' # all remaining columns)
+#' # at the end will capture all
+#' # remaining columns)
 #' tab_1 <-
 #'   exibble %>%
 #'   dplyr::select(

@@ -28,6 +28,8 @@ emailing context.
 }
 
 \examples{
+if (interactive()) {
+
 # Use `gtcars` to create a gt table;
 # add a header and then export as
 # HTML code with CSS inlined
@@ -50,6 +52,8 @@ tab_html <-
 tab_html \%>\%
   substr(1, 700) \%>\%
   cat()
+
+}
 
 }
 \seealso{

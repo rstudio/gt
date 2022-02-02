@@ -1,5 +1,3 @@
-context("Ensuring that the `cols_merge*()` functions work as expected")
-
 # Create a shortened version of `mtcars`
 mtcars_short <- mtcars[1:5, ]
 
@@ -480,17 +478,17 @@ test_that("the `cols_merge_n_pct()` function works correctly", {
   expect_equal(
     (tbl_html %>% render_formats_test("html"))[["a"]],
     c(
-      "1 (7.1&percnt;)", "5 (35.7&percnt;)", "0", "2 (14.3&percnt;)",
-      "NA", "6 (42.9&percnt;)", "5", "NA", "0", "NA"
+      "1 (7.1%)", "5 (35.7%)", "0", "2 (14.3%)",
+      "NA", "6 (42.9%)", "5", "NA", "0", "NA"
     )
   )
 
   expect_equal(
     (tbl_html %>% render_formats_test("html"))[["b"]],
     c(
-      "7.1&percnt;", "35.7&percnt;", "0.0&percnt;", "14.3&percnt;",
-      "NA", "42.9&percnt;", "NA", "100,000.0&percnt;", "NA",
-      "0.0&percnt;"
+      "7.1%", "35.7%", "0.0%", "14.3%",
+      "NA", "42.9%", "NA", "100,000.0%", "NA",
+      "0.0%"
     )
   )
 })

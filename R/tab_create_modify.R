@@ -619,7 +619,7 @@ tab_footnote <- function(data,
       set_footnote(
         loc = loc,
         data = data,
-        footnote = process_text(footnote)
+        footnote = footnote
       )
   }
 
@@ -1054,12 +1054,33 @@ tab_style <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Intercept font styles that require registration
-  if ("cell_text" %in% names(style)) {
+  # Upgrade `style` to be within a list if not provided as such
+  if (inherits(style, "cell_styles")) {
+    style <- list(style)
+  }
 
-    if ("font" %in% names(style[["cell_text"]])) {
+  # Determine if there is a `cell_text` list within the main list;
+  # because we need to intercept any provided `font` inputs in `cell_text`
+  # this is the first thing we need to know
+  has_cell_text <- "cell_text" %in% names(unlist(style, recursive = FALSE))
 
-      font <- style[["cell_text"]][["font"]]
+  # If the `cell_text` list is present we now need to determine if there
+  # is indeed a `font` input within that list
+  if (has_cell_text) {
+
+    # The `style` list will itself contain several lists and it's
+    # important to identify which one represents `cell_text`
+    for (i in seq_along(style)) {
+      if ("cell_text" %in% names(style[[i]])) {
+        cell_text_idx <- i
+      }
+    }
+
+    # If the `cell_text` list contains a `font` input then intercept
+    # the font styles that require registration
+    if ("font" %in% names(style[[cell_text_idx]][["cell_text"]])) {
+
+      font <- style[[cell_text_idx]][["cell_text"]][["font"]]
       font <- normalize_font_input(font_input = font)
 
       existing_additional_css <-
@@ -1076,11 +1097,9 @@ tab_style <- function(data,
           table.additional_css = additional_css
         )
 
-      font_names <- font$name
-
-      style[["cell_text"]][["font"]] <-
+      style[[cell_text_idx]][["cell_text"]][["font"]] <-
         as_css_font_family_attr(
-          font_vec = font_names,
+          font_vec = font$name,
           value_only = TRUE
         )
     }
@@ -1532,12 +1551,21 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' @param stub.border.style,stub.border.width,stub.border.color
 #'   The style, width, and color properties for the vertical border of the table
 #'   stub.
+#' @param stub_row_group.font.size,stub_row_group.font.weight,stub_row_group.text_transform,stub_row_group.border.style,stub_row_group.border.width,stub_row_group.border.color
+#'   Options for the row group column in the stub (made possible when using
+#'   `row_group.as_column = TRUE`). The defaults for these options mirror that
+#'   of the `stub.*` variants (except for `stub_row_group.border.width`, which
+#'   is `"1px"` instead of `"2px"`).
 #' @param row_group.default_label An option to set a default row group label for
 #'   any rows not formally placed in a row group named by `group` in any call of
 #'   `tab_row_group()`. If this is set as `NA_character` and there are rows that
 #'   haven't been placed into a row group (where one or more row groups already
 #'   exist), those rows will be automatically placed into a row group without a
 #'   label.
+#' @param row_group.as_column How should row groups be structured? By default,
+#'   they are separate rows that lie above the each of the groups. Setting this
+#'   to `TRUE` will structure row group labels are columns to the far left of
+#'   the table.
 #' @param summary_row.border.style,summary_row.border.width,summary_row.border.color
 #'   The style, width, and color properties for all horizontal borders of the
 #'   `summary_row` location.
@@ -1550,8 +1578,6 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' @param footnotes.border.lr.style,footnotes.border.lr.width,footnotes.border.lr.color
 #'   The style, width, and color properties for the left and right borders of
 #'   the `footnotes` location.
-#' @param footnotes.sep The separating characters between adjacent footnotes in
-#'   the footnotes section. The default value produces a linebreak.
 #' @param footnotes.marks The set of sequential marks used to reference and
 #'   identify each of the footnotes (same input as the [opt_footnote_marks()]
 #'   function. We can supply a vector that represents the series of footnote
@@ -1563,6 +1589,15 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   `"LETTERS"`. There is the option for using a traditional symbol set where
 #'   `"standard"` provides four symbols, and, `"extended"` adds two more
 #'   symbols, making six.
+#' @param footnotes.multiline,source_notes.multiline An option to either put
+#'   footnotes and source notes in separate lines (the default, or `TRUE`) or
+#'   render them as a continuous line of text with `footnotes.sep` providing the
+#'   separator (by default `" "`) between notes.
+#' @param footnotes.sep,source_notes.sep The separating characters between
+#'   adjacent footnotes and source notes in their respective footer sections
+#'   when rendered as a continuous line of text (when
+#'   `footnotes.multiline == FALSE`). The default value is a single space
+#'   character (`" "`).
 #' @param source_notes.border.bottom.style,source_notes.border.bottom.width,source_notes.border.bottom.color
 #'   The style, width, and color properties for the bottom border of the
 #'   `source_notes` location.
@@ -1757,6 +1792,7 @@ tab_options <- function(data,
                         row_group.border.right.width = NULL,
                         row_group.border.right.color = NULL,
                         row_group.default_label = NULL,
+                        row_group.as_column = NULL,
                         table_body.hlines.style = NULL,
                         table_body.hlines.width = NULL,
                         table_body.hlines.color = NULL,
@@ -1776,6 +1812,12 @@ tab_options <- function(data,
                         stub.border.style = NULL,
                         stub.border.width = NULL,
                         stub.border.color = NULL,
+                        stub_row_group.font.size = NULL,
+                        stub_row_group.font.weight = NULL,
+                        stub_row_group.text_transform = NULL,
+                        stub_row_group.border.style = NULL,
+                        stub_row_group.border.width = NULL,
+                        stub_row_group.border.color = NULL,
                         data_row.padding = NULL,
                         summary_row.background.color = NULL,
                         summary_row.text_transform = NULL,
@@ -1798,8 +1840,9 @@ tab_options <- function(data,
                         footnotes.border.lr.style = NULL,
                         footnotes.border.lr.width = NULL,
                         footnotes.border.lr.color = NULL,
-                        footnotes.sep = NULL,
                         footnotes.marks = NULL,
+                        footnotes.multiline = NULL,
+                        footnotes.sep = NULL,
                         source_notes.background.color = NULL,
                         source_notes.font.size = NULL,
                         source_notes.padding = NULL,
@@ -1809,6 +1852,8 @@ tab_options <- function(data,
                         source_notes.border.lr.style = NULL,
                         source_notes.border.lr.width = NULL,
                         source_notes.border.lr.color = NULL,
+                        source_notes.multiline = NULL,
+                        source_notes.sep = NULL,
                         row.striping.background_color = NULL,
                         row.striping.include_stub = NULL,
                         row.striping.include_table_body = NULL) {

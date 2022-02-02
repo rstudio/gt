@@ -652,8 +652,8 @@ test_that("styles are correctly applied to HTML output with location functions",
     render_as_html() %>%
     tidy_grepl(
       paste0(
-        "<td class=\"gt_row gt_left gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">1</td>.*",
-        "<td class=\"gt_row gt_left gt_stub\">2</td>"
+        "<td class=\"gt_row gt_right gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">1</td>.*",
+        "<td class=\"gt_row gt_right gt_stub\">2</td>"
       )
     ) %>%
     expect_true()
@@ -675,8 +675,8 @@ test_that("styles are correctly applied to HTML output with location functions",
     render_as_html() %>%
     tidy_grepl(
       paste0(
-        "<td class=\"gt_row gt_left gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">1</td>.*",
-        "<td class=\"gt_row gt_left gt_stub\">2</td>"
+        "<td class=\"gt_row gt_right gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">1</td>.*",
+        "<td class=\"gt_row gt_right gt_stub\">2</td>"
       )
     ) %>%
     expect_true()
@@ -698,8 +698,8 @@ test_that("styles are correctly applied to HTML output with location functions",
     render_as_html() %>%
     tidy_grepl(
       paste0(
-        "<td class=\"gt_row gt_left gt_stub\">1</td>.*",
-        "<td class=\"gt_row gt_left gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">2</td>"
+        "<td class=\"gt_row gt_right gt_stub\">1</td>.*",
+        "<td class=\"gt_row gt_right gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">2</td>"
       )
     ) %>%
     expect_true()
@@ -721,8 +721,8 @@ test_that("styles are correctly applied to HTML output with location functions",
     render_as_html() %>%
     tidy_grepl(
       paste0(
-        "<td class=\"gt_row gt_left gt_stub\">1</td>.*",
-        "<td class=\"gt_row gt_left gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">2</td>"
+        "<td class=\"gt_row gt_right gt_stub\">1</td>.*",
+        "<td class=\"gt_row gt_right gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">2</td>"
       )
     ) %>%
     expect_true()
@@ -744,8 +744,8 @@ test_that("styles are correctly applied to HTML output with location functions",
     render_as_html() %>%
     tidy_grepl(
       paste0(
-        "<td class=\"gt_row gt_left gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">1</td>.*",
-        "<td class=\"gt_row gt_left gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">2</td>"
+        "<td class=\"gt_row gt_right gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">1</td>.*",
+        "<td class=\"gt_row gt_right gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">2</td>"
       )
     ) %>%
     expect_true()
@@ -787,8 +787,8 @@ test_that("styles are correctly applied to HTML output with location functions",
     render_as_html() %>%
     tidy_grepl(
       paste0(
-        "<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row\" style=\"background-color: #FF0000;\">0.11</td>.*",
-        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row\">&mdash;</td>"
+        "<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">0.11</td>.*",
+        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row thick\">&mdash;</td>"
       )
     ) %>%
     expect_true()
@@ -804,14 +804,14 @@ test_that("styles are correctly applied to HTML output with location functions",
     render_as_html() %>%
     tidy_grepl(
       paste0(
-        "<td class=\"gt_row gt_stub gt_right gt_summary_row gt_first_summary_row\">min</td>.*",
-        "<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row\" style=\"background-color: #FF0000;\">0.11</td>.*",
-        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
-        "<td class=\"gt_row gt_center gt_summary_row gt_first_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
-        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
-        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
-        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
-        "<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>"
+        "<td class=\"gt_row gt_right gt_stub gt_summary_row gt_first_summary_row thick\">min</td>.*",
+        "<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">0.11</td>.*",
+        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+        "<td class=\"gt_row gt_center gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+        "<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">&mdash;</td>"
       )
     ) %>%
     expect_true()
@@ -830,7 +830,7 @@ test_that("styles are correctly applied to HTML output with location functions",
   gt_tbl_cells_stub_summary_1 %>%
     render_as_html() %>%
     tidy_grepl(
-      "<td class=\"gt_row gt_stub gt_right gt_summary_row gt_first_summary_row\" style=\"background-color: #FF0000;\">min</td>"
+      "<td class=\"gt_row gt_right gt_stub gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">min</td>"
     ) %>%
     expect_true()
 
@@ -844,7 +844,7 @@ test_that("styles are correctly applied to HTML output with location functions",
   gt_tbl_cells_stub_summary_2 %>%
     render_as_html() %>%
     tidy_grepl(
-      "<td class=\"gt_row gt_stub gt_right gt_summary_row gt_first_summary_row\" style=\"background-color: #FF0000;\">min</td>"
+      "<td class=\"gt_row gt_right gt_stub gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">min</td>"
     ) %>%
     expect_true()
 
@@ -877,14 +877,14 @@ test_that("styles are correctly applied to HTML output with location functions",
     render_as_html() %>%
     tidy_grepl(
       paste0(
-          "<td class=\"gt_row gt_stub gt_right gt_grand_summary_row\">max</td>.*",
-          "<td class=\"gt_row gt_right gt_grand_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
-          "<td class=\"gt_row gt_left gt_grand_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
-          "<td class=\"gt_row gt_center gt_grand_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
-          "<td class=\"gt_row gt_left gt_grand_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
-          "<td class=\"gt_row gt_left gt_grand_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
-          "<td class=\"gt_row gt_left gt_grand_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
-          "<td class=\"gt_row gt_right gt_grand_summary_row\" style=\"background-color: #FF0000;\">65,100.00</td>"
+          "<td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_last_summary_row\">max</td>.*",
+          "<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+          "<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+          "<td class=\"gt_row gt_center gt_grand_summary_row gt_last_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+          "<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+          "<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+          "<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+          "<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\" style=\"background-color: #FF0000;\">65,100.00</td>"
       )
     ) %>%
     expect_true()
@@ -903,7 +903,7 @@ test_that("styles are correctly applied to HTML output with location functions",
   gt_tbl_cells_stub_grand_summary_1 %>%
     render_as_html() %>%
     tidy_grepl(
-      "<td class=\"gt_row gt_stub gt_right gt_grand_summary_row gt_first_grand_summary_row\" style=\"background-color: #FF0000;\">min</td>"
+      "<td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_first_grand_summary_row\" style=\"background-color: #FF0000;\">min</td>"
     ) %>%
     expect_true()
 
@@ -917,7 +917,7 @@ test_that("styles are correctly applied to HTML output with location functions",
   gt_tbl_cells_stub_grand_summary_2 %>%
     render_as_html() %>%
     tidy_grepl(
-      "<td class=\"gt_row gt_stub gt_right gt_grand_summary_row\" style=\"background-color: #FF0000;\">max</td>"
+      "<td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_last_summary_row\" style=\"background-color: #FF0000;\">max</td>"
     ) %>%
     expect_true()
 
@@ -937,7 +937,7 @@ test_that("styles are correctly applied to HTML output with location functions",
   gt_tbl_cells_footnotes_1 %>%
     render_as_html() %>%
     tidy_grepl(
-      "<tr class=\"gt_footnotes\" style=\"background-color: #FF0000;\">"
+      "<td class=\"gt_footnote\" style=\"background-color: #FF0000;\""
     ) %>%
     expect_true()
 

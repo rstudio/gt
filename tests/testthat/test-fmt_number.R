@@ -667,9 +667,9 @@ test_that("the `drop_trailing_dec_mark` option works in select `fmt_*()` functio
        fmt_percent(columns = num, drop_trailing_dec_mark = TRUE) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "0.10&percnt;", "1.00&percnt;", "10.00&percnt;", "0.00&percnt;",
-      "100.00&percnt;", "110.00&percnt;", "112.00&percnt;", "5,000,000.00&percnt;",
-      "&minus;150.00&percnt;", "&minus;500.00&percnt;", "&minus;50,010.00&percnt;"
+      "0.10%", "1.00%", "10.00%", "0.00%",
+      "100.00%", "110.00%", "112.00%", "5,000,000.00%",
+      "&minus;150.00%", "&minus;500.00%", "&minus;50,010.00%"
     )
   )
 
@@ -679,9 +679,9 @@ test_that("the `drop_trailing_dec_mark` option works in select `fmt_*()` functio
        fmt_percent(columns = num, decimals = 0) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "0&percnt;", "1&percnt;", "10&percnt;", "0&percnt;", "100&percnt;",
-      "110&percnt;", "112&percnt;", "5,000,000&percnt;", "&minus;150&percnt;",
-      "&minus;500&percnt;", "&minus;50,010&percnt;"
+      "0%", "1%", "10%", "0%", "100%",
+      "110%", "112%", "5,000,000%", "&minus;150%",
+      "&minus;500%", "&minus;50,010%"
     )
   )
 
@@ -692,9 +692,9 @@ test_that("the `drop_trailing_dec_mark` option works in select `fmt_*()` functio
        fmt_percent(columns = num, decimals = 0, drop_trailing_dec_mark = FALSE) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "0.&percnt;", "1.&percnt;", "10.&percnt;", "0.&percnt;", "100.&percnt;",
-      "110.&percnt;", "112.&percnt;", "5,000,000.&percnt;", "&minus;150.&percnt;",
-      "&minus;500.&percnt;", "&minus;50,010.&percnt;"
+      "0.%", "1.%", "10.%", "0.%", "100.%",
+      "110.%", "112.%", "5,000,000.%", "&minus;150.%",
+      "&minus;500.%", "&minus;50,010.%"
     )
   )
 
