@@ -258,29 +258,38 @@ test_that("the `fmt_fraction()` function produces reproducible results for HTML 
   exact_numbers <- c(-1, 0, 1)
   not_numbers <- c(NA_real_, NaN, Inf, -Inf)
 
-  # Generate a gt table that demonstrate use of `fmt_fraction()`
-  dplyr::tibble(
-    x = c(
-      range_0_1, range_0_1_minus, range_1_2, range_1_2_minus,
-      exact_numbers, not_numbers
-    ),
-    category = c(
-      rep("0 to 1", length(range_0_1)),
-      rep("0 to -1", length(range_0_1_minus)),
-      rep("1 to 2", length(range_1_2)),
-      rep("-1 to -2", length(range_1_2_minus)),
-      rep("Exact Numbers", length(exact_numbers)),
-      rep("Not Numbers", length(not_numbers))
-    ),
-    low = x,
-    med = x,
-    high = x,
-    halves = x,
-    quarters = x,
-    eighths = x,
-    sixteenths = x,
-    hundredths = x
-  ) %>%
+  #
+  # Generate gt tables that exhaustively use `fmt_fraction()`
+  # across a wide range of numbers and formatting accuracy
+  #
+
+  input_data <-
+    dplyr::tibble(
+      x = c(
+        range_0_1, range_0_1_minus, range_1_2, range_1_2_minus,
+        exact_numbers, not_numbers
+      ),
+      category = c(
+        rep("0 to 1", length(range_0_1)),
+        rep("0 to -1", length(range_0_1_minus)),
+        rep("1 to 2", length(range_1_2)),
+        rep("-1 to -2", length(range_1_2_minus)),
+        rep("Exact Numbers", length(exact_numbers)),
+        rep("Not Numbers", length(not_numbers))
+      ),
+      low = x,
+      med = x,
+      high = x,
+      halves = x,
+      quarters = x,
+      eighths = x,
+      sixteenths = x,
+      hundredths = x
+    )
+
+  # Generate table with the `layout = "diagonal"` option (the default)
+  fraction_tbl_diagonal <-
+    input_data %>%
     gt(rowname_col = "x", groupname_col = "category") %>%
     fmt_fraction(columns = low, accuracy = "low") %>%
     fmt_fraction(columns = med, accuracy = "med") %>%
@@ -291,7 +300,24 @@ test_that("the `fmt_fraction()` function produces reproducible results for HTML 
     fmt_fraction(columns = sixteenths, accuracy = "/16") %>%
     fmt_fraction(columns = hundredths, accuracy = "/100") %>%
     cols_width(everything() ~ px(100)) %>%
-    opt_all_caps() %>%
-    render_as_html() %>%
-    expect_snapshot()
+    opt_all_caps()
+
+  # Generate table with the `layout = "inline"` option
+  fraction_tbl_inline <-
+    input_data %>%
+    gt(rowname_col = "x", groupname_col = "category") %>%
+    fmt_fraction(columns = low, accuracy = "low", layout = "inline") %>%
+    fmt_fraction(columns = med, accuracy = "med", layout = "inline") %>%
+    fmt_fraction(columns = high, accuracy = "high", layout = "inline") %>%
+    fmt_fraction(columns = halves, accuracy = "/2", layout = "inline") %>%
+    fmt_fraction(columns = quarters, accuracy = "/4", layout = "inline") %>%
+    fmt_fraction(columns = eighths, accuracy = "/8", layout = "inline") %>%
+    fmt_fraction(columns = sixteenths, accuracy = "/16", layout = "inline") %>%
+    fmt_fraction(columns = hundredths, accuracy = "/100", layout = "inline") %>%
+    cols_width(everything() ~ px(100)) %>%
+    opt_all_caps()
+
+  # Perform snapshot tests for HTML outputs
+  fraction_tbl_diagonal %>% render_as_html() %>% expect_snapshot()
+  fraction_tbl_inline %>% render_as_html() %>% expect_snapshot()
 })
