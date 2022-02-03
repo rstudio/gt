@@ -889,6 +889,13 @@ tab_source_note <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
+  # There is the option to remove all source notes with
+  # `source_note = NULL`; this will essentially reinitialize the
+  # list of source notes
+  if (is.null(source_note)) {
+    return(dt_source_notes_init(data = data))
+  }
+
   dt_source_notes_add(
     data = data,
     source_note = source_note
