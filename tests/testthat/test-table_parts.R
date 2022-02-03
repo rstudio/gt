@@ -229,6 +229,25 @@ test_that("a gt table contains the expected spanner column labels", {
       tab_spanner(label = "a", columns = num) %>%
       tab_spanner(label = "b", id = "a", columns = char)
   )
+
+  # Create a `tbl_html` object with `gt()`; this table
+  # has the spanner heading `perimeter` set over the
+  # `peri` and `shape` column labels, but, is then removed
+  # with a second call of `tab_spanner()`
+  tbl_html <-
+    gt(rock) %>%
+    tab_spanner(
+      label = "perimeter",
+      columns = c("peri", "shape")
+    ) %>%
+    tab_spanner(label = NULL) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect no spanner text will be rendered
+  tbl_html %>%
+    selection_text("[class='gt_center gt_columns_top_border gt_column_spanner_outer']") %>%
+    expect_equal(character(0))
 })
 
 test_that("`tab_spanner()` exclusively uses IDs for arranging spanners", {
