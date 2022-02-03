@@ -59,7 +59,8 @@ tab_header <- function(data,
 #' those columns and column labels.
 #'
 #' @inheritParams fmt_number
-#' @param label The text to use for the spanner column label.
+#' @param label The text to use for the spanner column label. Using `NULL` will
+#'   remove any existing spanner column labels.
 #' @param columns The columns to be components of the spanner heading.
 #' @param id The ID for the spanner column label. When accessing a spanner
 #'   column label through [cells_column_spanners()] (when using [tab_style()] or
@@ -113,6 +114,13 @@ tab_spanner <- function(data,
 
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  # There is the option to remove all spanners with
+  # `label = NULL`; this will essentially reinitialize
+  # all spanner settings
+  if (is.null(label)) {
+    return(dt_spanners_init(data = data))
+  }
 
   checkmate::assert_character(
     label, len = 1, any.missing = FALSE, null.ok = FALSE

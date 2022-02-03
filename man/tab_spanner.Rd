@@ -9,7 +9,8 @@ tab_spanner(data, label, columns, id = label, gather = TRUE)
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{label}{The text to use for the spanner column label.}
+\item{label}{The text to use for the spanner column label. Using \code{NULL} will
+remove any existing spanner column labels.}
 
 \item{columns}{The columns to be components of the spanner heading.}
 
