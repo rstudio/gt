@@ -857,7 +857,8 @@ set_footnote.cells_footnotes <- function(loc, data, footnote) {
 #' @inheritParams fmt_number
 #' @param source_note Text to be used in the source note. We can optionally use
 #'   the [md()] and [html()] functions to style the text as Markdown or to
-#'   retain HTML elements in the text.
+#'   retain HTML elements in the text. Using `NULL` will remove all existing
+#'   source notes.
 #'
 #' @return An object of class `gt_tbl`.
 #'

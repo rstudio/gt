@@ -18,6 +18,13 @@ dt_source_notes_init <- function(data) {
 
 dt_source_notes_add <- function(data, source_note) {
 
+  # There is the option to remove all source notes with
+  # `tab_source_note(source_note = NULL)`; this will
+  # essentially reinitialize the list
+  if (is.null(source_note)) {
+    return(dt_source_notes_init(data = data))
+  }
+
   data %>%
     dt_source_notes_get() %>%
     append(
