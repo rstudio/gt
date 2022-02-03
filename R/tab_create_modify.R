@@ -198,6 +198,7 @@ tab_spanner <- function(data,
 #'   procedure. The first component of the split will become the spanner column
 #'   label (and its ID value, used for styling or for the addition of footnotes
 #'   in those locations) and the second component will be the column label.
+#'   Using `NULL` will remove any existing spanner column labels.
 #' @param columns An optional vector of column names that this operation should
 #'   be limited to. The default is to consider all columns in the table.
 #' @param split Should the delimiter splitting occur at the `"last"` instance of
@@ -235,6 +236,13 @@ tab_spanner_delim <- function(data,
 
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  # There is the option to remove all spanners with
+  # `delim = NULL`; this will essentially reinitialize
+  # all spanner settings
+  if (is.null(delim)) {
+    return(dt_spanners_init(data = data))
+  }
 
   split <- match.arg(split)
 

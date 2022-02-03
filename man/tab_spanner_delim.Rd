@@ -19,7 +19,8 @@ tab_spanner_delim(
 delimiter supplied will be autoescaped for the internal splitting
 procedure. The first component of the split will become the spanner column
 label (and its ID value, used for styling or for the addition of footnotes
-in those locations) and the second component will be the column label.}
+in those locations) and the second component will be the column label.
+Using \code{NULL} will remove any existing spanner column labels.}
 
 \item{columns}{An optional vector of column names that this operation should
 be limited to. The default is to consider all columns in the table.}
