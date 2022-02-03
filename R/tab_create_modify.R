@@ -550,7 +550,8 @@ tab_stubhead <- function(data,
 #' @inheritParams fmt_number
 #' @param footnote The text to be used in the footnote. We can optionally use
 #'   the [md()] and [html()] functions to style the text as Markdown or to
-#'   retain HTML elements in the footnote text.
+#'   retain HTML elements in the footnote text. Using `NULL` will remove all
+#'   existing footnotes.
 #' @param locations The cell or set of cells to be associated with the footnote.
 #'   Supplying any of the `cells_*()` helper functions is a useful way to target
 #'   the location cells that are associated with the footnote text. These helper
@@ -607,6 +608,13 @@ tab_footnote <- function(data,
 
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  # There is the option to remove all source notes with
+  # `source_note = NULL`; this will essentially reinitialize
+  # the table of footnotes
+  if (is.null(footnote)) {
+    return(dt_footnotes_init(data = data))
+  }
 
   # Resolve into a list of locations
   locations <- as_locations(locations)

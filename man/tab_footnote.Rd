@@ -11,7 +11,8 @@ tab_footnote(data, footnote, locations)
 
 \item{footnote}{The text to be used in the footnote. We can optionally use
 the \code{\link[=md]{md()}} and \code{\link[=html]{html()}} functions to style the text as Markdown or to
-retain HTML elements in the footnote text.}
+retain HTML elements in the footnote text. Using \code{NULL} will remove all
+existing footnotes.}
 
 \item{locations}{The cell or set of cells to be associated with the footnote.
 Supplying any of the \verb{cells_*()} helper functions is a useful way to target
