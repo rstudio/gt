@@ -640,6 +640,23 @@ test_that("the `tab_footnote()` function works correctly", {
     selection_text(selection = "[class='gt_footnote_marks']") %>%
     tidy_gsub("\\s+", "") %>%
     expect_equal(rep(as.character(1:4), 2))
+
+  # Create a `tbl_html` object with `gt()`, apply two different
+  # footnotes, and then remove them both with `NULL` on the third
+  # `tab_foonote()` call
+  tbl_html <-
+    mtcars %>%
+    gt() %>%
+    tab_footnote(footnote = "The `mpg` column", locations = cells_column_labels(columns = mpg)) %>%
+    tab_footnote(footnote = "The `cyl` column", locations = cells_column_labels(columns = cyl)) %>%
+    tab_footnote(footnote = NULL) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect no footnote text will be rendered
+  tbl_html %>%
+    selection_text("[class='gt_footnote']") %>%
+    expect_equal(character(0))
 })
 
 test_that("the footnotes table is structured correctly", {
