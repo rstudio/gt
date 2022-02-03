@@ -420,6 +420,20 @@ test_that("a gt table contains the expected source note", {
     expect_equal(
       c("Henderson and Velleman (1981).",
         "This was in Motor Trend magazine, hence the `mt`."))
+
+  # Create a `tbl_html` object with `gt()`; this sets a
+  # source note and then removes it with `NULL`
+  tbl_html <-
+    gt(mtcars_short) %>%
+    tab_source_note(source_note = md("*Henderson and Velleman* (1981).")) %>%
+    tab_source_note(source_note = NULL) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect no source note text will be rendered
+  tbl_html %>%
+    selection_text("[class='gt_sourcenote']") %>%
+    expect_equal(character(0))
 })
 
 test_that("row groups can be successfully generated with `tab_row_group()", {
