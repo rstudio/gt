@@ -293,6 +293,20 @@ test_that("the `tab_spanner_delim()` function works correctly", {
           "M.Petal.Length", "M.Petal.Width"
         )
       )
+
+    # Create a `tbl_html` object with `gt()`, split the column
+    # names into spanner headings and column labels, then remove
+    # all spanner column labels with a second call of `tab_spanner_delim()`
+    tbl_html <-
+      gt(iris_short) %>%
+      tab_spanner_delim(delim = ".") %>%
+      tab_spanner_delim(delim = NULL)
+
+    # Expect no spanner column labels within the gt object
+    tbl_html %>%
+      .$spanner_label %>%
+      unlist() %>%
+      expect_null()
 })
 
 test_that("`tab_spanner_delim()` gathers columns as necessary", {
