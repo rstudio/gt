@@ -11,7 +11,8 @@ tab_stubhead(data, label)
 
 \item{label}{The text to be used as the stubhead label We can optionally use
 the \code{\link[=md]{md()}} and \code{\link[=html]{html()}} functions to style the text as Markdown or to
-retain HTML elements in the text.}
+retain HTML elements in the text. Using \code{NULL} will remove any existing
+stubhead label.}
 }
 \value{
 An object of class \code{gt_tbl}.

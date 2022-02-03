@@ -493,7 +493,8 @@ tab_row_group <- function(data,
 #' @inheritParams fmt_number
 #' @param label The text to be used as the stubhead label We can optionally use
 #'   the [md()] and [html()] functions to style the text as Markdown or to
-#'   retain HTML elements in the text.
+#'   retain HTML elements in the text. Using `NULL` will remove any existing
+#'   stubhead label.
 #'
 #' @return An object of class `gt_tbl`.
 #'
