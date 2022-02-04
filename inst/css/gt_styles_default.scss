@@ -93,8 +93,8 @@
     vertical-align: bottom;
     padding-top: $column_labels_padding; // column_labels.padding
     padding-bottom: $column_labels_padding + 1; // column_labels.padding
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: 5px; // new: column_labels.padding.horizontal
+    padding-right: 5px; // new: column_labels.padding.horizontal
     overflow-x: hidden;
   }
 
@@ -129,7 +129,10 @@
   }
 
   .gt_group_heading {
-    padding: $row_group_padding; // row_group.padding
+    padding-top: $row_group_padding; // row_group.padding
+    padding-bottom: $row_group_padding; // row_group.padding
+    padding-left: 5px; // new: row_group.padding.horizontal
+    padding-right: 5px; // new: row_group.padding.horizontal
     color: font-color($row_group_background_color);
     background-color: $row_group_background_color; // row_group.background.color
     font-size: $row_group_font_size; // row_group.font.size
@@ -176,8 +179,8 @@
   .gt_row {
     padding-top: $data_row_padding; // data_row.padding
     padding-bottom: $data_row_padding; // data_row.padding
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: 5px; // new: data_row.padding.horizontal
+    padding-right: 5px; // new: data_row.padding.horizontal
     margin: 10px;
     border-top-style: $table_body_hlines_style; // table_body.hlines.style
     border-top-width: $table_body_hlines_width; // table_body.hlines.width
@@ -201,7 +204,8 @@
     border-right-style: $stub_border_style; // stub.border.style
     border-right-width: $stub_border_width; // stub.border.width
     border-right-color: $stub_border_color; // stub.border.color
-    padding-left: 12px;
+    padding-left:  5px; // new: stub.padding.horizontal
+    padding-right: 5px; // new: stub.padding.horizontal
   }
 
   .gt_stub_row_group {
@@ -213,7 +217,8 @@
     border-right-style: $stub_row_group_border_style; // stub_row_group.border.style
     border-right-width: $stub_row_group_border_width; // stub_row_group.border.width
     border-right-color: $stub_row_group_border_color; // stub_row_group.border.color
-    padding-left: 12px;
+    padding-left:  5px; // new: stub.padding.horizontal
+    padding-right: 5px; // new: stub.padding.horizontal
     vertical-align: top;
   }
 
@@ -227,8 +232,8 @@
     text-transform: $summary_row_text_transform; // summary_row.text_transform
     padding-top: $summary_row_padding; // summary_row.padding
     padding-bottom: $summary_row_padding; // summary_row.padding
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: 5px; // new: summary_row.horizontal
+    padding-right: 5px; // new: summary_row.horizontal
   }
 
   .gt_first_summary_row {
@@ -243,8 +248,8 @@
   .gt_last_summary_row {
     padding-top: $summary_row_padding; // summary_row.padding
     padding-bottom: $summary_row_padding; // summary_row.padding
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: 5px; // new: summary_row.horizontal
+    padding-right: 5px; // new: summary_row.horizontal
     border-bottom-style: $summary_row_border_style; // summary_row.border.style
     border-bottom-width: $summary_row_border_width; // summary_row.border.width
     border-bottom-color: $summary_row_border_color; // summary_row.border.color
@@ -256,15 +261,15 @@
     text-transform: $grand_summary_row_text_transform; // grand_summary_row.text_transform
     padding-top: $grand_summary_row_padding; // grand_summary_row.padding
     padding-bottom: $grand_summary_row_padding; // grand_summary_row.padding
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: 5px; // new: grand_summary_row.horizontal
+    padding-right: 5px; // new: grand_summary_row.horizontal
   }
 
   .gt_first_grand_summary_row {
     padding-top: $grand_summary_row_padding; // grand_summary_row.padding
     padding-bottom: $grand_summary_row_padding; // grand_summary_row.padding
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: 5px; // new: grand_summary_row.horizontal
+    padding-right: 5px; // new: grand_summary_row.horizontal
     border-top-style: $grand_summary_row_border_style; // grand_summary_row.border.style
     border-top-width: $grand_summary_row_border_width; // grand_summary_row.border.width
     border-top-color: $grand_summary_row_border_color; // grand_summary_row.border.color
