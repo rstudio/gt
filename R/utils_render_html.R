@@ -3,9 +3,13 @@
 #' @noRd
 footnote_mark_to_html <- function(mark) {
 
-  as.character(
-    htmltools::tagList(htmltools::tags$sup(class = "gt_footnote_marks", mark))
-  )
+  if (!grepl("^[\\*]+?$", mark)) {
+    as.character(
+      htmltools::tagList(htmltools::tags$sup(class = "gt_footnote_marks", mark))
+    )
+  } else {
+    mark
+  }
 }
 
 styles_to_html <- function(styles) {
@@ -1078,15 +1082,14 @@ create_footnotes_component_h <- function(data) {
         FUN = function(x, footnote_text) {
           as.character(
             htmltools::tagList(
-              htmltools::tags$sup(
-                .noWS = c("after", "before"),
-                class = "gt_footnote_marks",
-                htmltools::tags$em(
-                  .noWS = c("after", "before"),
-                  paste0(x, " ")
-                )
-              ),
-              htmltools::HTML(process_text(footnote_text, context = "html"))
+              htmltools::HTML(
+                paste0(
+                  footnote_mark_to_html(x),
+                  " ",
+                  process_text(footnote_text, context = "html")
+                ),
+                .noWS = c("after", "before")
+              )
             )
           )
         }
