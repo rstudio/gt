@@ -224,6 +224,155 @@ opt_align_table_header <- function(data,
   )
 }
 
+#' Option to expand or contract vertical padding
+#'
+#' @description
+#' This function can increase or decrease the vertical padding throughout all
+#' locations of a gt table by an arbitrary number of steps, which is defined by
+#' a real number between -1.0 and 2.0.
+#'
+#' @inheritParams fmt_number
+#' @param steps A positive or negative factor by which the vertical padding will
+#'   be adjusted. Must be a number between `-1.0` and `2.0`.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @family Table Option Functions
+#' @section Function ID:
+#' 9-4
+#'
+#' @export
+opt_vertical_padding <- function(data,
+                                 steps = 0) {
+
+  # Stop if steps is beyond an acceptable range
+  if (steps > 2.0 | steps < -1.0) {
+    stop(
+      "The value provided for `steps` (", steps, ") must be between ",
+      "`-1.0` and `+2.0`.",
+      call. = FALSE
+      )
+  }
+
+  vertical_padding_params <-
+    c(
+      "heading_padding",           # 4
+      "column_labels_padding",     # 5
+      "row_group_padding",         # 8
+      "data_row_padding",          # 8
+      "summary_row_padding",       # 8
+      "grand_summary_row_padding", # 8
+      "footnotes_padding",         # 4
+      "source_notes_padding"       # 4
+    )
+
+  direction <- sign(steps)
+
+  if (direction != -1) {
+    steps <- abs(steps + 1)
+  }
+
+  if (direction == -1) {
+    # Translate negative steps such that -1 -> 0 and 0 -> 1
+    steps <- 1 - abs(steps)
+  }
+
+  vertical_padding_options <-
+    dt_options_tbl %>%
+    dplyr::filter(parameter %in% vertical_padding_params) %>%
+    dplyr::select(parameter, value) %>%
+    dplyr::mutate(parameter = gsub("_padding", ".padding", parameter, fixed = TRUE)) %>%
+    dplyr::mutate(value = unlist(value)) %>%
+    dplyr::mutate(px = as.numeric(gsub("px", "", value))) %>%
+    dplyr::mutate(px = px * steps)
+
+  option_value_list <-
+    create_option_value_list(
+      vertical_padding_options$parameter,
+      paste0(vertical_padding_options$px, "px")
+    )
+
+  tab_options_multi(
+    data = data,
+    options = option_value_list
+  )
+}
+
+#' Option to expand or contract horizontal padding
+#'
+#' @description
+#' This function can increase or decrease the horizontal padding throughout all
+#' locations of a gt table by an arbitrary number of steps, which is defined by
+#' a real number between -1.0 and 2.0.
+#'
+#' @inheritParams fmt_number
+#' @param steps A positive or negative factor by which the horizontal padding
+#'   will be adjusted. Must be a number between `-1.0` and `2.0`.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @family Table Option Functions
+#' @section Function ID:
+#' 9-5
+#'
+#' @export
+opt_horizontal_padding <- function(data,
+                                   steps = 0) {
+
+  # Stop if steps is beyond an acceptable range
+  if (steps > 2.0 | steps < -1.0) {
+    stop(
+      "The value provided for `steps` (", steps, ") must be between ",
+      "`-1.0` and `+2.0`.",
+      call. = FALSE
+    )
+  }
+
+  # TODO: Ensure these parameters are made available
+  horizontal_padding_params <-
+    c(
+      "heading_padding_horizontal",           # 4
+      "column_labels_padding_horizontal",     # 5
+      "row_group_padding_horizontal",         # 8
+      "data_row_padding_horizontal",          # 8
+      "summary_row_padding_horizontal",       # 8
+      "grand_summary_row_padding_horizontal", # 8
+      "footnotes_padding_horizontal",         # 4
+      "source_notes_padding_horizontal"       # 4
+    )
+
+  direction <- sign(steps)
+
+  if (direction != -1) {
+    steps <- abs(steps + 1)
+  }
+
+  if (direction == -1) {
+    # Translate negative steps such that -1 -> 0 and 0 -> 1
+    steps <- 1 - abs(steps)
+  }
+
+  horizontal_padding_options <-
+    dt_options_tbl %>%
+    dplyr::filter(parameter %in% horizontal_padding_params) %>%
+    dplyr::select(parameter, value) %>%
+    dplyr::mutate(parameter = gsub("_padding_horizontal", ".padding.horizontal", parameter, fixed = TRUE)) %>%
+    dplyr::mutate(value = unlist(value)) %>%
+    dplyr::mutate(px = as.numeric(gsub("px", "", value))) %>%
+    dplyr::mutate(px = px * steps)
+
+  option_value_list <-
+    create_option_value_list(
+      horizontal_padding_options$parameter,
+      paste0(horizontal_padding_options$px, "px")
+    )
+
+  tab_options_multi(
+    data = data,
+    options = option_value_list
+  )
+}
+
 #' Option to use all caps in select table locations
 #'
 #' @description
@@ -283,7 +432,7 @@ opt_align_table_header <- function(data,
 #'
 #' @family Table Option Functions
 #' @section Function ID:
-#' 9-4
+#' 9-6
 #'
 #' @export
 opt_all_caps <- function(data,
@@ -385,7 +534,7 @@ opt_all_caps <- function(data,
 #'
 #' @family Table Option Functions
 #' @section Function ID:
-#' 9-5
+#' 9-7
 #'
 #' @export
 opt_table_lines <- function(data,
@@ -475,7 +624,7 @@ opt_table_lines <- function(data,
 #'
 #' @family Table Option Functions
 #' @section Function ID:
-#' 9-6
+#' 9-8
 #'
 #' @export
 opt_table_outline <- function(data,
@@ -613,7 +762,7 @@ opt_table_outline <- function(data,
 #'
 #' @family Table Option Functions
 #' @section Function ID:
-#' 9-7
+#' 9-9
 #'
 #' @export
 opt_table_font <- function(data,
@@ -737,7 +886,7 @@ opt_table_font <- function(data,
 #'
 #' @family Table Option Functions
 #' @section Function ID:
-#' 9-8
+#' 9-10
 #'
 #' @export
 opt_css <- function(data,
