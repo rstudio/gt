@@ -48,7 +48,7 @@ helper function.
 
 \section{Function ID}{
 
-9-7
+9-9
 }
 
 \examples{
@@ -114,8 +114,10 @@ Other Table Option Functions:
 \code{\link{opt_all_caps}()},
 \code{\link{opt_css}()},
 \code{\link{opt_footnote_marks}()},
+\code{\link{opt_horizontal_padding}()},
 \code{\link{opt_row_striping}()},
 \code{\link{opt_table_lines}()},
-\code{\link{opt_table_outline}()}
+\code{\link{opt_table_outline}()},
+\code{\link{opt_vertical_padding}()}
 }
 \concept{Table Option Functions}
