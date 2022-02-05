@@ -1133,6 +1133,13 @@ fmt_fraction <- function(
       pattern = pattern,
       format_fn = function(x, context) {
 
+        # Get the correct minus mark based on the output context
+        minus_mark <- context_minus_mark(context = context)
+
+        # Generate an vector of empty strings that will eventually contain
+        # all of the fractional parts of the finalized numbers
+        fraction_x <- rep("", length(x))
+
         # Round all values of x to 3 digits with the R-H-U method of
         # rounding (for reproducibility purposes)
         x <- round_gt(x, 3)
@@ -1146,42 +1153,46 @@ fmt_fraction <- function(
         big_x <- trunc(x)
         small_x <- abs(x - big_x)
 
-        # Get the correct minus mark based on the output context
-        minus_mark <- context_minus_mark(context = context)
+        if (is.numeric(accuracy)) {
 
-        # Format the 'small' portion of the numeric values
-        # to character-based numbers with exactly 3 decimal places
-        small_x[x_is_a_number] <-
-          format_num_to_str(
-            small_x[x_is_a_number],
-            context = context, decimals = 3, n_sigfig = NULL,
-            sep_mark = ",", dec_mark = ".",
-            drop_trailing_zeros = FALSE,
-            drop_trailing_dec_mark = TRUE,
-            format = "f"
-          )
+          fraction_x[x_is_a_number] <-
+            make_frac(
+              x[x_is_a_number],
+              denom = accuracy,
+              simplify = simplify
+            )
 
-        # Map the `accuracy` keyword to a column index in the
-        # internal `fractions` dataset
-        fractions_col_idx <-
-          which(c("low", "med", "high", "/2", "/4", "/8", "/16", "/100") %in% accuracy) + 1
+        } else {
 
-        # Generate an vector of empty strings that will eventually contain
-        # all of the fractional parts of the finalized numbers
-        fraction_x <- rep("", length(x))
+          # Format the 'small' portion of the numeric values
+          # to character-based numbers with exactly 3 decimal places
+          small_x[x_is_a_number] <-
+            format_num_to_str(
+              small_x[x_is_a_number],
+              context = context, decimals = 3, n_sigfig = NULL,
+              sep_mark = ",", dec_mark = ".",
+              drop_trailing_zeros = FALSE,
+              drop_trailing_dec_mark = TRUE,
+              format = "f"
+            )
 
-        # For every `small_x` value that corresponds to a number
-        # (i.e., not Inf), get the fractional part from the `fractions`
-        # lookup table
-        fraction_x[x_is_a_number] <-
-          vapply(
-            small_x[x_is_a_number],
-            FUN.VALUE = character(1),
-            USE.NAMES = FALSE,
-            FUN = function(x) {
-              fractions[fractions[["x"]] == x, ][[fractions_col_idx]]
-            }
-          )
+          # Map the `accuracy` keyword to a column index in the
+          # internal `fractions` dataset
+          fractions_col_idx <- which(c("low", "med", "high") %in% accuracy) + 1
+
+          # For every `small_x` value that corresponds to a number
+          # (i.e., not Inf), get the fractional part from the `fractions`
+          # lookup table
+          fraction_x[x_is_a_number] <-
+            vapply(
+              small_x[x_is_a_number],
+              FUN.VALUE = character(1),
+              USE.NAMES = FALSE,
+              FUN = function(x) {
+                fractions[fractions[["x"]] == x, ][[fractions_col_idx]]
+              }
+            )
+        }
 
         # Round up or down the `big_x` values when necessary; values
         # of exactly "1" indicate a requirement for rounding and this
@@ -1313,9 +1324,9 @@ gcd <- function(x,y) {
 make_frac <- function(x, denom, simplify = TRUE) {
 
   big_x <- trunc(x)
-  small_x <- x %% 1
+  small_x <- abs(x - big_x)
 
-  numer <- round(small_x * denom)
+  numer <- round_gt(small_x * denom)
 
   if (simplify) {
     denom <- rep_len(denom, length(x))
