@@ -98,10 +98,13 @@ test_that("the `fmt_fraction()` function works correctly", {
   )
 
   # Format the `num` column to fractions with an accuracy in terms of
-  # halves ("/2") for the denominator, have the layout be 'inline'
+  # halves (`2`) for the denominator; have the layout be 'inline'
   expect_equal(
     (tab %>%
-       fmt_fraction(columns = num, accuracy = "/2", layout = "inline") %>%
+       fmt_fraction(
+         columns = num, accuracy = 2,
+         simplify = FALSE, layout = "inline"
+       ) %>%
        render_formats_test("html"))[["num"]],
     c(
       "&minus;50", "&minus;2 1/2", "&minus;1", "0", "0", "0", "0",
@@ -111,10 +114,29 @@ test_that("the `fmt_fraction()` function works correctly", {
   )
 
   # Format the `num` column to fractions with an accuracy in terms of
-  # quarters ("/4") for the denominator, have the layout be 'inline'
+  # halves (`2`) for the denominator (and simplify); have the layout be 'inline'
   expect_equal(
     (tab %>%
-       fmt_fraction(columns = num, accuracy = "/4", layout = "inline") %>%
+       fmt_fraction(
+         columns = num, accuracy = 2,
+         simplify = TRUE, layout = "inline"
+       ) %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "&minus;50", "&minus;2 1/2", "&minus;1", "0", "0", "0", "0",
+      "0", "0", "1/2", "1/2", "1/2", "1", "1", "1", "1", "2", "2,000,000",
+      "30,000,000,000", "NA", "Inf", "-Inf"
+    )
+  )
+
+  # Format the `num` column to fractions with an accuracy in terms of
+  # quarters (`4`) for the denominator; have the layout be 'inline'
+  expect_equal(
+    (tab %>%
+       fmt_fraction(
+         columns = num, accuracy = 4,
+         simplify = FALSE, layout = "inline"
+       ) %>%
        render_formats_test("html"))[["num"]],
     c(
       "&minus;50", "&minus;2 2/4", "&minus;1", "0", "0", "0", "0",
@@ -124,10 +146,29 @@ test_that("the `fmt_fraction()` function works correctly", {
   )
 
   # Format the `num` column to fractions with an accuracy in terms of
-  # eighths ("/8") for the denominator, have the layout be 'inline'
+  # quarters (`4`) for the denominator (and simplify); have the layout be 'inline'
   expect_equal(
     (tab %>%
-       fmt_fraction(columns = num, accuracy = "/8", layout = "inline") %>%
+       fmt_fraction(
+         columns = num, accuracy = 4,
+         simplify = TRUE, layout = "inline"
+       ) %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "&minus;50", "&minus;2 1/2", "&minus;1", "0", "0", "0", "0",
+      "0", "0", "1/4", "1/2", "1/2", "1", "1", "1", "1", "2", "2,000,000 1/4",
+      "30,000,000,000", "NA", "Inf", "-Inf"
+    )
+  )
+
+  # Format the `num` column to fractions with an accuracy in terms of
+  # eighths (`8`) for the denominator; have the layout be 'inline'
+  expect_equal(
+    (tab %>%
+       fmt_fraction(
+         columns = num, accuracy = 8,
+         simplify = FALSE, layout = "inline"
+       ) %>%
        render_formats_test("html"))[["num"]],
     c(
       "&minus;50", "&minus;2 4/8", "&minus;7/8", "0", "0", "0", "0",
@@ -137,10 +178,29 @@ test_that("the `fmt_fraction()` function works correctly", {
   )
 
   # Format the `num` column to fractions with an accuracy in terms of
-  # sixteenths ("/16") for the denominator, have the layout be 'inline'
+  # eighths (`8`) for the denominator (and simplify); have the layout be 'inline'
   expect_equal(
     (tab %>%
-       fmt_fraction(columns = num, accuracy = "/16", layout = "inline") %>%
+       fmt_fraction(
+         columns = num, accuracy = 8,
+         simplify = TRUE, layout = "inline"
+       ) %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "&minus;50", "&minus;2 1/2", "&minus;7/8", "0", "0", "0", "0",
+      "0", "1/8", "1/4", "1/2", "1/2", "7/8", "1", "1", "1 1/8", "2",
+      "2,000,000 1/4", "30,000,000,000", "NA", "Inf", "-Inf"
+    )
+  )
+
+  # Format the `num` column to fractions with an accuracy in terms of
+  # sixteenths (`16`) for the denominator; have the layout be 'inline'
+  expect_equal(
+    (tab %>%
+       fmt_fraction(
+         columns = num, accuracy = 16,
+         simplify = FALSE, layout = "inline"
+       ) %>%
        render_formats_test("html"))[["num"]],
     c(
       "&minus;50", "&minus;2 8/16", "&minus;14/16", "0", "0", "0",
@@ -151,10 +211,29 @@ test_that("the `fmt_fraction()` function works correctly", {
   )
 
   # Format the `num` column to fractions with an accuracy in terms of
-  # hundredths ("/100") for the denominator, have the layout be 'inline'
+  # sixteenths (`16`) for the denominator (and simplify); have the layout be 'inline'
   expect_equal(
     (tab %>%
-       fmt_fraction(columns = num, accuracy = "/100", layout = "inline") %>%
+       fmt_fraction(
+         columns = num, accuracy = 16,
+         simplify = TRUE, layout = "inline"
+       ) %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "&minus;50", "&minus;2 1/2", "&minus;7/8", "0", "0", "0", "1/16",
+      "1/16", "1/8", "5/16", "1/2", "9/16", "15/16", "1", "1", "1 1/8",
+      "1 15/16", "2,000,000 3/16", "30,000,000,000", "NA", "Inf", "-Inf"
+    )
+  )
+
+  # Format the `num` column to fractions with an accuracy in terms of
+  # hundredths (`100`) for the denominator; have the layout be 'inline'
+  expect_equal(
+    (tab %>%
+       fmt_fraction(
+         columns = num, accuracy = 100,
+         simplify = FALSE, layout = "inline"
+        ) %>%
        render_formats_test("html"))[["num"]],
     c(
       "&minus;50", "&minus;2 50/100", "&minus;90/100", "0", "0",
@@ -165,12 +244,29 @@ test_that("the `fmt_fraction()` function works correctly", {
   )
 
   # Format the `num` column to fractions with an accuracy in terms of
-  # hundredths ("/100") for the denominator, have the layout be 'inline' and
+  # hundredths (`100`) for the denominator (and simplify); have the layout be 'inline'
+  expect_equal(
+    (tab %>%
+       fmt_fraction(
+         columns = num, accuracy = 100,
+         simplify = TRUE, layout = "inline"
+       ) %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "&minus;50", "&minus;2 1/2", "&minus;9/10", "0", "0", "0",
+      "1/25", "3/50", "1/10", "3/10", "1/2", "14/25", "23/25", "1",
+      "1", "1 1/10", "1 19/20", "2,000,000 1/5", "30,000,000,000",
+      "NA", "Inf", "-Inf"
+    )
+  )
+
+  # Format the `num` column to fractions with an accuracy in terms of
+  # hundredths (`100`) for the denominator, have the layout be 'inline' and
   # apply the `en_US` locale
   expect_equal(
     (tab %>%
        fmt_fraction(
-         columns = num, accuracy = "/100",
+         columns = num, accuracy = 100, simplify = FALSE,
          layout = "inline", locale = "en_US"
        ) %>%
        render_formats_test("html"))[["num"]],
@@ -183,12 +279,12 @@ test_that("the `fmt_fraction()` function works correctly", {
   )
 
   # Format the `num` column to fractions with an accuracy in terms of
-  # hundredths ("/100") for the denominator, have the layout be 'inline' and
+  # hundredths (`100`) for the denominator, have the layout be 'inline' and
   # apply the `da_DK` locale
   expect_equal(
     (tab %>%
        fmt_fraction(
-         columns = num, accuracy = "/100",
+         columns = num, accuracy = 100, simplify = FALSE,
          layout = "inline", locale = "da_DK"
        ) %>%
        render_formats_test("html"))[["num"]],
@@ -201,12 +297,12 @@ test_that("the `fmt_fraction()` function works correctly", {
   )
 
   # Format the `num` column to fractions with an accuracy in terms of
-  # hundredths ("/100") for the denominator, have the layout be 'inline' and
+  # hundredths (`100`) for the denominator, have the layout be 'inline' and
   # apply the `de_AT` locale
   expect_equal(
     (tab %>%
        fmt_fraction(
-         columns = num, accuracy = "/100",
+         columns = num, accuracy = 100, simplify = FALSE,
          layout = "inline", locale = "de_AT"
        ) %>%
        render_formats_test("html"))[["num"]],
@@ -294,11 +390,11 @@ test_that("the `fmt_fraction()` function produces reproducible results for HTML 
     fmt_fraction(columns = low, accuracy = "low") %>%
     fmt_fraction(columns = med, accuracy = "med") %>%
     fmt_fraction(columns = high, accuracy = "high") %>%
-    fmt_fraction(columns = halves, accuracy = "/2") %>%
-    fmt_fraction(columns = quarters, accuracy = "/4") %>%
-    fmt_fraction(columns = eighths, accuracy = "/8") %>%
-    fmt_fraction(columns = sixteenths, accuracy = "/16") %>%
-    fmt_fraction(columns = hundredths, accuracy = "/100") %>%
+    fmt_fraction(columns = halves, accuracy = 2, simplify = FALSE) %>%
+    fmt_fraction(columns = quarters, accuracy = 4, simplify = FALSE) %>%
+    fmt_fraction(columns = eighths, accuracy = 8, simplify = FALSE) %>%
+    fmt_fraction(columns = sixteenths, accuracy = 16, simplify = FALSE) %>%
+    fmt_fraction(columns = hundredths, accuracy = 100, simplify = FALSE) %>%
     cols_width(everything() ~ px(100)) %>%
     opt_all_caps()
 
@@ -309,23 +405,42 @@ test_that("the `fmt_fraction()` function produces reproducible results for HTML 
     fmt_fraction(columns = low, accuracy = "low", layout = "inline") %>%
     fmt_fraction(columns = med, accuracy = "med", layout = "inline") %>%
     fmt_fraction(columns = high, accuracy = "high", layout = "inline") %>%
-    fmt_fraction(columns = halves, accuracy = "/2", layout = "inline") %>%
-    fmt_fraction(columns = quarters, accuracy = "/4", layout = "inline") %>%
-    fmt_fraction(columns = eighths, accuracy = "/8", layout = "inline") %>%
-    fmt_fraction(columns = sixteenths, accuracy = "/16", layout = "inline") %>%
-    fmt_fraction(columns = hundredths, accuracy = "/100", layout = "inline") %>%
+    fmt_fraction(columns = halves, accuracy = 2, layout = "inline", simplify = FALSE) %>%
+    fmt_fraction(columns = quarters, accuracy = 4, layout = "inline", simplify = FALSE) %>%
+    fmt_fraction(columns = eighths, accuracy = 8, layout = "inline", simplify = FALSE) %>%
+    fmt_fraction(columns = sixteenths, accuracy = 16, layout = "inline", simplify = FALSE) %>%
+    fmt_fraction(columns = hundredths, accuracy = 100, layout = "inline", simplify = FALSE) %>%
+    cols_width(everything() ~ px(100)) %>%
+    opt_all_caps()
+
+  # Generate table with inline fractions that are simplified when specifying a
+  # denominator value for `accuracy`
+  fraction_tbl_simplified <-
+    input_data %>%
+    gt(rowname_col = "x", groupname_col = "category") %>%
+    fmt_fraction(columns = low, accuracy = "low") %>%
+    fmt_fraction(columns = med, accuracy = "med") %>%
+    fmt_fraction(columns = high, accuracy = "high") %>%
+    fmt_fraction(columns = halves, accuracy = 2) %>%
+    fmt_fraction(columns = quarters, accuracy = 4) %>%
+    fmt_fraction(columns = eighths, accuracy = 8) %>%
+    fmt_fraction(columns = sixteenths, accuracy = 16) %>%
+    fmt_fraction(columns = hundredths, accuracy = 100) %>%
     cols_width(everything() ~ px(100)) %>%
     opt_all_caps()
 
   # Perform snapshot tests for HTML outputs
   fraction_tbl_diagonal %>% render_as_html() %>% expect_snapshot()
   fraction_tbl_inline %>% render_as_html() %>% expect_snapshot()
+  fraction_tbl_simplified %>% render_as_html() %>% expect_snapshot()
 
   # Perform snapshot tests for LaTeX outputs
   fraction_tbl_diagonal %>% as_latex() %>% as.character() %>% expect_snapshot()
   fraction_tbl_inline %>% as_latex() %>% as.character() %>% expect_snapshot()
+  fraction_tbl_simplified %>% as_latex() %>% as.character() %>% expect_snapshot()
 
   # Perform snapshot tests for RTF outputs
   fraction_tbl_diagonal %>% as_rtf() %>% expect_snapshot()
   fraction_tbl_inline %>% as_rtf() %>% expect_snapshot()
+  fraction_tbl_simplified %>% as_rtf() %>% expect_snapshot()
 })
