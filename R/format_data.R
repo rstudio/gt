@@ -1023,11 +1023,14 @@ fmt_percent <- function(data,
 #' argument. See the Arguments section for more information on this.
 #'
 #' @inheritParams fmt_number
-#' @param accuracy The type of fractions to generate. With either of `"low"`,
-#'   `"med"`, and `"high"` we can generate fractions with denominators of up to
-#'   1, 2, or 3 digits. Several options provide a fixed denominator: `"/2"` (for
-#'   fractions as halves), `"/4"` (quarters), `"/8"` (eighths), `"/16"`
-#'   (sixteenths), and `"1/100"` (hundredths).
+#' @param accuracy The type of fractions to generate. This can either be one of
+#'   the keywords `"low"`, `"med"`, or `"high"` (to generate fractions with
+#'   denominators of up to 1, 2, or 3 digits, respectively) or an integer value
+#'   greater than one to obtain a fixed denominator (e.g., `2` yields halves,
+#'   `3` is for thirds, `4` is quarters, etc.).
+#' @param simplify If choosing a default denominator value (i.e., providing an
+#'   value for `accuracy`), the option to simplify the denominator value (where
+#'   possible) can be taken with `TRUE` (the default).
 #' @param layout For HTML output, the `"diagonal"` layout is the default. This
 #'   will generate fractions that are typeset with raised/lowered numerals and a
 #'   virgule. The `"inline"` layout places the numerals of the fraction on the
@@ -1045,7 +1048,8 @@ fmt_fraction <- function(
     data,
     columns,
     rows = everything(),
-    accuracy = c("low", "med", "high", "/2", "/4", "/8", "/16", "/100"),
+    accuracy = NULL,
+    simplify = TRUE,
     layout = c("diagonal", "inline"),
     use_seps = TRUE,
     pattern = "{x}",
@@ -1054,11 +1058,48 @@ fmt_fraction <- function(
     locale = NULL
 ) {
 
-  accuracy <- match.arg(accuracy)
-  layout <- match.arg(layout)
-
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  layout <- match.arg(layout)
+
+  if (is.null(accuracy)) {
+    accuracy <- "med"
+
+  } else {
+
+    if (is.character(accuracy)) {
+
+      if (!(accuracy %in% c("low", "med", "high"))) {
+
+        stop(
+          "The value supplied for `accuracy` is invalid:\n",
+          "* Must be either \"low\", \"med\", or \"high\"",
+          call. = FALSE
+        )
+      }
+
+    } else if (is.numeric(accuracy)) {
+
+      if (accuracy < 1) {
+
+        stop(
+          "The numeric value supplied for `accuracy` is invalid:\n",
+          "* Must be an integer value greater than zero",
+          call. = FALSE
+        )
+      }
+
+    } else {
+
+      stop(
+        "The input for `accuracy` is invalid:\n",
+        "* Must be a keyword \"low\", \"med\", or \"high\", or\n",
+        "* Must be an integer value greater than zero",
+        call. = FALSE
+      )
+    }
+  }
 
   # Resolve the `locale` value here with the global locale value
   locale <- resolve_locale(data = data, locale = locale)
@@ -1072,17 +1113,11 @@ fmt_fraction <- function(
   )
   ) {
     stop(
-      "The `fmt_fraction()` function can only be used on `columns` with numeric data",
+      "The `fmt_fraction()` function can only be used on `columns` ",
+      "with numeric data",
       call. = FALSE
     )
   }
-
-  # In the inline layout (where there is no special typesetting of the
-  # fraction part) we must include a space to distinguish between the
-  # whole number and fraction parts
-  # if (layout == "inline") {
-  #   incl_space <- TRUE
-  # }
 
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
@@ -1270,20 +1305,28 @@ fmt_fraction <- function(
   )
 }
 
-get_fractions <- function(small_x, accuracy) {
+gcd <- function(x,y) {
+  r <- x %% y
+  return(ifelse(r, gcd(y, r), y))
+}
 
-  fractions_col_idx <-
-    which(c("low", "med", "high", "/2", "/4", "/8", "/16", "/100") %in% accuracy) + 1
+make_frac <- function(x, denom, simplify = TRUE) {
 
-  vapply(
-    small_x,
-    FUN.VALUE = character(1),
-    USE.NAMES = FALSE,
-    FUN = function(x) {
-      res <- fractions[fractions[["x"]] == x, ][[fractions_col_idx]]
-      if (res %in% c("0", "1")) res <- ""
-      res
-    }
+  big_x <- trunc(x)
+  small_x <- x %% 1
+
+  numer <- round(small_x * denom)
+
+  if (simplify) {
+    denom <- rep_len(denom, length(x))
+    factor <- gcd(numer, denom)
+    numer <- numer / factor
+    denom <- denom / factor
+  }
+
+  ifelse(
+    numer == denom, "1",
+    ifelse(numer == 0, "0", paste0(numer, "/", denom))
   )
 }
 
