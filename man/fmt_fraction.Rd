@@ -8,7 +8,8 @@ fmt_fraction(
   data,
   columns,
   rows = everything(),
-  accuracy = c("low", "med", "high", "/2", "/4", "/8", "/16", "/100"),
+  accuracy = NULL,
+  simplify = TRUE,
   layout = c("diagonal", "inline"),
   use_seps = TRUE,
   pattern = "{x}",
@@ -35,11 +36,15 @@ functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with
 to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{accuracy}{The type of fractions to generate. With either of \code{"low"},
-\code{"med"}, and \code{"high"} we can generate fractions with denominators of up to
-1, 2, or 3 digits. Several options provide a fixed denominator: \code{"/2"} (for
-fractions as halves), \code{"/4"} (quarters), \code{"/8"} (eighths), \code{"/16"}
-(sixteenths), and \code{"1/100"} (hundredths).}
+\item{accuracy}{The type of fractions to generate. This can either be one of
+the keywords \code{"low"}, \code{"med"}, or \code{"high"} (to generate fractions with
+denominators of up to 1, 2, or 3 digits, respectively) or an integer value
+greater than one to obtain a fixed denominator (e.g., \code{2} yields halves,
+\code{3} is for thirds, \code{4} is quarters, etc.).}
+
+\item{simplify}{If choosing a default denominator value (i.e., providing an
+value for \code{accuracy}), the option to simplify the denominator value (where
+possible) can be taken with \code{TRUE} (the default).}
 
 \item{layout}{For HTML output, the \code{"diagonal"} layout is the default. This
 will generate fractions that are typeset with raised/lowered numerals and a
