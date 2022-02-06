@@ -261,6 +261,61 @@ test_that("the `fmt_fraction()` function works correctly", {
   )
 
   # Format the `num` column to fractions with an accuracy in terms of
+  # a very large denominator (`9999999`); have the layout be 'inline'
+  expect_equal(
+    (tab %>%
+       fmt_fraction(
+         columns = num, accuracy = 9999999,
+         simplify = FALSE, layout = "inline"
+       ) %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "&minus;50", "&minus;2 4990000/9999999", "&minus;8999999/9999999",
+      "&minus;20000/9999999", "0", "20000/9999999", "400000/9999999",
+      "600000/9999999", "1000000/9999999", "3000000/9999999", "5000000/9999999",
+      "5559999/9999999", "9199999/9999999", "9989999/9999999", "1",
+      "1 1000000/9999999", "1 9499999/9999999", "2,000,000 2000000/9999999",
+      "30,000,000,000", "NA", "Inf", "-Inf"
+    )
+  )
+
+  # Format the `num` column to fractions with an accuracy in terms of
+  # a very large denominator (`9999999`); simplify and have the layout be 'inline'
+  expect_equal(
+    (tab %>%
+       fmt_fraction(
+         columns = num, accuracy = 9999999,
+         simplify = TRUE, layout = "inline"
+       ) %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "&minus;50", "&minus;2 4990000/9999999", "&minus;8999999/9999999",
+      "&minus;20000/9999999", "0", "20000/9999999", "400000/9999999",
+      "200000/3333333", "1000000/9999999", "1000000/3333333", "5000000/9999999",
+      "1853333/3333333", "9199999/9999999", "9989999/9999999", "1",
+      "1 1000000/9999999", "1 9499999/9999999", "2,000,000 2000000/9999999",
+      "30,000,000,000", "NA", "Inf", "-Inf"
+    )
+  )
+
+  # Format the `num` column to fractions with an accuracy in terms of
+  # hundredths (`100`) for the denominator (and simplify); have the layout be 'inline'
+  expect_equal(
+    (tab %>%
+       fmt_fraction(
+         columns = num, accuracy = 100,
+         simplify = TRUE, layout = "inline"
+       ) %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "&minus;50", "&minus;2 1/2", "&minus;9/10", "0", "0", "0",
+      "1/25", "3/50", "1/10", "3/10", "1/2", "14/25", "23/25", "1",
+      "1", "1 1/10", "1 19/20", "2,000,000 1/5", "30,000,000,000",
+      "NA", "Inf", "-Inf"
+    )
+  )
+
+  # Format the `num` column to fractions with an accuracy in terms of
   # hundredths (`100`) for the denominator, have the layout be 'inline' and
   # apply the `en_US` locale
   expect_equal(
