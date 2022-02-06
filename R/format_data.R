@@ -1184,14 +1184,9 @@ fmt_fraction <- function(
           # (i.e., not Inf), get the fractional part from the `fractions`
           # lookup table
           fraction_x[x_is_a_number] <-
-            vapply(
-              small_x[x_is_a_number],
-              FUN.VALUE = character(1),
-              USE.NAMES = FALSE,
-              FUN = function(x) {
-                fractions[fractions[["x"]] == x, ][[fractions_col_idx]]
-              }
-            )
+            fractions[[fractions_col_idx]][
+              (as.numeric(small_x[x_is_a_number]) * 1000) + 1
+            ]
         }
 
         # Round up or down the `big_x` values when necessary; values
