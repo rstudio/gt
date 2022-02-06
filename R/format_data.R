@@ -1337,7 +1337,30 @@ make_frac <- function(x, denom, simplify = TRUE) {
 
   ifelse(
     numer == denom, "1",
-    ifelse(numer == 0, "0", paste0(numer, "/", denom))
+    ifelse(
+      numer == 0, "0",
+      paste0(
+        format_num_to_str(
+          numer,
+          context = "plain",
+          decimals = 0, n_sigfig = NULL,
+          sep_mark = "", dec_mark = ".",
+          drop_trailing_zeros = TRUE,
+          drop_trailing_dec_mark = TRUE,
+          format = "f"
+        ),
+        "/",
+        format_num_to_str(
+          denom,
+          context = "plain",
+          decimals = 0, n_sigfig = NULL,
+          sep_mark = "", dec_mark = ".",
+          drop_trailing_zeros = TRUE,
+          drop_trailing_dec_mark = TRUE,
+          format = "f"
+        )
+      )
+    )
   )
 }
 
