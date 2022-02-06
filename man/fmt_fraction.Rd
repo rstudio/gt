@@ -42,9 +42,9 @@ denominators of up to 1, 2, or 3 digits, respectively) or an integer value
 greater than one to obtain a fixed denominator (e.g., \code{2} yields halves,
 \code{3} is for thirds, \code{4} is quarters, etc.).}
 
-\item{simplify}{If choosing a default denominator value (i.e., providing an
-value for \code{accuracy}), the option to simplify the denominator value (where
-possible) can be taken with \code{TRUE} (the default).}
+\item{simplify}{If choosing to provide a numeric value for \code{accuracy}, the
+option to simplify the fraction (where possible) can be taken with \code{TRUE}
+(the default).}
 
 \item{layout}{For HTML output, the \code{"diagonal"} layout is the default. This
 will generate fractions that are typeset with raised/lowered numerals and a

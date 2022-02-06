@@ -1028,9 +1028,9 @@ fmt_percent <- function(data,
 #'   denominators of up to 1, 2, or 3 digits, respectively) or an integer value
 #'   greater than one to obtain a fixed denominator (e.g., `2` yields halves,
 #'   `3` is for thirds, `4` is quarters, etc.).
-#' @param simplify If choosing a default denominator value (i.e., providing an
-#'   value for `accuracy`), the option to simplify the denominator value (where
-#'   possible) can be taken with `TRUE` (the default).
+#' @param simplify If choosing to provide a numeric value for `accuracy`, the
+#'   option to simplify the fraction (where possible) can be taken with `TRUE`
+#'   (the default).
 #' @param layout For HTML output, the `"diagonal"` layout is the default. This
 #'   will generate fractions that are typeset with raised/lowered numerals and a
 #'   virgule. The `"inline"` layout places the numerals of the fraction on the
