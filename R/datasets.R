@@ -116,6 +116,7 @@
 #'   both types (`am`), or, direct drive (`dd`)}
 #'   \item{ctry_origin}{The country name for where the vehicle manufacturer
 #'   is headquartered}
+#'   \item{msrp}{Manufacturer's suggested retail price in U.S. dollars (USD)}
 #' }
 #'
 #' @examples
