@@ -3,13 +3,15 @@
 #' @noRd
 footnote_mark_to_html <- function(mark) {
 
+  # Generate the CSS classes needed on the basis of whether the
+  # mark is one or more asterisk characters or anything else
   if (!grepl("^[\\*]+?$", mark)) {
-    as.character(
-      htmltools::tagList(htmltools::tags$sup(class = "gt_footnote_marks", mark))
-    )
+    sup_class <- "gt_footnote_marks"
   } else {
-    mark
+    sup_class <- "gt_footnote_marks gt_asterisk"
   }
+
+  as.character(htmltools::tagList(htmltools::tags$sup(class = sup_class, mark)))
 }
 
 styles_to_html <- function(styles) {
