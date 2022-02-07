@@ -1001,12 +1001,14 @@ fmt_percent <- function(data,
 #' @description
 #' With numeric values in a **gt** table, we can perform mixed-fraction-based
 #' formatting. There are several options for setting the accuracy of the
-#' fractions (e.g., setting the number of desired figures in the denominator or
-#' expressing fractions with fixed denominators). The following options are
-#' available for controlling this type of formatting:
+#' fractions. Furthermore, there is an option for choosing a layout (i.e.,
+#' typesetting style) for the mixed-fraction output.
+#'
+#' The following options are available for controlling this type of formatting:
 #'
 #' - accuracy: how to express the fractional part of the mixed fractions; there
-#' are nine named options for this.
+#' are three keyword options for this and an allowance for arbitrary denominator
+#' settings
 #' - layout: for HTML output, we can choose to use diagonal or inline fractions
 #' - digit grouping separators: options to enable/disable digit separators
 #' and provide a choice of separator symbol for the whole number portion
@@ -1026,11 +1028,14 @@ fmt_percent <- function(data,
 #' @param accuracy The type of fractions to generate. This can either be one of
 #'   the keywords `"low"`, `"med"`, or `"high"` (to generate fractions with
 #'   denominators of up to 1, 2, or 3 digits, respectively) or an integer value
-#'   greater than one to obtain a fixed denominator (e.g., `2` yields halves,
-#'   `3` is for thirds, `4` is quarters, etc.).
+#'   greater than zero to obtain fractions with a fixed denominator (`2` yields
+#'   halves, `3` is for thirds, `4` is quarters, etc.). For the latter option,
+#'   using `simplify = TRUE` will simplify fractions where possible (e.g., `2/4`
+#'   will be simplified as `1/2`).
 #' @param simplify If choosing to provide a numeric value for `accuracy`, the
 #'   option to simplify the fraction (where possible) can be taken with `TRUE`
-#'   (the default).
+#'   (the default). With `FALSE`, denominators in fractions will be fixed to the
+#'   value provided in `accuracy`.
 #' @param layout For HTML output, the `"diagonal"` layout is the default. This
 #'   will generate fractions that are typeset with raised/lowered numerals and a
 #'   virgule. The `"inline"` layout places the numerals of the fraction on the

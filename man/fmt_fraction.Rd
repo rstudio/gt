@@ -39,12 +39,15 @@ to filter down to the rows we need (e.g.,
 \item{accuracy}{The type of fractions to generate. This can either be one of
 the keywords \code{"low"}, \code{"med"}, or \code{"high"} (to generate fractions with
 denominators of up to 1, 2, or 3 digits, respectively) or an integer value
-greater than one to obtain a fixed denominator (e.g., \code{2} yields halves,
-\code{3} is for thirds, \code{4} is quarters, etc.).}
+greater than zero to obtain fractions with a fixed denominator (\code{2} yields
+halves, \code{3} is for thirds, \code{4} is quarters, etc.). For the latter option,
+using \code{simplify = TRUE} will simplify fractions where possible (e.g., \code{2/4}
+will be simplified as \code{1/2}).}
 
 \item{simplify}{If choosing to provide a numeric value for \code{accuracy}, the
 option to simplify the fraction (where possible) can be taken with \code{TRUE}
-(the default).}
+(the default). With \code{FALSE}, denominators in fractions will be fixed to the
+value provided in \code{accuracy}.}
 
 \item{layout}{For HTML output, the \code{"diagonal"} layout is the default. This
 will generate fractions that are typeset with raised/lowered numerals and a
@@ -80,12 +83,14 @@ An object of class \code{gt_tbl}.
 \description{
 With numeric values in a \strong{gt} table, we can perform mixed-fraction-based
 formatting. There are several options for setting the accuracy of the
-fractions (e.g., setting the number of desired figures in the denominator or
-expressing fractions with fixed denominators). The following options are
-available for controlling this type of formatting:
+fractions. Furthermore, there is an option for choosing a layout (i.e.,
+typesetting style) for the mixed-fraction output.
+
+The following options are available for controlling this type of formatting:
 \itemize{
 \item accuracy: how to express the fractional part of the mixed fractions; there
-are nine named options for this.
+are three keyword options for this and an allowance for arbitrary denominator
+settings
 \item layout: for HTML output, we can choose to use diagonal or inline fractions
 \item digit grouping separators: options to enable/disable digit separators
 and provide a choice of separator symbol for the whole number portion
