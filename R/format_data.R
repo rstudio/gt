@@ -1171,7 +1171,8 @@ fmt_fraction <- function(
 
           # Format the 'small' portion of the numeric values
           # to character-based numbers with exactly 3 decimal places
-          small_x[x_is_a_number] <-
+          small_x_str <- as.character(small_x)
+          small_x_str[x_is_a_number] <-
             format_num_to_str(
               small_x[x_is_a_number],
               context = context, decimals = 3, n_sigfig = NULL,
@@ -1181,17 +1182,11 @@ fmt_fraction <- function(
               format = "f"
             )
 
-          # Map the `accuracy` keyword to a column index in the
-          # internal `fractions` dataset
-          fractions_col_idx <- which(c("low", "med", "high") %in% accuracy) + 1
-
           # For every `small_x` value that corresponds to a number
           # (i.e., not Inf), get the fractional part from the `fractions`
           # lookup table
           fraction_x[x_is_a_number] <-
-            fractions[[fractions_col_idx]][
-              (as.numeric(small_x[x_is_a_number]) * 1000) + 1
-            ]
+            fractions[(as.numeric(small_x_str[x_is_a_number]) * 1000) + 1, accuracy, drop = TRUE]
         }
 
         # Round up or down the `big_x` values when necessary; values
