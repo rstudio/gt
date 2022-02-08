@@ -398,18 +398,7 @@ get_padding_option_value_list <- function(steps, type) {
     dplyr::filter(grepl(paste0(pattern, "$"), parameter)) %>%
     dplyr::pull(parameter)
 
-  # Get the direction of steps through its sign (either -1, 0, or 1)
-  direction <- sign(steps)
-
-  if (direction != -1) {
-    # Translate positive and `0` steps such that 0 -> 1, 1 -> 2, and 2 -> 3
-    steps <- abs(steps + 1)
-  }
-
-  if (direction == -1) {
-    # Translate negative steps such that -1 -> 0 and 0 -> 1
-    steps <- 1 - abs(steps)
-  }
+  steps <- steps + 1
 
   padding_options <-
     dt_options_tbl %>%
