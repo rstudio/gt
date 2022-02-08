@@ -25,6 +25,7 @@ the number of gears; the car could have automatic transmission
 both types (\code{am}), or, direct drive (\code{dd})}
 \item{ctry_origin}{The country name for where the vehicle manufacturer
 is headquartered}
+\item{msrp}{Manufacturer's suggested retail price in U.S. dollars (USD)}
 }
 }
 \usage{
