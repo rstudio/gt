@@ -31,11 +31,48 @@ setting the following eight options in \code{\link[=tab_options]{tab_options()}}
 \item \code{source_notes.padding.horizontal}
 }
 }
+\section{Figures}{
+
+\if{html}{\figure{man_opt_horizontal_padding_1.png}{options: width=100\%}}
+}
+
 \section{Function ID}{
 
 9-5
 }
 
+\examples{
+# Use `exibble` to create a gt table with
+# a number of table parts added; expand
+# the horizontal padding across the entire
+# table with `opt_horizontal_padding()`
+tab_1 <-
+  exibble \%>\%
+  gt(rowname_col = "row", groupname_col = "group") \%>\%
+  summary_rows(
+    groups = "grp_a",
+    columns = c(num, currency),
+    fns = list(
+      min = ~min(., na.rm = TRUE),
+      max = ~max(., na.rm = TRUE)
+    )) \%>\%
+  grand_summary_rows(
+    columns = currency,
+    fns = list(
+      total = ~sum(., na.rm = TRUE)
+    )) \%>\%
+  tab_source_note(source_note = "This is a source note.") \%>\%
+  tab_footnote(
+    footnote = "This is a footnote.",
+    locations = cells_body(columns = 1, rows = 1)
+  ) \%>\%
+  tab_header(
+    title = "The title of the table",
+    subtitle = "The table's subtitle"
+  ) \%>\%
+  opt_horizontal_padding(steps = 2)
+
+}
 \seealso{
 Other Table Option Functions: 
 \code{\link{opt_align_table_header}()},
