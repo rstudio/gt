@@ -4,7 +4,7 @@
 \alias{fmt_date}
 \title{Format values as dates}
 \usage{
-fmt_date(data, columns, rows = everything(), date_style = 2)
+fmt_date(data, columns, rows = everything(), date_style = 2, pattern = "{x}")
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -15,9 +15,9 @@ focused on selections. The select helper functions are: \code{\link[=starts_with
 \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
 \code{\link[=everything]{everything()}}.}
 
-\item{rows}{Optional rows to format. Providing either \code{\link[=everything]{everything()}} (the
-default) or \code{TRUE} results in all rows in \code{columns} being formatted. Can
-either be a vector of row captions provided in \code{\link[=c]{c()}}, a vector of row
+\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
+default) results in all rows in \code{columns} being formatted. Alternatively,
+we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
 indices, or a helper function focused on selections. The select helper
 functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
 \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
@@ -28,18 +28,24 @@ to filter down to the rows we need (e.g.,
 that corresponds to the preferred date style, or, provide a named date
 style (\code{"wday_month_day_year"}, \code{"m_day_year"}, \code{"year.mn.day"}, etc.). Use
 \code{\link[=info_date_style]{info_date_style()}} to see the different numbered and named date presets.}
+
+\item{pattern}{A formatting pattern that allows for decoration of the
+formatted value. The value itself is represented by \code{{x}} and all other
+characters are taken to be string literals.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
-Format input date values that are either of the \code{Date} type, or, are
-character-based and expressed according to the ISO 8601 date format
-(\code{YYYY-MM-DD}). Once the appropriate data cells are targeted with \code{columns}
-(and, optionally, \code{rows}), we can simply apply a preset date style to format
-the dates. The following date styles are available for simpler formatting of
-ISO dates (all using the input date of \code{2000-02-29} in the example output
-dates):
+Format input values to time values using one of fourteen presets. Input can
+be in the form of \code{POSIXt} (i.e., date-times), the \code{Date} type, or
+\code{character} (must be in the ISO 8601 form of \verb{YYYY-MM-DD HH:MM:SS} or
+\code{YYYY-MM-DD}).
+
+Once the appropriate data cells are targeted with \code{columns} (and, optionally,
+\code{rows}), we can simply apply a preset date style to format the dates. The
+following date styles are available for use (all using the input date of
+\code{2000-02-29} in the example output dates):
 \enumerate{
 \item \code{"iso"}: \code{2000-02-29}
 \item \code{"wday_month_day_year"}: \verb{Tuesday, February 29, 2000}
@@ -64,7 +70,7 @@ the possible inputs to \code{date_style}.
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
 nothing is provided for \code{rows} then entire columns are selected). Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the Arguments section for more information on this.
+argument. See the \emph{Arguments} section for more information on this.
 }
 \section{Figures}{
 
@@ -75,7 +81,7 @@ argument. See the Arguments section for more information on this.
 
 \section{Function ID}{
 
-3-6
+3-8
 }
 
 \examples{
@@ -122,6 +128,9 @@ Other Format Data:
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
+\code{\link{fmt_engineering}()},
+\code{\link{fmt_fraction}()},
+\code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},

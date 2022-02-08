@@ -128,21 +128,23 @@ gtsave <- function(data,
 
   # Use the appropriate save function based
   # on the filename extension
-  switch(file_ext,
-          "htm" = ,
-         "html" = gt_save_html(data, filename, path, ...),
-          "ltx" = , # We don't verbally support using `ltx`
-          "rnw" = ,
-          "tex" = gt_save_latex(data, filename, path, ...),
-          "rtf" = gt_save_rtf(data, filename, path, ...),
-          "png" = ,
-          "pdf" = gt_save_webshot(data, filename, path, ...),
-         {
-           stop("The file extension used (`.", file_ext, "`) doesn't have an ",
-                "associated saving function. ",
-                ext_supported_text,
-                call. = FALSE)
-         }
+  switch(
+    file_ext,
+    "htm" = ,
+    "html" = gt_save_html(data = data, filename, path, ...),
+    "ltx" = , # We don't verbally support using `ltx`
+    "rnw" = ,
+    "tex" = gt_save_latex(data = data, filename, path, ...),
+    "rtf" = gt_save_rtf(data = data, filename, path, ...),
+    "png" = ,
+    "pdf" = gt_save_webshot(data = data, filename, path, ...),
+    {
+      stop(
+        "The file extension used (`.", file_ext, "`) doesn't have an ",
+        "associated saving function. ", ext_supported_text,
+        call. = FALSE
+      )
+    }
   )
 }
 
@@ -295,6 +297,8 @@ gtsave_filename <- function(path, filename) {
 #'   clients over using CSS in a `<style>` block.
 #'
 #' @examples
+#' if (interactive()) {
+#'
 #' # Use `gtcars` to create a gt table;
 #' # add a header and then export as
 #' # HTML code with CSS inlined
@@ -318,6 +322,8 @@ gtsave_filename <- function(path, filename) {
 #'   substr(1, 700) %>%
 #'   cat()
 #'
+#' }
+#'
 #' @family Export Functions
 #' @section Function ID:
 #' 13-2
@@ -336,11 +342,12 @@ as_raw_html <- function(data,
 
     # Create inline styles
     html_table <-
-      html_table %>%
-      inline_html_styles(css_tbl = get_css_tbl(data))
+      inline_html_styles(
+        html = html_table,
+        css_tbl = get_css_tbl(data = data)
+      )
 
   } else {
-
     html_table <- as.character(as.tags.gt_tbl(data))
   }
 
@@ -359,6 +366,8 @@ as_raw_html <- function(data,
 #' @param data A table object that is created using the [gt()] function.
 #'
 #' @examples
+#' if (interactive()) {
+#'
 #' # Use `gtcars` to create a gt table;
 #' # add a header and then export as
 #' # an object with LaTeX code
@@ -383,6 +392,8 @@ as_raw_html <- function(data,
 #'   as.character() %>%
 #'   cat()
 #'
+#' }
+#'
 #' @family Export Functions
 #' @section Function ID:
 #' 13-3
@@ -394,7 +405,7 @@ as_latex <- function(data) {
   stop_if_not_gt(data = data)
 
   # Build all table data objects through a common pipeline
-  data <- data %>% build_data(context = "latex")
+  data <- build_data(data = data, context = "latex")
 
   # Composition of LaTeX ----------------------------------------------------
 
@@ -402,7 +413,7 @@ as_latex <- function(data) {
   table_start <- create_table_start_l(data = data)
 
   # Create the heading component
-  heading_component <- create_heading_component(data = data, context = "latex")
+  heading_component <- create_heading_component_l(data = data)
 
   # Create the columns component
   columns_component <- create_columns_component_l(data = data)
@@ -410,11 +421,8 @@ as_latex <- function(data) {
   # Create the body component
   body_component <- create_body_component_l(data = data)
 
-  # Create the source notes component
-  source_notes_component <- create_source_note_component_l(data = data)
-
   # Create the footnotes component
-  footnotes_component <- create_footnotes_component_l(data = data)
+  footer_component <- create_footer_component_l(data = data)
 
   # Create a LaTeX fragment for the ending tabular statement
   table_end <- create_table_end_l()
@@ -423,10 +431,7 @@ as_latex <- function(data) {
   # `latex_dependency()` function to load latex packages
   # without requiring the user to do so
   if (requireNamespace("rmarkdown", quietly = TRUE)) {
-
-    latex_packages <-
-      lapply(latex_packages(), rmarkdown::latex_dependency)
-
+    latex_packages <- lapply(latex_packages(), rmarkdown::latex_dependency)
   } else {
     latex_packages <- NULL
   }
@@ -438,8 +443,7 @@ as_latex <- function(data) {
     columns_component,
     body_component,
     table_end,
-    footnotes_component,
-    source_notes_component,
+    footer_component,
     collapse = ""
   ) %>%
     knitr::asis_output(meta = latex_packages)
@@ -458,6 +462,8 @@ as_latex <- function(data) {
 #'   or `"header"`. By default, page numbering is not active (`"none"`).
 #'
 #' @examples
+#' if (interactive()) {
+#'
 #' # Use `gtcars` to create a gt table;
 #' # add a header and then export as
 #' # RTF code
@@ -471,6 +477,8 @@ as_latex <- function(data) {
 #'     subtitle = md("`gtcars` is an R dataset")
 #'   ) %>%
 #'   as_rtf()
+#'
+#' }
 #'
 #' @family Export Functions
 #' @section Function ID:
@@ -486,7 +494,7 @@ as_rtf <- function(data,
   stop_if_not_gt(data = data)
 
   # Build all table data objects through a common pipeline
-  data <- data %>% build_data(context = "rtf")
+  data <- build_data(data = data, context = "rtf")
 
   # Composition of RTF ------------------------------------------------------
 
@@ -499,32 +507,29 @@ as_rtf <- function(data,
   # Create the body component
   body_component <- create_body_component_rtf(data = data)
 
-  # Create the footnotes component
-  footnotes_component <- create_footnotes_component_rtf(data = data)
-
-  # Create the source notes component
-  source_notes_component <- create_source_notes_component_rtf(data = data)
+  # Create the footer component
+  footer_component <- create_footer_component_rtf(data = data)
 
   # Compose the RTF table
   rtf_table <-
-    rtf_file(
-      document = {
-        rtf_table(
-          rows = c(
-            heading_component,
-            columns_component,
-            body_component,
-            footnotes_component,
-            source_notes_component
+    as_rtf_string(
+      rtf_file(
+        document = {
+          rtf_table(
+            rows = c(
+              heading_component,
+              columns_component,
+              body_component,
+              footer_component
+            )
           )
-        )
-      },
-      page_numbering = page_numbering
-    ) %>%
-    as_rtf_string()
+        },
+        page_numbering = page_numbering
+      )
+    )
 
   if (isTRUE(getOption('knitr.in.progress'))) {
-    rtf_table <- rtf_table %>% knitr::raw_output()
+    rtf_table <- knitr::raw_output(rtf_table)
   }
 
   rtf_table
@@ -585,7 +590,7 @@ as_rtf <- function(data,
 #'   summary_extracted %>%
 #'   unlist(recursive = FALSE) %>%
 #'   dplyr::bind_rows() %>%
-#'   gt()
+#'   gt(groupname_col = "group_id")
 #'
 #' @section Figures:
 #' \if{html}{\figure{man_extract_summary_1.png}{options: width=100\%}}
@@ -603,9 +608,12 @@ extract_summary <- function(data) {
   # Stop function if there are no
   # directives to create summary rows
   if (!dt_summary_exists(data = data)) {
-    stop("There is no summary list to extract.\n",
-         "Use the `summary_rows()` function to generate summaries.",
-         call. = FALSE)
+
+    stop(
+      "There is no summary list to extract.\n",
+      "Use the `summary_rows()`/`grand_summary_rows()` functions to generate summaries.",
+      call. = FALSE
+    )
   }
 
   # Build the `data` using the standard
@@ -614,5 +622,17 @@ extract_summary <- function(data) {
 
   # Extract the list of summary data frames
   # that contains tidy, unformatted data
-  dt_summary_df_data_get(data = built_data) %>% as.list()
+  summary_tbl <-
+    dt_summary_df_data_get(data = built_data) %>%
+    lapply(FUN = function(x) {
+      lapply(x, function(y) {
+        dplyr::rename(
+          y,
+          rowname = .env$rowname_col_private,
+          group_id = .env$group_id_col_private
+        )
+      })
+    })
+
+  as.list(summary_tbl)
 }

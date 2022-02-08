@@ -33,7 +33,7 @@ within. We can easily experiment with a local PNG or SVG image that's
 available in the \strong{gt} package using the \code{\link[=test_image]{test_image()}} function. Using
 that, the call \code{local_image(file = test_image(type = "png"))} evaluates to:
 
-\verb{<img cid=<random CID> src=<data URI> style=\\"height:30px;\\">}
+\verb{<img src=<data URI> style=\\"height:30px;\\">}
 
 where a height of \verb{30px} is a default height chosen to work well within the
 heights of most table rows.

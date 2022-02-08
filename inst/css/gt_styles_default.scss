@@ -41,8 +41,8 @@
     color: font-color($heading_background_color);
     font-size: $heading_title_font_size; // heading.title.font.size
     font-weight: $heading_title_font_weight; // heading.title.font.weight
-    padding-top: 4px; // heading.top.padding - not yet used
-    padding-bottom: 4px;
+    padding-top: $heading_padding; // heading.padding
+    padding-bottom: $heading_padding; //heading.padding
     border-bottom-color: $table_background_color; // table.background.color
     border-bottom-width: 0;
   }
@@ -52,7 +52,7 @@
     font-size: $heading_subtitle_font_size; // heading.subtitle.font.size
     font-weight: $heading_subtitle_font_weight; // heading.subtitle.font.weight
     padding-top: 0;
-    padding-bottom: 4px; // heading.bottom.padding - not yet used
+    padding-bottom: $heading_padding + 2; // heading.padding
     border-top-color: $table_background_color; // table.background.color
     border-top-width: 0;
   }
@@ -91,8 +91,8 @@
     border-right-width: $column_labels_vlines_width; // column_labels.vlines.width
     border-right-color: $column_labels_vlines_color; // column_labels.vlines.color
     vertical-align: bottom;
-    padding-top: 5px;
-    padding-bottom: 6px;
+    padding-top: $column_labels_padding; // column_labels.padding
+    padding-bottom: $column_labels_padding + 1; // column_labels.padding
     padding-left: 5px;
     padding-right: 5px;
     overflow-x: hidden;
@@ -121,8 +121,8 @@
     border-bottom-width: $column_labels_border_bottom_width; // column_labels.border.bottom.width
     border-bottom-color: $column_labels_border_bottom_color; // column_labels.border.bottom.color
     vertical-align: bottom;
-    padding-top: 5px;
-    padding-bottom: 6px;
+    padding-top: $column_labels_padding; // column_labels.padding
+    padding-bottom: $column_labels_padding; // column_labels.padding
     overflow-x: hidden;
     display: inline-block;
     width: 100%;
@@ -204,6 +204,23 @@
     padding-left: 12px;
   }
 
+  .gt_stub_row_group {
+    color: font-color($stub_row_group_background_color);
+    background-color: $stub_row_group_background_color; // stub_row_group.background.color
+    font-size: $stub_row_group_font_size; // stub_row_group.font.size
+    font-weight: $stub_row_group_font_weight; // stub_row_group.font.weight
+    text-transform: $stub_row_group_text_transform; // stub_row_group.text_transform
+    border-right-style: $stub_row_group_border_style; // stub_row_group.border.style
+    border-right-width: $stub_row_group_border_width; // stub_row_group.border.width
+    border-right-color: $stub_row_group_border_color; // stub_row_group.border.color
+    padding-left: 12px;
+    vertical-align: top;
+  }
+
+  .gt_row_group_first td {
+    border-top-width: $row_group_border_top_width;
+  }
+
   .gt_summary_row {
     color: font-color($summary_row_background_color);
     background-color: $summary_row_background_color; // summary_row.background.color
@@ -215,13 +232,22 @@
   }
 
   .gt_first_summary_row {
+    border-top-style: $summary_row_border_style; // summary_row.border.style
+    border-top-color: $summary_row_border_color; // summary_row.border.color
+  }
+
+  .gt_first_summary_row.thick {
+    border-top-width: $summary_row_border_width; // summary_row.border.width
+  }
+
+  .gt_last_summary_row {
     padding-top: $summary_row_padding; // summary_row.padding
     padding-bottom: $summary_row_padding; // summary_row.padding
     padding-left: 5px;
     padding-right: 5px;
-    border-top-style: $summary_row_border_style; // summary_row.border.style
-    border-top-width: $summary_row_border_width; // summary_row.border.width
-    border-top-color: $summary_row_border_color; // summary_row.border.color
+    border-bottom-style: $summary_row_border_style; // summary_row.border.style
+    border-bottom-width: $summary_row_border_width; // summary_row.border.width
+    border-bottom-color: $summary_row_border_color; // summary_row.border.color
   }
 
   .gt_grand_summary_row {
@@ -331,4 +357,21 @@
     font-size: 65%;
   }
 
+  .gt_slash_mark {
+    font-size: 0.7em;
+    line-height: 0.7em;
+    vertical-align: 0.15em;
+  }
+
+  .gt_fraction_numerator {
+    font-size: 0.6em;
+    line-height: 0.6em;
+    vertical-align: 0.45em;
+  }
+
+  .gt_fraction_denominator {
+    font-size: 0.6em;
+    line-height: 0.6em;
+    vertical-align: -0.05em;
+  }
 }

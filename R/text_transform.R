@@ -43,7 +43,7 @@
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-12
+#' 3-14
 #'
 #' @export
 text_transform <- function(data,
@@ -110,7 +110,7 @@ text_transform_at_location.cells_stub <- function(loc,
   stub_df <- dt_stub_df_get(data = data)
 
   stub_var <- dt_boxhead_get_var_stub(data = data)
-
+  # FIXME: Check for zero-length stub_var before continuing.
   body[[stub_var]][stub_df$rownum_i %in% loc$rows] <-
     fn(body[[stub_var]][stub_df$rownum_i %in% loc$rows])
 

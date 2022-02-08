@@ -1,4 +1,4 @@
-context("Ensuring that the creation of tab components works as expected")
+testthat::local_edition(3)
 
 # Create a shorter version of `mtcars`
 mtcars_short <- mtcars[1:5, ]
@@ -42,7 +42,7 @@ test_that("a gt table contains the expected heading components", {
   # Create a `tbl_html` object with `gt()`; this table
   # contains a title
   tbl_html <-
-    gt(data = mtcars_short) %>%
+    gt(mtcars_short) %>%
     tab_header(title = "test heading") %>%
     render_as_html() %>%
     xml2::read_html()
@@ -67,7 +67,7 @@ test_that("a gt table contains the expected heading components", {
   # Create a `gt_tbl` object with `gt()`; this table
   # contains a title and a subtitle
   tbl_html <-
-    gt(data = mtcars_short) %>%
+    gt(mtcars_short) %>%
     tab_header(
       title = "test title",
       subtitle = "test subtitle") %>%
@@ -83,6 +83,43 @@ test_that("a gt table contains the expected heading components", {
   tbl_html %>%
     selection_text("[class='gt_heading gt_subtitle gt_font_normal gt_bottom_border']") %>%
     expect_equal("test subtitle")
+
+  # Perform a snapshot test where an HTML table contains only a title
+  mtcars_short %>%
+    gt() %>%
+    tab_header(title = "test title") %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  # Perform a snapshot test where an HTML table contains a title and a subtitle
+  mtcars_short %>%
+    gt() %>%
+    tab_header(title = "test title", subtitle = "test subtitle") %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  # Expect that providing a subtitle value with an empty
+  # string won't produce a subtitle line
+  mtcars_short %>%
+    gt() %>%
+    tab_header(title = "test title", subtitle = "") %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  # Expect that providing a subtitle value with a series
+  # a space characters also won't produce a subtitle line
+  mtcars_short %>%
+    gt() %>%
+    tab_header(title = "test title", subtitle = "   ") %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  # Expect an error if only a subtitle is provided to `tab_header()`
+  expect_error(
+    mtcars_short %>%
+      gt() %>%
+      tab_header(subtitle = "test subtitle")
+  )
 })
 
 test_that("a gt table contains the expected stubhead label", {
@@ -93,7 +130,7 @@ test_that("a gt table contains the expected stubhead label", {
   # Create a `tbl_html` object with `gt()`; this table
   # contains a stub and a stubhead label
   tbl_html <-
-    gt(data = mtcars_short, rownames_to_stub = TRUE) %>%
+    gt(mtcars_short, rownames_to_stub = TRUE) %>%
     tab_stubhead(label = "the mtcars") %>%
     render_as_html() %>%
     xml2::read_html()
@@ -114,7 +151,7 @@ test_that("a gt table contains the expected spanner column labels", {
   # contains the spanner heading `perimeter` over the
   # `peri` and `shape` column labels
   tbl_html <-
-    gt(data = rock) %>%
+    gt(rock) %>%
     tab_spanner(
       label = "perimeter",
       columns = c("peri", "shape")) %>%
@@ -133,7 +170,7 @@ test_that("a gt table contains the expected spanner column labels", {
   # `peri` and `shape` column labels (this time, using
   # `c()` to define the columns)
   tbl_html <-
-    gt(data = rock) %>%
+    gt(rock) %>%
     tab_spanner(
       label = "perimeter",
       columns = c(peri, shape)) %>%
@@ -151,7 +188,7 @@ test_that("a gt table contains the expected spanner column labels", {
   # contains the spanner heading `perimeter` that is formatted
   # with Markdown via `md()`
   tbl_html <-
-    gt(data = rock) %>%
+    gt(rock) %>%
     tab_spanner(
       label = md("*perimeter*"),
       columns = c("peri", "shape")) %>%
@@ -166,7 +203,7 @@ test_that("a gt table contains the expected spanner column labels", {
   # contains the spanner heading `perimeter` that is formatted
   # with HTML via `html()`
   tbl_html <-
-    gt(data = rock) %>%
+    gt(rock) %>%
     tab_spanner(
       label = html("<em>perimeter</em>"),
       columns = c("peri", "shape")) %>%
@@ -180,7 +217,7 @@ test_that("a gt table contains the expected spanner column labels", {
   # Expect an error when using column labels
   # that don't exist
   expect_error(
-    gt(data = rock) %>%
+    gt(rock) %>%
       tab_spanner(
         label = "perimeter",
         columns = c(peris, shapes))
@@ -281,7 +318,7 @@ test_that("`tab_spanner()` exclusively uses IDs for arranging spanners", {
 test_that("`tab_spanner()` doesn't adversely affect column alignment", {
 
   tbl_html <-
-    gt(data = airquality) %>%
+    gt(airquality) %>%
     cols_move_to_start(columns = c(Month, Day)) %>%
     cols_label(Solar.R = html("Solar<br>Radiation")) %>%
     tab_spanner(
@@ -842,7 +879,7 @@ test_that("a gt table contains custom styles at the correct locations", {
 
   # Expect that the stubhead label is styled
   tbl_html %>%
-    rvest::html_nodes("[style='background-color: #0000FF; color: white;']") %>%
+    rvest::html_nodes("[style='background-color: #0000FF; color: #FFFFFF;']") %>%
     rvest::html_text("[class='gt_col_heading gt_columns_bottom_border gt_left]") %>%
     expect_equal("cars")
 
@@ -860,13 +897,13 @@ test_that("a gt table contains custom styles at the correct locations", {
 
   # Expect that the summary cell (`Mercs`::`sum`/`hp`) is styled
   tbl_html %>%
-    rvest::html_nodes("[style='background-color: #00FF00; color: white;']") %>%
+    rvest::html_nodes("[style='background-color: #00FF00; color: #FFFFFF;']") %>%
     rvest::html_text("[class='gt_row gt_right gt_summary_row']") %>%
     expect_equal("943.00")
 
   # Expect that the grand summary cell (`sum`/`hp`) is styled
   tbl_html %>%
-    rvest::html_nodes("[style='background-color: #A020F0; color: white;']") %>%
+    rvest::html_nodes("[style='background-color: #A020F0; color: #FFFFFF;']") %>%
     rvest::html_text("[class='gt_row gt_grand_summary_row']") %>%
     expect_equal("4,694.00")
 
@@ -885,7 +922,7 @@ test_that("a gt table contains custom styles at the correct locations", {
 
   # Expect that most stub cells are styled with a lightgray background
   tbl_html %>%
-    rvest::html_nodes("[class='gt_row gt_left gt_stub'][style='background-color: #D3D3D3;']") %>%
+    rvest::html_nodes("[class='gt_row gt_right gt_stub'][style='background-color: #D3D3D3;']") %>%
     rvest::html_text() %>%
     length() %>%
     expect_equal(31)
@@ -905,7 +942,7 @@ test_that("a gt table contains custom styles at the correct locations", {
   # Expect that the row caption `Merc 240D` has a cell background that
   # is ultimately steelblue, and, the font the white
   tbl_html %>%
-    rvest::html_nodes("[style='background-color: #4682B4; color: white;']") %>%
+    rvest::html_nodes("[style='background-color: #4682B4; color: #FFFFFF;']") %>%
     rvest::html_text() %>%
     expect_equal("Merc 240D")
 
@@ -920,7 +957,7 @@ test_that("a gt table contains custom styles at the correct locations", {
   # Expect that the `Mazdas` row group label
   # cell has a red background and white text
   tbl_html %>%
-    rvest::html_nodes("[style='background-color: #FF0000; color: white;']") %>%
+    rvest::html_nodes("[style='background-color: #FF0000; color: #FFFFFF;']") %>%
     rvest::html_text() %>%
     expect_equal("Mazdas")
 

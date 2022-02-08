@@ -25,8 +25,8 @@ resolve_footnotes_styles <- function(data,
     return(data)
   }
 
-  # Filter table to include only the `default` vars
-  # in the `data` and `columns_columns` locnames
+  # Obtain all of the visible (`"default"`), non-stub
+  # column names for the table
   default_vars <- dt_boxhead_get_vars_default(data = data)
 
   tbl <-
@@ -528,6 +528,7 @@ apply_footnotes_to_output <- function(data,
   if (nrow(footnotes_tbl_data) > 0) {
 
     if ("stub" %in% footnotes_tbl_data$locname &&
+        # FIXME: Check for length(...) > 0 instead of !is.na
         !is.na(dt_boxhead_get_var_stub(data))) {
 
       boxhead_var_stub <- dt_boxhead_get_var_stub(data = data)

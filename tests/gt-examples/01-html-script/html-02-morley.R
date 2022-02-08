@@ -2,7 +2,7 @@ library(gt)
 
 # Create a display table based on `morley`
 morley_tbl <-
-  gt(data = morley) %>%
+  gt(morley) %>%
   fmt_number(
     columns = Speed,
     decimals = 0,

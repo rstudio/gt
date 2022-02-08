@@ -13,9 +13,8 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
       stringsAsFactors = FALSE
     )
 
-  # Create a `gt_tbl` object with `gt()` and the
-  # `data_tbl` dataset
-  tab <- gt(data = data_tbl)
+  # Create a `gt_tbl` object with `gt()` and the `data_tbl` dataset
+  tab <- gt(data_tbl)
 
   # Expect an error when attempting to format a column
   # that does not exist
@@ -36,9 +35,9 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
        fmt_percent(columns = num_1, decimals = 2) %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      "183,623.00&percnt;", "276,339.00&percnt;", "93,729.00&percnt;",
-      "64,300.00&percnt;", "21,223.20&percnt;", "0.00&percnt;",
-      "&minus;2,324.00&percnt;"
+      "183,623.00%", "276,339.00%", "93,729.00%",
+      "64,300.00%", "21,223.20%", "0.00%",
+      "&minus;2,324.00%"
     )
   )
 
@@ -48,9 +47,9 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
        fmt_percent(columns = num_1, decimals = 5) %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      "183,623.00000&percnt;", "276,339.00000&percnt;", "93,729.00000&percnt;",
-      "64,300.00000&percnt;", "21,223.20000&percnt;", "0.00000&percnt;",
-      "&minus;2,324.00000&percnt;"
+      "183,623.00000%", "276,339.00000%", "93,729.00000%",
+      "64,300.00000%", "21,223.20000%", "0.00000%",
+      "&minus;2,324.00000%"
     )
   )
 
@@ -62,8 +61,8 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
                    drop_trailing_zeros = TRUE) %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      "183,623&percnt;", "276,339&percnt;", "93,729&percnt;", "64,300&percnt;",
-      "21,223.2&percnt;", "0&percnt;", "&minus;2,324&percnt;"
+      "183,623%", "276,339%", "93,729%", "64,300%",
+      "21,223.2%", "0%", "&minus;2,324%"
     )
   )
 
@@ -74,9 +73,9 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
        fmt_percent(columns = num_1, decimals = 2, use_seps = FALSE) %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      "183623.00&percnt;", "276339.00&percnt;", "93729.00&percnt;",
-      "64300.00&percnt;", "21223.20&percnt;", "0.00&percnt;",
-      "&minus;2324.00&percnt;"
+      "183623.00%", "276339.00%", "93729.00%",
+      "64300.00%", "21223.20%", "0.00%",
+      "&minus;2324.00%"
     )
   )
 
@@ -87,9 +86,9 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
        fmt_percent(columns = num_1, decimals = 2, sep_mark = " ") %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      "183 623.00&percnt;", "276 339.00&percnt;", "93 729.00&percnt;",
-      "64 300.00&percnt;", "21 223.20&percnt;", "0.00&percnt;",
-      "&minus;2 324.00&percnt;"
+      "183 623.00%", "276 339.00%", "93 729.00%",
+      "64 300.00%", "21 223.20%", "0.00%",
+      "&minus;2 324.00%"
     )
   )
 
@@ -102,9 +101,9 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
                    sep_mark = ".", dec_mark = ",") %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      "183.623,00&percnt;", "276.339,00&percnt;", "93.729,00&percnt;",
-      "64.300,00&percnt;", "21.223,20&percnt;", "0,00&percnt;",
-      "&minus;2.324,00&percnt;"
+      "183.623,00%", "276.339,00%", "93.729,00%",
+      "64.300,00%", "21.223,20%", "0,00%",
+      "&minus;2.324,00%"
     )
   )
 
@@ -115,10 +114,10 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
        fmt_percent(columns = num_1, decimals = 2, pattern = "a {x}:n") %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      "a 183,623.00&percnt;:n", "a 276,339.00&percnt;:n",
-      "a 93,729.00&percnt;:n", "a 64,300.00&percnt;:n",
-      "a 21,223.20&percnt;:n", "a 0.00&percnt;:n",
-      "a &minus;2,324.00&percnt;:n"
+      "a 183,623.00%:n", "a 276,339.00%:n",
+      "a 93,729.00%:n", "a 64,300.00%:n",
+      "a 21,223.20%:n", "a 0.00%:n",
+      "a &minus;2,324.00%:n"
     )
   )
 
@@ -130,9 +129,9 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
                    placement = "right", incl_space = TRUE) %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      "183,623 &percnt;", "276,339 &percnt;", "93,729 &percnt;",
-      "64,300 &percnt;", "21,223 &percnt;", "0 &percnt;",
-      "&minus;2,324 &percnt;"
+      "183,623 %", "276,339 %", "93,729 %",
+      "64,300 %", "21,223 %", "0 %",
+      "&minus;2,324 %"
     )
   )
 
@@ -144,9 +143,9 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
                    placement = "left", incl_space = TRUE) %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      "&percnt; 183,623", "&percnt; 276,339", "&percnt; 93,729",
-      "&percnt; 64,300", "&percnt; 21,223", "&percnt; 0",
-      "&minus;&percnt; 2,324"
+      "% 183,623", "% 276,339", "% 93,729",
+      "% 64,300", "% 21,223", "% 0",
+      "&minus;% 2,324"
     )
   )
 
@@ -156,8 +155,8 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
        fmt_percent(columns = num_1, accounting = TRUE) %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      "183,623.00&percnt;", "276,339.00&percnt;", "93,729.00&percnt;",
-      "64,300.00&percnt;", "21,223.20&percnt;", "0.00&percnt;", "(2,324.00&percnt;)"
+      "183,623.00%", "276,339.00%", "93,729.00%",
+      "64,300.00%", "21,223.20%", "0.00%", "(2,324.00%)"
     )
   )
 
@@ -167,9 +166,9 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
        fmt_percent(columns = num_1, decimals = 3, accounting = TRUE) %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      "183,623.000&percnt;", "276,339.000&percnt;", "93,729.000&percnt;",
-      "64,300.000&percnt;", "21,223.200&percnt;", "0.000&percnt;",
-      "(2,324.000&percnt;)"
+      "183,623.000%", "276,339.000%", "93,729.000%",
+      "64,300.000%", "21,223.200%", "0.000%",
+      "(2,324.000%)"
     )
   )
 
@@ -182,9 +181,9 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
          accounting = TRUE, pattern = "a{x}b") %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      "a183,623.000&percnt;b", "a276,339.000&percnt;b", "a93,729.000&percnt;b",
-      "a64,300.000&percnt;b", "a21,223.200&percnt;b", "a0.000&percnt;b",
-      "a(2,324.000&percnt;)b"
+      "a183,623.000%b", "a276,339.000%b", "a93,729.000%b",
+      "a64,300.000%b", "a21,223.200%b", "a0.000%b",
+      "a(2,324.000%)b"
     )
   )
 
@@ -197,8 +196,55 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
          accounting = TRUE, drop_trailing_zeros = TRUE) %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      "183,623&percnt;", "276,339&percnt;", "93,729&percnt;", "64,300&percnt;",
-      "21,223.2&percnt;", "0&percnt;", "(2,324&percnt;)"
+      "183,623%", "276,339%", "93,729%", "64,300%",
+      "21,223.2%", "0%", "(2,324%)"
+    )
+  )
+
+  # Format the `num_1` column to 2 decimal places, force the sign
+  expect_equal(
+    (tab %>%
+       fmt_percent(
+         columns = num_1, decimals = 2,  drop_trailing_zeros = TRUE,
+         scale_values = FALSE, force_sign = TRUE
+       ) %>%
+       render_formats_test("html"))[["num_1"]],
+    c(
+      "+1,836.23%", "+2,763.39%", "+937.29%",
+      "+643%", "+212.23%", "0%", "&minus;23.24%"
+    )
+  )
+
+  # Expect that using `force_sign = TRUE` with `accounting = TRUE`
+  # will render values in accounting format
+  expect_equal(
+    (tab %>%
+       fmt_percent(
+         columns = num_1, decimals = 2, drop_trailing_zeros = TRUE,
+         scale_values = FALSE, accounting = TRUE, force_sign = TRUE
+       ) %>%
+       render_formats_test("html"))[["num_1"]],
+    (tab %>%
+       fmt_percent(
+         columns = num_1, decimals = 2,  drop_trailing_zeros = TRUE,
+         scale_values = FALSE, accounting = TRUE
+       ) %>%
+       render_formats_test("html"))[["num_1"]]
+  )
+
+  # Format the `num_1` column to 2 decimal places, force the sign and
+  # define a pattern for decorating values
+  expect_equal(
+    (tab %>%
+       fmt_percent(
+         columns = num_1, decimals = 2, drop_trailing_zeros = TRUE,
+         pattern = "*{x}*", force_sign = TRUE
+       ) %>%
+       render_formats_test("html"))[["num_1"]],
+    c(
+      "*+183,623%*", "*+276,339%*", "*+93,729%*",
+      "*+64,300%*", "*+21,223.2%*", "*0%*",
+      "*&minus;2,324%*"
     )
   )
 
@@ -209,9 +255,9 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
        fmt_percent(columns = num_1, decimals = 2, locale = "en_US") %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      "183,623.00&percnt;", "276,339.00&percnt;", "93,729.00&percnt;",
-      "64,300.00&percnt;", "21,223.20&percnt;", "0.00&percnt;",
-      "&minus;2,324.00&percnt;"
+      "183,623.00%", "276,339.00%", "93,729.00%",
+      "64,300.00%", "21,223.20%", "0.00%",
+      "&minus;2,324.00%"
     )
   )
 
@@ -222,9 +268,9 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
        fmt_percent(columns = num_1, decimals = 2, locale = "da_DK") %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      "183.623,00&percnt;", "276.339,00&percnt;", "93.729,00&percnt;",
-      "64.300,00&percnt;", "21.223,20&percnt;", "0,00&percnt;",
-      "&minus;2.324,00&percnt;"
+      "183.623,00%", "276.339,00%", "93.729,00%",
+      "64.300,00%", "21.223,20%", "0,00%",
+      "&minus;2.324,00%"
     )
   )
 
@@ -235,9 +281,9 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
        fmt_percent(columns = num_1, decimals = 2, locale = "de_AT") %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      "183 623,00&percnt;", "276 339,00&percnt;", "93 729,00&percnt;",
-      "64 300,00&percnt;", "21 223,20&percnt;", "0,00&percnt;",
-      "&minus;2 324,00&percnt;"
+      "183 623,00%", "276 339,00%", "93 729,00%",
+      "64 300,00%", "21 223,20%", "0,00%",
+      "&minus;2 324,00%"
     )
   )
 
@@ -248,9 +294,9 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
        fmt_percent(columns = num_1, decimals = 2, locale = "et_EE") %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      "183 623,00&percnt;", "276 339,00&percnt;", "93 729,00&percnt;",
-      "64 300,00&percnt;", "21 223,20&percnt;", "0,00&percnt;",
-      "&minus;2 324,00&percnt;"
+      "183 623,00%", "276 339,00%", "93 729,00%",
+      "64 300,00%", "21 223,20%", "0,00%",
+      "&minus;2 324,00%"
     )
   )
 
@@ -261,9 +307,9 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
        fmt_percent(columns = num_1, decimals = 2, locale = "gl_ES") %>%
        render_formats_test("html"))[["num_1"]],
     c(
-      "183.623,00&percnt;", "276.339,00&percnt;", "93.729,00&percnt;",
-      "64.300,00&percnt;", "21.223,20&percnt;", "0,00&percnt;",
-      "&minus;2.324,00&percnt;"
+      "183.623,00%", "276.339,00%", "93.729,00%",
+      "64.300,00%", "21.223,20%", "0,00%",
+      "&minus;2.324,00%"
     )
   )
 
@@ -274,8 +320,8 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
        fmt_percent(columns = num_2, decimals = 2, scale_values = FALSE) %>%
        render_formats_test("html"))[["num_2"]],
     c(
-      "34.00&percnt;", "74.00&percnt;", "23.00&percnt;", "93.00&percnt;",
-      "35.00&percnt;", "76.00&percnt;", "57.00&percnt;"
+      "34.00%", "74.00%", "23.00%", "93.00%",
+      "35.00%", "76.00%", "57.00%"
     )
   )
 })

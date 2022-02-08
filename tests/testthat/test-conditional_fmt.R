@@ -14,7 +14,7 @@ data_tbl <-
 
 # Create a `gt_tbl` object with `gt()` and the
 # `data_tbl` dataset
-tab <- gt(data = data_tbl)
+tab <- gt(data_tbl)
 
 # Create an input data frame with dates, times, and date-times (all
 # as character)
@@ -28,7 +28,7 @@ time_tbl <-
 
 # Create a `gt_tbl` object with `gt()` and the
 # `data_tbl` dataset
-tab_time <- gt(data = time_tbl)
+tab_time <- gt(time_tbl)
 
 test_that("the `fmt_number()` function works with conditional `rows`", {
 
@@ -88,8 +88,8 @@ test_that("the `fmt_percent()` function works with conditional `rows`", {
          decimals = 2,
          rows = num_1 < 1000) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("1836.23", "2763.39", "93,729.00&percnt;", "64,300.00&percnt;",
-      "21,223.20&percnt;", "0.00&percnt;", "&minus;2,324.00&percnt;")
+    c("1836.23", "2763.39", "93,729.00%", "64,300.00%",
+      "21,223.20%", "0.00%", "&minus;2,324.00%")
   )
 
   expect_equal(
@@ -99,7 +99,7 @@ test_that("the `fmt_percent()` function works with conditional `rows`", {
          decimals = 2,
          rows = char_2 %in% c("june", "july") & grepl("sa.*", char_1)) %>%
        render_formats_test(context = "html"))[["num_2"]],
-    c("3,400.00&percnt;", "74", "23", "NA", "35", "NA", "NA")
+    c("3,400.00%", "74", "23", "NA", "35", "NA", "NA")
   )
 })
 

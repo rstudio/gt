@@ -4,13 +4,13 @@
 \alias{cols_width}
 \title{Set the widths of columns}
 \usage{
-cols_width(data, ..., .list = list2(...))
+cols_width(.data, ..., .list = list2(...))
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{...}{Expressions for the assignment of column widths for the table
-columns in \code{data}. Two-sided formulas (e.g, \verb{<LHS> ~ <RHS>}) can be used,
+columns in \code{.data}. Two-sided formulas (e.g, \verb{<LHS> ~ <RHS>}) can be used,
 where the left-hand side corresponds to selections of columns and the
 right-hand side evaluates to single-length character values in the form
 \verb{\{##\}px} (i.e., pixel dimensions); the \code{\link[=px]{px()}} helper function is best used
@@ -20,7 +20,7 @@ column-based select helpers \code{\link[=starts_with]{starts_with()}}, \code{\li
 Subsequent expressions that operate on the columns assigned previously will
 result in overwriting column width values (both in the same \code{cols_width()}
 call and across separate calls). All other columns can be assigned a
-default width value by using \code{TRUE} or \code{everything()} on the left-hand
+default width value by using \code{everything()} on the left-hand
 side.}
 
 \item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
@@ -61,8 +61,8 @@ and \code{container.width} arguments within \code{\link[=tab_options]{tab_option
 # with named arguments in `...`, we
 # can specify the exact widths for
 # table columns (using `everything()`
-# or `TRUE` at the end will capture
-# all remaining columns)
+# at the end will capture all
+# remaining columns)
 tab_1 <-
   exibble \%>\%
   dplyr::select(

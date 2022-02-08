@@ -4,7 +4,7 @@
 \alias{fmt_time}
 \title{Format values as times}
 \usage{
-fmt_time(data, columns, rows = everything(), time_style = 2)
+fmt_time(data, columns, rows = everything(), time_style = 2, pattern = "{x}")
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -15,9 +15,9 @@ focused on selections. The select helper functions are: \code{\link[=starts_with
 \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
 \code{\link[=everything]{everything()}}.}
 
-\item{rows}{Optional rows to format. Providing either \code{\link[=everything]{everything()}} (the
-default) or \code{TRUE} results in all rows in \code{columns} being formatted. Can
-either be a vector of row captions provided in \code{\link[=c]{c()}}, a vector of row
+\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
+default) results in all rows in \code{columns} being formatted. Alternatively,
+we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
 indices, or a helper function focused on selections. The select helper
 functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
 \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
@@ -28,16 +28,23 @@ to filter down to the rows we need (e.g.,
 that corresponds to the preferred time style, or, provide a named time
 style (\code{"hms"}, \code{"hms_p"}, \code{"h_p"}, etc.). Use \code{\link[=info_time_style]{info_time_style()}} to see
 the different numbered and named time presets.}
+
+\item{pattern}{A formatting pattern that allows for decoration of the
+formatted value. The value itself is represented by \code{{x}} and all other
+characters are taken to be string literals.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
-Format input time values that are character-based and expressed according to
-the ISO 8601 time format (\code{HH:MM:SS}). Once the appropriate data cells are
-targeted with \code{columns} (and, optionally, \code{rows}), we can simply apply a
-preset time style to format the times. The following time styles are
-available for simpler formatting of ISO times (all using the input time of
+Format input values to time values using one of five presets. Input can be in
+the form of \code{POSIXt} (i.e., date-times), \code{character} (must be in the ISO
+8601 forms of \code{HH:MM:SS} or \verb{YYYY-MM-DD HH:MM:SS}), or \code{Date} (which always
+results in the formatting of \code{00:00:00}).
+
+Once the appropriate data cells are targeted with \code{columns} (and, optionally,
+\code{rows}), we can simply apply a preset time style to format the times. The
+following time styles are available for use (all using the input time of
 \code{14:35:00} in the example output times):
 \enumerate{
 \item \code{"hms"}: \code{14:35:00}
@@ -54,7 +61,7 @@ the possible inputs to \code{time_style}.
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
 nothing is provided for \code{rows} then entire columns are selected). Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the Arguments section for more information on this.
+argument. See the \emph{Arguments} section for more information on this.
 }
 \section{Figures}{
 
@@ -65,7 +72,7 @@ argument. See the Arguments section for more information on this.
 
 \section{Function ID}{
 
-3-7
+3-9
 }
 
 \examples{
@@ -113,6 +120,9 @@ Other Format Data:
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_engineering}()},
+\code{\link{fmt_fraction}()},
+\code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},

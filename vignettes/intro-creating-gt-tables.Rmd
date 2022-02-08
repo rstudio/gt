@@ -4,7 +4,7 @@ output:
   rmarkdown::html_vignette:
     self_contained: true
 vignette: >
-  %\VignetteIndexEntry{Intro to Creating gt Tables}
+  %\VignetteIndexEntry{Introduction to Creating gt Tables}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -52,7 +52,7 @@ The main entry point into the **gt** API is the `gt()` function. If we pass `isl
 ```{r simple_gt_table}
 # Create a display table showing ten of
 # the largest islands in the world
-gt_tbl <- gt(data = islands_tbl)
+gt_tbl <- gt(islands_tbl)
 
 # Show the gt Table
 gt_tbl
@@ -302,7 +302,7 @@ airquality_m <-
 # Create a display table using the `airquality`
 # dataset; arrange columns into groups
 gt_tbl <- 
-  gt(data = airquality_m) %>%
+  gt(airquality_m) %>%
   tab_header(
     title = "New York Air Quality Measurements",
     subtitle = "Daily measurements in New York City (May 1-10, 1973)"

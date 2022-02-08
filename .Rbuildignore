@@ -3,6 +3,7 @@
 ^pkgdown$
 ^scripts$
 ^\.github$
+^\.gitattributes$
 ^\.Rproj\.user$
 ^gt\.Rproj$
 ^_pkgdown\.yml$
@@ -10,7 +11,8 @@
 ^README\.Rmd$
 ^README\.md$
 ^LICENSE\.md$
-tests/gt-examples
 vignettes
 man/figures/.*svg$
 man/figures/[^m].*png$
+tests/gt-examples
+index.md

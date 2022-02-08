@@ -15,7 +15,7 @@ test_that("the `fmt_percent()` function works correctly in the LaTeX context", {
 
   # Create a `tbl_latex` object with `gt()` and the
   # `data_tbl` dataset
-  tbl_latex <- gt(data = data_tbl)
+  tbl_latex <- gt(data_tbl)
 
   # Format the `num_1` column to 2 decimal places, use all
   # other defaults; extract `output_df` and compare to expected values
@@ -193,6 +193,52 @@ test_that("the `fmt_percent()` function works correctly in the LaTeX context", {
     c(
       "$183,623\\%$", "$276,339\\%$", "$93,729\\%$", "$64,300\\%$",
       "$21,223.2\\%$", "$0\\%$", "$(2,324\\%)$"
+    )
+  )
+
+  # Format the `num_1` column to 2 decimal places, force the sign
+  expect_equal(
+    (tbl_latex %>%
+       fmt_percent(
+         columns = num_1, decimals = 2,  drop_trailing_zeros = TRUE,
+         scale_values = FALSE, force_sign = TRUE
+       ) %>%
+       render_formats_test("latex"))[["num_1"]],
+    c(
+      "$+1,836.23\\%$", "$+2,763.39\\%$", "$+937.29\\%$", "$+643\\%$",
+      "$+212.23\\%$", "$0\\%$", "$-23.24\\%$"
+    )
+  )
+
+  # Expect that using `force_sign = TRUE` with `accounting = TRUE`
+  # will render values in accounting format
+  expect_equal(
+    (tbl_latex %>%
+       fmt_percent(
+         columns = num_1, decimals = 2, drop_trailing_zeros = TRUE,
+         scale_values = FALSE, accounting = TRUE, force_sign = TRUE
+       ) %>%
+       render_formats_test("latex"))[["num_1"]],
+    (tbl_latex %>%
+       fmt_percent(
+         columns = num_1, decimals = 2,  drop_trailing_zeros = TRUE,
+         scale_values = FALSE, accounting = TRUE
+       ) %>%
+       render_formats_test("latex"))[["num_1"]]
+  )
+
+  # Format the `num_1` column to 2 decimal places, force the sign and
+  # define a pattern for decorating values
+  expect_equal(
+    (tbl_latex %>%
+       fmt_percent(
+         columns = num_1, decimals = 2, drop_trailing_zeros = TRUE,
+         pattern = "*{x}*", force_sign = TRUE
+       ) %>%
+       render_formats_test("latex"))[["num_1"]],
+    c(
+      "*$+183,623\\%$*", "*$+276,339\\%$*", "*$+93,729\\%$*",
+      "*$+64,300\\%$*", "*$+21,223.2\\%$*", "*$0\\%$*", "*$-2,324\\%$*"
     )
   )
 

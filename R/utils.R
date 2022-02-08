@@ -40,25 +40,48 @@ time_formats <- function() {
 #' @noRd
 get_date_format <- function(date_style) {
 
-  # Create bindings for specific variables
-  format_number <- format_code <- format_name <- NULL
+  date_format_tbl <- date_formats()
+  date_format_num_range <- seq_len(nrow((date_format_tbl)))
 
-  if (date_style %in% 1:14 | date_style %in% as.character(1:14)) {
-
-    return(
-      date_formats() %>%
-        dplyr::filter(format_number == as.character(date_style)) %>%
-        dplyr::pull(format_code)
-    )
+  # In the rare instance that `date_style` consists of a character-based
+  # number in the valid range of numbers, cast the value as a number
+  if (
+    is.character(date_style) &&
+    date_style %in% as.character(date_format_num_range)
+  ) {
+    date_style <- as.numeric(date_style)
   }
 
-  if (date_style %in% date_formats()$format_name) {
-    return(
-      date_formats() %>%
-        dplyr::filter(format_name == date_style) %>%
-        dplyr::pull(format_code)
-    )
+  # Stop function if a numeric `date_style` value is invalid
+  if (is.numeric(date_style)) {
+
+    if (!(date_style %in% date_format_num_range)) {
+      stop(
+        "If using a numeric value for a `date_style`, it must be ",
+        "between `1` and `", nrow((date_format_tbl)), "`:\n",
+        "* Use `info_date_style()` for a useful visual reference",
+        call. = FALSE
+      )
+    }
   }
+
+  # Stop function if a character-based `date_style` value is invalid
+  if (is.character(date_style)) {
+
+    if (!(date_style %in% date_format_tbl$format_name)) {
+      stop(
+        "If using a `date_style` name, it must be in the valid set:\n",
+        "* Use `info_date_style()` for a useful visual reference",
+        call. = FALSE
+      )
+    }
+
+    # Normalize `date_style` to be a numeric index value
+    date_style <- which(date_format_tbl$format_name == date_style)
+  }
+
+  # Obtain the correct date format code for use with `strptime()`
+  date_format_tbl[["format_code"]][date_style]
 }
 
 #' Transform a `time_style` to a `time_format`
@@ -66,22 +89,69 @@ get_date_format <- function(date_style) {
 #' @noRd
 get_time_format <- function(time_style) {
 
-  # Create bindings for specific variables
-  format_number <- format_code <- format_name <- NULL
+  time_format_tbl <- time_formats()
+  time_format_num_range <- seq_len(nrow((time_format_tbl)))
 
-  if (time_style %in% 1:5 | time_style %in% as.character(1:5)) {
-
-    return(
-      time_formats() %>%
-        dplyr::filter(format_number == as.character(time_style)) %>%
-        dplyr::pull(format_code))
+  # In the rare instance that `time_style` consists of a character-based
+  # number in the valid range of numbers, cast the value as a number
+  if (
+    is.character(time_style) &&
+    time_style %in% as.character(time_format_num_range)
+  ) {
+    time_style <- as.numeric(time_style)
   }
 
-  if (time_style %in% time_formats()$format_name) {
-    return(
-      time_formats() %>%
-        dplyr::filter(format_name == time_style) %>%
-        dplyr::pull(format_code))
+  # Stop function if a numeric `time_style` value is invalid
+  if (is.numeric(time_style)) {
+
+    if (!(time_style %in% time_format_num_range)) {
+      stop(
+        "If using a numeric value for a `time_style`, it must be ",
+        "between `1` and `", nrow((time_format_tbl)), "`:\n",
+        "* Use `info_time_style()` for a useful visual reference",
+        call. = FALSE
+      )
+    }
+  }
+
+  # Stop function if a character-based `time_style` value is invalid
+  if (is.character(time_style)) {
+
+    if (!(time_style %in% time_format_tbl$format_name)) {
+      stop(
+        "If using a `time_style` name, it must be in the valid set:\n",
+        "* Use `info_time_style()` for a useful visual reference",
+        call. = FALSE
+      )
+    }
+
+    # Normalize `time_style` to be a numeric index value
+    time_style <- which(time_format_tbl$format_name == time_style)
+  }
+
+  # Obtain the correct time format code for use with `strptime()`
+  time_format_tbl[["format_code"]][time_style]
+}
+
+#' Are string values 24 hour times?
+#'
+#' Determine whether string values are representative of ISO 8601 time parts
+#' (in 24 hour time). Valid strings can be in the following formats: `hh::mm`,
+#' `hh::mm:ss`, and `hh::mm:ss.sss`.
+#'
+#' @noRd
+is_string_time <- function(x) {
+
+  is.character(x) & grepl("^\\d{1,2}:\\d{2}(:\\d{2}(\\.\\d+)?)?$", x)
+}
+
+check_format_string <- function(format) {
+
+  if (!is.character(format) || length(format) != 1) {
+    stop(
+      "The `format` code must be a character string of length 1.",
+      call. = FALSE
+    )
   }
 }
 
@@ -1139,6 +1209,15 @@ is_gt <- function(data) {
   checkmate::test_class(data, "gt_tbl")
 }
 
+#' Determines whether a character vector is non-empty
+#'
+#' @param x A character vector.
+#' @noRd
+is_nonempty_string <- function(x) {
+
+  length(x) > 0 && any(grepl("\\S", x))
+}
+
 #' Stop any function if object is not a `gt_tbl` object
 #'
 #' @param data The input `data` object that is to be validated.
@@ -1170,11 +1249,24 @@ resolve_border_side <- function(side) {
          all = "all")
 }
 
-#' Expand a path using fs::path_ex
+#' Expand a path using fs::path_expand
+#'
 #' @noRd
 path_expand <- function(file) {
 
   fs::path_expand(file)
+}
+
+# TODO: the `get_file_ext()` function overlaps greatly with `gtsave_file_ext()`;
+#       both are not vectorized
+
+#' Get a file's extension
+#'
+#' @noRd
+get_file_ext <- function(file) {
+
+  pos <- regexpr("\\.([[:alnum:]]+)$", file)
+  ifelse(pos > -1L, substring(file, pos + 1L), "")
 }
 
 validate_marks <- function(marks) {
