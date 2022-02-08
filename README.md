@@ -1,8 +1,8 @@
 <div align="center">
 
-<a href='https://gt.rstudio.com/'><img src="man/figures/logo.svg" height="350px"/></a>
-<hr />
-
+<hr style="color:transparent" />
+<a href='https://gt.rstudio.com/'><img src="man/figures/logo.svg" width="350px"/></a>
+<hr style="color:transparent"/>
 <!-- badges: start -->
 <a href="https://cran.r-project.org/package=gt"><img src="https://www.r-pkg.org/badges/version/gt" alt="CRAN status" /></a>
 <a href="https://github.com/rstudio/gt/actions"><img src="https://github.com/rich-iannone/pointblank/workflows/R-CMD-check/badge.svg" alt="R build status" /></a>
@@ -16,7 +16,7 @@
 
 <a href="https://www.contributor-covenant.org/version/2/0/code_of_conduct/"><img src="https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg" alt="Contributor Covenant" /></a>
 <!-- badges: end -->
-<hr />
+<hr style="color:transparent" />
 <br />
 </div>
 

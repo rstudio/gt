@@ -3,9 +3,15 @@
 #' @noRd
 footnote_mark_to_html <- function(mark) {
 
-  as.character(
-    htmltools::tagList(htmltools::tags$sup(class = "gt_footnote_marks", mark))
-  )
+  # Generate the CSS classes needed on the basis of whether the
+  # mark is one or more asterisk characters or anything else
+  if (!grepl("^[\\*]+?$", mark)) {
+    sup_class <- "gt_footnote_marks"
+  } else {
+    sup_class <- "gt_footnote_marks gt_asterisk"
+  }
+
+  as.character(htmltools::tags$sup(class = sup_class, mark))
 }
 
 styles_to_html <- function(styles) {
@@ -1078,15 +1084,14 @@ create_footnotes_component_h <- function(data) {
         FUN = function(x, footnote_text) {
           as.character(
             htmltools::tagList(
-              htmltools::tags$sup(
-                .noWS = c("after", "before"),
-                class = "gt_footnote_marks",
-                htmltools::tags$em(
-                  .noWS = c("after", "before"),
-                  paste0(x, " ")
-                )
-              ),
-              htmltools::HTML(process_text(footnote_text, context = "html"))
+              htmltools::HTML(
+                paste0(
+                  footnote_mark_to_html(x),
+                  " ",
+                  process_text(footnote_text, context = "html")
+                ),
+                .noWS = c("after", "before")
+              )
             )
           )
         }
