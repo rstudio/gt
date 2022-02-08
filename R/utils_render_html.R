@@ -11,7 +11,7 @@ footnote_mark_to_html <- function(mark) {
     sup_class <- "gt_footnote_marks gt_asterisk"
   }
 
-  as.character(htmltools::tagList(htmltools::tags$sup(class = sup_class, mark)))
+  as.character(htmltools::tags$sup(class = sup_class, mark))
 }
 
 styles_to_html <- function(styles) {
