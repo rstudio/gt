@@ -227,10 +227,10 @@ opt_align_table_header <- function(data,
 #' Option to expand or contract vertical padding
 #'
 #' @description
-#' Increase or decrease the vertical padding throughout all locations of a gt
-#' table by an arbitrary number of 'steps', which here are defined by a real
-#' number between -1.0 and 2.0. This function serves as a shortcut for
-#' setting the following eight options in [tab_options()]:
+#' Increase or decrease the vertical padding throughout all locations of a
+#' **gt** table by use of a `scale` factor, which here is defined by a real
+#' number between `0` and `3`. This function serves as a shortcut for setting
+#' the following eight options in [tab_options()]:
 #'
 #' - `heading.padding`
 #' - `column_labels.padding`
@@ -242,8 +242,8 @@ opt_align_table_header <- function(data,
 #' - `source_notes.padding`
 #'
 #' @inheritParams fmt_number
-#' @param steps A positive or negative factor by which the vertical padding will
-#'   be adjusted. Must be a number between `-1.0` and `2.0`.
+#' @param scale A scale factor by which the vertical padding will be adjusted.
+#'   Must be a number between `0` and `3`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -276,7 +276,7 @@ opt_align_table_header <- function(data,
 #'     title = "The title of the table",
 #'     subtitle = "The table's subtitle"
 #'   ) %>%
-#'   opt_vertical_padding(steps = -0.25)
+#'   opt_vertical_padding(scale = 0.25)
 #'
 #' @section Figures:
 #' \if{html}{\figure{man_opt_vertical_padding_1.png}{options: width=100\%}}
@@ -287,11 +287,11 @@ opt_align_table_header <- function(data,
 #'
 #' @export
 opt_vertical_padding <- function(data,
-                                 steps = 0) {
+                                 scale = 1) {
 
   option_value_list <-
     get_padding_option_value_list(
-      steps = steps,
+      scale = scale,
       type = "vertical"
     )
 
@@ -304,10 +304,10 @@ opt_vertical_padding <- function(data,
 #' Option to expand or contract horizontal padding
 #'
 #' @description
-#' Increase or decrease the horizontal padding throughout all locations of a gt
-#' table by an arbitrary number of 'steps', which here are defined by a real
-#' number between -1.0 and 2.0. This function serves as a shortcut for
-#' setting the following eight options in [tab_options()]:
+#' Increase or decrease the horizontal padding throughout all locations of a
+#' **gt** table by use of a `scale` factor, which here is defined by a real
+#' number between `0` and `3`. This function serves as a shortcut for setting
+#' the following eight options in [tab_options()]:
 #'
 #' - `heading.padding.horizontal`
 #' - `column_labels.padding.horizontal`
@@ -319,8 +319,8 @@ opt_vertical_padding <- function(data,
 #' - `source_notes.padding.horizontal`
 #'
 #' @inheritParams fmt_number
-#' @param steps A positive or negative factor by which the horizontal padding
-#'   will be adjusted. Must be a number between `-1.0` and `2.0`.
+#' @param scale A scale factor by which the horizontal padding will be adjusted.
+#'   Must be a number between `0` and `3`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -353,7 +353,7 @@ opt_vertical_padding <- function(data,
 #'     title = "The title of the table",
 #'     subtitle = "The table's subtitle"
 #'   ) %>%
-#'   opt_horizontal_padding(steps = 2)
+#'   opt_horizontal_padding(scale = 3)
 #'
 #' @section Figures:
 #' \if{html}{\figure{man_opt_horizontal_padding_1.png}{options: width=100\%}}
@@ -364,11 +364,11 @@ opt_vertical_padding <- function(data,
 #'
 #' @export
 opt_horizontal_padding <- function(data,
-                                   steps = 0) {
+                                   scale = 1) {
 
   option_value_list <-
     get_padding_option_value_list(
-      steps = steps,
+      scale = scale,
       type = "horizontal"
     )
 
@@ -378,13 +378,12 @@ opt_horizontal_padding <- function(data,
   )
 }
 
-get_padding_option_value_list <- function(steps, type) {
+get_padding_option_value_list <- function(scale, type) {
 
-  # Stop if `steps` is beyond an acceptable range
-  if (steps > 2.0 | steps < -1.0) {
+  # Stop if `scale` is beyond an acceptable range
+  if (scale < 0 | scale > 3) {
     stop(
-      "The value provided for `steps` (", steps, ") must be between ",
-      "`-1.0` and `+2.0`.",
+      "The value provided for `scale` (", scale, ") must be between `0` and `3`.",
       call. = FALSE
     )
   }
@@ -398,8 +397,6 @@ get_padding_option_value_list <- function(steps, type) {
     dplyr::filter(grepl(paste0(pattern, "$"), parameter)) %>%
     dplyr::pull(parameter)
 
-  steps <- steps + 1
-
   padding_options <-
     dt_options_tbl %>%
     dplyr::filter(parameter %in% padding_params) %>%
@@ -409,7 +406,7 @@ get_padding_option_value_list <- function(steps, type) {
     ) %>%
     dplyr::mutate(value = unlist(value)) %>%
     dplyr::mutate(px = as.numeric(gsub("px", "", value))) %>%
-    dplyr::mutate(px = px * steps)
+    dplyr::mutate(px = px * scale)
 
   create_option_value_list(
     padding_options$parameter,

@@ -4,22 +4,22 @@
 \alias{opt_vertical_padding}
 \title{Option to expand or contract vertical padding}
 \usage{
-opt_vertical_padding(data, steps = 0)
+opt_vertical_padding(data, scale = 1)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{steps}{A positive or negative factor by which the vertical padding will
-be adjusted. Must be a number between \code{-1.0} and \code{2.0}.}
+\item{scale}{A scale factor by which the vertical padding will be adjusted.
+Must be a number between \code{0} and \code{3}.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
-Increase or decrease the vertical padding throughout all locations of a gt
-table by an arbitrary number of 'steps', which here are defined by a real
-number between -1.0 and 2.0. This function serves as a shortcut for
-setting the following eight options in \code{\link[=tab_options]{tab_options()}}:
+Increase or decrease the vertical padding throughout all locations of a
+\strong{gt} table by use of a \code{scale} factor, which here is defined by a real
+number between \code{0} and \code{3}. This function serves as a shortcut for setting
+the following eight options in \code{\link[=tab_options]{tab_options()}}:
 \itemize{
 \item \code{heading.padding}
 \item \code{column_labels.padding}
@@ -70,7 +70,7 @@ tab_1 <-
     title = "The title of the table",
     subtitle = "The table's subtitle"
   ) \%>\%
-  opt_vertical_padding(steps = -0.25)
+  opt_vertical_padding(scale = 0.25)
 
 }
 \seealso{

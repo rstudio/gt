@@ -4,22 +4,22 @@
 \alias{opt_horizontal_padding}
 \title{Option to expand or contract horizontal padding}
 \usage{
-opt_horizontal_padding(data, steps = 0)
+opt_horizontal_padding(data, scale = 1)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{steps}{A positive or negative factor by which the horizontal padding
-will be adjusted. Must be a number between \code{-1.0} and \code{2.0}.}
+\item{scale}{A scale factor by which the horizontal padding will be adjusted.
+Must be a number between \code{0} and \code{3}.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
-Increase or decrease the horizontal padding throughout all locations of a gt
-table by an arbitrary number of 'steps', which here are defined by a real
-number between -1.0 and 2.0. This function serves as a shortcut for
-setting the following eight options in \code{\link[=tab_options]{tab_options()}}:
+Increase or decrease the horizontal padding throughout all locations of a
+\strong{gt} table by use of a \code{scale} factor, which here is defined by a real
+number between \code{0} and \code{3}. This function serves as a shortcut for setting
+the following eight options in \code{\link[=tab_options]{tab_options()}}:
 \itemize{
 \item \code{heading.padding.horizontal}
 \item \code{column_labels.padding.horizontal}
@@ -70,7 +70,7 @@ tab_1 <-
     title = "The title of the table",
     subtitle = "The table's subtitle"
   ) \%>\%
-  opt_horizontal_padding(steps = 2)
+  opt_horizontal_padding(scale = 3)
 
 }
 \seealso{
