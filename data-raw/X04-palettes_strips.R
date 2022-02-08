@@ -56,10 +56,13 @@ get_d_palettes <- function(color_packages = c(
     dplyr::filter(package %in% color_packages) %>%
     mutate(colors = "NA_character_")
 
-  for (i in seq(nrow(palettes))) {
+  for (i in seq_len(nrow(palettes))) {
+
+    pkg <- palettes[[i, "package"]]
+    pal <- palettes[[i, "palette"]]
 
     color_strip <-
-      palettes_d[[palettes[i, "package"]]][[palettes[i, "palette"]]] %>%
+      palettes_d[[pkg]][[pal]] %>%
       make_color_strip_svg()
 
     palettes[i, "colors"] <- color_strip

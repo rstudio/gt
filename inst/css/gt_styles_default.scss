@@ -354,7 +354,30 @@
   .gt_footnote_marks {
     font-style: italic;
     font-weight: normal;
-    font-size: 65%;
+    font-size: 75%;
+    vertical-align: 0.4em;
   }
 
+  .gt_asterisk {
+    font-size: 100%;
+    vertical-align: 0;
+  }
+
+  .gt_slash_mark {
+    font-size: 0.7em;
+    line-height: 0.7em;
+    vertical-align: 0.15em;
+  }
+
+  .gt_fraction_numerator {
+    font-size: 0.6em;
+    line-height: 0.6em;
+    vertical-align: 0.45em;
+  }
+
+  .gt_fraction_denominator {
+    font-size: 0.6em;
+    line-height: 0.6em;
+    vertical-align: -0.05em;
+  }
 }
