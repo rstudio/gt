@@ -251,6 +251,14 @@ group labels (\code{row_group.padding}), in the body/stub rows
 \code{grand_summary_row.padding}), or in the footnotes and source notes
 (\code{footnotes.padding} and \code{source_notes.padding}).}
 
+\item{heading.padding.horizontal, column_labels.padding.horizontal, data_row.padding.horizontal, row_group.padding.horizontal, summary_row.padding.horizontal, grand_summary_row.padding.horizontal, footnotes.padding.horizontal, source_notes.padding.horizontal}{The amount of horizontal padding to incorporate in the \code{heading} (title and
+subtitle), the \code{column_labels} (this includes the column spanners), the row
+group labels (\code{row_group.padding.horizontal}), in the body/stub rows
+(\code{data_row.padding}), in summary rows (\code{summary_row.padding.horizontal} or
+\code{grand_summary_row.padding.horizontal}), or in the footnotes and source
+notes (\code{footnotes.padding.horizontal} and
+\code{source_notes.padding.horizontal}).}
+
 \item{heading.border.bottom.style, heading.border.bottom.width, heading.border.bottom.color}{The style, width, and color properties of the header's bottom border. This
 border shares space with that of the \code{column_labels} location. If the
 \code{width} of this border is larger, then it will be the visible border.}

@@ -1476,6 +1476,14 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   (`data_row.padding`), in summary rows (`summary_row.padding` or
 #'   `grand_summary_row.padding`), or in the footnotes and source notes
 #'   (`footnotes.padding` and `source_notes.padding`).
+#' @param heading.padding.horizontal,column_labels.padding.horizontal,data_row.padding.horizontal,row_group.padding.horizontal,summary_row.padding.horizontal,grand_summary_row.padding.horizontal,footnotes.padding.horizontal,source_notes.padding.horizontal
+#'   The amount of horizontal padding to incorporate in the `heading` (title and
+#'   subtitle), the `column_labels` (this includes the column spanners), the row
+#'   group labels (`row_group.padding.horizontal`), in the body/stub rows
+#'   (`data_row.padding`), in summary rows (`summary_row.padding.horizontal` or
+#'   `grand_summary_row.padding.horizontal`), or in the footnotes and source
+#'   notes (`footnotes.padding.horizontal` and
+#'   `source_notes.padding.horizontal`).
 #' @param table.border.top.style,table.border.top.width,table.border.top.color,table.border.right.style,table.border.right.width,table.border.right.color,table.border.bottom.style,table.border.bottom.width,table.border.bottom.color,table.border.left.style,table.border.left.width,table.border.left.color
 #'   The style, width, and color properties of the table's absolute top and
 #'   absolute bottom borders.
