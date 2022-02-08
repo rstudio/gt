@@ -245,51 +245,10 @@ opt_align_table_header <- function(data,
 opt_vertical_padding <- function(data,
                                  steps = 0) {
 
-  # Stop if steps is beyond an acceptable range
-  if (steps > 2.0 | steps < -1.0) {
-    stop(
-      "The value provided for `steps` (", steps, ") must be between ",
-      "`-1.0` and `+2.0`.",
-      call. = FALSE
-      )
-  }
-
-  vertical_padding_params <-
-    c(
-      "heading_padding",           # 4
-      "column_labels_padding",     # 5
-      "row_group_padding",         # 8
-      "data_row_padding",          # 8
-      "summary_row_padding",       # 8
-      "grand_summary_row_padding", # 8
-      "footnotes_padding",         # 4
-      "source_notes_padding"       # 4
-    )
-
-  direction <- sign(steps)
-
-  if (direction != -1) {
-    steps <- abs(steps + 1)
-  }
-
-  if (direction == -1) {
-    # Translate negative steps such that -1 -> 0 and 0 -> 1
-    steps <- 1 - abs(steps)
-  }
-
-  vertical_padding_options <-
-    dt_options_tbl %>%
-    dplyr::filter(parameter %in% vertical_padding_params) %>%
-    dplyr::select(parameter, value) %>%
-    dplyr::mutate(parameter = gsub("_padding", ".padding", parameter, fixed = TRUE)) %>%
-    dplyr::mutate(value = unlist(value)) %>%
-    dplyr::mutate(px = as.numeric(gsub("px", "", value))) %>%
-    dplyr::mutate(px = px * steps)
-
   option_value_list <-
-    create_option_value_list(
-      vertical_padding_options$parameter,
-      paste0(vertical_padding_options$px, "px")
+    get_padding_option_value_list(
+      steps = steps,
+      type = "vertical"
     )
 
   tab_options_multi(
@@ -319,7 +278,21 @@ opt_vertical_padding <- function(data,
 opt_horizontal_padding <- function(data,
                                    steps = 0) {
 
-  # Stop if steps is beyond an acceptable range
+  option_value_list <-
+    get_padding_option_value_list(
+      steps = steps,
+      type = "horizontal"
+    )
+
+  tab_options_multi(
+    data = data,
+    options = option_value_list
+  )
+}
+
+get_padding_option_value_list <- function(steps, type) {
+
+  # Stop if `steps` is beyond an acceptable range
   if (steps > 2.0 | steps < -1.0) {
     stop(
       "The value provided for `steps` (", steps, ") must be between ",
@@ -328,22 +301,20 @@ opt_horizontal_padding <- function(data,
     )
   }
 
-  # TODO: Ensure these parameters are made available
-  horizontal_padding_params <-
-    c(
-      "heading_padding_horizontal",           # 4
-      "column_labels_padding_horizontal",     # 5
-      "row_group_padding_horizontal",         # 8
-      "data_row_padding_horizontal",          # 8
-      "summary_row_padding_horizontal",       # 8
-      "grand_summary_row_padding_horizontal", # 8
-      "footnotes_padding_horizontal",         # 4
-      "source_notes_padding_horizontal"       # 4
-    )
+  pattern <- if (type == "vertical") "_padding" else  "_padding_horizontal"
 
+  # Get the padding parameters from `dt_options_tbl` that relate
+  # to the `type` (either vertical or horizontal padding)
+  padding_params <-
+    dt_options_tbl %>%
+    dplyr::filter(grepl(paste0(pattern, "$"), parameter)) %>%
+    dplyr::pull(parameter)
+
+  # Get the direction of steps through its sign (either -1, 0, or 1)
   direction <- sign(steps)
 
   if (direction != -1) {
+    # Translate positive and `0` steps such that 0 -> 1, 1 -> 2, and 2 -> 3
     steps <- abs(steps + 1)
   }
 
@@ -352,24 +323,20 @@ opt_horizontal_padding <- function(data,
     steps <- 1 - abs(steps)
   }
 
-  horizontal_padding_options <-
+  padding_options <-
     dt_options_tbl %>%
-    dplyr::filter(parameter %in% horizontal_padding_params) %>%
+    dplyr::filter(parameter %in% padding_params) %>%
     dplyr::select(parameter, value) %>%
-    dplyr::mutate(parameter = gsub("_padding_horizontal", ".padding.horizontal", parameter, fixed = TRUE)) %>%
+    dplyr::mutate(
+      parameter = gsub(pattern, gsub("_", ".", pattern, fixed = TRUE), parameter, fixed = TRUE)
+    ) %>%
     dplyr::mutate(value = unlist(value)) %>%
     dplyr::mutate(px = as.numeric(gsub("px", "", value))) %>%
     dplyr::mutate(px = px * steps)
 
-  option_value_list <-
-    create_option_value_list(
-      horizontal_padding_options$parameter,
-      paste0(horizontal_padding_options$px, "px")
-    )
-
-  tab_options_multi(
-    data = data,
-    options = option_value_list
+  create_option_value_list(
+    padding_options$parameter,
+    paste0(padding_options$px, "px")
   )
 }
 
