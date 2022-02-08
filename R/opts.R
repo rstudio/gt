@@ -227,9 +227,19 @@ opt_align_table_header <- function(data,
 #' Option to expand or contract vertical padding
 #'
 #' @description
-#' This function can increase or decrease the vertical padding throughout all
-#' locations of a gt table by an arbitrary number of steps, which is defined by
-#' a real number between -1.0 and 2.0.
+#' Increase or decrease the vertical padding throughout all locations of a gt
+#' table by an arbitrary number of 'steps', which here are defined by a real
+#' number between -1.0 and 2.0. This function serves as a shortcut for
+#' setting the following eight options in [tab_options()]:
+#'
+#' - `heading.padding`
+#' - `column_labels.padding`
+#' - `data_row.padding`
+#' - `row_group.padding`
+#' - `summary_row.padding`
+#' - `grand_summary_row.padding`
+#' - `footnotes.padding`
+#' - `source_notes.padding`
 #'
 #' @inheritParams fmt_number
 #' @param steps A positive or negative factor by which the vertical padding will
@@ -260,9 +270,19 @@ opt_vertical_padding <- function(data,
 #' Option to expand or contract horizontal padding
 #'
 #' @description
-#' This function can increase or decrease the horizontal padding throughout all
-#' locations of a gt table by an arbitrary number of steps, which is defined by
-#' a real number between -1.0 and 2.0.
+#' Increase or decrease the horizontal padding throughout all locations of a gt
+#' table by an arbitrary number of 'steps', which here are defined by a real
+#' number between -1.0 and 2.0. This function serves as a shortcut for
+#' setting the following eight options in [tab_options()]:
+#'
+#' - `heading.padding.horizontal`
+#' - `column_labels.padding.horizontal`
+#' - `data_row.padding.horizontal`
+#' - `row_group.padding.horizontal`
+#' - `summary_row.padding.horizontal`
+#' - `grand_summary_row.padding.horizontal`
+#' - `footnotes.padding.horizontal`
+#' - `source_notes.padding.horizontal`
 #'
 #' @inheritParams fmt_number
 #' @param steps A positive or negative factor by which the horizontal padding

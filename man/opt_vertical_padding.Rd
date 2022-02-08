@@ -16,9 +16,20 @@ be adjusted. Must be a number between \code{-1.0} and \code{2.0}.}
 An object of class \code{gt_tbl}.
 }
 \description{
-This function can increase or decrease the vertical padding throughout all
-locations of a gt table by an arbitrary number of steps, which is defined by
-a real number between -1.0 and 2.0.
+Increase or decrease the vertical padding throughout all locations of a gt
+table by an arbitrary number of 'steps', which here are defined by a real
+number between -1.0 and 2.0. This function serves as a shortcut for
+setting the following eight options in \code{\link[=tab_options]{tab_options()}}:
+\itemize{
+\item \code{heading.padding}
+\item \code{column_labels.padding}
+\item \code{data_row.padding}
+\item \code{row_group.padding}
+\item \code{summary_row.padding}
+\item \code{grand_summary_row.padding}
+\item \code{footnotes.padding}
+\item \code{source_notes.padding}
+}
 }
 \section{Function ID}{
 
