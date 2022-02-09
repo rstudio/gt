@@ -11,11 +11,7 @@ fmt_fraction(
   accuracy = NULL,
   simplify = TRUE,
   layout = c("diagonal", "inline"),
-  use_seps = TRUE,
-  pattern = "{x}",
-  sep_mark = ",",
-  dec_mark = ".",
-  locale = NULL
+  pattern = "{x}"
 )
 }
 \arguments{
@@ -54,28 +50,9 @@ will generate fractions that are typeset with raised/lowered numerals and a
 virgule. The \code{"inline"} layout places the numerals of the fraction on the
 baseline and uses a standard slash character.}
 
-\item{use_seps}{An option to use digit group separators. The type of digit
-group separator is set by \code{sep_mark} and overridden if a locale ID is
-provided to \code{locale}. This setting is \code{TRUE} by default.}
-
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other
 characters are taken to be string literals.}
-
-\item{sep_mark}{The mark to use as a separator between groups of digits
-(e.g., using \code{sep_mark = ","} with \code{1000} would result in a formatted value
-of \verb{1,000}).}
-
-\item{dec_mark}{The character to use as a decimal mark (e.g., using \code{dec_mark = ","} with \code{0.152} would result in a formatted value of \verb{0,152}).}
-
-\item{locale}{An optional locale ID that can be used for formatting the value
-according the locale's rules. Examples include \code{"en_US"} for English
-(United States) and \code{"fr_FR"} for French (France). The use of a valid
-locale ID will override any values provided in \code{sep_mark} and \code{dec_mark}.
-We can use the \code{\link[=info_locales]{info_locales()}} function as a useful reference for all of
-the locales that are supported. Any \code{locale} value provided here will
-override any global locale setting performed in \code{\link[=gt]{gt()}}'s own \code{locale}
-argument.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -91,13 +68,10 @@ The following options are available for controlling this type of formatting:
 \item accuracy: how to express the fractional part of the mixed fractions; there
 are three keyword options for this and an allowance for arbitrary denominator
 settings
-\item layout: for HTML output, we can choose to use diagonal or inline fractions
-\item digit grouping separators: options to enable/disable digit separators
-and provide a choice of separator symbol for the whole number portion
+\item simplification: an option to simplify fractions whenever possible
+\item layout: We can choose to output values with diagonal or inline fractions
 \item pattern: option to use a text pattern for decoration of the formatted
 mixed fractions
-\item locale-based formatting: providing a locale ID will result in number
-formatting specific to the chosen locale
 }
 }
 \details{
@@ -107,11 +81,80 @@ helper functions exist to make targeting more effective. Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
 argument. See the Arguments section for more information on this.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_fmt_fraction_1.png}{options: width=100\%}}
+}
+
 \section{Function ID}{
 
 3-6
 }
 
+\examples{
+# Use `pizzaplace` to create a gt table;
+# format the `f_sold` and `f_income`
+# columns to display fractions
+tab_1 <-
+  pizzaplace \%>\%
+  dplyr::group_by(type, size) \%>\%
+  dplyr::summarize(
+    sold = dplyr::n(),
+    income = sum(price),
+    .groups = "drop_last"
+  ) \%>\%
+  dplyr::group_by(type) \%>\%
+  dplyr::mutate(
+    f_sold = sold / sum(sold),
+    f_income = income / sum(income),
+  ) \%>\%
+  dplyr::arrange(type, dplyr::desc(income)) \%>\%
+  gt(rowname_col = "size") \%>\%
+  tab_header(
+    title = "Pizzas Sold in 2015",
+    subtitle = "Fraction of Sell Count and Revenue by Size per Type"
+  ) \%>\%
+  fmt_integer(columns = sold) \%>\%
+  fmt_currency(columns = income) \%>\%
+  fmt_fraction(
+    columns = starts_with("f_"),
+    accuracy = 10,
+    simplify = FALSE
+  ) \%>\%
+  fmt_missing(
+    columns = everything(),
+    missing_text = ""
+  ) \%>\%
+  tab_spanner(
+    label = "Sold",
+    columns = contains("sold")
+  ) \%>\%
+  tab_spanner(
+    label = "Revenue",
+    columns = contains("income")
+  ) \%>\%
+  text_transform(
+    locations = cells_body(),
+    fn = function(x) {
+      dplyr::case_when(
+        x == 0 ~ "<em>nil</em>",
+        x != 0 ~ x
+      )
+    }
+  ) \%>\%
+  cols_label(
+    sold = "Amount",
+    income = "Amount",
+    f_sold = md("_f_"),
+    f_income = md("_f_")
+  ) \%>\%
+  cols_align(align = "center", columns = starts_with("f")) \%>\%
+  tab_options(
+    table.width = px(400),
+    row_group.as_column = TRUE
+  )
+
+}
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},
