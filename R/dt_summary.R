@@ -251,7 +251,13 @@ dt_summary_build <- function(data,
               context = context
             )
 
-          formatter(x)
+          formatted <- formatter(x)
+
+          if (length(formatted) < 1) {
+            formatted <- NA_character_
+          }
+
+          formatted
         }
       ) %>%
       dplyr::mutate_at(
