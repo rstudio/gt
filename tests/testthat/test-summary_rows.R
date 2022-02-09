@@ -1,4 +1,4 @@
-context("Ensuring that the `summary_rows()` function works as expected")
+skip_on_cran()
 
 # Create a table based on `sp500`, with
 # group names, rownames, and four
@@ -976,6 +976,82 @@ test_that("the ordering of groups shouldn't affect group/grand summary calcs", {
   gt_tbl_5 %>% render_as_html() %>% xml2::read_html() %>%
     selection_text("[class='gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row']") %>%
     expect_equal(c("122.00", "244.00"))
+})
+
+test_that("summary rows can be created from all NA columns", {
+
+  # Generate a tibble with two columns containing just NA values
+  na_tbl <-
+    tibble::tibble(
+      group = c(rep("one", 5), rep("two", 5)),
+      na_1 = rep(NA_real_, 10),
+      na_2 = rep(NA_integer_, 10)
+    )
+
+  # Create a gt table with summary rows
+  gt_tbl_1 <-
+    na_tbl %>%
+    gt(groupname_col = "group") %>%
+    summary_rows(
+      groups = c("one", "two"),
+      columns = c(na_1, na_2),
+      fns = list(
+        ~ sum(., na.rm = TRUE),
+        ~ mean(., na.rm = TRUE)
+      )
+    )
+
+  # Expect the correct values in all of the first and second
+  # summary rows of `gt_tbl_1`
+  gt_tbl_1 %>% render_as_html() %>% xml2::read_html() %>%
+    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick']") %>%
+    expect_equal(rep("0.00", 4))
+
+  gt_tbl_1 %>% render_as_html() %>% xml2::read_html() %>%
+    selection_text("[class='gt_row gt_right gt_summary_row gt_last_summary_row']") %>%
+    expect_equal(rep("—", 4))
+
+  # Create a gt table with grand summary rows
+  gt_tbl_2 <-
+    na_tbl %>%
+    gt(groupname_col = "group") %>%
+    grand_summary_rows(
+      columns = c(na_1, na_2),
+      fns = list(
+        ~ sum(., na.rm = TRUE),
+        ~ mean(., na.rm = TRUE)
+      )
+    )
+
+  # Expect the correct values in all of the first and second
+  # grand summary rows of `gt_tbl_2`
+  gt_tbl_2 %>% render_as_html() %>% xml2::read_html() %>%
+    selection_text("[class='gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row']") %>%
+    expect_equal(rep("0.00", 2))
+
+  gt_tbl_2 %>% render_as_html() %>% xml2::read_html() %>%
+    selection_text("[class='gt_row gt_right gt_grand_summary_row gt_last_summary_row']") %>%
+    expect_equal(rep("—", 2))
+
+  # Create a gt table with grand summary rows, replacing missing
+  # values with the word "nil"
+  gt_tbl_3 <-
+    na_tbl %>%
+    gt(groupname_col = "group") %>%
+    grand_summary_rows(
+      columns = c(na_1, na_2),
+      fns = list(
+        ~ sum(., na.rm = TRUE),
+        ~ mean(., na.rm = TRUE)
+      ),
+      missing_text = "nil"
+    )
+
+  # Expect to see the `missing_text` values in all of the second
+  # grand summary rows of `gt_tbl_3`
+  gt_tbl_3 %>% render_as_html() %>% xml2::read_html() %>%
+    selection_text("[class='gt_row gt_right gt_grand_summary_row gt_last_summary_row']") %>%
+    expect_equal(rep("nil", 2))
 })
 
 test_that("summary rows can be created when there is no stub", {
