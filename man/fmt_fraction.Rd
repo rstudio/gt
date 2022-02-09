@@ -11,7 +11,10 @@ fmt_fraction(
   accuracy = NULL,
   simplify = TRUE,
   layout = c("diagonal", "inline"),
-  pattern = "{x}"
+  use_seps = TRUE,
+  sep_mark = ",",
+  pattern = "{x}",
+  locale = NULL
 )
 }
 \arguments{
@@ -50,9 +53,26 @@ will generate fractions that are typeset with raised/lowered numerals and a
 virgule. The \code{"inline"} layout places the numerals of the fraction on the
 baseline and uses a standard slash character.}
 
+\item{use_seps}{An option to use digit group separators. The type of digit
+group separator is set by \code{sep_mark} and overridden if a locale ID is
+provided to \code{locale}. This setting is \code{TRUE} by default.}
+
+\item{sep_mark}{The mark to use as a separator between groups of digits
+(e.g., using \code{sep_mark = ","} with \code{1000} would result in a formatted value
+of \verb{1,000}).}
+
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other
 characters are taken to be string literals.}
+
+\item{locale}{An optional locale ID that can be used for formatting the value
+according the locale's rules. Examples include \code{"en_US"} for English
+(United States) and \code{"fr_FR"} for French (France). The use of a valid
+locale ID will override any values provided in \code{sep_mark} and \code{dec_mark}.
+We can use the \code{\link[=info_locales]{info_locales()}} function as a useful reference for all of
+the locales that are supported. Any \code{locale} value provided here will
+override any global locale setting performed in \code{\link[=gt]{gt()}}'s own \code{locale}
+argument.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -70,8 +90,12 @@ are three keyword options for this and an allowance for arbitrary denominator
 settings
 \item simplification: an option to simplify fractions whenever possible
 \item layout: We can choose to output values with diagonal or inline fractions
+\item digit grouping separators: options to enable/disable digit separators
+and provide a choice of separator symbol for the whole number portion
 \item pattern: option to use a text pattern for decoration of the formatted
 mixed fractions
+\item locale-based formatting: providing a locale ID will result in number
+formatting specific to the chosen locale
 }
 }
 \details{

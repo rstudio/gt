@@ -1011,8 +1011,12 @@ fmt_percent <- function(data,
 #' settings
 #' - simplification: an option to simplify fractions whenever possible
 #' - layout: We can choose to output values with diagonal or inline fractions
+#' - digit grouping separators: options to enable/disable digit separators
+#' and provide a choice of separator symbol for the whole number portion
 #' - pattern: option to use a text pattern for decoration of the formatted
 #' mixed fractions
+#' - locale-based formatting: providing a locale ID will result in number
+#' formatting specific to the chosen locale
 #'
 #' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
@@ -1119,7 +1123,10 @@ fmt_fraction <- function(
     accuracy = NULL,
     simplify = TRUE,
     layout = c("diagonal", "inline"),
-    pattern = "{x}"
+    use_seps = TRUE,
+    sep_mark = ",",
+    pattern = "{x}",
+    locale = NULL
 ) {
 
   # Perform input object validation
@@ -1165,6 +1172,9 @@ fmt_fraction <- function(
     }
   }
 
+  # Resolve the `locale` value here with the global locale value
+  locale <- resolve_locale(data = data, locale = locale)
+
   # Stop function if any columns have data that is incompatible
   # with this formatter
   if (!column_classes_are_valid(
@@ -1179,6 +1189,9 @@ fmt_fraction <- function(
       call. = FALSE
     )
   }
+
+  # Use locale-based marks if a locale ID is provided
+  sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -1262,7 +1275,7 @@ fmt_fraction <- function(
           format_num_to_str(
             big_x,
             context = context, decimals = 0, n_sigfig = NULL,
-            sep_mark = "", dec_mark = ".",
+            sep_mark = sep_mark, dec_mark = "",
             drop_trailing_zeros = TRUE,
             drop_trailing_dec_mark = TRUE,
             format = "f"
