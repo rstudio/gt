@@ -1028,7 +1028,7 @@ fmt_percent <- function(data,
 #'   greater than zero to obtain fractions with a fixed denominator (`2` yields
 #'   halves, `3` is for thirds, `4` is quarters, etc.). For the latter option,
 #'   using `simplify = TRUE` will simplify fractions where possible (e.g., `2/4`
-#'   will be simplified as `1/2`).
+#'   will be simplified as `1/2`). By default, the `"low"` option is used.
 #' @param simplify If choosing to provide a numeric value for `accuracy`, the
 #'   option to simplify the fraction (where possible) can be taken with `TRUE`
 #'   (the default). With `FALSE`, denominators in fractions will be fixed to the
@@ -1128,7 +1128,7 @@ fmt_fraction <- function(
   layout <- match.arg(layout)
 
   if (is.null(accuracy)) {
-    accuracy <- "med"
+    accuracy <- "low"
 
   } else {
 

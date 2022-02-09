@@ -38,7 +38,7 @@ denominators of up to 1, 2, or 3 digits, respectively) or an integer value
 greater than zero to obtain fractions with a fixed denominator (\code{2} yields
 halves, \code{3} is for thirds, \code{4} is quarters, etc.). For the latter option,
 using \code{simplify = TRUE} will simplify fractions where possible (e.g., \code{2/4}
-will be simplified as \code{1/2}).}
+will be simplified as \code{1/2}). By default, the \code{"low"} option is used.}
 
 \item{simplify}{If choosing to provide a numeric value for \code{accuracy}, the
 option to simplify the fraction (where possible) can be taken with \code{TRUE}
