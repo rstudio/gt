@@ -1124,8 +1124,8 @@ fmt_fraction <- function(
     simplify = TRUE,
     layout = c("diagonal", "inline"),
     use_seps = TRUE,
-    sep_mark = ",",
     pattern = "{x}",
+    sep_mark = ",",
     locale = NULL
 ) {
 

@@ -12,8 +12,8 @@ fmt_fraction(
   simplify = TRUE,
   layout = c("diagonal", "inline"),
   use_seps = TRUE,
-  sep_mark = ",",
   pattern = "{x}",
+  sep_mark = ",",
   locale = NULL
 )
 }
@@ -57,13 +57,13 @@ baseline and uses a standard slash character.}
 group separator is set by \code{sep_mark} and overridden if a locale ID is
 provided to \code{locale}. This setting is \code{TRUE} by default.}
 
-\item{sep_mark}{The mark to use as a separator between groups of digits
-(e.g., using \code{sep_mark = ","} with \code{1000} would result in a formatted value
-of \verb{1,000}).}
-
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other
 characters are taken to be string literals.}
+
+\item{sep_mark}{The mark to use as a separator between groups of digits
+(e.g., using \code{sep_mark = ","} with \code{1000} would result in a formatted value
+of \verb{1,000}).}
 
 \item{locale}{An optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include \code{"en_US"} for English
