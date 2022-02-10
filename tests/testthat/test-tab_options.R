@@ -1402,15 +1402,6 @@ test_that("the internal `opts_df` table can be correctly modified", {
   ) %>%
     expect_equal(c(FALSE, TRUE))
 
-  # Modify the `footnotes.sep` option
-  tbl_html <- data %>% tab_options(footnotes.sep = " ")
-
-  # Compare before and after values
-  c(dt_options_get_value(data = data, option = "footnotes_sep"),
-    dt_options_get_value(data = tbl_html, option = "footnotes_sep")
-  ) %>%
-    expect_equal(c("<br />", " "))
-
   # Modify the `footnotes.marks` option
   tbl_html <- data %>% tab_options(footnotes.marks = "LETTERS")
 
@@ -1419,6 +1410,42 @@ test_that("the internal `opts_df` table can be correctly modified", {
     dt_options_get_value(data = tbl_html, option = "footnotes_marks")
   ) %>%
     expect_equal(c("numbers", "LETTERS"))
+
+  # Modify the `footnotes.multiline` option
+  tbl_html <- data %>% tab_options(footnotes.multiline = FALSE)
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "footnotes_multiline"),
+    dt_options_get_value(data = tbl_html, option = "footnotes_multiline")
+  ) %>%
+    expect_equal(c(TRUE, FALSE))
+
+  # Modify the `footnotes.sep` option
+  tbl_html <- data %>% tab_options(footnotes.sep = "  ")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "footnotes_sep"),
+    dt_options_get_value(data = tbl_html, option = "footnotes_sep")
+  ) %>%
+    expect_equal(c(" ", "  "))
+
+  # Modify the `source_notes.multiline` option
+  tbl_html <- data %>% tab_options(source_notes.multiline = FALSE)
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "source_notes_multiline"),
+    dt_options_get_value(data = tbl_html, option = "source_notes_multiline")
+  ) %>%
+    expect_equal(c(TRUE, FALSE))
+
+  # Modify the `source_notes.sep` option
+  tbl_html <- data %>% tab_options(source_notes.sep = "  ")
+
+  # Compare before and after values
+  c(dt_options_get_value(data = data, option = "source_notes_sep"),
+    dt_options_get_value(data = tbl_html, option = "source_notes_sep")
+  ) %>%
+    expect_equal(c(" ", "  "))
 })
 
 test_that("the `opts_df` getter/setter functions properly", {
@@ -1514,13 +1541,14 @@ test_that("the row striping options work correctly", {
   expect_length(
     c(
       tbl %>%
-      gt() %>%
-      tab_options(
-        row.striping.include_stub = TRUE,
-        row.striping.include_table_body = TRUE) %>%
-      render_as_html() %>%
-      xml2::read_html() %>%
-      selection_text("[class='gt_row gt_left gt_stub gt_striped']"),
+        gt() %>%
+        tab_options(
+          row.striping.include_stub = TRUE,
+          row.striping.include_table_body = TRUE
+        ) %>%
+        render_as_html() %>%
+        xml2::read_html() %>%
+        selection_text("[class='gt_row gt_right gt_stub gt_striped']"),
       tbl %>%
         gt() %>%
         tab_options(
@@ -1529,8 +1557,9 @@ test_that("the row striping options work correctly", {
         render_as_html() %>%
         xml2::read_html() %>%
         selection_text("[class='gt_row gt_right gt_striped']")
-      ),
-    25)
+    ),
+    25
+  )
 
   # Expect that the options `row.striping.include_table_body = FALSE`
   # and `row.striping.include_stub = FALSE` will result in cells that
@@ -1555,7 +1584,8 @@ test_that("the row striping options work correctly", {
         xml2::read_html() %>%
         selection_text("[class='gt_row gt_right gt_striped']")
     ),
-    0)
+    0
+  )
 })
 
 test_that("certain X11 color names are replaced in HTML tables", {

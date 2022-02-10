@@ -1,6 +1,4 @@
-context("Ensuring that coloring cells with `data_color()` is reliable")
-
-# Create a table that can be used for all `data_color()` tests
+# Create a table that can be used for testing
 test_tbl <-
   sza %>%
   dplyr::filter(

@@ -1,7 +1,12 @@
-url: https://gt.rstudio.com
+destination: docs
 
 home:
   strip_header: true
+
+url: https://gt.rstudio.com
+
+template:
+  bootstrap: 5
 
 reference:
   - title: Create Table
@@ -53,6 +58,7 @@ reference:
     - fmt_scientific
     - fmt_engineering
     - fmt_percent
+    - fmt_fraction
     - fmt_currency
     - fmt_bytes
     - fmt_date
@@ -71,7 +77,7 @@ reference:
       columns. This includes alignment of the data in columns
       (`cols_align()`), hiding columns from view (`cols_hide()`),
       re-labeling the column labels (`cols_label()`), merging two columns
-      together (`cols_merge*()`), moving columns around (`cols_move*()`)
+      together (`cols_merge*()`), moving columns around (`cols_move*()`).
     contents:
     - cols_align
     - cols_width

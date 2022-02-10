@@ -20,7 +20,7 @@ column-based select helpers \code{\link[=starts_with]{starts_with()}}, \code{\li
 Subsequent expressions that operate on the columns assigned previously will
 result in overwriting column width values (both in the same \code{cols_width()}
 call and across separate calls). All other columns can be assigned a
-default width value by using \code{TRUE} or \code{everything()} on the left-hand
+default width value by using \code{everything()} on the left-hand
 side.}
 
 \item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
@@ -61,8 +61,8 @@ and \code{container.width} arguments within \code{\link[=tab_options]{tab_option
 # with named arguments in `...`, we
 # can specify the exact widths for
 # table columns (using `everything()`
-# or `TRUE` at the end will capture
-# all remaining columns)
+# at the end will capture all
+# remaining columns)
 tab_1 <-
   exibble \%>\%
   dplyr::select(

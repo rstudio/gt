@@ -619,7 +619,7 @@ tab_footnote <- function(data,
       set_footnote(
         loc = loc,
         data = data,
-        footnote = process_text(footnote)
+        footnote = footnote
       )
   }
 
@@ -1515,12 +1515,21 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' @param stub.border.style,stub.border.width,stub.border.color
 #'   The style, width, and color properties for the vertical border of the table
 #'   stub.
+#' @param stub_row_group.font.size,stub_row_group.font.weight,stub_row_group.text_transform,stub_row_group.border.style,stub_row_group.border.width,stub_row_group.border.color
+#'   Options for the row group column in the stub (made possible when using
+#'   `row_group.as_column = TRUE`). The defaults for these options mirror that
+#'   of the `stub.*` variants (except for `stub_row_group.border.width`, which
+#'   is `"1px"` instead of `"2px"`).
 #' @param row_group.default_label An option to set a default row group label for
 #'   any rows not formally placed in a row group named by `group` in any call of
 #'   `tab_row_group()`. If this is set as `NA_character` and there are rows that
 #'   haven't been placed into a row group (where one or more row groups already
 #'   exist), those rows will be automatically placed into a row group without a
 #'   label.
+#' @param row_group.as_column How should row groups be structured? By default,
+#'   they are separate rows that lie above the each of the groups. Setting this
+#'   to `TRUE` will structure row group labels are columns to the far left of
+#'   the table.
 #' @param summary_row.border.style,summary_row.border.width,summary_row.border.color
 #'   The style, width, and color properties for all horizontal borders of the
 #'   `summary_row` location.
@@ -1533,8 +1542,6 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' @param footnotes.border.lr.style,footnotes.border.lr.width,footnotes.border.lr.color
 #'   The style, width, and color properties for the left and right borders of
 #'   the `footnotes` location.
-#' @param footnotes.sep The separating characters between adjacent footnotes in
-#'   the footnotes section. The default value produces a linebreak.
 #' @param footnotes.marks The set of sequential marks used to reference and
 #'   identify each of the footnotes (same input as the [opt_footnote_marks()]
 #'   function. We can supply a vector that represents the series of footnote
@@ -1546,6 +1553,15 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   `"LETTERS"`. There is the option for using a traditional symbol set where
 #'   `"standard"` provides four symbols, and, `"extended"` adds two more
 #'   symbols, making six.
+#' @param footnotes.multiline,source_notes.multiline An option to either put
+#'   footnotes and source notes in separate lines (the default, or `TRUE`) or
+#'   render them as a continuous line of text with `footnotes.sep` providing the
+#'   separator (by default `" "`) between notes.
+#' @param footnotes.sep,source_notes.sep The separating characters between
+#'   adjacent footnotes and source notes in their respective footer sections
+#'   when rendered as a continuous line of text (when
+#'   `footnotes.multiline == FALSE`). The default value is a single space
+#'   character (`" "`).
 #' @param source_notes.border.bottom.style,source_notes.border.bottom.width,source_notes.border.bottom.color
 #'   The style, width, and color properties for the bottom border of the
 #'   `source_notes` location.
@@ -1740,6 +1756,7 @@ tab_options <- function(data,
                         row_group.border.right.width = NULL,
                         row_group.border.right.color = NULL,
                         row_group.default_label = NULL,
+                        row_group.as_column = NULL,
                         table_body.hlines.style = NULL,
                         table_body.hlines.width = NULL,
                         table_body.hlines.color = NULL,
@@ -1759,6 +1776,12 @@ tab_options <- function(data,
                         stub.border.style = NULL,
                         stub.border.width = NULL,
                         stub.border.color = NULL,
+                        stub_row_group.font.size = NULL,
+                        stub_row_group.font.weight = NULL,
+                        stub_row_group.text_transform = NULL,
+                        stub_row_group.border.style = NULL,
+                        stub_row_group.border.width = NULL,
+                        stub_row_group.border.color = NULL,
                         data_row.padding = NULL,
                         summary_row.background.color = NULL,
                         summary_row.text_transform = NULL,
@@ -1781,8 +1804,9 @@ tab_options <- function(data,
                         footnotes.border.lr.style = NULL,
                         footnotes.border.lr.width = NULL,
                         footnotes.border.lr.color = NULL,
-                        footnotes.sep = NULL,
                         footnotes.marks = NULL,
+                        footnotes.multiline = NULL,
+                        footnotes.sep = NULL,
                         source_notes.background.color = NULL,
                         source_notes.font.size = NULL,
                         source_notes.padding = NULL,
@@ -1792,6 +1816,8 @@ tab_options <- function(data,
                         source_notes.border.lr.style = NULL,
                         source_notes.border.lr.width = NULL,
                         source_notes.border.lr.color = NULL,
+                        source_notes.multiline = NULL,
+                        source_notes.sep = NULL,
                         row.striping.background_color = NULL,
                         row.striping.include_stub = NULL,
                         row.striping.include_table_body = NULL) {

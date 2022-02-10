@@ -47,3 +47,39 @@ dt_styles_add <- function(data,
     ) %>%
     dt_styles_set(styles = ., data = data)
 }
+
+dt_styles_pluck <- function(styles_tbl,
+  locname = missing_arg(),
+  grpname = missing_arg(),
+  colname = missing_arg(),
+  locnum = missing_arg(),
+  rownum = missing_arg(),
+  grprow = missing_arg()) {
+
+  if (is.null(styles_tbl$html_style)) {
+    stop("dt_styles_pluck must be passed a built styles table")
+  }
+
+  idx <- rep_len(TRUE, nrow(styles_tbl))
+
+  if (!is_missing(locname)) {
+    idx <- idx & styles_tbl$locname %in% locname
+  }
+  if (!is_missing(grpname)) {
+    idx <- idx & styles_tbl$grpname %in% grpname
+  }
+  if (!is_missing(colname)) {
+    idx <- idx & styles_tbl$colname %in% colname
+  }
+  if (!is_missing(locnum)) {
+    idx <- idx & styles_tbl$locnum %in% locnum
+  }
+  if (!is_missing(rownum)) {
+    idx <- idx & styles_tbl$rownum %in% rownum
+  }
+  if (!is_missing(grprow)) {
+    idx <- idx & round((styles_tbl$rownum %% 1) * 100) %in% grprow
+  }
+
+  styles_tbl[idx, ]
+}
