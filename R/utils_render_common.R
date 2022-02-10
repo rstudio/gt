@@ -355,12 +355,20 @@ perform_col_merge <- function(data,
 
         pattern_unequal <-
           paste0(
-            "{1}<span style=\"margin-left: 0.1em;\">",
+            "<<1>><span style=\"margin-left: 0.1em;\">",
             "<span class=\"gt_two_val_uncert\">",
-            "+{3}<br>",
-            context_minus_mark(context = context), "{2}",
+            "+<<3>><br>",
+            context_minus_mark(context = context), "<<2>>",
             "</span></span>"
           )
+
+      } else if (context == "latex") {
+
+        pattern_unequal <- "$<<1>>^{+<<3>>}_{-<<2>>}$"
+
+      } else if (context == "rtf") {
+
+        pattern_unequal <- "<<1>>(+<<3>>, -<<2>>)"
       }
 
       # Determine rows where NA values exist
@@ -393,7 +401,9 @@ perform_col_merge <- function(data,
               "2" = body[[lu_column]][rows_to_format_unequal],
               "3" = body[[uu_column]][rows_to_format_unequal]
             ),
-            pattern_unequal
+            pattern_unequal,
+            .open = "<<",
+            .close = ">>"
           )
         )
 
