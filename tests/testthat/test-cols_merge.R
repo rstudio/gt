@@ -238,6 +238,42 @@ test_that("the `cols_merge_uncert()` function works correctly", {
   expect_equal(sep, I(" +/- "))
 })
 
+test_that("the `cols_merge_uncert()` works nicely with different error bounds", {
+
+  # Check that specific suggested packages are available
+  check_suggests()
+
+  # Create a table with three columns of values
+  tbl_uncert <-
+    dplyr::tibble(
+      value = c(34.5, 29.2, 36.3, 31.6, 28.5, 30.9,  NA, NA, Inf, 30, 32,  34,  NaN),
+      lu =    c(2.1,   2.4,  2.6,  1.8,   NA,   NA, 1.2, NA,  NA,  0, 0.1, NaN, 0.1),
+      uu =    c(1.8,   2.7,  2.6,   NA,  1.6,   NA,  NA, NA,  NA,  0, 0,   0.1, 0.3)
+    )
+
+  # Create a `tbl_html` object with `gt()`; merge three columns together
+  # with `cols_merge_uncert()`
+  tbl_html <-
+    tbl_uncert %>%
+    gt() %>%
+    cols_merge_uncert(
+      col_val = "value",
+      col_uncert = c("lu", "uu")
+    )
+
+  expect_equal(
+    (tbl_html %>% render_formats_test("html"))[["value"]],
+    c(
+      "34.5<span style=\"margin-left: 0.1em;\"><span class=\"gt_two_val_uncert\">+1.8<br>&minus;2.1</span></span>",
+      "29.2<span style=\"margin-left: 0.1em;\"><span class=\"gt_two_val_uncert\">+2.7<br>&minus;2.4</span></span>",
+      "36.3 &plusmn; 2.6", "31.6", "28.5", "30.9", "NA", "NA", "Inf",
+      "30.0 &plusmn; 0.0",
+      "32.0<span style=\"margin-left: 0.1em;\"><span class=\"gt_two_val_uncert\">+0.0<br>&minus;0.1</span></span>",
+      "34.0", "NaN"
+    )
+  )
+})
+
 test_that("the `cols_merge_range()` function works correctly", {
 
   # Check that specific suggested packages are available
