@@ -355,13 +355,11 @@ perform_col_merge <- function(data,
 
         pattern_unequal <-
           paste0(
-            "<span>{1}",
-            "<span style=\"margin-left: 0.1em;\">",
-            "<span style=\"display: inline-block; ",
-            "vertical-align: -0.3em; font-size: 60%; line-height: 1em; ",
-            "text-align: right;\">",
+            "{1}<span style=\"margin-left: 0.1em;\">",
+            "<span class=\"gt_two_val_uncert\">",
             "+{3}<br>",
-            context_minus_mark(context = context), "{2}</span></span></span>"
+            context_minus_mark(context = context), "{2}",
+            "</span></span>"
           )
       }
 
