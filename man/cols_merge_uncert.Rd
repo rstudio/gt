@@ -2,7 +2,7 @@
 % Please edit documentation in R/modify_columns.R
 \name{cols_merge_uncert}
 \alias{cols_merge_uncert}
-\title{Merge two columns to a value & uncertainty column}
+\title{Merge columns to a value-with-uncertainty column}
 \usage{
 cols_merge_uncert(data, col_val, col_uncert, sep = " +/- ", autohide = TRUE)
 }
@@ -12,45 +12,50 @@ cols_merge_uncert(data, col_val, col_uncert, sep = " +/- ", autohide = TRUE)
 \item{col_val}{A single column name that contains the base values. This is
 the column where values will be mutated.}
 
-\item{col_uncert}{A single column name that contains the uncertainty values.
-These values will be combined with those in \code{col_val}. We have the option
-to automatically hide the \code{col_uncert} column through \code{autohide}.}
+\item{col_uncert}{Either one or two column names that contain the uncertainty
+values. The most common case involves supplying a single column with
+uncertainties; these values will be combined with those in \code{col_val}. Less
+commonly, lower and upper uncertainty bounds may be different. For that
+case two columns (representing lower and upper uncertainty values away from
+\code{col_val}, respectively) should be provided. Since we often don't want the
+uncertainty value columns in the output table, we can automatically hide
+any \code{col_uncert} columns through the \code{autohide} option.}
 
-\item{sep}{The separator text that contains the uncertainty mark. The
-default value of \code{" +/- "} indicates that an appropriate plus/minus mark
-will be used depending on the output context. Should you want this special
-symbol to be taken literally, it can be supplied within the base \code{\link[=I]{I()}}
-function.}
+\item{sep}{The separator text that contains the uncertainty mark for a single
+uncertainty value. The default value of \code{" +/- "} indicates that an
+appropriate plus/minus mark will be used depending on the output context.
+Should you want this special symbol to be taken literally, it can be
+supplied within the \code{\link[=I]{I()}} function.}
 
-\item{autohide}{An option to automatically hide the column specified as
-\code{col_uncert}. Any columns with their state changed to hidden will behave
-the same as before, they just won't be displayed in the finalized table.}
+\item{autohide}{An option to automatically hide any columns specified in
+\code{col_uncert}. Any columns with their state changed to 'hidden' will behave
+the same as before, they just won't be displayed in the finalized table.
+By default, this is set to \code{TRUE}.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
 The \code{cols_merge_uncert()} function is a specialized variant of the
-\code{\link[=cols_merge]{cols_merge()}} function. It operates by taking a base value column
-(\code{col_val}) and an uncertainty column (\code{col_uncert}) and merges them into a
-single column. What results is a column with values and associated
-uncertainties (e.g., \verb{12.0 ± 0.1}), and, the column specified in \code{col_uncert}
-is dropped from the output table.
+\code{\link[=cols_merge]{cols_merge()}} function. It takes as input a base value column (\code{col_val})
+and either: (1) a single uncertainty column, or (2) two columns representing
+lower and upper uncertainty bounds. These columns will be essentially merged
+in a single column (that of \code{col_val}). What results is a column with values
+and associated uncertainties (e.g., \verb{12.0 ± 0.1}), and any columns specified
+in \code{col_uncert} are hidden from appearing the output table.
 }
 \details{
-This function could be somewhat replicated using \code{\link[=cols_merge]{cols_merge()}}, however,
+This function could be somewhat replicated using \code{\link[=cols_merge]{cols_merge()}} in the case
+where a single column is supplied for \code{col_uncert}, however,
 \code{cols_merge_uncert()} employs the following specialized semantics for \code{NA}
 handling:
-
 \enumerate{
-\item \code{NA}s in \code{col_val} result in missing values for the merged
-column (e.g., \code{NA} + \code{0.1} = \code{NA})
-\item \code{NA}s in \code{col_uncert} (but not \code{col_val}) result in
-base values only for the merged column (e.g.,
-\code{12.0} + \code{NA} = \code{12.0})
-\item \code{NA}s both \code{col_val} and \code{col_uncert} result in
-missing values for the merged column (e.g., \code{NA} + \code{NA} =
-\code{NA})
+\item \code{NA}s in \code{col_val} result in missing values for the merged column (e.g.,
+\code{NA} + \code{0.1} = \code{NA})
+\item \code{NA}s in \code{col_uncert} (but not \code{col_val}) result in base values only for
+the merged column (e.g., \code{12.0} + \code{NA} = \code{12.0})
+\item \code{NA}s both \code{col_val} and \code{col_uncert} result in missing values for the
+merged column (e.g., \code{NA} + \code{NA} = \code{NA})
 }
 
 Any resulting \code{NA} values in the \code{col_val} column following the merge
