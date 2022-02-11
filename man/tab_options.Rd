@@ -42,6 +42,7 @@ tab_options(
   heading.subtitle.font.size = NULL,
   heading.subtitle.font.weight = NULL,
   heading.padding = NULL,
+  heading.padding.horizontal = NULL,
   heading.border.bottom.style = NULL,
   heading.border.bottom.width = NULL,
   heading.border.bottom.color = NULL,
@@ -53,6 +54,7 @@ tab_options(
   column_labels.font.weight = NULL,
   column_labels.text_transform = NULL,
   column_labels.padding = NULL,
+  column_labels.padding.horizontal = NULL,
   column_labels.vlines.style = NULL,
   column_labels.vlines.width = NULL,
   column_labels.vlines.color = NULL,
@@ -71,6 +73,7 @@ tab_options(
   row_group.font.weight = NULL,
   row_group.text_transform = NULL,
   row_group.padding = NULL,
+  row_group.padding.horizontal = NULL,
   row_group.border.top.style = NULL,
   row_group.border.top.width = NULL,
   row_group.border.top.color = NULL,
@@ -111,21 +114,25 @@ tab_options(
   stub_row_group.border.width = NULL,
   stub_row_group.border.color = NULL,
   data_row.padding = NULL,
+  data_row.padding.horizontal = NULL,
   summary_row.background.color = NULL,
   summary_row.text_transform = NULL,
   summary_row.padding = NULL,
+  summary_row.padding.horizontal = NULL,
   summary_row.border.style = NULL,
   summary_row.border.width = NULL,
   summary_row.border.color = NULL,
   grand_summary_row.background.color = NULL,
   grand_summary_row.text_transform = NULL,
   grand_summary_row.padding = NULL,
+  grand_summary_row.padding.horizontal = NULL,
   grand_summary_row.border.style = NULL,
   grand_summary_row.border.width = NULL,
   grand_summary_row.border.color = NULL,
   footnotes.background.color = NULL,
   footnotes.font.size = NULL,
   footnotes.padding = NULL,
+  footnotes.padding.horizontal = NULL,
   footnotes.border.bottom.style = NULL,
   footnotes.border.bottom.width = NULL,
   footnotes.border.bottom.color = NULL,
@@ -138,6 +145,7 @@ tab_options(
   source_notes.background.color = NULL,
   source_notes.font.size = NULL,
   source_notes.padding = NULL,
+  source_notes.padding.horizontal = NULL,
   source_notes.border.bottom.style = NULL,
   source_notes.border.bottom.width = NULL,
   source_notes.border.bottom.color = NULL,
@@ -242,6 +250,14 @@ group labels (\code{row_group.padding}), in the body/stub rows
 (\code{data_row.padding}), in summary rows (\code{summary_row.padding} or
 \code{grand_summary_row.padding}), or in the footnotes and source notes
 (\code{footnotes.padding} and \code{source_notes.padding}).}
+
+\item{heading.padding.horizontal, column_labels.padding.horizontal, data_row.padding.horizontal, row_group.padding.horizontal, summary_row.padding.horizontal, grand_summary_row.padding.horizontal, footnotes.padding.horizontal, source_notes.padding.horizontal}{The amount of horizontal padding to incorporate in the \code{heading} (title and
+subtitle), the \code{column_labels} (this includes the column spanners), the row
+group labels (\code{row_group.padding.horizontal}), in the body/stub rows
+(\code{data_row.padding}), in summary rows (\code{summary_row.padding.horizontal} or
+\code{grand_summary_row.padding.horizontal}), or in the footnotes and source
+notes (\code{footnotes.padding.horizontal} and
+\code{source_notes.padding.horizontal}).}
 
 \item{heading.border.bottom.style, heading.border.bottom.width, heading.border.bottom.color}{The style, width, and color properties of the header's bottom border. This
 border shares space with that of the \code{column_labels} location. If the

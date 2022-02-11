@@ -224,6 +224,196 @@ opt_align_table_header <- function(data,
   )
 }
 
+#' Option to expand or contract vertical padding
+#'
+#' @description
+#' Increase or decrease the vertical padding throughout all locations of a
+#' **gt** table by use of a `scale` factor, which here is defined by a real
+#' number between `0` and `3`. This function serves as a shortcut for setting
+#' the following eight options in [tab_options()]:
+#'
+#' - `heading.padding`
+#' - `column_labels.padding`
+#' - `data_row.padding`
+#' - `row_group.padding`
+#' - `summary_row.padding`
+#' - `grand_summary_row.padding`
+#' - `footnotes.padding`
+#' - `source_notes.padding`
+#'
+#' @inheritParams fmt_number
+#' @param scale A scale factor by which the vertical padding will be adjusted.
+#'   Must be a number between `0` and `3`.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @examples
+#' # Use `exibble` to create a gt table with
+#' # a number of table parts added; contract
+#' # the vertical padding across the entire
+#' # table with `opt_vertical_padding()`
+#' tab_1 <-
+#'   exibble %>%
+#'   gt(rowname_col = "row", groupname_col = "group") %>%
+#'   summary_rows(
+#'     groups = "grp_a",
+#'     columns = c(num, currency),
+#'     fns = list(
+#'       min = ~min(., na.rm = TRUE),
+#'       max = ~max(., na.rm = TRUE)
+#'     )) %>%
+#'   grand_summary_rows(
+#'     columns = currency,
+#'     fns = list(
+#'       total = ~sum(., na.rm = TRUE)
+#'     )) %>%
+#'   tab_source_note(source_note = "This is a source note.") %>%
+#'   tab_footnote(
+#'     footnote = "This is a footnote.",
+#'     locations = cells_body(columns = 1, rows = 1)
+#'   ) %>%
+#'   tab_header(
+#'     title = "The title of the table",
+#'     subtitle = "The table's subtitle"
+#'   ) %>%
+#'   opt_vertical_padding(scale = 0.25)
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_opt_vertical_padding_1.png}{options: width=100\%}}
+#'
+#' @family Table Option Functions
+#' @section Function ID:
+#' 9-4
+#'
+#' @export
+opt_vertical_padding <- function(data,
+                                 scale = 1) {
+
+  option_value_list <-
+    get_padding_option_value_list(
+      scale = scale,
+      type = "vertical"
+    )
+
+  tab_options_multi(
+    data = data,
+    options = option_value_list
+  )
+}
+
+#' Option to expand or contract horizontal padding
+#'
+#' @description
+#' Increase or decrease the horizontal padding throughout all locations of a
+#' **gt** table by use of a `scale` factor, which here is defined by a real
+#' number between `0` and `3`. This function serves as a shortcut for setting
+#' the following eight options in [tab_options()]:
+#'
+#' - `heading.padding.horizontal`
+#' - `column_labels.padding.horizontal`
+#' - `data_row.padding.horizontal`
+#' - `row_group.padding.horizontal`
+#' - `summary_row.padding.horizontal`
+#' - `grand_summary_row.padding.horizontal`
+#' - `footnotes.padding.horizontal`
+#' - `source_notes.padding.horizontal`
+#'
+#' @inheritParams fmt_number
+#' @param scale A scale factor by which the horizontal padding will be adjusted.
+#'   Must be a number between `0` and `3`.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @examples
+#' # Use `exibble` to create a gt table with
+#' # a number of table parts added; expand
+#' # the horizontal padding across the entire
+#' # table with `opt_horizontal_padding()`
+#' tab_1 <-
+#'   exibble %>%
+#'   gt(rowname_col = "row", groupname_col = "group") %>%
+#'   summary_rows(
+#'     groups = "grp_a",
+#'     columns = c(num, currency),
+#'     fns = list(
+#'       min = ~min(., na.rm = TRUE),
+#'       max = ~max(., na.rm = TRUE)
+#'     )) %>%
+#'   grand_summary_rows(
+#'     columns = currency,
+#'     fns = list(
+#'       total = ~sum(., na.rm = TRUE)
+#'     )) %>%
+#'   tab_source_note(source_note = "This is a source note.") %>%
+#'   tab_footnote(
+#'     footnote = "This is a footnote.",
+#'     locations = cells_body(columns = 1, rows = 1)
+#'   ) %>%
+#'   tab_header(
+#'     title = "The title of the table",
+#'     subtitle = "The table's subtitle"
+#'   ) %>%
+#'   opt_horizontal_padding(scale = 3)
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_opt_horizontal_padding_1.png}{options: width=100\%}}
+#'
+#' @family Table Option Functions
+#' @section Function ID:
+#' 9-5
+#'
+#' @export
+opt_horizontal_padding <- function(data,
+                                   scale = 1) {
+
+  option_value_list <-
+    get_padding_option_value_list(
+      scale = scale,
+      type = "horizontal"
+    )
+
+  tab_options_multi(
+    data = data,
+    options = option_value_list
+  )
+}
+
+get_padding_option_value_list <- function(scale, type) {
+
+  # Stop if `scale` is beyond an acceptable range
+  if (scale < 0 | scale > 3) {
+    stop(
+      "The value provided for `scale` (", scale, ") must be between `0` and `3`.",
+      call. = FALSE
+    )
+  }
+
+  pattern <- if (type == "vertical") "_padding" else  "_padding_horizontal"
+
+  # Get the padding parameters from `dt_options_tbl` that relate
+  # to the `type` (either vertical or horizontal padding)
+  padding_params <-
+    dt_options_tbl %>%
+    dplyr::filter(grepl(paste0(pattern, "$"), parameter)) %>%
+    dplyr::pull(parameter)
+
+  padding_options <-
+    dt_options_tbl %>%
+    dplyr::filter(parameter %in% padding_params) %>%
+    dplyr::select(parameter, value) %>%
+    dplyr::mutate(
+      parameter = gsub(pattern, gsub("_", ".", pattern, fixed = TRUE), parameter, fixed = TRUE)
+    ) %>%
+    dplyr::mutate(value = unlist(value)) %>%
+    dplyr::mutate(px = as.numeric(gsub("px", "", value))) %>%
+    dplyr::mutate(px = px * scale)
+
+  create_option_value_list(
+    padding_options$parameter,
+    paste0(padding_options$px, "px")
+  )
+}
+
 #' Option to use all caps in select table locations
 #'
 #' @description
@@ -283,7 +473,7 @@ opt_align_table_header <- function(data,
 #'
 #' @family Table Option Functions
 #' @section Function ID:
-#' 9-4
+#' 9-6
 #'
 #' @export
 opt_all_caps <- function(data,
@@ -385,7 +575,7 @@ opt_all_caps <- function(data,
 #'
 #' @family Table Option Functions
 #' @section Function ID:
-#' 9-5
+#' 9-7
 #'
 #' @export
 opt_table_lines <- function(data,
@@ -475,7 +665,7 @@ opt_table_lines <- function(data,
 #'
 #' @family Table Option Functions
 #' @section Function ID:
-#' 9-6
+#' 9-8
 #'
 #' @export
 opt_table_outline <- function(data,
@@ -613,7 +803,7 @@ opt_table_outline <- function(data,
 #'
 #' @family Table Option Functions
 #' @section Function ID:
-#' 9-7
+#' 9-9
 #'
 #' @export
 opt_table_font <- function(data,
@@ -737,7 +927,7 @@ opt_table_font <- function(data,
 #'
 #' @family Table Option Functions
 #' @section Function ID:
-#' 9-8
+#' 9-10
 #'
 #' @export
 opt_css <- function(data,
