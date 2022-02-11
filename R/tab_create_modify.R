@@ -632,7 +632,9 @@ set_footnote <- function(loc, data, footnote) {
 
 set_footnote.cells_title <- function(loc, data, footnote) {
 
-  if ((loc$groups %>% rlang::eval_tidy()) == "title") {
+  title_components <- rlang::eval_tidy(loc$groups)
+
+  if ("title" %in% title_components) {
 
     data <-
       dt_footnotes_add(
@@ -644,8 +646,9 @@ set_footnote.cells_title <- function(loc, data, footnote) {
         rownum = NA_integer_,
         footnotes = footnote
       )
+  }
 
-  } else if ((loc$groups %>% rlang::eval_tidy()) == "subtitle") {
+  if ("subtitle" %in% title_components) {
 
     data <-
       dt_footnotes_add(
@@ -1158,7 +1161,9 @@ set_style <- function(loc, data, style) {
 
 set_style.cells_title <- function(loc, data, style) {
 
-  if ((loc$groups %>% rlang::eval_tidy()) == "title") {
+  title_components <- rlang::eval_tidy(loc$groups)
+
+  if ("title" %in% title_components) {
 
     data <-
       dt_styles_add(
@@ -1170,8 +1175,9 @@ set_style.cells_title <- function(loc, data, style) {
         rownum = NA_integer_,
         styles = style
       )
+  }
 
-  } else if ((loc$groups %>% rlang::eval_tidy()) == "subtitle") {
+  if ("subtitle" %in% title_components) {
 
     data <-
       dt_styles_add(
@@ -1476,6 +1482,14 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   (`data_row.padding`), in summary rows (`summary_row.padding` or
 #'   `grand_summary_row.padding`), or in the footnotes and source notes
 #'   (`footnotes.padding` and `source_notes.padding`).
+#' @param heading.padding.horizontal,column_labels.padding.horizontal,data_row.padding.horizontal,row_group.padding.horizontal,summary_row.padding.horizontal,grand_summary_row.padding.horizontal,footnotes.padding.horizontal,source_notes.padding.horizontal
+#'   The amount of horizontal padding to incorporate in the `heading` (title and
+#'   subtitle), the `column_labels` (this includes the column spanners), the row
+#'   group labels (`row_group.padding.horizontal`), in the body/stub rows
+#'   (`data_row.padding`), in summary rows (`summary_row.padding.horizontal` or
+#'   `grand_summary_row.padding.horizontal`), or in the footnotes and source
+#'   notes (`footnotes.padding.horizontal` and
+#'   `source_notes.padding.horizontal`).
 #' @param table.border.top.style,table.border.top.width,table.border.top.color,table.border.right.style,table.border.right.width,table.border.right.color,table.border.bottom.style,table.border.bottom.width,table.border.bottom.color,table.border.left.style,table.border.left.width,table.border.left.color
 #'   The style, width, and color properties of the table's absolute top and
 #'   absolute bottom borders.
@@ -1714,6 +1728,7 @@ tab_options <- function(data,
                         heading.subtitle.font.size = NULL,
                         heading.subtitle.font.weight = NULL,
                         heading.padding = NULL,
+                        heading.padding.horizontal = NULL,
                         heading.border.bottom.style = NULL,
                         heading.border.bottom.width = NULL,
                         heading.border.bottom.color = NULL,
@@ -1725,6 +1740,7 @@ tab_options <- function(data,
                         column_labels.font.weight = NULL,
                         column_labels.text_transform = NULL,
                         column_labels.padding = NULL,
+                        column_labels.padding.horizontal = NULL,
                         column_labels.vlines.style = NULL,
                         column_labels.vlines.width = NULL,
                         column_labels.vlines.color = NULL,
@@ -1743,6 +1759,7 @@ tab_options <- function(data,
                         row_group.font.weight = NULL,
                         row_group.text_transform = NULL,
                         row_group.padding = NULL,
+                        row_group.padding.horizontal = NULL,
                         row_group.border.top.style = NULL,
                         row_group.border.top.width = NULL,
                         row_group.border.top.color = NULL,
@@ -1783,21 +1800,25 @@ tab_options <- function(data,
                         stub_row_group.border.width = NULL,
                         stub_row_group.border.color = NULL,
                         data_row.padding = NULL,
+                        data_row.padding.horizontal = NULL,
                         summary_row.background.color = NULL,
                         summary_row.text_transform = NULL,
                         summary_row.padding = NULL,
+                        summary_row.padding.horizontal = NULL,
                         summary_row.border.style = NULL,
                         summary_row.border.width = NULL,
                         summary_row.border.color = NULL,
                         grand_summary_row.background.color = NULL,
                         grand_summary_row.text_transform = NULL,
                         grand_summary_row.padding = NULL,
+                        grand_summary_row.padding.horizontal = NULL,
                         grand_summary_row.border.style = NULL,
                         grand_summary_row.border.width = NULL,
                         grand_summary_row.border.color = NULL,
                         footnotes.background.color = NULL,
                         footnotes.font.size = NULL,
                         footnotes.padding = NULL,
+                        footnotes.padding.horizontal = NULL,
                         footnotes.border.bottom.style = NULL,
                         footnotes.border.bottom.width = NULL,
                         footnotes.border.bottom.color = NULL,
@@ -1810,6 +1831,7 @@ tab_options <- function(data,
                         source_notes.background.color = NULL,
                         source_notes.font.size = NULL,
                         source_notes.padding = NULL,
+                        source_notes.padding.horizontal = NULL,
                         source_notes.border.bottom.style = NULL,
                         source_notes.border.bottom.width = NULL,
                         source_notes.border.bottom.color = NULL,
