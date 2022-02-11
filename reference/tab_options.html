@@ -105,6 +105,7 @@ components, the subcomponents, and the element that can adjusted.</p>
   heading.subtitle.font.size <span class="op">=</span> <span class="cn">NULL</span>,
   heading.subtitle.font.weight <span class="op">=</span> <span class="cn">NULL</span>,
   heading.padding <span class="op">=</span> <span class="cn">NULL</span>,
+  heading.padding.horizontal <span class="op">=</span> <span class="cn">NULL</span>,
   heading.border.bottom.style <span class="op">=</span> <span class="cn">NULL</span>,
   heading.border.bottom.width <span class="op">=</span> <span class="cn">NULL</span>,
   heading.border.bottom.color <span class="op">=</span> <span class="cn">NULL</span>,
@@ -116,6 +117,7 @@ components, the subcomponents, and the element that can adjusted.</p>
   column_labels.font.weight <span class="op">=</span> <span class="cn">NULL</span>,
   column_labels.text_transform <span class="op">=</span> <span class="cn">NULL</span>,
   column_labels.padding <span class="op">=</span> <span class="cn">NULL</span>,
+  column_labels.padding.horizontal <span class="op">=</span> <span class="cn">NULL</span>,
   column_labels.vlines.style <span class="op">=</span> <span class="cn">NULL</span>,
   column_labels.vlines.width <span class="op">=</span> <span class="cn">NULL</span>,
   column_labels.vlines.color <span class="op">=</span> <span class="cn">NULL</span>,
@@ -134,6 +136,7 @@ components, the subcomponents, and the element that can adjusted.</p>
   row_group.font.weight <span class="op">=</span> <span class="cn">NULL</span>,
   row_group.text_transform <span class="op">=</span> <span class="cn">NULL</span>,
   row_group.padding <span class="op">=</span> <span class="cn">NULL</span>,
+  row_group.padding.horizontal <span class="op">=</span> <span class="cn">NULL</span>,
   row_group.border.top.style <span class="op">=</span> <span class="cn">NULL</span>,
   row_group.border.top.width <span class="op">=</span> <span class="cn">NULL</span>,
   row_group.border.top.color <span class="op">=</span> <span class="cn">NULL</span>,
@@ -174,21 +177,25 @@ components, the subcomponents, and the element that can adjusted.</p>
   stub_row_group.border.width <span class="op">=</span> <span class="cn">NULL</span>,
   stub_row_group.border.color <span class="op">=</span> <span class="cn">NULL</span>,
   data_row.padding <span class="op">=</span> <span class="cn">NULL</span>,
+  data_row.padding.horizontal <span class="op">=</span> <span class="cn">NULL</span>,
   summary_row.background.color <span class="op">=</span> <span class="cn">NULL</span>,
   summary_row.text_transform <span class="op">=</span> <span class="cn">NULL</span>,
   summary_row.padding <span class="op">=</span> <span class="cn">NULL</span>,
+  summary_row.padding.horizontal <span class="op">=</span> <span class="cn">NULL</span>,
   summary_row.border.style <span class="op">=</span> <span class="cn">NULL</span>,
   summary_row.border.width <span class="op">=</span> <span class="cn">NULL</span>,
   summary_row.border.color <span class="op">=</span> <span class="cn">NULL</span>,
   grand_summary_row.background.color <span class="op">=</span> <span class="cn">NULL</span>,
   grand_summary_row.text_transform <span class="op">=</span> <span class="cn">NULL</span>,
   grand_summary_row.padding <span class="op">=</span> <span class="cn">NULL</span>,
+  grand_summary_row.padding.horizontal <span class="op">=</span> <span class="cn">NULL</span>,
   grand_summary_row.border.style <span class="op">=</span> <span class="cn">NULL</span>,
   grand_summary_row.border.width <span class="op">=</span> <span class="cn">NULL</span>,
   grand_summary_row.border.color <span class="op">=</span> <span class="cn">NULL</span>,
   footnotes.background.color <span class="op">=</span> <span class="cn">NULL</span>,
   footnotes.font.size <span class="op">=</span> <span class="cn">NULL</span>,
   footnotes.padding <span class="op">=</span> <span class="cn">NULL</span>,
+  footnotes.padding.horizontal <span class="op">=</span> <span class="cn">NULL</span>,
   footnotes.border.bottom.style <span class="op">=</span> <span class="cn">NULL</span>,
   footnotes.border.bottom.width <span class="op">=</span> <span class="cn">NULL</span>,
   footnotes.border.bottom.color <span class="op">=</span> <span class="cn">NULL</span>,
@@ -201,6 +208,7 @@ components, the subcomponents, and the element that can adjusted.</p>
   source_notes.background.color <span class="op">=</span> <span class="cn">NULL</span>,
   source_notes.font.size <span class="op">=</span> <span class="cn">NULL</span>,
   source_notes.padding <span class="op">=</span> <span class="cn">NULL</span>,
+  source_notes.padding.horizontal <span class="op">=</span> <span class="cn">NULL</span>,
   source_notes.border.bottom.style <span class="op">=</span> <span class="cn">NULL</span>,
   source_notes.border.bottom.width <span class="op">=</span> <span class="cn">NULL</span>,
   source_notes.border.bottom.color <span class="op">=</span> <span class="cn">NULL</span>,
@@ -308,6 +316,14 @@ group labels (<code>row_group.padding</code>), in the body/stub rows
 (<code>data_row.padding</code>), in summary rows (<code>summary_row.padding</code> or
 <code>grand_summary_row.padding</code>), or in the footnotes and source notes
 (<code>footnotes.padding</code> and <code>source_notes.padding</code>).</p></dd>
+<dt>heading.padding.horizontal, column_labels.padding.horizontal, data_row.padding.horizontal, row_group.padding.horizontal, summary_row.padding.horizontal, grand_summary_row.padding.horizontal, footnotes.padding.horizontal, source_notes.padding.horizontal</dt>
+<dd><p>The amount of horizontal padding to incorporate in the <code>heading</code> (title and
+subtitle), the <code>column_labels</code> (this includes the column spanners), the row
+group labels (<code>row_group.padding.horizontal</code>), in the body/stub rows
+(<code>data_row.padding</code>), in summary rows (<code>summary_row.padding.horizontal</code> or
+<code>grand_summary_row.padding.horizontal</code>), or in the footnotes and source
+notes (<code>footnotes.padding.horizontal</code> and
+<code>source_notes.padding.horizontal</code>).</p></dd>
 <dt>heading.border.bottom.style, heading.border.bottom.width, heading.border.bottom.color</dt>
 <dd><p>The style, width, and color properties of the header's bottom border. This
 border shares space with that of the <code>column_labels</code> location. If the

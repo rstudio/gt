@@ -286,6 +286,9 @@
     <loc>https://gt.rstudio.com/reference/opt_footnote_marks.html</loc>
   </url>
   <url>
+    <loc>https://gt.rstudio.com/reference/opt_horizontal_padding.html</loc>
+  </url>
+  <url>
     <loc>https://gt.rstudio.com/reference/opt_row_striping.html</loc>
   </url>
   <url>
@@ -296,6 +299,9 @@
   </url>
   <url>
     <loc>https://gt.rstudio.com/reference/opt_table_outline.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/reference/opt_vertical_padding.html</loc>
   </url>
   <url>
     <loc>https://gt.rstudio.com/reference/pct.html</loc>
