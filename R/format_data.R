@@ -870,7 +870,7 @@ fmt_symbol <- function(data,
 #' formatting. It is assumed the input numeric values are proportional values
 #' and, in this case, the values will be automatically multiplied by `100`
 #' before decorating with a percent sign (the other case is accommodated though
-#' setting the `scale_values` to `FALSE`) For more control over percentage
+#' setting the `scale_values` to `FALSE`). For more control over percentage
 #' formatting, we can use the following options:
 #'
 #' - percent sign placement: the percent sign can be placed after or
@@ -1009,7 +1009,8 @@ fmt_percent <- function(data,
 #' - accuracy: how to express the fractional part of the mixed fractions; there
 #' are three keyword options for this and an allowance for arbitrary denominator
 #' settings
-#' - layout: for HTML output, we can choose to use diagonal or inline fractions
+#' - simplification: an option to simplify fractions whenever possible
+#' - layout: We can choose to output values with diagonal or inline fractions
 #' - digit grouping separators: options to enable/disable digit separators
 #' and provide a choice of separator symbol for the whole number portion
 #' - pattern: option to use a text pattern for decoration of the formatted
@@ -1031,7 +1032,7 @@ fmt_percent <- function(data,
 #'   greater than zero to obtain fractions with a fixed denominator (`2` yields
 #'   halves, `3` is for thirds, `4` is quarters, etc.). For the latter option,
 #'   using `simplify = TRUE` will simplify fractions where possible (e.g., `2/4`
-#'   will be simplified as `1/2`).
+#'   will be simplified as `1/2`). By default, the `"low"` option is used.
 #' @param simplify If choosing to provide a numeric value for `accuracy`, the
 #'   option to simplify the fraction (where possible) can be taken with `TRUE`
 #'   (the default). With `FALSE`, denominators in fractions will be fixed to the
@@ -1042,6 +1043,72 @@ fmt_percent <- function(data,
 #'   baseline and uses a standard slash character.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @examples
+#' # Use `pizzaplace` to create a gt table;
+#' # format the `f_sold` and `f_income`
+#' # columns to display fractions
+#' tab_1 <-
+#'   pizzaplace %>%
+#'   dplyr::group_by(type, size) %>%
+#'   dplyr::summarize(
+#'     sold = dplyr::n(),
+#'     income = sum(price),
+#'     .groups = "drop_last"
+#'   ) %>%
+#'   dplyr::group_by(type) %>%
+#'   dplyr::mutate(
+#'     f_sold = sold / sum(sold),
+#'     f_income = income / sum(income),
+#'   ) %>%
+#'   dplyr::arrange(type, dplyr::desc(income)) %>%
+#'   gt(rowname_col = "size") %>%
+#'   tab_header(
+#'     title = "Pizzas Sold in 2015",
+#'     subtitle = "Fraction of Sell Count and Revenue by Size per Type"
+#'   ) %>%
+#'   fmt_integer(columns = sold) %>%
+#'   fmt_currency(columns = income) %>%
+#'   fmt_fraction(
+#'     columns = starts_with("f_"),
+#'     accuracy = 10,
+#'     simplify = FALSE
+#'   ) %>%
+#'   fmt_missing(
+#'     columns = everything(),
+#'     missing_text = ""
+#'   ) %>%
+#'   tab_spanner(
+#'     label = "Sold",
+#'     columns = contains("sold")
+#'   ) %>%
+#'   tab_spanner(
+#'     label = "Revenue",
+#'     columns = contains("income")
+#'   ) %>%
+#'   text_transform(
+#'     locations = cells_body(),
+#'     fn = function(x) {
+#'       dplyr::case_when(
+#'         x == 0 ~ "<em>nil</em>",
+#'         x != 0 ~ x
+#'       )
+#'     }
+#'   ) %>%
+#'   cols_label(
+#'     sold = "Amount",
+#'     income = "Amount",
+#'     f_sold = md("_f_"),
+#'     f_income = md("_f_")
+#'   ) %>%
+#'   cols_align(align = "center", columns = starts_with("f")) %>%
+#'   tab_options(
+#'     table.width = px(400),
+#'     row_group.as_column = TRUE
+#'   )
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_fmt_fraction_1.png}{options: width=100\%}}
 #'
 #' @family Format Data
 #' @section Function ID:
@@ -1059,7 +1126,6 @@ fmt_fraction <- function(
     use_seps = TRUE,
     pattern = "{x}",
     sep_mark = ",",
-    dec_mark = ".",
     locale = NULL
 ) {
 
@@ -1069,7 +1135,7 @@ fmt_fraction <- function(
   layout <- match.arg(layout)
 
   if (is.null(accuracy)) {
-    accuracy <- "med"
+    accuracy <- "low"
 
   } else {
 
@@ -1126,7 +1192,6 @@ fmt_fraction <- function(
 
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
-  dec_mark <- get_locale_dec_mark(locale, dec_mark)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -1210,7 +1275,7 @@ fmt_fraction <- function(
           format_num_to_str(
             big_x,
             context = context, decimals = 0, n_sigfig = NULL,
-            sep_mark = sep_mark, dec_mark = dec_mark,
+            sep_mark = sep_mark, dec_mark = "",
             drop_trailing_zeros = TRUE,
             drop_trailing_dec_mark = TRUE,
             format = "f"

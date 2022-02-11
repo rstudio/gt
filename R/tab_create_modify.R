@@ -632,7 +632,9 @@ set_footnote <- function(loc, data, footnote) {
 
 set_footnote.cells_title <- function(loc, data, footnote) {
 
-  if ((loc$groups %>% rlang::eval_tidy()) == "title") {
+  title_components <- rlang::eval_tidy(loc$groups)
+
+  if ("title" %in% title_components) {
 
     data <-
       dt_footnotes_add(
@@ -644,8 +646,9 @@ set_footnote.cells_title <- function(loc, data, footnote) {
         rownum = NA_integer_,
         footnotes = footnote
       )
+  }
 
-  } else if ((loc$groups %>% rlang::eval_tidy()) == "subtitle") {
+  if ("subtitle" %in% title_components) {
 
     data <-
       dt_footnotes_add(
@@ -1158,7 +1161,9 @@ set_style <- function(loc, data, style) {
 
 set_style.cells_title <- function(loc, data, style) {
 
-  if ((loc$groups %>% rlang::eval_tidy()) == "title") {
+  title_components <- rlang::eval_tidy(loc$groups)
+
+  if ("title" %in% title_components) {
 
     data <-
       dt_styles_add(
@@ -1170,8 +1175,9 @@ set_style.cells_title <- function(loc, data, style) {
         rownum = NA_integer_,
         styles = style
       )
+  }
 
-  } else if ((loc$groups %>% rlang::eval_tidy()) == "subtitle") {
+  if ("subtitle" %in% title_components) {
 
     data <-
       dt_styles_add(
