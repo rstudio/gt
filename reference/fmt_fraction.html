@@ -7,7 +7,8 @@ The following options are available for controlling this type of formatting:
 accuracy: how to express the fractional part of the mixed fractions; there
 are three keyword options for this and an allowance for arbitrary denominator
 settings
-layout: for HTML output, we can choose to use diagonal or inline fractions
+simplification: an option to simplify fractions whenever possible
+layout: We can choose to output values with diagonal or inline fractions
 digit grouping separators: options to enable/disable digit separators
 and provide a choice of separator symbol for the whole number portion
 pattern: option to use a text pattern for decoration of the formatted
@@ -23,7 +24,8 @@ The following options are available for controlling this type of formatting:
 accuracy: how to express the fractional part of the mixed fractions; there
 are three keyword options for this and an allowance for arbitrary denominator
 settings
-layout: for HTML output, we can choose to use diagonal or inline fractions
+simplification: an option to simplify fractions whenever possible
+layout: We can choose to output values with diagonal or inline fractions
 digit grouping separators: options to enable/disable digit separators
 and provide a choice of separator symbol for the whole number portion
 pattern: option to use a text pattern for decoration of the formatted
@@ -98,7 +100,8 @@ typesetting style) for the mixed-fraction output.</p>
 <p>The following options are available for controlling this type of formatting:</p><ul><li><p>accuracy: how to express the fractional part of the mixed fractions; there
 are three keyword options for this and an allowance for arbitrary denominator
 settings</p></li>
-<li><p>layout: for HTML output, we can choose to use diagonal or inline fractions</p></li>
+<li><p>simplification: an option to simplify fractions whenever possible</p></li>
+<li><p>layout: We can choose to output values with diagonal or inline fractions</p></li>
 <li><p>digit grouping separators: options to enable/disable digit separators
 and provide a choice of separator symbol for the whole number portion</p></li>
 <li><p>pattern: option to use a text pattern for decoration of the formatted
@@ -119,7 +122,6 @@ formatting specific to the chosen locale</p></li>
   use_seps <span class="op">=</span> <span class="cn">TRUE</span>,
   pattern <span class="op">=</span> <span class="st">"{x}"</span>,
   sep_mark <span class="op">=</span> <span class="st">","</span>,
-  dec_mark <span class="op">=</span> <span class="st">"."</span>,
   locale <span class="op">=</span> <span class="cn">NULL</span>
 <span class="op">)</span></code></pre></div>
     </div>
@@ -150,7 +152,7 @@ denominators of up to 1, 2, or 3 digits, respectively) or an integer value
 greater than zero to obtain fractions with a fixed denominator (<code>2</code> yields
 halves, <code>3</code> is for thirds, <code>4</code> is quarters, etc.). For the latter option,
 using <code>simplify = TRUE</code> will simplify fractions where possible (e.g., <code>2/4</code>
-will be simplified as <code>1/2</code>).</p></dd>
+will be simplified as <code>1/2</code>). By default, the <code>"low"</code> option is used.</p></dd>
 <dt>simplify</dt>
 <dd><p>If choosing to provide a numeric value for <code>accuracy</code>, the
 option to simplify the fraction (where possible) can be taken with <code>TRUE</code>
@@ -173,8 +175,6 @@ characters are taken to be string literals.</p></dd>
 <dd><p>The mark to use as a separator between groups of digits
 (e.g., using <code>sep_mark = ","</code> with <code>1000</code> would result in a formatted value
 of <code>1,000</code>).</p></dd>
-<dt>dec_mark</dt>
-<dd><p>The character to use as a decimal mark (e.g., using <code>dec_mark = ","</code> with <code>0.152</code> would result in a formatted value of <code>0,152</code>).</p></dd>
 <dt>locale</dt>
 <dd><p>An optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include <code>"en_US"</code> for English
@@ -196,6 +196,12 @@ nothing is provided for <code>rows</code> then entire columns are selected). A n
 helper functions exist to make targeting more effective. Conditional
 formatting is possible by providing a conditional expression to the <code>rows</code>
 argument. See the Arguments section for more information on this.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="figures">Figures<a class="anchor" aria-label="anchor" href="#figures"></a></h2>
+    
+
+<p><img src="figures/man_fmt_fraction_1.png" width="100%"></p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
@@ -224,6 +230,72 @@ argument. See the Arguments section for more information on this.</p>
 <code><a href="text_transform.html">text_transform</a>()</code></p></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Use `pizzaplace` to create a gt table;</span></span>
+<span class="r-in"><span class="co"># format the `f_sold` and `f_income`</span></span>
+<span class="r-in"><span class="co"># columns to display fractions</span></span>
+<span class="r-in"><span class="va">tab_1</span> <span class="op">&lt;-</span></span>
+<span class="r-in">  <span class="va">pizzaplace</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">type</span>, <span class="va">size</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span></span>
+<span class="r-in">    sold <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span class="r-in">    income <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">price</span><span class="op">)</span>,</span>
+<span class="r-in">    .groups <span class="op">=</span> <span class="st">"drop_last"</span></span>
+<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">type</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span class="r-in">    f_sold <span class="op">=</span> <span class="va">sold</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">sold</span><span class="op">)</span>,</span>
+<span class="r-in">    f_income <span class="op">=</span> <span class="va">income</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">income</span><span class="op">)</span>,</span>
+<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">type</span>, <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">income</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"size"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="tab_header.html">tab_header</a></span><span class="op">(</span></span>
+<span class="r-in">    title <span class="op">=</span> <span class="st">"Pizzas Sold in 2015"</span>,</span>
+<span class="r-in">    subtitle <span class="op">=</span> <span class="st">"Fraction of Sell Count and Revenue by Size per Type"</span></span>
+<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="fmt_integer.html">fmt_integer</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">sold</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="fmt_currency.html">fmt_currency</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">income</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">fmt_fraction</span><span class="op">(</span></span>
+<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"f_"</span><span class="op">)</span>,</span>
+<span class="r-in">    accuracy <span class="op">=</span> <span class="fl">10</span>,</span>
+<span class="r-in">    simplify <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="fmt_missing.html">fmt_missing</a></span><span class="op">(</span></span>
+<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span class="r-in">    missing_text <span class="op">=</span> <span class="st">""</span></span>
+<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="tab_spanner.html">tab_spanner</a></span><span class="op">(</span></span>
+<span class="r-in">    label <span class="op">=</span> <span class="st">"Sold"</span>,</span>
+<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"sold"</span><span class="op">)</span></span>
+<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="tab_spanner.html">tab_spanner</a></span><span class="op">(</span></span>
+<span class="r-in">    label <span class="op">=</span> <span class="st">"Revenue"</span>,</span>
+<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"income"</span><span class="op">)</span></span>
+<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="text_transform.html">text_transform</a></span><span class="op">(</span></span>
+<span class="r-in">    locations <span class="op">=</span> <span class="fu"><a href="cells_body.html">cells_body</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span class="r-in">    fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in">      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span></span>
+<span class="r-in">        <span class="va">x</span> <span class="op">==</span> <span class="fl">0</span> <span class="op">~</span> <span class="st">"&lt;em&gt;nil&lt;/em&gt;"</span>,</span>
+<span class="r-in">        <span class="va">x</span> <span class="op">!=</span> <span class="fl">0</span> <span class="op">~</span> <span class="va">x</span></span>
+<span class="r-in">      <span class="op">)</span></span>
+<span class="r-in">    <span class="op">}</span></span>
+<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="cols_label.html">cols_label</a></span><span class="op">(</span></span>
+<span class="r-in">    sold <span class="op">=</span> <span class="st">"Amount"</span>,</span>
+<span class="r-in">    income <span class="op">=</span> <span class="st">"Amount"</span>,</span>
+<span class="r-in">    f_sold <span class="op">=</span> <span class="fu"><a href="md.html">md</a></span><span class="op">(</span><span class="st">"_f_"</span><span class="op">)</span>,</span>
+<span class="r-in">    f_income <span class="op">=</span> <span class="fu"><a href="md.html">md</a></span><span class="op">(</span><span class="st">"_f_"</span><span class="op">)</span></span>
+<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="cols_align.html">cols_align</a></span><span class="op">(</span>align <span class="op">=</span> <span class="st">"center"</span>, columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"f"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="tab_options.html">tab_options</a></span><span class="op">(</span></span>
+<span class="r-in">    table.width <span class="op">=</span> <span class="fu"><a href="px.html">px</a></span><span class="op">(</span><span class="fl">400</span><span class="op">)</span>,</span>
+<span class="r-in">    row_group.as_column <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span class="r-in">  <span class="op">)</span></span>
+<span class="r-in"></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
