@@ -104,7 +104,7 @@ With numeric values in a \strong{gt} table, we can perform percentage-based
 formatting. It is assumed the input numeric values are proportional values
 and, in this case, the values will be automatically multiplied by \code{100}
 before decorating with a percent sign (the other case is accommodated though
-setting the \code{scale_values} to \code{FALSE}) For more control over percentage
+setting the \code{scale_values} to \code{FALSE}). For more control over percentage
 formatting, we can use the following options:
 \itemize{
 \item percent sign placement: the percent sign can be placed after or
