@@ -85,7 +85,7 @@ expect_tab <- function(tab,
 
   dt_footnotes_get(data = tab) %>%
     dim() %>%
-    expect_equal(c(0, 7))
+    expect_equal(c(0, 8))
 
   dt_source_notes_get(data = tab) %>%
     length() %>%

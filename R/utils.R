@@ -210,6 +210,116 @@ get_currency_str <- function(currency,
   }
 }
 
+resolve_footnote_placement <- function(data,
+                                       colname,
+                                       rownum,
+                                       input_placement,
+                                       cell_content,
+                                       context) {
+
+  if (input_placement %in% c("left", "right")) {
+    return(input_placement)
+  }
+
+  cell_alignment <-
+    get_alignment_at_body_cell(
+      data = data,
+      colname = colname,
+      rownum = rownum,
+      context = context
+    )
+
+  # If cell alignment has been set then always choose 'right' placement
+  if (!is.null(names(cell_alignment)) && names(cell_alignment) == "user_set") {
+    return("right")
+  }
+
+  if (cell_alignment == "right") {
+
+    # Look at `cell_context` and determine whether 'left' alignment
+    # should be preferred over 'right'
+    digit_count <- nchar(gsub("[^[:digit:]]", "", cell_content))
+    character_count <- nchar(gsub("[[:digit:]]", "", cell_content))
+    ends_with_digits <- grepl("^.*\\d+%?\\)?$", cell_content)
+    is_sci_notn <- grepl("(times;? 10|d7 10| x 10\\()", cell_content)
+
+    if (ends_with_digits || is_sci_notn || digit_count >= character_count) {
+      return("left")
+    } else {
+      return("right")
+    }
+
+  } else {
+    return("right")
+  }
+}
+
+get_alignment_at_body_cell <- function(data,
+                                       colname,
+                                       rownum,
+                                       context) {
+
+  column_alignment <-
+    dt_boxhead_get_alignment_by_var(
+      data = data,
+      var = colname
+    )
+
+  if (context != "html") {
+    return(column_alignment)
+  }
+
+  stub_layout <- get_stub_layout(data = data)
+
+  if (colname %in% stub_layout) {
+    column_alignment <- "right"
+  }
+
+  # Get cell alignment set by `tab_style`
+  styles_tbl <- dt_styles_get(data = data)
+
+  if (nrow(styles_tbl) > 0) {
+
+    styles_filtered_tbl <-
+      styles_tbl %>%
+      dplyr::filter(
+        locname == "data" &&
+          colname == .env$colname && rownum == .env$rownum
+      )
+
+    if (nrow(styles_tbl) < 1) break
+
+    html_styles <-
+      vapply(
+        styles_filtered_tbl$styles,
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = styles_to_html
+      )
+
+    if (length(html_styles) > 0) {
+
+      if (grepl("text-align", html_styles)) {
+
+        style_vec <-
+          html_styles %>%
+          strsplit(";\\s+") %>% unlist()
+
+        is_text_alignment <- grepl("text-align", style_vec)
+
+        cell_alignment <-
+          gsub("text-align:\\s+|;", "", style_vec[is_text_alignment])[1]
+
+        names(cell_alignment) <- "user_set"
+
+        return(cell_alignment)
+      }
+    }
+  }
+
+  column_alignment
+}
+
 #' Get a currency exponent from a currency code
 #'
 #' @noRd
