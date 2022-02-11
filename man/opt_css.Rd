@@ -38,7 +38,7 @@ as a vector of lines or as a single string.
 
 \section{Function ID}{
 
-9-8
+9-10
 }
 
 \examples{
@@ -78,9 +78,11 @@ Other Table Option Functions:
 \code{\link{opt_align_table_header}()},
 \code{\link{opt_all_caps}()},
 \code{\link{opt_footnote_marks}()},
+\code{\link{opt_horizontal_padding}()},
 \code{\link{opt_row_striping}()},
 \code{\link{opt_table_font}()},
 \code{\link{opt_table_lines}()},
-\code{\link{opt_table_outline}()}
+\code{\link{opt_table_outline}()},
+\code{\link{opt_vertical_padding}()}
 }
 \concept{Table Option Functions}
