@@ -187,16 +187,22 @@ dt_summary_build <- function(data,
     }
 
     # Get the registered function calls
-    agg_funs <- lapply(fns, function(fn) {
-      fn <- rlang::as_closure(fn)
-      function(x) {
-        result <- fn(x)
-        if (length(result) != 1) {
-          rlang::abort("Summary functions must return vector of length 1")
+    agg_funs <-
+      lapply(
+        fns, function(fn) {
+          fn <- rlang::as_closure(fn)
+          function(x) {
+            result <- fn(x)
+            if (length(result) != 1) {
+              rlang::abort(c(
+                "Failure in the evaluation of summary cells.",
+                "i" = "We must always return a vector of length `1`."
+              ))
+            }
+            result
+          }
         }
-        result
-      }
-    })
+      )
 
     summary_dfs_data <-
       dplyr::bind_rows(
