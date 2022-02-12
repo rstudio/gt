@@ -43,6 +43,8 @@
     font-weight: $heading_title_font_weight; // heading.title.font.weight
     padding-top: $heading_padding; // heading.padding
     padding-bottom: $heading_padding; //heading.padding
+    padding-left: $heading_padding_horizontal; // heading.padding.horizontal
+    padding-right: $heading_padding_horizontal; //heading.padding.horizontal
     border-bottom-color: $table_background_color; // table.background.color
     border-bottom-width: 0;
   }
@@ -53,6 +55,8 @@
     font-weight: $heading_subtitle_font_weight; // heading.subtitle.font.weight
     padding-top: 0;
     padding-bottom: $heading_padding + 2; // heading.padding
+    padding-left: $heading_padding_horizontal; // heading.padding.horizontal
+    padding-right: $heading_padding_horizontal; //heading.padding.horizontal
     border-top-color: $table_background_color; // table.background.color
     border-top-width: 0;
   }
@@ -93,8 +97,8 @@
     vertical-align: bottom;
     padding-top: $column_labels_padding; // column_labels.padding
     padding-bottom: $column_labels_padding + 1; // column_labels.padding
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: $column_labels_padding_horizontal; // column_labels.padding.horizontal
+    padding-right: $column_labels_padding_horizontal; // column_labels.padding.horizontal
     overflow-x: hidden;
   }
 
@@ -129,7 +133,10 @@
   }
 
   .gt_group_heading {
-    padding: $row_group_padding; // row_group.padding
+    padding-top: $row_group_padding; // row_group.padding
+    padding-bottom: $row_group_padding; // row_group.padding
+    padding-left: $row_group_padding_horizontal; // row_group.padding.horizontal
+    padding-right: $row_group_padding_horizontal; // row_group.padding.horizontal
     color: font-color($row_group_background_color);
     background-color: $row_group_background_color; // row_group.background.color
     font-size: $row_group_font_size; // row_group.font.size
@@ -176,8 +183,8 @@
   .gt_row {
     padding-top: $data_row_padding; // data_row.padding
     padding-bottom: $data_row_padding; // data_row.padding
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: $data_row_padding_horizontal; // data_row.padding.horizontal
+    padding-right: $data_row_padding_horizontal; // data_row.padding.horizontal
     margin: 10px;
     border-top-style: $table_body_hlines_style; // table_body.hlines.style
     border-top-width: $table_body_hlines_width; // table_body.hlines.width
@@ -201,7 +208,8 @@
     border-right-style: $stub_border_style; // stub.border.style
     border-right-width: $stub_border_width; // stub.border.width
     border-right-color: $stub_border_color; // stub.border.color
-    padding-left: 12px;
+    padding-left:  $data_row_padding_horizontal; // data_row.padding.horizontal
+    padding-right: $data_row_padding_horizontal; // data_row.padding.horizontal
   }
 
   .gt_stub_row_group {
@@ -213,7 +221,8 @@
     border-right-style: $stub_row_group_border_style; // stub_row_group.border.style
     border-right-width: $stub_row_group_border_width; // stub_row_group.border.width
     border-right-color: $stub_row_group_border_color; // stub_row_group.border.color
-    padding-left: 12px;
+    padding-left:  $row_group_padding_horizontal; // new: row_group.padding.horizontal
+    padding-right: $row_group_padding_horizontal; // new: row_group.padding.horizontal
     vertical-align: top;
   }
 
@@ -227,8 +236,8 @@
     text-transform: $summary_row_text_transform; // summary_row.text_transform
     padding-top: $summary_row_padding; // summary_row.padding
     padding-bottom: $summary_row_padding; // summary_row.padding
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: $summary_row_padding_horizontal; // summary_row.padding.horizontal
+    padding-right: $summary_row_padding_horizontal; // summary_row.padding.horizontal
   }
 
   .gt_first_summary_row {
@@ -243,8 +252,8 @@
   .gt_last_summary_row {
     padding-top: $summary_row_padding; // summary_row.padding
     padding-bottom: $summary_row_padding; // summary_row.padding
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: $summary_row_padding_horizontal; // summary_row.padding.horizontal
+    padding-right: $summary_row_padding_horizontal; // summary_row.padding.horizontal
     border-bottom-style: $summary_row_border_style; // summary_row.border.style
     border-bottom-width: $summary_row_border_width; // summary_row.border.width
     border-bottom-color: $summary_row_border_color; // summary_row.border.color
@@ -256,15 +265,15 @@
     text-transform: $grand_summary_row_text_transform; // grand_summary_row.text_transform
     padding-top: $grand_summary_row_padding; // grand_summary_row.padding
     padding-bottom: $grand_summary_row_padding; // grand_summary_row.padding
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: $grand_summary_row_padding_horizontal; // grand_summary_row.padding.horizontal
+    padding-right: $grand_summary_row_padding_horizontal; // grand_summary_row.padding.horizontal
   }
 
   .gt_first_grand_summary_row {
     padding-top: $grand_summary_row_padding; // grand_summary_row.padding
     padding-bottom: $grand_summary_row_padding; // grand_summary_row.padding
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: $grand_summary_row_padding_horizontal; // grand_summary_row.padding.horizontal
+    padding-right: $grand_summary_row_padding_horizontal; // grand_summary_row.padding.horizontal
     border-top-style: $grand_summary_row_border_style; // grand_summary_row.border.style
     border-top-width: $grand_summary_row_border_width; // grand_summary_row.border.width
     border-top-color: $grand_summary_row_border_color; // grand_summary_row.border.color
@@ -300,7 +309,10 @@
   .gt_footnote {
     margin: $footnotes_margin;
     font-size: $footnotes_font_size; // footnotes.font.size
-    padding: $footnotes_padding; // footnotes.padding
+    padding-left: $footnotes_padding; // footnotes.padding
+    padding-right: $footnotes_padding; // footnotes.padding
+    padding-left: $footnotes_padding_horizontal; // footnotes.padding.horizontal
+    padding-right: $footnotes_padding_horizontal; // footnotes.padding.horizontal
   }
 
   .gt_sourcenotes {
@@ -319,7 +331,10 @@
 
   .gt_sourcenote {
     font-size: $source_notes_font_size; // source_notes.font.size
-    padding: $source_notes_padding; // source_notes.padding
+    padding-top: $source_notes_padding; // source_notes.padding
+    padding-bottom: $source_notes_padding; // source_notes.padding
+    padding-left: $source_notes_padding_horizontal; // source_notes.padding.horizontal
+    padding-right: $source_notes_padding_horizontal; // source_notes.padding.horizontal
   }
 
   .gt_left {
@@ -354,7 +369,13 @@
   .gt_footnote_marks {
     font-style: italic;
     font-weight: normal;
-    font-size: 65%;
+    font-size: 75%;
+    vertical-align: 0.4em;
+  }
+
+  .gt_asterisk {
+    font-size: 100%;
+    vertical-align: 0;
   }
 
   .gt_slash_mark {
