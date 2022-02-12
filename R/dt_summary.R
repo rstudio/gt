@@ -243,30 +243,27 @@ dt_summary_build <- function(data,
         .vars = columns,
         .funs = function(x) {
 
-          # This creates a gt structure so that the
-          # formatter can be easily extracted by using
-          # the regular `dt_*()` methods
-          summary_data <- gt(data.frame(x = x))
+          # This creates a gt structure so that the formatter can be
+          # easily extracted by using the regular `dt_*()` methods
+          summary_data <-
+            gt(
+              data = data.frame(x = x),
+              locale = dt_locale_get_value(data = data)
+            )
 
           format_data <-
             do.call(
-              summary_attrs$formatter,
-              append(
-                list(
-                  summary_data,
-                  columns = "x"
-                ),
-                summary_attrs$formatter_options
-              )
+              formatter,
+              append(list(summary_data, columns = "x"), formatter_options)
             )
 
-          formatter <-
+          formatter_fn <-
             dt_formats_summary_formatter(
               data = format_data,
               context = context
             )
 
-          formatter(x)
+          formatter_fn(x)
         }
       ) %>%
       dplyr::mutate_at(
