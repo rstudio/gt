@@ -1,4 +1,4 @@
-testthat::local_edition(3)
+local_edition(3)
 skip_on_cran()
 
 test_that("the `fmt_fraction()` function works correctly", {

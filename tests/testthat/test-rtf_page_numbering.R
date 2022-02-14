@@ -1,6 +1,7 @@
-test_that("page numbering directives can be added to RTF documents", {
+local_edition(3)
+skip_on_cran()
 
-  local_edition(3)
+test_that("page numbering directives can be added to RTF documents", {
 
   # Create a one-row table for these tests
   exibble_min <- exibble[1, ]
