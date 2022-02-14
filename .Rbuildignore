@@ -15,4 +15,5 @@ vignettes
 man/figures/.*svg$
 man/figures/[^m].*png$
 tests/gt-examples
+tests/testthat/_snaps
 index.md
