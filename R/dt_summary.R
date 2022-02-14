@@ -192,12 +192,15 @@ dt_summary_build <- function(data,
         fns, function(fn) {
           fn <- rlang::as_closure(fn)
           function(x) {
+
             result <- fn(x)
+
             if (length(result) != 1) {
-              rlang::abort(c(
-                "Failure in the evaluation of summary cells.",
-                "i" = "We must always return a vector of length `1`."
-              ))
+              stop(
+                "Failure in the evaluation of summary cells:\n",
+                "* We must always return a vector of length `1`.",
+                call. = FALSE
+              )
             }
             result
           }
