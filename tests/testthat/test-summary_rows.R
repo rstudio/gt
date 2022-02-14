@@ -978,7 +978,7 @@ test_that("the ordering of groups shouldn't affect group/grand summary calcs", {
     expect_equal(c("122.00", "244.00"))
 })
 
-test_that("summary rows can be created from all NA columns", {
+test_that("summary cells can be created with NA/NaN-resulting values", {
 
   # Generate a tibble with two columns containing just NA values
   na_tbl <-
@@ -1052,6 +1052,17 @@ test_that("summary rows can be created from all NA columns", {
   gt_tbl_3 %>% render_as_html() %>% xml2::read_html() %>%
     selection_text("[class='gt_row gt_right gt_grand_summary_row gt_last_summary_row']") %>%
     expect_equal(rep("nil", 2))
+
+  # Expect an error if summarizing results in a zero-length vector
+  expect_error(
+    na_tbl %>%
+      gt(groupname_col = "group") %>%
+      summary_rows(
+        groups = "one",
+        columns = na_1,
+        fns = list(empty = ~ numeric(0))
+      )
+  )
 })
 
 test_that("summary rows can be created when there is no stub", {
