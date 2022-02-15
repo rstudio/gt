@@ -1,3 +1,4 @@
+local_edition(3)
 skip_on_cran()
 
 # Create a table based on `sp500`, with
