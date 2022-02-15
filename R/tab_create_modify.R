@@ -539,8 +539,11 @@ tab_stubhead <- function(data,
 #' @details
 #' The formatting of the footnotes can be controlled through the use of various
 #' parameters in the [tab_options()] function:
+#' - `footnotes.multiline`: a setting that determines whether footnotes each
+#' start on a new line or are combined into a single block.
 #' - `footnotes.sep`: allows for a choice of the separator between consecutive
-#' footnotes in the table footer. By default, this is set to a linebreak.
+#' footnotes in the table footer. By default, this is set to a single space
+#' character.
 #' - `footnotes.marks`: the set of sequential characters or numbers used to
 #' identify the footnotes.
 #' - `footnotes.font.size`: the size of the font used in the footnote section.
@@ -561,6 +564,11 @@ tab_stubhead <- function(data,
 #'   can enclose several `cells_*()` calls within a `list()` if we wish to link
 #'   the footnote text to different types of locations (e.g., body cells, row
 #'   group labels, the table title, etc.).
+#' @param placement Where to affix footnote marks to the table content. Two
+#'   options for this are `"left` or `"right"`, where the placement is to the
+#'   absolute left or right of the cell content. By default, however, this is
+#'   set to `"auto"` whereby **gt** will choose a preferred left-or-right
+#'   placement depending on the context.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -603,7 +611,10 @@ tab_stubhead <- function(data,
 #' @export
 tab_footnote <- function(data,
                          footnote,
-                         locations) {
+                         locations,
+                         placement = c("auto", "right", "left")) {
+
+  placement <- match.arg(placement)
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -619,18 +630,19 @@ tab_footnote <- function(data,
       set_footnote(
         loc = loc,
         data = data,
-        footnote = footnote
+        footnote = footnote,
+        placement = placement
       )
   }
 
   data
 }
 
-set_footnote <- function(loc, data, footnote) {
+set_footnote <- function(loc, data, footnote, placement) {
   UseMethod("set_footnote")
 }
 
-set_footnote.cells_title <- function(loc, data, footnote) {
+set_footnote.cells_title <- function(loc, data, footnote, placement) {
 
   title_components <- rlang::eval_tidy(loc$groups)
 
@@ -644,7 +656,8 @@ set_footnote.cells_title <- function(loc, data, footnote) {
         colname = NA_character_,
         locnum = 1,
         rownum = NA_integer_,
-        footnotes = footnote
+        footnotes = footnote,
+        placement = placement
       )
   }
 
@@ -658,14 +671,15 @@ set_footnote.cells_title <- function(loc, data, footnote) {
         colname = NA_character_,
         locnum = 2,
         rownum = NA_integer_,
-        footnotes = footnote
+        footnotes = footnote,
+        placement = placement
       )
   }
 
   data
 }
 
-set_footnote.cells_stubhead <- function(loc, data, footnote) {
+set_footnote.cells_stubhead <- function(loc, data, footnote, placement) {
 
   data <-
     dt_footnotes_add(
@@ -675,13 +689,14 @@ set_footnote.cells_stubhead <- function(loc, data, footnote) {
       colname = NA_character_,
       locnum = 2.5,
       rownum = NA_integer_,
-      footnotes = footnote
+      footnotes = footnote,
+      placement = placement
     )
 
   data
 }
 
-set_footnote.cells_column_labels <- function(loc, data, footnote) {
+set_footnote.cells_column_labels <- function(loc, data, footnote, placement) {
 
   resolved <- resolve_cells_column_labels(data = data, object = loc)
 
@@ -697,13 +712,14 @@ set_footnote.cells_column_labels <- function(loc, data, footnote) {
       colname = colnames,
       locnum = 4,
       rownum = NA_integer_,
-      footnotes = footnote
+      footnotes = footnote,
+      placement = placement
     )
 
   data
 }
 
-set_footnote.cells_column_spanners <- function(loc, data, footnote) {
+set_footnote.cells_column_spanners <- function(loc, data, footnote, placement) {
 
   resolved <- resolve_cells_column_spanners(data = data, object = loc)
 
@@ -717,13 +733,14 @@ set_footnote.cells_column_spanners <- function(loc, data, footnote) {
       colname = NA_character_,
       locnum = 3,
       rownum = NA_integer_,
-      footnotes = footnote
+      footnotes = footnote,
+      placement = placement
     )
 
   data
 }
 
-set_footnote.cells_row_groups <- function(loc, data, footnote) {
+set_footnote.cells_row_groups <- function(loc, data, footnote, placement) {
 
   row_groups <- dt_row_groups_get(data = data)
 
@@ -745,13 +762,14 @@ set_footnote.cells_row_groups <- function(loc, data, footnote) {
       colname = NA_character_,
       locnum = 5,
       rownum = NA_integer_,
-      footnotes = footnote
+      footnotes = footnote,
+      placement = placement
     )
 
   data
 }
 
-set_footnote.cells_body <- function(loc, data, footnote) {
+set_footnote.cells_body <- function(loc, data, footnote, placement) {
 
   resolved <- resolve_cells_body(data = data, object = loc)
 
@@ -768,13 +786,14 @@ set_footnote.cells_body <- function(loc, data, footnote) {
       colname = colnames,
       locnum = 5,
       rownum = rows,
-      footnotes = footnote
+      footnotes = footnote,
+      placement = placement
     )
 
   data
 }
 
-set_footnote.cells_stub <- function(loc, data, footnote) {
+set_footnote.cells_stub <- function(loc, data, footnote, placement) {
 
   resolved <- resolve_cells_stub(data = data, object = loc)
 
@@ -788,60 +807,65 @@ set_footnote.cells_stub <- function(loc, data, footnote) {
       colname = NA_character_,
       locnum = 5,
       rownum = rows,
-      footnotes = footnote
+      footnotes = footnote,
+      placement = placement
     )
 
   data
 }
 
-set_footnote.cells_summary <- function(loc, data, footnote) {
+set_footnote.cells_summary <- function(loc, data, footnote, placement) {
 
   add_summary_location_row(
     loc = loc,
     data = data,
     style = footnote,
+    placement = placement,
     df_type = "footnotes_df"
   )
 }
 
-set_footnote.cells_grand_summary <- function(loc, data, footnote) {
+set_footnote.cells_grand_summary <- function(loc, data, footnote, placement) {
 
   add_grand_summary_location_row(
     loc = loc,
     data = data,
     style = footnote,
+    placement = placement,
     df_type = "footnotes_df"
   )
 }
 
-set_footnote.cells_stub_summary <- function(loc, data, footnote) {
+set_footnote.cells_stub_summary <- function(loc, data, footnote, placement) {
 
   add_summary_location_row(
     loc = loc,
     data = data,
     style = footnote,
+    placement = placement,
     df_type = "footnotes_df"
   )
 }
 
-set_footnote.cells_stub_grand_summary <- function(loc, data, footnote) {
+set_footnote.cells_stub_grand_summary <- function(loc, data, footnote, placement) {
 
   add_grand_summary_location_row(
     loc = loc,
     data = data,
     style = footnote,
+    placement = placement,
     df_type = "footnotes_df"
   )
 }
 
-set_footnote.cells_source_notes <- function(loc, data, footnote) {
+set_footnote.cells_source_notes <- function(loc, data, footnote, placement) {
 
   stop("Footnotes cannot be applied to source notes.", call. = FALSE)
 
   data
 }
 
-set_footnote.cells_footnotes <- function(loc, data, footnote) {
+set_footnote.cells_footnotes <- function(loc, data, footnote, placement) {
 
   stop("Footnotes cannot be applied to other footnotes.", call. = FALSE)
 

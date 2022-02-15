@@ -19,7 +19,8 @@ dt_footnotes_init <- function(data) {
     locnum = numeric(0),
     rownum = integer(0),
     colnum = integer(0),
-    footnotes = list(character(0))
+    footnotes = list(character(0)),
+    placement = character(0)
   ) %>%
     dt_footnotes_set(footnotes = ., data = data)
 }
@@ -30,7 +31,8 @@ dt_footnotes_add <- function(data,
                              colname,
                              locnum,
                              rownum,
-                             footnotes) {
+                             footnotes,
+                             placement) {
 
   data %>%
     dt_footnotes_get() %>%
@@ -42,7 +44,8 @@ dt_footnotes_add <- function(data,
         locnum = locnum,
         rownum = rownum,
         colnum = NA_integer_,
-        footnotes = list(footnotes)
+        footnotes = list(footnotes),
+        placement = placement
       )
     ) %>%
     dt_footnotes_set(footnotes = ., data = data)
