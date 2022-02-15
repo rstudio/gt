@@ -1,4 +1,5 @@
-context("Ensuring that the `tab_options()` function works as expected")
+local_edition(3)
+skip_on_cran()
 
 # Create a table with rownames and four columns of values
 tbl <-

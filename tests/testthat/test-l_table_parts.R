@@ -1,6 +1,5 @@
-context("LaTeX -- Ensuring that the creation of tab components works as expected")
-
-testthat::local_edition(3)
+local_edition(3)
+skip_on_cran()
 
 # Create a shorter version of `mtcars`
 mtcars_short <- mtcars[1:5, ]

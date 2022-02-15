@@ -1,3 +1,6 @@
+local_edition(3)
+skip_on_cran()
+
 context("Ensuring that the `summary_rows()` function works as expected")
 
 # Create a table based on `sp500`, with

@@ -1,4 +1,4 @@
-context("Ensuring that the `cells_*()` functions work as expected")
+skip_on_cran()
 
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
