@@ -1,4 +1,4 @@
-testthat::local_edition(3)
+local_edition(3)
 skip_on_cran()
 
 test_that("The footer section formatting and options work well across all output formats", {
