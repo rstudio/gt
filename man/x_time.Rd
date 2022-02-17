@@ -7,6 +7,8 @@
 x_time(x, time_style = 2, pattern = "{x}", output = c("html", "latex", "rtf"))
 }
 \arguments{
+\item{x}{A numeric vector.}
+
 \item{time_style}{The time style to use. Supply a number (from \code{1} to \code{5})
 that corresponds to the preferred time style, or, provide a named time
 style (\code{"hms"}, \code{"hms_p"}, \code{"h_p"}, etc.). Use \code{\link[=info_time_style]{info_time_style()}} to see
@@ -15,6 +17,9 @@ the different numbered and named time presets.}
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other
 characters are taken to be string literals.}
+
+\item{output}{The output style of the resulting character vector. This can
+either be \code{"html"} (the default), \code{"latex"}, or \code{"rtf"}.}
 }
 \value{
 A character vector.

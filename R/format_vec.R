@@ -860,7 +860,7 @@ x_date <- function(
 #' We can use the [info_time_style()] function for a useful reference on all of
 #' the possible inputs to `time_style`.
 #'
-#' @inheritParams fmt_number
+#' @inheritParams x_number
 #' @param time_style The time style to use. Supply a number (from `1` to `5`)
 #'   that corresponds to the preferred time style, or, provide a named time
 #'   style (`"hms"`, `"hms_p"`, `"h_p"`, etc.). Use [info_time_style()] to see
