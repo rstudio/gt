@@ -1759,3 +1759,481 @@ test_that("The `x_fraction()` function works", {
   expect_error(x_fraction(list(1, 2, 3)))
   expect_error(x_fraction(dplyr::tibble(a = c(1, 2, 3))))
 })
+
+test_that("The `x_currency()` function works", {
+
+  x_currency(vec_num_1) %>%
+    expect_equal(
+      c(
+        "&minus;$2.50", "&minus;$2.00", "&minus;$1.50", "&minus;$1.00",
+        "&minus;$0.50", "$0.00", "$0.50", "$1.00", "$1.50", "$2.00",
+        "$2.50", "NA", "$Inf"
+      )
+    )
+
+  x_currency(vec_num_1, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-\\text{\\$}2.50$", "$-\\text{\\$}2.00$", "$-\\text{\\$}1.50$",
+        "$-\\text{\\$}1.00$", "$-\\text{\\$}0.50$", "$\\text{\\$}0.00$",
+        "$\\text{\\$}0.50$", "$\\text{\\$}1.00$", "$\\text{\\$}1.50$",
+        "$\\text{\\$}2.00$", "$\\text{\\$}2.50$", "NA", "$\\text{\\$}Inf$"
+      )
+    )
+
+  x_currency(vec_num_1, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-$2.50", "-$2.00", "-$1.50", "-$1.00", "-$0.50", "$0.00",
+        "$0.50", "$1.00", "$1.50", "$2.00", "$2.50", "NA", "$Inf"
+      )
+    )
+
+  x_currency(vec_num_1, use_subunits = FALSE) %>%
+    expect_equal(
+      c(
+        "&minus;$2", "&minus;$2", "&minus;$2", "&minus;$1", "&minus;$0",
+        "$0", "$0", "$1", "$2", "$2", "$2", "NA", "$Inf"
+      )
+    )
+
+  x_currency(vec_num_1, use_subunits = FALSE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-\\text{\\$}2$", "$-\\text{\\$}2$", "$-\\text{\\$}2$", "$-\\text{\\$}1$",
+        "$-\\text{\\$}0$", "$\\text{\\$}0$", "$\\text{\\$}0$", "$\\text{\\$}1$",
+        "$\\text{\\$}2$", "$\\text{\\$}2$", "$\\text{\\$}2$", "NA", "$\\text{\\$}Inf$"
+      )
+    )
+
+  x_currency(vec_num_1, use_subunits = FALSE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-$2", "-$2", "-$2", "-$1", "-$0", "$0", "$0", "$1", "$2",
+        "$2", "$2", "NA", "$Inf"
+      )
+    )
+
+  x_currency(vec_num_6, decimals = 4) %>%
+    expect_equal(
+      c(
+        "$0.0000", "$0.1000", "$0.2000", "$0.3000", "$0.4000", "$0.5000",
+        "$0.6000", "$0.7000", "$0.8000", "$0.9000", "$1.0000", "$1.1000",
+        "$1.2000", "$1.3000", "$1.4000", "$1.5000", "$1.6000", "$1.7000",
+        "$1.8000", "$1.9000", "$2.0000"
+      )
+    )
+
+  x_currency(vec_num_6, decimals = 4, output = "latex") %>%
+    expect_equal(
+      c(
+        "$\\text{\\$}0.0000$", "$\\text{\\$}0.1000$", "$\\text{\\$}0.2000$",
+        "$\\text{\\$}0.3000$", "$\\text{\\$}0.4000$", "$\\text{\\$}0.5000$",
+        "$\\text{\\$}0.6000$", "$\\text{\\$}0.7000$", "$\\text{\\$}0.8000$",
+        "$\\text{\\$}0.9000$", "$\\text{\\$}1.0000$", "$\\text{\\$}1.1000$",
+        "$\\text{\\$}1.2000$", "$\\text{\\$}1.3000$", "$\\text{\\$}1.4000$",
+        "$\\text{\\$}1.5000$", "$\\text{\\$}1.6000$", "$\\text{\\$}1.7000$",
+        "$\\text{\\$}1.8000$", "$\\text{\\$}1.9000$", "$\\text{\\$}2.0000$"
+      )
+    )
+
+  x_currency(vec_num_6, decimals = 4, output = "rtf") %>%
+    expect_equal(
+      c(
+        "$0.0000", "$0.1000", "$0.2000", "$0.3000", "$0.4000", "$0.5000",
+        "$0.6000", "$0.7000", "$0.8000", "$0.9000", "$1.0000", "$1.1000",
+        "$1.2000", "$1.3000", "$1.4000", "$1.5000", "$1.6000", "$1.7000",
+        "$1.8000", "$1.9000", "$2.0000"
+      )
+    )
+
+  # Expect that using `decimals = 0` is equivalent to `use_subunits = FALSE`
+  expect_equal(
+    x_currency(seq(-5, 5, 0.1), decimals = 0),
+    x_currency(seq(-5, 5, 0.1), use_subunits = FALSE)
+  )
+
+  x_currency(vec_num_6, decimals = 0, drop_trailing_dec_mark = FALSE) %>%
+    expect_equal(
+      c(
+        "$0.", "$0.", "$0.", "$0.", "$0.", "$0.", "$1.", "$1.", "$1.",
+        "$1.", "$1.", "$1.", "$1.", "$1.", "$1.", "$2.", "$2.", "$2.",
+        "$2.", "$2.", "$2."
+      )
+    )
+
+  x_currency(vec_num_6, decimals = 0, drop_trailing_dec_mark = FALSE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$\\text{\\$}0.$", "$\\text{\\$}0.$", "$\\text{\\$}0.$", "$\\text{\\$}0.$",
+        "$\\text{\\$}0.$", "$\\text{\\$}0.$", "$\\text{\\$}1.$", "$\\text{\\$}1.$",
+        "$\\text{\\$}1.$", "$\\text{\\$}1.$", "$\\text{\\$}1.$", "$\\text{\\$}1.$",
+        "$\\text{\\$}1.$", "$\\text{\\$}1.$", "$\\text{\\$}1.$", "$\\text{\\$}2.$",
+        "$\\text{\\$}2.$", "$\\text{\\$}2.$", "$\\text{\\$}2.$", "$\\text{\\$}2.$",
+        "$\\text{\\$}2.$"
+      )
+    )
+
+  x_currency(vec_num_6, decimals = 0, drop_trailing_dec_mark = FALSE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "$0.", "$0.", "$0.", "$0.", "$0.", "$0.", "$1.", "$1.", "$1.",
+        "$1.", "$1.", "$1.", "$1.", "$1.", "$1.", "$2.", "$2.", "$2.",
+        "$2.", "$2.", "$2."
+      )
+    )
+
+  x_currency(vec_num_4, use_seps = FALSE) %>%
+    expect_equal(
+      c(
+        "&minus;$2500000.00", "&minus;$2000000.00", "&minus;$1500000.00",
+        "&minus;$1000000.00", "&minus;$500000.00", "$0.00", "$500000.00",
+        "$1000000.00", "$1500000.00", "$2000000.00", "$2500000.00", "NA",
+        "$Inf"
+      )
+    )
+
+  x_currency(vec_num_4, use_seps = FALSE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-\\text{\\$}2500000.00$", "$-\\text{\\$}2000000.00$", "$-\\text{\\$}1500000.00$",
+        "$-\\text{\\$}1000000.00$", "$-\\text{\\$}500000.00$", "$\\text{\\$}0.00$",
+        "$\\text{\\$}500000.00$", "$\\text{\\$}1000000.00$", "$\\text{\\$}1500000.00$",
+        "$\\text{\\$}2000000.00$", "$\\text{\\$}2500000.00$", "NA", "$\\text{\\$}Inf$"
+      )
+    )
+
+  x_currency(vec_num_4, use_seps = FALSE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-$2500000.00", "-$2000000.00", "-$1500000.00", "-$1000000.00",
+        "-$500000.00", "$0.00", "$500000.00", "$1000000.00", "$1500000.00",
+        "$2000000.00", "$2500000.00", "NA", "$Inf"
+      )
+    )
+
+  x_currency(vec_num_1, accounting = TRUE) %>%
+    expect_equal(
+      c(
+        "($2.50)", "($2.00)", "($1.50)", "($1.00)", "($0.50)", "$0.00",
+        "$0.50", "$1.00", "$1.50", "$2.00", "$2.50", "NA", "$Inf"
+      )
+    )
+
+  x_currency(vec_num_1, accounting = TRUE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$(\\text{\\$}2.50)$", "$(\\text{\\$}2.00)$", "$(\\text{\\$}1.50)$",
+        "$(\\text{\\$}1.00)$", "$(\\text{\\$}0.50)$", "$\\text{\\$}0.00$",
+        "$\\text{\\$}0.50$", "$\\text{\\$}1.00$", "$\\text{\\$}1.50$",
+        "$\\text{\\$}2.00$", "$\\text{\\$}2.50$", "NA", "$\\text{\\$}Inf$"
+      )
+    )
+
+  x_currency(vec_num_4, accounting = TRUE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "($2,500,000.00)", "($2,000,000.00)", "($1,500,000.00)", "($1,000,000.00)",
+        "($500,000.00)", "$0.00", "$500,000.00", "$1,000,000.00", "$1,500,000.00",
+        "$2,000,000.00", "$2,500,000.00", "NA", "$Inf"
+      )
+    )
+
+  x_currency(vec_num_1, scale_by = 2.5) %>%
+    expect_equal(
+      c(
+        "&minus;$6.25", "&minus;$5.00", "&minus;$3.75", "&minus;$2.50",
+        "&minus;$1.25", "$0.00", "$1.25", "$2.50", "$3.75", "$5.00",
+        "$6.25", "NA", "$Inf"
+      )
+    )
+
+  x_currency(vec_num_1, scale_by = 2.5, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-\\text{\\$}6.25$", "$-\\text{\\$}5.00$", "$-\\text{\\$}3.75$",
+        "$-\\text{\\$}2.50$", "$-\\text{\\$}1.25$", "$\\text{\\$}0.00$",
+        "$\\text{\\$}1.25$", "$\\text{\\$}2.50$", "$\\text{\\$}3.75$",
+        "$\\text{\\$}5.00$", "$\\text{\\$}6.25$", "NA", "$\\text{\\$}Inf$"
+      )
+    )
+
+  x_currency(vec_num_1, scale_by = 2.5, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-$6.25", "-$5.00", "-$3.75", "-$2.50", "-$1.25", "$0.00",
+        "$1.25", "$2.50", "$3.75", "$5.00", "$6.25", "NA", "$Inf"
+      )
+    )
+
+  x_currency(vec_num_4, locale = "de") %>%
+    expect_equal(
+      c(
+        "&minus;$2.500.000,00", "&minus;$2.000.000,00", "&minus;$1.500.000,00",
+        "&minus;$1.000.000,00", "&minus;$500.000,00", "$0,00", "$500.000,00",
+        "$1.000.000,00", "$1.500.000,00", "$2.000.000,00", "$2.500.000,00",
+        "NA", "$Inf"
+      )
+    )
+
+  x_currency(vec_num_4, locale = "de", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-\\text{\\$}2.500.000,00$", "$-\\text{\\$}2.000.000,00$",
+        "$-\\text{\\$}1.500.000,00$", "$-\\text{\\$}1.000.000,00$", "$-\\text{\\$}500.000,00$",
+        "$\\text{\\$}0,00$", "$\\text{\\$}500.000,00$", "$\\text{\\$}1.000.000,00$",
+        "$\\text{\\$}1.500.000,00$", "$\\text{\\$}2.000.000,00$", "$\\text{\\$}2.500.000,00$",
+        "NA", "$\\text{\\$}Inf$"
+      )
+    )
+
+  x_currency(vec_num_4, locale = "de", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-$2.500.000,00", "-$2.000.000,00", "-$1.500.000,00", "-$1.000.000,00",
+        "-$500.000,00", "$0,00", "$500.000,00", "$1.000.000,00", "$1.500.000,00",
+        "$2.000.000,00", "$2.500.000,00", "NA", "$Inf"
+      )
+    )
+
+  x_currency(vec_num_4, suffixing = TRUE) %>%
+    expect_equal(
+      c(
+        "&minus;$2.50M", "&minus;$2.00M", "&minus;$1.50M", "&minus;$1.00M",
+        "&minus;$500.00K", "$0.00", "$500.00K", "$1.00M", "$1.50M", "$2.00M",
+        "$2.50M", "NA", "$InfT"
+      )
+    )
+
+  x_currency(vec_num_4, suffixing = TRUE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-\\text{\\$}2.50M$", "$-\\text{\\$}2.00M$", "$-\\text{\\$}1.50M$",
+        "$-\\text{\\$}1.00M$", "$-\\text{\\$}500.00K$", "$\\text{\\$}0.00$",
+        "$\\text{\\$}500.00K$", "$\\text{\\$}1.00M$", "$\\text{\\$}1.50M$",
+        "$\\text{\\$}2.00M$", "$\\text{\\$}2.50M$", "NA", "$\\text{\\$}InfT$"
+      )
+    )
+
+  x_currency(vec_num_4, suffixing = TRUE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-$2.50M", "-$2.00M", "-$1.50M", "-$1.00M", "-$500.00K", "$0.00",
+        "$500.00K", "$1.00M", "$1.50M", "$2.00M", "$2.50M", "NA", "$InfT"
+      )
+    )
+
+  x_currency(vec_num_1, pattern = "a{x}b") %>%
+    expect_equal(
+      c(
+        "a&minus;$2.50b", "a&minus;$2.00b", "a&minus;$1.50b", "a&minus;$1.00b",
+        "a&minus;$0.50b", "a$0.00b", "a$0.50b", "a$1.00b", "a$1.50b",
+        "a$2.00b", "a$2.50b", "NA", "a$Infb"
+      )
+    )
+
+  x_currency(vec_num_1, pattern = "a{x}b", output = "latex") %>%
+    expect_equal(
+      c(
+        "a$-\\text{\\$}2.50$b", "a$-\\text{\\$}2.00$b", "a$-\\text{\\$}1.50$b",
+        "a$-\\text{\\$}1.00$b", "a$-\\text{\\$}0.50$b", "a$\\text{\\$}0.00$b",
+        "a$\\text{\\$}0.50$b", "a$\\text{\\$}1.00$b", "a$\\text{\\$}1.50$b",
+        "a$\\text{\\$}2.00$b", "a$\\text{\\$}2.50$b", "NA", "a$\\text{\\$}Inf$b"
+      )
+    )
+
+  x_currency(vec_num_1, pattern = "a{x}b", output = "rtf") %>%
+    expect_equal(
+      c(
+        "a-$2.50b", "a-$2.00b", "a-$1.50b", "a-$1.00b", "a-$0.50b",
+        "a$0.00b", "a$0.50b", "a$1.00b", "a$1.50b", "a$2.00b", "a$2.50b",
+        "NA", "a$Infb"
+      )
+    )
+
+  x_currency(vec_num_4, sep_mark = " ", dec_mark = ",") %>%
+    expect_equal(
+      c(
+        "&minus;$2 500 000,00", "&minus;$2 000 000,00", "&minus;$1 500 000,00",
+        "&minus;$1 000 000,00", "&minus;$500 000,00", "$0,00", "$500 000,00",
+        "$1 000 000,00", "$1 500 000,00", "$2 000 000,00", "$2 500 000,00",
+        "NA", "$Inf"
+      )
+    )
+
+  x_currency(vec_num_4, sep_mark = " ", dec_mark = ",", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-\\text{\\$}2 500 000,00$", "$-\\text{\\$}2 000 000,00$",
+        "$-\\text{\\$}1 500 000,00$", "$-\\text{\\$}1 000 000,00$", "$-\\text{\\$}500 000,00$",
+        "$\\text{\\$}0,00$", "$\\text{\\$}500 000,00$", "$\\text{\\$}1 000 000,00$",
+        "$\\text{\\$}1 500 000,00$", "$\\text{\\$}2 000 000,00$", "$\\text{\\$}2 500 000,00$",
+        "NA", "$\\text{\\$}Inf$"
+      )
+    )
+
+  x_currency(vec_num_4, sep_mark = " ", dec_mark = ",", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-$2 500 000,00", "-$2 000 000,00", "-$1 500 000,00", "-$1 000 000,00",
+        "-$500 000,00", "$0,00", "$500 000,00", "$1 000 000,00", "$1 500 000,00",
+        "$2 000 000,00", "$2 500 000,00", "NA", "$Inf"
+      )
+    )
+
+  x_currency(vec_num_1, force_sign = TRUE) %>%
+    expect_equal(
+      c(
+        "&minus;$2.50", "&minus;$2.00", "&minus;$1.50", "&minus;$1.00",
+        "&minus;$0.50", "$0.00", "+$0.50", "+$1.00", "+$1.50", "+$2.00",
+        "+$2.50", "NA", "+$Inf"
+      )
+    )
+
+  x_currency(vec_num_1, force_sign = TRUE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-\\text{\\$}2.50$", "$-\\text{\\$}2.00$", "$-\\text{\\$}1.50$",
+        "$-\\text{\\$}1.00$", "$-\\text{\\$}0.50$", "$\\text{\\$}0.00$",
+        "$+\\text{\\$}0.50$", "$+\\text{\\$}1.00$", "$+\\text{\\$}1.50$",
+        "$+\\text{\\$}2.00$", "$+\\text{\\$}2.50$", "NA", "$+\\text{\\$}Inf$"
+      )
+    )
+
+  x_currency(vec_num_1, force_sign = TRUE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-$2.50", "-$2.00", "-$1.50", "-$1.00", "-$0.50", "$0.00",
+        "+$0.50", "+$1.00", "+$1.50", "+$2.00", "+$2.50", "NA", "+$Inf"
+      )
+    )
+
+  x_currency(vec_num_1, incl_space = TRUE) %>%
+    expect_equal(
+      c(
+        "&minus;$ 2.50", "&minus;$ 2.00", "&minus;$ 1.50", "&minus;$ 1.00",
+        "&minus;$ 0.50", "$ 0.00", "$ 0.50", "$ 1.00", "$ 1.50", "$ 2.00",
+        "$ 2.50", "NA", "$ Inf"
+      )
+    )
+
+  x_currency(vec_num_1, incl_space = TRUE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-\\text{\\$} 2.50$", "$-\\text{\\$} 2.00$", "$-\\text{\\$} 1.50$",
+        "$-\\text{\\$} 1.00$", "$-\\text{\\$} 0.50$", "$\\text{\\$} 0.00$",
+        "$\\text{\\$} 0.50$", "$\\text{\\$} 1.00$", "$\\text{\\$} 1.50$",
+        "$\\text{\\$} 2.00$", "$\\text{\\$} 2.50$", "NA", "$\\text{\\$} Inf$"
+      )
+    )
+
+  x_currency(vec_num_1, incl_space = TRUE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-$ 2.50", "-$ 2.00", "-$ 1.50", "-$ 1.00", "-$ 0.50", "$ 0.00",
+        "$ 0.50", "$ 1.00", "$ 1.50", "$ 2.00", "$ 2.50", "NA", "$ Inf"
+      )
+    )
+
+  x_currency(vec_num_1, placement = "right") %>%
+    expect_equal(
+      c(
+        "&minus;2.50$", "&minus;2.00$", "&minus;1.50$", "&minus;1.00$",
+        "&minus;0.50$", "0.00$", "0.50$", "1.00$", "1.50$", "2.00$",
+        "2.50$", "NA", "Inf$"
+      )
+    )
+
+  x_currency(vec_num_1, placement = "right", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.50\\text{\\$}$", "$-2.00\\text{\\$}$", "$-1.50\\text{\\$}$",
+        "$-1.00\\text{\\$}$", "$-0.50\\text{\\$}$", "$0.00\\text{\\$}$",
+        "$0.50\\text{\\$}$", "$1.00\\text{\\$}$", "$1.50\\text{\\$}$",
+        "$2.00\\text{\\$}$", "$2.50\\text{\\$}$", "NA", "$Inf\\text{\\$}$"
+      )
+    )
+
+  x_currency(vec_num_1, placement = "right", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.50$", "-2.00$", "-1.50$", "-1.00$", "-0.50$", "0.00$",
+        "0.50$", "1.00$", "1.50$", "2.00$", "2.50$", "NA", "Inf$"
+      )
+    )
+
+  x_currency(vec_num_1, incl_space = TRUE, placement = "right") %>%
+    expect_equal(
+      c(
+        "&minus;2.50 $", "&minus;2.00 $", "&minus;1.50 $", "&minus;1.00 $",
+        "&minus;0.50 $", "0.00 $", "0.50 $", "1.00 $", "1.50 $", "2.00 $",
+        "2.50 $", "NA", "Inf $"
+      )
+    )
+
+  x_currency(vec_num_1, incl_space = TRUE, placement = "right", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.50 \\text{\\$}$", "$-2.00 \\text{\\$}$", "$-1.50 \\text{\\$}$",
+        "$-1.00 \\text{\\$}$", "$-0.50 \\text{\\$}$", "$0.00 \\text{\\$}$",
+        "$0.50 \\text{\\$}$", "$1.00 \\text{\\$}$", "$1.50 \\text{\\$}$",
+        "$2.00 \\text{\\$}$", "$2.50 \\text{\\$}$", "NA", "$Inf \\text{\\$}$"
+      )
+    )
+
+  x_currency(vec_num_1, incl_space = TRUE, placement = "right", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.50 $", "-2.00 $", "-1.50 $", "-1.00 $", "-0.50 $", "0.00 $",
+        "0.50 $", "1.00 $", "1.50 $", "2.00 $", "2.50 $", "NA", "Inf $"
+      )
+    )
+
+  x_currency(vec_num_1, currency = "EUR") %>%
+    expect_equal(
+      c(
+        "&minus;&#8364;2.50", "&minus;&#8364;2.00", "&minus;&#8364;1.50",
+        "&minus;&#8364;1.00", "&minus;&#8364;0.50", "&#8364;0.00", "&#8364;0.50",
+        "&#8364;1.00", "&#8364;1.50", "&#8364;2.00", "&#8364;2.50", "NA",
+        "&#8364;Inf"
+      )
+    )
+
+  x_currency(vec_num_1, currency = "EUR", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-\\text{EUR}2.50$", "$-\\text{EUR}2.00$", "$-\\text{EUR}1.50$",
+        "$-\\text{EUR}1.00$", "$-\\text{EUR}0.50$", "$\\text{EUR}0.00$",
+        "$\\text{EUR}0.50$", "$\\text{EUR}1.00$", "$\\text{EUR}1.50$",
+        "$\\text{EUR}2.00$", "$\\text{EUR}2.50$", "NA", "$\\text{EUR}Inf$"
+      )
+    )
+
+  x_currency(vec_num_1, currency = "EUR", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-EUR2.50", "-EUR2.00", "-EUR1.50", "-EUR1.00", "-EUR0.50",
+        "EUR0.00", "EUR0.50", "EUR1.00", "EUR1.50", "EUR2.00", "EUR2.50",
+        "NA", "EURInf"
+      )
+    )
+
+  x_currency(vec_num_1, currency = "yen", output = "html") %>%
+    expect_equal(
+      c(
+        "&minus;&#165;2.50", "&minus;&#165;2.00", "&minus;&#165;1.50",
+        "&minus;&#165;1.00", "&minus;&#165;0.50", "&#165;0.00", "&#165;0.50",
+        "&#165;1.00", "&#165;1.50", "&#165;2.00", "&#165;2.50", "NA",
+        "&#165;Inf"
+      )
+    )
+
+  expect_equal(x_currency(numeric(0)), character(0))
+  expect_equal(x_currency(integer(0)), character(0))
+
+  expect_error(x_currency(c(1, 2), currency = "NOTREAL"))
+  expect_error(x_currency(letters))
+  expect_error(x_currency(TRUE))
+  expect_error(x_currency(list(1, 2, 3)))
+  expect_error(x_currency(dplyr::tibble(a = c(1, 2, 3))))
+})
