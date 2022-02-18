@@ -748,6 +748,7 @@ x_bytes <- function(
     fmt_bytes(
       gt(dplyr::tibble(x = x)),
       columns = "x", rows = everything(),
+      standard = standard,
       decimals = decimals,
       n_sigfig = n_sigfig,
       drop_trailing_zeros = drop_trailing_zeros,
