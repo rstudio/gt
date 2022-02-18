@@ -1842,7 +1842,14 @@ tab_options <- function(data,
                         source_notes.sep = NULL,
                         row.striping.background_color = NULL,
                         row.striping.include_stub = NULL,
-                        row.striping.include_table_body = NULL) {
+                        row.striping.include_table_body = NULL,
+                        ihtml.use_pagination = NULL,
+                        ihtml.use_search = NULL,
+                        ihtml.use_sorting = NULL,
+                        ihtml.use_filters = NULL,
+                        ihtml.use_resizers = NULL,
+                        ihtml.use_highlight = NULL,
+                        ihtml.use_compact_mode = NULL) {
 
   # TODO: add helper functions to divide the options into those by location
   # TODO: add helper functions to divide the options into those by parameter

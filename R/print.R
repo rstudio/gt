@@ -2,6 +2,25 @@
 #'
 #' This facilitates printing of the HTML table to the R console.
 #'
+#' @param x An object of class `gtr_tbl`.
+#' @param ... Any additional parameters.
+#' @param view The value for `print()`s `browse` argument.
+#'
+#' @keywords internal
+#'
+#' @export
+print.gtr_tbl <- function(x, ..., view = interactive()) {
+
+  html_tbl <- as.tags.gtr_tbl(x, ...)
+
+  # Use `print()` to print to the console
+  print(html_tbl, browse = view, ...)
+}
+
+#' Print the table
+#'
+#' This facilitates printing of the HTML table to the R console.
+#'
 #' @param x An object of class `gt_tbl`.
 #' @param ... Any additional parameters.
 #' @param view The value for `print()`s `browse` argument.
@@ -32,6 +51,8 @@ knitr_is_rtf_output <- function() {
 #' @keywords internal
 #' @noRd
 knit_print.gt_tbl <- function(x, ...) {
+
+  # TODO: Add print method for interactive HTML table
 
   if (knitr_is_rtf_output()) {
     x <- as_rtf(x)
@@ -95,6 +116,41 @@ as.tags.gt_tbl <- function(x, ...) {
     )
 
   html_tbl
+}
+
+#' Convert an interactive **gt** table to an **htmltools** `tagList`
+#'
+#' This converts a **gt** table object to an **htmltools**
+#' [htmltools::tagList()] object. The returned object is of the `shiny.tag.list`
+#' class and using `as.character()` with that will render the HTML, resulting in
+#' a length 1 character vector that contains the HTML table.
+#'
+#' @param x Object to be converted.
+#' @param ... Any additional parameters.
+#'
+#' @keywords internal
+#' @noRd
+as.tags.gtr_tbl <- function(x, ...) {
+
+  table_id <- dt_options_get_value(x, option = "table_id")
+
+  if (is.na(table_id)) {
+    id <- random_id()
+  } else {
+    id <- table_id
+  }
+
+  # Compile the SCSS as CSS
+  css <- compile_scss(data = x, id = id)
+
+  # Generate the HTML table
+  x <- render_as_i_html(data = x, id = id)
+
+  # Attach styles to the HTML table
+  x <-
+    htmlwidgets::prependContent(
+      x, htmltools::tags$style(htmltools::HTML(css))
+    )
 }
 
 #' Print RTF text

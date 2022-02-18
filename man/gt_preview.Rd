@@ -61,6 +61,7 @@ tab_1 <-
 }
 \seealso{
 Other Create Table: 
+\code{\link{gtr}()},
 \code{\link{gt}()}
 }
 \concept{Create Table}

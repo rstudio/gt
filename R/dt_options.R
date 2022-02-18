@@ -201,4 +201,11 @@ dt_options_tbl <-
     "row_striping_background_color",      TRUE,  "row",              "value",   "rgba(128,128,128,0.05)",
     "row_striping_include_stub",         FALSE,  "row",              "logical", FALSE,
     "row_striping_include_table_body",   FALSE,  "row",              "logical", FALSE,
+    "ihtml_use_pagination",              FALSE,  "interactive",      "logical", TRUE,
+    "ihtml_use_search",                  FALSE,  "interactive",      "logical", FALSE,
+    "ihtml_use_sorting",                 FALSE,  "interactive",      "logical", TRUE,
+    "ihtml_use_filters",                 FALSE,  "interactive",      "logical", FALSE,
+    "ihtml_use_resizers",                FALSE,  "interactive",      "logical", FALSE,
+    "ihtml_use_highlight",               FALSE,  "interactive",      "logical", FALSE,
+    "ihtml_use_compact_mode",            FALSE,  "interactive",      "logical", FALSE,
   )[-1, ]

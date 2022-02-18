@@ -37,6 +37,7 @@ Imports:
     glue (>= 1.6.1),
     htmltools (>= 0.5.2),
     magrittr (>= 2.0.2),
+    reactable (>= 0.2.3),
     rlang (>= 1.0.1),
     sass (>= 0.4.0),
     scales (>= 1.1.1),
@@ -88,6 +89,7 @@ Collate:
     'gt-package.R'
     'gt.R'
     'gt_preview.R'
+    'gtr.R'
     'helpers.R'
     'image.R'
     'info_tables.R'
@@ -100,6 +102,7 @@ Collate:
     'print.R'
     'reexports.R'
     'render_as_html.R'
+    'render_as_i_html.R'
     'resolver.R'
     'shiny.R'
     'summary_rows.R'
