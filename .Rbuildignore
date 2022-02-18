@@ -30,3 +30,4 @@ tests/testthat/test-summary_rows_latex.R
 tests/testthat/test-summary_rows_rtf.R
 tests/testthat/test-tab_options.R
 tests/testthat/test-table_parts.R
+tests/testthat/test-x_x.R
