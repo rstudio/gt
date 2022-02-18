@@ -17,7 +17,7 @@ not_numbers <- c(NA_real_, NaN, Inf, -Inf)
 
 test_that("The `x_number()` function works", {
 
-  x_number(vec_num_1) %>%
+  x_number(vec_num_1, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.50", "&minus;2.00", "&minus;1.50", "&minus;1.00",
@@ -41,7 +41,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_6, decimals = 4) %>%
+  x_number(vec_num_6, decimals = 4, output = "html") %>%
     expect_equal(
       c(
         "0.0000", "0.1000", "0.2000", "0.3000", "0.4000", "0.5000", "0.6000",
@@ -69,7 +69,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_1, drop_trailing_zeros = TRUE) %>%
+  x_number(vec_num_1, drop_trailing_zeros = TRUE, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.5", "&minus;2", "&minus;1.5", "&minus;1", "&minus;0.5",
@@ -93,7 +93,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_1, n_sigfig = 3) %>%
+  x_number(vec_num_1, n_sigfig = 3, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.50", "&minus;2.00", "&minus;1.50", "&minus;1.00",
@@ -118,7 +118,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_4, use_seps = FALSE) %>%
+  x_number(vec_num_4, use_seps = FALSE, output = "html") %>%
     expect_equal(
       c(
         "&minus;2500000.00", "&minus;2000000.00", "&minus;1500000.00",
@@ -146,7 +146,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_1, accounting = TRUE) %>%
+  x_number(vec_num_1, accounting = TRUE, output = "html") %>%
     expect_equal(
       c(
         "(2.50)", "(2.00)", "(1.50)", "(1.00)", "(0.50)", "0.00", "0.50",
@@ -172,7 +172,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_1, scale_by = 2.5) %>%
+  x_number(vec_num_1, scale_by = 2.5, output = "html") %>%
     expect_equal(
       c(
         "&minus;6.25", "&minus;5.00", "&minus;3.75", "&minus;2.50",
@@ -197,7 +197,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_4, locale = "de") %>%
+  x_number(vec_num_4, locale = "de", output = "html") %>%
     expect_equal(
       c(
         "&minus;2.500.000,00", "&minus;2.000.000,00", "&minus;1.500.000,00",
@@ -225,7 +225,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_4, suffixing = TRUE) %>%
+  x_number(vec_num_4, suffixing = TRUE, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.50M", "&minus;2.00M", "&minus;1.50M", "&minus;1.00M",
@@ -251,7 +251,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_1, pattern = "a{x}b") %>%
+  x_number(vec_num_1, pattern = "a{x}b", output = "html") %>%
     expect_equal(
       c(
         "a&minus;2.50b", "a&minus;2.00b", "a&minus;1.50b", "a&minus;1.00b",
@@ -277,7 +277,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_1, force_sign = TRUE) %>%
+  x_number(vec_num_1, force_sign = TRUE, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.50", "&minus;2.00", "&minus;1.50", "&minus;1.00",
@@ -313,7 +313,7 @@ test_that("The `x_number()` function works", {
 
 test_that("The `x_integer()` function works", {
 
-  x_integer(vec_num_1) %>%
+  x_integer(vec_num_1, output = "html") %>%
     expect_equal(
       c(
         "&minus;2", "&minus;2", "&minus;2", "&minus;1", "0", "0", "0",
@@ -337,7 +337,7 @@ test_that("The `x_integer()` function works", {
       )
     )
 
-  x_integer(vec_num_4, locale = "de") %>%
+  x_integer(vec_num_4, locale = "de", output = "html") %>%
     expect_equal(
       c(
         "&minus;2.500.000", "&minus;2.000.000", "&minus;1.500.000",
@@ -364,7 +364,7 @@ test_that("The `x_integer()` function works", {
       )
     )
 
-  x_integer(vec_num_4, suffixing = TRUE) %>%
+  x_integer(vec_num_4, suffixing = TRUE, output = "html") %>%
     expect_equal(
       c(
         "&minus;2M", "&minus;2M", "&minus;2M", "&minus;1M", "&minus;500K",
@@ -388,7 +388,7 @@ test_that("The `x_integer()` function works", {
       )
     )
 
-  x_integer(vec_num_1, pattern = "a{x}b") %>%
+  x_integer(vec_num_1, pattern = "a{x}b", output = "html") %>%
     expect_equal(
       c(
         "a&minus;2b", "a&minus;2b", "a&minus;2b", "a&minus;1b", "a0b",
@@ -412,7 +412,7 @@ test_that("The `x_integer()` function works", {
       )
     )
 
-  x_integer(vec_num_1, force_sign = TRUE) %>%
+  x_integer(vec_num_1, force_sign = TRUE, output = "html") %>%
     expect_equal(
       c(
         "&minus;2", "&minus;2", "&minus;2", "&minus;1", "0", "0", "+0",
@@ -454,7 +454,7 @@ test_that("The `x_scientific()` function works", {
   vec_num_1_m <- vec_num_1[-13]
   vec_num_4_m <- vec_num_4[-13]
 
-  x_scientific(vec_num_1_m) %>%
+  x_scientific(vec_num_1_m, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.50", "&minus;2.00", "&minus;1.50", "&minus;1.00",
@@ -482,7 +482,7 @@ test_that("The `x_scientific()` function works", {
       )
     )
 
-  x_scientific(vec_num_4_m) %>%
+  x_scientific(vec_num_4_m, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.50 &times; 10<sup class='gt_super'>6</sup>", "&minus;2.00 &times; 10<sup class='gt_super'>6</sup>",
@@ -516,7 +516,7 @@ test_that("The `x_scientific()` function works", {
 
   # TODO: `x_scientifc()` and `fmt_scientific()` both error when
   # `drop_trailing_zeros = TRUE`; omit these test until a fix is available
-  # x_scientific(vec_num_4_m, drop_trailing_zeros = TRUE) %>%
+  # x_scientific(vec_num_4_m, drop_trailing_zeros = TRUE, output = "html") %>%
   #   expect_equal(
   #     c(
   #     )
@@ -535,7 +535,7 @@ test_that("The `x_scientific()` function works", {
   #   )
 
 
-  x_scientific(vec_num_4_m, locale = "de") %>%
+  x_scientific(vec_num_4_m, locale = "de", output = "html") %>%
     expect_equal(
       c(
         "&minus;2,50 &times; 10<sup class='gt_super'>6</sup>", "&minus;2,00 &times; 10<sup class='gt_super'>6</sup>",
@@ -567,7 +567,7 @@ test_that("The `x_scientific()` function works", {
       )
     )
 
-  x_scientific(vec_num_4_m, pattern = "a{x}b") %>%
+  x_scientific(vec_num_4_m, pattern = "a{x}b", output = "html") %>%
     expect_equal(
       c(
         "a&minus;2.50 &times; 10<sup class='gt_super'>6</sup>b", "a&minus;2.00 &times; 10<sup class='gt_super'>6</sup>b",
@@ -600,7 +600,7 @@ test_that("The `x_scientific()` function works", {
       )
     )
 
-  x_scientific(vec_num_4_m, force_sign = TRUE) %>%
+  x_scientific(vec_num_4_m, force_sign = TRUE, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.50 &times; 10<sup class='gt_super'>6</sup>", "&minus;2.00 &times; 10<sup class='gt_super'>6</sup>",
@@ -643,7 +643,7 @@ test_that("The `x_scientific()` function works", {
 
 test_that("The `x_engineering()` function works", {
 
-  x_engineering(vec_num_1) %>%
+  x_engineering(vec_num_1, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.50", "&minus;2.00", "&minus;1.50", "&minus;1.00",
@@ -671,7 +671,7 @@ test_that("The `x_engineering()` function works", {
       )
     )
 
-  x_engineering(vec_num_4) %>%
+  x_engineering(vec_num_4, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.50 &times; 10<sup class='gt_super'>6</sup>", "&minus;2.00 &times; 10<sup class='gt_super'>6</sup>",
@@ -704,7 +704,7 @@ test_that("The `x_engineering()` function works", {
       )
     )
 
-  x_engineering(vec_num_5) %>%
+  x_engineering(vec_num_5, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.50 &times; 10<sup class='gt_super'>12</sup>", "&minus;2.00 &times; 10<sup class='gt_super'>12</sup>",
@@ -737,7 +737,7 @@ test_that("The `x_engineering()` function works", {
       )
     )
 
-  x_engineering(vec_num_4, drop_trailing_zeros = TRUE) %>%
+  x_engineering(vec_num_4, drop_trailing_zeros = TRUE, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.5 &times; 10<sup class='gt_super'>6</sup>", "&minus;2. &times; 10<sup class='gt_super'>6</sup>",
@@ -770,7 +770,7 @@ test_that("The `x_engineering()` function works", {
     )
 
 
-  x_engineering(vec_num_4, locale = "de") %>%
+  x_engineering(vec_num_4, locale = "de", output = "html") %>%
     expect_equal(
       c(
         "&minus;2,50 &times; 10<sup class='gt_super'>6</sup>", "&minus;2,00 &times; 10<sup class='gt_super'>6</sup>",
@@ -803,7 +803,7 @@ test_that("The `x_engineering()` function works", {
       )
     )
 
-  x_engineering(vec_num_4, pattern = "a{x}b") %>%
+  x_engineering(vec_num_4, pattern = "a{x}b", output = "html") %>%
     expect_equal(
       c(
         "a&minus;2.50 &times; 10<sup class='gt_super'>6</sup>b", "a&minus;2.00 &times; 10<sup class='gt_super'>6</sup>b",
@@ -836,7 +836,7 @@ test_that("The `x_engineering()` function works", {
       )
     )
 
-  x_engineering(vec_num_4, force_sign = TRUE) %>%
+  x_engineering(vec_num_4, force_sign = TRUE, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.50 &times; 10<sup class='gt_super'>6</sup>", "&minus;2.00 &times; 10<sup class='gt_super'>6</sup>",
@@ -878,10 +878,9 @@ test_that("The `x_engineering()` function works", {
   expect_error(x_engineering(dplyr::tibble(a = c(1, 2, 3))))
 })
 
-
 test_that("The `x_percent()` function works", {
 
-  x_percent(vec_num_1) %>%
+  x_percent(vec_num_1, output = "html") %>%
     expect_equal(
       c(
         "&minus;250.00%", "&minus;200.00%", "&minus;150.00%", "&minus;100.00%",
@@ -908,7 +907,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, decimals = 4) %>%
+  x_percent(vec_num_1, decimals = 4, output = "html") %>%
     expect_equal(
       c(
         "&minus;250.0000%", "&minus;200.0000%", "&minus;150.0000%",
@@ -935,7 +934,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, scale_values = FALSE) %>%
+  x_percent(vec_num_1, scale_values = FALSE, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.50%", "&minus;2.00%", "&minus;1.50%", "&minus;1.00%",
@@ -961,7 +960,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, scale_values = FALSE, drop_trailing_zeros = TRUE) %>%
+  x_percent(vec_num_1, scale_values = FALSE, drop_trailing_zeros = TRUE, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.5%", "&minus;2%", "&minus;1.5%", "&minus;1%", "&minus;0.5%",
@@ -986,7 +985,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_4, use_seps = FALSE) %>%
+  x_percent(vec_num_4, use_seps = FALSE, output = "html") %>%
     expect_equal(
       c(
         "&minus;250000000.00%", "&minus;200000000.00%", "&minus;150000000.00%",
@@ -1015,7 +1014,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, accounting = TRUE) %>%
+  x_percent(vec_num_1, accounting = TRUE, output = "html") %>%
     expect_equal(
       c(
         "(250.00%)", "(200.00%)", "(150.00%)", "(100.00%)", "(50.00%)",
@@ -1043,7 +1042,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_4, locale = "de") %>%
+  x_percent(vec_num_4, locale = "de", output = "html") %>%
     expect_equal(
       c(
         "&minus;250.000.000,00%", "&minus;200.000.000,00%", "&minus;150.000.000,00%",
@@ -1073,7 +1072,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, pattern = "a{x}b") %>%
+  x_percent(vec_num_1, pattern = "a{x}b", output = "html") %>%
     expect_equal(
       c(
         "a&minus;250.00%b", "a&minus;200.00%b", "a&minus;150.00%b",
@@ -1100,7 +1099,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, force_sign = TRUE) %>%
+  x_percent(vec_num_1, force_sign = TRUE, output = "html") %>%
     expect_equal(
       c(
         "&minus;250.00%", "&minus;200.00%", "&minus;150.00%", "&minus;100.00%",
@@ -1127,7 +1126,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, placement = "left") %>%
+  x_percent(vec_num_1, placement = "left", output = "html") %>%
     expect_equal(
       c(
         "&minus;%250.00", "&minus;%200.00", "&minus;%150.00", "&minus;%100.00",
@@ -1154,7 +1153,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, incl_space = TRUE) %>%
+  x_percent(vec_num_1, incl_space = TRUE, output = "html") %>%
     expect_equal(
       c(
         "&minus;250.00 %", "&minus;200.00 %", "&minus;150.00 %", "&minus;100.00 %",
@@ -1181,7 +1180,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, placement = "left", incl_space = TRUE) %>%
+  x_percent(vec_num_1, placement = "left", incl_space = TRUE, output = "html") %>%
     expect_equal(
       c(
         "&minus;% 250.00", "&minus;% 200.00", "&minus;% 150.00", "&minus;% 100.00",
@@ -1217,27 +1216,9 @@ test_that("The `x_percent()` function works", {
   expect_error(x_percent(dplyr::tibble(a = c(1, 2, 3))))
 })
 
-# x_fraction <- function(
-#     x,
-#     accuracy = NULL,
-#     simplify = TRUE,
-#     layout = c("diagonal", "inline"),
-#     use_seps = TRUE,
-#     pattern = "{x}",
-#     sep_mark = ",",
-#     locale = NULL,
-#     output = c("html", "latex", "rtf")
-
-# range_0_1 <- c(0.0001, 0.001, 0.01, 0.1, 0.25, 0.4, 0.5, 0.6, 0.75, 0.9, 0.99, 0.999, 0.9999)
-# range_0_1_minus <- range_0_1 * -1
-# range_1_2 <- range_0_1 + 1
-# range_1_2_minus <- range_0_1_minus - 1
-# exact_numbers <- c(-1, 0, 1)
-# not_numbers <- c(NA_real_, NaN, Inf, -Inf)
-
 test_that("The `x_fraction()` function works", {
 
-  x_fraction(range_0_1) %>%
+  x_fraction(range_0_1, output = "html") %>%
     expect_equal(
       c(
         "0", "0", "0", "<span class=\"gt_fraction_numerator\">1</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">9</span>",
@@ -1269,7 +1250,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(range_0_1_minus) %>%
+  x_fraction(range_0_1_minus, output = "html") %>%
     expect_equal(
       c(
         "0", "0", "0", "&minus;<span class=\"gt_fraction_numerator\">1</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">9</span>",
@@ -1303,7 +1284,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(range_1_2) %>%
+  x_fraction(range_1_2, output = "html") %>%
     expect_equal(
       c(
         "1", "1", "1", "1&#8239;<span class=\"gt_fraction_numerator\">1</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">9</span>",
@@ -1337,7 +1318,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(range_1_2_minus) %>%
+  x_fraction(range_1_2_minus, output = "html") %>%
     expect_equal(
       c(
         "&minus;1", "&minus;1", "&minus;1", "&minus;1&#8239;<span class=\"gt_fraction_numerator\">1</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">9</span>",
@@ -1371,7 +1352,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(range_0_1, layout = "inline") %>%
+  x_fraction(range_0_1, layout = "inline", output = "html") %>%
     expect_equal(
       c(
         "0", "0", "0", "1/9", "1/4", "2/5", "1/2", "3/5", "3/4", "8/9",
@@ -1395,7 +1376,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(range_0_1_minus, layout = "inline") %>%
+  x_fraction(range_0_1_minus, layout = "inline", output = "html") %>%
     expect_equal(
       c(
         "0", "0", "0", "&minus;1/9", "&minus;1/4", "&minus;2/5", "&minus;1/2",
@@ -1420,7 +1401,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(range_1_2, layout = "inline") %>%
+  x_fraction(range_1_2, layout = "inline", output = "html") %>%
     expect_equal(
       c(
         "1", "1", "1", "1 1/9", "1 1/4", "1 2/5", "1 1/2", "1 3/5",
@@ -1445,7 +1426,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(range_1_2_minus, layout = "inline") %>%
+  x_fraction(range_1_2_minus, layout = "inline", output = "html") %>%
     expect_equal(
       c(
         "&minus;1", "&minus;1", "&minus;1", "&minus;1 1/9", "&minus;1 1/4",
@@ -1646,7 +1627,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(c(5000.3, 10000.8)) %>%
+  x_fraction(c(5000.3, 10000.8), output = "html") %>%
     expect_equal(
       c(
         "5,000&#8239;<span class=\"gt_fraction_numerator\">2</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">7</span>",
@@ -1676,7 +1657,7 @@ test_that("The `x_fraction()` function works", {
   # x_fraction(c(5000.3, 10000.8), use_seps = FALSE, output = "rtf") %>%
   #   expect_equal(c())
 
-  x_fraction(c(5000.3, 10000.8), sep_mark = ".") %>%
+  x_fraction(c(5000.3, 10000.8), sep_mark = ".", output = "html") %>%
     expect_equal(
       c(
         "5.000&#8239;<span class=\"gt_fraction_numerator\">2</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">7</span>",
@@ -1690,7 +1671,7 @@ test_that("The `x_fraction()` function works", {
   x_fraction(c(5000.3, 10000.8), sep_mark = ".", output = "rtf") %>%
     expect_equal(c("5.000{\\super 2}/{\\sub 7}", "10.000{\\super 4}/{\\sub 5}"))
 
-  x_fraction(c(0.5, 1.5), pattern = "a{x}b") %>%
+  x_fraction(c(0.5, 1.5), pattern = "a{x}b", output = "html") %>%
     expect_equal(
       c(
         "a<span class=\"gt_fraction_numerator\">1</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">2</span>b",
@@ -1704,7 +1685,7 @@ test_that("The `x_fraction()` function works", {
   x_fraction(c(0.5, 1.5), pattern = "a{x}b", output = "rtf") %>%
     expect_equal(c("a{\\super 1}/{\\sub 2}b", "a1{\\super 1}/{\\sub 2}b"))
 
-  x_fraction(c(0.5, 1.5), pattern = "a{x}b", layout = "inline") %>%
+  x_fraction(c(0.5, 1.5), pattern = "a{x}b", layout = "inline", output = "html") %>%
     expect_equal(c("a1/2b", "a1 1/2b"))
 
   x_fraction(c(0.5, 1.5), pattern = "a{x}b", layout = "inline", output = "latex") %>%
@@ -1713,7 +1694,7 @@ test_that("The `x_fraction()` function works", {
   x_fraction(c(0.5, 1.5), pattern = "a{x}b", layout = "inline", output = "rtf") %>%
     expect_equal(c("a1/2b", "a1 1/2b"))
 
-  x_fraction(exact_numbers) %>%
+  x_fraction(exact_numbers, output = "html") %>%
     expect_equal(c("&minus;1", "0", "1"))
 
   x_fraction(exact_numbers, output = "latex") %>%
@@ -1722,7 +1703,7 @@ test_that("The `x_fraction()` function works", {
   x_fraction(exact_numbers, output = "rtf") %>%
     expect_equal(c("-1", "0", "1"))
 
-  x_fraction(exact_numbers, layout = "inline") %>%
+  x_fraction(exact_numbers, layout = "inline", output = "html") %>%
     expect_equal(c("&minus;1", "0", "1"))
 
   x_fraction(exact_numbers, layout = "inline", output = "latex") %>%
@@ -1731,7 +1712,7 @@ test_that("The `x_fraction()` function works", {
   x_fraction(exact_numbers, layout = "inline", output = "rtf") %>%
     expect_equal(c("-1", "0", "1"))
 
-  x_fraction(not_numbers) %>%
+  x_fraction(not_numbers, output = "html") %>%
     expect_equal(c("NA", "NaN", "Inf", "-Inf"))
 
   x_fraction(not_numbers, output = "latex") %>%
@@ -1740,7 +1721,7 @@ test_that("The `x_fraction()` function works", {
   x_fraction(not_numbers, output = "rtf") %>%
     expect_equal(c("NA", "NaN", "Inf", "-Inf"))
 
-  x_fraction(not_numbers, layout = "inline") %>%
+  x_fraction(not_numbers, layout = "inline", output = "html") %>%
     expect_equal(c("NA", "NaN", "Inf", "-Inf"))
 
   x_fraction(not_numbers, layout = "inline", output = "latex") %>%
@@ -1762,7 +1743,7 @@ test_that("The `x_fraction()` function works", {
 
 test_that("The `x_currency()` function works", {
 
-  x_currency(vec_num_1) %>%
+  x_currency(vec_num_1, output = "html") %>%
     expect_equal(
       c(
         "&minus;$2.50", "&minus;$2.00", "&minus;$1.50", "&minus;$1.00",
@@ -1789,7 +1770,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, use_subunits = FALSE) %>%
+  x_currency(vec_num_1, use_subunits = FALSE, output = "html") %>%
     expect_equal(
       c(
         "&minus;$2", "&minus;$2", "&minus;$2", "&minus;$1", "&minus;$0",
@@ -1814,7 +1795,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_6, decimals = 4) %>%
+  x_currency(vec_num_6, decimals = 4, output = "html") %>%
     expect_equal(
       c(
         "$0.0000", "$0.1000", "$0.2000", "$0.3000", "$0.4000", "$0.5000",
@@ -1849,11 +1830,11 @@ test_that("The `x_currency()` function works", {
 
   # Expect that using `decimals = 0` is equivalent to `use_subunits = FALSE`
   expect_equal(
-    x_currency(seq(-5, 5, 0.1), decimals = 0),
-    x_currency(seq(-5, 5, 0.1), use_subunits = FALSE)
+    x_currency(seq(-5, 5, 0.1), decimals = 0, output = "html"),
+    x_currency(seq(-5, 5, 0.1), use_subunits = FALSE, output = "html")
   )
 
-  x_currency(vec_num_6, decimals = 0, drop_trailing_dec_mark = FALSE) %>%
+  x_currency(vec_num_6, decimals = 0, drop_trailing_dec_mark = FALSE, output = "html") %>%
     expect_equal(
       c(
         "$0.", "$0.", "$0.", "$0.", "$0.", "$0.", "$1.", "$1.", "$1.",
@@ -1883,7 +1864,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_4, use_seps = FALSE) %>%
+  x_currency(vec_num_4, use_seps = FALSE, output = "html") %>%
     expect_equal(
       c(
         "&minus;$2500000.00", "&minus;$2000000.00", "&minus;$1500000.00",
@@ -1912,7 +1893,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, accounting = TRUE) %>%
+  x_currency(vec_num_1, accounting = TRUE, output = "html") %>%
     expect_equal(
       c(
         "($2.50)", "($2.00)", "($1.50)", "($1.00)", "($0.50)", "$0.00",
@@ -1939,7 +1920,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, scale_by = 2.5) %>%
+  x_currency(vec_num_1, scale_by = 2.5, output = "html") %>%
     expect_equal(
       c(
         "&minus;$6.25", "&minus;$5.00", "&minus;$3.75", "&minus;$2.50",
@@ -1966,7 +1947,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_4, locale = "de") %>%
+  x_currency(vec_num_4, locale = "de", output = "html") %>%
     expect_equal(
       c(
         "&minus;$2.500.000,00", "&minus;$2.000.000,00", "&minus;$1.500.000,00",
@@ -1996,7 +1977,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_4, suffixing = TRUE) %>%
+  x_currency(vec_num_4, suffixing = TRUE, output = "html") %>%
     expect_equal(
       c(
         "&minus;$2.50M", "&minus;$2.00M", "&minus;$1.50M", "&minus;$1.00M",
@@ -2023,7 +2004,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, pattern = "a{x}b") %>%
+  x_currency(vec_num_1, pattern = "a{x}b", output = "html") %>%
     expect_equal(
       c(
         "a&minus;$2.50b", "a&minus;$2.00b", "a&minus;$1.50b", "a&minus;$1.00b",
@@ -2051,7 +2032,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_4, sep_mark = " ", dec_mark = ",") %>%
+  x_currency(vec_num_4, sep_mark = " ", dec_mark = ",", output = "html") %>%
     expect_equal(
       c(
         "&minus;$2 500 000,00", "&minus;$2 000 000,00", "&minus;$1 500 000,00",
@@ -2081,7 +2062,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, force_sign = TRUE) %>%
+  x_currency(vec_num_1, force_sign = TRUE, output = "html") %>%
     expect_equal(
       c(
         "&minus;$2.50", "&minus;$2.00", "&minus;$1.50", "&minus;$1.00",
@@ -2108,7 +2089,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, incl_space = TRUE) %>%
+  x_currency(vec_num_1, incl_space = TRUE, output = "html") %>%
     expect_equal(
       c(
         "&minus;$ 2.50", "&minus;$ 2.00", "&minus;$ 1.50", "&minus;$ 1.00",
@@ -2135,7 +2116,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, placement = "right") %>%
+  x_currency(vec_num_1, placement = "right", output = "html") %>%
     expect_equal(
       c(
         "&minus;2.50$", "&minus;2.00$", "&minus;1.50$", "&minus;1.00$",
@@ -2162,7 +2143,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, incl_space = TRUE, placement = "right") %>%
+  x_currency(vec_num_1, incl_space = TRUE, placement = "right", output = "html") %>%
     expect_equal(
       c(
         "&minus;2.50 $", "&minus;2.00 $", "&minus;1.50 $", "&minus;1.00 $",
@@ -2189,7 +2170,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, currency = "EUR") %>%
+  x_currency(vec_num_1, currency = "EUR", output = "html") %>%
     expect_equal(
       c(
         "&minus;&#8364;2.50", "&minus;&#8364;2.00", "&minus;&#8364;1.50",
@@ -2236,4 +2217,577 @@ test_that("The `x_currency()` function works", {
   expect_error(x_currency(TRUE))
   expect_error(x_currency(list(1, 2, 3)))
   expect_error(x_currency(dplyr::tibble(a = c(1, 2, 3))))
+})
+
+test_that("The `x_bytes()` function works", {
+
+  x_bytes(vec_num_1, standard = "decimal", output = "html") %>%
+    expect_equal(
+      c(
+        "&minus;2 B", "&minus;2 B", "&minus;1 B", "&minus;1 B", "0 B",
+        "0 B", "0 B", "1 B", "1 B", "2 B", "2 B", "NA", "Inf YB"
+      )
+    )
+
+  x_bytes(vec_num_1, standard = "decimal", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2 B$", "$-2 B$", "$-1 B$", "$-1 B$", "$0 B$", "$0 B$", "$0 B$",
+        "$1 B$", "$1 B$", "$2 B$", "$2 B$", "NA", "$Inf YB$"
+      )
+    )
+
+  x_bytes(vec_num_1, standard = "decimal", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2 B", "-2 B", "-1 B", "-1 B", "0 B", "0 B", "0 B", "1 B",
+        "1 B", "2 B", "2 B", "NA", "Inf YB"
+      )
+    )
+
+  x_bytes(vec_num_2, standard = "decimal", output = "html") %>%
+    expect_equal(
+      c(
+        "&minus;25 B", "&minus;20 B", "&minus;15 B", "&minus;10 B",
+        "&minus;5 B", "0 B", "5 B", "10 B", "15 B", "20 B", "25 B", "NA",
+        "Inf YB"
+      )
+    )
+
+  x_bytes(vec_num_2, standard = "decimal", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-25 B$", "$-20 B$", "$-15 B$", "$-10 B$", "$-5 B$", "$0 B$",
+        "$5 B$", "$10 B$", "$15 B$", "$20 B$", "$25 B$", "NA", "$Inf YB$"
+      )
+    )
+
+  x_bytes(vec_num_2, standard = "decimal", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-25 B", "-20 B", "-15 B", "-10 B", "-5 B", "0 B", "5 B", "10 B",
+        "15 B", "20 B", "25 B", "NA", "Inf YB"
+      )
+    )
+
+  x_bytes(vec_num_3, standard = "decimal", output = "html") %>%
+    expect_equal(
+      c(
+        "&minus;250 B", "&minus;200 B", "&minus;150 B", "&minus;100 B",
+        "&minus;50 B", "0 B", "50 B", "100 B", "150 B", "200 B", "250 B",
+        "NA", "Inf YB"
+      )
+    )
+
+  x_bytes(vec_num_3, standard = "decimal", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-250 B$", "$-200 B$", "$-150 B$", "$-100 B$", "$-50 B$",
+        "$0 B$", "$50 B$", "$100 B$", "$150 B$", "$200 B$", "$250 B$",
+        "NA", "$Inf YB$"
+      )
+    )
+
+  x_bytes(vec_num_3, standard = "decimal", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-250 B", "-200 B", "-150 B", "-100 B", "-50 B", "0 B", "50 B",
+        "100 B", "150 B", "200 B", "250 B", "NA", "Inf YB"
+      )
+    )
+
+  x_bytes(vec_num_4, standard = "decimal", output = "html") %>%
+    expect_equal(
+      c(
+        "&minus;2.5 MB", "&minus;2 MB", "&minus;1.5 MB", "&minus;1 MB",
+        "&minus;500 kB", "0 B", "500 kB", "1 MB", "1.5 MB", "2 MB", "2.5 MB",
+        "NA", "Inf YB"
+      )
+    )
+
+  x_bytes(vec_num_4, standard = "decimal", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.5 MB$", "$-2 MB$", "$-1.5 MB$", "$-1 MB$", "$-500 kB$",
+        "$0 B$", "$500 kB$", "$1 MB$", "$1.5 MB$", "$2 MB$", "$2.5 MB$",
+        "NA", "$Inf YB$"
+      )
+    )
+
+  x_bytes(vec_num_4, standard = "decimal", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.5 MB", "-2 MB", "-1.5 MB", "-1 MB", "-500 kB", "0 B", "500 kB",
+        "1 MB", "1.5 MB", "2 MB", "2.5 MB", "NA", "Inf YB"
+      )
+    )
+
+  x_bytes(vec_num_5, standard = "decimal", output = "html") %>%
+    expect_equal(
+      c(
+        "&minus;2.5 TB", "&minus;2 TB", "&minus;1.5 TB", "&minus;1 TB",
+        "&minus;500 GB", "0 B", "500 GB", "1 TB", "1.5 TB", "2 TB", "2.5 TB",
+        "NA", "Inf YB"
+      )
+    )
+
+  x_bytes(vec_num_5, standard = "decimal", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.5 TB$", "$-2 TB$", "$-1.5 TB$", "$-1 TB$", "$-500 GB$",
+        "$0 B$", "$500 GB$", "$1 TB$", "$1.5 TB$", "$2 TB$", "$2.5 TB$",
+        "NA", "$Inf YB$"
+      )
+    )
+
+  x_bytes(vec_num_5, standard = "decimal", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.5 TB", "-2 TB", "-1.5 TB", "-1 TB", "-500 GB", "0 B", "500 GB",
+        "1 TB", "1.5 TB", "2 TB", "2.5 TB", "NA", "Inf YB"
+      )
+    )
+
+  x_bytes(vec_num_6, standard = "decimal", output = "html") %>%
+    expect_equal(
+      c(
+        "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B",
+        "0 B", "1 B", "1 B", "1 B", "1 B", "1 B", "1 B", "1 B", "1 B",
+        "1 B", "1 B", "2 B"
+      )
+    )
+
+  x_bytes(vec_num_6, standard = "decimal", output = "latex") %>%
+    expect_equal(
+      c(
+        "$0 B$", "$0 B$", "$0 B$", "$0 B$", "$0 B$", "$0 B$", "$0 B$",
+        "$0 B$", "$0 B$", "$0 B$", "$1 B$", "$1 B$", "$1 B$", "$1 B$",
+        "$1 B$", "$1 B$", "$1 B$", "$1 B$", "$1 B$", "$1 B$", "$2 B$"
+      )
+    )
+
+  x_bytes(vec_num_6, standard = "decimal", output = "rtf") %>%
+    expect_equal(
+      c(
+        "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B",
+        "0 B", "1 B", "1 B", "1 B", "1 B", "1 B", "1 B", "1 B", "1 B",
+        "1 B", "1 B", "2 B"
+      )
+    )
+
+  x_bytes(vec_num_1, standard = "binary", output = "html") %>%
+    expect_equal(
+      c(
+        "&minus;2 B", "&minus;2 B", "&minus;1 B", "&minus;1 B", "0 B",
+        "0 B", "0 B", "1 B", "1 B", "2 B", "2 B", "NA", "Inf YiB"
+      )
+    )
+
+  x_bytes(vec_num_1, standard = "binary", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2 B$", "$-2 B$", "$-1 B$", "$-1 B$", "$0 B$", "$0 B$", "$0 B$",
+        "$1 B$", "$1 B$", "$2 B$", "$2 B$", "NA", "$Inf YiB$"
+      )
+    )
+
+  x_bytes(vec_num_1, standard = "binary", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2 B", "-2 B", "-1 B", "-1 B", "0 B", "0 B", "0 B", "1 B",
+        "1 B", "2 B", "2 B", "NA", "Inf YiB"
+      )
+    )
+
+  x_bytes(vec_num_2, standard = "binary", output = "html") %>%
+    expect_equal(
+      c(
+        "&minus;25 B", "&minus;20 B", "&minus;15 B", "&minus;10 B",
+        "&minus;5 B", "0 B", "5 B", "10 B", "15 B", "20 B", "25 B", "NA",
+        "Inf YiB"
+      )
+    )
+
+  x_bytes(vec_num_2, standard = "binary", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-25 B$", "$-20 B$", "$-15 B$", "$-10 B$", "$-5 B$", "$0 B$",
+        "$5 B$", "$10 B$", "$15 B$", "$20 B$", "$25 B$", "NA", "$Inf YiB$"
+      )
+    )
+
+  x_bytes(vec_num_2, standard = "binary", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-25 B", "-20 B", "-15 B", "-10 B", "-5 B", "0 B", "5 B", "10 B",
+        "15 B", "20 B", "25 B", "NA", "Inf YiB"
+      )
+    )
+
+  x_bytes(vec_num_3, standard = "binary", output = "html") %>%
+    expect_equal(
+      c(
+        "&minus;250 B", "&minus;200 B", "&minus;150 B", "&minus;100 B",
+        "&minus;50 B", "0 B", "50 B", "100 B", "150 B", "200 B", "250 B",
+        "NA", "Inf YiB"
+      )
+    )
+
+  x_bytes(vec_num_3, standard = "binary", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-250 B$", "$-200 B$", "$-150 B$", "$-100 B$", "$-50 B$",
+        "$0 B$", "$50 B$", "$100 B$", "$150 B$", "$200 B$", "$250 B$",
+        "NA", "$Inf YiB$"
+      )
+    )
+
+  x_bytes(vec_num_3, standard = "binary", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-250 B", "-200 B", "-150 B", "-100 B", "-50 B", "0 B", "50 B",
+        "100 B", "150 B", "200 B", "250 B", "NA", "Inf YiB"
+      )
+    )
+
+  x_bytes(vec_num_4, standard = "binary", output = "html") %>%
+    expect_equal(
+      c(
+        "&minus;2.4 MiB", "&minus;1.9 MiB", "&minus;1.4 MiB", "&minus;976.6 KiB",
+        "&minus;488.3 KiB", "0 B", "488.3 KiB", "976.6 KiB", "1.4 MiB",
+        "1.9 MiB", "2.4 MiB", "NA", "Inf YiB"
+      )
+    )
+
+  x_bytes(vec_num_4, standard = "binary", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.4 MiB$", "$-1.9 MiB$", "$-1.4 MiB$", "$-976.6 KiB$", "$-488.3 KiB$",
+        "$0 B$", "$488.3 KiB$", "$976.6 KiB$", "$1.4 MiB$", "$1.9 MiB$",
+        "$2.4 MiB$", "NA", "$Inf YiB$"
+      )
+    )
+
+  x_bytes(vec_num_4, standard = "binary", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.4 MiB", "-1.9 MiB", "-1.4 MiB", "-976.6 KiB", "-488.3 KiB",
+        "0 B", "488.3 KiB", "976.6 KiB", "1.4 MiB", "1.9 MiB", "2.4 MiB",
+        "NA", "Inf YiB"
+      )
+    )
+
+  x_bytes(vec_num_5, standard = "binary", output = "html") %>%
+    expect_equal(
+      c(
+        "&minus;2.3 TiB", "&minus;1.8 TiB", "&minus;1.4 TiB", "&minus;931.3 GiB",
+        "&minus;465.7 GiB", "0 B", "465.7 GiB", "931.3 GiB", "1.4 TiB",
+        "1.8 TiB", "2.3 TiB", "NA", "Inf YiB"
+      )
+    )
+
+  x_bytes(vec_num_5, standard = "binary", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.3 TiB$", "$-1.8 TiB$", "$-1.4 TiB$", "$-931.3 GiB$", "$-465.7 GiB$",
+        "$0 B$", "$465.7 GiB$", "$931.3 GiB$", "$1.4 TiB$", "$1.8 TiB$",
+        "$2.3 TiB$", "NA", "$Inf YiB$"
+      )
+    )
+
+  x_bytes(vec_num_5, standard = "binary", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.3 TiB", "-1.8 TiB", "-1.4 TiB", "-931.3 GiB", "-465.7 GiB",
+        "0 B", "465.7 GiB", "931.3 GiB", "1.4 TiB", "1.8 TiB", "2.3 TiB",
+        "NA", "Inf YiB"
+      )
+    )
+
+  x_bytes(vec_num_6, standard = "binary", output = "html") %>%
+    expect_equal(
+      c(
+        "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B",
+        "0 B", "1 B", "1 B", "1 B", "1 B", "1 B", "1 B", "1 B", "1 B",
+        "1 B", "1 B", "2 B"
+      )
+    )
+
+  x_bytes(vec_num_6, standard = "binary", output = "latex") %>%
+    expect_equal(
+      c(
+        "$0 B$", "$0 B$", "$0 B$", "$0 B$", "$0 B$", "$0 B$", "$0 B$",
+        "$0 B$", "$0 B$", "$0 B$", "$1 B$", "$1 B$", "$1 B$", "$1 B$",
+        "$1 B$", "$1 B$", "$1 B$", "$1 B$", "$1 B$", "$1 B$", "$2 B$"
+      )
+    )
+
+  x_bytes(vec_num_6, standard = "binary", output = "rtf") %>%
+    expect_equal(
+      c(
+        "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B",
+        "0 B", "1 B", "1 B", "1 B", "1 B", "1 B", "1 B", "1 B", "1 B",
+        "1 B", "1 B", "2 B"
+      )
+    )
+
+  x_bytes(vec_num_5, decimals = 4, drop_trailing_zeros = TRUE, output = "html") %>%
+    expect_equal(
+      c(
+        "&minus;2.5 TB", "&minus;2 TB", "&minus;1.5 TB", "&minus;1 TB",
+        "&minus;500 GB", "0 B", "500 GB", "1 TB", "1.5 TB", "2 TB", "2.5 TB",
+        "NA", "  Inf YB"
+      )
+    )
+
+  x_bytes(vec_num_5, decimals = 4, drop_trailing_zeros = TRUE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.5 TB$", "$-2 TB$", "$-1.5 TB$", "$-1 TB$", "$-500 GB$",
+        "$0 B$", "$500 GB$", "$1 TB$", "$1.5 TB$", "$2 TB$", "$2.5 TB$",
+        "NA", "$  Inf YB$"
+      )
+    )
+
+  x_bytes(vec_num_5, decimals = 4, drop_trailing_zeros = TRUE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.5 TB", "-2 TB", "-1.5 TB", "-1 TB", "-500 GB", "0 B", "500 GB",
+        "1 TB", "1.5 TB", "2 TB", "2.5 TB", "NA", "  Inf YB"
+      )
+    )
+
+  x_bytes(vec_num_5, decimals = 4, drop_trailing_zeros = FALSE, output = "html") %>%
+    expect_equal(
+      c(
+        "&minus;2.5000 TB", "&minus;2.0000 TB", "&minus;1.5000 TB",
+        "&minus;1.0000 TB", "&minus;500.0000 GB", "0.0000 B", "500.0000 GB",
+        "1.0000 TB", "1.5000 TB", "2.0000 TB", "2.5000 TB", "NA", "  Inf YB"
+      )
+    )
+
+  x_bytes(vec_num_5, decimals = 4, drop_trailing_zeros = FALSE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.5000 TB$", "$-2.0000 TB$", "$-1.5000 TB$", "$-1.0000 TB$",
+        "$-500.0000 GB$", "$0.0000 B$", "$500.0000 GB$", "$1.0000 TB$",
+        "$1.5000 TB$", "$2.0000 TB$", "$2.5000 TB$", "NA", "$  Inf YB$"
+      )
+    )
+
+  x_bytes(vec_num_5, decimals = 4, drop_trailing_zeros = FALSE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.5000 TB", "-2.0000 TB", "-1.5000 TB", "-1.0000 TB", "-500.0000 GB",
+        "0.0000 B", "500.0000 GB", "1.0000 TB", "1.5000 TB", "2.0000 TB",
+        "2.5000 TB", "NA", "  Inf YB"
+      )
+    )
+
+  x_bytes(vec_num_5, decimals = 0, drop_trailing_dec_mark = FALSE, output = "html") %>%
+    expect_equal(
+      c(
+        "&minus;2. TB", "&minus;2. TB", "&minus;2. TB", "&minus;1. TB",
+        "&minus;500. GB", "0. B", "500. GB", "1. TB", "2. TB", "2. TB",
+        "2. TB", "NA", "Inf. YB"
+      )
+    )
+
+  x_bytes(vec_num_5, decimals = 0, drop_trailing_dec_mark = FALSE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2. TB$", "$-2. TB$", "$-2. TB$", "$-1. TB$", "$-500. GB$",
+        "$0. B$", "$500. GB$", "$1. TB$", "$2. TB$", "$2. TB$", "$2. TB$",
+        "NA", "$Inf. YB$"
+      )
+    )
+
+  x_bytes(vec_num_5, decimals = 0, drop_trailing_dec_mark = FALSE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2. TB", "-2. TB", "-2. TB", "-1. TB", "-500. GB", "0. B",
+        "500. GB", "1. TB", "2. TB", "2. TB", "2. TB", "NA", "Inf. YB"
+      )
+    )
+
+  x_bytes(vec_num_4, n_sigfig = 3, output = "html") %>%
+    expect_equal(
+      c(
+        "&minus;2.50 MB", "&minus;2.00 MB", "&minus;1.50 MB", "&minus;1.00 MB",
+        "&minus;500 kB", "0 B", "500 kB", "1.00 MB", "1.50 MB", "2.00 MB",
+        "2.50 MB", "NA", " Inf YB"
+      )
+    )
+
+  x_bytes(vec_num_1, n_sigfig = 3, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.00 B$", "$-2.00 B$", "$-1.00 B$", "$-1.00 B$", "$0 B$",
+        "$0 B$", "$0 B$", "$1.00 B$", "$1.00 B$", "$2.00 B$", "$2.00 B$",
+        "NA", "$ Inf YB$"
+      )
+    )
+
+  x_bytes(vec_num_1, n_sigfig = 3, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.00 B", "-2.00 B", "-1.00 B", "-1.00 B", "0 B", "0 B", "0 B",
+        "1.00 B", "1.00 B", "2.00 B", "2.00 B", "NA", " Inf YB"
+      )
+    )
+
+  x_bytes(c(1e6, 1e9, 1e12, 1e15, 1e18, 1e21, 1e24, 1e27), use_seps = FALSE, output = "html") %>%
+    expect_equal(c("1 MB", "1 GB", "1 TB", "1 PB", "1 EB", "1 ZB", "1 YB", "1000 YB"))
+
+  x_bytes(c(1e6, 1e9, 1e12, 1e15, 1e18, 1e21, 1e24, 1e27), use_seps = FALSE, output = "latex") %>%
+    expect_equal(c("$1 MB$", "$1 GB$", "$1 TB$", "$1 PB$", "$1 EB$", "$1 ZB$", "$1 YB$", "$1000 YB$"))
+
+  x_bytes(c(1e6, 1e9, 1e12, 1e15, 1e18, 1e21, 1e24, 1e27), use_seps = FALSE, output = "rtf") %>%
+    expect_equal(c("1 MB", "1 GB", "1 TB", "1 PB", "1 EB", "1 ZB", "1 YB", "1000 YB"))
+
+  x_bytes(vec_num_1, pattern = "a{x}b", output = "html") %>%
+    expect_equal(
+      c(
+        "a&minus;2 Bb", "a&minus;2 Bb", "a&minus;1 Bb", "a&minus;1 Bb",
+        "a0 Bb", "a0 Bb", "a0 Bb", "a1 Bb", "a1 Bb", "a2 Bb", "a2 Bb",
+        "NA", "aInf YBb"
+      )
+    )
+
+  x_bytes(vec_num_1, pattern = "a{x}b", output = "latex") %>%
+    expect_equal(
+      c(
+        "a$-2 B$b", "a$-2 B$b", "a$-1 B$b", "a$-1 B$b", "a$0 B$b",
+        "a$0 B$b", "a$0 B$b", "a$1 B$b", "a$1 B$b", "a$2 B$b", "a$2 B$b",
+        "NA", "a$Inf YB$b"
+      )
+    )
+
+  x_bytes(vec_num_1, pattern = "a{x}b", output = "rtf") %>%
+    expect_equal(
+      c(
+        "a-2 Bb", "a-2 Bb", "a-1 Bb", "a-1 Bb", "a0 Bb", "a0 Bb", "a0 Bb",
+        "a1 Bb", "a1 Bb", "a2 Bb", "a2 Bb", "NA", "aInf YBb"
+      )
+    )
+
+  x_bytes(vec_num_5, locale = "de", output = "html") %>%
+    expect_equal(
+      c(
+        "&minus;2,5 TB", "&minus;2 TB", "&minus;1,5 TB", "&minus;1 TB",
+        "&minus;500 GB", "0 B", "500 GB", "1 TB", "1,5 TB", "2 TB", "2,5 TB",
+        "NA", "Inf YB"
+      )
+    )
+
+  x_bytes(vec_num_5, locale = "de", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2,5 TB$", "$-2 TB$", "$-1,5 TB$", "$-1 TB$", "$-500 GB$",
+        "$0 B$", "$500 GB$", "$1 TB$", "$1,5 TB$", "$2 TB$", "$2,5 TB$",
+        "NA", "$Inf YB$"
+      )
+    )
+
+  x_bytes(vec_num_5, locale = "de", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2,5 TB", "-2 TB", "-1,5 TB", "-1 TB", "-500 GB", "0 B", "500 GB",
+        "1 TB", "1,5 TB", "2 TB", "2,5 TB", "NA", "Inf YB"
+      )
+    )
+
+  x_bytes(
+    vec_num_5 * 1e15, decimals = 1, drop_trailing_zeros = FALSE,
+    sep_mark = " ", dec_mark = ",", output = "html"
+  ) %>%
+    expect_equal(
+      c(
+        "&minus;2 500,0 YB", "&minus;2 000,0 YB", "&minus;1 500,0 YB",
+        "&minus;1 000,0 YB", "&minus;500,0 YB", "0,0 B", "500,0 YB",
+        "1 000,0 YB", "1 500,0 YB", "2 000,0 YB", "2 500,0 YB", "NA",
+        "Inf YB"
+      )
+    )
+
+  x_bytes(
+    vec_num_5 * 1e15, decimals = 1, drop_trailing_zeros = FALSE,
+    sep_mark = " ", dec_mark = ",", output = "latex"
+  ) %>%
+    expect_equal(
+      c(
+        "$-2 500,0 YB$", "$-2 000,0 YB$", "$-1 500,0 YB$", "$-1 000,0 YB$",
+        "$-500,0 YB$", "$0,0 B$", "$500,0 YB$", "$1 000,0 YB$", "$1 500,0 YB$",
+        "$2 000,0 YB$", "$2 500,0 YB$", "NA", "$Inf YB$"
+      )
+    )
+
+  x_bytes(
+    vec_num_5 * 1e15, decimals = 1, drop_trailing_zeros = FALSE,
+    sep_mark = " ", dec_mark = ",", output = "rtf"
+  ) %>%
+    expect_equal(
+      c(
+        "-2 500,0 YB", "-2 000,0 YB", "-1 500,0 YB", "-1 000,0 YB",
+        "-500,0 YB", "0,0 B", "500,0 YB", "1 000,0 YB", "1 500,0 YB",
+        "2 000,0 YB", "2 500,0 YB", "NA", "Inf YB"
+      )
+    )
+
+  x_bytes(vec_num_1, force_sign = TRUE, output = "html") %>%
+    expect_equal(
+      c(
+        "&minus;2 B", "&minus;2 B", "&minus;1 B", "&minus;1 B", "0 B",
+        "0 B", "0 B", "+1 B", "+1 B", "+2 B", "+2 B", "NA", "+Inf YB"
+      )
+    )
+
+  x_bytes(vec_num_1, force_sign = TRUE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2 B$", "$-2 B$", "$-1 B$", "$-1 B$", "$0 B$", "$0 B$", "$0 B$",
+        "$+1 B$", "$+1 B$", "$+2 B$", "$+2 B$", "NA", "$+Inf YB$"
+      )
+    )
+
+  x_bytes(vec_num_1, force_sign = TRUE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2 B", "-2 B", "-1 B", "-1 B", "0 B", "0 B", "0 B", "+1 B",
+        "+1 B", "+2 B", "+2 B", "NA", "+Inf YB"
+      )
+    )
+
+  x_bytes(vec_num_1, incl_space = FALSE, output = "html") %>%
+    expect_equal(
+      c(
+        "&minus;2B", "&minus;2B", "&minus;1B", "&minus;1B", "0B", "0B",
+        "0B", "1B", "1B", "2B", "2B", "NA", "InfYB"
+      )
+    )
+
+  x_bytes(vec_num_1, incl_space = FALSE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2B$", "$-2B$", "$-1B$", "$-1B$", "$0B$", "$0B$", "$0B$",
+        "$1B$", "$1B$", "$2B$", "$2B$", "NA", "$InfYB$"
+      )
+    )
+
+  x_bytes(vec_num_1, incl_space = FALSE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2B", "-2B", "-1B", "-1B", "0B", "0B", "0B", "1B", "1B", "2B",
+        "2B", "NA", "InfYB"
+      )
+    )
+
+  expect_equal(x_bytes(numeric(0)), character(0))
+  expect_equal(x_bytes(integer(0)), character(0))
+
+  expect_error(x_bytes(c(1, 2), standard = "NONE"))
+  expect_error(x_bytes(letters))
+  expect_error(x_bytes(TRUE))
+  expect_error(x_bytes(list(1, 2, 3)))
+  expect_error(x_bytes(dplyr::tibble(a = c(1, 2, 3))))
 })
