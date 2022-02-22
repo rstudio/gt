@@ -89,7 +89,6 @@ Collate:
     'gt-package.R'
     'gt.R'
     'gt_preview.R'
-    'gtr.R'
     'helpers.R'
     'image.R'
     'info_tables.R'
