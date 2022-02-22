@@ -120,6 +120,6 @@ tab_2 <-
 \seealso{
 Other Create Table: 
 \code{\link{gt_preview}()},
-\code{\link{gtr}()}
+\code{\link{gti}()}
 }
 \concept{Create Table}

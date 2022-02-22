@@ -161,7 +161,9 @@ tab_options(
   ihtml.use_search = NULL,
   ihtml.use_sorting = NULL,
   ihtml.use_filters = NULL,
-  ihtml.use_resizers = NULL
+  ihtml.use_resizers = NULL,
+  ihtml.use_highlight = NULL,
+  ihtml.use_compact_mode = NULL
 )
 }
 \arguments{
