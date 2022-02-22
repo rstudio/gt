@@ -1,7 +1,7 @@
-#' Create a **gt** table object
+#' Create an interactive, HTML-based **gt** table object
 #'
 #' @description
-#' The `gtr()` function creates an interactive **gt** table object when provided
+#' The `gti()` function creates an interactive **gt** table object when provided
 #' with table data. Using this function is the first step in a typical **gt**
 #' workflow. Once we have the **gt** table object, we can perform styling
 #' transformations before rendering to a display table of various formats.
@@ -49,14 +49,14 @@
 #'   possibility when providing `data` as a `grouped_df` with multiple groups)
 #'   in the displayed stub row group label.
 #'
-#' @return An object of class `gtr_tbl`.
+#' @return An object of class `gti_tbl`.
 #'
 #' @family Create Table
 #' @section Function ID:
 #' 1-3
 #'
 #' @export
-gtr <- function(
+gti <- function(
     data,
     rowname_col = "rowname",
     groupname_col = dplyr::group_vars(data),
@@ -81,9 +81,9 @@ gtr <- function(
       row_group.sep = row_group.sep
     )
 
-  # Apply the `gtr_tbl` class to the object while
+  # Apply the `gti_tbl` class to the object while
   # also keeping the `gt_tbl` and `data.frame` classes
-  class(data) <- c("gtr_tbl", "gt_tbl", "list")
+  class(data) <- c("gti_tbl", "gt_tbl", "list")
 
   data
 }
