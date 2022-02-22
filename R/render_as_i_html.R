@@ -1,6 +1,6 @@
 #' Transform a **gt** table object to an HTML table
 #'
-#' Take a `gtr_tbl` table object and transform it to an HTML table.
+#' Take a `gti_tbl` table object and transform it to an HTML table.
 #'
 #' @param data A table object that is created using the `gt()` function.
 #'
@@ -98,6 +98,13 @@ render_as_i_html <- function(data, id) {
     )
   names(col_defs) <- column_names
 
+  # TODO: Add `html_style`s to `col_defs`
+  # Obtain the rendered HTML table body
+  body_styles_tbl <-
+    dt_styles_get(data = data) %>%
+    dplyr::filter(locname %in% c("data", "stub")) %>%
+    dplyr::select(colname, rownum, html_style)
+
   # Process the table heading, if available
   if (dt_heading_has_title(data = data)) {
 
@@ -105,19 +112,25 @@ render_as_i_html <- function(data, id) {
 
     heading_component <-
       htmltools::div(
+        class = "gt_table",
+        style = htmltools::css(
+          `border-top-style` = "solid",
+          `border-top-width` = "2px",
+          `border-top-color` = "#D3D3D3",
+          `padding-bottom` = "8px"
+        ),
         id = id,
-        class = "gt_header",
         htmltools::div(
           id = id,
           class = "gt_heading gt_title gt_font_normal",
+          style = htmltools::css(`text-size` = "bigger"),
           htmltools::HTML(tbl_heading$title)
         ),
         htmltools::div(
           id = id,
           class = "gt_heading gt_subtitle gt_bottom_border",
           htmltools::HTML(tbl_heading$subtitle)
-        ),
-        htmltools::br()
+        )
       )
   } else {
     heading_component <- ""
@@ -137,7 +150,11 @@ render_as_i_html <- function(data, id) {
         fontFamily = table_font_style
       ),
       tableStyle = NULL,
-      headerStyle = NULL,
+      headerStyle = list(
+        borderTopStyle = "solid",
+        borderTopWidth = "2px",
+        borderTopColor = "#D3D3D3"
+      ),
       groupHeaderStyle = NULL,
       tableBodyStyle = NULL,
       rowGroupStyle = NULL,
