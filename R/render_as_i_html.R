@@ -11,7 +11,7 @@ render_as_i_html <- function(data, id) {
 
   data <- build_data(data = data, context = "html")
 
-  # Upgrade `_styles` to gain a `html_style` column with CSS style rules
+  # Upgrade `_styles` to gain a `js_style` column with CSS style rules
   data <- add_css_styles(data = data)
 
   # caption_component <- create_caption_component_h(data = data)
@@ -98,12 +98,61 @@ render_as_i_html <- function(data, id) {
     )
   names(col_defs) <- column_names
 
-  # TODO: Add `html_style`s to `col_defs`
-  # Obtain the rendered HTML table body
+  #
+  # Add custom styles to `col_defs`
+  #
+
   body_styles_tbl <-
     dt_styles_get(data = data) %>%
     dplyr::filter(locname %in% c("data", "stub")) %>%
+    dplyr::arrange(colnum, rownum) %>%
     dplyr::select(colname, rownum, html_style)
+
+  cols_with_styles <- unique(body_styles_tbl[["colname"]])
+
+  for (column_i in cols_with_styles) {
+
+    styles_for_col <-
+      body_styles_tbl %>%
+      dplyr::filter(colname == .env$column_i) %>%
+      dplyr::select(rownum, html_style) %>%
+      dplyr::group_by(html_style) %>%
+      dplyr::summarize(rownums = list(rownum))
+
+    for (i in seq_len(nrow(styles_for_col))) {
+
+      html_style_cell <- styles_for_col[[i, "html_style"]]
+      row_indices <- unlist(styles_for_col[[i, "rownums"]])
+
+      html_style_cell <-
+        unlist(strsplit(html_style_cell, "; ")) %>%
+        gsub("(-)\\s*(.)", "\\U\\2", ., perl = TRUE) %>%
+        gsub("(:)\\s*(.*)", ": '\\2'", ., perl = TRUE) %>%
+        paste(collapse = ", ")
+
+      js_style_cell_fn <-
+        JS(
+          paste0(
+            "function(rowInfo) {
+        var value = rowInfo.row['", column_i, "']
+        if (", paste(paste("value ==", row_indices), collapse = " | "), ") {
+          return { ", html_style_cell, " }
+        }
+      }"
+          )
+        )
+
+      # Append style to appropriate column in `col_defs`
+      if (column_i %in% names(col_defs)) {
+
+        col_defs[[column_i]] <-
+          append(
+            col_defs[[column_i]],
+            reactable::colDef(style = js_style_cell_fn)
+          )
+      }
+    }
+  }
 
   # Process the table heading, if available
   if (dt_heading_has_title(data = data)) {
