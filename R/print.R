@@ -2,16 +2,16 @@
 #'
 #' This facilitates printing of the HTML table to the R console.
 #'
-#' @param x An object of class `gtr_tbl`.
+#' @param x An object of class `gti_tbl`.
 #' @param ... Any additional parameters.
 #' @param view The value for `print()`s `browse` argument.
 #'
 #' @keywords internal
 #'
 #' @export
-print.gtr_tbl <- function(x, ..., view = interactive()) {
+print.gti_tbl <- function(x, ..., view = interactive()) {
 
-  html_tbl <- as.tags.gtr_tbl(x, ...)
+  html_tbl <- as.tags.gti_tbl(x, ...)
 
   # Use `print()` to print to the console
   print(html_tbl, browse = view, ...)
@@ -130,7 +130,7 @@ as.tags.gt_tbl <- function(x, ...) {
 #'
 #' @keywords internal
 #' @noRd
-as.tags.gtr_tbl <- function(x, ...) {
+as.tags.gti_tbl <- function(x, ...) {
 
   table_id <- dt_options_get_value(x, option = "table_id")
 
