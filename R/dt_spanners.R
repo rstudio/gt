@@ -91,17 +91,73 @@ dt_spanners_print <- function(data, include_hidden = TRUE, ids = FALSE) {
   } else {
     vars <- dt_boxhead_get_vars(data = data)
   }
-
-  vars_list <- rep(NA_character_, length(vars)) %>% magrittr::set_names(vars)
+  vars_vec <- rep(NA_character_, length(vars))
+  names(vars_vec) <- vars
 
   for (i in seq_len(nrow(spanners))) {
 
     if (ids) {
-      vars_list[spanners$vars[[i]]] <- spanners$spanner_id[i]
+      vars_vec[spanners$vars[[i]]] <- spanners$spanner_id[i]
     } else {
-      vars_list[spanners$vars[[i]]] <- spanners$built[[i]]
+      vars_vec[spanners$vars[[i]]] <- spanners$built[[i]]
     }
   }
 
-  unname(vars_list[names(vars_list) %in% vars])
+  unname(vars_vec[names(vars_vec) %in% vars])
+}
+
+dt_spanners_print_matrix <- function(
+    data,
+    include_hidden = TRUE,
+    ids = FALSE
+) {
+
+  spanners_tbl <- dt_spanners_get(data = data)
+
+  spanner_height <- max(spanners_tbl[["spanner_level"]])
+
+  if (!include_hidden) {
+    vars <- dt_boxhead_get_vars_default(data = data)
+  } else {
+    vars <- dt_boxhead_get_vars(data = data)
+  }
+  vars_vec <- rep(NA_character_, length(vars))
+  names(vars_vec) <- vars
+
+  # Initialize matrix to serve as boxhead representation
+  columns_mat <- matrix(vars, nrow = 1, ncol = length(vars))
+
+  columns_mat <-
+    rbind(
+      columns_mat,
+      matrix(vars_vec, nrow = spanner_height - 1, ncol = length(vars_vec))
+    )
+  colnames(columns_mat) <- vars
+
+  spanners_tbl <- spanners_tbl %>% dplyr::filter(spanner_level > 1)
+
+  columns_mat_id <- columns_mat_labels <- columns_mat
+
+  for (i in seq_len(nrow(spanners_tbl))) {
+
+    columns_mat_id[spanners_tbl$spanner_level[[i]], spanners_tbl$vars[[i]]] <-
+      spanners_tbl$spanner_id[i]
+
+    columns_mat_labels[spanners_tbl$spanner_level[[i]], spanners_tbl$vars[[i]]] <-
+      spanners_tbl$built[i]
+  }
+
+  # Flip matrix in y direction to put boxhead levels in display order
+  columns_mat_id <- columns_mat_id[rev(seq_len(nrow(columns_mat_id))), ]
+  columns_mat_labels <- columns_mat_labels[rev(seq_len(nrow(columns_mat_labels))), ]
+
+  # TODO: Prune any rows that are completely filled with NA values
+
+  # TODO: Promote ids/labels to highest possible levels
+
+  if (ids) {
+    return(columns_mat_id)
+  } else {
+    return(columns_mat_labels)
+  }
 }

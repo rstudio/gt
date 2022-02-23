@@ -439,6 +439,9 @@ create_columns_component_h <- function(data) {
     spanners <- dt_spanners_print(data = data, include_hidden = FALSE)
     spanner_ids <- dt_spanners_print(data = data, include_hidden = FALSE, ids = TRUE)
 
+    # spanners <- dt_spanners_print_matrix(data = data, include_hidden = FALSE)
+    # spanner_ids <- dt_spanners_print_matrix(data = data, include_hidden = FALSE, ids = TRUE)
+
     # A list of <th> elements that will go in the top row. This includes
     # spanner labels and column labels for solo columns (don't have spanner
     # labels); in the latter case, rowspan=2 will be used.

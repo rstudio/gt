@@ -217,6 +217,9 @@ resolve_spanner_level <- function(
       )
     }
 
+    # TODO: Only allow `level = 1` if `column_names` doesn't collide
+    # with those column names underneath existing spanners
+
     return(as.integer(level))
   }
 
