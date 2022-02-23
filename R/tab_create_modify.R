@@ -61,6 +61,11 @@ tab_header <- function(data,
 #' @inheritParams fmt_number
 #' @param label The text to use for the spanner column label.
 #' @param columns The columns to be components of the spanner heading.
+#' @param spanners The spanners that should be spanned over, should they already
+#'   be defined.
+#' @param level An explicit level to which the spanner should be placed. If not
+#'   provided, **gt** will choose the level based on the inputs provided within
+#'   `columns` and `spanners`.
 #' @param id The ID for the spanner column label. When accessing a spanner
 #'   column label through [cells_column_spanners()] (when using [tab_style()] or
 #'   [tab_footnote()]) the `id` value is used as the reference (and not the
@@ -107,36 +112,57 @@ tab_header <- function(data,
 #' @export
 tab_spanner <- function(data,
                         label,
-                        columns,
+                        columns = NULL,
+                        spanners = NULL,
+                        level = NULL,
                         id = label,
                         gather = TRUE) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  checkmate::assert_character(
-    label, len = 1, any.missing = FALSE, null.ok = FALSE
-  )
-
-  checkmate::assert_character(
-    id, len = 1, any.missing = FALSE, null.ok = FALSE
-  )
-
   # Get the columns supplied in `columns` as a character vector
   column_names <-
     resolve_cols_c(
       expr = {{ columns }},
-      data = data
+      data = data,
+      null_means = "nothing"
     )
 
-  # If `column_names` evaluates to an empty vector or is NULL,
+  # Get the spanner IDs supplied in `spanners` as a character vector
+  spanner_id_idx <-
+    with_vars(
+      vars = dt_spanners_get_ids(data = data),
+      expr = spanners
+    )
+
+  spanner_ids <- dt_spanners_get_ids(data = data)[spanner_id_idx]
+
+  # If `column_names` and `spanner_ids` have zero lengths then
   # return the data unchanged
-  if (length(column_names) < 1) {
+  if (length(column_names) < 1 && length(spanner_ids) < 1) {
     return(data)
   }
 
-  # Check `id` against existing `id` values and stop if necessary
+  # Check new `id` against existing `id` values and stop if necessary
   check_spanner_id_unique(data = data, spanner_id = id)
+
+  # Resolve the `level` of the new spanner
+  level <-
+    resolve_spanner_level(
+      data = data,
+      column_names = column_names,
+      spanner_ids = spanner_ids,
+      level = level
+    )
+
+  # Resolve the `column_names` that new spanner will span over
+  column_names <-
+    resolve_spanned_column_names(
+      data = data,
+      column_names = column_names,
+      spanner_ids = spanner_ids
+    )
 
   # Add the spanner to the `_spanners` table
   data <-
@@ -145,12 +171,21 @@ tab_spanner <- function(data,
       vars = column_names,
       spanner_label = label,
       spanner_id = id,
+      spanner_level = level,
       gather = gather
     )
 
-  if (isTRUE(gather) && length(column_names) >= 1) {
+  # Move columns into place with `cols_move()` only if specific
+  # conditions are met:
+  # - `gather` should be TRUE
+  # - `spanner_ids` should be empty
+  # - `level` is NULL or `1`
+  if (
+    gather &&
+    length(spanner_ids) < 1 &&
+    (is.null(level) || level == 1)
+    ) {
 
-    # Move columns into place
     data <-
       cols_move(
         data = data,
@@ -160,6 +195,93 @@ tab_spanner <- function(data,
   }
 
   data
+}
+
+resolve_spanner_level <- function(
+  data,
+  column_names,
+  spanner_ids,
+  level
+) {
+
+  any_existing_spanners <- dt_spanners_exists(data = data)
+
+  # If explicitly providing a `level`, ensure it's at least 1 or above
+  if (!is.null(level)) {
+
+    if (level < 1) {
+      stop(
+        "A spanner level of ", level, " cannot be set:\n",
+        "* Please choose a `level` value greater than or equal to `1`",
+        call. = FALSE
+      )
+    }
+
+    return(as.integer(level))
+  }
+
+  # If spanning exclusively over column labels, and there aren't any
+  # existing spanners, then the new spanner level is always `1`
+  if (length(spanner_ids) < 1 && !any_existing_spanners) {
+    return(1L)
+  }
+
+  spanners_existing <- dt_spanners_get(data = data)
+
+  if (length(spanner_ids) < 1 && any_existing_spanners) {
+
+    highest_level <- 0L
+
+    spanners_existing <-
+      spanners_existing %>%
+      dplyr::select(spanner_id, vars, spanner_level)
+
+    for (i in seq_len(nrow(spanners_existing))) {
+
+      spanned_vars <- unlist(spanners_existing[[i, "vars"]])
+      level <- spanners_existing[[i, "spanner_level"]]
+
+      if (any(column_names %in% spanned_vars)) {
+        if (level > highest_level) {
+          highest_level <- level
+        }
+      }
+    }
+
+    return(highest_level + 1L)
+  }
+
+  # If spanning over any existing spanners then the new spanner
+  # level is one greater than the highest of the spanners with `spanner_ids`
+  spanner_levels_under <-
+    spanners_existing[["spanner_level"]][
+      spanners_existing[["spanner_id"]] == spanner_ids
+    ]
+
+  max(spanner_levels_under) + 1L
+}
+
+resolve_spanned_column_names <- function(
+  data,
+  column_names,
+  spanner_ids
+) {
+
+  if (length(spanner_ids) > 0) {
+
+    spanners_existing <- dt_spanners_get(data = data)
+
+    column_names_associated <-
+      unlist(
+        spanners_existing[["vars"]][
+          spanners_existing[["spanner_id"]] == spanner_ids
+        ]
+      )
+
+    column_names <- unique(c(column_names, column_names_associated))
+  }
+
+  column_names
 }
 
 #' Create column labels and spanners via delimited names
