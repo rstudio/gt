@@ -4,7 +4,15 @@
 \alias{tab_spanner}
 \title{Add a spanner column label}
 \usage{
-tab_spanner(data, label, columns, id = label, gather = TRUE)
+tab_spanner(
+  data,
+  label,
+  columns = NULL,
+  spanners = NULL,
+  level = NULL,
+  id = label,
+  gather = TRUE
+)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -12,6 +20,13 @@ tab_spanner(data, label, columns, id = label, gather = TRUE)
 \item{label}{The text to use for the spanner column label.}
 
 \item{columns}{The columns to be components of the spanner heading.}
+
+\item{spanners}{The spanners that should be spanned over, should they already
+be defined.}
+
+\item{level}{An explicit level to which the spanner should be placed. If not
+provided, \strong{gt} will choose the level based on the inputs provided within
+\code{columns} and \code{spanners}.}
 
 \item{id}{The ID for the spanner column label. When accessing a spanner
 column label through \code{\link[=cells_column_spanners]{cells_column_spanners()}} (when using \code{\link[=tab_style]{tab_style()}} or
