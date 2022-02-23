@@ -21,6 +21,8 @@ dt_spanners_init <- function(data) {
     spanner_label = list(),
     # The spanner id
     spanner_id = character(0),
+    # The spanner level
+    spanner_level = integer(0),
     # Should be columns be gathered under a single spanner label?
     gather = logical(0),
     built = NA_character_
@@ -32,6 +34,7 @@ dt_spanners_add <- function(data,
                             vars,
                             spanner_label,
                             spanner_id,
+                            spanner_level,
                             gather) {
 
 
@@ -41,6 +44,7 @@ dt_spanners_add <- function(data,
         vars = list(vars),
         spanner_label = list(spanner_label),
         spanner_id = as.character(spanner_id),
+        spanner_level = as.integer(spanner_level),
         gather = gather,
         built = NA_character_
       )
