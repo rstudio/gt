@@ -2455,7 +2455,7 @@ random_id <- function(n = 10) {
 #' function will transform a character vector so that it is safe to use within
 #' LaTeX tables.
 #'
-#' @param text a character vector containing the text that is to be
+#' @param text A character vector containing the text that is to be
 #'   LaTeX-escaped.
 #'
 #' @return A character vector.
