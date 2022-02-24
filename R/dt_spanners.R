@@ -109,7 +109,8 @@ dt_spanners_print <- function(data, include_hidden = TRUE, ids = FALSE) {
 dt_spanners_print_matrix <- function(
     data,
     include_hidden = TRUE,
-    ids = FALSE
+    ids = FALSE,
+    omit_columns_row = FALSE
 ) {
 
   spanners_tbl <- dt_spanners_get(data = data)
@@ -168,6 +169,11 @@ dt_spanners_print_matrix <- function(
   if (length(na_rows) > 0) {
     columns_mat_id <- columns_mat_id[-na_rows, ]
     columns_mat_labels <- columns_mat_labels[-na_rows, ]
+  }
+
+  if (omit_columns_row) {
+    columns_mat_id <- columns_mat_id[-nrow(columns_mat_id), , drop = FALSE]
+    columns_mat_labels <- columns_mat_labels[-nrow(columns_mat_labels), , drop = FALSE]
   }
 
   if (ids) {
