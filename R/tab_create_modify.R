@@ -131,7 +131,7 @@ tab_spanner <- function(data,
 
   # Get the spanner IDs supplied in `spanners` as a character vector
   spanner_id_idx <-
-    with_vars(
+    tidyselect::with_vars(
       vars = dt_spanners_get_ids(data = data),
       expr = spanners
     )
