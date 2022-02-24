@@ -650,6 +650,7 @@ create_columns_component_h <- function(data) {
 
       spanner_ids_row <- spanner_ids[i, ]
       spanners_row <- spanners[i, ]
+      spanners_vars <- unique(spanner_ids_row[!is.na(spanner_ids_row)])
 
       # Replace NA values with an empty string ID
       spanner_ids_row[is.na(spanner_ids_row)] <- ""
@@ -669,6 +670,20 @@ create_columns_component_h <- function(data) {
       for (j in seq_along(colspans)) {
 
         if (colspans[j] > 0) {
+
+          styles_spanners <-
+            dplyr::filter(
+              styles_tbl,
+              locname == "columns_groups",
+              grpname == spanners_vars
+            )
+
+          spanner_style <-
+            if (nrow(styles_spanners) > 0) {
+              styles_spanners$html_style
+            } else {
+              NULL
+            }
 
           level_i_spanners[[length(level_i_spanners) + 1]] <-
             htmltools::tags$th(
