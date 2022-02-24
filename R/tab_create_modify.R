@@ -1359,11 +1359,7 @@ set_style.cells_column_labels <- function(loc, data, style) {
 
 set_style.cells_column_spanners <- function(loc, data, style) {
 
-  resolved <-
-    resolve_cells_column_spanners(
-      data = data,
-      object = {{ loc }}
-    )
+  resolved <- resolve_cells_column_spanners(data = data, object = loc)
 
   groups <- resolved$spanners
 
