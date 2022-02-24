@@ -207,12 +207,13 @@ resolve_footnotes_styles <- function(data,
 
     tbl_column_cells <-
       tbl %>%
-      dplyr::select(-colnum) %>%
+      dplyr::select(-colnum, -rownum) %>%
       dplyr::filter(locname == "columns_columns") %>%
       dplyr::inner_join(
         dplyr::tibble(
           colnum = seq(default_vars),
-          colname = default_vars
+          colname = default_vars,
+          rownum = -1L
         ),
         by = "colname"
       )
@@ -229,33 +230,73 @@ resolve_footnotes_styles <- function(data,
   # For the column spanner label cells, insert a
   # `colnum` based on `boxh_df`
   if ("columns_groups" %in% tbl[["locname"]]) {
-    vars_default <- seq_along(dt_boxhead_get_vars_default(data = data))
-
-    spanners_ids <-
-      dt_spanners_print(
-        data = data,
-        include_hidden = FALSE,
-        ids = TRUE
-      )
-
-    group_label_df <-
-      dplyr::tibble(
-        colnum = seq(vars_default),
-        grpname = spanners_ids
-      ) %>%
-      dplyr::group_by(grpname) %>%
-      dplyr::summarize(colnum = min(colnum))
 
     tbl_not_col_spanner_cells <- dplyr::filter(tbl, locname != "columns_groups")
 
+    vars_default <- seq_along(dt_boxhead_get_vars_default(data = data))
+
+    spanner_id_names <- dt_spanners_get_ids(data = data)
+
+    spanners_matrix_ids <-
+      dt_spanners_print_matrix(
+        data = data,
+        include_hidden = FALSE,
+        ids = TRUE, omit_columns_row = TRUE
+      )
+
+    spanner_id <- spanner_start_colname <- spanner_start_colnum <- level <- c()
+
+    for (i in seq_along(spanner_id_names)) {
+
+      if (spanner_id_names[i] %in% spanners_matrix_ids) {
+
+        for (j in seq_len(nrow(spanners_matrix_ids))) {
+
+          if (spanner_id_names[i] %in% spanners_matrix_ids[j, ]) {
+
+            spanner_start_colname_i <-
+              names(
+                sort(
+                  spanners_matrix_ids[j, ] == spanner_id_names[i],
+                  decreasing = TRUE
+                )[1]
+              )
+
+            spanner_start_colname <- c(spanner_start_colname, spanner_start_colname_i)
+
+            spanner_start_colnum <-
+              c(
+                spanner_start_colnum,
+                which(default_vars == spanner_start_colname_i)
+              )
+
+            level <-
+              c(
+                level,
+                ((rev(seq_len(nrow(spanners_matrix_ids))) + 1) * (-1))[j]
+              )
+
+            spanner_id <- c(spanner_id, spanner_id_names[i])
+          }
+        }
+      }
+    }
+
+    spanner_label_df <-
+      dplyr::tibble(
+        grpname = spanner_id,
+        colname = spanner_start_colname,
+        colnum = spanner_start_colnum,
+        rownum = level
+      )
+
     tbl_column_spanner_cells <-
       tbl %>%
-      dplyr::select(-colnum) %>%
+      dplyr::select(-colnum, -colname, -rownum) %>%
       dplyr::filter(locname == "columns_groups") %>%
-      dplyr::inner_join(group_label_df, by = "grpname")
+      dplyr::inner_join(spanner_label_df, by = "grpname")
 
-    # Re-combine `tbl_not_col_spanner_cells`
-    # with `tbl_not_col_spanner_cells`
+    # Re-combine `tbl_not_col_spanner_cells` with `tbl_not_col_spanner_cells`
     tbl <-
       dplyr::bind_rows(
         tbl_not_col_spanner_cells,
@@ -324,6 +365,15 @@ set_footnote_marks_columns <- function(data,
   boxh <- dt_boxhead_get(data = data)
   footnotes_tbl <- dt_footnotes_get(data = data)
 
+  # Get the correct `footnote_mark_to_*()` function for the context
+  footnote_mark_fn <-
+    switch(
+      context,
+      html = footnote_mark_to_html,
+      latex = footnote_mark_to_latex,
+      rtf = footnote_mark_to_rtf
+    )
+
   # If there are any footnotes to apply to the columns,
   # process them individually for the spanner groups and
   # for the column label groups
@@ -336,15 +386,17 @@ set_footnote_marks_columns <- function(data,
       )
 
     # Filter the spanner column footnotes
-    footnotes_columns_group_tbl <- dplyr::filter(footnotes_tbl, !is.na(grpname))
+    footnotes_columns_groups_tbl <-
+      dplyr::filter(footnotes_tbl, locname == "columns_groups")
 
     # Filter the column label footnotes
-    footnotes_columns_column_tbl <- dplyr::filter(footnotes_tbl, !is.na(colname))
+    footnotes_columns_columns_tbl <-
+      dplyr::filter(footnotes_tbl, locname == "columns_columns")
 
-    if (nrow(footnotes_columns_group_tbl) > 0) {
+    if (nrow(footnotes_columns_groups_tbl) > 0) {
 
       footnotes_columns_group_marks <-
-        footnotes_columns_group_tbl %>%
+        footnotes_columns_groups_tbl %>%
         dplyr::group_by(grpname) %>%
         dplyr::mutate(fs_id_coalesced = paste(fs_id, collapse = ",")) %>%
         dplyr::ungroup() %>%
@@ -354,41 +406,12 @@ set_footnote_marks_columns <- function(data,
       for (i in seq(nrow(footnotes_columns_group_marks))) {
 
         spanners <- dt_spanners_get(data = data)
-        spanner_labels <- dt_spanners_print(data = data)
-        spanner_ids <- dt_spanners_print(data = data, ids = TRUE)
+        spanner_labels <- dt_spanners_print_matrix(data = data, omit_columns_row = TRUE) %>% as.vector()
+        spanner_ids <- dt_spanners_print_matrix(data = data, ids = TRUE, omit_columns_row = TRUE) %>% as.vector()
+        vector_indices <- which(spanner_ids == footnotes_columns_group_marks$grpname[i])
 
-        column_indices <-
-          which(spanner_ids == footnotes_columns_group_marks$grpname[i])
-
-        text <- unique(spanner_labels[column_indices])
-
-        if (context == "html") {
-
-          text <-
-            paste0(
-              text,
-              footnote_mark_to_html(
-                footnotes_columns_group_marks$fs_id_coalesced[i])
-            )
-
-        } else if (context == "rtf") {
-
-          text <-
-            paste0(
-              text,
-              footnote_mark_to_rtf(
-                footnotes_columns_group_marks$fs_id_coalesced[i])
-            )
-
-        } else if (context == "latex") {
-
-          text <-
-            paste0(
-              text,
-              footnote_mark_to_latex(
-                footnotes_columns_group_marks$fs_id_coalesced[i])
-            )
-        }
+        text <- unique(spanner_labels[vector_indices])
+        text <- paste0(text, footnote_mark_fn(footnotes_columns_group_marks$fs_id_coalesced[i]))
 
         spanners_i <-
           which(
@@ -401,10 +424,11 @@ set_footnote_marks_columns <- function(data,
       }
     }
 
-    if (nrow(footnotes_columns_column_tbl) > 0) {
+    if (nrow(footnotes_columns_columns_tbl) > 0) {
 
       footnotes_columns_column_marks <-
-        footnotes_columns_column_tbl %>%
+        footnotes_columns_columns_tbl %>%
+        dplyr::filter(locname == "columns_columns") %>%
         dplyr::group_by(colname) %>%
         dplyr::mutate(fs_id_coalesced = paste(fs_id, collapse = ",")) %>%
         dplyr::ungroup() %>%
@@ -413,40 +437,13 @@ set_footnote_marks_columns <- function(data,
 
       for (i in seq(nrow(footnotes_columns_column_marks))) {
 
-        # TODO: make this work with column labels
         text <-
           boxh %>%
           dplyr::filter(var == footnotes_columns_column_marks$colname[i]) %>%
           dplyr::pull(column_label) %>%
           .[[1]]
 
-        if (context == "html") {
-
-          text <-
-            paste0(
-              text,
-              footnote_mark_to_html(
-                footnotes_columns_column_marks$fs_id_coalesced[i])
-            )
-
-        } else if (context == "rtf") {
-
-          text <-
-            paste0(
-              text,
-              footnote_mark_to_rtf(
-                footnotes_columns_column_marks$fs_id_coalesced[i])
-            )
-
-        } else if (context == "latex") {
-
-          text <-
-            paste0(
-              text,
-              footnote_mark_to_latex(
-                footnotes_columns_column_marks$fs_id_coalesced[i])
-            )
-        }
+        text <- paste0(text, footnote_mark_fn(footnotes_columns_column_marks$fs_id_coalesced[i]))
 
         boxh <-
           dplyr::mutate(
