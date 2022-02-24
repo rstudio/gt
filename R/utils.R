@@ -1318,12 +1318,19 @@ validate_style_in <- function(style_vals,
 check_spanner_id_unique <- function(data,
                                     spanner_id) {
 
-  existing_ids <- dt_spanners_get_ids(data = data)
+  existing_ids <-
+    c(
+      dt_spanners_get_ids(data = data), dt_boxhead_get_vars(data = data)
+    )
 
   if (spanner_id %in% existing_ids) {
-    stop("The spanner `id` provided (`\"", spanner_id, "\"`) is not unique:\n",
-         "* provide a unique ID value for this spanner",
-         call. = FALSE)
+
+    stop(
+      "The spanner `id` provided (`\"", spanner_id, "\"`) is not unique:\n",
+      "* The `id` must be unique across existing spanners and column names\n",
+      "* Provide a unique ID value for this spanner",
+      call. = FALSE
+    )
   }
 }
 
@@ -1331,12 +1338,16 @@ check_row_group_id_unique <- function(data,
                                       row_group_id) {
 
   stub_df <- dt_stub_df_get(data = data)
+
   existing_ids <- stub_df$group_id
 
   if (row_group_id %in% existing_ids) {
-    stop("The row group `id` provided (`\"", row_group_id, "\"`) is not unique:\n",
-         "* provide a unique ID value for this row group",
-         call. = FALSE)
+
+    stop(
+      "The row group `id` provided (`\"", row_group_id, "\"`) is not unique:\n",
+      "* Provide a unique ID value for this row group",
+      call. = FALSE
+    )
   }
 }
 
