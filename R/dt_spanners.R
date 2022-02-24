@@ -114,6 +114,9 @@ dt_spanners_print_matrix <- function(
 
   spanners_tbl <- dt_spanners_get(data = data)
 
+  # Get the maximum height of the spanner matrix; this won't
+  # necessarily be the finalized height since we will collapse
+  # empty rows
   spanner_height <- max(spanners_tbl[["spanner_level"]])
 
   if (!include_hidden) {
@@ -130,20 +133,20 @@ dt_spanners_print_matrix <- function(
   columns_mat <-
     rbind(
       columns_mat,
-      matrix(vars_vec, nrow = spanner_height - 1, ncol = length(vars_vec))
+      matrix(vars_vec, nrow = spanner_height, ncol = length(vars_vec))
     )
   colnames(columns_mat) <- vars
 
-  spanners_tbl <- spanners_tbl %>% dplyr::filter(spanner_level > 1)
+  spanners_tbl <- spanners_tbl %>% dplyr::filter(spanner_level >= 1)
 
   columns_mat_id <- columns_mat_labels <- columns_mat
 
   for (i in seq_len(nrow(spanners_tbl))) {
 
-    columns_mat_id[spanners_tbl$spanner_level[[i]], spanners_tbl$vars[[i]]] <-
+    columns_mat_id[spanners_tbl$spanner_level[[i]] + 1, spanners_tbl$vars[[i]]] <-
       spanners_tbl$spanner_id[i]
 
-    columns_mat_labels[spanners_tbl$spanner_level[[i]], spanners_tbl$vars[[i]]] <-
+    columns_mat_labels[spanners_tbl$spanner_level[[i]] + 1, spanners_tbl$vars[[i]]] <-
       spanners_tbl$built[i]
   }
 
@@ -152,8 +155,20 @@ dt_spanners_print_matrix <- function(
   columns_mat_labels <- columns_mat_labels[rev(seq_len(nrow(columns_mat_labels))), ]
 
   # TODO: Prune any rows that are completely filled with NA values
+  na_rows <- c()
+  for (i in seq_len(nrow(columns_mat_id))) {
 
-  # TODO: Promote ids/labels to highest possible levels
+    row_i_unique <- unique(columns_mat_id[i, ])
+
+     if (length(row_i_unique) == 1 && is.na(row_i_unique)) {
+       na_rows <- c(na_rows, i)
+     }
+  }
+
+  if (length(na_rows) > 0) {
+    columns_mat_id <- columns_mat_id[-na_rows, ]
+    columns_mat_labels <- columns_mat_labels[-na_rows, ]
+  }
 
   if (ids) {
     return(columns_mat_id)
