@@ -182,3 +182,16 @@ dt_spanners_print_matrix <- function(
     return(columns_mat_labels)
   }
 }
+
+dt_spanners_matrix_height <- function(
+    data,
+    omit_columns_row = FALSE
+) {
+
+  nrow(
+    dt_spanners_print_matrix(
+      data = data,
+      omit_columns_row = omit_columns_row
+    )
+  )
+}
