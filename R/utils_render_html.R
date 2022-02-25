@@ -439,16 +439,15 @@ create_columns_component_h <- function(data) {
     spanners <- dt_spanners_print_matrix(data = data, include_hidden = FALSE)
     spanner_ids <- dt_spanners_print_matrix(data = data, include_hidden = FALSE, ids = TRUE)
 
-    boxhead_height <- nrow(spanners)
     level_1_index <- nrow(spanners) - 1L
 
-    # A list of <th> elements that will go in the second level; this includes
-    # spanner labels and column labels for solo columns (don't have spanner
-    # labels)
+    # A list of <th> elements that will go in the first level; this
+    # includes spanner labels and column labels for solo columns (don't
+    # have spanner labels above them)
     level_1_spanners <- list()
 
-    # A list of <th> elements that will go in the second row. This is all column
-    # labels that DO have spanners above them.
+    # A list of <th> elements that will go in the second row. This is
+    # all column labels that DO have spanners above them.
     spanned_column_labels <- list()
 
     # Create the cell for the stubhead label
@@ -535,9 +534,10 @@ create_columns_component_h <- function(data) {
 
       } else if (!is.na(spanner_ids[level_1_index, ][i])) {
 
-        # If colspans[i] == 0, it means that a previous cell's colspan
-        # will cover us.
+        # If colspans[i] == 0, it means that a previous cell's `colspan`
+        # will cover us
         if (colspans[i] > 0) {
+
           class <- "gt_column_spanner"
 
           styles_spanners <-
@@ -639,8 +639,7 @@ create_columns_component_h <- function(data) {
     }
   }
 
-
-  if (spanners_present && boxhead_height > 2) {
+  if (dt_spanners_matrix_height(data = data) > 2) {
 
     higher_spanner_rows_idx <- seq_len(nrow(spanner_ids) - 2)
 
