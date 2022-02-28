@@ -343,8 +343,12 @@ create_columns_component_h <- function(data) {
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
 
-  # Determine if there are any spanners present
-  spanners_present <- dt_spanners_exists(data = data)
+  # Determine the finalized number of spanner rows
+  spanner_row_count <-
+    dt_spanners_matrix_height(
+      data = data,
+      omit_columns_row = TRUE
+    )
 
   # Get the column alignments and also the alignment class names
   col_alignment <- dt_boxhead_get_vars_align_default(data = data)
@@ -379,7 +383,7 @@ create_columns_component_h <- function(data) {
 
   table_col_headings <- list()
 
-  if (!spanners_present) {
+  if (spanner_row_count < 1) {
 
     # Create the cell for the stubhead label
     if (length(stub_layout) > 0) {
@@ -434,10 +438,20 @@ create_columns_component_h <- function(data) {
     table_col_headings <- htmltools::tags$tr(table_col_headings)
   }
 
-  if (spanners_present) {
+  if (spanner_row_count > 0) {
 
-    spanners <- dt_spanners_print_matrix(data = data, include_hidden = FALSE)
-    spanner_ids <- dt_spanners_print_matrix(data = data, include_hidden = FALSE, ids = TRUE)
+    spanners <-
+      dt_spanners_print_matrix(
+        data = data,
+        include_hidden = FALSE
+      )
+
+    spanner_ids <-
+      dt_spanners_print_matrix(
+        data = data,
+        include_hidden = FALSE,
+        ids = TRUE
+      )
 
     level_1_index <- nrow(spanners) - 1L
 
