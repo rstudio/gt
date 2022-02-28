@@ -1098,19 +1098,24 @@ create_columns_component_rtf <- function(data) {
 
           level_i_spanners <-
             c(
-              list(rtf_tbl_cell(
-                rtf_font(
-                  font_size = 10,
-                  rtf_raw("")
+              rep(
+                list(
+                  rtf_tbl_cell(
+                    rtf_font(
+                      font_size = 10,
+                      rtf_raw("")
+                    ),
+                    h_align = "center",
+                    borders = list(
+                      rtf_border("top", color = column_labels_border_top_color, width = 40),
+                      rtf_border("bottom", color = column_labels_border_bottom_color),
+                      rtf_border("left", color = column_labels_vlines_color),
+                      rtf_border("right", color = column_labels_vlines_color)
+                    )
+                  )
                 ),
-                h_align = "center",
-                borders = list(
-                  rtf_border("top", color = column_labels_border_top_color, width = 40),
-                  rtf_border("bottom", color = column_labels_border_bottom_color),
-                  rtf_border("left", color = column_labels_vlines_color),
-                  rtf_border("right", color = column_labels_vlines_color)
-                )
-              )),
+                length(stub_layout)
+              ),
               level_i_spanners
             )
         }
