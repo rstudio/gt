@@ -960,8 +960,12 @@ create_columns_component_rtf <- function(data) {
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
 
-  # Determine if there are any spanners present
-  spanners_present <- dt_spanners_exists(data)
+  # Determine the finalized number of spanner rows
+  spanner_row_count <-
+    dt_spanners_matrix_height(
+      data = data,
+      omit_columns_row = TRUE
+    )
 
   # Get options related to column label border colors
   column_labels_border_top_color <- dt_options_get_value(data = data, option = "column_labels_border_top_color")
@@ -1040,124 +1044,123 @@ create_columns_component_rtf <- function(data) {
       }
     )
 
-  if (spanners_present) {
+  if (spanner_row_count > 0) {
 
-    higher_spanner_rows <- list()
+    spanner_rows <- list()
 
-    if (dt_spanners_matrix_height(data = data) > 1) {
+    spanners <-
+      dt_spanners_print_matrix(
+        data = data,
+        include_hidden = FALSE,
+        omit_columns_row = TRUE
+      )
 
-      spanners <- dt_spanners_print_matrix(data = data, include_hidden = FALSE, omit_columns_row = TRUE)
-      spanner_ids <- dt_spanners_print_matrix(data = data, include_hidden = FALSE, ids = TRUE, omit_columns_row = TRUE)
+    spanner_ids <-
+      dt_spanners_print_matrix(
+        data = data,
+        include_hidden = FALSE,
+        ids = TRUE,
+        omit_columns_row = TRUE
+      )
 
-      higher_spanner_rows_idx <- seq_len(nrow(spanner_ids))
+    higher_spanner_rows_idx <- seq_len(nrow(spanner_ids))
 
-      for (i in higher_spanner_rows_idx) {
+    for (i in higher_spanner_rows_idx) {
 
-        spanner_ids_row <- spanner_ids[i, ]
-        spanners_row <- spanners[i, ]
-        spanners_vars <- unique(spanner_ids_row[!is.na(spanner_ids_row)])
+      spanner_ids_row <- spanner_ids[i, ]
+      spanners_row <- spanners[i, ]
+      spanners_vars <- unique(spanner_ids_row[!is.na(spanner_ids_row)])
 
-        # Replace NA values with an empty string ID
-        spanner_ids_row[is.na(spanner_ids_row)] <- ""
-        spanners_row[is.na(spanners_row)] <- ""
+      # Replace NA values with an empty string ID
+      spanner_ids_row[is.na(spanner_ids_row)] <- ""
+      spanners_row[is.na(spanners_row)] <- ""
 
-        spanners_lengths <- unclass(rle(spanner_ids[i, ]))
+      spanners_lengths <- unclass(rle(spanner_ids[i, ]))
 
-        merge_keys_spanners <- c()
+      merge_keys_spanners <- c()
 
-        for (j in seq_along(spanners_lengths$lengths)) {
-          if (spanners_lengths$lengths[j] == 1) {
-            merge_keys_spanners <- c(merge_keys_spanners, 0)
-          } else {
-            merge_keys_spanners <- c(merge_keys_spanners, 1, rep(2, spanners_lengths$lengths[j] - 1))
-          }
+      for (j in seq_along(spanners_lengths$lengths)) {
+        if (spanners_lengths$lengths[j] == 1) {
+          merge_keys_spanners <- c(merge_keys_spanners, 0)
+        } else {
+          merge_keys_spanners <- c(merge_keys_spanners, 1, rep(2, spanners_lengths$lengths[j] - 1))
         }
+      }
+
+      level_i_spanners <-
+        lapply(
+          seq_along(spanner_ids_row),
+          FUN = function(x) {
+            rtf_tbl_cell(
+              rtf_font(
+                font_size = 10,
+                rtf_raw(spanners_row[x])
+              ),
+              h_align = "center",
+              h_merge = merge_keys_spanners[x],
+              borders = list(
+                rtf_border("top", color = column_labels_border_top_color, width = 40),
+                rtf_border("bottom", color = column_labels_border_bottom_color),
+                rtf_border("left", color = column_labels_vlines_color),
+                rtf_border("right", color = column_labels_vlines_color)
+              )
+            )
+          }
+        )
+
+      if (length(stub_layout) > 0) {
 
         level_i_spanners <-
-          lapply(
-            seq_along(spanner_ids_row),
-            FUN = function(x) {
-              rtf_tbl_cell(
-                rtf_font(
-                  font_size = 10,
-                  rtf_raw(spanners_row[x])
-                ),
-                h_align = "center",
-                h_merge = merge_keys_spanners[x],
-                borders = list(
-                  rtf_border("top", color = column_labels_border_top_color, width = 40),
-                  rtf_border("bottom", color = column_labels_border_bottom_color),
-                  rtf_border("left", color = column_labels_vlines_color),
-                  rtf_border("right", color = column_labels_vlines_color)
-                )
-              )
-            }
-          )
-
-        if (length(stub_layout) > 0) {
-
-          level_i_spanners <-
-            c(
-              rep(
-                list(
-                  rtf_tbl_cell(
-                    rtf_font(
-                      font_size = 10,
-                      rtf_raw("")
-                    ),
-                    h_align = "center",
-                    borders = list(
-                      rtf_border("top", color = column_labels_border_top_color, width = 40),
-                      rtf_border("bottom", color = column_labels_border_bottom_color),
-                      rtf_border("left", color = column_labels_vlines_color),
-                      rtf_border("right", color = column_labels_vlines_color)
-                    )
-                  )
-                ),
-                length(stub_layout)
-              ),
-              level_i_spanners
-            )
-        }
-
-        higher_spanner_rows <-
           c(
-            higher_spanner_rows,
-            list(
-              rtf_tbl_row(
-                level_i_spanners,
-                widths = col_widths,
-                height = 0,
-                repeat_header = TRUE
-              )
-            )
+            rep(
+              list(
+                rtf_tbl_cell(
+                  rtf_font(
+                    font_size = 10,
+                    rtf_raw("")
+                  ),
+                  h_align = "center",
+                  borders = list(
+                    rtf_border("top", color = column_labels_border_top_color, width = 40),
+                    rtf_border("bottom", color = column_labels_border_bottom_color),
+                    rtf_border("left", color = column_labels_vlines_color),
+                    rtf_border("right", color = column_labels_vlines_color)
+                  )
+                )
+              ),
+              length(stub_layout)
+            ),
+            level_i_spanners
           )
       }
+
+      spanner_rows <-
+        c(
+          spanner_rows,
+          list(
+            rtf_tbl_row(
+              level_i_spanners,
+              widths = col_widths,
+              height = 0,
+              repeat_header = TRUE
+            )
+          )
+        )
     }
-
-    row_list_column_labels <-
-      list(
-        higher_spanner_rows,
-        rtf_tbl_row(
-          cell_list,
-          widths = col_widths,
-          height = 0,
-          repeat_header = TRUE
-        )
-      )
-
   } else {
-
-    row_list_column_labels <-
-      list(
-        rtf_tbl_row(
-          cell_list,
-          widths = col_widths,
-          height = 0,
-          repeat_header = TRUE
-        )
-      )
+    spanner_rows <- ""
   }
+
+  row_list_column_labels <-
+    list(
+      spanner_rows,
+      rtf_tbl_row(
+        cell_list,
+        widths = col_widths,
+        height = 0,
+        repeat_header = TRUE
+      )
+    )
 
   # Return a list of RTF table rows (either one or two rows)
   row_list_column_labels
