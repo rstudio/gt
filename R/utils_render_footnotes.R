@@ -241,7 +241,8 @@ resolve_footnotes_styles <- function(data,
       dt_spanners_print_matrix(
         data = data,
         include_hidden = FALSE,
-        ids = TRUE, omit_columns_row = TRUE
+        ids = TRUE,
+        omit_columns_row = TRUE
       )
 
     spanner_id <- spanner_start_colname <- spanner_start_colnum <- level <- c()
@@ -290,18 +291,24 @@ resolve_footnotes_styles <- function(data,
         rownum = level
       )
 
-    tbl_column_spanner_cells <-
-      tbl %>%
-      dplyr::select(-colnum, -colname, -rownum) %>%
-      dplyr::filter(locname == "columns_groups") %>%
-      dplyr::inner_join(spanner_label_df, by = "grpname")
+    if (nrow(spanner_label_df) > 0) {
 
-    # Re-combine `tbl_not_col_spanner_cells` with `tbl_not_col_spanner_cells`
-    tbl <-
-      dplyr::bind_rows(
-        tbl_not_col_spanner_cells,
-        tbl_column_spanner_cells
-      )
+      tbl_column_spanner_cells <-
+        tbl %>%
+        dplyr::select(-colnum, -colname, -rownum) %>%
+        dplyr::filter(locname == "columns_groups") %>%
+        dplyr::inner_join(spanner_label_df, by = "grpname")
+
+      # Re-combine `tbl_not_col_spanner_cells` with `tbl_not_col_spanner_cells`
+      tbl <-
+        dplyr::bind_rows(
+          tbl_not_col_spanner_cells,
+          tbl_column_spanner_cells
+        )
+
+    } else {
+      tbl <- tbl_not_col_spanner_cells
+    }
   }
 
   # Sort the table rows
