@@ -118,13 +118,19 @@ dt_spanners_print_matrix <- function(
   # Get the maximum height of the spanner matrix; this won't
   # necessarily be the finalized height since we will collapse
   # empty rows
-  spanner_height <- max(spanners_tbl[["spanner_level"]])
+
+  if (nrow(spanners_tbl) < 1) {
+    spanner_height <- 0
+  } else {
+    spanner_height <- max(spanners_tbl[["spanner_level"]])
+  }
 
   if (!include_hidden) {
     vars <- dt_boxhead_get_vars_default(data = data)
   } else {
     vars <- dt_boxhead_get_vars(data = data)
   }
+
   vars_vec <- rep(NA_character_, length(vars))
   names(vars_vec) <- vars
 
@@ -134,7 +140,9 @@ dt_spanners_print_matrix <- function(
   columns_mat <-
     rbind(
       columns_mat,
+      if (spanner_height > 0) {
       matrix(vars_vec, nrow = spanner_height, ncol = length(vars_vec))
+      }
     )
   colnames(columns_mat) <- vars
 
@@ -142,33 +150,37 @@ dt_spanners_print_matrix <- function(
 
   columns_mat_id <- columns_mat_labels <- columns_mat
 
-  for (i in seq_len(nrow(spanners_tbl))) {
+  if (spanner_height > 0) {
 
-    columns_mat_id[spanners_tbl$spanner_level[[i]] + 1, spanners_tbl$vars[[i]]] <-
-      spanners_tbl$spanner_id[i]
+    for (i in seq_len(nrow(spanners_tbl))) {
 
-    columns_mat_labels[spanners_tbl$spanner_level[[i]] + 1, spanners_tbl$vars[[i]]] <-
-      spanners_tbl$built[i]
-  }
+      columns_mat_id[spanners_tbl$spanner_level[[i]] + 1, spanners_tbl$vars[[i]]] <-
+        spanners_tbl$spanner_id[i]
 
-  # Flip matrix in y direction to put boxhead levels in display order
-  columns_mat_id <- columns_mat_id[rev(seq_len(nrow(columns_mat_id))), ]
-  columns_mat_labels <- columns_mat_labels[rev(seq_len(nrow(columns_mat_labels))), ]
+      columns_mat_labels[spanners_tbl$spanner_level[[i]] + 1, spanners_tbl$vars[[i]]] <-
+        spanners_tbl$built[i]
+    }
 
-  # TODO: Prune any rows that are completely filled with NA values
-  na_rows <- c()
-  for (i in seq_len(nrow(columns_mat_id))) {
+    # Flip matrix in y direction to put boxhead levels in display order
+    columns_mat_id <- columns_mat_id[rev(seq_len(nrow(columns_mat_id))), ]
+    columns_mat_labels <- columns_mat_labels[rev(seq_len(nrow(columns_mat_labels))), ]
 
-    row_i_unique <- unique(columns_mat_id[i, ])
+    # TODO: Prune any rows that are completely filled with NA values
+    na_rows <- c()
+    for (i in seq_len(nrow(columns_mat_id))) {
 
-     if (length(row_i_unique) == 1 && is.na(row_i_unique)) {
-       na_rows <- c(na_rows, i)
-     }
-  }
+      row_i_unique <- unique(columns_mat_id[i, ])
 
-  if (length(na_rows) > 0) {
-    columns_mat_id <- columns_mat_id[-na_rows, ]
-    columns_mat_labels <- columns_mat_labels[-na_rows, ]
+      if (length(row_i_unique) == 1 && is.na(row_i_unique)) {
+        na_rows <- c(na_rows, i)
+      }
+    }
+
+    if (length(na_rows) > 0) {
+      columns_mat_id <- columns_mat_id[-na_rows, ]
+      columns_mat_labels <- columns_mat_labels[-na_rows, ]
+    }
+
   }
 
   if (omit_columns_row) {
