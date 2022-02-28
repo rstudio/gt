@@ -115,20 +115,42 @@ dt_spanners_print_matrix <- function(
 
   spanners_tbl <- dt_spanners_get(data = data)
 
-  # Get the maximum height of the spanner matrix; this won't
-  # necessarily be the finalized height since we will collapse
-  # empty rows
-
-  if (nrow(spanners_tbl) < 1) {
-    spanner_height <- 0
-  } else {
-    spanner_height <- max(spanners_tbl[["spanner_level"]])
-  }
+  remove_entry <- rep(FALSE, nrow(spanners_tbl))
 
   if (!include_hidden) {
     vars <- dt_boxhead_get_vars_default(data = data)
   } else {
     vars <- dt_boxhead_get_vars(data = data)
+  }
+
+  # Keep only the columns in `spanners_tbl` that are in the `vars`;
+  # this will exclude spanners if their columns aren't in `vars` (this
+  # is possible when hiding columns via `col_hide()`
+  for (i in seq_len(nrow(spanners_tbl))) {
+
+    vars_spanner_i <- unlist(spanners_tbl[i, ][["vars"]])
+    vars_spanner_i_flt <- base::intersect(vars_spanner_i, vars)
+
+    if (length(vars_spanner_i_flt) < 1) {
+      # If none of the columns under the proposed spanner are
+      # set as visible columns, then we need to mark the spanner
+      # entry for deletion from `spanners_tbl`
+      remove_entry[i] <- TRUE
+    } else {
+      spanners_tbl[i, ][["vars"]] <- list(vars_spanner_i_flt)
+    }
+  }
+
+  # Remove entries from `spanners_tbl` as needed
+  spanners_tbl <- spanners_tbl[!remove_entry, ]
+
+  # Get the maximum height of the spanner matrix; this won't
+  # necessarily be the finalized height since we will collapse
+  # empty rows
+  if (nrow(spanners_tbl) < 1) {
+    spanner_height <- 0
+  } else {
+    spanner_height <- max(spanners_tbl[["spanner_level"]])
   }
 
   vars_vec <- rep(NA_character_, length(vars))
@@ -197,12 +219,14 @@ dt_spanners_print_matrix <- function(
 
 dt_spanners_matrix_height <- function(
     data,
+    include_hidden = FALSE,
     omit_columns_row = FALSE
 ) {
 
   nrow(
     dt_spanners_print_matrix(
       data = data,
+      include_hidden = include_hidden,
       omit_columns_row = omit_columns_row
     )
   )
