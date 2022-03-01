@@ -28,10 +28,9 @@ be limited to. The default is to consider all columns in the table.}
 unified under the spanner column label. Ordering of the moved-into-place
 columns will be preserved in all cases. By default, this is set to \code{TRUE}.}
 
-\item{split}{Should the delimiter splitting occur at the \code{"last"} instance of
-\code{delim} or the \code{"first"}? By default column name splitting happens at the
-last instance of the delimiter. This relevant only in the case that column
-names included in \code{columns} have multiple instances of the \code{delim}.}
+\item{split}{Should the delimiter splitting occur from the \code{"last"} instance
+of the \code{delim} character or from the \code{"first"}? By default, column name
+splitting begins at the last instance of the delimiter.}
 }
 \value{
 An object of class \code{gt_tbl}.

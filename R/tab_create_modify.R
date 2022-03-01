@@ -136,7 +136,11 @@ tab_spanner <- function(data,
       expr = spanners
     )
 
-  spanner_ids <- dt_spanners_get_ids(data = data)[spanner_id_idx]
+  if (is.numeric(spanner_id_idx)) {
+    spanner_ids <- dt_spanners_get_ids(data = data)[spanner_id_idx]
+  } else {
+    spanner_ids <- base::intersect(dt_spanners_get_ids(data = data), spanner_id_idx)
+  }
 
   # If `column_names` and `spanner_ids` have zero lengths then
   # return the data unchanged
@@ -258,7 +262,7 @@ resolve_spanner_level <- function(
   # level is one greater than the highest of the spanners with `spanner_ids`
   spanner_levels_under <-
     spanners_existing[["spanner_level"]][
-      spanners_existing[["spanner_id"]] == spanner_ids
+      spanners_existing[["spanner_id"]] %in% spanner_ids
     ]
 
   max(spanner_levels_under) + 1L
@@ -277,7 +281,7 @@ resolve_spanned_column_names <- function(
     column_names_associated <-
       unlist(
         spanners_existing[["vars"]][
-          spanners_existing[["spanner_id"]] == spanner_ids
+          spanners_existing[["spanner_id"]] %in% spanner_ids
         ]
       )
 
@@ -317,10 +321,9 @@ resolve_spanned_column_names <- function(
 #'   in those locations) and the second component will be the column label.
 #' @param columns An optional vector of column names that this operation should
 #'   be limited to. The default is to consider all columns in the table.
-#' @param split Should the delimiter splitting occur at the `"last"` instance of
-#'   `delim` or the `"first"`? By default column name splitting happens at the
-#'   last instance of the delimiter. This relevant only in the case that column
-#'   names included in `columns` have multiple instances of the `delim`.
+#' @param split Should the delimiter splitting occur from the `"last"` instance
+#'   of the `delim` character or from the `"first"`? By default, column name
+#'   splitting begins at the last instance of the delimiter.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -375,11 +378,14 @@ tab_spanner_delim <- function(data,
     return(data)
   }
 
+  level <- 0L
+
   colnames_has_delim <- grepl(pattern = delim, x = colnames, fixed = TRUE)
+  colnames_with_delim <- colnames[colnames_has_delim]
 
-  if (any(colnames_has_delim)) {
+  while (any(colnames_has_delim)) {
 
-    colnames_with_delim <- colnames[colnames_has_delim]
+    level <- level + 1L
 
     # Perform regexec match where the delimiter is either declared
     # to be the 'first' instance or the 'last' instance
@@ -402,31 +408,54 @@ tab_spanner_delim <- function(data,
 
     for (label in names(spanner_var_list)) {
 
+      ids_existing <-
+        c(
+          dt_spanners_get_ids(data = data), dt_boxhead_get_vars(data = data)
+        )
+
+      new_spanner_id <- label
+
+      # TODO: split in the opposite direction when `split = "first"`
+      new_label <- gsub(".*?\\.(.*)", "\\1", label)
+
+      if (new_spanner_id %in% ids_existing) {
+        new_spanner_id <- paste0(new_spanner_id, "_", level)
+      }
+
       data <-
         tab_spanner(
           data = data,
-          label = label,
-          columns = spanner_var_list[[label]],
-          gather = gather
+          label = new_label,
+          id = new_spanner_id,
+          columns = if (level == 1) spanner_var_list[[label]],
+          spanners = if (level > 1) spanner_var_list[[label]],
+          gather = if (level == 1) gather else FALSE,
+          level = level
         )
     }
 
-    new_labels <-
-      lapply(split_colnames, `[[`, -1) %>%
-      vapply(paste0, FUN.VALUE = character(1), collapse = delim)
+    if (level == 1) {
 
-    for (i in seq_along(split_colnames)) {
+      new_labels <-
+        lapply(split_colnames, `[[`, -1) %>%
+        vapply(paste0, FUN.VALUE = character(1), collapse = delim)
 
-      new_labels_i <- new_labels[i]
-      var_i <- colnames_with_delim[i]
+      for (i in seq_along(split_colnames)) {
 
-      data <-
-        dt_boxhead_edit(
-          data = data,
-          var = var_i,
-          column_label = new_labels_i
-        )
+        new_labels_i <- new_labels[i]
+        var_i <- colnames_with_delim[i]
+
+        data <-
+          dt_boxhead_edit(
+            data = data,
+            var = var_i,
+            column_label = new_labels_i
+          )
+      }
     }
+
+    colnames_with_delim <- vapply(split_colnames, FUN.VALUE = character(1), `[[`, 1)
+    colnames_has_delim <- grepl(pattern = delim, x = colnames_with_delim, fixed = TRUE)
   }
 
   data
