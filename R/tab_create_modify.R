@@ -65,7 +65,8 @@ tab_header <- function(data,
 #'   be defined.
 #' @param level An explicit level to which the spanner should be placed. If not
 #'   provided, **gt** will choose the level based on the inputs provided within
-#'   `columns` and `spanners`.
+#'   `columns` and `spanners`, placing the spanner where it will fig. The first
+#'   spanner level (right above the column labels) is `1`.
 #' @param id The ID for the spanner column label. When accessing a spanner
 #'   column label through [cells_column_spanners()] (when using [tab_style()] or
 #'   [tab_footnote()]) the `id` value is used as the reference (and not the
@@ -79,6 +80,10 @@ tab_header <- function(data,
 #' @param gather An option to move the specified `columns` such that they are
 #'   unified under the spanner column label. Ordering of the moved-into-place
 #'   columns will be preserved in all cases. By default, this is set to `TRUE`.
+#' @param replace Should new spanners be allowed to partially or fully replace
+#'   existing spanners? (This is a possibility if setting spanners at an already
+#'   populated `level`.) By default, this is set to `FALSE` and an error will
+#'   occur if some replacement is attempted.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -99,7 +104,8 @@ tab_header <- function(data,
 #'     label = "performance",
 #'     columns = c(
 #'       hp, hp_rpm, trq, trq_rpm,
-#'       mpg_c, mpg_h)
+#'       mpg_c, mpg_h
+#'     )
 #'   )
 #'
 #' @section Figures:
@@ -116,10 +122,13 @@ tab_spanner <- function(data,
                         spanners = NULL,
                         level = NULL,
                         id = label,
-                        gather = TRUE) {
+                        gather = TRUE,
+                        replace = FALSE) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  present_spanner_ids <- dt_spanners_get_ids(data = data)
 
   # Get the columns supplied in `columns` as a character vector
   column_names <-
@@ -132,14 +141,36 @@ tab_spanner <- function(data,
   # Get the spanner IDs supplied in `spanners` as a character vector
   spanner_id_idx <-
     tidyselect::with_vars(
-      vars = dt_spanners_get_ids(data = data),
+      vars = present_spanner_ids,
       expr = spanners
     )
 
   if (is.numeric(spanner_id_idx)) {
-    spanner_ids <- dt_spanners_get_ids(data = data)[spanner_id_idx]
+
+    spanner_ids <- present_spanner_ids[spanner_id_idx]
+
   } else {
-    spanner_ids <- base::intersect(dt_spanners_get_ids(data = data), spanner_id_idx)
+
+    if (
+      !is.null(spanner_id_idx) &&
+      !all(spanner_id_idx %in% present_spanner_ids)
+    ) {
+
+      error_vars <-
+        paste(
+          base::setdiff(spanner_id_idx, present_spanner_ids),
+          collapse = ", "
+        )
+
+      stop(
+        "One or more spanner ID(s) supplied in `spanners` (", error_vars, ") ",
+        "for the new spanner with the ID `",  id, "` doesn't belong to any ",
+        "existing spanners.",
+        call. = FALSE
+      )
+    }
+
+    spanner_ids <- base::intersect(present_spanner_ids, spanner_id_idx)
   }
 
   # If `column_names` and `spanner_ids` have zero lengths then
@@ -176,7 +207,8 @@ tab_spanner <- function(data,
       spanner_label = label,
       spanner_id = id,
       spanner_level = level,
-      gather = gather
+      gather = gather,
+      replace = replace
     )
 
   # Move columns into place with `cols_move()` only if specific
@@ -220,9 +252,6 @@ resolve_spanner_level <- function(
         call. = FALSE
       )
     }
-
-    # TODO: Only allow `level = 1` if `column_names` doesn't collide
-    # with those column names underneath existing spanners
 
     return(as.integer(level))
   }
@@ -312,7 +341,6 @@ resolve_spanned_column_names <- function(
 #' unique even though there may eventually be repeated column labels in the
 #' rendered output table).
 #'
-#' @inheritParams cols_align
 #' @inheritParams tab_spanner
 #' @param delim The delimiter to use to split an input column name. The
 #'   delimiter supplied will be autoescaped for the internal splitting
