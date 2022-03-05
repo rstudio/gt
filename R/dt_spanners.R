@@ -35,8 +35,30 @@ dt_spanners_add <- function(data,
                             spanner_label,
                             spanner_id,
                             spanner_level,
-                            gather) {
+                            gather,
+                            replace) {
 
+  spanners_at_level <-
+    dt_spanners_get(data = data) %>%
+    dplyr::filter(.env$spanner_level == .data$spanner_level)
+
+  if (
+    !replace &&
+    any(vars %in% unlist(spanners_at_level[["vars"]]))
+  ) {
+
+    error_vars <-
+      paste(
+        vars[vars %in% unlist(spanners_at_level[["vars"]])],
+        collapse = ", "
+      )
+
+    stop(
+      "The column(s) used (", error_vars ,") for the new spanner `",
+      spanner_id, "` belong to an existing spanner",
+      call. = FALSE
+    )
+  }
 
   dt_spanners_get(data = data) %>%
     dplyr::bind_rows(
