@@ -378,7 +378,6 @@ resolve_spanned_column_names <- function(
 tab_spanner_delim <- function(data,
                               delim,
                               columns = everything(),
-                              gather = TRUE,
                               split = c("last", "first")) {
 
   # Perform input object validation
@@ -395,98 +394,143 @@ tab_spanner_delim <- function(data,
       expr = {{ columns }},
       data = data
     )
-
   if (!is.null(columns)) {
-    colnames <- base::intersect(all_cols, columns)
+    colnames_spanners <- base::intersect(all_cols, columns)
   } else {
-    colnames <- all_cols
+    colnames_spanners <- all_cols
   }
 
-  if (length(colnames) == 0) {
+  if (length(colnames_spanners) == 0) {
     return(data)
   }
 
-  level <- 0L
+  if (split == "first") {
 
-  colnames_has_delim <- grepl(pattern = delim, x = colnames, fixed = TRUE)
-  colnames_with_delim <- colnames[colnames_has_delim]
-
-  while (any(colnames_has_delim)) {
-
-    level <- level + 1L
-
-    # Perform regexec match where the delimiter is either declared
-    # to be the 'first' instance or the 'last' instance
-    regexec_m <-
-      regexec(
-        paste0(
-          "^(.*",
-          ifelse(split == "first", "?", ""),
-          ")\\Q", delim, "\\E(.*)$"
-        ),
-        colnames_with_delim
+    colnames_spanners_ordered <-
+      vapply(
+        colnames_spanners,
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = function(x) {
+          paste(
+            rev(unlist(strsplit(x, split = delim, fixed = TRUE))),
+            collapse = delim
+          )
+        }
       )
 
-    split_colnames <-
-      lapply(regmatches(colnames_with_delim, regexec_m), FUN = `[`, 2:3)
+  } else {
+    colnames_spanners_ordered <- colnames_spanners
+  }
 
-    spanners <- vapply(split_colnames, FUN.VALUE = character(1), `[[`, 1)
+  #
+  # Determine the highest spanner level from these column names
+  #
 
-    spanner_var_list <- split(colnames_with_delim, spanners)
+  max_level <-
+    max(
+      vapply(
+        colnames_spanners_ordered,
+        FUN.VALUE = integer(1), FUN = function(x) {
+          length(unlist(strsplit(x, split = delim, fixed = TRUE)))
+        }
+      ),
+      na.rm = TRUE
+    )
 
-    for (label in names(spanner_var_list)) {
+  #
+  # Create a matrix representation of the spanners
+  #
 
-      ids_existing <-
-        c(
-          dt_spanners_get_ids(data = data), dt_boxhead_get_vars(data = data)
+  spanner_matrix <- matrix(data = NA_character_, nrow = max_level, ncol = 0)
+
+  for (col in all_cols) {
+
+    if (col %in% colnames_spanners) {
+
+      col_name <- colnames_spanners_ordered[colnames_spanners %in% col]
+
+      elements <- unlist(strsplit(col_name, split = delim, fixed = TRUE))
+
+      elements_n <- length(elements)
+
+      matrix_col_i <-
+        matrix(
+          c(rep(NA_character_, max_level - elements_n), elements),
+          ncol = 1
         )
 
-      new_spanner_id <- label
+    } else {
 
-      # TODO: split in the opposite direction when `split = "first"`
-      new_label <- gsub(".*?\\.(.*)", "\\1", label)
-
-      if (new_spanner_id %in% ids_existing) {
-        new_spanner_id <- paste0(new_spanner_id, "_", level)
-      }
-
-      data <-
-        tab_spanner(
-          data = data,
-          label = new_label,
-          id = new_spanner_id,
-          columns = if (level == 1) spanner_var_list[[label]],
-          spanners = if (level > 1) spanner_var_list[[label]],
-          gather = if (level == 1) gather else FALSE,
-          level = level
-        )
+      matrix_col_i <- matrix(c(rep(NA_character_, max_level - 1), col_name))
     }
 
-    if (level == 1) {
+    spanner_matrix <- cbind(spanner_matrix, matrix_col_i)
+  }
 
-      new_labels <-
-        lapply(split_colnames, `[[`, -1) %>%
-        vapply(paste0, FUN.VALUE = character(1), collapse = delim)
+  # If the height of the spanner matrix isn't greater than
+  # one then return the data untouched
+  if (nrow(spanner_matrix) == 1) {
+    return(data)
+  }
 
-      for (i in seq_along(split_colnames)) {
+  for (i in rev(seq_len(nrow(spanner_matrix)))) {
 
-        new_labels_i <- new_labels[i]
-        var_i <- colnames_with_delim[i]
+    if (i == nrow(spanner_matrix)) next
 
+    level <- nrow(spanner_matrix) - i
+
+    rle_spanners_i <- rle(spanner_matrix[i, ])
+    spanners_i_lengths <- rle_spanners_i$lengths
+    spanners_i_values <- rle_spanners_i$values
+    spanners_i_col_i <- head(cumsum(c(1, spanners_i_lengths)), -1)
+
+    for (j in seq_along(spanners_i_lengths)) {
+
+      if (!is.na(spanners_i_values[j])) {
+
+        # Obtain the ID for the spanner
+        spanner_id <-
+          paste0(
+            paste(
+              spanner_matrix[seq(i, nrow(spanner_matrix)), spanners_i_col_i[j]],
+              collapse = delim
+            ),
+            "-spanner"
+          )
+
+        spanner_columns <-
+          seq(
+            spanners_i_col_i[j],
+            spanners_i_col_i[j] + spanners_i_lengths[j] - 1
+          )
+
+        # Set the spanner with a call to `tab_spanner()`
         data <-
-          dt_boxhead_edit(
+          tab_spanner(
             data = data,
-            var = var_i,
-            column_label = new_labels_i
+            label = spanners_i_values[j],
+            columns = spanner_columns,
+            spanners = NULL,
+            level = level,
+            id = spanner_id,
+            gather = FALSE
           )
       }
     }
-
-    colnames_with_delim <- vapply(split_colnames, FUN.VALUE = character(1), `[[`, 1)
-    colnames_has_delim <- grepl(pattern = delim, x = colnames_with_delim, fixed = TRUE)
   }
 
-  data
+  #
+  # Re-label column labels included in `colnames_spanners`
+  #
+
+  new_labels <-
+    strsplit(colnames_spanners_ordered, split = delim, fixed = TRUE) %>%
+    vapply(FUN.VALUE = character(1), tail, 1)
+
+  new_label_list <- setNames(as.list(new_labels), colnames_spanners)
+
+  cols_label(data, .list = new_label_list)
 }
 
 #' Add a row group to a **gt** table
