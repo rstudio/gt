@@ -11,7 +11,8 @@ tab_spanner(
   spanners = NULL,
   level = NULL,
   id = label,
-  gather = TRUE
+  gather = TRUE,
+  replace = FALSE
 )
 }
 \arguments{
@@ -26,7 +27,8 @@ be defined.}
 
 \item{level}{An explicit level to which the spanner should be placed. If not
 provided, \strong{gt} will choose the level based on the inputs provided within
-\code{columns} and \code{spanners}.}
+\code{columns} and \code{spanners}, placing the spanner where it will fig. The first
+spanner level (right above the column labels) is \code{1}.}
 
 \item{id}{The ID for the spanner column label. When accessing a spanner
 column label through \code{\link[=cells_column_spanners]{cells_column_spanners()}} (when using \code{\link[=tab_style]{tab_style()}} or
@@ -42,6 +44,11 @@ unique).}
 \item{gather}{An option to move the specified \code{columns} such that they are
 unified under the spanner column label. Ordering of the moved-into-place
 columns will be preserved in all cases. By default, this is set to \code{TRUE}.}
+
+\item{replace}{Should new spanners be allowed to partially or fully replace
+existing spanners? (This is a possibility if setting spanners at an already
+populated \code{level}.) By default, this is set to \code{FALSE} and an error will
+occur if some replacement is attempted.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -78,7 +85,8 @@ tab_1 <-
     label = "performance",
     columns = c(
       hp, hp_rpm, trq, trq_rpm,
-      mpg_c, mpg_h)
+      mpg_c, mpg_h
+    )
   )
 
 }

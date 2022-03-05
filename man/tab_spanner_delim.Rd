@@ -8,7 +8,6 @@ tab_spanner_delim(
   data,
   delim,
   columns = everything(),
-  gather = TRUE,
   split = c("last", "first")
 )
 }
@@ -23,10 +22,6 @@ in those locations) and the second component will be the column label.}
 
 \item{columns}{An optional vector of column names that this operation should
 be limited to. The default is to consider all columns in the table.}
-
-\item{gather}{An option to move the specified \code{columns} such that they are
-unified under the spanner column label. Ordering of the moved-into-place
-columns will be preserved in all cases. By default, this is set to \code{TRUE}.}
 
 \item{split}{Should the delimiter splitting occur from the \code{"last"} instance
 of the \code{delim} character or from the \code{"first"}? By default, column name
