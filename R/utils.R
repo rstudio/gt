@@ -1318,16 +1318,13 @@ validate_style_in <- function(style_vals,
 check_spanner_id_unique <- function(data,
                                     spanner_id) {
 
-  existing_ids <-
-    c(
-      dt_spanners_get_ids(data = data), dt_boxhead_get_vars(data = data)
-    )
+  existing_ids <- dt_spanners_get_ids(data = data)
 
   if (spanner_id %in% existing_ids) {
 
     stop(
       "The spanner `id` provided (`\"", spanner_id, "\"`) is not unique:\n",
-      "* The `id` must be unique across existing spanners and column names\n",
+      "* The `id` must be unique across existing spanners\n",
       "* Provide a unique ID value for this spanner",
       call. = FALSE
     )
