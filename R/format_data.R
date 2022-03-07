@@ -92,6 +92,11 @@
 #'   for this option. The default is `FALSE`, where only negative numbers will
 #'   display a minus sign. This option is disregarded when using accounting
 #'   notation with `accounting = TRUE`.
+#' @param system The numbering system to use. By default, this is the
+#'   international numbering system (`"intl"`) whereby grouping separators
+#'   (i.e., `sep_mark`) are separated by three digits. The alternative system,
+#'   the Indian numbering system (`"ind"`) uses grouping separators that
+#'   correspond to thousand, lakh, crore, and higher quantities.
 #' @param locale An optional locale ID that can be used for formatting the value
 #'   according the locale's rules. Examples include `"en_US"` for English
 #'   (United States) and `"fr_FR"` for French (France). The use of a valid
@@ -165,10 +170,13 @@ fmt_number <- function(data,
                        sep_mark = ",",
                        dec_mark = ".",
                        force_sign = FALSE,
+                       system = c("intl", "ind"),
                        locale = NULL) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  system <- match.arg(system)
 
   # Resolve the `locale` value here with the global locale value
   locale <- resolve_locale(data = data, locale = locale)
@@ -242,7 +250,8 @@ fmt_number <- function(data,
             dec_mark = dec_mark,
             drop_trailing_zeros = drop_trailing_zeros,
             drop_trailing_dec_mark = drop_trailing_dec_mark,
-            format = formatC_format
+            format = formatC_format,
+            system = system
           )
 
         # Paste the vector of suffixes to the right of the values
@@ -346,6 +355,7 @@ fmt_integer <- function(data,
                         pattern = "{x}",
                         sep_mark = ",",
                         force_sign = FALSE,
+                        system = c("intl", "ind"),
                         locale = NULL) {
 
   fmt_number(
@@ -364,6 +374,7 @@ fmt_integer <- function(data,
     sep_mark = sep_mark,
     dec_mark = "not used",
     force_sign = force_sign,
+    system = system,
     locale = locale
   )
 }
@@ -757,7 +768,10 @@ fmt_symbol <- function(data,
                        force_sign = FALSE,
                        placement = "left",
                        incl_space = FALSE,
+                       system = c("intl", "ind"),
                        locale = NULL) {
+
+  system <- match.arg(system)
 
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
@@ -806,7 +820,8 @@ fmt_symbol <- function(data,
               sep_mark = sep_mark,
               dec_mark = dec_mark,
               drop_trailing_zeros = drop_trailing_zeros,
-              drop_trailing_dec_mark = drop_trailing_dec_mark
+              drop_trailing_dec_mark = drop_trailing_dec_mark,
+              system = system
             )
         }
 
@@ -823,7 +838,8 @@ fmt_symbol <- function(data,
               sep_mark = sep_mark,
               dec_mark = dec_mark,
               drop_trailing_zeros = drop_trailing_zeros,
-              drop_trailing_dec_mark = drop_trailing_dec_mark
+              drop_trailing_dec_mark = drop_trailing_dec_mark,
+              system = system
             )
         }
 
@@ -1563,6 +1579,7 @@ fmt_currency <- function(data,
                          force_sign = FALSE,
                          placement = "left",
                          incl_space = FALSE,
+                         system = c("intl", "ind"),
                          locale = NULL) {
 
   # Perform input object validation
@@ -1616,6 +1633,7 @@ fmt_currency <- function(data,
     force_sign = force_sign,
     placement = placement,
     incl_space = incl_space,
+    system = system,
     locale = locale
   )
 }
@@ -2830,4 +2848,112 @@ fmt <- function(data,
     )
 
   dt_formats_add(data = data, formats = formatter_list)
+}
+
+#' Insert separator marks to an integer to conform to Indian numbering system
+#'
+#' @param integer The integer portion of a numeric value. Can be supplied as an
+#'   integer value or a string. If supplied as a string, it must only contain
+#'   numeral characters.
+#' @param sep_mark The character to use as the separator mark. By default, this
+#'   is the comma character.
+#'
+#' @noRd
+insert_seps_ind <- function(integer,
+                            sep_mark = ",") {
+
+  if (inherits(integer, "integer")) {
+
+    integer <- as.character(integer)
+
+  } else if (
+    inherits(integer, "character") &&
+    !grepl("^[0-9]+?$", integer)
+  ) {
+
+    stop(
+      "If `integer` given as a character value, it must only contain numbers."
+    )
+  }
+
+  if (nchar(integer) < 4) {
+    return(integer)
+  }
+
+  insertion_seq <-
+    get_insertion_sequence(
+      number = integer,
+      grouping = c(3, 2, 2)
+    )
+
+  str_rev(
+    insert_str(
+      target = str_rev(integer),
+      insert = rep(sep_mark, length(insertion_seq)),
+      index = insertion_seq
+    )
+  )
+}
+
+str_rev <- function(x) {
+  nc <- nchar(x)
+  paste(substring(x, nc:1, nc:1), collapse = "")
+}
+
+insert_str <- function(target, insert, index) {
+
+  insert <- insert[order(index)]
+  index <- sort(index)
+
+  paste(
+    interleave(
+      split_str_by_index(target, index),
+      insert
+    ),
+    collapse = ""
+  )
+}
+
+interleave <- function(v1, v2) {
+
+  ord_1 <- 2 * (1:length(v1)) - 1
+  ord_2 <- 2 * (1:length(v2))
+
+  c(v1, v2)[order(c(ord_1, ord_2))]
+}
+
+split_str_by_index <- function(target, index) {
+
+  index <- sort(index)
+
+  substr(
+    rep(target, length(index) + 1),
+    start = c(1, index),
+    stop = c(index -1, nchar(target))
+  )
+}
+
+get_insertion_sequence <- function(number, grouping) {
+
+  number <- strsplit(as.character(number), "\\.")[[1]][1]
+  nchar_n <- nchar(number)
+  grouping <- c(3, rep(2, nchar_n * 10))
+
+  x <- 1
+
+  repeat {
+
+    pattern <- rep(grouping, x) %>% cumsum() + 1
+
+    if (max(pattern) >= nchar_n) {
+
+      pattern <- pattern[pattern <= nchar_n]
+      break
+
+    } else {
+      x <- x + 1
+    }
+  }
+
+  pattern
 }

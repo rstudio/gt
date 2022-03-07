@@ -22,6 +22,7 @@ fmt_currency(
   force_sign = FALSE,
   placement = "left",
   incl_space = FALSE,
+  system = c("intl", "ind"),
   locale = NULL
 )
 }
@@ -125,6 +126,12 @@ notation with \code{accounting = TRUE}.}
 
 \item{incl_space}{An option for whether to include a space between the value
 and the currency symbol. The default is to not introduce a space character.}
+
+\item{system}{The numbering system to use. By default, this is the
+international numbering system (\code{"intl"}) whereby grouping separators
+(i.e., \code{sep_mark}) are separated by three digits. The alternative system,
+the Indian numbering system (\code{"ind"}) uses grouping separators that
+correspond to thousand, lakh, crore, and higher quantities.}
 
 \item{locale}{An optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include \code{"en_US"} for English

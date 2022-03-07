@@ -256,7 +256,10 @@ format_num_to_str <- function(x,
                               drop_trailing_zeros,
                               drop_trailing_dec_mark,
                               format = "f",
-                              replace_minus_mark = TRUE) {
+                              replace_minus_mark = TRUE,
+                              system = c("intl", "ind")) {
+
+  system <- match.arg(system)
 
   if (format == "fg") {
     x <- signif(x, digits = n_sigfig)
@@ -286,8 +289,8 @@ format_num_to_str <- function(x,
       digits = digits,
       flag = flag,
       drop0trailing = drop0trailing,
-      big.mark = sep_mark,
-      decimal.mark = dec_mark
+      big.mark = if (system == "intl") sep_mark else ",",
+      decimal.mark = if (system == "intl") dec_mark else "."
     )
 
   # Remove `-` for any signed zeros returned by `formatC()`
@@ -300,6 +303,33 @@ format_num_to_str <- function(x,
   if (!drop_trailing_dec_mark) {
     x_str_no_dec <- !grepl(dec_mark, x_str, fixed = TRUE)
     x_str[x_str_no_dec] <- paste_right(x_str[x_str_no_dec], dec_mark)
+  }
+
+  # Perform modifications to `x_str` values if formatting values to
+  # conform to the Indian numbering system
+  if (system == "ind") {
+
+    is_inf <- grepl("Inf", x_str)
+    x_str_numeric <- x_str[!is_inf]
+    has_decimal <- grepl("\\.", x_str_numeric)
+    is_negative <- grepl("^-", x_str_numeric)
+
+    integer_parts <-
+      strsplit(x_str_numeric, split = dec_mark, fixed = TRUE) %>%
+      vapply(FUN.VALUE = character(1), USE.NAMES = FALSE, `[[`, 1) %>%
+      gsub("(,|-)", "", .) %>%
+      vapply(
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = insert_seps_ind
+      )
+
+    decimal_str <- rep("", length(x_str_numeric))
+    decimal_str[has_decimal] <-
+      gsub("^.*?(\\..*?)", "\\1", x_str_numeric[has_decimal])
+
+    x_str[!is_inf] <- paste0(integer_parts, decimal_str)
+    x_str[!is_inf][is_negative] <- paste0("-", x_str[!is_inf][is_negative])
   }
 
   # Replace the minus mark (a hyphen) with a context-specific minus sign
@@ -320,7 +350,10 @@ format_num_to_str_c <- function(x,
                                 sep_mark,
                                 dec_mark,
                                 drop_trailing_zeros = FALSE,
-                                drop_trailing_dec_mark) {
+                                drop_trailing_dec_mark,
+                                system = c("intl", "ind")) {
+
+  system <- match.arg(system)
 
   format_num_to_str(
     x = x,
@@ -330,7 +363,8 @@ format_num_to_str_c <- function(x,
     dec_mark = dec_mark,
     drop_trailing_zeros = drop_trailing_zeros,
     drop_trailing_dec_mark = drop_trailing_dec_mark,
-    format = "f"
+    format = "f",
+    system = system
   )
 }
 
