@@ -462,7 +462,7 @@ tab_spanner_delim <- function(data,
 
     } else {
 
-      matrix_col_i <- matrix(c(rep(NA_character_, max_level - 1), col_name))
+      matrix_col_i <- matrix(c(rep(NA_character_, max_level - 1), col))
     }
 
     spanner_matrix <- cbind(spanner_matrix, matrix_col_i)
