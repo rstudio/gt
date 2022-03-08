@@ -491,12 +491,9 @@ tab_spanner_delim <- function(data,
 
         # Obtain the ID for the spanner
         spanner_id <-
-          paste0(
-            paste(
-              spanner_matrix[seq(i, nrow(spanner_matrix)), spanners_i_col_i[j]],
-              collapse = delim
-            ),
-            "-spanner"
+          paste(
+            spanner_matrix[seq(i, nrow(spanner_matrix)), spanners_i_col_i[j]],
+            collapse = delim
           )
 
         spanner_columns <-
