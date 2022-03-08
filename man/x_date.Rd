@@ -53,3 +53,23 @@ in the example output dates):
 We can use the \code{\link[=info_date_style]{info_date_style()}} function for a useful reference on all of
 the possible inputs to \code{date_style}.
 }
+\section{Function ID}{
+
+14-9
+}
+
+\seealso{
+Other Vector Formatters: 
+\code{\link{x_bytes}()},
+\code{\link{x_currency}()},
+\code{\link{x_datetime}()},
+\code{\link{x_engineering}()},
+\code{\link{x_fraction}()},
+\code{\link{x_integer}()},
+\code{\link{x_markdown}()},
+\code{\link{x_number}()},
+\code{\link{x_percent}()},
+\code{\link{x_scientific}()},
+\code{\link{x_time}()}
+}
+\concept{Vector Formatters}
