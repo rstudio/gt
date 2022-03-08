@@ -239,6 +239,26 @@ reference:
     - as_rtf
     - extract_summary
 
+  - title: Vector Formatters
+    desc: >
+      Why should columns have all the formatting fun? If you have vectors in
+      need of formatting, we have a set of `x_*()` functions that have been
+      adapted from the corresponding `fmt_*()` functions. You can choose which
+      output format you'd like (either HTML, LaTeX, or RTF) with each of these.
+    contents:
+    - x_number
+    - x_integer
+    - x_scientific
+    - x_engineering
+    - x_percent
+    - x_fraction
+    - x_currency
+    - x_bytes
+    - x_date
+    - x_time
+    - x_datetime
+    - x_markdown
+
 navbar:
   type: default
   left:
