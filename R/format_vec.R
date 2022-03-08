@@ -1083,13 +1083,21 @@ x_markdown <- function(
   # Ensure that `x` is strictly a vector with `rlang::is_vector()`
   stop_if_not_vector(x)
 
-  render_as_vector(
-    fmt_markdown(
-      gt(dplyr::tibble(x = x)),
-      columns = "x", rows = everything()
-    ),
-    output = output
-  )
+  x_out <-
+    render_as_vector(
+      fmt_markdown(
+        gt(dplyr::tibble(x = x)),
+        columns = "x", rows = everything()
+      ),
+      output = output
+    )
+
+  if (output == "html") {
+    x_out <- gsub("^<div class='gt_from_md'>(.*)", "\\1", x_out)
+    x_out <- gsub("(.*)\n</div>", "\\1", x_out)
+  }
+
+  x_out
 }
 
 stop_if_not_vector <- function(x) {
