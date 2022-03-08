@@ -83,3 +83,23 @@ mixed fractions
 formatting specific to the chosen locale
 }
 }
+\section{Function ID}{
+
+14-6
+}
+
+\seealso{
+Other Vector Formatters: 
+\code{\link{x_bytes}()},
+\code{\link{x_currency}()},
+\code{\link{x_datetime}()},
+\code{\link{x_date}()},
+\code{\link{x_engineering}()},
+\code{\link{x_integer}()},
+\code{\link{x_markdown}()},
+\code{\link{x_number}()},
+\code{\link{x_percent}()},
+\code{\link{x_scientific}()},
+\code{\link{x_time}()}
+}
+\concept{Vector Formatters}

@@ -44,3 +44,23 @@ the example output times):
 We can use the \code{\link[=info_time_style]{info_time_style()}} function for a useful reference on all of
 the possible inputs to \code{time_style}.
 }
+\section{Function ID}{
+
+14-10
+}
+
+\seealso{
+Other Vector Formatters: 
+\code{\link{x_bytes}()},
+\code{\link{x_currency}()},
+\code{\link{x_datetime}()},
+\code{\link{x_date}()},
+\code{\link{x_engineering}()},
+\code{\link{x_fraction}()},
+\code{\link{x_integer}()},
+\code{\link{x_markdown}()},
+\code{\link{x_number}()},
+\code{\link{x_percent}()},
+\code{\link{x_scientific}()}
+}
+\concept{Vector Formatters}
