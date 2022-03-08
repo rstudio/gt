@@ -84,6 +84,10 @@
 #'
 #' @return A character vector.
 #'
+#' @family Vector Formatters
+#' @section Function ID:
+#' 14-1
+#'
 #' @export
 x_number <- function(
     x,
@@ -182,6 +186,10 @@ x_number <- function(
 #'
 #' @return A character vector.
 #'
+#' @family Vector Formatters
+#' @section Function ID:
+#' 14-2
+#'
 #' @export
 x_integer <- function(
     x,
@@ -239,6 +247,10 @@ x_integer <- function(
 #'   display a minus sign.
 #'
 #' @return A character vector.
+#'
+#' @family Vector Formatters
+#' @section Function ID:
+#' 14-3
 #'
 #' @export
 x_scientific <- function(
@@ -314,6 +326,10 @@ x_scientific <- function(
 #'   display a minus sign.
 #'
 #' @return A character vector.
+#'
+#' @family Vector Formatters
+#' @section Function ID:
+#' 14-4
 #'
 #' @export
 x_engineering <- function(
@@ -397,6 +413,10 @@ x_engineering <- function(
 #'   `right` (the default) or `left`.
 #'
 #' @return A character vector.
+#'
+#' @family Vector Formatters
+#' @section Function ID:
+#' 14-5
 #'
 #' @export
 x_percent <- function(
@@ -497,6 +517,10 @@ x_percent <- function(
 #'   baseline and uses a standard slash character.
 #'
 #' @return A character vector.
+#'
+#' @family Vector Formatters
+#' @section Function ID:
+#' 14-6
 #'
 #' @export
 x_fraction <- function(
@@ -608,6 +632,10 @@ x_fraction <- function(
 #'
 #' @return A character vector.
 #'
+#' @family Vector Formatters
+#' @section Function ID:
+#' 14-7
+#'
 #' @export
 x_currency <- function(
     x,
@@ -708,6 +736,10 @@ x_currency <- function(
 #'
 #' @return A character vector.
 #'
+#' @family Vector Formatters
+#' @section Function ID:
+#' 14-8
+#'
 #' @export
 x_bytes <- function(
     x,
@@ -803,6 +835,10 @@ x_bytes <- function(
 #'
 #' @return A character vector.
 #'
+#' @family Vector Formatters
+#' @section Function ID:
+#' 14-9
+#'
 #' @export
 x_date <- function(
     x,
@@ -868,6 +904,10 @@ x_date <- function(
 #'   the different numbered and named time presets.
 #'
 #' @return A character vector.
+#'
+#' @family Vector Formatters
+#' @section Function ID:
+#' 14-10
 #'
 #' @export
 x_time <- function(
@@ -1018,6 +1058,10 @@ x_time <- function(
 #'
 #' @return A character vector.
 #'
+#' @family Vector Formatters
+#' @section Function ID:
+#' 14-11
+#'
 #' @export
 x_datetime <- function(
     x,
@@ -1071,6 +1115,10 @@ x_datetime <- function(
 #' @inheritParams x_number
 #'
 #' @return A character vector.
+#'
+#' @family Vector Formatters
+#' @section Function ID:
+#' 14-12
 #'
 #' @export
 x_markdown <- function(
