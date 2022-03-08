@@ -483,7 +483,7 @@ tab_spanner_delim <- function(data,
     rle_spanners_i <- rle(spanner_matrix[i, ])
     spanners_i_lengths <- rle_spanners_i$lengths
     spanners_i_values <- rle_spanners_i$values
-    spanners_i_col_i <- head(cumsum(c(1, spanners_i_lengths)), -1)
+    spanners_i_col_i <- utils::head(cumsum(c(1, spanners_i_lengths)), -1)
 
     for (j in seq_along(spanners_i_lengths)) {
 
@@ -526,9 +526,9 @@ tab_spanner_delim <- function(data,
 
   new_labels <-
     strsplit(colnames_spanners_ordered, split = delim, fixed = TRUE) %>%
-    vapply(FUN.VALUE = character(1), tail, 1)
+    vapply(FUN.VALUE = character(1), utils::tail, 1)
 
-  new_label_list <- setNames(as.list(new_labels), colnames_spanners)
+  new_label_list <- stats::setNames(as.list(new_labels), colnames_spanners)
 
   cols_label(data, .list = new_label_list)
 }
