@@ -2448,6 +2448,19 @@ random_id <- function(n = 10) {
   paste(sample(letters, n, replace = TRUE), collapse = "")
 }
 
+latex_special_chars <- c(
+  "\\" = "\\textbackslash{}",
+  "~" = "\\textasciitilde{}",
+  "^" = "\\textasciicircum{}",
+  "&" = "\\&",
+  "%" = "\\%",
+  "$" = "\\$",
+  "#" = "\\#",
+  "_" = "\\_",
+  "{" = "\\{",
+  "}" = "\\}"
+)
+
 #' Perform LaTeX escaping
 #'
 #' @description
@@ -2467,12 +2480,13 @@ random_id <- function(n = 10) {
 #' @export
 escape_latex <- function(text) {
 
-  text %>%
-    tidy_gsub("\\\\", "\\\\textbackslash") %>%
-    tidy_gsub("([&%$#_{}])", "\\\\\\1") %>%
-    tidy_gsub("~", "\\\\textasciitilde{}") %>%
-    tidy_gsub("\\^", "\\\\textasciicircum{}") %>%
-    tidy_gsub("\\\\textbackslash", "\\\\textbackslash{}")
+  m <- gregexec("[\\\\&%$#_{}~^]", text)
+  special_chars <- regmatches(text, m)
+  escaped_chars <- lapply(special_chars, function(x) {
+    latex_special_chars[x]
+  })
+  regmatches(text, m) <- escaped_chars
+  text
 }
 
 #' Get the LaTeX dependencies required for a **gt** table
