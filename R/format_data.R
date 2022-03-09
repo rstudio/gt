@@ -2852,44 +2852,28 @@ fmt <- function(data,
 
 #' Insert separator marks to an integer to conform to Indian numbering system
 #'
-#' @param integer The integer portion of a numeric value. Can be supplied as an
-#'   integer value or a string. If supplied as a string, it must only contain
-#'   numeral characters.
-#' @param sep_mark The character to use as the separator mark. By default, this
-#'   is the comma character.
+#' @param integer The integer portion of a numeric value. Should be supplied as
+#'   a string that only contains numeral characters.
 #'
 #' @noRd
-insert_seps_ind <- function(integer,
-                            sep_mark = ",") {
+insert_seps_ind <- function(integer) {
 
-  if (inherits(integer, "integer")) {
-
-    integer <- as.character(integer)
-
-  } else if (
-    inherits(integer, "character") &&
-    !grepl("^[0-9]+?$", integer)
-  ) {
-
+  if (!grepl("^[0-9]+?$", integer)) {
     stop(
-      "If `integer` given as a character value, it must only contain numbers."
+      "The `integer` string must only contain numbers."
     )
   }
 
-  if (nchar(integer) < 4) {
-    return(integer)
-  }
+  # Return integer unchanged if there are no commas to insert
+  if (nchar(integer) < 4) return(integer)
 
-  insertion_seq <-
-    get_insertion_sequence(
-      number = integer,
-      grouping = c(3, 2, 2)
-    )
+  # Generate an 'insertion sequence' (where to place the separators)
+  insertion_seq <- cumsum(c(3, rep(2, floor((nchar(integer) - 4) / 2)))) + 1
 
   str_rev(
     insert_str(
       target = str_rev(integer),
-      insert = rep(sep_mark, length(insertion_seq)),
+      insert = rep(",", length(insertion_seq)),
       index = insertion_seq
     )
   )
@@ -2905,55 +2889,33 @@ insert_str <- function(target, insert, index) {
   insert <- insert[order(index)]
   index <- sort(index)
 
-  paste(
-    interleave(
-      split_str_by_index(target, index),
-      insert
-    ),
-    collapse = ""
-  )
+  split_strings <- split_str_by_index(target, index)
+
+  interleave(split_strings, rep(",", length(split_strings) - 1))
 }
 
-interleave <- function(v1, v2) {
+# This function takes two vectors and combines them
+# into a single interleaved vector or combined string
+interleave <- function(first, second, combine = TRUE) {
 
-  ord_1 <- 2 * (1:length(v1)) - 1
-  ord_2 <- 2 * (1:length(v2))
+  order_vec_1 <- 2 * (seq_len(length(first))) - 1
+  order_vec_2 <- 2 * (seq_len(length(second)))
 
-  c(v1, v2)[order(c(ord_1, ord_2))]
+  out_vec <- c(first, second)[order(c(order_vec_1, order_vec_2))]
+
+  if (combine) {
+    out_vec <- paste(out_vec, collapse = "")
+  }
+
+  out_vec
 }
 
 split_str_by_index <- function(target, index) {
 
   index <- sort(index)
-
   substr(
     rep(target, length(index) + 1),
     start = c(1, index),
     stop = c(index -1, nchar(target))
   )
-}
-
-get_insertion_sequence <- function(number, grouping) {
-
-  number <- strsplit(as.character(number), "\\.")[[1]][1]
-  nchar_n <- nchar(number)
-  grouping <- c(3, rep(2, nchar_n * 10))
-
-  x <- 1
-
-  repeat {
-
-    pattern <- rep(grouping, x) %>% cumsum() + 1
-
-    if (max(pattern) >= nchar_n) {
-
-      pattern <- pattern[pattern <= nchar_n]
-      break
-
-    } else {
-      x <- x + 1
-    }
-  }
-
-  pattern
 }
