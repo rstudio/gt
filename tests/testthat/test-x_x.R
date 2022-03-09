@@ -15,6 +15,28 @@ range_1_2_minus <- range_0_1_minus - 1
 exact_numbers <- c(-1, 0, 1)
 not_numbers <- c(NA_real_, NaN, Inf, -Inf)
 
+# Define vectors with dates and times
+years <- 2020:2024
+months <- 1:5
+days <- 5:9
+hours <- 15:19
+minutes <- 35:39
+seconds <- 0:4
+
+datetimes <-
+  ISOdatetime(
+    year = years,
+    month = months,
+    day = days,
+    hour = hours,
+    min = minutes,
+    sec = seconds,
+    tz = "GMT"
+  )
+
+dates <- as.Date(datetimes)
+times <- paste0(hours, ":", minutes)
+
 test_that("The `x_number()` function works", {
 
   x_number(vec_num_1, output = "html") %>%
@@ -2790,4 +2812,115 @@ test_that("The `x_bytes()` function works", {
   expect_error(x_bytes(TRUE))
   expect_error(x_bytes(list(1, 2, 3)))
   expect_error(x_bytes(dplyr::tibble(a = c(1, 2, 3))))
+})
+
+
+test_that("The `x_date()` function works", {
+
+  x_date(dates, date_style = 2, output = "html") %>%
+    expect_equal(
+      c(
+        "Sunday, January 5, 2020", "Saturday, February 6, 2021",
+        "Monday, March 7, 2022", "Saturday, April 8, 2023",
+        "Thursday, May 9, 2024"
+      )
+    )
+  expect_equal(
+    x_date(dates, date_style = 2, output = "html"),
+    x_date(dates, date_style = 2, output = "latex")
+  )
+  expect_equal(
+    x_date(dates, date_style = 2, output = "html"),
+    x_date(dates, date_style = 2, output = "rtf")
+  )
+
+  expect_equal(
+    x_date(dates, date_style = 1, output = "html"),
+    as.character(dates)
+  )
+  expect_equal(
+    x_date(dates, date_style = 1, output = "html"),
+    x_date(dates, date_style = 1, output = "latex")
+  )
+  expect_equal(
+    x_date(dates, date_style = 1, output = "html"),
+    x_date(dates, date_style = 1, output = "rtf")
+  )
+
+  expect_equal(
+    x_date(as.character(dates), date_style = 1, output = "html"),
+    as.character(dates)
+  )
+  expect_equal(
+    x_date(as.character(dates), date_style = 1, output = "html"),
+    x_date(as.character(dates), date_style = 1, output = "latex")
+  )
+  expect_equal(
+    x_date(as.character(dates), date_style = 1, output = "html"),
+    x_date(as.character(dates), date_style = 1, output = "rtf")
+  )
+
+  x_date(dates, date_style = 3, output = "html") %>%
+    expect_equal(
+      c(
+        "Sun, Jan 5, 2020", "Sat, Feb 6, 2021", "Mon, Mar 7, 2022",
+        "Sat, Apr 8, 2023", "Thu, May 9, 2024"
+      )
+    )
+  expect_equal(
+    x_date(as.character(dates), date_style = 3, output = "html"),
+    x_date(as.character(dates), date_style = 3, output = "latex")
+  )
+  expect_equal(
+    x_date(as.character(dates), date_style = 3, output = "html"),
+    x_date(as.character(dates), date_style = 3, output = "rtf")
+  )
+
+  x_date(dates, date_style = 4, output = "html") %>%
+    expect_equal(
+      c(
+        "Sunday 5 January 2020", "Saturday 6 February 2021",
+        "Monday 7 March 2022", "Saturday 8 April 2023", "Thursday 9 May 2024"
+      )
+    )
+  expect_equal(
+    x_date(as.character(dates), date_style = 4, output = "html"),
+    x_date(as.character(dates), date_style = 4, output = "latex")
+  )
+  expect_equal(
+    x_date(as.character(dates), date_style = 4, output = "html"),
+    x_date(as.character(dates), date_style = 4, output = "rtf")
+  )
+
+  x_date(dates, date_style = 5, output = "html") %>%
+    expect_equal(
+      c(
+        "January 5, 2020", "February 6, 2021", "March 7, 2022",
+        "April 8, 2023", "May 9, 2024"
+      )
+    )
+  expect_equal(
+    x_date(as.character(dates), date_style = 5, output = "html"),
+    x_date(as.character(dates), date_style = 5, output = "latex")
+  )
+  expect_equal(
+    x_date(as.character(dates), date_style = 5, output = "html"),
+    x_date(as.character(dates), date_style = 5, output = "rtf")
+  )
+
+  x_date(dates, date_style = 6, output = "html") %>%
+    expect_equal(
+      c(
+        "Jan 5, 2020", "Feb 6, 2021", "Mar 7, 2022",
+        "Apr 8, 2023", "May 9, 2024"
+      )
+    )
+  expect_equal(
+    x_date(as.character(dates), date_style = 6, output = "html"),
+    x_date(as.character(dates), date_style = 6, output = "latex")
+  )
+  expect_equal(
+    x_date(as.character(dates), date_style = 6, output = "html"),
+    x_date(as.character(dates), date_style = 6, output = "rtf")
+  )
 })
