@@ -2923,4 +2923,120 @@ test_that("The `x_date()` function works", {
     x_date(as.character(dates), date_style = 6, output = "html"),
     x_date(as.character(dates), date_style = 6, output = "rtf")
   )
+
+  x_date(dates, date_style = 7, output = "html") %>%
+    expect_equal(
+      c(
+        "5 Jan 2020", "6 Feb 2021", "7 Mar 2022", "8 Apr 2023", "9 May 2024"
+      )
+    )
+  expect_equal(
+    x_date(as.character(dates), date_style = 7, output = "html"),
+    x_date(as.character(dates), date_style = 7, output = "latex")
+  )
+  expect_equal(
+    x_date(as.character(dates), date_style = 7, output = "html"),
+    x_date(as.character(dates), date_style = 7, output = "rtf")
+  )
+
+  x_date(dates, date_style = 8, output = "html") %>%
+    expect_equal(
+      c(
+        "5 January 2020", "6 February 2021", "7 March 2022",
+        "8 April 2023", "9 May 2024"
+      )
+    )
+  expect_equal(
+    x_date(as.character(dates), date_style = 8, output = "html"),
+    x_date(as.character(dates), date_style = 8, output = "latex")
+  )
+  expect_equal(
+    x_date(as.character(dates), date_style = 8, output = "html"),
+    x_date(as.character(dates), date_style = 8, output = "rtf")
+  )
+
+  x_date(dates, date_style = 9, output = "html") %>%
+    expect_equal(
+      c("5 January", "6 February", "7 March", "8 April", "9 May")
+    )
+  expect_equal(
+    x_date(as.character(dates), date_style = 9, output = "html"),
+    x_date(as.character(dates), date_style = 9, output = "latex")
+  )
+  expect_equal(
+    x_date(as.character(dates), date_style = 9, output = "html"),
+    x_date(as.character(dates), date_style = 9, output = "rtf")
+  )
+
+  x_date(dates, date_style = 10, output = "html") %>%
+    expect_equal(c("2020", "2021", "2022", "2023", "2024"))
+  expect_equal(
+    x_date(as.character(dates), date_style = 10, output = "html"),
+    x_date(as.character(dates), date_style = 10, output = "latex")
+  )
+  expect_equal(
+    x_date(as.character(dates), date_style = 10, output = "html"),
+    x_date(as.character(dates), date_style = 10, output = "rtf")
+  )
+
+  x_date(dates, date_style = 11, output = "html") %>%
+    expect_equal(c("January", "February", "March", "April", "May"))
+  expect_equal(
+    x_date(as.character(dates), date_style = 11, output = "html"),
+    x_date(as.character(dates), date_style = 11, output = "latex")
+  )
+  expect_equal(
+    x_date(as.character(dates), date_style = 11, output = "html"),
+    x_date(as.character(dates), date_style = 11, output = "rtf")
+  )
+
+  x_date(dates, date_style = 12, output = "html") %>%
+    expect_equal(c("05", "06", "07", "08", "09"))
+  expect_equal(
+    x_date(as.character(dates), date_style = 12, output = "html"),
+    x_date(as.character(dates), date_style = 12, output = "latex")
+  )
+  expect_equal(
+    x_date(as.character(dates), date_style = 12, output = "html"),
+    x_date(as.character(dates), date_style = 12, output = "rtf")
+  )
+
+  x_date(dates, date_style = 13, output = "html") %>%
+    expect_equal(
+      c(
+        "2020/01/05", "2021/02/06", "2022/03/07", "2023/04/08", "2024/05/09"
+      )
+    )
+  expect_equal(
+    x_date(as.character(dates), date_style = 13, output = "html"),
+    x_date(as.character(dates), date_style = 13, output = "latex")
+  )
+  expect_equal(
+    x_date(as.character(dates), date_style = 13, output = "html"),
+    x_date(as.character(dates), date_style = 13, output = "rtf")
+  )
+
+  x_date(dates, date_style = 14, output = "html") %>%
+    expect_equal(
+      c(
+        "20/01/05", "21/02/06", "22/03/07", "23/04/08", "24/05/09"
+      )
+    )
+  expect_equal(
+    x_date(as.character(dates), date_style = 14, output = "html"),
+    x_date(as.character(dates), date_style = 14, output = "latex")
+  )
+  expect_equal(
+    x_date(as.character(dates), date_style = 14, output = "html"),
+    x_date(as.character(dates), date_style = 14, output = "rtf")
+  )
+
+  x_date(dates, date_style = 2, pattern = "d{x}d", output = "html") %>%
+    expect_equal(
+      c(
+        "dSunday, January 5, 2020d", "dSaturday, February 6, 2021d",
+        "dMonday, March 7, 2022d", "dSaturday, April 8, 2023d",
+        "dThursday, May 9, 2024d"
+      )
+    )
 })
