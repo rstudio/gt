@@ -2480,7 +2480,8 @@ latex_special_chars <- c(
 #' @export
 escape_latex <- function(text) {
 
-  m <- gregexec("[\\\\&%$#_{}~^]", text)
+  m <- gregexpr("[\\\\&%$#_{}~^]", text, perl = TRUE)
+
   special_chars <- regmatches(text, m)
   escaped_chars <- lapply(special_chars, function(x) {
     latex_special_chars[x]
