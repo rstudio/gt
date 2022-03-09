@@ -104,30 +104,6 @@ dt_spanners_get_ids <- function(data) {
   spanners$spanner_id
 }
 
-dt_spanners_print <- function(data, include_hidden = TRUE, ids = FALSE) {
-
-  spanners <- dt_spanners_get(data = data)
-
-  if (!include_hidden) {
-    vars <- dt_boxhead_get_vars_default(data = data)
-  } else {
-    vars <- dt_boxhead_get_vars(data = data)
-  }
-  vars_vec <- rep(NA_character_, length(vars))
-  names(vars_vec) <- vars
-
-  for (i in seq_len(nrow(spanners))) {
-
-    if (ids) {
-      vars_vec[spanners$vars[[i]]] <- spanners$spanner_id[i]
-    } else {
-      vars_vec[spanners$vars[[i]]] <- spanners$built[[i]]
-    }
-  }
-
-  unname(vars_vec[names(vars_vec) %in% vars])
-}
-
 dt_spanners_print_matrix <- function(
     data,
     include_hidden = TRUE,
