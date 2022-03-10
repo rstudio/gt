@@ -414,7 +414,6 @@ test_that("the `dt_spanners_print_matrix()` util function works well", {
     )
   )
 
-
   # Build a spanner matrix that has a spanner appearing immediately
   # over the `num`, `char`, and `fctr` columns, hide the `char` column
   # and only show the visible columns in the spanner matrix
@@ -883,5 +882,68 @@ test_that("the `dt_spanners_print_matrix()` util function works well", {
       tab_spanner(label = "D", columns = 4, level = 4) %>%
       build_data(context = "html") %>%
       dt_spanners_print_matrix(include_hidden = FALSE)
+  )
+
+  # Expect that spanners with levels >= 2 won't ever gather
+  # columns like spanners with level = 1 (no matter the `gather` value)
+  #
+  #      num        char        fctr   date
+  # [1,] NA         "char_fctr" NA     "char_fctr"
+  # [2,] "num_char" "num_char"  NA     NA
+  # [3,] "num"      "char"      "fctr" "date"
+  expect_equal(
+    exibble[, 1:4] %>%
+      gt() %>%
+      tab_spanner(label = "num_char", columns = c(num, char)) %>%
+      tab_spanner(label = "char_fctr", columns = c(char, date)) %>%
+      build_data(context = "html") %>%
+      dt_spanners_print_matrix(include_hidden = FALSE),
+    structure(
+      c(
+        NA, "num_char", "num", "char_fctr", "num_char", "char",
+        NA, NA, "fctr", "char_fctr", NA, "date"
+      ),
+      .Dim = 3:4,
+      .Dimnames = list(NULL, c("num", "char", "fctr", "date"))
+    )
+  )
+  expect_equal(
+    exibble[, 1:4] %>%
+      gt() %>%
+      tab_spanner(label = "num_char", columns = c(num, char)) %>%
+      tab_spanner(label = "char_fctr", columns = c(char, date), gather = TRUE) %>%
+      build_data(context = "html") %>%
+      dt_spanners_print_matrix(include_hidden = FALSE),
+    exibble[, 1:4] %>%
+      gt() %>%
+      tab_spanner(label = "num_char", columns = c(num, char)) %>%
+      tab_spanner(label = "char_fctr", columns = c(char, date), gather = FALSE) %>%
+      build_data(context = "html") %>%
+      dt_spanners_print_matrix(include_hidden = FALSE)
+  )
+
+  # ...moving columns will have to be done manually but the spanners
+  # that are aloft can be unified
+  #
+  #      num        char        date        fctr
+  # [1,] NA         "char_fctr" "char_fctr" NA
+  # [2,] "num_char" "num_char"  NA          NA
+  # [3,] "num"      "char"      "date"      "fctr"
+  expect_equal(
+    exibble[, 1:4] %>%
+      gt() %>%
+      tab_spanner(label = "num_char", columns = c(num, char)) %>%
+      tab_spanner(label = "char_fctr", columns = c(char, date)) %>%
+      cols_move(columns = date, after = char) %>%
+      build_data(context = "html") %>%
+      dt_spanners_print_matrix(include_hidden = FALSE),
+    structure(
+      c(
+        NA, "num_char", "num", "char_fctr", "num_char", "char",
+        "char_fctr", NA, "date", NA, NA, "fctr"
+      ),
+      .Dim = 3:4,
+      .Dimnames = list(NULL, c("num", "char", "date", "fctr"))
+    )
   )
 })
