@@ -263,3 +263,632 @@ test_that("`tab_spanner()` works even when columns are forcibly moved", {
       )
     )
 })
+
+test_that("the `dt_spanners_print_matrix()` util function works well", {
+
+  # dt_spanners_print_matrix(
+  #   data,
+  #   include_hidden = TRUE,
+  #   ids = FALSE,
+  #   omit_columns_row = FALSE
+  # )
+
+  # Expect that a table with no spanners declared will generate
+  # a spanner matrix that only has column names
+  expect_equal(
+    exibble %>%
+      gt() %>%
+      dt_spanners_print_matrix(),
+    {
+      mat <- matrix(colnames(exibble), nrow = 1)
+      colnames(mat) <- colnames(exibble)
+      mat
+    }
+  )
+
+  # Expect that the `ids = TRUE` setting will have
+  # no effect in this case
+  expect_equal(
+    exibble %>%
+      gt() %>%
+      dt_spanners_print_matrix(ids = TRUE),
+    {
+      mat <- matrix(colnames(exibble), nrow = 1)
+      colnames(mat) <- colnames(exibble)
+      mat
+    }
+  )
+
+  # Hiding columns should have no effect on the spanner matrix (i.e., it
+  # will show all vars regardless of visibility)
+  expect_equal(
+    exibble %>%
+      gt() %>%
+      cols_hide(columns = char) %>%
+      dt_spanners_print_matrix(),
+    {
+      mat <- matrix(colnames(exibble), nrow = 1)
+      colnames(mat) <- colnames(exibble)
+      mat
+    }
+  )
+
+  # Hidden columns will affect the spanner matrix if `include_hidden`
+  # is FALSE
+  expect_equal(
+    exibble %>%
+      gt() %>%
+      cols_hide(columns = char) %>%
+      dt_spanners_print_matrix(include_hidden = FALSE),
+    {
+      mat <- matrix(base::setdiff(colnames(exibble), "char"), nrow = 1)
+      colnames(mat) <- base::setdiff(colnames(exibble), "char")
+      mat
+    }
+  )
+
+  # Using `omit_columns_rows = TRUE` on a table with no spanners
+  # will return a 0-row matrix (with the correct number of columns)
+  expect_equal(
+    exibble %>% gt() %>% dt_spanners_print_matrix(omit_columns_row = TRUE),
+    {
+      mat <- matrix(colnames(exibble), nrow = 1)
+      colnames(mat) <- colnames(exibble)
+      mat[-1, ]
+    }
+  )
+
+  # Using `omit_columns_rows = TRUE` on a table with no spanners
+  # will return a 0-row matrix (with the correct number of columns);
+  # here we hide a column and ask for `dt_spanners_print_matrix()` not
+  # to show hidden columns
+  expect_equal(
+    exibble %>%
+      gt() %>%
+      cols_hide(columns = char) %>%
+      dt_spanners_print_matrix(omit_columns_row = TRUE, include_hidden = FALSE),
+    {
+      mat <- matrix(base::setdiff(colnames(exibble), "char"), nrow = 1)
+      colnames(mat) <- base::setdiff(colnames(exibble), "char")
+      mat[-1, ]
+    }
+  )
+
+  # With actual spanners, we must be sure to build the table with
+  # the `build_data()` function (here, using `"html"` as the `context`)
+
+  # Build a spanner matrix that has a spanner appearing immediately
+  # over the `num`, `char`, and `fctr` columns
+  #
+  #      num       char      fctr      date   time   datetime   currency   row   group
+  # [1,] "spanner" "spanner" "spanner" NA     NA     NA         NA         NA    NA
+  # [2,] "num"     "char"    "fctr"    "date" "time" "datetime" "currency" "row" "group"
+
+  expect_equal(
+    exibble %>%
+      gt() %>%
+      tab_spanner(label = "spanner", columns = c(num, char, fctr)) %>%
+      build_data(context = "html") %>%
+      dt_spanners_print_matrix(),
+    structure(
+      c(
+        "spanner", "num", "spanner", "char", "spanner", "fctr",
+        NA, "date", NA, "time", NA, "datetime", NA, "currency", NA, "row",
+        NA, "group"
+      ),
+      .Dim = c(2L, 9L),
+      .Dimnames = list(
+        NULL,
+        c(
+          "num", "char", "fctr", "date", "time", "datetime",
+          "currency", "row", "group"
+        )
+      )
+    )
+  )
+
+  # Build a spanner matrix that has a spanner appearing immediately
+  # over the `num`, `char`, and `fctr` columns; use the `ids = TRUE` option
+  #
+  #      num          char         fctr         date   time   datetime   currency   row   group
+  # [1,] "spanner-id" "spanner-id" "spanner-id" NA     NA     NA         NA         NA    NA
+  # [2,] "num"        "char"       "fctr"       "date" "time" "datetime" "currency" "row" "group"
+
+  expect_equal(
+    exibble %>%
+      gt() %>%
+      tab_spanner(
+        label = "spanner",
+        columns = c(num, char, fctr),
+        id = "spanner-id"
+      ) %>%
+      build_data(context = "html") %>%
+      dt_spanners_print_matrix(ids = TRUE),
+    structure(
+      c(
+        "spanner-id", "num", "spanner-id", "char", "spanner-id", "fctr",
+        NA, "date", NA, "time", NA, "datetime", NA, "currency", NA, "row",
+        NA, "group"
+      ),
+      .Dim = c(2L, 9L),
+      .Dimnames = list(
+        NULL,
+        c(
+          "num", "char", "fctr", "date", "time", "datetime",
+          "currency", "row", "group"
+        )
+      )
+    )
+  )
+
+
+  # Build a spanner matrix that has a spanner appearing immediately
+  # over the `num`, `char`, and `fctr` columns, hide the `char` column
+  # and only show the visible columns in the spanner matrix
+  #
+  #      num       fctr      date   time   datetime   currency   row   group
+  # [1,] "spanner" "spanner" NA     NA     NA         NA         NA    NA
+  # [2,] "num"     "fctr"    "date" "time" "datetime" "currency" "row" "group"
+
+  expect_equal(
+    exibble %>%
+      gt() %>%
+      tab_spanner(
+        label = "spanner",
+        columns = c(num, char, fctr),
+        id = "spanner-id"
+      ) %>%
+      cols_hide(columns = char) %>%
+      build_data(context = "html") %>%
+      dt_spanners_print_matrix(include_hidden = FALSE),
+    structure(
+      c(
+        "spanner", "num", "spanner", "fctr", NA, "date", NA, "time", NA,
+        "datetime", NA, "currency", NA, "row", NA, "group"
+      ),
+      .Dim = c(2L, 8L),
+      .Dimnames = list(
+        NULL,
+        c(
+          "num", "fctr", "date", "time", "datetime",
+          "currency", "row", "group"
+        )
+      )
+    )
+  )
+
+  # Build a spanner matrix that has a spanner appearing immediately
+  # over the `num`, `char`, and `fctr` columns, hide all of these columns
+  # and only show the visible columns in the spanner matrix
+  #
+  #      date   time   datetime   currency   row   group
+  # [1,] "date" "time" "datetime" "currency" "row" "group"
+
+  expect_equal(
+    exibble %>%
+      gt() %>%
+      tab_spanner(
+        label = "spanner",
+        columns = c(num, char, fctr),
+        id = "spanner-id"
+      ) %>%
+      cols_hide(columns = c(num, char, fctr)) %>%
+      build_data(context = "html") %>%
+      dt_spanners_print_matrix(include_hidden = FALSE),
+    structure(
+      c("date", "time", "datetime", "currency", "row", "group"),
+      .Dim = c(1L, 6L),
+      .Dimnames = list(
+        NULL,
+        c("date", "time", "datetime", "currency", "row", "group")
+      )
+    )
+  )
+
+  # Build a spanner matrix that has spanner appearing immediately
+  # over the `num`, `char`, and `fctr` columns; have another spanner
+  # that goes over those columns plus `date` and `time`; hide the
+  # `num`, `char`, and `fctr` columns and only expect a single spanner
+  # (on level 1) to appear over `date` and `time` in the spanner matrix
+  #
+  #      date       time       datetime   currency   row   group
+  # [1,] "spanner2" "spanner2" NA         NA         NA    NA
+  # [2,] "date"     "time"     "datetime" "currency" "row" "group"
+
+  expect_equal(
+    exibble %>%
+      gt() %>%
+      tab_spanner(
+        label = "spanner",
+        columns = c(num, char, fctr),
+        id = "spanner-id"
+      ) %>%
+      tab_spanner(
+        label = "spanner2",
+        columns = c(num, char, fctr, date, time),
+        id = "spanner-id-2"
+      ) %>%
+      cols_hide(columns = c(num, char, fctr)) %>%
+      build_data(context = "html") %>%
+      dt_spanners_print_matrix(include_hidden = FALSE),
+    structure(
+      c(
+        "spanner2", "date", "spanner2", "time", NA, "datetime",
+        NA, "currency", NA, "row", NA, "group"
+      ),
+      .Dim = c(2L, 6L),
+      .Dimnames = list(
+        NULL,
+        c("date", "time", "datetime", "currency", "row", "group")
+      )
+    )
+  )
+
+  # Expect that variations that use combinations of `columns`
+  # and `spanners` should having matching spanner matrices
+  expect_equal(
+    exibble %>%
+      gt() %>%
+      tab_spanner(
+        label = "spanner",
+        columns = c(num, char, fctr),
+        id = "spanner-id"
+      ) %>%
+      tab_spanner(
+        label = "spanner2",
+        columns = c(date, time), # this combination reolves to
+        spanners = "spanner-id", # c(num, char, fctr, date, time)
+        id = "spanner-id-2"
+      ) %>%
+      cols_hide(columns = c(num, char, fctr)) %>%
+      build_data(context = "html") %>%
+      dt_spanners_print_matrix(include_hidden = FALSE),
+    exibble %>%
+      gt() %>%
+      tab_spanner(
+        label = "spanner",
+        columns = c(num, char, fctr),
+        id = "spanner-id"
+      ) %>%
+      tab_spanner(
+        label = "spanner2",
+        columns = c(num, char, fctr, date, time),
+        id = "spanner-id-2"
+      ) %>%
+      cols_hide(columns = c(num, char, fctr)) %>%
+      build_data(context = "html") %>%
+      dt_spanners_print_matrix(include_hidden = FALSE)
+  )
+
+  expect_equal(
+    exibble %>%
+      gt() %>%
+      tab_spanner(
+        label = "spanner",
+        columns = c(num, char, fctr),
+        id = "spanner-id"
+      ) %>%
+      tab_spanner(
+        label = "spanner2",
+        columns = c(date, time, num, char), # this combination reolves to
+        spanners = "spanner-id",             # c(num, char, fctr, date, time)
+        id = "spanner-id-2"
+      ) %>%
+      cols_hide(columns = c(num, char, fctr)) %>%
+      build_data(context = "html") %>%
+      dt_spanners_print_matrix(include_hidden = FALSE),
+    exibble %>%
+      gt() %>%
+      tab_spanner(
+        label = "spanner",
+        columns = c(num, char, fctr),
+        id = "spanner-id"
+      ) %>%
+      tab_spanner(
+        label = "spanner2",
+        columns = c(num, char, fctr, date, time),
+        id = "spanner-id-2"
+      ) %>%
+      cols_hide(columns = c(num, char, fctr)) %>%
+      build_data(context = "html") %>%
+      dt_spanners_print_matrix(include_hidden = FALSE)
+  )
+
+  expect_equal(
+    exibble %>%
+      gt() %>%
+      tab_spanner(
+        label = "spanner",
+        columns = c(num, char, fctr),
+        id = "spanner-id"
+      ) %>%
+      tab_spanner(
+        label = "spanner2",
+        columns = c(date, time, num, char, fctr), # this combination reolves to
+        spanners = "spanner-id",                  # c(num, char, fctr, date, time)
+        id = "spanner-id-2"
+      ) %>%
+      cols_hide(columns = c(num, char, fctr)) %>%
+      build_data(context = "html") %>%
+      dt_spanners_print_matrix(include_hidden = FALSE),
+    exibble %>%
+      gt() %>%
+      tab_spanner(
+        label = "spanner",
+        columns = c(num, char, fctr),
+        id = "spanner-id"
+      ) %>%
+      tab_spanner(
+        label = "spanner2",
+        columns = c(num, char, fctr, date, time),
+        id = "spanner-id-2"
+      ) %>%
+      cols_hide(columns = c(num, char, fctr)) %>%
+      build_data(context = "html") %>%
+      dt_spanners_print_matrix(include_hidden = FALSE)
+  )
+
+  # Specifying `level = 1` here is no different than not providing the level
+  expect_equal(
+    exibble %>%
+      gt() %>%
+      tab_spanner(
+        label = "spanner",
+        columns = c(num, char, fctr),
+        level = 1,
+        id = "spanner-id"
+      ) %>%
+      build_data(context = "html") %>%
+      dt_spanners_print_matrix(include_hidden = FALSE),
+    exibble %>%
+      gt() %>%
+      tab_spanner(
+        label = "spanner",
+        columns = c(num, char, fctr),
+        id = "spanner-id"
+      ) %>%
+      build_data(context = "html") %>%
+      dt_spanners_print_matrix(include_hidden = FALSE)
+  )
+
+  # Specifying `level = 10` here is no different than not providing the level
+  # because intervening levels that are empty will be removed
+  expect_equal(
+    exibble %>%
+      gt() %>%
+      tab_spanner(
+        label = "spanner",
+        columns = c(num, char, fctr),
+        level = 10,
+        id = "spanner-id"
+      ) %>%
+      build_data(context = "html") %>%
+      dt_spanners_print_matrix(include_hidden = FALSE),
+    exibble %>%
+      gt() %>%
+      tab_spanner(
+        label = "spanner",
+        columns = c(num, char, fctr),
+        id = "spanner-id"
+      ) %>%
+      build_data(context = "html") %>%
+      dt_spanners_print_matrix(include_hidden = FALSE)
+  )
+
+  # Stacking spanners vertically on top of each other is possible
+  # by just specifying the spanner ID values in `tab_spanner`
+  #
+  #      num         char        fctr        date
+  # [1,] "spanner-3" "spanner-3" "spanner-3" "spanner-3"
+  # [2,] "spanner-2" "spanner-2" "spanner-2" "spanner-2"
+  # [3,] "spanner"   "spanner"   "spanner"   "spanner"
+  # [4,] "num"       "char"      "fctr"      "date"
+
+  expect_equal(
+    exibble[, 1:4] %>%
+      gt() %>%
+      tab_spanner(
+        label = "spanner",
+        columns = everything(),
+        id = "spanner-id"
+      ) %>%
+      tab_spanner(
+        label = "spanner-2",
+        spanners = "spanner-id",
+        id = "spanner-id-2"
+      ) %>%
+      tab_spanner(
+        label = "spanner-3",
+        spanners = "spanner-id-2",
+        id = "spanner-id-3"
+      ) %>%
+      build_data(context = "html") %>%
+      dt_spanners_print_matrix(include_hidden = FALSE),
+    structure(
+      c(
+        "spanner-3", "spanner-2", "spanner", "num", "spanner-3",
+        "spanner-2", "spanner", "char", "spanner-3", "spanner-2", "spanner",
+        "fctr", "spanner-3", "spanner-2", "spanner", "date"
+      ),
+      .Dim = c(4L, 4L),
+      .Dimnames = list(NULL, c("num", "char", "fctr", "date"))
+    )
+  )
+
+  # Expect the spanner stacking in this case can be equivalently
+  # performed by specifying columns (`everything()`)
+  expect_equal(
+    exibble[, 1:4] %>%
+      gt() %>%
+      tab_spanner(
+        label = "spanner",
+        columns = everything(),
+        id = "spanner-id"
+      ) %>%
+      tab_spanner(
+        label = "spanner-2",
+        columns = everything(),
+        id = "spanner-id-2"
+      ) %>%
+      tab_spanner(
+        label = "spanner-3",
+        columns = everything(),
+        id = "spanner-id-3"
+      ) %>%
+      build_data(context = "html") %>%
+      dt_spanners_print_matrix(include_hidden = FALSE),
+    structure(
+      c(
+        "spanner-3", "spanner-2", "spanner", "num", "spanner-3",
+        "spanner-2", "spanner", "char", "spanner-3", "spanner-2", "spanner",
+        "fctr", "spanner-3", "spanner-2", "spanner", "date"
+      ),
+      .Dim = c(4L, 4L),
+      .Dimnames = list(NULL, c("num", "char", "fctr", "date"))
+    )
+  )
+
+  # Expect partial replacement of a spanner by specifying the level
+  # in a latter `tab_spanner()` call and using `replace = TRUE`
+  #
+  #      num         char        fctr        date
+  # [1,] "spanner-3" "spanner-3" "spanner-3" "spanner-3"
+  # [2,] "2-&gt;"    "2-&gt;"    "spanner-2" "spanner-2"
+  # [3,] "spanner"   "spanner"   "spanner"   "spanner"
+  # [4,] "num"       "char"      "fctr"      "date"
+
+  expect_equal(
+    exibble[, 1:4] %>%
+      gt() %>%
+      tab_spanner(
+        label = "spanner",
+        columns = everything(),
+        id = "spanner-id"
+      ) %>%
+      tab_spanner(
+        label = "spanner-2",
+        columns = everything(),
+        id = "spanner-id-2"
+      ) %>%
+      tab_spanner(
+        label = "spanner-3",
+        columns = everything(),
+        id = "spanner-id-3"
+      ) %>%
+      tab_spanner(
+        label = "2->",
+        id = "spanner-id-2-b",
+        columns = c(num, char),
+        level = 2,
+        replace = TRUE
+      ) %>%
+      build_data(context = "html") %>%
+      dt_spanners_print_matrix(include_hidden = FALSE),
+    structure(
+      c(
+        "spanner-3", "2-&gt;", "spanner", "num", "spanner-3",
+        "2-&gt;", "spanner", "char", "spanner-3", "spanner-2", "spanner",
+        "fctr", "spanner-3", "spanner-2", "spanner", "date"
+      ),
+      .Dim = c(4L, 4L),
+      .Dimnames = list(NULL, c("num", "char", "fctr", "date"))
+    )
+  )
+
+  # Expect a full replacement of a spanner by specifying the level
+  # in a latter `tab_spanner()` call and using `replace = TRUE`
+  #
+  #      num           char          fctr          date
+  # [1,] "spanner-3"   "spanner-3"   "spanner-3"   "spanner-3"
+  # [2,] "&lt;-2-&gt;" "&lt;-2-&gt;" "&lt;-2-&gt;" "&lt;-2-&gt;"
+  # [3,] "spanner"     "spanner"     "spanner"     "spanner"
+  # [4,] "num"         "char"        "fctr"        "date"
+
+  expect_equal(
+    exibble[, 1:4] %>%
+      gt() %>%
+      tab_spanner(
+        label = "spanner",
+        columns = everything(),
+        id = "spanner-id"
+      ) %>%
+      tab_spanner(
+        label = "spanner-2",
+        columns = everything(),
+        id = "spanner-id-2"
+      ) %>%
+      tab_spanner(
+        label = "spanner-3",
+        columns = everything(),
+        id = "spanner-id-3"
+      ) %>%
+      tab_spanner(
+        label = "<-2->",
+        id = "spanner-id-2-b",
+        columns = everything(),
+        level = 2,
+        replace = TRUE
+      ) %>%
+      build_data(context = "html") %>%
+      dt_spanners_print_matrix(include_hidden = FALSE),
+    structure(
+      c(
+        "spanner-3", "&lt;-2-&gt;", "spanner", "num", "spanner-3",
+        "&lt;-2-&gt;", "spanner", "char", "spanner-3", "&lt;-2-&gt;",
+        "spanner", "fctr", "spanner-3", "&lt;-2-&gt;", "spanner", "date"
+      ),
+      .Dim = c(4L, 4L),
+      .Dimnames = list(NULL, c("num", "char", "fctr", "date"))
+    )
+  )
+
+  # Construct a diagonal of one-col-width spanners by specifying the
+  # level when necessary
+  #
+  #      num   char   fctr   date
+  # [1,] NA    NA     NA     "D"
+  # [2,] NA    NA     "C"    NA
+  # [3,] NA    "B"    NA     NA
+  # [4,] "A"   NA     NA     NA
+  # [5,] "num" "char" "fctr" "date"
+
+  expect_equal(
+    exibble[, 1:4] %>%
+      gt() %>%
+      tab_spanner(label = "A", columns = 1) %>%
+      tab_spanner(label = "B", columns = 2, level = 2) %>%
+      tab_spanner(label = "C", columns = 3, level = 3) %>%
+      tab_spanner(label = "D", columns = 4, level = 4) %>%
+      build_data(context = "html") %>%
+      dt_spanners_print_matrix(include_hidden = FALSE),
+    structure(
+      c(
+        NA, NA, NA, "A", "num", NA, NA, "B", NA, "char",
+        NA, "C", NA, NA, "fctr", "D", NA, NA, NA, "date"
+      ),
+      .Dim = 5:4,
+      .Dimnames = list(NULL, c("num", "char", "fctr", "date"))
+    )
+  )
+
+  # Expect that this can be in a different order when being
+  # completely explicit about the `level`
+  expect_equal(
+    exibble[, 1:4] %>%
+      gt() %>%
+      tab_spanner(label = "A", columns = 1) %>%
+      tab_spanner(label = "B", columns = 2, level = 2) %>%
+      tab_spanner(label = "C", columns = 3, level = 3) %>%
+      tab_spanner(label = "D", columns = 4, level = 4) %>%
+      build_data(context = "html") %>%
+      dt_spanners_print_matrix(include_hidden = FALSE),
+    exibble[, 1:4] %>%
+      gt() %>%
+      tab_spanner(label = "B", columns = 2, level = 2) %>%
+      tab_spanner(label = "C", columns = 3, level = 3) %>%
+      tab_spanner(label = "A", columns = 1, level = 1) %>%
+      tab_spanner(label = "D", columns = 4, level = 4) %>%
+      build_data(context = "html") %>%
+      dt_spanners_print_matrix(include_hidden = FALSE)
+  )
+})
