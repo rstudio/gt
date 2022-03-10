@@ -132,11 +132,11 @@ dt_spanners_print_matrix <- function(
   # is possible when hiding columns via `col_hide()`
   spanners_tbl <-
     spanners_tbl %>%
+    dplyr::mutate(vars = lapply(.data$vars, base::intersect, .env$vars)) %>%
+    dplyr::filter(vapply(vars, length, integer(1)) > 0) %>%
     dplyr::mutate(
       spanner_level = match(spanner_level, sort(unique(spanner_level)))
-    )  %>%
-    dplyr::mutate(vars = lapply(.data$vars, base::intersect, .env$vars)) %>%
-    dplyr::filter(vapply(vars, length, integer(1)) > 0)
+    )
 
   # If `spanners_tbl` is immediately empty then return a single-row
   # matrix of column vars/IDs (or not, if `omit_columns_row = TRUE`)
@@ -146,9 +146,7 @@ dt_spanners_print_matrix <- function(
     )
   }
 
-  # Get the maximum height of the spanner matrix; this won't
-  # necessarily be the finalized height since we will collapse
-  # empty rows
+  # Get the height of the spanner matrix
   spanner_height <- max(spanners_tbl[["spanner_level"]])
 
   vars_vec <- rep(NA_character_, length(vars))
