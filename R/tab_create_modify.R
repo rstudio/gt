@@ -145,6 +145,15 @@ tab_spanner <- function(data,
       expr = spanners
     )
 
+  # Stop function if `level` is provided and is less than `1`
+  if (!is.null(level) && level < 1) {
+    stop(
+      "A spanner level of ", level, " cannot be set:\n",
+      "* Please choose a `level` value greater than or equal to `1`",
+      call. = FALSE
+    )
+  }
+
   if (is.numeric(spanner_id_idx)) {
 
     spanner_ids <- present_spanner_ids[spanner_id_idx]
@@ -182,21 +191,20 @@ tab_spanner <- function(data,
   # Check new `id` against existing `id` values and stop if necessary
   check_spanner_id_unique(data = data, spanner_id = id)
 
-  # Resolve the `level` of the new spanner
-  level <-
-    resolve_spanner_level(
-      data = data,
-      column_names = column_names,
-      spanner_ids = spanner_ids,
-      level = level
-    )
-
   # Resolve the `column_names` that new spanner will span over
   column_names <-
     resolve_spanned_column_names(
       data = data,
       column_names = column_names,
       spanner_ids = spanner_ids
+    )
+
+  # Resolve the `level` of the new spanner
+  level <-
+    resolve_spanner_level(
+      data = data,
+      column_names = column_names,
+      level = level
     )
 
   # Add the spanner to the `_spanners` table
@@ -236,65 +244,43 @@ tab_spanner <- function(data,
 resolve_spanner_level <- function(
   data,
   column_names,
-  spanner_ids,
   level
 ) {
 
-  any_existing_spanners <- dt_spanners_exists(data = data)
-
-  # If explicitly providing a `level`, ensure it's at least 1 or above
+  # If explicitly providing a `level` simply return that value
   if (!is.null(level)) {
-
-    if (level < 1) {
-      stop(
-        "A spanner level of ", level, " cannot be set:\n",
-        "* Please choose a `level` value greater than or equal to `1`",
-        call. = FALSE
-      )
-    }
-
     return(as.integer(level))
   }
 
-  # If spanning exclusively over column labels, and there aren't any
-  # existing spanners, then the new spanner level is always `1`
-  if (length(spanner_ids) < 1 && !any_existing_spanners) {
+  # Determine if there are any existing spanners
+  any_existing_spanners <- dt_spanners_exists(data = data)
+
+  # If there aren't any existing spanners, then the new spanner
+  # level will always be `1`
+  if (!any_existing_spanners) {
     return(1L)
   }
 
-  spanners_existing <- dt_spanners_get(data = data)
+  # Get the present `spanners_tbl`
+  spanners_tbl <- dt_spanners_get(data = data)
 
-  if (length(spanner_ids) < 1 && any_existing_spanners) {
+  highest_level <- 0L
 
-    highest_level <- 0L
+  spanners_tbl <- dplyr::select(spanners_tbl, spanner_id, vars, spanner_level)
 
-    spanners_existing <-
-      spanners_existing %>%
-      dplyr::select(spanner_id, vars, spanner_level)
+  for (i in seq_len(nrow(spanners_tbl))) {
 
-    for (i in seq_len(nrow(spanners_existing))) {
+    spanned_vars <- unlist(spanners_tbl[[i, "vars"]])
+    level <- spanners_tbl[[i, "spanner_level"]]
 
-      spanned_vars <- unlist(spanners_existing[[i, "vars"]])
-      level <- spanners_existing[[i, "spanner_level"]]
-
-      if (any(column_names %in% spanned_vars)) {
-        if (level > highest_level) {
-          highest_level <- level
-        }
+    if (any(column_names %in% spanned_vars)) {
+      if (level > highest_level) {
+        highest_level <- level
       }
     }
-
-    return(highest_level + 1L)
   }
 
-  # If spanning over any existing spanners then the new spanner
-  # level is one greater than the highest of the spanners with `spanner_ids`
-  spanner_levels_under <-
-    spanners_existing[["spanner_level"]][
-      spanners_existing[["spanner_id"]] %in% spanner_ids
-    ]
-
-  max(spanner_levels_under) + 1L
+  highest_level + 1L
 }
 
 resolve_spanned_column_names <- function(
