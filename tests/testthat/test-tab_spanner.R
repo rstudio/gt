@@ -266,13 +266,6 @@ test_that("`tab_spanner()` works even when columns are forcibly moved", {
 
 test_that("the `dt_spanners_print_matrix()` util function works well", {
 
-  # dt_spanners_print_matrix(
-  #   data,
-  #   include_hidden = TRUE,
-  #   ids = FALSE,
-  #   omit_columns_row = FALSE
-  # )
-
   # Expect that a table with no spanners declared will generate
   # a spanner matrix that only has column names
   expect_equal(
