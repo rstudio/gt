@@ -134,7 +134,9 @@ dt_spanners_print_matrix <- function(
     spanners_tbl %>%
     dplyr::mutate(
       spanner_level = match(spanner_level, sort(unique(spanner_level)))
-    )
+    )  %>%
+    dplyr::mutate(vars = lapply(.data$vars, base::intersect, .env$vars)) %>%
+    dplyr::filter(vapply(vars, length, integer(1)) > 0)
 
   # If `spanners_tbl` is immediately empty then return a single-row
   # matrix of column vars/IDs (or not, if `omit_columns_row = TRUE`)
@@ -152,59 +154,29 @@ dt_spanners_print_matrix <- function(
   vars_vec <- rep(NA_character_, length(vars))
   names(vars_vec) <- vars
 
+  # Initialize matrix row that represents the column vars
+  columns_mat_cols_row <- matrix(vars, nrow = 1, ncol = length(vars))
+
   # Initialize matrix to serve as boxhead representation
   columns_mat <-
-    rbind(
-      matrix(vars, nrow = 1, ncol = length(vars)),
-      matrix(NA_character_, nrow = spanner_height, ncol = length(vars_vec))
-    )
-
+    matrix(NA_character_, nrow = spanner_height, ncol = length(vars_vec))
   colnames(columns_mat) <- vars
 
-  spanners_tbl <- spanners_tbl %>% dplyr::filter(spanner_level >= 1)
-
-  columns_mat_id <- columns_mat_labels <- columns_mat
-
+  # columns_mat_id <- columns_mat_labels <- columns_mat
 
   for (i in seq_len(nrow(spanners_tbl))) {
-
-    columns_mat_id[spanners_tbl$spanner_level[[i]] + 1, spanners_tbl$vars[[i]]] <-
-      spanners_tbl$spanner_id[i]
-
-    columns_mat_labels[spanners_tbl$spanner_level[[i]] + 1, spanners_tbl$vars[[i]]] <-
-      spanners_tbl$built[i]
+    columns_mat[spanners_tbl$spanner_level[[i]], spanners_tbl$vars[[i]]] <-
+      if (ids) spanners_tbl$spanner_id[i] else spanners_tbl$built[i]
   }
 
   # Flip matrix in y direction to put boxhead levels in display order
-  columns_mat_id <- columns_mat_id[rev(seq_len(nrow(columns_mat_id))), ]
-  columns_mat_labels <- columns_mat_labels[rev(seq_len(nrow(columns_mat_labels))), ]
+  columns_mat <- columns_mat[rev(seq_len(nrow(columns_mat))), , drop = FALSE]
 
-  # TODO: Prune any rows that are completely filled with NA values
-  na_rows <- c()
-  for (i in seq_len(nrow(columns_mat_id))) {
-
-    row_i_unique <- unique(columns_mat_id[i, ])
-
-    if (length(row_i_unique) == 1 && is.na(row_i_unique)) {
-      na_rows <- c(na_rows, i)
-    }
+  if (!omit_columns_row) {
+    columns_mat <- rbind(columns_mat, columns_mat_cols_row)
   }
 
-  if (length(na_rows) > 0) {
-    columns_mat_id <- columns_mat_id[-na_rows, ]
-    columns_mat_labels <- columns_mat_labels[-na_rows, ]
-  }
-
-  if (omit_columns_row) {
-    columns_mat_id <- columns_mat_id[-nrow(columns_mat_id), , drop = FALSE]
-    columns_mat_labels <- columns_mat_labels[-nrow(columns_mat_labels), , drop = FALSE]
-  }
-
-  if (ids) {
-    return(columns_mat_id)
-  } else {
-    return(columns_mat_labels)
-  }
+  columns_mat
 }
 
 empty_spanner_matrix <- function(vars, omit_columns_row) {

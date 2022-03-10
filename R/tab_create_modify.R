@@ -170,7 +170,7 @@ tab_spanner <- function(data,
       )
     }
 
-    spanner_ids <- base::intersect(present_spanner_ids, spanner_id_idx)
+    spanner_ids <- spanner_id_idx
   }
 
   # If `column_names` and `spanner_ids` have zero lengths then
@@ -314,10 +314,10 @@ resolve_spanned_column_names <- function(
         ]
       )
 
-    column_names <- unique(c(column_names, column_names_associated))
+    column_names <- c(column_names, column_names_associated)
   }
 
-  column_names
+  unique(column_names)
 }
 
 #' Create column labels and spanners via delimited names
