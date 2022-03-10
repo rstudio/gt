@@ -113,94 +113,86 @@ dt_spanners_print_matrix <- function(
 
   spanners_tbl <- dt_spanners_get(data = data)
 
-  remove_entry <- rep(FALSE, nrow(spanners_tbl))
-
   if (!include_hidden) {
     vars <- dt_boxhead_get_vars_default(data = data)
   } else {
     vars <- dt_boxhead_get_vars(data = data)
   }
 
+  # If `spanners_tbl` is immediately empty then return a single-row
+  # matrix of column vars/IDs (or not, if `omit_columns_row = TRUE`)
+  if (nrow(spanners_tbl) < 1) {
+    return(
+      empty_spanner_matrix(vars = vars, omit_columns_row = omit_columns_row)
+    )
+  }
+
   # Keep only the columns in `spanners_tbl` that are in the `vars`;
   # this will exclude spanners if their columns aren't in `vars` (this
   # is possible when hiding columns via `col_hide()`
-  for (i in seq_len(nrow(spanners_tbl))) {
+  spanners_tbl <-
+    spanners_tbl %>%
+    dplyr::mutate(
+      spanner_level = match(spanner_level, sort(unique(spanner_level)))
+    )
 
-    vars_spanner_i <- unlist(spanners_tbl[i, ][["vars"]])
-    vars_spanner_i_flt <- base::intersect(vars_spanner_i, vars)
-
-    if (length(vars_spanner_i_flt) < 1) {
-      # If none of the columns under the proposed spanner are
-      # set as visible columns, then we need to mark the spanner
-      # entry for deletion from `spanners_tbl`
-      remove_entry[i] <- TRUE
-    } else {
-      spanners_tbl[i, ][["vars"]] <- list(vars_spanner_i_flt)
-    }
+  # If `spanners_tbl` is immediately empty then return a single-row
+  # matrix of column vars/IDs (or not, if `omit_columns_row = TRUE`)
+  if (nrow(spanners_tbl) < 1) {
+    return(
+      empty_spanner_matrix(vars = vars, omit_columns_row = omit_columns_row)
+    )
   }
-
-  # Remove entries from `spanners_tbl` as needed
-  spanners_tbl <- spanners_tbl[!remove_entry, ]
 
   # Get the maximum height of the spanner matrix; this won't
   # necessarily be the finalized height since we will collapse
   # empty rows
-  if (nrow(spanners_tbl) < 1) {
-    spanner_height <- 0
-  } else {
-    spanner_height <- max(spanners_tbl[["spanner_level"]])
-  }
+  spanner_height <- max(spanners_tbl[["spanner_level"]])
 
   vars_vec <- rep(NA_character_, length(vars))
   names(vars_vec) <- vars
 
   # Initialize matrix to serve as boxhead representation
-  columns_mat <- matrix(vars, nrow = 1, ncol = length(vars))
-
   columns_mat <-
     rbind(
-      columns_mat,
-      if (spanner_height > 0) {
-      matrix(vars_vec, nrow = spanner_height, ncol = length(vars_vec))
-      }
+      matrix(vars, nrow = 1, ncol = length(vars)),
+      matrix(NA_character_, nrow = spanner_height, ncol = length(vars_vec))
     )
+
   colnames(columns_mat) <- vars
 
   spanners_tbl <- spanners_tbl %>% dplyr::filter(spanner_level >= 1)
 
   columns_mat_id <- columns_mat_labels <- columns_mat
 
-  if (spanner_height > 0) {
 
-    for (i in seq_len(nrow(spanners_tbl))) {
+  for (i in seq_len(nrow(spanners_tbl))) {
 
-      columns_mat_id[spanners_tbl$spanner_level[[i]] + 1, spanners_tbl$vars[[i]]] <-
-        spanners_tbl$spanner_id[i]
+    columns_mat_id[spanners_tbl$spanner_level[[i]] + 1, spanners_tbl$vars[[i]]] <-
+      spanners_tbl$spanner_id[i]
 
-      columns_mat_labels[spanners_tbl$spanner_level[[i]] + 1, spanners_tbl$vars[[i]]] <-
-        spanners_tbl$built[i]
+    columns_mat_labels[spanners_tbl$spanner_level[[i]] + 1, spanners_tbl$vars[[i]]] <-
+      spanners_tbl$built[i]
+  }
+
+  # Flip matrix in y direction to put boxhead levels in display order
+  columns_mat_id <- columns_mat_id[rev(seq_len(nrow(columns_mat_id))), ]
+  columns_mat_labels <- columns_mat_labels[rev(seq_len(nrow(columns_mat_labels))), ]
+
+  # TODO: Prune any rows that are completely filled with NA values
+  na_rows <- c()
+  for (i in seq_len(nrow(columns_mat_id))) {
+
+    row_i_unique <- unique(columns_mat_id[i, ])
+
+    if (length(row_i_unique) == 1 && is.na(row_i_unique)) {
+      na_rows <- c(na_rows, i)
     }
+  }
 
-    # Flip matrix in y direction to put boxhead levels in display order
-    columns_mat_id <- columns_mat_id[rev(seq_len(nrow(columns_mat_id))), ]
-    columns_mat_labels <- columns_mat_labels[rev(seq_len(nrow(columns_mat_labels))), ]
-
-    # TODO: Prune any rows that are completely filled with NA values
-    na_rows <- c()
-    for (i in seq_len(nrow(columns_mat_id))) {
-
-      row_i_unique <- unique(columns_mat_id[i, ])
-
-      if (length(row_i_unique) == 1 && is.na(row_i_unique)) {
-        na_rows <- c(na_rows, i)
-      }
-    }
-
-    if (length(na_rows) > 0) {
-      columns_mat_id <- columns_mat_id[-na_rows, ]
-      columns_mat_labels <- columns_mat_labels[-na_rows, ]
-    }
-
+  if (length(na_rows) > 0) {
+    columns_mat_id <- columns_mat_id[-na_rows, ]
+    columns_mat_labels <- columns_mat_labels[-na_rows, ]
   }
 
   if (omit_columns_row) {
@@ -213,6 +205,18 @@ dt_spanners_print_matrix <- function(
   } else {
     return(columns_mat_labels)
   }
+}
+
+empty_spanner_matrix <- function(vars, omit_columns_row) {
+
+  columns_mat <- matrix(vars, nrow = 1, ncol = length(vars))
+  colnames(columns_mat) <- vars
+
+  if (omit_columns_row) {
+    columns_mat <- columns_mat[-1, , drop = FALSE]
+  }
+
+  columns_mat
 }
 
 dt_spanners_matrix_height <- function(
