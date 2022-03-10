@@ -164,7 +164,7 @@ dt_spanners_print_matrix <- function(
 
   for (i in seq_len(nrow(spanners_tbl))) {
     columns_mat[spanners_tbl$spanner_level[[i]], spanners_tbl$vars[[i]]] <-
-      if (ids) spanners_tbl$spanner_id[i] else spanners_tbl$built[i]
+      if (ids) spanners_tbl$spanner_id[[i]] else spanners_tbl$built[[i]]
   }
 
   # Flip matrix in y direction to put boxhead levels in display order
