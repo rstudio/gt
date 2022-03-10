@@ -7,7 +7,7 @@
 escape_latex(text)
 }
 \arguments{
-\item{text}{a character vector containing the text that is to be
+\item{text}{A character vector containing the text that is to be
 LaTeX-escaped.}
 }
 \value{
