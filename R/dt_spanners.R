@@ -152,9 +152,6 @@ dt_spanners_print_matrix <- function(
   vars_vec <- rep(NA_character_, length(vars))
   names(vars_vec) <- vars
 
-  # Initialize matrix row that represents the column vars
-  columns_mat_cols_row <- matrix(vars, nrow = 1, ncol = length(vars))
-
   # Initialize matrix to serve as boxhead representation
   columns_mat <-
     matrix(NA_character_, nrow = spanner_height, ncol = length(vars_vec))
@@ -171,7 +168,7 @@ dt_spanners_print_matrix <- function(
   columns_mat <- columns_mat[rev(seq_len(nrow(columns_mat))), , drop = FALSE]
 
   if (!omit_columns_row) {
-    columns_mat <- rbind(columns_mat, columns_mat_cols_row)
+    columns_mat <- rbind(columns_mat, matrix(vars, nrow = 1, ncol = length(vars)))
   }
 
   columns_mat
