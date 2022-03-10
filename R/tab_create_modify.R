@@ -65,8 +65,8 @@ tab_header <- function(data,
 #'   be defined.
 #' @param level An explicit level to which the spanner should be placed. If not
 #'   provided, **gt** will choose the level based on the inputs provided within
-#'   `columns` and `spanners`, placing the spanner where it will fig. The first
-#'   spanner level (right above the column labels) is `1`.
+#'   `columns` and `spanners`, placing the spanner label where it will fit. The
+#'   first spanner level (right above the column labels) is `1`.
 #' @param id The ID for the spanner column label. When accessing a spanner
 #'   column label through [cells_column_spanners()] (when using [tab_style()] or
 #'   [tab_footnote()]) the `id` value is used as the reference (and not the

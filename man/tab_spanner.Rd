@@ -27,8 +27,8 @@ be defined.}
 
 \item{level}{An explicit level to which the spanner should be placed. If not
 provided, \strong{gt} will choose the level based on the inputs provided within
-\code{columns} and \code{spanners}, placing the spanner where it will fig. The first
-spanner level (right above the column labels) is \code{1}.}
+\code{columns} and \code{spanners}, placing the spanner label where it will fit. The
+first spanner level (right above the column labels) is \code{1}.}
 
 \item{id}{The ID for the spanner column label. When accessing a spanner
 column label through \code{\link[=cells_column_spanners]{cells_column_spanners()}} (when using \code{\link[=tab_style]{tab_style()}} or
