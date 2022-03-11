@@ -739,11 +739,14 @@ prettify_scientific_notation <- function(x,
 create_suffix_df <- function(x,
                              decimals,
                              suffix_labels,
-                             scale_by) {
+                             scale_by,
+                             system) {
+
+  suffix_fn <- if (system == "intl") num_suffix else num_suffix_ind
 
   # Create a tibble with scaled values for `x` and the
   # suffix labels to use for character formatting
-  num_suffix(
+  suffix_fn(
     round(x, decimals),
     suffixes = suffix_labels,
     scale_by = scale_by

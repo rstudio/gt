@@ -777,7 +777,7 @@ num_suffix <- function(x,
   }
 
   # Obtain a vector of index values that places
-  # each value of `x` (either postive or negative)
+  # each value of `x` (either positive or negative)
   # in the correct scale category, according to
   # the base value (defaulting to 1000); this works
   # in tandem with the `suffixes` vector, where each
@@ -828,6 +828,95 @@ num_suffix <- function(x,
   )
 }
 
+#' Get a tibble of scaling values and suffixes for the Indian numbering system
+#'
+#' The `num_suffix()` function operates on a vector of numerical values and
+#' returns a tibble where each row represents a scaled value for `x` and the
+#' correct suffix to use during `x`'s character-based formatting.
+#' @noRd
+num_suffix_ind <- function(x,
+                           suffixes = c(NA, "L", "Cr"),
+                           scale_by) {
+
+  # If `suffixes` is a zero-length vector, we
+  # provide a tibble that will ultimately not
+  # scale value or apply any suffixes
+  if (length(suffixes) == 0) {
+
+    return(
+      dplyr::tibble(
+        scale_by = rep_len(scale_by, length(x)),
+        suffix = rep_len("", length(x))
+      )
+    )
+  }
+
+  # Obtain a vector of index values that places
+  # each value of `x` (either positive or negative)
+  # in the correct scale category, according to
+  # the base value; this works in tandem with the
+  # `suffixes` vector, where each index position
+  # (starting from 1) represents the index here
+  exponent <- log(abs(x), base = 10)
+
+  i <-
+    dplyr::case_when(
+      exponent <= 2 ~ 0,
+      exponent >= 2 & exponent < 5 ~ 1,
+      exponent >= 5 & exponent < 7 ~ 2,
+      exponent >= 7 ~ 3
+    )
+
+  # Replace any -Inf, Inf, or zero values
+  # with NA (required for the `non_na_index()`
+  # function)
+  i[is.infinite(i) | i == 0] <- NA_integer_
+
+  # Using the `non_na_index()` function on the
+  # vector of index values (`i`) is required
+  # to enable inheritance of scalars/suffixes
+  # to ranges where the user prefers the last
+  # suffix given
+  suffix_index <-
+    non_na_index(
+      values = suffixes,
+      index = i,
+      default_value = 0
+    )
+
+  # Replace any zero values in `suffix_index`
+  # with NA values
+  suffix_index[suffix_index == 0] <- NA_integer_
+
+  # Get a vector of suffix labels; this vector
+  # is to be applied to the scaled values
+  suffix_labels <- suffixes[suffix_index]
+
+  # Replace any NAs in `suffix_labels` with an
+  # empty string
+  suffix_labels[is.na(suffix_labels)] <- ""
+
+  # Replace any NAs in `suffix_index` with zeros
+  suffix_index[is.na(suffix_index)] <- 0
+
+  # Add a leading space to all non-empty suffix labels
+  suffix_labels[suffix_labels != ""] <-
+    paste0(" ", suffix_labels[suffix_labels != ""])
+
+  # Create and return a tibble with `scale_by`
+  # and `suffix` values
+  dplyr::tibble(
+    scale_by = suffix_index,
+    suffix = suffix_labels
+  ) %>%
+    dplyr::mutate(scale_by = dplyr::case_when(
+      scale_by == 0 ~ 1,
+      scale_by == 1 ~ 0.001,
+      scale_by == 2 ~ 0.00001,
+      scale_by == 3 ~ 0.0000001
+    ))
+}
+
 #' An `isFALSE`-based helper function
 #'
 #' The `is_false()` function is similar to the `isFALSE()` function that was
@@ -849,7 +938,8 @@ is_false = function(x) {
 #'   `fmt_*()` functions.
 #' @noRd
 normalize_suffixing_inputs <- function(suffixing,
-                                       scale_by) {
+                                       scale_by,
+                                       system) {
 
   if (is_false(suffixing)) {
 
@@ -864,8 +954,12 @@ normalize_suffixing_inputs <- function(suffixing,
     warn_on_scale_by_input(scale_by)
 
     # If `suffixing` is TRUE, return the default
-    # set of suffixes
-    return(c("K", "M", "B", "T"))
+    # set of suffixes depending on the `system`
+    if (system == "intl") {
+      return(c("K", "M", "B", "T"))
+    } else {
+      return(c(NA, "Lac", "Cr"))
+    }
 
   } else if (is.character(suffixing)) {
 
@@ -876,8 +970,10 @@ normalize_suffixing_inputs <- function(suffixing,
     # to `suffixing`, we first want to check if there
     # are any names provided
     if (!is.null(names(suffixing))) {
-      stop("The character vector supplied to `suffixed` cannot contain names.",
-           call. = FALSE)
+      stop(
+        "The character vector supplied to `suffixed` cannot contain names.",
+        call. = FALSE
+      )
     }
 
     # We can now return the character vector, having
@@ -889,10 +985,12 @@ normalize_suffixing_inputs <- function(suffixing,
     # Stop function if the input to `suffixing` isn't
     # valid (i.e., isn't logical and isn't a valid
     # character vector)
-    stop("The value provided to `suffixing` must either be:\n",
-         " * `TRUE` or `FALSE` (the default)\n",
-         " * a character vector with suffixing labels",
-         call. = FALSE)
+    stop(
+      "The value provided to `suffixing` must either be:\n",
+      "* `TRUE` or `FALSE` (the default)\n",
+      "* a character vector with suffixing labels",
+      call. = FALSE
+    )
   }
 }
 
