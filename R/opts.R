@@ -41,34 +41,45 @@
 #' # which footnote marks to use
 #' tab_1 <-
 #'   sza %>%
-#'   dplyr::group_by(latitude, tst) %>%
-#'   dplyr::summarize(
-#'     SZA.Max = max(sza),
-#'     SZA.Min = min(sza, na.rm = TRUE)
-#'   ) %>%
-#'   dplyr::ungroup() %>%
-#'   dplyr::filter(latitude == 30, !is.infinite(SZA.Min)) %>%
-#'   dplyr::select(-latitude) %>%
-#'   gt(rowname_col = "tst") %>%
-#'   tab_spanner_delim(delim = ".") %>%
-#'   fmt_missing(
-#'     columns = everything(),
-#'     missing_text = "90+"
-#'   ) %>%
-#'   tab_stubhead("TST") %>%
-#'   tab_footnote(
-#'     footnote = "True solar time.",
-#'     locations = cells_stubhead()
-#'   ) %>%
-#'   tab_footnote(
-#'     footnote = "Solar zenith angle.",
-#'     locations = cells_column_spanners(spanners = "SZA")
-#'   ) %>%
-#'   tab_footnote(
-#'     footnote = "The Lowest SZA.",
-#'     locations = cells_stub(rows = "1200")
-#'   ) %>%
-#'   opt_footnote_marks(marks = "standard")
+#'     dplyr::filter(latitude == 30) %>%
+#'     dplyr::group_by(tst) %>%
+#'     dplyr::summarize(
+#'       SZA.Max = if (
+#'         all(is.na(sza))) {
+#'         NA
+#'       } else {
+#'         max(sza, na.rm = TRUE)
+#'       },
+#'       SZA.Min = if (
+#'         all(is.na(sza))) {
+#'         NA
+#'       } else {
+#'         min(sza, na.rm = TRUE)
+#'       },
+#'       .groups = "drop"
+#'     ) %>%
+#'     gt(rowname_col = "tst") %>%
+#'     tab_spanner_delim(delim = ".") %>%
+#'     fmt_missing(
+#'       columns = everything(),
+#'       missing_text = "90+"
+#'     ) %>%
+#'     tab_stubhead(label = "TST") %>%
+#'     tab_footnote(
+#'       footnote = "True solar time.",
+#'       locations = cells_stubhead()
+#'     ) %>%
+#'     tab_footnote(
+#'       footnote = "Solar zenith angle.",
+#'       locations = cells_column_spanners(
+#'         spanners = "SZA.Max"
+#'       )
+#'     ) %>%
+#'     tab_footnote(
+#'       footnote = "The Lowest SZA.",
+#'       locations = cells_stub(rows = "1200")
+#'     ) %>%
+#'     opt_footnote_marks(marks = "standard")
 #'
 #' @section Figures:
 #' \if{html}{\figure{man_opt_footnote_marks_1.png}{options: width=100\%}}

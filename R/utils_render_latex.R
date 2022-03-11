@@ -167,8 +167,12 @@ create_columns_component_l <- function(data) {
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
 
-  # Determine if there are any spanners present
-  spanners_present <- dt_spanners_exists(data = data)
+  # Determine the finalized number of spanner rows
+  spanner_row_count <-
+    dt_spanners_matrix_height(
+      data = data,
+      omit_columns_row = TRUE
+    )
 
   # Get the column headings
   headings_vars <- dt_boxhead_get_vars_default(data = data)
@@ -193,65 +197,88 @@ create_columns_component_l <- function(data) {
   table_col_headings <-
     paste0(latex_heading_row(content = headings_labels), collapse = "")
 
-  if (spanners_present) {
+  if (spanner_row_count > 0) {
 
-    # Get vector of group labels (spanners)
-    spanners <- dt_spanners_print(data = data, include_hidden = FALSE)
-    spanner_ids <- dt_spanners_print(data = data, include_hidden = FALSE, ids = TRUE)
+    table_col_spanners <- c()
 
-    if (length(stub_layout) > 0) {
-      spanners <- c(rep(NA_character_, length(stub_layout)), spanners)
-      spanner_ids <- c(rep(NA_character_, length(stub_layout)), spanner_ids)
-    }
-
-    spanners_rle <- unclass(rle(spanner_ids))
-
-    # We need a parallel vector of spanner labels and this could
-    # be part of the `spanners_rle` list
-    spanners_rle$labels <- spanners[cumsum(spanners_rle$lengths)]
-
-    begins <- (cumsum(utils::head(c(0, spanners_rle$lengths), -1)) + 1)[!is.na(spanners_rle$values)]
-    ends <- cumsum(spanners_rle$lengths)[!is.na(spanners_rle$values)]
-    cmidrule <- paste0("\\cmidrule(lr){", begins, "-", ends, "}")
-
-    is_spanner_na <- is.na(spanners_rle$values)
-    is_spanner_single <- spanners_rle$lengths == 1
-
-    multicol <-
-      ifelse(
-        is_spanner_na, "",
-        ifelse(
-          is_spanner_single, spanners_rle$labels,
-          sprintf(
-            "\\multicolumn{%d}{c}{%s}", spanners_rle$lengths, spanners_rle$labels
-          )
-        )
+    spanners <-
+      dt_spanners_print_matrix(
+        data = data,
+        include_hidden = FALSE,
+        omit_columns_row = TRUE
       )
 
-    # If there is a stub we need to tweak the spanners row with a blank
-    # multicolumn statement that's the same width as that in the columns
-    # row; this is to prevent the automatic vertical line that would otherwise
-    # appear here
+    spanner_ids <-
+      dt_spanners_print_matrix(
+        data = data,
+        include_hidden = FALSE,
+        ids = TRUE,
+        omit_columns_row = TRUE
+      )
+
     if (length(stub_layout) > 0) {
 
-      multicol <-
-        c(
-          paste0("\\multicolumn{", length(stub_layout), "}{l}{}"),
-          multicol[-seq_along(stub_layout)]
-        )
+      stub_matrix <- matrix(nrow = nrow(spanners), ncol = length(stub_layout))
+
+      spanners <- cbind(stub_matrix, spanners)
+      spanner_ids <- cbind(stub_matrix, spanner_ids)
     }
 
-    multicol <- paste0(paste(multicol, collapse = " & "), " \\\\ \n")
-    cmidrule <- paste0(paste(cmidrule, collapse = " "), "\n")
+    for (i in seq_len(nrow(spanners))) {
 
-    table_col_spanners <- paste0(multicol, cmidrule, collapse = "")
+      spanners_i <- spanners[i, ]
+      spanner_ids_i <- spanner_ids[i, ]
 
+      spanners_rle <- unclass(rle(spanner_ids_i))
+
+      # We need a parallel vector of spanner labels and this could
+      # be part of the `spanners_rle` list
+      spanners_rle$labels <- spanners_i[cumsum(spanners_rle$lengths)]
+
+      begins <- (cumsum(utils::head(c(0, spanners_rle$lengths), -1)) + 1)[!is.na(spanners_rle$values)]
+      ends <- cumsum(spanners_rle$lengths)[!is.na(spanners_rle$values)]
+      cmidrule <- paste0("\\cmidrule(lr){", begins, "-", ends, "}")
+
+      is_spanner_na <- is.na(spanners_rle$values)
+      is_spanner_single <- spanners_rle$lengths == 1
+
+      multicol <-
+        ifelse(
+          is_spanner_na, "",
+          ifelse(
+            is_spanner_single, spanners_rle$labels,
+            sprintf(
+              "\\multicolumn{%d}{c}{%s}", spanners_rle$lengths, spanners_rle$labels
+            )
+          )
+        )
+
+      # If there is a stub we need to tweak the spanners row with a blank
+      # multicolumn statement that's the same width as that in the columns
+      # row; this is to prevent the automatic vertical line that would otherwise
+      # appear here
+      if (length(stub_layout) > 0) {
+
+        multicol <-
+          c(
+            paste0("\\multicolumn{", length(stub_layout), "}{l}{}"),
+            multicol[-seq_along(stub_layout)]
+          )
+      }
+
+      multicol <- paste0(paste(multicol, collapse = " & "), " \\\\ \n")
+      cmidrule <- paste0(paste(cmidrule, collapse = " "), "\n")
+
+      col_spanners_i <- paste0(multicol, cmidrule, collapse = "")
+
+      table_col_spanners <- c(table_col_spanners, col_spanners_i)
+    }
 
   } else {
     table_col_spanners <- ""
   }
 
-  paste0("\\toprule\n", table_col_spanners, table_col_headings)
+  paste0("\\toprule\n", paste0(table_col_spanners, collapse = ""), table_col_headings)
 }
 
 #' @noRd
