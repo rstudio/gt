@@ -3054,11 +3054,11 @@
       
       \trowd\trrh0\trhdr
       
-      \pard\plain\uc0\qc\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrt\brdrs\brdrw40\brdrcf3\clbrdrb\brdrs\brdrw20\brdrcf3\clbrdrl\brdrs\brdrw20\brdrcf3\clbrdrr\brdrs\brdrw20\brdrcf3\clmgf\cellx1052
+      \pard\plain\uc0\qc\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrt\brdrs\brdrw40\brdrcf3\clbrdrb\brdrs\brdrw20\brdrcf3\clbrdrl\brdrs\brdrw20\brdrcf3\clbrdrr\brdrs\brdrw20\brdrcf3\cellx1052
       \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
-      \pard\plain\uc0\qc\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrt\brdrs\brdrw40\brdrcf3\clbrdrb\brdrs\brdrw20\brdrcf3\clbrdrl\brdrs\brdrw20\brdrcf3\clbrdrr\brdrs\brdrw20\brdrcf3\clmrg\cellx2104
+      \pard\plain\uc0\qc\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrt\brdrs\brdrw40\brdrcf3\clbrdrb\brdrs\brdrw20\brdrcf3\clbrdrl\brdrs\brdrw20\brdrcf3\clbrdrr\brdrs\brdrw20\brdrcf3\cellx2104
       \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
@@ -8186,11 +8186,11 @@
       
       \trowd\trrh0\trhdr
       
-      \pard\plain\uc0\qc\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrt\brdrs\brdrw40\brdrcf3\clbrdrb\brdrs\brdrw20\brdrcf3\clbrdrl\brdrs\brdrw20\brdrcf3\clbrdrr\brdrs\brdrw20\brdrcf3\clmgf\cellx1052
+      \pard\plain\uc0\qc\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrt\brdrs\brdrw40\brdrcf3\clbrdrb\brdrs\brdrw20\brdrcf3\clbrdrl\brdrs\brdrw20\brdrcf3\clbrdrr\brdrs\brdrw20\brdrcf3\cellx1052
       \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
-      \pard\plain\uc0\qc\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrt\brdrs\brdrw40\brdrcf3\clbrdrb\brdrs\brdrw20\brdrcf3\clbrdrl\brdrs\brdrw20\brdrcf3\clbrdrr\brdrs\brdrw20\brdrcf3\clmrg\cellx2104
+      \pard\plain\uc0\qc\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrt\brdrs\brdrw40\brdrcf3\clbrdrb\brdrs\brdrw20\brdrcf3\clbrdrl\brdrs\brdrw20\brdrcf3\clbrdrr\brdrs\brdrw20\brdrcf3\cellx2104
       \intbl {\f0 {\f0\fs20 }}\cell
       \pard\plain
       
