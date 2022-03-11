@@ -870,3 +870,28 @@ test_that("Default locale settings are honored by formatting functions", {
   (exibble_1 %>% gt(locale = "fr") %>% fmt_bytes(num, locale = "de") %>% render_formats_test(context = "plain"))[["num"]] %>%
     expect_equal("8,9 MB")
 })
+
+test_that("Default locale settings are honored when generating summary rows", {
+
+  # Generate a simplified gt table using select columns from the
+  # `exibble` dataset; set a default locale of "de" and format the
+  # `num` column using that locale, and, generate summary rows
+  tbl_gt <-
+    exibble %>%
+    dplyr::select(num, row, group) %>%
+    gt(rowname_col = "row", groupname_col = "group", locale = "de") %>%
+    fmt_number(columns = num, decimals = 2) %>%
+    summary_rows(
+      groups = c("grp_a", "grp_b"),
+      columns = num,
+      fns = list(mean = ~ mean(., na.rm = TRUE))
+    )
+
+  # Expect that the default formatter for `summary_rows()` (`fmt_number`)
+  # will honor the locale setting of "de" in it's formatting
+  tbl_gt %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row']") %>%
+    expect_equal(c("120,02", "3.220.850,00"))
+})

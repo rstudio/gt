@@ -246,12 +246,13 @@ dt_summary_build <- function(data,
         .vars = columns,
         .funs = function(x) {
 
-          # This creates a gt structure so that the formatter can be
-          # easily extracted by using the regular `dt_*()` methods
+          # This creates a gt structure so that the
+          # formatter can be easily extracted by using
+          # the regular `dt_*()` methods
           summary_data <-
             gt(
-              data = data.frame(x = x),
-              locale = dt_locale_get_value(data = data)
+              data.frame(x = x),
+              locale = resolve_locale(data = data, locale = NULL)
             )
 
           format_data <-
