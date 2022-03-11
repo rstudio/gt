@@ -103,7 +103,11 @@ inherit a previous suffix (e.g., with \code{c("K", "M", NA, "T")}, all numbers
 in the range of millions and billions will be in terms of millions).
 
 Any use of \code{suffixing} (where it is not set expressly as \code{FALSE}) means
-that any value provided to \code{scale_by} will be ignored.}
+that any value provided to \code{scale_by} will be ignored.
+
+If using \code{system = "ind"} then the default suffix set provided by
+\code{suffixing = TRUE} will be \code{c(NA, "L", "Cr")}. This doesn't apply suffixes
+to the thousands range, but does express values in lakhs and crores.}
 
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other
