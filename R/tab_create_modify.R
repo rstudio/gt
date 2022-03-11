@@ -267,18 +267,10 @@ resolve_spanner_level <- function(
   highest_level <- 0L
 
   spanners_tbl <- dplyr::select(spanners_tbl, spanner_id, vars, spanner_level)
-
-  for (i in seq_len(nrow(spanners_tbl))) {
-
-    spanned_vars <- unlist(spanners_tbl[[i, "vars"]])
-    level <- spanners_tbl[[i, "spanner_level"]]
-
-    if (any(column_names %in% spanned_vars)) {
-      if (level > highest_level) {
-        highest_level <- level
-      }
-    }
-  }
+  highest_level <- spanners_tbl %>%
+    dplyr::filter(vapply(vars, function(x) any(column_names %in% x), logical(1))) %>%
+    dplyr::pull("spanner_level") %>%
+    max(0) # Max of ^ and 0
 
   highest_level + 1L
 }
