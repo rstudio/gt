@@ -314,9 +314,16 @@ format_num_to_str <- function(x,
     has_decimal <- grepl("\\.", x_str_numeric)
     is_negative <- grepl("^-", x_str_numeric)
 
+    integer_parts <- x_str_numeric
+
+    if (dec_mark != "") {
+      integer_parts <-
+        strsplit(x_str_numeric, split = dec_mark, fixed = TRUE) %>%
+        vapply(FUN.VALUE = character(1), USE.NAMES = FALSE, `[[`, 1)
+    }
+
     integer_parts <-
-      strsplit(x_str_numeric, split = dec_mark, fixed = TRUE) %>%
-      vapply(FUN.VALUE = character(1), USE.NAMES = FALSE, `[[`, 1) %>%
+      integer_parts %>%
       gsub("(,|-)", "", .) %>%
       vapply(
         FUN.VALUE = character(1),
