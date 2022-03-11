@@ -78,6 +78,8 @@ globalVariables(
     "row_start",
     "rownum",
     "rownum_i",
+    "spanner_id",
+    "spanner_level",
     "styles",
     "styles_appended",
     "symbol",

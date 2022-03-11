@@ -61,6 +61,12 @@ tab_header <- function(data,
 #' @inheritParams fmt_number
 #' @param label The text to use for the spanner column label.
 #' @param columns The columns to be components of the spanner heading.
+#' @param spanners The spanners that should be spanned over, should they already
+#'   be defined.
+#' @param level An explicit level to which the spanner should be placed. If not
+#'   provided, **gt** will choose the level based on the inputs provided within
+#'   `columns` and `spanners`, placing the spanner label where it will fit. The
+#'   first spanner level (right above the column labels) is `1`.
 #' @param id The ID for the spanner column label. When accessing a spanner
 #'   column label through [cells_column_spanners()] (when using [tab_style()] or
 #'   [tab_footnote()]) the `id` value is used as the reference (and not the
@@ -74,6 +80,10 @@ tab_header <- function(data,
 #' @param gather An option to move the specified `columns` such that they are
 #'   unified under the spanner column label. Ordering of the moved-into-place
 #'   columns will be preserved in all cases. By default, this is set to `TRUE`.
+#' @param replace Should new spanners be allowed to partially or fully replace
+#'   existing spanners? (This is a possibility if setting spanners at an already
+#'   populated `level`.) By default, this is set to `FALSE` and an error will
+#'   occur if some replacement is attempted.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -94,7 +104,8 @@ tab_header <- function(data,
 #'     label = "performance",
 #'     columns = c(
 #'       hp, hp_rpm, trq, trq_rpm,
-#'       mpg_c, mpg_h)
+#'       mpg_c, mpg_h
+#'     )
 #'   )
 #'
 #' @section Figures:
@@ -107,36 +118,94 @@ tab_header <- function(data,
 #' @export
 tab_spanner <- function(data,
                         label,
-                        columns,
+                        columns = NULL,
+                        spanners = NULL,
+                        level = NULL,
                         id = label,
-                        gather = TRUE) {
+                        gather = TRUE,
+                        replace = FALSE) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  checkmate::assert_character(
-    label, len = 1, any.missing = FALSE, null.ok = FALSE
-  )
-
-  checkmate::assert_character(
-    id, len = 1, any.missing = FALSE, null.ok = FALSE
-  )
+  present_spanner_ids <- dt_spanners_get_ids(data = data)
 
   # Get the columns supplied in `columns` as a character vector
   column_names <-
     resolve_cols_c(
       expr = {{ columns }},
-      data = data
+      data = data,
+      null_means = "nothing"
     )
 
-  # If `column_names` evaluates to an empty vector or is NULL,
+  # Get the spanner IDs supplied in `spanners` as a character vector
+  spanner_id_idx <-
+    tidyselect::with_vars(
+      vars = present_spanner_ids,
+      expr = spanners
+    )
+
+  # Stop function if `level` is provided and is less than `1`
+  if (!is.null(level) && level < 1) {
+    stop(
+      "A spanner level of ", level, " cannot be set:\n",
+      "* Please choose a `level` value greater than or equal to `1`",
+      call. = FALSE
+    )
+  }
+
+  if (is.numeric(spanner_id_idx)) {
+
+    spanner_ids <- present_spanner_ids[spanner_id_idx]
+
+  } else {
+
+    if (
+      !is.null(spanner_id_idx) &&
+      !all(spanner_id_idx %in% present_spanner_ids)
+    ) {
+
+      error_vars <-
+        paste(
+          base::setdiff(spanner_id_idx, present_spanner_ids),
+          collapse = ", "
+        )
+
+      stop(
+        "One or more spanner ID(s) supplied in `spanners` (", error_vars, ") ",
+        "for the new spanner with the ID `",  id, "` doesn't belong to any ",
+        "existing spanners.",
+        call. = FALSE
+      )
+    }
+
+    spanner_ids <- spanner_id_idx
+  }
+
+  # If `column_names` and `spanner_ids` have zero lengths then
   # return the data unchanged
-  if (length(column_names) < 1) {
+  if (length(column_names) < 1 && length(spanner_ids) < 1) {
     return(data)
   }
 
-  # Check `id` against existing `id` values and stop if necessary
+  # Check new `id` against existing `id` values and stop if necessary
   check_spanner_id_unique(data = data, spanner_id = id)
+
+  # Resolve the `column_names` that new spanner will span over
+  column_names <-
+    resolve_spanned_column_names(
+      data = data,
+      column_names = column_names,
+      spanner_ids = spanner_ids
+    )
+
+  # Resolve the `level` of the new spanner
+  level <-
+    resolve_spanner_level(
+      data = data,
+      column_names = column_names,
+      level = level
+    )
 
   # Add the spanner to the `_spanners` table
   data <-
@@ -145,12 +214,22 @@ tab_spanner <- function(data,
       vars = column_names,
       spanner_label = label,
       spanner_id = id,
-      gather = gather
+      spanner_level = level,
+      gather = gather,
+      replace = replace
     )
 
-  if (isTRUE(gather) && length(column_names) >= 1) {
+  # Move columns into place with `cols_move()` only if specific
+  # conditions are met:
+  # - `gather` should be TRUE
+  # - `spanner_ids` should be empty
+  # - `level` is NULL or `1`
+  if (
+    gather &&
+    length(spanner_ids) < 1 &&
+    (is.null(level) || level == 1)
+    ) {
 
-    # Move columns into place
     data <-
       cols_move(
         data = data,
@@ -160,6 +239,63 @@ tab_spanner <- function(data,
   }
 
   data
+}
+
+resolve_spanner_level <- function(
+  data,
+  column_names,
+  level
+) {
+
+  # If explicitly providing a `level` simply return that value
+  if (!is.null(level)) {
+    return(as.integer(level))
+  }
+
+  # Determine if there are any existing spanners
+  any_existing_spanners <- dt_spanners_exists(data = data)
+
+  # If there aren't any existing spanners, then the new spanner
+  # level will always be `1`
+  if (!any_existing_spanners) {
+    return(1L)
+  }
+
+  # Get the present `spanners_tbl`
+  spanners_tbl <- dt_spanners_get(data = data)
+
+  highest_level <- 0L
+
+  spanners_tbl <- dplyr::select(spanners_tbl, spanner_id, vars, spanner_level)
+  highest_level <- spanners_tbl %>%
+    dplyr::filter(vapply(vars, function(x) any(column_names %in% x), logical(1))) %>%
+    dplyr::pull("spanner_level") %>%
+    max(0) # Max of ^ and 0
+
+  highest_level + 1L
+}
+
+resolve_spanned_column_names <- function(
+  data,
+  column_names,
+  spanner_ids
+) {
+
+  if (length(spanner_ids) > 0) {
+
+    spanners_existing <- dt_spanners_get(data = data)
+
+    column_names_associated <-
+      unlist(
+        spanners_existing[["vars"]][
+          spanners_existing[["spanner_id"]] %in% spanner_ids
+        ]
+      )
+
+    column_names <- c(column_names, column_names_associated)
+  }
+
+  unique(column_names)
 }
 
 #' Create column labels and spanners via delimited names
@@ -183,7 +319,6 @@ tab_spanner <- function(data,
 #' unique even though there may eventually be repeated column labels in the
 #' rendered output table).
 #'
-#' @inheritParams cols_align
 #' @inheritParams tab_spanner
 #' @param delim The delimiter to use to split an input column name. The
 #'   delimiter supplied will be autoescaped for the internal splitting
@@ -192,10 +327,9 @@ tab_spanner <- function(data,
 #'   in those locations) and the second component will be the column label.
 #' @param columns An optional vector of column names that this operation should
 #'   be limited to. The default is to consider all columns in the table.
-#' @param split Should the delimiter splitting occur at the `"last"` instance of
-#'   `delim` or the `"first"`? By default column name splitting happens at the
-#'   last instance of the delimiter. This relevant only in the case that column
-#'   names included in `columns` have multiple instances of the `delim`.
+#' @param split Should the delimiter splitting occur from the `"last"` instance
+#'   of the `delim` character or from the `"first"`? By default, column name
+#'   splitting begins at the last instance of the delimiter.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -222,7 +356,6 @@ tab_spanner <- function(data,
 tab_spanner_delim <- function(data,
                               delim,
                               columns = everything(),
-                              gather = TRUE,
                               split = c("last", "first")) {
 
   # Perform input object validation
@@ -239,72 +372,140 @@ tab_spanner_delim <- function(data,
       expr = {{ columns }},
       data = data
     )
-
   if (!is.null(columns)) {
-    colnames <- base::intersect(all_cols, columns)
+    colnames_spanners <- base::intersect(all_cols, columns)
   } else {
-    colnames <- all_cols
+    colnames_spanners <- all_cols
   }
 
-  if (length(colnames) == 0) {
+  if (length(colnames_spanners) == 0) {
     return(data)
   }
 
-  colnames_has_delim <- grepl(pattern = delim, x = colnames, fixed = TRUE)
+  if (split == "first") {
 
-  if (any(colnames_has_delim)) {
-
-    colnames_with_delim <- colnames[colnames_has_delim]
-
-    # Perform regexec match where the delimiter is either declared
-    # to be the 'first' instance or the 'last' instance
-    regexec_m <-
-      regexec(
-        paste0(
-          "^(.*",
-          ifelse(split == "first", "?", ""),
-          ")\\Q", delim, "\\E(.*)$"
-        ),
-        colnames_with_delim
+    colnames_spanners_ordered <-
+      vapply(
+        colnames_spanners,
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = function(x) {
+          paste(
+            rev(unlist(strsplit(x, split = delim, fixed = TRUE))),
+            collapse = delim
+          )
+        }
       )
 
-    split_colnames <-
-      lapply(regmatches(colnames_with_delim, regexec_m), FUN = `[`, 2:3)
+  } else {
+    colnames_spanners_ordered <- colnames_spanners
+  }
 
-    spanners <- vapply(split_colnames, FUN.VALUE = character(1), `[[`, 1)
+  #
+  # Determine the highest spanner level from these column names
+  #
 
-    spanner_var_list <- split(colnames_with_delim, spanners)
+  max_level <-
+    max(
+      vapply(
+        colnames_spanners_ordered,
+        FUN.VALUE = integer(1), FUN = function(x) {
+          length(unlist(strsplit(x, split = delim, fixed = TRUE)))
+        }
+      ),
+      na.rm = TRUE
+    )
 
-    for (label in names(spanner_var_list)) {
+  #
+  # Create a matrix representation of the spanners
+  #
 
-      data <-
-        tab_spanner(
-          data = data,
-          label = label,
-          columns = spanner_var_list[[label]],
-          gather = gather
+  spanner_matrix <- matrix(data = NA_character_, nrow = max_level, ncol = 0)
+
+  for (col in all_cols) {
+
+    if (col %in% colnames_spanners) {
+
+      col_name <- colnames_spanners_ordered[colnames_spanners %in% col]
+
+      elements <- unlist(strsplit(col_name, split = delim, fixed = TRUE))
+
+      elements_n <- length(elements)
+
+      matrix_col_i <-
+        matrix(
+          c(rep(NA_character_, max_level - elements_n), elements),
+          ncol = 1
         )
+
+    } else {
+
+      matrix_col_i <- matrix(c(rep(NA_character_, max_level - 1), col))
     }
 
-    new_labels <-
-      lapply(split_colnames, `[[`, -1) %>%
-      vapply(paste0, FUN.VALUE = character(1), collapse = delim)
+    spanner_matrix <- cbind(spanner_matrix, matrix_col_i)
+  }
 
-    for (i in seq_along(split_colnames)) {
+  # If the height of the spanner matrix isn't greater than
+  # one then return the data untouched
+  if (nrow(spanner_matrix) == 1) {
+    return(data)
+  }
 
-      new_labels_i <- new_labels[i]
-      var_i <- colnames_with_delim[i]
+  for (i in rev(seq_len(nrow(spanner_matrix)))) {
 
-      data <-
-        dt_boxhead_edit(
-          data = data,
-          var = var_i,
-          column_label = new_labels_i
-        )
+    if (i == nrow(spanner_matrix)) next
+
+    level <- nrow(spanner_matrix) - i
+
+    rle_spanners_i <- rle(spanner_matrix[i, ])
+    spanners_i_lengths <- rle_spanners_i$lengths
+    spanners_i_values <- rle_spanners_i$values
+    spanners_i_col_i <- utils::head(cumsum(c(1, spanners_i_lengths)), -1)
+
+    for (j in seq_along(spanners_i_lengths)) {
+
+      if (!is.na(spanners_i_values[j])) {
+
+        # Obtain the ID for the spanner
+        spanner_id <-
+          paste(
+            spanner_matrix[seq(i, nrow(spanner_matrix)), spanners_i_col_i[j]],
+            collapse = delim
+          )
+
+        spanner_columns <-
+          seq(
+            spanners_i_col_i[j],
+            spanners_i_col_i[j] + spanners_i_lengths[j] - 1
+          )
+
+        # Set the spanner with a call to `tab_spanner()`
+        data <-
+          tab_spanner(
+            data = data,
+            label = spanners_i_values[j],
+            columns = spanner_columns,
+            spanners = NULL,
+            level = level,
+            id = spanner_id,
+            gather = FALSE
+          )
+      }
     }
   }
 
-  data
+  #
+  # Re-label column labels included in `colnames_spanners`
+  #
+
+  new_labels <-
+    strsplit(colnames_spanners_ordered, split = delim, fixed = TRUE) %>%
+    vapply(FUN.VALUE = character(1), utils::tail, 1)
+
+  new_label_list <- stats::setNames(as.list(new_labels), colnames_spanners)
+
+  cols_label(data, .list = new_label_list)
 }
 
 #' Add a row group to a **gt** table
@@ -1258,11 +1459,7 @@ set_style.cells_column_labels <- function(loc, data, style) {
 
 set_style.cells_column_spanners <- function(loc, data, style) {
 
-  resolved <-
-    resolve_cells_column_spanners(
-      data = data,
-      object = {{ loc }}
-    )
+  resolved <- resolve_cells_column_spanners(data = data, object = loc)
 
   groups <- resolved$spanners
 
