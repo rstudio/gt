@@ -161,14 +161,18 @@ resolve_cells_column_spanners <- function(data,
 resolve_cols_c <- function(expr,
                            data,
                            strict = TRUE,
-                           excl_stub = TRUE) {
+                           excl_stub = TRUE,
+                           null_means = c("everything", "nothing")) {
+
+  null_means <- match.arg(null_means)
 
   names(
     resolve_cols_i(
       expr = {{expr}},
       data = data,
       strict = strict,
-      excl_stub = excl_stub
+      excl_stub = excl_stub,
+      null_means = null_means
     )
   )
 }
@@ -185,10 +189,12 @@ resolve_cols_c <- function(expr,
 resolve_cols_i <- function(expr,
                            data,
                            strict = TRUE,
-                           excl_stub = TRUE) {
+                           excl_stub = TRUE,
+                           null_means = c("everything", "nothing")) {
 
   quo <- rlang::enquo(expr)
   cols_excl <- c()
+  null_means <- match.arg(null_means)
 
   if (is_gt(data)) {
 
@@ -218,7 +224,7 @@ resolve_cols_i <- function(expr,
 
   stopifnot(is.data.frame(data))
 
-  quo <- translate_legacy_resolver_expr(quo)
+  quo <- translate_legacy_resolver_expr(quo, null_means)
 
   # With the quosure and the `data`, we can use `tidyselect::eval_select()`
   # to resolve the expression to columns indices/names; no `env` argument
@@ -231,7 +237,7 @@ resolve_cols_i <- function(expr,
 
 #' @param quo A quosure that might contain legacy gt column criteria
 #' @noRd
-translate_legacy_resolver_expr <- function(quo) {
+translate_legacy_resolver_expr <- function(quo, null_means) {
 
   expr <- rlang::quo_get_expr(quo = quo)
 
@@ -256,13 +262,19 @@ translate_legacy_resolver_expr <- function(quo) {
 
   } else if (is.null(expr)) {
 
-    warning(
-      "`columns = NULL` has been deprecated in gt 0.3.0:\n",
-      "* please use `columns = everything()` instead",
-      call. = FALSE
-    )
+    if (null_means == "everything") {
 
-    rlang::quo_set_expr(quo = quo, expr = quote(everything()))
+      warning(
+        "`columns = NULL` has been deprecated in gt 0.3.0:\n",
+        "* please use `columns = everything()` instead",
+        call. = FALSE
+      )
+
+      rlang::quo_set_expr(quo = quo, expr = quote(everything()))
+
+    } else {
+      rlang::quo_set_expr(quo = quo, expr = quote(NULL))
+    }
 
   } else if (rlang::quo_is_call(quo = quo, name = "vars")) {
 
@@ -329,7 +341,11 @@ resolve_rows_i <- function(expr, data) {
   which(resolve_rows_l(expr = {{ expr }}, data = data))
 }
 
-resolve_vector_l <- function(expr, vector, item_label = "item") {
+resolve_vector_l <- function(
+    expr,
+    vector,
+    item_label = "item"
+  ) {
 
   quo <- rlang::enquo(expr)
 

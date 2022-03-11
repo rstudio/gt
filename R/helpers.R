@@ -2448,6 +2448,19 @@ random_id <- function(n = 10) {
   paste(sample(letters, n, replace = TRUE), collapse = "")
 }
 
+latex_special_chars <- c(
+  "\\" = "\\textbackslash{}",
+  "~" = "\\textasciitilde{}",
+  "^" = "\\textasciicircum{}",
+  "&" = "\\&",
+  "%" = "\\%",
+  "$" = "\\$",
+  "#" = "\\#",
+  "_" = "\\_",
+  "{" = "\\{",
+  "}" = "\\}"
+)
+
 #' Perform LaTeX escaping
 #'
 #' @description
@@ -2455,7 +2468,7 @@ random_id <- function(n = 10) {
 #' function will transform a character vector so that it is safe to use within
 #' LaTeX tables.
 #'
-#' @param text a character vector containing the text that is to be
+#' @param text A character vector containing the text that is to be
 #'   LaTeX-escaped.
 #'
 #' @return A character vector.
@@ -2467,11 +2480,14 @@ random_id <- function(n = 10) {
 #' @export
 escape_latex <- function(text) {
 
-  text %>%
-    tidy_gsub("\\\\", "\\\\textbackslash ") %>%
-    tidy_gsub("([&%$#_{}])", "\\\\\\1") %>%
-    tidy_gsub("~", "\\\\textasciitilde ") %>%
-    tidy_gsub("\\^", "\\\\textasciicircum ")
+  m <- gregexpr("[\\\\&%$#_{}~^]", text, perl = TRUE)
+
+  special_chars <- regmatches(text, m)
+  escaped_chars <- lapply(special_chars, function(x) {
+    latex_special_chars[x]
+  })
+  regmatches(text, m) <- escaped_chars
+  text
 }
 
 #' Get the LaTeX dependencies required for a **gt** table
