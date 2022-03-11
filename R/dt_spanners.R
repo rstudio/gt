@@ -127,9 +127,11 @@ dt_spanners_print_matrix <- function(
     )
   }
 
-  # Keep only the columns in `spanners_tbl` that are in the `vars`;
-  # this will exclude spanners if their columns aren't in `vars` (this
-  # is possible when hiding columns via `col_hide()`
+  # Modify `spanners_tbl` such that:
+  # (1) only visible vars are included in the `vars` column
+  # (2) entries with no vars (after step 1) are removed, and
+  # (3) `spanner_level` values have all gaps removed, being compressed
+  #     down to start at 1 (e.g., 7, 5, 3, 1 -> 4, 3, 2, 1)
   spanners_tbl <-
     spanners_tbl %>%
     dplyr::mutate(vars = lapply(.data$vars, base::intersect, .env$vars)) %>%
