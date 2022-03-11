@@ -2877,6 +2877,13 @@ fmt <- function(data,
 #' @noRd
 insert_seps_ind <- function(integer) {
 
+  # The `fmt_fraction()` formatter can sometimes generate
+  # empty strings; if seen here, just return them unchanged
+  if (integer == "") {
+    return(integer)
+  }
+
+  # Ensure that integer-based strings only contain numbers
   if (!grepl("^[0-9]+?$", integer)) {
     stop(
       "The `integer` string must only contain numbers."
