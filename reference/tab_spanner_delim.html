@@ -80,7 +80,6 @@ input table data (which are unique by necessity).</p>
   <span class="va">data</span>,
   <span class="va">delim</span>,
   columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,
-  gather <span class="op">=</span> <span class="cn">TRUE</span>,
   split <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"last"</span>, <span class="st">"first"</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
     </div>
@@ -98,15 +97,10 @@ in those locations) and the second component will be the column label.</p></dd>
 <dt>columns</dt>
 <dd><p>An optional vector of column names that this operation should
 be limited to. The default is to consider all columns in the table.</p></dd>
-<dt>gather</dt>
-<dd><p>An option to move the specified <code>columns</code> such that they are
-unified under the spanner column label. Ordering of the moved-into-place
-columns will be preserved in all cases. By default, this is set to <code>TRUE</code>.</p></dd>
 <dt>split</dt>
-<dd><p>Should the delimiter splitting occur at the <code>"last"</code> instance of
-<code>delim</code> or the <code>"first"</code>? By default column name splitting happens at the
-last instance of the delimiter. This relevant only in the case that column
-names included in <code>columns</code> have multiple instances of the <code>delim</code>.</p></dd>
+<dd><p>Should the delimiter splitting occur from the <code>"last"</code> instance
+of the <code>delim</code> character or from the <code>"first"</code>? By default, column name
+splitting begins at the last instance of the delimiter.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
