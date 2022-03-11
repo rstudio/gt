@@ -2942,6 +2942,6 @@ split_str_by_index <- function(target, index) {
   substr(
     rep(target, length(index) + 1),
     start = c(1, index),
-    stop = c(index -1, nchar(target))
+    stop = c(index - 1, nchar(target))
   )
 }
