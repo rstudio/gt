@@ -805,7 +805,7 @@ test_that("rownames and groupnames aren't included in columns = TRUE", {
   )
 })
 
-test_that("the `fmt_number()` fn can render in the Indian numbering system", {
+test_that("`fmt_number()` can render values in the Indian numbering system", {
 
   # These numbers will be used in tests of formatting
   # values to the Indian numbering system
@@ -870,6 +870,82 @@ test_that("the `fmt_number()` fn can render in the Indian numbering system", {
       "&minus;50,00,00,000", "&minus;1,000", "&minus;10.00", "&minus;12,340",
       "&minus;1,234", "&minus;123.4", "&minus;1.234", "&minus;0.1234",
       "&minus;0.00001235", "0", "NA", "  Inf", " &minus;Inf"
+    )
+  )
+
+  # Format the `num` column using the Indian numbering system; force
+  # each number's sign to always be present
+  expect_equal(
+    (tab %>%
+       fmt_number(columns = num, force_sign = TRUE, system = "ind") %>%
+       render_formats_test(context = "html"))[["num"]],
+    c(
+      "+50,00,000.01", "+1,000.00", "+10.00", "+12,345.00", "+1,234.50",
+      "+123.45", "+1.23", "+0.12", "+25,83,063.23", "+1,53,56,74,223.33",
+      "+6,42,56,48,25,73,36,228.00", "&minus;50,00,00,000.00", "&minus;1,000.00",
+      "&minus;10.00", "&minus;12,345.00", "&minus;1,234.50", "&minus;123.45",
+      "&minus;1.23", "&minus;0.12", "0.00", "0.00", "NA", "+ Inf",
+      "&minus;Inf"
+    )
+  )
+
+  # Format the `num` column and use appropriate suffixes
+  expect_equal(
+    (tab %>%
+       fmt_number(columns = num, suffixing = TRUE, system = "ind") %>%
+       render_formats_test(context = "html"))[["num"]],
+    c(
+      "50.00 Lac", "1,000.00", "10.00", "12,345.00", "1,234.50",
+      "123.45", "1.23", "0.12", "25.83 Lac", "153.57 Cr", "64,25,64,825.73 Cr",
+      "&minus;50.00 Cr", "&minus;1,000.00", "&minus;10.00", "&minus;12,345.00",
+      "&minus;1,234.50", "&minus;123.45", "&minus;1.23", "&minus;0.12",
+      "0.00", "0.00", "NA", " Inf Cr", "&minus;Inf Cr"
+    )
+  )
+  expect_equal(
+    (tab %>%
+       fmt_number(columns = num, suffixing = c("K", "Lacs", "Crores"), system = "ind") %>%
+       render_formats_test(context = "html"))[["num"]],
+    c(
+      "50.00 Lacs", "1.00 K", "10.00", "12.35 K", "1.23 K", "0.12 K",
+      "1.23", "0.12", "25.83 Lacs", "153.57 Crores", "64,25,64,825.73 Crores",
+      "&minus;50.00 Crores", "&minus;1.00 K", "&minus;10.00", "&minus;12.35 K",
+      "&minus;1.23 K", "&minus;0.12 K", "&minus;1.23", "&minus;0.12",
+      "0.00", "0.00", "NA", " Inf Crores", "&minus;Inf Crores"
+    )
+  )
+  expect_equal(
+    (tab %>%
+       fmt_number(columns = num, suffixing = c(NA, "Lacs", NA), system = "ind") %>%
+       render_formats_test(context = "html"))[["num"]],
+    c(
+      "50.00 Lacs", "1,000.00", "10.00", "12,345.00", "1,234.50",
+      "123.45", "1.23", "0.12", "25.83 Lacs", "15,356.74 Lacs", "64,25,64,82,573.36 Lacs",
+      "&minus;5,000.00 Lacs", "&minus;1,000.00", "&minus;10.00", "&minus;12,345.00",
+      "&minus;1,234.50", "&minus;123.45", "&minus;1.23", "&minus;0.12",
+      "0.00", "0.00", "NA", " Inf Lacs", "&minus;Inf Lacs"
+    )
+  )
+  expect_equal(
+    (tab %>%
+       fmt_number(columns = num, suffixing = TRUE, accounting = TRUE, system = "ind") %>%
+       render_formats_test(context = "html"))[["num"]],
+    c(
+      "50.00 Lac", "1,000.00", "10.00", "12,345.00", "1,234.50",
+      "123.45", "1.23", "0.12", "25.83 Lac", "153.57 Cr", "64,25,64,825.73 Cr",
+      "(50.00 Cr)", "(1,000.00)", "(10.00)", "(12,345.00)", "(1,234.50)",
+      "(123.45)", "(1.23)", "(0.12)", "(0.00)", "0.00", "NA", " Inf Cr",
+      "(Inf Cr)"
+    )
+  )
+  expect_warning(
+    expect_equal(
+      (tab %>%
+         fmt_number(columns = num, suffixing = TRUE, system = "ind") %>%
+         render_formats_test(context = "html"))[["num"]],
+      (tab %>%
+         fmt_number(columns = num, suffixing = TRUE, scale_by = 200, system = "ind") %>%
+         render_formats_test(context = "html"))[["num"]]
     )
   )
 })
