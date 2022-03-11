@@ -2895,19 +2895,13 @@ insert_seps_ind <- function(integer) {
 
   # Generate an 'insertion sequence' (where to place the separators)
   insertion_seq <- cumsum(c(3, rep(2, floor((nchar(integer) - 4) / 2)))) + 1
+  insertion_seq <- (nchar(integer) - insertion_seq) + 2
 
-  str_rev(
-    insert_str(
-      target = str_rev(integer),
-      insert = rep(",", length(insertion_seq)),
-      index = insertion_seq
-    )
+  insert_str(
+    target = integer,
+    insert = rep(",", length(insertion_seq)),
+    index = insertion_seq
   )
-}
-
-str_rev <- function(x) {
-  nc <- nchar(x)
-  paste(substring(x, nc:1, nc:1), collapse = "")
 }
 
 insert_str <- function(target, insert, index) {
