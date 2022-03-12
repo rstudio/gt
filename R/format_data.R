@@ -2872,7 +2872,8 @@ fmt <- function(data,
 #' Insert separator marks to an integer to conform to Indian numbering system
 #'
 #' @param integer The integer portion of a numeric value. Should be supplied as
-#'   a string that only contains numeral characters.
+#'   a length-1 character vector. The element should only contain numeral
+#'   characters.
 #'
 #' @noRd
 insert_seps_ind <- function(integer) {
