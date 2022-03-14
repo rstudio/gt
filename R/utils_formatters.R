@@ -432,6 +432,50 @@ context_plusminus_mark <- function(plusminus_mark,
   )
 }
 
+#' Obtain the contextually correct small values text for `sub_small_vals()`
+#'
+#' @param context The output context.
+#' @noRd
+context_small_vals_text <- function(threshold,
+                                    small_pattern,
+                                    sign,
+                                    context) {
+
+  if (small_pattern == "<{x}" && sign == "-") {
+    small_pattern <- md("<*abs*({x})")
+  }
+  small_vals_text <- gsub("{x}", threshold, small_pattern, fixed = TRUE)
+
+  switch(
+    context,
+    html = process_text(small_vals_text, context = "html"),
+    latex = process_text(small_vals_text, context = "latex"),
+    rtf = process_text(small_vals_text, context = "rtf")
+  )
+}
+
+#' Obtain the contextually correct large values text for `sub_large_vals()`
+#'
+#' @param context The output context.
+#' @noRd
+context_large_vals_text <- function(threshold,
+                                    large_pattern,
+                                    sign,
+                                    context) {
+
+  if (large_pattern == ">={x}" && sign == "-") {
+    large_pattern <- "<{x}"
+  }
+  large_vals_text <- gsub("{x}", threshold, large_pattern, fixed = TRUE)
+
+  switch(
+    context,
+    html = process_text(large_vals_text, context = "html"),
+    latex = process_text(large_vals_text, context = "latex"),
+    rtf = process_text(large_vals_text, context = "rtf")
+  )
+}
+
 #' Obtain the contextually correct minus mark
 #'
 #' @param context The output context.
