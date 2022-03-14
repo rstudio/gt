@@ -436,43 +436,72 @@ context_plusminus_mark <- function(plusminus_mark,
 #'
 #' @param context The output context.
 #' @noRd
-context_small_vals_text <- function(threshold,
-                                    small_pattern,
-                                    sign,
-                                    context) {
+context_small_vals_text <- function(
+    threshold,
+    small_pattern,
+    sign
+) {
 
   if (small_pattern == "<{x}" && sign == "-") {
     small_pattern <- md("<*abs*({x})")
   }
-  small_vals_text <- gsub("{x}", threshold, small_pattern, fixed = TRUE)
-
-  switch(
-    context,
-    html = process_text(small_vals_text, context = "html"),
-    latex = process_text(small_vals_text, context = "latex"),
-    rtf = process_text(small_vals_text, context = "rtf")
-  )
+  gsub("{x}", threshold, small_pattern, fixed = TRUE)
 }
 
 #' Obtain the contextually correct large values text for `sub_large_vals()`
 #'
 #' @param context The output context.
 #' @noRd
-context_large_vals_text <- function(threshold,
-                                    large_pattern,
-                                    sign,
-                                    context) {
+context_large_vals_text <- function(
+    threshold,
+    large_pattern,
+    sign,
+    context
+) {
 
   if (large_pattern == ">={x}" && sign == "-") {
     large_pattern <- "<{x}"
   }
+
   large_vals_text <- gsub("{x}", threshold, large_pattern, fixed = TRUE)
 
   switch(
     context,
-    html = process_text(large_vals_text, context = "html"),
-    latex = process_text(large_vals_text, context = "latex"),
-    rtf = process_text(large_vals_text, context = "rtf")
+    html = {
+      if (large_pattern == ">={x}") {
+        gsub(">=", context_gte_mark(context = "html"), large_vals_text)
+      } else {
+        large_vals_text
+      }
+    },
+    latex = {
+      if (large_pattern == ">={x}") {
+        gsub(">=", context_gte_mark(context = "latex"), large_vals_text)
+      } else {
+        large_vals_text
+      }
+    },
+    rtf = {
+      if (large_pattern == ">={x}") {
+        gsub(">=", context_gte_mark(context = "rtf"), large_vals_text)
+      } else {
+        large_vals_text
+      }
+    }
+  )
+}
+
+#' Obtain the contextually correct greater than or equal to
+#'
+#' @param context The output context.
+#' @noRd
+context_gte_mark <- function(context) {
+
+  switch(
+    context,
+    html = "&ge;",
+    latex = "$\\\\geq$",
+    ">="
   )
 }
 
@@ -482,9 +511,11 @@ context_large_vals_text <- function(threshold,
 #' @noRd
 context_minus_mark <- function(context) {
 
-  switch(context,
-         html = "&minus;",
-         "-")
+  switch(
+    context,
+    html = "&minus;",
+    "-"
+  )
 }
 
 #' Obtain the contextually correct percent mark
@@ -493,10 +524,12 @@ context_minus_mark <- function(context) {
 #' @noRd
 context_percent_mark <- function(context) {
 
-  switch(context,
-         html = "%",
-         latex = "\\%",
-         "%")
+  switch(
+    context,
+    html = "%",
+    latex = "\\%",
+    "%"
+  )
 }
 
 #' Obtain the contextually correct pair of parentheses
@@ -505,9 +538,11 @@ context_percent_mark <- function(context) {
 #' @noRd
 context_parens_marks <- function(context) {
 
-  switch(context,
-         latex = c("(", ")"),
-         c("(", ")"))
+  switch(
+    context,
+    latex = c("(", ")"),
+    c("(", ")")
+  )
 }
 
 #' Obtain the contextually correct pair of opening/closing exponential strings
@@ -516,11 +551,13 @@ context_parens_marks <- function(context) {
 #' @noRd
 context_exp_marks <- function(context) {
 
-  switch(context,
-         html = c(" &times; 10<sup class='gt_super'>", "</sup>"),
-         latex = c(" \\times 10^{", "}"),
-         rtf = c(" \\'d7 10{\\super ", "}"),
-         c(" x 10(", ")"))
+  switch(
+    context,
+    html = c(" &times; 10<sup class='gt_super'>", "</sup>"),
+    latex = c(" \\times 10^{", "}"),
+    rtf = c(" \\'d7 10{\\super ", "}"),
+    c(" x 10(", ")")
+  )
 }
 
 

@@ -126,7 +126,6 @@ fmt_missing <- function(data,
   )
 }
 
-
 #' Substitute zero values in the table body
 #'
 #' @description
@@ -173,18 +172,18 @@ sub_zero <- function(
       # any values that aren't 0 won't be affected
       html = function(x) {
         zero_text <- process_text(zero_text, context = "html")
-        ifelse(is.numeric(x) & x == 0, zero_text, x)
+        ifelse(is.numeric(x) & x == 0, zero_text, NA_character_)
       },
       rtf = function(x) {
         zero_text <- process_text(zero_text, context = "rtf")
-        ifelse(is.numeric(x) & x == 0, zero_text, x)
+        ifelse(is.numeric(x) & x == 0, zero_text, NA_character_)
       },
       latex = function(x) {
         zero_text <- process_text(zero_text, context = "latex")
-        ifelse(is.numeric(x) & x == 0, zero_text, x)
+        ifelse(is.numeric(x) & x == 0, zero_text, NA_character_)
       },
       default = function(x) {
-        ifelse(is.numeric(x) & x == 0, zero_text, x)
+        ifelse(is.numeric(x) & x == 0, zero_text, NA_character_)
       }
     )
   )
@@ -264,10 +263,9 @@ sub_small_vals <- function(
           context_small_vals_text(
             threshold = threshold,
             small_pattern = small_pattern,
-            sign = sign,
-            context = "html"
+            sign = sign
           ),
-          x
+          NA_character_
         )
       },
       rtf = function(x) {
@@ -280,10 +278,9 @@ sub_small_vals <- function(
           context_small_vals_text(
             threshold = threshold,
             small_pattern = small_pattern,
-            sign = sign,
-            context = "rtf"
+            sign = sign
           ),
-          x
+          NA_character_
         )
       },
       latex = function(x) {
@@ -296,10 +293,9 @@ sub_small_vals <- function(
           context_small_vals_text(
             threshold = threshold,
             small_pattern = small_pattern,
-            sign = sign,
-            context = "latex"
+            sign = sign
           ),
-          x
+          NA_character_
         )
       },
       default = function(x) {
@@ -312,10 +308,9 @@ sub_small_vals <- function(
           context_small_vals_text(
             threshold = threshold,
             small_pattern = small_pattern,
-            sign = sign,
-            context = "default"
+            sign = sign
           ),
-          x
+          NA_character_
         )
       }
     )
@@ -394,7 +389,7 @@ sub_large_vals <- function(
             sign = sign,
             context = "html"
           ),
-          x
+          NA_character_
         )
       },
       rtf = function(x) {
@@ -407,7 +402,7 @@ sub_large_vals <- function(
             sign = sign,
             context = "rtf"
           ),
-          x
+          NA_character_
         )
       },
       latex = function(x) {
@@ -420,7 +415,7 @@ sub_large_vals <- function(
             sign = sign,
             context = "latex"
           ),
-          x
+          NA_character_
         )
       },
       default = function(x) {
@@ -432,7 +427,7 @@ sub_large_vals <- function(
             sign = sign,
             context = "default"
           ),
-          x
+          NA_character_
         )
       }
     )
