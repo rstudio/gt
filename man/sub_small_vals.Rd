@@ -2,7 +2,7 @@
 % Please edit documentation in R/substitution.R
 \name{sub_small_vals}
 \alias{sub_small_vals}
-\title{Substitute defined, small values in the table body}
+\title{Substitute small values in the table body}
 \usage{
 sub_small_vals(
   data,

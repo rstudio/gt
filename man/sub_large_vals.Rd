@@ -2,7 +2,7 @@
 % Please edit documentation in R/substitution.R
 \name{sub_large_vals}
 \alias{sub_large_vals}
-\title{Substitute defined, large values in the table body}
+\title{Substitute large values in the table body}
 \usage{
 sub_large_vals(
   data,
