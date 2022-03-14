@@ -31,8 +31,15 @@ functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with
 to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{zero_text}{The text to be used in place of zero values in the rendered
-table.}
+\item{threshold}{The threshold value with which values should be considered
+large enough for replacement.}
+
+\item{large_pattern}{The pattern text to be used in place of the suitably
+large values in the rendered table.}
+
+\item{sign}{The sign of the numbers to be considered in the replacement. By
+default, we only consider positive values (\code{"+"}). The other option is the
+consideration of only negative value with \code{"-"}.}
 }
 \value{
 An object of class \code{gt_tbl}.

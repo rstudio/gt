@@ -34,12 +34,12 @@ to filter down to the rows we need (e.g.,
 \item{threshold}{The threshold value with which values should be considered
 small enough for replacement.}
 
-\item{small_pattern}{The pattern text to be used in place of zero values in
-the rendered table.}
+\item{small_pattern}{The pattern text to be used in place of the suitably
+small values in the rendered table.}
 
-\item{sign}{The sign of the numbers to be considered in the replacement.
-By default, we only consider positive values (\code{"+"}). The other option is
-the consideration of only negative value with \code{"-"}.}
+\item{sign}{The sign of the numbers to be considered in the replacement. By
+default, we only consider positive values (\code{"+"}). The other option is the
+consideration of only negative value with \code{"-"}.}
 }
 \value{
 An object of class \code{gt_tbl}.

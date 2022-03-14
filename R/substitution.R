@@ -207,11 +207,11 @@ sub_zero <- function(
 #' @inheritParams fmt_number
 #' @param threshold The threshold value with which values should be considered
 #'   small enough for replacement.
-#' @param small_pattern The pattern text to be used in place of zero values in
-#'   the rendered table.
-#' @param sign The sign of the numbers to be considered in the replacement.
-#' By default, we only consider positive values (`"+"`). The other option is
-#' the consideration of only negative value with `"-"`.
+#' @param small_pattern The pattern text to be used in place of the suitably
+#'   small values in the rendered table.
+#' @param sign The sign of the numbers to be considered in the replacement. By
+#'   default, we only consider positive values (`"+"`). The other option is the
+#'   consideration of only negative value with `"-"`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -337,8 +337,13 @@ sub_small_vals <- function(
 #' argument. See the Arguments section for more information on this.
 #'
 #' @inheritParams fmt_number
-#' @param zero_text The text to be used in place of zero values in the rendered
-#'   table.
+#' @param threshold The threshold value with which values should be considered
+#'   large enough for replacement.
+#' @param large_pattern The pattern text to be used in place of the suitably
+#'   large values in the rendered table.
+#' @param sign The sign of the numbers to be considered in the replacement. By
+#'   default, we only consider positive values (`"+"`). The other option is the
+#'   consideration of only negative value with `"-"`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
