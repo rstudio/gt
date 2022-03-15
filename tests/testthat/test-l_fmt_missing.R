@@ -19,14 +19,14 @@ test_that("the `sub_missing()` function works correctly", {
     (tbl_latex %>%
        sub_missing(columns = "num_1") %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c("---", "74", "---", "93", "---", "76", "---")
+    c("—", "74", "—", "93", "—", "76", "—")
   )
 
   expect_equal(
     (tbl_latex %>%
        sub_missing(columns = "num_1", missing_text = "--") %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c("--", "74", "--", "93", "--", "76", "--")
+    c("–", "74", "–", "93", "–", "76", "–")
   )
 
   expect_equal(
@@ -47,7 +47,7 @@ test_that("the `sub_missing()` function works correctly", {
     (tbl_latex %>%
        sub_missing(columns = "num_1", rows = num_2 < 50) %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c("---", "74", "---", "93", "---", "76", "NA")
+    c("—", "74", "—", "93", "—", "76", "NA")
   )
 
   # Format columns with `fmt_number()` then use
@@ -61,7 +61,7 @@ test_that("the `sub_missing()` function works correctly", {
        ) %>%
        sub_missing(columns = everything()) %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c("---", "$74.000$", "---", "$93.000$", "---", "$76.000$", "---")
+    c("—", "$74.000$", "—", "$93.000$", "—", "$76.000$", "—")
   )
 
   # Reverse the ordering: use `sub_missing()` first
@@ -74,6 +74,6 @@ test_that("the `sub_missing()` function works correctly", {
          decimals = 3
        ) %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c("---", "$74.000$", "---", "$93.000$", "---", "$76.000$", "---")
+    c("—", "$74.000$", "—", "$93.000$", "—", "$76.000$", "—")
   )
 })
