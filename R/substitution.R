@@ -3,7 +3,7 @@
 #' @description
 #' Wherever there is missing data (i.e., `NA` values) customizable content may
 #' present better than the standard `NA` text that would otherwise appear. The
-#' `fmt_missing()` function allows for this replacement through its
+#' `sub_missing()` function allows for this replacement through its
 #' `missing_text` argument (where an em dash serves as the default).
 #'
 #' @details
@@ -107,10 +107,12 @@ sub_missing <- function(
 #' @import rlang
 #' @keywords internal
 #' @export
-fmt_missing <- function(data,
-                        columns = everything(),
-                        rows = everything(),
-                        missing_text = "---") {
+fmt_missing <- function(
+    data,
+    columns = everything(),
+    rows = everything(),
+    missing_text = "---"
+) {
 
   warning(
     "The `fmt_missing()` function is deprecated and will soon be removed\n",

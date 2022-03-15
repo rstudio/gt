@@ -985,7 +985,7 @@ cols_unhide <- function(data,
 #' }
 #'
 #' Any resulting `NA` values in the `col_val` column following the merge
-#' operation can be easily formatted using the [fmt_missing()] function.
+#' operation can be easily formatted using the [sub_missing()] function.
 #'
 #' This function is part of a set of four column-merging functions. The other
 #' two are the general [cols_merge()] function and the specialized
@@ -1114,8 +1114,8 @@ cols_merge_uncert <- function(data,
 #' the merged column
 #'
 #' Any resulting `NA` values in the `col_begin` column following the merge
-#' operation can be easily formatted using the [fmt_missing()] function.
-#' Separate calls of [fmt_missing()] can be used for the `col_begin` and
+#' operation can be easily formatted using the [sub_missing()] function.
+#' Separate calls of [sub_missing()] can be used for the `col_begin` and
 #' `col_end` columns for finer control of the replacement values.
 #'
 #' This function is part of a set of four column-merging functions. The other
@@ -1263,8 +1263,8 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #' `"0"` (i.e., no percentage will be shown)
 #'
 #' Any resulting `NA` values in the `col_n` column following the merge
-#' operation can be easily formatted using the [fmt_missing()] function.
-#' Separate calls of [fmt_missing()] can be used for the `col_n` and
+#' operation can be easily formatted using the [sub_missing()] function.
+#' Separate calls of [sub_missing()] can be used for the `col_n` and
 #' `col_pct` columns for finer control of the replacement values. It is the
 #' responsibility of the user to ensure that values are correct in both the
 #' `col_n` and `col_pct` columns (this function neither generates nor

@@ -60,10 +60,7 @@
 #'     ) %>%
 #'     gt(rowname_col = "tst") %>%
 #'     tab_spanner_delim(delim = ".") %>%
-#'     fmt_missing(
-#'       columns = everything(),
-#'       missing_text = "90+"
-#'     ) %>%
+#'     sub_missing(missing_text = "90+") %>%
 #'     tab_stubhead(label = "TST") %>%
 #'     tab_footnote(
 #'       footnote = "True solar time.",

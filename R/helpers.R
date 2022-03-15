@@ -777,10 +777,7 @@ cells_group <- function(groups = TRUE) {
 #'   dplyr::filter(!is.na(sza)) %>%
 #'   tidyr::spread(key = "tst", value = sza) %>%
 #'   gt(rowname_col = "month") %>%
-#'   fmt_missing(
-#'     columns = everything(),
-#'     missing_text = ""
-#'   ) %>%
+#'   sub_missing(missing_text = "") %>%
 #'   tab_style(
 #'     style = list(
 #'       cell_fill(color = "darkblue"),
@@ -2193,7 +2190,7 @@ cell_style_structure <- function(name, obj, subclass = name) {
 #'   exibble %>%
 #'   dplyr::select(char, time) %>%
 #'   gt() %>%
-#'   fmt_missing(columns = everything()) %>%
+#'   sub_missing() %>%
 #'   tab_style(
 #'     style = cell_text(
 #'       font = c(

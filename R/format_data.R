@@ -1074,10 +1074,7 @@ fmt_percent <- function(data,
 #'     accuracy = 10,
 #'     simplify = FALSE
 #'   ) %>%
-#'   fmt_missing(
-#'     columns = everything(),
-#'     missing_text = ""
-#'   ) %>%
+#'   sub_missing(missing_text = "") %>%
 #'   tab_spanner(
 #'     label = "Sold",
 #'     columns = contains("sold")
