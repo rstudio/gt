@@ -864,7 +864,7 @@ num_suffix_ind <- function(x,
   # Replace any -Inf, Inf, or zero values
   # with NA (required for the `non_na_index()`
   # function)
-  i[is.infinite(i) | i == 0] <- NA_integer_
+  i[is.infinite(x) | x == 0] <- NA_integer_
 
   # Using the `non_na_index()` function on the
   # vector of index values (`i`) is required
