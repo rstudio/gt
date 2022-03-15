@@ -395,7 +395,8 @@ sub_large_vals <- function(
               large_pattern = large_pattern,
               sign = sign,
               context = "html"
-            ), context = "html"
+            ),
+            context = "html"
           ),
           NA_character_
         )
