@@ -443,9 +443,9 @@ context_small_vals_text <- function(
 ) {
 
   if (small_pattern == "<{x}" && sign == "-") {
-    small_pattern <- md("<*abs*({x})")
+    small_pattern <- md("<*abs*(-{x})")
   }
-  gsub("{x}", threshold, small_pattern, fixed = TRUE)
+  gsub("{x}", abs(threshold), small_pattern, fixed = TRUE)
 }
 
 #' Obtain the contextually correct large values text for `sub_large_vals()`
