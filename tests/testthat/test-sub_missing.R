@@ -1,6 +1,4 @@
-context("Ensuring that the `fmt_missing()` function works as expected")
-
-test_that("the `fmt_missing()` function works correctly", {
+test_that("the `sub_missing()` function works correctly", {
 
   # Create an input data frame with two columns, both numeric
   data_tbl <-
@@ -29,8 +27,7 @@ test_that("the `fmt_missing()` function works correctly", {
 
   # Expect an error when attempting to format a column
   # that does not exist
-  expect_error(
-    tab %>% fmt_missing(columns = "num_3"))
+  expect_error(tab %>% sub_missing(columns = "num_3"))
 
   #
   # Format `date` in various date formats and verify the output
@@ -38,48 +35,55 @@ test_that("the `fmt_missing()` function works correctly", {
 
   expect_equal(
     (tab %>%
-       fmt_missing(columns = "num_1") %>%
+       sub_missing(columns = "num_1") %>%
        render_formats_test(context = "default"))[["num_1"]],
-    c("---", "74", "---", "93", "---", "76", "---"))
+    c("---", "74", "---", "93", "---", "76", "---")
+  )
 
   expect_equal(
     (tab %>%
-       fmt_missing(columns = "num_1") %>%
+       sub_missing(columns = "num_1") %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("&mdash;", "74", "&mdash;", "93", "&mdash;", "76", "&mdash;"))
+    c("&mdash;", "74", "&mdash;", "93", "&mdash;", "76", "&mdash;")
+  )
 
   expect_equal(
     (tab %>%
-       fmt_missing(columns = "num_1", missing_text = "--") %>%
+       sub_missing(columns = "num_1", missing_text = "--") %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("&ndash;", "74", "&ndash;", "93", "&ndash;", "76", "&ndash;"))
+    c("&ndash;", "74", "&ndash;", "93", "&ndash;", "76", "&ndash;")
+  )
 
   expect_equal(
     (tab %>%
-       fmt_missing(columns = "num_1", missing_text = "--") %>%
+       sub_missing(columns = "num_1", missing_text = "--") %>%
        render_formats_test(context = "default"))[["num_1"]],
-    c("--", "74", "--", "93", "--", "76", "--"))
+    c("--", "74", "--", "93", "--", "76", "--")
+  )
 
   expect_equal(
     (tab %>%
-       fmt_missing(columns = "num_1", missing_text = "a") %>%
+       sub_missing(columns = "num_1", missing_text = "a") %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("a", "74", "a", "93", "a", "76", "a"))
+    c("a", "74", "a", "93", "a", "76", "a")
+  )
 
   expect_equal(
     (tab %>%
-       fmt_missing(columns = "num_2") %>%
+       sub_missing(columns = "num_2") %>%
        render_formats_test(context = "default"))[["num_2"]],
-    c("34", "74", "23", "93", "35", "76", "57"))
+    c("34", "74", "23", "93", "35", "76", "57")
+  )
 
   expect_equal(
     (tab %>%
-       fmt_missing(columns = "num_1", rows = num_2 < 50) %>%
+       sub_missing(columns = "num_1", rows = num_2 < 50) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("&mdash;", "74", "&mdash;", "93", "&mdash;", "76", "NA"))
+    c("&mdash;", "74", "&mdash;", "93", "&mdash;", "76", "NA")
+  )
 
   # Format columns with `fmt_number()` then use
-  # `fmt_missing()` on all columns (the two functions
+  # `sub_missing()` on all columns (the two functions
   # shouldn't wipe out formatting on cells)
   expect_equal(
     (tab %>%
@@ -87,19 +91,21 @@ test_that("the `fmt_missing()` function works correctly", {
          columns = everything(),
          decimals = 3
        ) %>%
-       fmt_missing(columns = everything()) %>%
+       sub_missing(columns = everything()) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("&mdash;", "74.000", "&mdash;", "93.000", "&mdash;", "76.000", "&mdash;"))
+    c("&mdash;", "74.000", "&mdash;", "93.000", "&mdash;", "76.000", "&mdash;")
+  )
 
-  # Reverse the ordering: use `fmt_missing()` first
+  # Reverse the ordering: use `sub_missing()` first
   # then `fmt_number()`; expect the same output as before
   expect_equal(
     (tab %>%
-       fmt_missing(columns = everything()) %>%
+       sub_missing(columns = everything()) %>%
        fmt_number(
          columns = everything(),
          decimals = 3
        ) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("&mdash;", "74.000", "&mdash;", "93.000", "&mdash;", "76.000", "&mdash;"))
+    c("&mdash;", "74.000", "&mdash;", "93.000", "&mdash;", "76.000", "&mdash;")
+  )
 })
