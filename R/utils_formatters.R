@@ -463,7 +463,7 @@ context_large_vals_text <- function(
     large_pattern <- "<{x}"
   }
 
-  large_vals_text <- gsub("{x}", threshold, large_pattern, fixed = TRUE)
+  large_vals_text <- gsub("{x}", abs(threshold), large_pattern, fixed = TRUE)
 
   switch(
     context,
@@ -499,7 +499,7 @@ context_gte_mark <- function(context) {
 
   switch(
     context,
-    html = "&ge;",
+    html = "≥",
     latex = "$\\\\geq$",
     ">="
   )
