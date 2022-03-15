@@ -260,13 +260,17 @@ sub_small_vals <- function(
           is.numeric(x) &
             !is.na(x) &
             x != 0 &
-            op_fn_threshold(x, abs(threshold)) &
+            op_fn_threshold(x, abs(threshold) * ifelse(sign == "-", -1, 1)) &
             op_fn_zero_away(x, 0),
-          context_small_vals_text(
-            threshold = threshold,
-            small_pattern = small_pattern,
-            sign = sign
-          ),
+          process_text(
+            context_small_vals_text(
+              threshold = threshold,
+              small_pattern = small_pattern,
+              sign = sign
+            ),
+            context = "html"
+          )
+            ,
           NA_character_
         )
       },
@@ -275,7 +279,7 @@ sub_small_vals <- function(
           is.numeric(x) &
             !is.na(x) &
             x != 0 &
-            op_fn_threshold(x, abs(threshold)) &
+            op_fn_threshold(x, abs(threshold) * ifelse(sign == "-", -1, 1)) &
             op_fn_zero_away(x, 0),
           context_small_vals_text(
             threshold = threshold,
@@ -290,7 +294,7 @@ sub_small_vals <- function(
           is.numeric(x) &
             !is.na(x) &
             x != 0 &
-            op_fn_threshold(x, abs(threshold)) &
+            op_fn_threshold(x, abs(threshold) * ifelse(sign == "-", -1, 1)) &
             op_fn_zero_away(x, 0),
           context_small_vals_text(
             threshold = threshold,
@@ -305,7 +309,7 @@ sub_small_vals <- function(
           is.numeric(x) &
             !is.na(x) &
             x != 0 &
-            op_fn_threshold(x, abs(threshold)) &
+            op_fn_threshold(x, abs(threshold) * ifelse(sign == "-", -1, 1)) &
             op_fn_zero_away(x, 0),
           context_small_vals_text(
             threshold = threshold,
@@ -385,11 +389,13 @@ sub_large_vals <- function(
         ifelse(
           is.numeric(x) &
             op_fn(x, abs(threshold) * ifelse(sign == "-", -1, 1)),
-          context_large_vals_text(
-            threshold = threshold,
-            large_pattern = large_pattern,
-            sign = sign,
-            context = "html"
+          process_text(
+            context_large_vals_text(
+              threshold = threshold,
+              large_pattern = large_pattern,
+              sign = sign,
+              context = "html"
+            ), context = "html"
           ),
           NA_character_
         )
