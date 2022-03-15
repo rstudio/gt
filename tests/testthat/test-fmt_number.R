@@ -907,10 +907,10 @@ test_that("`fmt_number()` can render values in the Indian numbering system", {
        fmt_number(columns = num, suffixing = c("K", "Lacs", "Crores"), system = "ind") %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "50.00 Lacs", "1.00 K", "10.00", "12.35 K", "1.23 K", "0.12 K",
+      "50.00 Lacs", "1.00 K", "10.00", "12.35 K", "1.23 K", "123.45",
       "1.23", "0.12", "25.83 Lacs", "153.57 Crores", "64,25,64,825.73 Crores",
       "&minus;50.00 Crores", "&minus;1.00 K", "&minus;10.00", "&minus;12.35 K",
-      "&minus;1.23 K", "&minus;0.12 K", "&minus;1.23", "&minus;0.12",
+      "&minus;1.23 K", "&minus;123.45", "&minus;1.23", "&minus;0.12",
       "0.00", "0.00", "NA", " Inf Crores", "&minus;Inf Crores"
     )
   )

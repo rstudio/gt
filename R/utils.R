@@ -859,13 +859,7 @@ num_suffix_ind <- function(x,
   # (starting from 1) represents the index here
   exponent <- log(abs(x), base = 10)
 
-  i <-
-    dplyr::case_when(
-      exponent <= 2 ~ 0,
-      exponent >= 2 & exponent < 5 ~ 1,
-      exponent >= 5 & exponent < 7 ~ 2,
-      exponent >= 7 ~ 3
-    )
+  i <- pmin(length(suffixes), pmax(0, ceiling(floor(exponent) / 2) - 1))
 
   # Replace any -Inf, Inf, or zero values
   # with NA (required for the `non_na_index()`
