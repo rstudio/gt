@@ -2898,37 +2898,9 @@ insert_seps_ind <- function(integer) {
   insertion_seq <- cumsum(c(3, rep(2, floor((nchar(integer) - 4) / 2)))) + 1
   insertion_seq <- (nchar(integer) - insertion_seq) + 2
 
-  insert_str(
-    target = integer,
-    insert = rep(",", length(insertion_seq)),
-    index = insertion_seq
-  )
-}
+  split_strings <- split_str_by_index(target = integer, index = insertion_seq)
 
-insert_str <- function(target, insert, index) {
-
-  insert <- insert[order(index)]
-  index <- sort(index)
-
-  split_strings <- split_str_by_index(target, index)
-
-  interleave(split_strings, rep(",", length(split_strings) - 1))
-}
-
-# This function takes two vectors and combines them
-# into a single interleaved vector or combined string
-interleave <- function(first, second, combine = TRUE) {
-
-  order_vec_1 <- 2 * (seq_len(length(first))) - 1
-  order_vec_2 <- 2 * (seq_len(length(second)))
-
-  out_vec <- c(first, second)[order(c(order_vec_1, order_vec_2))]
-
-  if (combine) {
-    out_vec <- paste(out_vec, collapse = "")
-  }
-
-  out_vec
+  paste(split_strings, collapse = ",")
 }
 
 split_str_by_index <- function(target, index) {
