@@ -48,8 +48,8 @@ the merged column
 }
 
 Any resulting \code{NA} values in the \code{col_begin} column following the merge
-operation can be easily formatted using the \code{\link[=fmt_missing]{fmt_missing()}} function.
-Separate calls of \code{\link[=fmt_missing]{fmt_missing()}} can be used for the \code{col_begin} and
+operation can be easily formatted using the \code{\link[=sub_missing]{sub_missing()}} function.
+Separate calls of \code{\link[=sub_missing]{sub_missing()}} can be used for the \code{col_begin} and
 \code{col_end} columns for finer control of the replacement values.
 
 This function is part of a set of four column-merging functions. The other

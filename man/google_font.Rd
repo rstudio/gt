@@ -45,7 +45,7 @@ tab_1 <-
   exibble \%>\%
   dplyr::select(char, time) \%>\%
   gt() \%>\%
-  fmt_missing(columns = everything()) \%>\%
+  sub_missing() \%>\%
   tab_style(
     style = cell_text(
       font = c(

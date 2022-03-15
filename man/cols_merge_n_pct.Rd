@@ -46,8 +46,8 @@ missing values for the merged column (e.g., \code{NA} + \code{NA} = \code{NA})
 }
 
 Any resulting \code{NA} values in the \code{col_n} column following the merge
-operation can be easily formatted using the \code{\link[=fmt_missing]{fmt_missing()}} function.
-Separate calls of \code{\link[=fmt_missing]{fmt_missing()}} can be used for the \code{col_n} and
+operation can be easily formatted using the \code{\link[=sub_missing]{sub_missing()}} function.
+Separate calls of \code{\link[=sub_missing]{sub_missing()}} can be used for the \code{col_n} and
 \code{col_pct} columns for finer control of the replacement values. It is the
 responsibility of the user to ensure that values are correct in both the
 \code{col_n} and \code{col_pct} columns (this function neither generates nor

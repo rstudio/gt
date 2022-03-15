@@ -90,10 +90,7 @@ tab_1 <-
   dplyr::filter(!is.na(sza)) \%>\%
   tidyr::spread(key = "tst", value = sza) \%>\%
   gt(rowname_col = "month") \%>\%
-  fmt_missing(
-    columns = everything(),
-    missing_text = ""
-  ) \%>\%
+  sub_missing(missing_text = "") \%>\%
   tab_style(
     style = list(
       cell_fill(color = "darkblue"),

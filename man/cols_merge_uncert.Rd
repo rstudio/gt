@@ -54,7 +54,7 @@ missing values for the merged column (e.g., \code{NA} + \code{NA} =
 }
 
 Any resulting \code{NA} values in the \code{col_val} column following the merge
-operation can be easily formatted using the \code{\link[=fmt_missing]{fmt_missing()}} function.
+operation can be easily formatted using the \code{\link[=sub_missing]{sub_missing()}} function.
 
 This function is part of a set of four column-merging functions. The other
 two are the general \code{\link[=cols_merge]{cols_merge()}} function and the specialized
