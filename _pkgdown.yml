@@ -66,9 +66,12 @@ reference:
     - fmt_datetime
     - fmt_markdown
     - fmt_passthrough
-    - fmt_missing
     - fmt
     - text_transform
+    - sub_missing
+    - sub_zero
+    - sub_small_vals
+    - sub_large_vals
     - data_color
 
   - title: Modify Columns
