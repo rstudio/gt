@@ -178,7 +178,7 @@ test_that("the `sub_zero()` function works correctly", {
 
 test_that("the `sub_small_vals()` function works correctly", {
 
-  # Create an input data frame with three columns
+  # Create an input table with three columns
   data_tbl <-
     dplyr::tibble(
       num_1 = c(-0.0001, 74, NA, 0, 5e12, 0.0001, 84.34),
@@ -193,13 +193,6 @@ test_that("the `sub_small_vals()` function works correctly", {
   # Expect an error when attempting to format a column
   # that does not exist
   expect_error(tab %>% sub_small_vals(columns = "num_3"))
-
-  expect_equal(
-    (tab %>%
-       sub_small_vals(columns = "num_1") %>%
-       render_formats_test(context = "default"))[["num_1"]],
-    c("-1.000e-04", "7.400e+01", "NA", "0.000e+00", "5.000e+12", "<0.01", "8.434e+01")
-  )
 
   expect_equal(
     (tab %>%
@@ -280,4 +273,98 @@ test_that("the `sub_small_vals()` function works correctly", {
 
   # Expect an error if an invalid `sign` is used
   expect_error(tab %>% sub_small_vals(columns = "num_1", sign = "?"))
+})
+
+test_that("the `sub_large_vals()` function works correctly", {
+
+  # Create an input table with three columns
+  data_tbl <-
+    dplyr::tibble(
+      num_1 = c(-0.0001, 74, NA, 0, 5e12, 0.0001, 84.34),
+      int_1 = c(1L, -100000L, 800L, 5L, NA, 0L, -32L),
+      lett = LETTERS[1:7]
+    )
+
+  # Create a `gt_tbl` object with `gt()` and the
+  # `data_tbl` dataset
+  tab <- gt(data_tbl)
+
+  # Expect an error when attempting to format a column
+  # that does not exist
+  expect_error(tab %>% sub_large_vals(columns = "num_3"))
+
+  expect_equal(
+    (tab %>%
+       sub_large_vals(columns = "num_1") %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c("-0.0001", "74.0000", "NA", "0.0000", "≥1e+12", "0.0001",
+      "84.3400")
+  )
+
+  expect_equal(
+    (tab %>%
+       fmt_number(columns = num_1) %>%
+       sub_large_vals(columns = "num_1") %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c("0.00", "74.00", "NA", "0.00", "≥1e+12", "0.00", "84.34")
+  )
+
+  expect_equal(
+    (tab %>%
+       fmt_number(columns = num_1) %>%
+       sub_large_vals(columns = "num_1", threshold = 100) %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c("0.00", "74.00", "NA", "0.00", "≥100", "0.00", "84.34")
+  )
+
+  expect_equal(
+    (tab %>%
+       fmt_number(columns = num_1) %>%
+       sub_large_vals(columns = "int_1", threshold = 500, sign = "-") %>%
+       render_formats_test(context = "html"))[["int_1"]],
+    c("1", "&lt;500", "800", "5", "NA", "0", "-32")
+  )
+
+  expect_equal(
+    (tab %>%
+       fmt_number(columns = num_1) %>%
+       sub_large_vals(columns = "int_1", threshold = 400, large_pattern = "big", sign = "-") %>%
+       render_formats_test(context = "html"))[["int_1"]],
+    c("1", "big", "800", "5", "NA", "0", "-32")
+  )
+
+  expect_equal(
+    (tab %>%
+       fmt_number(columns = num_1) %>%
+       sub_large_vals(columns = "int_1", threshold = 300, large_pattern = "(({x}))", sign = "-") %>%
+       render_formats_test(context = "html"))[["int_1"]],
+    c("1", "((300))", "800", "5", "NA", "0", "-32")
+  )
+
+  # Expect that the sign of the `threshold` value doesn't affect anything
+  expect_equal(
+    tab %>%
+      sub_large_vals(columns = "int_1", threshold = 3, sign = "-") %>%
+      render_as_html(),
+    tab %>%
+      sub_large_vals(columns = "int_1", threshold = -3, sign = "-") %>%
+      render_as_html()
+  )
+
+  expect_equal(
+    tab %>%
+      sub_large_vals(columns = "num_1", threshold = 10, sign = "+") %>%
+      render_as_html(),
+    tab %>%
+      sub_large_vals(columns = "num_1", threshold = -10, sign = "+") %>%
+      render_as_html()
+  )
+
+  expect_equal(
+    tab %>% sub_large_vals(columns = "lett") %>% render_as_html(),
+    tab %>% render_as_html()
+  )
+
+  # Expect an error if an invalid `sign` is used
+  expect_error(tab %>% sub_large_vals(columns = "num_1", sign = "?"))
 })
