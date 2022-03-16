@@ -859,12 +859,13 @@ num_suffix_ind <- function(x,
   # (starting from 1) represents the index here
   exponent <- log(abs(x), base = 10)
 
+  # Transform the `exponent` vector to a vector of
+  # indices (each index represents the suffix in the
+  # Indian numbering system); replace any `0` values
+  # in `i` (represents values less than 1000) with NA
+  # (this is required for the `non_na_index()` function)
   i <- pmin(length(suffixes), pmax(0, ceiling(floor(exponent) / 2) - 1))
-
-  # Replace any -Inf, Inf, or zero values
-  # with NA (required for the `non_na_index()`
-  # function)
-  i[is.infinite(x) | x == 0] <- NA_integer_
+  i[i == 0] <- NA_integer_
 
   # Using the `non_na_index()` function on the
   # vector of index values (`i`) is required
@@ -900,15 +901,9 @@ num_suffix_ind <- function(x,
   # Create and return a tibble with `scale_by`
   # and `suffix` values
   dplyr::tibble(
-    scale_by = suffix_index,
+    scale_by = 10^(-ifelse(suffix_index == 0, 0, (suffix_index * 2) + 1)),
     suffix = suffix_labels
-  ) %>%
-    dplyr::mutate(scale_by = dplyr::case_when(
-      scale_by == 0 ~ 1,
-      scale_by == 1 ~ 0.001,
-      scale_by == 2 ~ 0.00001,
-      scale_by == 3 ~ 0.0000001
-    ))
+  )
 }
 
 #' An `isFALSE`-based helper function

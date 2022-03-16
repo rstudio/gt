@@ -409,9 +409,9 @@ test_that("the `fmt_integer()` fn can render in the Indian numbering system", {
        fmt_integer(columns = num, suffixing = c("K", "Lacs", "Crores"), system = "ind") %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "50 Lacs", "1 K", "10", "12 K", "1 K", "0 K", "1", "0", "26 Lacs",
+      "50 Lacs", "1 K", "10", "12 K", "1 K", "123", "1", "0", "26 Lacs",
       "154 Crores", "64,25,64,826 Crores", "&minus;50 Crores", "&minus;1 K",
-      "&minus;10", "&minus;12 K", "&minus;1 K", "0 K", "&minus;1",
+      "&minus;10", "&minus;12 K", "&minus;1 K", "&minus;123", "&minus;1",
       "0", "0", "0", "NA", " Inf Crores", "&minus;Inf Crores"
     )
   )

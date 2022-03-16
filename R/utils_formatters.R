@@ -735,7 +735,10 @@ prettify_scientific_notation <- function(x,
     tidy_gsub("-", minus_mark, fixed = TRUE)
 }
 
-#' Create the data frame with suffixes and scaling values
+#' Create the tibble with suffixes and scaling values
+#'
+#' The returned tibble should always have the same number of rows as the length
+#' of input vector `x`.
 #'
 #' @param x Numeric values in `numeric` form.
 #' @param decimals The exact number of decimal places to be used in the
