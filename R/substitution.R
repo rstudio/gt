@@ -55,8 +55,8 @@ sub_missing <- function(
   stop_if_not_gt(data = data)
 
   # Pass `data`, `columns`, `rows`, and the formatting
-  # functions (as a function list) to `fmt()`
-  fmt(
+  # functions (as a function list) to `subst()`
+  subst(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
@@ -164,8 +164,8 @@ sub_zero <- function(
   stop_if_not_gt(data = data)
 
   # Pass `data`, `columns`, `rows`, and the formatting
-  # functions (as a function list) to `fmt()`
-  fmt(
+  # functions (as a function list) to `subst()`
+  subst(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
@@ -246,8 +246,8 @@ sub_small_vals <- function(
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
-  # functions (as a function list) to `fmt()`
-  fmt(
+  # functions (as a function list) to `subst()`
+  subst(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
@@ -376,8 +376,8 @@ sub_large_vals <- function(
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
-  # functions (as a function list) to `fmt()`
-  fmt(
+  # functions (as a function list) to `subst()`
+  subst(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
@@ -453,4 +453,52 @@ check_sub_fn_sign <- function(sign) {
       call. = FALSE
     )
   }
+}
+
+subst <- function(
+    data,
+    columns = everything(),
+    rows = everything(),
+    fns
+) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  # Get the `stub_df` and `data_tbl` tables from `data`
+  stub_df <- dt_stub_df_get(data = data)
+  data_tbl <- dt_data_get(data = data)
+
+  #
+  # Resolution of columns and rows as character vectors
+  #
+
+  resolved_columns <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data
+    )
+
+  resolved_rows_idx <-
+    resolve_rows_i(
+      expr = {{ rows }},
+      data = data
+    )
+
+  # If a single function is supplied to `fns` then
+  # repackage that into a list as the `default` function
+  if (is.function(fns)) {
+    fns <- list(default = fns)
+  }
+
+  # Create the `subst_list`, which is a bundle of
+  # substitution functions for specific columns and rows
+  subst_list <-
+    list(
+      func = fns,
+      cols = resolved_columns,
+      rows = resolved_rows_idx
+    )
+
+  dt_substitutions_add(data = data, substitutions = subst_list)
 }

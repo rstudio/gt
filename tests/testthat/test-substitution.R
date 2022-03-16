@@ -172,7 +172,7 @@ test_that("the `sub_zero()` function works correctly", {
          decimals = 3
        ) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("NA", "74.000", "NA", "0.000", "NA", "0.000", "NA")
+    c("NA", "74.000", "NA", "nil", "NA", "0.000", "NA")
   )
 })
 
@@ -339,6 +339,19 @@ test_that("the `sub_large_vals()` function works correctly", {
        sub_large_vals(columns = "int_1", threshold = 300, large_pattern = "(({x}))", sign = "-") %>%
        render_formats_test(context = "html"))[["int_1"]],
     c("1", "((300))", "800", "5", "NA", "0", "-32")
+  )
+
+  # Expect that the order of `fmt_*()` and `sub_*()` functions shouldn't
+  # make a different in the final outputs
+  expect_equal(
+    tab %>%
+      fmt_integer(columns = "int_1") %>%
+      sub_large_vals(columns = "int_1", threshold = 3, sign = "-") %>%
+      render_as_html(),
+    tab %>%
+      sub_large_vals(columns = "int_1", threshold = -3, sign = "-") %>%
+      fmt_integer(columns = "int_1") %>%
+      render_as_html()
   )
 
   # Expect that the sign of the `threshold` value doesn't affect anything

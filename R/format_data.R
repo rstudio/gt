@@ -2687,7 +2687,7 @@ fmt <- function(data,
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Get the `stub_df` data frame from `data`
+  # Get the `stub_df` and `data_tbl` tables from `data`
   stub_df <- dt_stub_df_get(data = data)
   data_tbl <- dt_data_get(data = data)
 
