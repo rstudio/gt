@@ -499,7 +499,7 @@ context_gte_mark <- function(context) {
 
   switch(
     context,
-    html = "≥",
+    html = "\U02265",
     latex = "$\\\\geq$",
     ">="
   )
