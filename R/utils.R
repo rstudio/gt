@@ -700,17 +700,11 @@ non_na_index <- function(values,
                          index,
                          default_value = NA) {
 
-  if (is.logical(index)) {
-    index <- is.integer(index)
-  }
-
   stopifnot(is.integer(index) || is.numeric(index))
+  stopifnot(all(index >= 1 | is.na(index)))
+  stopifnot(all(length(values) >= index | is.na(index)))
 
-  # The algorithm requires `-Inf` not being present
-  stopifnot(!any(is.infinite(values) & values < 0))
-
-  # Get a vector of suffixes, which may include
-  # NA values
+  # Get a vector of suffixes, which may include NA values
   res <- values[index]
 
   # If there are no NA values to reconcile, return
