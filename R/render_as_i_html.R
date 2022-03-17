@@ -276,7 +276,7 @@ render_as_i_html <- function(data, id) {
     )
 
   # Prepend the `heading_component` to the widget content
-  x <- prependContent(x, heading_component)
+  x <- htmlwidgets::prependContent(x, heading_component)
 
   x
 }
