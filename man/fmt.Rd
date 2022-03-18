@@ -30,11 +30,13 @@ to filter down to the rows we need (e.g.,
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{fmt()} function provides greater control in formatting raw data values
-than any of the specialized \verb{fmt_*()} functions that are available in
-\strong{gt}. Along with the \code{columns} and \code{rows} arguments that provide some
-precision in targeting data cells, the \code{fns} argument allows you to define
-one or more functions for manipulating the raw data.
+The \code{fmt()} function provides a way to execute custom formatting
+functionality with raw data values in a way that can consider all output
+contexts.
+
+Along with the \code{columns} and \code{rows} arguments that provide some precision in
+targeting data cells, the \code{fns} argument allows you to define one or more
+functions for manipulating the raw data.
 
 If providing a single function to \code{fns}, the recommended format is in the
 form: \code{fns = function(x) ...}. This single function will format the targeted
@@ -51,7 +53,7 @@ aren't provided.
 As with all of the \verb{fmt_*()} functions, targeting of values is done through
 \code{columns} and additionally by \code{rows} (if nothing is provided for \code{rows} then
 entire columns are selected). Conditional formatting is possible by providing
-a conditional expression to the \code{rows} argument. See the Arguments section
+a conditional expression to the \code{rows} argument. See the \emph{Arguments} section
 for more information on this.
 }
 \section{Figures}{
@@ -100,6 +102,7 @@ Other Format Data:
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},
+\code{\link{sub_x}()},
 \code{\link{sub_zero}()},
 \code{\link{text_transform}()}
 }

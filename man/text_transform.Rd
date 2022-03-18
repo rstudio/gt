@@ -30,7 +30,7 @@ Perform targeted text transformation with a function
 
 \section{Function ID}{
 
-3-14
+3-20
 }
 
 \examples{
@@ -82,6 +82,7 @@ Other Format Data:
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},
+\code{\link{sub_x}()},
 \code{\link{sub_zero}()}
 }
 \concept{Format Data}
