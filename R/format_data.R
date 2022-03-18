@@ -2624,11 +2624,13 @@ fmt_passthrough <- function(data,
 #' Set a column format with a formatter function
 #'
 #' @description
-#' The `fmt()` function provides greater control in formatting raw data values
-#' than any of the specialized `fmt_*()` functions that are available in
-#' **gt**. Along with the `columns` and `rows` arguments that provide some
-#' precision in targeting data cells, the `fns` argument allows you to define
-#' one or more functions for manipulating the raw data.
+#' The `fmt()` function provides a way to execute custom formatting
+#' functionality with raw data values in a way that can consider all output
+#' contexts.
+#'
+#' Along with the `columns` and `rows` arguments that provide some precision in
+#' targeting data cells, the `fns` argument allows you to define one or more
+#' functions for manipulating the raw data.
 #'
 #' If providing a single function to `fns`, the recommended format is in the
 #' form: `fns = function(x) ...`. This single function will format the targeted
@@ -2646,7 +2648,7 @@ fmt_passthrough <- function(data,
 #' As with all of the `fmt_*()` functions, targeting of values is done through
 #' `columns` and additionally by `rows` (if nothing is provided for `rows` then
 #' entire columns are selected). Conditional formatting is possible by providing
-#' a conditional expression to the `rows` argument. See the Arguments section
+#' a conditional expression to the `rows` argument. See the *Arguments* section
 #' for more information on this.
 #'
 #' @inheritParams fmt_number
