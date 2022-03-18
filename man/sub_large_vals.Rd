@@ -38,8 +38,8 @@ large enough for replacement.}
 large values in the rendered table.}
 
 \item{sign}{The sign of the numbers to be considered in the replacement. By
-default, we only consider positive values (\code{"+"}). The other option is the
-consideration of only negative value with \code{"-"}.}
+default, we only consider positive values (\code{"+"}). The other option (\code{"-"})
+can be used to consider only negative values.}
 }
 \value{
 An object of class \code{gt_tbl}.
