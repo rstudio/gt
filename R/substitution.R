@@ -55,8 +55,8 @@ sub_missing <- function(
   stop_if_not_gt(data = data)
 
   # Pass `data`, `columns`, `rows`, and the formatting
-  # functions (as a function list) to `subst()`
-  subst(
+  # functions (as a function list) to `sub_x()`
+  sub_x(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
@@ -164,8 +164,8 @@ sub_zero <- function(
   stop_if_not_gt(data = data)
 
   # Pass `data`, `columns`, `rows`, and the formatting
-  # functions (as a function list) to `subst()`
-  subst(
+  # functions (as a function list) to `sub_x()`
+  sub_x(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
@@ -246,8 +246,8 @@ sub_small_vals <- function(
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
-  # functions (as a function list) to `subst()`
-  subst(
+  # functions (as a function list) to `sub_x()`
+  sub_x(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
@@ -376,8 +376,8 @@ sub_large_vals <- function(
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
-  # functions (as a function list) to `subst()`
-  subst(
+  # functions (as a function list) to `sub_x()`
+  sub_x(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
@@ -455,7 +455,49 @@ check_sub_fn_sign <- function(sign) {
   }
 }
 
-subst <- function(
+#' Set a substitution scheme with custom functions
+#'
+#' @description
+#' The `sub_x()` function provides a way to execute custom substitution
+#' functionality with raw data values in a way that can consider all output
+#' contexts.
+#'
+#' Along with the `columns` and `rows` arguments that provide some
+#' precision in targeting data cells, the `fns` argument allows you to define
+#' one or more functions for manipulating the raw data.
+#'
+#' If providing a single function to `fns`, the recommended format is in the
+#' form: `fns = function(x) ...`. This single function will format the targeted
+#' data cells the same way regardless of the output format (e.g., HTML, LaTeX,
+#' RTF).
+#'
+#' If you require formatting of `x` that depends on the output format, a list of
+#' functions can be provided for the `html`, `latex`, and `default` contexts.
+#' This can be in the form of `fns = list(html = function(x) ..., latex =
+#' function(x) ..., default = function(x) ...)`. In this multiple-function case,
+#' we recommended including the `default` function as a fallback if all contexts
+#' aren't provided.
+#'
+#' @details
+#' As with all of the `sub_*()` functions, targeting of values is done through
+#' `columns` and additionally by `rows` (if nothing is provided for `rows` then
+#' entire columns are selected). Conditional substitution is possible by
+#' providing a conditional expression to the `rows` argument. See the
+#' *Arguments* section for more information on this.
+#'
+#' @inheritParams fmt_number
+#' @param fns Either a single substitution function or a named list of
+#'   functions.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @family Format Data
+#' @section Function ID:
+#' 3-19
+#'
+#' @import rlang
+#' @export
+sub_x <- function(
     data,
     columns = everything(),
     rows = everything(),
