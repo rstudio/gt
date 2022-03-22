@@ -138,6 +138,7 @@ Other Format Data:
 \code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
 \code{\link{fmt_passthrough}()},
+\code{\link{fmt_per_x}()},
 \code{\link{fmt_percent}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt}()},
