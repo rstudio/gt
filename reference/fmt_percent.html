@@ -131,6 +131,7 @@ formatting specific to the chosen locale</p></li>
   force_sign <span class="op">=</span> <span class="cn">FALSE</span>,
   incl_space <span class="op">=</span> <span class="cn">FALSE</span>,
   placement <span class="op">=</span> <span class="st">"right"</span>,
+  system <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"intl"</span>, <span class="st">"ind"</span><span class="op">)</span>,
   locale <span class="op">=</span> <span class="cn">NULL</span>
 <span class="op">)</span></code></pre></div>
     </div>
@@ -200,6 +201,12 @@ and the percent sign. The default is to not introduce a space character.</p></dd
 <dt>placement</dt>
 <dd><p>The placement of the percent sign. This can be either be
 <code>right</code> (the default) or <code>left</code>.</p></dd>
+<dt>system</dt>
+<dd><p>The numbering system to use. By default, this is the
+international numbering system (<code>"intl"</code>) whereby grouping separators
+(i.e., <code>sep_mark</code>) are separated by three digits. The alternative system,
+the Indian numbering system (<code>"ind"</code>) uses grouping separators that
+correspond to thousand, lakh, crore, and higher quantities.</p></dd>
 <dt>locale</dt>
 <dd><p>An optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include <code>"en_US"</code> for English

@@ -125,6 +125,7 @@ formatting specific to the chosen locale</p></li>
   sep_mark <span class="op">=</span> <span class="st">","</span>,
   dec_mark <span class="op">=</span> <span class="st">"."</span>,
   force_sign <span class="op">=</span> <span class="cn">FALSE</span>,
+  system <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"intl"</span>, <span class="st">"ind"</span><span class="op">)</span>,
   locale <span class="op">=</span> <span class="cn">NULL</span>
 <span class="op">)</span></code></pre></div>
     </div>
@@ -193,7 +194,10 @@ will either not be included in the transformation (e.g, <code>c(NA, "M", "B", "T
 inherit a previous suffix (e.g., with <code>c("K", "M", NA, "T")</code>, all numbers
 in the range of millions and billions will be in terms of millions).</p>
 <p>Any use of <code>suffixing</code> (where it is not set expressly as <code>FALSE</code>) means
-that any value provided to <code>scale_by</code> will be ignored.</p></dd>
+that any value provided to <code>scale_by</code> will be ignored.</p>
+<p>If using <code>system = "ind"</code> then the default suffix set provided by
+<code>suffixing = TRUE</code> will be <code>c(NA, "L", "Cr")</code>. This doesn't apply suffixes
+to the thousands range, but does express values in lakhs and crores.</p></dd>
 <dt>pattern</dt>
 <dd><p>A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by <code>{x}</code> and all other
@@ -210,6 +214,12 @@ of <code>1,000</code>).</p></dd>
 for this option. The default is <code>FALSE</code>, where only negative numbers will
 display a minus sign. This option is disregarded when using accounting
 notation with <code>accounting = TRUE</code>.</p></dd>
+<dt>system</dt>
+<dd><p>The numbering system to use. By default, this is the
+international numbering system (<code>"intl"</code>) whereby grouping separators
+(i.e., <code>sep_mark</code>) are separated by three digits. The alternative system,
+the Indian numbering system (<code>"ind"</code>) uses grouping separators that
+correspond to thousand, lakh, crore, and higher quantities.</p></dd>
 <dt>locale</dt>
 <dd><p>An optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include <code>"en_US"</code> for English

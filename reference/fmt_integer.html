@@ -111,6 +111,7 @@ formatting specific to the chosen locale</p></li>
   pattern <span class="op">=</span> <span class="st">"{x}"</span>,
   sep_mark <span class="op">=</span> <span class="st">","</span>,
   force_sign <span class="op">=</span> <span class="cn">FALSE</span>,
+  system <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"intl"</span>, <span class="st">"ind"</span><span class="op">)</span>,
   locale <span class="op">=</span> <span class="cn">NULL</span>
 <span class="op">)</span></code></pre></div>
     </div>
@@ -176,6 +177,12 @@ of <code>1,000</code>).</p></dd>
 for this option. The default is <code>FALSE</code>, where only negative numbers will
 display a minus sign. This option is disregarded when using accounting
 notation with <code>accounting = TRUE</code>.</p></dd>
+<dt>system</dt>
+<dd><p>The numbering system to use. By default, this is the
+international numbering system (<code>"intl"</code>) whereby grouping separators
+(i.e., <code>sep_mark</code>) are separated by three digits. The alternative system,
+the Indian numbering system (<code>"ind"</code>) uses grouping separators that
+correspond to thousand, lakh, crore, and higher quantities.</p></dd>
 <dt>locale</dt>
 <dd><p>An optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include <code>"en_US"</code> for English
