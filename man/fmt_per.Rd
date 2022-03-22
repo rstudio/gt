@@ -8,7 +8,7 @@ fmt_per(
   data,
   columns,
   rows = everything(),
-  to_units = c("ppm", "ppb", "ppt", "ppq", "per-mille", "per-myriad"),
+  to_units = c("per-mille", "per-myriad", "ppm", "ppb", "ppt", "ppq"),
   symbol = "auto",
   decimals = 2,
   drop_trailing_zeros = FALSE,
@@ -20,9 +20,82 @@ fmt_per(
   dec_mark = ".",
   force_sign = FALSE,
   incl_space = "auto",
-  placement = "right",
   locale = NULL
 )
+}
+\arguments{
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+
+\item{columns}{The columns to format. Can either be a series of column names
+provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
+focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
+\code{\link[=everything]{everything()}}.}
+
+\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
+default) results in all rows in \code{columns} being formatted. Alternatively,
+we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
+indices, or a helper function focused on selections. The select helper
+functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
+to filter down to the rows we need (e.g.,
+\verb{[colname_1] > 100 & [colname_2] < 50}).}
+
+\item{symbol}{The symbol/units to use for the quantity. By default, this is
+set to \code{"auto"} and \strong{gt} will choose the appropriate symbol based on the
+\code{to_units} keyword and the output context. However, this can be changed by
+supplying a string (e.g, \code{"ppbV"} when using \code{to_units = "ppb"}).}
+
+\item{decimals}{An option to specify the exact number of decimal places to
+use. The default number of decimal places is \code{2}.}
+
+\item{drop_trailing_zeros}{A logical value that allows for removal of
+trailing zeros (those redundant zeros after the decimal mark).}
+
+\item{drop_trailing_dec_mark}{A logical value that determines whether decimal
+marks should always appear even if there are no decimal digits to display
+after formatting (e.g, \code{23} becomes \code{23.}). The default for this is \code{TRUE},
+which means that trailing decimal marks are not shown.}
+
+\item{scale_values}{Should the values be scaled through multiplication
+according to the keyword set in \code{to_units}? By default this is \code{TRUE} since
+the expectation is that normally values are proportions. Setting to \code{FALSE}
+signifies that the values are already scaled and require only the
+appropriate symbol/units when formatted.}
+
+\item{use_seps}{An option to use digit group separators. The type of digit
+group separator is set by \code{sep_mark} and overridden if a locale ID is
+provided to \code{locale}. This setting is \code{TRUE} by default.}
+
+\item{pattern}{A formatting pattern that allows for decoration of the
+formatted value. The value itself is represented by \code{{x}} and all other
+characters are taken to be string literals.}
+
+\item{sep_mark}{The mark to use as a separator between groups of digits
+(e.g., using \code{sep_mark = ","} with \code{1000} would result in a formatted value
+of \verb{1,000}).}
+
+\item{dec_mark}{The character to use as a decimal mark (e.g., using \code{dec_mark = ","} with \code{0.152} would result in a formatted value of \verb{0,152}).}
+
+\item{force_sign}{Should the positive sign be shown for positive values
+(effectively showing a sign for all values except zero)? If so, use \code{TRUE}
+for this option. The default is \code{FALSE}, where only negative numbers will
+display a minus sign. This option is disregarded when using accounting
+notation with \code{accounting = TRUE}.}
+
+\item{incl_space}{An option for whether to include a space between the value
+and the symbol/units. The default is \code{"auto"} which provides spacing
+depending on the mark but this can be directly controlled with either a
+\code{TRUE} or a \code{FALSE}.}
+
+\item{locale}{An optional locale ID that can be used for formatting the value
+according the locale's rules. Examples include \code{"en_US"} for English
+(United States) and \code{"fr_FR"} for French (France). The use of a valid
+locale ID will override any values provided in \code{sep_mark} and \code{dec_mark}.
+We can use the \code{\link[=info_locales]{info_locales()}} function as a useful reference for all of
+the locales that are supported. Any \code{locale} value provided here will
+override any global locale setting performed in \code{\link[=gt]{gt()}}'s own \code{locale}
+argument.}
 }
 \description{
 With numeric values in a \strong{gt} table we can format the values so that they
