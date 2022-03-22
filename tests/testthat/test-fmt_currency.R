@@ -580,3 +580,144 @@ test_that("the `currency()` helper function works correctly", {
       "$\\text{HK\\$}212.23$", "$\\text{HK\\$}0.00$", "$-\\text{HK\\$}23.24$")
   )
 })
+
+test_that("the `fmt_currency()` fn can render in the Indian numbering system", {
+
+  # These numbers will be used in tests of formatting
+  # values to the Indian numbering system
+  numbers <-
+    c(
+      5000000.01,        #1
+      1000.001,          #2
+      10.00001,          #3
+      12345,             #4
+      1234.5,            #5
+      123.45,            #6
+      1.2345,            #7
+      0.12345,           #8
+      2583063.2345,      #9
+      1535674223.33,    #10
+      6425648257336228, #11
+      -500000000.000,   #12
+      -1000.001,        #13
+      -10.00001,        #14
+      -12345,           #15
+      -1234.5,          #16
+      -123.45,          #17
+      -1.2345,          #18
+      -0.12345,         #19
+      -0.0000123456,    #20
+      0,                #21
+      NA_real_,         #22
+      Inf,              #23
+      -Inf              #24
+    )
+
+  # Create a single-column tibble with these values in `num`
+  numbers_tbl <- dplyr::tibble(num = numbers)
+
+  # Create a `gt_tbl` object with `gt()` and the `numbers_tbl` dataset
+  tab <- gt(numbers_tbl)
+
+  # Format the `num` column to 2 decimal places and use the Indian
+  # numbering system
+  expect_equal(
+    (tab %>%
+       fmt_currency(columns = num, currency = "INR", system = "ind") %>%
+       render_formats_test(context = "html"))[["num"]],
+    c(
+      "&#8377;50,00,000.01", "&#8377;1,000.00", "&#8377;10.00", "&#8377;12,345.00",
+      "&#8377;1,234.50", "&#8377;123.45", "&#8377;1.23", "&#8377;0.12",
+      "&#8377;25,83,063.23", "&#8377;1,53,56,74,223.33", "&#8377;6,42,56,48,25,73,36,228.00",
+      "&minus;&#8377;50,00,00,000.00", "&minus;&#8377;1,000.00", "&minus;&#8377;10.00",
+      "&minus;&#8377;12,345.00", "&minus;&#8377;1,234.50", "&minus;&#8377;123.45",
+      "&minus;&#8377;1.23", "&minus;&#8377;0.12", "&minus;&#8377;0.00",
+      "&#8377;0.00", "NA", "&#8377;Inf", "&minus;&#8377;Inf"
+    )
+  )
+
+  # Format the `num` column using the Indian numbering system; force
+  # each number's sign to always be present
+  expect_equal(
+    (tab %>%
+       fmt_currency(columns = num, currency = "INR", force_sign = TRUE, system = "ind") %>%
+       render_formats_test(context = "html"))[["num"]],
+    c(
+      "+&#8377;50,00,000.01", "+&#8377;1,000.00", "+&#8377;10.00",
+      "+&#8377;12,345.00", "+&#8377;1,234.50", "+&#8377;123.45", "+&#8377;1.23",
+      "+&#8377;0.12", "+&#8377;25,83,063.23", "+&#8377;1,53,56,74,223.33",
+      "+&#8377;6,42,56,48,25,73,36,228.00", "&minus;&#8377;50,00,00,000.00",
+      "&minus;&#8377;1,000.00", "&minus;&#8377;10.00", "&minus;&#8377;12,345.00",
+      "&minus;&#8377;1,234.50", "&minus;&#8377;123.45", "&minus;&#8377;1.23",
+      "&minus;&#8377;0.12", "&minus;&#8377;0.00", "&#8377;0.00", "NA",
+      "+&#8377;Inf", "&minus;&#8377;Inf"
+    )
+  )
+
+  # Format the `num` column and use appropriate suffixes
+  expect_equal(
+    (tab %>%
+       fmt_currency(columns = num, currency = "INR", suffixing = TRUE, system = "ind") %>%
+       render_formats_test(context = "html"))[["num"]],
+    c(
+      "&#8377;50.00 Lac", "&#8377;1,000.00", "&#8377;10.00", "&#8377;12,345.00",
+      "&#8377;1,234.50", "&#8377;123.45", "&#8377;1.23", "&#8377;0.12",
+      "&#8377;25.83 Lac", "&#8377;153.57 Cr", "&#8377;64,25,64,825.73 Cr",
+      "&minus;&#8377;50.00 Cr", "&minus;&#8377;1,000.00", "&minus;&#8377;10.00",
+      "&minus;&#8377;12,345.00", "&minus;&#8377;1,234.50", "&minus;&#8377;123.45",
+      "&minus;&#8377;1.23", "&minus;&#8377;0.12", "&minus;&#8377;0.00",
+      "&#8377;0.00", "NA", "&#8377;Inf Cr", "&minus;&#8377;Inf Cr"
+    )
+  )
+  expect_equal(
+    (tab %>%
+       fmt_currency(columns = num, currency = "INR", suffixing = c("K", "Lacs", "Crores"), system = "ind") %>%
+       render_formats_test(context = "html"))[["num"]],
+    c(
+      "&#8377;50.00 Lacs", "&#8377;1.00 K", "&#8377;10.00", "&#8377;12.35 K",
+      "&#8377;1.23 K", "&#8377;123.45", "&#8377;1.23", "&#8377;0.12",
+      "&#8377;25.83 Lacs", "&#8377;153.57 Crores", "&#8377;64,25,64,825.73 Crores",
+      "&minus;&#8377;50.00 Crores", "&minus;&#8377;1.00 K", "&minus;&#8377;10.00",
+      "&minus;&#8377;12.35 K", "&minus;&#8377;1.23 K", "&minus;&#8377;123.45",
+      "&minus;&#8377;1.23", "&minus;&#8377;0.12", "&minus;&#8377;0.00",
+      "&#8377;0.00", "NA", "&#8377;Inf Crores", "&minus;&#8377;Inf Crores"
+    )
+  )
+  expect_equal(
+    (tab %>%
+       fmt_currency(columns = num, currency = "INR", suffixing = c(NA, "Lacs", NA), system = "ind") %>%
+       render_formats_test(context = "html"))[["num"]],
+    c(
+      "&#8377;50.00 Lacs", "&#8377;1,000.00", "&#8377;10.00", "&#8377;12,345.00",
+      "&#8377;1,234.50", "&#8377;123.45", "&#8377;1.23", "&#8377;0.12",
+      "&#8377;25.83 Lacs", "&#8377;15,356.74 Lacs", "&#8377;64,25,64,82,573.36 Lacs",
+      "&minus;&#8377;5,000.00 Lacs", "&minus;&#8377;1,000.00", "&minus;&#8377;10.00",
+      "&minus;&#8377;12,345.00", "&minus;&#8377;1,234.50", "&minus;&#8377;123.45",
+      "&minus;&#8377;1.23", "&minus;&#8377;0.12", "&minus;&#8377;0.00",
+      "&#8377;0.00", "NA", "&#8377;Inf Lacs", "&minus;&#8377;Inf Lacs"
+    )
+  )
+  expect_equal(
+    (tab %>%
+       fmt_currency(columns = num, currency = "INR", suffixing = TRUE, accounting = TRUE, system = "ind") %>%
+       render_formats_test(context = "html"))[["num"]],
+    c(
+      "&#8377;50.00 Lac", "&#8377;1,000.00", "&#8377;10.00", "&#8377;12,345.00",
+      "&#8377;1,234.50", "&#8377;123.45", "&#8377;1.23", "&#8377;0.12",
+      "&#8377;25.83 Lac", "&#8377;153.57 Cr", "&#8377;64,25,64,825.73 Cr",
+      "(&#8377;50.00) Cr", "(&#8377;1,000.00)", "(&#8377;10.00)", "(&#8377;12,345.00)",
+      "(&#8377;1,234.50)", "(&#8377;123.45)", "(&#8377;1.23)", "(&#8377;0.12)",
+      "(&#8377;0.00)", "&#8377;0.00", "NA", "&#8377;Inf Cr", "(&#8377;Inf) Cr"
+    )
+  )
+  expect_warning(
+    expect_equal(
+      (tab %>%
+         fmt_currency(columns = num, suffixing = TRUE, system = "ind") %>%
+         render_formats_test(context = "html"))[["num"]],
+      (tab %>%
+         fmt_currency(columns = num, suffixing = TRUE, scale_by = 200, system = "ind") %>%
+         render_formats_test(context = "html"))[["num"]]
+    )
+  )
+})

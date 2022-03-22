@@ -15,6 +15,7 @@ fmt_integer(
   pattern = "{x}",
   sep_mark = ",",
   force_sign = FALSE,
+  system = c("intl", "ind"),
   locale = NULL
 )
 }
@@ -79,6 +80,12 @@ of \verb{1,000}).}
 for this option. The default is \code{FALSE}, where only negative numbers will
 display a minus sign. This option is disregarded when using accounting
 notation with \code{accounting = TRUE}.}
+
+\item{system}{The numbering system to use. By default, this is the
+international numbering system (\code{"intl"}) whereby grouping separators
+(i.e., \code{sep_mark}) are separated by three digits. The alternative system,
+the Indian numbering system (\code{"ind"}) uses grouping separators that
+correspond to thousand, lakh, crore, and higher quantities.}
 
 \item{locale}{An optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include \code{"en_US"} for English

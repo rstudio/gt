@@ -14,6 +14,7 @@ fmt_fraction(
   use_seps = TRUE,
   pattern = "{x}",
   sep_mark = ",",
+  system = c("intl", "ind"),
   locale = NULL
 )
 }
@@ -64,6 +65,12 @@ characters are taken to be string literals.}
 \item{sep_mark}{The mark to use as a separator between groups of digits
 (e.g., using \code{sep_mark = ","} with \code{1000} would result in a formatted value
 of \verb{1,000}).}
+
+\item{system}{The numbering system to use. By default, this is the
+international numbering system (\code{"intl"}) whereby grouping separators
+(i.e., \code{sep_mark}) are separated by three digits. The alternative system,
+the Indian numbering system (\code{"ind"}) uses grouping separators that
+correspond to thousand, lakh, crore, and higher quantities.}
 
 \item{locale}{An optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include \code{"en_US"} for English
