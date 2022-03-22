@@ -455,6 +455,34 @@ context_percent_mark <- function(context) {
          "%")
 }
 
+#' Obtain the contextually correct per mille mark
+#'
+#' @param context The output context.
+#' @noRd
+context_permille_mark <- function(context) {
+
+  switch(
+    context,
+    html = "\U02030",
+    latex = "\\perthousand",
+    "%"
+  )
+}
+
+#' Obtain the contextually correct per myriad mark
+#'
+#' @param context The output context.
+#' @noRd
+context_permyriad_mark <- function(context) {
+
+  switch(
+    context,
+    html = "\U02031",
+    latex = "\\%",
+    "%"
+  )
+}
+
 #' Obtain the contextually correct pair of parentheses
 #'
 #' @param context The output context.
@@ -509,6 +537,18 @@ context_symbol_str <- function(context,
   # get the contextually correct percent mark
   if (symbol == "%") {
     return(context_percent_mark(context))
+  }
+
+  # If we supply a per mille keyword as `symbol`,
+  # get the contextually correct percent mark
+  if (symbol == "per-mille") {
+    return(context_permille_mark(context))
+  }
+
+  # If we supply a per myriad keyword as `symbol`,
+  # get the contextually correct percent mark
+  if (symbol == "per-myriad") {
+    return(context_permyriad_mark(context))
   }
 
   # Get the contextually correct currency string
