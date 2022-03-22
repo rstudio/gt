@@ -264,11 +264,11 @@ test_that("the `cols_merge_uncert()` works nicely with different error bounds", 
   expect_equal(
     (tbl_gt %>% render_formats_test("html"))[["value"]],
     c(
-      "34.5<span style=\"margin-left: 0.1em;\"><span class=\"gt_two_val_uncert\">+1.8<br>&minus;2.1</span></span>",
-      "29.2<span style=\"margin-left: 0.1em;\"><span class=\"gt_two_val_uncert\">+2.7<br>&minus;2.4</span></span>",
+      "34.5<span><span class=\"gt_two_val_uncert\">+1.8<br>&minus;2.1</span></span>",
+      "29.2<span><span class=\"gt_two_val_uncert\">+2.7<br>&minus;2.4</span></span>",
       "36.3 &plusmn; 2.6", "31.6", "28.5", "30.9", "NA", "NA", "Inf",
       "30.0 &plusmn; 0.0",
-      "32.0<span style=\"margin-left: 0.1em;\"><span class=\"gt_two_val_uncert\">+0.0<br>&minus;0.1</span></span>",
+      "32.0<span><span class=\"gt_two_val_uncert\">+0.0<br>&minus;0.1</span></span>",
       "34.0", "NaN"
     )
   )
