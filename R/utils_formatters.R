@@ -354,9 +354,12 @@ to_latex_math_mode <- function(
     # Ensure that `$` signs only surround the correct number parts
     # - certain LaTeX marks operate only in text mode and we need to
     #   conditionally surround only the number portion in these cases
-    if (all(grepl("\\\\textperthousand$", x))) {
+    # - right now, the only marks that need to be situated outside of
+    #   the math context are the per mille and per myriad (10,000)
+    #   marks (provided by the `fmt_per()` function)
+    if (all(grepl("\\\\textper(ten)?thousand$", x))) {
       out <- paste0("$", x)
-      out <- gsub("(\\s*?\\\\textperthousand)", "$\\1", out)
+      out <- gsub("(\\s*?\\\\textper(ten)?thousand)", "$\\1", out)
     } else {
       out <- paste_between(x, x_2 = c("$", "$"))
     }
