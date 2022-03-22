@@ -1070,10 +1070,12 @@ fmt_per <- function(
     dec_mark = ".",
     force_sign = FALSE,
     incl_space = "auto",
+    system = c("intl", "ind"),
     locale = NULL
 ) {
 
   to_units <- match.arg(to_units)
+  system <- match.arg(system)
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -1162,6 +1164,7 @@ fmt_per <- function(
     force_sign = force_sign,
     placement = "right",
     incl_space = incl_space,
+    system = system,
     locale = locale
   )
 }
