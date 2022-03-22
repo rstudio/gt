@@ -20,6 +20,7 @@ fmt_per(
   dec_mark = ".",
   force_sign = FALSE,
   incl_space = "auto",
+  system = c("intl", "ind"),
   locale = NULL
 )
 }
@@ -87,6 +88,12 @@ notation with \code{accounting = TRUE}.}
 and the symbol/units. The default is \code{"auto"} which provides spacing
 depending on the mark but this can be directly controlled with either a
 \code{TRUE} or a \code{FALSE}.}
+
+\item{system}{The numbering system to use. By default, this is the
+international numbering system (\code{"intl"}) whereby grouping separators
+(i.e., \code{sep_mark}) are separated by three digits. The alternative system,
+the Indian numbering system (\code{"ind"}) uses grouping separators that
+correspond to thousand, lakh, crore, and higher quantities.}
 
 \item{locale}{An optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include \code{"en_US"} for English
