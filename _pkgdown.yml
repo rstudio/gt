@@ -58,7 +58,7 @@ reference:
     - fmt_scientific
     - fmt_engineering
     - fmt_percent
-    - fmt_per
+    - fmt_ratio
     - fmt_fraction
     - fmt_currency
     - fmt_bytes
