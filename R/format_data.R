@@ -1025,15 +1025,26 @@ fmt_percent <- function(data,
   )
 }
 
-#' Format values as parts per some fixed quantity
+#' Format values as high-ratio, dimensionless quantities
 #'
 #' @description
 #' With numeric values in a **gt** table we can format the values so that they
-#' are rendered as ppm, ppb, etc., quantities.
+#' are rendered as *per mille*, *ppm*, *ppb*, etc., quantities. The following
+#' list of keywords (with associated naming and scaling factors) is available to
+#' use within `fmt_ratio()`:
 #'
+#' - `"per-mille"`: Per mille, (1 part in `1,000`)
+#' - `"per-myriad"`: Per myriad, (1 part in `10,000`)
+#' - `"pcm"`: Per cent mille (1 part in `100,000`)
+#' - `"ppm"`: Parts per million, (1 part in `1,000,000`)
+#' - `"ppb"`: Parts per billion, (1 part in `1,000,000,000`)
+#' - `"ppt"`: Parts per trillion, (1 part in `1,000,000,000,000`)
+#' - `"ppq"`: Parts per quadrillion, (1 part in `1,000,000,000,000,000`)
 #'
 #' @inheritParams fmt_number
-#' @param to_units
+#' @param to_units A keyword that signifies the desired output quantity. This
+#'   can be any from the following set: `"per-mille"`, `"per-myriad"`, `"pcm"`,
+#'   `"ppm"`, `"ppb"`, `"ppt"`, or `"ppq"`.
 #' @param symbol The symbol/units to use for the quantity. By default, this is
 #'   set to `"auto"` and **gt** will choose the appropriate symbol based on the
 #'   `to_units` keyword and the output context. However, this can be changed by
@@ -1045,8 +1056,8 @@ fmt_percent <- function(data,
 #'   appropriate symbol/units when formatted.
 #' @param incl_space An option for whether to include a space between the value
 #'   and the symbol/units. The default is `"auto"` which provides spacing
-#'   depending on the mark but this can be directly controlled with either a
-#'   `TRUE` or a `FALSE`.
+#'   dependent on the mark itself. This can be directly controlled by using
+#'   either `TRUE` or `FALSE`.
 #'
 #' @family Format Data
 #' @section Function ID:
@@ -1054,11 +1065,11 @@ fmt_percent <- function(data,
 #'
 #' @import rlang
 #' @export
-fmt_per <- function(
+fmt_ratio <- function(
     data,
     columns,
     rows = everything(),
-    to_units = c("per-mille", "per-myriad", "ppm", "ppb", "ppt", "ppq"),
+    to_units = c("per-mille", "per-myriad", "pcm", "ppm", "ppb", "ppt", "ppq"),
     symbol = "auto",
     decimals = 2,
     drop_trailing_zeros = FALSE,
@@ -1105,12 +1116,13 @@ fmt_per <- function(
     scale_by <-
       switch(
         to_units,
+        `per-mille` = 1E3,
+        `per-myriad` = 1E4,
+        pcm = 1E5,
         ppm = 1E6,
         ppb = 1E9,
         ppt = 1E12,
         ppq = 1E15,
-        `per-mille` = 1000,
-        `per-myriad` = 10000
       )
 
   } else {
@@ -1122,12 +1134,13 @@ fmt_per <- function(
     symbol <-
       switch(
         to_units,
+        `per-mille` = "per-mille",
+        `per-myriad` = "per-myriad",
+        pcm = "pcm",
         ppm = "ppm",
         ppb = "ppb",
         ppt = "ppt",
-        ppq = "ppq",
-        `per-mille` = "per-mille",
-        `per-myriad` = "per-myriad"
+        ppq = "ppq"
       )
   }
 
@@ -1136,12 +1149,13 @@ fmt_per <- function(
     incl_space <-
       switch(
         to_units,
+        `per-mille` = ,
+        `per-myriad` = FALSE,
+        pcm = ,
         ppm = ,
         ppb = ,
         ppt = ,
-        ppq = TRUE,
-        `per-mille` = ,
-        `per-myriad` = FALSE
+        ppq = TRUE
       )
   }
 
