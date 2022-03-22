@@ -84,7 +84,7 @@ Other Format Data:
 \code{\link{fmt_number}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
-\code{\link{fmt_per}()},
+\code{\link{fmt_ratio}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt}()},
