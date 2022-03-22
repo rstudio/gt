@@ -1008,7 +1008,7 @@ fmt_percent <- function(data,
 #'
 #' @import rlang
 #' @export
-fmt_per_x <- function(
+fmt_per <- function(
     data,
     columns,
     rows = everything(),
