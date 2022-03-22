@@ -1002,6 +1002,23 @@ fmt_percent <- function(data,
 #' With numeric values in a **gt** table we can format the values so that they
 #' are rendered as ppm, ppb, etc., quantities.
 #'
+#'
+#' @inheritParams fmt_number
+#' @param to_units
+#' @param symbol The symbol/units to use for the quantity. By default, this is
+#'   set to `"auto"` and **gt** will choose the appropriate symbol based on the
+#'   `to_units` keyword and the output context. However, this can be changed by
+#'   supplying a string (e.g, `"ppbV"` when using `to_units = "ppb"`).
+#' @param scale_values Should the values be scaled through multiplication
+#'   according to the keyword set in `to_units`? By default this is `TRUE` since
+#'   the expectation is that normally values are proportions. Setting to `FALSE`
+#'   signifies that the values are already scaled and require only the
+#'   appropriate symbol/units when formatted.
+#' @param incl_space An option for whether to include a space between the value
+#'   and the symbol/units. The default is `"auto"` which provides spacing
+#'   depending on the mark but this can be directly controlled with either a
+#'   `TRUE` or a `FALSE`.
+#'
 #' @family Format Data
 #' @section Function ID:
 #' 3-6
@@ -1012,7 +1029,7 @@ fmt_per <- function(
     data,
     columns,
     rows = everything(),
-    to_units = c("ppm", "ppb", "ppt", "ppq", "per-mille", "per-myriad"),
+    to_units = c("per-mille", "per-myriad", "ppm", "ppb", "ppt", "ppq"),
     symbol = "auto",
     decimals = 2,
     drop_trailing_zeros = FALSE,
