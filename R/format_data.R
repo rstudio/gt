@@ -1024,7 +1024,6 @@ fmt_per <- function(
     dec_mark = ".",
     force_sign = FALSE,
     incl_space = "auto",
-    placement = "right",
     locale = NULL
 ) {
 
@@ -1115,7 +1114,7 @@ fmt_per <- function(
     sep_mark = sep_mark,
     dec_mark = dec_mark,
     force_sign = force_sign,
-    placement = placement,
+    placement = "right",
     incl_space = incl_space,
     locale = locale
   )
