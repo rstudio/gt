@@ -20,6 +20,7 @@ fmt_percent(
   force_sign = FALSE,
   incl_space = FALSE,
   placement = "right",
+  system = c("intl", "ind"),
   locale = NULL
 )
 }
@@ -86,6 +87,12 @@ and the percent sign. The default is to not introduce a space character.}
 
 \item{placement}{The placement of the percent sign. This can be either be
 \code{right} (the default) or \code{left}.}
+
+\item{system}{The numbering system to use. By default, this is the
+international numbering system (\code{"intl"}) whereby grouping separators
+(i.e., \code{sep_mark}) are separated by three digits. The alternative system,
+the Indian numbering system (\code{"ind"}) uses grouping separators that
+correspond to thousand, lakh, crore, and higher quantities.}
 
 \item{locale}{An optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include \code{"en_US"} for English

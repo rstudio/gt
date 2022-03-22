@@ -22,6 +22,7 @@ fmt_currency(
   force_sign = FALSE,
   placement = "left",
   incl_space = FALSE,
+  system = c("intl", "ind"),
   locale = NULL
 )
 }
@@ -102,7 +103,11 @@ inherit a previous suffix (e.g., with \code{c("K", "M", NA, "T")}, all numbers
 in the range of millions and billions will be in terms of millions).
 
 Any use of \code{suffixing} (where it is not set expressly as \code{FALSE}) means
-that any value provided to \code{scale_by} will be ignored.}
+that any value provided to \code{scale_by} will be ignored.
+
+If using \code{system = "ind"} then the default suffix set provided by
+\code{suffixing = TRUE} will be \code{c(NA, "L", "Cr")}. This doesn't apply suffixes
+to the thousands range, but does express values in lakhs and crores.}
 
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other
@@ -125,6 +130,12 @@ notation with \code{accounting = TRUE}.}
 
 \item{incl_space}{An option for whether to include a space between the value
 and the currency symbol. The default is to not introduce a space character.}
+
+\item{system}{The numbering system to use. By default, this is the
+international numbering system (\code{"intl"}) whereby grouping separators
+(i.e., \code{sep_mark}) are separated by three digits. The alternative system,
+the Indian numbering system (\code{"ind"}) uses grouping separators that
+correspond to thousand, lakh, crore, and higher quantities.}
 
 \item{locale}{An optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include \code{"en_US"} for English
