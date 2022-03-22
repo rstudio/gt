@@ -256,7 +256,17 @@ format_num_to_str <- function(x,
                               drop_trailing_zeros,
                               drop_trailing_dec_mark,
                               format = "f",
-                              replace_minus_mark = TRUE) {
+                              replace_minus_mark = TRUE,
+                              system = c("intl", "ind")) {
+
+  system <- match.arg(system)
+
+  # If this hardcoding is ever to change, then we need to
+  # modify the regexes below
+  if (system == "ind") {
+    sep_mark <- ","
+    dec_mark <- "."
+  }
 
   if (format == "fg") {
     x <- signif(x, digits = n_sigfig)
@@ -302,6 +312,38 @@ format_num_to_str <- function(x,
     x_str[x_str_no_dec] <- paste_right(x_str[x_str_no_dec], dec_mark)
   }
 
+  # Perform modifications to `x_str` values if formatting values to
+  # conform to the Indian numbering system
+  if (system == "ind") {
+
+    is_inf <- grepl("Inf", x_str)
+    x_str_numeric <- x_str[!is_inf]
+    has_decimal <- grepl("\\.", x_str_numeric)
+    is_negative <- grepl("^-", x_str_numeric)
+
+    integer_parts <- sub("\\..*", "", x_str_numeric)
+
+    integer_parts <-
+      integer_parts %>%
+      gsub("(,|-)", "", .) %>%
+      vapply(
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = insert_seps_ind
+      )
+
+    decimal_str <- rep("", length(x_str_numeric))
+    decimal_str[has_decimal] <-
+      gsub("^.*?(\\..*)", "\\1", x_str_numeric[has_decimal])
+
+    x_str[!is_inf] <-
+      paste0(
+        ifelse(is_negative, "-", ""),
+        integer_parts,
+        decimal_str
+      )
+  }
+
   # Replace the minus mark (a hyphen) with a context-specific minus sign
   if (replace_minus_mark) {
     x_str <- format_minus(x_str = x_str, x = x, context = context)
@@ -320,7 +362,10 @@ format_num_to_str_c <- function(x,
                                 sep_mark,
                                 dec_mark,
                                 drop_trailing_zeros = FALSE,
-                                drop_trailing_dec_mark) {
+                                drop_trailing_dec_mark,
+                                system = c("intl", "ind")) {
+
+  system <- match.arg(system)
 
   format_num_to_str(
     x = x,
@@ -330,7 +375,8 @@ format_num_to_str_c <- function(x,
     dec_mark = dec_mark,
     drop_trailing_zeros = drop_trailing_zeros,
     drop_trailing_dec_mark = drop_trailing_dec_mark,
-    format = "f"
+    format = "f",
+    system = system
   )
 }
 
@@ -694,7 +740,10 @@ prettify_scientific_notation <- function(x,
     tidy_gsub("-", minus_mark, fixed = TRUE)
 }
 
-#' Create the data frame with suffixes and scaling values
+#' Create the tibble with suffixes and scaling values
+#'
+#' The returned tibble should always have the same number of rows as the length
+#' of input vector `x`.
 #'
 #' @param x Numeric values in `numeric` form.
 #' @param decimals The exact number of decimal places to be used in the
@@ -705,11 +754,14 @@ prettify_scientific_notation <- function(x,
 create_suffix_df <- function(x,
                              decimals,
                              suffix_labels,
-                             scale_by) {
+                             scale_by,
+                             system) {
+
+  suffix_fn <- if (system == "intl") num_suffix else num_suffix_ind
 
   # Create a tibble with scaled values for `x` and the
   # suffix labels to use for character formatting
-  num_suffix(
+  suffix_fn(
     round(x, decimals),
     suffixes = suffix_labels,
     scale_by = scale_by
