@@ -1285,7 +1285,7 @@ fmt_per <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-6
+#' 3-7
 #'
 #' @import rlang
 #' @export
@@ -1719,7 +1719,7 @@ round_gt <- function(x, digits = 0) {
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-7
+#' 3-8
 #'
 #' @import rlang
 #' @export
@@ -1868,7 +1868,7 @@ fmt_currency <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-8
+#' 3-9
 #'
 #' @import rlang
 #' @export
@@ -2060,7 +2060,7 @@ fmt_bytes <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-8
+#' 3-10
 #'
 #' @import rlang
 #' @export
@@ -2212,7 +2212,7 @@ fmt_date <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-9
+#' 3-11
 #'
 #' @import rlang
 #' @export
@@ -2430,7 +2430,7 @@ fmt_time <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-10
+#' 3-12
 #'
 #' @import rlang
 #' @export
@@ -2626,7 +2626,7 @@ fmt_datetime <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-11
+#' 3-13
 #'
 #' @import rlang
 #' @export
@@ -2713,7 +2713,7 @@ fmt_markdown <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-12
+#' 3-14
 #'
 #' @import rlang
 #' @export
@@ -2847,7 +2847,7 @@ fmt_passthrough <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-13
+#' 3-15
 #'
 #' @import rlang
 #' @export
@@ -2963,7 +2963,7 @@ fmt_missing <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-14
+#' 3-16
 #'
 #' @import rlang
 #' @export

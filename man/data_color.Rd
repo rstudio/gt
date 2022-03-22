@@ -96,7 +96,7 @@ hexadecimal colors.
 
 \section{Function ID}{
 
-3-15
+3-18
 }
 
 \examples{

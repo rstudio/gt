@@ -119,7 +119,7 @@ argument. See the Arguments section for more information on this.
 
 \section{Function ID}{
 
-3-6
+3-7
 }
 
 \examples{

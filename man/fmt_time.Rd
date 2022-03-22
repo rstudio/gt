@@ -72,7 +72,7 @@ argument. See the \emph{Arguments} section for more information on this.
 
 \section{Function ID}{
 
-3-9
+3-11
 }
 
 \examples{
