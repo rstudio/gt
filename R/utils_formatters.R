@@ -340,13 +340,28 @@ format_num_to_str_c <- function(x,
 #' @param context The output context.
 #'
 #' @noRd
-to_latex_math_mode <- function(x,
-                               context) {
+to_latex_math_mode <- function(
+    x,
+    context
+) {
 
   if (context != "latex") {
+
     return(x)
+
   } else {
-    return(x %>% paste_between(x_2 = c("$", "$")))
+
+    # Ensure that `$` signs only surround the correct number parts
+    # - certain LaTeX marks operate only in text mode and we need to
+    #   conditionally surround only the number portion in these cases
+    if (all(grepl("\\\\textperthousand$", x))) {
+      out <- paste0("$", x)
+      out <- gsub("(\\s*?\\\\textperthousand)", "$\\1", out)
+    } else {
+      out <- paste_between(x, x_2 = c("$", "$"))
+    }
+
+    return(out)
   }
 }
 
@@ -480,6 +495,7 @@ context_permyriad_mark <- function(context) {
   switch(
     context,
     html = "\U02031",
+    latex = "\\textpertenthousand",
     "per myriad"
   )
 }
