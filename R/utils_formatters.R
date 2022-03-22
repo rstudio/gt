@@ -449,10 +449,11 @@ context_minus_mark <- function(context) {
 #' @noRd
 context_percent_mark <- function(context) {
 
-  switch(context,
-         html = "%",
-         latex = "\\%",
-         "%")
+  switch(
+    context,
+    latex = "\\%",
+    "%"
+  )
 }
 
 #' Obtain the contextually correct per mille mark
@@ -464,8 +465,9 @@ context_permille_mark <- function(context) {
   switch(
     context,
     html = "\U02030",
-    latex = "\\perthousand",
-    "%"
+    latex = "\\textperthousand",
+    rtf = "\\'2030",
+    "per mille"
   )
 }
 
@@ -478,8 +480,7 @@ context_permyriad_mark <- function(context) {
   switch(
     context,
     html = "\U02031",
-    latex = "\\%",
-    "%"
+    "per myriad"
   )
 }
 
