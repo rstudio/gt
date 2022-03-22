@@ -261,6 +261,13 @@ format_num_to_str <- function(x,
 
   system <- match.arg(system)
 
+  # If this hardcoding is ever to change, then we need to
+  # modify the regexes below
+  if (system == "ind") {
+    sep_mark <- ","
+    dec_mark <- "."
+  }
+
   if (format == "fg") {
     x <- signif(x, digits = n_sigfig)
     mode <- NULL
@@ -289,8 +296,8 @@ format_num_to_str <- function(x,
       digits = digits,
       flag = flag,
       drop0trailing = drop0trailing,
-      big.mark = if (system == "intl") sep_mark else ",",
-      decimal.mark = if (system == "intl") dec_mark else "."
+      big.mark = sep_mark,
+      decimal.mark = dec_mark
     )
 
   # Remove `-` for any signed zeros returned by `formatC()`
@@ -314,13 +321,7 @@ format_num_to_str <- function(x,
     has_decimal <- grepl("\\.", x_str_numeric)
     is_negative <- grepl("^-", x_str_numeric)
 
-    integer_parts <- x_str_numeric
-
-    if (dec_mark != "") {
-      integer_parts <-
-        strsplit(x_str_numeric, split = dec_mark, fixed = TRUE) %>%
-        vapply(FUN.VALUE = character(1), USE.NAMES = FALSE, `[[`, 1)
-    }
+    integer_parts <- sub("\\..*", "", x_str_numeric)
 
     integer_parts <-
       integer_parts %>%
@@ -333,10 +334,14 @@ format_num_to_str <- function(x,
 
     decimal_str <- rep("", length(x_str_numeric))
     decimal_str[has_decimal] <-
-      gsub("^.*?(\\..*?)", "\\1", x_str_numeric[has_decimal])
+      gsub("^.*?(\\..*)", "\\1", x_str_numeric[has_decimal])
 
-    x_str[!is_inf] <- paste0(integer_parts, decimal_str)
-    x_str[!is_inf][is_negative] <- paste0("-", x_str[!is_inf][is_negative])
+    x_str[!is_inf] <-
+      paste0(
+        ifelse(is_negative, "-", ""),
+        integer_parts,
+        decimal_str
+      )
   }
 
   # Replace the minus mark (a hyphen) with a context-specific minus sign
