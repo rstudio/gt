@@ -324,3 +324,127 @@ test_that("rownames and groupnames aren't included in columns = TRUE", {
       fmt_integer(columns = everything(), rows = chardata == "Mazda RX4")
   )
 })
+
+test_that("the `fmt_integer()` fn can render in the Indian numbering system", {
+
+  # These numbers will be used in tests of formatting
+  # values to the Indian numbering system
+  numbers <-
+    c(
+      5000000.01,        #1
+      1000.001,          #2
+      10.00001,          #3
+      12345,             #4
+      1234.5,            #5
+      123.45,            #6
+      1.2345,            #7
+      0.12345,           #8
+      2583063.2345,      #9
+      1535674223.33,    #10
+      6425648257336228, #11
+      -500000000.000,   #12
+      -1000.001,        #13
+      -10.00001,        #14
+      -12345,           #15
+      -1234.5,          #16
+      -123.45,          #17
+      -1.2345,          #18
+      -0.12345,         #19
+      -0.0000123456,    #20
+      0,                #21
+      NA_real_,         #22
+      Inf,              #23
+      -Inf              #24
+    )
+
+  # Create a single-column tibble with these values in `num`
+  numbers_tbl <- dplyr::tibble(num = numbers)
+
+  # Create a `gt_tbl` object with `gt()` and the `numbers_tbl` dataset
+  tab <- gt(numbers_tbl)
+
+  # Format the `num` column using the Indian numbering system
+  expect_equal(
+    (tab %>%
+       fmt_integer(columns = num, system = "ind") %>%
+       render_formats_test(context = "html"))[["num"]],
+    c(
+      "50,00,000", "1,000", "10", "12,345", "1,234", "123", "1",
+      "0", "25,83,063", "1,53,56,74,223", "6,42,56,48,25,73,36,228",
+      "&minus;50,00,00,000", "&minus;1,000", "&minus;10", "&minus;12,345",
+      "&minus;1,234", "&minus;123", "&minus;1", "0", "0", "0", "NA",
+      " Inf", "&minus;Inf"
+    )
+  )
+
+  # Format the `num` column using the Indian numbering system; force
+  # each number's sign to always be present
+  expect_equal(
+    (tab %>%
+       fmt_integer(columns = num, force_sign = TRUE, system = "ind") %>%
+       render_formats_test(context = "html"))[["num"]],
+    c(
+      "+50,00,000", "+1,000", "+10", "+12,345", "+1,234", "+123",
+      "+1", "+0", "+25,83,063", "+1,53,56,74,223", "+6,42,56,48,25,73,36,228",
+      "&minus;50,00,00,000", "&minus;1,000", "&minus;10", "&minus;12,345",
+      "&minus;1,234", "&minus;123", "&minus;1", "0", "0", "0", "NA",
+      "+ Inf", "&minus;Inf"
+    )
+  )
+
+  # Format the `num` column and use appropriate suffixes
+  expect_equal(
+    (tab %>%
+       fmt_integer(columns = num, suffixing = TRUE, system = "ind") %>%
+       render_formats_test(context = "html"))[["num"]],
+    c(
+      "50 Lac", "1,000", "10", "12,345", "1,234", "123", "1", "0",
+      "26 Lac", "154 Cr", "64,25,64,826 Cr", "&minus;50 Cr", "&minus;1,000",
+      "&minus;10", "&minus;12,345", "&minus;1,234", "&minus;123", "&minus;1",
+      "0", "0", "0", "NA", " Inf Cr", "&minus;Inf Cr"
+    )
+  )
+  expect_equal(
+    (tab %>%
+       fmt_integer(columns = num, suffixing = c("K", "Lacs", "Crores"), system = "ind") %>%
+       render_formats_test(context = "html"))[["num"]],
+    c(
+      "50 Lacs", "1 K", "10", "12 K", "1 K", "123", "1", "0", "26 Lacs",
+      "154 Crores", "64,25,64,826 Crores", "&minus;50 Crores", "&minus;1 K",
+      "&minus;10", "&minus;12 K", "&minus;1 K", "&minus;123", "&minus;1",
+      "0", "0", "0", "NA", " Inf Crores", "&minus;Inf Crores"
+    )
+  )
+  expect_equal(
+    (tab %>%
+       fmt_integer(columns = num, suffixing = c(NA, "Lacs", NA), system = "ind") %>%
+       render_formats_test(context = "html"))[["num"]],
+    c(
+      "50 Lacs", "1,000", "10", "12,345", "1,234", "123", "1", "0",
+      "26 Lacs", "15,357 Lacs", "64,25,64,82,573 Lacs", "&minus;5,000 Lacs",
+      "&minus;1,000", "&minus;10", "&minus;12,345", "&minus;1,234",
+      "&minus;123", "&minus;1", "0", "0", "0", "NA", " Inf Lacs", "&minus;Inf Lacs"
+    )
+  )
+  expect_equal(
+    (tab %>%
+       fmt_integer(columns = num, suffixing = TRUE, accounting = TRUE, system = "ind") %>%
+       render_formats_test(context = "html"))[["num"]],
+    c(
+      "50 Lac", "1,000", "10", "12,345", "1,234", "123", "1", "0",
+      "26 Lac", "154 Cr", "64,25,64,826 Cr", "(50 Cr)", "(1,000)",
+      "(10)", "(12,345)", "(1,234)", "(123)", "(1)", "(0)", "(0)",
+      "0", "NA", " Inf Cr", "(Inf Cr)"
+    )
+  )
+  expect_warning(
+    expect_equal(
+      (tab %>%
+         fmt_integer(columns = num, suffixing = TRUE, system = "ind") %>%
+         render_formats_test(context = "html"))[["num"]],
+      (tab %>%
+         fmt_integer(columns = num, suffixing = TRUE, scale_by = 200, system = "ind") %>%
+         render_formats_test(context = "html"))[["num"]]
+    )
+  )
+})

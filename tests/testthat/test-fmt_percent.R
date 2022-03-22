@@ -325,3 +325,74 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
     )
   )
 })
+
+test_that("the `fmt_percent()` fn can render in the Indian numbering system", {
+
+  # These numbers will be used in tests of formatting
+  # values to the Indian numbering system
+  numbers <-
+    c(
+      5000000.01,        #1
+      1000.001,          #2
+      10.00001,          #3
+      12345,             #4
+      1234.5,            #5
+      123.45,            #6
+      1.2345,            #7
+      0.12345,           #8
+      2583063.2345,      #9
+      1535674223.33,    #10
+      6425648257336228, #11
+      -500000000.000,   #12
+      -1000.001,        #13
+      -10.00001,        #14
+      -12345,           #15
+      -1234.5,          #16
+      -123.45,          #17
+      -1.2345,          #18
+      -0.12345,         #19
+      -0.0000123456,    #20
+      0,                #21
+      NA_real_,         #22
+      Inf,              #23
+      -Inf              #24
+    )
+
+  # Create a single-column tibble with these values in `num`
+  numbers_tbl <- dplyr::tibble(num = numbers)
+
+  # Create a `gt_tbl` object with `gt()` and the `numbers_tbl` dataset
+  tab <- gt(numbers_tbl)
+
+  # Format the `num` column using the Indian numbering system
+  expect_equal(
+    (tab %>%
+       fmt_percent(columns = num, system = "ind") %>%
+       render_formats_test(context = "html"))[["num"]],
+    c(
+      "50,00,00,001.00%", "1,00,000.10%", "1,000.00%", "12,34,500.00%",
+      "1,23,450.00%", "12,345.00%", "123.45%", "12.35%", "25,83,06,323.45%",
+      "1,53,56,74,22,333.00%", "6,42,56,48,25,73,36,22,784.00%", "&minus;50,00,00,00,000.00%",
+      "&minus;1,00,000.10%", "&minus;1,000.00%", "&minus;12,34,500.00%",
+      "&minus;1,23,450.00%", "&minus;12,345.00%", "&minus;123.45%",
+      "&minus;12.35%", "&minus;0.00%", "0.00%", "NA", "Inf%", "&minus;Inf%"
+    )
+  )
+
+  # Format the `num` column using the Indian numbering system; force
+  # each number's sign to always be present
+  expect_equal(
+    (tab %>%
+       fmt_percent(columns = num, force_sign = TRUE, system = "ind") %>%
+       render_formats_test(context = "html"))[["num"]],
+    c(
+      "+50,00,00,001.00%", "+1,00,000.10%", "+1,000.00%", "+12,34,500.00%",
+      "+1,23,450.00%", "+12,345.00%", "+123.45%", "+12.35%", "+25,83,06,323.45%",
+      "+1,53,56,74,22,333.00%", "+6,42,56,48,25,73,36,22,784.00%",
+      "&minus;50,00,00,00,000.00%", "&minus;1,00,000.10%", "&minus;1,000.00%",
+      "&minus;12,34,500.00%", "&minus;1,23,450.00%", "&minus;12,345.00%",
+      "&minus;123.45%", "&minus;12.35%", "&minus;0.00%", "0.00%", "NA",
+      "+Inf%", "&minus;Inf%"
+    )
+  )
+})

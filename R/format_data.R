@@ -79,6 +79,11 @@
 #'
 #'   Any use of `suffixing` (where it is not set expressly as `FALSE`) means
 #'   that any value provided to `scale_by` will be ignored.
+#'
+#'   If using `system = "ind"` then the default suffix set provided by
+#'   `suffixing = TRUE` will be `c(NA, "L", "Cr")`. This doesn't apply suffixes
+#'   to the thousands range, but does express values in lakhs and crores.
+#'
 #' @param pattern A formatting pattern that allows for decoration of the
 #'   formatted value. The value itself is represented by `{x}` and all other
 #'   characters are taken to be string literals.
@@ -92,6 +97,11 @@
 #'   for this option. The default is `FALSE`, where only negative numbers will
 #'   display a minus sign. This option is disregarded when using accounting
 #'   notation with `accounting = TRUE`.
+#' @param system The numbering system to use. By default, this is the
+#'   international numbering system (`"intl"`) whereby grouping separators
+#'   (i.e., `sep_mark`) are separated by three digits. The alternative system,
+#'   the Indian numbering system (`"ind"`) uses grouping separators that
+#'   correspond to thousand, lakh, crore, and higher quantities.
 #' @param locale An optional locale ID that can be used for formatting the value
 #'   according the locale's rules. Examples include `"en_US"` for English
 #'   (United States) and `"fr_FR"` for French (France). The use of a valid
@@ -165,10 +175,13 @@ fmt_number <- function(data,
                        sep_mark = ",",
                        dec_mark = ".",
                        force_sign = FALSE,
+                       system = c("intl", "ind"),
                        locale = NULL) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  system <- match.arg(system)
 
   # Resolve the `locale` value here with the global locale value
   locale <- resolve_locale(data = data, locale = locale)
@@ -179,7 +192,7 @@ fmt_number <- function(data,
 
   # Normalize the `suffixing` input to either return a character vector
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
-  suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by)
+  suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by, system)
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
@@ -225,7 +238,8 @@ fmt_number <- function(data,
             x,
             decimals = decimals,
             suffix_labels = suffix_labels,
-            scale_by = scale_by
+            scale_by = scale_by,
+            system = system
           )
 
         # Scale the `x` values by the `scale_by` values in `suffix_df`
@@ -242,7 +256,8 @@ fmt_number <- function(data,
             dec_mark = dec_mark,
             drop_trailing_zeros = drop_trailing_zeros,
             drop_trailing_dec_mark = drop_trailing_dec_mark,
-            format = formatC_format
+            format = formatC_format,
+            system = system
           )
 
         # Paste the vector of suffixes to the right of the values
@@ -346,6 +361,7 @@ fmt_integer <- function(data,
                         pattern = "{x}",
                         sep_mark = ",",
                         force_sign = FALSE,
+                        system = c("intl", "ind"),
                         locale = NULL) {
 
   fmt_number(
@@ -364,6 +380,7 @@ fmt_integer <- function(data,
     sep_mark = sep_mark,
     dec_mark = "not used",
     force_sign = force_sign,
+    system = system,
     locale = locale
   )
 }
@@ -457,7 +474,7 @@ fmt_scientific <- function(data,
 
   # Normalize the `suffixing` input to either return a character vector
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
-  suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by)
+  suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by, system = "intl")
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
@@ -499,7 +516,8 @@ fmt_scientific <- function(data,
             x,
             decimals = decimals,
             suffix_labels = suffix_labels,
-            scale_by = scale_by
+            scale_by = scale_by,
+            system = "intl"
           )
 
         # Scale the `x` values by the `scale_by` values in `suffix_df`
@@ -634,7 +652,7 @@ fmt_engineering <- function(data,
 
   # Normalize the `suffixing` input to either return a character vector
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
-  suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by)
+  suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by, system = "intl")
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
@@ -667,7 +685,8 @@ fmt_engineering <- function(data,
             x,
             decimals = decimals,
             suffix_labels = suffix_labels,
-            scale_by = scale_by
+            scale_by = scale_by,
+            system = "intl"
           )
 
         # Scale the `x_vals` by the `scale_by` values
@@ -757,7 +776,10 @@ fmt_symbol <- function(data,
                        force_sign = FALSE,
                        placement = "left",
                        incl_space = FALSE,
+                       system = c("intl", "ind"),
                        locale = NULL) {
+
+  system <- match.arg(system)
 
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
@@ -765,7 +787,7 @@ fmt_symbol <- function(data,
 
   # Normalize the `suffixing` input to either return a character vector
   # of suffix labels, or NULL (the case where `suffixing` is FALSE)
-  suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by)
+  suffix_labels <- normalize_suffixing_inputs(suffixing, scale_by, system = system)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -786,7 +808,8 @@ fmt_symbol <- function(data,
             x,
             decimals = decimals,
             suffix_labels = suffix_labels,
-            scale_by = scale_by
+            scale_by = scale_by,
+            system = system
           )
 
         # Scale the `x_vals` by the `scale_by` value
@@ -806,7 +829,8 @@ fmt_symbol <- function(data,
               sep_mark = sep_mark,
               dec_mark = dec_mark,
               drop_trailing_zeros = drop_trailing_zeros,
-              drop_trailing_dec_mark = drop_trailing_dec_mark
+              drop_trailing_dec_mark = drop_trailing_dec_mark,
+              system = system
             )
         }
 
@@ -823,7 +847,8 @@ fmt_symbol <- function(data,
               sep_mark = sep_mark,
               dec_mark = dec_mark,
               drop_trailing_zeros = drop_trailing_zeros,
-              drop_trailing_dec_mark = drop_trailing_dec_mark
+              drop_trailing_dec_mark = drop_trailing_dec_mark,
+              system = system
             )
         }
 
@@ -944,7 +969,10 @@ fmt_percent <- function(data,
                         force_sign = FALSE,
                         incl_space = FALSE,
                         placement = "right",
+                        system = c("intl", "ind"),
                         locale = NULL) {
+
+  system <- match.arg(system)
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -992,6 +1020,7 @@ fmt_percent <- function(data,
     force_sign = force_sign,
     placement = placement,
     incl_space = incl_space,
+    system = system,
     locale = locale
   )
 }
@@ -1126,8 +1155,11 @@ fmt_fraction <- function(
     use_seps = TRUE,
     pattern = "{x}",
     sep_mark = ",",
+    system = c("intl", "ind"),
     locale = NULL
 ) {
+
+  system <- match.arg(system)
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -1278,7 +1310,8 @@ fmt_fraction <- function(
             sep_mark = sep_mark, dec_mark = "",
             drop_trailing_zeros = TRUE,
             drop_trailing_dec_mark = TRUE,
-            format = "f"
+            format = "f",
+            system = system
           )
 
         # Initialize a vector that will contain the finalized strings
@@ -1563,7 +1596,10 @@ fmt_currency <- function(data,
                          force_sign = FALSE,
                          placement = "left",
                          incl_space = FALSE,
+                         system = c("intl", "ind"),
                          locale = NULL) {
+
+  system <- match.arg(system)
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -1616,6 +1652,7 @@ fmt_currency <- function(data,
     force_sign = force_sign,
     placement = placement,
     incl_space = incl_space,
+    system = system,
     locale = locale
   )
 }
@@ -2830,4 +2867,48 @@ fmt <- function(data,
     )
 
   dt_formats_add(data = data, formats = formatter_list)
+}
+
+#' Insert separator marks to an integer to conform to Indian numbering system
+#'
+#' @param integer The integer portion of a numeric value. Should be supplied as
+#'   a length-1 character vector. The element should only contain numeral
+#'   characters.
+#'
+#' @noRd
+insert_seps_ind <- function(integer) {
+
+  # The `fmt_fraction()` formatter can sometimes generate
+  # empty strings; if seen here, just return them unchanged
+  if (integer == "") {
+    return(integer)
+  }
+
+  # Ensure that integer-based strings only contain numbers
+  if (!grepl("^[0-9]+?$", integer)) {
+    stop(
+      "The `integer` string must only contain numbers."
+    )
+  }
+
+  # Return integer unchanged if there are no commas to insert
+  if (nchar(integer) < 4) return(integer)
+
+  # Generate an 'insertion sequence' (where to place the separators)
+  insertion_seq <- cumsum(c(3, rep(2, floor((nchar(integer) - 4) / 2)))) + 1
+  insertion_seq <- (nchar(integer) - insertion_seq) + 2
+
+  split_strings <- split_str_by_index(target = integer, index = insertion_seq)
+
+  paste(split_strings, collapse = ",")
+}
+
+split_str_by_index <- function(target, index) {
+
+  index <- sort(index)
+  substr(
+    rep(target, length(index) + 1),
+    start = c(1, index),
+    stop = c(index - 1, nchar(target))
+  )
 }
