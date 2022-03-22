@@ -996,6 +996,131 @@ fmt_percent <- function(data,
   )
 }
 
+#' Format values as parts per some fixed quantity
+#'
+#' @description
+#' With numeric values in a **gt** table we can format the values so that they
+#' are rendered as ppm, ppb, etc., quantities.
+#'
+#' @family Format Data
+#' @section Function ID:
+#' 3-6
+#'
+#' @import rlang
+#' @export
+fmt_per_x <- function(
+    data,
+    columns,
+    rows = everything(),
+    to_units = c("ppm", "ppb", "ppt", "ppq", "per-mille", "per-myriad"),
+    symbol = "auto",
+    decimals = 2,
+    drop_trailing_zeros = FALSE,
+    drop_trailing_dec_mark = TRUE,
+    scale_values = TRUE,
+    use_seps = TRUE,
+    pattern = "{x}",
+    sep_mark = ",",
+    dec_mark = ".",
+    force_sign = FALSE,
+    incl_space = "auto",
+    placement = "right",
+    locale = NULL
+) {
+
+  to_units <- match.arg(to_units)
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  # Resolve the `locale` value here with the global locale value
+  locale <- resolve_locale(data = data, locale = locale)
+
+  # Stop function if any columns have data that is incompatible
+  # with this formatter
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = c("numeric", "integer")
+    )
+  ) {
+    stop(
+      "The `fmt_per_x()` function can only be used on `columns` ",
+      "with numeric data.",
+      call. = FALSE
+    )
+  }
+
+  # Scale values according to `to_units` value
+  if (scale_values) {
+
+    scale_by <-
+      switch(
+        to_units,
+        ppm = 1E6,
+        ppb = 1E9,
+        ppt = 1E12,
+        ppq = 1E15,
+        `per-mille` = 1000,
+        `per-myriad` = 10000
+      )
+
+  } else {
+    scale_by <- 1.0
+  }
+
+  if (symbol == "auto") {
+
+    symbol <-
+      switch(
+        to_units,
+        ppm = "ppm",
+        ppb = "ppb",
+        ppt = "ppt",
+        ppq = "ppq",
+        `per-mille` = "per-mille",
+        `per-myriad` = "per-myriad"
+      )
+  }
+
+  if (incl_space == "auto") {
+
+    incl_space <-
+      switch(
+        to_units,
+        ppm = ,
+        ppb = ,
+        ppt = ,
+        ppq = TRUE,
+        `per-mille` = ,
+        `per-myriad` = FALSE
+      )
+  }
+
+  # Pass `data`, `columns`, `rows`, and other options to `fmt_symbol()`
+  fmt_symbol(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    symbol = symbol,
+    accounting = FALSE,
+    decimals = decimals,
+    drop_trailing_zeros = drop_trailing_zeros,
+    drop_trailing_dec_mark = drop_trailing_dec_mark,
+    use_seps = use_seps,
+    scale_by = scale_by,
+    suffixing = FALSE,
+    pattern = pattern,
+    sep_mark = sep_mark,
+    dec_mark = dec_mark,
+    force_sign = force_sign,
+    placement = placement,
+    incl_space = incl_space,
+    locale = locale
+  )
+}
+
 #' Format values as a mixed fractions
 #'
 #' @description
