@@ -121,6 +121,9 @@ value.
 trailing zeros, and a choice of the decimal symbol
 \item digit grouping separators: options to enable/disable digit separators
 and provide a choice of separator symbol
+\item value scaling toggle: choose to disable automatic value scaling in the
+situation that values are already scaled coming in (and just require the
+percent symbol)
 \item pattern: option to use a text pattern for decoration of the formatted
 values
 \item locale-based formatting: providing a locale ID will result in number
@@ -131,7 +134,7 @@ formatting specific to the chosen locale
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
 nothing is provided for \code{rows} then entire columns are selected). Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the Arguments section for more information on this.
+argument. See the \emph{Arguments} section for more information on this.
 }
 \section{Figures}{
 

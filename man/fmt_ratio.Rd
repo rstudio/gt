@@ -122,6 +122,30 @@ use within \code{fmt_ratio()}:
 \item \code{"ppt"}: Parts per trillion, (1 part in \verb{1,000,000,000,000})
 \item \code{"ppq"}: Parts per quadrillion, (1 part in \verb{1,000,000,000,000,000})
 }
+
+The function provides a lot of formatting control and we can use the
+following options:
+\itemize{
+\item custom symbol/units: we can override the automatic symbol or units display
+with our own choice as the situation warrants
+\item decimals: choice of the number of decimal places, option to drop
+trailing zeros, and a choice of the decimal symbol
+\item digit grouping separators: options to enable/disable digit separators
+and provide a choice of separator symbol
+\item value scaling toggle: choose to disable automatic value scaling in the
+situation that values are already scaled coming in (and just require the
+appropriate symbol or unit display)
+\item pattern: option to use a text pattern for decoration of the formatted
+values
+\item locale-based formatting: providing a locale ID will result in number
+formatting specific to the chosen locale
+}
+}
+\details{
+Targeting of values is done through \code{columns} and additionally by \code{rows} (if
+nothing is provided for \code{rows} then entire columns are selected). Conditional
+formatting is possible by providing a conditional expression to the \code{rows}
+argument. See the \emph{Arguments} section for more information on this.
 }
 \section{Function ID}{
 
