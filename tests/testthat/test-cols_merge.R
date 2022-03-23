@@ -266,10 +266,11 @@ test_that("the `cols_merge_uncert()` works nicely with different error bounds", 
     c(
       "34.5<span><span class=\"gt_two_val_uncert\">+1.8<br>&minus;2.1</span></span>",
       "29.2<span><span class=\"gt_two_val_uncert\">+2.7<br>&minus;2.4</span></span>",
-      "36.3 &plusmn; 2.6", "31.6", "28.5", "30.9", "NA", "NA", "Inf",
-      "30.0 &plusmn; 0.0",
-      "32.0<span><span class=\"gt_two_val_uncert\">+0.0<br>&minus;0.1</span></span>",
-      "34.0", "NaN"
+      "36.3 &plusmn; 2.6", "31.6<span><span class=\"gt_two_val_uncert\">+NA<br>&minus;1.8</span></span>",
+      "28.5<span><span class=\"gt_two_val_uncert\">+1.6<br>&minus;NA</span></span>",
+      "30.9", "NA", "NA", "Inf", "30.0 &plusmn; 0.0", "32.0<span><span class=\"gt_two_val_uncert\">+0.0<br>&minus;0.1</span></span>",
+      "34.0<span><span class=\"gt_two_val_uncert\">+0.1<br>&minus;NaN</span></span>",
+      "NaN"
     )
   )
 
@@ -277,20 +278,20 @@ test_that("the `cols_merge_uncert()` works nicely with different error bounds", 
     (tbl_gt %>% render_formats_test("latex"))[["value"]],
     c(
       "$34.5^{+1.8}_{-2.1}$", "$29.2^{+2.7}_{-2.4}$", "36.3 ± 2.6",
-      "31.6", "28.5", "30.9", "NA", "NA", "Inf", "30.0 ± 0.0", "$32.0^{+0.0}_{-0.1}$",
-      "34.0", "NaN"
+      "$31.6^{+NA}_{-1.8}$", "$28.5^{+1.6}_{-NA}$", "30.9", "NA", "NA",
+      "Inf", "30.0 ± 0.0", "$32.0^{+0.0}_{-0.1}$", "$34.0^{+0.1}_{-NaN}$",
+      "NaN"
     )
   )
 
   expect_equal(
     (tbl_gt %>% render_formats_test("rtf"))[["value"]],
     c(
-      "34.5(+1.8, -2.1)", "29.2(+2.7, -2.4)", "36.3 \\'b1 2.6", "31.6",
-      "28.5", "30.9", "NA", "NA", "Inf", "30.0 \\'b1 0.0", "32.0(+0.0, -0.1)",
-      "34.0", "NaN"
+      "34.5(+1.8, -2.1)", "29.2(+2.7, -2.4)", "36.3 \\'b1 2.6", "31.6(+NA, -1.8)",
+      "28.5(+1.6, -NA)", "30.9", "NA", "NA", "Inf", "30.0 \\'b1 0.0",
+      "32.0(+0.0, -0.1)", "34.0(+0.1, -NaN)", "NaN"
     )
   )
-
 })
 
 test_that("the `cols_merge_range()` function works correctly", {
