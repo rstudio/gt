@@ -530,7 +530,7 @@ context_permille_mark <- function(context) {
     context,
     html = "\U02030",
     latex = "\\textperthousand",
-    rtf = "\\'2030",
+    rtf = "\\'89",
     "per mille"
   )
 }
@@ -545,6 +545,7 @@ context_permyriad_mark <- function(context) {
     context,
     html = "\U02031",
     latex = "\\textpertenthousand",
+    rtf = "\\uc0\\u8241",
     "per myriad"
   )
 }
