@@ -22,7 +22,7 @@
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @param data A table object that is created using the [gt()] function.
 #' @param columns The columns to format. Can either be a series of column names
@@ -306,7 +306,7 @@ fmt_number <- function(data,
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param suffixing An option to scale and apply suffixes to larger numbers
@@ -404,7 +404,7 @@ fmt_integer <- function(data,
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param scale_by A value to scale the input. The default is `1.0`. All numeric
@@ -595,7 +595,7 @@ fmt_scientific <- function(data,
 #' nothing is provided for `rows` then entire columns are selected). A number of
 #' helper functions exist to make targeting more effective. Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param scale_by A value to scale the input. The default is `1.0`. All numeric
@@ -905,6 +905,9 @@ fmt_symbol <- function(data,
 #' trailing zeros, and a choice of the decimal symbol
 #' - digit grouping separators: options to enable/disable digit separators
 #' and provide a choice of separator symbol
+#' - value scaling toggle: choose to disable automatic value scaling in the
+#' situation that values are already scaled coming in (and just require the
+#' percent symbol)
 #' - pattern: option to use a text pattern for decoration of the formatted
 #' values
 #' - locale-based formatting: providing a locale ID will result in number
@@ -914,7 +917,7 @@ fmt_symbol <- function(data,
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param scale_values Should the values be scaled through multiplication by
@@ -1040,6 +1043,29 @@ fmt_percent <- function(data,
 #' - `"ppb"`: Parts per billion, (1 part in `1,000,000,000`)
 #' - `"ppt"`: Parts per trillion, (1 part in `1,000,000,000,000`)
 #' - `"ppq"`: Parts per quadrillion, (1 part in `1,000,000,000,000,000`)
+#'
+#' The function provides a lot of formatting control and we can use the
+#' following options:
+#'
+#' - custom symbol/units: we can override the automatic symbol or units display
+#' with our own choice as the situation warrants
+#' - decimals: choice of the number of decimal places, option to drop
+#' trailing zeros, and a choice of the decimal symbol
+#' - digit grouping separators: options to enable/disable digit separators
+#' and provide a choice of separator symbol
+#' - value scaling toggle: choose to disable automatic value scaling in the
+#' situation that values are already scaled coming in (and just require the
+#' appropriate symbol or unit display)
+#' - pattern: option to use a text pattern for decoration of the formatted
+#' values
+#' - locale-based formatting: providing a locale ID will result in number
+#' formatting specific to the chosen locale
+#'
+#' @details
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param to_units A keyword that signifies the desired output quantity. This
@@ -1210,7 +1236,7 @@ fmt_ratio <- function(
 #' nothing is provided for `rows` then entire columns are selected). A number of
 #' helper functions exist to make targeting more effective. Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param accuracy The type of fractions to generate. This can either be one of
@@ -1666,7 +1692,7 @@ round_gt <- function(x, digits = 0) {
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param currency The currency to use for the numeric value. This input can be
@@ -1843,7 +1869,7 @@ fmt_currency <- function(data,
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param standard The way to express large byte sizes.
@@ -2582,7 +2608,7 @@ fmt_datetime <- function(data,
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #'
@@ -2695,7 +2721,7 @@ fmt_markdown <- function(data,
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param escape An option to escape text according to the final output format
@@ -2831,7 +2857,7 @@ fmt_passthrough <- function(data,
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param missing_text The text to be used in place of `NA` values in the
@@ -2948,7 +2974,7 @@ fmt_missing <- function(data,
 #' As with all of the `fmt_*()` functions, targeting of values is done through
 #' `columns` and additionally by `rows` (if nothing is provided for `rows` then
 #' entire columns are selected). Conditional formatting is possible by providing
-#' a conditional expression to the `rows` argument. See the Arguments section
+#' a conditional expression to the `rows` argument. See the *Arguments* section
 #' for more information on this.
 #'
 #' @inheritParams fmt_number
