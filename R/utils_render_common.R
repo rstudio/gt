@@ -337,6 +337,8 @@ perform_col_merge <- function(data,
 
     } else if (type == "merge_uncert" && length(col_merge[[i]]$vars) == 3) {
 
+      # Case where lower and upper certainties provided as input columns
+
       mutated_column <- col_merge[[i]]$vars[1]
       lu_column <- col_merge[[i]]$vars[2]
       uu_column <- col_merge[[i]]$vars[3]
@@ -375,10 +377,12 @@ perform_col_merge <- function(data,
       na_lu_rows <- is.na(data_tbl[[lu_column]])
       na_uu_rows <- is.na(data_tbl[[uu_column]])
       na_lu_or_uu <- na_lu_rows | na_uu_rows
+      na_lu_and_uu <- na_lu_rows & na_uu_rows
+      na_one_of_lu_uu <- na_lu_or_uu & !na_lu_and_uu
       lu_equals_uu <- data_tbl[[lu_column]] == data_tbl[[uu_column]] & !na_lu_or_uu
 
       rows_to_format_equal <- which(!na_1_rows & lu_equals_uu)
-      rows_to_format_unequal <- which(!na_1_rows & !na_lu_or_uu & !lu_equals_uu)
+      rows_to_format_unequal <- which(!na_1_rows & !na_lu_and_uu & !lu_equals_uu)
 
       body[rows_to_format_equal, mutated_column] <-
         as.character(
