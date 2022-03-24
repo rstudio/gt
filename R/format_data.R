@@ -2420,8 +2420,37 @@ fmt_datetime <- function(data,
 #' Format input values to time durations whether those input values are numbers
 #' or of the `difftime` class. We can specify which time units any numeric input
 #' values have (as days, hours, minutes, or seconds) and the output can be
-#' customized with a duration style (`1`-`3`, representing short, medium, and
-#' long forms) and a choice of output units from weeks to milliseconds.
+#' customized with a duration style (corresponding to short, long, and
+#' colon-separated forms) and a choice of output units from weeks to seconds.
+#'
+#' @details
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the *Arguments* section for more information on this.
+#'
+#' @inheritParams fmt_number
+#' @param input_values If one or more selected columns contains numeric values,
+#'   the keyword provided for `input_values` will determine how those values are
+#'   interpreted in terms of a single duration type. By default, **gt** assumes
+#'   that numeric values are representative of `"days"` but this can be changed
+#'   to either of `"hours"`, `"minutes"`, or `"seconds"`.
+#' @param output_values The output values can be handled by one of two keywords
+#'   (`"auto"`, the default, or `"all"`) or a vector of the following time
+#'   parts: `"weeks"`, `"days"`, `"hours"`, `"minutes"`, or `"seconds"`.
+#' @param duration_style A choice of three formatting styles for the output
+#'   duration values. With `"narrow"` (the default style), durations will be
+#'   formatted with single letter time-part units (e.g., 1.35 days will be
+#'   styled as `"1d 8h 24m`). With `"wide"`, this example value will be expanded
+#'   to `"1 day 8 hours 24 minutes"` after formatting. The `"colon-sep"` style
+#'   of formatting will separate all values with a colon and will not provide
+#'   any time-part units, so the output of 1.35 days will be `"1:8:24"`.
+#' @param drop_zero_parts An option to drop leading and internal values for
+#'   time parts if they are zero. By default this is `TRUE` and duration values
+#'   that might otherwise be formatted as `"0w 1d 0h 4m 19s"` with
+#'   `drop_zero_parts = FALSE` are instead displayed as `"1d 4m 19s"`.
+#'
+#' @return An object of class `gt_tbl`.
 #'
 #' @family Format Data
 #' @section Function ID:
@@ -2435,14 +2464,33 @@ fmt_duration <- function(
     rows = everything(),
     input_values = c("days", "hours", "minutes", "seconds"),
     output_units = "auto",
-    duration_style = 1,
+    duration_style = c("narrow", "wide", "colon-sep"),
+    drop_zero_parts = TRUE,
     pattern = "{x}"
 ) {
-
   input_values <- match.arg(input_values)
+  duration_style <- match.arg(duration_style)
 
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  # Resolve output units
+  if (length(output_units) == 1 && output_units == "all") {
+
+    output_units <- c("weeks", "days", "hours", "minutes", "seconds")
+
+  } else if (length(output_units == 1) && output_units == "auto") {
+
+    output_units <- "auto"
+
+  } else if (!any(c("auto", "all") %in% output_units)) {
+
+    # Stop function if `output_units` does not contain valid values
+    validate_duration_output_units(output_units = output_units)
+
+    # Normalize the valid set of provided `output_units`
+    output_units <- normalize_duration_output_units(output_units = output_units)
+  }
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
@@ -2450,7 +2498,8 @@ fmt_duration <- function(
     !column_classes_are_valid(
       data = data,
       columns = {{ columns }},
-      valid_classes = c("numeric", "difftime"))
+      valid_classes = c("numeric", "difftime")
+    )
   ) {
     stop(
       "The `fmt_duration()` function can only be used on `columns` of certain types:\n",
@@ -2459,7 +2508,217 @@ fmt_duration <- function(
     )
   }
 
-  data
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    fns = num_fmt_factory_multi(
+      pattern = pattern,
+      use_latex_math_mode = FALSE,
+      format_fn = function(x, context) {
+
+        x_str <-
+          values_to_durations(
+            x,
+            in_units = input_values,
+            out_units = output_units,
+            out_style = duration_style,
+            drop_zero_parts = drop_zero_parts
+          )
+
+        x_str[x < 0 & !is.infinite(x)] <-
+          paste0(
+            context_minus_mark(context = context),
+            x_str[x < 0 & !is.infinite(x)]
+          )
+
+        x_str
+      }
+    )
+  )
+}
+
+validate_duration_output_units <- function(output_units) {
+
+  if (!is_character(output_units)) {
+
+    stop(
+      "The `output_units` input to `fmt_duration()` must be a character vector",
+      call. = FALSE
+    )
+  }
+
+  time_parts_vec <- c("weeks", "days", "hours", "minutes", "seconds")
+
+  if (!all(output_units %in% time_parts_vec)) {
+
+    stop(
+      "There are invalid components in the `output_units` input to ",
+      "`fmt_duration()`:\n",
+      "* Only the `\"weeks\"`, `\"days\"`, `\"hours\"`, `\"minutes\"`, and\n",
+      "`\"seconds\"` time parts should be present",
+      call. = FALSE
+    )
+  }
+}
+
+normalize_duration_output_units <- function(output_units) {
+
+  # Ensure that the output units are a unique set
+  output_units <- unique(output_units)
+
+  # Ensure that the order of output units is from greatest to smallest
+  time_parts <- c("weeks", "days", "hours", "minutes", "seconds")
+  output_units[order(match(output_units, time_parts))]
+}
+
+values_to_durations <- function(
+    x,
+    in_units,
+    out_units,
+    out_style,
+    drop_zero_parts
+) {
+
+  if (out_units[1] == "auto") {
+    time_parts <- c("weeks", "days", "hours", "minutes", "seconds")
+  } else {
+    time_parts <- out_units
+  }
+
+  # Should `in_units` be anything other than days then convert
+  # all `x` values to days
+  if (in_units != "days") {
+
+    x <-
+      switch(
+        in_units,
+        hours = x / 24,
+        minutes = x / 1440,
+        seconds = x / 86400
+      )
+  }
+
+  x_str <- character(length(x))
+
+  for (i in seq_along(x)) {
+
+    x_str_i <- c()
+    x_rem_i <- abs(x[i])
+    break_vec <- c()
+
+    for (time_p in time_parts) {
+
+      time_part_val <- get_time_part_val(x_rem_i, time_part = time_p)
+
+      # Discontinue formatting of smaller time parts if there is a
+      # separation of 2 or higher across consecutive time parts
+      # (e.g., '5d 20s' -> '5d' but '5d 2m 20s' is okay)
+      #
+      # This is only performed if `out_units` is set to `"auto"` and
+      # is never done if formatting durations as colon-separated values
+      break_vec <- c(break_vec, ifelse(time_part_val > 0, 1, 0))
+
+      if (out_units == "auto" && out_style != "colon-sep") {
+
+        # Reinitialize `break_vec` in the case of all zero-value
+        # time-parts (usually, this removes leading zeros)
+        if (all(break_vec == 0)) break_vec <- c()
+
+        if (!is.null(break_vec)) {
+          rle_i <- rle(x = break_vec)
+          if (any(rle_i$values == 0)) {
+            if (any(rle_i$lengths[rle_i$values == 0] > 1)) break
+          }
+        }
+      }
+
+      # `!is.null(break_vec)` implies that we are at a time part that is
+      # non-zero and perhaps previous time parts were processed before
+
+      if (!(
+        (time_part_val < 1 && drop_zero_parts) &&
+        (drop_zero_parts || !is.null(break_vec))
+      )) {
+
+        x_str_i <-
+          c(
+            x_str_i,
+            format_time_part(
+              x = time_part_val,
+              time_part = time_p,
+              out_style = out_style
+            )
+          )
+
+        x_rem_i <-
+          subtract_time_with_val(
+            x = x_rem_i,
+            time_part = time_p,
+            val = time_part_val
+          )
+      }
+    }
+
+    # Handle edge case where duration is non-zero and smaller
+    # than the smallest time-part in `time_parts`
+    if (x_rem_i > 0 && is.null(x_str_i)) {
+
+      x_str_i <-
+        paste0(
+          "<",
+          format_time_part(
+            x = 1,
+            time_part = time_p,
+            out_style = out_style
+          )
+        )
+    }
+
+    if (out_style == "colon-sep") {
+      x_str[i] <- paste0(x_str_i, collapse = ":")
+    } else {
+      x_str[i] <- paste0(x_str_i, collapse = " ")
+    }
+  }
+
+  x_str
+}
+
+day_conversion_factor <- function(time_part) {
+
+  switch(
+    time_part,
+    weeks = 1/7,
+    days = 1,
+    hours = 24,
+    minutes = 1440,
+    seconds = 86400
+  )
+}
+
+get_time_part_val <- function(x, time_part) {
+  floor(x * day_conversion_factor(time_part = time_part))
+}
+
+subtract_time_with_val <- function(x, time_part, val) {
+  x - (val / day_conversion_factor(time_part = time_part))
+}
+
+format_time_part <- function(x, time_part, out_style) {
+
+  if (out_style == "narrow") {
+    out <- paste0(x, substr(time_part, 1, 1))
+  } else if (out_style == "wide") {
+    if (x == 1) time_part <- gsub("s$", "", time_part)
+    out <- paste(x, time_part)
+  } else {
+    out <- x
+  }
+
+  out
 }
 
 #' Format Markdown text
