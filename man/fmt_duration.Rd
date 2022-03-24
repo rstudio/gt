@@ -10,16 +10,71 @@ fmt_duration(
   rows = everything(),
   input_values = c("days", "hours", "minutes", "seconds"),
   output_units = "auto",
-  duration_style = 1,
+  duration_style = c("narrow", "wide", "colon-sep"),
+  drop_zero_parts = TRUE,
   pattern = "{x}"
 )
+}
+\arguments{
+\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+
+\item{columns}{The columns to format. Can either be a series of column names
+provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
+focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
+\code{\link[=everything]{everything()}}.}
+
+\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
+default) results in all rows in \code{columns} being formatted. Alternatively,
+we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
+indices, or a helper function focused on selections. The select helper
+functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
+to filter down to the rows we need (e.g.,
+\verb{[colname_1] > 100 & [colname_2] < 50}).}
+
+\item{input_values}{If one or more selected columns contains numeric values,
+the keyword provided for \code{input_values} will determine how those values are
+interpreted in terms of a single duration type. By default, \strong{gt} assumes
+that numeric values are representative of \code{"days"} but this can be changed
+to either of \code{"hours"}, \code{"minutes"}, or \code{"seconds"}.}
+
+\item{duration_style}{A choice of three formatting styles for the output
+duration values. With \code{"narrow"} (the default style), durations will be
+formatted with single letter time-part units (e.g., 1.35 days will be
+styled as \verb{"1d 8h 24m}). With \code{"wide"}, this example value will be expanded
+to \code{"1 day 8 hours 24 minutes"} after formatting. The \code{"colon-sep"} style
+of formatting will separate all values with a colon and will not provide
+any time-part units, so the output of 1.35 days will be \code{"1:8:24"}.}
+
+\item{drop_zero_parts}{An option to drop leading and internal values for
+time parts if they are zero. By default this is \code{TRUE} and duration values
+that might otherwise be formatted as \code{"0w 1d 0h 4m 19s"} with
+\code{drop_zero_parts = FALSE} are instead displayed as \code{"1d 4m 19s"}.}
+
+\item{pattern}{A formatting pattern that allows for decoration of the
+formatted value. The value itself is represented by \code{{x}} and all other
+characters are taken to be string literals.}
+
+\item{output_values}{The output values can be handled by one of two keywords
+(\code{"auto"}, the default, or \code{"all"}) or a vector of the following time
+parts: \code{"weeks"}, \code{"days"}, \code{"hours"}, \code{"minutes"}, or \code{"seconds"}.}
+}
+\value{
+An object of class \code{gt_tbl}.
 }
 \description{
 Format input values to time durations whether those input values are numbers
 or of the \code{difftime} class. We can specify which time units any numeric input
 values have (as days, hours, minutes, or seconds) and the output can be
-customized with a duration style (\code{1}-\code{3}, representing short, medium, and
-long forms) and a choice of output units from weeks to milliseconds.
+customized with a duration style (corresponding to short, long, and
+colon-separated forms) and a choice of output units from weeks to seconds.
+}
+\details{
+Targeting of values is done through \code{columns} and additionally by \code{rows} (if
+nothing is provided for \code{rows} then entire columns are selected). Conditional
+formatting is possible by providing a conditional expression to the \code{rows}
+argument. See the \emph{Arguments} section for more information on this.
 }
 \section{Function ID}{
 
