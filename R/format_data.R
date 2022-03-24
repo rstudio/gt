@@ -2414,6 +2414,54 @@ fmt_datetime <- function(data,
   )
 }
 
+#' Format values as time durations
+#'
+#' @description
+#' Format input values to time durations whether those input values are numbers
+#' or of the `difftime` class. We can specify which time units any numeric input
+#' values have (as days, hours, minutes, or seconds) and the output can be
+#' customized with a duration style (`1`-`3`, representing short, medium, and
+#' long forms) and a choice of output units from weeks to milliseconds.
+#'
+#' @family Format Data
+#' @section Function ID:
+#' 3-11
+#'
+#' @import rlang
+#' @export
+fmt_duration <- function(
+    data,
+    columns,
+    rows = everything(),
+    input_values = c("days", "hours", "minutes", "seconds"),
+    output_units = "auto",
+    duration_style = 1,
+    pattern = "{x}"
+) {
+
+  input_values <- match.arg(input_values)
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  # Stop function if any columns have data that is incompatible
+  # with this formatter
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = c("numeric", "difftime"))
+  ) {
+    stop(
+      "The `fmt_duration()` function can only be used on `columns` of certain types:\n",
+      "* Allowed types are `numeric` and `difftime`",
+      call. = FALSE
+    )
+  }
+
+  data
+}
+
 #' Format Markdown text
 #'
 #' @description
@@ -2482,7 +2530,7 @@ fmt_datetime <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-11
+#' 3-12
 #'
 #' @import rlang
 #' @export
@@ -2569,7 +2617,7 @@ fmt_markdown <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-12
+#' 3-13
 #'
 #' @import rlang
 #' @export
@@ -2703,7 +2751,7 @@ fmt_passthrough <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-13
+#' 3-14
 #'
 #' @import rlang
 #' @export
@@ -2819,7 +2867,7 @@ fmt_missing <- function(data,
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-14
+#' 3-15
 #'
 #' @import rlang
 #' @export

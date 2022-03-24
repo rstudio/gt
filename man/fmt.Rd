@@ -61,7 +61,7 @@ for more information on this.
 
 \section{Function ID}{
 
-3-14
+3-15
 }
 
 \examples{
@@ -88,6 +88,7 @@ Other Format Data:
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_fraction}()},
 \code{\link{fmt_integer}()},
