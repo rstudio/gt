@@ -2589,8 +2589,9 @@ values_to_durations <- function(
   }
 
   # Should `in_units` be anything other than days then convert
-  # all `x` values to days
-  if (in_units != "days") {
+  # all `x` values to days (but only if `x` is not of class
+  # `difftime`, where the time unit is known)
+  if (!inherits(x, "difftime") && in_units != "days") {
 
     x <-
       switch(
