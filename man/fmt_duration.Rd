@@ -39,6 +39,10 @@ interpreted in terms of a single duration type. By default, \strong{gt} assumes
 that numeric values are representative of \code{"days"} but this can be changed
 to either of \code{"hours"}, \code{"minutes"}, or \code{"seconds"}.}
 
+\item{output_units}{The output values can be handled by one of two keywords
+(\code{"auto"}, the default, or \code{"all"}) or a vector of the following time
+parts: \code{"weeks"}, \code{"days"}, \code{"hours"}, \code{"minutes"}, or \code{"seconds"}.}
+
 \item{duration_style}{A choice of three formatting styles for the output
 duration values. With \code{"narrow"} (the default style), durations will be
 formatted with single letter time-part units (e.g., 1.35 days will be
@@ -55,10 +59,6 @@ that might otherwise be formatted as \code{"0w 1d 0h 4m 19s"} with
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other
 characters are taken to be string literals.}
-
-\item{output_values}{The output values can be handled by one of two keywords
-(\code{"auto"}, the default, or \code{"all"}) or a vector of the following time
-parts: \code{"weeks"}, \code{"days"}, \code{"hours"}, \code{"minutes"}, or \code{"seconds"}.}
 }
 \value{
 An object of class \code{gt_tbl}.
