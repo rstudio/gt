@@ -238,6 +238,62 @@ test_that("the `cols_merge_uncert()` function works correctly", {
   expect_equal(sep, I(" +/- "))
 })
 
+test_that("the `cols_merge_uncert()` works nicely with different error bounds", {
+
+  # Check that specific suggested packages are available
+  check_suggests()
+
+  # Create a table with three columns of values
+  tbl_uncert <-
+    dplyr::tibble(
+      value = c(34.5, 29.2, 36.3, 31.6, 28.5, 30.9,  NA, NA, Inf, 30, 32,  34,  NaN),
+      lu =    c(2.1,   2.4,  2.6,  1.8,   NA,   NA, 1.2, NA,  NA,  0, 0.1, NaN, 0.1),
+      uu =    c(1.8,   2.7,  2.6,   NA,  1.6,   NA,  NA, NA,  NA,  0, 0,   0.1, 0.3)
+    )
+
+  # Create a `tbl_html` object with `gt()`; merge three columns together
+  # with `cols_merge_uncert()`
+  tbl_gt <-
+    tbl_uncert %>%
+    gt() %>%
+    cols_merge_uncert(
+      col_val = "value",
+      col_uncert = c("lu", "uu")
+    )
+
+  expect_equal(
+    (tbl_gt %>% render_formats_test("html"))[["value"]],
+    c(
+      "34.5<span class=\"gt_two_val_uncert\">+1.8<br>&minus;2.1</span>",
+      "29.2<span class=\"gt_two_val_uncert\">+2.7<br>&minus;2.4</span>",
+      "36.3 &plusmn; 2.6", "31.6<span class=\"gt_two_val_uncert\">+NA<br>&minus;1.8</span>",
+      "28.5<span class=\"gt_two_val_uncert\">+1.6<br>&minus;NA</span>",
+      "30.9", "NA", "NA", "Inf", "30.0 &plusmn; 0.0", "32.0<span class=\"gt_two_val_uncert\">+0.0<br>&minus;0.1</span>",
+      "34.0<span class=\"gt_two_val_uncert\">+0.1<br>&minus;NaN</span>",
+      "NaN"
+    )
+  )
+
+  expect_equal(
+    (tbl_gt %>% render_formats_test("latex"))[["value"]],
+    c(
+      "$34.5^{+1.8}_{-2.1}$", "$29.2^{+2.7}_{-2.4}$", "36.3 ± 2.6",
+      "$31.6^{+NA}_{-1.8}$", "$28.5^{+1.6}_{-NA}$", "30.9", "NA", "NA",
+      "Inf", "30.0 ± 0.0", "$32.0^{+0.0}_{-0.1}$", "$34.0^{+0.1}_{-NaN}$",
+      "NaN"
+    )
+  )
+
+  expect_equal(
+    (tbl_gt %>% render_formats_test("rtf"))[["value"]],
+    c(
+      "34.5(+1.8, -2.1)", "29.2(+2.7, -2.4)", "36.3 \\'b1 2.6", "31.6(+NA, -1.8)",
+      "28.5(+1.6, -NA)", "30.9", "NA", "NA", "Inf", "30.0 \\'b1 0.0",
+      "32.0(+0.0, -0.1)", "34.0(+0.1, -NaN)", "NaN"
+    )
+  )
+})
+
 test_that("the `cols_merge_range()` function works correctly", {
 
   # Check that specific suggested packages are available
