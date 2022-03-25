@@ -2435,7 +2435,7 @@ fmt_datetime <- function(data,
 #'   interpreted in terms of a single duration type. By default, **gt** assumes
 #'   that numeric values are representative of `"days"` but this can be changed
 #'   to either of `"hours"`, `"minutes"`, or `"seconds"`.
-#' @param output_values The output values can be handled by one of two keywords
+#' @param output_units The output values can be handled by one of two keywords
 #'   (`"auto"`, the default, or `"all"`) or a vector of the following time
 #'   parts: `"weeks"`, `"days"`, `"hours"`, `"minutes"`, or `"seconds"`.
 #' @param duration_style A choice of three formatting styles for the output
