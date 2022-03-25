@@ -187,7 +187,25 @@ dt_summary_build <- function(data,
     }
 
     # Get the registered function calls
-    agg_funs <- lapply(fns, rlang::as_closure)
+    agg_funs <-
+      lapply(
+        fns, function(fn) {
+          fn <- rlang::as_closure(fn)
+          function(x) {
+
+            result <- fn(x)
+
+            if (length(result) != 1) {
+              stop(
+                "Failure in the evaluation of summary cells:\n",
+                "* We must always return a vector of length `1`.",
+                call. = FALSE
+              )
+            }
+            result
+          }
+        }
+      )
 
     summary_dfs_data <-
       dplyr::bind_rows(
@@ -239,23 +257,17 @@ dt_summary_build <- function(data,
 
           format_data <-
             do.call(
-              summary_attrs$formatter,
-              append(
-                list(
-                  summary_data,
-                  columns = "x"
-                ),
-                summary_attrs$formatter_options
-              )
+              formatter,
+              append(list(summary_data, columns = "x"), formatter_options)
             )
 
-          formatter <-
+          formatter_fn <-
             dt_formats_summary_formatter(
               data = format_data,
               context = context
             )
 
-          formatter(x)
+          formatter_fn(x)
         }
       ) %>%
       dplyr::mutate_at(
