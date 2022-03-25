@@ -357,10 +357,10 @@ perform_col_merge <- function(data,
 
         pattern_unequal <-
           paste0(
-            "<<1>><span><span class=\"gt_two_val_uncert\">",
+            "<<1>><span class=\"gt_two_val_uncert\">",
             "+<<3>><br>",
             context_minus_mark(context = context), "<<2>>",
-            "</span></span>"
+            "</span>"
           )
 
       } else if (context == "latex") {
@@ -378,7 +378,6 @@ perform_col_merge <- function(data,
       na_uu_rows <- is.na(data_tbl[[uu_column]])
       na_lu_or_uu <- na_lu_rows | na_uu_rows
       na_lu_and_uu <- na_lu_rows & na_uu_rows
-      na_one_of_lu_uu <- na_lu_or_uu & !na_lu_and_uu
       lu_equals_uu <- data_tbl[[lu_column]] == data_tbl[[uu_column]] & !na_lu_or_uu
 
       rows_to_format_equal <- which(!na_1_rows & lu_equals_uu)
