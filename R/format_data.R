@@ -2430,14 +2430,15 @@ fmt_datetime <- function(data,
 #' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
-#' @param input_values If one or more selected columns contains numeric values,
-#'   the keyword provided for `input_values` will determine how those values are
-#'   interpreted in terms of a single duration type. By default, **gt** assumes
-#'   that numeric values are representative of `"days"` but this can be changed
-#'   to either of `"hours"`, `"minutes"`, or `"seconds"`.
+#' @param input_units If one or more selected columns contains numeric values,
+#'   the keyword provided for `input_units` will determine how those values are
+#'   interpreted in terms of a single duration type. If numeric columns are
+#'   included in `columns` then one of the following keywords, representative of
+#'   time units, must be provided: seconds (`"secs"`), `"mins"` (minutes),
+#'   `"hours"`, `"days"`, or `"weeks"`.
 #' @param output_units The output values can be handled by one of two keywords
 #'   (`"auto"`, the default, or `"all"`) or a vector of the following time
-#'   parts: `"weeks"`, `"days"`, `"hours"`, `"minutes"`, or `"seconds"`.
+#'   parts: `"weeks"`, `"days"`, `"hours"`, `"mins"`, or `"secs"`.
 #' @param duration_style A choice of three formatting styles for the output
 #'   duration values. With `"narrow"` (the default style), durations will be
 #'   formatted with single letter time-part units (e.g., 1.35 days will be
@@ -2462,35 +2463,17 @@ fmt_duration <- function(
     data,
     columns,
     rows = everything(),
-    input_values = c("days", "hours", "minutes", "seconds"),
+    input_units = NULL,
     output_units = "auto",
     duration_style = c("narrow", "wide", "colon-sep"),
     drop_zero_parts = TRUE,
     pattern = "{x}"
 ) {
-  input_values <- match.arg(input_values)
+
   duration_style <- match.arg(duration_style)
 
   # Perform input object validation
   stop_if_not_gt(data = data)
-
-  # Resolve output units
-  if (length(output_units) == 1 && output_units == "all") {
-
-    output_units <- c("weeks", "days", "hours", "minutes", "seconds")
-
-  } else if (length(output_units == 1) && output_units == "auto") {
-
-    output_units <- "auto"
-
-  } else if (!any(c("auto", "all") %in% output_units)) {
-
-    # Stop function if `output_units` does not contain valid values
-    validate_duration_output_units(output_units = output_units)
-
-    # Normalize the valid set of provided `output_units`
-    output_units <- normalize_duration_output_units(output_units = output_units)
-  }
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
@@ -2508,6 +2491,40 @@ fmt_duration <- function(
     )
   }
 
+  # Stop function if any columns have numeric data and `input_units` is NULL
+  if (
+    column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = "numeric"
+    ) &&
+    is.null(input_units)
+  ) {
+    stop(
+      "When there are numeric columns to format, `input_units` must not be `NULL`:\n",
+      "* Use one of `\"secs\"`, `\"mins\"`, `\"hours\"`, `\"days\"`, or `\"weeks\"`",
+      call. = FALSE
+    )
+  }
+
+  # Resolve output units
+  if (length(output_units) == 1 && output_units == "all") {
+
+    output_units <- c("weeks", "days", "hours", "mins", "secs")
+
+  } else if (length(output_units == 1) && output_units == "auto") {
+
+    output_units <- "auto"
+
+  } else if (!any(c("auto", "all") %in% output_units)) {
+
+    # Stop function if `output_units` does not contain valid values
+    validate_duration_output_units(output_units = output_units)
+
+    # Normalize the valid set of provided `output_units`
+    output_units <- normalize_duration_output_units(output_units = output_units)
+  }
+
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(
@@ -2522,7 +2539,7 @@ fmt_duration <- function(
         x_str <-
           values_to_durations(
             x,
-            in_units = input_values,
+            in_units = input_units,
             out_units = output_units,
             out_style = duration_style,
             drop_zero_parts = drop_zero_parts
@@ -2550,15 +2567,15 @@ validate_duration_output_units <- function(output_units) {
     )
   }
 
-  time_parts_vec <- c("weeks", "days", "hours", "minutes", "seconds")
+  time_parts_vec <- c("weeks", "days", "hours", "mins", "secs")
 
   if (!all(output_units %in% time_parts_vec)) {
 
     stop(
       "There are invalid components in the `output_units` input to ",
       "`fmt_duration()`:\n",
-      "* Only the `\"weeks\"`, `\"days\"`, `\"hours\"`, `\"minutes\"`, and\n",
-      "`\"seconds\"` time parts should be present",
+      "* Only the `\"weeks\"`, `\"days\"`, `\"hours\"`, `\"mins\"`, and\n",
+      "`\"secs\"` time parts should be present",
       call. = FALSE
     )
   }
@@ -2570,7 +2587,7 @@ normalize_duration_output_units <- function(output_units) {
   output_units <- unique(output_units)
 
   # Ensure that the order of output units is from greatest to smallest
-  time_parts <- c("weeks", "days", "hours", "minutes", "seconds")
+  time_parts <- c("weeks", "days", "hours", "mins", "secs")
   output_units[order(match(output_units, time_parts))]
 }
 
@@ -2583,7 +2600,7 @@ values_to_durations <- function(
 ) {
 
   if (out_units[1] == "auto") {
-    time_parts <- c("weeks", "days", "hours", "minutes", "seconds")
+    time_parts <- c("weeks", "days", "hours", "mins", "secs")
   } else {
     time_parts <- out_units
   }
@@ -2597,8 +2614,8 @@ values_to_durations <- function(
       switch(
         in_units,
         hours = x / 24,
-        minutes = x / 1440,
-        seconds = x / 86400
+        mins = x / 1440,
+        secs = x / 86400
       )
   }
 
@@ -2695,8 +2712,8 @@ day_conversion_factor <- function(time_part) {
     weeks = 1/7,
     days = 1,
     hours = 24,
-    minutes = 1440,
-    seconds = 86400
+    mins = 1440,
+    secs = 86400
   )
 }
 

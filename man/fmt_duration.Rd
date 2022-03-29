@@ -8,7 +8,7 @@ fmt_duration(
   data,
   columns,
   rows = everything(),
-  input_values = c("days", "hours", "minutes", "seconds"),
+  input_units = NULL,
   output_units = "auto",
   duration_style = c("narrow", "wide", "colon-sep"),
   drop_zero_parts = TRUE,
@@ -33,15 +33,16 @@ functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with
 to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{input_values}{If one or more selected columns contains numeric values,
-the keyword provided for \code{input_values} will determine how those values are
-interpreted in terms of a single duration type. By default, \strong{gt} assumes
-that numeric values are representative of \code{"days"} but this can be changed
-to either of \code{"hours"}, \code{"minutes"}, or \code{"seconds"}.}
+\item{input_units}{If one or more selected columns contains numeric values,
+the keyword provided for \code{input_units} will determine how those values are
+interpreted in terms of a single duration type. If numeric columns are
+included in \code{columns} then one of the following keywords, representative of
+time units, must be provided: seconds (\code{"secs"}), \code{"mins"} (minutes),
+\code{"hours"}, \code{"days"}, or \code{"weeks"}.}
 
 \item{output_units}{The output values can be handled by one of two keywords
 (\code{"auto"}, the default, or \code{"all"}) or a vector of the following time
-parts: \code{"weeks"}, \code{"days"}, \code{"hours"}, \code{"minutes"}, or \code{"seconds"}.}
+parts: \code{"weeks"}, \code{"days"}, \code{"hours"}, \code{"mins"}, or \code{"secs"}.}
 
 \item{duration_style}{A choice of three formatting styles for the output
 duration values. With \code{"narrow"} (the default style), durations will be
