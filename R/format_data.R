@@ -2436,20 +2436,37 @@ fmt_datetime <- function(data,
 #'   included in `columns` then one of the following keywords, representative of
 #'   time units, must be provided: seconds (`"secs"`), `"mins"` (minutes),
 #'   `"hours"`, `"days"`, or `"weeks"`.
-#' @param output_units The output values can be handled by one of two keywords
-#'   (`"auto"`, the default, or `"all"`) or a vector of the following time
-#'   parts: `"weeks"`, `"days"`, `"hours"`, `"mins"`, or `"secs"`.
+#' @param output_units Controls the output time units. The default, `NULL`,
+#'   means that **gt** will automatically choose time units based on the input
+#'   duration value. To control which time units are to be considered for output
+#'   (before trimming with `trim_zero_units`) we can specify a range of time
+#'   units with a two-element vector consisting of these keywords: `"weeks"`,
+#'   `"days"`, `"hours"`, `"mins"`, or `"secs"`. If only a single time unit is
+#'   needed for output, a one-element vector can be used with any of the
+#'   aforementioned keywords.
 #' @param duration_style A choice of three formatting styles for the output
-#'   duration values. With `"narrow"` (the default style), durations will be
-#'   formatted with single letter time-part units (e.g., 1.35 days will be
+#'   duration values. With `"narrow"` (the default style), duration values will
+#'   be formatted with single letter time-part units (e.g., 1.35 days will be
 #'   styled as `"1d 8h 24m`). With `"wide"`, this example value will be expanded
 #'   to `"1 day 8 hours 24 minutes"` after formatting. The `"colon-sep"` style
-#'   of formatting will separate all values with a colon and will not provide
-#'   any time-part units, so the output of 1.35 days will be `"1:8:24"`.
-#' @param drop_zero_parts An option to drop leading and internal values for
-#'   time parts if they are zero. By default this is `TRUE` and duration values
-#'   that might otherwise be formatted as `"0w 1d 0h 4m 19s"` with
-#'   `drop_zero_parts = FALSE` are instead displayed as `"1d 4m 19s"`.
+#'   will put days, hours, minutes, and seconds in the `"[D]/[HH]:[MM]:[SS]"`
+#'   format. The `"iso"` style will produce a value that conforms to the ISO
+#'   8601 rules for duration values (e.g., 1.35 days will become `"P1DT8H24M"`).
+#' @param trim_zero_units Provides methods to remove output time units that have
+#'   zero values. By default this is `TRUE` and duration values that might
+#'   otherwise be formatted as `"0w 1d 0h 4m 19s"` with
+#'   `trim_zero_units = FALSE` are instead displayed as `"1d 4m 19s"`. Aside
+#'   from using `TRUE`/`FALSE` we could provide a vector of keywords for more
+#'   precise control. These keywords are: (1) `"leading"`, to omit all leading
+#'   zero-value time units (e.g., `"0w 1d"` -> `"1d"`), (2) `"trailing"`, to
+#'   omit all trailing zero-value time units (e.g., `"3d 5h 0s"` -> `"3d 5h"`),
+#'   and `"internal"`, which removes all internal zero-value time units (e.g.,
+#'   `"5d 0h 33m"` -> `"5d 33m"`).
+#' @param max_output_units If `output_units` is `NULL`, where the output time
+#'   units are unspecified and left to **gt** to handle, a numeric value
+#'   provided for `max_output_units` will be taken as the maximum number of time
+#'   units to display in all output time duration values. By default, this is
+#'   `NULL` and all possible time units will be displayed.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -2464,9 +2481,10 @@ fmt_duration <- function(
     columns,
     rows = everything(),
     input_units = NULL,
-    output_units = "auto",
-    duration_style = c("narrow", "wide", "colon-sep"),
-    drop_zero_parts = TRUE,
+    output_units = NULL,
+    duration_style = c("narrow", "wide", "colon-sep", "iso"),
+    trim_zero_units = TRUE,
+    max_output_units = NULL,
     pattern = "{x}"
 ) {
 
@@ -2474,6 +2492,41 @@ fmt_duration <- function(
 
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  if (is_true(trim_zero_units)) {
+    trim_zero_units <- c("leading", "trailing", "internal")
+  } else if (is_false(trim_zero_units)) {
+    trim_zero_units <- NULL
+  } else if (is.character(trim_zero_units) && length(trim_zero_units) > 0) {
+    # Validate that `trim_zero_units` contains only the allowed keywords
+    validate_trim_zero_units(trim_zero_units = trim_zero_units)
+  } else {
+    stop(
+      "The value provided for `trim_zero_units` is invalid. Either use:\n",
+      "* `TRUE` or `FALSE`, or\n",
+      "* A vector with any of the keywords `\"leading\"`, `\"trailing\"`, or ",
+      "`\"internal\"`",
+      call. = FALSE
+    )
+  }
+
+  if (!is.null(max_output_units)) {
+
+    if (
+      (!is.numeric(max_output_units) &&
+       length(max_output_units) != 1) ||
+      (is.numeric(max_output_units) &&
+       length(max_output_units) == 1 &&
+       max_output_units < 1)
+    ) {
+
+      stop(
+        "The numeric value supplied for `max_output_units` is invalid:\n",
+        "* Must either be `NULL` or an integer value greater than zero",
+        call. = FALSE
+      )
+    }
+  }
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
@@ -2493,10 +2546,10 @@ fmt_duration <- function(
 
   # Stop function if any columns have numeric data and `input_units` is NULL
   if (
-    column_classes_are_valid(
+    !column_classes_are_valid(
       data = data,
       columns = {{ columns }},
-      valid_classes = "numeric"
+      valid_classes = "difftime"
     ) &&
     is.null(input_units)
   ) {
@@ -2508,21 +2561,33 @@ fmt_duration <- function(
   }
 
   # Resolve output units
-  if (length(output_units) == 1 && output_units == "all") {
+  if (is.null(output_units)) {
 
     output_units <- c("weeks", "days", "hours", "mins", "secs")
 
-  } else if (length(output_units == 1) && output_units == "auto") {
+  } else {
 
-    output_units <- "auto"
-
-  } else if (!any(c("auto", "all") %in% output_units)) {
-
-    # Stop function if `output_units` does not contain valid values
+    # Stop function if `output_units` isn't a character vector, isn't of
+    # the right length (1 or 2), and does not contain valid values
     validate_duration_output_units(output_units = output_units)
 
     # Normalize the valid set of provided `output_units`
     output_units <- normalize_duration_output_units(output_units = output_units)
+  }
+
+  # If `duration_style` is of the "iso" or "colon-sep" types, then
+  # some options need to be overridden
+
+  if (duration_style == "iso") {
+    output_units <- c("days", "hours", "mins", "secs")
+    max_output_units <- NULL
+    trim_zero_units <- c("leading", "trailing")
+  }
+
+  if (duration_style == "colon-sep") {
+    output_units <- c("days", "hours", "mins", "secs")
+    max_output_units <- NULL
+    trim_zero_units <- FALSE
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -2542,7 +2607,8 @@ fmt_duration <- function(
             in_units = input_units,
             out_units = output_units,
             out_style = duration_style,
-            drop_zero_parts = drop_zero_parts
+            trim_zero_units = trim_zero_units,
+            max_output_units = max_output_units
           )
 
         x_str[x < 0 & !is.infinite(x)] <-
@@ -2555,6 +2621,18 @@ fmt_duration <- function(
       }
     )
   )
+}
+
+validate_trim_zero_units <- function(trim_zero_units) {
+
+  if (!all(trim_zero_units %in% c("leading", "trailing", "internal"))) {
+    stop(
+      "The character vector provided for `trim_zero_units` is invalid:\n",
+      "* It should only contain any of the keywords `\"leading\"`, `\"trailing\"`,
+      or ", "`\"internal\"`",
+      call. = FALSE
+    )
+  }
 }
 
 validate_duration_output_units <- function(output_units) {
@@ -2596,14 +2674,9 @@ values_to_durations <- function(
     in_units,
     out_units,
     out_style,
-    drop_zero_parts
+    trim_zero_units,
+    max_output_units
 ) {
-
-  if (out_units[1] == "auto") {
-    time_parts <- c("weeks", "days", "hours", "mins", "secs")
-  } else {
-    time_parts <- out_units
-  }
 
   # Should `in_units` be anything other than days then convert
   # all `x` values to days (but only if `x` is not of class
@@ -2623,80 +2696,128 @@ values_to_durations <- function(
 
   for (i in seq_along(x)) {
 
+    x_val_i <- c()
     x_str_i <- c()
     x_rem_i <- abs(x[i])
-    break_vec <- c()
 
-    for (time_p in time_parts) {
+    for (time_p in out_units) {
 
       time_part_val <- get_time_part_val(x_rem_i, time_part = time_p)
+      names(time_part_val) <- time_p
 
-      # Discontinue formatting of smaller time parts if there is a
-      # separation of 2 or higher across consecutive time parts
-      # (e.g., '5d 20s' -> '5d' but '5d 2m 20s' is okay)
-      #
-      # This is only performed if `out_units` is set to `"auto"` and
-      # is never done if formatting durations as colon-separated values
-      break_vec <- c(break_vec, ifelse(time_part_val > 0, 1, 0))
+      x_val_i <- c(x_val_i, time_part_val)
 
-      if (out_units == "auto" && out_style != "colon-sep") {
-
-        # Reinitialize `break_vec` in the case of all zero-value
-        # time-parts (usually, this removes leading zeros)
-        if (all(break_vec == 0)) break_vec <- c()
-
-        if (!is.null(break_vec)) {
-          rle_i <- rle(x = break_vec)
-          if (any(rle_i$values == 0)) {
-            if (any(rle_i$lengths[rle_i$values == 0] > 1)) break
-          }
-        }
-      }
-
-      # `!is.null(break_vec)` implies that we are at a time part that is
-      # non-zero and perhaps previous time parts were processed before
-
-      if (!(
-        (time_part_val < 1 && drop_zero_parts) &&
-        (drop_zero_parts || !is.null(break_vec))
-      )) {
-
-        x_str_i <-
-          c(
-            x_str_i,
-            format_time_part(
-              x = time_part_val,
-              time_part = time_p,
-              out_style = out_style
-            )
-          )
-
-        x_rem_i <-
-          subtract_time_with_val(
-            x = x_rem_i,
-            time_part = time_p,
-            val = time_part_val
-          )
-      }
-    }
-
-    # Handle edge case where duration is non-zero and smaller
-    # than the smallest time-part in `time_parts`
-    if (x_rem_i > 0 && is.null(x_str_i)) {
+      x_rem_i <-
+        subtract_time_with_val(
+          x = x_rem_i,
+          time_part = time_p,
+          val = unname(time_part_val)
+        )
 
       x_str_i <-
-        paste0(
-          "<",
+        c(
+          x_str_i,
           format_time_part(
-            x = 1,
+            x = time_part_val,
             time_part = time_p,
             out_style = out_style
           )
         )
     }
 
+    # Handle edge cases where duration is smaller
+    # than the smallest unit in `out_units`
+    if (all(x_val_i == 0)) {
+
+      if (x_rem_i == 0) {
+
+        # Case where time duration is zero
+        x_str[i] <-
+          format_time_part(
+            x = 0,
+            time_part = time_p,
+            out_style = out_style
+          )
+
+      } else {
+
+        # Case where time duration is lesser than the
+        # lowest time unit in `out_units`
+        x_str[i] <-
+          paste0(
+            "<",
+            format_time_part(
+              x = 1,
+              time_part = time_p,
+              out_style = out_style
+            )
+          )
+      }
+
+      next
+    }
+
+    # Remove time parts according to keywords in `trim_zero_units`
+    total_time_units <- length(x_val_i)
+
+    first_non_zero_unit_idx <- utils::head(which(unname(x_val_i) != 0), 1)
+    last_non_zero_unit_idx <- utils::tail(which(unname(x_val_i) != 0), 1)
+
+    remove_idx <- c()
+
+    # Possibly add leading zero time parts to `remove_idx`
+    if (
+      "leading" %in% trim_zero_units &&
+      length(first_non_zero_unit_idx) > 0 &&
+      first_non_zero_unit_idx > 1
+    ) {
+      remove_idx <- c(remove_idx, seq(1, first_non_zero_unit_idx - 1))
+    }
+
+    # Possibly add trailing zero time parts to `remove_idx`
+    if (
+      "trailing" %in% trim_zero_units &&
+      length(last_non_zero_unit_idx) > 0 &&
+      last_non_zero_unit_idx < total_time_units
+    ) {
+      remove_idx <- c(remove_idx, seq(last_non_zero_unit_idx + 1, total_time_units))
+    }
+
+    # Possibly add internal zero time parts to `remove_idx`
+    if (
+      "internal" %in% trim_zero_units &&
+      first_non_zero_unit_idx != last_non_zero_unit_idx &&
+      last_non_zero_unit_idx - first_non_zero_unit_idx > 1
+    ) {
+
+      internal_idx <- (first_non_zero_unit_idx + 1):(last_non_zero_unit_idx - 1)
+      remove_idx <- c(remove_idx, base::intersect(internal_idx, which(unname(x_val_i) == 0)))
+    }
+
+    # Remove units from `x_str_i`
+    if (!is.null(remove_idx) && length(remove_idx) > 0) {
+      x_str_i <- x_str_i[-remove_idx]
+    }
+
+    # Remove units that exceed a maximum number according to `max_output_units`
+    if (!is.null(max_output_units) && length(x_str_i) > max_output_units) {
+      x_str_i <- x_str_i[seq_len(max_output_units)]
+    }
+
     if (out_style == "colon-sep") {
+
       x_str[i] <- paste0(x_str_i, collapse = ":")
+
+      if (length(x_str_i) == 4) {
+        x_str[i] <- sub(":", "/", x_str[i], fixed = TRUE)
+      }
+
+    } else if (out_style == "iso") {
+
+      x_str[i] <-
+        paste0("P", paste0(x_str_i, collapse = "")) %>%
+        tidy_sub("D", "DT", fixed = TRUE)
+
     } else {
       x_str[i] <- paste0(x_str_i, collapse = " ")
     }
@@ -2732,8 +2853,14 @@ format_time_part <- function(x, time_part, out_style) {
   } else if (out_style == "wide") {
     if (x == 1) time_part <- gsub("s$", "", time_part)
     out <- paste(x, time_part)
+  } else if (out_style == "iso") {
+    out <- paste0(x, toupper(substr(time_part, 1, 1)))
   } else {
-    out <- x
+    if (names(x) %in% c("hours", "mins", "secs") && x < 10) {
+      out <- paste0("0", x)
+    } else {
+      out <- x
+    }
   }
 
   out
