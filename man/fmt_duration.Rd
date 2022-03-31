@@ -9,9 +9,10 @@ fmt_duration(
   columns,
   rows = everything(),
   input_units = NULL,
-  output_units = "auto",
-  duration_style = c("narrow", "wide", "colon-sep"),
-  drop_zero_parts = TRUE,
+  output_units = NULL,
+  duration_style = c("narrow", "wide", "colon-sep", "iso"),
+  trim_zero_units = TRUE,
+  max_output_units = NULL,
   pattern = "{x}"
 )
 }
@@ -40,22 +41,40 @@ included in \code{columns} then one of the following keywords, representative of
 time units, must be provided: seconds (\code{"secs"}), \code{"mins"} (minutes),
 \code{"hours"}, \code{"days"}, or \code{"weeks"}.}
 
-\item{output_units}{The output values can be handled by one of two keywords
-(\code{"auto"}, the default, or \code{"all"}) or a vector of the following time
-parts: \code{"weeks"}, \code{"days"}, \code{"hours"}, \code{"mins"}, or \code{"secs"}.}
+\item{output_units}{Controls the output time units. The default, \code{NULL},
+means that \strong{gt} will automatically choose time units based on the input
+duration value. To control which time units are to be considered for output
+(before trimming with \code{trim_zero_units}) we can specify a range of time
+units with a two-element vector consisting of these keywords: \code{"weeks"},
+\code{"days"}, \code{"hours"}, \code{"mins"}, or \code{"secs"}. If only a single time unit is
+needed for output, a one-element vector can be used with any of the
+aforementioned keywords.}
 
 \item{duration_style}{A choice of three formatting styles for the output
-duration values. With \code{"narrow"} (the default style), durations will be
-formatted with single letter time-part units (e.g., 1.35 days will be
+duration values. With \code{"narrow"} (the default style), duration values will
+be formatted with single letter time-part units (e.g., 1.35 days will be
 styled as \verb{"1d 8h 24m}). With \code{"wide"}, this example value will be expanded
 to \code{"1 day 8 hours 24 minutes"} after formatting. The \code{"colon-sep"} style
-of formatting will separate all values with a colon and will not provide
-any time-part units, so the output of 1.35 days will be \code{"1:8:24"}.}
+will put days, hours, minutes, and seconds in the \code{"[D]/[HH]:[MM]:[SS]"}
+format. The \code{"iso"} style will produce a value that conforms to the ISO
+8601 rules for duration values (e.g., 1.35 days will become \code{"P1DT8H24M"}).}
 
-\item{drop_zero_parts}{An option to drop leading and internal values for
-time parts if they are zero. By default this is \code{TRUE} and duration values
-that might otherwise be formatted as \code{"0w 1d 0h 4m 19s"} with
-\code{drop_zero_parts = FALSE} are instead displayed as \code{"1d 4m 19s"}.}
+\item{trim_zero_units}{Provides methods to remove output time units that have
+zero values. By default this is \code{TRUE} and duration values that might
+otherwise be formatted as \code{"0w 1d 0h 4m 19s"} with
+\code{trim_zero_units = FALSE} are instead displayed as \code{"1d 4m 19s"}. Aside
+from using \code{TRUE}/\code{FALSE} we could provide a vector of keywords for more
+precise control. These keywords are: (1) \code{"leading"}, to omit all leading
+zero-value time units (e.g., \code{"0w 1d"} -> \code{"1d"}), (2) \code{"trailing"}, to
+omit all trailing zero-value time units (e.g., \code{"3d 5h 0s"} -> \code{"3d 5h"}),
+and \code{"internal"}, which removes all internal zero-value time units (e.g.,
+\code{"5d 0h 33m"} -> \code{"5d 33m"}).}
+
+\item{max_output_units}{If \code{output_units} is \code{NULL}, where the output time
+units are unspecified and left to \strong{gt} to handle, a numeric value
+provided for \code{max_output_units} will be taken as the maximum number of time
+units to display in all output time duration values. By default, this is
+\code{NULL} and all possible time units will be displayed.}
 
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other
