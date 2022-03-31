@@ -1222,7 +1222,7 @@ fmt_fraction <- function(
     )
   }
 
-  # Use locale-based marks if a locale ID is provided
+  # Use locale-based `sep_mark` if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -2485,13 +2485,27 @@ fmt_duration <- function(
     duration_style = c("narrow", "wide", "colon-sep", "iso"),
     trim_zero_units = TRUE,
     max_output_units = NULL,
-    pattern = "{x}"
+    pattern = "{x}",
+    use_seps = TRUE,
+    sep_mark = ",",
+    force_sign = FALSE,
+    system = c("intl", "ind"),
+    locale = NULL
 ) {
 
   duration_style <- match.arg(duration_style)
+  system <- match.arg(system)
+  dec_mark <- "."
 
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  # Resolve the `locale` value here with the global locale value
+  locale <- resolve_locale(data = data, locale = locale)
+
+  # Use locale-based marks if a locale ID is provided
+  sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
+  dec_mark <- get_locale_dec_mark(locale, dec_mark)
 
   if (is_true(trim_zero_units)) {
     trim_zero_units <- c("leading", "trailing", "internal")
@@ -2608,7 +2622,11 @@ fmt_duration <- function(
             out_units = output_units,
             out_style = duration_style,
             trim_zero_units = trim_zero_units,
-            max_output_units = max_output_units
+            max_output_units = max_output_units,
+            sep_mark = sep_mark,
+            dec_mark = dec_mark,
+            system = system,
+            locale = locale
           )
 
         x_str[x < 0 & !is.infinite(x)] <-
@@ -2675,7 +2693,11 @@ values_to_durations <- function(
     out_units,
     out_style,
     trim_zero_units,
-    max_output_units
+    max_output_units,
+    sep_mark,
+    dec_mark,
+    system,
+    locale
 ) {
 
   # Should `in_units` be anything other than days then convert
@@ -2720,7 +2742,11 @@ values_to_durations <- function(
           format_time_part(
             x = time_part_val,
             time_part = time_p,
-            out_style = out_style
+            out_style = out_style,
+            sep_mark = sep_mark,
+            dec_mark = dec_mark,
+            locale = locale,
+            system = system
           )
         )
     }
@@ -2736,7 +2762,11 @@ values_to_durations <- function(
           format_time_part(
             x = 0,
             time_part = time_p,
-            out_style = out_style
+            out_style = out_style,
+            sep_mark = sep_mark,
+            dec_mark = dec_mark,
+            locale = locale,
+            system = system
           )
 
       } else {
@@ -2749,7 +2779,11 @@ values_to_durations <- function(
             format_time_part(
               x = 1,
               time_part = time_p,
-              out_style = out_style
+              out_style = out_style,
+              sep_mark = sep_mark,
+              dec_mark = dec_mark,
+              locale = locale,
+              system = system
             )
           )
       }
@@ -2846,20 +2880,42 @@ subtract_time_with_val <- function(x, time_part, val) {
   x - (val / day_conversion_factor(time_part = time_part))
 }
 
-format_time_part <- function(x, time_part, out_style) {
+format_time_part <- function(
+    x,
+    time_part,
+    out_style,
+    sep_mark,
+    dec_mark,
+    locale,
+    system
+) {
+
+  x_val <-
+    format_num_to_str(
+      x,
+      context = "plain",
+      decimals = 0,
+      n_sigfig = NULL,
+      sep_mark = if (out_style != "iso") sep_mark else "",
+      dec_mark = dec_mark,
+      drop_trailing_zeros = TRUE,
+      drop_trailing_dec_mark = TRUE,
+      format = "f",
+      system = system
+    )
 
   if (out_style == "narrow") {
-    out <- paste0(x, substr(time_part, 1, 1))
+    out <- paste0(x_val, substr(time_part, 1, 1))
   } else if (out_style == "wide") {
     if (x == 1) time_part <- gsub("s$", "", time_part)
-    out <- paste(x, time_part)
+    out <- paste(x_val, time_part)
   } else if (out_style == "iso") {
-    out <- paste0(x, toupper(substr(time_part, 1, 1)))
+    out <- paste0(x_val, toupper(substr(time_part, 1, 1)))
   } else {
     if (names(x) %in% c("hours", "mins", "secs") && x < 10) {
-      out <- paste0("0", x)
+      out <- paste0("0", x_val)
     } else {
-      out <- x
+      out <- x_val
     }
   }
 
