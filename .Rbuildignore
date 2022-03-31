@@ -18,6 +18,7 @@ tests/gt-examples
 tests/testthat/_snaps
 tests/testthat/test-cols_width_rtf.R
 tests/testthat/test-data_color.R
+tests/testthat/test-fmt_duration.R
 tests/testthat/test-fmt_fraction.R
 tests/testthat/test-footer.R
 tests/testthat/test-group_column_label.R
