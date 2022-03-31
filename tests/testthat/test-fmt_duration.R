@@ -20,7 +20,7 @@ test_that("the `fmt_duration()` function works correctly", {
        fmt_duration(columns = "num_1", input_units = "days") %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1d 4m 19s", "5189w 7m 11s", "5d", "&minus;4w 6d 12h", "4w 3d 14h 24m",
+      "1d 4m 19s", "5,189w 7m 11s", "5d", "&minus;4w 6d 12h", "4w 3d 14h 24m",
       "4w 12h", "NA"
     )
   )
@@ -32,7 +32,7 @@ test_that("the `fmt_duration()` function works correctly", {
          columns = "num_1", input_units = "days", duration_style = "wide") %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1 day 4 mins 19 secs", "5189 weeks 7 mins 11 secs", "5 days",
+      "1 day 4 mins 19 secs", "5,189 weeks 7 mins 11 secs", "5 days",
       "&minus;4 weeks 6 days 12 hours", "4 weeks 3 days 14 hours 24 mins",
       "4 weeks 12 hours", "NA"
       )
@@ -45,7 +45,7 @@ test_that("the `fmt_duration()` function works correctly", {
          columns = "num_1", input_units = "days", duration_style = "colon-sep") %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1/00:04:19", "36323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
+      "1/00:04:19", "36,323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
       "31/14:24:00", "28/12:00:00", "NA"
     )
   )
@@ -70,7 +70,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "narrow", trim_zero_units = FALSE) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "0w 1d 0h 4m 19s", "5189w 0d 0h 7m 11s", "0w 5d 0h 0m 0s",
+      "0w 1d 0h 4m 19s", "5,189w 0d 0h 7m 11s", "0w 5d 0h 0m 0s",
       "&minus;4w 6d 12h 0m 0s", "4w 3d 14h 24m 0s", "4w 0d 12h 0m 0s",
       "NA"
     )
@@ -84,7 +84,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "wide", trim_zero_units = FALSE) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "0 weeks 1 day 0 hours 4 mins 19 secs", "5189 weeks 0 days 0 hours 7 mins 11 secs",
+      "0 weeks 1 day 0 hours 4 mins 19 secs", "5,189 weeks 0 days 0 hours 7 mins 11 secs",
       "0 weeks 5 days 0 hours 0 mins 0 secs", "&minus;4 weeks 6 days 12 hours 0 mins 0 secs",
       "4 weeks 3 days 14 hours 24 mins 0 secs", "4 weeks 0 days 12 hours 0 mins 0 secs",
       "NA"
@@ -100,7 +100,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "colon-sep", trim_zero_units = FALSE) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1/00:04:19", "36323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
+      "1/00:04:19", "36,323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
       "31/14:24:00", "28/12:00:00", "NA"
     )
   )
@@ -127,7 +127,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "narrow", trim_zero_units = "leading") %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1d 0h 4m 19s", "5189w 0d 0h 7m 11s", "5d 0h 0m 0s", "&minus;4w 6d 12h 0m 0s",
+      "1d 0h 4m 19s", "5,189w 0d 0h 7m 11s", "5d 0h 0m 0s", "&minus;4w 6d 12h 0m 0s",
       "4w 3d 14h 24m 0s", "4w 0d 12h 0m 0s", "NA"
     )
   )
@@ -140,7 +140,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "wide", trim_zero_units = "leading") %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1 day 0 hours 4 mins 19 secs", "5189 weeks 0 days 0 hours 7 mins 11 secs",
+      "1 day 0 hours 4 mins 19 secs", "5,189 weeks 0 days 0 hours 7 mins 11 secs",
       "5 days 0 hours 0 mins 0 secs", "&minus;4 weeks 6 days 12 hours 0 mins 0 secs",
       "4 weeks 3 days 14 hours 24 mins 0 secs", "4 weeks 0 days 12 hours 0 mins 0 secs",
       "NA"
@@ -156,7 +156,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "colon-sep", trim_zero_units = "leading") %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1/00:04:19", "36323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
+      "1/00:04:19", "36,323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
       "31/14:24:00", "28/12:00:00", "NA"
     )
   )
@@ -183,7 +183,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "narrow", trim_zero_units = "trailing") %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "0w 1d 0h 4m 19s", "5189w 0d 0h 7m 11s", "0w 5d", "&minus;4w 6d 12h",
+      "0w 1d 0h 4m 19s", "5,189w 0d 0h 7m 11s", "0w 5d", "&minus;4w 6d 12h",
       "4w 3d 14h 24m", "4w 0d 12h", "NA"
     )
   )
@@ -196,7 +196,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "wide", trim_zero_units = "trailing") %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "0 weeks 1 day 0 hours 4 mins 19 secs", "5189 weeks 0 days 0 hours 7 mins 11 secs",
+      "0 weeks 1 day 0 hours 4 mins 19 secs", "5,189 weeks 0 days 0 hours 7 mins 11 secs",
       "0 weeks 5 days", "&minus;4 weeks 6 days 12 hours", "4 weeks 3 days 14 hours 24 mins",
       "4 weeks 0 days 12 hours", "NA"
     )
@@ -211,7 +211,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "colon-sep", trim_zero_units = "trailing") %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1/00:04:19", "36323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
+      "1/00:04:19", "36,323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
       "31/14:24:00", "28/12:00:00", "NA"
     )
   )
@@ -238,7 +238,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "narrow", trim_zero_units = "internal") %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "0w 1d 4m 19s", "5189w 7m 11s", "0w 5d 0h 0m 0s", "&minus;4w 6d 12h 0m 0s",
+      "0w 1d 4m 19s", "5,189w 7m 11s", "0w 5d 0h 0m 0s", "&minus;4w 6d 12h 0m 0s",
       "4w 3d 14h 24m 0s", "4w 12h 0m 0s", "NA"
     )
   )
@@ -251,7 +251,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "wide", trim_zero_units = "internal") %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "0 weeks 1 day 4 mins 19 secs", "5189 weeks 7 mins 11 secs",
+      "0 weeks 1 day 4 mins 19 secs", "5,189 weeks 7 mins 11 secs",
       "0 weeks 5 days 0 hours 0 mins 0 secs", "&minus;4 weeks 6 days 12 hours 0 mins 0 secs",
       "4 weeks 3 days 14 hours 24 mins 0 secs", "4 weeks 12 hours 0 mins 0 secs",
       "NA"
@@ -267,7 +267,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "colon-sep", trim_zero_units = "internal") %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1/00:04:19", "36323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
+      "1/00:04:19", "36,323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
       "31/14:24:00", "28/12:00:00", "NA"
     )
   )
@@ -294,7 +294,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "narrow", trim_zero_units = c("leading", "trailing")) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1d 0h 4m 19s", "5189w 0d 0h 7m 11s", "5d", "&minus;4w 6d 12h",
+      "1d 0h 4m 19s", "5,189w 0d 0h 7m 11s", "5d", "&minus;4w 6d 12h",
       "4w 3d 14h 24m", "4w 0d 12h", "NA"
     )
   )
@@ -307,7 +307,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "wide", trim_zero_units = c("leading", "trailing")) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1 day 0 hours 4 mins 19 secs", "5189 weeks 0 days 0 hours 7 mins 11 secs",
+      "1 day 0 hours 4 mins 19 secs", "5,189 weeks 0 days 0 hours 7 mins 11 secs",
       "5 days", "&minus;4 weeks 6 days 12 hours", "4 weeks 3 days 14 hours 24 mins",
       "4 weeks 0 days 12 hours", "NA"
     )
@@ -322,7 +322,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "colon-sep", trim_zero_units = c("leading", "trailing")) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1/00:04:19", "36323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
+      "1/00:04:19", "36,323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
       "31/14:24:00", "28/12:00:00", "NA"
     )
   )
@@ -349,7 +349,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "narrow", trim_zero_units = c("leading", "internal")) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1d 4m 19s", "5189w 7m 11s", "5d 0h 0m 0s", "&minus;4w 6d 12h 0m 0s",
+      "1d 4m 19s", "5,189w 7m 11s", "5d 0h 0m 0s", "&minus;4w 6d 12h 0m 0s",
       "4w 3d 14h 24m 0s", "4w 12h 0m 0s", "NA"
     )
   )
@@ -362,7 +362,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "wide", trim_zero_units = c("leading", "internal")) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1 day 4 mins 19 secs", "5189 weeks 7 mins 11 secs", "5 days 0 hours 0 mins 0 secs",
+      "1 day 4 mins 19 secs", "5,189 weeks 7 mins 11 secs", "5 days 0 hours 0 mins 0 secs",
       "&minus;4 weeks 6 days 12 hours 0 mins 0 secs", "4 weeks 3 days 14 hours 24 mins 0 secs",
       "4 weeks 12 hours 0 mins 0 secs", "NA"
     )
@@ -377,7 +377,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "colon-sep", trim_zero_units = c("leading", "internal")) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1/00:04:19", "36323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
+      "1/00:04:19", "36,323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
       "31/14:24:00", "28/12:00:00", "NA"
     )
   )
@@ -404,7 +404,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "narrow", trim_zero_units = c("trailing", "internal")) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "0w 1d 4m 19s", "5189w 7m 11s", "0w 5d", "&minus;4w 6d 12h",
+      "0w 1d 4m 19s", "5,189w 7m 11s", "0w 5d", "&minus;4w 6d 12h",
       "4w 3d 14h 24m", "4w 12h", "NA"
     )
   )
@@ -417,7 +417,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "wide", trim_zero_units = c("trailing", "internal")) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "0 weeks 1 day 4 mins 19 secs", "5189 weeks 7 mins 11 secs",
+      "0 weeks 1 day 4 mins 19 secs", "5,189 weeks 7 mins 11 secs",
       "0 weeks 5 days", "&minus;4 weeks 6 days 12 hours", "4 weeks 3 days 14 hours 24 mins",
       "4 weeks 12 hours", "NA"
     )
@@ -432,7 +432,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "colon-sep", trim_zero_units = c("trailing", "internal")) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1/00:04:19", "36323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
+      "1/00:04:19", "36,323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
       "31/14:24:00", "28/12:00:00", "NA"
     )
   )
@@ -458,7 +458,7 @@ test_that("the `fmt_duration()` function works correctly", {
          columns = "num_1", input_units = "days",
          duration_style = "narrow", max_output_units = 2) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("1d 4m", "5189w 7m", "5d", "&minus;4w 6d", "4w 3d", "4w 12h", "NA")
+    c("1d 4m", "5,189w 7m", "5d", "&minus;4w 6d", "4w 3d", "4w 12h", "NA")
   )
 
   # Use the "wide" duration style and keep a max of 2 time units
@@ -469,7 +469,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "wide", max_output_units = 2) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1 day 4 mins", "5189 weeks 7 mins", "5 days", "&minus;4 weeks 6 days",
+      "1 day 4 mins", "5,189 weeks 7 mins", "5 days", "&minus;4 weeks 6 days",
       "4 weeks 3 days", "4 weeks 12 hours", "NA"
     )
   )
@@ -483,7 +483,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "colon-sep", max_output_units = 2) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1/00:04:19", "36323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
+      "1/00:04:19", "36,323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
       "31/14:24:00", "28/12:00:00", "NA"
     )
   )
@@ -509,7 +509,7 @@ test_that("the `fmt_duration()` function works correctly", {
          columns = "num_1", input_units = "days",
          duration_style = "narrow", max_output_units = 1) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("1d", "5189w", "5d", "&minus;4w", "4w", "4w", "NA")
+    c("1d", "5,189w", "5d", "&minus;4w", "4w", "4w", "NA")
   )
 
   # Use the "wide" duration style and keep a max of 1 time unit
@@ -520,7 +520,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "wide", max_output_units = 1) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1 day", "5189 weeks", "5 days", "&minus;4 weeks", "4 weeks",
+      "1 day", "5,189 weeks", "5 days", "&minus;4 weeks", "4 weeks",
       "4 weeks", "NA"
     )
   )
@@ -534,7 +534,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "colon-sep", max_output_units = 1) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1/00:04:19", "36323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
+      "1/00:04:19", "36,323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
       "31/14:24:00", "28/12:00:00", "NA"
     )
   )
@@ -562,7 +562,7 @@ test_that("the `fmt_duration()` function works correctly", {
          output_units = c("hours", "mins"),
          duration_style = "narrow") %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("24h 4m", "871752h 7m", "120h", "&minus;828h", "758h 24m", "684h", "NA")
+    c("24h 4m", "871,752h 7m", "120h", "&minus;828h", "758h 24m", "684h", "NA")
   )
 
   # Use the "wide" duration style and a set of custom output time units
@@ -575,7 +575,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "wide") %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "24 hours 4 mins", "871752 hours 7 mins", "120 hours", "&minus;828 hours",
+      "24 hours 4 mins", "871,752 hours 7 mins", "120 hours", "&minus;828 hours",
       "758 hours 24 mins", "684 hours", "NA"
     )
   )
@@ -590,7 +590,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "colon-sep") %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1/00:04:19", "36323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
+      "1/00:04:19", "36,323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
       "31/14:24:00", "28/12:00:00", "NA"
     )
   )
@@ -619,7 +619,7 @@ test_that("the `fmt_duration()` function works correctly", {
          output_units = c("mins", "secs"),
          duration_style = "narrow") %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("1444m 19s", "52305127m 11s", "7200m", "&minus;49680m", "45504m", "41040m", "NA")
+    c("1,444m 19s", "52,305,127m 11s", "7,200m", "&minus;49,680m", "45,504m", "41,040m", "NA")
   )
 
   # Use the "wide" duration style and a set of custom output time units
@@ -632,8 +632,8 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "wide") %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1444 mins 19 secs", "52305127 mins 11 secs", "7200 mins",
-      "&minus;49680 mins", "45504 mins", "41040 mins", "NA"
+      "1,444 mins 19 secs", "52,305,127 mins 11 secs", "7,200 mins",
+      "&minus;49,680 mins", "45,504 mins", "41,040 mins", "NA"
     )
   )
 
@@ -647,7 +647,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "colon-sep") %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1/00:04:19", "36323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
+      "1/00:04:19", "36,323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
       "31/14:24:00", "28/12:00:00", "NA"
     )
   )
@@ -676,7 +676,7 @@ test_that("the `fmt_duration()` function works correctly", {
          output_units = "weeks",
          duration_style = "narrow") %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("<1w", "5189w", "<1w", "&minus;4w", "4w", "4w", "NA")
+    c("<1w", "5,189w", "<1w", "&minus;4w", "4w", "4w", "NA")
   )
 
   # Use the "wide" duration style and a set of custom output time units
@@ -689,7 +689,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "wide") %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "<1 week", "5189 weeks", "<1 week", "&minus;4 weeks", "4 weeks",
+      "<1 week", "5,189 weeks", "<1 week", "&minus;4 weeks", "4 weeks",
       "4 weeks", "NA"
     )
   )
@@ -704,7 +704,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "colon-sep") %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1/00:04:19", "36323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
+      "1/00:04:19", "36,323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
       "31/14:24:00", "28/12:00:00", "NA"
     )
   )
@@ -733,7 +733,7 @@ test_that("the `fmt_duration()` function works correctly", {
          output_units = c("days", "mins"),
          duration_style = "narrow") %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("1d 4m", "36323d 7m", "5d", "&minus;34d 720m", "31d 864m", "28d 720m", "NA")
+    c("1d 4m", "36,323d 7m", "5d", "&minus;34d 720m", "31d 864m", "28d 720m", "NA")
   )
 
   # Use the "wide" duration style and a set of custom output time units
@@ -746,7 +746,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "wide") %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1 day 4 mins", "36323 days 7 mins", "5 days", "&minus;34 days 720 mins",
+      "1 day 4 mins", "36,323 days 7 mins", "5 days", "&minus;34 days 720 mins",
       "31 days 864 mins", "28 days 720 mins", "NA"
     )
   )
@@ -761,7 +761,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "colon-sep") %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1/00:04:19", "36323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
+      "1/00:04:19", "36,323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
       "31/14:24:00", "28/12:00:00", "NA"
     )
   )
@@ -790,7 +790,7 @@ test_that("the `fmt_duration()` function works correctly", {
          output_units = c("weeks", "hours", "secs"),
          duration_style = "narrow") %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("24h 259s", "5189w 431s", "120h", "&minus;4w 156h", "4w 86h 1440s", "4w 12h", "NA")
+    c("24h 259s", "5,189w 431s", "120h", "&minus;4w 156h", "4w 86h 1,440s", "4w 12h", "NA")
   )
 
   # Use the "wide" duration style and a set of custom output time units
@@ -803,8 +803,8 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "wide") %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "24 hours 259 secs", "5189 weeks 431 secs", "120 hours",
-      "&minus;4 weeks 156 hours", "4 weeks 86 hours 1440 secs",
+      "24 hours 259 secs", "5,189 weeks 431 secs", "120 hours",
+      "&minus;4 weeks 156 hours", "4 weeks 86 hours 1,440 secs",
       "4 weeks 12 hours", "NA"
     )
   )
@@ -819,7 +819,7 @@ test_that("the `fmt_duration()` function works correctly", {
          duration_style = "colon-sep") %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1/00:04:19", "36323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
+      "1/00:04:19", "36,323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
       "31/14:24:00", "28/12:00:00", "NA"
     )
   )
