@@ -2439,11 +2439,11 @@ fmt_datetime <- function(data,
 #' @param output_units Controls the output time units. The default, `NULL`,
 #'   means that **gt** will automatically choose time units based on the input
 #'   duration value. To control which time units are to be considered for output
-#'   (before trimming with `trim_zero_units`) we can specify a range of time
-#'   units with a two-element vector consisting of these keywords: `"weeks"`,
-#'   `"days"`, `"hours"`, `"mins"`, or `"secs"`. If only a single time unit is
-#'   needed for output, a one-element vector can be used with any of the
-#'   aforementioned keywords.
+#'   (before trimming with `trim_zero_units`) we can specify the use of several
+#'   time units with a vector consisting of these keywords: `"weeks"`, `"days"`,
+#'   `"hours"`, `"mins"`, or `"secs"`. If only a single time unit is needed for
+#'   output, a one-element vector can be used with any of the aforementioned
+#'   keywords.
 #' @param duration_style A choice of three formatting styles for the output
 #'   duration values. With `"narrow"` (the default style), duration values will
 #'   be formatted with single letter time-part units (e.g., 1.35 days will be
@@ -2568,7 +2568,7 @@ fmt_duration <- function(
   } else {
 
     # Stop function if `output_units` isn't a character vector, isn't of
-    # the right length (1 or 2), and does not contain valid values
+    # the right length (1 or greater), and does not contain valid values
     validate_duration_output_units(output_units = output_units)
 
     # Normalize the valid set of provided `output_units`
