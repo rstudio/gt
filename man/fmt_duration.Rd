@@ -44,11 +44,11 @@ time units, must be provided: seconds (\code{"secs"}), \code{"mins"} (minutes),
 \item{output_units}{Controls the output time units. The default, \code{NULL},
 means that \strong{gt} will automatically choose time units based on the input
 duration value. To control which time units are to be considered for output
-(before trimming with \code{trim_zero_units}) we can specify a range of time
-units with a two-element vector consisting of these keywords: \code{"weeks"},
-\code{"days"}, \code{"hours"}, \code{"mins"}, or \code{"secs"}. If only a single time unit is
-needed for output, a one-element vector can be used with any of the
-aforementioned keywords.}
+(before trimming with \code{trim_zero_units}) we can specify the use of several
+time units with a vector consisting of these keywords: \code{"weeks"}, \code{"days"},
+\code{"hours"}, \code{"mins"}, or \code{"secs"}. If only a single time unit is needed for
+output, a one-element vector can be used with any of the aforementioned
+keywords.}
 
 \item{duration_style}{A choice of three formatting styles for the output
 duration values. With \code{"narrow"} (the default style), duration values will
