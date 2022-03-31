@@ -1,3 +1,6 @@
+local_edition(3)
+skip_on_cran()
+
 test_that("the `fmt_duration()` function works correctly", {
 
   # Create an input tibble with a numeric column
@@ -13,7 +16,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Format the `num_1` column using the defaults for `fmt_duration()` and
   # ensuring the `input_units` are days
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(columns = "num_1", input_units = "days") %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
@@ -24,7 +27,7 @@ test_that("the `fmt_duration()` function works correctly", {
 
   # Use the "wide" duration style
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days", duration_style = "wide") %>%
        render_formats_test(context = "html"))[["num_1"]],
@@ -37,7 +40,7 @@ test_that("the `fmt_duration()` function works correctly", {
 
   # Use the "colon-sep" duration style
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days", duration_style = "colon-sep") %>%
        render_formats_test(context = "html"))[["num_1"]],
@@ -49,7 +52,7 @@ test_that("the `fmt_duration()` function works correctly", {
 
   # Use the "iso" duration style
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days", duration_style = "iso") %>%
        render_formats_test(context = "html"))[["num_1"]],
@@ -61,7 +64,7 @@ test_that("the `fmt_duration()` function works correctly", {
 
   # Use the "narrow" duration style and don't trim any time units
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "narrow", trim_zero_units = FALSE) %>%
@@ -75,7 +78,7 @@ test_that("the `fmt_duration()` function works correctly", {
 
   # Use the "wide" duration style and don't trim any time units
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "wide", trim_zero_units = FALSE) %>%
@@ -91,7 +94,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "colon-sep" duration style and don't trim any time units
   # (`trim_zero_units` has no effect with this duration style)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "colon-sep", trim_zero_units = FALSE) %>%
@@ -105,7 +108,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "iso" duration style and don't trim any time units
   # (`trim_zero_units` has no effect with this duration style)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "iso", trim_zero_units = FALSE) %>%
@@ -118,7 +121,7 @@ test_that("the `fmt_duration()` function works correctly", {
 
   # Use the "narrow" duration style and trim leading time units
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "narrow", trim_zero_units = "leading") %>%
@@ -131,7 +134,7 @@ test_that("the `fmt_duration()` function works correctly", {
 
   # Use the "wide" duration style and trim leading time units
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "wide", trim_zero_units = "leading") %>%
@@ -147,7 +150,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "colon-sep" duration style and trim leading time units
   # (`trim_zero_units` has no effect with this duration style)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "colon-sep", trim_zero_units = "leading") %>%
@@ -161,7 +164,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "iso" duration style and trim leading time units
   # (`trim_zero_units` has no effect with this duration style)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "iso", trim_zero_units = "leading") %>%
@@ -174,7 +177,7 @@ test_that("the `fmt_duration()` function works correctly", {
 
   # Use the "narrow" duration style and trim trailing time units
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "narrow", trim_zero_units = "trailing") %>%
@@ -187,7 +190,7 @@ test_that("the `fmt_duration()` function works correctly", {
 
   # Use the "wide" duration style and trim trailing time units
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "wide", trim_zero_units = "trailing") %>%
@@ -202,7 +205,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "colon-sep" duration style and trim trailing time units
   # (`trim_zero_units` has no effect with this duration style)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "colon-sep", trim_zero_units = "trailing") %>%
@@ -216,7 +219,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "iso" duration style and trim trailing time units
   # (`trim_zero_units` has no effect with this duration style)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "iso", trim_zero_units = "trailing") %>%
@@ -229,7 +232,7 @@ test_that("the `fmt_duration()` function works correctly", {
 
   # Use the "narrow" duration style and trim internal time units
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "narrow", trim_zero_units = "internal") %>%
@@ -242,7 +245,7 @@ test_that("the `fmt_duration()` function works correctly", {
 
   # Use the "wide" duration style and trim internal time units
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "wide", trim_zero_units = "internal") %>%
@@ -258,7 +261,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "colon-sep" duration style and trim internal time units
   # (`trim_zero_units` has no effect with this duration style)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "colon-sep", trim_zero_units = "internal") %>%
@@ -272,7 +275,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "iso" duration style and trim internal time units
   # (`trim_zero_units` has no effect with this duration style)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "iso", trim_zero_units = "internal") %>%
@@ -285,7 +288,7 @@ test_that("the `fmt_duration()` function works correctly", {
 
   # Use the "narrow" duration style and trim leading and trailing time units
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "narrow", trim_zero_units = c("leading", "trailing")) %>%
@@ -298,7 +301,7 @@ test_that("the `fmt_duration()` function works correctly", {
 
   # Use the "wide" duration style and trim leading and trailing time units
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "wide", trim_zero_units = c("leading", "trailing")) %>%
@@ -313,7 +316,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "colon-sep" duration style and trim leading and trailing time units
   # (`trim_zero_units` has no effect with this duration style)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "colon-sep", trim_zero_units = c("leading", "trailing")) %>%
@@ -327,7 +330,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "iso" duration style and trim leading and trailing time units
   # (`trim_zero_units` has no effect with this duration style)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "iso", trim_zero_units = c("leading", "trailing")) %>%
@@ -340,7 +343,7 @@ test_that("the `fmt_duration()` function works correctly", {
 
   # Use the "narrow" duration style and trim leading and internal time units
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "narrow", trim_zero_units = c("leading", "internal")) %>%
@@ -353,7 +356,7 @@ test_that("the `fmt_duration()` function works correctly", {
 
   # Use the "wide" duration style and trim leading and internal time units
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "wide", trim_zero_units = c("leading", "internal")) %>%
@@ -368,7 +371,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "colon-sep" duration style and trim leading and internal time units
   # (`trim_zero_units` has no effect with this duration style)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "colon-sep", trim_zero_units = c("leading", "internal")) %>%
@@ -382,7 +385,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "iso" duration style and trim leading and internal time units
   # (`trim_zero_units` has no effect with this duration style)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "iso", trim_zero_units = c("leading", "internal")) %>%
@@ -395,7 +398,7 @@ test_that("the `fmt_duration()` function works correctly", {
 
   # Use the "narrow" duration style and trim trailing and internal time units
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "narrow", trim_zero_units = c("trailing", "internal")) %>%
@@ -408,7 +411,7 @@ test_that("the `fmt_duration()` function works correctly", {
 
   # Use the "wide" duration style and trim trailing and internal time units
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "wide", trim_zero_units = c("trailing", "internal")) %>%
@@ -423,7 +426,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "colon-sep" duration style and trim trailing and internal time units
   # (`trim_zero_units` has no effect with this duration style)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "colon-sep", trim_zero_units = c("trailing", "internal")) %>%
@@ -437,7 +440,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "iso" duration style and trim trailing and internal time units
   # (`trim_zero_units` has no effect with this duration style)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "iso", trim_zero_units = c("trailing", "internal")) %>%
@@ -450,7 +453,7 @@ test_that("the `fmt_duration()` function works correctly", {
 
   # Use the "narrow" duration style and keep a max of 2 time units
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "narrow", max_output_units = 2) %>%
@@ -460,7 +463,7 @@ test_that("the `fmt_duration()` function works correctly", {
 
   # Use the "wide" duration style and keep a max of 2 time units
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "wide", max_output_units = 2) %>%
@@ -474,7 +477,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "colon-sep" duration style and keep a max of 2 time units
   # (`max_output_units` has no effect with this duration style)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "colon-sep", max_output_units = 2) %>%
@@ -488,7 +491,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "iso" duration style and keep a max of 2 time units
   # (`max_output_units` has no effect with this duration style)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "iso", max_output_units = 2) %>%
@@ -501,7 +504,7 @@ test_that("the `fmt_duration()` function works correctly", {
 
   # Use the "narrow" duration style and keep a max of 1 time unit
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "narrow", max_output_units = 1) %>%
@@ -511,7 +514,7 @@ test_that("the `fmt_duration()` function works correctly", {
 
   # Use the "wide" duration style and keep a max of 1 time unit
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "wide", max_output_units = 1) %>%
@@ -525,7 +528,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "colon-sep" duration style and keep a max of 1 time unit
   # (`max_output_units` has no effect with this duration style)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "colon-sep", max_output_units = 1) %>%
@@ -539,7 +542,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "iso" duration style and keep a max of 1 time unit
   # (`max_output_units` has no effect with this duration style)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          duration_style = "iso", max_output_units = 1) %>%
@@ -553,7 +556,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "narrow" duration style and a set of custom output time units
   # (hours and minutes)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("hours", "mins"),
@@ -565,7 +568,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "wide" duration style and a set of custom output time units
   # (hours and minutes)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("hours", "mins"),
@@ -580,7 +583,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "colon-sep" duration style and a set of custom output time units
   # (hours and minutes, no effect with this duration style)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("hours", "mins"),
@@ -595,7 +598,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "iso" duration style and a set of custom output time units
   # (hours and minutes, no effect with this duration style)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("hours", "mins"),
@@ -610,7 +613,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "narrow" duration style and a set of custom output time units
   # (minutes and seconds)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("mins", "secs"),
@@ -622,7 +625,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "wide" duration style and a set of custom output time units
   # (minutes and seconds)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("mins", "secs"),
@@ -637,7 +640,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "colon-sep" duration style and a set of custom output time units
   # (minutes and seconds, no effect with this duration style)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("mins", "secs"),
@@ -652,7 +655,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "iso" duration style and a set of custom output time units
   # (minutes and seconds, no effect with this duration style)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("mins", "secs"),
@@ -667,7 +670,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "narrow" duration style and a set of custom output time units
   # (weeks)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = "weeks",
@@ -679,7 +682,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "wide" duration style and a set of custom output time units
   # (weeks)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = "weeks",
@@ -694,7 +697,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "colon-sep" duration style and a set of custom output time units
   # (weeks, no effect with this duration style)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = "weeks",
@@ -709,7 +712,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "iso" duration style and a set of custom output time units
   # (weeks, no effect with this duration style)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = "weeks",
@@ -724,7 +727,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "narrow" duration style and a set of custom output time units
   # (days and minutes)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("days", "mins"),
@@ -736,7 +739,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "wide" duration style and a set of custom output time units
   # (days and minutes)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("days", "mins"),
@@ -751,7 +754,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "colon-sep" duration style and a set of custom output time units
   # (days and minutes, no effect with this duration style)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("days", "mins"),
@@ -766,7 +769,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "iso" duration style and a set of custom output time units
   # (days and minutes, no effect with this duration style)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("days", "mins"),
@@ -781,7 +784,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "narrow" duration style and a set of custom output time units
   # (weeks, hours, and seconds)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("weeks", "hours", "secs"),
@@ -793,7 +796,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "wide" duration style and a set of custom output time units
   # (weeks, hours, and seconds)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("weeks", "hours", "secs"),
@@ -809,7 +812,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "colon-sep" duration style and a set of custom output time units
   # (weeks, hours, and seconds; no effect with this duration style)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("weeks", "hours", "secs"),
@@ -824,7 +827,7 @@ test_that("the `fmt_duration()` function works correctly", {
   # Use the "iso" duration style and a set of custom output time units
   # (weeks, hours, and seconds; no effect with this duration style)
   expect_equal(
-    (tab %>%
+    (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("weeks", "hours", "secs"),
