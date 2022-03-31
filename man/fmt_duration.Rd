@@ -13,7 +13,12 @@ fmt_duration(
   duration_style = c("narrow", "wide", "colon-sep", "iso"),
   trim_zero_units = TRUE,
   max_output_units = NULL,
-  pattern = "{x}"
+  pattern = "{x}",
+  use_seps = TRUE,
+  sep_mark = ",",
+  force_sign = FALSE,
+  system = c("intl", "ind"),
+  locale = NULL
 )
 }
 \arguments{
@@ -79,6 +84,35 @@ units to display in all output time duration values. By default, this is
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other
 characters are taken to be string literals.}
+
+\item{use_seps}{An option to use digit group separators. The type of digit
+group separator is set by \code{sep_mark} and overridden if a locale ID is
+provided to \code{locale}. This setting is \code{TRUE} by default.}
+
+\item{sep_mark}{The mark to use as a separator between groups of digits
+(e.g., using \code{sep_mark = ","} with \code{1000} would result in a formatted value
+of \verb{1,000}).}
+
+\item{force_sign}{Should the positive sign be shown for positive values
+(effectively showing a sign for all values except zero)? If so, use \code{TRUE}
+for this option. The default is \code{FALSE}, where only negative numbers will
+display a minus sign. This option is disregarded when using accounting
+notation with \code{accounting = TRUE}.}
+
+\item{system}{The numbering system to use. By default, this is the
+international numbering system (\code{"intl"}) whereby grouping separators
+(i.e., \code{sep_mark}) are separated by three digits. The alternative system,
+the Indian numbering system (\code{"ind"}) uses grouping separators that
+correspond to thousand, lakh, crore, and higher quantities.}
+
+\item{locale}{An optional locale ID that can be used for formatting the value
+according the locale's rules. Examples include \code{"en_US"} for English
+(United States) and \code{"fr_FR"} for French (France). The use of a valid
+locale ID will override any values provided in \code{sep_mark} and \code{dec_mark}.
+We can use the \code{\link[=info_locales]{info_locales()}} function as a useful reference for all of
+the locales that are supported. Any \code{locale} value provided here will
+override any global locale setting performed in \code{\link[=gt]{gt()}}'s own \code{locale}
+argument.}
 }
 \value{
 An object of class \code{gt_tbl}.
