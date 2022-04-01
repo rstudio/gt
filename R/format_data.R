@@ -2904,11 +2904,43 @@ format_time_part <- function(
       system = system
     )
 
+  if (time_part == "mins") time_part <- "minutes"
+  if (time_part == "secs") time_part <- "seconds"
+
   if (out_style == "narrow") {
-    out <- paste0(x_val, substr(time_part, 1, 1))
+
+    if (is.null(locale) || locale == "en") {
+      out <- paste0(x_val, substr(time_part, 1, 1))
+    } else {
+
+      duration_pattern <-
+        get_localized_duration_pattern(
+          value = x,
+          type = "narrow",
+          unit = time_part,
+          locale = locale
+        )
+      out <- gsub("{0}", x_val, duration_pattern, fixed = TRUE)
+    }
+
   } else if (out_style == "wide") {
-    if (x == 1) time_part <- gsub("s$", "", time_part)
-    out <- paste(x_val, time_part)
+
+    if (is.null(locale) || locale == "en") {
+      if (x == 1) time_part <- gsub("s$", "", time_part)
+      out <- paste(x_val, time_part)
+    } else {
+
+    duration_pattern <-
+      get_localized_duration_pattern(
+        value = x,
+        type = "long",
+        unit = time_part,
+        locale = locale
+      )
+
+    out <- gsub("{0}", x_val, duration_pattern, fixed = TRUE)
+    }
+
   } else if (out_style == "iso") {
     out <- paste0(x_val, toupper(substr(time_part, 1, 1)))
   } else {
@@ -2920,6 +2952,47 @@ format_time_part <- function(
   }
 
   out
+}
+
+get_localized_duration_pattern <- function(
+    value,
+    type,
+    unit,
+    locale
+) {
+
+  if (is.null(locale)) locale <- "en"
+
+  unit <- gsub("s$", "", unit)
+
+  durations_tbl <-
+    durations[
+      durations$locale == locale,
+      grepl(paste0(unit, ".unitPattern"), colnames(durations), fixed = TRUE) |
+        grepl("type", colnames(durations), fixed = TRUE)
+    ] %>%
+    dplyr::filter(type == .env$type) %>%
+    dplyr::select(type, dplyr::matches(unit))
+
+  if (value == 0) {
+    pattern <-
+      ifelse(
+        !is.na(dplyr::select(durations_tbl, dplyr::matches("count-zero"))[[1]]),
+        dplyr::select(durations_tbl, dplyr::matches("count-zero"))[[1]],
+        dplyr::select(durations_tbl, dplyr::matches("count-other"))[[1]]
+      )
+  } else if (value == 1) {
+    pattern <-
+      ifelse(
+        !is.na(dplyr::select(durations_tbl, dplyr::matches("count-one"))[[1]]),
+        dplyr::select(durations_tbl, dplyr::matches("count-one"))[[1]],
+        dplyr::select(durations_tbl, dplyr::matches("count-other"))[[1]]
+      )
+  } else {
+    pattern <- dplyr::select(durations_tbl, dplyr::matches("count-other"))[[1]]
+  }
+
+  pattern
 }
 
 #' Format Markdown text
