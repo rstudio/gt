@@ -1,7 +1,7 @@
 local_edition(3)
 skip_on_cran()
 
-test_that("the `fmt_duration()` function works correctly", {
+test_that("the `fmt_duration()` function works correctly with numerical inputs", {
 
   # Create an input tibble with a numeric column
   data_tbl_1 <-
@@ -838,4 +838,27 @@ test_that("the `fmt_duration()` function works correctly", {
       "P31DT14H24M", "P28DT12H", "NA"
     )
   )
+
+  # Create another input tibble with a numeric column
+  data_tbl_2 <-
+    dplyr::tibble(
+      num_1 = c(5500, -3500, 0.03, -0.03, 0, 0.005, NA)
+    )
+
+  # Create a `gt_tbl` object with `gt()` and the
+  # `data_tbl_2` dataset
+  tab_2 <- gt(data_tbl_2)
+
+  # Format the `num_1` column using the defaults for `fmt_duration()` and
+  # ensuring the `input_units` are seconds
+  expect_equal(
+    (tab_2 %>%
+       fmt_duration(columns = "num_1", input_units = "seconds") %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c(
+      "1h 31m 40s", "&minus;58m 19s", "<1s", "&minus;<1s", "0s",
+      "<1s", "NA"
+    )
+  )
+
 })
