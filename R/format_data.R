@@ -2569,15 +2569,26 @@ fmt_duration <- function(
   ) {
     stop(
       "When there are numeric columns to format, `input_units` must not be `NULL`:\n",
-      "* Use one of `\"secs\"`, `\"mins\"`, `\"hours\"`, `\"days\"`, or `\"weeks\"`",
+      "* Use one of `\"seconds\"`, `\"minutes\"`, `\"hours\"`, `\"days\"`, or `\"weeks\"`",
       call. = FALSE
     )
+  }
+
+  # Resolve input units
+  if (!is.null(input_units)) {
+
+    # Stop function if `input_units` isn't a character vector, isn't of
+    # the right length (1 or greater), and does not contain valid values
+    validate_duration_input_units(input_units = input_units)
+
+    # Normalize the valid set of provided `input_units`
+    input_units <- normalize_duration_input_units(input_units = input_units)
   }
 
   # Resolve output units
   if (is.null(output_units)) {
 
-    output_units <- c("weeks", "days", "hours", "mins", "secs")
+    output_units <- c("weeks", "days", "hours", "minutes", "seconds")
 
   } else {
 
@@ -2593,13 +2604,13 @@ fmt_duration <- function(
   # some options need to be overridden
 
   if (duration_style == "iso") {
-    output_units <- c("days", "hours", "mins", "secs")
+    output_units <- c("days", "hours", "minutes", "seconds")
     max_output_units <- NULL
     trim_zero_units <- c("leading", "trailing")
   }
 
   if (duration_style == "colon-sep") {
-    output_units <- c("days", "hours", "mins", "secs")
+    output_units <- c("days", "hours", "minutes", "seconds")
     max_output_units <- NULL
     trim_zero_units <- FALSE
   }
@@ -2615,6 +2626,19 @@ fmt_duration <- function(
       use_latex_math_mode = FALSE,
       format_fn = function(x, context) {
 
+        if (duration_style %in% c("narrow", "wide")) {
+
+          patterns <-
+            get_localized_duration_patterns(
+              value = x,
+              type = duration_style,
+              locale = locale
+            )
+
+        } else {
+          patterns <- NULL
+        }
+
         x_str <-
           values_to_durations(
             x,
@@ -2626,7 +2650,8 @@ fmt_duration <- function(
             sep_mark = sep_mark,
             dec_mark = dec_mark,
             system = system,
-            locale = locale
+            locale = locale,
+            patterns = patterns
           )
 
         x_str[x < 0 & !is.infinite(x)] <-
@@ -2653,9 +2678,44 @@ validate_trim_zero_units <- function(trim_zero_units) {
   }
 }
 
+validate_duration_input_units <- function(input_units) {
+
+  if (is.null(input_units)) {
+    return(NULL)
+  }
+
+  if (!is.character(input_units)) {
+
+    stop(
+      "The `input_units` input to `fmt_duration()` must be a character vector",
+      call. = FALSE
+    )
+  }
+
+  time_parts_vec <- c("weeks", "days", "hours", "mins", "minutes", "secs", "seconds")
+
+  if (!all(input_units %in% time_parts_vec) || length(input_units) != 1) {
+
+    stop(
+      "The value of `input_units` for `fmt_duration()` is invalid:\n",
+      "* Only one of `\"weeks\"`, `\"days\"`, `\"hours\"`, `\"minutes\"`, or \n",
+      "the `\"seconds\"` time part should be present",
+      call. = FALSE
+    )
+  }
+}
+
+normalize_duration_input_units <- function(input_units) {
+
+  # Ensure that key transforms occur
+  input_units %>%
+    tidy_sub("secs", "seconds") %>%
+    tidy_sub("mins", "minutes")
+}
+
 validate_duration_output_units <- function(output_units) {
 
-  if (!is_character(output_units)) {
+  if (!is.character(output_units)) {
 
     stop(
       "The `output_units` input to `fmt_duration()` must be a character vector",
@@ -2663,15 +2723,15 @@ validate_duration_output_units <- function(output_units) {
     )
   }
 
-  time_parts_vec <- c("weeks", "days", "hours", "mins", "secs")
+  time_parts_vec <- c("weeks", "days", "hours", "mins", "minutes", "secs", "seconds")
 
   if (!all(output_units %in% time_parts_vec)) {
 
     stop(
       "There are invalid components in the `output_units` input to ",
       "`fmt_duration()`:\n",
-      "* Only the `\"weeks\"`, `\"days\"`, `\"hours\"`, `\"mins\"`, and\n",
-      "`\"secs\"` time parts should be present",
+      "* Only the `\"weeks\"`, `\"days\"`, `\"hours\"`, `\"minutes\"`, and\n",
+      "`\"seconds\"` time parts should be present",
       call. = FALSE
     )
   }
@@ -2679,11 +2739,15 @@ validate_duration_output_units <- function(output_units) {
 
 normalize_duration_output_units <- function(output_units) {
 
-  # Ensure that the output units are a unique set
-  output_units <- unique(output_units)
+  # Ensure that key transforms occur and that the output units are a unique set
+  output_units <-
+    output_units %>%
+    tidy_sub("secs", "seconds") %>%
+    tidy_sub("mins", "minutes") %>%
+    unique()
 
   # Ensure that the order of output units is from greatest to smallest
-  time_parts <- c("weeks", "days", "hours", "mins", "secs")
+  time_parts <- c("weeks", "days", "hours", "minutes", "seconds")
   output_units[order(match(output_units, time_parts))]
 }
 
@@ -2697,7 +2761,8 @@ values_to_durations <- function(
     sep_mark,
     dec_mark,
     system,
-    locale
+    locale,
+    patterns
 ) {
 
   # Should `in_units` be anything other than days then convert
@@ -2708,9 +2773,10 @@ values_to_durations <- function(
     x <-
       switch(
         in_units,
+        weeks = x * 7,
         hours = x / 24,
-        mins = x / 1440,
-        secs = x / 86400
+        minutes = x / 1440,
+        seconds = x / 86400
       )
   }
 
@@ -2736,6 +2802,13 @@ values_to_durations <- function(
           val = unname(time_part_val)
         )
 
+      pattern <-
+        extract_duration_pattern(
+          value = time_part_val,
+          time_p = time_p,
+          patterns = patterns
+        )
+
       x_str_i <-
         c(
           x_str_i,
@@ -2746,7 +2819,8 @@ values_to_durations <- function(
             sep_mark = sep_mark,
             dec_mark = dec_mark,
             locale = locale,
-            system = system
+            system = system,
+            pattern = pattern
           )
         )
     }
@@ -2755,38 +2829,31 @@ values_to_durations <- function(
     # than the smallest unit in `out_units`
     if (all(x_val_i == 0)) {
 
-      if (x_rem_i == 0) {
+      # If the time duration is zero then use `0` as the value,
+      # otherwise, use `1` and indicate that the value is less than that
 
-        # Case where time duration is zero
+      pattern <-
+        extract_duration_pattern(
+          value = if (x_rem_i == 0) 0 else 1,
+          time_p = time_p,
+          patterns = patterns
+        )
+
+      if (x_rem_i != 0 ) {
+        pattern <- gsub("{0}", "<{0}", pattern, fixed = TRUE)
+      }
+
         x_str[i] <-
           format_time_part(
-            x = 0,
+            x = if (x_rem_i == 0) 0 else 1,
             time_part = time_p,
             out_style = out_style,
             sep_mark = sep_mark,
             dec_mark = dec_mark,
             locale = locale,
-            system = system
+            system = system,
+            pattern = pattern
           )
-
-      } else {
-
-        # Case where time duration is lesser than the
-        # lowest time unit in `out_units`
-        x_str[i] <-
-          paste0(
-            "<",
-            format_time_part(
-              x = 1,
-              time_part = time_p,
-              out_style = out_style,
-              sep_mark = sep_mark,
-              dec_mark = dec_mark,
-              locale = locale,
-              system = system
-            )
-          )
-      }
 
       next
     }
@@ -2867,8 +2934,8 @@ day_conversion_factor <- function(time_part) {
     weeks = 1/7,
     days = 1,
     hours = 24,
-    mins = 1440,
-    secs = 86400
+    minutes = 1440,
+    seconds = 86400
   )
 }
 
@@ -2887,7 +2954,8 @@ format_time_part <- function(
     sep_mark,
     dec_mark,
     locale,
-    system
+    system,
+    pattern
 ) {
 
   x_val <-
@@ -2904,92 +2972,64 @@ format_time_part <- function(
       system = system
     )
 
-  if (time_part == "mins") time_part <- "minutes"
-  if (time_part == "secs") time_part <- "seconds"
-
-  if (out_style == "narrow") {
-
-    if (is.null(locale) || locale == "en") {
-      out <- paste0(x_val, substr(time_part, 1, 1))
-    } else {
-
-      duration_pattern <-
-        get_localized_duration_pattern(
-          value = x,
-          type = "narrow",
-          unit = time_part,
-          locale = locale
-        )
-      out <- gsub("{0}", x_val, duration_pattern, fixed = TRUE)
-    }
-
-  } else if (out_style == "wide") {
-
-    if (is.null(locale) || locale == "en") {
-      if (x == 1) time_part <- gsub("s$", "", time_part)
-      out <- paste(x_val, time_part)
-    } else {
-
-    duration_pattern <-
-      get_localized_duration_pattern(
-        value = x,
-        type = "long",
-        unit = time_part,
-        locale = locale
-      )
-
-    out <- gsub("{0}", x_val, duration_pattern, fixed = TRUE)
-    }
-
+  if (out_style %in% c("narrow", "wide")) {
+    out <- gsub("{0}", x_val, pattern, fixed = TRUE)
   } else if (out_style == "iso") {
     out <- paste0(x_val, toupper(substr(time_part, 1, 1)))
   } else {
-    if (names(x) %in% c("hours", "mins", "secs") && x < 10) {
+    if (names(x) %in% c("hours", "minutes", "seconds") && x < 10) {
       out <- paste0("0", x_val)
     } else {
-      out <- x_val
+      out <- as.character(x_val)
     }
   }
 
   out
 }
 
-get_localized_duration_pattern <- function(
+get_localized_duration_patterns <- function(
     value,
     type,
-    unit,
     locale
 ) {
 
   if (is.null(locale)) locale <- "en"
 
-  unit <- gsub("s$", "", unit)
+  if (type == "wide") type <- "long"
 
-  durations_tbl <-
+  pattern_tbl <-
     durations[
       durations$locale == locale,
-      grepl(paste0(unit, ".unitPattern"), colnames(durations), fixed = TRUE) |
+      grepl(
+        "^duration-(week|day|hour|minute|second).unitPattern-count-(zero|one|other)$",
+        colnames(durations)
+      ) |
         grepl("type", colnames(durations), fixed = TRUE)
     ] %>%
     dplyr::filter(type == .env$type) %>%
-    dplyr::select(type, dplyr::matches(unit))
+    dplyr::select(-type)
 
-  if (value == 0) {
-    pattern <-
-      ifelse(
-        !is.na(dplyr::select(durations_tbl, dplyr::matches("count-zero"))[[1]]),
-        dplyr::select(durations_tbl, dplyr::matches("count-zero"))[[1]],
-        dplyr::select(durations_tbl, dplyr::matches("count-other"))[[1]]
-      )
-  } else if (value == 1) {
-    pattern <-
-      ifelse(
-        !is.na(dplyr::select(durations_tbl, dplyr::matches("count-one"))[[1]]),
-        dplyr::select(durations_tbl, dplyr::matches("count-one"))[[1]],
-        dplyr::select(durations_tbl, dplyr::matches("count-other"))[[1]]
-      )
-  } else {
-    pattern <- dplyr::select(durations_tbl, dplyr::matches("count-other"))[[1]]
+  colnames(pattern_tbl) <- gsub("(duration|-|unitPattern-count)", "", colnames(pattern_tbl))
+
+  as.list(pattern_tbl)
+}
+
+extract_duration_pattern <- function(
+    value,
+    time_p,
+    patterns
+) {
+
+  x_val_i_type <-
+    dplyr::case_when(
+      value == 1 ~ "one",
+      value == 0 ~ "zero",
+      TRUE ~ "other"
+    )
+
+  pattern <- patterns[grepl(paste0(gsub("s$", "", time_p), ".*?.", x_val_i_type), names(patterns))][[1]]
+  if (!is.null(pattern) && is.na(pattern)) {
+    pattern <- patterns[grepl(paste0(gsub("s$", "", time_p), ".*?.other"), names(patterns))][[1]]
   }
 
   pattern
