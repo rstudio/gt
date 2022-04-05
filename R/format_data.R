@@ -2723,6 +2723,15 @@ validate_duration_output_units <- function(output_units) {
     )
   }
 
+  if (length(output_units) < 1) {
+
+    stop(
+      "The `output_units` input to `fmt_duration()` must be a vector with at ",
+      "least one element",
+      call. = FALSE
+    )
+  }
+
   time_parts_vec <- c("weeks", "days", "hours", "mins", "minutes", "secs", "seconds")
 
   if (!all(output_units %in% time_parts_vec)) {
