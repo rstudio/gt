@@ -1116,3 +1116,50 @@ test_that("the `fmt_duration()` function will produce localized outputs", {
   tab_narrow %>% render_as_html() %>% expect_snapshot()
   tab_wide %>% render_as_html() %>% expect_snapshot()
 })
+
+test_that("the `fmt_duration()` function will error in specific cases", {
+
+  dt_1 <- ISOdatetime(year = 2015, month = 6, day = 3:5, hour = 3:5, min = 5:7, sec = 25:27, tz = "GMT")
+  dt_2 <- ISOdatetime(year = 2015, month = 6, day = c(5, 8, 12), hour = 5:7, min = 30:32, sec = 0:2, tz = "GMT")
+
+  # Create an input tibble with a numeric column
+  data_tbl_6 <-
+    dplyr::tibble(num_1 = c(1.0030, 36323.005, 0.343), dur_1 = c(difftime(dt_1, dt_2, units = "weeks")))
+
+  # Create a `gt_tbl` object with `gt()` and the
+  # `data_tbl_6` dataset
+  tab_6 <- gt(data_tbl_6)
+
+  # Expect an error if `input_units` not provided when numeric columns are
+  # to be formatted
+  expect_error(tab_6 %>% fmt_duration(columns = "num_1"))
+  expect_error(tab_6 %>% fmt_duration(columns = c("num_1", "dur_1")))
+  expect_error(regexp = NA, tab_6 %>% fmt_duration(columns = "dur_1"))
+
+  # Expect an error if `input_units` is invalid
+  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "Stunden"))
+  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = c("hours", "minutes")))
+  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = character(0)))
+  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = 1))
+
+  # Expect an error if `output_units` is invalid
+  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", output_units = "Stunden"))
+  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", output_units = c("days", "weeks", "years")))
+  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", output_units = character(0)))
+  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", output_units = 1))
+
+  # Expect an error if `duration_style` is invalid
+  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", duration_style = "style"))
+
+  # Expect an error if `trim_zero_units` is invalid
+  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", trim_zero_units = "infernal"))
+  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", trim_zero_units = 2))
+  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", trim_zero_units = NULL))
+  expect_error(regexp = NA,tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", trim_zero_units = c("leading", "leading")))
+
+  # Expect an error if `max_output_units` is invalid
+  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", max_output_units = "max"))
+  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", max_output_units = 0))
+  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", max_output_units = c(2, 3)))
+  expect_error(regexp = NA, tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", max_output_units = NULL))
+})
