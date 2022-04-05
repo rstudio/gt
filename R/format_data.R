@@ -2524,22 +2524,20 @@ fmt_duration <- function(
     )
   }
 
-  if (!is.null(max_output_units)) {
+  if (
+    !is.null(max_output_units) &&
+    (
+      !is.numeric(max_output_units) ||
+      length(max_output_units) != 1 ||
+      max_output_units < 1
+    )
+  ) {
 
-    if (
-      (!is.numeric(max_output_units) &&
-       length(max_output_units) != 1) ||
-      (is.numeric(max_output_units) &&
-       length(max_output_units) == 1 &&
-       max_output_units < 1)
-    ) {
-
-      stop(
-        "The numeric value supplied for `max_output_units` is invalid:\n",
-        "* Must either be `NULL` or an integer value greater than zero",
-        call. = FALSE
-      )
-    }
+    stop(
+      "The numeric value supplied for `max_output_units` is invalid:\n",
+      "* Must either be `NULL` or an integer value greater than zero",
+      call. = FALSE
+    )
   }
 
   # Stop function if any columns have data that is incompatible
