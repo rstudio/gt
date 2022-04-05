@@ -2765,17 +2765,23 @@ values_to_durations <- function(
     patterns
 ) {
 
-  # Should `in_units` be anything other than days then convert
-  # all `x` values to days (but only if `x` is not of class
-  # `difftime`, where the time unit is known)
-  if (!inherits(x, "difftime") && in_units != "days") {
+  # Obtain the units of `x` if it is of the difftime class
+  if (inherits(x, "difftime")) {
+    in_units <- units(x)
+  }
+
+  # Should `in_units` be anything other than days then
+  # convert all `x` values to days
+  if (in_units != "days") {
 
     x <-
       switch(
         in_units,
         weeks = x * 7,
         hours = x / 24,
+        mins =,
         minutes = x / 1440,
+        secs =,
         seconds = x / 86400
       )
   }
