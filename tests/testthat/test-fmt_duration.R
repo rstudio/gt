@@ -861,4 +861,258 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     )
   )
 
+  # Expect that using `input_units = "secs"' produces the same results
+  expect_equal(
+    (tab_2 %>%
+       fmt_duration(columns = "num_1", input_units = "secs") %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    (tab_2 %>%
+       fmt_duration(columns = "num_1", input_units = "seconds") %>%
+       render_formats_test(context = "html"))[["num_1"]]
+  )
+
+
+  # Format the `num_1` column using the defaults for `fmt_duration()` and
+  # ensuring the `input_units` are minutes
+  expect_equal(
+    (tab_2 %>%
+       fmt_duration(columns = "num_1", input_units = "minutes") %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c(
+      "3d 19h 40m", "&minus;2d 10h 19m 59s", "1s", "&minus;1s", "0s",
+      "<1s", "NA"
+    )
+  )
+
+  # Expect that using `input_units = "mins"' produces the same results
+  expect_equal(
+    (tab_2 %>%
+       fmt_duration(columns = "num_1", input_units = "mins") %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    (tab_2 %>%
+       fmt_duration(columns = "num_1", input_units = "minutes") %>%
+       render_formats_test(context = "html"))[["num_1"]]
+  )
+
+
+  # Format the `num_1` column using the defaults for `fmt_duration()` and
+  # ensuring the `input_units` are hours
+  expect_equal(
+    (tab_2 %>%
+       fmt_duration(columns = "num_1", input_units = "hours") %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c(
+      "32w 5d 3h 59m 59s", "&minus;20w 5d 20h", "1m 48s", "&minus;1m 48s",
+      "0s", "18s", "NA"
+    )
+  )
+
+  # Format the `num_1` column using the defaults for `fmt_duration()` and
+  # ensuring the `input_units` are days
+  expect_equal(
+    (tab_2 %>%
+       fmt_duration(columns = "num_1", input_units = "days") %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c(
+      "785w 5d", "&minus;500w", "43m 11s", "&minus;43m 11s", "0s",
+      "7m 12s", "NA"
+    )
+  )
+
+  # Format the `num_1` column using the defaults for `fmt_duration()` and
+  # ensuring the `input_units` are weeks
+  expect_equal(
+    (tab_2 %>%
+       fmt_duration(columns = "num_1", input_units = "weeks") %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c(
+      "5,500w", "&minus;3,500w", "5h 2m 23s", "&minus;5h 2m 23s",
+      "0s", "50m 24s", "NA"
+    )
+  )
+})
+
+test_that("the `fmt_duration()` function works correctly with difftime inputs", {
+
+  dt_1 <- ISOdatetime(year = 2015, month = 6, day = 3:5, hour = 3:5, min = 5:7, sec = 25:27, tz = "GMT")
+  dt_2 <- ISOdatetime(year = 2015, month = 6, day = c(5, 8, 12), hour = 5:7, min = 30:32, sec = 0:2, tz = "GMT")
+
+  data_tbl_3 <-
+    dplyr::tibble(
+      weeks = c(difftime(dt_1, dt_2, units = "weeks")),
+      days = c(difftime(dt_1, dt_2, units = "days")),
+      hours = c(difftime(dt_1, dt_2, units = "hours")),
+      minutes = c(difftime(dt_1, dt_2, units = "mins")),
+      seconds = c(difftime(dt_1, dt_2, units = "secs"))
+    ) %>%
+    dplyr::add_row()
+
+
+  # Create a `gt_tbl` object with `gt()` and the
+  # `data_tbl_3` dataset
+  tab_3 <- gt(data_tbl_3)
+
+  # Format the `weeks` column using the defaults for `fmt_duration()`
+  expect_equal(
+    (tab_3 %>%
+       fmt_duration(columns = "weeks") %>%
+       render_formats_test(context = "html"))[["weeks"]],
+    c(
+      "&minus;2d 2h 24m 34s", "&minus;4d 2h 24m 34s", "&minus;1w 2h 24m 34s",
+      NA
+    )
+  )
+
+  # Expect that every other column produces the same cell data since they
+  # are the same duration values, just expressed with different units
+  expect_equal(
+    (tab_3 %>%
+       fmt_duration(columns = "weeks") %>%
+       render_formats_test(context = "html"))[["weeks"]],
+    (tab_3 %>%
+       fmt_duration(columns = "days") %>%
+       render_formats_test(context = "html"))[["days"]]
+  )
+  expect_equal(
+    (tab_3 %>%
+       fmt_duration(columns = "weeks") %>%
+       render_formats_test(context = "html"))[["weeks"]],
+    (tab_3 %>%
+       fmt_duration(columns = "hours") %>%
+       render_formats_test(context = "html"))[["hours"]]
+  )
+  expect_equal(
+    (tab_3 %>%
+       fmt_duration(columns = "hours") %>%
+       render_formats_test(context = "html"))[["hours"]],
+    (tab_3 %>%
+       fmt_duration(columns = "seconds") %>%
+       render_formats_test(context = "html"))[["seconds"]]
+  )
+  expect_equal(
+    (tab_3 %>%
+       fmt_duration(columns = "weeks") %>%
+       render_formats_test(context = "html"))[["weeks"]],
+    (tab_3 %>%
+       fmt_duration(columns = "seconds") %>%
+       render_formats_test(context = "html"))[["seconds"]]
+  )
+})
+
+test_that("the `fmt_duration()` function works well with mixed numeric/difftime inputs", {
+
+  dt_1 <- ISOdatetime(year = 2015, month = 6, day = 3:5, hour = 3:5, min = 5:7, sec = 25:27, tz = "GMT")
+  dt_2 <- ISOdatetime(year = 2015, month = 6, day = c(5, 8, 12), hour = 5:7, min = 30:32, sec = 0:2, tz = "GMT")
+
+  data_tbl_4 <-
+    dplyr::tibble(
+      weeks = c(difftime(dt_1, dt_2, units = "weeks")),
+      days = c(difftime(dt_1, dt_2, units = "days")),
+      hours = c(difftime(dt_1, dt_2, units = "hours")),
+      minutes = c(difftime(dt_1, dt_2, units = "mins")),
+      seconds = c(difftime(dt_1, dt_2, units = "secs"))
+    ) %>%
+    dplyr::mutate(
+      duration_hours = c(2.34, 6.23, 75.249)
+    )
+
+  # Create a `gt_tbl` object with `gt()` and the
+  # `data_tbl_3` dataset
+  tab_4 <- gt(data_tbl_4)
+
+  # Format the `weeks` and `duration_hours` columns using the defaults
+  # for `fmt_duration()`; expect correct duration values for in the
+  # `duration_hours` column
+  expect_equal(
+    (tab_4 %>%
+       fmt_duration(columns = c("weeks", "duration_hours"), input_units = "hours") %>%
+       render_formats_test(context = "html"))[["duration_hours"]],
+    c("2h 20m 23s", "6h 13m 48s", "3d 3h 14m 56s")
+  )
+
+  # Expect that, for the same expression, that the formatting of the
+  # `weeks` column isn't tainted by the necessary addition of `input_units`
+  expect_equal(
+    (tab_4 %>%
+       fmt_duration(columns = c("weeks", "duration_hours"), input_units = "hours") %>%
+       render_formats_test(context = "html"))[["weeks"]],
+    (tab_4 %>%
+       fmt_duration(columns = "weeks") %>%
+       render_formats_test(context = "html"))[["weeks"]]
+  )
+})
+
+test_that("the `fmt_duration()` function will produce localized outputs", {
+
+  # Create an input tibble with a numeric column
+  data_tbl_5 <-
+    dplyr::tibble(
+      num_1 = c(1.0030, 36323.005, 5.000003, -34.5, 31.6, 28.5, NA)
+    )
+
+  # Get a vector of some of the supported locales
+  sample_locales <-
+    c(
+      "agq", "ak", "am", "as", "asa", "ast", "az", "bas",
+      "be", "bem", "bez", "bg", "bm", "bn", "bo", "br", "brx", "bs",
+      "ca", "ce", "cgg", "chr", "ckb", "cs", "cy", "da", "dav", "de",
+      "dje", "dsb", "dua", "dyo", "dz", "ebu", "ee", "el", "en", "eo",
+      "es", "et", "eu", "ewo", "ff", "fi", "fil", "fo", "fr",
+      "fur", "fy", "ga", "gd", "gl", "gsw", "gu", "guz", "gv", "ha",
+      "haw", "hi", "hr", "hsb", "hu", "hy", "id", "ig", "ii",
+      "is", "it", "ja", "jgo", "jmc", "ka", "kab", "kam", "kde", "kea",
+      "khq", "ki", "kk", "kkj", "kl", "kln", "km", "kn", "ko", "kok",
+      "ksb", "ksf", "ksh", "kw", "ky", "lag", "lb", "lg", "lkt",
+      "ln", "lo", "lt", "lu", "luo", "luy", "lv", "mas", "mer", "mfe",
+      "mg", "mgh", "mgo", "mk", "ml", "mn", "mr", "ms", "mt", "mua",
+      "my", "naq", "nb", "nd", "nds", "ne", "nl", "nmg", "nn", "nnh",
+      "nus", "nyn", "om", "or", "os", "pa", "pl", "pt", "qu",
+      "rm", "rn", "ro", "rof", "ru", "rw", "rwk", "sah", "saq", "sbp",
+      "se", "seh", "ses", "sg", "shi", "si", "sk", "sl", "smn", "sn",
+      "so", "sq", "sr", "sv", "sw", "ta", "te", "teo", "tg", "th",
+      "ti", "to", "tr", "tt", "twq", "tzm", "uk", "uz", "vai", "vi",
+      "vun", "wae", "wo", "xog", "yav", "yi", "yo", "yue", "zh", "zu"
+    )
+
+  # Replicate single column to match number of locales and rename columns
+  suppressMessages(
+    data_tbl_5 <-
+      dplyr::bind_cols(data_tbl_5, rep(data_tbl_5[, 1], length(sample_locales) - 1))
+  )
+  colnames(data_tbl_5) <- sample_locales
+
+  # Create two `gt_tbl` objects with `gt()` and the `data_tbl_5` dataset
+  tab_narrow <- tab_wide <- gt(data_tbl_5)
+
+  # Ensure outputs are correctly localized for the `"narrow"` duration style
+  for (i in seq_along(sample_locales)) {
+
+    tab_narrow <-
+      tab_narrow %>%
+      fmt_duration(
+        columns = sample_locales[i], input_units = "days",
+        duration_style = "narrow", locale = sample_locales[i]
+      )
+
+    tab_wide <-
+      tab_wide %>%
+      fmt_duration(
+        columns = sample_locales[i], input_units = "days",
+        duration_style = "wide", locale = sample_locales[i]
+      )
+  }
+
+  # Add basic styling for better legibility
+  tab_narrow <-
+    tab_narrow %>%
+    cols_width(everything() ~ px(175)) %>%
+    tab_style(style = cell_text(size = "smaller"), locations = cells_body())
+  tab_wide <-
+    tab_wide %>%
+    cols_width(everything() ~ px(275)) %>%
+    tab_style(style = cell_text(size = "smaller"), locations = cells_body())
+
+  # Perform snapshot tests
+  tab_narrow %>% render_as_html() %>% expect_snapshot()
+  tab_wide %>% render_as_html() %>% expect_snapshot()
 })
