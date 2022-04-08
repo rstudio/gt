@@ -2652,11 +2652,20 @@ fmt_duration <- function(
             patterns = patterns
           )
 
+        #
+        # Prefix with plus and minus signs where necessary
+        #
+
         x_str[x < 0 & !is.infinite(x)] <-
           paste0(
             context_minus_mark(context = context),
             x_str[x < 0 & !is.infinite(x)]
           )
+
+        if (force_sign) {
+          x_str[x > 0 & !is.infinite(x)] <-
+            paste0("+", x_str[x > 0 & !is.infinite(x)])
+        }
 
         x_str
       }
