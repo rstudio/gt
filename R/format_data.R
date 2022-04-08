@@ -2931,8 +2931,10 @@ values_to_durations <- function(
 
       x_str[i] <- paste0(x_str_i, collapse = ":")
 
-      if (length(x_str_i) == 4) {
+      if (x_str_i[1] != 0) {
         x_str[i] <- sub(":", "/", x_str[i], fixed = TRUE)
+      } else {
+        x_str[i] <- sub("^0:", "", x_str[i])
       }
 
     } else if (out_style == "iso") {
