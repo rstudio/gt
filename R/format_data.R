@@ -2495,7 +2495,7 @@ fmt_duration <- function(
 
   duration_style <- match.arg(duration_style)
   system <- match.arg(system)
-  dec_mark <- "."
+  dec_mark <- "unused"
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -2505,7 +2505,6 @@ fmt_duration <- function(
 
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
-  dec_mark <- get_locale_dec_mark(locale, dec_mark)
 
   if (is_true(trim_zero_units)) {
     trim_zero_units <- c("leading", "trailing", "internal")
