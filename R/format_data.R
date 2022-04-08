@@ -2430,26 +2430,22 @@ fmt_datetime <- function(data,
 #' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
-#' @param input_units If one or more selected columns contains numeric values,
-#'   the keyword provided for `input_units` will determine how those values are
-#'   interpreted in terms of a single duration type. If numeric columns are
-#'   included in `columns` then one of the following keywords, representative of
-#'   time units, must be provided: seconds (`"secs"`), `"mins"` (minutes),
-#'   `"hours"`, `"days"`, or `"weeks"`.
+#' @param input_units If one or more selected columns contains numeric values, a
+#'   keyword must be provided for `input_units` for **gt** to determine how
+#'   those values are to be interpreted in terms of duration. The accepted units
+#'   are: `"seconds"`, `"minutes"`, `"hours"`, `"days"`, and `"weeks"`.
 #' @param output_units Controls the output time units. The default, `NULL`,
 #'   means that **gt** will automatically choose time units based on the input
 #'   duration value. To control which time units are to be considered for output
-#'   (before trimming with `trim_zero_units`) we can specify the use of several
-#'   time units with a vector consisting of these keywords: `"weeks"`, `"days"`,
-#'   `"hours"`, `"mins"`, or `"secs"`. If only a single time unit is needed for
-#'   output, a one-element vector can be used with any of the aforementioned
-#'   keywords.
-#' @param duration_style A choice of three formatting styles for the output
+#'   (before trimming with `trim_zero_units`) we can specify a vector of one or
+#'   more of the following keywords: `"weeks"`, `"days"`, `"hours"`,
+#'   `"minutes"`, or `"seconds"`.
+#' @param duration_style A choice of four formatting styles for the output
 #'   duration values. With `"narrow"` (the default style), duration values will
 #'   be formatted with single letter time-part units (e.g., 1.35 days will be
 #'   styled as `"1d 8h 24m`). With `"wide"`, this example value will be expanded
 #'   to `"1 day 8 hours 24 minutes"` after formatting. The `"colon-sep"` style
-#'   will put days, hours, minutes, and seconds in the `"[D]/[HH]:[MM]:[SS]"`
+#'   will put days, hours, minutes, and seconds in the `"([D]/)[HH]:[MM]:[SS]"`
 #'   format. The `"iso"` style will produce a value that conforms to the ISO
 #'   8601 rules for duration values (e.g., 1.35 days will become `"P1DT8H24M"`).
 #' @param trim_zero_units Provides methods to remove output time units that have

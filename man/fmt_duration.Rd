@@ -39,28 +39,24 @@ functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with
 to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{input_units}{If one or more selected columns contains numeric values,
-the keyword provided for \code{input_units} will determine how those values are
-interpreted in terms of a single duration type. If numeric columns are
-included in \code{columns} then one of the following keywords, representative of
-time units, must be provided: seconds (\code{"secs"}), \code{"mins"} (minutes),
-\code{"hours"}, \code{"days"}, or \code{"weeks"}.}
+\item{input_units}{If one or more selected columns contains numeric values, a
+keyword must be provided for \code{input_units} for \strong{gt} to determine how
+those values are to be interpreted in terms of duration. The accepted units
+are: \code{"seconds"}, \code{"minutes"}, \code{"hours"}, \code{"days"}, and \code{"weeks"}.}
 
 \item{output_units}{Controls the output time units. The default, \code{NULL},
 means that \strong{gt} will automatically choose time units based on the input
 duration value. To control which time units are to be considered for output
-(before trimming with \code{trim_zero_units}) we can specify the use of several
-time units with a vector consisting of these keywords: \code{"weeks"}, \code{"days"},
-\code{"hours"}, \code{"mins"}, or \code{"secs"}. If only a single time unit is needed for
-output, a one-element vector can be used with any of the aforementioned
-keywords.}
+(before trimming with \code{trim_zero_units}) we can specify a vector of one or
+more of the following keywords: \code{"weeks"}, \code{"days"}, \code{"hours"},
+\code{"minutes"}, or \code{"seconds"}.}
 
-\item{duration_style}{A choice of three formatting styles for the output
+\item{duration_style}{A choice of four formatting styles for the output
 duration values. With \code{"narrow"} (the default style), duration values will
 be formatted with single letter time-part units (e.g., 1.35 days will be
 styled as \verb{"1d 8h 24m}). With \code{"wide"}, this example value will be expanded
 to \code{"1 day 8 hours 24 minutes"} after formatting. The \code{"colon-sep"} style
-will put days, hours, minutes, and seconds in the \code{"[D]/[HH]:[MM]:[SS]"}
+will put days, hours, minutes, and seconds in the \code{"([D]/)[HH]:[MM]:[SS]"}
 format. The \code{"iso"} style will produce a value that conforms to the ISO
 8601 rules for duration values (e.g., 1.35 days will become \code{"P1DT8H24M"}).}
 
