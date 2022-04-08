@@ -852,6 +852,17 @@ fmt_symbol <- function(data,
             )
         }
 
+        # If we supply a per mille or per myriad keyword as
+        # `symbol` (possible inputs in `fmt_partsper()`),
+        # get the contextually correct mark
+        if (is.character(symbol)) {
+          if (symbol == "per-mille") {
+            symbol <- I(context_permille_mark(context = context))
+          } else if (symbol == "per-myriad") {
+            symbol <- I(context_permyriad_mark(context = context))
+          }
+        }
+
         # Format values with a symbol string
         x_str <-
           format_symbol_str(
@@ -1028,13 +1039,13 @@ fmt_percent <- function(data,
   )
 }
 
-#' Format values as high-ratio, dimensionless quantities
+#' Format values as parts-per quantities
 #'
 #' @description
 #' With numeric values in a **gt** table we can format the values so that they
 #' are rendered as *per mille*, *ppm*, *ppb*, etc., quantities. The following
 #' list of keywords (with associated naming and scaling factors) is available to
-#' use within `fmt_ratio()`:
+#' use within `fmt_partsper()`:
 #'
 #' - `"per-mille"`: Per mille, (1 part in `1,000`)
 #' - `"per-myriad"`: Per myriad, (1 part in `10,000`)
@@ -1074,7 +1085,7 @@ fmt_percent <- function(data,
 #' @param symbol The symbol/units to use for the quantity. By default, this is
 #'   set to `"auto"` and **gt** will choose the appropriate symbol based on the
 #'   `to_units` keyword and the output context. However, this can be changed by
-#'   supplying a string (e.g, `"ppbV"` when using `to_units = "ppb"`).
+#'   supplying a string (e.g, using `symbol = "ppbV"` when `to_units = "ppb"`).
 #' @param scale_values Should the values be scaled through multiplication
 #'   according to the keyword set in `to_units`? By default this is `TRUE` since
 #'   the expectation is that normally values are proportions. Setting to `FALSE`
@@ -1091,7 +1102,7 @@ fmt_percent <- function(data,
 #'
 #' @import rlang
 #' @export
-fmt_ratio <- function(
+fmt_partsper <- function(
     data,
     columns,
     rows = everything(),

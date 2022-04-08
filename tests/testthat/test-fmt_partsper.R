@@ -1,7 +1,7 @@
 local_edition(3)
 skip_on_cran()
 
-test_that("the `fmt_ratio()` function works correctly", {
+test_that("the `fmt_partsper()` function works correctly", {
 
   # Create an input data frame two columns: one
   # character-based and one that is numeric
@@ -27,15 +27,15 @@ test_that("the `fmt_ratio()` function works correctly", {
 
   # Expect an error when attempting to format a column
   # that does not exist
-  expect_error(tab %>% fmt_ratio(columns = num_2))
+  expect_error(tab %>% fmt_partsper(columns = num_2))
 
   # Expect an error when using a locale that does not exist
-  expect_error(tab %>% fmt_ratio(columns = num_2, locale = "aa_bb"))
+  expect_error(tab %>% fmt_partsper(columns = num_2, locale = "aa_bb"))
 
   # Format the `num` column to per mille values in the "html" context
   expect_equal(
     (tab %>%
-       fmt_ratio(columns = num, to_units = "per-mille") %>%
+       fmt_partsper(columns = num, to_units = "per-mille") %>%
        render_formats_test(context = "html"))[["num"]],
     c(
       "1,000.00‰", "100.00‰", "10.00‰", "1.00‰", "0.10‰",
@@ -48,7 +48,7 @@ test_that("the `fmt_ratio()` function works correctly", {
   # Format the `num` column to per mille values in the "latex" context
   expect_equal(
     (tab %>%
-       fmt_ratio(columns = num, to_units = "per-mille") %>%
+       fmt_partsper(columns = num, to_units = "per-mille") %>%
        render_formats_test(context = "latex"))[["num"]],
     c(
       "$1,000.00$\\textperthousand", "$100.00$\\textperthousand",
@@ -68,7 +68,7 @@ test_that("the `fmt_ratio()` function works correctly", {
   # Format the `num` column to per mille values in the "rtf" context
   expect_equal(
     (tab %>%
-       fmt_ratio(columns = num, to_units = "per-mille") %>%
+       fmt_partsper(columns = num, to_units = "per-mille") %>%
        render_formats_test(context = "rtf"))[["num"]],
     c(
       "1,000.00\\'89", "100.00\\'89", "10.00\\'89", "1.00\\'89",
@@ -82,7 +82,7 @@ test_that("the `fmt_ratio()` function works correctly", {
   # Format the `num` column to per myriad values in the "html" context
   expect_equal(
     (tab %>%
-       fmt_ratio(columns = num, to_units = "per-myriad") %>%
+       fmt_partsper(columns = num, to_units = "per-myriad") %>%
        render_formats_test(context = "html"))[["num"]],
     c(
       "10,000.00‱", "1,000.00‱", "100.00‱", "10.00‱", "1.00‱",
@@ -95,7 +95,7 @@ test_that("the `fmt_ratio()` function works correctly", {
   # Format the `num` column to per myriad values in the "latex" context
   expect_equal(
     (tab %>%
-       fmt_ratio(columns = num, to_units = "per-myriad") %>%
+       fmt_partsper(columns = num, to_units = "per-myriad") %>%
        render_formats_test(context = "latex"))[["num"]],
     c(
       "$10,000.00$\\textpertenthousand", "$1,000.00$\\textpertenthousand",
@@ -115,7 +115,7 @@ test_that("the `fmt_ratio()` function works correctly", {
   # Format the `num` column to per myriad values in the "rtf" context
   expect_equal(
     (tab %>%
-       fmt_ratio(columns = num, to_units = "per-myriad") %>%
+       fmt_partsper(columns = num, to_units = "per-myriad") %>%
        render_formats_test(context = "rtf"))[["num"]],
     c(
       "10,000.00\\uc0\\u8241", "1,000.00\\uc0\\u8241", "100.00\\uc0\\u8241",
@@ -131,7 +131,7 @@ test_that("the `fmt_ratio()` function works correctly", {
   # Format the `num` column to pcm values in the "html" context
   expect_equal(
     (tab %>%
-       fmt_ratio(columns = num, to_units = "pcm") %>%
+       fmt_partsper(columns = num, to_units = "pcm") %>%
        render_formats_test(context = "html"))[["num"]],
     c(
       "100,000.00 pcm", "10,000.00 pcm", "1,000.00 pcm", "100.00 pcm",
@@ -145,7 +145,7 @@ test_that("the `fmt_ratio()` function works correctly", {
   # Format the `num` column to pcm values in the "latex" context
   expect_equal(
     (tab %>%
-       fmt_ratio(columns = num, to_units = "pcm") %>%
+       fmt_partsper(columns = num, to_units = "pcm") %>%
        render_formats_test(context = "latex"))[["num"]],
     c(
       "$100,000.00 \\text{pcm}$", "$10,000.00 \\text{pcm}$",
@@ -162,7 +162,7 @@ test_that("the `fmt_ratio()` function works correctly", {
   # Format the `num` column to pcm values in the "rtf" context
   expect_equal(
     (tab %>%
-       fmt_ratio(columns = num, to_units = "pcm") %>%
+       fmt_partsper(columns = num, to_units = "pcm") %>%
        render_formats_test(context = "rtf"))[["num"]],
     c(
       "100,000.00 pcm", "10,000.00 pcm", "1,000.00 pcm", "100.00 pcm",
@@ -176,7 +176,7 @@ test_that("the `fmt_ratio()` function works correctly", {
   # Format the `num` column to ppm values in the "html" context
   expect_equal(
     (tab %>%
-       fmt_ratio(columns = num, to_units = "ppm") %>%
+       fmt_partsper(columns = num, to_units = "ppm") %>%
        render_formats_test(context = "html"))[["num"]],
     c(
       "1,000,000.00 ppm", "100,000.00 ppm", "10,000.00 ppm", "1,000.00 ppm",
@@ -190,7 +190,7 @@ test_that("the `fmt_ratio()` function works correctly", {
   # Format the `num` column to ppm values in the "latex" context
   expect_equal(
     (tab %>%
-       fmt_ratio(columns = num, to_units = "ppm") %>%
+       fmt_partsper(columns = num, to_units = "ppm") %>%
        render_formats_test(context = "latex"))[["num"]],
     c(
       "$1,000,000.00 \\text{ppm}$", "$100,000.00 \\text{ppm}$",
@@ -207,7 +207,7 @@ test_that("the `fmt_ratio()` function works correctly", {
   # Format the `num` column to ppm values in the "rtf" context
   expect_equal(
     (tab %>%
-       fmt_ratio(columns = num, to_units = "ppm") %>%
+       fmt_partsper(columns = num, to_units = "ppm") %>%
        render_formats_test(context = "rtf"))[["num"]],
     c(
       "1,000,000.00 ppm", "100,000.00 ppm", "10,000.00 ppm", "1,000.00 ppm",
@@ -221,7 +221,7 @@ test_that("the `fmt_ratio()` function works correctly", {
   # Format the `num` column to ppb values in the "html" context
   expect_equal(
     (tab %>%
-       fmt_ratio(columns = num, to_units = "ppb") %>%
+       fmt_partsper(columns = num, to_units = "ppb") %>%
        render_formats_test(context = "html"))[["num"]],
     c(
       "1,000,000,000.00 ppb", "100,000,000.00 ppb", "10,000,000.00 ppb",
@@ -235,7 +235,7 @@ test_that("the `fmt_ratio()` function works correctly", {
   # Format the `num` column to ppb values in the "latex" context
   expect_equal(
     (tab %>%
-       fmt_ratio(columns = num, to_units = "ppb") %>%
+       fmt_partsper(columns = num, to_units = "ppb") %>%
        render_formats_test(context = "latex"))[["num"]],
     c(
       "$1,000,000,000.00 \\text{ppb}$", "$100,000,000.00 \\text{ppb}$",
@@ -252,7 +252,7 @@ test_that("the `fmt_ratio()` function works correctly", {
   # Format the `num` column to ppb values in the "rtf" context
   expect_equal(
     (tab %>%
-       fmt_ratio(columns = num, to_units = "ppb") %>%
+       fmt_partsper(columns = num, to_units = "ppb") %>%
        render_formats_test(context = "rtf"))[["num"]],
     c(
       "1,000,000,000.00 ppb", "100,000,000.00 ppb", "10,000,000.00 ppb",
@@ -266,7 +266,7 @@ test_that("the `fmt_ratio()` function works correctly", {
   # Format the `num` column to ppt values in the "html" context
   expect_equal(
     (tab %>%
-       fmt_ratio(columns = num, to_units = "ppt") %>%
+       fmt_partsper(columns = num, to_units = "ppt") %>%
        render_formats_test(context = "html"))[["num"]],
     c(
       "1,000,000,000,000.00 ppt", "100,000,000,000.00 ppt", "10,000,000,000.00 ppt",
@@ -281,7 +281,7 @@ test_that("the `fmt_ratio()` function works correctly", {
   # Format the `num` column to ppt values in the "latex" context
   expect_equal(
     (tab %>%
-       fmt_ratio(columns = num, to_units = "ppt") %>%
+       fmt_partsper(columns = num, to_units = "ppt") %>%
        render_formats_test(context = "latex"))[["num"]],
     c(
       "$1,000,000,000,000.00 \\text{ppt}$", "$100,000,000,000.00 \\text{ppt}$",
@@ -298,7 +298,7 @@ test_that("the `fmt_ratio()` function works correctly", {
   # Format the `num` column to ppt values in the "rtf" context
   expect_equal(
     (tab %>%
-       fmt_ratio(columns = num, to_units = "ppt") %>%
+       fmt_partsper(columns = num, to_units = "ppt") %>%
        render_formats_test(context = "rtf"))[["num"]],
     c(
       "1,000,000,000,000.00 ppt", "100,000,000,000.00 ppt", "10,000,000,000.00 ppt",
@@ -313,7 +313,7 @@ test_that("the `fmt_ratio()` function works correctly", {
   # Format the `num` column to ppq values in the "html" context
   expect_equal(
     (tab %>%
-       fmt_ratio(columns = num, to_units = "ppq") %>%
+       fmt_partsper(columns = num, to_units = "ppq") %>%
        render_formats_test(context = "html"))[["num"]],
     c(
       "1,000,000,000,000,000.00 ppq", "100,000,000,000,000.00 ppq",
@@ -328,7 +328,7 @@ test_that("the `fmt_ratio()` function works correctly", {
   # Format the `num` column to ppq values in the "latex" context
   expect_equal(
     (tab %>%
-       fmt_ratio(columns = num, to_units = "ppq") %>%
+       fmt_partsper(columns = num, to_units = "ppq") %>%
        render_formats_test(context = "latex"))[["num"]],
     c(
       "$1,000,000,000,000,000.00 \\text{ppq}$", "$100,000,000,000,000.00 \\text{ppq}$",
@@ -346,7 +346,7 @@ test_that("the `fmt_ratio()` function works correctly", {
   # Format the `num` column to ppq values in the "rtf" context
   expect_equal(
     (tab %>%
-       fmt_ratio(columns = num, to_units = "ppq") %>%
+       fmt_partsper(columns = num, to_units = "ppq") %>%
        render_formats_test(context = "rtf"))[["num"]],
     c(
       "1,000,000,000,000,000.00 ppq", "100,000,000,000,000.00 ppq",
@@ -358,32 +358,32 @@ test_that("the `fmt_ratio()` function works correctly", {
     )
   )
 
-  # Expect that a column with NAs will work fine with `fmt_ratio()`,
+  # Expect that a column with NAs will work fine with `fmt_partsper()`,
   # it'll just produce NA values
   na_col_tbl <- dplyr::tibble(a = rep(NA_real_, 10), b = 1:10) %>% gt()
 
   # Expect a returned object of class `gt_tbl` with various
-  # uses of `fmt_ratio()`
+  # uses of `fmt_partsper()`
   expect_error(
     regexp = NA,
-    na_col_tbl %>% fmt_ratio(columns = a) %>% as_raw_html()
+    na_col_tbl %>% fmt_partsper(columns = a) %>% as_raw_html()
   )
   expect_error(
     regexp = NA,
     na_col_tbl %>%
-      fmt_ratio(columns = a, rows = 1:5) %>% as_raw_html()
+      fmt_partsper(columns = a, rows = 1:5) %>% as_raw_html()
   )
   expect_error(
     regexp = NA,
     na_col_tbl %>%
-      fmt_ratio(columns = a, pattern = "a{x}b") %>% as_raw_html()
+      fmt_partsper(columns = a, pattern = "a{x}b") %>% as_raw_html()
   )
 
   # Expect that two columns being formatted (one entirely NA) will work
   expect_equal(
     (na_col_tbl %>%
-       fmt_ratio(columns = a) %>%
-       fmt_ratio(columns = b) %>% render_formats_test("html"))[["b"]],
+       fmt_partsper(columns = a) %>%
+       fmt_partsper(columns = b) %>% render_formats_test("html"))[["b"]],
     c(
       "1,000.00‰", "2,000.00‰", "3,000.00‰", "4,000.00‰",
       "5,000.00‰", "6,000.00‰", "7,000.00‰", "8,000.00‰",

@@ -606,34 +606,23 @@ context_symbol_str <- function(context,
     return(context_percent_mark(context))
   }
 
-  # If we supply a per mille keyword as `symbol`,
-  # get the contextually correct percent mark
-  if (symbol == "per-mille") {
-    return(context_permille_mark(context))
-  }
-
-  # If we supply a per myriad keyword as `symbol`,
-  # get the contextually correct percent mark
-  if (symbol == "per-myriad") {
-    return(context_permyriad_mark(context))
-  }
-
-  # Get the contextually correct currency string
-  switch(context,
-         html = {
-           symbol %>%
-             get_currency_str()
-         },
-         latex = {
-           symbol %>%
-             get_currency_str(fallback_to_code = TRUE) %>%
-             markdown_to_latex() %>%
-             paste_between(x_2 = c("\\text{", "}"))
-         },
-         {
-           symbol %>%
-             get_currency_str(fallback_to_code = TRUE)
-         })
+  # Get the contextually correct symbol string
+  symbol <-
+    switch(
+      context,
+      html = get_currency_str(currency = symbol),
+      latex = {
+        if (!inherits(symbol, "AsIs")) {
+          symbol %>%
+            get_currency_str(fallback_to_code = TRUE) %>%
+            markdown_to_latex() %>%
+            paste_between(x_2 = c("\\text{", "}"))
+        } else {
+          symbol
+        }
+      },
+      get_currency_str(currency = symbol, fallback_to_code = TRUE)
+    )
 }
 
 #' Paste a symbol string to a formatted number
@@ -676,7 +665,7 @@ format_symbol_str <- function(x_abs_str,
         direction = placement
       ) %>%
       paste_on_side(
-        x_side = symbol_str,
+        x_side = as.character(symbol_str),
         direction = placement
       )
 
