@@ -95,9 +95,8 @@ of \verb{1,000}).}
 
 \item{force_sign}{Should the positive sign be shown for positive values
 (effectively showing a sign for all values except zero)? If so, use \code{TRUE}
-for this option. The default is \code{FALSE}, where only negative numbers will
-display a minus sign. This option is disregarded when using accounting
-notation with \code{accounting = TRUE}.}
+for this option. The default is \code{FALSE}, where only negative value will
+display a minus sign.}
 
 \item{system}{The numbering system to use. By default, this is the
 international numbering system (\code{"intl"}) whereby grouping separators
@@ -130,11 +129,40 @@ nothing is provided for \code{rows} then entire columns are selected). Condition
 formatting is possible by providing a conditional expression to the \code{rows}
 argument. See the \emph{Arguments} section for more information on this.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_fmt_duration_1.png}{options: width=100\%}}
+}
+
 \section{Function ID}{
 
 3-11
 }
 
+\examples{
+# Use part of the `sp500` table to
+# create a gt table; create a
+# difftime-based column and format
+# the duration values to be displayed
+# as the number of days since March
+# 30, 2020
+tab_1 <-
+  sp500 \%>\%
+  dplyr::slice_head(n = 10) \%>\%
+  dplyr::mutate(
+    time_point = lubridate::ymd("2020-03-30"),
+    time_passed = difftime(time_point, date)
+  ) \%>\%
+  dplyr::select(time_passed, open, close) \%>\%
+  gt(rowname_col = "month") \%>\%
+  fmt_duration(
+    columns = time_passed,
+    output_units = "days",
+    duration_style = "wide"
+  ) \%>\%
+  fmt_currency(columns = c(open, close))
+
+}
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},

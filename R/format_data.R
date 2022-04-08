@@ -2467,8 +2467,38 @@ fmt_datetime <- function(data,
 #'   provided for `max_output_units` will be taken as the maximum number of time
 #'   units to display in all output time duration values. By default, this is
 #'   `NULL` and all possible time units will be displayed.
+#' @param force_sign Should the positive sign be shown for positive values
+#'   (effectively showing a sign for all values except zero)? If so, use `TRUE`
+#'   for this option. The default is `FALSE`, where only negative value will
+#'   display a minus sign.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @examples
+#' # Use part of the `sp500` table to
+#' # create a gt table; create a
+#' # difftime-based column and format
+#' # the duration values to be displayed
+#' # as the number of days since March
+#' # 30, 2020
+#' tab_1 <-
+#'   sp500 %>%
+#'   dplyr::slice_head(n = 10) %>%
+#'   dplyr::mutate(
+#'     time_point = lubridate::ymd("2020-03-30"),
+#'     time_passed = difftime(time_point, date)
+#'   ) %>%
+#'   dplyr::select(time_passed, open, close) %>%
+#'   gt(rowname_col = "month") %>%
+#'   fmt_duration(
+#'     columns = time_passed,
+#'     output_units = "days",
+#'     duration_style = "wide"
+#'   ) %>%
+#'   fmt_currency(columns = c(open, close))
+#'
+#' @section Figures:
+#' \if{html}{\figure{man_fmt_duration_1.png}{options: width=100\%}}
 #'
 #' @family Format Data
 #' @section Function ID:
