@@ -839,6 +839,64 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     )
   )
 
+  # Format the `num_1` column using the `force_sign = TRUE` option for
+  # the "narrow" duration style
+  expect_equal(
+    (tab_1 %>%
+       fmt_duration(
+         columns = "num_1", input_units = "days",
+         duration_style = "narrow", force_sign = TRUE) %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c(
+      "+1d 4m 19s", "+5,189w 7m 11s", "+5d", "&minus;4w 6d 12h",
+      "+4w 3d 14h 24m", "+4w 12h", "NA"
+    )
+  )
+
+  # Format the `num_1` column using the `force_sign = TRUE` option for
+  # the "wide" duration style
+  expect_equal(
+    (tab_1 %>%
+       fmt_duration(
+         columns = "num_1", input_units = "days",
+         duration_style = "wide", force_sign = TRUE) %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c(
+      "+1 day 4 minutes 19 seconds", "+5,189 weeks 7 minutes 11 seconds",
+      "+5 days", "&minus;4 weeks 6 days 12 hours", "+4 weeks 3 days 14 hours 24 minutes",
+      "+4 weeks 12 hours", "NA"
+    )
+  )
+
+  # Format the `num_1` column using the `force_sign = TRUE` option for
+  # the "colon-sep" duration style
+  expect_equal(
+    (tab_1 %>%
+       fmt_duration(
+         columns = "num_1", input_units = "hours",
+         duration_style = "colon-sep", force_sign = TRUE) %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c(
+      "+01:00:10", "+1,513/11:00:17", "+05:00:00", "&minus;1/10:29:59",
+      "+1/07:35:59", "+1/04:30:00", "NA"
+    )
+  )
+
+  # Format the `num_1` column using the `force_sign = TRUE` option for
+  # the "colon-sep" duration style
+  expect_equal(
+    (tab_1 %>%
+       fmt_duration(
+         columns = "num_1", input_units = "hours",
+         duration_style = "iso", force_sign = TRUE) %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c(
+      "+P1H0M10S", "+P1513DT11H0M17S", "+P5H", "&minus;P1DT10H29M59S",
+      "+P1DT7H35M59S", "+P1DT4H30M", "NA"
+    )
+  )
+
+
   # Create another input tibble with a numeric column
   data_tbl_2 <-
     dplyr::tibble(
@@ -1160,6 +1218,8 @@ test_that("the `fmt_duration()` function will error in specific cases", {
   # Expect an error if `max_output_units` is invalid
   expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", max_output_units = "max"))
   expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", max_output_units = 0))
+  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", max_output_units = -1))
   expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", max_output_units = c(2, 3)))
   expect_error(regexp = NA, tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", max_output_units = NULL))
+  expect_error(regexp = NA, tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", max_output_units = Inf))
 })
