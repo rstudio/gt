@@ -174,9 +174,10 @@ text_transform_at_location.cells_row_groups <- function(
 
       stub_df <-
         stub_df %>%
-        dplyr::mutate(
-          group_label = ifelse(group_id == group, fn(group_label), group_label)
-        )
+        dplyr::mutate(group_label = dplyr::case_when(
+          group_id == .env$group ~ lapply(fn(group_label), FUN = `[`),
+          TRUE ~ group_label
+        ))
 
       data <- dt_stub_df_set(data = data, stub_df = stub_df)
     }
