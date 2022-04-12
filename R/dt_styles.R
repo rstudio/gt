@@ -24,26 +24,33 @@ dt_styles_init <- function(data) {
     dt_styles_set(styles = ., data = data)
 }
 
-dt_styles_add <- function(data,
-                          locname,
-                          grpname,
-                          colname,
-                          locnum,
-                          rownum,
-                          styles) {
+dt_styles_add <- function(
+    data,
+    locname,
+    grpname,
+    colname,
+    locnum,
+    rownum,
+    styles
+) {
 
   data %>%
     dt_styles_get() %>%
     dplyr::bind_rows(
-      dplyr::tibble(
+      expand.grid(
         locname = locname,
         grpname = grpname,
         colname = colname,
         locnum = locnum,
         rownum = rownum,
-        colnum = NA_integer_,
-        styles = list(styles)
-      )
+        stringsAsFactors = FALSE
+      ) %>%
+        dplyr::as_tibble() %>%
+        dplyr::mutate(
+          colnum = NA_integer_,
+          styles = list(styles)
+        ) %>%
+        dplyr::distinct()
     ) %>%
     dt_styles_set(styles = ., data = data)
 }

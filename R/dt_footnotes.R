@@ -24,26 +24,33 @@ dt_footnotes_init <- function(data) {
     dt_footnotes_set(footnotes = ., data = data)
 }
 
-dt_footnotes_add <- function(data,
-                             locname,
-                             grpname,
-                             colname,
-                             locnum,
-                             rownum,
-                             footnotes) {
+dt_footnotes_add <- function(
+    data,
+    locname,
+    grpname,
+    colname,
+    locnum,
+    rownum,
+    footnotes
+) {
 
   data %>%
     dt_footnotes_get() %>%
     dplyr::bind_rows(
-      dplyr::tibble(
+      expand.grid(
         locname = locname,
         grpname = grpname,
         colname = colname,
         locnum = locnum,
         rownum = rownum,
-        colnum = NA_integer_,
-        footnotes = list(footnotes)
-      )
+        stringsAsFactors = FALSE
+      ) %>%
+        dplyr::as_tibble() %>%
+        dplyr::mutate(
+          colnum = NA_integer_,
+          footnotes = list(footnotes)
+        ) %>%
+        dplyr::distinct()
     ) %>%
     dt_footnotes_set(footnotes = ., data = data)
 }
