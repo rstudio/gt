@@ -2806,9 +2806,11 @@ values_to_durations <- function(
     patterns
 ) {
 
-  # Obtain the units of `x` if it is of the difftime class
+  # Obtain the units of `x` if it is of the difftime class (and
+  # drop difftime attrs with `as.numeric()`)
   if (inherits(x, "difftime")) {
     in_units <- units(x)
+    x <- as.numeric(x)
   }
 
   # Should `in_units` be anything other than days then
@@ -2831,84 +2833,42 @@ values_to_durations <- function(
 
   for (i in seq_along(x)) {
 
-    x_val_i <- c()
-    x_str_i <- c()
+    x_df_i <-
+      dplyr::tibble(
+        value = numeric(0),
+        time_part = character(0),
+        formatted = character(0)
+      )
+
     x_rem_i <- abs(x[i])
 
     for (time_p in out_units) {
 
       time_part_val <- get_time_part_val(x_rem_i, time_part = time_p)
 
-      x_val_i <- c(x_val_i, time_part_val)
+      x_df_i <-
+        dplyr::bind_rows(
+          x_df_i,
+          dplyr::tibble(
+            value = time_part_val,
+            time_part = time_p,
+            formatted = NA_character_
+          )
+        )
 
       x_rem_i <-
         subtract_time_with_val(
           x = x_rem_i,
           time_part = time_p,
-          val = unname(time_part_val)
+          val = time_part_val
         )
-
-      pattern <-
-        extract_duration_pattern(
-          value = time_part_val,
-          time_p = time_p,
-          patterns = patterns
-        )
-
-      x_str_i <-
-        c(
-          x_str_i,
-          format_time_part(
-            x = time_part_val,
-            time_part = time_p,
-            out_style = out_style,
-            sep_mark = sep_mark,
-            dec_mark = dec_mark,
-            locale = locale,
-            system = system,
-            pattern = pattern
-          )
-        )
-    }
-
-    # Handle edge cases where duration is smaller
-    # than the smallest unit in `out_units`
-    if (all(x_val_i == 0)) {
-
-      # If the time duration is zero then use `0` as the value,
-      # otherwise, use `1` and indicate that the value is less than that
-
-      pattern <-
-        extract_duration_pattern(
-          value = if (x_rem_i == 0) 0 else 1,
-          time_p = time_p,
-          patterns = patterns
-        )
-
-      x_str[i] <-
-        format_time_part(
-          x = if (x_rem_i == 0) 0 else 1,
-          time_part = time_p,
-          out_style = out_style,
-          sep_mark = sep_mark,
-          dec_mark = dec_mark,
-          locale = locale,
-          system = system,
-          pattern = pattern
-        )
-
-      if (x_rem_i != 0 ) {
-        x_str[i] <- paste0("<", x_str[i])
-      }
-
-      next
     }
 
     # Remove time parts according to keywords in `trim_zero_units`
-    total_time_units <- length(x_val_i)
+    total_time_units <- nrow(x_df_i)
 
-    first_non_zero_unit_idx <- utils::head(which(unname(x_val_i) != 0), 1)
-    last_non_zero_unit_idx <- utils::tail(which(unname(x_val_i) != 0), 1)
+    first_non_zero_unit_idx <- utils::head(which(x_df_i$value != 0), 1)
+    last_non_zero_unit_idx <- utils::tail(which(x_df_i$value != 0), 1)
 
     remove_idx <- c()
 
@@ -2933,29 +2893,85 @@ values_to_durations <- function(
     # Possibly add internal zero time parts to `remove_idx`
     if (
       "internal" %in% trim_zero_units &&
+      length(first_non_zero_unit_idx) > 0 &&
       first_non_zero_unit_idx != last_non_zero_unit_idx &&
       last_non_zero_unit_idx - first_non_zero_unit_idx > 1
     ) {
 
       internal_idx <- (first_non_zero_unit_idx + 1):(last_non_zero_unit_idx - 1)
-      remove_idx <- c(remove_idx, base::intersect(internal_idx, which(unname(x_val_i) == 0)))
+      remove_idx <- c(remove_idx, base::intersect(internal_idx, which(x_df_i$value == 0)))
     }
 
-    # Remove units from `x_str_i`
+    # Remove rows from `x_df_i`
     if (!is.null(remove_idx) && length(remove_idx) > 0) {
-      x_str_i <- x_str_i[-remove_idx]
+      x_df_i <- x_df_i[-remove_idx, ]
     }
 
     # Remove units that exceed a maximum number according to `max_output_units`
-    if (!is.null(max_output_units) && length(x_str_i) > max_output_units) {
-      x_str_i <- x_str_i[seq_len(max_output_units)]
+    if (!is.null(max_output_units) && nrow(x_df_i) > max_output_units) {
+      x_df_i <- x_df_i[seq_len(max_output_units), ]
+    }
+
+    for (j in seq_len(nrow(x_df_i))) {
+
+      pattern <-
+        extract_duration_pattern(
+          value = x_df_i$value[j],
+          time_p = x_df_i$time_part[j],
+          patterns = patterns
+        )
+
+      x_df_i[j, "formatted"] <-
+        format_time_part(
+          x = x_df_i$value[j],
+          time_part = x_df_i$time_part[j],
+          out_style = out_style,
+          sep_mark = sep_mark,
+          dec_mark = dec_mark,
+          locale = locale,
+          system = system,
+          pattern = pattern
+        )
+    }
+
+    # Handle edge cases where duration is smaller
+    # than the smallest unit in `out_units`
+    if (all(x_df_i$value == 0)) {
+
+      # Remove all but the final row
+      x_df_i <- utils::tail(x_df_i, n = 1)
+
+      # If the time duration is zero then use `0` as the value,
+      # otherwise, use `1` and indicate that the value is less than that
+      pattern <-
+        extract_duration_pattern(
+          value = if (x_rem_i == 0) 0 else 1,
+          time_p = time_p,
+          patterns = patterns
+        )
+
+      x_df_i[1, "formatted"] <-
+        format_time_part(
+          x = if (x_rem_i == 0) 0 else 1,
+          time_part = time_p,
+          out_style = out_style,
+          sep_mark = sep_mark,
+          dec_mark = dec_mark,
+          locale = locale,
+          system = system,
+          pattern = pattern
+        )
+
+      if (x_rem_i != 0 ) {
+        x_df_i[1, "formatted"] <- paste0("<", x_df_i[1, "formatted"])
+      }
     }
 
     if (out_style == "colon-sep") {
 
-      x_str[i] <- paste0(x_str_i, collapse = ":")
+      x_str[i] <- paste0(x_df_i$formatted, collapse = ":")
 
-      if (x_str_i[1] != 0) {
+      if (x_df_i$formatted[1] != 0) {
         x_str[i] <- sub(":", "/", x_str[i], fixed = TRUE)
       } else {
         x_str[i] <- sub("^0:", "", x_str[i])
@@ -2964,11 +2980,11 @@ values_to_durations <- function(
     } else if (out_style == "iso") {
 
       x_str[i] <-
-        paste0("P", paste0(x_str_i, collapse = "")) %>%
+        paste0("P", paste0(x_df_i$formatted, collapse = "")) %>%
         tidy_sub("D", "DT", fixed = TRUE)
 
     } else {
-      x_str[i] <- paste0(x_str_i, collapse = " ")
+      x_str[i] <- paste0(x_df_i$formatted, collapse = " ")
     }
   }
 
