@@ -2886,21 +2886,21 @@ values_to_durations <- function(
           patterns = patterns
         )
 
-      if (x_rem_i != 0 ) {
-        pattern <- gsub("{0}", "<{0}", pattern, fixed = TRUE)
-      }
+      x_str[i] <-
+        format_time_part(
+          x = if (x_rem_i == 0) 0 else 1,
+          time_part = time_p,
+          out_style = out_style,
+          sep_mark = sep_mark,
+          dec_mark = dec_mark,
+          locale = locale,
+          system = system,
+          pattern = pattern
+        )
 
-        x_str[i] <-
-          format_time_part(
-            x = if (x_rem_i == 0) 0 else 1,
-            time_part = time_p,
-            out_style = out_style,
-            sep_mark = sep_mark,
-            dec_mark = dec_mark,
-            locale = locale,
-            system = system,
-            pattern = pattern
-          )
+      if (x_rem_i != 0 ) {
+        x_str[i] <- paste0("<", x_str[i])
+      }
 
       next
     }
