@@ -2838,7 +2838,6 @@ values_to_durations <- function(
     for (time_p in out_units) {
 
       time_part_val <- get_time_part_val(x_rem_i, time_part = time_p)
-      names(time_part_val) <- time_p
 
       x_val_i <- c(x_val_i, time_part_val)
 
@@ -3026,7 +3025,7 @@ format_time_part <- function(
   } else if (out_style == "iso") {
     out <- paste0(x_val, toupper(substr(time_part, 1, 1)))
   } else {
-    if (names(x) %in% c("hours", "minutes", "seconds") && x < 10) {
+    if (time_part %in% c("hours", "minutes", "seconds") && x < 10) {
       out <- paste0("0", x_val)
     } else {
       out <- as.character(x_val)
