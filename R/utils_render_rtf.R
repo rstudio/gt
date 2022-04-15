@@ -683,6 +683,7 @@ rtf_raw <- function(...) {
 
 # Transform a footnote mark to an RTF representation as a superscript
 footnote_mark_to_rtf <- function(mark) {
+
   rtf_paste0(rtf_raw("{\\super \\i "), mark, rtf_raw("}"))
 }
 
@@ -1594,7 +1595,7 @@ create_footer_component_rtf <- function(data) {
               italic = TRUE,
               super_sub = "super",
               font_size = 10,
-              rtf_raw(footnote_mark[i])
+              if (is.na(footnote_mark[i])) "" else rtf_raw(footnote_mark[i])
             ),
             rtf_font(
               font_size = 10,
