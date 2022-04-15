@@ -1256,8 +1256,8 @@ test_that("specialized handling of the `colon-sep` format works correctly", {
     )
   )
 
-  # Using `output_units` of "minutes" and "seconds" will truncate duration
-  # values to only display those units
+  # Using `output_units` of "hours",  "minutes", and "seconds" will truncate
+  # duration values to only display those units
   expect_equal(
     (tab_1 %>%
        fmt_duration(
@@ -1271,8 +1271,9 @@ test_that("specialized handling of the `colon-sep` format works correctly", {
     )
   )
 
-  # Using `output_units` of "minutes" and "seconds" will truncate duration
-  # values to only display those units
+  # Using `trim_zero_units = "leading"` with output units of "hours",
+  # "minutes", and "seconds" will remove the "hours" unit only if that output
+  # unit is zero
   expect_equal(
     (tab_1 %>%
        fmt_duration(
@@ -1283,6 +1284,100 @@ test_that("specialized handling of the `colon-sep` format works correctly", {
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "04:19", "07:11", "00:00", "&minus;12:00:00", "14:24:00",
+      "12:00:00", "NA"
+    )
+  )
+
+  # Expect that any other valid variation of `trim_zero_units` won't remove
+  # the zero-value "hours" unit
+  expect_equal(
+    (tab_1 %>%
+       fmt_duration(
+         columns = "num_1", input_units = "days", duration_style = "colon-sep",
+         output_units = c("hours", "minutes", "seconds"),
+         trim_zero_units = "trailing"
+       ) %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c(
+      "00:04:19", "00:07:11", "00:00:00", "&minus;12:00:00", "14:24:00",
+      "12:00:00", "NA"
+    )
+  )
+  expect_equal(
+    (tab_1 %>%
+       fmt_duration(
+         columns = "num_1", input_units = "days", duration_style = "colon-sep",
+         output_units = c("hours", "minutes", "seconds"),
+         trim_zero_units = "internal"
+       ) %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c(
+      "00:04:19", "00:07:11", "00:00:00", "&minus;12:00:00", "14:24:00",
+      "12:00:00", "NA"
+    )
+  )
+  expect_equal(
+    (tab_1 %>%
+       fmt_duration(
+         columns = "num_1", input_units = "days", duration_style = "colon-sep",
+         output_units = c("hours", "minutes", "seconds"),
+         trim_zero_units = c("leading", "trailing")
+       ) %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c(
+      "00:04:19", "00:07:11", "00:00:00", "&minus;12:00:00", "14:24:00",
+      "12:00:00", "NA"
+    )
+  )
+  expect_equal(
+    (tab_1 %>%
+       fmt_duration(
+         columns = "num_1", input_units = "days", duration_style = "colon-sep",
+         output_units = c("hours", "minutes", "seconds"),
+         trim_zero_units = c("leading", "internal")
+       ) %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c(
+      "00:04:19", "00:07:11", "00:00:00", "&minus;12:00:00", "14:24:00",
+      "12:00:00", "NA"
+    )
+  )
+  expect_equal(
+    (tab_1 %>%
+       fmt_duration(
+         columns = "num_1", input_units = "days", duration_style = "colon-sep",
+         output_units = c("hours", "minutes", "seconds"),
+         trim_zero_units = c("internal", "trailing")
+       ) %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c(
+      "00:04:19", "00:07:11", "00:00:00", "&minus;12:00:00", "14:24:00",
+      "12:00:00", "NA"
+    )
+  )
+  expect_equal(
+    (tab_1 %>%
+       fmt_duration(
+         columns = "num_1", input_units = "days", duration_style = "colon-sep",
+         output_units = c("hours", "minutes", "seconds"),
+         trim_zero_units = TRUE
+       ) %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c(
+      "00:04:19", "00:07:11", "00:00:00", "&minus;12:00:00", "14:24:00",
+      "12:00:00", "NA"
+    )
+  )
+  expect_equal(
+    (tab_1 %>%
+       fmt_duration(
+         columns = "num_1", input_units = "days", duration_style = "colon-sep",
+         output_units = c("hours", "minutes", "seconds"),
+         trim_zero_units = FALSE
+       ) %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c(
+      "00:04:19", "00:07:11", "00:00:00", "&minus;12:00:00", "14:24:00",
       "12:00:00", "NA"
     )
   )
