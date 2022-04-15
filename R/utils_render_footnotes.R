@@ -347,6 +347,7 @@ resolve_footnotes_styles <- function(data,
       tbl <- dplyr::filter(tbl, locname != "none")
 
       if (nrow(tbl) > 0) {
+
         tbl <-
           dplyr::mutate(
             tbl,
@@ -355,6 +356,8 @@ resolve_footnotes_styles <- function(data,
               marks = footnote_marks
             )
           )
+      } else {
+        tbl <- dplyr::mutate(tbl, fs_id = as.character(fs_id))
       }
 
       tbl <- dplyr::bind_rows(tbl_no_loc, tbl)
