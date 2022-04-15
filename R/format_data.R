@@ -2597,6 +2597,9 @@ fmt_duration <- function(
     )
   }
 
+  # Initialize `colon_sep_params` list
+  colon_sep_params <- list()
+
   # Resolve input units
   if (!is.null(input_units)) {
 
@@ -2633,9 +2636,36 @@ fmt_duration <- function(
   }
 
   if (duration_style == "colon-sep") {
+
+    if (
+      any(
+        identical(output_units, c("minutes", "seconds")),
+        identical(output_units, c("hours", "minutes")),
+        identical(output_units, c("hours", "minutes", "seconds")),
+        identical(output_units, c("days", "hours", "minutes"))
+      )
+    ){
+      colon_sep_output_units <- output_units
+    } else {
+      colon_sep_output_units <- c("days", "hours", "minutes", "seconds")
+    }
+
     output_units <- c("days", "hours", "minutes", "seconds")
-    max_output_units <- NULL
+
+    if (identical(trim_zero_units, "leading")) {
+      colon_sep_trim_zero_units <- "leading"
+    } else {
+      colon_sep_trim_zero_units <- FALSE
+    }
+
+    colon_sep_params <-
+      list(
+        output_units = colon_sep_output_units,
+        trim_zero_units = colon_sep_trim_zero_units
+      )
+
     trim_zero_units <- FALSE
+    max_output_units <- NULL
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -2670,6 +2700,7 @@ fmt_duration <- function(
             out_style = duration_style,
             trim_zero_units = trim_zero_units,
             max_output_units = max_output_units,
+            colon_sep_params = colon_sep_params,
             sep_mark = sep_mark,
             dec_mark = dec_mark,
             system = system,
@@ -2799,6 +2830,7 @@ values_to_durations <- function(
     out_style,
     trim_zero_units,
     max_output_units,
+    colon_sep_params,
     sep_mark,
     dec_mark,
     system,
@@ -2969,13 +3001,37 @@ values_to_durations <- function(
 
     if (out_style == "colon-sep") {
 
-      x_str[i] <- paste0(x_df_i$formatted, collapse = ":")
+      colon_sep_output_units <- colon_sep_params$output_units
+      colon_sep_trim_zero_units <- colon_sep_params$trim_zero_units
 
-      if (x_df_i$formatted[1] != 0) {
-        x_str[i] <- sub(":", "/", x_str[i], fixed = TRUE)
-      } else {
-        x_str[i] <- sub("^0:", "", x_str[i])
+      # Filter to only the output units needed
+      x_df_i <- dplyr::filter(x_df_i, time_part %in% .env$colon_sep_output_units)
+
+      # If days has a zero value, remove that entry unconditionally
+      if ("days" %in% x_df_i$time_part && x_df_i[[1, "value"]] == 0) {
+        x_df_i <- dplyr::filter(x_df_i, time_part != "days")
       }
+
+      if (colon_sep_trim_zero_units == "leading") {
+        if (
+          identical(x_df_i$time_part, c("hours", "minutes", "seconds")) &&
+          x_df_i[[1, "value"]] == 0
+        ) {
+          x_df_i <- dplyr::filter(x_df_i, time_part != "hours")
+        }
+      }
+
+      # Assemble the remaining time parts
+      hms_part <-
+        x_df_i %>%
+        dplyr::filter(time_part %in% c("hours", "minutes", "seconds")) %>%
+        dplyr::pull(formatted) %>%
+        paste(collapse = ":")
+
+      d_part <-
+        ifelse("days" %in% x_df_i$time_part, paste0(x_df_i$formatted[1], "/"), "")
+
+      x_str[i] <- paste0(d_part, hms_part)
 
     } else if (out_style == "iso") {
 
