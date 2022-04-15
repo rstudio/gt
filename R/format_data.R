@@ -2932,8 +2932,13 @@ values_to_durations <- function(
     }
 
     # Remove rows from `x_df_i`
-    if (!is.null(remove_idx) && length(remove_idx) > 0) {
+    if (length(remove_idx) > 0) {
       x_df_i <- x_df_i[-remove_idx, ]
+    }
+
+    if (all(x_df_i$value == 0) && length(trim_zero_units) > 0) {
+      # Remove all but the final row
+      x_df_i <- utils::tail(x_df_i, n = 1)
     }
 
     # Remove units that exceed a maximum number according to `max_output_units`
@@ -2967,9 +2972,6 @@ values_to_durations <- function(
     # than the smallest unit in `out_units`
     if (all(x_df_i$value == 0)) {
 
-      # Remove all but the final row
-      x_df_i <- utils::tail(x_df_i, n = 1)
-
       # If the time duration is zero then use `0` as the value,
       # otherwise, use `1` and indicate that the value is less than that
       pattern <-
@@ -2979,7 +2981,7 @@ values_to_durations <- function(
           patterns = patterns
         )
 
-      x_df_i[1, "formatted"] <-
+      x_df_i[nrow(x_df_i), "formatted"] <-
         format_time_part(
           x = if (x_rem_i == 0) 0 else 1,
           time_part = time_p,
