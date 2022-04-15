@@ -2925,12 +2925,9 @@ values_to_durations <- function(
     # Possibly add internal zero time parts to `remove_idx`
     if (
       "internal" %in% trim_zero_units &&
-      length(first_non_zero_unit_idx) > 0 &&
-      first_non_zero_unit_idx != last_non_zero_unit_idx &&
-      last_non_zero_unit_idx - first_non_zero_unit_idx > 1
+      length(first_non_zero_unit_idx) > 0
     ) {
-
-      internal_idx <- (first_non_zero_unit_idx + 1):(last_non_zero_unit_idx - 1)
+      internal_idx <- first_non_zero_unit_idx:last_non_zero_unit_idx
       remove_idx <- c(remove_idx, base::intersect(internal_idx, which(x_df_i$value == 0)))
     }
 
