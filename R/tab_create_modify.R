@@ -761,7 +761,9 @@ tab_stubhead <- function(data,
 #'   [cells_stub_summary()], and [cells_stub_grand_summary()]. Additionally, we
 #'   can enclose several `cells_*()` calls within a `list()` if we wish to link
 #'   the footnote text to different types of locations (e.g., body cells, row
-#'   group labels, the table title, etc.).
+#'   group labels, the table title, etc.). If `NULL`, then the footnote text
+#'   will be treated as standalone text in the table footer and will appear
+#'   before any footnotes with marks.
 #'
 #' @return An object of class `gt_tbl`.
 #'
