@@ -581,7 +581,7 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
   )
 
   # Use the "colon-sep" duration style and a set of custom output time units
-  # (hours and minutes, no effect with this duration style)
+  # (hours and minutes, has an effect on this duration style)
   expect_equal(
     (tab_1 %>%
        fmt_duration(
@@ -589,10 +589,7 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
          output_units = c("hours", "mins"),
          duration_style = "colon-sep") %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c(
-      "1/00:04:19", "36,323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
-      "31/14:24:00", "28/12:00:00", "NA"
-    )
+    c("00:04", "00:07", "00:00", "&minus;12:00", "14:24", "12:00", "NA")
   )
 
   # Use the "iso" duration style and a set of custom output time units
@@ -638,7 +635,7 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
   )
 
   # Use the "colon-sep" duration style and a set of custom output time units
-  # (minutes and seconds, no effect with this duration style)
+  # (minutes and seconds, has an effect with this duration style)
   expect_equal(
     (tab_1 %>%
        fmt_duration(
@@ -646,10 +643,7 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
          output_units = c("mins", "secs"),
          duration_style = "colon-sep") %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c(
-      "1/00:04:19", "36,323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
-      "31/14:24:00", "28/12:00:00", "NA"
-    )
+    c("04:19", "07:11", "00:00", "&minus;00:00", "24:00", "00:00", "NA")
   )
 
   # Use the "iso" duration style and a set of custom output time units
@@ -659,6 +653,64 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("mins", "secs"),
+         duration_style = "iso") %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c(
+      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT", "&minus;P34DT12H",
+      "P31DT14H24M", "P28DT12H", "NA"
+    )
+  )
+
+  # Use the "narrow" duration style and a set of custom output time units
+  # (minutes and seconds)
+  expect_equal(
+    (tab_1 %>%
+       fmt_duration(
+         columns = "num_1", input_units = "days",
+         output_units = c("hours", "mins", "secs"),
+         duration_style = "narrow") %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c("24h 4m 19s", "871,752h 7m 11s", "120h", "&minus;828h", "758h 24m", "684h", "NA")
+  )
+
+  # Use the "wide" duration style and a set of custom output time units
+  # (minutes and seconds)
+  expect_equal(
+    (tab_1 %>%
+       fmt_duration(
+         columns = "num_1", input_units = "days",
+         output_units = c("hours", "mins", "secs"),
+         duration_style = "wide") %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c(
+      "24 hours 4 minutes 19 seconds", "871,752 hours 7 minutes 11 seconds",
+      "120 hours", "&minus;828 hours", "758 hours 24 minutes", "684 hours",
+      "NA"
+    )
+  )
+
+  # Use the "colon-sep" duration style and a set of custom output time units
+  # (minutes and seconds, has an effect with this duration style)
+  expect_equal(
+    (tab_1 %>%
+       fmt_duration(
+         columns = "num_1", input_units = "days",
+         output_units = c("hours", "mins", "secs"),
+         duration_style = "colon-sep") %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c(
+      "00:04:19", "00:07:11", "00:00:00", "&minus;12:00:00",
+      "14:24:00", "12:00:00", "NA"
+    )
+  )
+
+  # Use the "iso" duration style and a set of custom output time units
+  # (minutes and seconds, no effect with this duration style)
+  expect_equal(
+    (tab_1 %>%
+       fmt_duration(
+         columns = "num_1", input_units = "days",
+         output_units = c("hours", "mins", "secs"),
          duration_style = "iso") %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
@@ -1158,6 +1210,80 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     c(
       "5,500w", "&minus;3,500w", "5h 2m 23s", "&minus;5h 2m 23s",
       "0s", "50m 24s", "NA"
+    )
+  )
+})
+
+test_that("specialized handling of the `colon-sep` format works correctly", {
+
+  # Create an input tibble with a numeric column
+  data_tbl_1 <-
+    dplyr::tibble(
+      num_1 = c(1.0030, 36323.005, 5.000003, -34.5, 31.6, 28.5, NA)
+    )
+
+  # Create a `gt_tbl` object with `gt()` and the
+  # `data_tbl_1` dataset
+  tab_1 <- gt(data_tbl_1)
+
+  # Using `output_units` of "minutes" and "seconds" will truncate duration
+  # values to only display those units
+  expect_equal(
+    (tab_1 %>%
+       fmt_duration(
+         columns = "num_1", input_units = "days", duration_style = "colon-sep",
+         output_units = c("minutes", "seconds")
+       ) %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c(
+      "04:19", "07:11", "00:00", "&minus;00:00",
+      "24:00", "00:00", "NA"
+    )
+  )
+
+  # Using `output_units` of "hours" and "minutes" will truncate duration
+  # values to only display those units
+  expect_equal(
+    (tab_1 %>%
+       fmt_duration(
+         columns = "num_1", input_units = "days", duration_style = "colon-sep",
+         output_units = c("hours", "minutes")
+       ) %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c(
+      "00:04", "00:07", "00:00", "&minus;12:00",
+      "14:24", "12:00", "NA"
+    )
+  )
+
+  # Using `output_units` of "minutes" and "seconds" will truncate duration
+  # values to only display those units
+  expect_equal(
+    (tab_1 %>%
+       fmt_duration(
+         columns = "num_1", input_units = "days", duration_style = "colon-sep",
+         output_units = c("hours", "minutes", "seconds")
+       ) %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c(
+      "00:04:19", "00:07:11", "00:00:00", "&minus;12:00:00", "14:24:00",
+      "12:00:00", "NA"
+    )
+  )
+
+  # Using `output_units` of "minutes" and "seconds" will truncate duration
+  # values to only display those units
+  expect_equal(
+    (tab_1 %>%
+       fmt_duration(
+         columns = "num_1", input_units = "days", duration_style = "colon-sep",
+         output_units = c("hours", "minutes", "seconds"),
+         trim_zero_units = "leading"
+       ) %>%
+       render_formats_test(context = "html"))[["num_1"]],
+    c(
+      "04:19", "07:11", "00:00", "&minus;12:00:00", "14:24:00",
+      "12:00:00", "NA"
     )
   )
 })
