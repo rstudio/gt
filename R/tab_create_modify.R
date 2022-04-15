@@ -802,12 +802,30 @@ tab_stubhead <- function(data,
 #' 2-6
 #'
 #' @export
-tab_footnote <- function(data,
-                         footnote,
-                         locations) {
+tab_footnote <- function(
+    data,
+    footnote,
+    locations = NULL
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  if (is.null(locations)) {
+
+    data <-
+      dt_footnotes_add(
+        data = data,
+        locname = "none",
+        grpname = NA_character_,
+        colname = NA_character_,
+        locnum = 0,
+        rownum = NA_integer_,
+        footnotes = footnote
+      )
+
+    return(data)
+  }
 
   # Resolve into a list of locations
   locations <- as_locations(locations)
