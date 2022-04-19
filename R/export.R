@@ -487,9 +487,7 @@ as_latex <- function(data) {
 #' @export
 as_rtf <- function(
     data,
-    page_numbering = c("none", "footer", "header"),
-    header_content = NULL,
-    notes_in_page_footer = FALSE
+    page_numbering = c("none", "footer", "header")
 ) {
 
   page_numbering <- match.arg(page_numbering)
