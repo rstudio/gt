@@ -1,12 +1,16 @@
 rtf_paste0 <- function(..., collapse = NULL) {
-  args <- lapply(list(...), function(x) {
-    if (is.null(x) || is_rtf(x)) {
-      x
-    } else {
-      rtf_escape(as.character(x))
-    }
-  })
+
+  args <-
+    lapply(list(...), function(x) {
+      if (is.null(x) || is_rtf(x)) {
+        x
+      } else {
+        rtf_escape(as.character(x))
+      }
+    })
+
   args$collapse <- collapse
+
   rtf_raw(do.call(paste0, args))
 }
 
@@ -14,9 +18,11 @@ rtf_key <- function(word, val = NULL, space = FALSE) {
   rtf_raw(paste0("\\", word, val %||% "", if (space) " "))
 }
 
-rtf_fonttbl <- function(...,
-                        .font_names = NULL,
-                        .default_n = NULL) {
+rtf_fonttbl <- function(
+    ...,
+    .font_names = NULL,
+    .default_n = NULL
+) {
 
   fonts <- list(...)
 
@@ -27,8 +33,8 @@ rtf_fonttbl <- function(...,
   if (length(fonts) < 1) {
     fonts <-
       list(
-        rtf_font_def(font = "Calibri", family = "roman"),
-        rtf_font_def(font = "Courier", family = "roman")
+        rtf_font_def(font = "Courier New", family = "roman"),
+        rtf_font_def(font = "Times", family = "roman")
       )
   }
 
@@ -39,7 +45,9 @@ rtf_fonttbl <- function(...,
 
   fontinfo_values <-
     vapply(
-      seq_along(fonts),FUN.VALUE = character(1), USE.NAMES = FALSE,
+      seq_along(fonts),
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
       FUN = function(x) {
         fonts[x] %>% unlist() %>% gsub("{x}", font_sequence[x], ., fixed = TRUE)
       }
@@ -50,14 +58,17 @@ rtf_fonttbl <- function(...,
   rtf_fonttbl <- list(paste0(default_n, paste0("{", fonttbl_values, "}")))
 
   class(rtf_fonttbl) <- "rtf_fonttbl"
+
   rtf_fonttbl
 }
 
-rtf_font_def <- function(font,
-                         family = NULL,
-                         number = NULL,
-                         charset = NULL,
-                         pitch = NULL) {
+rtf_font_def <- function(
+    font,
+    family = NULL,
+    number = NULL,
+    charset = NULL,
+    pitch = NULL
+) {
 
   font_family_name <- family %||% "nil"
   font_charset <- charset %||% 0
@@ -86,9 +97,11 @@ rtf_font_def <- function(font,
   rtf_font
 }
 
-rtf_colortbl <- function(...,
-                         .hexadecimal_colors = NULL,
-                         .add_default = TRUE) {
+rtf_colortbl <- function(
+    ...,
+    .hexadecimal_colors = NULL,
+    .add_default = TRUE
+) {
 
   colors <- list(...)
 
@@ -131,7 +144,11 @@ rtf_color <- function(color = NULL, rgb = NULL) {
   rtf_color
 }
 
-rtf_header <- function(..., .charset = "ansi", .ansi_code_page = 1252) {
+rtf_header <- function(
+    ...,
+    .charset = "ansi",
+    .ansi_code_page = 1252
+) {
 
   # Requires the font table (<fonttbl>)
 
@@ -181,9 +198,12 @@ rtf_header <- function(..., .charset = "ansi", .ansi_code_page = 1252) {
   rtf_header
 }
 
-rtf_file <- function(header = NULL,
-                     document = NULL,
-                     page_numbering) {
+rtf_file <- function(
+    header = NULL,
+    document = NULL,
+    footer = NULL,
+    page_numbering
+) {
 
   if (is.null(header) && is.null(document)) {
     header <- document <- ""
@@ -217,7 +237,7 @@ rtf_file <- function(header = NULL,
     if (length(matched_fonts) > 0) {
 
       fonttbl <-
-        rtf_fonttbl(.font_names = c("Calibri", gsub("<<FONT:|>>", "", matched_fonts)), .default_n = 1)
+        rtf_fonttbl(.font_names = c("Times", gsub("<<FONT:|>>", "", matched_fonts)), .default_n = 1)
 
       for (i in seq_along(matched_fonts)) {
         document <- gsub(matched_fonts[i], as.character(i), document, fixed = TRUE)
@@ -245,14 +265,18 @@ rtf_file <- function(header = NULL,
       )
   }
 
-  rtf_file <- list(header = header, document = document)
+  rtf_file <-
+    list(
+      header = header,
+      document = document,
+      footer = footer
+    )
 
   class(rtf_file) <- c("rtf_file", "rtf")
   rtf_file
 }
 
 rtf_table <- function(rows) {
-
   rtf_raw(paste(unlist(rows), collapse = ""))
 }
 
@@ -267,8 +291,10 @@ twip_factors <-
 # suffix of in, pt, px, cm, mm, tw; you can also include `""`.
 # Output: data frame with columns `value` and `unit`, with NA for both
 # if input element was `""`. Values that cannot be parsed will throw errors.
-parse_length_str <- function(lengths_vec,
-                             allow_negative = FALSE) {
+parse_length_str <- function(
+    lengths_vec,
+    allow_negative = FALSE
+) {
 
   match <- regexec("^([0-9.-]+)(%|[a-z]+)$", lengths_vec)
   match <- regmatches(lengths_vec, match)
@@ -341,9 +367,11 @@ abs_len_to_twips <- function(lengths_df) {
 # a numeric portion followed by the unit; the first should be a
 # length-1 vector and the latter should be a vector with as many
 # elements as there are visible columns in the gt table
-col_width_resolver_rtf <- function(table_width,
-                                   col_widths = NULL,
-                                   n_cols = length(col_widths)) {
+col_width_resolver_rtf <- function(
+    table_width,
+    col_widths = NULL,
+    n_cols = length(col_widths)
+) {
 
   rtf_page_width <- getOption("gt.rtf_page_width")
 
@@ -408,11 +436,13 @@ col_width_resolver_rtf <- function(table_width,
   round(col_widths[["value"]])
 }
 
-rtf_tbl_row <- function(x,
-                        widths = NULL,
-                        height = NULL,
-                        borders = NULL,
-                        repeat_header = FALSE) {
+rtf_tbl_row <- function(
+    x,
+    widths = NULL,
+    height = NULL,
+    borders = NULL,
+    repeat_header = FALSE
+) {
 
   rtf_page_width <- getOption("gt.rtf_page_width")
 
@@ -521,19 +551,21 @@ rtf_tbl_row <- function(x,
   )
 }
 
-rtf_tbl_cell <- function(x,
-                         borders = NULL,
-                         h_align = c("left", "center", "right"),
-                         v_align = c("center", "top", "bottom"),
-                         h_merge = NULL,
-                         padding = NULL,
-                         cell_background_color = NULL,
-                         font = NULL,
-                         font_size = NULL,
-                         font_color = NULL,
-                         bold = FALSE,
-                         italic = FALSE,
-                         super_sub = NULL) {
+rtf_tbl_cell <- function(
+    x,
+    borders = NULL,
+    h_align = c("left", "center", "right"),
+    v_align = c("center", "top", "bottom"),
+    h_merge = NULL,
+    padding = NULL,
+    cell_background_color = NULL,
+    font = NULL,
+    font_size = NULL,
+    font_color = NULL,
+    bold = FALSE,
+    italic = FALSE,
+    super_sub = NULL
+) {
 
   x <- paste(x, collapse = " ")
 
@@ -651,13 +683,15 @@ rtf_tbl_cell <- function(x,
   rtf_paste0(cell_settings, "\n", cell_content)
 }
 
-rtf_font <- function(...,
-                     font = NULL,
-                     font_size = NULL,
-                     font_color = NULL,
-                     bold = FALSE,
-                     italic = FALSE,
-                     super_sub = NULL) {
+rtf_font <- function(
+    ...,
+    font = NULL,
+    font_size = NULL,
+    font_color = NULL,
+    bold = FALSE,
+    italic = FALSE,
+    super_sub = NULL
+) {
 
   # Obtain font-specific settings
   font_styles <-
@@ -722,12 +756,14 @@ rtf_escape_unicode <- function(x) {
   paste(chars, collapse = "")
 }
 
-rtf_font_styling <- function(font = NULL,
-                             font_size = NULL,
-                             font_color = NULL,
-                             bold = FALSE,
-                             italic = FALSE,
-                             super_sub = NULL) {
+rtf_font_styling <- function(
+    font = NULL,
+    font_size = NULL,
+    font_color = NULL,
+    bold = FALSE,
+    italic = FALSE,
+    super_sub = NULL
+) {
 
   # Set font for text
   if (!is.null(font)) {
@@ -787,10 +823,12 @@ rtf_font_styling <- function(font = NULL,
   )
 }
 
-rtf_border <- function(direction,
-                       style = "s",
-                       width = 20,
-                       color = 0) {
+rtf_border <- function(
+    direction,
+    style = "s",
+    width = 20,
+    color = 0
+) {
 
   if (direction == "all") {
     direction <- c("top", "bottom", "left", "right")
