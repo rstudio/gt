@@ -60,7 +60,7 @@ dt_options_tbl <-
     "table_font_names",                  FALSE,  "table",            "values",  default_fonts_vec,
     "table_font_size",                    TRUE,  "table",            "px",      "16px",
     "table_font_weight",                  TRUE,  "table",            "value",   "normal",
-    "table_font_style",                   TRUE,   "table",           "value",   "normal",
+    "table_font_style",                   TRUE,  "table",            "value",   "normal",
     "table_font_color",                   TRUE,  "table",            "value",   "#333333",
     "table_font_color_light",             TRUE,  "table",            "value",   "#FFFFFF",
     "table_border_top_include",          FALSE,  "table",            "logical", TRUE,
@@ -201,4 +201,8 @@ dt_options_tbl <-
     "row_striping_background_color",      TRUE,  "row",              "value",   "rgba(128,128,128,0.05)",
     "row_striping_include_stub",         FALSE,  "row",              "logical", FALSE,
     "row_striping_include_table_body",   FALSE,  "row",              "logical", FALSE,
+    "page_orientation",                  FALSE,  "page",             "value",   "portrait",
+    "page_numbering",                    FALSE,  "page",             "value",   "none",
+    "page_header_use_tbl_headings",      FALSE,  "page",             "logical", FALSE,
+    "page_footer_use_tbl_notes",         FALSE,  "page",             "logical", FALSE,
   )[-1, ]
