@@ -38,19 +38,20 @@ dt_styles_add <- function(
     dt_styles_get() %>%
     dplyr::bind_rows(
       expand.grid(
-        locname = locname,
         grpname = grpname,
         colname = colname,
-        locnum = locnum,
         rownum = rownum,
         stringsAsFactors = FALSE
       ) %>%
         dplyr::as_tibble() %>%
         dplyr::mutate(
+          locname = locname,
+          locnum = locnum,
           colnum = NA_integer_,
           styles = list(styles)
         ) %>%
-        dplyr::distinct()
+        dplyr::distinct() %>%
+        dplyr::select(locname, grpname, colname, locnum, rownum, styles)
     ) %>%
     dt_styles_set(styles = ., data = data)
 }
