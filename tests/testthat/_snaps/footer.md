@@ -17,7 +17,7 @@
     Code
       .
     Output
-      {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Calibri;}{\f1\froman\fcharset0\fprq0 Courier;}}{\colortbl;\red211\green211\blue211;}
+      {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red211\green211\blue211;}
       
       \trowd\trrh0\trhdr
       
@@ -136,7 +136,7 @@
     Code
       .
     Output
-      {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Calibri;}{\f1\froman\fcharset0\fprq0 Courier;}}{\colortbl;\red211\green211\blue211;}
+      {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red211\green211\blue211;}
       
       \trowd\trrh0\trhdr
       
@@ -255,7 +255,7 @@
     Code
       .
     Output
-      {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Calibri;}{\f1\froman\fcharset0\fprq0 Courier;}}{\colortbl;\red211\green211\blue211;}
+      {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red211\green211\blue211;}
       
       \trowd\trrh0\trhdr
       
