@@ -958,31 +958,29 @@ cols_unhide <- function(data,
   )
 }
 
-#' Merge two columns to a value & uncertainty column
+#' Merge columns to a value-with-uncertainty column
 #'
 #' @description
 #' The `cols_merge_uncert()` function is a specialized variant of the
-#' [cols_merge()] function. It operates by taking a base value column
-#' (`col_val`) and an uncertainty column (`col_uncert`) and merges them into a
-#' single column. What results is a column with values and associated
-#' uncertainties (e.g., `12.0 ± 0.1`), and, the column specified in `col_uncert`
-#' is dropped from the output table.
+#' [cols_merge()] function. It takes as input a base value column (`col_val`)
+#' and either: (1) a single uncertainty column, or (2) two columns representing
+#' lower and upper uncertainty bounds. These columns will be essentially merged
+#' in a single column (that of `col_val`). What results is a column with values
+#' and associated uncertainties (e.g., `12.0 ± 0.1`), and any columns specified
+#' in `col_uncert` are hidden from appearing the output table.
 #'
 #' @details
-#' This function could be somewhat replicated using [cols_merge()], however,
+#' This function could be somewhat replicated using [cols_merge()] in the case
+#' where a single column is supplied for `col_uncert`, however,
 #' `cols_merge_uncert()` employs the following specialized semantics for `NA`
 #' handling:
 #'
-#' \enumerate{
-#' \item `NA`s in `col_val` result in missing values for the merged
-#' column (e.g., `NA` + `0.1` = `NA`)
-#' \item `NA`s in `col_uncert` (but not `col_val`) result in
-#' base values only for the merged column (e.g.,
-#' `12.0` + `NA` = `12.0`)
-#' \item `NA`s both `col_val` and `col_uncert` result in
-#' missing values for the merged column (e.g., `NA` + `NA` =
-#' `NA`)
-#' }
+#' 1. `NA`s in `col_val` result in missing values for the merged column (e.g.,
+#' `NA` + `0.1` = `NA`)
+#' 2. `NA`s in `col_uncert` (but not `col_val`) result in base values only for
+#' the merged column (e.g., `12.0` + `NA` = `12.0`)
+#' 3. `NA`s both `col_val` and `col_uncert` result in missing values for the
+#' merged column (e.g., `NA` + `NA` = `NA`)
 #'
 #' Any resulting `NA` values in the `col_val` column following the merge
 #' operation can be easily formatted using the [sub_missing()] function.
@@ -996,17 +994,23 @@ cols_unhide <- function(data,
 #' @inheritParams cols_align
 #' @param col_val A single column name that contains the base values. This is
 #'   the column where values will be mutated.
-#' @param col_uncert A single column name that contains the uncertainty values.
-#'   These values will be combined with those in `col_val`. We have the option
-#'   to automatically hide the `col_uncert` column through `autohide`.
-#' @param sep The separator text that contains the uncertainty mark. The
-#'   default value of `" +/- "` indicates that an appropriate plus/minus mark
-#'   will be used depending on the output context. Should you want this special
-#'   symbol to be taken literally, it can be supplied within the base [I()]
-#'   function.
-#' @param autohide An option to automatically hide the column specified as
-#'   `col_uncert`. Any columns with their state changed to hidden will behave
+#' @param col_uncert Either one or two column names that contain the uncertainty
+#'   values. The most common case involves supplying a single column with
+#'   uncertainties; these values will be combined with those in `col_val`. Less
+#'   commonly, lower and upper uncertainty bounds may be different. For that
+#'   case two columns (representing lower and upper uncertainty values away from
+#'   `col_val`, respectively) should be provided. Since we often don't want the
+#'   uncertainty value columns in the output table, we can automatically hide
+#'   any `col_uncert` columns through the `autohide` option.
+#' @param sep The separator text that contains the uncertainty mark for a single
+#'   uncertainty value. The default value of `" +/- "` indicates that an
+#'   appropriate plus/minus mark will be used depending on the output context.
+#'   Should you want this special symbol to be taken literally, it can be
+#'   supplied within the [I()] function.
+#' @param autohide An option to automatically hide any columns specified in
+#'   `col_uncert`. Any columns with their state changed to 'hidden' will behave
 #'   the same as before, they just won't be displayed in the finalized table.
+#'   By default, this is set to `TRUE`.
 #'
 #' @return An object of class `gt_tbl`.
 #'

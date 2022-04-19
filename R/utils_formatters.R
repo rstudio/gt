@@ -892,30 +892,31 @@ num_fmt_factory <- function(context,
 
   function(x) {
 
+    # Create `x_str` with the same length as `x`
+    x_str <- rep(NA_character_, length(x))
+
     # Determine which of `x` are not NA
     non_na_x <- !is.na(x)
 
-    # Create a possibly shorter vector of non-NA `x` values
-    x_vals <- x[non_na_x]
+    if (any(non_na_x)) {
 
-    if (length(x_vals) == 0) {
-      return(character(0))
+      # Create a possibly shorter vector of non-NA `x` values
+      x_vals <- x[non_na_x]
+
+      # Apply a series of transformations to `x_str_vals`
+      x_str_vals <-
+        x_vals %>%
+        # Format all non-NA x values with a formatting function
+        format_fn(context = context) %>%
+        # If in a LaTeX context, wrap values in math mode
+        { if (use_latex_math_mode) to_latex_math_mode(., context = context) else . } %>%
+        # Handle formatting of pattern
+        apply_pattern_fmt_x(pattern = pattern)
+
+      # place the `x_str_vals` into `str` (at the non-NA indices)
+      x_str[non_na_x] <- x_str_vals
     }
 
-    # Apply a series of transformations to `x_str_vals`
-    x_str_vals <-
-      x_vals %>%
-      # Format all non-NA x values with a formatting function
-      format_fn(context = context) %>%
-      # If in a LaTeX context, wrap values in math mode
-      { if (use_latex_math_mode) to_latex_math_mode(., context = context) else . } %>%
-      # Handle formatting of pattern
-      apply_pattern_fmt_x(pattern = pattern)
-
-    # Create `x_str` with the same length as `x`; place the
-    # `x_str_vals` into `str` (at the non-NA indices)
-    x_str <- rep(NA_character_, length(x))
-    x_str[non_na_x] <- x_str_vals
     x_str
   }
 }
