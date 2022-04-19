@@ -873,6 +873,93 @@ test_that("the ordering of groups shouldn't affect group/grand summary calcs", {
     expect_equal(c("122.00", "244.00"))
 })
 
+test_that("summary cells can be created with NA/NaN-resulting values", {
+
+  # Generate a tibble with two columns containing just NA values
+  na_tbl <-
+    tibble::tibble(
+      group = c(rep("one", 5), rep("two", 5)),
+      na_1 = rep(NA_real_, 10),
+      na_2 = rep(NA_integer_, 10)
+    )
+
+  # Create a gt table with summary rows
+  gt_tbl_1 <-
+    na_tbl %>%
+    gt(groupname_col = "group") %>%
+    summary_rows(
+      groups = c("one", "two"),
+      columns = c(na_1, na_2),
+      fns = list(
+        ~ sum(., na.rm = TRUE),
+        ~ mean(., na.rm = TRUE)
+      )
+    )
+
+  # Expect the correct values in all of the first and second
+  # summary rows of `gt_tbl_1`
+  gt_tbl_1 %>% render_as_html() %>% xml2::read_html() %>%
+    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick']") %>%
+    expect_equal(rep("0.00", 4))
+
+  gt_tbl_1 %>% render_as_html() %>% xml2::read_html() %>%
+    selection_text("[class='gt_row gt_right gt_summary_row gt_last_summary_row']") %>%
+    expect_equal(rep("—", 4))
+
+  # Create a gt table with grand summary rows
+  gt_tbl_2 <-
+    na_tbl %>%
+    gt(groupname_col = "group") %>%
+    grand_summary_rows(
+      columns = c(na_1, na_2),
+      fns = list(
+        ~ sum(., na.rm = TRUE),
+        ~ mean(., na.rm = TRUE)
+      )
+    )
+
+  # Expect the correct values in all of the first and second
+  # grand summary rows of `gt_tbl_2`
+  gt_tbl_2 %>% render_as_html() %>% xml2::read_html() %>%
+    selection_text("[class='gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row']") %>%
+    expect_equal(rep("0.00", 2))
+
+  gt_tbl_2 %>% render_as_html() %>% xml2::read_html() %>%
+    selection_text("[class='gt_row gt_right gt_grand_summary_row gt_last_summary_row']") %>%
+    expect_equal(rep("—", 2))
+
+  # Create a gt table with grand summary rows, replacing missing
+  # values with the word "nil"
+  gt_tbl_3 <-
+    na_tbl %>%
+    gt(groupname_col = "group") %>%
+    grand_summary_rows(
+      columns = c(na_1, na_2),
+      fns = list(
+        ~ sum(., na.rm = TRUE),
+        ~ mean(., na.rm = TRUE)
+      ),
+      missing_text = "nil"
+    )
+
+  # Expect to see the `missing_text` values in all of the second
+  # grand summary rows of `gt_tbl_3`
+  gt_tbl_3 %>% render_as_html() %>% xml2::read_html() %>%
+    selection_text("[class='gt_row gt_right gt_grand_summary_row gt_last_summary_row']") %>%
+    expect_equal(rep("nil", 2))
+
+  # Expect an error if summarizing results in a zero-length vector
+  expect_error(
+    na_tbl %>%
+      gt(groupname_col = "group") %>%
+      summary_rows(
+        groups = "one",
+        columns = na_1,
+        fns = list(empty = ~ numeric(0))
+      )
+  )
+})
+
 test_that("summary rows can be created when there is no stub", {
 
   # Create a table based on `sp500`, with
@@ -1507,4 +1594,42 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
   expect_warning(regexp = NA, summary_tbl_6 %>% render_as_html())
   expect_warning(regexp = NA, summary_tbl_6 %>% as_latex())
   expect_warning(regexp = NA, summary_tbl_6 %>% as_rtf())
+})
+
+test_that("summary rows can be styled comprehensively", {
+
+  # Generate a gt table with group and grand summary rows and style
+  # every one of these cells in a single, comprehensive `tab_style()` stmt
+  gt_tbl <-
+    gtcars %>%
+    dplyr::select(mfr, model, hp, trq) %>%
+    dplyr::filter(mfr %in% c("Lamborghini", "Maserati", "Aston Martin")) %>%
+    gt(rowname_col = "model", groupname_col = "mfr") %>%
+    summary_rows(
+      groups = TRUE,
+      fns = list(
+        Minimum = ~min(.),
+        Maximum = ~max(.)
+      )
+    ) %>%
+    grand_summary_rows(
+      fns = list(
+        Minimum = ~min(.),
+        Maximum = ~max(.)
+      )
+    ) %>%
+    tab_style(
+      style = list(
+        cell_fill(color = "#DA291C"),
+        cell_borders(color = "#FFC72C", weight = "4px"),
+        cell_text(color = "white", weight = "bold")
+      ),
+      locations = list(
+        cells_summary(), cells_stub_summary(),
+        cells_grand_summary(), cells_stub_grand_summary()
+      )
+    )
+
+  # Take a snapshot of `gt_tbl`
+  gt_tbl %>% render_as_html() %>% expect_snapshot()
 })

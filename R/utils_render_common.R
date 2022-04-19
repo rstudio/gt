@@ -271,12 +271,13 @@ perform_col_merge <- function(data,
 
   col_merge <- dt_col_merge_get(data = data)
   body <- dt_body_get(data = data)
+  data_tbl <- dt_data_get(data = data)
 
   if (length(col_merge) == 0) {
     return(data)
   }
 
-  for (i in seq(col_merge)) {
+  for (i in seq_along(col_merge)) {
 
     type <- col_merge[[i]]$type
 
@@ -292,19 +293,16 @@ perform_col_merge <- function(data,
       columns <- col_merge[[i]]$vars
       pattern <- col_merge[[i]]$pattern
 
-      glue_src_data <- body[, columns] %>% as.list()
+      glue_src_data <- as.list(body[, columns])
       glue_src_data <- stats::setNames(glue_src_data, seq_len(length(glue_src_data)))
 
       body <-
-        body %>%
         dplyr::mutate(
-          !!mutated_column_sym := glue_gt(glue_src_data, pattern) %>%
-            as.character()
+          body,
+          !!mutated_column_sym := as.character(glue_gt(glue_src_data, pattern))
         )
 
     } else if (type == "merge_n_pct") {
-
-      data_tbl <- dt_data_get(data = data)
 
       mutated_column <- col_merge[[i]]$vars[1]
       second_column <- col_merge[[i]]$vars[2]
@@ -327,18 +325,91 @@ perform_col_merge <- function(data,
       rows_to_format_idx <- setdiff(rows_to_format_idx, zero_rows_idx)
 
       body[rows_to_format_idx, mutated_column] <-
-        glue_gt(
-          list(
-            "1" = body[[mutated_column]][rows_to_format_idx],
-            "2" = body[[second_column]][rows_to_format_idx]
-          ),
-          pattern
-        ) %>%
-        as.character()
+        as.character(
+          glue_gt(
+            list(
+              "1" = body[[mutated_column]][rows_to_format_idx],
+              "2" = body[[second_column]][rows_to_format_idx]
+            ),
+            pattern
+          )
+        )
+
+    } else if (type == "merge_uncert" && length(col_merge[[i]]$vars) == 3) {
+
+      # Case where lower and upper certainties provided as input columns
+
+      mutated_column <- col_merge[[i]]$vars[1]
+      lu_column <- col_merge[[i]]$vars[2]
+      uu_column <- col_merge[[i]]$vars[3]
+
+      pattern_equal <- col_merge[[i]]$pattern
+      sep <- col_merge[[i]]$sep
+
+      # Transform the separator text depending on specific
+      # inputs and the `context`
+      sep <-
+        sep %>%
+        context_dash_mark(context = context) %>%
+        context_plusminus_mark(context = context)
+
+      if (context == "html") {
+
+        pattern_unequal <-
+          paste0(
+            "<<1>><span class=\"gt_two_val_uncert\">",
+            "+<<3>><br>",
+            context_minus_mark(context = context), "<<2>>",
+            "</span>"
+          )
+
+      } else if (context == "latex") {
+
+        pattern_unequal <- "$<<1>>^{+<<3>>}_{-<<2>>}$"
+
+      } else if (context == "rtf") {
+
+        pattern_unequal <- "<<1>>(+<<3>>, -<<2>>)"
+      }
+
+      # Determine rows where NA values exist
+      na_1_rows <- is.na(data_tbl[[mutated_column]])
+      na_lu_rows <- is.na(data_tbl[[lu_column]])
+      na_uu_rows <- is.na(data_tbl[[uu_column]])
+      na_lu_or_uu <- na_lu_rows | na_uu_rows
+      na_lu_and_uu <- na_lu_rows & na_uu_rows
+      lu_equals_uu <- data_tbl[[lu_column]] == data_tbl[[uu_column]] & !na_lu_or_uu
+
+      rows_to_format_equal <- which(!na_1_rows & lu_equals_uu)
+      rows_to_format_unequal <- which(!na_1_rows & !na_lu_and_uu & !lu_equals_uu)
+
+      body[rows_to_format_equal, mutated_column] <-
+        as.character(
+          glue_gt(
+            list(
+              "1" = body[[mutated_column]][rows_to_format_equal],
+              "2" = body[[lu_column]][rows_to_format_equal],
+              "sep" = sep
+            ),
+            pattern_equal
+          )
+        )
+
+      body[rows_to_format_unequal, mutated_column] <-
+        as.character(
+          glue_gt(
+            list(
+              "1" = body[[mutated_column]][rows_to_format_unequal],
+              "2" = body[[lu_column]][rows_to_format_unequal],
+              "3" = body[[uu_column]][rows_to_format_unequal]
+            ),
+            pattern_unequal,
+            .open = "<<",
+            .close = ">>"
+          )
+        )
 
     } else {
-
-      data_tbl <- dt_data_get(data = data)
 
       mutated_column <- col_merge[[i]]$vars[1]
       second_column <- col_merge[[i]]$vars[2]
@@ -365,21 +436,20 @@ perform_col_merge <- function(data,
         }
 
       body[rows_to_format, mutated_column] <-
-        glue_gt(
-          list(
-            "1" = body[[mutated_column]][rows_to_format],
-            "2" = body[[second_column]][rows_to_format],
-            "sep" = sep
-          ),
-          pattern
-        ) %>%
-        as.character()
+        as.character(
+          glue_gt(
+            list(
+              "1" = body[[mutated_column]][rows_to_format],
+              "2" = body[[second_column]][rows_to_format],
+              "sep" = sep
+            ),
+            pattern
+          )
+        )
     }
   }
 
-  data <- dt_body_set(data = data, body = body)
-
-  data
+  dt_body_set(data = data, body = body)
 }
 
 #' Suitably replace `NA` values in the `groups_df` data frame
