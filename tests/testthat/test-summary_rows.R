@@ -1595,3 +1595,41 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
   expect_warning(regexp = NA, summary_tbl_6 %>% as_latex())
   expect_warning(regexp = NA, summary_tbl_6 %>% as_rtf())
 })
+
+test_that("summary rows can be styled comprehensively", {
+
+  # Generate a gt table with group and grand summary rows and style
+  # every one of these cells in a single, comprehensive `tab_style()` stmt
+  gt_tbl <-
+    gtcars %>%
+    dplyr::select(mfr, model, hp, trq) %>%
+    dplyr::filter(mfr %in% c("Lamborghini", "Maserati", "Aston Martin")) %>%
+    gt(rowname_col = "model", groupname_col = "mfr") %>%
+    summary_rows(
+      groups = TRUE,
+      fns = list(
+        Minimum = ~min(.),
+        Maximum = ~max(.)
+      )
+    ) %>%
+    grand_summary_rows(
+      fns = list(
+        Minimum = ~min(.),
+        Maximum = ~max(.)
+      )
+    ) %>%
+    tab_style(
+      style = list(
+        cell_fill(color = "#DA291C"),
+        cell_borders(color = "#FFC72C", weight = "4px"),
+        cell_text(color = "white", weight = "bold")
+      ),
+      locations = list(
+        cells_summary(), cells_stub_summary(),
+        cells_grand_summary(), cells_stub_grand_summary()
+      )
+    )
+
+  # Take a snapshot of `gt_tbl`
+  gt_tbl %>% render_as_html() %>% expect_snapshot()
+})
