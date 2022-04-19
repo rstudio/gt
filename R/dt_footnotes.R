@@ -38,19 +38,20 @@ dt_footnotes_add <- function(
     dt_footnotes_get() %>%
     dplyr::bind_rows(
       expand.grid(
-        locname = locname,
         grpname = grpname,
         colname = colname,
-        locnum = locnum,
         rownum = rownum,
         stringsAsFactors = FALSE
       ) %>%
         dplyr::as_tibble() %>%
         dplyr::mutate(
+          locname = locname,
+          locnum = locnum,
           colnum = NA_integer_,
           footnotes = list(footnotes)
         ) %>%
-        dplyr::distinct()
+        dplyr::distinct() %>%
+        dplyr::select(locname, grpname, colname, locnum, rownum, footnotes)
     ) %>%
     dt_footnotes_set(footnotes = ., data = data)
 }
