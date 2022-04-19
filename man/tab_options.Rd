@@ -156,7 +156,11 @@ tab_options(
   source_notes.sep = NULL,
   row.striping.background_color = NULL,
   row.striping.include_stub = NULL,
-  row.striping.include_table_body = NULL
+  row.striping.include_table_body = NULL,
+  page.orientation = NULL,
+  page.numbering = NULL,
+  page.header.use_tbl_headings = NULL,
+  page.footer.use_tbl_notes = NULL
 )
 }
 \arguments{
