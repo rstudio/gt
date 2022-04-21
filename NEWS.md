@@ -1,5 +1,23 @@
 # gt 0.5.0
 
+## New features
+
+* The `tab_spanner()` and `tab_spanner_delim()` functions now support the addition of column spanners with unlimited levels (previously, only a single level of spanner column labels was possible to add) (#746). (#905)
+
+* There is now support for the Indian numbering system, making the placement of digit-grouping separators correspond to thousand, lakh, crore, and higher quantities. This is available for several `fmt_*()` functions (`fmt_number()`, `fmt_integer()`, `fmt_currency()`, `fmt_percent()`, and `fmt_fraction()`) and is exposed as the `system` argument with two options `"intl"` (international, the default) and `"ind"` (Indian).
+
+## Minor improvements and bug fixes
+
+* Enhanced the `cols_merge_uncert()` function such that different lower and upper uncertainty values could be used (by specifying two columns in the `col_uncert` argument) (#884). (#888)
+
+* Honor the `locale` setting from the initial `gt()` call when rendering summary rows (#906). (#907)
+
+* Fixed an issue where styles that spanned multiple columns and rows in a summary block were not fully rendered (#859). (#924)
+
+* Improved LaTeX rendering of certain characters (e.g, `\`, `~`, `&`, etc.). (#903)
+
+* Aggregations with `summary_rows()` and `grand_summary_rows()` that might return an `NaN` (common case is using `mean(., na.rm = TRUE)` on an all-`NA` column) now return `NA`. This removes the evaluation error that would otherwise occur and provides an opportunity to replace the `NA` with an explanatory replacement string (#471, #827). (#887)
+
 # gt 0.4.0
 
 ## New features
