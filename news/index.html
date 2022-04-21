@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,7 +58,20 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="gt-development-version">gt (development version)<a class="anchor" aria-label="anchor" href="#gt-development-version"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.5.0" id="gt-050">gt 0.5.0<a class="anchor" aria-label="anchor" href="#gt-050"></a></h2>
+<div class="section level3">
+<h3 id="new-features-0-5-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-5-0"></a></h3>
+<ul><li><p>The <code><a href="../reference/tab_spanner.html">tab_spanner()</a></code> and <code><a href="../reference/tab_spanner_delim.html">tab_spanner_delim()</a></code> functions now support the addition of column spanners with unlimited levels (previously, only a single level of spanner column labels was possible to add) (<a href="https://github.com/rstudio/gt/issues/746" class="external-link">#746</a>). (<a href="https://github.com/rstudio/gt/issues/905" class="external-link">#905</a>)</p></li>
+<li><p>There is now support for the Indian numbering system, making the placement of digit-grouping separators correspond to thousand, lakh, crore, and higher quantities. This is available for several <code>fmt_*()</code> functions (<code><a href="../reference/fmt_number.html">fmt_number()</a></code>, <code><a href="../reference/fmt_integer.html">fmt_integer()</a></code>, <code><a href="../reference/fmt_currency.html">fmt_currency()</a></code>, <code><a href="../reference/fmt_percent.html">fmt_percent()</a></code>, and <code><a href="../reference/fmt_fraction.html">fmt_fraction()</a></code>) and is exposed as the <code>system</code> argument with two options <code>"intl"</code> (international, the default) and <code>"ind"</code> (Indian).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="minor-improvements-and-bug-fixes-0-5-0">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-0-5-0"></a></h3>
+<ul><li><p>Enhanced the <code><a href="../reference/cols_merge_uncert.html">cols_merge_uncert()</a></code> function such that different lower and upper uncertainty values could be used (by specifying two columns in the <code>col_uncert</code> argument) (<a href="https://github.com/rstudio/gt/issues/884" class="external-link">#884</a>). (<a href="https://github.com/rstudio/gt/issues/888" class="external-link">#888</a>)</p></li>
+<li><p>Honor the <code>locale</code> setting from the initial <code><a href="../reference/gt.html">gt()</a></code> call when rendering summary rows (<a href="https://github.com/rstudio/gt/issues/906" class="external-link">#906</a>). (<a href="https://github.com/rstudio/gt/issues/907" class="external-link">#907</a>)</p></li>
+<li><p>Fixed an issue where styles that spanned multiple columns and rows in a summary block were not fully rendered (<a href="https://github.com/rstudio/gt/issues/859" class="external-link">#859</a>). (<a href="https://github.com/rstudio/gt/issues/924" class="external-link">#924</a>)</p></li>
+<li><p>Improved LaTeX rendering of certain characters (e.g, <code>\</code>, <code>~</code>, <code>&amp;</code>, etc.). (<a href="https://github.com/rstudio/gt/issues/903" class="external-link">#903</a>)</p></li>
+<li><p>Aggregations with <code><a href="../reference/summary_rows.html">summary_rows()</a></code> and <code><a href="../reference/grand_summary_rows.html">grand_summary_rows()</a></code> that might return an <code>NaN</code> (common case is using <code>mean(., na.rm = TRUE)</code> on an all-<code>NA</code> column) now return <code>NA</code>. This removes the evaluation error that would otherwise occur and provides an opportunity to replace the <code>NA</code> with an explanatory replacement string (<a href="https://github.com/rstudio/gt/issues/471" class="external-link">#471</a>, <a href="https://github.com/rstudio/gt/issues/827" class="external-link">#827</a>). (<a href="https://github.com/rstudio/gt/issues/887" class="external-link">#887</a>)</p></li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.4.0" id="gt-040">gt 0.4.0<a class="anchor" aria-label="anchor" href="#gt-040"></a></h2><p class="text-muted">CRAN release: 2022-02-15</p>
