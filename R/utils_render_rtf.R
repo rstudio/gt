@@ -683,8 +683,13 @@ rtf_raw <- function(...) {
 
 # Transform a footnote mark to an RTF representation as a superscript
 footnote_mark_to_rtf <- function(mark) {
+  stopifnot(length(mark) == 1)
 
-  rtf_paste0(rtf_raw("{\\super \\i "), mark, rtf_raw("}"))
+  if (is.na(mark)) {
+    ""
+  } else {
+    rtf_paste0(rtf_raw("{\\super \\i "), mark, rtf_raw("}"))
+  }
 }
 
 rtf_escape <- function(x) {
@@ -1557,8 +1562,6 @@ create_footer_component_rtf <- function(data) {
 
   table_width <- sum(col_widths)
 
-  cell_list <- ""
-
   # Get the multiline and separator options for footnotes and source notes
   footnotes_multiline <- dt_options_get_value(data = data, option = "footnotes_multiline")
   footnotes_sep <- dt_options_get_value(data = data, option = "footnotes_sep")
@@ -1590,23 +1593,14 @@ create_footer_component_rtf <- function(data) {
         c(
           footnotes,
           rtf_paste0(
-            cell_list,
-            rtf_font(
-              italic = TRUE,
-              super_sub = "super",
-              font_size = 10,
-              if (is.na(footnote_mark[i])) "" else rtf_raw(footnote_mark[i])
-            ),
-            rtf_font(
-              font_size = 10,
-              rtf_raw(footnote_text[i])
-            )
+            footnote_mark_to_rtf(footnote_mark[i]),
+            rtf_raw(footnote_text[i])
           )
         )
     }
 
     if (footnotes_multiline) {
-      footnotes <- paste(footnotes, collapse = rtf_raw("\\line"))
+      footnotes <- paste(footnotes, collapse = rtf_raw("\\line "))
     } else {
       footnotes <- paste(footnotes, collapse = footnotes_sep)
     }
@@ -1621,21 +1615,11 @@ create_footer_component_rtf <- function(data) {
 
     for (i in seq_along(source_notes_vec)) {
 
-      source_notes <-
-        c(
-          source_notes,
-          rtf_paste0(
-            cell_list,
-            rtf_font(
-              font_size = 10,
-              rtf_raw(source_notes_vec[i])
-            )
-          )
-        )
+      source_notes <- c(source_notes, rtf_raw(source_notes_vec[i]))
     }
 
     if (source_notes_multiline) {
-      source_notes <- paste(source_notes, collapse = "\\line")
+      source_notes <- paste(source_notes, collapse = "\\line ")
     } else {
       source_notes <- paste(source_notes, collapse = source_notes_sep)
     }
@@ -1648,12 +1632,9 @@ create_footer_component_rtf <- function(data) {
     if (footnotes != "") {
       rtf_tbl_row(
         rtf_tbl_cell(
-          rtf_paste0(
-            cell_list,
-            rtf_font(
-              font_size = 10,
-              rtf_raw(footnotes)
-            )
+          rtf_font(
+            font_size = 10,
+            rtf_raw(footnotes)
           )
         ),
         widths = table_width,
@@ -1663,12 +1644,9 @@ create_footer_component_rtf <- function(data) {
     if (source_notes != "") {
       rtf_tbl_row(
         rtf_tbl_cell(
-          rtf_paste0(
-            cell_list,
-            rtf_font(
-              font_size = 10,
-              rtf_raw(source_notes)
-            )
+          rtf_font(
+            font_size = 10,
+            rtf_raw(source_notes)
           )
         ),
         widths = table_width,
