@@ -330,18 +330,17 @@ resolve_footnotes_styles <- function(data,
       dplyr::filter(locname != "none") %>%
       dplyr::select(footnotes) %>%
       dplyr::distinct() %>%
-      tibble::rownames_to_column(var = "fs_id") %>%
-      dplyr::mutate(fs_id = as.integer(fs_id))
+      tibble::rownames_to_column(var = "fs_id")
 
     # Join the lookup table to `tbl`
-    tbl <- dplyr::left_join(tbl, lookup_tbl, by = "footnotes")
+    tbl <-
+      dplyr::left_join(tbl, lookup_tbl, by = "footnotes") %>%
+      dplyr::mutate(fs_id = ifelse(locname == "none", NA_character_, fs_id))
 
     if (nrow(tbl) > 0) {
 
       # Retain the row that only contain `locname == "none"`
-      tbl_no_loc <-
-        dplyr::filter(tbl, locname == "none") %>%
-        dplyr::mutate(fs_id = as.character(fs_id))
+      tbl_no_loc <- dplyr::filter(tbl, locname == "none")
 
       # Modify `fs_id` to contain the footnote marks we need
       tbl <- dplyr::filter(tbl, locname != "none")
@@ -352,12 +351,10 @@ resolve_footnotes_styles <- function(data,
           dplyr::mutate(
             tbl,
             fs_id = process_footnote_marks(
-              x = fs_id,
+              x = as.integer(fs_id),
               marks = footnote_marks
             )
           )
-      } else {
-        tbl <- dplyr::mutate(tbl, fs_id = as.character(fs_id))
       }
 
       tbl <- dplyr::bind_rows(tbl_no_loc, tbl)
