@@ -102,7 +102,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\cellx9468
-      \intbl {\f0 {\f0\fs20 {\f0\fs20\i\super }{\f0\fs20 A footnote.}}}\cell
+      \intbl {\f0 {\f0\fs20 A footnote.}}\cell
       \pard\plain
       
       \row
@@ -213,7 +213,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\cellx9468
-      \intbl {\f0 {\f0\fs20 {\f0\fs20\i\super }{\f0\fs20 A footnote.}}}\cell
+      \intbl {\f0 {\f0\fs20 A footnote.}}\cell
       \pard\plain
       
       \row
@@ -225,14 +225,14 @@
     Code
       .
     Output
-      [1] "<table class=\"gt_table\">\n  \n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\">num</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">char</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_center\" rowspan=\"1\" colspan=\"1\">fctr</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">date</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">time</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">datetime</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\">currency</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">row</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">group</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td class=\"gt_row gt_right\">0.1111<sup class=\"gt_footnote_marks\">1</sup></td>\n<td class=\"gt_row gt_left\">apricot</td>\n<td class=\"gt_row gt_center\">one</td>\n<td class=\"gt_row gt_left\">2015-01-15</td>\n<td class=\"gt_row gt_left\">13:35</td>\n<td class=\"gt_row gt_left\">2018-01-01 02:22</td>\n<td class=\"gt_row gt_right\">49.95</td>\n<td class=\"gt_row gt_left\">row_1</td>\n<td class=\"gt_row gt_left\">grp_a</td></tr>\n  </tbody>\n  \n  <tfoot class=\"gt_footnotes\">\n    <tr>\n      <td class=\"gt_footnote\" colspan=\"9\"><sup class=\"gt_footnote_marks\">1</sup> A footnote.</td>\n    </tr>\n  </tfoot>\n</table>"
+      [1] "<table class=\"gt_table\">\n  \n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\">num</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">char</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_center\" rowspan=\"1\" colspan=\"1\">fctr</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">date</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">time</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">datetime</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\">currency</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">row</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\">group</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td class=\"gt_row gt_right\">0.1111<sup class=\"gt_footnote_marks\">1</sup></td>\n<td class=\"gt_row gt_left\">apricot</td>\n<td class=\"gt_row gt_center\">one</td>\n<td class=\"gt_row gt_left\">2015-01-15</td>\n<td class=\"gt_row gt_left\">13:35</td>\n<td class=\"gt_row gt_left\">2018-01-01 02:22</td>\n<td class=\"gt_row gt_right\">49.95</td>\n<td class=\"gt_row gt_left\">row_1</td>\n<td class=\"gt_row gt_left\">grp_a</td></tr>\n  </tbody>\n  \n  <tfoot class=\"gt_footnotes\">\n    <tr>\n      <td class=\"gt_footnote\" colspan=\"9\"> A footnote.</td>\n    </tr>\n    <tr>\n      <td class=\"gt_footnote\" colspan=\"9\"><sup class=\"gt_footnote_marks\">1</sup> A footnote.</td>\n    </tr>\n  </tfoot>\n</table>"
 
 ---
 
     Code
       .
     Output
-      [1] "\\captionsetup[table]{labelformat=empty,skip=1pt}\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rlclllrll}\n\\toprule\nnum & char & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\n0.1111\\textsuperscript{1} & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.95 & row\\_1 & grp\\_a \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\textsuperscript{1}A footnote.\\\\\n\\end{minipage}\n"
+      [1] "\\captionsetup[table]{labelformat=empty,skip=1pt}\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rlclllrll}\n\\toprule\nnum & char & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\n0.1111\\textsuperscript{1} & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.95 & row\\_1 & grp\\_a \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nA footnote.\\\\\n\\textsuperscript{1}A footnote.\\\\\n\\end{minipage}\n"
 
 ---
 
@@ -324,7 +324,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\cellx9468
-      \intbl {\f0 {\f0\fs20 {\f0\fs20\i\super 1}{\f0\fs20 A footnote.}}}\cell
+      \intbl {\f0 {\f0\fs20 A footnote.\line {\super \i 1}A footnote.}}\cell
       \pard\plain
       
       \row
@@ -435,7 +435,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\cellx9468
-      \intbl {\f0 {\f0\fs20 {\f0\fs20\i\super }{\f0\fs20 A footnote.} {\f0\fs20\i\super }{\f0\fs20 A second footnote.} {\f0\fs20\i\super 1}{\f0\fs20 location note}}}\cell
+      \intbl {\f0 {\f0\fs20 A footnote. A second footnote. {\super \i 1}location note}}\cell
       \pard\plain
       
       \row
