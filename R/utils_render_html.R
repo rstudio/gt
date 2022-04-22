@@ -3,6 +3,8 @@
 #' @noRd
 footnote_mark_to_html <- function(mark) {
 
+  if (is.na(mark)) return("")
+
   # Generate the CSS classes needed on the basis of whether the
   # mark is one or more asterisk characters or anything else
   if (!grepl("^[\\*]+?$", mark)) {

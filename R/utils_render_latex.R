@@ -10,7 +10,7 @@ latex_packages <- function() {
 
 # Transform a footnote mark to a LaTeX representation as a superscript
 footnote_mark_to_latex <- function(mark) {
-  paste0("\\textsuperscript{", mark, "}")
+  ifelse(is.na(mark), "", paste0("\\textsuperscript{", mark, "}"))
 }
 
 #' @noRd
