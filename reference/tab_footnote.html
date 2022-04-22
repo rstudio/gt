@@ -82,7 +82,7 @@ functions (e.g., <code><a href="cells_body.html">cells_body()</a></code>, <code>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">tab_footnote</span><span class="op">(</span><span class="va">data</span>, <span class="va">footnote</span>, <span class="va">locations</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">tab_footnote</span><span class="op">(</span><span class="va">data</span>, <span class="va">footnote</span>, locations <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -103,7 +103,9 @@ functions are: <code><a href="cells_title.html">cells_title()</a></code>, <code>
 <code><a href="cells_stub_summary.html">cells_stub_summary()</a></code>, and <code><a href="cells_stub_grand_summary.html">cells_stub_grand_summary()</a></code>. Additionally, we
 can enclose several <code>cells_*()</code> calls within a <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> if we wish to link
 the footnote text to different types of locations (e.g., body cells, row
-group labels, the table title, etc.).</p></dd>
+group labels, the table title, etc.). If <code>NULL</code>, then the footnote text
+will be treated as standalone text in the table footer and will appear
+before any footnotes with marks.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
