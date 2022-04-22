@@ -761,7 +761,9 @@ tab_stubhead <- function(data,
 #'   [cells_stub_summary()], and [cells_stub_grand_summary()]. Additionally, we
 #'   can enclose several `cells_*()` calls within a `list()` if we wish to link
 #'   the footnote text to different types of locations (e.g., body cells, row
-#'   group labels, the table title, etc.).
+#'   group labels, the table title, etc.). If `NULL`, then the footnote text
+#'   will be treated as standalone text in the table footer and will appear
+#'   before any footnotes with marks.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -802,12 +804,34 @@ tab_stubhead <- function(data,
 #' 2-6
 #'
 #' @export
-tab_footnote <- function(data,
-                         footnote,
-                         locations) {
+tab_footnote <- function(
+    data,
+    footnote,
+    locations = NULL
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  if (is.null(locations)) {
+
+    # We need to invoke `dt_footnotes_add()` here (and not use
+    # `as_locations()`/`set_footnote()`) because there is no
+    # method for NULL
+
+    data <-
+      dt_footnotes_add(
+        data = data,
+        locname = "none",
+        grpname = NA_character_,
+        colname = NA_character_,
+        locnum = 0,
+        rownum = NA_integer_,
+        footnotes = footnote
+      )
+
+    return(data)
+  }
 
   # Resolve into a list of locations
   locations <- as_locations(locations)
