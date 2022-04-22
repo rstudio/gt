@@ -815,6 +815,10 @@ tab_footnote <- function(
 
   if (is.null(locations)) {
 
+    # We need to invoke `dt_footnotes_add()` here (and not use
+    # `as_locations()`/`set_footnote()`) because there is no
+    # method for NULL
+
     data <-
       dt_footnotes_add(
         data = data,
