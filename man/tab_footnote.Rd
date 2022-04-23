@@ -4,7 +4,7 @@
 \alias{tab_footnote}
 \title{Add a table footnote}
 \usage{
-tab_footnote(data, footnote, locations)
+tab_footnote(data, footnote, locations = NULL)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -22,7 +22,9 @@ functions are: \code{\link[=cells_title]{cells_title()}}, \code{\link[=cells_stu
 \code{\link[=cells_stub_summary]{cells_stub_summary()}}, and \code{\link[=cells_stub_grand_summary]{cells_stub_grand_summary()}}. Additionally, we
 can enclose several \verb{cells_*()} calls within a \code{list()} if we wish to link
 the footnote text to different types of locations (e.g., body cells, row
-group labels, the table title, etc.).}
+group labels, the table title, etc.). If \code{NULL}, then the footnote text
+will be treated as standalone text in the table footer and will appear
+before any footnotes with marks.}
 }
 \value{
 An object of class \code{gt_tbl}.
