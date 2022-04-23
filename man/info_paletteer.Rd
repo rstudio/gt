@@ -61,9 +61,16 @@ are shown by default with \code{info_paletteer()}:
 \item \strong{yarrr}, 21 palettes
 }
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_info_paletteer_1.png}{options: width=100\%}}
+
+Get a table of info on just the \code{"ggthemes"} color palette (easily accessible
+from the \strong{paletteer} pkg).\if{html}{\out{<div class="sourceCode r">}}\preformatted{info_paletteer(color_pkgs = "ggthemes")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_info_paletteer_1.png" style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
@@ -71,15 +78,6 @@ are shown by default with \code{info_paletteer()}:
 10-5
 }
 
-\examples{
-# Get a table of info on just the
-# `ggthemes` color palette (easily
-# accessible from the paletteer pkg)
-tab_1 <-
-  info_paletteer(
-    color_pkgs = "ggthemes")
-
-}
 \seealso{
 Other Information Functions: 
 \code{\link{info_currencies}()},

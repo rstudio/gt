@@ -123,34 +123,32 @@ nothing is provided for \code{rows} then entire columns are selected). Condition
 formatting is possible by providing a conditional expression to the \code{rows}
 argument. See the Arguments section for more information on this.
 }
-\section{Function ID}{
+\section{Examples}{
 
-3-8
-}
 
-\examples{
-# Use `exibble` to create a gt table;
-# format the `num` column to have
-# byte sizes in the binary standard
-tab_1 <-
-  exibble \%>\%
+Use \code{exibble} to create a \strong{gt} table. Format the \code{num} column to have byte
+sizes in the binary standard.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(num) \%>\%
   gt() \%>\%
   fmt_bytes(columns = num)
+}\if{html}{\out{</div>}}
 
-# Create a similar table with the
-# `fmt_bytes()` function, this time
-# showing byte sizes as binary values
-tab_2 <-
-  exibble \%>\%
+Create a similar table with the \code{fmt_bytes()} function, this time showing
+byte sizes as binary values.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(num) \%>\%
   gt() \%>\%
   fmt_bytes(
     columns = num,
     standard = "binary"
   )
-
+}\if{html}{\out{</div>}}
 }
+
+\section{Function ID}{
+
+3-8
+}
+
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},

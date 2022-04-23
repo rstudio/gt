@@ -15,12 +15,13 @@
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `gtcars` to create a gt table;
-#' # add a header part to contain a title
-#' # and subtitle
-#' tab_1 <-
-#'   gtcars %>%
+#' @section Examples:
+#'
+#' Use `gtcars` to create a **gt** table. Add a header part to contain a title
+#' and subtitle.
+#'
+#' ```r
+#' gtcars %>%
 #'   dplyr::select(mfr, model, msrp) %>%
 #'   dplyr::slice(1:5) %>%
 #'   gt() %>%
@@ -28,18 +29,22 @@
 #'     title = md("Data listing from **gtcars**"),
 #'     subtitle = md("`gtcars` is an R dataset")
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_tab_header_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_header_1.png")`
+#' }}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
 #' 2-1
 #'
 #' @export
-tab_header <- function(data,
-                       title,
-                       subtitle = NULL) {
+tab_header <- function(
+    data,
+    title,
+    subtitle = NULL
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -87,13 +92,13 @@ tab_header <- function(data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `gtcars` to create a gt table;
-#' # Group several columns related to car
-#' # performance under a spanner column
-#' # with the label `performance`
-#' tab_1 <-
-#'   gtcars %>%
+#' @section Examples:
+#'
+#' Use `gtcars` to create a **gt** table. Group several columns related to car
+#' performance under a spanner column with the label `performance`.
+#'
+#' ```r
+#' gtcars %>%
 #'   dplyr::select(
 #'     -mfr, -trim, bdy_style, drivetrain,
 #'     -drivetrain, -trsmn, -ctry_origin
@@ -107,23 +112,27 @@ tab_header <- function(data,
 #'       mpg_c, mpg_h
 #'     )
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_tab_spanner_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_spanner_1.png")`
+#' }}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
 #' 2-2
 #'
 #' @export
-tab_spanner <- function(data,
-                        label,
-                        columns = NULL,
-                        spanners = NULL,
-                        level = NULL,
-                        id = label,
-                        gather = TRUE,
-                        replace = FALSE) {
+tab_spanner <- function(
+    data,
+    label,
+    columns = NULL,
+    spanners = NULL,
+    level = NULL,
+    id = label,
+    gather = TRUE,
+    replace = FALSE
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -333,30 +342,34 @@ resolve_spanned_column_names <- function(
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `iris` to create a gt table; split
-#' # any columns that are dot-separated
-#' # between column spanner labels (first
-#' # part) and column labels (second part)
-#' tab_1 <-
-#'   iris %>%
+#' @section Examples:
+#'
+#' Use `iris` to create a **gt** table. Split any columns that are dot-separated
+#' between column spanner labels (first part) and column labels (second part).
+#'
+#' ```r
+#' iris %>%
 #'   dplyr::group_by(Species) %>%
 #'   dplyr::slice(1:4) %>%
 #'   gt() %>%
 #'   tab_spanner_delim(delim = ".")
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_tab_spanner_delim_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_spanner_delim_1.png")`
+#' }}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
 #' 2-3
 #'
 #' @export
-tab_spanner_delim <- function(data,
-                              delim,
-                              columns = everything(),
-                              split = c("last", "first")) {
+tab_spanner_delim <- function(
+    data,
+    delim,
+    columns = everything(),
+    split = c("last", "first")
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -546,13 +559,13 @@ tab_spanner_delim <- function(data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `gtcars` to create a gt table and
-#' # add two row groups with the labels:
-#' # `numbered` and `NA` (a group without
-#' # a title, or, the rest)
-#' tab_1 <-
-#'   gtcars %>%
+#' @section Examples:
+#'
+#' Use `gtcars` to create a **gt** table and add two row groups with the labels:
+#' `numbered` and `NA` (a group without a title, or, the rest).
+#'
+#' ```r
+#' gtcars %>%
 #'   dplyr::select(model, year, hp, trq) %>%
 #'   dplyr::slice(1:8) %>%
 #'   gt(rowname_col = "model") %>%
@@ -560,14 +573,18 @@ tab_spanner_delim <- function(data,
 #'     label = "numbered",
 #'     rows = matches("^[0-9]")
 #'   )
+#' ```
 #'
-#' # Use `gtcars` to create a gt table;
-#' # add two row groups with the labels
-#' # `powerful` and `super powerful`: the
-#' # distinction being `hp` lesser or
-#' # greater than `600`
-#' tab_2 <-
-#'   gtcars %>%
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_row_group_1.png")`
+#' }}
+#'
+#' Use `gtcars` to create a **gt** table. Add two row groups with the labels
+#' `powerful` and `super powerful`: the distinction being `hp` lesser or greater
+#' than `600`.
+#'
+#' ```r
+#' gtcars %>%
 #'   dplyr::select(model, year, hp, trq) %>%
 #'   dplyr::slice(1:8) %>%
 #'   gt(rowname_col = "model") %>%
@@ -579,11 +596,11 @@ tab_spanner_delim <- function(data,
 #'     label = "super powerful",
 #'     rows = hp > 600
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_tab_row_group_1.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_tab_row_group_2.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_row_group_2.png")`
+#' }}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
@@ -591,12 +608,14 @@ tab_spanner_delim <- function(data,
 #'
 #' @import rlang
 #' @export
-tab_row_group <- function(data,
-                          label,
-                          rows,
-                          id = label,
-                          others_label = NULL,
-                          group = NULL) {
+tab_row_group <- function(
+    data,
+    label,
+    rows,
+    id = label,
+    others_label = NULL,
+    group = NULL
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -698,27 +717,32 @@ tab_row_group <- function(data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `gtcars` to create a gt table; add
-#' # a stubhead label to describe what is
-#' # in the stub
-#' tab_1 <-
-#'   gtcars %>%
+#' @section Examples:
+#'
+#' Use `gtcars` to create a **gt** table. Add a stubhead label to describe what
+#' is in the stub.
+#'
+#' ```r
+#' gtcars %>%
 #'   dplyr::select(model, year, hp, trq) %>%
 #'   dplyr::slice(1:5) %>%
 #'   gt(rowname_col = "model") %>%
 #'   tab_stubhead(label = "car")
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_tab_stubhead_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_stubhead_1.png")`
+#' }}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
 #' 2-5
 #'
 #' @export
-tab_stubhead <- function(data,
-                         label) {
+tab_stubhead <- function(
+    data,
+    label
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -765,14 +789,14 @@ tab_stubhead <- function(data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `sza` to create a gt table; color
-#' # the `sza` column using the `data_color()`
-#' # function, then, add a footnote to the
-#' # `sza` column label explaining what the
-#' # color scale signifies
-#' tab_1 <-
-#'   sza %>%
+#' @section Examples:
+#'
+#' Use `sza` to create a **gt** table. Color the `sza` column using the
+#' [data_color()] function, then, add a footnote to the `sza` column label
+#' explaining what the color scale signifies.
+#'
+#' ```r
+#' sza %>%
 #'   dplyr::filter(
 #'     latitude == 20 &
 #'       month == "jan" &
@@ -793,9 +817,11 @@ tab_stubhead <- function(data,
 #'       columns = sza
 #'     )
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_tab_footnote_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_footnote_1.png")`
+#' }}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
@@ -1065,29 +1091,34 @@ set_footnote.cells_footnotes <- function(loc, data, footnote) {
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `gtcars` to create a gt table;
-#' # add a source note to the table
-#' # footer that cites the data source
-#' tab_1 <-
-#'   gtcars %>%
+#' @section Examples:
+#'
+#' Use `gtcars` to create a **gt** table. Add a source note to the table footer
+#' that cites the data source.
+#'
+#' ```r
+#' gtcars %>%
 #'   dplyr::select(mfr, model, msrp) %>%
 #'   dplyr::slice(1:5) %>%
 #'   gt() %>%
 #'   tab_source_note(
 #'     source_note = "From edmunds.com"
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_tab_source_note_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_source_note_1.png")`
+#' }}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
 #' 2-7
 #'
 #' @export
-tab_source_note <- function(data,
-                            source_note) {
+tab_source_note <- function(
+    data,
+    source_note
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -1139,13 +1170,13 @@ tab_source_note <- function(data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `exibble` to create a gt table;
-#' # add styles that are to be applied
-#' # to data cells that satisfy a
-#' # condition (using `tab_style()`)
-#' tab_1 <-
-#'   exibble %>%
+#' @section Examples:
+#'
+#' Use `exibble` to create a **gt** table. Add styles that are to be applied to
+#' data cells that satisfy a condition (using `tab_style()`).
+#'
+#' ```r
+#' exibble %>%
 #'   dplyr::select(num, currency) %>%
 #'   gt() %>%
 #'   fmt_number(
@@ -1172,12 +1203,17 @@ tab_source_note <- function(data,
 #'       rows = currency < 100
 #'     )
 #'   )
+#' ```
 #'
-#' # Use `sp500` to create a gt table;
-#' # color entire rows of cells based
-#' # on values in a particular column
-#' tab_2 <-
-#'   sp500 %>%
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_style_1.png")`
+#' }}
+#'
+#' Use `sp500` to create a **gt** table. Color entire rows of cells based on
+#' values in a particular column.
+#'
+#' ```r
+#' sp500 %>%
 #'   dplyr::filter(
 #'     date >= "2015-12-01" &
 #'     date <= "2015-12-15"
@@ -1197,15 +1233,18 @@ tab_source_note <- function(data,
 #'     locations = cells_body(
 #'       rows = open > close)
 #'   )
+#' ```
 #'
-#' # Use `exibble` to create a gt table;
-#' # replace missing values with the
-#' # `fmt_missing()` function and then
-#' # add styling to the `char` column
-#' # with `cell_fill()` and with a
-#' # CSS style declaration
-#' tab_3 <-
-#'   exibble %>%
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_style_2.png")`
+#' }}
+#'
+#' Use `exibble` to create a **gt** table. Replace missing values with the
+#' `fmt_missing()` function and then add styling to the `char` column with
+#' `cell_fill()` and with a CSS style declaration.
+#'
+#' ```r
+#' exibble %>%
 #'   dplyr::select(char, fctr) %>%
 #'   gt() %>%
 #'   fmt_missing(everything()) %>%
@@ -1216,13 +1255,11 @@ tab_source_note <- function(data,
 #'     ),
 #'     locations = cells_body(columns = char)
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_tab_style_1.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_tab_style_2.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_tab_style_3.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_style_3.png")`
+#' }}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
@@ -1233,9 +1270,11 @@ tab_source_note <- function(data,
 #'   functions for targeting the locations to be styled.
 #'
 #' @export
-tab_style <- function(data,
-                      style,
-                      locations) {
+tab_style <- function(
+    data,
+    style,
+    locations
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -1788,10 +1827,12 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `exibble` to create a gt table with
-#' # all the main parts added; we can use this
-#' # going forward to demo some `tab_options()`
+#' @section Examples:
+#'
+#' Use `exibble` to create a **gt** table with all the main parts added. We can
+#' use this **gt** object going forward to demo some `tab_options()`.
+#'
+#' ```r
 #' tab_1 <-
 #'   exibble %>%
 #'   dplyr::select(
@@ -1827,219 +1868,232 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'       columns = char
 #'     )
 #'   )
+#' ```
 #'
-#' # Modify the table width to 100% (which
-#' # spans the entire content width area)
-#' tab_2 <-
-#'   tab_1 %>%
-#'   tab_options(
-#'     table.width = pct(100)
-#'   )
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_options_1.png")`
+#' }}
 #'
-#' # Modify the table's background color
-#' # to be "lightcyan"
-#' tab_3 <-
-#'   tab_1 %>%
-#'   tab_options(
-#'     table.background.color = "lightcyan"
-#'   )
+#' Modify the table width to 100% (which spans the entire content width area).
 #'
-#' # Use letters as the marks for footnote
-#' # references; also, separate footnotes in
-#' # the footer by spaces instead of newlines
-#' tab_4 <-
-#'   tab_1 %>%
+#' ```r
+#' tab_1 %>% tab_options(table.width = pct(100))
+#' ```
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_options_2.png")`
+#' }}
+#'
+#' Modify the table's background color to be `"lightcyan"`.
+#'
+#' ```r
+#' tab_1 %>% tab_options(table.background.color = "lightcyan")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_options_3.png")`
+#' }}
+#'
+#' Use letters as the marks for footnote references; also, separate footnotes in
+#' the footer by spaces instead of newlines.
+#'
+#' ```r
+#' tab_1 %>%
 #'   tab_options(
 #'     footnotes.sep = " ",
 #'     footnotes.marks = letters
 #'   )
+#' ```
 #'
-#' # Change the padding of data rows to 5px
-#' tab_5 <-
-#'   tab_1 %>%
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_options_4.png")`
+#' }}
+#'
+#' Change the padding of data rows to 5px.
+#'
+#' ```r
+#' tab_1 %>%
 #'   tab_options(
 #'     data_row.padding = px(5)
 #'   )
+#' ```
 #'
-#' # Reduce the size of the title and the
-#' # subtitle text
-#' tab_6 <-
-#'   tab_1 %>%
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_options_5.png")`
+#' }}
+#'
+#' Reduce the size of the title and the subtitle text.
+#'
+#' ```r
+#' tab_1 %>%
 #'   tab_options(
 #'     heading.title.font.size = "small",
 #'     heading.subtitle.font.size = "small"
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_tab_options_1.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_tab_options_2.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_tab_options_3.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_tab_options_4.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_tab_options_5.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_tab_options_6.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_options_6.png")`
+#' }}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
 #' 2-9
 #'
 #' @export
-tab_options <- function(data,
-                        container.width = NULL,
-                        container.height = NULL,
-                        container.overflow.x = NULL,
-                        container.overflow.y = NULL,
-                        table.width = NULL,
-                        table.layout = NULL,
-                        table.align = NULL,
-                        table.margin.left = NULL,
-                        table.margin.right = NULL,
-                        table.background.color = NULL,
-                        table.additional_css = NULL,
-                        table.font.names = NULL,
-                        table.font.size = NULL,
-                        table.font.weight = NULL,
-                        table.font.style = NULL,
-                        table.font.color = NULL,
-                        table.font.color.light = NULL,
-                        table.border.top.style = NULL,
-                        table.border.top.width = NULL,
-                        table.border.top.color = NULL,
-                        table.border.right.style = NULL,
-                        table.border.right.width = NULL,
-                        table.border.right.color = NULL,
-                        table.border.bottom.style = NULL,
-                        table.border.bottom.width = NULL,
-                        table.border.bottom.color = NULL,
-                        table.border.left.style = NULL,
-                        table.border.left.width = NULL,
-                        table.border.left.color = NULL,
-                        heading.background.color = NULL,
-                        heading.align = NULL,
-                        heading.title.font.size = NULL,
-                        heading.title.font.weight = NULL,
-                        heading.subtitle.font.size = NULL,
-                        heading.subtitle.font.weight = NULL,
-                        heading.padding = NULL,
-                        heading.padding.horizontal = NULL,
-                        heading.border.bottom.style = NULL,
-                        heading.border.bottom.width = NULL,
-                        heading.border.bottom.color = NULL,
-                        heading.border.lr.style = NULL,
-                        heading.border.lr.width = NULL,
-                        heading.border.lr.color = NULL,
-                        column_labels.background.color = NULL,
-                        column_labels.font.size = NULL,
-                        column_labels.font.weight = NULL,
-                        column_labels.text_transform = NULL,
-                        column_labels.padding = NULL,
-                        column_labels.padding.horizontal = NULL,
-                        column_labels.vlines.style = NULL,
-                        column_labels.vlines.width = NULL,
-                        column_labels.vlines.color = NULL,
-                        column_labels.border.top.style = NULL,
-                        column_labels.border.top.width = NULL,
-                        column_labels.border.top.color = NULL,
-                        column_labels.border.bottom.style = NULL,
-                        column_labels.border.bottom.width = NULL,
-                        column_labels.border.bottom.color = NULL,
-                        column_labels.border.lr.style = NULL,
-                        column_labels.border.lr.width = NULL,
-                        column_labels.border.lr.color = NULL,
-                        column_labels.hidden = NULL,
-                        row_group.background.color = NULL,
-                        row_group.font.size = NULL,
-                        row_group.font.weight = NULL,
-                        row_group.text_transform = NULL,
-                        row_group.padding = NULL,
-                        row_group.padding.horizontal = NULL,
-                        row_group.border.top.style = NULL,
-                        row_group.border.top.width = NULL,
-                        row_group.border.top.color = NULL,
-                        row_group.border.bottom.style = NULL,
-                        row_group.border.bottom.width = NULL,
-                        row_group.border.bottom.color = NULL,
-                        row_group.border.left.style = NULL,
-                        row_group.border.left.width = NULL,
-                        row_group.border.left.color = NULL,
-                        row_group.border.right.style = NULL,
-                        row_group.border.right.width = NULL,
-                        row_group.border.right.color = NULL,
-                        row_group.default_label = NULL,
-                        row_group.as_column = NULL,
-                        table_body.hlines.style = NULL,
-                        table_body.hlines.width = NULL,
-                        table_body.hlines.color = NULL,
-                        table_body.vlines.style = NULL,
-                        table_body.vlines.width = NULL,
-                        table_body.vlines.color = NULL,
-                        table_body.border.top.style = NULL,
-                        table_body.border.top.width = NULL,
-                        table_body.border.top.color = NULL,
-                        table_body.border.bottom.style = NULL,
-                        table_body.border.bottom.width = NULL,
-                        table_body.border.bottom.color = NULL,
-                        stub.background.color = NULL,
-                        stub.font.size = NULL,
-                        stub.font.weight = NULL,
-                        stub.text_transform = NULL,
-                        stub.border.style = NULL,
-                        stub.border.width = NULL,
-                        stub.border.color = NULL,
-                        stub_row_group.font.size = NULL,
-                        stub_row_group.font.weight = NULL,
-                        stub_row_group.text_transform = NULL,
-                        stub_row_group.border.style = NULL,
-                        stub_row_group.border.width = NULL,
-                        stub_row_group.border.color = NULL,
-                        data_row.padding = NULL,
-                        data_row.padding.horizontal = NULL,
-                        summary_row.background.color = NULL,
-                        summary_row.text_transform = NULL,
-                        summary_row.padding = NULL,
-                        summary_row.padding.horizontal = NULL,
-                        summary_row.border.style = NULL,
-                        summary_row.border.width = NULL,
-                        summary_row.border.color = NULL,
-                        grand_summary_row.background.color = NULL,
-                        grand_summary_row.text_transform = NULL,
-                        grand_summary_row.padding = NULL,
-                        grand_summary_row.padding.horizontal = NULL,
-                        grand_summary_row.border.style = NULL,
-                        grand_summary_row.border.width = NULL,
-                        grand_summary_row.border.color = NULL,
-                        footnotes.background.color = NULL,
-                        footnotes.font.size = NULL,
-                        footnotes.padding = NULL,
-                        footnotes.padding.horizontal = NULL,
-                        footnotes.border.bottom.style = NULL,
-                        footnotes.border.bottom.width = NULL,
-                        footnotes.border.bottom.color = NULL,
-                        footnotes.border.lr.style = NULL,
-                        footnotes.border.lr.width = NULL,
-                        footnotes.border.lr.color = NULL,
-                        footnotes.marks = NULL,
-                        footnotes.multiline = NULL,
-                        footnotes.sep = NULL,
-                        source_notes.background.color = NULL,
-                        source_notes.font.size = NULL,
-                        source_notes.padding = NULL,
-                        source_notes.padding.horizontal = NULL,
-                        source_notes.border.bottom.style = NULL,
-                        source_notes.border.bottom.width = NULL,
-                        source_notes.border.bottom.color = NULL,
-                        source_notes.border.lr.style = NULL,
-                        source_notes.border.lr.width = NULL,
-                        source_notes.border.lr.color = NULL,
-                        source_notes.multiline = NULL,
-                        source_notes.sep = NULL,
-                        row.striping.background_color = NULL,
-                        row.striping.include_stub = NULL,
-                        row.striping.include_table_body = NULL) {
+tab_options <- function(
+    data,
+    container.width = NULL,
+    container.height = NULL,
+    container.overflow.x = NULL,
+    container.overflow.y = NULL,
+    table.width = NULL,
+    table.layout = NULL,
+    table.align = NULL,
+    table.margin.left = NULL,
+    table.margin.right = NULL,
+    table.background.color = NULL,
+    table.additional_css = NULL,
+    table.font.names = NULL,
+    table.font.size = NULL,
+    table.font.weight = NULL,
+    table.font.style = NULL,
+    table.font.color = NULL,
+    table.font.color.light = NULL,
+    table.border.top.style = NULL,
+    table.border.top.width = NULL,
+    table.border.top.color = NULL,
+    table.border.right.style = NULL,
+    table.border.right.width = NULL,
+    table.border.right.color = NULL,
+    table.border.bottom.style = NULL,
+    table.border.bottom.width = NULL,
+    table.border.bottom.color = NULL,
+    table.border.left.style = NULL,
+    table.border.left.width = NULL,
+    table.border.left.color = NULL,
+    heading.background.color = NULL,
+    heading.align = NULL,
+    heading.title.font.size = NULL,
+    heading.title.font.weight = NULL,
+    heading.subtitle.font.size = NULL,
+    heading.subtitle.font.weight = NULL,
+    heading.padding = NULL,
+    heading.padding.horizontal = NULL,
+    heading.border.bottom.style = NULL,
+    heading.border.bottom.width = NULL,
+    heading.border.bottom.color = NULL,
+    heading.border.lr.style = NULL,
+    heading.border.lr.width = NULL,
+    heading.border.lr.color = NULL,
+    column_labels.background.color = NULL,
+    column_labels.font.size = NULL,
+    column_labels.font.weight = NULL,
+    column_labels.text_transform = NULL,
+    column_labels.padding = NULL,
+    column_labels.padding.horizontal = NULL,
+    column_labels.vlines.style = NULL,
+    column_labels.vlines.width = NULL,
+    column_labels.vlines.color = NULL,
+    column_labels.border.top.style = NULL,
+    column_labels.border.top.width = NULL,
+    column_labels.border.top.color = NULL,
+    column_labels.border.bottom.style = NULL,
+    column_labels.border.bottom.width = NULL,
+    column_labels.border.bottom.color = NULL,
+    column_labels.border.lr.style = NULL,
+    column_labels.border.lr.width = NULL,
+    column_labels.border.lr.color = NULL,
+    column_labels.hidden = NULL,
+    row_group.background.color = NULL,
+    row_group.font.size = NULL,
+    row_group.font.weight = NULL,
+    row_group.text_transform = NULL,
+    row_group.padding = NULL,
+    row_group.padding.horizontal = NULL,
+    row_group.border.top.style = NULL,
+    row_group.border.top.width = NULL,
+    row_group.border.top.color = NULL,
+    row_group.border.bottom.style = NULL,
+    row_group.border.bottom.width = NULL,
+    row_group.border.bottom.color = NULL,
+    row_group.border.left.style = NULL,
+    row_group.border.left.width = NULL,
+    row_group.border.left.color = NULL,
+    row_group.border.right.style = NULL,
+    row_group.border.right.width = NULL,
+    row_group.border.right.color = NULL,
+    row_group.default_label = NULL,
+    row_group.as_column = NULL,
+    table_body.hlines.style = NULL,
+    table_body.hlines.width = NULL,
+    table_body.hlines.color = NULL,
+    table_body.vlines.style = NULL,
+    table_body.vlines.width = NULL,
+    table_body.vlines.color = NULL,
+    table_body.border.top.style = NULL,
+    table_body.border.top.width = NULL,
+    table_body.border.top.color = NULL,
+    table_body.border.bottom.style = NULL,
+    table_body.border.bottom.width = NULL,
+    table_body.border.bottom.color = NULL,
+    stub.background.color = NULL,
+    stub.font.size = NULL,
+    stub.font.weight = NULL,
+    stub.text_transform = NULL,
+    stub.border.style = NULL,
+    stub.border.width = NULL,
+    stub.border.color = NULL,
+    stub_row_group.font.size = NULL,
+    stub_row_group.font.weight = NULL,
+    stub_row_group.text_transform = NULL,
+    stub_row_group.border.style = NULL,
+    stub_row_group.border.width = NULL,
+    stub_row_group.border.color = NULL,
+    data_row.padding = NULL,
+    data_row.padding.horizontal = NULL,
+    summary_row.background.color = NULL,
+    summary_row.text_transform = NULL,
+    summary_row.padding = NULL,
+    summary_row.padding.horizontal = NULL,
+    summary_row.border.style = NULL,
+    summary_row.border.width = NULL,
+    summary_row.border.color = NULL,
+    grand_summary_row.background.color = NULL,
+    grand_summary_row.text_transform = NULL,
+    grand_summary_row.padding = NULL,
+    grand_summary_row.padding.horizontal = NULL,
+    grand_summary_row.border.style = NULL,
+    grand_summary_row.border.width = NULL,
+    grand_summary_row.border.color = NULL,
+    footnotes.background.color = NULL,
+    footnotes.font.size = NULL,
+    footnotes.padding = NULL,
+    footnotes.padding.horizontal = NULL,
+    footnotes.border.bottom.style = NULL,
+    footnotes.border.bottom.width = NULL,
+    footnotes.border.bottom.color = NULL,
+    footnotes.border.lr.style = NULL,
+    footnotes.border.lr.width = NULL,
+    footnotes.border.lr.color = NULL,
+    footnotes.marks = NULL,
+    footnotes.multiline = NULL,
+    footnotes.sep = NULL,
+    source_notes.background.color = NULL,
+    source_notes.font.size = NULL,
+    source_notes.padding = NULL,
+    source_notes.padding.horizontal = NULL,
+    source_notes.border.bottom.style = NULL,
+    source_notes.border.bottom.width = NULL,
+    source_notes.border.bottom.color = NULL,
+    source_notes.border.lr.style = NULL,
+    source_notes.border.lr.width = NULL,
+    source_notes.border.lr.color = NULL,
+    source_notes.multiline = NULL,
+    source_notes.sep = NULL,
+    row.striping.background_color = NULL,
+    row.striping.include_stub = NULL,
+    row.striping.include_table_body = NULL
+) {
 
   # TODO: add helper functions to divide the options into those by location
   # TODO: add helper functions to divide the options into those by parameter

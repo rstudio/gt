@@ -32,11 +32,66 @@ define which borders should be modified (e.g., \code{"left"}, \code{"right"}, et
 With that selection, the \code{color}, \code{style}, and \code{weight} of the selected
 borders can then be modified.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cell_borders_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_cell_borders_2.png}{options: width=100\%}}
+Add horizontal border lines for all table body rows in \code{exibble}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+  gt() \%>\%
+  tab_options(row.striping.include_table_body = FALSE) \%>\%
+  tab_style(
+    style = cell_borders(
+      sides = c("top", "bottom"),
+      color = "#BBBBBB",
+      weight = px(1.5),
+      style = "solid"
+    ),
+    locations = cells_body(
+      columns = everything(),
+      rows = everything()
+    )
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cell_borders_1.png" style="width:100\%;">
+}}
+
+Incorporate different horizontal and vertical borders at several locations.
+This uses multiple \code{cell_borders()} and [cells_body()] calls within
+\code{list()}s.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+  gt() \%>\%
+  tab_style(
+    style = list(
+      cell_borders(
+        sides = c("top", "bottom"),
+        color = "#FF0000",
+        weight = px(2)
+      ),
+      cell_borders(
+        sides = c("left", "right"),
+        color = "#0000FF",
+        weight = px(2)
+      )
+    ),
+    locations = list(
+      cells_body(
+        columns = num,
+        rows = is.na(num)
+      ),
+      cells_body(
+        columns = currency,
+        rows = is.na(currency)
+      )
+    )
+  )
+
+\if{html}{\out{
+`r man_get_image_tag(file = "man_cell_borders_2.png")`
+}}
+
+
+[cells_body()]: R:cells_body()
+}\if{html}{\out{</div>}}
 }
 
 \section{Function ID}{
@@ -44,59 +99,6 @@ borders can then be modified.
 7-21
 }
 
-\examples{
-# Add horizontal border lines for
-# all table body rows in `exibble`
-tab_1 <-
-  exibble \%>\%
-    gt() \%>\%
-    tab_options(row.striping.include_table_body = FALSE) \%>\%
-    tab_style(
-      style = cell_borders(
-        sides = c("top", "bottom"),
-        color = "#BBBBBB",
-        weight = px(1.5),
-        style = "solid"
-      ),
-      locations = cells_body(
-        columns = everything(),
-        rows = everything()
-      )
-    )
-
-# Incorporate different horizontal and
-# vertical borders at several locations;
-# this uses multiple `cell_borders()` and
-# `cells_body()` calls within `list()`s
-tab_2 <-
-  exibble \%>\%
-    gt() \%>\%
-    tab_style(
-      style = list(
-        cell_borders(
-          sides = c("top", "bottom"),
-          color = "#FF0000",
-          weight = px(2)
-        ),
-        cell_borders(
-          sides = c("left", "right"),
-          color = "#0000FF",
-          weight = px(2)
-        )
-      ),
-      locations = list(
-        cells_body(
-          columns = num,
-          rows = is.na(num)
-        ),
-        cells_body(
-          columns = currency,
-          rows = is.na(currency)
-        )
-      )
-    )
-
-}
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},

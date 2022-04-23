@@ -72,40 +72,27 @@ nothing is provided for \code{rows} then entire columns are selected). Condition
 formatting is possible by providing a conditional expression to the \code{rows}
 argument. See the \emph{Arguments} section for more information on this.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_fmt_date_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_fmt_date_2.png}{options: width=100\%}}
-}
-
-\section{Function ID}{
-
-3-8
-}
-
-\examples{
-# Use `exibble` to create a gt table;
-# keep only the `date` and `time` columns;
-# format the `date` column to have
-# dates formatted as `month_day_year`
-# (date style `5`)
-tab_1 <-
-  exibble \%>\%
+Use \code{exibble} to create a \strong{gt} table. Keep only the \code{date} and \code{time}
+columns. Format the \code{date} column to have dates formatted as \code{month_day_year}
+(date style \code{5}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(date, time) \%>\%
   gt() \%>\%
   fmt_date(
     columns = date,
     date_style = 5
   )
+}\if{html}{\out{</div>}}
 
-# Use `exibble` to create a gt table;
-# keep only the `date` and `time` columns;
-# format the `date` column to have mixed
-# date formats (dates after April will
-# be different than the others)
-tab_2 <-
-  exibble \%>\%
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_date_1.png" style="width:100\%;">
+}}
+
+Use \code{exibble} to create a \strong{gt} table. Keep only the \code{date} and \code{time}
+columns. Format the \code{date} column to have mixed date formats (dates after
+April will be different than the others).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(date, time) \%>\%
   gt() \%>\%
   fmt_date(
@@ -120,8 +107,18 @@ tab_2 <-
       as.Date(date) <= as.Date("2015-04-01"),
     date_style = "day_m_year"
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_date_2.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+3-8
+}
+
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},

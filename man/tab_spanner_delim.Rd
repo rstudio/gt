@@ -49,9 +49,20 @@ additional advantage is that the column names in the input table data remain
 unique even though there may eventually be repeated column labels in the
 rendered output table).
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_tab_spanner_delim_1.png}{options: width=100\%}}
+
+Use \code{iris} to create a \strong{gt} table. Split any columns that are dot-separated
+between column spanner labels (first part) and column labels (second part).\if{html}{\out{<div class="sourceCode r">}}\preformatted{iris \%>\%
+  dplyr::group_by(Species) \%>\%
+  dplyr::slice(1:4) \%>\%
+  gt() \%>\%
+  tab_spanner_delim(delim = ".")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_spanner_delim_1.png" style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
@@ -59,19 +70,6 @@ rendered output table).
 2-3
 }
 
-\examples{
-# Use `iris` to create a gt table; split
-# any columns that are dot-separated
-# between column spanner labels (first
-# part) and column labels (second part)
-tab_1 <-
-  iris \%>\%
-  dplyr::group_by(Species) \%>\%
-  dplyr::slice(1:4) \%>\%
-  gt() \%>\%
-  tab_spanner_delim(delim = ".")
-
-}
 \seealso{
 Other Create or Modify Parts: 
 \code{\link{tab_footnote}()},

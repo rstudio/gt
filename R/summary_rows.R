@@ -43,13 +43,14 @@
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `sp500` to create a gt table with
-#' # row groups; create summary rows (`min`,
-#' # `max`, `avg`) by row group, where each
-#' # each row group is a week number
-#' tab_1 <-
-#'   sp500 %>%
+#' @section Examples:
+#'
+#' Use `sp500` to create a **gt** table with row groups. Create summary rows
+#' (`min`, `max`, `avg`) by row group, where each each row group is a week
+#' number.
+#'
+#' ```r
+#' sp500 %>%
 #'   dplyr::filter(
 #'     date >= "2015-01-05" &
 #'       date <="2015-01-16"
@@ -74,22 +75,26 @@
 #'     formatter = fmt_number,
 #'     use_seps = FALSE
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_summary_rows_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_summary_rows_1.png")`
+#' }}
 #'
 #' @family Add Rows
 #' @section Function ID:
 #' 6-1
 #'
 #' @export
-summary_rows <- function(data,
-                         groups = NULL,
-                         columns = everything(),
-                         fns,
-                         missing_text = "---",
-                         formatter = fmt_number,
-                         ...) {
+summary_rows <- function(
+    data,
+    groups = NULL,
+    columns = everything(),
+    fns,
+    missing_text = "---",
+    formatter = fmt_number,
+    ...
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -203,12 +208,13 @@ summary_rows <- function(data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `sp500` to create a gt table with
-#' # row groups; create grand summary rows
-#' # (`min`, `max`, `avg`) for the table
-#' tab_1 <-
-#'   sp500 %>%
+#' @section Examples:
+#'
+#' Use `sp500` to create a **gt** table with row groups. Create grand summary
+#' rows (`min`, `max`, `avg`) for the table.
+#'
+#' ```r
+#' sp500 %>%
 #'   dplyr::filter(
 #'     date >= "2015-01-05" &
 #'       date <="2015-01-16"
@@ -232,21 +238,25 @@ summary_rows <- function(data,
 #'     formatter = fmt_number,
 #'     use_seps = FALSE
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_grand_summary_rows_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_grand_summary_rows_1.png")`
+#' }}
 #'
 #' @family Add Rows
 #' @section Function ID:
 #' 6-2
 #'
 #' @export
-grand_summary_rows <- function(data,
-                               columns = everything(),
-                               fns,
-                               missing_text = "---",
-                               formatter = fmt_number,
-                               ...) {
+grand_summary_rows <- function(
+    data,
+    columns = everything(),
+    fns,
+    missing_text = "---",
+    formatter = fmt_number,
+    ...
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)

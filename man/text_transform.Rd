@@ -23,25 +23,12 @@ An object of class \code{gt_tbl}.
 \description{
 Perform targeted text transformation with a function
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_text_transform_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
-
-3-14
-}
-
-\examples{
-# Use `exibble` to create a gt table;
-# transform the formatted text in the
-# `num` and `currency` columns using
-# a function within `text_transform()`,
-# where `x` is a formatted vector of
-# column values
-tab_1 <-
-  exibble \%>\%
+Use \code{exibble} to create a \strong{gt} table. transform the formatted text in the
+\code{num} and \code{currency} columns using a function within \code{text_transform()},
+where \code{x} is a formatted vector of column values.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(num, char, currency) \%>\%
   dplyr::slice(1:4) \%>\%
   gt() \%>\%
@@ -51,17 +38,27 @@ tab_1 <-
     locations = cells_body(
       columns = num
     ),
-    fn = function(x) {
+    fn = function(x) \{
       paste0(
         x, " (",
         dplyr::case_when(
           x > 20   ~ "large",
           x <= 20  ~ "small"),
         ")")
-    }
+    \}
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_text_transform_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+3-14
+}
+
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},

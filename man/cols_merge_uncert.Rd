@@ -67,24 +67,12 @@ two are the general \code{\link[=cols_merge]{cols_merge()}} function and the spe
 operate similarly, where the non-target columns can be optionally hidden from
 the output table through the \code{hide_columns} or \code{autohide} options.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cols_merge_uncert_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
-
-4-9
-}
-
-\examples{
-# Use `exibble` to create a gt table,
-# keeping only the `currency` and `num`
-# columns; merge columns into one with
-# a base value and uncertainty (after
-# formatting the `num` column)
-tab_1 <-
-  exibble \%>\%
+Use \code{exibble} to create a \strong{gt} table, keeping only the \code{currency} and \code{num}
+columns. Merge columns into one with a base value and uncertainty (after
+formatting the \code{num} column).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(currency, num) \%>\%
   dplyr::slice(1:7) \%>\%
   gt() \%>\%
@@ -100,8 +88,18 @@ tab_1 <-
   cols_label(
     currency = "value + uncert."
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_merge_uncert_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+4-9
+}
+
 \seealso{
 Other Modify Columns: 
 \code{\link{cols_align}()},

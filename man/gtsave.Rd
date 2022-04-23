@@ -57,56 +57,40 @@ LaTeX document is produced. An output filename of \code{.rtf} will generate an R
 document. The LaTeX and RTF saving functions don't have any options to pass
 to \code{...}.
 }
-\section{Function ID}{
+\section{Examples}{
 
-13-1
-}
 
-\examples{
-if (interactive()) {
-
-# Use `gtcars` to create a gt table; add
-# a stubhead label to describe what is
-# in the stub
-tab_1 <-
+Use \code{gtcars} to create a \strong{gt} table. Add a stubhead label to describe what
+is in the stub.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
   gtcars \%>\%
   dplyr::select(model, year, hp, trq) \%>\%
   dplyr::slice(1:5) \%>\%
   gt(rowname_col = "model") \%>\%
   tab_stubhead(label = "car")
+}\if{html}{\out{</div>}}
 
-# Get an HTML file with inlined CSS
-# (which is necessary for including the
-# table as part of an HTML email)
-tab_1 \%>\%
-  gtsave(
-    "tab_1.html", inline_css = TRUE,
-    path = tempdir()
-  )
+Export the \strong{gt} table to an HTML file with inlined CSS (which is necessary
+for including the table as part of an HTML email).\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% gtsave(filename = "tab_1.html", inline_css = TRUE)
+}\if{html}{\out{</div>}}
 
-# By leaving out the `inline_css` option,
-# we get a more conventional HTML file
-# with embedded CSS styles
-tab_1 \%>\%
-  gtsave("tab_1.html", path = tempdir())
+By leaving out the \code{inline_css} option, we get a more conventional HTML file
+with embedded CSS styles.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% gtsave(filename = "tab_1.html")
+}\if{html}{\out{</div>}}
 
-# Saving as PNG file results in a cropped
-# image of an HTML table; the amount of
-# whitespace can be set
-tab_1 \%>\%
-  gtsave(
-    "tab_1.png", expand = 10,
-    path = tempdir()
-  )
+Saving as a PNG file results in a cropped image of an HTML table. The amount
+of whitespace can be set with the \code{expand} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% gtsave("tab_1.png", expand = 10)
+}\if{html}{\out{</div>}}
 
-# Any use of the `.tex`, `.ltx`, or `.rnw`
-# will result in the output of a LaTeX
-# document
-tab_1 \%>\%
-  gtsave("tab_1.tex", path = tempdir())
+Any use of the \code{.tex}, \code{.ltx}, or \code{.rnw} will result in the output of a LaTeX
+document.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% gtsave("tab_1.tex")
+}\if{html}{\out{</div>}}
 }
 
+\section{Function ID}{
+
+13-1
 }
+
 \seealso{
 Other Export Functions: 
 \code{\link{as_latex}()},

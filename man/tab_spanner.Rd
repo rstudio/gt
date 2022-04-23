@@ -58,23 +58,11 @@ Set a spanner column label by mapping it to columns already in the table.
 This label is placed above one or more column labels, spanning the width of
 those columns and column labels.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_tab_spanner_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
-
-2-2
-}
-
-\examples{
-# Use `gtcars` to create a gt table;
-# Group several columns related to car
-# performance under a spanner column
-# with the label `performance`
-tab_1 <-
-  gtcars \%>\%
+Use \code{gtcars} to create a \strong{gt} table. Group several columns related to car
+performance under a spanner column with the label \code{performance}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
   dplyr::select(
     -mfr, -trim, bdy_style, drivetrain,
     -drivetrain, -trsmn, -ctry_origin
@@ -88,8 +76,18 @@ tab_1 <-
       mpg_c, mpg_h
     )
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_spanner_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+2-2
+}
+
 \seealso{
 Other Create or Modify Parts: 
 \code{\link{tab_footnote}()},

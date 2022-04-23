@@ -40,24 +40,11 @@ between columns in other \strong{gt} function calls (e.g., in all of the
 \verb{fmt*()} functions) even though we may lose distinguishability in column
 labels once they have been relabeled.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cols_label_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_cols_label_2.png}{options: width=100\%}}
-}
-
-\section{Function ID}{
-
-4-3
-}
-
-\examples{
-# Use `countrypops` to create a gt table;
-# label all the table's columns to
-# present better
-tab_1 <-
-  countrypops \%>\%
+Use \code{countrypops} to create a \strong{gt} table. Label all the table's columns to
+present better.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::select(-contains("code")) \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%
@@ -67,12 +54,14 @@ tab_1 <-
     year = "Year",
     population = "Population"
   )
+}\if{html}{\out{</div>}}
 
-# Use `countrypops` to create a gt table;
-# label columns as before but make them
-# bold with markdown formatting
-tab_2 <-
-  countrypops \%>\%
+#' \if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_1.png" style="width:100\%;">
+}}
+
+Use \code{countrypops} to create a \strong{gt} table. Label columns as before but make
+them bold with markdown formatting.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::select(-contains("code")) \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%
@@ -82,8 +71,18 @@ tab_2 <-
     year = md("**Year**"),
     population = md("**Population**")
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_2.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+4-3
+}
+
 \seealso{
 Other Modify Columns: 
 \code{\link{cols_align}()},

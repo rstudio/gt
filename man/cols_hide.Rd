@@ -34,24 +34,11 @@ of such a pipeline. The \code{cols_hide()} function quietly changes the visible
 state of a column (much like the \code{\link[=cols_unhide]{cols_unhide()}} function) and doesn't yield
 warnings or messages when changing the state of already-invisible columns.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cols_hide_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_cols_hide_2.png}{options: width=100\%}}
-}
-
-\section{Function ID}{
-
-4-7
-}
-
-\examples{
-# Use `countrypops` to create a gt table;
-# Hide the columns `country_code_2` and
-# `country_code_3`
-tab_1 <-
-  countrypops \%>\%
+Use \code{countrypops} to create a \strong{gt} table. Hide the columns \code{country_code_2}
+and \code{country_code_3}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%
   gt() \%>\%
@@ -60,13 +47,15 @@ tab_1 <-
       country_code_2, country_code_3
     )
   )
+}\if{html}{\out{</div>}}
 
-# Use `countrypops` to create a gt table;
-# Use the `population` column to provide
-# the conditional placement of footnotes,
-# then hide that column and one other
-tab_2 <-
-  countrypops \%>\%
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_hide_1.png" style="width:100\%;">
+}}
+
+Use \code{countrypops} to create a \strong{gt} table. Use the \code{population} column to
+provide the conditional placement of footnotes, then hide that column and one
+other.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%
   gt() \%>\%
@@ -80,8 +69,18 @@ tab_2 <-
       rows = population > 3000000
     )
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_hide_2.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+4-7
+}
+
 \seealso{
 \code{\link[=cols_unhide]{cols_unhide()}} to perform the inverse operation.
 

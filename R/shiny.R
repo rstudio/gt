@@ -31,16 +31,15 @@
 #'   call to [gt_output()] when `render_gt` is used in an interactive R Markdown
 #'   document.
 #'
-#' @examples
-#' library(shiny)
+#' @section Examples:
 #'
-#' # Here is a Shiny app (contained within
-#' # a single file) that (1) prepares a
-#' # gt table, (2) sets up the `ui` with
-#' # `gt_output()`, and (3) sets up the
-#' # `server` with a `render_gt()` that
-#' # uses the `gt_tbl` object as the input
-#' # expression
+#' Here is a Shiny app (contained within a single file) that (1) prepares a
+#' **gt** table, (2) sets up the `ui` with `gt_output()`, and (3) sets up the
+#' `server` with a `render_gt()` that uses the `gt_tbl` object as the input
+#' expression.
+#'
+#' ```r
+#' library(shiny)
 #'
 #' gt_tbl <-
 #'   gtcars %>%
@@ -63,23 +62,22 @@
 #'       width = px(600)
 #'     )
 #' }
-#'
-#' if (interactive()) {
-#'   shinyApp(ui, server)
-#' }
+#' ```
 #'
 #' @family Shiny functions
 #' @section Function ID:
 #' 12-1
 #'
 #' @export
-render_gt <- function(expr,
-                      width = NULL,
-                      height = NULL,
-                      align = NULL,
-                      env = parent.frame(),
-                      quoted = FALSE,
-                      outputArgs = list()) {
+render_gt <- function(
+    expr,
+    width = NULL,
+    height = NULL,
+    align = NULL,
+    env = parent.frame(),
+    quoted = FALSE,
+    outputArgs = list()
+) {
 
   # Ensure that the shiny package is available
   check_shiny()
@@ -151,16 +149,15 @@ render_gt <- function(expr,
 #'
 #' @param outputId An output variable from which to read the table.
 #'
-#' @examples
-#' library(shiny)
+#' @section Examples:
 #'
-#' # Here is a Shiny app (contained within
-#' # a single file) that (1) prepares a
-#' # gt table, (2) sets up the `ui` with
-#' # `gt_output()`, and (3) sets up the
-#' # `server` with a `render_gt()` that
-#' # uses the `gt_tbl` object as the input
-#' # expression
+#' Here is a Shiny app (contained within a single file) that (1) prepares a
+#' **gt** table, (2) sets up the `ui` with `gt_output()`, and (3) sets up the
+#' `server` with a `render_gt()` that uses the `gt_tbl` object as the input
+#' expression.
+#'
+#' ```r
+#' library(shiny)
 #'
 #' gt_tbl <-
 #'   gtcars %>%
@@ -183,10 +180,7 @@ render_gt <- function(expr,
 #'       width = px(600)
 #'     )
 #' }
-#'
-#' if (interactive()) {
-#'   shinyApp(ui, server)
-#' }
+#' ```
 #'
 #' @family Shiny functions
 #' @section Function ID:

@@ -50,9 +50,32 @@ behavior that is optimized for common table tasks: \code{\link[=cols_merge_range
 similarly, where the non-target columns can be optionally hidden from the
 output table through the \code{autohide} option.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cols_merge_1.png}{options: width=100\%}}
+
+Use \code{sp500} to create a \strong{gt} table. Merge the \code{open} & \code{close} columns
+together, and, the \code{low} & \code{high} columns (putting an em dash between both).
+Rename the columns.\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
+  dplyr::slice(50:55) \%>\%
+  dplyr::select(-volume, -adj_close) \%>\%
+  gt() \%>\%
+  cols_merge(
+    columns = c(open, close),
+    pattern = "\{1\}&mdash;\{2\}"
+  ) \%>\%
+  cols_merge(
+    columns = c(low, high),
+    pattern = "\{1\}&mdash;\{2\}"
+  ) \%>\%
+  cols_label(
+    open = "open/close",
+    low = "low/high"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_merge_1.png" style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
@@ -60,31 +83,6 @@ output table through the \code{autohide} option.
 4-12
 }
 
-\examples{
-# Use `sp500` to create a gt table;
-# merge the `open` & `close` columns
-# together, and, the `low` & `high`
-# columns (putting an em dash between
-# both); rename the columns
-tab_1 <-
-  sp500 \%>\%
-  dplyr::slice(50:55) \%>\%
-  dplyr::select(-volume, -adj_close) \%>\%
-  gt() \%>\%
-  cols_merge(
-    columns = c(open, close),
-    pattern = "{1}&mdash;{2}"
-  ) \%>\%
-  cols_merge(
-    columns = c(low, high),
-    pattern = "{1}&mdash;{2}"
-  ) \%>\%
-  cols_label(
-    open = "open/close",
-    low = "low/high"
-  )
-
-}
 \seealso{
 Other Modify Columns: 
 \code{\link{cols_align}()},

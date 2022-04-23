@@ -26,24 +26,12 @@ to this revised ordering. It isn't necessary to provide all row ID values in
 top of the table and the remaining row groups will follow in their original
 ordering.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_row_group_order_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
-
-5-1
-}
-
-\examples{
-# Use `exibble` to create a gt table
-# with a stub and with row groups;
-# modify the order of the row groups
-# with `row_group_order()`, specifying
-# the new ordering in `groups`
-tab_1 <-
-  exibble \%>\%
+Use \code{exibble} to create a \strong{gt} table with a stub and with row groups.
+Modify the order of the row groups with \code{row_group_order()}, specifying the
+new ordering in \code{groups}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(char, currency, row, group) \%>\%
     gt(
       rowname_col = "row",
@@ -52,6 +40,16 @@ tab_1 <-
     row_group_order(
       groups = c("grp_b", "grp_a")
     )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_row_group_order_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+5-1
+}
+
 \concept{Modify Rows}

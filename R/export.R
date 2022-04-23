@@ -48,59 +48,59 @@
 #' @param ... All other options passed to the appropriate internal saving
 #'   function.
 #'
-#' @examples
-#' if (interactive()) {
+#' @section Examples:
 #'
-#' # Use `gtcars` to create a gt table; add
-#' # a stubhead label to describe what is
-#' # in the stub
+#' Use `gtcars` to create a **gt** table. Add a stubhead label to describe what
+#' is in the stub.
+#'
+#' ```r
 #' tab_1 <-
 #'   gtcars %>%
 #'   dplyr::select(model, year, hp, trq) %>%
 #'   dplyr::slice(1:5) %>%
 #'   gt(rowname_col = "model") %>%
 #'   tab_stubhead(label = "car")
+#' ```
 #'
-#' # Get an HTML file with inlined CSS
-#' # (which is necessary for including the
-#' # table as part of an HTML email)
-#' tab_1 %>%
-#'   gtsave(
-#'     "tab_1.html", inline_css = TRUE,
-#'     path = tempdir()
-#'   )
+#' Export the **gt** table to an HTML file with inlined CSS (which is necessary
+#' for including the table as part of an HTML email).
 #'
-#' # By leaving out the `inline_css` option,
-#' # we get a more conventional HTML file
-#' # with embedded CSS styles
-#' tab_1 %>%
-#'   gtsave("tab_1.html", path = tempdir())
+#' ```r
+#' tab_1 %>% gtsave(filename = "tab_1.html", inline_css = TRUE)
+#' ```
 #'
-#' # Saving as PNG file results in a cropped
-#' # image of an HTML table; the amount of
-#' # whitespace can be set
-#' tab_1 %>%
-#'   gtsave(
-#'     "tab_1.png", expand = 10,
-#'     path = tempdir()
-#'   )
+#' By leaving out the `inline_css` option, we get a more conventional HTML file
+#' with embedded CSS styles.
 #'
-#' # Any use of the `.tex`, `.ltx`, or `.rnw`
-#' # will result in the output of a LaTeX
-#' # document
-#' tab_1 %>%
-#'   gtsave("tab_1.tex", path = tempdir())
-#' }
+#' ```r
+#' tab_1 %>% gtsave(filename = "tab_1.html")
+#' ```
+#'
+#' Saving as a PNG file results in a cropped image of an HTML table. The amount
+#' of whitespace can be set with the `expand` option.
+#'
+#' ```r
+#' tab_1 %>% gtsave("tab_1.png", expand = 10)
+#' ```
+#'
+#' Any use of the `.tex`, `.ltx`, or `.rnw` will result in the output of a LaTeX
+#' document.
+#'
+#' ```r
+#' tab_1 %>% gtsave("tab_1.tex")
+#' ```
 #'
 #' @family Export Functions
 #' @section Function ID:
 #' 13-1
 #'
 #' @export
-gtsave <- function(data,
-                   filename,
-                   path = NULL,
-                   ...) {
+gtsave <- function(
+    data,
+    filename,
+    path = NULL,
+    ...
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -151,11 +151,13 @@ gtsave <- function(data,
 #' Saving function for an HTML file
 #'
 #' @noRd
-gt_save_html <- function(data,
-                         filename,
-                         path = NULL,
-                         ...,
-                         inline_css = FALSE) {
+gt_save_html <- function(
+    data,
+    filename,
+    path = NULL,
+    ...,
+    inline_css = FALSE
+) {
 
   filename <- gtsave_filename(path = path, filename = filename)
 
@@ -177,12 +179,14 @@ gt_save_html <- function(data,
 #' Saving function for an image file via the webshot package
 #'
 #' @noRd
-gt_save_webshot <- function(data,
-                            filename,
-                            path = NULL,
-                            ...,
-                            zoom = 2,
-                            expand = 5) {
+gt_save_webshot <- function(
+    data,
+    filename,
+    path = NULL,
+    ...,
+    zoom = 2,
+    expand = 5
+) {
 
   filename <- gtsave_filename(path = path, filename = filename)
 
@@ -225,10 +229,12 @@ gt_save_webshot <- function(data,
 #' Saving function for a LaTeX file
 #'
 #' @noRd
-gt_save_latex <- function(data,
-                          filename,
-                          path = NULL,
-                          ...) {
+gt_save_latex <- function(
+    data,
+    filename,
+    path = NULL,
+    ...
+) {
 
   filename <- gtsave_filename(path = path, filename = filename)
 
@@ -238,11 +244,13 @@ gt_save_latex <- function(data,
 #' Saving function for an RTF file
 #'
 #' @noRd
-gt_save_rtf <- function(data,
-                        filename,
-                        path = NULL,
-                        ...,
-                        page_numbering = c("none", "footer", "header")) {
+gt_save_rtf <- function(
+    data,
+    filename,
+    path = NULL,
+    ...,
+    page_numbering = c("none", "footer", "header")
+) {
 
   page_numbering <- match.arg(page_numbering)
 
@@ -296,12 +304,12 @@ gtsave_filename <- function(path, filename) {
 #'   email message body, since inlined styles are largely supported in email
 #'   clients over using CSS in a `<style>` block.
 #'
-#' @examples
-#' if (interactive()) {
+#' @section Examples:
 #'
-#' # Use `gtcars` to create a gt table;
-#' # add a header and then export as
-#' # HTML code with CSS inlined
+#' Use `gtcars` to create a **gt** table. Add a header and then export as HTML
+#' code with CSS inlined.
+#'
+#' ```r
 #' tab_html <-
 #'   gtcars %>%
 #'   dplyr::select(mfr, model, msrp) %>%
@@ -312,25 +320,21 @@ gtsave_filename <- function(path, filename) {
 #'     subtitle = md("`gtcars` is an R dataset")
 #'   ) %>%
 #'   as_raw_html()
+#' ```
 #'
-#' # `tab_html` is a single-element vector
-#' # containing inlined HTML for the table;
-#' # it has only the `<table>...</table>` part
-#' # so it's not a complete HTML document but
-#' # rather an HTML fragment
-#' tab_html %>%
-#'   substr(1, 700) %>%
-#'   cat()
-#'
-#' }
+#' What's returned is a single-element vector containing inlined HTML for the
+#' table. It has only the `<table>...</table>` part so it's not a complete HTML
+#' document but rather an HTML fragment.
 #'
 #' @family Export Functions
 #' @section Function ID:
 #' 13-2
 #'
 #' @export
-as_raw_html <- function(data,
-                        inline_css = TRUE) {
+as_raw_html <- function(
+    data,
+    inline_css = TRUE
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -365,12 +369,12 @@ as_raw_html <- function(data,
 #'
 #' @param data A table object that is created using the [gt()] function.
 #'
-#' @examples
-#' if (interactive()) {
+#' @section Examples:
 #'
-#' # Use `gtcars` to create a gt table;
-#' # add a header and then export as
-#' # an object with LaTeX code
+#' Use `gtcars` to create a **gt** table. Add a header and then export as an
+#' object with LaTeX code.
+#'
+#' ```r
 #' tab_latex <-
 #'   gtcars %>%
 #'   dplyr::select(mfr, model, msrp) %>%
@@ -381,18 +385,11 @@ as_raw_html <- function(data,
 #'     subtitle = md("`gtcars` is an R dataset")
 #'   ) %>%
 #'   as_latex()
+#' ```
 #'
-#' # `tab_latex` is a `knit_asis` object,
-#' # which makes it easy to include in
-#' # R Markdown documents that are knit to
-#' # PDF; we can use `as.character()` to
-#' # get just the LaTeX code as a single-
-#' # element vector
-#' tab_latex %>%
-#'   as.character() %>%
-#'   cat()
-#'
-#' }
+#' What's returned is a `knit_asis` object, which makes it easy to include in R
+#' Markdown documents that are knit to PDF. We can use `as.character()` to get
+#' just the LaTeX code as a single- element vector.
 #'
 #' @family Export Functions
 #' @section Function ID:
@@ -461,12 +458,12 @@ as_latex <- function(data) {
 #'   document. The page numbering text can either be in the document `"footer"`
 #'   or `"header"`. By default, page numbering is not active (`"none"`).
 #'
-#' @examples
-#' if (interactive()) {
+#' @section Examples:
 #'
-#' # Use `gtcars` to create a gt table;
-#' # add a header and then export as
-#' # RTF code
+#' Use `gtcars` to create a **gt** table. Add a header and then export as RTF
+#' code.
+#'
+#' ```r
 #' tab_rtf <-
 #'   gtcars %>%
 #'   dplyr::select(mfr, model) %>%
@@ -477,16 +474,17 @@ as_latex <- function(data) {
 #'     subtitle = md("`gtcars` is an R dataset")
 #'   ) %>%
 #'   as_rtf()
-#'
-#' }
+#' ```
 #'
 #' @family Export Functions
 #' @section Function ID:
 #' 13-4
 #'
 #' @export
-as_rtf <- function(data,
-                   page_numbering = c("none", "footer", "header")) {
+as_rtf <- function(
+    data,
+    page_numbering = c("none", "footer", "header")
+) {
 
   page_numbering <- match.arg(page_numbering)
 
@@ -548,12 +546,13 @@ as_rtf <- function(data,
 #'
 #' @return A list of data frames containing summary data.
 #'
-#' @examples
-#' # Use `sp500` to create a gt table with
-#' # row groups; create summary rows by row
-#' # group (`min`, `max`, `avg`) and then
-#' # extract the summary rows as a list
-#' # object
+#' @section Examples:
+#'
+#' Use `sp500` to create a **gt** table with row groups. Create summary rows by
+#' row group (`min`, `max`, `avg`) and then extract the summary rows as a list
+#' object.
+#'
+#' ```{r}
 #' summary_extracted <-
 #'   sp500 %>%
 #'   dplyr::filter(
@@ -582,18 +581,22 @@ as_rtf <- function(data,
 #'   ) %>%
 #'   extract_summary()
 #'
-#' # Use the summary list to make a new
-#' # gt table; the key thing is to use
-#' # `dplyr::bind_rows()` and then pass the
-#' # tibble to `gt()`
-#' tab_1 <-
-#'   summary_extracted %>%
+#' summary_extracted
+#' ```
+#'
+#' Use the summary list to make a new **gt** table. The key thing is to use
+#' `dplyr::bind_rows()` and then pass the tibble to [gt()].
+#'
+#' ```r
+#' summary_extracted %>%
 #'   unlist(recursive = FALSE) %>%
 #'   dplyr::bind_rows() %>%
 #'   gt(groupname_col = "group_id")
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_extract_summary_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_extract_summary_1.png")`
+#' }}
 #'
 #' @family Export Functions
 #' @section Function ID:

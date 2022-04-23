@@ -64,24 +64,11 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \code{list()} (e.g., \code{list(cells_body(), cells_grand_summary())}).
 }
 
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cells_body_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
-
-7-11
-}
-
-\examples{
-# Use `gtcars` to create a gt table; add
-# a footnote that targets a single data cell
-# with `tab_footnote()`, using `cells_body()`
-# in `locations` (`rows = hp == max(hp)` will
-# target a single row in the `hp` column)
-tab_1 <-
-  gtcars \%>\%
+Use \code{gtcars} to create a \strong{gt} table. Add a footnote that targets a single
+data cell with \code{\link[=tab_footnote]{tab_footnote()}}, using \code{cells_body()} in \code{locations} (\code{rows = hp == max(hp)} will target a single row in the \code{hp} column).\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
   dplyr::filter(ctry_origin == "United Kingdom") \%>\%
   dplyr::select(mfr, model, year, hp) \%>\%
   gt() \%>\%
@@ -92,8 +79,18 @@ tab_1 <-
       rows = hp == max(hp))
   ) \%>\%
   opt_footnote_marks(marks = c("*", "+"))
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_body_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+7-11
+}
+
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},

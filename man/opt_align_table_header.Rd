@@ -22,24 +22,12 @@ easily set the horizontal alignment of the title and subtitle to the left
 or right by using the \code{"align"} argument. This function serves as a
 convenient shortcut for \verb{<gt_tbl> \%>\% tab_options(heading.align = <align>)}.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_opt_align_table_header_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
-
-9-3
-}
-
-\examples{
-# Use `exibble` to create a gt table with
-# a number of table parts added; the header
-# (consisting of the title and the subtitle)
-# are to be aligned to the left with the
-# `opt_align_table_header()` function
-tab_1 <-
-  exibble \%>\%
+Use \code{exibble} to create a \strong{gt} table with a number of table parts added.
+The header (consisting of the title and the subtitle) are to be aligned to
+the left with the \code{opt_align_table_header()} function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt(rowname_col = "row", groupname_col = "group") \%>\%
   summary_rows(
     groups = "grp_a",
@@ -63,8 +51,18 @@ tab_1 <-
     subtitle = "The table's subtitle"
   ) \%>\%
   opt_align_table_header(align = "left")
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_align_table_header_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+9-3
+}
+
 \seealso{
 Other Table Option Functions: 
 \code{\link{opt_all_caps}()},

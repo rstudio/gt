@@ -64,22 +64,11 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \code{list()} (e.g., \code{list(cells_body(), cells_grand_summary())}).
 }
 
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cells_stub_summary_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
-
-7-14
-}
-
-\examples{
-# Use `countrypops` to create a gt table; add
-# some styling to the summary data stub cells
-# with `tab_style()` and `cells_stub_summary()`
-tab_1 <-
-  countrypops \%>\%
+Use \code{countrypops} to create a \strong{gt} table. Add some styling to the summary
+data stub cells with \code{\link[=tab_style]{tab_style()}} and \code{cells_stub_summary()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::filter(
     country_name == "Japan",
     year < 1970) \%>\%
@@ -118,8 +107,18 @@ tab_1 <-
       groups = "1960s"
     )
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_stub_summary_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+7-14
+}
+
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},

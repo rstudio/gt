@@ -58,22 +58,11 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \code{list()} (e.g., \code{list(cells_body(), cells_grand_summary())}).
 }
 
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cells_stubhead_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
-
-7-6
-}
-
-\examples{
-# Use `pizzaplace` to create a gt table;
-# add a stubhead label and then style it
-# with `tab_style()` and `cells_stubhead()`
-tab_1 <-
-  pizzaplace \%>\%
+Use \code{pizzaplace} to create a \strong{gt} table. Add a stubhead label and then
+style it with \code{\link[=tab_style]{tab_style()}} and \code{cells_stubhead()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
   dplyr::mutate(month = as.numeric(substr(date, 6, 7))) \%>\%
   dplyr::group_by(month, type) \%>\%
   dplyr::summarize(sold = dplyr::n()) \%>\%
@@ -85,8 +74,18 @@ tab_1 <-
     style = cell_fill(color = "lightblue"),
     locations = cells_stubhead()
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_stubhead_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+7-6
+}
+
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},

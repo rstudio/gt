@@ -57,22 +57,11 @@ Should we need to obtain the summary data for external purposes, the
 \code{\link[=extract_summary]{extract_summary()}} function can be used with a \code{gt_tbl} object where grand
 summary rows were added via \code{grand_summary_rows()}.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_grand_summary_rows_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
-
-6-2
-}
-
-\examples{
-# Use `sp500` to create a gt table with
-# row groups; create grand summary rows
-# (`min`, `max`, `avg`) for the table
-tab_1 <-
-  sp500 \%>\%
+Use \code{sp500} to create a \strong{gt} table with row groups. Create grand summary
+rows (\code{min}, \code{max}, \code{avg}) for the table.\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
   dplyr::filter(
     date >= "2015-01-05" &
       date <="2015-01-16"
@@ -96,8 +85,18 @@ tab_1 <-
     formatter = fmt_number,
     use_seps = FALSE
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_grand_summary_rows_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+6-2
+}
+
 \seealso{
 Other Add Rows: 
 \code{\link{summary_rows}()}

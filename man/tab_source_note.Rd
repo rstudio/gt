@@ -23,9 +23,22 @@ footer, simply use multiple calls of \code{tab_source_note()} and they will be
 inserted in the order provided. We can use Markdown formatting for the note,
 or, if the table is intended for HTML output, we can include HTML formatting.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_tab_source_note_1.png}{options: width=100\%}}
+
+Use \code{gtcars} to create a \strong{gt} table. Add a source note to the table footer
+that cites the data source.\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
+  dplyr::select(mfr, model, msrp) \%>\%
+  dplyr::slice(1:5) \%>\%
+  gt() \%>\%
+  tab_source_note(
+    source_note = "From edmunds.com"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_source_note_1.png" style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
@@ -33,20 +46,6 @@ or, if the table is intended for HTML output, we can include HTML formatting.
 2-7
 }
 
-\examples{
-# Use `gtcars` to create a gt table;
-# add a source note to the table
-# footer that cites the data source
-tab_1 <-
-  gtcars \%>\%
-  dplyr::select(mfr, model, msrp) \%>\%
-  dplyr::slice(1:5) \%>\%
-  gt() \%>\%
-  tab_source_note(
-    source_note = "From edmunds.com"
-  )
-
-}
 \seealso{
 Other Create or Modify Parts: 
 \code{\link{tab_footnote}()},

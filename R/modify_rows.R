@@ -17,14 +17,14 @@
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `exibble` to create a gt table
-#' # with a stub and with row groups;
-#' # modify the order of the row groups
-#' # with `row_group_order()`, specifying
-#' # the new ordering in `groups`
-#' tab_1 <-
-#'   exibble %>%
+#' @section Examples:
+#'
+#' Use `exibble` to create a **gt** table with a stub and with row groups.
+#' Modify the order of the row groups with `row_group_order()`, specifying the
+#' new ordering in `groups`.
+#'
+#' ```r
+#' exibble %>%
 #'   dplyr::select(char, currency, row, group) %>%
 #'     gt(
 #'       rowname_col = "row",
@@ -33,17 +33,21 @@
 #'     row_group_order(
 #'       groups = c("grp_b", "grp_a")
 #'     )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_row_group_order_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_row_group_order_1.png")`
+#' }}
 #'
 #' @family Modify Rows
 #' @section Function ID:
 #' 5-1
 #'
 #' @export
-row_group_order <- function(data,
-                            groups) {
+row_group_order <- function(
+    data,
+    groups
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)

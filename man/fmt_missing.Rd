@@ -42,22 +42,11 @@ nothing is provided for \code{rows} then entire columns are selected). Condition
 formatting is possible by providing a conditional expression to the \code{rows}
 argument. See the Arguments section for more information on this.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_fmt_missing_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
-
-3-13
-}
-
-\examples{
-# Use `exibble` to create a gt table;
-# NA values in different columns will
-# be given replacement text
-tab_1 <-
-  exibble \%>\%
+Use \code{exibble} to create a \strong{gt} table. The \code{NA} values in different columns
+will be given replacement text.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(-row, -group) \%>\%
   gt() \%>\%
   fmt_missing(
@@ -68,8 +57,18 @@ tab_1 <-
     columns = 4:7,
     missing_text = "nothing"
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_missing_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+3-13
+}
+
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},

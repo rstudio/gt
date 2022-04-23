@@ -48,25 +48,11 @@ will be automatically placed into a row group without a label. To restore
 labels for row groups not explicitly assigned a group,
 \code{tab_options(row_group.default_label = "")} can be used.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_tab_row_group_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_tab_row_group_2.png}{options: width=100\%}}
-}
-
-\section{Function ID}{
-
-2-4
-}
-
-\examples{
-# Use `gtcars` to create a gt table and
-# add two row groups with the labels:
-# `numbered` and `NA` (a group without
-# a title, or, the rest)
-tab_1 <-
-  gtcars \%>\%
+Use \code{gtcars} to create a \strong{gt} table and add two row groups with the labels:
+\code{numbered} and \code{NA} (a group without a title, or, the rest).\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
   dplyr::select(model, year, hp, trq) \%>\%
   dplyr::slice(1:8) \%>\%
   gt(rowname_col = "model") \%>\%
@@ -74,14 +60,15 @@ tab_1 <-
     label = "numbered",
     rows = matches("^[0-9]")
   )
+}\if{html}{\out{</div>}}
 
-# Use `gtcars` to create a gt table;
-# add two row groups with the labels
-# `powerful` and `super powerful`: the
-# distinction being `hp` lesser or
-# greater than `600`
-tab_2 <-
-  gtcars \%>\%
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_row_group_1.png" style="width:100\%;">
+}}
+
+Use \code{gtcars} to create a \strong{gt} table. Add two row groups with the labels
+\code{powerful} and \verb{super powerful}: the distinction being \code{hp} lesser or greater
+than \code{600}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
   dplyr::select(model, year, hp, trq) \%>\%
   dplyr::slice(1:8) \%>\%
   gt(rowname_col = "model") \%>\%
@@ -93,8 +80,18 @@ tab_2 <-
     label = "super powerful",
     rows = hp > 600
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_row_group_2.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+2-4
+}
+
 \seealso{
 Other Create or Modify Parts: 
 \code{\link{tab_footnote}()},

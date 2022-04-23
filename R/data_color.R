@@ -65,15 +65,14 @@
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # library(paletteer)
+#' @section Examples:
 #'
-#' # Use `countrypops` to create a gt table;
-#' # Apply a color scale to the `population`
-#' # column with `scales::col_numeric`,
-#' # four supplied colors, and a domain
-#' tab_1 <-
-#'   countrypops %>%
+#' Use `countrypops` to create a **gt** table. Apply a color scale to the
+#' `population` column with `scales::col_numeric`, four supplied colors, and a
+#' domain.
+#'
+#' ```r
+#' countrypops %>%
 #'   dplyr::filter(country_name == "Mongolia") %>%
 #'   dplyr::select(-contains("code")) %>%
 #'   tail(10) %>%
@@ -85,18 +84,21 @@
 #'         "red", "orange", "green", "blue"),
 #'       domain = c(0.2E7, 0.4E7))
 #'   )
+#' ```
 #'
-#' # Use `pizzaplace` to create a gt table;
-#' # Apply colors from the `red_material`
-#' # palette (in the `ggsci` pkg but
-#' # more easily gotten from the `paletteer`
-#' # package, info at `info_paletteer()`) to
-#' # to `sold` and `income` columns; setting
-#' # the `domain` of `scales::col_numeric()`
-#' # to `NULL` will use the bounds of the
-#' # available data as the domain
-#' tab_2 <-
-#'   pizzaplace %>%
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_data_color_1.png")`
+#' }}
+#'
+#' Use `pizzaplace` to create a **gt** table. Apply colors from the
+#' `"ggsci::red_material"` palette (it's in the **ggsci** R package but more
+#' easily gotten from the **paletteer** package, info at [info_paletteer()]) to
+#' to `sold` and `income` columns. Setting the `domain` of
+#' `scales::col_numeric()` to `NULL` will use the bounds of the available data
+#' as the domain.
+#'
+#' ```r
+#' pizzaplace %>%
 #'   dplyr::filter(
 #'     type %in% c("chicken", "supreme")) %>%
 #'   dplyr::group_by(type, size) %>%
@@ -114,11 +116,11 @@
 #'       domain = NULL
 #'       )
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_data_color_1.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_data_color_2.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_data_color_2.png")`
+#' }}
 #'
 #' @family Format Data
 #' @section Function ID:

@@ -44,9 +44,55 @@ which has 26 uppercase letters of the Roman alphabet
 more symbols, making six
 }
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_opt_footnote_marks_1.png}{options: width=100\%}}
+
+Use \code{sza} to create a gt table, adding three footnotes. Call
+\code{opt_footnote_marks()} to specify which footnote marks to use.\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza \%>\%
+  dplyr::filter(latitude == 30) \%>\%
+  dplyr::group_by(tst) \%>\%
+  dplyr::summarize(
+    SZA.Max = if (
+      all(is.na(sza))) \{
+      NA
+    \} else \{
+      max(sza, na.rm = TRUE)
+    \},
+    SZA.Min = if (
+      all(is.na(sza))) \{
+      NA
+    \} else \{
+      min(sza, na.rm = TRUE)
+    \},
+    .groups = "drop"
+  ) \%>\%
+  gt(rowname_col = "tst") \%>\%
+  tab_spanner_delim(delim = ".") \%>\%
+  fmt_missing(
+    columns = everything(),
+    missing_text = "90+"
+  ) \%>\%
+  tab_stubhead(label = "TST") \%>\%
+  tab_footnote(
+    footnote = "True solar time.",
+    locations = cells_stubhead()
+  ) \%>\%
+  tab_footnote(
+    footnote = "Solar zenith angle.",
+    locations = cells_column_spanners(
+      spanners = "SZA.Max"
+    )
+  ) \%>\%
+  tab_footnote(
+    footnote = "The Lowest SZA.",
+    locations = cells_stub(rows = "1200")
+  ) \%>\%
+  opt_footnote_marks(marks = "standard")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_footnote_marks_1.png" style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
@@ -54,54 +100,6 @@ more symbols, making six
 9-1
 }
 
-\examples{
-# Use `sza` to create a gt table,
-# adding three footnotes; call
-# `opt_footnote_marks()` to specify
-# which footnote marks to use
-tab_1 <-
-  sza \%>\%
-    dplyr::filter(latitude == 30) \%>\%
-    dplyr::group_by(tst) \%>\%
-    dplyr::summarize(
-      SZA.Max = if (
-        all(is.na(sza))) {
-        NA
-      } else {
-        max(sza, na.rm = TRUE)
-      },
-      SZA.Min = if (
-        all(is.na(sza))) {
-        NA
-      } else {
-        min(sza, na.rm = TRUE)
-      },
-      .groups = "drop"
-    ) \%>\%
-    gt(rowname_col = "tst") \%>\%
-    tab_spanner_delim(delim = ".") \%>\%
-    fmt_missing(
-      columns = everything(),
-      missing_text = "90+"
-    ) \%>\%
-    tab_stubhead(label = "TST") \%>\%
-    tab_footnote(
-      footnote = "True solar time.",
-      locations = cells_stubhead()
-    ) \%>\%
-    tab_footnote(
-      footnote = "Solar zenith angle.",
-      locations = cells_column_spanners(
-        spanners = "SZA.Max"
-      )
-    ) \%>\%
-    tab_footnote(
-      footnote = "The Lowest SZA.",
-      locations = cells_stub(rows = "1200")
-    ) \%>\%
-    opt_footnote_marks(marks = "standard")
-
-}
 \seealso{
 Other Table Option Functions: 
 \code{\link{opt_align_table_header}()},

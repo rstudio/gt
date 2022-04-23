@@ -31,24 +31,11 @@ place one or columns at the end of the column series, the
 the \code{\link[=cols_move]{cols_move()}} function, where columns could be placed after a specific
 column.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cols_move_to_start_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_cols_move_to_start_2.png}{options: width=100\%}}
-}
-
-\section{Function ID}{
-
-4-4
-}
-
-\examples{
-# Use `countrypops` to create a gt table;
-# With the remaining columns, move the
-# `year` column to the start
-tab_1 <-
-  countrypops \%>\%
+Use \code{countrypops} to create a \strong{gt} table. With the remaining columns, move
+the \code{year} column to the start.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::select(-contains("code")) \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%
@@ -56,12 +43,14 @@ tab_1 <-
   cols_move_to_start(
     columns = year
   )
+}\if{html}{\out{</div>}}
 
-# Use `countrypops` to create a gt table;
-# With the remaining columns, move `year`
-# and `population` to the start
-tab_2 <-
-  countrypops \%>\%
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_move_to_start_1.png" style="width:100\%;">
+}}
+
+Use \code{countrypops} to create a \strong{gt} table. With the remaining columns, move
+\code{year} and \code{population} to the start.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::select(-contains("code")) \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%
@@ -69,8 +58,18 @@ tab_2 <-
   cols_move_to_start(
     columns = c(year, population)
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_move_to_start_2.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+4-4
+}
+
 \seealso{
 Other Modify Columns: 
 \code{\link{cols_align}()},

@@ -9,15 +9,18 @@
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Get a table of info on the different
-#' # date-formatting styles (which are used
-#' # by supplying a number code to the
-#' # `fmt_date()` function)
-#' tab_1 <- info_date_style()
+#' @section Examples:
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_info_date_style_1.png}{options: width=100\%}}
+#' Get a table of info on the different date-formatting styles (which are used
+#' by supplying a number code to the [fmt_date()] function).
+#'
+#' ```r
+#' info_date_style()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_info_date_style_1.png")`
+#' }}
 #'
 #' @family Information Functions
 #' @section Function ID:
@@ -74,15 +77,18 @@ info_date_style <- function() {
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Get a table of info on the different
-#' # time-formatting styles (which are used
-#' # by supplying a number code to the
-#' # `fmt_time()` function)
-#' tab_1 <- info_time_style()
+#' @section Examples:
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_info_time_style_1.png}{options: width=100\%}}
+#' Get a table of info on the different time-formatting styles (which are used
+#' by supplying a number code to the [fmt_time()] function).
+#'
+#' ```r
+#' info_time_style()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_info_time_style_1.png")`
+#' }}
 #'
 #' @family Information Functions
 #' @section Function ID:
@@ -145,29 +151,39 @@ info_time_style <- function() {
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Get a table of info on all of
-#' # the currencies where the three-
-#' # letter code begins with a "h"
-#' tab_1 <- info_currencies(begins_with = "h")
+#' @section Examples:
 #'
-#' # Get a table of info on all of the
-#' # common currency name/symbols that
-#' # can be used with `fmt_currency()`
-#' tab_2 <- info_currencies(type = "symbol")
+#' Get a table of info on all of the currencies where the three- letter code
+#' begins with a `"h"`.
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_info_currencies_1.png}{options: width=100\%}}
+#' ```r
+#' info_currencies(begins_with = "h")
+#' ```
 #'
-#' \if{html}{\figure{man_info_currencies_2.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_info_currencies_1.png")`
+#' }}
+#'
+#' Get a table of info on all of the common currency name/symbols that can be
+#' used with [fmt_currency()].
+#'
+#' ```r
+#' info_currencies(type = "symbol")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_info_currencies_2.png")`
+#' }}
 #'
 #' @family Information Functions
 #' @section Function ID:
 #' 10-3
 #'
 #' @export
-info_currencies <- function(type = c("code", "symbol"),
-                            begins_with = NULL) {
+info_currencies <- function(
+    type = c("code", "symbol"),
+    begins_with = NULL
+) {
 
   if (type[1] == "code") {
 
@@ -298,11 +314,18 @@ info_currencies <- function(type = c("code", "symbol"),
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Get a table of info on all of
-#' # the locales where the base
-#' # locale ID begins with a "v"
-#' tab_1 <- info_locales(begins_with = "v")
+#' @section Examples:
+#'
+#' Get a table of info on all of the locales where the base locale ID begins
+#' with a `"v"`.
+#'
+#' ```r
+#' info_locales(begins_with = "v")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_info_locales_1.png")`
+#' }}
 #'
 #' @family Information Functions
 #' @section Function ID:
@@ -435,16 +458,18 @@ info_locales <- function(begins_with = NULL) {
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Get a table of info on just the
-#' # `ggthemes` color palette (easily
-#' # accessible from the paletteer pkg)
-#' tab_1 <-
-#'   info_paletteer(
-#'     color_pkgs = "ggthemes")
+#' @section Examples:
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_info_paletteer_1.png}{options: width=100\%}}
+#' Get a table of info on just the `"ggthemes"` color palette (easily accessible
+#' from the **paletteer** pkg).
+#'
+#' ```r
+#' info_paletteer(color_pkgs = "ggthemes")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_info_paletteer_1.png")`
+#' }}
 #'
 #' @family Information Functions
 #' @section Function ID:
@@ -541,10 +566,17 @@ info_paletteer <- function(color_pkgs = NULL) {
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Get a table of info on some of the
-#' # recommended Google Fonts for tables
-#' tab_1 <- info_google_fonts()
+#' @section Examples:
+#'
+#' Get a table of info on some of the recommended *Google Fonts* for tables.
+#'
+#' ```r
+#' info_google_fonts()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_info_google_fonts_1.png")`
+#' }}
 #'
 #' @family Information Functions
 #' @section Function ID:

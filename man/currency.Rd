@@ -36,23 +36,11 @@ string without a name, it will be taken as the \code{default} (i.e.,
 we were to specify currency strings for multiple output contexts, names are
 required each and every context.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_currency_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
-
-7-18
-}
-
-\examples{
-# Use `exibble` to create a gt table;
-# format the `currency` column to have
-# currency values in guilder (a defunct
-# Dutch currency)
-tab_1 <-
-  exibble \%>\%
+Use \code{exibble} to create a \strong{gt} table. Format the \code{currency} column to have
+currency values in guilder (a defunct Dutch currency).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt() \%>\%
   fmt_currency(
     columns = currency,
@@ -61,8 +49,18 @@ tab_1 <-
       default = "f"),
     decimals = 2
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_currency_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+7-18
+}
+
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},

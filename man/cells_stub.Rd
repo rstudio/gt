@@ -65,26 +65,11 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \code{list()} (e.g., \code{list(cells_body(), cells_grand_summary())}).
 }
 
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cells_stub_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
-
-7-10
-}
-
-\examples{
-library(tidyr)
-
-# Use `sza` to create a gt table; color
-# all of the `month` values in the table
-# stub with `tab_style()`, using `cells_stub()`
-# in `locations` (`rows = TRUE` targets
-# all stub rows)
-tab_1 <-
-  sza \%>\%
+Use \code{sza} to create a \strong{gt} table. Color all of the \code{month} values in the
+table stub with \code{\link[=tab_style]{tab_style()}}, using \code{cells_stub()} in \code{locations} (\code{rows = TRUE} targets all stub rows).\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza \%>\%
   dplyr::filter(latitude == 20 & tst <= "1000") \%>\%
   dplyr::select(-latitude) \%>\%
   dplyr::filter(!is.na(sza)) \%>\%
@@ -101,8 +86,18 @@ tab_1 <-
       ),
     locations = cells_stub()
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_stub_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+7-10
+}
+
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},

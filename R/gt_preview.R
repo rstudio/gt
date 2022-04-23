@@ -27,28 +27,32 @@
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `gtcars` to create a gt table
-#' # preview (with only a few of its
-#' # columns); you'll see the first five
-#' # rows and the last row
-#' tab_1 <-
-#'   gtcars %>%
+#' @section Examples:
+#'
+#' Use `gtcars` to create a **gt** table preview (with only a few of its
+#' columns). You'll see the first five rows and the last row.
+#'
+#' ```r
+#' gtcars %>%
 #'   dplyr::select(mfr, model, year) %>%
 #'   gt_preview()
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_gt_preview_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_gt_preview_1.png")`
+#' }}
 #'
 #' @family Create Table
 #' @section Function ID:
 #' 1-2
 #'
 #' @export
-gt_preview <- function(data,
-                       top_n = 5,
-                       bottom_n = 1,
-                       incl_rownums = TRUE) {
+gt_preview <- function(
+    data,
+    top_n = 5,
+    bottom_n = 1,
+    incl_rownums = TRUE
+) {
 
   if (is_gt(data)) {
     data <- dt_data_get(data = data)

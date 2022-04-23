@@ -38,9 +38,31 @@ that, the call \code{local_image(file = test_image(type = "png"))} evaluates to:
 where a height of \verb{30px} is a default height chosen to work well within the
 heights of most table rows.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_local_image_1.png}{options: width=100\%}}
+
+Create a tibble that contains heights of an image in pixels (one column as a
+string, the other as numerical values), then, create a \strong{gt} table. Use the
+\code{\link[=text_transform]{text_transform()}} function to insert a local test image (PNG) image with the
+various sizes.\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
+  pixels = px(seq(10, 35, 5)),
+  image = seq(10, 35, 5)
+) \%>\%
+  gt() \%>\%
+  text_transform(
+    locations = cells_body(columns = image),
+    fn = function(x) \{
+      local_image(
+        filename = test_image(type = "png"),
+        height = as.numeric(x)
+      )
+    \}
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_local_image_1.png" style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
@@ -48,31 +70,6 @@ heights of most table rows.
 8-2
 }
 
-\examples{
-# Create a tibble that contains heights
-# of an image in pixels (one column as a
-# string, the other as numerical values),
-# then, create a gt table; use the
-# `text_transform()` function to insert
-# a local test image (PNG) image with the
-# various sizes
-tab_1 <-
-  dplyr::tibble(
-    pixels = px(seq(10, 35, 5)),
-    image = seq(10, 35, 5)
-  ) \%>\%
-  gt() \%>\%
-  text_transform(
-    locations = cells_body(columns = image),
-    fn = function(x) {
-      local_image(
-        filename = test_image(type = "png"),
-        height = as.numeric(x)
-      )
-    }
-  )
-
-}
 \seealso{
 Other Image Addition Functions: 
 \code{\link{ggplot_image}()},

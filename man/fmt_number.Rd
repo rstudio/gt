@@ -153,39 +153,25 @@ nothing is provided for \code{rows} then entire columns are selected). Condition
 formatting is possible by providing a conditional expression to the \code{rows}
 argument. See the Arguments section for more information on this.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_fmt_number_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_fmt_number_2.png}{options: width=100\%}}
-}
-
-\section{Function ID}{
-
-3-1
-}
-
-\examples{
-library(tidyr)
-
-# Use `exibble` to create a gt table;
-# format the `num` column as numeric
-# with three decimal places and with no
-# use of digit separators
-tab_1 <-
-  exibble \%>\%
+Use \code{exibble} to create a \strong{gt} table. format the \code{num} column as numeric
+with three decimal places and with no use of digit separators.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt() \%>\%
   fmt_number(
     columns = num,
     decimals = 3,
     use_seps = FALSE
   )
+}\if{html}{\out{</div>}}
 
-# Use `countrypops` to create a gt
-# table; format all numeric columns
-# to use large-number suffixing
-tab_2 <-
-  countrypops \%>\%
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_number_1.png" style="width:100\%;">
+}}
+
+Use \code{countrypops} to create a \strong{gt} table. Format all numeric columns to use
+large-number suffixing.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::select(country_code_3, year, population) \%>\%
   dplyr::filter(
     country_code_3 \%in\% c(
@@ -200,8 +186,18 @@ tab_2 <-
     decimals = 2,
     suffixing = TRUE
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_number_2.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+3-1
+}
+
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},

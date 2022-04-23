@@ -26,12 +26,13 @@
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `countrypops` to create a gt table;
-#' # align the `population` column data to
-#' # the left
-#' tab_1 <-
-#'   countrypops %>%
+#' @section Examples:
+#'
+#' Use `countrypops` to create a **gt** table. Align the `population` column
+#' data to the left.
+#'
+#' ```r
+#' countrypops %>%
 #'   dplyr::select(-contains("code")) %>%
 #'   dplyr::filter(country_name == "Mongolia") %>%
 #'   tail(5) %>%
@@ -40,18 +41,22 @@
 #'     align = "left",
 #'     columns = population
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_cols_align_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_align_1.png")`
+#' }}
 #'
 #' @family Modify Columns
 #' @section Function ID:
 #' 4-1
 #'
 #' @export
-cols_align <- function(data,
-                       align = c("auto", "left", "center", "right"),
-                       columns = everything()) {
+cols_align <- function(
+    data,
+    align = c("auto", "left", "center", "right"),
+    columns = everything()
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -152,15 +157,17 @@ cols_align <- function(data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `exibble` to create a gt table;
-#' # with named arguments in `...`, we
-#' # can specify the exact widths for
-#' # table columns (using `everything()`
-#' # at the end will capture all
-#' # remaining columns)
-#' tab_1 <-
-#'   exibble %>%
+#' @section Examples:
+#'
+#' Use `exibble` to create a gt table;
+#' with named arguments in `...`, we
+#' can specify the exact widths for
+#' table columns (using `everything()`
+#' at the end will capture all
+#' remaining columns).
+#'
+#' ```r
+#' exibble %>%
 #'   dplyr::select(
 #'     num, char, date,
 #'     datetime, row
@@ -172,18 +179,22 @@ cols_align <- function(data,
 #'     starts_with("date") ~ px(200),
 #'     everything() ~ px(60)
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_cols_width_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_width_1.png")`
+#' }}
 #'
 #' @family Modify Columns
 #' @section Function ID:
 #' 4-2
 #'
 #' @export
-cols_width <- function(.data,
-                       ...,
-                       .list = list2(...)) {
+cols_width <- function(
+    .data,
+    ...,
+    .list = list2(...)
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = .data)
@@ -311,12 +322,13 @@ cols_width <- function(.data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `countrypops` to create a gt table;
-#' # label all the table's columns to
-#' # present better
-#' tab_1 <-
-#'   countrypops %>%
+#' @section Examples:
+#'
+#' Use `countrypops` to create a **gt** table. Label all the table's columns to
+#' present better.
+#'
+#' ```r
+#' countrypops %>%
 #'   dplyr::select(-contains("code")) %>%
 #'   dplyr::filter(country_name == "Mongolia") %>%
 #'   tail(5) %>%
@@ -326,12 +338,17 @@ cols_width <- function(.data,
 #'     year = "Year",
 #'     population = "Population"
 #'   )
+#' ```
 #'
-#' # Use `countrypops` to create a gt table;
-#' # label columns as before but make them
-#' # bold with markdown formatting
-#' tab_2 <-
-#'   countrypops %>%
+#' #' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_label_1.png")`
+#' }}
+#'
+#' Use `countrypops` to create a **gt** table. Label columns as before but make
+#' them bold with markdown formatting.
+#'
+#' ```r
+#' countrypops %>%
 #'   dplyr::select(-contains("code")) %>%
 #'   dplyr::filter(country_name == "Mongolia") %>%
 #'   tail(5) %>%
@@ -341,11 +358,11 @@ cols_width <- function(.data,
 #'     year = md("**Year**"),
 #'     population = md("**Population**")
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_cols_label_1.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_cols_label_2.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_label_2.png")`
+#' }}
 #'
 #' @family Modify Columns
 #' @section Function ID:
@@ -353,9 +370,11 @@ cols_width <- function(.data,
 #'
 #' @import rlang
 #' @export
-cols_label <- function(.data,
-                       ...,
-                       .list = list2(...)) {
+cols_label <- function(
+    .data,
+    ...,
+    .list = list2(...)
+) {
 
   # Collect a named list of column labels
   labels_list <- .list
@@ -440,12 +459,13 @@ cols_label <- function(.data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `countrypops` to create a gt table;
-#' # With the remaining columns, move the
-#' # `year` column to the start
-#' tab_1 <-
-#'   countrypops %>%
+#' @section Examples:
+#'
+#' Use `countrypops` to create a **gt** table. With the remaining columns, move
+#' the `year` column to the start.
+#'
+#' ```r
+#' countrypops %>%
 #'   dplyr::select(-contains("code")) %>%
 #'   dplyr::filter(country_name == "Mongolia") %>%
 #'   tail(5) %>%
@@ -453,12 +473,18 @@ cols_label <- function(.data,
 #'   cols_move_to_start(
 #'     columns = year
 #'   )
+#' ```
 #'
-#' # Use `countrypops` to create a gt table;
-#' # With the remaining columns, move `year`
-#' # and `population` to the start
-#' tab_2 <-
-#'   countrypops %>%
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_move_to_start_1.png")`
+#' }}
+#'
+#'
+#' Use `countrypops` to create a **gt** table. With the remaining columns, move
+#' `year` and `population` to the start.
+#'
+#' ```r
+#' countrypops %>%
 #'   dplyr::select(-contains("code")) %>%
 #'   dplyr::filter(country_name == "Mongolia") %>%
 #'   tail(5) %>%
@@ -466,11 +492,11 @@ cols_label <- function(.data,
 #'   cols_move_to_start(
 #'     columns = c(year, population)
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_cols_move_to_start_1.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_cols_move_to_start_2.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_move_to_start_2.png")`
+#' }}
 #'
 #' @family Modify Columns
 #' @section Function ID:
@@ -478,8 +504,10 @@ cols_label <- function(.data,
 #'
 #' @import rlang
 #' @export
-cols_move_to_start <- function(data,
-                               columns) {
+cols_move_to_start <- function(
+    data,
+    columns
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -543,12 +571,13 @@ cols_move_to_start <- function(data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `countrypops` to create a gt table;
-#' # With the remaining columns, move the
-#' # `year` column to the end
-#' tab_1 <-
-#'   countrypops %>%
+#' @section Examples:
+#'
+#' Use `countrypops` to create a **gt** table. With the remaining columns, move
+#' the `year` column to the end.
+#'
+#' ```r
+#' countrypops %>%
 #'   dplyr::select(-contains("code")) %>%
 #'   dplyr::filter(country_name == "Mongolia") %>%
 #'   tail(5) %>%
@@ -556,12 +585,17 @@ cols_move_to_start <- function(data,
 #'   cols_move_to_end(
 #'     columns = year
 #'   )
+#' ```
 #'
-#' # Use `countrypops` to create a gt table;
-#' # With the remaining columns, move `year`
-#' # and `country_name` to the end
-#' tab_2 <-
-#'   countrypops %>%
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_move_to_end_1.png")`
+#' }}
+#'
+#' Use `countrypops` to create a **gt** table. With the remaining columns, move
+#' `year` and `country_name` to the end.
+#'
+#' ```r
+#' countrypops %>%
 #'   dplyr::select(-contains("code")) %>%
 #'   dplyr::filter(country_name == "Mongolia") %>%
 #'   tail(5) %>%
@@ -569,11 +603,11 @@ cols_move_to_start <- function(data,
 #'   cols_move_to_end(
 #'     columns = c(year, country_name)
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_cols_move_to_end_1.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_cols_move_to_end_2.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_move_to_end_2.png")`
+#' }}
 #'
 #' @family Modify Columns
 #' @section Function ID:
@@ -581,8 +615,10 @@ cols_move_to_start <- function(data,
 #'
 #' @import rlang
 #' @export
-cols_move_to_end <- function(data,
-                             columns) {
+cols_move_to_end <- function(
+    data,
+    columns
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -651,12 +687,13 @@ cols_move_to_end <- function(data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `countrypops` to create a gt table;
-#' # With the remaining columns, position
-#' # `population` after `country_name`
-#' tab_1 <-
-#'   countrypops %>%
+#' @section Examples:
+#'
+#' Use `countrypops` to create a **gt** table. With the remaining columns,
+#' position `population` after `country_name`.
+#'
+#' ```r
+#' countrypops %>%
 #'   dplyr::select(-contains("code")) %>%
 #'   dplyr::filter(country_name == "Mongolia") %>%
 #'   tail(5) %>%
@@ -665,9 +702,11 @@ cols_move_to_end <- function(data,
 #'     columns = population,
 #'     after = country_name
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_cols_move_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_move_1.png")`
+#' }}
 #'
 #' @family Modify Columns
 #' @section Function ID:
@@ -675,9 +714,11 @@ cols_move_to_end <- function(data,
 #'
 #' @import rlang
 #' @export
-cols_move <- function(data,
-                      columns,
-                      after) {
+cols_move <- function(
+    data,
+    columns,
+    after
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -773,12 +814,13 @@ cols_move <- function(data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `countrypops` to create a gt table;
-#' # Hide the columns `country_code_2` and
-#' # `country_code_3`
-#' tab_1 <-
-#'   countrypops %>%
+#' @section Examples:
+#'
+#' Use `countrypops` to create a **gt** table. Hide the columns `country_code_2`
+#' and `country_code_3`.
+#'
+#' ```r
+#' countrypops %>%
 #'   dplyr::filter(country_name == "Mongolia") %>%
 #'   tail(5) %>%
 #'   gt() %>%
@@ -787,13 +829,18 @@ cols_move <- function(data,
 #'       country_code_2, country_code_3
 #'     )
 #'   )
+#' ```
 #'
-#' # Use `countrypops` to create a gt table;
-#' # Use the `population` column to provide
-#' # the conditional placement of footnotes,
-#' # then hide that column and one other
-#' tab_2 <-
-#'   countrypops %>%
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_hide_1.png")`
+#' }}
+#'
+#' Use `countrypops` to create a **gt** table. Use the `population` column to
+#' provide the conditional placement of footnotes, then hide that column and one
+#' other.
+#'
+#' ```r
+#' countrypops %>%
 #'   dplyr::filter(country_name == "Mongolia") %>%
 #'   tail(5) %>%
 #'   gt() %>%
@@ -807,11 +854,11 @@ cols_move <- function(data,
 #'       rows = population > 3000000
 #'     )
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_cols_hide_1.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_cols_hide_2.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_hide_2.png")`
+#' }}
 #'
 #' @family Modify Columns
 #' @section Function ID:
@@ -821,8 +868,10 @@ cols_move <- function(data,
 #'
 #' @import rlang
 #' @export
-cols_hide <- function(data,
-                      columns) {
+cols_hide <- function(
+    data,
+    columns
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -882,10 +931,12 @@ cols_hide <- function(data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `countrypops` to create a gt table;
-#' # Hide the columns `country_code_2` and
-#' # `country_code_3`
+#' @section Examples:
+#'
+#' Use `countrypops` to create a **gt** table. Hide the columns `country_code_2`
+#' and `country_code_3`.
+#'
+#' ```r
 #' tab_1 <-
 #'   countrypops %>%
 #'   dplyr::filter(country_name == "Mongolia") %>%
@@ -898,19 +949,24 @@ cols_hide <- function(data,
 #'      )
 #'   )
 #'
-#' # If the `tab_1` object is provided without
-#' # the code or source data to regenerate it, and,
-#' # the user wants to reveal otherwise hidden
-#' # columns then the `cols_unhide()` function
-#' # becomes useful
-#' tab_2 <-
-#'   tab_1 %>%
-#'   cols_unhide(columns = country_code_2)
+#' tab_1
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_cols_unhide_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_unhide_1.png")`
+#' }}
 #'
-#' \if{html}{\figure{man_cols_unhide_2.png}{options: width=100\%}}
+#' If the `tab_1` object is provided without the code or source data to
+#' regenerate it, and, the user wants to reveal otherwise hidden columns then
+#' the `cols_unhide()` function becomes useful.
+#'
+#' ```r
+#' tab_1 %>% cols_unhide(columns = country_code_2)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_unhide_2.png")`
+#' }}
 #'
 #' @family Modify Columns
 #' @section Function ID:
@@ -920,8 +976,10 @@ cols_hide <- function(data,
 #'
 #' @import rlang
 #' @export
-cols_unhide <- function(data,
-                        columns) {
+cols_unhide <- function(
+    data,
+    columns
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -1014,14 +1072,14 @@ cols_unhide <- function(data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `exibble` to create a gt table,
-#' # keeping only the `currency` and `num`
-#' # columns; merge columns into one with
-#' # a base value and uncertainty (after
-#' # formatting the `num` column)
-#' tab_1 <-
-#'   exibble %>%
+#' @section Examples:
+#'
+#' Use `exibble` to create a **gt** table, keeping only the `currency` and `num`
+#' columns. Merge columns into one with a base value and uncertainty (after
+#' formatting the `num` column).
+#'
+#' ```r
+#' exibble %>%
 #'   dplyr::select(currency, num) %>%
 #'   dplyr::slice(1:7) %>%
 #'   gt() %>%
@@ -1037,9 +1095,11 @@ cols_unhide <- function(data,
 #'   cols_label(
 #'     currency = "value + uncert."
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_cols_merge_uncert_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_merge_uncert_1.png")`
+#' }}
 #'
 #' @family Modify Columns
 #' @section Function ID:
@@ -1047,11 +1107,13 @@ cols_unhide <- function(data,
 #'
 #' @import rlang
 #' @export
-cols_merge_uncert <- function(data,
-                              col_val,
-                              col_uncert,
-                              sep = " +/- ",
-                              autohide = TRUE) {
+cols_merge_uncert <- function(
+    data,
+    col_val,
+    col_uncert,
+    sep = " +/- ",
+    autohide = TRUE
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -1142,15 +1204,14 @@ cols_merge_uncert <- function(data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `gtcars` to create a gt table,
-#' # keeping only the `model`, `mpg_c`,
-#' # and `mpg_h` columns; merge the mpg
-#' # columns together as a single range
-#' # column (which is labeled as MPG,
-#' # in italics)
-#' tab_1 <-
-#'   gtcars %>%
+#' @section Examples:
+#'
+#' Use `gtcars` to create a **gt** table, keeping only the `model`, `mpg_c`, and
+#' `mpg_h` columns. Merge the `"mpg*"` columns together as a single range column
+#' (which is labeled as MPG, in italics).
+#'
+#' ```r
+#' gtcars %>%
 #'   dplyr::select(model, starts_with("mpg")) %>%
 #'   dplyr::slice(1:8) %>%
 #'   gt() %>%
@@ -1161,9 +1222,11 @@ cols_merge_uncert <- function(data,
 #'   cols_label(
 #'     mpg_c = md("*MPG*")
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_cols_merge_range_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_merge_range_1.png")`
+#' }}
 #'
 #' @family Modify Columns
 #' @section Function ID:
@@ -1171,11 +1234,13 @@ cols_merge_uncert <- function(data,
 #'
 #' @import rlang
 #' @export
-cols_merge_range <- function(data,
-                             col_begin,
-                             col_end,
-                             sep = "--",
-                             autohide = TRUE) {
+cols_merge_range <- function(
+    data,
+    col_begin,
+    col_end,
+    sep = "--",
+    autohide = TRUE
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -1292,16 +1357,15 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `pizzaplace` to create a gt table
-#' # that displays the counts and percentages
-#' # of the top 3 pizzas sold by pizza
-#' # category in 2015; the `cols_merge_n_pct()`
-#' # function is used to merge the `n` and
-#' # `frac` columns (and the `frac` column is
-#' # formatted using `fmt_percent()`)
-#' tab_1 <-
-#'   pizzaplace %>%
+#' @section Examples:
+#'
+#' Use `pizzaplace` to create a **gt** table that displays the counts and
+#' percentages of the top 3 pizzas sold by pizza category in 2015. The
+#' `cols_merge_n_pct()` function is used to merge the `n` and `frac` columns
+#' (and the `frac` column is formatted using `fmt_percent()`).
+#'
+#' ```r
+#' pizzaplace %>%
 #'   dplyr::group_by(name, type, price) %>%
 #'   dplyr::summarize(
 #'     n = dplyr::n(),
@@ -1332,9 +1396,11 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #'   tab_stubhead(md("Cat. and  \nPizza Code")) %>%
 #'   tab_header(title = "Top 3 Pizzas Sold by Category in 2015") %>%
 #'   tab_options(table.width = px(512))
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_cols_merge_n_pct_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_merge_n_pct_1.png")`
+#' }}
 #'
 #' @family Modify Columns
 #' @section Function ID:
@@ -1342,10 +1408,12 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #'
 #' @import rlang
 #' @export
-cols_merge_n_pct <- function(data,
-                             col_n,
-                             col_pct,
-                             autohide = TRUE) {
+cols_merge_n_pct <- function(
+    data,
+    col_n,
+    col_pct,
+    autohide = TRUE
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -1424,14 +1492,14 @@ cols_merge_n_pct <- function(data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `sp500` to create a gt table;
-#' # merge the `open` & `close` columns
-#' # together, and, the `low` & `high`
-#' # columns (putting an em dash between
-#' # both); rename the columns
-#' tab_1 <-
-#'   sp500 %>%
+#' @section Examples:
+#'
+#' Use `sp500` to create a **gt** table. Merge the `open` & `close` columns
+#' together, and, the `low` & `high` columns (putting an em dash between both).
+#' Rename the columns.
+#'
+#' ```r
+#' sp500 %>%
 #'   dplyr::slice(50:55) %>%
 #'   dplyr::select(-volume, -adj_close) %>%
 #'   gt() %>%
@@ -1447,9 +1515,11 @@ cols_merge_n_pct <- function(data,
 #'     open = "open/close",
 #'     low = "low/high"
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_cols_merge_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_merge_1.png")`
+#' }}
 #'
 #' @family Modify Columns
 #' @section Function ID:
@@ -1457,10 +1527,12 @@ cols_merge_n_pct <- function(data,
 #'
 #' @import rlang
 #' @export
-cols_merge <- function(data,
-                       columns,
-                       hide_columns = columns[-1],
-                       pattern = paste0("{", seq_along(columns), "}", collapse = " ")) {
+cols_merge <- function(
+    data,
+    columns,
+    hide_columns = columns[-1],
+    pattern = paste0("{", seq_along(columns), "}", collapse = " ")
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)

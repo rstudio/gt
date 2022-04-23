@@ -46,20 +46,11 @@ heights of most table rows. There is the option to modify the aspect ratio of
 the plot (the default \code{aspect_ratio} is \code{1.0}) and this is useful for
 elongating any given plot to fit better within the table construct.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_ggplot_image_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
+Create a \strong{ggplot} plot.\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(ggplot2)
 
-8-3
-}
-
-\examples{
-library(ggplot2)
-
-# Create a ggplot plot
 plot_object <-
   ggplot(
     data = gtcars,
@@ -67,29 +58,35 @@ plot_object <-
         size = msrp)) +
   geom_point(color = "blue") +
   theme(legend.position = "none")
+}\if{html}{\out{</div>}}
 
-# Create a tibble that contains two
-# cells (where one is a placeholder for
-# an image), then, create a gt table;
-# use the `text_transform()` function
-# to insert the plot using by calling
-# `ggplot_object()` within the user-
-# defined function
-tab_1 <-
-  dplyr::tibble(
-    text = "Here is a ggplot:",
-    ggplot = NA
-  ) \%>\%
+Create a tibble that contains two cells (where one is a placeholder for an
+image), then, create a \strong{gt} table. Use the \code{text_transform()} function to
+insert the plot using by calling \code{ggplot_object()} within the user- defined
+function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
+  text = "Here is a ggplot:",
+  ggplot = NA
+) \%>\%
   gt() \%>\%
   text_transform(
     locations = cells_body(columns = ggplot),
-    fn = function(x) {
+    fn = function(x) \{
       plot_object \%>\%
         ggplot_image(height = px(200))
-    }
+    \}
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_ggplot_image_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+8-3
+}
+
 \seealso{
 Other Image Addition Functions: 
 \code{\link{local_image}()},

@@ -31,23 +31,12 @@ the following eight options in \code{\link[=tab_options]{tab_options()}}:
 \item \code{source_notes.padding}
 }
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_opt_vertical_padding_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
-
-9-4
-}
-
-\examples{
-# Use `exibble` to create a gt table with
-# a number of table parts added; contract
-# the vertical padding across the entire
-# table with `opt_vertical_padding()`
-tab_1 <-
-  exibble \%>\%
+Use \code{exibble} to create a \strong{gt} table with a number of table parts added.
+Contract the vertical padding across the entire table with
+\code{opt_vertical_padding()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt(rowname_col = "row", groupname_col = "group") \%>\%
   summary_rows(
     groups = "grp_a",
@@ -71,8 +60,18 @@ tab_1 <-
     subtitle = "The table's subtitle"
   ) \%>\%
   opt_vertical_padding(scale = 0.25)
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_vertical_padding_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+9-4
+}
+
 \seealso{
 Other Table Option Functions: 
 \code{\link{opt_align_table_header}()},
