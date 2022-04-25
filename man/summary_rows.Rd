@@ -70,15 +70,9 @@ rows were added via \code{summary_rows()}.
 Use \code{\link{sp500}} to create a \strong{gt} table with row groups. Create the summary
 rows labeled \code{min}, \code{max}, and \code{avg} by row group (where each each row group
 is a week number) with the \code{summary_rows()} function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
-  dplyr::filter(
-    date >= "2015-01-05" &
-      date <="2015-01-16"
-  ) \%>\%
+  dplyr::filter(date >= "2015-01-05" & date <="2015-01-16") \%>\%
   dplyr::arrange(date) \%>\%
-  dplyr::mutate(
-    week = paste0(
-      "W", strftime(date, format = "\%V"))
-  ) \%>\%
+  dplyr::mutate(week = paste0( "W", strftime(date, format = "\%V"))) \%>\%
   dplyr::select(-adj_close, -volume) \%>\%
   gt(
     rowname_col = "date",

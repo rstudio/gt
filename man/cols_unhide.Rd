@@ -39,12 +39,7 @@ Use \code{\link{countrypops}} to create a \strong{gt} table. Hide the \code{coun
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%
   gt() \%>\%
-  cols_hide(
-    columns = c(
-      country_code_2,
-      country_code_3
-     )
-  )
+  cols_hide(columns = c(country_code_2, country_code_3))
 
 tab_1
 }\if{html}{\out{</div>}}

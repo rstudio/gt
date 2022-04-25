@@ -410,6 +410,8 @@ the \code{tab_options()} function.\if{html}{\out{<div class="sourceCode r">}}\pr
     footnote = "Alphabetical fruit.",
     locations = cells_column_labels(columns = char)
   )
+
+tab_1
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{

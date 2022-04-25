@@ -669,7 +669,7 @@ opt_table_lines <- function(
 #' Have an outline wrap around the entire table by using `opt_table_outline()`.
 #'
 #' ```r
-#' tab_ 1 <-
+#' tab_1 <-
 #'   exibble %>%
 #'   gt(rowname_col = "row", groupname_col = "group") %>%
 #'   summary_rows(

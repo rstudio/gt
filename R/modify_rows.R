@@ -26,11 +26,11 @@
 #' ```r
 #' exibble %>%
 #'   dplyr::select(char, currency, row, group) %>%
-#'     gt(
-#'       rowname_col = "row",
-#'       groupname_col = "group"
-#'     ) %>%
-#'     row_group_order(groups = c("grp_b", "grp_a"))
+#'   gt(
+#'     rowname_col = "row",
+#'     groupname_col = "group"
+#'   ) %>%
+#'   row_group_order(groups = c("grp_b", "grp_a"))
 #' ```
 #'
 #' \if{html}{\out{

@@ -80,9 +80,9 @@
 #'   data_color(
 #'     columns = population,
 #'     colors = scales::col_numeric(
-#'       palette = c(
-#'         "red", "orange", "green", "blue"),
-#'       domain = c(0.2E7, 0.4E7))
+#'       palette = c("red", "orange", "green", "blue"),
+#'       domain = c(0.2E7, 0.4E7)
+#'     )
 #'   )
 #' ```
 #'
@@ -99,22 +99,26 @@
 #'
 #' ```r
 #' pizzaplace %>%
-#'   dplyr::filter(
-#'     type %in% c("chicken", "supreme")) %>%
+#'   dplyr::filter(type %in% c("chicken", "supreme")) %>%
 #'   dplyr::group_by(type, size) %>%
 #'   dplyr::summarize(
 #'     sold = dplyr::n(),
-#'     income = sum(price)
+#'     income = sum(price),
+#'     .groups = "drop"
 #'   ) %>%
-#'   gt(rowname_col = "size") %>%
+#'   gt(
+#'     rowname_col = "size",
+#'     groupname_col = "type"
+#'   ) %>%
 #'   data_color(
 #'     columns = c(sold, income),
 #'     colors = scales::col_numeric(
 #'       palette = paletteer::paletteer_d(
 #'         palette = "ggsci::red_material"
-#'         ) %>% as.character(),
+#'       ) %>%
+#'         as.character(),
 #'       domain = NULL
-#'       )
+#'     )
 #'   )
 #' ```
 #'

@@ -35,14 +35,14 @@ borders can then be modified.
 \section{Examples}{
 
 
-Add horizontal border lines for all table body rows in [\code{exibble}] using
-[tab_style()] and \code{cell_borders()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+Add horizontal border lines for all table body rows in \code{\link{exibble}} using
+\code{\link[=tab_style]{tab_style()}} and \code{cell_borders()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt() \%>\%
   tab_options(row.striping.include_table_body = FALSE) \%>\%
   tab_style(
     style = cell_borders(
       sides = c("top", "bottom"),
-      color = "#BBBBBB",
+      color = "red",
       weight = px(1.5),
       style = "solid"
     ),
@@ -58,7 +58,7 @@ Add horizontal border lines for all table body rows in [\code{exibble}] using
 }}
 
 Incorporate different horizontal and vertical borders at several locations.
-This uses multiple \code{cell_borders()} and [cells_body()] calls within
+This uses multiple \code{cell_borders()} and \code{\link[=cells_body]{cells_body()}} calls within
 \code{list()}s.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt() \%>\%
   tab_style(
@@ -85,16 +85,11 @@ This uses multiple \code{cell_borders()} and [cells_body()] calls within
       )
     )
   )
+}\if{html}{\out{</div>}}
 
 \if{html}{\out{
-`r man_get_image_tag(file = "man_cell_borders_2.png")`
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cell_borders_2.png" style="width:100\%;">
 }}
-
-
-[`exibble`]: R:\%60exibble\%60
-[tab_style()]: R:tab_style()
-[cells_body()]: R:cells_body()
-}\if{html}{\out{</div>}}
 }
 
 \section{Function ID}{

@@ -138,10 +138,7 @@
 #' ```r
 #' countrypops %>%
 #'   dplyr::select(country_code_3, year, population) %>%
-#'   dplyr::filter(
-#'     country_code_3 %in% c(
-#'       "CHN", "IND", "USA", "PAK", "IDN")
-#'   ) %>%
+#'   dplyr::filter(country_code_3 %in% c("CHN", "IND", "USA", "PAK", "IDN")) %>%
 #'   dplyr::filter(year > 1975 & year %% 5 == 0) %>%
 #'   tidyr::spread(year, population) %>%
 #'   dplyr::arrange(desc(`2015`)) %>%
@@ -1591,7 +1588,7 @@ round_gt <- function(x, digits = 0) {
 #' columns, then, format those columns using the `"CNY"` and `"GBP"` currencies.
 #'
 #' ```r
-#'   exibble %>%
+#' exibble %>%
 #'   dplyr::select(num, currency) %>%
 #'   gt() %>%
 #'   fmt_currency(
@@ -1749,6 +1746,10 @@ fmt_currency <- function(
 #'   fmt_bytes(columns = num)
 #' ```
 #'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_bytes_1.png")`
+#' }}
+#'
 #' Create a similar table with the `fmt_bytes()` function, this time showing
 #' byte sizes as binary values.
 #'
@@ -1761,6 +1762,10 @@ fmt_currency <- function(
 #'     standard = "binary"
 #'   )
 #' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_bytes_2.png")`
+#' }}
 #'
 #' @family Format Data
 #' @section Function ID:

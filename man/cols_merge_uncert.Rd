@@ -85,9 +85,7 @@ Use \code{\link{exibble}} to create a \strong{gt} table, keeping only the \code{
     col_val = currency,
     col_uncert = num
   ) \%>\%
-  cols_label(
-    currency = "value + uncert."
-  )
+  cols_label(currency = "value + uncert.")
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{

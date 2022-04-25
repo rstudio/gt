@@ -205,7 +205,7 @@ have currency values in euros (\code{"EUR"}).\if{html}{\out{<div class="sourceCo
 }}
 
 Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{num} and \code{currency},
-columns, then, format those columns using the \code{"CNY"} and \code{"GBP"} currencies.\if{html}{\out{<div class="sourceCode r">}}\preformatted{  exibble \%>\%
+columns, then, format those columns using the \code{"CNY"} and \code{"GBP"} currencies.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(num, currency) \%>\%
   gt() \%>\%
   fmt_currency(

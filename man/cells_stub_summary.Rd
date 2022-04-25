@@ -72,7 +72,6 @@ data stub cells with \code{\link[=tab_style]{tab_style()}} and \code{cells_stub_
   dplyr::filter(country_name == "Japan", year < 1970) \%>\%
   dplyr::select(-contains("country")) \%>\%
   dplyr::mutate(decade = paste0(substr(year, 1, 3), "0s")) \%>\%
-  dplyr::group_by(decade) \%>\%
   gt(
     rowname_col = "year",
     groupname_col = "decade"

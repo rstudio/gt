@@ -487,9 +487,7 @@ cols_label <- function(
 #'   dplyr::filter(country_name == "Mongolia") %>%
 #'   tail(5) %>%
 #'   gt() %>%
-#'   cols_move_to_start(
-#'     columns = c(year, population)
-#'   )
+#'   cols_move_to_start(columns = c(year, population))
 #' ```
 #'
 #' \if{html}{\out{
@@ -571,8 +569,8 @@ cols_move_to_start <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`countrypops`] to create a **gt** table. With the remaining columns, move
-#' the `year` column to the end of the column series with the
+#' Use [`countrypops`] to create a **gt** table. With the remaining columns,
+#' move the `year` column to the end of the column series with the
 #' `cols_move_to_end()` function.
 #'
 #' ```r
@@ -932,12 +930,7 @@ cols_hide <- function(
 #'   dplyr::filter(country_name == "Mongolia") %>%
 #'   tail(5) %>%
 #'   gt() %>%
-#'   cols_hide(
-#'     columns = c(
-#'       country_code_2,
-#'       country_code_3
-#'      )
-#'   )
+#'   cols_hide(columns = c(country_code_2, country_code_3))
 #'
 #' tab_1
 #' ```
@@ -1082,9 +1075,7 @@ cols_unhide <- function(
 #'     col_val = currency,
 #'     col_uncert = num
 #'   ) %>%
-#'   cols_label(
-#'     currency = "value + uncert."
-#'   )
+#'   cols_label(currency = "value + uncert.")
 #' ```
 #'
 #' \if{html}{\out{
@@ -1210,9 +1201,7 @@ cols_merge_uncert <- function(
 #'     col_begin = mpg_c,
 #'     col_end = mpg_h
 #'   ) %>%
-#'   cols_label(
-#'     mpg_c = md("*MPG*")
-#'   )
+#'   cols_label(mpg_c = md("*MPG*"))
 #' ```
 #'
 #' \if{html}{\out{

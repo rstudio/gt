@@ -25,15 +25,9 @@ Use \code{\link{sp500}} to create a \strong{gt} table with row groups. Create su
 labeled as \code{min}, \code{max}, and \code{avg} for every row group with \code{\link[=summary_rows]{summary_rows()}}.
 Then, extract the summary rows as a list object.\if{html}{\out{<div class="sourceCode r">}}\preformatted{summary_extracted <-
   sp500 \%>\%
-  dplyr::filter(
-    date >= "2015-01-05" &
-      date <="2015-01-30"
-  ) \%>\%
+  dplyr::filter(date >= "2015-01-05" & date <="2015-01-30") \%>\%
   dplyr::arrange(date) \%>\%
-  dplyr::mutate(
-    week = paste0(
-      "W", strftime(date, format = "\%V"))
-  ) \%>\%
+  dplyr::mutate(week = paste0("W", strftime(date, format = "\%V"))) \%>\%
   dplyr::select(-adj_close, -volume) \%>\%
   gt(
     rowname_col = "date",
@@ -45,7 +39,8 @@ Then, extract the summary rows as a list object.\if{html}{\out{<div class="sourc
     fns = list(
       min = ~min(.),
       max = ~max(.),
-      avg = ~mean(.)),
+      avg = ~mean(.)
+    ),
     formatter = fmt_number,
     use_seps = FALSE
   ) \%>\%

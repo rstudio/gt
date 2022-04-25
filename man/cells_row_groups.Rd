@@ -71,14 +71,10 @@ Use \code{\link{pizzaplace}} to create a \strong{gt} table with grouped data. Ad
 with the \code{\link[=summary_rows]{summary_rows()}} function and then add a footnote to the
 \code{"peppr_salami"} row group label with \code{\link[=tab_footnote]{tab_footnote()}} and with
 \code{cells_row_groups()} in \code{locations}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
-  dplyr::filter(
-    name \%in\% c("soppressata", "peppr_salami")
-  ) \%>\%
+  dplyr::filter(name \%in\% c("soppressata", "peppr_salami")) \%>\%
   dplyr::group_by(name, size) \%>\%
-  dplyr::summarize(
-    `Pizzas Sold` = dplyr::n()
-  ) \%>\%
-  gt(rowname_col = "size") \%>\%
+  dplyr::summarize(`Pizzas Sold` = dplyr::n(), .groups = "drop") \%>\%
+  gt(rowname_col = "size", groupname_col = "name") \%>\%
   summary_rows(
     groups = TRUE,
     columns = `Pizzas Sold`,

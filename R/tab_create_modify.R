@@ -1250,16 +1250,14 @@ tab_source_note <- function(
 #'   gt() %>%
 #'   tab_style(
 #'     style = cell_fill(color = "lightgreen"),
-#'     locations = cells_body(
-#'       rows = close > open)
+#'     locations = cells_body(rows = close > open)
 #'   ) %>%
 #'   tab_style(
 #'     style = list(
 #'       cell_fill(color = "red"),
 #'       cell_text(color = "white")
 #'       ),
-#'     locations = cells_body(
-#'       rows = open > close)
+#'     locations = cells_body(rows = open > close)
 #'   )
 #' ```
 #'
@@ -1893,6 +1891,8 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'     footnote = "Alphabetical fruit.",
 #'     locations = cells_column_labels(columns = char)
 #'   )
+#'
+#' tab_1
 #' ```
 #'
 #' \if{html}{\out{

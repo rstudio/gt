@@ -54,9 +54,7 @@ move \code{year} and \code{population} to the start.\if{html}{\out{<div class="s
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%
   gt() \%>\%
-  cols_move_to_start(
-    columns = c(year, population)
-  )
+  cols_move_to_start(columns = c(year, population))
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{

@@ -173,10 +173,7 @@ with three decimal places and with no use of digit separators.\if{html}{\out{<di
 Use \code{\link{countrypops}} to create a \strong{gt} table. Format all numeric columns to
 use large-number suffixing with the \code{suffixing = TRUE} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::select(country_code_3, year, population) \%>\%
-  dplyr::filter(
-    country_code_3 \%in\% c(
-      "CHN", "IND", "USA", "PAK", "IDN")
-  ) \%>\%
+  dplyr::filter(country_code_3 \%in\% c("CHN", "IND", "USA", "PAK", "IDN")) \%>\%
   dplyr::filter(year > 1975 & year \%\% 5 == 0) \%>\%
   tidyr::spread(year, population) \%>\%
   dplyr::arrange(desc(`2015`)) \%>\%

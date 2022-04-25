@@ -72,9 +72,7 @@ function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
     col_begin = mpg_c,
     col_end = mpg_h
   ) \%>\%
-  cols_label(
-    mpg_c = md("*MPG*")
-  )
+  cols_label(mpg_c = md("*MPG*"))
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{

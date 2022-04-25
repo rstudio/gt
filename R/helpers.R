@@ -258,13 +258,8 @@ pct <- function(x) {
 #'
 #' ```r
 #' sp500 %>%
-#'   dplyr::filter(
-#'     date >= "2015-01-05" &
-#'       date <="2015-01-10"
-#'   ) %>%
-#'   dplyr::select(
-#'     -c(adj_close, volume, high, low)
-#'   ) %>%
+#'   dplyr::filter(date >= "2015-01-05" & date <="2015-01-10") %>%
+#'   dplyr::select(-c(adj_close, volume, high, low)) %>%
 #'   gt() %>%
 #'   tab_header(title = "S&P 500") %>%
 #'   tab_footnote(
@@ -370,8 +365,7 @@ cells_title <- function(groups = c("title", "subtitle")) {
 #' pizzaplace %>%
 #'   dplyr::mutate(month = as.numeric(substr(date, 6, 7))) %>%
 #'   dplyr::group_by(month, type) %>%
-#'   dplyr::summarize(sold = dplyr::n()) %>%
-#'   dplyr::ungroup() %>%
+#'   dplyr::summarize(sold = dplyr::n(), .groups = "drop") %>%
 #'   dplyr::filter(month %in% 1:2) %>%
 #'   gt(rowname_col = "type") %>%
 #'   tab_stubhead(label = "type") %>%
@@ -668,14 +662,10 @@ cells_column_labels <- function(columns = everything()) {
 #'
 #' ```r
 #' pizzaplace %>%
-#'   dplyr::filter(
-#'     name %in% c("soppressata", "peppr_salami")
-#'   ) %>%
+#'   dplyr::filter(name %in% c("soppressata", "peppr_salami")) %>%
 #'   dplyr::group_by(name, size) %>%
-#'   dplyr::summarize(
-#'     `Pizzas Sold` = dplyr::n()
-#'   ) %>%
-#'   gt(rowname_col = "size") %>%
+#'   dplyr::summarize(`Pizzas Sold` = dplyr::n(), .groups = "drop") %>%
+#'   gt(rowname_col = "size", groupname_col = "name") %>%
 #'   summary_rows(
 #'     groups = TRUE,
 #'     columns = `Pizzas Sold`,
@@ -1005,7 +995,6 @@ cells_body <- function(
 #'   dplyr::filter(country_name == "Japan", year < 1970) %>%
 #'   dplyr::select(-contains("country")) %>%
 #'   dplyr::mutate(decade = paste0(substr(year, 1, 3), "0s")) %>%
-#'   dplyr::group_by(decade) %>%
 #'   gt(
 #'     rowname_col = "year",
 #'     groupname_col = "decade"
@@ -1264,7 +1253,6 @@ cells_grand_summary <- function(
 #'   dplyr::filter(country_name == "Japan", year < 1970) %>%
 #'   dplyr::select(-contains("country")) %>%
 #'   dplyr::mutate(decade = paste0(substr(year, 1, 3), "0s")) %>%
-#'   dplyr::group_by(decade) %>%
 #'   gt(
 #'     rowname_col = "year",
 #'     groupname_col = "decade"
@@ -2063,7 +2051,7 @@ cell_style_to_html.cell_fill <- function(style) {
 #'   tab_style(
 #'     style = cell_borders(
 #'       sides = c("top", "bottom"),
-#'       color = "#BBBBBB",
+#'       color = "red",
 #'       weight = px(1.5),
 #'       style = "solid"
 #'     ),
@@ -2109,6 +2097,7 @@ cell_style_to_html.cell_fill <- function(style) {
 #'       )
 #'     )
 #'   )
+#' ```
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_cell_borders_2.png")`

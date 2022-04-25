@@ -97,16 +97,14 @@ values in a particular column.\if{html}{\out{<div class="sourceCode r">}}\prefor
   gt() \%>\%
   tab_style(
     style = cell_fill(color = "lightgreen"),
-    locations = cells_body(
-      rows = close > open)
+    locations = cells_body(rows = close > open)
   ) \%>\%
   tab_style(
     style = list(
       cell_fill(color = "red"),
       cell_text(color = "white")
       ),
-    locations = cells_body(
-      rows = open > close)
+    locations = cells_body(rows = open > close)
   )
 }\if{html}{\out{</div>}}
 

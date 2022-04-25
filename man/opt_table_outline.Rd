@@ -28,7 +28,7 @@ will remove any present outline.
 
 
 Use \code{\link{exibble}} to create a \strong{gt} table with a number of table parts added.
-Have an outline wrap around the entire table by using \code{opt_table_outline()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_ 1 <-
+Have an outline wrap around the entire table by using \code{opt_table_outline()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
   exibble \%>\%
   gt(rowname_col = "row", groupname_col = "group") \%>\%
   summary_rows(
