@@ -54,8 +54,8 @@ Create a \strong{ggplot} plot.\if{html}{\out{<div class="sourceCode r">}}\prefor
 plot_object <-
   ggplot(
     data = gtcars,
-    aes(x = hp, y = trq,
-        size = msrp)) +
+    aes(x = hp, y = trq, size = msrp)
+  ) +
   geom_point(color = "blue") +
   theme(legend.position = "none")
 }\if{html}{\out{</div>}}

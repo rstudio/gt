@@ -64,7 +64,7 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \section{Examples}{
 
 
-Use \code{sza} to create a \strong{gt} table. Color the \code{sza} column using the
+Use \code{\link{sza}} to create a \strong{gt} table. Color the \code{sza} column using the
 \code{data_color()} function, add a footnote and also style the footnotes section.\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza \%>\%
   dplyr::filter(
     latitude == 20 &
@@ -82,9 +82,7 @@ Use \code{sza} to create a \strong{gt} table. Color the \code{sza} column using 
   ) \%>\%
   tab_footnote(
     footnote = "Color indicates height of sun.",
-    locations = cells_column_labels(
-      columns = sza
-    )
+    locations = cells_column_labels(columns = sza)
   ) \%>\%
   tab_options(table.width = px(320)) \%>\%
   tab_style(

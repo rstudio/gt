@@ -35,7 +35,8 @@ borders can then be modified.
 \section{Examples}{
 
 
-Add horizontal border lines for all table body rows in \code{exibble}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+Add horizontal border lines for all table body rows in [\code{exibble}] using
+[tab_style()] and \code{cell_borders()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt() \%>\%
   tab_options(row.striping.include_table_body = FALSE) \%>\%
   tab_style(
@@ -90,6 +91,8 @@ This uses multiple \code{cell_borders()} and [cells_body()] calls within
 }}
 
 
+[`exibble`]: R:\%60exibble\%60
+[tab_style()]: R:tab_style()
 [cells_body()]: R:cells_body()
 }\if{html}{\out{</div>}}
 }

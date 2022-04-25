@@ -39,8 +39,8 @@ supplied letter.
 \section{Examples}{
 
 
-Get a table of info on all of the currencies where the three- letter code
-begins with a \code{"h"}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{info_currencies(begins_with = "h")
+Get a table of info on all of the currencies where the three-letter code
+begins with an \code{"h"}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{info_currencies(begins_with = "h")
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{

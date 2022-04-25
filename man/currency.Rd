@@ -39,14 +39,15 @@ required each and every context.
 \section{Examples}{
 
 
-Use \code{exibble} to create a \strong{gt} table. Format the \code{currency} column to have
-currency values in guilder (a defunct Dutch currency).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{currency} column to
+have currency values in guilder (a defunct Dutch currency).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt() \%>\%
   fmt_currency(
     columns = currency,
     currency = currency(
       html = "&fnof;",
-      default = "f"),
+      default = "f"
+    ),
     decimals = 2
   )
 }\if{html}{\out{</div>}}

@@ -66,13 +66,10 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \section{Examples}{
 
 
-Use \code{countrypops} to create a \strong{gt} table. Add some styling to a grand
+Use \code{\link{countrypops}} to create a \strong{gt} table. Add some styling to a grand
 summary stub cell with with the \code{\link[=tab_style]{tab_style()}} and
 \code{cells_stub_grand_summary()} functions.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::filter(
-    country_name == "Spain",
-    year < 1970
-  ) \%>\%
+  dplyr::filter(country_name == "Spain", year < 1970) \%>\%
   dplyr::select(-contains("country")) \%>\%
   gt(rowname_col = "year") \%>\%
   fmt_number(
@@ -81,9 +78,7 @@ summary stub cell with with the \code{\link[=tab_style]{tab_style()}} and
   ) \%>\%
   grand_summary_rows(
     columns = population,
-    fns = list(
-      change = ~max(.) - min(.)
-    ),
+    fns = list(change = ~max(.) - min(.)),
     formatter = fmt_number,
     decimals = 0
   ) \%>\%

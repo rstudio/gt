@@ -14,15 +14,14 @@
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table. When adding a title, use the `md()`
+#' Use [`exibble`] to create a **gt** table. When adding a title, use the `md()`
 #' helper to use Markdown formatting.
 #'
 #' ```r
 #' exibble %>%
 #'   dplyr::select(currency, char) %>%
 #'   gt() %>%
-#'   tab_header(
-#'     title = md("Using *Markdown*"))
+#'   tab_header(title = md("Using *Markdown*"))
 #' ```
 #'
 #' \if{html}{\out{
@@ -62,15 +61,14 @@ md <- function(text) {
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table. When adding a title, use the `html()`
-#' helper to use html formatting.
+#' Use [`exibble`] to create a **gt** table. When adding a title, use the
+#' `html()` helper to use HTML formatting.
 #'
 #' ```r
 #' exibble %>%
 #'   dplyr::select(currency, char) %>%
 #'   gt() %>%
-#'   tab_header(
-#'     title = html("<em>HTML</em>"))
+#'   tab_header(title = html("<em>HTML</em>"))
 #' ```
 #'
 #' \if{html}{\out{
@@ -118,7 +116,7 @@ is_rtf <- function(x) {
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table. Use the `px()` helper to define the
+#' Use [`exibble`] to create a **gt** table. Use the `px()` helper to define the
 #' font size for the column labels.
 #'
 #' ```r
@@ -168,8 +166,8 @@ px <- function(x) {
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table. Use the `pct()` helper to define the
-#' font size for the column labels.
+#' Use [`exibble`] to create a **gt** table. Use the `pct()` helper to define
+#' the font size for the column labels.
 #'
 #' ```r
 #' exibble %>%
@@ -254,8 +252,8 @@ pct <- function(x) {
 #'
 #' @section Examples:
 #'
-#' Use `sp500` to create a **gt** table. Add a header with a title, and then add
-#' a footnote to the title with [tab_footnote()] and `cells_title()` (in
+#' Use [`sp500`] to create a **gt** table. Add a header with a title, and then
+#' add a footnote to the title with [tab_footnote()] and `cells_title()` (in
 #' `locations`).
 #'
 #' ```r
@@ -365,8 +363,8 @@ cells_title <- function(groups = c("title", "subtitle")) {
 #'
 #' @section Examples:
 #'
-#' Use `pizzaplace` to create a **gt** table. Add a stubhead label and then
-#' style it with [tab_style()] and `cells_stubhead()`.
+#' Use [`pizzaplace`] to create a **gt** table. Add a stubhead label with
+#' [tab_stubhead()] and then style it with [tab_style()] and `cells_stubhead()`.
 #'
 #' ```r
 #' pizzaplace %>%
@@ -459,8 +457,9 @@ cells_stubhead <- function() {
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table. Add a spanner column label over three
-#' column labels and then use [tab_style()] to make the spanner label text bold.
+#' Use [`exibble`] to create a **gt** table. Add a spanner column label over
+#' three column labels with [tab_spanner()] and then use [tab_style()] and
+#' `cells_column_spanners()` to make the spanner label text bold.
 #'
 #' ```r
 #' exibble %>%
@@ -556,9 +555,8 @@ cells_column_spanners <- function(spanners = everything()) {
 #'
 #' @section Examples:
 #'
-#' Use `sza` to create a **gt** table. Add a header and then add footnotes to
-#' the column labels with [tab_footnote()] and `cells_column_labels()` in
-#' `locations`.
+#' Use [`sza`] to create a **gt** table. Add footnotes to the column labels with
+#' [tab_footnote()] and `cells_column_labels()` in `locations`.
 #'
 #' ```r
 #' sza %>%
@@ -663,7 +661,7 @@ cells_column_labels <- function(columns = everything()) {
 #'
 #' @section Examples:
 #'
-#' Use `pizzaplace` to create a **gt** table with grouped data. Add a summary
+#' Use [`pizzaplace`] to create a **gt** table with grouped data. Add a summary
 #' with the [summary_rows()] function and then add a footnote to the
 #' `"peppr_salami"` row group label with [tab_footnote()] and with
 #' `cells_row_groups()` in `locations`.
@@ -789,9 +787,8 @@ cells_group <- function(groups = TRUE) {
 #'
 #' @section Examples:
 #'
-#' Use `sza` to create a **gt** table. Color all of the `month` values in the
-#' table stub with [tab_style()], using `cells_stub()` in `locations` (`rows =
-#' TRUE` targets all stub rows).
+#' Use [`sza`] to create a **gt** table. Color all of the `month` values in the
+#' table stub with [tab_style()], using `cells_stub()` in `locations`.
 #'
 #' ```r
 #' sza %>%
@@ -893,9 +890,9 @@ cells_stub <- function(rows = everything()) {
 #'
 #' @section Examples:
 #'
-#' Use `gtcars` to create a **gt** table. Add a footnote that targets a single
-#' data cell with [tab_footnote()], using `cells_body()` in `locations` (`rows =
-#' hp == max(hp)` will target a single row in the `hp` column).
+#' Use [`gtcars`] to create a **gt** table. Add a footnote that targets a single
+#' data cell with [tab_footnote()], using `cells_body()` in `locations`
+#' (`rows = hp == max(hp)` will target a single row in the `hp` column).
 #'
 #' ```r
 #' gtcars %>%
@@ -906,7 +903,8 @@ cells_stub <- function(rows = everything()) {
 #'     footnote = "Highest horsepower.",
 #'     locations = cells_body(
 #'       columns = hp,
-#'       rows = hp == max(hp))
+#'       rows = hp == max(hp)
+#'     )
 #'   ) %>%
 #'   opt_footnote_marks(marks = c("*", "+"))
 #' ```
@@ -999,18 +997,14 @@ cells_body <- function(
 #'
 #' @section Examples:
 #'
-#' Use `countrypops` to create a **gt** table. Add some styling to the summary
+#' Use [`countrypops`] to create a **gt** table. Add some styling to the summary
 #' data cells with with [tab_style()], using `cells_summary()` in `locations`.
 #'
 #' ```r
 #' countrypops %>%
-#'   dplyr::filter(
-#'     country_name == "Japan",
-#'     year < 1970) %>%
+#'   dplyr::filter(country_name == "Japan", year < 1970) %>%
 #'   dplyr::select(-contains("country")) %>%
-#'   dplyr::mutate(
-#'     decade = paste0(substr(year, 1, 3), "0s")
-#'   ) %>%
+#'   dplyr::mutate(decade = paste0(substr(year, 1, 3), "0s")) %>%
 #'   dplyr::group_by(decade) %>%
 #'   gt(
 #'     rowname_col = "year",
@@ -1031,7 +1025,7 @@ cells_body <- function(
 #'     style = list(
 #'       cell_text(style = "italic"),
 #'       cell_fill(color = "lightblue")
-#'       ),
+#'     ),
 #'     locations = cells_summary(
 #'       groups = "1960s",
 #'       columns = population,
@@ -1042,7 +1036,7 @@ cells_body <- function(
 #'     style = list(
 #'       cell_text(style = "italic"),
 #'       cell_fill(color = "lightgreen")
-#'       ),
+#'     ),
 #'     locations = cells_summary(
 #'       groups = "1960s",
 #'       columns = population,
@@ -1142,15 +1136,12 @@ cells_summary <- function(
 #'
 #' @section Examples:
 #'
-#' Use `countrypops` to create a **gt** table. Add some styling to a grand
+#' Use [`countrypops`] to create a **gt** table. Add some styling to a grand
 #' summary cell with with [tab_style()] and `cells_grand_summary()`.
 #'
 #' ```r
 #' countrypops %>%
-#'   dplyr::filter(
-#'     country_name == "Spain",
-#'     year < 1970
-#'   ) %>%
+#'   dplyr::filter(country_name == "Spain", year < 1970) %>%
 #'   dplyr::select(-contains("country")) %>%
 #'   gt(rowname_col = "year") %>%
 #'   fmt_number(
@@ -1172,7 +1163,8 @@ cells_summary <- function(
 #'     ),
 #'     locations = cells_grand_summary(
 #'       columns = population,
-#'       rows = 1)
+#'       rows = 1
+#'     )
 #'   )
 #' ```
 #'
@@ -1264,18 +1256,14 @@ cells_grand_summary <- function(
 #'
 #' @section Examples:
 #'
-#' Use `countrypops` to create a **gt** table. Add some styling to the summary
+#' Use [`countrypops`] to create a **gt** table. Add some styling to the summary
 #' data stub cells with [tab_style()] and `cells_stub_summary()`.
 #'
 #' ```r
 #' countrypops %>%
-#'   dplyr::filter(
-#'     country_name == "Japan",
-#'     year < 1970) %>%
+#'   dplyr::filter(country_name == "Japan", year < 1970) %>%
 #'   dplyr::select(-contains("country")) %>%
-#'   dplyr::mutate(
-#'     decade = paste0(substr(year, 1, 3), "0s")
-#'   ) %>%
+#'   dplyr::mutate(decade = paste0(substr(year, 1, 3), "0s")) %>%
 #'   dplyr::group_by(decade) %>%
 #'   gt(
 #'     rowname_col = "year",
@@ -1397,16 +1385,13 @@ cells_stub_summary <- function(
 #'
 #' @section Examples:
 #'
-#' Use `countrypops` to create a **gt** table. Add some styling to a grand
+#' Use [`countrypops`] to create a **gt** table. Add some styling to a grand
 #' summary stub cell with with the [tab_style()] and
 #' `cells_stub_grand_summary()` functions.
 #'
 #' ```r
 #' countrypops %>%
-#'   dplyr::filter(
-#'     country_name == "Spain",
-#'     year < 1970
-#'   ) %>%
+#'   dplyr::filter(country_name == "Spain", year < 1970) %>%
 #'   dplyr::select(-contains("country")) %>%
 #'   gt(rowname_col = "year") %>%
 #'   fmt_number(
@@ -1415,9 +1400,7 @@ cells_stub_summary <- function(
 #'   ) %>%
 #'   grand_summary_rows(
 #'     columns = population,
-#'     fns = list(
-#'       change = ~max(.) - min(.)
-#'     ),
+#'     fns = list(change = ~max(.) - min(.)),
 #'     formatter = fmt_number,
 #'     decimals = 0
 #'   ) %>%
@@ -1506,7 +1489,7 @@ cells_stub_grand_summary <- function(rows = everything()) {
 #'
 #' @section Examples:
 #'
-#' Use `sza` to create a **gt** table. Color the `sza` column using the
+#' Use [`sza`] to create a **gt** table. Color the `sza` column using the
 #' `data_color()` function, add a footnote and also style the footnotes section.
 #'
 #' ```r
@@ -1527,9 +1510,7 @@ cells_stub_grand_summary <- function(rows = everything()) {
 #'   ) %>%
 #'   tab_footnote(
 #'     footnote = "Color indicates height of sun.",
-#'     locations = cells_column_labels(
-#'       columns = sza
-#'     )
+#'     locations = cells_column_labels(columns = sza)
 #'   ) %>%
 #'   tab_options(table.width = px(320)) %>%
 #'   tab_style(
@@ -1617,17 +1598,15 @@ cells_footnotes <- function() {
 #'
 #' @section Examples:
 #'
-#' Use `gtcars` to create a **gt** table. Add a source note and style the source
-#' notes section.
+#' Use [`gtcars`] to create a **gt** table. Add a source note and style the
+#' source notes section.
 #'
 #' ```r
 #' gtcars %>%
 #'   dplyr::select(mfr, model, msrp) %>%
 #'   dplyr::slice(1:5) %>%
 #'   gt() %>%
-#'   tab_source_note(
-#'     source_note = "From edmunds.com"
-#'   ) %>%
+#'   tab_source_note(source_note = "From edmunds.com") %>%
 #'   tab_style(
 #'     style = cell_text(
 #'       color = "#A9A9A9",
@@ -1689,8 +1668,8 @@ cells_source_notes <- function() {
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table. Format the `currency` column to have
-#' currency values in guilder (a defunct Dutch currency).
+#' Use [`exibble`] to create a **gt** table. Format the `currency` column to
+#' have currency values in guilder (a defunct Dutch currency).
 #'
 #' ```r
 #' exibble %>%
@@ -1699,7 +1678,8 @@ cells_source_notes <- function() {
 #'     columns = currency,
 #'     currency = currency(
 #'       html = "&fnof;",
-#'       default = "f"),
+#'       default = "f"
+#'     ),
 #'     decimals = 2
 #'   )
 #' ```
@@ -1805,8 +1785,8 @@ currency <- function(
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table. Add styles with [tab_style()] and the
-#' `cell_text()` helper function.
+#' Use [`exibble`] to create a **gt** table. Add styles with [tab_style()] and
+#' the `cell_text()` helper function.
 #'
 #' ```r
 #' exibble %>%
@@ -1820,7 +1800,8 @@ currency <- function(
 #'     style = cell_text(weight = "bold"),
 #'     locations = cells_body(
 #'       columns = num,
-#'       rows = num >= 5000)
+#'       rows = num >= 5000
+#'     )
 #'   ) %>%
 #'   tab_style(
 #'     style = cell_text(style = "italic"),
@@ -1979,8 +1960,8 @@ cell_style_to_html.cell_text <- function(style) {
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table. Add styles with [tab_style()] and the
-#' `cell_fill()` helper function.
+#' Use [`exibble`] to create a **gt** table. Add styles with [tab_style()] and
+#' the `cell_fill()` helper function.
 #'
 #' ```r
 #' exibble %>%
@@ -1994,7 +1975,8 @@ cell_style_to_html.cell_text <- function(style) {
 #'     style = cell_fill(color = "lightblue"),
 #'     locations = cells_body(
 #'       columns = num,
-#'       rows = num >= 5000)
+#'       rows = num >= 5000
+#'     )
 #'   ) %>%
 #'   tab_style(
 #'     style = cell_fill(color = "gray85"),
@@ -2071,7 +2053,8 @@ cell_style_to_html.cell_fill <- function(style) {
 #'
 #' @section Examples:
 #'
-#' Add horizontal border lines for all table body rows in `exibble`.
+#' Add horizontal border lines for all table body rows in [`exibble`] using
+#' [tab_style()] and `cell_borders()`.
 #'
 #' ```r
 #' exibble %>%
@@ -2253,10 +2236,10 @@ cell_style_structure <- function(name, obj, subclass = name) {
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table of eight rows, replace missing values
-#' with em dashes. For text in the `time` column, we use the Google font 'IBM
-#' Plex Mono' and set up the [default_fonts()] as fallbacks (just in case the
-#' webfont is not accessible).
+#' Use [`exibble`] to create a **gt** table of eight rows, replace missing values
+#' with em dashes. For text in the `time` column, we use the Google font
+#' `"IBM Plex Mono"` and set up the [default_fonts()] as fallbacks (just in case
+#' the webfont is not accessible).
 #'
 #' ```r
 #' exibble %>%
@@ -2278,10 +2261,11 @@ cell_style_structure <- function(name, obj, subclass = name) {
 #' `r man_get_image_tag(file = "man_google_font_1.png")`
 #' }}
 #'
-#' Use `sp500` to create a small **gt** table, using [fmt_currency()] to provide
-#' a dollar sign for the first row of monetary values. Then, set a larger font
-#' size for the table and use the 'Merriweather' font using the `google_font()`
-#' function (with two font fallbacks: 'Cochin' and the catchall 'Serif' group).
+#' Use [`sp500`] to create a small **gt** table, using [fmt_currency()] to
+#' provide a dollar sign for the first row of monetary values. Then, set a
+#' larger font size for the table and use the `"Merriweather"` font using the
+#' `google_font()` function (with two font fallbacks: `"Cochin"` and the
+#' catchall `"Serif"` group).
 #'
 #' ```r
 #' sp500 %>%
@@ -2348,7 +2332,7 @@ google_font <- function(name) {
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table. Attempting to modify the fonts used
+#' Use [`exibble`] to create a **gt** table. Attempting to modify the fonts used
 #' for the `time` column is much safer if `default_fonts()` is appended to the
 #' end of the `font` listing in the `cell_text()` call (the `"Comic Sansa"` and
 #' `"Menloa"` fonts don't exist, but, we'll get the first available font from

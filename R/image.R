@@ -67,8 +67,8 @@
 #'
 #' Create a tibble that contains heights of an image in pixels (one column as a
 #' string, the other as numerical values), then, create a **gt** table. Use the
-#' [tab_header()] function to insert the R logo SVG image once in the title and
-#' five times in the subtitle.
+#' [tab_header()] function to insert the **R** logo SVG image once in the title
+#' and five times in the subtitle.
 #'
 #' ```r
 #' dplyr::tibble(
@@ -242,8 +242,8 @@ local_image <- function(
 #' plot_object <-
 #'   ggplot(
 #'     data = gtcars,
-#'     aes(x = hp, y = trq,
-#'         size = msrp)) +
+#'     aes(x = hp, y = trq, size = msrp)
+#'   ) +
 #'   geom_point(color = "blue") +
 #'   theme(legend.position = "none")
 #' ```

@@ -27,8 +27,8 @@ cells. Specifically, the call to \code{cell_fill()} should be bound to the
 \section{Examples}{
 
 
-Use \code{exibble} to create a \strong{gt} table. Add styles with \code{\link[=tab_style]{tab_style()}} and the
-\code{cell_fill()} helper function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+Use \code{\link{exibble}} to create a \strong{gt} table. Add styles with \code{\link[=tab_style]{tab_style()}} and
+the \code{cell_fill()} helper function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(num, currency) \%>\%
   gt() \%>\%
   fmt_number(
@@ -39,7 +39,8 @@ Use \code{exibble} to create a \strong{gt} table. Add styles with \code{\link[=t
     style = cell_fill(color = "lightblue"),
     locations = cells_body(
       columns = num,
-      rows = num >= 5000)
+      rows = num >= 5000
+    )
   ) \%>\%
   tab_style(
     style = cell_fill(color = "gray85"),

@@ -53,8 +53,8 @@ bold text (the degree of choice is greater with variable fonts)
 \section{Examples}{
 
 
-Use \code{exibble} to create a \strong{gt} table. Add styles that are to be applied to
-data cells that satisfy a condition (using \code{tab_style()}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+Use \code{\link{exibble}} to create a \strong{gt} table. Add styles that are to be applied
+to data cells that satisfy a condition (using \code{tab_style()}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(num, currency) \%>\%
   gt() \%>\%
   fmt_number(
@@ -87,7 +87,7 @@ data cells that satisfy a condition (using \code{tab_style()}).\if{html}{\out{<d
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_1.png" style="width:100\%;">
 }}
 
-Use \code{sp500} to create a \strong{gt} table. Color entire rows of cells based on
+Use \code{\link{sp500}} to create a \strong{gt} table. Color entire rows of cells based on
 values in a particular column.\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
   dplyr::filter(
     date >= "2015-12-01" &
@@ -114,9 +114,9 @@ values in a particular column.\if{html}{\out{<div class="sourceCode r">}}\prefor
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_2.png" style="width:100\%;">
 }}
 
-Use \code{exibble} to create a \strong{gt} table. Replace missing values with the
-\code{fmt_missing()} function and then add styling to the \code{char} column with
-\code{cell_fill()} and with a CSS style declaration.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+Use \code{\link{exibble}} to create a \strong{gt} table. Replace missing values with the
+\code{\link[=fmt_missing]{fmt_missing()}} function and then add styling to the \code{char} column with
+\code{\link[=cell_fill]{cell_fill()}} and with a CSS style declaration.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(char, fctr) \%>\%
   gt() \%>\%
   fmt_missing(everything()) \%>\%

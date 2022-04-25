@@ -67,15 +67,11 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \section{Examples}{
 
 
-Use \code{countrypops} to create a \strong{gt} table. Add some styling to the summary
+Use \code{\link{countrypops}} to create a \strong{gt} table. Add some styling to the summary
 data stub cells with \code{\link[=tab_style]{tab_style()}} and \code{cells_stub_summary()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::filter(
-    country_name == "Japan",
-    year < 1970) \%>\%
+  dplyr::filter(country_name == "Japan", year < 1970) \%>\%
   dplyr::select(-contains("country")) \%>\%
-  dplyr::mutate(
-    decade = paste0(substr(year, 1, 3), "0s")
-  ) \%>\%
+  dplyr::mutate(decade = paste0(substr(year, 1, 3), "0s")) \%>\%
   dplyr::group_by(decade) \%>\%
   gt(
     rowname_col = "year",

@@ -799,9 +799,9 @@ tab_stubhead <- function(
 #'
 #' @section Examples:
 #'
-#' Use `sza` to create a **gt** table. Color the `sza` column using the
-#' [data_color()] function, then, add a footnote to the `sza` column label
-#' explaining what the color scale signifies.
+#' Use [`sza`] to create a **gt** table. Color the `sza` column using the
+#' [data_color()] function, then, use `tab_footnote()` to add a footnote to the
+#' `sza` column label (explaining what the color scale signifies).
 #'
 #' ```r
 #' sza %>%
@@ -1123,17 +1123,15 @@ set_footnote.cells_footnotes <- function(loc, data, footnote) {
 #'
 #' @section Examples:
 #'
-#' Use `gtcars` to create a **gt** table. Add a source note to the table footer
-#' that cites the data source.
+#' Use [`gtcars`] to create a **gt** table. Use `tab_source_note()` to add a
+#' source note to the table footer that cites the data source.
 #'
 #' ```r
 #' gtcars %>%
 #'   dplyr::select(mfr, model, msrp) %>%
 #'   dplyr::slice(1:5) %>%
 #'   gt() %>%
-#'   tab_source_note(
-#'     source_note = "From edmunds.com"
-#'   )
+#'   tab_source_note(source_note = "From edmunds.com")
 #' ```
 #'
 #' \if{html}{\out{
@@ -1202,8 +1200,8 @@ tab_source_note <- function(
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table. Add styles that are to be applied to
-#' data cells that satisfy a condition (using `tab_style()`).
+#' Use [`exibble`] to create a **gt** table. Add styles that are to be applied
+#' to data cells that satisfy a condition (using `tab_style()`).
 #'
 #' ```r
 #' exibble %>%
@@ -1239,7 +1237,7 @@ tab_source_note <- function(
 #' `r man_get_image_tag(file = "man_tab_style_1.png")`
 #' }}
 #'
-#' Use `sp500` to create a **gt** table. Color entire rows of cells based on
+#' Use [`sp500`] to create a **gt** table. Color entire rows of cells based on
 #' values in a particular column.
 #'
 #' ```r
@@ -1269,9 +1267,9 @@ tab_source_note <- function(
 #' `r man_get_image_tag(file = "man_tab_style_2.png")`
 #' }}
 #'
-#' Use `exibble` to create a **gt** table. Replace missing values with the
-#' `fmt_missing()` function and then add styling to the `char` column with
-#' `cell_fill()` and with a CSS style declaration.
+#' Use [`exibble`] to create a **gt** table. Replace missing values with the
+#' [fmt_missing()] function and then add styling to the `char` column with
+#' [cell_fill()] and with a CSS style declaration.
 #'
 #' ```r
 #' exibble %>%
@@ -1859,15 +1857,14 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table with all the main parts added. We can
-#' use this **gt** object going forward to demo some `tab_options()`.
+#' Use [`exibble`] to create a **gt** table with all the main parts added. We
+#' can use this **gt** object going forward to demo some of what's available in
+#' the `tab_options()` function.
 #'
 #' ```r
 #' tab_1 <-
 #'   exibble %>%
-#'   dplyr::select(
-#'     -c(fctr, date, time, datetime)
-#'   ) %>%
+#'   dplyr::select(-c(fctr, date, time, datetime)) %>%
 #'   gt(
 #'     rowname_col = "row",
 #'     groupname_col = "group"
@@ -1894,9 +1891,7 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   ) %>%
 #'   tab_footnote(
 #'     footnote = "Alphabetical fruit.",
-#'     locations = cells_column_labels(
-#'       columns = char
-#'     )
+#'     locations = cells_column_labels(columns = char)
 #'   )
 #' ```
 #'
@@ -1904,7 +1899,8 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' `r man_get_image_tag(file = "man_tab_options_1.png")`
 #' }}
 #'
-#' Modify the table width to 100% (which spans the entire content width area).
+#' Modify the table width to be 100% (which spans the entire content width
+#' area).
 #'
 #' ```r
 #' tab_1 %>% tab_options(table.width = pct(100))
@@ -1923,14 +1919,14 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' `r man_get_image_tag(file = "man_tab_options_3.png")`
 #' }}
 #'
-#' Use letters as the marks for footnote references; also, separate footnotes in
+#' Use letters as the marks for footnote references. Also, separate footnotes in
 #' the footer by spaces instead of newlines.
 #'
 #' ```r
 #' tab_1 %>%
 #'   tab_options(
-#'     footnotes.sep = " ",
-#'     footnotes.marks = letters
+#'     footnotes.marks = letters,
+#'     footnotes.multiline = FALSE
 #'   )
 #' ```
 #'
@@ -1938,7 +1934,7 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' `r man_get_image_tag(file = "man_tab_options_4.png")`
 #' }}
 #'
-#' Change the padding of data rows to 5px.
+#' Change the padding of data rows to 5 px.
 #'
 #' ```r
 #' tab_1 %>%

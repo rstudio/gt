@@ -377,12 +377,11 @@ components, the subcomponents, and the element that can adjusted.
 \section{Examples}{
 
 
-Use \code{exibble} to create a \strong{gt} table with all the main parts added. We can
-use this \strong{gt} object going forward to demo some \code{tab_options()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
+Use \code{\link{exibble}} to create a \strong{gt} table with all the main parts added. We
+can use this \strong{gt} object going forward to demo some of what's available in
+the \code{tab_options()} function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
   exibble \%>\%
-  dplyr::select(
-    -c(fctr, date, time, datetime)
-  ) \%>\%
+  dplyr::select(-c(fctr, date, time, datetime)) \%>\%
   gt(
     rowname_col = "row",
     groupname_col = "group"
@@ -409,9 +408,7 @@ use this \strong{gt} object going forward to demo some \code{tab_options()}.\if{
   ) \%>\%
   tab_footnote(
     footnote = "Alphabetical fruit.",
-    locations = cells_column_labels(
-      columns = char
-    )
+    locations = cells_column_labels(columns = char)
   )
 }\if{html}{\out{</div>}}
 
@@ -419,7 +416,8 @@ use this \strong{gt} object going forward to demo some \code{tab_options()}.\if{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_1.png" style="width:100\%;">
 }}
 
-Modify the table width to 100\% (which spans the entire content width area).\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% tab_options(table.width = pct(100))
+Modify the table width to be 100\% (which spans the entire content width
+area).\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% tab_options(table.width = pct(100))
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
@@ -433,11 +431,11 @@ Modify the table's background color to be \code{"lightcyan"}.\if{html}{\out{<div
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_3.png" style="width:100\%;">
 }}
 
-Use letters as the marks for footnote references; also, separate footnotes in
+Use letters as the marks for footnote references. Also, separate footnotes in
 the footer by spaces instead of newlines.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\%
   tab_options(
-    footnotes.sep = " ",
-    footnotes.marks = letters
+    footnotes.marks = letters,
+    footnotes.multiline = FALSE
   )
 }\if{html}{\out{</div>}}
 
@@ -445,7 +443,7 @@ the footer by spaces instead of newlines.\if{html}{\out{<div class="sourceCode r
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_4.png" style="width:100\%;">
 }}
 
-Change the padding of data rows to 5px.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\%
+Change the padding of data rows to 5 px.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\%
   tab_options(
     data_row.padding = px(5)
   )

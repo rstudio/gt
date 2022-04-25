@@ -24,7 +24,7 @@ function \code{\link[=pct]{pct()}}.
 \section{Examples}{
 
 
-Use \code{exibble} to create a \strong{gt} table. Use the \code{px()} helper to define the
+Use \code{\link{exibble}} to create a \strong{gt} table. Use the \code{px()} helper to define the
 font size for the column labels.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt() \%>\%
   tab_style(

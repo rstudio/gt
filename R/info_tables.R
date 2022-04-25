@@ -153,8 +153,8 @@ info_time_style <- function() {
 #'
 #' @section Examples:
 #'
-#' Get a table of info on all of the currencies where the three- letter code
-#' begins with a `"h"`.
+#' Get a table of info on all of the currencies where the three-letter code
+#' begins with an `"h"`.
 #'
 #' ```r
 #' info_currencies(begins_with = "h")
@@ -461,7 +461,7 @@ info_locales <- function(begins_with = NULL) {
 #' @section Examples:
 #'
 #' Get a table of info on just the `"ggthemes"` color palette (easily accessible
-#' from the **paletteer** pkg).
+#' from the **paletteer** package).
 #'
 #' ```r
 #' info_paletteer(color_pkgs = "ggthemes")

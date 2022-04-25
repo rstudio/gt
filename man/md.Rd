@@ -23,12 +23,11 @@ get to use Markdown plus any HTML fragments \emph{at the same time}).
 \section{Examples}{
 
 
-Use \code{exibble} to create a \strong{gt} table. When adding a title, use the \code{md()}
+Use \code{\link{exibble}} to create a \strong{gt} table. When adding a title, use the \code{md()}
 helper to use Markdown formatting.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(currency, char) \%>\%
   gt() \%>\%
-  tab_header(
-    title = md("Using *Markdown*"))
+  tab_header(title = md("Using *Markdown*"))
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{

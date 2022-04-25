@@ -70,8 +70,8 @@ Get the SVG-based logo for the R Project from an image URL.\if{html}{\out{<div c
 
 Create a tibble that contains heights of an image in pixels (one column as a
 string, the other as numerical values), then, create a \strong{gt} table. Use the
-\code{\link[=tab_header]{tab_header()}} function to insert the R logo SVG image once in the title and
-five times in the subtitle.\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
+\code{\link[=tab_header]{tab_header()}} function to insert the \strong{R} logo SVG image once in the title
+and five times in the subtitle.\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
   pixels = px(seq(10, 35, 5)),
   image = seq(10, 35, 5)
 ) \%>\%
