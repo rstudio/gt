@@ -61,9 +61,10 @@ the output table through the \code{hide_columns} or \code{autohide} options.
 \section{Examples}{
 
 
-Use \code{gtcars} to create a \strong{gt} table, keeping only the \code{model}, \code{mpg_c}, and
-\code{mpg_h} columns. Merge the \code{"mpg*"} columns together as a single range column
-(which is labeled as MPG, in italics).\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
+Use \code{\link{gtcars}} to create a \strong{gt} table, keeping only the \code{model}, \code{mpg_c},
+and \code{mpg_h} columns. Merge the \code{"mpg*"} columns together as a single range
+column (which is labeled as MPG, in italics) using the \code{cols_merge_range()}
+function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
   dplyr::select(model, starts_with("mpg")) \%>\%
   dplyr::slice(1:8) \%>\%
   gt() \%>\%

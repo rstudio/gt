@@ -95,8 +95,9 @@ argument. See the Arguments section for more information on this.
 \section{Examples}{
 
 
-Use \code{exibble} to create a \strong{gt} table. format the \code{num} column as partially
-numeric and partially in scientific notation.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{num} column as
+partially numeric  and partially in scientific notation (using the
+\code{num > 500} and \code{num <= 500} expressions in the respective \code{rows} arguments).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt() \%>\%
   fmt_number(
     columns = num,

@@ -27,7 +27,8 @@ intended for HTML output, we can use HTML for the stubhead label.
 \section{Examples}{
 
 
-Use \code{gtcars} to create a \strong{gt} table. Add a stubhead label to describe what
+Use \code{\link{gtcars}} to create a \strong{gt} table. With \code{tab_stubhead()} we can add a
+stubhead label. This appears in the top-left and can be used to describe what
 is in the stub.\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
   dplyr::select(model, year, hp, trq) \%>\%
   dplyr::slice(1:5) \%>\%

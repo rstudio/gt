@@ -126,8 +126,8 @@ argument. See the Arguments section for more information on this.
 \section{Examples}{
 
 
-Use \code{exibble} to create a \strong{gt} table. Format the \code{num} column to have byte
-sizes in the binary standard.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{num} column to have
+byte sizes in the decimal standard.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(num) \%>\%
   gt() \%>\%
   fmt_bytes(columns = num)

@@ -28,7 +28,7 @@
 #'
 #' @section Examples:
 #'
-#' Use `countrypops` to create a **gt** table. Align the `population` column
+#' Use [`countrypops`] to create a **gt** table. Align the `population` column
 #' data to the left.
 #'
 #' ```r
@@ -159,12 +159,10 @@ cols_align <- function(
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a gt table;
-#' with named arguments in `...`, we
-#' can specify the exact widths for
-#' table columns (using `everything()`
-#' at the end will capture all
-#' remaining columns).
+#' Use [`exibble`] to create a **gt** table. We can specify the widths of
+#' columns with `cols_width()`. This is done with named arguments in `...`,
+#' specifying the exact widths for table columns (using `everything()` at the
+#' end will capture all remaining columns).
 #'
 #' ```r
 #' exibble %>%
@@ -324,8 +322,8 @@ cols_width <- function(
 #'
 #' @section Examples:
 #'
-#' Use `countrypops` to create a **gt** table. Label all the table's columns to
-#' present better.
+#' Use [`countrypops`] to create a **gt** table. Relabel all the table's columns
+#' with the `cols_label()` function to improve its presentation.
 #'
 #' ```r
 #' countrypops %>%
@@ -344,8 +342,9 @@ cols_width <- function(
 #' `r man_get_image_tag(file = "man_cols_label_1.png")`
 #' }}
 #'
-#' Use `countrypops` to create a **gt** table. Label columns as before but make
-#' them bold with markdown formatting.
+#' Using [`countrypops`] again to create a **gt** table, we label columns just
+#' as before but this time make the column labels bold through Markdown
+#' formatting.
 #'
 #' ```r
 #' countrypops %>%
@@ -461,8 +460,9 @@ cols_label <- function(
 #'
 #' @section Examples:
 #'
-#' Use `countrypops` to create a **gt** table. With the remaining columns, move
-#' the `year` column to the start.
+#' Use [`countrypops`] to create a **gt** table. With the remaining columns,
+#' move the `year` column to the start of the column series with
+#' `cols_move_to_start()`.
 #'
 #' ```r
 #' countrypops %>%
@@ -470,9 +470,7 @@ cols_label <- function(
 #'   dplyr::filter(country_name == "Mongolia") %>%
 #'   tail(5) %>%
 #'   gt() %>%
-#'   cols_move_to_start(
-#'     columns = year
-#'   )
+#'   cols_move_to_start(columns = year)
 #' ```
 #'
 #' \if{html}{\out{
@@ -480,8 +478,8 @@ cols_label <- function(
 #' }}
 #'
 #'
-#' Use `countrypops` to create a **gt** table. With the remaining columns, move
-#' `year` and `population` to the start.
+#' Use [`countrypops`] to create a **gt** table. With the remaining columns,
+#' move `year` and `population` to the start.
 #'
 #' ```r
 #' countrypops %>%
@@ -573,8 +571,9 @@ cols_move_to_start <- function(
 #'
 #' @section Examples:
 #'
-#' Use `countrypops` to create a **gt** table. With the remaining columns, move
-#' the `year` column to the end.
+#' Use [`countrypops`] to create a **gt** table. With the remaining columns, move
+#' the `year` column to the end of the column series with the
+#' `cols_move_to_end()` function.
 #'
 #' ```r
 #' countrypops %>%
@@ -582,17 +581,15 @@ cols_move_to_start <- function(
 #'   dplyr::filter(country_name == "Mongolia") %>%
 #'   tail(5) %>%
 #'   gt() %>%
-#'   cols_move_to_end(
-#'     columns = year
-#'   )
+#'   cols_move_to_end(columns = year)
 #' ```
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_cols_move_to_end_1.png")`
 #' }}
 #'
-#' Use `countrypops` to create a **gt** table. With the remaining columns, move
-#' `year` and `country_name` to the end.
+#' Use [`countrypops`] to create a **gt** table. With the remaining columns,
+#' move `year` and `country_name` to the end of the column series.
 #'
 #' ```r
 #' countrypops %>%
@@ -600,9 +597,7 @@ cols_move_to_start <- function(
 #'   dplyr::filter(country_name == "Mongolia") %>%
 #'   tail(5) %>%
 #'   gt() %>%
-#'   cols_move_to_end(
-#'     columns = c(year, country_name)
-#'   )
+#'   cols_move_to_end(columns = c(year, country_name))
 #' ```
 #'
 #' \if{html}{\out{
@@ -689,8 +684,8 @@ cols_move_to_end <- function(
 #'
 #' @section Examples:
 #'
-#' Use `countrypops` to create a **gt** table. With the remaining columns,
-#' position `population` after `country_name`.
+#' Use [`countrypops`] to create a **gt** table. With the remaining columns,
+#' position `population` after `country_name` with the `cols_move()` function.
 #'
 #' ```r
 #' countrypops %>%
@@ -816,37 +811,32 @@ cols_move <- function(
 #'
 #' @section Examples:
 #'
-#' Use `countrypops` to create a **gt** table. Hide the columns `country_code_2`
-#' and `country_code_3`.
+#' Use [`countrypops`] to create a **gt** table. Hide the `country_code_2` and
+#' `country_code_3` columns with `cols_hide()`.
 #'
 #' ```r
 #' countrypops %>%
 #'   dplyr::filter(country_name == "Mongolia") %>%
 #'   tail(5) %>%
 #'   gt() %>%
-#'   cols_hide(
-#'     columns = c(
-#'       country_code_2, country_code_3
-#'     )
-#'   )
+#'   cols_hide(columns = c(country_code_2, country_code_3))
 #' ```
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_cols_hide_1.png")`
 #' }}
 #'
-#' Use `countrypops` to create a **gt** table. Use the `population` column to
+#' Use [`countrypops`] to create a **gt** table. Use the `population` column to
 #' provide the conditional placement of footnotes, then hide that column and one
-#' other.
+#' other. Note that the order of the `cols_hide()` and [tab_footnote()]
+#' statements has no effect.
 #'
 #' ```r
 #' countrypops %>%
 #'   dplyr::filter(country_name == "Mongolia") %>%
 #'   tail(5) %>%
 #'   gt() %>%
-#'   cols_hide(
-#'     columns = c(country_code_3, population)
-#'   ) %>%
+#'   cols_hide(columns = c(country_code_3, population)) %>%
 #'   tab_footnote(
 #'     footnote = "Population above 3,000,000.",
 #'     locations = cells_body(
@@ -933,8 +923,8 @@ cols_hide <- function(
 #'
 #' @section Examples:
 #'
-#' Use `countrypops` to create a **gt** table. Hide the columns `country_code_2`
-#' and `country_code_3`.
+#' Use [`countrypops`] to create a **gt** table. Hide the `country_code_2` and
+#' `country_code_3` columns with [cols_hide()].
 #'
 #' ```r
 #' tab_1 <-
@@ -1074,9 +1064,9 @@ cols_unhide <- function(
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table, keeping only the `currency` and `num`
-#' columns. Merge columns into one with a base value and uncertainty (after
-#' formatting the `num` column).
+#' Use [`exibble`] to create a **gt** table, keeping only the `currency` and
+#' `num` columns. Merge columns into one with a base value and uncertainty
+#' (after formatting the `num` column) using the `cols_merge_uncert()` function.
 #'
 #' ```r
 #' exibble %>%
@@ -1206,9 +1196,10 @@ cols_merge_uncert <- function(
 #'
 #' @section Examples:
 #'
-#' Use `gtcars` to create a **gt** table, keeping only the `model`, `mpg_c`, and
-#' `mpg_h` columns. Merge the `"mpg*"` columns together as a single range column
-#' (which is labeled as MPG, in italics).
+#' Use [`gtcars`] to create a **gt** table, keeping only the `model`, `mpg_c`,
+#' and `mpg_h` columns. Merge the `"mpg*"` columns together as a single range
+#' column (which is labeled as MPG, in italics) using the `cols_merge_range()`
+#' function.
 #'
 #' ```r
 #' gtcars %>%
@@ -1359,10 +1350,10 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #'
 #' @section Examples:
 #'
-#' Use `pizzaplace` to create a **gt** table that displays the counts and
+#' Use [`pizzaplace`] to create a **gt** table that displays the counts and
 #' percentages of the top 3 pizzas sold by pizza category in 2015. The
 #' `cols_merge_n_pct()` function is used to merge the `n` and `frac` columns
-#' (and the `frac` column is formatted using `fmt_percent()`).
+#' (and the `frac` column is formatted using [fmt_percent()]).
 #'
 #' ```r
 #' pizzaplace %>%
@@ -1494,9 +1485,9 @@ cols_merge_n_pct <- function(
 #'
 #' @section Examples:
 #'
-#' Use `sp500` to create a **gt** table. Merge the `open` & `close` columns
-#' together, and, the `low` & `high` columns (putting an em dash between both).
-#' Rename the columns.
+#' Use [`sp500`] to create a **gt** table. Use the `cols_merge()` function to
+#' merge the `open` & `close` columns together, and, the `low` & `high` columns
+#' (putting an em dash between both). Relabel the columns with [cols_label()].
 #'
 #' ```r
 #' sp500 %>%

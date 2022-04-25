@@ -25,8 +25,8 @@ emailing context.
 \section{Examples}{
 
 
-Use \code{gtcars} to create a \strong{gt} table. Add a header and then export as HTML
-code with CSS inlined.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_html <-
+Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header and then export as HTML
+code with inlined CSS styles.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_html <-
   gtcars \%>\%
   dplyr::select(mfr, model, msrp) \%>\%
   dplyr::slice(1:5) \%>\%
@@ -38,8 +38,8 @@ code with CSS inlined.\if{html}{\out{<div class="sourceCode r">}}\preformatted{t
   as_raw_html()
 }\if{html}{\out{</div>}}
 
-What's returned is a single-element vector containing inlined HTML for the
-table. It has only the \verb{<table>...</table>} part so it's not a complete HTML
+What's returned is a single-element vector containing the HTML for the table.
+It has only the \verb{<table>...</table>} part so it's not a complete HTML
 document but rather an HTML fragment.
 }
 

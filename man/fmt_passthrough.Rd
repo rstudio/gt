@@ -61,9 +61,9 @@ argument. See the Arguments section for more information on this.
 \section{Examples}{
 
 
-Use \code{exibble} to create a \strong{gt} table. Keep only the \code{char} column. Pass the
-data in that column through but apply a simple pattern that adds an \code{"s"} to
-the non-\code{NA} values.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{char} column. Pass
+the data in that column through but apply a simple pattern that adds an \code{"s"}
+to the non-\code{NA} values.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(char) \%>\%
   gt() \%>\%
   fmt_passthrough(

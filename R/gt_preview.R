@@ -29,7 +29,7 @@
 #'
 #' @section Examples:
 #'
-#' Use `gtcars` to create a **gt** table preview (with only a few of its
+#' Use [`gtcars`] to create a **gt** table preview (with only a few of its
 #' columns). You'll see the first five rows and the last row.
 #'
 #' ```r

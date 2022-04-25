@@ -24,7 +24,7 @@ body. This function serves as a convenient shortcut for
 \section{Examples}{
 
 
-Use \code{exibble} to create a \strong{gt} table with a number of table parts added.
+Use \code{\link{exibble}} to create a \strong{gt} table with a number of table parts added.
 Next, we add row striping to every second row with the \code{opt_row_striping()}
 function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt(rowname_col = "row", groupname_col = "group") \%>\%

@@ -66,7 +66,7 @@ argument. See the \emph{Arguments} section for more information on this.
 \section{Examples}{
 
 
-Use \code{exibble} to create a \strong{gt} table. Keep only the \code{date} and \code{time}
+Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{date} and \code{time}
 columns. Format the \code{time} column to have times formatted as \code{hms_p} (time
 style \code{3}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(date, time) \%>\%
@@ -81,21 +81,20 @@ style \code{3}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_time_1.png" style="width:100\%;">
 }}
 
-Use \code{exibble} to create a \strong{gt} table. Keep only the \code{date} and \code{time}
+Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{date} and \code{time}
 columns. Format the \code{time} column to have mixed time formats (times after
-16:00 will be different than the others).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+16:00 will be different than the others because of the expressions used
+in the \code{rows} argument).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(date, time) \%>\%
   gt() \%>\%
   fmt_time(
     columns = time,
-    rows =
-      time > "16:00",
+    rows = time > "16:00",
     time_style = 3
   ) \%>\%
   fmt_time(
     columns = time,
-    rows =
-      time <= "16:00",
+    rows = time <= "16:00",
     time_style = 4
   )
 }\if{html}{\out{</div>}}

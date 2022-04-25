@@ -70,9 +70,9 @@ the output table through the \code{hide_columns} or \code{autohide} options.
 \section{Examples}{
 
 
-Use \code{exibble} to create a \strong{gt} table, keeping only the \code{currency} and \code{num}
-columns. Merge columns into one with a base value and uncertainty (after
-formatting the \code{num} column).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+Use \code{\link{exibble}} to create a \strong{gt} table, keeping only the \code{currency} and
+\code{num} columns. Merge columns into one with a base value and uncertainty
+(after formatting the \code{num} column) using the \code{cols_merge_uncert()} function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(currency, num) \%>\%
   dplyr::slice(1:7) \%>\%
   gt() \%>\%

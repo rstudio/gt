@@ -35,8 +35,7 @@ for certain types of footnote marks. The keywords are:
 \item \code{"numbers"}: numeric marks, they begin from 1 and these marks are not
 subject to recycling behavior
 \item \code{"letters"}: miniscule alphabetic marks, internally uses the \code{letters}
-vector
-which contains 26 lowercase letters of the Roman alphabet
+vector which contains 26 lowercase letters of the Roman alphabet
 \item \code{"LETTERS"}: majuscule alphabetic marks, using the \code{LETTERS} vector
 which has 26 uppercase letters of the Roman alphabet
 \item \code{"standard"}: symbolic marks, four symbols in total
@@ -47,7 +46,7 @@ more symbols, making six
 \section{Examples}{
 
 
-Use \code{sza} to create a gt table, adding three footnotes. Call
+Use \code{\link{sza}} to create a \strong{gt} table, adding three footnotes. Call
 \code{opt_footnote_marks()} to specify which footnote marks to use.\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza \%>\%
   dplyr::filter(latitude == 30) \%>\%
   dplyr::group_by(tst) \%>\%

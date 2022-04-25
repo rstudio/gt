@@ -16,8 +16,7 @@
 #' - `"numbers"`: numeric marks, they begin from 1 and these marks are not
 #' subject to recycling behavior
 #' - `"letters"`: miniscule alphabetic marks, internally uses the `letters`
-#' vector
-#' which contains 26 lowercase letters of the Roman alphabet
+#' vector which contains 26 lowercase letters of the Roman alphabet
 #' - `"LETTERS"`: majuscule alphabetic marks, using the `LETTERS` vector
 #' which has 26 uppercase letters of the Roman alphabet
 #' - `"standard"`: symbolic marks, four symbols in total
@@ -36,7 +35,7 @@
 #'
 #' @section Examples:
 #'
-#' Use `sza` to create a gt table, adding three footnotes. Call
+#' Use [`sza`] to create a **gt** table, adding three footnotes. Call
 #' `opt_footnote_marks()` to specify which footnote marks to use.
 #'
 #' ```r
@@ -121,7 +120,7 @@ opt_footnote_marks <- function(
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table with a number of table parts added.
+#' Use [`exibble`] to create a **gt** table with a number of table parts added.
 #' Next, we add row striping to every second row with the `opt_row_striping()`
 #' function.
 #'
@@ -192,7 +191,7 @@ opt_row_striping <- function(
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table with a number of table parts added.
+#' Use [`exibble`] to create a **gt** table with a number of table parts added.
 #' The header (consisting of the title and the subtitle) are to be aligned to
 #' the left with the `opt_align_table_header()` function.
 #'
@@ -273,7 +272,7 @@ opt_align_table_header <- function(
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table with a number of table parts added.
+#' Use [`exibble`] to create a **gt** table with a number of table parts added.
 #' Contract the vertical padding across the entire table with
 #' `opt_vertical_padding()`.
 #'
@@ -356,7 +355,7 @@ opt_vertical_padding <- function(
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table with a number of table parts added.
+#' Use [`exibble`] to create a **gt** table with a number of table parts added.
 #' Expand the horizontal padding across the entire table with
 #' `opt_horizontal_padding()`.
 #'
@@ -473,7 +472,7 @@ get_padding_option_value_list <- function(scale, type) {
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table with a number of table parts added.
+#' Use [`exibble`] to create a **gt** table with a number of table parts added.
 #' All text in the column labels, the stub, and in all row groups is to be
 #' transformed to all caps using `opt_all_caps()`.
 #'
@@ -579,7 +578,7 @@ opt_all_caps <- function(
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table with a number of table parts added.
+#' Use [`exibble`] to create a **gt** table with a number of table parts added.
 #' Then, use the `opt_table_lines()` function to haves lines everywhere there
 #' can possibly be lines.
 #'
@@ -666,7 +665,7 @@ opt_table_lines <- function(
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table with a number of table parts added.
+#' Use [`exibble`] to create a **gt** table with a number of table parts added.
 #' Have an outline wrap around the entire table by using `opt_table_outline()`.
 #'
 #' ```r
@@ -794,11 +793,11 @@ opt_table_outline <- function(
 #'
 #' @section Examples:
 #'
-#' Use `sp500` to create a small **gt** table, using `fmt_currency()` to provide
-#' a dollar sign for the first row of monetary values. Then, set a larger font
-#' size for the table and use the 'Merriweather' font (from Google Fonts, via
-#' `google_font()`) with two font fallbacks ('Cochin' and the catchall 'Serif'
-#' group).
+#' Use [`sp500`] to create a small **gt** table, using [fmt_currency()] to
+#' provide a dollar sign for the first row of monetary values. Then, set a
+#' larger font size for the table and use the `"Merriweather"` font (from
+#' *Google Fonts*, via [google_font()]) with two font fallbacks (`"Cochin"` and
+#' the catchall `"Serif"` group).
 #'
 #' ```r
 #' sp500 %>%
@@ -824,9 +823,9 @@ opt_table_outline <- function(
 #' `r man_get_image_tag(file = "man_opt_table_font_1.png")`
 #' }}
 #'
-#' Use `sza` to create an eleven-row table. Within `opt_table_font()`, set up a
-#' preferred list of sans-serif fonts that are commonly available in macOS
-#' (using part of the `default_fonts()` vector as a fallback).
+#' Use [`sza`] to create an eleven-row table. Within `opt_table_font()`, set up
+#' a preferred list of sans-serif fonts that are commonly available in macOS
+#' (using part of the [default_fonts()] vector as a fallback).
 #'
 #' ```r
 #' sza %>%
@@ -944,7 +943,7 @@ opt_table_font <- function(
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table and format the data in both columns.
+#' Use [`exibble`] to create a **gt** table and format the data in both columns.
 #' With `opt_css()`, insert CSS rulesets as as string and be sure to set the
 #' table ID explicitly (here as `"one"`).
 #'

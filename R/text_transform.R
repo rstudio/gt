@@ -12,9 +12,10 @@
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table. transform the formatted text in the
-#' `num` and `currency` columns using a function within `text_transform()`,
-#' where `x` is a formatted vector of column values.
+#' Use [`exibble`] to create a **gt** table. transform the formatted text in the
+#' `num` column using a function supplied to `text_transform()` (via the `fn`
+#' argument). Note that the `x` in the `fn = function (x)` part is a formatted
+#' vector of column values from the `num` column.
 #'
 #' ```r
 #' exibble %>%
@@ -24,9 +25,7 @@
 #'   fmt_number(columns = num) %>%
 #'   fmt_currency(columns = currency) %>%
 #'   text_transform(
-#'     locations = cells_body(
-#'       columns = num
-#'     ),
+#'     locations = cells_body(columns = num),
 #'     fn = function(x) {
 #'       paste0(
 #'         x, " (",

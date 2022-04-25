@@ -115,8 +115,8 @@ argument. See the Arguments section for more information on this.
 \section{Examples}{
 
 
-Use \code{pizzaplace} to create a \strong{gt} table. Format the \code{f_sold} and \code{f_income}
-columns to display fractions.\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
+Use \code{\link{pizzaplace}} to create a \strong{gt} table. Format the \code{f_sold} and
+\code{f_income} columns to display fractions.\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
   dplyr::group_by(type, size) \%>\%
   dplyr::summarize(
     sold = dplyr::n(),

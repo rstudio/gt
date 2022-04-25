@@ -124,8 +124,8 @@ argument. See the Arguments section for more information on this.
 \section{Examples}{
 
 
-Use \code{exibble} to create a \strong{gt} table. format the \code{num} column as integer
-values having no digit separators.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+Use \code{\link{exibble}} to create a \strong{gt} table. format the \code{num} column as integer
+values having no digit separators (with the \code{use_seps = FALSE} option).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(num, char) \%>\%
   gt() \%>\%
   fmt_integer(

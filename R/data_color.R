@@ -67,7 +67,7 @@
 #'
 #' @section Examples:
 #'
-#' Use `countrypops` to create a **gt** table. Apply a color scale to the
+#' Use [`countrypops`] to create a **gt** table. Apply a color scale to the
 #' `population` column with `scales::col_numeric`, four supplied colors, and a
 #' domain.
 #'
@@ -90,7 +90,7 @@
 #' `r man_get_image_tag(file = "man_data_color_1.png")`
 #' }}
 #'
-#' Use `pizzaplace` to create a **gt** table. Apply colors from the
+#' Use [`pizzaplace`] to create a **gt** table. Apply colors from the
 #' `"ggsci::red_material"` palette (it's in the **ggsci** R package but more
 #' easily gotten from the **paletteer** package, info at [info_paletteer()]) to
 #' to `sold` and `income` columns. Setting the `domain` of
@@ -128,12 +128,14 @@
 #'
 #' @import rlang
 #' @export
-data_color <- function(data,
-                       columns,
-                       colors,
-                       alpha = NULL,
-                       apply_to = c("fill", "text"),
-                       autocolor_text = TRUE) {
+data_color <- function(
+    data,
+    columns,
+    colors,
+    alpha = NULL,
+    apply_to = c("fill", "text"),
+    autocolor_text = TRUE
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -337,9 +339,11 @@ expand_short_hex <- function(colors) {
 #' output is a single color value in #RRGGBB hexadecimal format
 #'
 #' @noRd
-ideal_fgnd_color <- function(bgnd_color,
-                             light = "#FFFFFF",
-                             dark = "#000000") {
+ideal_fgnd_color <- function(
+    bgnd_color,
+    light = "#FFFFFF",
+    dark = "#000000"
+) {
 
   # Normalize color to hexadecimal color if it is in the 'rgba()' string format
   bgnd_color <- rgba_to_hex(colors = bgnd_color)

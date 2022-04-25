@@ -43,8 +43,8 @@ labels once they have been relabeled.
 \section{Examples}{
 
 
-Use \code{countrypops} to create a \strong{gt} table. Label all the table's columns to
-present better.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
+Use \code{\link{countrypops}} to create a \strong{gt} table. Relabel all the table's columns
+with the \code{cols_label()} function to improve its presentation.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::select(-contains("code")) \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%
@@ -60,8 +60,9 @@ present better.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countryp
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_1.png" style="width:100\%;">
 }}
 
-Use \code{countrypops} to create a \strong{gt} table. Label columns as before but make
-them bold with markdown formatting.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
+Using \code{\link{countrypops}} again to create a \strong{gt} table, we label columns just
+as before but this time make the column labels bold through Markdown
+formatting.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::select(-contains("code")) \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%

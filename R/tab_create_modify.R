@@ -17,8 +17,8 @@
 #'
 #' @section Examples:
 #'
-#' Use `gtcars` to create a **gt** table. Add a header part to contain a title
-#' and subtitle.
+#' Use [`gtcars`] to create a **gt** table. Add a header part with the
+#' `tab_header()` function so that we get a title and a subtitle for the table.
 #'
 #' ```r
 #' gtcars %>%
@@ -94,8 +94,9 @@ tab_header <- function(
 #'
 #' @section Examples:
 #'
-#' Use `gtcars` to create a **gt** table. Group several columns related to car
-#' performance under a spanner column with the label `performance`.
+#' Use [`gtcars`] to create a **gt** table. Use the `tab_spanner()` function to
+#' effectively group several columns related to car performance under a spanner
+#' column with the label `"performance"`.
 #'
 #' ```r
 #' gtcars %>%
@@ -344,8 +345,10 @@ resolve_spanned_column_names <- function(
 #'
 #' @section Examples:
 #'
-#' Use `iris` to create a **gt** table. Split any columns that are dot-separated
-#' between column spanner labels (first part) and column labels (second part).
+#' Use `iris` to create a **gt** table and use the `tab_spanner_delim()`
+#' function to automatically generate column spanner labels. This splits any
+#' columns that are dot-separated between column spanner labels (first part) and
+#' column labels (second part).
 #'
 #' ```r
 #' iris %>%
@@ -561,8 +564,9 @@ tab_spanner_delim <- function(
 #'
 #' @section Examples:
 #'
-#' Use `gtcars` to create a **gt** table and add two row groups with the labels:
-#' `numbered` and `NA` (a group without a title, or, the rest).
+#' Use [`gtcars`] to create a **gt** table and use `tab_row_group()` to add two
+#' row groups with the labels: `numbered` and `NA`. The row group with the `NA`
+#' label ends up being rendered without a label at all.
 #'
 #' ```r
 #' gtcars %>%
@@ -579,9 +583,10 @@ tab_spanner_delim <- function(
 #' `r man_get_image_tag(file = "man_tab_row_group_1.png")`
 #' }}
 #'
-#' Use `gtcars` to create a **gt** table. Add two row groups with the labels
-#' `powerful` and `super powerful`: the distinction being `hp` lesser or greater
-#' than `600`.
+#' Use [`gtcars`] to create a **gt** table. Add two row groups with the labels
+#' `powerful` and `super powerful`. The distinction between the groups is
+#' whether `hp` is lesser or greater than `600` (governed by the expressions
+#' provided to the `rows` argument).
 #'
 #' ```r
 #' gtcars %>%
@@ -719,7 +724,8 @@ tab_row_group <- function(
 #'
 #' @section Examples:
 #'
-#' Use `gtcars` to create a **gt** table. Add a stubhead label to describe what
+#' Use [`gtcars`] to create a **gt** table. With `tab_stubhead()` we can add a
+#' stubhead label. This appears in the top-left and can be used to describe what
 #' is in the stub.
 #'
 #' ```r

@@ -29,7 +29,7 @@ ordering.
 \section{Examples}{
 
 
-Use \code{exibble} to create a \strong{gt} table with a stub and with row groups.
+Use \code{\link{exibble}} to create a \strong{gt} table with a stub and with row groups.
 Modify the order of the row groups with \code{row_group_order()}, specifying the
 new ordering in \code{groups}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(char, currency, row, group) \%>\%
@@ -37,9 +37,7 @@ new ordering in \code{groups}.\if{html}{\out{<div class="sourceCode r">}}\prefor
       rowname_col = "row",
       groupname_col = "group"
     ) \%>\%
-    row_group_order(
-      groups = c("grp_b", "grp_a")
-    )
+    row_group_order(groups = c("grp_b", "grp_a"))
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{

@@ -50,8 +50,8 @@
 #'
 #' @section Examples:
 #'
-#' Use `gtcars` to create a **gt** table. Add a stubhead label to describe what
-#' is in the stub.
+#' Use [`gtcars`] to create a **gt** table. Add a stubhead label with the
+#' [tab_stubhead()] function to describe what is in the stub.
 #'
 #' ```r
 #' tab_1 <-
@@ -63,7 +63,8 @@
 #' ```
 #'
 #' Export the **gt** table to an HTML file with inlined CSS (which is necessary
-#' for including the table as part of an HTML email).
+#' for including the table as part of an HTML email) using `gtsave()` and the
+#' `inline_css = TRUE` option.
 #'
 #' ```r
 #' tab_1 %>% gtsave(filename = "tab_1.html", inline_css = TRUE)
@@ -88,6 +89,12 @@
 #'
 #' ```r
 #' tab_1 %>% gtsave("tab_1.tex")
+#' ```
+#'
+#' With the `.rtf` extension, we'll get an RTF document.
+#'
+#' ```r
+#' tab_1 %>% gtsave("tab_1.rtf")
 #' ```
 #'
 #' @family Export Functions
@@ -306,8 +313,8 @@ gtsave_filename <- function(path, filename) {
 #'
 #' @section Examples:
 #'
-#' Use `gtcars` to create a **gt** table. Add a header and then export as HTML
-#' code with CSS inlined.
+#' Use [`gtcars`] to create a **gt** table. Add a header and then export as HTML
+#' code with inlined CSS styles.
 #'
 #' ```r
 #' tab_html <-
@@ -322,8 +329,8 @@ gtsave_filename <- function(path, filename) {
 #'   as_raw_html()
 #' ```
 #'
-#' What's returned is a single-element vector containing inlined HTML for the
-#' table. It has only the `<table>...</table>` part so it's not a complete HTML
+#' What's returned is a single-element vector containing the HTML for the table.
+#' It has only the `<table>...</table>` part so it's not a complete HTML
 #' document but rather an HTML fragment.
 #'
 #' @family Export Functions
@@ -371,7 +378,7 @@ as_raw_html <- function(
 #'
 #' @section Examples:
 #'
-#' Use `gtcars` to create a **gt** table. Add a header and then export as an
+#' Use [`gtcars`] to create a **gt** table. Add a header and then export as an
 #' object with LaTeX code.
 #'
 #' ```r
@@ -389,7 +396,7 @@ as_raw_html <- function(
 #'
 #' What's returned is a `knit_asis` object, which makes it easy to include in R
 #' Markdown documents that are knit to PDF. We can use `as.character()` to get
-#' just the LaTeX code as a single- element vector.
+#' just the LaTeX code as a single-element vector.
 #'
 #' @family Export Functions
 #' @section Function ID:
@@ -460,7 +467,7 @@ as_latex <- function(data) {
 #'
 #' @section Examples:
 #'
-#' Use `gtcars` to create a **gt** table. Add a header and then export as RTF
+#' Use [`gtcars`] to create a **gt** table. Add a header and then export as RTF
 #' code.
 #'
 #' ```r
@@ -548,9 +555,9 @@ as_rtf <- function(
 #'
 #' @section Examples:
 #'
-#' Use `sp500` to create a **gt** table with row groups. Create summary rows by
-#' row group (`min`, `max`, `avg`) and then extract the summary rows as a list
-#' object.
+#' Use [`sp500`] to create a **gt** table with row groups. Create summary rows
+#' labeled as `min`, `max`, and `avg` for every row group with [summary_rows()].
+#' Then, extract the summary rows as a list object.
 #'
 #' ```{r}
 #' summary_extracted <-

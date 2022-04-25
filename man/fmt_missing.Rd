@@ -45,8 +45,8 @@ argument. See the Arguments section for more information on this.
 \section{Examples}{
 
 
-Use \code{exibble} to create a \strong{gt} table. The \code{NA} values in different columns
-will be given replacement text.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+Use \code{\link{exibble}} to create a \strong{gt} table. The \code{NA} values in different
+columns will be given replacement text.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(-row, -group) \%>\%
   gt() \%>\%
   fmt_missing(

@@ -34,7 +34,7 @@
 #' @section Examples:
 #'
 #' Here is a Shiny app (contained within a single file) that (1) prepares a
-#' **gt** table, (2) sets up the `ui` with `gt_output()`, and (3) sets up the
+#' **gt** table, (2) sets up the `ui` with [gt_output()], and (3) sets up the
 #' `server` with a `render_gt()` that uses the `gt_tbl` object as the input
 #' expression.
 #'
@@ -153,7 +153,7 @@ render_gt <- function(
 #'
 #' Here is a Shiny app (contained within a single file) that (1) prepares a
 #' **gt** table, (2) sets up the `ui` with `gt_output()`, and (3) sets up the
-#' `server` with a `render_gt()` that uses the `gt_tbl` object as the input
+#' `server` with a [render_gt()] that uses the `gt_tbl` object as the input
 #' expression.
 #'
 #' ```r

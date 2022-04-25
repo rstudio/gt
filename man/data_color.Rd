@@ -90,7 +90,7 @@ hexadecimal colors.
 \section{Examples}{
 
 
-Use \code{countrypops} to create a \strong{gt} table. Apply a color scale to the
+Use \code{\link{countrypops}} to create a \strong{gt} table. Apply a color scale to the
 \code{population} column with \code{scales::col_numeric}, four supplied colors, and a
 domain.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
@@ -110,7 +110,7 @@ domain.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_data_color_1.png" style="width:100\%;">
 }}
 
-Use \code{pizzaplace} to create a \strong{gt} table. Apply colors from the
+Use \code{\link{pizzaplace}} to create a \strong{gt} table. Apply colors from the
 \code{"ggsci::red_material"} palette (it's in the \strong{ggsci} R package but more
 easily gotten from the \strong{paletteer} package, info at \code{\link[=info_paletteer]{info_paletteer()}}) to
 to \code{sold} and \code{income} columns. Setting the \code{domain} of

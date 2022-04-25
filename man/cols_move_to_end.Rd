@@ -33,30 +33,27 @@ column.
 \section{Examples}{
 
 
-Use \code{countrypops} to create a \strong{gt} table. With the remaining columns, move
-the \code{year} column to the end.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
+Use \code{\link{countrypops}} to create a \strong{gt} table. With the remaining columns, move
+the \code{year} column to the end of the column series with the
+\code{cols_move_to_end()} function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::select(-contains("code")) \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%
   gt() \%>\%
-  cols_move_to_end(
-    columns = year
-  )
+  cols_move_to_end(columns = year)
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_move_to_end_1.png" style="width:100\%;">
 }}
 
-Use \code{countrypops} to create a \strong{gt} table. With the remaining columns, move
-\code{year} and \code{country_name} to the end.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
+Use \code{\link{countrypops}} to create a \strong{gt} table. With the remaining columns,
+move \code{year} and \code{country_name} to the end of the column series.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::select(-contains("code")) \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%
   gt() \%>\%
-  cols_move_to_end(
-    columns = c(year, country_name)
-  )
+  cols_move_to_end(columns = c(year, country_name))
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{

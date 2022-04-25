@@ -53,8 +53,9 @@
 #'
 #' @section Examples:
 #'
-#' Create a **gt** table object using the `exibble` dataset. Use the `row` and
-#' `group` columns to add a stub and row groups.
+#' Create a **gt** table object using the [`exibble`] dataset. Use the `row` and
+#' `group` columns to add a stub and row groups via the `rowname_col` and
+#' `groupname_col` arguments.
 #'
 #' ```r
 #' tab_1 <-
@@ -71,12 +72,12 @@
 #' `r man_get_image_tag(file = "man_gt_1.png")`
 #' }}
 #'
-#' The resulting object can be used in transformations (with `tab_*()`,
-#' `fmt_*()`, `cols_*()` functions).
+#' The resulting **gt** table object can be used in transformations with a
+#' variety of `tab_*()`, `fmt_*()`, `cols_*()`, and even more functions
+#' available in the package.
 #'
 #' ```r
-#' tab_2 <-
-#'   tab_1 %>%
+#' tab_1 %>%
 #'   tab_header(
 #'     title = "Table Title",
 #'     subtitle = "Subtitle"

@@ -75,7 +75,7 @@ argument. See the \emph{Arguments} section for more information on this.
 \section{Examples}{
 
 
-Use \code{exibble} to create a \strong{gt} table. Keep only the \code{date} and \code{time}
+Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{date} and \code{time}
 columns. Format the \code{date} column to have dates formatted as \code{month_day_year}
 (date style \code{5}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(date, time) \%>\%
@@ -90,21 +90,20 @@ columns. Format the \code{date} column to have dates formatted as \code{month_da
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_date_1.png" style="width:100\%;">
 }}
 
-Use \code{exibble} to create a \strong{gt} table. Keep only the \code{date} and \code{time}
+Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{date} and \code{time}
 columns. Format the \code{date} column to have mixed date formats (dates after
-April will be different than the others).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+April will be different than the others because of the expressions used
+in the \code{rows} argument).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(date, time) \%>\%
   gt() \%>\%
   fmt_date(
     columns = date,
-    rows =
-      as.Date(date) > as.Date("2015-04-01"),
+    rows = as.Date(date) > as.Date("2015-04-01"),
     date_style = "m_day_year"
   ) \%>\%
   fmt_date(
     columns = date,
-    rows =
-      as.Date(date) <= as.Date("2015-04-01"),
+    rows = as.Date(date) <= as.Date("2015-04-01"),
     date_style = "day_m_year"
   )
 }\if{html}{\out{</div>}}

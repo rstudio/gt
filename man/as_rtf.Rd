@@ -21,7 +21,7 @@ file that can be opened by RTF readers.
 \section{Examples}{
 
 
-Use \code{gtcars} to create a \strong{gt} table. Add a header and then export as RTF
+Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header and then export as RTF
 code.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_rtf <-
   gtcars \%>\%
   dplyr::select(mfr, model) \%>\%

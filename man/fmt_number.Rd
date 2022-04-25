@@ -156,7 +156,7 @@ argument. See the Arguments section for more information on this.
 \section{Examples}{
 
 
-Use \code{exibble} to create a \strong{gt} table. format the \code{num} column as numeric
+Use \code{\link{exibble}} to create a \strong{gt} table. format the \code{num} column as numeric
 with three decimal places and with no use of digit separators.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt() \%>\%
   fmt_number(
@@ -170,8 +170,8 @@ with three decimal places and with no use of digit separators.\if{html}{\out{<di
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_number_1.png" style="width:100\%;">
 }}
 
-Use \code{countrypops} to create a \strong{gt} table. Format all numeric columns to use
-large-number suffixing.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
+Use \code{\link{countrypops}} to create a \strong{gt} table. Format all numeric columns to
+use large-number suffixing with the \code{suffixing = TRUE} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::select(country_code_3, year, population) \%>\%
   dplyr::filter(
     country_code_3 \%in\% c(

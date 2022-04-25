@@ -174,7 +174,7 @@ Here are some extra formats that you may find useful:
 \section{Examples}{
 
 
-Use \code{exibble} to create a \strong{gt} table. Keep only the \code{datetime} column.
+Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{datetime} column.
 Format the column to have dates formatted as \code{month_day_year} and times to be
 \code{hms_p}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(datetime) \%>\%

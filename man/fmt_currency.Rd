@@ -191,8 +191,8 @@ argument. See the Arguments section for more information on this.
 \section{Examples}{
 
 
-Use \code{exibble} to create a \strong{gt} table. Format the \code{currency} column to have
-currency values in euros (\code{"EUR"}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{currency} column to
+have currency values in euros (\code{"EUR"}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt() \%>\%
   fmt_currency(
     columns = currency,
@@ -204,7 +204,7 @@ currency values in euros (\code{"EUR"}).\if{html}{\out{<div class="sourceCode r"
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_currency_1.png" style="width:100\%;">
 }}
 
-Use \code{exibble} to create a \strong{gt} table. Keep only the \code{num} and \code{currency},
+Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{num} and \code{currency},
 columns, then, format those columns using the \code{"CNY"} and \code{"GBP"} currencies.\if{html}{\out{<div class="sourceCode r">}}\preformatted{  exibble \%>\%
   dplyr::select(num, currency) \%>\%
   gt() \%>\%

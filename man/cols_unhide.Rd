@@ -33,8 +33,8 @@ already-visible columns.
 \section{Examples}{
 
 
-Use \code{countrypops} to create a \strong{gt} table. Hide the columns \code{country_code_2}
-and \code{country_code_3}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
+Use \code{\link{countrypops}} to create a \strong{gt} table. Hide the \code{country_code_2} and
+\code{country_code_3} columns with \code{\link[=cols_hide]{cols_hide()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
   countrypops \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%

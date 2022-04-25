@@ -57,7 +57,7 @@ Shiny apps can be found at the \href{https://shiny.rstudio.com}{Shiny Site}.
 
 
 Here is a Shiny app (contained within a single file) that (1) prepares a
-\strong{gt} table, (2) sets up the \code{ui} with \code{gt_output()}, and (3) sets up the
+\strong{gt} table, (2) sets up the \code{ui} with \code{\link[=gt_output]{gt_output()}}, and (3) sets up the
 \code{server} with a \code{render_gt()} that uses the \code{gt_tbl} object as the input
 expression.\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(shiny)
 

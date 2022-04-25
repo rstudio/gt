@@ -19,7 +19,7 @@ containing the LaTeX code.
 \section{Examples}{
 
 
-Use \code{gtcars} to create a \strong{gt} table. Add a header and then export as an
+Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header and then export as an
 object with LaTeX code.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_latex <-
   gtcars \%>\%
   dplyr::select(mfr, model, msrp) \%>\%
@@ -34,7 +34,7 @@ object with LaTeX code.\if{html}{\out{<div class="sourceCode r">}}\preformatted{
 
 What's returned is a \code{knit_asis} object, which makes it easy to include in R
 Markdown documents that are knit to PDF. We can use \code{as.character()} to get
-just the LaTeX code as a single- element vector.
+just the LaTeX code as a single-element vector.
 }
 
 \section{Function ID}{

@@ -34,23 +34,22 @@ column.
 \section{Examples}{
 
 
-Use \code{countrypops} to create a \strong{gt} table. With the remaining columns, move
-the \code{year} column to the start.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
+Use \code{\link{countrypops}} to create a \strong{gt} table. With the remaining columns,
+move the \code{year} column to the start of the column series with
+\code{cols_move_to_start()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::select(-contains("code")) \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%
   gt() \%>\%
-  cols_move_to_start(
-    columns = year
-  )
+  cols_move_to_start(columns = year)
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_move_to_start_1.png" style="width:100\%;">
 }}
 
-Use \code{countrypops} to create a \strong{gt} table. With the remaining columns, move
-\code{year} and \code{population} to the start.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
+Use \code{\link{countrypops}} to create a \strong{gt} table. With the remaining columns,
+move \code{year} and \code{population} to the start.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::select(-contains("code")) \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%

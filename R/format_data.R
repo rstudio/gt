@@ -115,7 +115,7 @@
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table. format the `num` column as numeric
+#' Use [`exibble`] to create a **gt** table. format the `num` column as numeric
 #' with three decimal places and with no use of digit separators.
 #'
 #' ```r
@@ -132,8 +132,8 @@
 #' `r man_get_image_tag(file = "man_fmt_number_1.png")`
 #' }}
 #'
-#' Use `countrypops` to create a **gt** table. Format all numeric columns to use
-#' large-number suffixing.
+#' Use [`countrypops`] to create a **gt** table. Format all numeric columns to
+#' use large-number suffixing with the `suffixing = TRUE` option.
 #'
 #' ```r
 #' countrypops %>%
@@ -336,8 +336,8 @@ fmt_number <- function(
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table. format the `num` column as integer
-#' values having no digit separators.
+#' Use [`exibble`] to create a **gt** table. format the `num` column as integer
+#' values having no digit separators (with the `use_seps = FALSE` option).
 #'
 #' ```r
 #' exibble %>%
@@ -428,8 +428,9 @@ fmt_integer <- function(
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table. format the `num` column as partially
-#' numeric and partially in scientific notation.
+#' Use [`exibble`] to create a **gt** table. Format the `num` column as
+#' partially numeric  and partially in scientific notation (using the
+#' `num > 500` and `num <= 500` expressions in the respective `rows` arguments).
 #'
 #' ```r
 #' exibble %>%
@@ -623,7 +624,7 @@ fmt_scientific <- function(
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table. Format the `num` column in
+#' Use [`exibble`] to create a **gt** table. Format the `num` column in
 #' engineering notation.
 #'
 #' ```r
@@ -951,8 +952,8 @@ fmt_symbol <- function(
 #'
 #' @section Examples:
 #'
-#' Use `pizzaplace` to create a **gt** table. Format the `frac_of_quota` column
-#' to display values as percentages.
+#' Use [`pizzaplace`] to create a **gt** table. Format the `frac_of_quota`
+#' column to display values as percentages.
 #'
 #' ```r
 #' pizzaplace %>%
@@ -1101,8 +1102,8 @@ fmt_percent <- function(
 #'
 #' @section Examples:
 #'
-#' Use `pizzaplace` to create a **gt** table. Format the `f_sold` and `f_income`
-#' columns to display fractions.
+#' Use [`pizzaplace`] to create a **gt** table. Format the `f_sold` and
+#' `f_income` columns to display fractions.
 #'
 #' ```r
 #' pizzaplace %>%
@@ -1570,8 +1571,8 @@ round_gt <- function(x, digits = 0) {
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table. Format the `currency` column to have
-#' currency values in euros (`"EUR"`).
+#' Use [`exibble`] to create a **gt** table. Format the `currency` column to
+#' have currency values in euros (`"EUR"`).
 #'
 #' ```r
 #' exibble %>%
@@ -1586,7 +1587,7 @@ round_gt <- function(x, digits = 0) {
 #' `r man_get_image_tag(file = "man_fmt_currency_1.png")`
 #' }}
 #'
-#' Use `exibble` to create a **gt** table. Keep only the `num` and `currency`,
+#' Use [`exibble`] to create a **gt** table. Keep only the `num` and `currency`,
 #' columns, then, format those columns using the `"CNY"` and `"GBP"` currencies.
 #'
 #' ```r
@@ -1738,8 +1739,8 @@ fmt_currency <- function(
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table. Format the `num` column to have byte
-#' sizes in the binary standard.
+#' Use [`exibble`] to create a **gt** table. Format the `num` column to have
+#' byte sizes in the decimal standard.
 #'
 #' ```r
 #' exibble %>%
@@ -1915,7 +1916,7 @@ fmt_bytes <- function(
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table. Keep only the `date` and `time`
+#' Use [`exibble`] to create a **gt** table. Keep only the `date` and `time`
 #' columns. Format the `date` column to have dates formatted as `month_day_year`
 #' (date style `5`).
 #'
@@ -1933,9 +1934,10 @@ fmt_bytes <- function(
 #' `r man_get_image_tag(file = "man_fmt_date_1.png")`
 #' }}
 #'
-#' Use `exibble` to create a **gt** table. Keep only the `date` and `time`
+#' Use [`exibble`] to create a **gt** table. Keep only the `date` and `time`
 #' columns. Format the `date` column to have mixed date formats (dates after
-#' April will be different than the others).
+#' April will be different than the others because of the expressions used
+#' in the `rows` argument).
 #'
 #' ```r
 #' exibble %>%
@@ -1943,14 +1945,12 @@ fmt_bytes <- function(
 #'   gt() %>%
 #'   fmt_date(
 #'     columns = date,
-#'     rows =
-#'       as.Date(date) > as.Date("2015-04-01"),
+#'     rows = as.Date(date) > as.Date("2015-04-01"),
 #'     date_style = "m_day_year"
 #'   ) %>%
 #'   fmt_date(
 #'     columns = date,
-#'     rows =
-#'       as.Date(date) <= as.Date("2015-04-01"),
+#'     rows = as.Date(date) <= as.Date("2015-04-01"),
 #'     date_style = "day_m_year"
 #'   )
 #' ```
@@ -2073,7 +2073,7 @@ fmt_date <- function(
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table. Keep only the `date` and `time`
+#' Use [`exibble`] to create a **gt** table. Keep only the `date` and `time`
 #' columns. Format the `time` column to have times formatted as `hms_p` (time
 #' style `3`).
 #'
@@ -2091,9 +2091,10 @@ fmt_date <- function(
 #' `r man_get_image_tag(file = "man_fmt_time_1.png")`
 #' }}
 #'
-#' Use `exibble` to create a **gt** table. Keep only the `date` and `time`
+#' Use [`exibble`] to create a **gt** table. Keep only the `date` and `time`
 #' columns. Format the `time` column to have mixed time formats (times after
-#' 16:00 will be different than the others).
+#' 16:00 will be different than the others because of the expressions used
+#' in the `rows` argument).
 #'
 #' ```r
 #' exibble %>%
@@ -2101,14 +2102,12 @@ fmt_date <- function(
 #'   gt() %>%
 #'   fmt_time(
 #'     columns = time,
-#'     rows =
-#'       time > "16:00",
+#'     rows = time > "16:00",
 #'     time_style = 3
 #'   ) %>%
 #'   fmt_time(
 #'     columns = time,
-#'     rows =
-#'       time <= "16:00",
+#'     rows = time <= "16:00",
 #'     time_style = 4
 #'   )
 #' ```
@@ -2320,7 +2319,7 @@ fmt_time <- function(
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table. Keep only the `datetime` column.
+#' Use [`exibble`] to create a **gt** table. Keep only the `datetime` column.
 #' Format the column to have dates formatted as `month_day_year` and times to be
 #' `hms_p`.
 #'
@@ -2613,9 +2612,9 @@ fmt_markdown <- function(
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table. Keep only the `char` column. Pass the
-#' data in that column through but apply a simple pattern that adds an `"s"` to
-#' the non-`NA` values.
+#' Use [`exibble`] to create a **gt** table. Keep only the `char` column. Pass
+#' the data in that column through but apply a simple pattern that adds an `"s"`
+#' to the non-`NA` values.
 #'
 #' ```r
 #' exibble %>%
@@ -2750,8 +2749,8 @@ fmt_passthrough <- function(
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table. The `NA` values in different columns
-#' will be given replacement text.
+#' Use [`exibble`] to create a **gt** table. The `NA` values in different
+#' columns will be given replacement text.
 #'
 #' ```r
 #' exibble %>%
@@ -2872,7 +2871,7 @@ fmt_missing <- function(
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table. Format the numeric values in the
+#' Use [`exibble`] to create a **gt** table. Format the numeric values in the
 #' `num` column with a function supplied to the `fns` argument.
 #'
 #' ```r

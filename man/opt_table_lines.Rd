@@ -26,7 +26,7 @@ completely lineless table, adding individual lines as needed.
 \section{Examples}{
 
 
-Use \code{exibble} to create a \strong{gt} table with a number of table parts added.
+Use \code{\link{exibble}} to create a \strong{gt} table with a number of table parts added.
 Then, use the \code{opt_table_lines()} function to haves lines everywhere there
 can possibly be lines.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt(rowname_col = "row", groupname_col = "group") \%>\%

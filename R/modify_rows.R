@@ -19,7 +19,7 @@
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a **gt** table with a stub and with row groups.
+#' Use [`exibble`] to create a **gt** table with a stub and with row groups.
 #' Modify the order of the row groups with `row_group_order()`, specifying the
 #' new ordering in `groups`.
 #'
@@ -30,9 +30,7 @@
 #'       rowname_col = "row",
 #'       groupname_col = "group"
 #'     ) %>%
-#'     row_group_order(
-#'       groups = c("grp_b", "grp_a")
-#'     )
+#'     row_group_order(groups = c("grp_b", "grp_a"))
 #' ```
 #'
 #' \if{html}{\out{

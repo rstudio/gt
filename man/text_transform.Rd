@@ -26,18 +26,17 @@ Perform targeted text transformation with a function
 \section{Examples}{
 
 
-Use \code{exibble} to create a \strong{gt} table. transform the formatted text in the
-\code{num} and \code{currency} columns using a function within \code{text_transform()},
-where \code{x} is a formatted vector of column values.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+Use \code{\link{exibble}} to create a \strong{gt} table. transform the formatted text in the
+\code{num} column using a function supplied to \code{text_transform()} (via the \code{fn}
+argument). Note that the \code{x} in the \verb{fn = function (x)} part is a formatted
+vector of column values from the \code{num} column.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(num, char, currency) \%>\%
   dplyr::slice(1:4) \%>\%
   gt() \%>\%
   fmt_number(columns = num) \%>\%
   fmt_currency(columns = currency) \%>\%
   text_transform(
-    locations = cells_body(
-      columns = num
-    ),
+    locations = cells_body(columns = num),
     fn = function(x) \{
       paste0(
         x, " (",

@@ -60,8 +60,8 @@ to \code{...}.
 \section{Examples}{
 
 
-Use \code{gtcars} to create a \strong{gt} table. Add a stubhead label to describe what
-is in the stub.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
+Use \code{\link{gtcars}} to create a \strong{gt} table. Add a stubhead label with the
+\code{\link[=tab_stubhead]{tab_stubhead()}} function to describe what is in the stub.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
   gtcars \%>\%
   dplyr::select(model, year, hp, trq) \%>\%
   dplyr::slice(1:5) \%>\%
@@ -70,7 +70,8 @@ is in the stub.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
 }\if{html}{\out{</div>}}
 
 Export the \strong{gt} table to an HTML file with inlined CSS (which is necessary
-for including the table as part of an HTML email).\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% gtsave(filename = "tab_1.html", inline_css = TRUE)
+for including the table as part of an HTML email) using \code{gtsave()} and the
+\code{inline_css = TRUE} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% gtsave(filename = "tab_1.html", inline_css = TRUE)
 }\if{html}{\out{</div>}}
 
 By leaving out the \code{inline_css} option, we get a more conventional HTML file
@@ -83,6 +84,9 @@ of whitespace can be set with the \code{expand} option.\if{html}{\out{<div class
 
 Any use of the \code{.tex}, \code{.ltx}, or \code{.rnw} will result in the output of a LaTeX
 document.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% gtsave("tab_1.tex")
+}\if{html}{\out{</div>}}
+
+With the \code{.rtf} extension, we'll get an RTF document.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% gtsave("tab_1.rtf")
 }\if{html}{\out{</div>}}
 }
 

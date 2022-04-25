@@ -34,7 +34,7 @@ the following eight options in \code{\link[=tab_options]{tab_options()}}:
 \section{Examples}{
 
 
-Use \code{exibble} to create a \strong{gt} table with a number of table parts added.
+Use \code{\link{exibble}} to create a \strong{gt} table with a number of table parts added.
 Contract the vertical padding across the entire table with
 \code{opt_vertical_padding()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt(rowname_col = "row", groupname_col = "group") \%>\%
