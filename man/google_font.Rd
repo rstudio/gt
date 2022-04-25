@@ -2,12 +2,12 @@
 % Please edit documentation in R/helpers.R
 \name{google_font}
 \alias{google_font}
-\title{Helper function for specifying a font from the Google Fonts service}
+\title{Helper function for specifying a font from the \emph{Google Fonts} service}
 \usage{
 google_font(name)
 }
 \arguments{
-\item{name}{The complete name of a font available in Google Fonts.}
+\item{name}{The complete name of a font available in \emph{Google Fonts}.}
 }
 \value{
 An object of class \code{font_css}.
@@ -74,7 +74,7 @@ catchall \code{"Serif"} group).\if{html}{\out{<div class="sourceCode r">}}\prefo
 
 \section{Function ID}{
 
-7-22
+7-27
 }
 
 \seealso{

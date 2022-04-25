@@ -80,7 +80,7 @@ to the non-\code{NA} values.\if{html}{\out{<div class="sourceCode r">}}\preforma
 
 \section{Function ID}{
 
-3-12
+3-13
 }
 
 \seealso{

@@ -75,7 +75,7 @@ of increasingly darker palettes (with \code{\link[=data_color]{data_color()}}).\
 
 \section{Function ID}{
 
-7-24
+7-22
 }
 
 \seealso{

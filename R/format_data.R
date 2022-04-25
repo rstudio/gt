@@ -1966,7 +1966,7 @@ fmt_bytes <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-8
+#' 3-9
 #'
 #' @import rlang
 #' @export
@@ -2123,7 +2123,7 @@ fmt_date <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-9
+#' 3-10
 #'
 #' @import rlang
 #' @export
@@ -2345,7 +2345,7 @@ fmt_time <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-10
+#' 3-11
 #'
 #' @import rlang
 #' @export
@@ -2547,7 +2547,7 @@ fmt_datetime <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-11
+#' 3-12
 #'
 #' @import rlang
 #' @export
@@ -2638,7 +2638,7 @@ fmt_markdown <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-12
+#' 3-13
 #'
 #' @import rlang
 #' @export
@@ -2777,7 +2777,7 @@ fmt_passthrough <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-13
+#' 3-14
 #'
 #' @import rlang
 #' @export
@@ -2897,7 +2897,7 @@ fmt_missing <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-14
+#' 3-15
 #'
 #' @import rlang
 #' @export

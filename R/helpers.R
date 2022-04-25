@@ -2210,7 +2210,7 @@ cell_style_structure <- function(name, obj, subclass = name) {
   style_obj
 }
 
-#' Helper function for specifying a font from the Google Fonts service
+#' Helper function for specifying a font from the *Google Fonts* service
 #'
 #' @description
 #' The `google_font()` helper function can be used wherever a font name should
@@ -2219,7 +2219,7 @@ cell_style_structure <- function(name, obj, subclass = name) {
 #' of [cell_text()] (used with [tab_style()]). To get a helpful listing of fonts
 #' that work well in tables, use the [info_google_fonts()] function.
 #'
-#' @param name The complete name of a font available in Google Fonts.
+#' @param name The complete name of a font available in *Google Fonts*.
 #'
 #' @return An object of class `font_css`.
 #'
@@ -2282,7 +2282,7 @@ cell_style_structure <- function(name, obj, subclass = name) {
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-22
+#' 7-27
 #'
 #' @export
 google_font <- function(name) {
@@ -2349,7 +2349,7 @@ google_font <- function(name) {
 #' @family Helper Functions
 #'
 #' @section Function ID:
-#' 7-23
+#' 7-26
 #'
 #' @export
 default_fonts <- function() {
@@ -2435,7 +2435,7 @@ default_fonts <- function() {
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-24
+#' 7-22
 #'
 #' @export
 adjust_luminance <- function(
@@ -2491,7 +2491,7 @@ adjust_luminance <- function(
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-25
+#' 7-23
 #'
 #' @export
 random_id <- function(n = 10) {
@@ -2526,7 +2526,7 @@ latex_special_chars <- c(
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-26
+#' 7-24
 #'
 #' @export
 escape_latex <- function(text) {
@@ -2583,7 +2583,7 @@ escape_latex <- function(text) {
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-27
+#' 7-25
 #'
 #' @export
 gt_latex_dependencies <- function() {
