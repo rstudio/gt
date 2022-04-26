@@ -1809,6 +1809,19 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   when striping rows.
 #' @param row.striping.include_table_body An option for whether to include the
 #'   table body when striping rows.
+#' @param page.orientation For RTF output, this provides two options for page
+#'   orientation: `"portrait"` (the default) and `"landscape"`.
+#' @param page.numbering Within RTF output, should page numbering be displayed?
+#'   By default, this is set to `"none"` but the other options are `"footer"`
+#'   and `"header"`.
+#' @param page.header.use_tbl_headings If `TRUE` then RTF output tables will
+#'   migrate all table headings (including the table title and all column
+#'   labels) to the page header. This page header content will repeat across
+#'   pages. By default, this is `FALSE`.
+#' @param page.header.use_tbl_headings If `TRUE` then RTF output tables will
+#'   migrate all table footer content (this includes footnotes and source notes)
+#'   to the page footer. This page footer content will repeat across
+#'   pages. By default, this is `FALSE`.
 #'
 #' @return An object of class `gt_tbl`.
 #'

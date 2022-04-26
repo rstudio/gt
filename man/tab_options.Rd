@@ -370,6 +370,18 @@ when striping rows.}
 
 \item{row.striping.include_table_body}{An option for whether to include the
 table body when striping rows.}
+
+\item{page.orientation}{For RTF output, this provides two options for page
+orientation: \code{"portrait"} (the default) and \code{"landscape"}.}
+
+\item{page.numbering}{Within RTF output, should page numbering be displayed?
+By default, this is set to \code{"none"} but the other options are \code{"footer"}
+and \code{"header"}.}
+
+\item{page.header.use_tbl_headings}{If \code{TRUE} then RTF output tables will
+migrate all table footer content (this includes footnotes and source notes)
+to the page footer. This page footer content will repeat across
+pages. By default, this is \code{FALSE}.}
 }
 \value{
 An object of class \code{gt_tbl}.
