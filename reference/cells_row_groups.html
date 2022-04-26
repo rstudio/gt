@@ -135,10 +135,31 @@ can be targeted by enclosing several <code>cells_*()</code> helper functions in 
 <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> (e.g., <code>list(cells_body(), cells_grand_summary())</code>).</p>
     </div>
     <div class="section level2">
-    <h2 id="figures">Figures<a class="anchor" aria-label="anchor" href="#figures"></a></h2>
+    <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     
 
-<p><img src="figures/man_cells_row_groups_1.png" width="100%"></p>
+
+<p>Use <code><a href="pizzaplace.html">pizzaplace</a></code> to create a <strong>gt</strong> table with grouped data. Add a summary
+with the <code><a href="summary_rows.html">summary_rows()</a></code> function and then add a footnote to the
+<code>"peppr_salami"</code> row group label with <code><a href="tab_footnote.html">tab_footnote()</a></code> and with
+<code>cells_row_groups()</code> in <code>locations</code>.</p><div class="sourceCode r"><pre><code><span class="va">pizzaplace</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">name</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"soppressata"</span>, <span class="st">"peppr_salami"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">size</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span>`Pizzas Sold` <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span>, .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"size"</span>, groupname_col <span class="op">=</span> <span class="st">"name"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/summary_rows.html">summary_rows</a></span><span class="op">(</span>
+    groups <span class="op">=</span> <span class="cn">TRUE</span>,
+    columns <span class="op">=</span> <span class="va">`Pizzas Sold`</span>,
+    fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>TOTAL <span class="op">=</span> <span class="st">"sum"</span><span class="op">)</span>,
+    formatter <span class="op">=</span> <span class="va">fmt_number</span>,
+    decimals <span class="op">=</span> <span class="fl">0</span>,
+    use_seps <span class="op">=</span> <span class="cn">TRUE</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/tab_footnote.html">tab_footnote</a></span><span class="op">(</span>
+    footnote <span class="op">=</span> <span class="st">"The Pepper-Salami."</span>,
+    <span class="fu"><a href="../reference/cells_row_groups.html">cells_row_groups</a></span><span class="op">(</span>groups <span class="op">=</span> <span class="st">"peppr_salami"</span><span class="op">)</span>
+  <span class="op">)</span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_row_groups_1.png" style="width:100%;"></p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
@@ -177,41 +198,6 @@ can be targeted by enclosing several <code>cells_*()</code> helper functions in 
 <code><a href="random_id.html">random_id</a>()</code></p></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Use `pizzaplace` to create a gt table</span></span>
-<span class="r-in"><span class="co"># with grouped data; add a summary with the</span></span>
-<span class="r-in"><span class="co"># `summary_rows()` function and then add a</span></span>
-<span class="r-in"><span class="co"># footnote to the "peppr_salami" row group</span></span>
-<span class="r-in"><span class="co"># label with `tab_footnote()` and with</span></span>
-<span class="r-in"><span class="co"># `cells_row_groups()` in `locations`</span></span>
-<span class="r-in"><span class="va">tab_1</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="va">pizzaplace</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="va">name</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"soppressata"</span>, <span class="st">"peppr_salami"</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">size</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span></span>
-<span class="r-in">    `Pizzas Sold` <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"size"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="summary_rows.html">summary_rows</a></span><span class="op">(</span></span>
-<span class="r-in">    groups <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">    columns <span class="op">=</span> <span class="va">`Pizzas Sold`</span>,</span>
-<span class="r-in">    fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>TOTAL <span class="op">=</span> <span class="st">"sum"</span><span class="op">)</span>,</span>
-<span class="r-in">    formatter <span class="op">=</span> <span class="va">fmt_number</span>,</span>
-<span class="r-in">    decimals <span class="op">=</span> <span class="fl">0</span>,</span>
-<span class="r-in">    use_seps <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="tab_footnote.html">tab_footnote</a></span><span class="op">(</span></span>
-<span class="r-in">    footnote <span class="op">=</span> <span class="st">"The Pepper-Salami."</span>,</span>
-<span class="r-in">    <span class="fu">cells_row_groups</span><span class="op">(</span>groups <span class="op">=</span> <span class="st">"peppr_salami"</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> `summarise()` has grouped output by 'name'. You can override using the</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> `.groups` argument.</span>
-<span class="r-in"></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
@@ -221,7 +207,7 @@ can be targeted by enclosing several <code>cells_*()</code> helper functions in 
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer></div>

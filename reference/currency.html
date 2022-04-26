@@ -111,10 +111,22 @@ we were to specify currency strings for multiple output contexts, names are
 required each and every context.</p>
     </div>
     <div class="section level2">
-    <h2 id="figures">Figures<a class="anchor" aria-label="anchor" href="#figures"></a></h2>
+    <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     
 
-<p><img src="figures/man_currency_1.png" width="100%"></p>
+
+<p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table. Format the <code>currency</code> column to
+have currency values in guilder (a defunct Dutch currency).</p><div class="sourceCode r"><pre><code><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/fmt_currency.html">fmt_currency</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="va">currency</span>,
+    currency <span class="op">=</span> <span class="fu"><a href="../reference/currency.html">currency</a></span><span class="op">(</span>
+      html <span class="op">=</span> <span class="st">"&amp;fnof;"</span>,
+      default <span class="op">=</span> <span class="st">"f"</span>
+    <span class="op">)</span>,
+    decimals <span class="op">=</span> <span class="fl">2</span>
+  <span class="op">)</span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_currency_1.png" style="width:100%;"></p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
@@ -153,25 +165,6 @@ required each and every context.</p>
 <code><a href="random_id.html">random_id</a>()</code></p></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Use `exibble` to create a gt table;</span></span>
-<span class="r-in"><span class="co"># format the `currency` column to have</span></span>
-<span class="r-in"><span class="co"># currency values in guilder (a defunct</span></span>
-<span class="r-in"><span class="co"># Dutch currency)</span></span>
-<span class="r-in"><span class="va">tab_1</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="va">exibble</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="fmt_currency.html">fmt_currency</a></span><span class="op">(</span></span>
-<span class="r-in">    columns <span class="op">=</span> <span class="va">currency</span>,</span>
-<span class="r-in">    currency <span class="op">=</span> <span class="fu">currency</span><span class="op">(</span></span>
-<span class="r-in">      html <span class="op">=</span> <span class="st">"&amp;fnof;"</span>,</span>
-<span class="r-in">      default <span class="op">=</span> <span class="st">"f"</span><span class="op">)</span>,</span>
-<span class="r-in">    decimals <span class="op">=</span> <span class="fl">2</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
@@ -181,7 +174,7 @@ required each and every context.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer></div>

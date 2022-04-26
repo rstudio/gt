@@ -282,16 +282,27 @@ generally work.</p><ul><li><p><code>"%m/%d/%Y"</code> -&gt; <code>"06/08/2015"</
 <li><p><code>"%%"</code> -&gt; <code>"%"</code> (the literal "<code>%</code>" character, in case you need it)</p></li>
 </ul></div>
     <div class="section level2">
-    <h2 id="figures">Figures<a class="anchor" aria-label="anchor" href="#figures"></a></h2>
+    <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     
 
-<p><img src="figures/man_fmt_datetime_1.png" width="100%"></p>
+
+<p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table. Keep only the <code>datetime</code> column.
+Format the column to have dates formatted as <code>month_day_year</code> and times to be
+<code>hms_p</code>.</p><div class="sourceCode r"><pre><code><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">datetime</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/fmt_datetime.html">fmt_datetime</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="va">datetime</span>,
+    date_style <span class="op">=</span> <span class="fl">5</span>,
+    time_style <span class="op">=</span> <span class="fl">3</span>
+  <span class="op">)</span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_datetime_1.png" style="width:100%;"></p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
     
 
-<p>3-10</p>
+<p>3-11</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -314,25 +325,6 @@ generally work.</p><ul><li><p><code>"%m/%d/%Y"</code> -&gt; <code>"06/08/2015"</
 <code><a href="text_transform.html">text_transform</a>()</code></p></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Use `exibble` to create a gt table;</span></span>
-<span class="r-in"><span class="co"># keep only the `datetime` column;</span></span>
-<span class="r-in"><span class="co"># format the column to have dates</span></span>
-<span class="r-in"><span class="co"># formatted as `month_day_year` and</span></span>
-<span class="r-in"><span class="co"># times to be `hms_p`</span></span>
-<span class="r-in"><span class="va">tab_1</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="va">exibble</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">datetime</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">fmt_datetime</span><span class="op">(</span></span>
-<span class="r-in">    columns <span class="op">=</span> <span class="va">datetime</span>,</span>
-<span class="r-in">    date_style <span class="op">=</span> <span class="fl">5</span>,</span>
-<span class="r-in">    time_style <span class="op">=</span> <span class="fl">3</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
@@ -342,7 +334,7 @@ generally work.</p><ul><li><p><code>"%m/%d/%Y"</code> -&gt; <code>"06/08/2015"</
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer></div>

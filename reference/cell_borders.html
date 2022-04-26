@@ -106,11 +106,56 @@ any defined <code>sides</code> can be removed by supplying <code>NULL</code> to 
     <p>A list object of class <code>cell_styles</code>.</p>
     </div>
     <div class="section level2">
-    <h2 id="figures">Figures<a class="anchor" aria-label="anchor" href="#figures"></a></h2>
+    <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     
 
-<p><img src="figures/man_cell_borders_1.png" width="100%"></p>
-<p><img src="figures/man_cell_borders_2.png" width="100%"></p>
+
+<p>Add horizontal border lines for all table body rows in <code><a href="exibble.html">exibble</a></code> using
+<code><a href="tab_style.html">tab_style()</a></code> and <code>cell_borders()</code>.</p><div class="sourceCode r"><pre><code><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>row.striping.include_table_body <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span>
+    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_borders.html">cell_borders</a></span><span class="op">(</span>
+      sides <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"top"</span>, <span class="st">"bottom"</span><span class="op">)</span>,
+      color <span class="op">=</span> <span class="st">"red"</span>,
+      weight <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">1.5</span><span class="op">)</span>,
+      style <span class="op">=</span> <span class="st">"solid"</span>
+    <span class="op">)</span>,
+    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span>
+      columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,
+      rows <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>
+    <span class="op">)</span>
+  <span class="op">)</span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cell_borders_1.png" style="width:100%;"></p>
+<p>Incorporate different horizontal and vertical borders at several locations.
+This uses multiple <code>cell_borders()</code> and <code><a href="cells_body.html">cells_body()</a></code> calls within
+<code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>s.</p><div class="sourceCode r"><pre><code><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span>
+    style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
+      <span class="fu"><a href="../reference/cell_borders.html">cell_borders</a></span><span class="op">(</span>
+        sides <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"top"</span>, <span class="st">"bottom"</span><span class="op">)</span>,
+        color <span class="op">=</span> <span class="st">"#FF0000"</span>,
+        weight <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
+      <span class="op">)</span>,
+      <span class="fu"><a href="../reference/cell_borders.html">cell_borders</a></span><span class="op">(</span>
+        sides <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"right"</span><span class="op">)</span>,
+        color <span class="op">=</span> <span class="st">"#0000FF"</span>,
+        weight <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
+      <span class="op">)</span>
+    <span class="op">)</span>,
+    locations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
+      <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span>
+        columns <span class="op">=</span> <span class="va">num</span>,
+        rows <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">num</span><span class="op">)</span>
+      <span class="op">)</span>,
+      <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span>
+        columns <span class="op">=</span> <span class="va">currency</span>,
+        rows <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">currency</span><span class="op">)</span>
+      <span class="op">)</span>
+    <span class="op">)</span>
+  <span class="op">)</span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cell_borders_2.png" style="width:100%;"></p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
@@ -149,61 +194,6 @@ any defined <code>sides</code> can be removed by supplying <code>NULL</code> to 
 <code><a href="random_id.html">random_id</a>()</code></p></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Add horizontal border lines for</span></span>
-<span class="r-in"><span class="co"># all table body rows in `exibble`</span></span>
-<span class="r-in"><span class="va">tab_1</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="va">exibble</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="tab_options.html">tab_options</a></span><span class="op">(</span>row.striping.include_table_body <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="tab_style.html">tab_style</a></span><span class="op">(</span></span>
-<span class="r-in">      style <span class="op">=</span> <span class="fu">cell_borders</span><span class="op">(</span></span>
-<span class="r-in">        sides <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"top"</span>, <span class="st">"bottom"</span><span class="op">)</span>,</span>
-<span class="r-in">        color <span class="op">=</span> <span class="st">"#BBBBBB"</span>,</span>
-<span class="r-in">        weight <span class="op">=</span> <span class="fu"><a href="px.html">px</a></span><span class="op">(</span><span class="fl">1.5</span><span class="op">)</span>,</span>
-<span class="r-in">        style <span class="op">=</span> <span class="st">"solid"</span></span>
-<span class="r-in">      <span class="op">)</span>,</span>
-<span class="r-in">      locations <span class="op">=</span> <span class="fu"><a href="cells_body.html">cells_body</a></span><span class="op">(</span></span>
-<span class="r-in">        columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span class="r-in">        rows <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in">      <span class="op">)</span></span>
-<span class="r-in">    <span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Incorporate different horizontal and</span></span>
-<span class="r-in"><span class="co"># vertical borders at several locations;</span></span>
-<span class="r-in"><span class="co"># this uses multiple `cell_borders()` and</span></span>
-<span class="r-in"><span class="co"># `cells_body()` calls within `list()`s</span></span>
-<span class="r-in"><span class="va">tab_2</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="va">exibble</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="tab_style.html">tab_style</a></span><span class="op">(</span></span>
-<span class="r-in">      style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">        <span class="fu">cell_borders</span><span class="op">(</span></span>
-<span class="r-in">          sides <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"top"</span>, <span class="st">"bottom"</span><span class="op">)</span>,</span>
-<span class="r-in">          color <span class="op">=</span> <span class="st">"#FF0000"</span>,</span>
-<span class="r-in">          weight <span class="op">=</span> <span class="fu"><a href="px.html">px</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in">        <span class="op">)</span>,</span>
-<span class="r-in">        <span class="fu">cell_borders</span><span class="op">(</span></span>
-<span class="r-in">          sides <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"right"</span><span class="op">)</span>,</span>
-<span class="r-in">          color <span class="op">=</span> <span class="st">"#0000FF"</span>,</span>
-<span class="r-in">          weight <span class="op">=</span> <span class="fu"><a href="px.html">px</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in">        <span class="op">)</span></span>
-<span class="r-in">      <span class="op">)</span>,</span>
-<span class="r-in">      locations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">        <span class="fu"><a href="cells_body.html">cells_body</a></span><span class="op">(</span></span>
-<span class="r-in">          columns <span class="op">=</span> <span class="va">num</span>,</span>
-<span class="r-in">          rows <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">num</span><span class="op">)</span></span>
-<span class="r-in">        <span class="op">)</span>,</span>
-<span class="r-in">        <span class="fu"><a href="cells_body.html">cells_body</a></span><span class="op">(</span></span>
-<span class="r-in">          columns <span class="op">=</span> <span class="va">currency</span>,</span>
-<span class="r-in">          rows <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">currency</span><span class="op">)</span></span>
-<span class="r-in">        <span class="op">)</span></span>
-<span class="r-in">      <span class="op">)</span></span>
-<span class="r-in">    <span class="op">)</span></span>
-<span class="r-in"></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
@@ -213,7 +203,7 @@ any defined <code>sides</code> can be removed by supplying <code>NULL</code> to 
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer></div>

@@ -115,11 +115,55 @@ a cell.</p>
 heights of most table rows.</p>
     </div>
     <div class="section level2">
-    <h2 id="figures">Figures<a class="anchor" aria-label="anchor" href="#figures"></a></h2>
+    <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     
 
-<p><img src="figures/man_web_image_1.png" width="100%"></p>
-<p><img src="figures/man_web_image_2.png" width="100%"></p>
+
+<p>Get the PNG-based logo for the R Project from an image URL.</p><div class="sourceCode r"><pre><code><span class="va">r_png_url</span> <span class="op">&lt;-</span> <span class="st">"https://www.r-project.org/logo/Rlogo.png"</span></code></pre><p></p></div>
+<p>Create a tibble that contains heights of an image in pixels (one column as a
+string, the other as numerical values), then, create a <strong>gt</strong> table. Use the
+<code><a href="text_transform.html">text_transform()</a></code> function to insert the R logo PNG image with the various
+sizes.</p><div class="sourceCode r"><pre><code><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>
+  pixels <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">35</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>,
+  image <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">35</span>, <span class="fl">5</span><span class="op">)</span>
+<span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/text_transform.html">text_transform</a></span><span class="op">(</span>
+    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">image</span><span class="op">)</span>,
+    fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+      <span class="fu"><a href="../reference/web_image.html">web_image</a></span><span class="op">(</span>
+        url <span class="op">=</span> <span class="va">r_png_url</span>,
+        height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+      <span class="op">)</span>
+    <span class="op">}</span>
+  <span class="op">)</span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_web_image_1.png" style="width:100%;"></p>
+<p>Get the SVG-based logo for the R Project from an image URL.</p><div class="sourceCode r"><pre><code><span class="va">r_svg_url</span> <span class="op">&lt;-</span> <span class="st">"https://www.r-project.org/logo/Rlogo.svg"</span></code></pre><p></p></div>
+<p>Create a tibble that contains heights of an image in pixels (one column as a
+string, the other as numerical values), then, create a <strong>gt</strong> table. Use the
+<code><a href="tab_header.html">tab_header()</a></code> function to insert the <strong>R</strong> logo SVG image once in the title
+and five times in the subtitle.</p><div class="sourceCode r"><pre><code><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>
+  pixels <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">35</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>,
+  image <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">35</span>, <span class="fl">5</span><span class="op">)</span>
+<span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/tab_header.html">tab_header</a></span><span class="op">(</span>
+    title <span class="op">=</span> <span class="fu"><a href="../reference/html.html">html</a></span><span class="op">(</span>
+      <span class="st">"&lt;strong&gt;R Logo&lt;/strong&gt;"</span>,
+      <span class="fu"><a href="../reference/web_image.html">web_image</a></span><span class="op">(</span>
+        url <span class="op">=</span> <span class="va">r_svg_url</span>,
+        height <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span>
+      <span class="op">)</span>
+    <span class="op">)</span>,
+    subtitle <span class="op">=</span> <span class="fu"><a href="../reference/html.html">html</a></span><span class="op">(</span>
+      <span class="fu"><a href="../reference/web_image.html">web_image</a></span><span class="op">(</span>
+        url <span class="op">=</span> <span class="va">r_svg_url</span>,
+        height <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">12</span><span class="op">)</span>
+      <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+        <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
+    <span class="op">)</span>
+  <span class="op">)</span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_web_image_2.png" style="width:100%;"></p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
@@ -135,73 +179,6 @@ heights of most table rows.</p>
 <code><a href="test_image.html">test_image</a>()</code></p></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Get the PNG-based logo for the R</span></span>
-<span class="r-in"><span class="co"># Project from an image URL</span></span>
-<span class="r-in"><span class="va">r_png_url</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="st">"https://www.r-project.org/logo/Rlogo.png"</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Create a tibble that contains heights</span></span>
-<span class="r-in"><span class="co"># of an image in pixels (one column as a</span></span>
-<span class="r-in"><span class="co"># string, the other as numerical values),</span></span>
-<span class="r-in"><span class="co"># then, create a gt table; use the</span></span>
-<span class="r-in"><span class="co"># `text_transform()` function to insert</span></span>
-<span class="r-in"><span class="co"># the R logo PNG image with the various</span></span>
-<span class="r-in"><span class="co"># sizes</span></span>
-<span class="r-in"><span class="va">tab_1</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
-<span class="r-in">    pixels <span class="op">=</span> <span class="fu"><a href="px.html">px</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">35</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">    image <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">35</span>, <span class="fl">5</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="text_transform.html">text_transform</a></span><span class="op">(</span></span>
-<span class="r-in">    locations <span class="op">=</span> <span class="fu"><a href="cells_body.html">cells_body</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">image</span><span class="op">)</span>,</span>
-<span class="r-in">    fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">      <span class="fu">web_image</span><span class="op">(</span></span>
-<span class="r-in">        url <span class="op">=</span> <span class="va">r_png_url</span>,</span>
-<span class="r-in">        height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span class="r-in">      <span class="op">)</span></span>
-<span class="r-in">    <span class="op">}</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Get the SVG-based logo for the R</span></span>
-<span class="r-in"><span class="co"># Project from an image URL</span></span>
-<span class="r-in"><span class="va">r_svg_url</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="st">"https://www.r-project.org/logo/Rlogo.svg"</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Create a tibble that contains heights</span></span>
-<span class="r-in"><span class="co"># of an image in pixels (one column as a</span></span>
-<span class="r-in"><span class="co"># string, the other as numerical values),</span></span>
-<span class="r-in"><span class="co"># then, create a gt table; use the</span></span>
-<span class="r-in"><span class="co"># `tab_header()` function to insert</span></span>
-<span class="r-in"><span class="co"># the R logo SVG image once in the title</span></span>
-<span class="r-in"><span class="co"># and five times in the subtitle</span></span>
-<span class="r-in"><span class="va">tab_2</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
-<span class="r-in">    pixels <span class="op">=</span> <span class="fu"><a href="px.html">px</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">35</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">    image <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">35</span>, <span class="fl">5</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="tab_header.html">tab_header</a></span><span class="op">(</span></span>
-<span class="r-in">    title <span class="op">=</span> <span class="fu"><a href="html.html">html</a></span><span class="op">(</span></span>
-<span class="r-in">      <span class="st">"&lt;strong&gt;R Logo&lt;/strong&gt;"</span>,</span>
-<span class="r-in">      <span class="fu">web_image</span><span class="op">(</span></span>
-<span class="r-in">        url <span class="op">=</span> <span class="va">r_svg_url</span>,</span>
-<span class="r-in">        height <span class="op">=</span> <span class="fu"><a href="px.html">px</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span></span>
-<span class="r-in">      <span class="op">)</span></span>
-<span class="r-in">    <span class="op">)</span>,</span>
-<span class="r-in">    subtitle <span class="op">=</span> <span class="fu"><a href="html.html">html</a></span><span class="op">(</span></span>
-<span class="r-in">      <span class="fu">web_image</span><span class="op">(</span></span>
-<span class="r-in">        url <span class="op">=</span> <span class="va">r_svg_url</span>,</span>
-<span class="r-in">        height <span class="op">=</span> <span class="fu"><a href="px.html">px</a></span><span class="op">(</span><span class="fl">12</span><span class="op">)</span></span>
-<span class="r-in">      <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">        <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
-<span class="r-in">    <span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
@@ -211,7 +188,7 @@ heights of most table rows.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer></div>

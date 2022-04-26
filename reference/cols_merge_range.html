@@ -126,10 +126,23 @@ operate similarly, where the non-target columns can be optionally hidden from
 the output table through the <code>hide_columns</code> or <code>autohide</code> options.</p>
     </div>
     <div class="section level2">
-    <h2 id="figures">Figures<a class="anchor" aria-label="anchor" href="#figures"></a></h2>
+    <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     
 
-<p><img src="figures/man_cols_merge_range_1.png" width="100%"></p>
+
+<p>Use <code><a href="gtcars.html">gtcars</a></code> to create a <strong>gt</strong> table, keeping only the <code>model</code>, <code>mpg_c</code>,
+and <code>mpg_h</code> columns. Merge the <code>"mpg*"</code> columns together as a single range
+column (which is labeled as MPG, in italics) using the <code>cols_merge_range()</code>
+function.</p><div class="sourceCode r"><pre><code><span class="va">gtcars</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">model</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"mpg"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/cols_merge_range.html">cols_merge_range</a></span><span class="op">(</span>
+    col_begin <span class="op">=</span> <span class="va">mpg_c</span>,
+    col_end <span class="op">=</span> <span class="va">mpg_h</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/cols_label.html">cols_label</a></span><span class="op">(</span>mpg_c <span class="op">=</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span><span class="st">"*MPG*"</span><span class="op">)</span><span class="op">)</span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_merge_range_1.png" style="width:100%;"></p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
@@ -153,29 +166,6 @@ the output table through the <code>hide_columns</code> or <code>autohide</code> 
 <code><a href="cols_width.html">cols_width</a>()</code></p></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Use `gtcars` to create a gt table,</span></span>
-<span class="r-in"><span class="co"># keeping only the `model`, `mpg_c`,</span></span>
-<span class="r-in"><span class="co"># and `mpg_h` columns; merge the mpg</span></span>
-<span class="r-in"><span class="co"># columns together as a single range</span></span>
-<span class="r-in"><span class="co"># column (which is labeled as MPG,</span></span>
-<span class="r-in"><span class="co"># in italics)</span></span>
-<span class="r-in"><span class="va">tab_1</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="va">gtcars</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">model</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"mpg"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">cols_merge_range</span><span class="op">(</span></span>
-<span class="r-in">    col_begin <span class="op">=</span> <span class="va">mpg_c</span>,</span>
-<span class="r-in">    col_end <span class="op">=</span> <span class="va">mpg_h</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="cols_label.html">cols_label</a></span><span class="op">(</span></span>
-<span class="r-in">    mpg_c <span class="op">=</span> <span class="fu"><a href="md.html">md</a></span><span class="op">(</span><span class="st">"*MPG*"</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
@@ -185,7 +175,7 @@ the output table through the <code>hide_columns</code> or <code>autohide</code> 
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer></div>

@@ -86,10 +86,74 @@ descriptive stub labels for the summary rows.</p>
     <p>A list of data frames containing summary data.</p>
     </div>
     <div class="section level2">
-    <h2 id="figures">Figures<a class="anchor" aria-label="anchor" href="#figures"></a></h2>
+    <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     
 
-<p><img src="figures/man_extract_summary_1.png" width="100%"></p>
+
+<p>Use <code><a href="sp500.html">sp500</a></code> to create a <strong>gt</strong> table with row groups. Create summary rows
+labeled as <code>min</code>, <code>max</code>, and <code>avg</code> for every row group with <code><a href="summary_rows.html">summary_rows()</a></code>.
+Then, extract the summary rows as a list object.</p><div class="sourceCode r"><pre><code><span class="va">summary_extracted</span> <span class="op">&lt;-</span>
+  <span class="va">sp500</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">date</span> <span class="op">&gt;=</span> <span class="st">"2015-01-05"</span> <span class="op">&amp;</span> <span class="va">date</span> <span class="op">&lt;=</span><span class="st">"2015-01-30"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>week <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"W"</span>, <span class="fu"><a href="https://rdrr.io/r/base/strptime.html" class="external-link">strftime</a></span><span class="op">(</span><span class="va">date</span>, format <span class="op">=</span> <span class="st">"%V"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">adj_close</span>, <span class="op">-</span><span class="va">volume</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>
+    rowname_col <span class="op">=</span> <span class="st">"date"</span>,
+    groupname_col <span class="op">=</span> <span class="st">"week"</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/summary_rows.html">summary_rows</a></span><span class="op">(</span>
+    groups <span class="op">=</span> <span class="cn">TRUE</span>,
+    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">open</span>, <span class="va">high</span>, <span class="va">low</span>, <span class="va">close</span><span class="op">)</span>,
+    fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
+      min <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span>,
+      max <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span>,
+      avg <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span>
+    <span class="op">)</span>,
+    formatter <span class="op">=</span> <span class="va">fmt_number</span>,
+    use_seps <span class="op">=</span> <span class="cn">FALSE</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/extract_summary.html">extract_summary</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="va">summary_extracted</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## $summary_df_data_list</span>
+<span class="co">## $summary_df_data_list$W02</span>
+<span class="co">## # A tibble: 3 × 8</span>
+<span class="co">##   group_id rowname  date  open  high   low close  week</span>
+<span class="co">##   &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">## 1 W02      min        NA 2006. 2030. 1992. 2003.    NA</span>
+<span class="co">## 2 W02      max        NA 2063. 2064. 2038. 2062.    NA</span>
+<span class="co">## 3 W02      avg        NA 2035. 2049. 2017. 2031.    NA</span>
+<span class="co">## </span>
+<span class="co">## $summary_df_data_list$W03</span>
+<span class="co">## # A tibble: 3 × 8</span>
+<span class="co">##   group_id rowname  date  open  high   low close  week</span>
+<span class="co">##   &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">## 1 W03      min        NA 1992. 2018. 1988. 1993.    NA</span>
+<span class="co">## 2 W03      max        NA 2046. 2057. 2023. 2028.    NA</span>
+<span class="co">## 3 W03      avg        NA 2020. 2033. 2000. 2015.    NA</span>
+<span class="co">## </span>
+<span class="co">## $summary_df_data_list$W04</span>
+<span class="co">## # A tibble: 3 × 8</span>
+<span class="co">##   group_id rowname  date  open  high   low close  week</span>
+<span class="co">##   &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">## 1 W04      min        NA 2020. 2029. 2004. 2023.    NA</span>
+<span class="co">## 2 W04      max        NA 2063. 2065. 2051. 2063.    NA</span>
+<span class="co">## 3 W04      avg        NA 2035. 2049. 2023. 2042.    NA</span>
+<span class="co">## </span>
+<span class="co">## $summary_df_data_list$W05</span>
+<span class="co">## # A tibble: 3 × 8</span>
+<span class="co">##   group_id rowname  date  open  high   low close  week</span>
+<span class="co">##   &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">## 1 W05      min        NA 2002. 2023. 1989. 1995.    NA</span>
+<span class="co">## 2 W05      max        NA 2050. 2058. 2041. 2057.    NA</span>
+<span class="co">## 3 W05      avg        NA 2030. 2039. 2009. 2021.    NA</span></code></pre></div>
+
+<p>Use the summary list to make a new <strong>gt</strong> table. The key thing is to use
+<code><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">dplyr::bind_rows()</a></code> and then pass the tibble to <code><a href="gt.html">gt()</a></code>.</p><div class="sourceCode r"><pre><code><span class="va">summary_extracted</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span>recursive <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>groupname_col <span class="op">=</span> <span class="st">"group_id"</span><span class="op">)</span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_extract_summary_1.png" style="width:100%;"></p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
@@ -106,53 +170,6 @@ descriptive stub labels for the summary rows.</p>
 <code><a href="gtsave.html">gtsave</a>()</code></p></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Use `sp500` to create a gt table with</span></span>
-<span class="r-in"><span class="co"># row groups; create summary rows by row</span></span>
-<span class="r-in"><span class="co"># group (`min`, `max`, `avg`) and then</span></span>
-<span class="r-in"><span class="co"># extract the summary rows as a list</span></span>
-<span class="r-in"><span class="co"># object</span></span>
-<span class="r-in"><span class="va">summary_extracted</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="va">sp500</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="va">date</span> <span class="op">&gt;=</span> <span class="st">"2015-01-05"</span> <span class="op">&amp;</span></span>
-<span class="r-in">      <span class="va">date</span> <span class="op">&lt;=</span><span class="st">"2015-01-30"</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
-<span class="r-in">    week <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span></span>
-<span class="r-in">      <span class="st">"W"</span>, <span class="fu"><a href="https://rdrr.io/r/base/strptime.html" class="external-link">strftime</a></span><span class="op">(</span><span class="va">date</span>, format <span class="op">=</span> <span class="st">"%V"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">adj_close</span>, <span class="op">-</span><span class="va">volume</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="gt.html">gt</a></span><span class="op">(</span></span>
-<span class="r-in">    rowname_col <span class="op">=</span> <span class="st">"date"</span>,</span>
-<span class="r-in">    groupname_col <span class="op">=</span> <span class="st">"week"</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="summary_rows.html">summary_rows</a></span><span class="op">(</span></span>
-<span class="r-in">    groups <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">open</span>, <span class="va">high</span>, <span class="va">low</span>, <span class="va">close</span><span class="op">)</span>,</span>
-<span class="r-in">    fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">      min <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span>,</span>
-<span class="r-in">      max <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span>,</span>
-<span class="r-in">      avg <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">    formatter <span class="op">=</span> <span class="va">fmt_number</span>,</span>
-<span class="r-in">    use_seps <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">extract_summary</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Use the summary list to make a new</span></span>
-<span class="r-in"><span class="co"># gt table; the key thing is to use</span></span>
-<span class="r-in"><span class="co"># `dplyr::bind_rows()` and then pass the</span></span>
-<span class="r-in"><span class="co"># tibble to `gt()`</span></span>
-<span class="r-in"><span class="va">tab_1</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="va">summary_extracted</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span>recursive <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="gt.html">gt</a></span><span class="op">(</span>groupname_col <span class="op">=</span> <span class="st">"group_id"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
@@ -162,7 +179,7 @@ descriptive stub labels for the summary rows.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer></div>

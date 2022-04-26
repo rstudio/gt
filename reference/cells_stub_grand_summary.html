@@ -132,10 +132,31 @@ can be targeted by enclosing several <code>cells_*()</code> helper functions in 
 <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> (e.g., <code>list(cells_body(), cells_grand_summary())</code>).</p>
     </div>
     <div class="section level2">
-    <h2 id="figures">Figures<a class="anchor" aria-label="anchor" href="#figures"></a></h2>
+    <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     
 
-<p><img src="figures/man_cells_stub_grand_summary_1.png" width="100%"></p>
+
+<p>Use <code><a href="countrypops.html">countrypops</a></code> to create a <strong>gt</strong> table. Add some styling to a grand
+summary stub cell with with the <code><a href="tab_style.html">tab_style()</a></code> and
+<code>cells_stub_grand_summary()</code> functions.</p><div class="sourceCode r"><pre><code><span class="va">countrypops</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">country_name</span> <span class="op">==</span> <span class="st">"Spain"</span>, <span class="va">year</span> <span class="op">&lt;</span> <span class="fl">1970</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"country"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"year"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="va">population</span>,
+    decimals <span class="op">=</span> <span class="fl">0</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/grand_summary_rows.html">grand_summary_rows</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="va">population</span>,
+    fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>change <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span>,
+    formatter <span class="op">=</span> <span class="va">fmt_number</span>,
+    decimals <span class="op">=</span> <span class="fl">0</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span>
+    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_text.html">cell_text</a></span><span class="op">(</span>weight <span class="op">=</span> <span class="st">"bold"</span>, transform <span class="op">=</span> <span class="st">"uppercase"</span><span class="op">)</span>,
+    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_stub_grand_summary.html">cells_stub_grand_summary</a></span><span class="op">(</span>rows <span class="op">=</span> <span class="st">"change"</span><span class="op">)</span>
+  <span class="op">)</span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_stub_grand_summary_1.png" style="width:100%;"></p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
@@ -174,39 +195,6 @@ can be targeted by enclosing several <code>cells_*()</code> helper functions in 
 <code><a href="random_id.html">random_id</a>()</code></p></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Use `countrypops` to create a gt table;</span></span>
-<span class="r-in"><span class="co"># add some styling to a grand summary stub</span></span>
-<span class="r-in"><span class="co"># cell with with the `tab_style()` and</span></span>
-<span class="r-in"><span class="co"># `cells_stub_grand_summary()` functions</span></span>
-<span class="r-in"><span class="va">tab_1</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="va">countrypops</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="va">country_name</span> <span class="op">==</span> <span class="st">"Spain"</span>,</span>
-<span class="r-in">    <span class="va">year</span> <span class="op">&lt;</span> <span class="fl">1970</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"country"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"year"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="fmt_number.html">fmt_number</a></span><span class="op">(</span></span>
-<span class="r-in">    columns <span class="op">=</span> <span class="va">population</span>,</span>
-<span class="r-in">    decimals <span class="op">=</span> <span class="fl">0</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="grand_summary_rows.html">grand_summary_rows</a></span><span class="op">(</span></span>
-<span class="r-in">    columns <span class="op">=</span> <span class="va">population</span>,</span>
-<span class="r-in">    fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">      change <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span></span>
-<span class="r-in">    <span class="op">)</span>,</span>
-<span class="r-in">    formatter <span class="op">=</span> <span class="va">fmt_number</span>,</span>
-<span class="r-in">    decimals <span class="op">=</span> <span class="fl">0</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="tab_style.html">tab_style</a></span><span class="op">(</span></span>
-<span class="r-in">    style <span class="op">=</span> <span class="fu"><a href="cell_text.html">cell_text</a></span><span class="op">(</span>weight <span class="op">=</span> <span class="st">"bold"</span>, transform <span class="op">=</span> <span class="st">"uppercase"</span><span class="op">)</span>,</span>
-<span class="r-in">    locations <span class="op">=</span> <span class="fu">cells_stub_grand_summary</span><span class="op">(</span>rows <span class="op">=</span> <span class="st">"change"</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
@@ -216,7 +204,7 @@ can be targeted by enclosing several <code>cells_*()</code> helper functions in 
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer></div>
