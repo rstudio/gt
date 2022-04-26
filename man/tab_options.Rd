@@ -379,9 +379,14 @@ By default, this is set to \code{"none"} but the other options are \code{"footer
 and \code{"header"}.}
 
 \item{page.header.use_tbl_headings}{If \code{TRUE} then RTF output tables will
-migrate all table footer content (this includes footnotes and source notes)
-to the page footer. This page footer content will repeat across
+migrate all table headings (including the table title and all column
+labels) to the page header. This page header content will repeat across
 pages. By default, this is \code{FALSE}.}
+
+\item{page.footer.use_tbl_notes}{If \code{TRUE} then RTF output tables will
+migrate all table footer content (this includes footnotes and source notes)
+to the page footer. This page footer content will repeat across pages. By
+default, this is \code{FALSE}.}
 }
 \value{
 An object of class \code{gt_tbl}.

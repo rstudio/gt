@@ -1818,10 +1818,10 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   migrate all table headings (including the table title and all column
 #'   labels) to the page header. This page header content will repeat across
 #'   pages. By default, this is `FALSE`.
-#' @param page.header.use_tbl_headings If `TRUE` then RTF output tables will
+#' @param page.footer.use_tbl_notes If `TRUE` then RTF output tables will
 #'   migrate all table footer content (this includes footnotes and source notes)
-#'   to the page footer. This page footer content will repeat across
-#'   pages. By default, this is `FALSE`.
+#'   to the page footer. This page footer content will repeat across pages. By
+#'   default, this is `FALSE`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
