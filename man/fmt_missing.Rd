@@ -44,13 +44,6 @@ argument. See the \emph{Arguments} section for more information on this.
 }
 \section{Examples}{
 
-\if{html}{\figure{man_fmt_missing_1.png}{options: width=100\%}}
-}
-
-\section{Function ID}{
-
-3-15
-}
 
 Use \code{\link{exibble}} to create a \strong{gt} table. The \code{NA} values in different
 columns will be given replacement text.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
@@ -77,7 +70,7 @@ columns will be given replacement text.\if{html}{\out{<div class="sourceCode r">
 }
 
 \seealso{
-Other Format Data:
+Other Format Data: 
 \code{\link{data_color}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},

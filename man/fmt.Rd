@@ -56,13 +56,6 @@ for more information on this.
 }
 \section{Examples}{
 
-\if{html}{\figure{man_fmt_1.png}{options: width=100\%}}
-}
-
-\section{Function ID}{
-
-3-16
-}
 
 Use \code{\link{exibble}} to create a \strong{gt} table. Format the numeric values in the
 \code{num} column with a function supplied to the \code{fns} argument.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
@@ -87,7 +80,7 @@ Use \code{\link{exibble}} to create a \strong{gt} table. Format the numeric valu
 }
 
 \seealso{
-Other Format Data:
+Other Format Data: 
 \code{\link{data_color}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},

@@ -191,20 +191,8 @@ argument. See the \emph{Arguments} section for more information on this.
 \section{Examples}{
 
 
-\if{html}{\figure{man_fmt_currency_2.png}{options: width=100\%}}
-}
-
-\section{Function ID}{
-
-3-8
-}
-
-\examples{
-# Use `exibble` to create a gt table;
-# format the `currency` column to have
-# currency values in euros (EUR)
-tab_1 <-
-  exibble \%>\%
+Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{currency} column to
+have currency values in euros (\code{"EUR"}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt() \%>\%
   fmt_currency(
     columns = currency,
@@ -237,11 +225,11 @@ columns, then, format those columns using the \code{"CNY"} and \code{"GBP"} curr
 
 \section{Function ID}{
 
-3-7
+3-8
 }
 
 \seealso{
-Other Format Data:
+Other Format Data: 
 \code{\link{data_color}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_datetime}()},

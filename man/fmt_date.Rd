@@ -75,22 +75,9 @@ argument. See the \emph{Arguments} section for more information on this.
 \section{Examples}{
 
 
-\if{html}{\figure{man_fmt_date_2.png}{options: width=100\%}}
-}
-
-\section{Function ID}{
-
-3-10
-}
-
-\examples{
-# Use `exibble` to create a gt table;
-# keep only the `date` and `time` columns;
-# format the `date` column to have
-# dates formatted as `month_day_year`
-# (date style `5`)
-tab_1 <-
-  exibble \%>\%
+Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{date} and \code{time}
+columns. Format the \code{date} column to have dates formatted as \code{month_day_year}
+(date style \code{5}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(date, time) \%>\%
   gt() \%>\%
   fmt_date(
@@ -132,7 +119,7 @@ in the \code{rows} argument).\if{html}{\out{<div class="sourceCode r">}}\preform
 }
 
 \seealso{
-Other Format Data:
+Other Format Data: 
 \code{\link{data_color}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
