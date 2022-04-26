@@ -19,10 +19,13 @@
 #'
 #' @source <https://data.worldbank.org/indicator/SP.POP.TOTL>
 #'
-#' @examples
-#' # Here is a glimpse at the data
-#' # available in `countrypops`
+#' @section Examples:
+#'
+#' Here is a glimpse at the data available in `countrypops`.
+#'
+#' ```{r}
 #' dplyr::glimpse(countrypops)
+#' ```
 #'
 #' @family Datasets
 #' @section Function ID:
@@ -67,10 +70,13 @@
 #' Photochemistry Applications (Peterson, 1976), available at:
 #' <https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=9100JA26.txt>.
 #'
-#' @examples
-#' # Here is a glimpse at the data
-#' # available in `sza`
+#' @section Examples:
+#'
+#' Here is a glimpse at the data available in `sza`.
+#'
+#' ```{r}
 #' dplyr::glimpse(sza)
+#' ```
 #'
 #' @family Datasets
 #' @section Function ID:
@@ -119,10 +125,13 @@
 #'   \item{msrp}{Manufacturer's suggested retail price in U.S. dollars (USD)}
 #' }
 #'
-#' @examples
-#' # Here is a glimpse at the data
-#' # available in `gtcars`
+#' @section Examples:
+#'
+#' Here is a glimpse at the data available in `gtcars`.
+#'
+#' ```{r}
 #' dplyr::glimpse(gtcars)
+#' ```
 #'
 #' @family Datasets
 #' @section Function ID:
@@ -146,10 +155,13 @@
 #' \item{adj_close}{The close price adjusted for both dividends and splits}
 #' }
 #'
-#' @examples
-#' # Here is a glimpse at the data
-#' # available in `sp500`
+#' @section Examples:
+#'
+#' Here is a glimpse at the data available in `sp500`.
+#'
+#' ```{r}
 #' dplyr::glimpse(sp500)
+#' ```
 #'
 #' @family Datasets
 #' @section Function ID:
@@ -274,10 +286,13 @@
 #'   (in USD)}
 #' }
 #'
-#' @examples
-#' # Here is a glimpse at the data
-#' # available in `pizzaplace`
+#' @section Examples:
+#'
+#' Here is a glimpse at the pizza data available in `pizzaplace`.
+#'
+#' ```{r}
 #' dplyr::glimpse(pizzaplace)
+#' ```
 #'
 #' @family Datasets
 #' @section Function ID:
@@ -315,10 +330,13 @@
 #'   row groups}
 #' }
 #'
-#' @examples
-#' # Here is a glimpse at the data
-#' # available in `exibble`
-#' dplyr::glimpse(exibble)
+#' @section Examples:
+#'
+#' Here is the `exibble`.
+#'
+#' ```{r}
+#' exibble
+#' ```
 #'
 #' @family Datasets
 #' @section Function ID:

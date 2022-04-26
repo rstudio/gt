@@ -2,6 +2,7 @@
 ^docs$
 ^pkgdown$
 ^scripts$
+^images$
 ^\.github$
 ^\.gitattributes$
 ^\.Rproj\.user$

@@ -1538,3 +1538,12 @@ column_classes_are_valid <- function(data, columns, valid_classes) {
 #
 #   print(x)
 # }
+
+man_get_image_tag <- function(file, dir = "images") {
+
+  repo_url <- "https://raw.githubusercontent.com/rstudio/gt/master"
+
+  image_url <- file.path(repo_url, dir, file)
+
+  paste0("<img src=\"", image_url, "\" style=\"width:100\\%;\">")
+}

@@ -96,9 +96,18 @@ helper functions exist to make targeting more effective. Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
 argument. See the \emph{Arguments} section for more information on this.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_fmt_engineering_1.png}{options: width=100\%}}
+
+Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{num} column in
+engineering notation.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+  gt() \%>\%
+  fmt_engineering(columns = num)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_engineering_1.png" style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
@@ -106,16 +115,6 @@ argument. See the \emph{Arguments} section for more information on this.
 3-4
 }
 
-\examples{
-# Use `exibble` to create a gt table;
-# format the `num` column in
-# engineering notation
-tab_1 <-
-  exibble \%>\%
-  gt() \%>\%
-  fmt_engineering(columns = num)
-
-}
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},

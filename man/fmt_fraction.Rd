@@ -112,7 +112,7 @@ helper functions exist to make targeting more effective. Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
 argument. See the \emph{Arguments} section for more information on this.
 }
-\section{Figures}{
+\section{Examples}{
 
 \if{html}{\figure{man_fmt_fraction_1.png}{options: width=100\%}}
 }
@@ -122,12 +122,8 @@ argument. See the \emph{Arguments} section for more information on this.
 3-7
 }
 
-\examples{
-# Use `pizzaplace` to create a gt table;
-# format the `f_sold` and `f_income`
-# columns to display fractions
-tab_1 <-
-  pizzaplace \%>\%
+Use \code{\link{pizzaplace}} to create a \strong{gt} table. Format the \code{f_sold} and
+\code{f_income} columns to display fractions.\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
   dplyr::group_by(type, size) \%>\%
   dplyr::summarize(
     sold = dplyr::n(),
@@ -166,12 +162,12 @@ tab_1 <-
   ) \%>\%
   text_transform(
     locations = cells_body(),
-    fn = function(x) {
+    fn = function(x) \{
       dplyr::case_when(
         x == 0 ~ "<em>nil</em>",
         x != 0 ~ x
       )
-    }
+    \}
   ) \%>\%
   cols_label(
     sold = "Amount",
@@ -184,10 +180,20 @@ tab_1 <-
     table.width = px(400),
     row_group.as_column = TRUE
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_fraction_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+3-6
+}
+
 \seealso{
-Other Format Data: 
+Other Format Data:
 \code{\link{data_color}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},

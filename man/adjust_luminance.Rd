@@ -31,33 +31,19 @@ This function can be useful when combined with the \code{\link[=data_color]{data
 functions from the \strong{scales} package (all of which have a \code{palette}
 argument).
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_adjust_luminance_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
+Get a palette of 8 pastel colors from the \strong{RColorBrewer} package.\if{html}{\out{<div class="sourceCode r">}}\preformatted{pal <- RColorBrewer::brewer.pal(8, "Pastel2")
+}\if{html}{\out{</div>}}
 
-7-24
-}
-
-\examples{
-# Get a palette of 8 pastel colors from
-# the RColorBrewer package
-pal <- RColorBrewer::brewer.pal(8, "Pastel2")
-
-# Create lighter and darker variants
-# of the base palette (one step lower, one
-# step higher)
-pal_darker  <- pal \%>\% adjust_luminance(-1.0)
+Create lighter and darker variants of the base palette (one step lower, one
+step higher).\if{html}{\out{<div class="sourceCode r">}}\preformatted{pal_darker  <- pal \%>\% adjust_luminance(-1.0)
 pal_lighter <- pal \%>\% adjust_luminance(+1.0)
+}\if{html}{\out{</div>}}
 
-# Create a tibble and make a gt table
-# from it; color each column in order of
-# increasingly darker palettes (with
-# `data_color()`)
-tab_1 <-
-  dplyr::tibble(a = 1:8, b = 1:8, c = 1:8) \%>\%
+Create a tibble and make a \strong{gt} table from it. Color each column in order
+of increasingly darker palettes (with \code{\link[=data_color]{data_color()}}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(a = 1:8, b = 1:8, c = 1:8) \%>\%
   gt() \%>\%
   data_color(
     columns = a,
@@ -80,8 +66,18 @@ tab_1 <-
       domain = c(1, 8)
     )
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_adjust_luminance_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+7-22
+}
+
 \seealso{
 Other Helper Functions: 
 \code{\link{cell_borders}()},

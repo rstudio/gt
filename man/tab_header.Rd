@@ -24,22 +24,11 @@ the column labels. We have the flexibility to use Markdown formatting for the
 header's title and subtitle. Furthermore, if the table is intended for HTML
 output, we can use HTML in either of the title or subtitle.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_tab_header_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
-
-2-1
-}
-
-\examples{
-# Use `gtcars` to create a gt table;
-# add a header part to contain a title
-# and subtitle
-tab_1 <-
-  gtcars \%>\%
+Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header part with the
+\code{tab_header()} function so that we get a title and a subtitle for the table.\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
   dplyr::select(mfr, model, msrp) \%>\%
   dplyr::slice(1:5) \%>\%
   gt() \%>\%
@@ -47,8 +36,18 @@ tab_1 <-
     title = md("Data listing from **gtcars**"),
     subtitle = md("`gtcars` is an R dataset")
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_header_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+2-1
+}
+
 \seealso{
 Other Create or Modify Parts: 
 \code{\link{tab_footnote}()},
