@@ -36,22 +36,11 @@ at the beginning of the column series, the \code{\link[=cols_move_to_start]{cols
 should be used. Similarly, if those columns to move should be placed at the
 end of the column series then use \code{\link[=cols_move_to_end]{cols_move_to_end()}}.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cols_move_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
-
-4-6
-}
-
-\examples{
-# Use `countrypops` to create a gt table;
-# With the remaining columns, position
-# `population` after `country_name`
-tab_1 <-
-  countrypops \%>\%
+Use \code{\link{countrypops}} to create a \strong{gt} table. With the remaining columns,
+position \code{population} after \code{country_name} with the \code{cols_move()} function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::select(-contains("code")) \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%
@@ -60,8 +49,18 @@ tab_1 <-
     columns = population,
     after = country_name
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_move_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+4-6
+}
+
 \seealso{
 Other Modify Columns: 
 \code{\link{cols_align}()},

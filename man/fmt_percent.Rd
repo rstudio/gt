@@ -133,22 +133,11 @@ nothing is provided for \code{rows} then entire columns are selected). Condition
 formatting is possible by providing a conditional expression to the \code{rows}
 argument. See the Arguments section for more information on this.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_fmt_percent_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
-
-3-5
-}
-
-\examples{
-# Use `pizzaplace` to create a gt table;
-# format the `frac_of_quota` column to
-# display values as percentages
-tab_1 <-
-  pizzaplace \%>\%
+Use \code{\link{pizzaplace}} to create a \strong{gt} table. Format the \code{frac_of_quota}
+column to display values as percentages.\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
   dplyr::mutate(month = as.numeric(substr(date, 6, 7))) \%>\%
   dplyr::group_by(month) \%>\%
   dplyr::summarize(pizzas_sold = dplyr::n()) \%>\%
@@ -159,8 +148,18 @@ tab_1 <-
     columns = frac_of_quota,
     decimals = 1
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_percent_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+3-5
+}
+
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},

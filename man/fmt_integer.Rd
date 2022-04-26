@@ -121,9 +121,22 @@ nothing is provided for \code{rows} then entire columns are selected). Condition
 formatting is possible by providing a conditional expression to the \code{rows}
 argument. See the Arguments section for more information on this.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_fmt_integer_1.png}{options: width=100\%}}
+
+Use \code{\link{exibble}} to create a \strong{gt} table. format the \code{num} column as integer
+values having no digit separators (with the \code{use_seps = FALSE} option).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+  dplyr::select(num, char) \%>\%
+  gt() \%>\%
+  fmt_integer(
+    columns = num,
+    use_seps = FALSE
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_integer_1.png" style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
@@ -131,20 +144,6 @@ argument. See the Arguments section for more information on this.
 3-2
 }
 
-\examples{
-# Use `exibble` to create a gt table;
-# format the `num` column as integer
-# values having no digit separators
-tab_1 <-
-  exibble \%>\%
-  dplyr::select(num, char) \%>\%
-  gt() \%>\%
-  fmt_integer(
-    columns = num,
-    use_seps = FALSE
-  )
-
-}
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},

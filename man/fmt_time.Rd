@@ -63,56 +63,52 @@ nothing is provided for \code{rows} then entire columns are selected). Condition
 formatting is possible by providing a conditional expression to the \code{rows}
 argument. See the \emph{Arguments} section for more information on this.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_fmt_time_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_fmt_time_2.png}{options: width=100\%}}
-}
-
-\section{Function ID}{
-
-3-9
-}
-
-\examples{
-# Use `exibble` to create a gt table;
-# keep only the `date` and `time` columns;
-# format the `time` column to have
-# times formatted as `hms_p`
-# (time style `3`)
-tab_1 <-
-  exibble \%>\%
+Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{date} and \code{time}
+columns. Format the \code{time} column to have times formatted as \code{hms_p} (time
+style \code{3}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(date, time) \%>\%
   gt() \%>\%
   fmt_time(
     columns = time,
     time_style = 3
   )
+}\if{html}{\out{</div>}}
 
-# Use `exibble` to create a gt table;
-# keep only the `date` and `time` columns;
-# format the `time` column to have mixed
-# time formats (times after 16:00 will
-# be different than the others)
-tab_2 <-
-  exibble \%>\%
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_time_1.png" style="width:100\%;">
+}}
+
+Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{date} and \code{time}
+columns. Format the \code{time} column to have mixed time formats (times after
+16:00 will be different than the others because of the expressions used
+in the \code{rows} argument).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(date, time) \%>\%
   gt() \%>\%
   fmt_time(
     columns = time,
-    rows =
-      time > "16:00",
+    rows = time > "16:00",
     time_style = 3
   ) \%>\%
   fmt_time(
     columns = time,
-    rows =
-      time <= "16:00",
+    rows = time <= "16:00",
     time_style = 4
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_time_2.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+3-10
+}
+
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},
