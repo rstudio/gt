@@ -457,9 +457,6 @@ as_latex <- function(data) {
 #' file that can be opened by RTF readers.
 #'
 #' @param data A table object that is created using the `gt()` function.
-#' @param page_numbering An option to include page numbering in the RTF
-#'   document. The page numbering text can either be in the document `"footer"`
-#'   or `"header"`. By default, page numbering is not active (`"none"`).
 #'
 #' @examples
 #' if (interactive()) {
@@ -485,12 +482,9 @@ as_latex <- function(data) {
 #' 13-4
 #'
 #' @export
-as_rtf <- function(
-    data,
-    page_numbering = c("none", "footer", "header")
-) {
+as_rtf <- function(data) {
 
-  page_numbering <- match.arg(page_numbering)
+  page_numbering <- dt_options_get_value(data = data, option = "page_numbering")
 
   # Perform input object validation
   stop_if_not_gt(data = data)
