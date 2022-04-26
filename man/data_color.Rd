@@ -90,23 +90,9 @@ hexadecimal colors.
 \section{Examples}{
 
 
-\if{html}{\figure{man_data_color_2.png}{options: width=100\%}}
-}
-
-\section{Function ID}{
-
-3-18
-}
-
-\examples{
-# library(paletteer)
-
-# Use `countrypops` to create a gt table;
-# Apply a color scale to the `population`
-# column with `scales::col_numeric`,
-# four supplied colors, and a domain
-tab_1 <-
-  countrypops \%>\%
+Use \code{\link{countrypops}} to create a \strong{gt} table. Apply a color scale to the
+\code{population} column with \code{scales::col_numeric}, four supplied colors, and a
+domain.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   dplyr::select(-contains("code")) \%>\%
   tail(10) \%>\%
@@ -160,11 +146,11 @@ as the domain.\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplac
 
 \section{Function ID}{
 
-3-17
+3-18
 }
 
 \seealso{
-Other Format Data:
+Other Format Data: 
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},

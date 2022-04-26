@@ -156,7 +156,7 @@ argument. See the \emph{Arguments} section for more information on this.
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. format the \code{num} column as numeric
+Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{num} column as numeric
 with three decimal places and with no use of digit separators.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt() \%>\%
   fmt_number(

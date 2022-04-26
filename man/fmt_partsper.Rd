@@ -108,6 +108,9 @@ the locales that are supported. Any \code{locale} value provided here will
 override any global locale setting performed in \code{\link[=gt]{gt()}}'s own \code{locale}
 argument.}
 }
+\value{
+An object of class \code{gt_tbl}.
+}
 \description{
 With numeric values in a \strong{gt} table we can format the values so that they
 are rendered as \emph{per mille}, \emph{ppm}, \emph{ppb}, etc., quantities. The following
@@ -147,6 +150,25 @@ nothing is provided for \code{rows} then entire columns are selected). Condition
 formatting is possible by providing a conditional expression to the \code{rows}
 argument. See the \emph{Arguments} section for more information on this.
 }
+\section{Examples}{
+
+
+Create a tibble of small numeric values and generate a \strong{gt} table. Format
+the \code{a} column to appear in scientific notation with \code{\link[=fmt_scientific]{fmt_scientific()}} and
+format the \code{b} column as \emph{per mille} values with \code{fmt_partsper()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(x = 0:-5, a = 10^(0:-5), b = a) \%>\%
+  gt(rowname_col = "x") \%>\%
+  fmt_scientific(a, decimals = 0) \%>\%
+  fmt_partsper(
+    columns = b,
+    to_units = "per-mille"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_partsper_1.png" style="width:100\%;">
+}}
+}
+
 \section{Function ID}{
 
 3-6

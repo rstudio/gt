@@ -25,13 +25,6 @@ Perform targeted text transformation with a function
 }
 \section{Examples}{
 
-\if{html}{\figure{man_text_transform_1.png}{options: width=100\%}}
-}
-
-\section{Function ID}{
-
-3-17
-}
 
 Use \code{\link{exibble}} to create a \strong{gt} table. transform the formatted text in the
 \code{num} column using a function supplied to \code{text_transform()} (via the \code{fn}
@@ -62,11 +55,11 @@ vector of column values from the \code{num} column.\if{html}{\out{<div class="so
 
 \section{Function ID}{
 
-3-16
+3-17
 }
 
 \seealso{
-Other Format Data:
+Other Format Data: 
 \code{\link{data_color}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},

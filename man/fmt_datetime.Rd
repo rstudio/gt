@@ -173,13 +173,6 @@ Here are some extra formats that you may find useful:
 
 \section{Examples}{
 
-\if{html}{\figure{man_fmt_datetime_1.png}{options: width=100\%}}
-}
-
-\section{Function ID}{
-
-3-12
-}
 
 Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{datetime} column.
 Format the column to have dates formatted as \code{month_day_year} and times to be
@@ -200,11 +193,11 @@ Format the column to have dates formatted as \code{month_day_year} and times to 
 
 \section{Function ID}{
 
-3-11
+3-12
 }
 
 \seealso{
-Other Format Data:
+Other Format Data: 
 \code{\link{data_color}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},

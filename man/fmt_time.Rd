@@ -66,22 +66,9 @@ argument. See the \emph{Arguments} section for more information on this.
 \section{Examples}{
 
 
-\if{html}{\figure{man_fmt_time_2.png}{options: width=100\%}}
-}
-
-\section{Function ID}{
-
-3-11
-}
-
-\examples{
-# Use `exibble` to create a gt table;
-# keep only the `date` and `time` columns;
-# format the `time` column to have
-# times formatted as `hms_p`
-# (time style `3`)
-tab_1 <-
-  exibble \%>\%
+Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{date} and \code{time}
+columns. Format the \code{time} column to have times formatted as \code{hms_p} (time
+style \code{3}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(date, time) \%>\%
   gt() \%>\%
   fmt_time(
@@ -119,11 +106,11 @@ in the \code{rows} argument).\if{html}{\out{<div class="sourceCode r">}}\preform
 
 \section{Function ID}{
 
-3-10
+3-11
 }
 
 \seealso{
-Other Format Data:
+Other Format Data: 
 \code{\link{data_color}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},

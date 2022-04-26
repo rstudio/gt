@@ -114,13 +114,6 @@ argument. See the \emph{Arguments} section for more information on this.
 }
 \section{Examples}{
 
-\if{html}{\figure{man_fmt_fraction_1.png}{options: width=100\%}}
-}
-
-\section{Function ID}{
-
-3-7
-}
 
 Use \code{\link{pizzaplace}} to create a \strong{gt} table. Format the \code{f_sold} and
 \code{f_income} columns to display fractions.\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
@@ -189,11 +182,11 @@ Use \code{\link{pizzaplace}} to create a \strong{gt} table. Format the \code{f_s
 
 \section{Function ID}{
 
-3-6
+3-7
 }
 
 \seealso{
-Other Format Data:
+Other Format Data: 
 \code{\link{data_color}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},

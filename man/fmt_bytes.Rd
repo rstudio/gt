@@ -125,8 +125,6 @@ argument. See the \emph{Arguments} section for more information on this.
 }
 \section{Examples}{
 
-3-9
-}
 
 Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{num} column to have
 byte sizes in the decimal standard.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
@@ -156,11 +154,11 @@ byte sizes as binary values.\if{html}{\out{<div class="sourceCode r">}}\preforma
 
 \section{Function ID}{
 
-3-8
+3-9
 }
 
 \seealso{
-Other Format Data:
+Other Format Data: 
 \code{\link{data_color}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},

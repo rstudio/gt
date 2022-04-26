@@ -115,7 +115,7 @@
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. format the `num` column as numeric
+#' Use [`exibble`] to create a **gt** table. Format the `num` column as numeric
 #' with three decimal places and with no use of digit separators.
 #'
 #' ```r
@@ -1119,6 +1119,28 @@ fmt_percent <- function(
 #'   and the symbol/units. The default is `"auto"` which provides spacing
 #'   dependent on the mark itself. This can be directly controlled by using
 #'   either `TRUE` or `FALSE`.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Create a tibble of small numeric values and generate a **gt** table. Format
+#' the `a` column to appear in scientific notation with [fmt_scientific()] and
+#' format the `b` column as *per mille* values with `fmt_partsper()`.
+#'
+#' ```r
+#' dplyr::tibble(x = 0:-5, a = 10^(0:-5), b = a) %>%
+#'   gt(rowname_col = "x") %>%
+#'   fmt_scientific(a, decimals = 0) %>%
+#'   fmt_partsper(
+#'     columns = b,
+#'     to_units = "per-mille"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_partsper_1.png")`
+#' }}
 #'
 #' @family Format Data
 #' @section Function ID:
@@ -2161,7 +2183,7 @@ fmt_bytes <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-9
+#' 3-10
 #'
 #' @import rlang
 #' @export
@@ -2318,7 +2340,7 @@ fmt_date <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-10
+#' 3-11
 #'
 #' @import rlang
 #' @export
@@ -2540,7 +2562,7 @@ fmt_time <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-11
+#' 3-12
 #'
 #' @import rlang
 #' @export
@@ -2742,7 +2764,7 @@ fmt_datetime <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-12
+#' 3-13
 #'
 #' @import rlang
 #' @export
@@ -2833,7 +2855,7 @@ fmt_markdown <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-13
+#' 3-14
 #'
 #' @import rlang
 #' @export
@@ -2972,7 +2994,7 @@ fmt_passthrough <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-14
+#' 3-15
 #'
 #' @import rlang
 #' @export
@@ -3092,7 +3114,7 @@ fmt_missing <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-15
+#' 3-16
 #'
 #' @import rlang
 #' @export
