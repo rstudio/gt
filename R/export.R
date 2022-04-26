@@ -241,8 +241,7 @@ gt_save_latex <- function(data,
 gt_save_rtf <- function(data,
                         filename,
                         path = NULL,
-                        ...,
-                        page_numbering = c("none", "footer", "header")) {
+                        ...) {
 
   page_numbering <- match.arg(page_numbering)
 
