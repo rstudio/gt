@@ -243,12 +243,10 @@ gt_save_rtf <- function(data,
                         path = NULL,
                         ...) {
 
-  page_numbering <- match.arg(page_numbering)
-
   filename <- gtsave_filename(path = path, filename = filename)
 
   data %>%
-    as_rtf(page_numbering = page_numbering) %>%
+    as_rtf() %>%
     writeLines(con = filename)
 }
 
