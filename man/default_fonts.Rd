@@ -18,28 +18,14 @@ used in the \code{\link[=tab_style]{tab_style()}} function). If using \code{\lin
 has a \code{font} argument) we probably don't need to specify this vector of fonts
 since it is handled by its \code{add} option (which is \code{TRUE} by default).
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_default_fonts_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
-
-7-23
-}
-
-\examples{
-# Use `exibble` to create a gt table;
-# attempting to modify the fonts used
-# for the `time` column is much safer
-# if `default_fonts()` is appended to
-# the end of the `font` listing in the
-# `cell_text()` call (the "Comic Sansa"
-# and "Menloa" fonts don't exist, but,
-# we'll get the first available font
-# from the `default_fonts()` set)
-tab_1 <-
-  exibble \%>\%
+Use \code{\link{exibble}} to create a \strong{gt} table. Attempting to modify the fonts used
+for the \code{time} column is much safer if \code{default_fonts()} is appended to the
+end of the \code{font} listing in the \code{cell_text()} call (the \code{"Comic Sansa"} and
+\code{"Menloa"} fonts don't exist, but, we'll get the first available font from
+the \code{default_fonts()} set).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(char, time) \%>\%
   gt() \%>\%
   tab_style(
@@ -51,8 +37,18 @@ tab_1 <-
     ),
     locations = cells_body(columns = time)
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_default_fonts_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+7-26
+}
+
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},

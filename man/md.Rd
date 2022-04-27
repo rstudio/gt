@@ -20,9 +20,19 @@ HTML as Markdown does. There is the \code{\link[=html]{html()}} helper that allo
 in HTML but this function \code{md()}... it's almost like a two-for-one deal (you
 get to use Markdown plus any HTML fragments \emph{at the same time}).
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_md_1.png}{options: width=100\%}}
+
+Use \code{\link{exibble}} to create a \strong{gt} table. When adding a title, use the \code{md()}
+helper to use Markdown formatting.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+  dplyr::select(currency, char) \%>\%
+  gt() \%>\%
+  tab_header(title = md("Using *Markdown*"))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_md_1.png" style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
@@ -30,18 +40,6 @@ get to use Markdown plus any HTML fragments \emph{at the same time}).
 7-1
 }
 
-\examples{
-# Use `exibble` to create a gt table;
-# when adding a title, use the `md()`
-# helper to use Markdown formatting
-tab_1 <-
-  exibble \%>\%
-  dplyr::select(currency, char) \%>\%
-  gt() \%>\%
-  tab_header(
-    title = md("Using *Markdown*"))
-
-}
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},

@@ -24,21 +24,13 @@ We need to ensure that we have the \strong{shiny} package installed first. This
 is easily by using \code{install.packages("shiny")}. More information on creating
 Shiny apps can be found at the \href{https://shiny.rstudio.com}{Shiny Site}.
 }
-\section{Function ID}{
+\section{Examples}{
 
-12-2
-}
 
-\examples{
-library(shiny)
-
-# Here is a Shiny app (contained within
-# a single file) that (1) prepares a
-# gt table, (2) sets up the `ui` with
-# `gt_output()`, and (3) sets up the
-# `server` with a `render_gt()` that
-# uses the `gt_tbl` object as the input
-# expression
+Here is a Shiny app (contained within a single file) that (1) prepares a
+\strong{gt} table, (2) sets up the \code{ui} with \code{gt_output()}, and (3) sets up the
+\code{server} with a \code{\link[=render_gt]{render_gt()}} that uses the \code{gt_tbl} object as the input
+expression.\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(shiny)
 
 gt_tbl <-
   gtcars \%>\%
@@ -52,7 +44,7 @@ ui <- fluidPage(
 
 server <- function(input,
                    output,
-                   session) {
+                   session) \{
 
   output$table <-
     render_gt(
@@ -60,13 +52,15 @@ server <- function(input,
       height = px(600),
       width = px(600)
     )
+\}
+}\if{html}{\out{</div>}}
 }
 
-if (interactive()) {
-  shinyApp(ui, server)
+\section{Function ID}{
+
+12-2
 }
 
-}
 \seealso{
 Other Shiny functions: 
 \code{\link{render_gt}()}

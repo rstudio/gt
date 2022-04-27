@@ -40,24 +40,13 @@ present better than the standard \code{NA} text that would otherwise appear. The
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
 nothing is provided for \code{rows} then entire columns are selected). Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the Arguments section for more information on this.
+argument. See the \emph{Arguments} section for more information on this.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_fmt_missing_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
-
-3-13
-}
-
-\examples{
-# Use `exibble` to create a gt table;
-# NA values in different columns will
-# be given replacement text
-tab_1 <-
-  exibble \%>\%
+Use \code{\link{exibble}} to create a \strong{gt} table. The \code{NA} values in different
+columns will be given replacement text.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(-row, -group) \%>\%
   gt() \%>\%
   fmt_missing(
@@ -68,8 +57,18 @@ tab_1 <-
     columns = 4:7,
     missing_text = "nothing"
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_missing_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+3-15
+}
+
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},
@@ -82,6 +81,7 @@ Other Format Data:
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},
+\code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
 \code{\link{fmt_scientific}()},

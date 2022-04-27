@@ -22,7 +22,7 @@
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @param data A table object that is created using the [gt()] function.
 #' @param columns The columns to format. Can either be a series of column names
@@ -113,32 +113,32 @@
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' library(tidyr)
+#' @section Examples:
 #'
-#' # Use `exibble` to create a gt table;
-#' # format the `num` column as numeric
-#' # with three decimal places and with no
-#' # use of digit separators
-#' tab_1 <-
-#'   exibble %>%
+#' Use [`exibble`] to create a **gt** table. Format the `num` column as numeric
+#' with three decimal places and with no use of digit separators.
+#'
+#' ```r
+#' exibble %>%
 #'   gt() %>%
 #'   fmt_number(
 #'     columns = num,
 #'     decimals = 3,
 #'     use_seps = FALSE
 #'   )
+#' ```
 #'
-#' # Use `countrypops` to create a gt
-#' # table; format all numeric columns
-#' # to use large-number suffixing
-#' tab_2 <-
-#'   countrypops %>%
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_number_1.png")`
+#' }}
+#'
+#' Use [`countrypops`] to create a **gt** table. Format all numeric columns to
+#' use large-number suffixing with the `suffixing = TRUE` option.
+#'
+#' ```r
+#' countrypops %>%
 #'   dplyr::select(country_code_3, year, population) %>%
-#'   dplyr::filter(
-#'     country_code_3 %in% c(
-#'       "CHN", "IND", "USA", "PAK", "IDN")
-#'   ) %>%
+#'   dplyr::filter(country_code_3 %in% c("CHN", "IND", "USA", "PAK", "IDN")) %>%
 #'   dplyr::filter(year > 1975 & year %% 5 == 0) %>%
 #'   tidyr::spread(year, population) %>%
 #'   dplyr::arrange(desc(`2015`)) %>%
@@ -148,11 +148,11 @@
 #'     decimals = 2,
 #'     suffixing = TRUE
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_fmt_number_1.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_fmt_number_2.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_number_2.png")`
+#' }}
 #'
 #' @family Format Data
 #' @section Function ID:
@@ -160,23 +160,25 @@
 #'
 #' @import rlang
 #' @export
-fmt_number <- function(data,
-                       columns,
-                       rows = everything(),
-                       decimals = 2,
-                       n_sigfig = NULL,
-                       drop_trailing_zeros = FALSE,
-                       drop_trailing_dec_mark = TRUE,
-                       use_seps = TRUE,
-                       accounting = FALSE,
-                       scale_by = 1.0,
-                       suffixing = FALSE,
-                       pattern = "{x}",
-                       sep_mark = ",",
-                       dec_mark = ".",
-                       force_sign = FALSE,
-                       system = c("intl", "ind"),
-                       locale = NULL) {
+fmt_number <- function(
+    data,
+    columns,
+    rows = everything(),
+    decimals = 2,
+    n_sigfig = NULL,
+    drop_trailing_zeros = FALSE,
+    drop_trailing_dec_mark = TRUE,
+    use_seps = TRUE,
+    accounting = FALSE,
+    scale_by = 1.0,
+    suffixing = FALSE,
+    pattern = "{x}",
+    sep_mark = ",",
+    dec_mark = ".",
+    force_sign = FALSE,
+    system = c("intl", "ind"),
+    locale = NULL
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -306,7 +308,7 @@ fmt_number <- function(data,
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param suffixing An option to scale and apply suffixes to larger numbers
@@ -329,21 +331,24 @@ fmt_number <- function(data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `exibble` to create a gt table;
-#' # format the `num` column as integer
-#' # values having no digit separators
-#' tab_1 <-
-#'   exibble %>%
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table. format the `num` column as integer
+#' values having no digit separators (with the `use_seps = FALSE` option).
+#'
+#' ```r
+#' exibble %>%
 #'   dplyr::select(num, char) %>%
 #'   gt() %>%
 #'   fmt_integer(
 #'     columns = num,
 #'     use_seps = FALSE
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_fmt_integer_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_integer_1.png")`
+#' }}
 #'
 #' @family Format Data
 #' @section Function ID:
@@ -351,18 +356,20 @@ fmt_number <- function(data,
 #'
 #' @import rlang
 #' @export
-fmt_integer <- function(data,
-                        columns,
-                        rows = everything(),
-                        use_seps = TRUE,
-                        accounting = FALSE,
-                        scale_by = 1.0,
-                        suffixing = FALSE,
-                        pattern = "{x}",
-                        sep_mark = ",",
-                        force_sign = FALSE,
-                        system = c("intl", "ind"),
-                        locale = NULL) {
+fmt_integer <- function(
+    data,
+    columns,
+    rows = everything(),
+    use_seps = TRUE,
+    accounting = FALSE,
+    scale_by = 1.0,
+    suffixing = FALSE,
+    pattern = "{x}",
+    sep_mark = ",",
+    force_sign = FALSE,
+    system = c("intl", "ind"),
+    locale = NULL
+) {
 
   fmt_number(
     data = data,
@@ -404,7 +411,7 @@ fmt_integer <- function(data,
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param scale_by A value to scale the input. The default is `1.0`. All numeric
@@ -416,13 +423,14 @@ fmt_integer <- function(data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `exibble` to create a gt table;
-#' # format the `num` column as partially
-#' # numeric and partially in scientific
-#' # notation
-#' tab_1 <-
-#'   exibble %>%
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table. Format the `num` column as
+#' partially numeric  and partially in scientific notation (using the
+#' `num > 500` and `num <= 500` expressions in the respective `rows` arguments).
+#'
+#' ```r
+#' exibble %>%
 #'   gt() %>%
 #'   fmt_number(
 #'     columns = num,
@@ -436,9 +444,11 @@ fmt_integer <- function(data,
 #'     rows = num <= 500,
 #'     decimals = 1
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_fmt_scientific_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_scientific_1.png")`
+#' }}
 #'
 #' @family Format Data
 #' @section Function ID:
@@ -446,17 +456,19 @@ fmt_integer <- function(data,
 #'
 #' @import rlang
 #' @export
-fmt_scientific <- function(data,
-                           columns,
-                           rows = everything(),
-                           decimals = 2,
-                           drop_trailing_zeros = FALSE,
-                           scale_by = 1.0,
-                           pattern = "{x}",
-                           sep_mark = ",",
-                           dec_mark = ".",
-                           force_sign = FALSE,
-                           locale = NULL) {
+fmt_scientific <- function(
+    data,
+    columns,
+    rows = everything(),
+    decimals = 2,
+    drop_trailing_zeros = FALSE,
+    scale_by = 1.0,
+    pattern = "{x}",
+    sep_mark = ",",
+    dec_mark = ".",
+    force_sign = FALSE,
+    locale = NULL
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -595,7 +607,7 @@ fmt_scientific <- function(data,
 #' nothing is provided for `rows` then entire columns are selected). A number of
 #' helper functions exist to make targeting more effective. Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param scale_by A value to scale the input. The default is `1.0`. All numeric
@@ -607,34 +619,39 @@ fmt_scientific <- function(data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `exibble` to create a gt table;
-#' # format the `num` column in
-#' # engineering notation
-#' tab_1 <-
-#'   exibble %>%
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table. Format the `num` column in
+#' engineering notation.
+#'
+#' ```r
+#' exibble %>%
 #'   gt() %>%
 #'   fmt_engineering(columns = num)
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_fmt_engineering_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_engineering_1.png")`
+#' }}
 #'
 #' @family Format Data
 #' @section Function ID:
 #' 3-4
 #'
 #' @export
-fmt_engineering <- function(data,
-                            columns,
-                            rows = everything(),
-                            decimals = 2,
-                            drop_trailing_zeros = FALSE,
-                            scale_by = 1.0,
-                            pattern = "{x}",
-                            sep_mark = ",",
-                            dec_mark = ".",
-                            force_sign = FALSE,
-                            locale = NULL) {
+fmt_engineering <- function(
+    data,
+    columns,
+    rows = everything(),
+    decimals = 2,
+    drop_trailing_zeros = FALSE,
+    scale_by = 1.0,
+    pattern = "{x}",
+    sep_mark = ",",
+    dec_mark = ".",
+    force_sign = FALSE,
+    locale = NULL
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -759,25 +776,27 @@ fmt_engineering <- function(data,
 #' @inheritParams fmt_currency
 #' @return An object of class `gt_tbl`.
 #' @noRd
-fmt_symbol <- function(data,
-                       columns,
-                       rows,
-                       symbol = "*",
-                       accounting = FALSE,
-                       decimals = NULL,
-                       drop_trailing_zeros = FALSE,
-                       drop_trailing_dec_mark = TRUE,
-                       use_seps = TRUE,
-                       scale_by = 1.0,
-                       suffixing = FALSE,
-                       pattern = "{x}",
-                       sep_mark = ",",
-                       dec_mark = ".",
-                       force_sign = FALSE,
-                       placement = "left",
-                       incl_space = FALSE,
-                       system = c("intl", "ind"),
-                       locale = NULL) {
+fmt_symbol <- function(
+    data,
+    columns,
+    rows,
+    symbol = "*",
+    accounting = FALSE,
+    decimals = NULL,
+    drop_trailing_zeros = FALSE,
+    drop_trailing_dec_mark = TRUE,
+    use_seps = TRUE,
+    scale_by = 1.0,
+    suffixing = FALSE,
+    pattern = "{x}",
+    sep_mark = ",",
+    dec_mark = ".",
+    force_sign = FALSE,
+    placement = "left",
+    incl_space = FALSE,
+    system = c("intl", "ind"),
+    locale = NULL
+) {
 
   system <- match.arg(system)
 
@@ -852,6 +871,17 @@ fmt_symbol <- function(data,
             )
         }
 
+        # If we supply a per mille or per myriad keyword as
+        # `symbol` (possible inputs in `fmt_partsper()`),
+        # get the contextually correct mark
+        if (is.character(symbol)) {
+          if (symbol == "per-mille") {
+            symbol <- I(context_permille_mark(context = context))
+          } else if (symbol == "per-myriad") {
+            symbol <- I(context_permyriad_mark(context = context))
+          }
+        }
+
         # Format values with a symbol string
         x_str <-
           format_symbol_str(
@@ -905,6 +935,9 @@ fmt_symbol <- function(data,
 #' trailing zeros, and a choice of the decimal symbol
 #' - digit grouping separators: options to enable/disable digit separators
 #' and provide a choice of separator symbol
+#' - value scaling toggle: choose to disable automatic value scaling in the
+#' situation that values are already scaled coming in (and just require the
+#' percent symbol)
 #' - pattern: option to use a text pattern for decoration of the formatted
 #' values
 #' - locale-based formatting: providing a locale ID will result in number
@@ -914,7 +947,7 @@ fmt_symbol <- function(data,
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param scale_values Should the values be scaled through multiplication by
@@ -928,12 +961,13 @@ fmt_symbol <- function(data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `pizzaplace` to create a gt table;
-#' # format the `frac_of_quota` column to
-#' # display values as percentages
-#' tab_1 <-
-#'   pizzaplace %>%
+#' @section Examples:
+#'
+#' Use [`pizzaplace`] to create a **gt** table. Format the `frac_of_quota`
+#' column to display values as percentages.
+#'
+#' ```r
+#' pizzaplace %>%
 #'   dplyr::mutate(month = as.numeric(substr(date, 6, 7))) %>%
 #'   dplyr::group_by(month) %>%
 #'   dplyr::summarize(pizzas_sold = dplyr::n()) %>%
@@ -944,9 +978,11 @@ fmt_symbol <- function(data,
 #'     columns = frac_of_quota,
 #'     decimals = 1
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_fmt_percent_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_percent_1.png")`
+#' }}
 #'
 #' @family Format Data
 #' @section Function ID:
@@ -954,23 +990,25 @@ fmt_symbol <- function(data,
 #'
 #' @import rlang
 #' @export
-fmt_percent <- function(data,
-                        columns,
-                        rows = everything(),
-                        decimals = 2,
-                        drop_trailing_zeros = FALSE,
-                        drop_trailing_dec_mark = TRUE,
-                        scale_values = TRUE,
-                        use_seps = TRUE,
-                        accounting = FALSE,
-                        pattern = "{x}",
-                        sep_mark = ",",
-                        dec_mark = ".",
-                        force_sign = FALSE,
-                        incl_space = FALSE,
-                        placement = "right",
-                        system = c("intl", "ind"),
-                        locale = NULL) {
+fmt_percent <- function(
+    data,
+    columns,
+    rows = everything(),
+    decimals = 2,
+    drop_trailing_zeros = FALSE,
+    drop_trailing_dec_mark = TRUE,
+    scale_values = TRUE,
+    use_seps = TRUE,
+    accounting = FALSE,
+    pattern = "{x}",
+    sep_mark = ",",
+    dec_mark = ".",
+    force_sign = FALSE,
+    incl_space = FALSE,
+    placement = "right",
+    system = c("intl", "ind"),
+    locale = NULL
+) {
 
   system <- match.arg(system)
 
@@ -1025,6 +1063,209 @@ fmt_percent <- function(data,
   )
 }
 
+#' Format values as parts-per quantities
+#'
+#' @description
+#' With numeric values in a **gt** table we can format the values so that they
+#' are rendered as *per mille*, *ppm*, *ppb*, etc., quantities. The following
+#' list of keywords (with associated naming and scaling factors) is available to
+#' use within `fmt_partsper()`:
+#'
+#' - `"per-mille"`: Per mille, (1 part in `1,000`)
+#' - `"per-myriad"`: Per myriad, (1 part in `10,000`)
+#' - `"pcm"`: Per cent mille (1 part in `100,000`)
+#' - `"ppm"`: Parts per million, (1 part in `1,000,000`)
+#' - `"ppb"`: Parts per billion, (1 part in `1,000,000,000`)
+#' - `"ppt"`: Parts per trillion, (1 part in `1,000,000,000,000`)
+#' - `"ppq"`: Parts per quadrillion, (1 part in `1,000,000,000,000,000`)
+#'
+#' The function provides a lot of formatting control and we can use the
+#' following options:
+#'
+#' - custom symbol/units: we can override the automatic symbol or units display
+#' with our own choice as the situation warrants
+#' - decimals: choice of the number of decimal places, option to drop
+#' trailing zeros, and a choice of the decimal symbol
+#' - digit grouping separators: options to enable/disable digit separators
+#' and provide a choice of separator symbol
+#' - value scaling toggle: choose to disable automatic value scaling in the
+#' situation that values are already scaled coming in (and just require the
+#' appropriate symbol or unit display)
+#' - pattern: option to use a text pattern for decoration of the formatted
+#' values
+#' - locale-based formatting: providing a locale ID will result in number
+#' formatting specific to the chosen locale
+#'
+#' @details
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the *Arguments* section for more information on this.
+#'
+#' @inheritParams fmt_number
+#' @param to_units A keyword that signifies the desired output quantity. This
+#'   can be any from the following set: `"per-mille"`, `"per-myriad"`, `"pcm"`,
+#'   `"ppm"`, `"ppb"`, `"ppt"`, or `"ppq"`.
+#' @param symbol The symbol/units to use for the quantity. By default, this is
+#'   set to `"auto"` and **gt** will choose the appropriate symbol based on the
+#'   `to_units` keyword and the output context. However, this can be changed by
+#'   supplying a string (e.g, using `symbol = "ppbV"` when `to_units = "ppb"`).
+#' @param scale_values Should the values be scaled through multiplication
+#'   according to the keyword set in `to_units`? By default this is `TRUE` since
+#'   the expectation is that normally values are proportions. Setting to `FALSE`
+#'   signifies that the values are already scaled and require only the
+#'   appropriate symbol/units when formatted.
+#' @param incl_space An option for whether to include a space between the value
+#'   and the symbol/units. The default is `"auto"` which provides spacing
+#'   dependent on the mark itself. This can be directly controlled by using
+#'   either `TRUE` or `FALSE`.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Create a tibble of small numeric values and generate a **gt** table. Format
+#' the `a` column to appear in scientific notation with [fmt_scientific()] and
+#' format the `b` column as *per mille* values with `fmt_partsper()`.
+#'
+#' ```r
+#' dplyr::tibble(x = 0:-5, a = 10^(0:-5), b = a) %>%
+#'   gt(rowname_col = "x") %>%
+#'   fmt_scientific(a, decimals = 0) %>%
+#'   fmt_partsper(
+#'     columns = b,
+#'     to_units = "per-mille"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_partsper_1.png")`
+#' }}
+#'
+#' @family Format Data
+#' @section Function ID:
+#' 3-6
+#'
+#' @import rlang
+#' @export
+fmt_partsper <- function(
+    data,
+    columns,
+    rows = everything(),
+    to_units = c("per-mille", "per-myriad", "pcm", "ppm", "ppb", "ppt", "ppq"),
+    symbol = "auto",
+    decimals = 2,
+    drop_trailing_zeros = FALSE,
+    drop_trailing_dec_mark = TRUE,
+    scale_values = TRUE,
+    use_seps = TRUE,
+    pattern = "{x}",
+    sep_mark = ",",
+    dec_mark = ".",
+    force_sign = FALSE,
+    incl_space = "auto",
+    system = c("intl", "ind"),
+    locale = NULL
+) {
+
+  to_units <- match.arg(to_units)
+  system <- match.arg(system)
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  # Resolve the `locale` value here with the global locale value
+  locale <- resolve_locale(data = data, locale = locale)
+
+  # Stop function if any columns have data that is incompatible
+  # with this formatter
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = c("numeric", "integer")
+    )
+  ) {
+    stop(
+      "The `fmt_per_x()` function can only be used on `columns` ",
+      "with numeric data.",
+      call. = FALSE
+    )
+  }
+
+  # Scale values according to `to_units` value
+  if (scale_values) {
+
+    scale_by <-
+      switch(
+        to_units,
+        `per-mille` = 1E3,
+        `per-myriad` = 1E4,
+        pcm = 1E5,
+        ppm = 1E6,
+        ppb = 1E9,
+        ppt = 1E12,
+        ppq = 1E15,
+      )
+
+  } else {
+    scale_by <- 1.0
+  }
+
+  if (symbol == "auto") {
+
+    symbol <-
+      switch(
+        to_units,
+        `per-mille` = "per-mille",
+        `per-myriad` = "per-myriad",
+        pcm = "pcm",
+        ppm = "ppm",
+        ppb = "ppb",
+        ppt = "ppt",
+        ppq = "ppq"
+      )
+  }
+
+  if (incl_space == "auto") {
+
+    incl_space <-
+      switch(
+        to_units,
+        `per-mille` = ,
+        `per-myriad` = FALSE,
+        pcm = ,
+        ppm = ,
+        ppb = ,
+        ppt = ,
+        ppq = TRUE
+      )
+  }
+
+  # Pass `data`, `columns`, `rows`, and other options to `fmt_symbol()`
+  fmt_symbol(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    symbol = symbol,
+    accounting = FALSE,
+    decimals = decimals,
+    drop_trailing_zeros = drop_trailing_zeros,
+    drop_trailing_dec_mark = drop_trailing_dec_mark,
+    use_seps = use_seps,
+    scale_by = scale_by,
+    suffixing = FALSE,
+    pattern = pattern,
+    sep_mark = sep_mark,
+    dec_mark = dec_mark,
+    force_sign = force_sign,
+    placement = "right",
+    incl_space = incl_space,
+    system = system,
+    locale = locale
+  )
+}
+
 #' Format values as a mixed fractions
 #'
 #' @description
@@ -1052,7 +1293,7 @@ fmt_percent <- function(data,
 #' nothing is provided for `rows` then entire columns are selected). A number of
 #' helper functions exist to make targeting more effective. Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param accuracy The type of fractions to generate. This can either be one of
@@ -1073,12 +1314,13 @@ fmt_percent <- function(data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `pizzaplace` to create a gt table;
-#' # format the `f_sold` and `f_income`
-#' # columns to display fractions
-#' tab_1 <-
-#'   pizzaplace %>%
+#' @section Examples:
+#'
+#' Use [`pizzaplace`] to create a **gt** table. Format the `f_sold` and
+#' `f_income` columns to display fractions.
+#'
+#' ```r
+#' pizzaplace %>%
 #'   dplyr::group_by(type, size) %>%
 #'   dplyr::summarize(
 #'     sold = dplyr::n(),
@@ -1135,13 +1377,15 @@ fmt_percent <- function(data,
 #'     table.width = px(400),
 #'     row_group.as_column = TRUE
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_fmt_fraction_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_fraction_1.png")`
+#' }}
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-6
+#' 3-7
 #'
 #' @import rlang
 #' @export
@@ -1508,7 +1752,7 @@ round_gt <- function(x, digits = 0) {
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param currency The currency to use for the numeric value. This input can be
@@ -1539,24 +1783,29 @@ round_gt <- function(x, digits = 0) {
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `exibble` to create a gt table;
-#' # format the `currency` column to have
-#' # currency values in euros (EUR)
-#' tab_1 <-
-#'   exibble %>%
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table. Format the `currency` column to
+#' have currency values in euros (`"EUR"`).
+#'
+#' ```r
+#' exibble %>%
 #'   gt() %>%
 #'   fmt_currency(
 #'     columns = currency,
 #'     currency = "EUR"
 #'   )
+#' ```
 #'
-#' # Use `exibble` to create a gt table;
-#' # Keep only the `num` and `currency`,
-#' # columns, then, format those columns
-#' # using the "CNY" and "GBP" currencies
-#' tab_2 <-
-#'   exibble %>%
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_currency_1.png")`
+#' }}
+#'
+#' Use [`exibble`] to create a **gt** table. Keep only the `num` and `currency`,
+#' columns, then, format those columns using the `"CNY"` and `"GBP"` currencies.
+#'
+#' ```r
+#' exibble %>%
 #'   dplyr::select(num, currency) %>%
 #'   gt() %>%
 #'   fmt_currency(
@@ -1567,37 +1816,39 @@ round_gt <- function(x, digits = 0) {
 #'     columns = currency,
 #'     currency = "GBP"
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_fmt_currency_1.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_fmt_currency_2.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_currency_2.png")`
+#' }}
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-7
+#' 3-8
 #'
 #' @import rlang
 #' @export
-fmt_currency <- function(data,
-                         columns,
-                         rows = everything(),
-                         currency = "USD",
-                         use_subunits = TRUE,
-                         decimals = NULL,
-                         drop_trailing_dec_mark = TRUE,
-                         use_seps = TRUE,
-                         accounting = FALSE,
-                         scale_by = 1.0,
-                         suffixing = FALSE,
-                         pattern = "{x}",
-                         sep_mark = ",",
-                         dec_mark = ".",
-                         force_sign = FALSE,
-                         placement = "left",
-                         incl_space = FALSE,
-                         system = c("intl", "ind"),
-                         locale = NULL) {
+fmt_currency <- function(
+    data,
+    columns,
+    rows = everything(),
+    currency = "USD",
+    use_subunits = TRUE,
+    decimals = NULL,
+    drop_trailing_dec_mark = TRUE,
+    use_seps = TRUE,
+    accounting = FALSE,
+    scale_by = 1.0,
+    suffixing = FALSE,
+    pattern = "{x}",
+    sep_mark = ",",
+    dec_mark = ".",
+    force_sign = FALSE,
+    placement = "left",
+    incl_space = FALSE,
+    system = c("intl", "ind"),
+    locale = NULL
+) {
 
   system <- match.arg(system)
 
@@ -1685,7 +1936,7 @@ fmt_currency <- function(data,
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param standard The way to express large byte sizes.
@@ -1700,49 +1951,62 @@ fmt_currency <- function(data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `exibble` to create a gt table;
-#' # format the `num` column to have
-#' # byte sizes in the binary standard
-#' tab_1 <-
-#'   exibble %>%
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table. Format the `num` column to have
+#' byte sizes in the decimal standard.
+#'
+#' ```r
+#' exibble %>%
 #'   dplyr::select(num) %>%
 #'   gt() %>%
 #'   fmt_bytes(columns = num)
+#' ```
 #'
-#' # Create a similar table with the
-#' # `fmt_bytes()` function, this time
-#' # showing byte sizes as binary values
-#' tab_2 <-
-#'   exibble %>%
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_bytes_1.png")`
+#' }}
+#'
+#' Create a similar table with the `fmt_bytes()` function, this time showing
+#' byte sizes as binary values.
+#'
+#' ```r
+#' exibble %>%
 #'   dplyr::select(num) %>%
 #'   gt() %>%
 #'   fmt_bytes(
 #'     columns = num,
 #'     standard = "binary"
 #'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_bytes_2.png")`
+#' }}
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-8
+#' 3-9
 #'
 #' @import rlang
 #' @export
-fmt_bytes <- function(data,
-                      columns,
-                      rows = everything(),
-                      standard = c("decimal", "binary"),
-                      decimals = 1,
-                      n_sigfig = NULL,
-                      drop_trailing_zeros = TRUE,
-                      drop_trailing_dec_mark = TRUE,
-                      use_seps = TRUE,
-                      pattern = "{x}",
-                      sep_mark = ",",
-                      dec_mark = ".",
-                      force_sign = FALSE,
-                      incl_space = TRUE,
-                      locale = NULL) {
+fmt_bytes <- function(
+    data,
+    columns,
+    rows = everything(),
+    standard = c("decimal", "binary"),
+    decimals = 1,
+    n_sigfig = NULL,
+    drop_trailing_zeros = TRUE,
+    drop_trailing_dec_mark = TRUE,
+    use_seps = TRUE,
+    pattern = "{x}",
+    sep_mark = ",",
+    dec_mark = ".",
+    force_sign = FALSE,
+    incl_space = TRUE,
+    locale = NULL
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -1872,59 +2136,64 @@ fmt_bytes <- function(data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `exibble` to create a gt table;
-#' # keep only the `date` and `time` columns;
-#' # format the `date` column to have
-#' # dates formatted as `month_day_year`
-#' # (date style `5`)
-#' tab_1 <-
-#'   exibble %>%
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table. Keep only the `date` and `time`
+#' columns. Format the `date` column to have dates formatted as `month_day_year`
+#' (date style `5`).
+#'
+#' ```r
+#' exibble %>%
 #'   dplyr::select(date, time) %>%
 #'   gt() %>%
 #'   fmt_date(
 #'     columns = date,
 #'     date_style = 5
 #'   )
+#' ```
 #'
-#' # Use `exibble` to create a gt table;
-#' # keep only the `date` and `time` columns;
-#' # format the `date` column to have mixed
-#' # date formats (dates after April will
-#' # be different than the others)
-#' tab_2 <-
-#'   exibble %>%
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_date_1.png")`
+#' }}
+#'
+#' Use [`exibble`] to create a **gt** table. Keep only the `date` and `time`
+#' columns. Format the `date` column to have mixed date formats (dates after
+#' April will be different than the others because of the expressions used
+#' in the `rows` argument).
+#'
+#' ```r
+#' exibble %>%
 #'   dplyr::select(date, time) %>%
 #'   gt() %>%
 #'   fmt_date(
 #'     columns = date,
-#'     rows =
-#'       as.Date(date) > as.Date("2015-04-01"),
+#'     rows = as.Date(date) > as.Date("2015-04-01"),
 #'     date_style = "m_day_year"
 #'   ) %>%
 #'   fmt_date(
 #'     columns = date,
-#'     rows =
-#'       as.Date(date) <= as.Date("2015-04-01"),
+#'     rows = as.Date(date) <= as.Date("2015-04-01"),
 #'     date_style = "day_m_year"
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_fmt_date_1.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_fmt_date_2.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_date_2.png")`
+#' }}
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-8
+#' 3-10
 #'
 #' @import rlang
 #' @export
-fmt_date <- function(data,
-                     columns,
-                     rows = everything(),
-                     date_style = 2,
-                     pattern = "{x}") {
+fmt_date <- function(
+    data,
+    columns,
+    rows = everything(),
+    date_style = 2,
+    pattern = "{x}"
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -2024,59 +2293,64 @@ fmt_date <- function(data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `exibble` to create a gt table;
-#' # keep only the `date` and `time` columns;
-#' # format the `time` column to have
-#' # times formatted as `hms_p`
-#' # (time style `3`)
-#' tab_1 <-
-#'   exibble %>%
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table. Keep only the `date` and `time`
+#' columns. Format the `time` column to have times formatted as `hms_p` (time
+#' style `3`).
+#'
+#' ```r
+#' exibble %>%
 #'   dplyr::select(date, time) %>%
 #'   gt() %>%
 #'   fmt_time(
 #'     columns = time,
 #'     time_style = 3
 #'   )
+#' ```
 #'
-#' # Use `exibble` to create a gt table;
-#' # keep only the `date` and `time` columns;
-#' # format the `time` column to have mixed
-#' # time formats (times after 16:00 will
-#' # be different than the others)
-#' tab_2 <-
-#'   exibble %>%
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_time_1.png")`
+#' }}
+#'
+#' Use [`exibble`] to create a **gt** table. Keep only the `date` and `time`
+#' columns. Format the `time` column to have mixed time formats (times after
+#' 16:00 will be different than the others because of the expressions used
+#' in the `rows` argument).
+#'
+#' ```r
+#' exibble %>%
 #'   dplyr::select(date, time) %>%
 #'   gt() %>%
 #'   fmt_time(
 #'     columns = time,
-#'     rows =
-#'       time > "16:00",
+#'     rows = time > "16:00",
 #'     time_style = 3
 #'   ) %>%
 #'   fmt_time(
 #'     columns = time,
-#'     rows =
-#'       time <= "16:00",
+#'     rows = time <= "16:00",
 #'     time_style = 4
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_fmt_time_1.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_fmt_time_2.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_time_2.png")`
+#' }}
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-9
+#' 3-11
 #'
 #' @import rlang
 #' @export
-fmt_time <- function(data,
-                     columns,
-                     rows = everything(),
-                     time_style = 2,
-                     pattern = "{x}") {
+fmt_time <- function(
+    data,
+    columns,
+    rows = everything(),
+    time_style = 2,
+    pattern = "{x}"
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -2265,14 +2539,14 @@ fmt_time <- function(data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `exibble` to create a gt table;
-#' # keep only the `datetime` column;
-#' # format the column to have dates
-#' # formatted as `month_day_year` and
-#' # times to be `hms_p`
-#' tab_1 <-
-#'   exibble %>%
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table. Keep only the `datetime` column.
+#' Format the column to have dates formatted as `month_day_year` and times to be
+#' `hms_p`.
+#'
+#' ```r
+#' exibble %>%
 #'   dplyr::select(datetime) %>%
 #'   gt() %>%
 #'   fmt_datetime(
@@ -2280,25 +2554,29 @@ fmt_time <- function(data,
 #'     date_style = 5,
 #'     time_style = 3
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_fmt_datetime_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_datetime_1.png")`
+#' }}
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-10
+#' 3-12
 #'
 #' @import rlang
 #' @export
-fmt_datetime <- function(data,
-                         columns,
-                         rows = everything(),
-                         date_style = 2,
-                         time_style = 2,
-                         sep = " ",
-                         format = NULL,
-                         tz = NULL,
-                         pattern = "{x}") {
+fmt_datetime <- function(
+    data,
+    columns,
+    rows = everything(),
+    date_style = 2,
+    time_style = 2,
+    sep = " ",
+    format = NULL,
+    tz = NULL,
+    pattern = "{x}"
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -2424,15 +2702,17 @@ fmt_datetime <- function(data,
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Create a few Markdown-based
-#' # text snippets
+#' @section Examples:
+#'
+#' Create a few Markdown-based text snippets.
+#'
+#' ```r
 #' text_1a <- "
 #' ### This is Markdown.
 #'
@@ -2462,33 +2742,37 @@ fmt_datetime <- function(data,
 #' text_2b <- "
 #' There's a quick reference [here](https://commonmark.org/help/).
 #' "
+#' ```
 #'
-#' # Arrange the text snippets as a tibble
-#' # using the `dplyr::tribble()` function;
-#' # then, create a gt table and format
-#' # all columns with `fmt_markdown()`
-#' tab_1 <-
-#'   dplyr::tribble(
-#'     ~Markdown, ~md,
-#'     text_1a,   text_2a,
-#'     text_1b,   text_2b,
-#'   ) %>%
-#'     gt() %>%
-#'     fmt_markdown(columns = everything()) %>%
-#'     tab_options(table.width = px(400))
+#' Arrange the text snippets as a tibble using the `dplyr::tribble()` function.
+#' then, create a **gt** table and format all columns with `fmt_markdown()`.
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_fmt_markdown_1.png}{options: width=100\%}}
+#' ```r
+#' dplyr::tribble(
+#'   ~Markdown, ~md,
+#'   text_1a,   text_2a,
+#'   text_1b,   text_2b,
+#' ) %>%
+#'   gt() %>%
+#'   fmt_markdown(columns = everything()) %>%
+#'   tab_options(table.width = px(400))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_markdown_1.png")`
+#' }}
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-11
+#' 3-13
 #'
 #' @import rlang
 #' @export
-fmt_markdown <- function(data,
-                         columns,
-                         rows = everything()) {
+fmt_markdown <- function(
+    data,
+    columns,
+    rows = everything()
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -2537,7 +2821,7 @@ fmt_markdown <- function(data,
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param escape An option to escape text according to the final output format
@@ -2548,14 +2832,14 @@ fmt_markdown <- function(data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `exibble` to create a gt table;
-#' # keep only the `char` column;
-#' # pass the data in that column through
-#' # but apply a simple pattern that adds
-#' # an 's' to the non-NA values
-#' tab_1 <-
-#'   exibble %>%
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table. Keep only the `char` column. Pass
+#' the data in that column through but apply a simple pattern that adds an `"s"`
+#' to the non-`NA` values.
+#'
+#' ```r
+#' exibble %>%
 #'   dplyr::select(char) %>%
 #'   gt() %>%
 #'   fmt_passthrough(
@@ -2563,21 +2847,25 @@ fmt_markdown <- function(data,
 #'     rows = !is.na(char),
 #'     pattern = "{x}s"
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_fmt_passthrough_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_passthrough_1.png")`
+#' }}
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-12
+#' 3-14
 #'
 #' @import rlang
 #' @export
-fmt_passthrough <- function(data,
-                            columns,
-                            rows = everything(),
-                            escape = TRUE,
-                            pattern = "{x}") {
+fmt_passthrough <- function(
+    data,
+    columns,
+    rows = everything(),
+    escape = TRUE,
+    pattern = "{x}"
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -2673,7 +2961,7 @@ fmt_passthrough <- function(data,
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param missing_text The text to be used in place of `NA` values in the
@@ -2681,12 +2969,13 @@ fmt_passthrough <- function(data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `exibble` to create a gt table;
-#' # NA values in different columns will
-#' # be given replacement text
-#' tab_1 <-
-#'   exibble %>%
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table. The `NA` values in different
+#' columns will be given replacement text.
+#'
+#' ```r
+#' exibble %>%
 #'   dplyr::select(-row, -group) %>%
 #'   gt() %>%
 #'   fmt_missing(
@@ -2697,20 +2986,24 @@ fmt_passthrough <- function(data,
 #'     columns = 4:7,
 #'     missing_text = "nothing"
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_fmt_missing_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_missing_1.png")`
+#' }}
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-13
+#' 3-15
 #'
 #' @import rlang
 #' @export
-fmt_missing <- function(data,
-                        columns,
-                        rows = everything(),
-                        missing_text = "---") {
+fmt_missing <- function(
+    data,
+    columns,
+    rows = everything(),
+    missing_text = "---"
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -2790,7 +3083,7 @@ fmt_missing <- function(data,
 #' As with all of the `fmt_*()` functions, targeting of values is done through
 #' `columns` and additionally by `rows` (if nothing is provided for `rows` then
 #' entire columns are selected). Conditional formatting is possible by providing
-#' a conditional expression to the `rows` argument. See the Arguments section
+#' a conditional expression to the `rows` argument. See the *Arguments* section
 #' for more information on this.
 #'
 #' @inheritParams fmt_number
@@ -2798,13 +3091,13 @@ fmt_missing <- function(data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `exibble` to create a gt table;
-#' # format the numeric values in the `num`
-#' # column with a function supplied to
-#' # the `fns` argument
-#' tab_1 <-
-#'   exibble %>%
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table. Format the numeric values in the
+#' `num` column with a function supplied to the `fns` argument.
+#'
+#' ```r
+#' exibble %>%
 #'   dplyr::select(-row, -group) %>%
 #'   gt() %>%
 #'   fmt(
@@ -2813,20 +3106,24 @@ fmt_missing <- function(data,
 #'       paste0("'", x * 1000, "'")
 #'     }
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_fmt_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_1.png")`
+#' }}
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-14
+#' 3-16
 #'
 #' @import rlang
 #' @export
-fmt <- function(data,
-                columns = everything(),
-                rows = everything(),
-                fns) {
+fmt <- function(
+    data,
+    columns = everything(),
+    rows = everything(),
+    fns
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
