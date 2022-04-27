@@ -146,7 +146,7 @@ as the domain.\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplac
 
 \section{Function ID}{
 
-3-17
+3-18
 }
 
 \seealso{
@@ -161,6 +161,7 @@ Other Format Data:
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
+\code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
 \code{\link{fmt_scientific}()},

@@ -51,7 +51,7 @@ aren't provided.
 As with all of the \verb{fmt_*()} functions, targeting of values is done through
 \code{columns} and additionally by \code{rows} (if nothing is provided for \code{rows} then
 entire columns are selected). Conditional formatting is possible by providing
-a conditional expression to the \code{rows} argument. See the Arguments section
+a conditional expression to the \code{rows} argument. See the \emph{Arguments} section
 for more information on this.
 }
 \section{Examples}{
@@ -76,7 +76,7 @@ Use \code{\link{exibble}} to create a \strong{gt} table. Format the numeric valu
 
 \section{Function ID}{
 
-3-15
+3-16
 }
 
 \seealso{
@@ -92,6 +92,7 @@ Other Format Data:
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
+\code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
 \code{\link{fmt_scientific}()},

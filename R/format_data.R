@@ -22,7 +22,7 @@
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @param data A table object that is created using the [gt()] function.
 #' @param columns The columns to format. Can either be a series of column names
@@ -115,7 +115,7 @@
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. format the `num` column as numeric
+#' Use [`exibble`] to create a **gt** table. Format the `num` column as numeric
 #' with three decimal places and with no use of digit separators.
 #'
 #' ```r
@@ -308,7 +308,7 @@ fmt_number <- function(
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param suffixing An option to scale and apply suffixes to larger numbers
@@ -411,7 +411,7 @@ fmt_integer <- function(
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param scale_by A value to scale the input. The default is `1.0`. All numeric
@@ -607,7 +607,7 @@ fmt_scientific <- function(
 #' nothing is provided for `rows` then entire columns are selected). A number of
 #' helper functions exist to make targeting more effective. Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param scale_by A value to scale the input. The default is `1.0`. All numeric
@@ -871,6 +871,17 @@ fmt_symbol <- function(
             )
         }
 
+        # If we supply a per mille or per myriad keyword as
+        # `symbol` (possible inputs in `fmt_partsper()`),
+        # get the contextually correct mark
+        if (is.character(symbol)) {
+          if (symbol == "per-mille") {
+            symbol <- I(context_permille_mark(context = context))
+          } else if (symbol == "per-myriad") {
+            symbol <- I(context_permyriad_mark(context = context))
+          }
+        }
+
         # Format values with a symbol string
         x_str <-
           format_symbol_str(
@@ -924,6 +935,9 @@ fmt_symbol <- function(
 #' trailing zeros, and a choice of the decimal symbol
 #' - digit grouping separators: options to enable/disable digit separators
 #' and provide a choice of separator symbol
+#' - value scaling toggle: choose to disable automatic value scaling in the
+#' situation that values are already scaled coming in (and just require the
+#' percent symbol)
 #' - pattern: option to use a text pattern for decoration of the formatted
 #' values
 #' - locale-based formatting: providing a locale ID will result in number
@@ -933,7 +947,7 @@ fmt_symbol <- function(
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param scale_values Should the values be scaled through multiplication by
@@ -1049,6 +1063,209 @@ fmt_percent <- function(
   )
 }
 
+#' Format values as parts-per quantities
+#'
+#' @description
+#' With numeric values in a **gt** table we can format the values so that they
+#' are rendered as *per mille*, *ppm*, *ppb*, etc., quantities. The following
+#' list of keywords (with associated naming and scaling factors) is available to
+#' use within `fmt_partsper()`:
+#'
+#' - `"per-mille"`: Per mille, (1 part in `1,000`)
+#' - `"per-myriad"`: Per myriad, (1 part in `10,000`)
+#' - `"pcm"`: Per cent mille (1 part in `100,000`)
+#' - `"ppm"`: Parts per million, (1 part in `1,000,000`)
+#' - `"ppb"`: Parts per billion, (1 part in `1,000,000,000`)
+#' - `"ppt"`: Parts per trillion, (1 part in `1,000,000,000,000`)
+#' - `"ppq"`: Parts per quadrillion, (1 part in `1,000,000,000,000,000`)
+#'
+#' The function provides a lot of formatting control and we can use the
+#' following options:
+#'
+#' - custom symbol/units: we can override the automatic symbol or units display
+#' with our own choice as the situation warrants
+#' - decimals: choice of the number of decimal places, option to drop
+#' trailing zeros, and a choice of the decimal symbol
+#' - digit grouping separators: options to enable/disable digit separators
+#' and provide a choice of separator symbol
+#' - value scaling toggle: choose to disable automatic value scaling in the
+#' situation that values are already scaled coming in (and just require the
+#' appropriate symbol or unit display)
+#' - pattern: option to use a text pattern for decoration of the formatted
+#' values
+#' - locale-based formatting: providing a locale ID will result in number
+#' formatting specific to the chosen locale
+#'
+#' @details
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the *Arguments* section for more information on this.
+#'
+#' @inheritParams fmt_number
+#' @param to_units A keyword that signifies the desired output quantity. This
+#'   can be any from the following set: `"per-mille"`, `"per-myriad"`, `"pcm"`,
+#'   `"ppm"`, `"ppb"`, `"ppt"`, or `"ppq"`.
+#' @param symbol The symbol/units to use for the quantity. By default, this is
+#'   set to `"auto"` and **gt** will choose the appropriate symbol based on the
+#'   `to_units` keyword and the output context. However, this can be changed by
+#'   supplying a string (e.g, using `symbol = "ppbV"` when `to_units = "ppb"`).
+#' @param scale_values Should the values be scaled through multiplication
+#'   according to the keyword set in `to_units`? By default this is `TRUE` since
+#'   the expectation is that normally values are proportions. Setting to `FALSE`
+#'   signifies that the values are already scaled and require only the
+#'   appropriate symbol/units when formatted.
+#' @param incl_space An option for whether to include a space between the value
+#'   and the symbol/units. The default is `"auto"` which provides spacing
+#'   dependent on the mark itself. This can be directly controlled by using
+#'   either `TRUE` or `FALSE`.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Create a tibble of small numeric values and generate a **gt** table. Format
+#' the `a` column to appear in scientific notation with [fmt_scientific()] and
+#' format the `b` column as *per mille* values with `fmt_partsper()`.
+#'
+#' ```r
+#' dplyr::tibble(x = 0:-5, a = 10^(0:-5), b = a) %>%
+#'   gt(rowname_col = "x") %>%
+#'   fmt_scientific(a, decimals = 0) %>%
+#'   fmt_partsper(
+#'     columns = b,
+#'     to_units = "per-mille"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_partsper_1.png")`
+#' }}
+#'
+#' @family Format Data
+#' @section Function ID:
+#' 3-6
+#'
+#' @import rlang
+#' @export
+fmt_partsper <- function(
+    data,
+    columns,
+    rows = everything(),
+    to_units = c("per-mille", "per-myriad", "pcm", "ppm", "ppb", "ppt", "ppq"),
+    symbol = "auto",
+    decimals = 2,
+    drop_trailing_zeros = FALSE,
+    drop_trailing_dec_mark = TRUE,
+    scale_values = TRUE,
+    use_seps = TRUE,
+    pattern = "{x}",
+    sep_mark = ",",
+    dec_mark = ".",
+    force_sign = FALSE,
+    incl_space = "auto",
+    system = c("intl", "ind"),
+    locale = NULL
+) {
+
+  to_units <- match.arg(to_units)
+  system <- match.arg(system)
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  # Resolve the `locale` value here with the global locale value
+  locale <- resolve_locale(data = data, locale = locale)
+
+  # Stop function if any columns have data that is incompatible
+  # with this formatter
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = c("numeric", "integer")
+    )
+  ) {
+    stop(
+      "The `fmt_per_x()` function can only be used on `columns` ",
+      "with numeric data.",
+      call. = FALSE
+    )
+  }
+
+  # Scale values according to `to_units` value
+  if (scale_values) {
+
+    scale_by <-
+      switch(
+        to_units,
+        `per-mille` = 1E3,
+        `per-myriad` = 1E4,
+        pcm = 1E5,
+        ppm = 1E6,
+        ppb = 1E9,
+        ppt = 1E12,
+        ppq = 1E15,
+      )
+
+  } else {
+    scale_by <- 1.0
+  }
+
+  if (symbol == "auto") {
+
+    symbol <-
+      switch(
+        to_units,
+        `per-mille` = "per-mille",
+        `per-myriad` = "per-myriad",
+        pcm = "pcm",
+        ppm = "ppm",
+        ppb = "ppb",
+        ppt = "ppt",
+        ppq = "ppq"
+      )
+  }
+
+  if (incl_space == "auto") {
+
+    incl_space <-
+      switch(
+        to_units,
+        `per-mille` = ,
+        `per-myriad` = FALSE,
+        pcm = ,
+        ppm = ,
+        ppb = ,
+        ppt = ,
+        ppq = TRUE
+      )
+  }
+
+  # Pass `data`, `columns`, `rows`, and other options to `fmt_symbol()`
+  fmt_symbol(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    symbol = symbol,
+    accounting = FALSE,
+    decimals = decimals,
+    drop_trailing_zeros = drop_trailing_zeros,
+    drop_trailing_dec_mark = drop_trailing_dec_mark,
+    use_seps = use_seps,
+    scale_by = scale_by,
+    suffixing = FALSE,
+    pattern = pattern,
+    sep_mark = sep_mark,
+    dec_mark = dec_mark,
+    force_sign = force_sign,
+    placement = "right",
+    incl_space = incl_space,
+    system = system,
+    locale = locale
+  )
+}
+
 #' Format values as a mixed fractions
 #'
 #' @description
@@ -1076,7 +1293,7 @@ fmt_percent <- function(
 #' nothing is provided for `rows` then entire columns are selected). A number of
 #' helper functions exist to make targeting more effective. Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param accuracy The type of fractions to generate. This can either be one of
@@ -1168,7 +1385,7 @@ fmt_percent <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-6
+#' 3-7
 #'
 #' @import rlang
 #' @export
@@ -1535,7 +1752,7 @@ round_gt <- function(x, digits = 0) {
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param currency The currency to use for the numeric value. This input can be
@@ -1607,7 +1824,7 @@ round_gt <- function(x, digits = 0) {
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-7
+#' 3-8
 #'
 #' @import rlang
 #' @export
@@ -1719,7 +1936,7 @@ fmt_currency <- function(
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param standard The way to express large byte sizes.
@@ -1769,7 +1986,7 @@ fmt_currency <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-8
+#' 3-9
 #'
 #' @import rlang
 #' @export
@@ -1966,7 +2183,7 @@ fmt_bytes <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-9
+#' 3-10
 #'
 #' @import rlang
 #' @export
@@ -2123,7 +2340,7 @@ fmt_date <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-10
+#' 3-11
 #'
 #' @import rlang
 #' @export
@@ -2345,7 +2562,7 @@ fmt_time <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-11
+#' 3-12
 #'
 #' @import rlang
 #' @export
@@ -2485,7 +2702,7 @@ fmt_datetime <- function(
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #'
@@ -2547,7 +2764,7 @@ fmt_datetime <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-12
+#' 3-13
 #'
 #' @import rlang
 #' @export
@@ -2604,7 +2821,7 @@ fmt_markdown <- function(
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param escape An option to escape text according to the final output format
@@ -2638,7 +2855,7 @@ fmt_markdown <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-13
+#' 3-14
 #'
 #' @import rlang
 #' @export
@@ -2744,7 +2961,7 @@ fmt_passthrough <- function(
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param missing_text The text to be used in place of `NA` values in the
@@ -2777,7 +2994,7 @@ fmt_passthrough <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-14
+#' 3-15
 #'
 #' @import rlang
 #' @export
@@ -2866,7 +3083,7 @@ fmt_missing <- function(
 #' As with all of the `fmt_*()` functions, targeting of values is done through
 #' `columns` and additionally by `rows` (if nothing is provided for `rows` then
 #' entire columns are selected). Conditional formatting is possible by providing
-#' a conditional expression to the `rows` argument. See the Arguments section
+#' a conditional expression to the `rows` argument. See the *Arguments* section
 #' for more information on this.
 #'
 #' @inheritParams fmt_number
@@ -2897,7 +3114,7 @@ fmt_missing <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-15
+#' 3-16
 #'
 #' @import rlang
 #' @export

@@ -35,7 +35,7 @@ appropriate output type during render when using \code{fmt_markdown()}.
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
 nothing is provided for \code{rows} then entire columns are selected). Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the Arguments section for more information on this.
+argument. See the \emph{Arguments} section for more information on this.
 }
 \section{Examples}{
 
@@ -89,7 +89,7 @@ then, create a \strong{gt} table and format all columns with \code{fmt_markdown(
 
 \section{Function ID}{
 
-3-12
+3-13
 }
 
 \seealso{
@@ -104,6 +104,7 @@ Other Format Data:
 \code{\link{fmt_integer}()},
 \code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
+\code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
 \code{\link{fmt_scientific}()},

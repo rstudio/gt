@@ -128,7 +128,7 @@
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-17
+#' 3-18
 #'
 #' @import rlang
 #' @export
@@ -565,4 +565,3 @@ check_named_colors <- function(named_colors) {
     )
   }
 }
-

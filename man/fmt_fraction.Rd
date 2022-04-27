@@ -110,7 +110,7 @@ Targeting of values is done through \code{columns} and additionally by \code{row
 nothing is provided for \code{rows} then entire columns are selected). A number of
 helper functions exist to make targeting more effective. Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the Arguments section for more information on this.
+argument. See the \emph{Arguments} section for more information on this.
 }
 \section{Examples}{
 
@@ -182,7 +182,7 @@ Use \code{\link{pizzaplace}} to create a \strong{gt} table. Format the \code{f_s
 
 \section{Function ID}{
 
-3-6
+3-7
 }
 
 \seealso{
@@ -197,6 +197,7 @@ Other Format Data:
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
+\code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
 \code{\link{fmt_scientific}()},
