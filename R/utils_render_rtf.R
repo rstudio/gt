@@ -200,13 +200,16 @@ rtf_header <- function(
 
 rtf_file <- function(
     header = NULL,
+    page_information = NULL,
     document = NULL,
-    footer = NULL,
+    page_orientation,
     page_numbering
 ) {
 
   if (is.null(header) && is.null(document)) {
+
     header <- document <- ""
+
   } else if (is.null(header) && !is.null(document)) {
 
     # If `header` is NULL then generate the header based on the
@@ -250,26 +253,49 @@ rtf_file <- function(
     header <- rtf_header(fonttbl, colortbl)
   }
 
-  # Include RTF code to express page numbering if `page_numbering != "none"`
-  if (page_numbering != "none") {
+  # Create the `page_information` statements if not provided
+  if (is.null(page_information)) {
 
-    document <-
-      paste(
-        document,
-        "\n\n",
-        rtf_raw(
-          "{",
-          if (page_numbering == "footer") "\\footer" else "\\header",
-          "\\qr{\n{\\field{\\*\\fldinst {PAGE}}{\\fldrslt {Refresh >F9<}}}}\\par}"
-        )
+    paper_width_val <- getOption(paste0("gt.rtf_paper_width_", page_orientation))
+    paper_height_val <- getOption(paste0("gt.rtf_paper_height_", page_orientation))
+
+    page_information <-
+      rtf_raw(
+        paste0("\\paperw", paper_width_val),
+        paste0("\\paperh", paper_height_val),
+        "\\widowctrl\\ftnbj\\fet0\\sectd\\linex0\n",
+        "\\lndscpsxn\n",
+        paste0("\\margl", getOption("gt.rtf_page_margin_left")),
+        paste0("\\margr", getOption("gt.rtf_page_margin_right")),
+        paste0("\\margt", getOption("gt.rtf_page_margin_top")),
+        paste0("\\margb", getOption("gt.rtf_page_margin_bottom")),
+        "\n",
+        paste0("\\headery", getOption("gt.rtf_page_header_height")),
+        paste0("\\footery", getOption("gt.rtf_page_footer_height")),
+        "\\fs20\n"
       )
   }
+
+  # # Include RTF code to express page numbering if `page_numbering != "none"`
+  # if (page_numbering != "none") {
+  #
+  #   document <-
+  #     paste(
+  #       document,
+  #       "\n\n",
+  #       rtf_raw(
+  #         "{",
+  #         if (page_numbering == "footer") "\\footer" else "\\header",
+  #         "\\qr{\n{\\field{\\*\\fldinst {PAGE}}{\\fldrslt {Refresh >F9<}}}}\\par}"
+  #       )
+  #     )
+  # }
 
   rtf_file <-
     list(
       header = header,
-      document = document,
-      footer = footer
+      page_information = page_information,
+      document = document
     )
 
   class(rtf_file) <- c("rtf_file", "rtf")
@@ -368,12 +394,16 @@ abs_len_to_twips <- function(lengths_df) {
 # length-1 vector and the latter should be a vector with as many
 # elements as there are visible columns in the gt table
 col_width_resolver_rtf <- function(
+    page_orientation,
     table_width,
     col_widths = NULL,
     n_cols = length(col_widths)
 ) {
 
-  rtf_page_width <- getOption("gt.rtf_page_width")
+  rtf_page_width <-
+    getOption(paste0("gt.rtf_paper_width_", page_orientation)) -
+    getOption("gt.rtf_page_margin_left") -
+    getOption("gt.rtf_page_margin_right")
 
   stopifnot(length(table_width) == 1)
 
@@ -444,6 +474,7 @@ rtf_tbl_row <- function(
     repeat_header = FALSE
 ) {
 
+  # TODO: provide orientation to `rtf_tbl_row` in order to obtain this
   rtf_page_width <- getOption("gt.rtf_page_width")
 
   if (is.list(x)) x <- unlist(x)
@@ -867,6 +898,8 @@ as_rtf_string <- function(x) {
     rtf_raw("{"),
     rtf_raw(as.character(x$header)),
     "\n",
+    rtf_raw(as.character(x$page_information)),
+    "\n",
     rtf_raw(as.character(x$document)),
     rtf_raw("}")
   )
@@ -910,6 +943,7 @@ create_heading_component_rtf <- function(data) {
 
   col_widths <-
     col_width_resolver_rtf(
+      page_orientation = dt_options_get_value(data = data, option = "page_orientation"),
       table_width = table_width,
       col_widths = col_widths,
       n_cols = length(col_widths)
@@ -1032,6 +1066,7 @@ create_columns_component_rtf <- function(data) {
     dplyr::pull(column_width) %>%
     unlist() %>%
     col_width_resolver_rtf(
+      page_orientation = dt_options_get_value(data = data, option = "page_orientation"),
       table_width = dt_options_get_value(data = data, option = "table_width"),
       col_widths = .,
       n_cols = get_effective_number_of_columns(data = data)
@@ -1268,6 +1303,7 @@ create_body_component_rtf <- function(data) {
     dplyr::pull(column_width) %>%
     unlist() %>%
     col_width_resolver_rtf(
+      page_orientation = dt_options_get_value(data = data, option = "page_orientation"),
       table_width = dt_options_get_value(data = data, option = "table_width"),
       col_widths = .,
       n_cols = n_cols
@@ -1593,6 +1629,7 @@ create_footer_component_rtf <- function(data) {
 
   col_widths <-
     col_width_resolver_rtf(
+      page_orientation = dt_options_get_value(data = data, option = "page_orientation"),
       table_width = table_width,
       col_widths = col_widths,
       n_cols = length(col_widths)

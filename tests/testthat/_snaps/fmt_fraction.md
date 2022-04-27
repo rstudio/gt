@@ -47,6 +47,11 @@
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red211\green211\blue211;}
       
+      \paperw12240\paperh15840\widowctrl\ftnbj\fet0\sectd\linex0
+      \lndscpsxn
+      \margl1440\margr1440\margt1440\margb1440
+      \headery720\footery720\fs20
+      
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrt\brdrs\brdrw40\brdrcf1\clbrdrb\brdrs\brdrw40\brdrcf1\clbrdrl\brdrs\brdrw20\brdrcf1\clbrdrr\brdrs\brdrw20\brdrcf1\cellx1500
@@ -2504,6 +2509,11 @@
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red211\green211\blue211;}
       
+      \paperw12240\paperh15840\widowctrl\ftnbj\fet0\sectd\linex0
+      \lndscpsxn
+      \margl1440\margr1440\margt1440\margb1440
+      \headery720\footery720\fs20
+      
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\clbrdrt\brdrs\brdrw40\brdrcf1\clbrdrb\brdrs\brdrw40\brdrcf1\clbrdrl\brdrs\brdrw20\brdrcf1\clbrdrr\brdrs\brdrw20\brdrcf1\cellx1500
@@ -4960,6 +4970,11 @@
       .
     Output
       {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red211\green211\blue211;}
+      
+      \paperw12240\paperh15840\widowctrl\ftnbj\fet0\sectd\linex0
+      \lndscpsxn
+      \margl1440\margr1440\margt1440\margb1440
+      \headery720\footery720\fs20
       
       \trowd\trrh0\trhdr
       

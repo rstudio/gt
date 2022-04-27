@@ -481,6 +481,7 @@ as_latex <- function(data) {
 #' @export
 as_rtf <- function(data) {
 
+  page_orientation <- dt_options_get_value(data = data, option = "page_orientation")
   page_numbering <- dt_options_get_value(data = data, option = "page_numbering")
 
   # Perform input object validation
@@ -503,20 +504,31 @@ as_rtf <- function(data) {
   # Create the footer component
   footer_component <- create_footer_component_rtf(data = data)
 
+  # Create the page header component
+
+
+  # Create the page footer component
+
+
   # Compose the RTF table
   rtf_table <-
     as_rtf_string(
       rtf_file(
+        header = NULL,
+        page_information = NULL,
         document = {
           rtf_table(
             rows = c(
+              #page_header_component,
               heading_component,
               columns_component,
               body_component,
-              footer_component
+              footer_component#,
+              #page_footer_component
             )
           )
         },
+        page_orientation = page_orientation,
         page_numbering = page_numbering
       )
     )
