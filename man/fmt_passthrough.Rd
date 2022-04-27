@@ -60,13 +60,6 @@ argument. See the \emph{Arguments} section for more information on this.
 }
 \section{Examples}{
 
-\if{html}{\figure{man_fmt_passthrough_1.png}{options: width=100\%}}
-}
-
-\section{Function ID}{
-
-3-13
-}
 
 Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{char} column. Pass
 the data in that column through but apply a simple pattern that adds an \code{"s"}
@@ -87,11 +80,11 @@ to the non-\code{NA} values.\if{html}{\out{<div class="sourceCode r">}}\preforma
 
 \section{Function ID}{
 
-3-14
+3-15
 }
 
 \seealso{
-Other Format Data:
+Other Format Data: 
 \code{\link{data_color}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},

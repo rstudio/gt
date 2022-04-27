@@ -39,13 +39,6 @@ argument. See the \emph{Arguments} section for more information on this.
 }
 \section{Examples}{
 
-\if{html}{\figure{man_fmt_markdown_1.png}{options: width=100\%}}
-}
-
-\section{Function ID}{
-
-3-12
-}
 
 Create a few Markdown-based text snippets.\if{html}{\out{<div class="sourceCode r">}}\preformatted{text_1a <- "
 ### This is Markdown.
@@ -96,11 +89,11 @@ then, create a \strong{gt} table and format all columns with \code{fmt_markdown(
 
 \section{Function ID}{
 
-3-13
+3-14
 }
 
 \seealso{
-Other Format Data:
+Other Format Data: 
 \code{\link{data_color}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},

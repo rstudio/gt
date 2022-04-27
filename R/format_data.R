@@ -2776,7 +2776,7 @@ fmt_datetime <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-11
+#' 3-13
 #'
 #' @import rlang
 #' @export
@@ -3504,7 +3504,7 @@ extract_duration_pattern <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-12
+#' 3-14
 #'
 #' @import rlang
 #' @export
@@ -3595,7 +3595,7 @@ fmt_markdown <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-13
+#' 3-15
 #'
 #' @import rlang
 #' @export
@@ -3734,7 +3734,7 @@ fmt_passthrough <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-14
+#' 3-16
 #'
 #' @import rlang
 #' @export
@@ -3854,7 +3854,7 @@ fmt_missing <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-15
+#' 3-17
 #'
 #' @import rlang
 #' @export

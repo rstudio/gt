@@ -132,7 +132,7 @@ argument. See the \emph{Arguments} section for more information on this.
 
 \section{Function ID}{
 
-3-11
+3-13
 }
 
 \examples{
@@ -172,6 +172,7 @@ Other Format Data:
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
+\code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
 \code{\link{fmt_scientific}()},
