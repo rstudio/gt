@@ -239,14 +239,14 @@ argument.</p></dd>
     <p>Targeting of values is done through <code>columns</code> and additionally by <code>rows</code> (if
 nothing is provided for <code>rows</code> then entire columns are selected). Conditional
 formatting is possible by providing a conditional expression to the <code>rows</code>
-argument. See the Arguments section for more information on this.</p>
+argument. See the <em>Arguments</em> section for more information on this.</p>
     </div>
     <div class="section level2">
     <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     
 
 
-<p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table. format the <code>num</code> column as numeric
+<p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table. Format the <code>num</code> column as numeric
 with three decimal places and with no use of digit separators.</p><div class="sourceCode r"><pre><code><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span>
@@ -289,6 +289,7 @@ use large-number suffixing with the <code>suffixing = TRUE</code> option.</p><di
 <code><a href="fmt_integer.html">fmt_integer</a>()</code>,
 <code><a href="fmt_markdown.html">fmt_markdown</a>()</code>,
 <code><a href="fmt_missing.html">fmt_missing</a>()</code>,
+<code><a href="fmt_partsper.html">fmt_partsper</a>()</code>,
 <code><a href="fmt_passthrough.html">fmt_passthrough</a>()</code>,
 <code><a href="fmt_percent.html">fmt_percent</a>()</code>,
 <code><a href="fmt_scientific.html">fmt_scientific</a>()</code>,
