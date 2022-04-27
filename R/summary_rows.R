@@ -43,22 +43,17 @@
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `sp500` to create a gt table with
-#' # row groups; create summary rows (`min`,
-#' # `max`, `avg`) by row group, where each
-#' # each row group is a week number
-#' tab_1 <-
-#'   sp500 %>%
-#'   dplyr::filter(
-#'     date >= "2015-01-05" &
-#'       date <="2015-01-16"
-#'   ) %>%
+#' @section Examples:
+#'
+#' Use [`sp500`] to create a **gt** table with row groups. Create the summary
+#' rows labeled `min`, `max`, and `avg` by row group (where each each row group
+#' is a week number) with the `summary_rows()` function.
+#'
+#' ```r
+#' sp500 %>%
+#'   dplyr::filter(date >= "2015-01-05" & date <="2015-01-16") %>%
 #'   dplyr::arrange(date) %>%
-#'   dplyr::mutate(
-#'     week = paste0(
-#'       "W", strftime(date, format = "%V"))
-#'   ) %>%
+#'   dplyr::mutate(week = paste0( "W", strftime(date, format = "%V"))) %>%
 #'   dplyr::select(-adj_close, -volume) %>%
 #'   gt(
 #'     rowname_col = "date",
@@ -74,22 +69,26 @@
 #'     formatter = fmt_number,
 #'     use_seps = FALSE
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_summary_rows_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_summary_rows_1.png")`
+#' }}
 #'
 #' @family Add Rows
 #' @section Function ID:
 #' 6-1
 #'
 #' @export
-summary_rows <- function(data,
-                         groups = NULL,
-                         columns = everything(),
-                         fns,
-                         missing_text = "---",
-                         formatter = fmt_number,
-                         ...) {
+summary_rows <- function(
+    data,
+    groups = NULL,
+    columns = everything(),
+    fns,
+    missing_text = "---",
+    formatter = fmt_number,
+    ...
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -203,21 +202,17 @@ summary_rows <- function(data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `sp500` to create a gt table with
-#' # row groups; create grand summary rows
-#' # (`min`, `max`, `avg`) for the table
-#' tab_1 <-
-#'   sp500 %>%
-#'   dplyr::filter(
-#'     date >= "2015-01-05" &
-#'       date <="2015-01-16"
-#'   ) %>%
+#' @section Examples:
+#'
+#' Use [`sp500`] to create a **gt** table with row groups. Create the grand
+#' summary rows `min`, `max`, and `avg` for the table with the
+#' `grand_summary_rows()` function.
+#'
+#' ```r
+#' sp500 %>%
+#'   dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") %>%
 #'   dplyr::arrange(date) %>%
-#'   dplyr::mutate(
-#'     week = paste0(
-#'       "W", strftime(date, format = "%V"))
-#'   ) %>%
+#'   dplyr::mutate(week = paste0("W", strftime(date, format = "%V"))) %>%
 #'   dplyr::select(-adj_close, -volume) %>%
 #'   gt(
 #'     rowname_col = "date",
@@ -232,21 +227,25 @@ summary_rows <- function(data,
 #'     formatter = fmt_number,
 #'     use_seps = FALSE
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_grand_summary_rows_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_grand_summary_rows_1.png")`
+#' }}
 #'
 #' @family Add Rows
 #' @section Function ID:
 #' 6-2
 #'
 #' @export
-grand_summary_rows <- function(data,
-                               columns = everything(),
-                               fns,
-                               missing_text = "---",
-                               formatter = fmt_number,
-                               ...) {
+grand_summary_rows <- function(
+    data,
+    columns = everything(),
+    fns,
+    missing_text = "---",
+    formatter = fmt_number,
+    ...
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)

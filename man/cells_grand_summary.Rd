@@ -63,26 +63,12 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \code{list()} (e.g., \code{list(cells_body(), cells_grand_summary())}).
 }
 
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cells_grand_summary_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
-
-7-13
-}
-
-\examples{
-# Use `countrypops` to create a gt table; add
-# some styling to a grand summary cell with
-# with `tab_style()` and `cells_grand_summary()`
-tab_1 <-
-  countrypops \%>\%
-  dplyr::filter(
-    country_name == "Spain",
-    year < 1970
-  ) \%>\%
+Use \code{\link{countrypops}} to create a \strong{gt} table. Add some styling to a grand
+summary cell with with \code{\link[=tab_style]{tab_style()}} and \code{cells_grand_summary()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
+  dplyr::filter(country_name == "Spain", year < 1970) \%>\%
   dplyr::select(-contains("country")) \%>\%
   gt(rowname_col = "year") \%>\%
   fmt_number(
@@ -104,10 +90,21 @@ tab_1 <-
     ),
     locations = cells_grand_summary(
       columns = population,
-      rows = 1)
+      rows = 1
+    )
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_grand_summary_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+7-13
+}
+
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},
