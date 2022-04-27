@@ -8,6 +8,7 @@
 <a href="https://github.com/rstudio/gt/actions"><img src="https://github.com/rich-iannone/pointblank/workflows/R-CMD-check/badge.svg" alt="R build status" /></a>
 <a href="https://app.codecov.io/gh/rstudio/gt?branch=master"><img src="https://codecov.io/gh/rstudio/gt/branch/master/graph/badge.svg" alt="Coverage status" /></a>
 
+<a href="https://bestpractices.coreinfrastructure.org/projects/5593"><img src="https://bestpractices.coreinfrastructure.org/projects/5593/badge" alt="Best Practices"></a>
 <a href="https://www.repostatus.org/#active"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="The project has reached a stable, usable state and is being actively developed." /></a>
 <a href="https://CRAN.R-project.org/package=gt"><img src="https://cranlogs.r-pkg.org/badges/gt" alt="Monthly Downloads"></a>
 <a href="https://CRAN.R-project.org/package=gt"><img src="https://cranlogs.r-pkg.org/badges/grand-total/gt" alt="Total Downloads"></a>

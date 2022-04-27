@@ -21,17 +21,22 @@ table. Why? For the most part they are suitable for body text, having large
 counters, large x-height, reasonably low contrast, and open apertures. These
 font features all make for high legibility at smaller sizes.
 }
+\section{Examples}{
+
+
+Get a table of info on some of the recommended \emph{Google Fonts} for tables.\if{html}{\out{<div class="sourceCode r">}}\preformatted{info_google_fonts()
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_info_google_fonts_1.png" style="width:100\%;">
+}}
+}
+
 \section{Function ID}{
 
 10-6
 }
 
-\examples{
-# Get a table of info on some of the
-# recommended Google Fonts for tables
-tab_1 <- info_google_fonts()
-
-}
 \seealso{
 Other Information Functions: 
 \code{\link{info_currencies}()},
