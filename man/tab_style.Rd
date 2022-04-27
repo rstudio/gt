@@ -50,27 +50,11 @@ bold text (the degree of choice is greater with variable fonts)
 \item the cell borders (\code{\link[=cell_borders]{cell_borders()}})
 }
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_tab_style_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_tab_style_2.png}{options: width=100\%}}
-
-\if{html}{\figure{man_tab_style_3.png}{options: width=100\%}}
-}
-
-\section{Function ID}{
-
-2-8
-}
-
-\examples{
-# Use `exibble` to create a gt table;
-# add styles that are to be applied
-# to data cells that satisfy a
-# condition (using `tab_style()`)
-tab_1 <-
-  exibble \%>\%
+Use \code{\link{exibble}} to create a \strong{gt} table. Add styles that are to be applied
+to data cells that satisfy a condition (using \code{tab_style()}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(num, currency) \%>\%
   gt() \%>\%
   fmt_number(
@@ -97,12 +81,14 @@ tab_1 <-
       rows = currency < 100
     )
   )
+}\if{html}{\out{</div>}}
 
-# Use `sp500` to create a gt table;
-# color entire rows of cells based
-# on values in a particular column
-tab_2 <-
-  sp500 \%>\%
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_1.png" style="width:100\%;">
+}}
+
+Use \code{\link{sp500}} to create a \strong{gt} table. Color entire rows of cells based on
+values in a particular column.\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
   dplyr::filter(
     date >= "2015-12-01" &
     date <= "2015-12-15"
@@ -111,26 +97,24 @@ tab_2 <-
   gt() \%>\%
   tab_style(
     style = cell_fill(color = "lightgreen"),
-    locations = cells_body(
-      rows = close > open)
+    locations = cells_body(rows = close > open)
   ) \%>\%
   tab_style(
     style = list(
       cell_fill(color = "red"),
       cell_text(color = "white")
       ),
-    locations = cells_body(
-      rows = open > close)
+    locations = cells_body(rows = open > close)
   )
+}\if{html}{\out{</div>}}
 
-# Use `exibble` to create a gt table;
-# replace missing values with the
-# `fmt_missing()` function and then
-# add styling to the `char` column
-# with `cell_fill()` and with a
-# CSS style declaration
-tab_3 <-
-  exibble \%>\%
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_2.png" style="width:100\%;">
+}}
+
+Use \code{\link{exibble}} to create a \strong{gt} table. Replace missing values with the
+\code{\link[=fmt_missing]{fmt_missing()}} function and then add styling to the \code{char} column with
+\code{\link[=cell_fill]{cell_fill()}} and with a CSS style declaration.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(char, fctr) \%>\%
   gt() \%>\%
   fmt_missing(everything()) \%>\%
@@ -141,8 +125,18 @@ tab_3 <-
     ),
     locations = cells_body(columns = char)
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_3.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+2-8
+}
+
 \seealso{
 \code{\link[=cell_text]{cell_text()}}, \code{\link[=cell_fill]{cell_fill()}}, and \code{\link[=cell_borders]{cell_borders()}} as helpers for
 defining custom styles and \code{\link[=cells_body]{cells_body()}} as one of many useful helper

@@ -18,33 +18,16 @@ rows were added via the \code{\link[=summary_rows]{summary_rows()}} function. Th
 contain the \code{group_id} and \code{rowname} columns, whereby \code{rowname} contains
 descriptive stub labels for the summary rows.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_extract_summary_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
-
-13-5
-}
-
-\examples{
-# Use `sp500` to create a gt table with
-# row groups; create summary rows by row
-# group (`min`, `max`, `avg`) and then
-# extract the summary rows as a list
-# object
-summary_extracted <-
+Use \code{\link{sp500}} to create a \strong{gt} table with row groups. Create summary rows
+labeled as \code{min}, \code{max}, and \code{avg} for every row group with \code{\link[=summary_rows]{summary_rows()}}.
+Then, extract the summary rows as a list object.\if{html}{\out{<div class="sourceCode r">}}\preformatted{summary_extracted <-
   sp500 \%>\%
-  dplyr::filter(
-    date >= "2015-01-05" &
-      date <="2015-01-30"
-  ) \%>\%
+  dplyr::filter(date >= "2015-01-05" & date <="2015-01-30") \%>\%
   dplyr::arrange(date) \%>\%
-  dplyr::mutate(
-    week = paste0(
-      "W", strftime(date, format = "\%V"))
-  ) \%>\%
+  dplyr::mutate(week = paste0("W", strftime(date, format = "\%V"))) \%>\%
   dplyr::select(-adj_close, -volume) \%>\%
   gt(
     rowname_col = "date",
@@ -56,23 +39,65 @@ summary_extracted <-
     fns = list(
       min = ~min(.),
       max = ~max(.),
-      avg = ~mean(.)),
+      avg = ~mean(.)
+    ),
     formatter = fmt_number,
     use_seps = FALSE
   ) \%>\%
   extract_summary()
 
-# Use the summary list to make a new
-# gt table; the key thing is to use
-# `dplyr::bind_rows()` and then pass the
-# tibble to `gt()`
-tab_1 <-
-  summary_extracted \%>\%
+summary_extracted
+}\if{html}{\out{</div>}}\preformatted{## $summary_df_data_list
+## $summary_df_data_list$W02
+## # A tibble: 3 × 8
+##   group_id rowname  date  open  high   low close  week
+##   <chr>    <chr>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+## 1 W02      min        NA 2006. 2030. 1992. 2003.    NA
+## 2 W02      max        NA 2063. 2064. 2038. 2062.    NA
+## 3 W02      avg        NA 2035. 2049. 2017. 2031.    NA
+## 
+## $summary_df_data_list$W03
+## # A tibble: 3 × 8
+##   group_id rowname  date  open  high   low close  week
+##   <chr>    <chr>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+## 1 W03      min        NA 1992. 2018. 1988. 1993.    NA
+## 2 W03      max        NA 2046. 2057. 2023. 2028.    NA
+## 3 W03      avg        NA 2020. 2033. 2000. 2015.    NA
+## 
+## $summary_df_data_list$W04
+## # A tibble: 3 × 8
+##   group_id rowname  date  open  high   low close  week
+##   <chr>    <chr>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+## 1 W04      min        NA 2020. 2029. 2004. 2023.    NA
+## 2 W04      max        NA 2063. 2065. 2051. 2063.    NA
+## 3 W04      avg        NA 2035. 2049. 2023. 2042.    NA
+## 
+## $summary_df_data_list$W05
+## # A tibble: 3 × 8
+##   group_id rowname  date  open  high   low close  week
+##   <chr>    <chr>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+## 1 W05      min        NA 2002. 2023. 1989. 1995.    NA
+## 2 W05      max        NA 2050. 2058. 2041. 2057.    NA
+## 3 W05      avg        NA 2030. 2039. 2009. 2021.    NA
+}
+
+Use the summary list to make a new \strong{gt} table. The key thing is to use
+\code{dplyr::bind_rows()} and then pass the tibble to \code{\link[=gt]{gt()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{summary_extracted \%>\%
   unlist(recursive = FALSE) \%>\%
   dplyr::bind_rows() \%>\%
   gt(groupname_col = "group_id")
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_extract_summary_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+13-5
+}
+
 \seealso{
 Other Export Functions: 
 \code{\link{as_latex}()},

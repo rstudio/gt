@@ -16,9 +16,16 @@ function provides a quick reference to all five styles, with associated
 number codes, the format names, and example outputs using a fixed time
 (\code{14:35}).
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_info_time_style_1.png}{options: width=100\%}}
+
+Get a table of info on the different time-formatting styles (which are used
+by supplying a number code to the \code{\link[=fmt_time]{fmt_time()}} function).\if{html}{\out{<div class="sourceCode r">}}\preformatted{info_time_style()
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_info_time_style_1.png" style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
@@ -26,14 +33,6 @@ number codes, the format names, and example outputs using a fixed time
 10-2
 }
 
-\examples{
-# Get a table of info on the different
-# time-formatting styles (which are used
-# by supplying a number code to the
-# `fmt_time()` function)
-tab_1 <- info_time_style()
-
-}
 \seealso{
 Other Information Functions: 
 \code{\link{info_currencies}()},

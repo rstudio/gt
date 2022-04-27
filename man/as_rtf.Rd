@@ -14,18 +14,11 @@ Get the RTF content from a \code{gt_tbl} object as as a single-element character
 vector. This object can be used with \code{writeLines()} to generate a valid .rtf
 file that can be opened by RTF readers.
 }
-\section{Function ID}{
+\section{Examples}{
 
-13-4
-}
 
-\examples{
-if (interactive()) {
-
-# Use `gtcars` to create a gt table;
-# add a header and then export as
-# RTF code
-tab_rtf <-
+Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header and then export as RTF
+code.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_rtf <-
   gtcars \%>\%
   dplyr::select(mfr, model) \%>\%
   dplyr::slice(1:2) \%>\%
@@ -35,10 +28,14 @@ tab_rtf <-
     subtitle = md("`gtcars` is an R dataset")
   ) \%>\%
   as_rtf()
-
+}\if{html}{\out{</div>}}
 }
 
+\section{Function ID}{
+
+13-4
 }
+
 \seealso{
 Other Export Functions: 
 \code{\link{as_latex}()},
