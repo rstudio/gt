@@ -4,7 +4,12 @@
 \alias{tab_footnote}
 \title{Add a table footnote}
 \usage{
-tab_footnote(data, footnote, locations = NULL, placement = c("auto", "right", "left"))
+tab_footnote(
+  data,
+  footnote,
+  locations = NULL,
+  placement = c("auto", "right", "left")
+)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -97,7 +102,7 @@ Use \code{\link{sza}} to create a \strong{gt} table. Color the \code{sza} column
 }
 
 \seealso{
-Other Create or Modify Parts:
+Other Create or Modify Parts: 
 \code{\link{tab_header}()},
 \code{\link{tab_options}()},
 \code{\link{tab_row_group}()},
