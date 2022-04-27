@@ -264,43 +264,51 @@ get_alignment_at_body_cell <- function(
   # Get cell alignment set by `tab_style`
   styles_tbl <- dt_styles_get(data = data)
 
-  if (nrow(styles_tbl) > 0) {
+  if (nrow(styles_tbl) < 1) {
+    return(column_alignment)
+  }
 
-    styles_filtered_tbl <-
-      styles_tbl %>%
-      dplyr::filter(
-        locname == "data" &&
-          colname == .env$colname && rownum == .env$rownum
-      )
+  #
+  # Check HTML styles to determine whether column alignment is
+  # set there (this has higher specificity)
+  #
 
-    if (nrow(styles_tbl) < 1) {
-      return(column_alignment)
-    }
+  styles_filtered_tbl <-
+    styles_tbl %>%
+    dplyr::filter(locname == "data" && colname == .env$colname && rownum == .env$rownum)
 
-    html_styles <-
-      vapply(
-        styles_filtered_tbl$styles,
-        FUN.VALUE = character(1),
-        USE.NAMES = FALSE,
-        FUN = styles_to_html
-      )
+  if (nrow(styles_tbl) < 1) {
+    return(column_alignment)
+  }
 
-    if (length(html_styles) > 0) {
+  # Extract the list of styles from the table
+  cell_styles_list <- styles_filtered_tbl$styles
 
-      if (grepl("text-align", html_styles)) {
+  if (length(cell_styles_list) < 1) {
+    return(column_alignment)
+  }
 
-        style_vec <-
-          html_styles %>%
-          strsplit(";\\s+") %>% unlist()
+  # Get the `align` property in `cell_styles_list` (element may not be present)
+  cell_text_align <- cell_styles_list[[1]]$cell_text$align
 
-        is_text_alignment <- grepl("text-align", style_vec)
+  # Get the `cell_style` property in `cell_styles_list` (may not be present)
+  # This is a user-defined string with CSS style rules that should look
+  # something like this: "text-align: right; background: green;"
+  cell_style <- cell_styles_list[[1]]$cell_style
 
-        cell_alignment <-
-          gsub("text-align:\\s+|;", "", style_vec[is_text_alignment])[1]
+  # Return the value of the last `text-align` property, if present
+  if (!is.null(cell_style) && grepl("text-align:", cell_style)) {
 
-        return(cell_alignment)
-      }
-    }
+    style_vec <- rev(unlist(strsplit(cell_style, ";\\s+")))
+    is_text_alignment <- grepl("text-align", style_vec)
+    cell_alignment <- gsub("text-align:\\s+|;", "", style_vec[is_text_alignment])[1]
+
+    return(cell_alignment)
+  }
+
+  # Return the value of the `cell_text$align` property, if present
+  if (!is.null(cell_text_align)) {
+    return(cell_text_align)
   }
 
   column_alignment
