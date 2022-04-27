@@ -102,7 +102,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\cellx9468
-      \intbl {\f0 {\f0\fs20 {\f0\fs20\i\super 1}{\f0\fs20 footnote **bold** (#1, no `md()`)}\line{\f0\fs20\i\super 2}{\f0\fs20 footnote {\b bold} (#2, uses {\f1 md()})}}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1}footnote **bold** (#1, no `md()`)\line {\super \i 2}footnote {\b bold} (#2, uses {\f1 md()})}}\cell
       \pard\plain
       
       \row
@@ -110,7 +110,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\cellx9468
-      \intbl {\f0 {\f0\fs20 {\f0\fs20 Source note **bold** (#1, no `md()`)}\line{\f0\fs20 Source note {\b bold} (#2, uses {\f1 md()})}}}\cell
+      \intbl {\f0 {\f0\fs20 Source note **bold** (#1, no `md()`)\line Source note {\b bold} (#2, uses {\f1 md()})}}\cell
       \pard\plain
       
       \row
@@ -221,7 +221,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\cellx9468
-      \intbl {\f0 {\f0\fs20 {\f0\fs20\i\super 1}{\f0\fs20 footnote **bold** (#1, no `md()`)}  {\f0\fs20\i\super 2}{\f0\fs20 footnote {\b bold} (#2, uses {\f1 md()})}}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1}footnote **bold** (#1, no `md()`)  {\super \i 2}footnote {\b bold} (#2, uses {\f1 md()})}}\cell
       \pard\plain
       
       \row
@@ -229,7 +229,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\cellx9468
-      \intbl {\f0 {\f0\fs20 {\f0\fs20 Source note **bold** (#1, no `md()`)}  {\f0\fs20 Source note {\b bold} (#2, uses {\f1 md()})}}}\cell
+      \intbl {\f0 {\f0\fs20 Source note **bold** (#1, no `md()`)  Source note {\b bold} (#2, uses {\f1 md()})}}\cell
       \pard\plain
       
       \row
@@ -340,7 +340,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\cellx9468
-      \intbl {\f0 {\f0\fs20 {\f0\fs20\i\super 1}{\f0\fs20 footnote **bold** (#1, no `md()`)} \line {\f0\fs20\i\super 2}{\f0\fs20 footnote {\b bold} (#2, uses {\f1 md()})}}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1}footnote **bold** (#1, no `md()`) \line {\super \i 2}footnote {\b bold} (#2, uses {\f1 md()})}}\cell
       \pard\plain
       
       \row
@@ -348,7 +348,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc\clpadb50\clpadfb3\clpadr50\clpadfr3\clpadl50\clpadfl3\clpadt50\clpadft3\cellx9468
-      \intbl {\f0 {\f0\fs20 {\f0\fs20 Source note **bold** (#1, no `md()`)} \line {\f0\fs20 Source note {\b bold} (#2, uses {\f1 md()})}}}\cell
+      \intbl {\f0 {\f0\fs20 Source note **bold** (#1, no `md()`) \line Source note {\b bold} (#2, uses {\f1 md()})}}\cell
       \pard\plain
       
       \row

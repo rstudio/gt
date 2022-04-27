@@ -4,7 +4,7 @@
 \alias{tab_footnote}
 \title{Add a table footnote}
 \usage{
-tab_footnote(data, footnote, locations, placement = c("auto", "right", "left"))
+tab_footnote(data, footnote, locations = NULL, placement = c("auto", "right", "left"))
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -58,24 +58,12 @@ identify the footnotes.
 and source note sections in the table footer.
 }
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_tab_footnote_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
-
-2-6
-}
-
-\examples{
-# Use `sza` to create a gt table; color
-# the `sza` column using the `data_color()`
-# function, then, add a footnote to the
-# `sza` column label explaining what the
-# color scale signifies
-tab_1 <-
-  sza \%>\%
+Use \code{\link{sza}} to create a \strong{gt} table. Color the \code{sza} column using the
+\code{\link[=data_color]{data_color()}} function, then, use \code{tab_footnote()} to add a footnote to the
+\code{sza} column label (explaining what the color scale signifies).\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza \%>\%
   dplyr::filter(
     latitude == 20 &
       month == "jan" &
@@ -96,10 +84,20 @@ tab_1 <-
       columns = sza
     )
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_footnote_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+2-6
+}
+
 \seealso{
-Other Create or Modify Parts: 
+Other Create or Modify Parts:
 \code{\link{tab_header}()},
 \code{\link{tab_options}()},
 \code{\link{tab_row_group}()},

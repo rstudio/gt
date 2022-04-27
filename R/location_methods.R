@@ -22,11 +22,13 @@ as_locations <- function(locations) {
   locations
 }
 
-add_summary_location_row <- function(loc,
-                                     data,
-                                     style,
-                                     placement = NULL,
-                                     df_type = "styles_df") {
+add_summary_location_row <- function(
+    loc,
+    data,
+    style,
+    placement = NULL,
+    df_type = "styles_df"
+) {
 
   stub_df <- dt_stub_df_get(data = data)
 
@@ -135,11 +137,13 @@ add_summary_location_row <- function(loc,
   data
 }
 
-add_grand_summary_location_row <- function(loc,
-                                           data,
-                                           style,
-                                           placement = NULL,
-                                           df_type = "styles_df") {
+add_grand_summary_location_row <- function(
+    loc,
+    data,
+    style,
+    placement = NULL,
+    df_type = "styles_df"
+) {
 
   summary_data <- dt_summary_get(data = data)
 

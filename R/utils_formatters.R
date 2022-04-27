@@ -386,13 +386,31 @@ format_num_to_str_c <- function(x,
 #' @param context The output context.
 #'
 #' @noRd
-to_latex_math_mode <- function(x,
-                               context) {
+to_latex_math_mode <- function(
+    x,
+    context
+) {
 
   if (context != "latex") {
+
     return(x)
+
   } else {
-    return(x %>% paste_between(x_2 = c("$", "$")))
+
+    # Ensure that `$` signs only surround the correct number parts
+    # - certain LaTeX marks operate only in text mode and we need to
+    #   conditionally surround only the number portion in these cases
+    # - right now, the only marks that need to be situated outside of
+    #   the math context are the per mille and per myriad (10,000)
+    #   marks (provided by the `fmt_per()` function)
+    if (all(grepl("\\\\textper(ten)?thousand$", x))) {
+      out <- paste0("$", x)
+      out <- gsub("(\\s*?\\\\textper(ten)?thousand)", "$\\1", out)
+    } else {
+      out <- paste_between(x, x_2 = c("$", "$"))
+    }
+
+    return(out)
   }
 }
 
@@ -495,10 +513,41 @@ context_minus_mark <- function(context) {
 #' @noRd
 context_percent_mark <- function(context) {
 
-  switch(context,
-         html = "%",
-         latex = "\\%",
-         "%")
+  switch(
+    context,
+    latex = "\\%",
+    "%"
+  )
+}
+
+#' Obtain the contextually correct per mille mark
+#'
+#' @param context The output context.
+#' @noRd
+context_permille_mark <- function(context) {
+
+  switch(
+    context,
+    html = "\U02030",
+    latex = "\\textperthousand",
+    rtf = "\\'89",
+    "per mille"
+  )
+}
+
+#' Obtain the contextually correct per myriad mark
+#'
+#' @param context The output context.
+#' @noRd
+context_permyriad_mark <- function(context) {
+
+  switch(
+    context,
+    html = "\U02031",
+    latex = "\\textpertenthousand",
+    rtf = "\\uc0\\u8241",
+    "per myriad"
+  )
 }
 
 #' Obtain the contextually correct pair of parentheses
@@ -557,22 +606,23 @@ context_symbol_str <- function(context,
     return(context_percent_mark(context))
   }
 
-  # Get the contextually correct currency string
-  switch(context,
-         html = {
-           symbol %>%
-             get_currency_str()
-         },
-         latex = {
-           symbol %>%
-             get_currency_str(fallback_to_code = TRUE) %>%
-             markdown_to_latex() %>%
-             paste_between(x_2 = c("\\text{", "}"))
-         },
-         {
-           symbol %>%
-             get_currency_str(fallback_to_code = TRUE)
-         })
+  # Get the contextually correct symbol string
+  symbol <-
+    switch(
+      context,
+      html = get_currency_str(currency = symbol),
+      latex = {
+        if (!inherits(symbol, "AsIs")) {
+          symbol %>%
+            get_currency_str(fallback_to_code = TRUE) %>%
+            markdown_to_latex() %>%
+            paste_between(x_2 = c("\\text{", "}"))
+        } else {
+          symbol
+        }
+      },
+      get_currency_str(currency = symbol, fallback_to_code = TRUE)
+    )
 }
 
 #' Paste a symbol string to a formatted number
@@ -615,7 +665,7 @@ format_symbol_str <- function(x_abs_str,
         direction = placement
       ) %>%
       paste_on_side(
-        x_side = symbol_str,
+        x_side = as.character(symbol_str),
         direction = placement
       )
 
@@ -811,30 +861,31 @@ num_fmt_factory <- function(context,
 
   function(x) {
 
+    # Create `x_str` with the same length as `x`
+    x_str <- rep(NA_character_, length(x))
+
     # Determine which of `x` are not NA
     non_na_x <- !is.na(x)
 
-    # Create a possibly shorter vector of non-NA `x` values
-    x_vals <- x[non_na_x]
+    if (any(non_na_x)) {
 
-    if (length(x_vals) == 0) {
-      return(character(0))
+      # Create a possibly shorter vector of non-NA `x` values
+      x_vals <- x[non_na_x]
+
+      # Apply a series of transformations to `x_str_vals`
+      x_str_vals <-
+        x_vals %>%
+        # Format all non-NA x values with a formatting function
+        format_fn(context = context) %>%
+        # If in a LaTeX context, wrap values in math mode
+        { if (use_latex_math_mode) to_latex_math_mode(., context = context) else . } %>%
+        # Handle formatting of pattern
+        apply_pattern_fmt_x(pattern = pattern)
+
+      # place the `x_str_vals` into `str` (at the non-NA indices)
+      x_str[non_na_x] <- x_str_vals
     }
 
-    # Apply a series of transformations to `x_str_vals`
-    x_str_vals <-
-      x_vals %>%
-      # Format all non-NA x values with a formatting function
-      format_fn(context = context) %>%
-      # If in a LaTeX context, wrap values in math mode
-      { if (use_latex_math_mode) to_latex_math_mode(., context = context) else . } %>%
-      # Handle formatting of pattern
-      apply_pattern_fmt_x(pattern = pattern)
-
-    # Create `x_str` with the same length as `x`; place the
-    # `x_str_vals` into `str` (at the non-NA indices)
-    x_str <- rep(NA_character_, length(x))
-    x_str[non_na_x] <- x_str_vals
     x_str
   }
 }

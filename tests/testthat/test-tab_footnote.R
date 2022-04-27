@@ -1,3 +1,6 @@
+local_edition(3)
+skip_on_cran()
+
 # Create a table from `mtcars` that has all the different components
 data <-
   mtcars %>%
@@ -689,7 +692,7 @@ test_that("the footnotes table is structured correctly", {
 
   # Expect that the `footnotes_resolved` object inherits
   # from `tbl_df`
-  expect_is(footnotes_tbl, "tbl_df")
+  expect_s3_class(footnotes_tbl, "tbl_df")
 
   # Expect that there are specific column names in
   # this tibble
@@ -724,7 +727,7 @@ test_that("the footnotes table is structured correctly", {
 
   # Expect that the `footnotes_resolved` object inherits
   # from `tbl_df`
-  expect_is(footnotes_tbl, "tbl_df")
+  expect_s3_class(footnotes_tbl, "tbl_df")
 
   # Expect that there are specific column names in
   # this tibble
@@ -796,7 +799,6 @@ test_that("the `list_of_summaries` table is structured correctly", {
     ) %>%
     build_data(context = "html")
 
-
   gtcars_built_summary_df <- dt_summary_df_get(data = gtcars_built)
   gtcars_built_summary_df_data <- dt_summary_df_data_get(data = gtcars_built)
   gtcars_built_summary_df_display <- dt_summary_df_display_get(data = gtcars_built)
@@ -843,4 +845,75 @@ test_that("the `list_of_summaries` table is structured correctly", {
     gtcars_built_summary_df_display$summary_df_display_list$BMW$msrp,
     c("116,066.67", "94,100.00")
   )
+})
+
+test_that("footnotes with no location are rendered correctly", {
+
+  gt_tbl <- gt(data = exibble[1, ])
+
+  gt_footnotes_1 <-
+    gt_tbl %>%
+    tab_footnote(footnote = "A footnote.")
+
+  # Take snapshots of `gt_footnotes_1`
+  gt_footnotes_1 %>% render_as_html() %>% expect_snapshot()
+  gt_footnotes_1 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  gt_footnotes_1 %>% as_rtf() %>% expect_snapshot()
+
+  gt_footnotes_2 <-
+    gt_tbl %>%
+    tab_footnote(footnote = "A footnote.") %>%
+    tab_footnote(footnote = "A second footnote.") %>%
+    tab_footnote(footnote = "location note", locations = cells_body(1, 1))
+
+  gt_footnotes_3 <-
+    gt_tbl %>%
+    tab_footnote(footnote = "location note", locations = cells_body(1, 1)) %>%
+    tab_footnote(footnote = "A footnote.") %>%
+    tab_footnote(footnote = "A second footnote.")
+
+  # Expect that `gt_footnotes_2` and `gt_footnotes_3` should be rendered the
+  # same across the supported formats
+  expect_equal(
+    gt_footnotes_2 %>% render_as_html(), gt_footnotes_3 %>% render_as_html()
+  )
+  expect_equal(
+    gt_footnotes_2 %>% as_latex() %>% as.character(),
+    gt_footnotes_3 %>% as_latex() %>% as.character()
+  )
+  expect_equal(
+    gt_footnotes_2 %>% as_rtf(), gt_footnotes_3 %>% as_rtf()
+  )
+
+  gt_footnotes_4 <-
+    gt_tbl %>%
+    tab_footnote(footnote = "A footnote.") %>%
+    tab_footnote(footnote = "A footnote.")
+
+  # Take snapshots of `gt_footnotes_4`
+  gt_footnotes_4 %>% render_as_html() %>% expect_snapshot()
+  gt_footnotes_4 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  gt_footnotes_4 %>% as_rtf() %>% expect_snapshot()
+
+  gt_footnotes_5 <-
+    gt_tbl %>%
+    tab_footnote(footnote = "A footnote.") %>%
+    tab_footnote(footnote = "A footnote.", locations = cells_body(1, 1))
+
+  # Take snapshots of `gt_footnotes_5`
+  gt_footnotes_5 %>% render_as_html() %>% expect_snapshot()
+  gt_footnotes_5 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  gt_footnotes_5 %>% as_rtf() %>% expect_snapshot()
+
+  gt_footnotes_6 <-
+    gt_tbl %>%
+    tab_footnote(footnote = "A footnote.") %>%
+    tab_footnote(footnote = "A second footnote.") %>%
+    tab_footnote(footnote = "location note", locations = cells_body(1, 1)) %>%
+    tab_options(footnotes.multiline = FALSE)
+
+  # Take snapshots of `gt_footnotes_6`
+  gt_footnotes_6 %>% render_as_html() %>% expect_snapshot()
+  gt_footnotes_6 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  gt_footnotes_6 %>% as_rtf() %>% expect_snapshot()
 })

@@ -61,28 +61,15 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \code{list()} (e.g., \code{list(cells_body(), cells_grand_summary())}).
 }
 
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cells_source_notes_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
-
-7-17
-}
-
-\examples{
-# Use `gtcars` to create a gt table;
-# add a source note and style the
-# source notes section
-tab_1 <-
-  gtcars \%>\%
+Use \code{\link{gtcars}} to create a \strong{gt} table. Add a source note and style the
+source notes section.\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
   dplyr::select(mfr, model, msrp) \%>\%
   dplyr::slice(1:5) \%>\%
   gt() \%>\%
-  tab_source_note(
-    source_note = "From edmunds.com"
-  ) \%>\%
+  tab_source_note(source_note = "From edmunds.com") \%>\%
   tab_style(
     style = cell_text(
       color = "#A9A9A9",
@@ -90,8 +77,18 @@ tab_1 <-
     ),
     locations = cells_source_notes()
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_source_notes_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+7-17
+}
+
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},
