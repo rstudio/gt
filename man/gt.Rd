@@ -80,35 +80,28 @@ columns of categorical data can be used to make row groups. The
 \code{row_group.sep} argument allows for control in how the row group label will
 appear in the display table.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_gt_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_gt_2.png}{options: width=100\%}}
-}
-
-\section{Function ID}{
-
-1-1
-}
-
-\examples{
-# Create a table object using the
-# `exibble` dataset; use the `row`
-# and `group` columns to add a stub
-# and row groups
-tab_1 <-
+Create a \strong{gt} table object using the \code{\link{exibble}} dataset. Use the \code{row} and
+\code{group} columns to add a stub and row groups via the \code{rowname_col} and
+\code{groupname_col} arguments.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
   exibble \%>\%
   gt(
     rowname_col = "row",
     groupname_col = "group"
   )
 
-# The resulting object can be used
-# in transformations (with `tab_*()`,
-# `fmt_*()`, `cols_*()` functions)
-tab_2 <-
-  tab_1 \%>\%
+tab_1
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_gt_1.png" style="width:100\%;">
+}}
+
+The resulting \strong{gt} table object can be used in transformations with a
+variety of \verb{tab_*()}, \verb{fmt_*()}, \verb{cols_*()}, and even more functions
+available in the package.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\%
   tab_header(
     title = "Table Title",
     subtitle = "Subtitle"
@@ -118,8 +111,18 @@ tab_2 <-
     decimals = 2
   ) \%>\%
   cols_label(num = "number")
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_gt_2.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+1-1
+}
+
 \seealso{
 Other Create Table: 
 \code{\link{gt_preview}()}

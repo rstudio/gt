@@ -38,9 +38,18 @@ in the output table. By default, the output table will include row numbers in
 a stub (including a range of row numbers for the omitted rows). This row
 numbering option can be deactivated by setting \code{incl_rownums} to \code{FALSE}.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_gt_preview_1.png}{options: width=100\%}}
+
+Use \code{\link{gtcars}} to create a \strong{gt} table preview (with only a few of its
+columns). You'll see the first five rows and the last row.\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
+  dplyr::select(mfr, model, year) \%>\%
+  gt_preview()
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_gt_preview_1.png" style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
@@ -48,17 +57,6 @@ numbering option can be deactivated by setting \code{incl_rownums} to \code{FALS
 1-2
 }
 
-\examples{
-# Use `gtcars` to create a gt table
-# preview (with only a few of its
-# columns); you'll see the first five
-# rows and the last row
-tab_1 <-
-  gtcars \%>\%
-  dplyr::select(mfr, model, year) \%>\%
-  gt_preview()
-
-}
 \seealso{
 Other Create Table: 
 \code{\link{gt}()}

@@ -381,35 +381,14 @@ An object of class \code{gt_tbl}.
 Modify the options available in a table. These options are named by the
 components, the subcomponents, and the element that can adjusted.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_tab_options_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_tab_options_2.png}{options: width=100\%}}
-
-\if{html}{\figure{man_tab_options_3.png}{options: width=100\%}}
-
-\if{html}{\figure{man_tab_options_4.png}{options: width=100\%}}
-
-\if{html}{\figure{man_tab_options_5.png}{options: width=100\%}}
-
-\if{html}{\figure{man_tab_options_6.png}{options: width=100\%}}
-}
-
-\section{Function ID}{
-
-2-9
-}
-
-\examples{
-# Use `exibble` to create a gt table with
-# all the main parts added; we can use this
-# going forward to demo some `tab_options()`
-tab_1 <-
+Use \code{\link{exibble}} to create a \strong{gt} table with all the main parts added. We
+can use this \strong{gt} object going forward to demo some of what's available in
+the \code{tab_options()} function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
   exibble \%>\%
-  dplyr::select(
-    -c(fctr, date, time, datetime)
-  ) \%>\%
+  dplyr::select(-c(fctr, date, time, datetime)) \%>\%
   gt(
     rowname_col = "row",
     groupname_col = "group"
@@ -436,54 +415,70 @@ tab_1 <-
   ) \%>\%
   tab_footnote(
     footnote = "Alphabetical fruit.",
-    locations = cells_column_labels(
-      columns = char
-    )
+    locations = cells_column_labels(columns = char)
   )
 
-# Modify the table width to 100\% (which
-# spans the entire content width area)
-tab_2 <-
-  tab_1 \%>\%
+tab_1
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_1.png" style="width:100\%;">
+}}
+
+Modify the table width to be 100\% (which spans the entire content width
+area).\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% tab_options(table.width = pct(100))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_2.png" style="width:100\%;">
+}}
+
+Modify the table's background color to be \code{"lightcyan"}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% tab_options(table.background.color = "lightcyan")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_3.png" style="width:100\%;">
+}}
+
+Use letters as the marks for footnote references. Also, separate footnotes in
+the footer by spaces instead of newlines.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\%
   tab_options(
-    table.width = pct(100)
+    footnotes.marks = letters,
+    footnotes.multiline = FALSE
   )
+}\if{html}{\out{</div>}}
 
-# Modify the table's background color
-# to be "lightcyan"
-tab_3 <-
-  tab_1 \%>\%
-  tab_options(
-    table.background.color = "lightcyan"
-  )
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_4.png" style="width:100\%;">
+}}
 
-# Use letters as the marks for footnote
-# references; also, separate footnotes in
-# the footer by spaces instead of newlines
-tab_4 <-
-  tab_1 \%>\%
-  tab_options(
-    footnotes.sep = " ",
-    footnotes.marks = letters
-  )
-
-# Change the padding of data rows to 5px
-tab_5 <-
-  tab_1 \%>\%
+Change the padding of data rows to 5 px.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\%
   tab_options(
     data_row.padding = px(5)
   )
+}\if{html}{\out{</div>}}
 
-# Reduce the size of the title and the
-# subtitle text
-tab_6 <-
-  tab_1 \%>\%
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_5.png" style="width:100\%;">
+}}
+
+Reduce the size of the title and the subtitle text.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\%
   tab_options(
     heading.title.font.size = "small",
     heading.subtitle.font.size = "small"
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_6.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+2-9
+}
+
 \seealso{
 Other Create or Modify Parts: 
 \code{\link{tab_footnote}()},

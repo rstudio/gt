@@ -52,11 +52,13 @@
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Create a table object using the
-#' # `exibble` dataset; use the `row`
-#' # and `group` columns to add a stub
-#' # and row groups
+#' @section Examples:
+#'
+#' Create a **gt** table object using the [`exibble`] dataset. Use the `row` and
+#' `group` columns to add a stub and row groups via the `rowname_col` and
+#' `groupname_col` arguments.
+#'
+#' ```r
 #' tab_1 <-
 #'   exibble %>%
 #'   gt(
@@ -64,11 +66,19 @@
 #'     groupname_col = "group"
 #'   )
 #'
-#' # The resulting object can be used
-#' # in transformations (with `tab_*()`,
-#' # `fmt_*()`, `cols_*()` functions)
-#' tab_2 <-
-#'   tab_1 %>%
+#' tab_1
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_gt_1.png")`
+#' }}
+#'
+#' The resulting **gt** table object can be used in transformations with a
+#' variety of `tab_*()`, `fmt_*()`, `cols_*()`, and even more functions
+#' available in the package.
+#'
+#' ```r
+#' tab_1 %>%
 #'   tab_header(
 #'     title = "Table Title",
 #'     subtitle = "Subtitle"
@@ -78,27 +88,30 @@
 #'     decimals = 2
 #'   ) %>%
 #'   cols_label(num = "number")
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_gt_1.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_gt_2.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_gt_2.png")`
+#' }}
 #'
 #' @family Create Table
 #' @section Function ID:
 #' 1-1
 #'
 #' @export
-gt <- function(data,
-               rowname_col = "rowname",
-               groupname_col = dplyr::group_vars(data),
-               caption = NULL,
-               rownames_to_stub = FALSE,
-               auto_align = TRUE,
-               i_html = FALSE,
-               id = NULL,
-               locale = NULL,
-               row_group.sep = getOption("gt.row_group.sep", " - ")) {
+gt <- function(
+    data,
+    rowname_col = "rowname",
+    groupname_col = dplyr::group_vars(data),
+    caption = NULL,
+    rownames_to_stub = FALSE,
+    auto_align = TRUE,
+    i_html = FALSE,
+    id = NULL,
+    locale = NULL,
+    row_group.sep = getOption("gt.row_group.sep", " - ")
+) {
+
 
   # Stop function if the supplied `id` doesn't conform
   # to character(1) input or isn't NULL
