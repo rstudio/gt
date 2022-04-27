@@ -50,10 +50,11 @@ dt_footnotes_add <- function(
           locname = locname,
           locnum = locnum,
           colnum = NA_integer_,
-          footnotes = list(footnotes)
+          footnotes = list(footnotes),
+          placement = placement,
         ) %>%
         dplyr::distinct() %>%
-        dplyr::select(locname, grpname, colname, locnum, rownum, footnotes)
+        dplyr::select(locname, grpname, colname, locnum, rownum, footnotes, placement)
     ) %>%
     dt_footnotes_set(footnotes = ., data = data)
 }

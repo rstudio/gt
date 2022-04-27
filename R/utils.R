@@ -210,12 +210,14 @@ get_currency_str <- function(currency,
   }
 }
 
-resolve_footnote_placement <- function(data,
-                                       colname,
-                                       rownum,
-                                       input_placement,
-                                       cell_content,
-                                       context) {
+resolve_footnote_placement <- function(
+    data,
+    colname,
+    rownum,
+    input_placement,
+    cell_content,
+    context
+) {
 
   if (input_placement %in% c("left", "right")) {
     return(input_placement)
@@ -229,35 +231,19 @@ resolve_footnote_placement <- function(data,
       context = context
     )
 
-  # If cell alignment has been set then always choose 'right' placement
-  if (!is.null(names(cell_alignment)) && names(cell_alignment) == "user_set") {
-    return("right")
-  }
-
   if (cell_alignment == "right") {
-
-    # Look at `cell_context` and determine whether 'left' alignment
-    # should be preferred over 'right'
-    digit_count <- nchar(gsub("[^[:digit:]]", "", cell_content))
-    character_count <- nchar(gsub("[[:digit:]]", "", cell_content))
-    ends_with_digits <- grepl("^.*\\d+%?\\)?$", cell_content)
-    is_sci_notn <- grepl("(times;? 10|d7 10| x 10\\()", cell_content)
-
-    if (ends_with_digits || is_sci_notn || digit_count >= character_count) {
-      return("left")
-    } else {
-      return("right")
-    }
-
+    return("left")
   } else {
     return("right")
   }
 }
 
-get_alignment_at_body_cell <- function(data,
-                                       colname,
-                                       rownum,
-                                       context) {
+get_alignment_at_body_cell <- function(
+    data,
+    colname,
+    rownum,
+    context
+) {
 
   column_alignment <-
     dt_boxhead_get_alignment_by_var(
@@ -311,8 +297,6 @@ get_alignment_at_body_cell <- function(data,
 
         cell_alignment <-
           gsub("text-align:\\s+|;", "", style_vec[is_text_alignment])[1]
-
-        names(cell_alignment) <- "user_set"
 
         return(cell_alignment)
       }

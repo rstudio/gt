@@ -799,7 +799,7 @@ tab_stubhead <- function(
 #'   options for this are `"left` or `"right"`, where the placement is to the
 #'   absolute left or right of the cell content. By default, however, this is
 #'   set to `"auto"` whereby **gt** will choose a preferred left-or-right
-#'   placement depending on the context.
+#'   placement depending on the alignment of the cell content.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -868,7 +868,8 @@ tab_footnote <- function(
         colname = NA_character_,
         locnum = 0,
         rownum = NA_integer_,
-        footnotes = footnote
+        footnotes = footnote,
+        placement = placement
       )
 
     return(data)

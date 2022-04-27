@@ -33,7 +33,7 @@ group labels, the table title, etc.).}
 options for this are \verb{"left} or \code{"right"}, where the placement is to the
 absolute left or right of the cell content. By default, however, this is
 set to \code{"auto"} whereby \strong{gt} will choose a preferred left-or-right
-placement depending on the context.}
+placement depending on the alignment of the cell content.}
 }
 \value{
 An object of class \code{gt_tbl}.
