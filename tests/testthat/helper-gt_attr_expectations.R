@@ -73,7 +73,7 @@ expect_tab <- function(tab,
 
   dt_heading_get(data = tab) %>%
     length() %>%
-    expect_equal(2)
+    expect_equal(3)
 
   dt_spanners_get(data = tab) %>%
     dim() %>%

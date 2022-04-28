@@ -12,6 +12,8 @@
 #'   the table subtitle. We can elect to use the [md()] and [html()] helper
 #'   functions to style the text as Markdown or to retain HTML elements in the
 #'   text.
+#' @param preheader Optional preheader content that is rendered above the table.
+#'   Can be supplied as a vector of text.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -43,16 +45,18 @@
 tab_header <- function(
     data,
     title,
-    subtitle = NULL
+    subtitle = NULL,
+    preheader = NULL
 ) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  dt_heading_title_subtitle(
+  dt_set_heading_components(
     data = data,
     title = title,
-    subtitle = subtitle
+    subtitle = subtitle,
+    preheader = preheader
   )
 }
 

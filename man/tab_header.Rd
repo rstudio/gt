@@ -4,7 +4,7 @@
 \alias{tab_header}
 \title{Add a table header}
 \usage{
-tab_header(data, title, subtitle = NULL)
+tab_header(data, title, subtitle = NULL, preheader = NULL)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -13,6 +13,9 @@ tab_header(data, title, subtitle = NULL)
 the table subtitle. We can elect to use the \code{\link[=md]{md()}} and \code{\link[=html]{html()}} helper
 functions to style the text as Markdown or to retain HTML elements in the
 text.}
+
+\item{preheader}{Optional preheader content that is rendered above the table.
+Can be supplied as a vector of text.}
 }
 \value{
 An object of class \code{gt_tbl}.

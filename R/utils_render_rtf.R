@@ -911,7 +911,8 @@ as_rtf_string <- function(x) {
 create_heading_component_rtf <- function(data) {
 
   if (!dt_heading_has_title(data = data) &&
-      !dt_heading_has_subtitle(data = data)) {
+      !dt_heading_has_subtitle(data = data) &&
+      !dt_heading_has_preheader(data = data)) {
     return(list())
   }
 
@@ -953,9 +954,9 @@ create_heading_component_rtf <- function(data) {
 
   # Get table options
   table_font_color <- dt_options_get_value(data, option = "table_font_color")
-  table_border_top_include <- dt_options_get_value(data, option = "table_border_top_include")
+  #table_border_top_include <- dt_options_get_value(data, option = "table_border_top_include")
+  table_border_top_include <- FALSE
   table_border_top_color <- dt_options_get_value(data, option = "table_border_top_color")
-
 
   if ("title" %in% footnotes_tbl$locname) {
     footnote_title_marks <- footnotes_tbl %>% coalesce_marks(locname = "title")
@@ -972,51 +973,75 @@ create_heading_component_rtf <- function(data) {
   }
 
   if (dt_heading_has_subtitle(data = data)) {
+
     subtitle_component <-
       c(
         rtf_key("line"),
         rtf_font(
-          font_size = 8,
+          font_size = 10,
           rtf_raw(heading$subtitle)
         ),
         rtf_font(
           italic = TRUE,
           super_sub = "super",
-          font_size = 8,
+          font_size = 10,
           rtf_raw(footnote_subtitle_marks)
         )
       )
+
   } else {
     subtitle_component <- NULL
+  }
+
+  # Generate the RTF lines that will generate content in the table preheader
+  if (dt_heading_has_preheader(data = data)) {
+
+    preheader_component <-
+    rtf_raw(
+      "\n",
+      paste0("{\\f0\\fs20 ", heading$preheader, "}\\par\n"),
+      "\n"
+    )
+
+  } else {
+    preheader_component <- NULL
   }
 
   tbl_cell <-
     rtf_tbl_cell(
       c(
         rtf_font(
-          font_size = 14,
+          font_size = 10,
           rtf_raw(heading$title)
         ),
         rtf_font(
           italic = TRUE,
           super_sub = "super",
-          font_size = 14,
+          font_size = 10,
           rtf_raw(footnote_title_marks)
         ),
         subtitle_component
       ),
       h_align = "center",
-      borders = if (table_border_top_include) list(rtf_border("top", color = table_border_top_color, width = 40)) else NULL,
+      borders =
+        if (table_border_top_include) {
+          list(rtf_border("top", color = table_border_top_color, width = 40))
+        } else {
+          NULL
+        },
       font_color = table_font_color
     )
 
   # Return a list of RTF table rows (in this case, a single row)
   list(
-    rtf_tbl_row(
-      tbl_cell,
-      widths = table_width,
-      height = 0,
-      repeat_header = TRUE
+    rtf_paste0(
+      preheader_component,
+      rtf_tbl_row(
+        tbl_cell,
+        widths = table_width,
+        height = 0,
+        repeat_header = TRUE
+      )
     )
   )
 }
@@ -1114,10 +1139,10 @@ create_columns_component_rtf <- function(data) {
           h_align = col_alignment[x],
           h_merge = merge_keys_cells[x],
           borders = list(
-            rtf_border("top", color = column_labels_border_top_color, width = 40),
-            rtf_border("bottom", color = column_labels_border_bottom_color, width = 40),
-            rtf_border("left", color = column_labels_vlines_color),
-            rtf_border("right", color = column_labels_vlines_color)
+            rtf_border("bottom", color = column_labels_border_bottom_color, width = 40)#,
+          # rtf_border("top", color = column_labels_border_top_color, width = 40),
+          # rtf_border("left", color = column_labels_vlines_color),
+          # rtf_border("right", color = column_labels_vlines_color)
           )
         )
       }
@@ -1176,13 +1201,13 @@ create_columns_component_rtf <- function(data) {
                 rtf_raw(spanners_row[x])
               ),
               h_align = "center",
-              h_merge = merge_keys_spanners[x],
-              borders = list(
-                rtf_border("top", color = column_labels_border_top_color, width = 40),
-                rtf_border("bottom", color = column_labels_border_bottom_color),
-                rtf_border("left", color = column_labels_vlines_color),
-                rtf_border("right", color = column_labels_vlines_color)
-              )
+              h_merge = merge_keys_spanners[x]#,
+              # borders = list(
+              #   rtf_border("top", color = column_labels_border_top_color, width = 40),
+              #   rtf_border("bottom", color = column_labels_border_bottom_color),
+              #   rtf_border("left", color = column_labels_vlines_color),
+              #   rtf_border("right", color = column_labels_vlines_color)
+              # )
             )
           }
         )
@@ -1198,13 +1223,13 @@ create_columns_component_rtf <- function(data) {
                     font_size = 10,
                     rtf_raw("")
                   ),
-                  h_align = "center",
-                  borders = list(
-                    rtf_border("top", color = column_labels_border_top_color, width = 40),
-                    rtf_border("bottom", color = column_labels_border_bottom_color),
-                    rtf_border("left", color = column_labels_vlines_color),
-                    rtf_border("right", color = column_labels_vlines_color)
-                  )
+                  h_align = "center"#,
+                  # borders = list(
+                  #   rtf_border("top", color = column_labels_border_top_color, width = 40),
+                  #   rtf_border("bottom", color = column_labels_border_bottom_color),
+                  #   rtf_border("left", color = column_labels_vlines_color),
+                  #   rtf_border("right", color = column_labels_vlines_color)
+                  # )
                 )
               ),
               length(stub_layout)
@@ -1336,13 +1361,13 @@ create_body_component_rtf <- function(data) {
               rtf_tbl_cell(
                 row_group_labels[which(row_group_rows == i)],
                 font_size = 10,
-                h_align = "left",
-                borders = list(
-                  rtf_border("top", color = row_group_border_top_color, width = 40),
-                  rtf_border("bottom", color = row_group_border_bottom_color, width = 40),
-                  rtf_border("left", color = row_group_border_left_color),
-                  rtf_border("right", color = row_group_border_right_color)
-                )
+                h_align = "left"#,
+                # borders = list(
+                #   rtf_border("top", color = row_group_border_top_color, width = 40),
+                #   rtf_border("bottom", color = row_group_border_bottom_color, width = 40),
+                #   rtf_border("left", color = row_group_border_left_color),
+                #   rtf_border("right", color = row_group_border_right_color)
+                # )
               )
             ),
             widths = sum(col_widths),
@@ -1402,12 +1427,12 @@ create_body_component_rtf <- function(data) {
               font_size = 10,
               rtf_raw(cell_matrix[[i, x]])
             ),
-            h_align = col_alignment[x],
-            borders = list(
-              top_bottom_borders,
-              rtf_border("left", color = table_body_vlines_color, width = 10),
-              rtf_border("right", color = table_body_vlines_color, width = 10)
-            )
+            h_align = col_alignment[x]#,
+            # borders = list(
+            #   top_bottom_borders,
+            #   rtf_border("left", color = table_body_vlines_color, width = 10),
+            #   rtf_border("right", color = table_body_vlines_color, width = 10)
+            # )
           )
         }
       )
@@ -1493,12 +1518,12 @@ create_body_component_rtf <- function(data) {
                     font_size = 10,
                     rtf_raw(summary_row[x])
                   ),
-                  h_align = col_alignment[x],
-                  borders = list(
-                    bottom_border,
-                    rtf_border("left", color = table_body_vlines_color, width = 10),
-                    rtf_border("right", color = table_body_vlines_color, width = 10)
-                  )
+                  h_align = col_alignment[x]#,
+                  # borders = list(
+                  #   bottom_border,
+                  #   rtf_border("left", color = table_body_vlines_color, width = 10),
+                  #   rtf_border("right", color = table_body_vlines_color, width = 10)
+                  # )
                 )
               }
             )
@@ -1550,16 +1575,16 @@ create_body_component_rtf <- function(data) {
                 rtf_raw(grand_summary_row[x])
               ),
               h_align = col_alignment[x],
-              h_merge = merge_keys_cells[x],
-              borders = list(
-                rtf_border(
-                  "bottom",
-                  color = table_body_hlines_color,
-                  width = ifelse(j == nrow(grand_summary_df), 50, 10)
-                  ),
-                rtf_border("left", color = table_body_vlines_color, width = 10),
-                rtf_border("right", color = table_body_vlines_color, width = 10)
-              )
+              h_merge = merge_keys_cells[x]#,
+              # borders = list(
+              #   rtf_border(
+              #     "bottom",
+              #     color = table_body_hlines_color,
+              #     width = ifelse(j == nrow(grand_summary_df), 50, 10)
+              #     ),
+              #   rtf_border("left", color = table_body_vlines_color, width = 10),
+              #   rtf_border("right", color = table_body_vlines_color, width = 10)
+              # )
             )
           }
         )
@@ -1570,15 +1595,15 @@ create_body_component_rtf <- function(data) {
           rtf_tbl_row(
             cell_list,
             widths = col_widths,
-            height = 0,
-            borders = list(
-              rtf_border(
-                "top",
-                style = ifelse(j == 1, "db", "s"),
-                color = table_body_hlines_color,
-                width = ifelse(j == 1, 50, 10)
-              )
-            ),
+            height = 0#,
+            # borders = list(
+            #   rtf_border(
+            #     "top",
+            #     style = ifelse(j == 1, "db", "s"),
+            #     color = table_body_hlines_color,
+            #     width = ifelse(j == 1, 50, 10)
+            #   )
+            # )
           )
         )
     }
