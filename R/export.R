@@ -486,6 +486,8 @@ as_rtf <- function(data) {
 
   page_orientation <- dt_options_get_value(data = data, option = "page_orientation")
   page_numbering <- dt_options_get_value(data = data, option = "page_numbering")
+  page_header_use_tbl_headings <-
+    dt_options_get_value(data = data, option = "page_header_use_tbl_headings")
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -507,9 +509,6 @@ as_rtf <- function(data) {
   # Create the footer component
   footer_component <- create_footer_component_rtf(data = data)
 
-  # Create the page header component
-
-
   # Create the page footer component
   page_footer_component <- create_page_footer_component_rtf(data = data)
 
@@ -522,9 +521,10 @@ as_rtf <- function(data) {
         document = {
           rtf_table(
             rows = c(
-              #page_header_component,
+              if (page_header_use_tbl_headings) rtf_raw("{\\header\n\n") else "",
               heading_component,
               columns_component,
+              if (page_header_use_tbl_headings) rtf_raw("}\n\n") else "",
               body_component,
               footer_component,
               page_footer_component
