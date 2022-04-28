@@ -1593,6 +1593,17 @@ create_body_component_rtf <- function(data) {
 #
 create_footer_component_rtf <- function(data) {
 
+  # Obtain the option on whether to place the footer component in the
+  # RTF document's page footer
+  page_footer_use_tbl_notes <-
+    dt_options_get_value(data = data, option = "page_footer_use_tbl_notes")
+
+  # If option is taken to display table notes in the page footer,
+  # return an empty list
+  if (page_footer_use_tbl_notes) {
+    return(list())
+  }
+
   # Get table components and metadata using the `data`
   source_notes <- dt_source_notes_get(data)
 
@@ -1728,5 +1739,100 @@ create_footer_component_rtf <- function(data) {
         height = 0
       )
     }
+  )
+}
+
+create_page_footer_component_rtf <- function(data) {
+
+  # Obtain the option on whether to place the footer component in the
+  # RTF document's page footer
+  page_footer_use_tbl_notes <-
+    dt_options_get_value(data = data, option = "page_footer_use_tbl_notes")
+
+  # If option not taken to display table notes in the page footer,
+  # return an empty list
+  if (!page_footer_use_tbl_notes) {
+    return(list())
+  }
+
+  # Get table components and metadata using the `data`
+  footnotes_tbl <- dt_footnotes_get(data = data)
+  source_notes_vec <- dt_source_notes_get(data = data)
+
+  # If there are no footnotes or source notes return an empty list
+  if (nrow(footnotes_tbl) == 0 && length(source_notes_vec) == 0){
+    return(list())
+  }
+
+  # Get the multiline and separator options for footnotes and source notes
+  footnotes_multiline <- dt_options_get_value(data = data, option = "footnotes_multiline")
+  footnotes_sep <- dt_options_get_value(data = data, option = "footnotes_sep")
+  source_notes_multiline <- dt_options_get_value(data = data, option = "source_notes_multiline")
+  source_notes_sep <- dt_options_get_value(data = data, option = "source_notes_sep")
+
+  # Create a formatted footnotes string
+  if (nrow(footnotes_tbl) > 0) {
+
+    footnotes_tbl <-
+      footnotes_tbl %>%
+      dplyr::select(fs_id, footnotes) %>%
+      dplyr::distinct()
+
+    footnote_text <- footnotes_tbl[["footnotes"]]
+    footnote_mark <- footnotes_tbl[["fs_id"]]
+
+    footnote_text <-
+      vapply(
+        footnote_text, FUN.VALUE = character(1), USE.NAMES = FALSE,
+        FUN = process_text, context = "rtf"
+      )
+
+    footnotes <- c()
+
+    for (i in seq_along(footnote_mark)) {
+
+      footnotes <-
+        c(
+          footnotes,
+          rtf_paste0(
+            footnote_mark_to_rtf(footnote_mark[i]),
+            rtf_raw(footnote_text[i])
+          )
+        )
+    }
+
+    if (footnotes_multiline) {
+      footnotes <- paste(footnotes, collapse = rtf_raw("\\line "))
+    } else {
+      footnotes <- paste(footnotes, collapse = footnotes_sep)
+    }
+  } else {
+    footnotes <- ""
+  }
+
+  # Create a formatted source notes string
+  if (length(source_notes_vec) > 0) {
+
+    source_notes <- c()
+
+    for (i in seq_along(source_notes_vec)) {
+      source_notes <- c(source_notes, rtf_raw(source_notes_vec[i]))
+    }
+
+    if (source_notes_multiline) {
+      source_notes <- paste(source_notes, collapse = "\\line ")
+    } else {
+      source_notes <- paste(source_notes, collapse = source_notes_sep)
+    }
+  } else {
+    source_notes <- ""
+  }
+
+  # Generate the RTF lines that will generate content in the page footer
+  rtf_raw(
+    "{\\footer\n",
+    paste0("{\\f0\\fs20 ", footnotes, "}\\par\n"),
+    paste0("{\\f0\\fs20 ", source_notes, "}\\par\n"),
+    "}\n"
   )
 }

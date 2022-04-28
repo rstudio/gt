@@ -511,7 +511,7 @@ as_rtf <- function(data) {
 
 
   # Create the page footer component
-
+  page_footer_component <- create_page_footer_component_rtf(data = data)
 
   # Compose the RTF table
   rtf_table <-
@@ -526,8 +526,8 @@ as_rtf <- function(data) {
               heading_component,
               columns_component,
               body_component,
-              footer_component#,
-              #page_footer_component
+              footer_component,
+              page_footer_component
             )
           )
         },
