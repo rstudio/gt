@@ -474,7 +474,6 @@ rtf_tbl_row <- function(
     repeat_header = FALSE
 ) {
 
-  # TODO: provide orientation to `rtf_tbl_row` in order to obtain this
   rtf_page_width <- getOption("gt.rtf_page_width")
 
   if (is.list(x)) x <- unlist(x)
@@ -563,7 +562,7 @@ rtf_tbl_row <- function(
   x <- strsplit(x, "\n")
 
   # Combine additional row components to the first element
-  row_components <- paste0(tb_borders, paste0("\\cellx", floor(widths_twips)))
+  row_components <- paste(tb_borders, paste0("\\cellx", floor(widths_twips)))
 
   for (i in seq_along(row_components)) {
     x[[i]][1] <- rtf_paste0(rtf_raw(x[[i]][1]), rtf_raw(row_components[i]))
@@ -604,21 +603,21 @@ rtf_tbl_cell <- function(
   v_align <- substr(match.arg(v_align), 1, 1)
 
   # Set default padding values if `padding = NULL`
-  if (is.null(padding)) padding <- c(50, 50, 50, 50)
+  if (is.null(padding)) padding <- c(25, 85, 25, 85)
 
-  # Set padding in units of twips, in the order bottom, right, left, and top
-  padding_values <-
-    c(
-      rtf_key("clpadb", padding[1]), rtf_key("clpadr", padding[2]),
-      rtf_key("clpadl", padding[3]), rtf_key("clpadt", padding[4])
-    )
+  # Set padding in units of twips, in the order left, top, bottom, right
   padding_units <-
     c(
-      rtf_key("clpadfb", 3), rtf_key("clpadfr", 3),
-      rtf_key("clpadfl", 3), rtf_key("clpadft", 3)
+      rtf_key("clpadfl", 3), rtf_key("clpadft", 3),
+      rtf_key("clpadfb", 3), rtf_key("clpadfr", 3)
+    )
+  padding_values <-
+    c(
+      rtf_key("clpadl", padding[1]), rtf_key("clpadt", padding[2]),
+      rtf_key("clpadb", padding[3]), rtf_key("clpadr", padding[4])
     )
 
-  cell_padding <- paste(paste0(padding_values, padding_units), collapse = "")
+  cell_padding <- paste(paste0(padding_units, padding_values), collapse = " ")
 
   # Set border values
   if (!is.null(borders)) {
@@ -692,7 +691,7 @@ rtf_tbl_cell <- function(
       rtf_key("plain"),
       rtf_key("uc", 0),
       rtf_key("q", h_align),
-      rtf_key("clvertal", v_align),
+      rtf_key("clvertal", v_align), " ",
       rtf_raw(cell_padding),
       rtf_raw(cell_borders),
       rtf_raw(cell_background_color),
@@ -705,9 +704,7 @@ rtf_tbl_cell <- function(
       rtf_key("intbl"),
       " ",
       cell_text,
-      rtf_key("cell"), "\n",
-      rtf_key("pard"),
-      rtf_key("plain")
+      rtf_key("cell")
     )
 
   # Return a complete RTF table cell (marked as `rtf_text`)
@@ -915,6 +912,8 @@ create_heading_component_rtf <- function(data) {
       !dt_heading_has_preheader(data = data)) {
     return(list())
   }
+
+  # TODO: Incorporate page numbering
 
   # Get table components and metadata using the `data`
   boxh <- dt_boxhead_get(data)
@@ -1139,7 +1138,7 @@ create_columns_component_rtf <- function(data) {
           h_align = col_alignment[x],
           h_merge = merge_keys_cells[x],
           borders = list(
-            rtf_border("bottom", color = column_labels_border_bottom_color, width = 40)#,
+            rtf_border("bottom", color = column_labels_border_bottom_color, width = 20)#,
           # rtf_border("top", color = column_labels_border_top_color, width = 40),
           # rtf_border("left", color = column_labels_vlines_color),
           # rtf_border("right", color = column_labels_vlines_color)
@@ -1201,13 +1200,14 @@ create_columns_component_rtf <- function(data) {
                 rtf_raw(spanners_row[x])
               ),
               h_align = "center",
-              h_merge = merge_keys_spanners[x]#,
-              # borders = list(
-              #   rtf_border("top", color = column_labels_border_top_color, width = 40),
-              #   rtf_border("bottom", color = column_labels_border_bottom_color),
-              #   rtf_border("left", color = column_labels_vlines_color),
-              #   rtf_border("right", color = column_labels_vlines_color)
-              # )
+              h_merge = merge_keys_spanners[x],
+              borders = list(
+                if (spanners_row[x] != "") {
+                  rtf_border("bottom", color = column_labels_border_bottom_color, width = 20)
+                } else {
+                  NULL
+                }
+              )
             )
           }
         )
