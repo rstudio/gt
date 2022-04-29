@@ -1041,6 +1041,38 @@ test_that("The final placement of footnotes is correct with the 'auto' mode", {
     selection_text("[class='gt_row gt_right']") %>%
     expect_equal("0.11mark_1")
 
+  # Expect a footnote mark to the left of the right-aligned number value
+  # (the !important 'text-align' rule in `tab_style()` determines the alignment)
+  exibble[1, 1] %>%
+    gt() %>%
+    fmt_number(columns = num) %>%
+    tab_footnote(footnote = "note", locations = cells_body(num, 1)) %>%
+    opt_footnote_marks(marks = footnote_marks) %>%
+    tab_style(
+      style = "text-align: right !important; background: green; text-align: left;",
+      locations = cells_body(num, 1)
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_text("[class='gt_row gt_right']") %>%
+    expect_equal("mark_1 0.11")
+
+  # Expect a footnote mark to the right of the left-aligned number value
+  # (the final !important 'text-align' rule in `tab_style()` determines the alignment)
+  exibble[1, 1] %>%
+    gt() %>%
+    fmt_number(columns = num) %>%
+    tab_footnote(footnote = "note", locations = cells_body(num, 1)) %>%
+    opt_footnote_marks(marks = footnote_marks) %>%
+    tab_style(
+      style = "text-align: right !important; text-align: left !important;",
+      locations = cells_body(num, 1)
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_text("[class='gt_row gt_right']") %>%
+    expect_equal("0.11mark_1")
+
   # Expect a footnote mark to the right of the center-aligned number value
   # (the center alignment was set by `cols_align()`)
   exibble[1, 1] %>%
