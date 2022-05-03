@@ -13,23 +13,23 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6000
-      \intbl {\f0\cf1 {\f0\fs20 Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20 Table Subtitle} {\f0\fs20\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20\b\i Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20\b\i Table Subtitle} {\f0\fs20\b\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx1500
-      \intbl {\f0 {\f0\fs20 }}\cell
+      \intbl {\f0 {\f0\fs20\b }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx3000
-      \intbl {\f0 {\f0\fs20 num}}\cell
+      \intbl {\f0 {\f0\fs20\b num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx4500
-      \intbl {\f0 {\f0\fs20 char}}\cell
+      \intbl {\f0 {\f0\fs20\b char}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx6000
-      \intbl {\f0 {\f0\fs20 datetime}}\cell
+      \intbl {\f0 {\f0\fs20\b datetime}}\cell
       
       \row
       
@@ -206,23 +206,23 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6000
-      \intbl {\f0\cf1 {\f0\fs20 Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20 Table Subtitle} {\f0\fs20\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20\b\i Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20\b\i Table Subtitle} {\f0\fs20\b\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx1500
-      \intbl {\f0 {\f0\fs20 }}\cell
+      \intbl {\f0 {\f0\fs20\b }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx3000
-      \intbl {\f0 {\f0\fs20 num}}\cell
+      \intbl {\f0 {\f0\fs20\b num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx4500
-      \intbl {\f0 {\f0\fs20 char}}\cell
+      \intbl {\f0 {\f0\fs20\b char}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx6000
-      \intbl {\f0 {\f0\fs20 datetime}}\cell
+      \intbl {\f0 {\f0\fs20\b datetime}}\cell
       
       \row
       
@@ -399,23 +399,23 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6000
-      \intbl {\f0\cf1 {\f0\fs20 Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20 Table Subtitle} {\f0\fs20\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20\b\i Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20\b\i Table Subtitle} {\f0\fs20\b\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx1050
-      \intbl {\f0 {\f0\fs20 }}\cell
+      \intbl {\f0 {\f0\fs20\b }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx2850
-      \intbl {\f0 {\f0\fs20 num}}\cell
+      \intbl {\f0 {\f0\fs20\b num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx4950
-      \intbl {\f0 {\f0\fs20 char}}\cell
+      \intbl {\f0 {\f0\fs20\b char}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx6000
-      \intbl {\f0 {\f0\fs20 datetime}}\cell
+      \intbl {\f0 {\f0\fs20\b datetime}}\cell
       
       \row
       
@@ -592,23 +592,23 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6000
-      \intbl {\f0\cf1 {\f0\fs20 Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20 Table Subtitle} {\f0\fs20\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20\b\i Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20\b\i Table Subtitle} {\f0\fs20\b\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx1500
-      \intbl {\f0 {\f0\fs20 }}\cell
+      \intbl {\f0 {\f0\fs20\b }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx3000
-      \intbl {\f0 {\f0\fs20 num}}\cell
+      \intbl {\f0 {\f0\fs20\b num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx4500
-      \intbl {\f0 {\f0\fs20 char}}\cell
+      \intbl {\f0 {\f0\fs20\b char}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx6000
-      \intbl {\f0 {\f0\fs20 datetime}}\cell
+      \intbl {\f0 {\f0\fs20\b datetime}}\cell
       
       \row
       
@@ -785,23 +785,23 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6000
-      \intbl {\f0\cf1 {\f0\fs20 Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20 Table Subtitle} {\f0\fs20\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20\b\i Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20\b\i Table Subtitle} {\f0\fs20\b\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx300
-      \intbl {\f0 {\f0\fs20 }}\cell
+      \intbl {\f0 {\f0\fs20\b }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx2850
-      \intbl {\f0 {\f0\fs20 num}}\cell
+      \intbl {\f0 {\f0\fs20\b num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx3450
-      \intbl {\f0 {\f0\fs20 char}}\cell
+      \intbl {\f0 {\f0\fs20\b char}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx6000
-      \intbl {\f0 {\f0\fs20 datetime}}\cell
+      \intbl {\f0 {\f0\fs20\b datetime}}\cell
       
       \row
       
@@ -978,23 +978,23 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6000
-      \intbl {\f0\cf1 {\f0\fs20 Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20 Table Subtitle} {\f0\fs20\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20\b\i Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20\b\i Table Subtitle} {\f0\fs20\b\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx1500
-      \intbl {\f0 {\f0\fs20 }}\cell
+      \intbl {\f0 {\f0\fs20\b }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx3000
-      \intbl {\f0 {\f0\fs20 num}}\cell
+      \intbl {\f0 {\f0\fs20\b num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx4500
-      \intbl {\f0 {\f0\fs20 char}}\cell
+      \intbl {\f0 {\f0\fs20\b char}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx6000
-      \intbl {\f0 {\f0\fs20 datetime}}\cell
+      \intbl {\f0 {\f0\fs20\b datetime}}\cell
       
       \row
       
@@ -1171,23 +1171,23 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6000
-      \intbl {\f0\cf1 {\f0\fs20 Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20 Table Subtitle} {\f0\fs20\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20\b\i Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20\b\i Table Subtitle} {\f0\fs20\b\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx750
-      \intbl {\f0 {\f0\fs20 }}\cell
+      \intbl {\f0 {\f0\fs20\b }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx2250
-      \intbl {\f0 {\f0\fs20 num}}\cell
+      \intbl {\f0 {\f0\fs20\b num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx5250
-      \intbl {\f0 {\f0\fs20 char}}\cell
+      \intbl {\f0 {\f0\fs20\b char}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx6000
-      \intbl {\f0 {\f0\fs20 datetime}}\cell
+      \intbl {\f0 {\f0\fs20\b datetime}}\cell
       
       \row
       
@@ -1364,23 +1364,23 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0\cf1 {\f0\fs20 Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20 Table Subtitle} {\f0\fs20\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20\b\i Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20\b\i Table Subtitle} {\f0\fs20\b\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx2340
-      \intbl {\f0 {\f0\fs20 }}\cell
+      \intbl {\f0 {\f0\fs20\b }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx4680
-      \intbl {\f0 {\f0\fs20 num}}\cell
+      \intbl {\f0 {\f0\fs20\b num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx7020
-      \intbl {\f0 {\f0\fs20 char}}\cell
+      \intbl {\f0 {\f0\fs20\b char}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx9360
-      \intbl {\f0 {\f0\fs20 datetime}}\cell
+      \intbl {\f0 {\f0\fs20\b datetime}}\cell
       
       \row
       
@@ -1557,23 +1557,23 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
-      \intbl {\f0\cf1 {\f0\fs20 Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20 Table Subtitle} {\f0\fs20\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20\b\i Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20\b\i Table Subtitle} {\f0\fs20\b\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx1404
-      \intbl {\f0 {\f0\fs20 }}\cell
+      \intbl {\f0 {\f0\fs20\b }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx2808
-      \intbl {\f0 {\f0\fs20 num}}\cell
+      \intbl {\f0 {\f0\fs20\b num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx4212
-      \intbl {\f0 {\f0\fs20 char}}\cell
+      \intbl {\f0 {\f0\fs20\b char}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx5616
-      \intbl {\f0 {\f0\fs20 datetime}}\cell
+      \intbl {\f0 {\f0\fs20\b datetime}}\cell
       
       \row
       
@@ -1750,23 +1750,23 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7200
-      \intbl {\f0\cf1 {\f0\fs20 Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20 Table Subtitle} {\f0\fs20\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20\b\i Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20\b\i Table Subtitle} {\f0\fs20\b\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx1800
-      \intbl {\f0 {\f0\fs20 }}\cell
+      \intbl {\f0 {\f0\fs20\b }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx3600
-      \intbl {\f0 {\f0\fs20 num}}\cell
+      \intbl {\f0 {\f0\fs20\b num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx5400
-      \intbl {\f0 {\f0\fs20 char}}\cell
+      \intbl {\f0 {\f0\fs20\b char}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx7200
-      \intbl {\f0 {\f0\fs20 datetime}}\cell
+      \intbl {\f0 {\f0\fs20\b datetime}}\cell
       
       \row
       
@@ -1943,23 +1943,23 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7200
-      \intbl {\f0\cf1 {\f0\fs20 Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20 Table Subtitle} {\f0\fs20\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20\b\i Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20\b\i Table Subtitle} {\f0\fs20\b\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx1800
-      \intbl {\f0 {\f0\fs20 }}\cell
+      \intbl {\f0 {\f0\fs20\b }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx3600
-      \intbl {\f0 {\f0\fs20 num}}\cell
+      \intbl {\f0 {\f0\fs20\b num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx5400
-      \intbl {\f0 {\f0\fs20 char}}\cell
+      \intbl {\f0 {\f0\fs20\b char}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx7200
-      \intbl {\f0 {\f0\fs20 datetime}}\cell
+      \intbl {\f0 {\f0\fs20\b datetime}}\cell
       
       \row
       
@@ -2136,23 +2136,23 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0\cf1 {\f0\fs20 Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20 Table Subtitle} {\f0\fs20\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20\b\i Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20\b\i Table Subtitle} {\f0\fs20\b\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx2730
-      \intbl {\f0 {\f0\fs20 }}\cell
+      \intbl {\f0 {\f0\fs20\b }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx4530
-      \intbl {\f0 {\f0\fs20 num}}\cell
+      \intbl {\f0 {\f0\fs20\b num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx6630
-      \intbl {\f0 {\f0\fs20 char}}\cell
+      \intbl {\f0 {\f0\fs20\b char}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx9360
-      \intbl {\f0 {\f0\fs20 datetime}}\cell
+      \intbl {\f0 {\f0\fs20\b datetime}}\cell
       
       \row
       
@@ -2329,23 +2329,23 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
-      \intbl {\f0\cf1 {\f0\fs20 Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20 Table Subtitle} {\f0\fs20\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20\b\i Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20\b\i Table Subtitle} {\f0\fs20\b\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx1794
-      \intbl {\f0 {\f0\fs20 }}\cell
+      \intbl {\f0 {\f0\fs20\b }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx3594
-      \intbl {\f0 {\f0\fs20 num}}\cell
+      \intbl {\f0 {\f0\fs20\b num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx5694
-      \intbl {\f0 {\f0\fs20 char}}\cell
+      \intbl {\f0 {\f0\fs20\b char}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx7488
-      \intbl {\f0 {\f0\fs20 datetime}}\cell
+      \intbl {\f0 {\f0\fs20\b datetime}}\cell
       
       \row
       
@@ -2522,23 +2522,23 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0\cf1 {\f0\fs20 Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20 Table Subtitle} {\f0\fs20\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20\b\i Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20\b\i Table Subtitle} {\f0\fs20\b\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx2340
-      \intbl {\f0 {\f0\fs20 }}\cell
+      \intbl {\f0 {\f0\fs20\b }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx4680
-      \intbl {\f0 {\f0\fs20 num}}\cell
+      \intbl {\f0 {\f0\fs20\b num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx7020
-      \intbl {\f0 {\f0\fs20 char}}\cell
+      \intbl {\f0 {\f0\fs20\b char}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx9360
-      \intbl {\f0 {\f0\fs20 datetime}}\cell
+      \intbl {\f0 {\f0\fs20\b datetime}}\cell
       
       \row
       
@@ -2715,23 +2715,23 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
-      \intbl {\f0\cf1 {\f0\fs20 Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20 Table Subtitle} {\f0\fs20\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20\b\i Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20\b\i Table Subtitle} {\f0\fs20\b\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx1872
-      \intbl {\f0 {\f0\fs20 }}\cell
+      \intbl {\f0 {\f0\fs20\b }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx3744
-      \intbl {\f0 {\f0\fs20 num}}\cell
+      \intbl {\f0 {\f0\fs20\b num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx5616
-      \intbl {\f0 {\f0\fs20 char}}\cell
+      \intbl {\f0 {\f0\fs20\b char}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx7488
-      \intbl {\f0 {\f0\fs20 datetime}}\cell
+      \intbl {\f0 {\f0\fs20\b datetime}}\cell
       
       \row
       
@@ -2908,23 +2908,23 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0\cf1 {\f0\fs20 Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20 Table Subtitle} {\f0\fs20\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20\b\i Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20\b\i Table Subtitle} {\f0\fs20\b\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx468
-      \intbl {\f0 {\f0\fs20 }}\cell
+      \intbl {\f0 {\f0\fs20\b }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx4446
-      \intbl {\f0 {\f0\fs20 num}}\cell
+      \intbl {\f0 {\f0\fs20\b num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx5382
-      \intbl {\f0 {\f0\fs20 char}}\cell
+      \intbl {\f0 {\f0\fs20\b char}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx9360
-      \intbl {\f0 {\f0\fs20 datetime}}\cell
+      \intbl {\f0 {\f0\fs20\b datetime}}\cell
       
       \row
       
@@ -3101,23 +3101,23 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7487
-      \intbl {\f0\cf1 {\f0\fs20 Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20 Table Subtitle} {\f0\fs20\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20\b\i Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20\b\i Table Subtitle} {\f0\fs20\b\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx374
-      \intbl {\f0 {\f0\fs20 }}\cell
+      \intbl {\f0 {\f0\fs20\b }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx3556
-      \intbl {\f0 {\f0\fs20 num}}\cell
+      \intbl {\f0 {\f0\fs20\b num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx4305
-      \intbl {\f0 {\f0\fs20 char}}\cell
+      \intbl {\f0 {\f0\fs20\b char}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx7487
-      \intbl {\f0 {\f0\fs20 datetime}}\cell
+      \intbl {\f0 {\f0\fs20\b datetime}}\cell
       
       \row
       
@@ -3294,23 +3294,23 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0\cf1 {\f0\fs20 Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20 Table Subtitle} {\f0\fs20\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20\b\i Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20\b\i Table Subtitle} {\f0\fs20\b\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx1500
-      \intbl {\f0 {\f0\fs20 }}\cell
+      \intbl {\f0 {\f0\fs20\b }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx3000
-      \intbl {\f0 {\f0\fs20 num}}\cell
+      \intbl {\f0 {\f0\fs20\b num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx6180
-      \intbl {\f0 {\f0\fs20 char}}\cell
+      \intbl {\f0 {\f0\fs20\b char}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx9360
-      \intbl {\f0 {\f0\fs20 datetime}}\cell
+      \intbl {\f0 {\f0\fs20\b datetime}}\cell
       
       \row
       
@@ -3487,23 +3487,23 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
-      \intbl {\f0\cf1 {\f0\fs20 Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20 Table Subtitle} {\f0\fs20\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20\b\i Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20\b\i Table Subtitle} {\f0\fs20\b\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx1500
-      \intbl {\f0 {\f0\fs20 }}\cell
+      \intbl {\f0 {\f0\fs20\b }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx3000
-      \intbl {\f0 {\f0\fs20 num}}\cell
+      \intbl {\f0 {\f0\fs20\b num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx5244
-      \intbl {\f0 {\f0\fs20 char}}\cell
+      \intbl {\f0 {\f0\fs20\b char}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx7488
-      \intbl {\f0 {\f0\fs20 datetime}}\cell
+      \intbl {\f0 {\f0\fs20\b datetime}}\cell
       
       \row
       
@@ -3680,23 +3680,23 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0\cf1 {\f0\fs20 Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20 Table Subtitle} {\f0\fs20\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20\b\i Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20\b\i Table Subtitle} {\f0\fs20\b\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx1590
-      \intbl {\f0 {\f0\fs20 }}\cell
+      \intbl {\f0 {\f0\fs20\b }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx3090
-      \intbl {\f0 {\f0\fs20 num}}\cell
+      \intbl {\f0 {\f0\fs20\b num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx7770
-      \intbl {\f0 {\f0\fs20 char}}\cell
+      \intbl {\f0 {\f0\fs20\b char}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx9360
-      \intbl {\f0 {\f0\fs20 datetime}}\cell
+      \intbl {\f0 {\f0\fs20\b datetime}}\cell
       
       \row
       
@@ -3873,23 +3873,23 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
-      \intbl {\f0\cf1 {\f0\fs20 Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20 Table Subtitle} {\f0\fs20\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20\b\i Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20\b\i Table Subtitle} {\f0\fs20\b\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx1122
-      \intbl {\f0 {\f0\fs20 }}\cell
+      \intbl {\f0 {\f0\fs20\b }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx2622
-      \intbl {\f0 {\f0\fs20 num}}\cell
+      \intbl {\f0 {\f0\fs20\b num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx6366
-      \intbl {\f0 {\f0\fs20 char}}\cell
+      \intbl {\f0 {\f0\fs20\b char}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx7488
-      \intbl {\f0 {\f0\fs20 datetime}}\cell
+      \intbl {\f0 {\f0\fs20\b datetime}}\cell
       
       \row
       
@@ -4066,23 +4066,23 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0\cf1 {\f0\fs20 Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20 Table Subtitle} {\f0\fs20\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20\b\i Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20\b\i Table Subtitle} {\f0\fs20\b\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx2340
-      \intbl {\f0 {\f0\fs20 }}\cell
+      \intbl {\f0 {\f0\fs20\b }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx4680
-      \intbl {\f0 {\f0\fs20 num}}\cell
+      \intbl {\f0 {\f0\fs20\b num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx7020
-      \intbl {\f0 {\f0\fs20 char}}\cell
+      \intbl {\f0 {\f0\fs20\b char}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx9360
-      \intbl {\f0 {\f0\fs20 datetime}}\cell
+      \intbl {\f0 {\f0\fs20\b datetime}}\cell
       
       \row
       
@@ -4259,23 +4259,23 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1200
-      \intbl {\f0\cf1 {\f0\fs20 Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20 Table Subtitle} {\f0\fs20\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20\b\i Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20\b\i Table Subtitle} {\f0\fs20\b\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx300
-      \intbl {\f0 {\f0\fs20 }}\cell
+      \intbl {\f0 {\f0\fs20\b }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx600
-      \intbl {\f0 {\f0\fs20 num}}\cell
+      \intbl {\f0 {\f0\fs20\b num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx900
-      \intbl {\f0 {\f0\fs20 char}}\cell
+      \intbl {\f0 {\f0\fs20\b char}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx1200
-      \intbl {\f0 {\f0\fs20 datetime}}\cell
+      \intbl {\f0 {\f0\fs20\b datetime}}\cell
       
       \row
       
@@ -4452,23 +4452,23 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0\cf1 {\f0\fs20 Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20 Table Subtitle} {\f0\fs20\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20\b\i Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20\b\i Table Subtitle} {\f0\fs20\b\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx2730
-      \intbl {\f0 {\f0\fs20 }}\cell
+      \intbl {\f0 {\f0\fs20\b }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx4530
-      \intbl {\f0 {\f0\fs20 num}}\cell
+      \intbl {\f0 {\f0\fs20\b num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx6630
-      \intbl {\f0 {\f0\fs20 char}}\cell
+      \intbl {\f0 {\f0\fs20\b char}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx9360
-      \intbl {\f0 {\f0\fs20 datetime}}\cell
+      \intbl {\f0 {\f0\fs20\b datetime}}\cell
       
       \row
       
@@ -4645,23 +4645,23 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0\cf1 {\f0\fs20 Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20 Table Subtitle} {\f0\fs20\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20\b\i Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20\b\i Table Subtitle} {\f0\fs20\b\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx3510
-      \intbl {\f0 {\f0\fs20 }}\cell
+      \intbl {\f0 {\f0\fs20\b }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx7020
-      \intbl {\f0 {\f0\fs20 num}}\cell
+      \intbl {\f0 {\f0\fs20\b num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx8190
-      \intbl {\f0 {\f0\fs20 char}}\cell
+      \intbl {\f0 {\f0\fs20\b char}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx9360
-      \intbl {\f0 {\f0\fs20 datetime}}\cell
+      \intbl {\f0 {\f0\fs20\b datetime}}\cell
       
       \row
       
@@ -4838,23 +4838,23 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0\cf1 {\f0\fs20 Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20 Table Subtitle} {\f0\fs20\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20\b\i Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20\b\i Table Subtitle} {\f0\fs20\b\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx936
-      \intbl {\f0 {\f0\fs20 }}\cell
+      \intbl {\f0 {\f0\fs20\b }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx4680
-      \intbl {\f0 {\f0\fs20 num}}\cell
+      \intbl {\f0 {\f0\fs20\b num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx5616
-      \intbl {\f0 {\f0\fs20 char}}\cell
+      \intbl {\f0 {\f0\fs20\b char}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx9360
-      \intbl {\f0 {\f0\fs20 datetime}}\cell
+      \intbl {\f0 {\f0\fs20\b datetime}}\cell
       
       \row
       
@@ -5031,23 +5031,23 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0\cf1 {\f0\fs20 Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20 Table Subtitle} {\f0\fs20\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20\b\i Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20\b\i Table Subtitle} {\f0\fs20\b\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx1500
-      \intbl {\f0 {\f0\fs20 }}\cell
+      \intbl {\f0 {\f0\fs20\b }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx3000
-      \intbl {\f0 {\f0\fs20 num}}\cell
+      \intbl {\f0 {\f0\fs20\b num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx6180
-      \intbl {\f0 {\f0\fs20 char}}\cell
+      \intbl {\f0 {\f0\fs20\b char}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx9360
-      \intbl {\f0 {\f0\fs20 datetime}}\cell
+      \intbl {\f0 {\f0\fs20\b datetime}}\cell
       
       \row
       
@@ -5224,23 +5224,23 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0\cf1 {\f0\fs20 Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20 Table Subtitle} {\f0\fs20\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20\b\i Table Title} {\f0\fs20\i\super 1} \line {\f0\fs20\b\i Table Subtitle} {\f0\fs20\b\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx1590
-      \intbl {\f0 {\f0\fs20 }}\cell
+      \intbl {\f0 {\f0\fs20\b }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx3090
-      \intbl {\f0 {\f0\fs20 num}}\cell
+      \intbl {\f0 {\f0\fs20\b num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx7770
-      \intbl {\f0 {\f0\fs20 char}}\cell
+      \intbl {\f0 {\f0\fs20\b char}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx9360
-      \intbl {\f0 {\f0\fs20 datetime}}\cell
+      \intbl {\f0 {\f0\fs20\b datetime}}\cell
       
       \row
       

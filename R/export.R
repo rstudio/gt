@@ -487,6 +487,16 @@ as_rtf <- function(data) {
   # Perform input object validation
   stop_if_not_gt(data = data)
 
+  if (dt_options_get_value(data = data, option = "page_numbering")) {
+
+    data <-
+      dt_options_set_value(
+        data = data,
+        option = "page_header_use_tbl_headings",
+        value = TRUE
+      )
+  }
+
   page_header_use_tbl_headings <-
     dt_options_get_value(data = data, option = "page_header_use_tbl_headings")
 

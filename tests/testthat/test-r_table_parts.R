@@ -16,10 +16,10 @@ test_that("a gt table contains the expected column spanner labels", {
   grepl(
     paste0(
       ".*.trowd.trrh0.trhdr.*",
-      ".intbl \\{.f0 \\{.f0.fs20 \\}\\}.cell.*",
-      ".intbl \\{.f0 \\{.f0.fs20 perimeter\\}\\}.cell.*",
-      ".intbl \\{.f0 \\{.f0.fs20 perimeter\\}\\}.cell.*",
-      ".intbl \\{.f0 \\{.f0.fs20 \\}\\}.cell.*",
+      ".intbl \\{.f0 \\{.f0.fs20.b \\}\\}.cell.*",
+      ".intbl \\{.f0 \\{.f0.fs20.b perimeter\\}\\}.cell.*",
+      ".intbl \\{.f0 \\{.f0.fs20.b perimeter\\}\\}.cell.*",
+      ".intbl \\{.f0 \\{.f0.fs20.b \\}\\}.cell.*",
       ".*area.*peri.*shape.*perm",
       ".*"
     ),
@@ -51,11 +51,11 @@ test_that("a gt table contains the expected column spanner labels", {
   grepl(
     paste0(
       ".*.trowd.trrh0.trhdr.*",
-      ".intbl \\{.f0 \\{.f0.fs20 \\}\\}.cell.*",
-      ".intbl \\{.f0 \\{.f0.fs20 v_1_2\\}\\}.cell.*",
-      ".intbl \\{.f0 \\{.f0.fs20 v_1_2\\}\\}.cell.*",
-      ".intbl \\{.f0 \\{.f0.fs20 v_4_5\\}\\}.cell.*",
-      ".intbl \\{.f0 \\{.f0.fs20 v_4_5\\}\\}.cell.*",
+      ".intbl \\{.f0 \\{.f0.fs20.b \\}\\}.cell.*",
+      ".intbl \\{.f0 \\{.f0.fs20.b v_1_2\\}\\}.cell.*",
+      ".intbl \\{.f0 \\{.f0.fs20.b v_1_2\\}\\}.cell.*",
+      ".intbl \\{.f0 \\{.f0.fs20.b v_4_5\\}\\}.cell.*",
+      ".intbl \\{.f0 \\{.f0.fs20.b v_4_5\\}\\}.cell.*",
       ".row.*",
       ".*v_3.*v_1.*v_2.*v_4.*v_5",
       ".*"
@@ -78,10 +78,10 @@ test_that("a gt table contains the expected column spanner labels", {
   grepl(
     paste0(
       ".*.trowd.trrh0.trhdr.*",
-      ".intbl \\{.f0 \\{.f0.fs20 A\\{.super .i 1\\}\\}\\}.cell.*",
-      ".intbl \\{.f0 \\{.f0.fs20 A\\}\\}.cell.*",
-      ".intbl \\{.f0 \\{.f0.fs20 A\\{.super .i 1\\}\\}\\}.cell.*",
-      ".intbl \\{.f0 \\{.f0.fs20 A\\}\\}.cell.*",
+      ".intbl \\{.f0 \\{.f0.fs20.b A\\{.super .i 1\\}\\}\\}.cell.*",
+      ".intbl \\{.f0 \\{.f0.fs20.b A\\}\\}.cell.*",
+      ".intbl \\{.f0 \\{.f0.fs20.b A\\{.super .i 1\\}\\}\\}.cell.*",
+      ".intbl \\{.f0 \\{.f0.fs20.b A\\}\\}.cell.*",
       ".row.*",
       ".*A_X.*B_X.*A_Y.*B_Y",
       ".*"
@@ -103,10 +103,10 @@ test_that("a gt table contains the expected column spanner labels", {
   grepl(
     paste0(
       ".*.trowd.trrh0.trhdr.*",
-      ".intbl \\{.f0 \\{.f0.fs20 A\\{.super .i 1\\}\\}\\}.cell.*",
-      ".intbl \\{.f0 \\{.f0.fs20 A\\{.super .i 1\\}\\}\\}.cell.*",
-      ".intbl \\{.f0 \\{.f0.fs20 A\\}\\}.cell.*",
-      ".intbl \\{.f0 \\{.f0.fs20 A\\}\\}.cell.*",
+      ".intbl \\{.f0 \\{.f0.fs20.b A\\{.super .i 1\\}\\}\\}.cell.*",
+      ".intbl \\{.f0 \\{.f0.fs20.b A\\{.super .i 1\\}\\}\\}.cell.*",
+      ".intbl \\{.f0 \\{.f0.fs20.b A\\}\\}.cell.*",
+      ".intbl \\{.f0 \\{.f0.fs20.b A\\}\\}.cell.*",
       ".row.*",
       ".*A_X.*A_Y.*B_X.*B_Y",
       ".*"
@@ -129,11 +129,11 @@ test_that("a gt table contains the expected column spanner labels", {
   grepl(
     paste0(
       ".*.trowd.trrh0.trhdr.*",
-      ".intbl \\{.f0 \\{.f0.fs20 Sepal\\}\\}.cell.*",
-      ".intbl \\{.f0 \\{.f0.fs20 Sepal\\}\\}.cell.*",
-      ".intbl \\{.f0 \\{.f0.fs20 \\}\\}.cell.*",
-      ".intbl \\{.f0 \\{.f0.fs20 \\}\\}.cell.*",
-      ".intbl \\{.f0 \\{.f0.fs20 \\}\\}.cell.*",
+      ".intbl \\{.f0 \\{.f0.fs20.b Sepal\\}\\}.cell.*",
+      ".intbl \\{.f0 \\{.f0.fs20.b Sepal\\}\\}.cell.*",
+      ".intbl \\{.f0 \\{.f0.fs20.b \\}\\}.cell.*",
+      ".intbl \\{.f0 \\{.f0.fs20.b \\}\\}.cell.*",
+      ".intbl \\{.f0 \\{.f0.fs20.b \\}\\}.cell.*",
       ".row.*",
       ".*Length.*Width.*Petal.*Length.*Petal.*Width.*Species",
       ".*"

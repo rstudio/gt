@@ -900,13 +900,13 @@ as_rtf_string <- function(x) {
 
 create_heading_component_rtf <- function(data) {
 
-  if (!dt_heading_has_title(data = data) &&
-      !dt_heading_has_subtitle(data = data) &&
-      !dt_heading_has_preheader(data = data)) {
+  if (
+    !dt_heading_has_title(data = data) &&
+    !dt_heading_has_subtitle(data = data) &&
+    !dt_heading_has_preheader(data = data)
+  ) {
     return(list())
   }
-
-  # TODO: Incorporate page numbering
 
   # Get table components and metadata using the `data`
   boxh <- dt_boxhead_get(data)

@@ -55,31 +55,31 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx1500
-      \intbl {\f0 {\f0\fs20 }}\cell
+      \intbl {\f0 {\f0\fs20\b }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx3000
-      \intbl {\f0 {\f0\fs20 low}}\cell
+      \intbl {\f0 {\f0\fs20\b low}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx4500
-      \intbl {\f0 {\f0\fs20 med}}\cell
+      \intbl {\f0 {\f0\fs20\b med}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx6000
-      \intbl {\f0 {\f0\fs20 high}}\cell
+      \intbl {\f0 {\f0\fs20\b high}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx7500
-      \intbl {\f0 {\f0\fs20 halves}}\cell
+      \intbl {\f0 {\f0\fs20\b halves}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx9000
-      \intbl {\f0 {\f0\fs20 quarters}}\cell
+      \intbl {\f0 {\f0\fs20\b quarters}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx10500
-      \intbl {\f0 {\f0\fs20 eighths}}\cell
+      \intbl {\f0 {\f0\fs20\b eighths}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx12000
-      \intbl {\f0 {\f0\fs20 sixteenths}}\cell
+      \intbl {\f0 {\f0\fs20\b sixteenths}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx13500
-      \intbl {\f0 {\f0\fs20 hundredths}}\cell
+      \intbl {\f0 {\f0\fs20\b hundredths}}\cell
       
       \row
       
@@ -1971,31 +1971,31 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx1500
-      \intbl {\f0 {\f0\fs20 }}\cell
+      \intbl {\f0 {\f0\fs20\b }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx3000
-      \intbl {\f0 {\f0\fs20 low}}\cell
+      \intbl {\f0 {\f0\fs20\b low}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx4500
-      \intbl {\f0 {\f0\fs20 med}}\cell
+      \intbl {\f0 {\f0\fs20\b med}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx6000
-      \intbl {\f0 {\f0\fs20 high}}\cell
+      \intbl {\f0 {\f0\fs20\b high}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx7500
-      \intbl {\f0 {\f0\fs20 halves}}\cell
+      \intbl {\f0 {\f0\fs20\b halves}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx9000
-      \intbl {\f0 {\f0\fs20 quarters}}\cell
+      \intbl {\f0 {\f0\fs20\b quarters}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx10500
-      \intbl {\f0 {\f0\fs20 eighths}}\cell
+      \intbl {\f0 {\f0\fs20\b eighths}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx12000
-      \intbl {\f0 {\f0\fs20 sixteenths}}\cell
+      \intbl {\f0 {\f0\fs20\b sixteenths}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx13500
-      \intbl {\f0 {\f0\fs20 hundredths}}\cell
+      \intbl {\f0 {\f0\fs20\b hundredths}}\cell
       
       \row
       
@@ -3887,31 +3887,31 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx1500
-      \intbl {\f0 {\f0\fs20 }}\cell
+      \intbl {\f0 {\f0\fs20\b }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx3000
-      \intbl {\f0 {\f0\fs20 low}}\cell
+      \intbl {\f0 {\f0\fs20\b low}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx4500
-      \intbl {\f0 {\f0\fs20 med}}\cell
+      \intbl {\f0 {\f0\fs20\b med}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx6000
-      \intbl {\f0 {\f0\fs20 high}}\cell
+      \intbl {\f0 {\f0\fs20\b high}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx7500
-      \intbl {\f0 {\f0\fs20 halves}}\cell
+      \intbl {\f0 {\f0\fs20\b halves}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx9000
-      \intbl {\f0 {\f0\fs20 quarters}}\cell
+      \intbl {\f0 {\f0\fs20\b quarters}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx10500
-      \intbl {\f0 {\f0\fs20 eighths}}\cell
+      \intbl {\f0 {\f0\fs20\b eighths}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx12000
-      \intbl {\f0 {\f0\fs20 sixteenths}}\cell
+      \intbl {\f0 {\f0\fs20\b sixteenths}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx13500
-      \intbl {\f0 {\f0\fs20 hundredths}}\cell
+      \intbl {\f0 {\f0\fs20\b hundredths}}\cell
       
       \row
       

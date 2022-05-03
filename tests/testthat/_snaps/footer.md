@@ -27,31 +27,31 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx1040
-      \intbl {\f0 {\f0\fs20 num{\super \i 1}}}\cell
+      \intbl {\f0 {\f0\fs20\b num{\super \i 1}}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx2080
-      \intbl {\f0 {\f0\fs20 char{\super \i 2}}}\cell
+      \intbl {\f0 {\f0\fs20\b char{\super \i 2}}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx3120
-      \intbl {\f0 {\f0\fs20 fctr}}\cell
+      \intbl {\f0 {\f0\fs20\b fctr}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx4160
-      \intbl {\f0 {\f0\fs20 date}}\cell
+      \intbl {\f0 {\f0\fs20\b date}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx5200
-      \intbl {\f0 {\f0\fs20 time}}\cell
+      \intbl {\f0 {\f0\fs20\b time}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx6240
-      \intbl {\f0 {\f0\fs20 datetime}}\cell
+      \intbl {\f0 {\f0\fs20\b datetime}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx7280
-      \intbl {\f0 {\f0\fs20 currency}}\cell
+      \intbl {\f0 {\f0\fs20\b currency}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx8320
-      \intbl {\f0 {\f0\fs20 row}}\cell
+      \intbl {\f0 {\f0\fs20\b row}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx9360
-      \intbl {\f0 {\f0\fs20 group}}\cell
+      \intbl {\f0 {\f0\fs20\b group}}\cell
       
       \row
       
@@ -131,31 +131,31 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx1040
-      \intbl {\f0 {\f0\fs20 num{\super \i 1}}}\cell
+      \intbl {\f0 {\f0\fs20\b num{\super \i 1}}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx2080
-      \intbl {\f0 {\f0\fs20 char{\super \i 2}}}\cell
+      \intbl {\f0 {\f0\fs20\b char{\super \i 2}}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx3120
-      \intbl {\f0 {\f0\fs20 fctr}}\cell
+      \intbl {\f0 {\f0\fs20\b fctr}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx4160
-      \intbl {\f0 {\f0\fs20 date}}\cell
+      \intbl {\f0 {\f0\fs20\b date}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx5200
-      \intbl {\f0 {\f0\fs20 time}}\cell
+      \intbl {\f0 {\f0\fs20\b time}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx6240
-      \intbl {\f0 {\f0\fs20 datetime}}\cell
+      \intbl {\f0 {\f0\fs20\b datetime}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx7280
-      \intbl {\f0 {\f0\fs20 currency}}\cell
+      \intbl {\f0 {\f0\fs20\b currency}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx8320
-      \intbl {\f0 {\f0\fs20 row}}\cell
+      \intbl {\f0 {\f0\fs20\b row}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx9360
-      \intbl {\f0 {\f0\fs20 group}}\cell
+      \intbl {\f0 {\f0\fs20\b group}}\cell
       
       \row
       
@@ -235,31 +235,31 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx1040
-      \intbl {\f0 {\f0\fs20 num{\super \i 1}}}\cell
+      \intbl {\f0 {\f0\fs20\b num{\super \i 1}}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx2080
-      \intbl {\f0 {\f0\fs20 char{\super \i 2}}}\cell
+      \intbl {\f0 {\f0\fs20\b char{\super \i 2}}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx3120
-      \intbl {\f0 {\f0\fs20 fctr}}\cell
+      \intbl {\f0 {\f0\fs20\b fctr}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx4160
-      \intbl {\f0 {\f0\fs20 date}}\cell
+      \intbl {\f0 {\f0\fs20\b date}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx5200
-      \intbl {\f0 {\f0\fs20 time}}\cell
+      \intbl {\f0 {\f0\fs20\b time}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx6240
-      \intbl {\f0 {\f0\fs20 datetime}}\cell
+      \intbl {\f0 {\f0\fs20\b datetime}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx7280
-      \intbl {\f0 {\f0\fs20 currency}}\cell
+      \intbl {\f0 {\f0\fs20\b currency}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx8320
-      \intbl {\f0 {\f0\fs20 row}}\cell
+      \intbl {\f0 {\f0\fs20\b row}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx9360
-      \intbl {\f0 {\f0\fs20 group}}\cell
+      \intbl {\f0 {\f0\fs20\b group}}\cell
       
       \row
       
