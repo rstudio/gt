@@ -57,5 +57,5 @@ dt_heading_has_preheader <- function(data) {
 
   heading <- dt_heading_get(data = data)
 
-  length(heading) > 0 && is_nonempty_string(heading$preheader)
+  length(heading$preheader) > 0
 }
