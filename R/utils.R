@@ -210,6 +210,118 @@ get_currency_str <- function(currency,
   }
 }
 
+resolve_footnote_placement <- function(
+    data,
+    colname,
+    rownum,
+    input_placement,
+    cell_content,
+    context
+) {
+
+  if (input_placement %in% c("left", "right")) {
+    return(input_placement)
+  }
+
+  cell_alignment <-
+    get_alignment_at_body_cell(
+      data = data,
+      colname = colname,
+      rownum = rownum,
+      context = context
+    )
+
+  if (cell_alignment == "right") {
+    return("left")
+  } else {
+    return("right")
+  }
+}
+
+get_alignment_at_body_cell <- function(
+    data,
+    colname,
+    rownum,
+    context
+) {
+
+  column_alignment <-
+    dt_boxhead_get_alignment_by_var(
+      data = data,
+      var = colname
+    )
+
+  if (context != "html") {
+    return(column_alignment)
+  }
+
+  stub_layout <- get_stub_layout(data = data)
+
+  if (colname %in% stub_layout) {
+    column_alignment <- "right"
+  }
+
+  # Get cell alignment set by `tab_style`
+  styles_tbl <- dt_styles_get(data = data)
+
+  if (nrow(styles_tbl) < 1) {
+    return(column_alignment)
+  }
+
+  #
+  # Check HTML styles to determine whether column alignment is
+  # set there (this has higher specificity)
+  #
+
+  styles_filtered_tbl <-
+    styles_tbl %>%
+    dplyr::filter(locname == "data" && colname == .env$colname && rownum == .env$rownum)
+
+  if (nrow(styles_tbl) < 1) {
+    return(column_alignment)
+  }
+
+  # Extract the list of styles from the table
+  cell_styles_list <- styles_filtered_tbl$styles
+
+  if (length(cell_styles_list) < 1) {
+    return(column_alignment)
+  }
+
+  # Get the `align` property in `cell_styles_list` (element may not be present)
+  cell_text_align <- cell_styles_list[[1]]$cell_text$align
+
+  # Get the `cell_style` property in `cell_styles_list` (may not be present)
+  # This is a user-defined string with CSS style rules that should look
+  # something like this: "text-align: right; background: green;"
+  cell_style <- cell_styles_list[[1]]$cell_style
+
+  # Return the value of the last `text-align` property, if present
+  if (!is.null(cell_style) && grepl("text-align", cell_style)) {
+
+    m <- gregexec("(?:^|;)\\s*text-align\\s*:\\s*([\\w-]+)\\s*(!important)?", cell_style, perl = TRUE)
+    cell_style_match_mat <- regmatches(cell_style, m)[[1]]
+
+    is_important <- grepl("!important", cell_style_match_mat[1, ], fixed = TRUE)
+
+    # Pick last !important, or if no !important, then last anything
+    if (any(is_important)) {
+      cell_alignment <- cell_style_match_mat[2, max(which(is_important))]
+    } else {
+      cell_alignment <- cell_style_match_mat[2, ncol(cell_style_match_mat)]
+    }
+
+    return(cell_alignment)
+  }
+
+  # Return the value of the `cell_text$align` property, if present
+  if (!is.null(cell_text_align)) {
+    return(cell_text_align)
+  }
+
+  column_alignment
+}
+
 #' Get a currency exponent from a currency code
 #'
 #' @noRd

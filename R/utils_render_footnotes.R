@@ -563,38 +563,44 @@ apply_footnotes_to_output <- function(data,
       dplyr::group_by(rownum, colnum) %>%
       dplyr::mutate(fs_id_coalesced = paste(fs_id, collapse = ",")) %>%
       dplyr::ungroup() %>%
-      dplyr::select(colname, rownum, fs_id_coalesced) %>%
+      dplyr::select(colname, rownum, locname, placement, fs_id_coalesced) %>%
       dplyr::distinct()
 
     for (i in seq(nrow(footnotes_data_marks))) {
 
       text <-
-        body[footnotes_data_marks$rownum[i], footnotes_data_marks$colname[i]]
+        body[[footnotes_data_marks$rownum[i], footnotes_data_marks$colname[i]]]
+
+      colname <- dplyr::pull(footnotes_data_marks[i, ], "colname")
+      rownum <- dplyr::pull(footnotes_data_marks[i, ], "rownum")
+      location <- dplyr::pull(footnotes_data_marks[i, ], "locname")
+      placement <- dplyr::pull(footnotes_data_marks[i, ], "placement")
+
+      footnote_placement <-
+        resolve_footnote_placement(
+          data = data,
+          colname = colname,
+          rownum = rownum,
+          input_placement = placement,
+          cell_content = text,
+          context = context
+        )
 
       if (context == "html") {
-
-        text <-
-          paste0(text, footnote_mark_to_html(
-            footnotes_data_marks$fs_id_coalesced[i])
-          )
-
+        mark <- footnote_mark_to_html(footnotes_data_marks$fs_id_coalesced[i])
       } else if (context == "rtf") {
-
-        text <-
-          paste0(text, footnote_mark_to_rtf(
-            footnotes_data_marks$fs_id_coalesced[i])
-          )
-
+        mark <- footnote_mark_to_rtf(footnotes_data_marks$fs_id_coalesced[i])
       } else if (context == "latex") {
-
-        text <-
-          paste0(text, footnote_mark_to_latex(
-            footnotes_data_marks$fs_id_coalesced[i])
-          )
+        mark <- footnote_mark_to_latex(footnotes_data_marks$fs_id_coalesced[i])
       }
 
-      body[
-        footnotes_data_marks$rownum[i], footnotes_data_marks$colname[i]] <- text
+      if (footnote_placement == "right") {
+        text <- paste0(text, mark)
+      } else {
+        text <- paste0(mark, " ", text)
+      }
+
+      body[footnotes_data_marks$rownum[i], footnotes_data_marks$colname[i]] <- text
     }
   }
 
