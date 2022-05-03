@@ -26,6 +26,7 @@ add_summary_location_row <- function(
     loc,
     data,
     style,
+    placement = NULL,
     df_type = "styles_df"
 ) {
 
@@ -114,7 +115,8 @@ add_summary_location_row <- function(
           colname = columns,
           locnum = 5,
           rownum = rows,
-          footnotes = style
+          footnotes = style,
+          placement = placement
         )
 
     } else {
@@ -139,6 +141,7 @@ add_grand_summary_location_row <- function(
     loc,
     data,
     style,
+    placement = NULL,
     df_type = "styles_df"
 ) {
 
@@ -194,7 +197,8 @@ add_grand_summary_location_row <- function(
         colname = columns,
         locnum = 6,
         rownum = rows,
-        footnotes = style
+        footnotes = style,
+        placement = placement
       )
 
   } else {
