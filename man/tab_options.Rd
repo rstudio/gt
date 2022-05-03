@@ -381,12 +381,12 @@ when striping rows.}
 \item{row.striping.include_table_body}{An option for whether to include the
 table body when striping rows.}
 
-\item{page.orientation}{For RTF output, this provides two options for page
+\item{page.orientation}{For RTF output, this provides an two options for page
 orientation: \code{"portrait"} (the default) and \code{"landscape"}.}
 
 \item{page.numbering}{Within RTF output, should page numbering be displayed?
-By default, this is set to \code{"none"} but the other options are \code{"footer"}
-and \code{"header"}.}
+By default, this is set to \code{FALSE} but if \code{TRUE} then page numbering text
+will be added to the document header.}
 
 \item{page.header.use_tbl_headings}{If \code{TRUE} then RTF output tables will
 migrate all table headings (including the table title and all column

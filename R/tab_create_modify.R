@@ -1854,11 +1854,11 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   when striping rows.
 #' @param row.striping.include_table_body An option for whether to include the
 #'   table body when striping rows.
-#' @param page.orientation For RTF output, this provides two options for page
+#' @param page.orientation For RTF output, this provides an two options for page
 #'   orientation: `"portrait"` (the default) and `"landscape"`.
 #' @param page.numbering Within RTF output, should page numbering be displayed?
-#'   By default, this is set to `"none"` but the other options are `"footer"`
-#'   and `"header"`.
+#'   By default, this is set to `FALSE` but if `TRUE` then page numbering text
+#'   will be added to the document header.
 #' @param page.header.use_tbl_headings If `TRUE` then RTF output tables will
 #'   migrate all table headings (including the table title and all column
 #'   labels) to the page header. This page header content will repeat across

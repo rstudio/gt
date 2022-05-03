@@ -202,7 +202,7 @@ dt_options_tbl <-
     "row_striping_include_stub",         FALSE,  "row",              "logical", FALSE,
     "row_striping_include_table_body",   FALSE,  "row",              "logical", FALSE,
     "page_orientation",                  FALSE,  "page",             "value",   "portrait",
-    "page_numbering",                    FALSE,  "page",             "value",   "none",
+    "page_numbering",                    FALSE,  "page",             "logical", FALSE,
     "page_header_use_tbl_headings",      FALSE,  "page",             "logical", FALSE,
     "page_footer_use_tbl_notes",         FALSE,  "page",             "logical", FALSE,
     "page_height_portrait",              FALSE,  "page",             "value",   15840L,
