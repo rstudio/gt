@@ -342,11 +342,3 @@ to_output_location.cells_stub <- function(loc, data) {
   class(loc) <- c("output_relative", class(loc))
   loc
 }
-
-to_output_location.cells_row_groups <- function(loc, data) {
-
-  loc <- resolve_location(loc = loc, data = data)
-
-  class(loc) <- c("output_relative", class(loc))
-  loc
-}
