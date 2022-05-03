@@ -128,16 +128,6 @@ NULL
 
 gt_default_options <- list(
   gt.row_group.sep = " - ",
-  gt.rtf_paper_height_portrait = 15840L,
-  gt.rtf_paper_height_landscape = 12240L,
-  gt.rtf_paper_width_portrait = 12240L,
-  gt.rtf_paper_width_landscape = 15840L,
-  gt.rtf_page_margin_left = 1440L,
-  gt.rtf_page_margin_right = 1440L,
-  gt.rtf_page_margin_top = 1440L,
-  gt.rtf_page_margin_bottom = 1440L,
-  gt.rtf_page_header_height = 720L,
-  gt.rtf_page_footer_height = 720L,
   gt.html_tag_check = TRUE
 )
 

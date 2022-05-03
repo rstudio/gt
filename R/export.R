@@ -484,13 +484,11 @@ as_latex <- function(data) {
 #' @export
 as_rtf <- function(data) {
 
-  page_orientation <- dt_options_get_value(data = data, option = "page_orientation")
-  page_numbering <- dt_options_get_value(data = data, option = "page_numbering")
-  page_header_use_tbl_headings <-
-    dt_options_get_value(data = data, option = "page_header_use_tbl_headings")
-
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  page_header_use_tbl_headings <-
+    dt_options_get_value(data = data, option = "page_header_use_tbl_headings")
 
   # Build all table data objects through a common pipeline
   data <- build_data(data = data, context = "rtf")
@@ -516,8 +514,7 @@ as_rtf <- function(data) {
   rtf_table <-
     as_rtf_string(
       rtf_file(
-        header = NULL,
-        page_information = NULL,
+        data = data,
         document = {
           rtf_table(
             rows = c(
@@ -530,9 +527,7 @@ as_rtf <- function(data) {
               page_footer_component
             )
           )
-        },
-        page_orientation = page_orientation,
-        page_numbering = page_numbering
+        }
       )
     )
 

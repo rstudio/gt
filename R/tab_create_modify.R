@@ -2139,7 +2139,17 @@ tab_options <- function(
     page.orientation = NULL,
     page.numbering = NULL,
     page.header.use_tbl_headings = NULL,
-    page.footer.use_tbl_notes = NULL
+    page.footer.use_tbl_notes = NULL,
+    page.height.portrait = NULL,
+    page.height.landscape = NULL,
+    page.width.portrait = NULL,
+    page.width.landscape = NULL,
+    page.margin.left = NULL,
+    page.margin.right = NULL,
+    page.margin.top = NULL,
+    page.margin.bottom = NULL,
+    page.header.height = NULL,
+    page.footer.height = NULL
 ) {
 
   # TODO: add helper functions to divide the options into those by location
