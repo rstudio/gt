@@ -354,3 +354,101 @@ test_that("`text_transform()` works on row labels in the stub", {
       )
     )
 })
+
+test_that("`text_transform()` works on row group labels", {
+
+  # Create a gt table and modify the two different row group labels
+  # with the `text_transform()` function
+  tbl_html <-
+    exibble %>%
+    gt(rowname_col = "row", groupname_col = "group") %>%
+    text_transform(
+      locations = cells_row_groups(),
+      fn = toupper
+    )
+
+  # Expect row group labels to be transformed correctly
+  tbl_html %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_text("[class='gt_group_heading']") %>%
+    expect_equal(c("GRP_A", "GRP_B"))
+
+
+  # Create a gt table and modify the first row group label
+  # with the `text_transform()` function
+  tbl_html <-
+    exibble %>%
+    gt(rowname_col = "row", groupname_col = "group") %>%
+    text_transform(
+      locations = cells_row_groups(groups = "grp_a"),
+      fn = toupper
+    )
+
+  # Expect row group labels to be transformed correctly
+  tbl_html %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_text("[class='gt_group_heading']") %>%
+    expect_equal(c("GRP_A", "grp_b"))
+
+  # Create a new gt table for further testing
+  tbl_gt <-
+    gtcars %>%
+    dplyr::select(model, year, hp, trq) %>%
+    gt(rowname_col = "model") %>%
+    tab_row_group(
+      label = "powerful",
+      rows = hp >= 400 & hp < 600
+    ) %>%
+    tab_row_group(
+      label = "super powerful",
+      rows = hp > 600
+    )
+
+  # Modify the first row group label with
+  # the `text_transform()` function
+  tbl_html <-
+    tbl_gt %>%
+    text_transform(
+      locations = cells_row_groups(groups = "powerful"),
+      fn = toupper
+    )
+
+  # Expect row group labels to be transformed correctly
+  tbl_html %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_text("[class='gt_group_heading']") %>%
+    expect_equal(c("super powerful", "POWERFUL"))
+
+  # Modify all group labels with the `text_transform()` function
+  tbl_html <-
+    tbl_gt %>%
+    text_transform(
+      locations = cells_row_groups(),
+      fn = function(x) ""
+    )
+
+  # Expect row group labels to be transformed correctly
+  tbl_html %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_text("[class='gt_group_heading']") %>%
+    expect_equal(character(0))
+
+  # Modify all group labels with the `text_transform()` function
+  tbl_html <-
+    tbl_gt %>%
+    text_transform(
+      locations = cells_row_groups(),
+      fn = toupper
+    )
+
+  # Expect row group labels to be transformed correctly
+  tbl_html %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_text("[class='gt_group_heading']") %>%
+    expect_equal(c("SUPER POWERFUL", "POWERFUL"))
+})

@@ -284,6 +284,17 @@ resolve_location.cells_stub <- function(loc, data) {
   loc
 }
 
+resolve_location.cells_row_groups <- function(loc, data) {
+
+  resolved <- resolve_cells_row_groups(data = data, object = loc)
+
+  loc$groups <- resolved$groups
+
+  class(loc) <- c("resolved", class(loc))
+
+  loc
+}
+
 # Given a location, reassign column/row numbers from data-relative to
 # output-relative, and return an object with the `output_relative` class added.
 to_output_location <- function(loc, data) {
