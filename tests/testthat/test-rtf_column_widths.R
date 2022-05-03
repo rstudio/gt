@@ -6,9 +6,11 @@ test_that("The `col_width_resolver_rtf()` function works correctly", {
     paste0(x, "tw")
   }
 
+  page_body_width_portrait <- 12240L - 1440L - 1440L
+
   expect_error(
     col_width_resolver_rtf(
-      page_orientation = "portrait",
+      page_body_width = page_body_width_portrait,
       table_width = "-1tw",
       col_widths = "1tw",
       n_cols = 1
@@ -17,7 +19,7 @@ test_that("The `col_width_resolver_rtf()` function works correctly", {
 
   expect_error(
     col_width_resolver_rtf(
-      page_orientation = "portrait",
+      page_body_width = page_body_width_portrait,
       table_width = "1tw",
       col_widths = "-1tw",
       n_cols = 1
@@ -26,7 +28,7 @@ test_that("The `col_width_resolver_rtf()` function works correctly", {
 
   expect_identical(
     col_width_resolver_rtf(
-      page_orientation = "portrait",
+      page_body_width = page_body_width_portrait,
       table_width = "auto",
       col_widths = NULL,
       n_cols = 3
@@ -36,7 +38,7 @@ test_that("The `col_width_resolver_rtf()` function works correctly", {
 
   expect_identical(
     col_width_resolver_rtf(
-      page_orientation = "portrait",
+      page_body_width = page_body_width_portrait,
       table_width = "1000tw",
       col_widths = NULL,
       n_cols = 3
@@ -46,7 +48,7 @@ test_that("The `col_width_resolver_rtf()` function works correctly", {
 
   expect_identical(
     col_width_resolver_rtf(
-      page_orientation = "portrait",
+      page_body_width = page_body_width_portrait,
       table_width = tw(900),
       col_widths = tw(c(200, 200, 200)),
       n_cols = 3
@@ -56,7 +58,7 @@ test_that("The `col_width_resolver_rtf()` function works correctly", {
 
   expect_identical(
     col_width_resolver_rtf(
-      page_orientation = "portrait",
+      page_body_width = page_body_width_portrait,
       table_width = tw(1200),
       col_widths = pct(c(100, 200, 300)),
       n_cols = 3
@@ -66,7 +68,7 @@ test_that("The `col_width_resolver_rtf()` function works correctly", {
 
   expect_identical(
     col_width_resolver_rtf(
-      page_orientation = "portrait",
+      page_body_width = page_body_width_portrait,
       table_width = tw(1200),
       col_widths = c(pct(c(100, 200, 300)), "", ""),
       n_cols = 5
@@ -76,7 +78,7 @@ test_that("The `col_width_resolver_rtf()` function works correctly", {
 
   expect_identical(
     col_width_resolver_rtf(
-      page_orientation = "portrait",
+      page_body_width = page_body_width_portrait,
       table_width = tw(1200),
       col_widths = c(pct(c(10, 20, 30)), "", ""),
       n_cols = 5
@@ -86,7 +88,7 @@ test_that("The `col_width_resolver_rtf()` function works correctly", {
 
   expect_identical(
     col_width_resolver_rtf(
-      page_orientation = "portrait",
+      page_body_width = page_body_width_portrait,
       table_width = tw(1000),
       col_widths = c("500tw", "50%", "50%"),
       n_cols = 3
@@ -96,7 +98,7 @@ test_that("The `col_width_resolver_rtf()` function works correctly", {
 
   expect_identical(
     col_width_resolver_rtf(
-      page_orientation = "portrait",
+      page_body_width = page_body_width_portrait,
       table_width = tw(1000),
       col_widths = c("500tw", "10%", "10%"),
       n_cols = 3
@@ -106,7 +108,7 @@ test_that("The `col_width_resolver_rtf()` function works correctly", {
 
   expect_identical(
     col_width_resolver_rtf(
-      page_orientation = "portrait",
+      page_body_width = page_body_width_portrait,
       table_width = tw(1000),
       col_widths = c("500tw", "10%", "10%", "", ""),
       n_cols = 5
@@ -116,7 +118,7 @@ test_that("The `col_width_resolver_rtf()` function works correctly", {
 
   expect_identical(
     col_width_resolver_rtf(
-      page_orientation = "portrait",
+      page_body_width = page_body_width_portrait,
       table_width = tw(1000),
       col_widths = c("500tw", "25%", "25%", "", ""),
       n_cols = 5
@@ -126,7 +128,7 @@ test_that("The `col_width_resolver_rtf()` function works correctly", {
 
   expect_identical(
     col_width_resolver_rtf(
-      page_orientation = "portrait",
+      page_body_width = page_body_width_portrait,
       table_width = tw(100),
       col_widths = rep_len("50tw", 3),
       n_cols = 3
@@ -136,7 +138,7 @@ test_that("The `col_width_resolver_rtf()` function works correctly", {
 
   expect_identical(
     col_width_resolver_rtf(
-      page_orientation = "portrait",
+      page_body_width = page_body_width_portrait,
       table_width = tw(100),
       col_widths = rep_len("0%", 3),
       n_cols = 3
