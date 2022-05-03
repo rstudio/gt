@@ -154,6 +154,35 @@ resolve_cells_column_spanners <- function(data,
   cells_resolved
 }
 
+#' Resolve the row group values in the `cells_row_groups` object once it
+#' has access to the `data` object
+#'
+#' @param data A table object that is created using the `gt()` function.
+#' @param object The list object created by the `cells_row_groups()`
+#'   function.
+#' @noRd
+resolve_cells_row_groups <- function(data, object) {
+
+  row_groups <- dt_row_groups_get(data = data)
+
+  resolved_row_groups_idx <-
+    resolve_vector_i(
+      expr = !!object$groups,
+      vector = row_groups,
+      item_label = "group"
+    )
+
+  resolved_row_groups <- row_groups[resolved_row_groups_idx]
+
+  # Create a list object
+  cells_resolved <- list(groups = resolved_row_groups)
+
+  # Apply the `columns_cells_resolved` class
+  class(cells_resolved) <- "row_groups_resolved"
+
+  cells_resolved
+}
+
 #' @param expr An unquoted expression that follows **tidyselect** semantics
 #' @param data A gt object or data frame or tibble
 #' @return Character vector

@@ -2,10 +2,10 @@
 #'
 #' @inheritParams cols_align
 #' @param locations The cell or set of cells to be associated with the text
-#'   transformation. Only the [cells_body()], [cells_stub()], and
-#'   [cells_column_labels()] helper functions can be used here. We can enclose
-#'   several of these calls within a `list()` if we wish to make the
-#'   transformation happen at different locations.
+#'   transformation. Only the [cells_body()], [cells_stub()],
+#'   [cells_column_labels()], and [cells_row_groups()] helper functions can be
+#'   used here. We can enclose several of these calls within a `list()` if we
+#'   wish to make the transformation happen at different locations.
 #' @param fn The function to use for text transformation.
 #'
 #' @return An object of class `gt_tbl`.
@@ -76,9 +76,11 @@ text_transform_at_location <- function(loc, data, fn = identity) {
   UseMethod("text_transform_at_location")
 }
 
-text_transform_at_location.cells_body <- function(loc,
-                                                  data,
-                                                  fn = identity) {
+text_transform_at_location.cells_body <- function(
+    loc,
+    data,
+    fn = identity
+) {
 
   body <- dt_body_get(data = data)
 
@@ -101,9 +103,11 @@ text_transform_at_location.cells_body <- function(loc,
   data
 }
 
-text_transform_at_location.cells_stub <- function(loc,
-                                                  data,
-                                                  fn = identity) {
+text_transform_at_location.cells_stub <- function(
+    loc,
+    data,
+    fn = identity
+) {
 
   body <- dt_body_get(data = data)
 
@@ -121,9 +125,12 @@ text_transform_at_location.cells_stub <- function(loc,
   data
 }
 
-text_transform_at_location.cells_column_labels <- function(loc,
-                                                           data,
-                                                           fn = identity) {
+text_transform_at_location.cells_column_labels <- function(
+    loc,
+    data,
+    fn = identity
+) {
+
   boxh <- dt_boxhead_get(data = data)
 
   loc <- to_output_location(loc = loc, data = data)
@@ -141,6 +148,34 @@ text_transform_at_location.cells_column_labels <- function(loc,
           var = col,
           column_label = list(column_label_edited)
         )
+    }
+  }
+
+  data
+}
+
+text_transform_at_location.cells_row_groups <- function(
+    loc,
+    data,
+    fn = identity
+) {
+
+  row_group_vec <- dt_row_groups_get(data = data)
+
+  loc <- to_output_location(loc = loc, data = data)
+
+  for (group in loc$groups) {
+
+    stub_df <- dt_stub_df_get(data = data)
+
+    if (group %in% row_group_vec) {
+
+      if (is.na(group)) next
+
+      stub_df[!is.na(stub_df$group_id) & stub_df$group_id == group, ][["group_label"]] <-
+        as.list(fn(stub_df[!is.na(stub_df$group_id) & stub_df$group_id == group, ][["group_label"]]))
+
+      data <- dt_stub_df_set(data = data, stub_df = stub_df)
     }
   }
 

@@ -10,10 +10,10 @@ text_transform(data, locations, fn)
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{locations}{The cell or set of cells to be associated with the text
-transformation. Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_stub]{cells_stub()}}, and
-\code{\link[=cells_column_labels]{cells_column_labels()}} helper functions can be used here. We can enclose
-several of these calls within a \code{list()} if we wish to make the
-transformation happen at different locations.}
+transformation. Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_stub]{cells_stub()}},
+\code{\link[=cells_column_labels]{cells_column_labels()}}, and \code{\link[=cells_row_groups]{cells_row_groups()}} helper functions can be
+used here. We can enclose several of these calls within a \code{list()} if we
+wish to make the transformation happen at different locations.}
 
 \item{fn}{The function to use for text transformation.}
 }
