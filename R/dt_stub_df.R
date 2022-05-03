@@ -55,7 +55,7 @@ dt_stub_df_init <- function(data,
 
     # Place the `group_labels` values into `stub_df$group_id`
     stub_df[["group_id"]] <- row_group_ids
-    stub_df[["group_label"]] <- lapply(row_group_ids, FUN = `[`)
+    stub_df[["group_label"]] <- as.list(row_group_ids)
 
     data <- data %>% dt_boxhead_set_row_group(vars = groupname_col)
   }
