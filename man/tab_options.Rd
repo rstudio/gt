@@ -397,6 +397,18 @@ pages. By default, this is \code{FALSE}.}
 migrate all table footer content (this includes footnotes and source notes)
 to the page footer. This page footer content will repeat across pages. By
 default, this is \code{FALSE}.}
+
+\item{page.height.portrait, page.height.landscape, page.width.portrait, page.width.landscape}{The page height and width in the portrait and landscape orientations (set
+in \code{page.orientation}). This is for RTF table output and the default values
+(in twips) are \code{15840}, \code{12240}, \code{12240}, and \code{15840}.}
+
+\item{page.margin.left, page.margin.right, page.margin.top, page.margin.bottom}{For RTF table output, these options correspond to the left, right, top, and
+bottom page margins. The default values for each of these is \code{1440} twips
+(corresponds to 1-inch margins).}
+
+\item{page.header.height, page.footer.height}{The heights of the page header
+and footer for RTF table outputs. Default values for both are \code{720} twips
+(a half-inch height).}
 }
 \value{
 An object of class \code{gt_tbl}.
