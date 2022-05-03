@@ -972,9 +972,12 @@ create_heading_component_rtf <- function(data) {
         rtf_key("line"),
         rtf_font(
           font_size = 10,
+          bold = TRUE,
+          italic = TRUE,
           rtf_raw(heading$subtitle)
         ),
         rtf_font(
+          bold = TRUE,
           italic = TRUE,
           super_sub = "super",
           font_size = 10,
@@ -987,14 +990,57 @@ create_heading_component_rtf <- function(data) {
   }
 
   # Generate the RTF lines that will generate content in the table preheader
-  if (dt_heading_has_preheader(data = data)) {
+  if (
+    dt_heading_has_preheader(data = data) &&
+    !dt_options_get_value(data, option = "page_numbering")
+    ) {
+
+    # Case where one or more preheader lines are present
 
     preheader_component <-
-    rtf_raw(
-      "\n",
-      paste0("{\\f0\\fs20 ", heading$preheader, "}\\par\n"),
-      "\n"
-    )
+      rtf_raw(
+        "\n",
+        paste0("{\\f0\\fs20 ", heading$preheader, "}\\par\n"),
+        "\n"
+      )
+
+  } else if (
+    !dt_heading_has_preheader(data = data) &&
+    dt_options_get_value(data, option = "page_numbering")
+  ) {
+
+    # Case where page numbering is present (but no preheader lines)
+
+    preheader_component <-
+      rtf_raw(
+        "\n",
+        "\\ql\\tx7245\\tqr\\tx12360\n",
+        "\\pmartabqr ",
+        "{\\f0\\fs20\\b\\i Page }{\\f0\\fs20\\b\\i \\field\\flddirty{\\*\\fldinst{  PAGE   ",
+        "\\\\* MERGEFORMAT }}}{\\f0\\fs20\\b\\i  of }{\\f0\\fs20\\b\\i \\field{\\*\\fldinst{ NUMPAGES}}}\n",
+        "\\par\\ql\n"
+      )
+
+  } else if (
+    dt_heading_has_preheader(data = data) &&
+    dt_options_get_value(data, option = "page_numbering")
+  ) {
+
+    # Case where one or more preheader lines and page numbering are present
+
+    preheader_length <- length(heading$preheader)
+
+    preheader_component <-
+      rtf_raw(
+        "\n",
+        "\\ql\\tx7245\\tqr\\tx12360\n",
+        paste0("{\\f0\\fs20\\b\\i ", heading$preheader[1], "}\\pmartabqr "),
+        "{\\f0\\fs20\\b\\i Page }{\\f0\\fs20\\b\\i \\field\\flddirty{\\*\\fldinst{  PAGE   ",
+        "\\\\* MERGEFORMAT }}}{\\f0\\fs20\\b\\i  of }{\\f0\\fs20\\b\\i \\field{\\*\\fldinst{ NUMPAGES}}}\n",
+        "\\par\\ql\n",
+        if (preheader_length > 1) paste0("{\\f0\\fs20\\b\\i ", heading$preheader[2:preheader_length], "}\\par\n") else "",
+        "\n"
+      )
 
   } else {
     preheader_component <- NULL
@@ -1004,6 +1050,8 @@ create_heading_component_rtf <- function(data) {
     rtf_tbl_cell(
       c(
         rtf_font(
+          bold = TRUE,
+          italic = TRUE,
           font_size = 10,
           rtf_raw(heading$title)
         ),
@@ -1131,6 +1179,7 @@ create_columns_component_rtf <- function(data) {
         rtf_tbl_cell(
           rtf_font(
             font_size = 10,
+            bold = TRUE,
             rtf_raw(headings_labels[x])
           ),
           h_align = col_alignment[x],
@@ -1195,6 +1244,7 @@ create_columns_component_rtf <- function(data) {
             rtf_tbl_cell(
               rtf_font(
                 font_size = 10,
+                bold = TRUE,
                 rtf_raw(spanners_row[x])
               ),
               h_align = "center",
@@ -1219,6 +1269,7 @@ create_columns_component_rtf <- function(data) {
                 rtf_tbl_cell(
                   rtf_font(
                     font_size = 10,
+                    bold = TRUE,
                     rtf_raw("")
                   ),
                   h_align = "center"#,
