@@ -13,25 +13,25 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx1337
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx2674
-      \intbl {\f0 {\f0\fs20\b col_1}}\cell
+      \intbl {\f0 {\f0\fs20 col_1}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx4011
-      \intbl {\f0 {\f0\fs20\b col_2}}\cell
+      \intbl {\f0 {\f0\fs20 col_2}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx5348
-      \intbl {\f0 {\f0\fs20\b col_3}}\cell
+      \intbl {\f0 {\f0\fs20 col_3}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx6685
-      \intbl {\f0 {\f0\fs20\b col_4}}\cell
+      \intbl {\f0 {\f0\fs20 col_4}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx8022
-      \intbl {\f0 {\f0\fs20\b row}}\cell
+      \intbl {\f0 {\f0\fs20 row}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx9359
-      \intbl {\f0 {\f0\fs20\b group}}\cell
+      \intbl {\f0 {\f0\fs20 group}}\cell
       
       \row
       
@@ -327,22 +327,22 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx1560
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx3120
-      \intbl {\f0 {\f0\fs20\b col_1}}\cell
+      \intbl {\f0 {\f0\fs20 col_1}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx4680
-      \intbl {\f0 {\f0\fs20\b col_2}}\cell
+      \intbl {\f0 {\f0\fs20 col_2}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx6240
-      \intbl {\f0 {\f0\fs20\b col_3}}\cell
+      \intbl {\f0 {\f0\fs20 col_3}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx7800
-      \intbl {\f0 {\f0\fs20\b col_4}}\cell
+      \intbl {\f0 {\f0\fs20 col_4}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx9360
-      \intbl {\f0 {\f0\fs20\b group}}\cell
+      \intbl {\f0 {\f0\fs20 group}}\cell
       
       \row
       
@@ -605,22 +605,22 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx1560
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx3120
-      \intbl {\f0 {\f0\fs20\b col_1}}\cell
+      \intbl {\f0 {\f0\fs20 col_1}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx4680
-      \intbl {\f0 {\f0\fs20\b col_2}}\cell
+      \intbl {\f0 {\f0\fs20 col_2}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx6240
-      \intbl {\f0 {\f0\fs20\b col_3}}\cell
+      \intbl {\f0 {\f0\fs20 col_3}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx7800
-      \intbl {\f0 {\f0\fs20\b col_4}}\cell
+      \intbl {\f0 {\f0\fs20 col_4}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx9360
-      \intbl {\f0 {\f0\fs20\b row}}\cell
+      \intbl {\f0 {\f0\fs20 row}}\cell
       
       \row
       
@@ -897,19 +897,19 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx1872
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx3744
-      \intbl {\f0 {\f0\fs20\b col_1}}\cell
+      \intbl {\f0 {\f0\fs20 col_1}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx5616
-      \intbl {\f0 {\f0\fs20\b col_2}}\cell
+      \intbl {\f0 {\f0\fs20 col_2}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx7488
-      \intbl {\f0 {\f0\fs20\b col_3}}\cell
+      \intbl {\f0 {\f0\fs20 col_3}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx9360
-      \intbl {\f0 {\f0\fs20\b col_4}}\cell
+      \intbl {\f0 {\f0\fs20 col_4}}\cell
       
       \row
       
@@ -1153,22 +1153,22 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx1560
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx3120
-      \intbl {\f0 {\f0\fs20\b col_1}}\cell
+      \intbl {\f0 {\f0\fs20 col_1}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx4680
-      \intbl {\f0 {\f0\fs20\b col_2}}\cell
+      \intbl {\f0 {\f0\fs20 col_2}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx6240
-      \intbl {\f0 {\f0\fs20\b col_3}}\cell
+      \intbl {\f0 {\f0\fs20 col_3}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx7800
-      \intbl {\f0 {\f0\fs20\b col_4}}\cell
+      \intbl {\f0 {\f0\fs20 col_4}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx9360
-      \intbl {\f0 {\f0\fs20\b row}}\cell
+      \intbl {\f0 {\f0\fs20 row}}\cell
       
       \row
       
@@ -1445,19 +1445,19 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx1872
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx3744
-      \intbl {\f0 {\f0\fs20\b col_1}}\cell
+      \intbl {\f0 {\f0\fs20 col_1}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx5616
-      \intbl {\f0 {\f0\fs20\b col_2}}\cell
+      \intbl {\f0 {\f0\fs20 col_2}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx7488
-      \intbl {\f0 {\f0\fs20\b col_3}}\cell
+      \intbl {\f0 {\f0\fs20 col_3}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx9360
-      \intbl {\f0 {\f0\fs20\b col_4}}\cell
+      \intbl {\f0 {\f0\fs20 col_4}}\cell
       
       \row
       
@@ -1701,22 +1701,22 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx1560
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx3120
-      \intbl {\f0 {\f0\fs20\b col_1}}\cell
+      \intbl {\f0 {\f0\fs20 col_1}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx4680
-      \intbl {\f0 {\f0\fs20\b col_2}}\cell
+      \intbl {\f0 {\f0\fs20 col_2}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx6240
-      \intbl {\f0 {\f0\fs20\b col_3}}\cell
+      \intbl {\f0 {\f0\fs20 col_3}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx7800
-      \intbl {\f0 {\f0\fs20\b col_4}}\cell
+      \intbl {\f0 {\f0\fs20 col_4}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx9360
-      \intbl {\f0 {\f0\fs20\b row}}\cell
+      \intbl {\f0 {\f0\fs20 row}}\cell
       
       \row
       
@@ -1993,22 +1993,22 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx1560
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx3120
-      \intbl {\f0 {\f0\fs20\b col_1}}\cell
+      \intbl {\f0 {\f0\fs20 col_1}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx4680
-      \intbl {\f0 {\f0\fs20\b col_2}}\cell
+      \intbl {\f0 {\f0\fs20 col_2}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx6240
-      \intbl {\f0 {\f0\fs20\b col_3}}\cell
+      \intbl {\f0 {\f0\fs20 col_3}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx7800
-      \intbl {\f0 {\f0\fs20\b col_4}}\cell
+      \intbl {\f0 {\f0\fs20 col_4}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx9360
-      \intbl {\f0 {\f0\fs20\b row}}\cell
+      \intbl {\f0 {\f0\fs20 row}}\cell
       
       \row
       
@@ -2285,22 +2285,22 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx1560
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx3120
-      \intbl {\f0 {\f0\fs20\b col_1}}\cell
+      \intbl {\f0 {\f0\fs20 col_1}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx4680
-      \intbl {\f0 {\f0\fs20\b col_2}}\cell
+      \intbl {\f0 {\f0\fs20 col_2}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx6240
-      \intbl {\f0 {\f0\fs20\b col_3}}\cell
+      \intbl {\f0 {\f0\fs20 col_3}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx7800
-      \intbl {\f0 {\f0\fs20\b col_4}}\cell
+      \intbl {\f0 {\f0\fs20 col_4}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx9360
-      \intbl {\f0 {\f0\fs20\b row}}\cell
+      \intbl {\f0 {\f0\fs20 row}}\cell
       
       \row
       
@@ -2577,19 +2577,19 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx1872
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx3744
-      \intbl {\f0 {\f0\fs20\b col_1}}\cell
+      \intbl {\f0 {\f0\fs20 col_1}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx5616
-      \intbl {\f0 {\f0\fs20\b col_2}}\cell
+      \intbl {\f0 {\f0\fs20 col_2}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx7488
-      \intbl {\f0 {\f0\fs20\b col_3}}\cell
+      \intbl {\f0 {\f0\fs20 col_3}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx9360
-      \intbl {\f0 {\f0\fs20\b col_4}}\cell
+      \intbl {\f0 {\f0\fs20 col_4}}\cell
       
       \row
       

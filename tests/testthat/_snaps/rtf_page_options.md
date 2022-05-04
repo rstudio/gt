@@ -13,32 +13,32 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1\clmgf \cellx4680
-      \intbl {\f0 {\f0\fs20\b label}}\cell
+      \intbl {\f0 {\f0\fs20 label}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1\clmrg \cellx7020
-      \intbl {\f0 {\f0\fs20\b label}}\cell
+      \intbl {\f0 {\f0\fs20 label}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx2340
-      \intbl {\f0 {\f0\fs20\b num}}\cell
+      \intbl {\f0 {\f0\fs20 num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx4680
-      \intbl {\f0 {\f0\fs20\b char}}\cell
+      \intbl {\f0 {\f0\fs20 char}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx7020
-      \intbl {\f0 {\f0\fs20\b fctr}}\cell
+      \intbl {\f0 {\f0\fs20 fctr}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx9360
-      \intbl {\f0 {\f0\fs20\b date}}\cell
+      \intbl {\f0 {\f0\fs20 date}}\cell
       
       \row
       
@@ -89,39 +89,39 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0\cf1 {\f0\fs20\b\i The Table Title} {\f0\fs20\i\super } \line {\f0\fs20\b\i The Table Subtitle} {\f0\fs20\b\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20 The Table Title} {\f0\fs20\i\super } \line {\f0\fs20 The Table Subtitle} {\f0\fs20\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2\clmgf \cellx4680
-      \intbl {\f0 {\f0\fs20\b label}}\cell
+      \intbl {\f0 {\f0\fs20 label}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2\clmrg \cellx7020
-      \intbl {\f0 {\f0\fs20\b label}}\cell
+      \intbl {\f0 {\f0\fs20 label}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx2340
-      \intbl {\f0 {\f0\fs20\b num}}\cell
+      \intbl {\f0 {\f0\fs20 num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx4680
-      \intbl {\f0 {\f0\fs20\b char}}\cell
+      \intbl {\f0 {\f0\fs20 char}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx7020
-      \intbl {\f0 {\f0\fs20\b fctr}}\cell
+      \intbl {\f0 {\f0\fs20 fctr}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx9360
-      \intbl {\f0 {\f0\fs20\b date}}\cell
+      \intbl {\f0 {\f0\fs20 date}}\cell
       
       \row
       
@@ -175,39 +175,39 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0\cf1 {\f0\fs20\b\i The Table Title} {\f0\fs20\i\super } \line {\f0\fs20\b\i The Table Subtitle} {\f0\fs20\b\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20 The Table Title} {\f0\fs20\i\super } \line {\f0\fs20 The Table Subtitle} {\f0\fs20\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2\clmgf \cellx4680
-      \intbl {\f0 {\f0\fs20\b label}}\cell
+      \intbl {\f0 {\f0\fs20 label}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2\clmrg \cellx7020
-      \intbl {\f0 {\f0\fs20\b label}}\cell
+      \intbl {\f0 {\f0\fs20 label}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx2340
-      \intbl {\f0 {\f0\fs20\b num}}\cell
+      \intbl {\f0 {\f0\fs20 num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx4680
-      \intbl {\f0 {\f0\fs20\b char}}\cell
+      \intbl {\f0 {\f0\fs20 char}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx7020
-      \intbl {\f0 {\f0\fs20\b fctr}}\cell
+      \intbl {\f0 {\f0\fs20 fctr}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx9360
-      \intbl {\f0 {\f0\fs20\b date}}\cell
+      \intbl {\f0 {\f0\fs20 date}}\cell
       
       \row
       
@@ -264,39 +264,39 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0\cf1 {\f0\fs20\b\i The Table Title} {\f0\fs20\i\super } \line {\f0\fs20\b\i The Table Subtitle} {\f0\fs20\b\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20 The Table Title} {\f0\fs20\i\super } \line {\f0\fs20 The Table Subtitle} {\f0\fs20\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2\clmgf \cellx4680
-      \intbl {\f0 {\f0\fs20\b label}}\cell
+      \intbl {\f0 {\f0\fs20 label}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2\clmrg \cellx7020
-      \intbl {\f0 {\f0\fs20\b label}}\cell
+      \intbl {\f0 {\f0\fs20 label}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx2340
-      \intbl {\f0 {\f0\fs20\b num}}\cell
+      \intbl {\f0 {\f0\fs20 num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx4680
-      \intbl {\f0 {\f0\fs20\b char}}\cell
+      \intbl {\f0 {\f0\fs20 char}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx7020
-      \intbl {\f0 {\f0\fs20\b fctr}}\cell
+      \intbl {\f0 {\f0\fs20 fctr}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx9360
-      \intbl {\f0 {\f0\fs20\b date}}\cell
+      \intbl {\f0 {\f0\fs20 date}}\cell
       
       \row
       
@@ -355,39 +355,39 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0\cf1 {\f0\fs20\b\i The Table Title} {\f0\fs20\i\super } \line {\f0\fs20\b\i The Table Subtitle} {\f0\fs20\b\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20 The Table Title} {\f0\fs20\i\super } \line {\f0\fs20 The Table Subtitle} {\f0\fs20\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2\clmgf \cellx4680
-      \intbl {\f0 {\f0\fs20\b label}}\cell
+      \intbl {\f0 {\f0\fs20 label}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2\clmrg \cellx7020
-      \intbl {\f0 {\f0\fs20\b label}}\cell
+      \intbl {\f0 {\f0\fs20 label}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx2340
-      \intbl {\f0 {\f0\fs20\b num}}\cell
+      \intbl {\f0 {\f0\fs20 num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx4680
-      \intbl {\f0 {\f0\fs20\b char}}\cell
+      \intbl {\f0 {\f0\fs20 char}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx7020
-      \intbl {\f0 {\f0\fs20\b fctr}}\cell
+      \intbl {\f0 {\f0\fs20 fctr}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx9360
-      \intbl {\f0 {\f0\fs20\b date}}\cell
+      \intbl {\f0 {\f0\fs20 date}}\cell
       
       \row
       
@@ -431,46 +431,46 @@
       
       
       \ql\tx7245\tqr\tx12360
-      {\f0\fs20\b\i Protocol: Number #1}\pmartabqr {\f0\fs20\b\i Page }{\f0\fs20\b\i \field\flddirty{\*\fldinst{  PAGE   \\* MERGEFORMAT }}}{\f0\fs20\b\i  of }{\f0\fs20\b\i \field{\*\fldinst{ NUMPAGES}}}
+      {\f0\fs20 Protocol: Number #1}\pmartabqr {\f0\fs20\i Page }{\f0\fs20\i \field\flddirty{\*\fldinst{  PAGE   \\* MERGEFORMAT }}}{\f0\fs20\i  of }{\f0\fs20\i \field{\*\fldinst{ NUMPAGES}}}
       \par\ql
-      {\f0\fs20\b\i Population: Subset #1}\par
+      {\f0\fs20 Population: Subset #1}\par
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0\cf1 {\f0\fs20\b\i The Table Title} {\f0\fs20\i\super } \line {\f0\fs20\b\i The Table Subtitle} {\f0\fs20\b\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20 The Table Title} {\f0\fs20\i\super } \line {\f0\fs20 The Table Subtitle} {\f0\fs20\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2\clmgf \cellx4680
-      \intbl {\f0 {\f0\fs20\b label}}\cell
+      \intbl {\f0 {\f0\fs20 label}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2\clmrg \cellx7020
-      \intbl {\f0 {\f0\fs20\b label}}\cell
+      \intbl {\f0 {\f0\fs20 label}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx2340
-      \intbl {\f0 {\f0\fs20\b num}}\cell
+      \intbl {\f0 {\f0\fs20 num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx4680
-      \intbl {\f0 {\f0\fs20\b char}}\cell
+      \intbl {\f0 {\f0\fs20 char}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx7020
-      \intbl {\f0 {\f0\fs20\b fctr}}\cell
+      \intbl {\f0 {\f0\fs20 fctr}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx9360
-      \intbl {\f0 {\f0\fs20\b date}}\cell
+      \intbl {\f0 {\f0\fs20 date}}\cell
       
       \row
       
@@ -514,46 +514,46 @@
       
       
       \ql\tx7245\tqr\tx12360
-      {\f0\fs20\b\i Protocol: Number #1}\pmartabqr {\f0\fs20\b\i Page }{\f0\fs20\b\i \field\flddirty{\*\fldinst{  PAGE   \\* MERGEFORMAT }}}{\f0\fs20\b\i  of }{\f0\fs20\b\i \field{\*\fldinst{ NUMPAGES}}}
+      {\f0\fs20 Protocol: Number #1}\pmartabqr {\f0\fs20\i Page }{\f0\fs20\i \field\flddirty{\*\fldinst{  PAGE   \\* MERGEFORMAT }}}{\f0\fs20\i  of }{\f0\fs20\i \field{\*\fldinst{ NUMPAGES}}}
       \par\ql
-      {\f0\fs20\b\i Population: Subset #1}\par
+      {\f0\fs20 Population: Subset #1}\par
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0\cf1 {\f0\fs20\b\i The Table Title} {\f0\fs20\i\super } \line {\f0\fs20\b\i The Table Subtitle} {\f0\fs20\b\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20 The Table Title} {\f0\fs20\i\super } \line {\f0\fs20 The Table Subtitle} {\f0\fs20\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2\clmgf \cellx4680
-      \intbl {\f0 {\f0\fs20\b label}}\cell
+      \intbl {\f0 {\f0\fs20 label}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2\clmrg \cellx7020
-      \intbl {\f0 {\f0\fs20\b label}}\cell
+      \intbl {\f0 {\f0\fs20 label}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx2340
-      \intbl {\f0 {\f0\fs20\b num}}\cell
+      \intbl {\f0 {\f0\fs20 num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx4680
-      \intbl {\f0 {\f0\fs20\b char}}\cell
+      \intbl {\f0 {\f0\fs20 char}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx7020
-      \intbl {\f0 {\f0\fs20\b fctr}}\cell
+      \intbl {\f0 {\f0\fs20 fctr}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx9360
-      \intbl {\f0 {\f0\fs20\b date}}\cell
+      \intbl {\f0 {\f0\fs20 date}}\cell
       
       \row
       
@@ -607,44 +607,44 @@
       
       
       \ql\tx7245\tqr\tx12360
-      \pmartabqr {\f0\fs20\b\i Page }{\f0\fs20\b\i \field\flddirty{\*\fldinst{  PAGE   \\* MERGEFORMAT }}}{\f0\fs20\b\i  of }{\f0\fs20\b\i \field{\*\fldinst{ NUMPAGES}}}
+      \pmartabqr {\f0\fs20\i Page }{\f0\fs20\i \field\flddirty{\*\fldinst{  PAGE   \\* MERGEFORMAT }}}{\f0\fs20\i  of }{\f0\fs20\i \field{\*\fldinst{ NUMPAGES}}}
       \par\ql
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0\cf1 {\f0\fs20\b\i The Table Title} {\f0\fs20\i\super } \line {\f0\fs20\b\i The Table Subtitle} {\f0\fs20\b\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20 The Table Title} {\f0\fs20\i\super } \line {\f0\fs20 The Table Subtitle} {\f0\fs20\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx2340
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2\clmgf \cellx4680
-      \intbl {\f0 {\f0\fs20\b label}}\cell
+      \intbl {\f0 {\f0\fs20 label}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2\clmrg \cellx7020
-      \intbl {\f0 {\f0\fs20\b label}}\cell
+      \intbl {\f0 {\f0\fs20 label}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx2340
-      \intbl {\f0 {\f0\fs20\b num}}\cell
+      \intbl {\f0 {\f0\fs20 num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx4680
-      \intbl {\f0 {\f0\fs20\b char}}\cell
+      \intbl {\f0 {\f0\fs20 char}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx7020
-      \intbl {\f0 {\f0\fs20\b fctr}}\cell
+      \intbl {\f0 {\f0\fs20 fctr}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx9360
-      \intbl {\f0 {\f0\fs20\b date}}\cell
+      \intbl {\f0 {\f0\fs20 date}}\cell
       
       \row
       
@@ -695,39 +695,39 @@
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx12960
-      \intbl {\f0\cf1 {\f0\fs20\b\i The Table Title} {\f0\fs20\i\super } \line {\f0\fs20\b\i The Table Subtitle} {\f0\fs20\b\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20 The Table Title} {\f0\fs20\i\super } \line {\f0\fs20 The Table Subtitle} {\f0\fs20\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3240
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2\clmgf \cellx6480
-      \intbl {\f0 {\f0\fs20\b label}}\cell
+      \intbl {\f0 {\f0\fs20 label}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2\clmrg \cellx9720
-      \intbl {\f0 {\f0\fs20\b label}}\cell
+      \intbl {\f0 {\f0\fs20 label}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx12960
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx3240
-      \intbl {\f0 {\f0\fs20\b num}}\cell
+      \intbl {\f0 {\f0\fs20 num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx6480
-      \intbl {\f0 {\f0\fs20\b char}}\cell
+      \intbl {\f0 {\f0\fs20 char}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx9720
-      \intbl {\f0 {\f0\fs20\b fctr}}\cell
+      \intbl {\f0 {\f0\fs20 fctr}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx12960
-      \intbl {\f0 {\f0\fs20\b date}}\cell
+      \intbl {\f0 {\f0\fs20 date}}\cell
       
       \row
       
@@ -771,46 +771,46 @@
       
       
       \ql\tx7245\tqr\tx12360
-      {\f0\fs20\b\i Protocol: Number #1}\pmartabqr {\f0\fs20\b\i Page }{\f0\fs20\b\i \field\flddirty{\*\fldinst{  PAGE   \\* MERGEFORMAT }}}{\f0\fs20\b\i  of }{\f0\fs20\b\i \field{\*\fldinst{ NUMPAGES}}}
+      {\f0\fs20 Protocol: Number #1}\pmartabqr {\f0\fs20\i Page }{\f0\fs20\i \field\flddirty{\*\fldinst{  PAGE   \\* MERGEFORMAT }}}{\f0\fs20\i  of }{\f0\fs20\i \field{\*\fldinst{ NUMPAGES}}}
       \par\ql
-      {\f0\fs20\b\i Population: Subset #1}\par
+      {\f0\fs20 Population: Subset #1}\par
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx12960
-      \intbl {\f0\cf1 {\f0\fs20\b\i The Table Title} {\f0\fs20\i\super } \line {\f0\fs20\b\i The Table Subtitle} {\f0\fs20\b\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20 The Table Title} {\f0\fs20\i\super } \line {\f0\fs20 The Table Subtitle} {\f0\fs20\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3240
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2\clmgf \cellx6480
-      \intbl {\f0 {\f0\fs20\b label}}\cell
+      \intbl {\f0 {\f0\fs20 label}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2\clmrg \cellx9720
-      \intbl {\f0 {\f0\fs20\b label}}\cell
+      \intbl {\f0 {\f0\fs20 label}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx12960
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx3240
-      \intbl {\f0 {\f0\fs20\b num}}\cell
+      \intbl {\f0 {\f0\fs20 num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx6480
-      \intbl {\f0 {\f0\fs20\b char}}\cell
+      \intbl {\f0 {\f0\fs20 char}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx9720
-      \intbl {\f0 {\f0\fs20\b fctr}}\cell
+      \intbl {\f0 {\f0\fs20 fctr}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx12960
-      \intbl {\f0 {\f0\fs20\b date}}\cell
+      \intbl {\f0 {\f0\fs20 date}}\cell
       
       \row
       
@@ -854,46 +854,46 @@
       
       
       \ql\tx7245\tqr\tx12360
-      {\f0\fs20\b\i Protocol: Number #1}\pmartabqr {\f0\fs20\b\i Page }{\f0\fs20\b\i \field\flddirty{\*\fldinst{  PAGE   \\* MERGEFORMAT }}}{\f0\fs20\b\i  of }{\f0\fs20\b\i \field{\*\fldinst{ NUMPAGES}}}
+      {\f0\fs20 Protocol: Number #1}\pmartabqr {\f0\fs20\i Page }{\f0\fs20\i \field\flddirty{\*\fldinst{  PAGE   \\* MERGEFORMAT }}}{\f0\fs20\i  of }{\f0\fs20\i \field{\*\fldinst{ NUMPAGES}}}
       \par\ql
-      {\f0\fs20\b\i Population: Subset #1}\par
+      {\f0\fs20 Population: Subset #1}\par
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx12960
-      \intbl {\f0\cf1 {\f0\fs20\b\i The Table Title} {\f0\fs20\i\super } \line {\f0\fs20\b\i The Table Subtitle} {\f0\fs20\b\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20 The Table Title} {\f0\fs20\i\super } \line {\f0\fs20 The Table Subtitle} {\f0\fs20\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3240
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2\clmgf \cellx6480
-      \intbl {\f0 {\f0\fs20\b label}}\cell
+      \intbl {\f0 {\f0\fs20 label}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2\clmrg \cellx9720
-      \intbl {\f0 {\f0\fs20\b label}}\cell
+      \intbl {\f0 {\f0\fs20 label}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx12960
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx3240
-      \intbl {\f0 {\f0\fs20\b num}}\cell
+      \intbl {\f0 {\f0\fs20 num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx6480
-      \intbl {\f0 {\f0\fs20\b char}}\cell
+      \intbl {\f0 {\f0\fs20 char}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx9720
-      \intbl {\f0 {\f0\fs20\b fctr}}\cell
+      \intbl {\f0 {\f0\fs20 fctr}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx12960
-      \intbl {\f0 {\f0\fs20\b date}}\cell
+      \intbl {\f0 {\f0\fs20 date}}\cell
       
       \row
       
@@ -947,44 +947,44 @@
       
       
       \ql\tx7245\tqr\tx12360
-      \pmartabqr {\f0\fs20\b\i Page }{\f0\fs20\b\i \field\flddirty{\*\fldinst{  PAGE   \\* MERGEFORMAT }}}{\f0\fs20\b\i  of }{\f0\fs20\b\i \field{\*\fldinst{ NUMPAGES}}}
+      \pmartabqr {\f0\fs20\i Page }{\f0\fs20\i \field\flddirty{\*\fldinst{  PAGE   \\* MERGEFORMAT }}}{\f0\fs20\i  of }{\f0\fs20\i \field{\*\fldinst{ NUMPAGES}}}
       \par\ql
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx12960
-      \intbl {\f0\cf1 {\f0\fs20\b\i The Table Title} {\f0\fs20\i\super } \line {\f0\fs20\b\i The Table Subtitle} {\f0\fs20\b\i\super }}\cell
+      \intbl {\f0\cf1 {\f0\fs20 The Table Title} {\f0\fs20\i\super } \line {\f0\fs20 The Table Subtitle} {\f0\fs20\i\super }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3240
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2\clmgf \cellx6480
-      \intbl {\f0 {\f0\fs20\b label}}\cell
+      \intbl {\f0 {\f0\fs20 label}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2\clmrg \cellx9720
-      \intbl {\f0 {\f0\fs20\b label}}\cell
+      \intbl {\f0 {\f0\fs20 label}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx12960
-      \intbl {\f0 {\f0\fs20\b }}\cell
+      \intbl {\f0 {\f0\fs20 }}\cell
       
       \row
       
       \trowd\trrh0\trhdr
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx3240
-      \intbl {\f0 {\f0\fs20\b num}}\cell
+      \intbl {\f0 {\f0\fs20 num}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx6480
-      \intbl {\f0 {\f0\fs20\b char}}\cell
+      \intbl {\f0 {\f0\fs20 char}}\cell
       
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx9720
-      \intbl {\f0 {\f0\fs20\b fctr}}\cell
+      \intbl {\f0 {\f0\fs20 fctr}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf2 \cellx12960
-      \intbl {\f0 {\f0\fs20\b date}}\cell
+      \intbl {\f0 {\f0\fs20 date}}\cell
       
       \row
       

@@ -1890,10 +1890,9 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   migrate all table footer content (this includes footnotes and source notes)
 #'   to the page footer. This page footer content will repeat across pages. By
 #'   default, this is `FALSE`.
-#' @param page.height.portrait,page.height.landscape,page.width.portrait,page.width.landscape
-#'   The page height and width in the portrait and landscape orientations (set
-#'   in `page.orientation`). This is for RTF table output and the default values
-#'   (in twips) are `15840`, `12240`, `12240`, and `15840`.
+#' @param page.width,page.height The page width and height in the standard
+#'   portrait orientation. This is for RTF table output and the default
+#'   values (in inches) are `8.5` and `11`.
 #' @param page.margin.left,page.margin.right,page.margin.top,page.margin.bottom
 #'   For RTF table output, these options correspond to the left, right, top, and
 #'   bottom page margins. The default values for each of these is `1440` twips
@@ -2174,10 +2173,8 @@ tab_options <- function(
     page.numbering = NULL,
     page.header.use_tbl_headings = NULL,
     page.footer.use_tbl_notes = NULL,
-    page.height.portrait = NULL,
-    page.height.landscape = NULL,
-    page.width.portrait = NULL,
-    page.width.landscape = NULL,
+    page.width = NULL,
+    page.height = NULL,
     page.margin.left = NULL,
     page.margin.right = NULL,
     page.margin.top = NULL,

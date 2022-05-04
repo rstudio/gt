@@ -14,6 +14,13 @@ rtf_paste0 <- function(..., collapse = NULL) {
   rtf_raw(do.call(paste0, args))
 }
 
+# Conversion factors from absolute width units to twips (`tw`)
+twip_factors <-
+  c(
+    `in` = 1440, `pt` = 20, `px` = 15,
+    `cm` = 566.9291, `mm` = 56.69291, `tw` = 1
+  )
+
 rtf_key <- function(word, val = NULL, space = FALSE) {
   rtf_raw(paste0("\\", word, val %||% "", if (space) " "))
 }
@@ -249,14 +256,25 @@ rtf_file <- function(
   #
 
   page_orientation <- dt_options_get_value(data = data, option = "page_orientation")
-  page_width_val <- dt_options_get_value(data = data, option = paste0("page_width_", page_orientation))
-  page_height_val <- dt_options_get_value(data = data, option = paste0("page_height_", page_orientation))
-  page_margin_left_val <- dt_options_get_value(data = data, option = "page_margin_left")
-  page_margin_right_val <- dt_options_get_value(data = data, option = "page_margin_right")
-  page_margin_top_val <- dt_options_get_value(data = data, option = "page_margin_top")
-  page_margin_bottom_val <- dt_options_get_value(data = data, option = "page_margin_bottom")
-  page_header_height_val <- dt_options_get_value(data = data, option = "page_header_height")
-  page_footer_height_val <- dt_options_get_value(data = data, option = "page_footer_height")
+
+  page_width_val <-
+    dt_options_get_page_value_in_twips(
+      data = data,
+      option = if (page_orientation == "portrait") "page_width" else "page_height"
+    )
+
+  page_height_val <-
+    dt_options_get_page_value_in_twips(
+      data = data,
+      option = if (page_orientation == "portrait") "page_height" else "page_width"
+    )
+
+  page_margin_left_val <- dt_options_get_page_value_in_twips(data = data, option = "page_margin_left")
+  page_margin_right_val <- dt_options_get_page_value_in_twips(data = data, option = "page_margin_right")
+  page_margin_top_val <- dt_options_get_page_value_in_twips(data = data, option = "page_margin_top")
+  page_margin_bottom_val <- dt_options_get_page_value_in_twips(data = data, option = "page_margin_bottom")
+  page_header_height_val <- dt_options_get_page_value_in_twips(data = data, option = "page_header_height")
+  page_footer_height_val <- dt_options_get_page_value_in_twips(data = data, option = "page_footer_height")
 
   page_information <-
     rtf_raw(
@@ -274,21 +292,6 @@ rtf_file <- function(
       "\\fs20\n"
     )
 
-  # # Include RTF code to express page numbering if `page_numbering != "none"`
-  # if (page_numbering != "none") {
-  #
-  #   document <-
-  #     paste(
-  #       document,
-  #       "\n\n",
-  #       rtf_raw(
-  #         "{",
-  #         if (page_numbering == "footer") "\\footer" else "\\header",
-  #         "\\qr{\n{\\field{\\*\\fldinst {PAGE}}{\\fldrslt {Refresh >F9<}}}}\\par}"
-  #       )
-  #     )
-  # }
-
   rtf_file <-
     list(
       header = header,
@@ -304,12 +307,7 @@ rtf_table <- function(rows) {
   rtf_raw(paste(unlist(rows), collapse = ""))
 }
 
-# Conversion factors from absolute width units to twips (`tw`)
-twip_factors <-
-  c(
-    `in` = 1440, `pt` = 20, `px` = 15,
-    `cm` = 566.9291, `mm` = 56.69291, `tw` = 1
-  )
+
 
 # Input: character vector of any length. Valid values are numbers with
 # suffix of in, pt, px, cm, mm, tw; you can also include `""`.
@@ -894,6 +892,12 @@ as_rtf_string <- function(x) {
   )
 }
 
+rtf_header_page_numbering <-
+  paste0(
+    "{\\f0\\fs20\\i Page }{\\f0\\fs20\\i \\field\\flddirty{\\*\\fldinst{  PAGE   ",
+    "\\\\* MERGEFORMAT }}}{\\f0\\fs20\\i  of }{\\f0\\fs20\\i \\field{\\*\\fldinst{ NUMPAGES}}}\n"
+  )
+
 #
 # Table Header
 #
@@ -972,12 +976,9 @@ create_heading_component_rtf <- function(data) {
         rtf_key("line"),
         rtf_font(
           font_size = 10,
-          bold = TRUE,
-          italic = TRUE,
           rtf_raw(heading$subtitle)
         ),
         rtf_font(
-          bold = TRUE,
           italic = TRUE,
           super_sub = "super",
           font_size = 10,
@@ -1016,8 +1017,7 @@ create_heading_component_rtf <- function(data) {
         "\n",
         "\\ql\\tx7245\\tqr\\tx12360\n",
         "\\pmartabqr ",
-        "{\\f0\\fs20\\b\\i Page }{\\f0\\fs20\\b\\i \\field\\flddirty{\\*\\fldinst{  PAGE   ",
-        "\\\\* MERGEFORMAT }}}{\\f0\\fs20\\b\\i  of }{\\f0\\fs20\\b\\i \\field{\\*\\fldinst{ NUMPAGES}}}\n",
+        rtf_header_page_numbering,
         "\\par\\ql\n"
       )
 
@@ -1034,11 +1034,10 @@ create_heading_component_rtf <- function(data) {
       rtf_raw(
         "\n",
         "\\ql\\tx7245\\tqr\\tx12360\n",
-        paste0("{\\f0\\fs20\\b\\i ", heading$preheader[1], "}\\pmartabqr "),
-        "{\\f0\\fs20\\b\\i Page }{\\f0\\fs20\\b\\i \\field\\flddirty{\\*\\fldinst{  PAGE   ",
-        "\\\\* MERGEFORMAT }}}{\\f0\\fs20\\b\\i  of }{\\f0\\fs20\\b\\i \\field{\\*\\fldinst{ NUMPAGES}}}\n",
+        paste0("{\\f0\\fs20 ", heading$preheader[1], "}\\pmartabqr "),
+        rtf_header_page_numbering,
         "\\par\\ql\n",
-        if (preheader_length > 1) paste0("{\\f0\\fs20\\b\\i ", heading$preheader[2:preheader_length], "}\\par\n") else "",
+        if (preheader_length > 1) paste0("{\\f0\\fs20 ", heading$preheader[2:preheader_length], "}\\par\n") else "",
         "\n"
       )
 
@@ -1050,8 +1049,6 @@ create_heading_component_rtf <- function(data) {
     rtf_tbl_cell(
       c(
         rtf_font(
-          bold = TRUE,
-          italic = TRUE,
           font_size = 10,
           rtf_raw(heading$title)
         ),
@@ -1179,7 +1176,6 @@ create_columns_component_rtf <- function(data) {
         rtf_tbl_cell(
           rtf_font(
             font_size = 10,
-            bold = TRUE,
             rtf_raw(headings_labels[x])
           ),
           h_align = col_alignment[x],
@@ -1244,7 +1240,6 @@ create_columns_component_rtf <- function(data) {
             rtf_tbl_cell(
               rtf_font(
                 font_size = 10,
-                bold = TRUE,
                 rtf_raw(spanners_row[x])
               ),
               h_align = "center",
@@ -1269,7 +1264,6 @@ create_columns_component_rtf <- function(data) {
                 rtf_tbl_cell(
                   rtf_font(
                     font_size = 10,
-                    bold = TRUE,
                     rtf_raw("")
                   ),
                   h_align = "center"#,
@@ -1903,12 +1897,29 @@ generate_notes_list <- function(
   )
 }
 
+dt_options_get_page_value_in_twips <- function(data, option) {
+
+  value <- dt_options_get_value(data = data, option = option)
+
+  if (!is.numeric(value)) {
+    stop("Value from option must be a numeric length value.")
+  }
+
+  value * twip_factors[names(twip_factors) == "in"]
+}
+
 get_page_body_width <- function(data) {
 
   page_orientation <- dt_options_get_value(data = data, option = "page_orientation")
-  page_width_val <- dt_options_get_value(data = data, option = paste0("page_width_", page_orientation))
-  page_margin_left_val <- dt_options_get_value(data = data, option = "page_margin_left")
-  page_margin_right_val <- dt_options_get_value(data = data, option = "page_margin_right")
+
+  page_width_val <-
+    dt_options_get_page_value_in_twips(
+      data = data,
+      option = if (page_orientation == "portrait") "page_width" else "page_height"
+    )
+
+  page_margin_left_val <- dt_options_get_page_value_in_twips(data = data, option = "page_margin_left")
+  page_margin_right_val <- dt_options_get_page_value_in_twips(data = data, option = "page_margin_right")
 
   page_width_val - page_margin_left_val - page_margin_right_val
 }

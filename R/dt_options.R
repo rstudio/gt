@@ -205,14 +205,12 @@ dt_options_tbl <-
     "page_numbering",                    FALSE,  "page",             "logical", FALSE,
     "page_header_use_tbl_headings",      FALSE,  "page",             "logical", FALSE,
     "page_footer_use_tbl_notes",         FALSE,  "page",             "logical", FALSE,
-    "page_height_portrait",              FALSE,  "page",             "value",   15840L,
-    "page_height_landscape",             FALSE,  "page",             "value",   12240L,
-    "page_width_portrait",               FALSE,  "page",             "value",   12240L,
-    "page_width_landscape",              FALSE,  "page",             "value",   15840L,
-    "page_margin_left",                  FALSE,  "page",             "value",   1440L,
-    "page_margin_right",                 FALSE,  "page",             "value",   1440L,
-    "page_margin_top",                   FALSE,  "page",             "value",   1440L,
-    "page_margin_bottom",                FALSE,  "page",             "value",   1440L,
-    "page_header_height",                FALSE,  "page",             "value",   720L,
-    "page_footer_height",                FALSE,  "page",             "value",   720L,
+    "page_width",                        FALSE,  "page",             "value",   8.5, # 12240 twips
+    "page_height",                       FALSE,  "page",             "value",   11,  # 15840 twips
+    "page_margin_left",                  FALSE,  "page",             "value",   1.0, # 1440 twips
+    "page_margin_right",                 FALSE,  "page",             "value",   1.0, # 1440 twips
+    "page_margin_top",                   FALSE,  "page",             "value",   1.0, # 1440 twips
+    "page_margin_bottom",                FALSE,  "page",             "value",   1.0, # 1440 twips
+    "page_header_height",                FALSE,  "page",             "value",   0.5, # 720 twips
+    "page_footer_height",                FALSE,  "page",             "value",   0.5, # 720 twips
   )[-1, ]
