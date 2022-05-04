@@ -145,7 +145,6 @@ as the domain.\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplac
 }
 
 \section{Function ID}{
-
 3-22
 }
 
