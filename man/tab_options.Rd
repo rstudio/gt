@@ -156,7 +156,19 @@ tab_options(
   source_notes.sep = NULL,
   row.striping.background_color = NULL,
   row.striping.include_stub = NULL,
-  row.striping.include_table_body = NULL
+  row.striping.include_table_body = NULL,
+  page.orientation = NULL,
+  page.numbering = NULL,
+  page.header.use_tbl_headings = NULL,
+  page.footer.use_tbl_notes = NULL,
+  page.width = NULL,
+  page.height = NULL,
+  page.margin.left = NULL,
+  page.margin.right = NULL,
+  page.margin.top = NULL,
+  page.margin.bottom = NULL,
+  page.header.height = NULL,
+  page.footer.height = NULL
 )
 }
 \arguments{
@@ -366,6 +378,33 @@ when striping rows.}
 
 \item{row.striping.include_table_body}{An option for whether to include the
 table body when striping rows.}
+
+\item{page.orientation}{For RTF output, this provides an two options for page
+orientation: \code{"portrait"} (the default) and \code{"landscape"}.}
+
+\item{page.numbering}{Within RTF output, should page numbering be displayed?
+By default, this is set to \code{FALSE} but if \code{TRUE} then page numbering text
+will be added to the document header.}
+
+\item{page.header.use_tbl_headings}{If \code{TRUE} then RTF output tables will
+migrate all table headings (including the table title and all column
+labels) to the page header. This page header content will repeat across
+pages. By default, this is \code{FALSE}.}
+
+\item{page.footer.use_tbl_notes}{If \code{TRUE} then RTF output tables will
+migrate all table footer content (this includes footnotes and source notes)
+to the page footer. This page footer content will repeat across pages. By
+default, this is \code{FALSE}.}
+
+\item{page.width, page.height}{The page width and height in the standard
+portrait orientation. This is for RTF table output and the default
+values (in inches) are \verb{8.5in} and \verb{11.0in}.}
+
+\item{page.margin.left, page.margin.right, page.margin.top, page.margin.bottom}{For RTF table output, these options correspond to the left, right, top, and
+bottom page margins. The default values for each of these is \verb{1.0in}.}
+
+\item{page.header.height, page.footer.height}{The heights of the page header
+and footer for RTF table outputs. Default values for both are \verb{0.5in}.}
 }
 \value{
 An object of class \code{gt_tbl}.

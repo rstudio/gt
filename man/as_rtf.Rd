@@ -4,14 +4,10 @@
 \alias{as_rtf}
 \title{Output a \strong{gt} object as RTF}
 \usage{
-as_rtf(data, page_numbering = c("none", "footer", "header"))
+as_rtf(data)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{gt()} function.}
-
-\item{page_numbering}{An option to include page numbering in the RTF
-document. The page numbering text can either be in the document \code{"footer"}
-or \code{"header"}. By default, page numbering is not active (\code{"none"}).}
 }
 \description{
 Get the RTF content from a \code{gt_tbl} object as as a single-element character
