@@ -1897,15 +1897,14 @@ generate_notes_list <- function(
   )
 }
 
+# Convert value given in different length units to twips
 dt_options_get_page_value_in_twips <- function(data, option) {
 
   value <- dt_options_get_value(data = data, option = option)
 
-  if (!is.numeric(value)) {
-    stop("Value from option must be a numeric length value.")
-  }
+  tw_tbl <- abs_len_to_twips(parse_length_str(value))
 
-  value * twip_factors[names(twip_factors) == "in"]
+  tw_tbl$value
 }
 
 get_page_body_width <- function(data) {

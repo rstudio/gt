@@ -398,15 +398,13 @@ default, this is \code{FALSE}.}
 
 \item{page.width, page.height}{The page width and height in the standard
 portrait orientation. This is for RTF table output and the default
-values (in inches) are \code{8.5} and \code{11}.}
+values (in inches) are \verb{8.5in} and \verb{11.0in}.}
 
 \item{page.margin.left, page.margin.right, page.margin.top, page.margin.bottom}{For RTF table output, these options correspond to the left, right, top, and
-bottom page margins. The default values for each of these is \code{1440} twips
-(corresponds to 1-inch margins).}
+bottom page margins. The default values for each of these is \verb{1.0in}.}
 
 \item{page.header.height, page.footer.height}{The heights of the page header
-and footer for RTF table outputs. Default values for both are \code{720} twips
-(a half-inch height).}
+and footer for RTF table outputs. Default values for both are \verb{0.5in}.}
 }
 \value{
 An object of class \code{gt_tbl}.

@@ -1892,14 +1892,12 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   default, this is `FALSE`.
 #' @param page.width,page.height The page width and height in the standard
 #'   portrait orientation. This is for RTF table output and the default
-#'   values (in inches) are `8.5` and `11`.
+#'   values (in inches) are `8.5in` and `11.0in`.
 #' @param page.margin.left,page.margin.right,page.margin.top,page.margin.bottom
 #'   For RTF table output, these options correspond to the left, right, top, and
-#'   bottom page margins. The default values for each of these is `1440` twips
-#'   (corresponds to 1-inch margins).
+#'   bottom page margins. The default values for each of these is `1.0in`.
 #' @param page.header.height,page.footer.height The heights of the page header
-#'   and footer for RTF table outputs. Default values for both are `720` twips
-#'   (a half-inch height).
+#'   and footer for RTF table outputs. Default values for both are `0.5in`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
