@@ -255,16 +255,13 @@ gt_save_rtf <- function(
     data,
     filename,
     path = NULL,
-    ...,
-    page_numbering = c("none", "footer", "header")
+    ...
 ) {
-
-  page_numbering <- match.arg(page_numbering)
 
   filename <- gtsave_filename(path = path, filename = filename)
 
   data %>%
-    as_rtf(page_numbering = page_numbering) %>%
+    as_rtf() %>%
     writeLines(con = filename)
 }
 
@@ -461,9 +458,6 @@ as_latex <- function(data) {
 #' file that can be opened by RTF readers.
 #'
 #' @param data A table object that is created using the `gt()` function.
-#' @param page_numbering An option to include page numbering in the RTF
-#'   document. The page numbering text can either be in the document `"footer"`
-#'   or `"header"`. By default, page numbering is not active (`"none"`).
 #'
 #' @section Examples:
 #'
@@ -488,15 +482,23 @@ as_latex <- function(data) {
 #' 13-4
 #'
 #' @export
-as_rtf <- function(
-    data,
-    page_numbering = c("none", "footer", "header")
-) {
-
-  page_numbering <- match.arg(page_numbering)
+as_rtf <- function(data) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  if (dt_options_get_value(data = data, option = "page_numbering")) {
+
+    data <-
+      dt_options_set_value(
+        data = data,
+        option = "page_header_use_tbl_headings",
+        value = TRUE
+      )
+  }
+
+  page_header_use_tbl_headings <-
+    dt_options_get_value(data = data, option = "page_header_use_tbl_headings")
 
   # Build all table data objects through a common pipeline
   data <- build_data(data = data, context = "rtf")
@@ -515,21 +517,27 @@ as_rtf <- function(
   # Create the footer component
   footer_component <- create_footer_component_rtf(data = data)
 
+  # Create the page footer component
+  page_footer_component <- create_page_footer_component_rtf(data = data)
+
   # Compose the RTF table
   rtf_table <-
     as_rtf_string(
       rtf_file(
+        data = data,
         document = {
           rtf_table(
             rows = c(
+              if (page_header_use_tbl_headings) rtf_raw("{\\header\n\n") else "",
               heading_component,
               columns_component,
+              if (page_header_use_tbl_headings) rtf_raw("}\n\n") else "",
               body_component,
-              footer_component
+              footer_component,
+              page_footer_component
             )
           )
-        },
-        page_numbering = page_numbering
+        }
       )
     )
 
