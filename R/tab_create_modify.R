@@ -12,6 +12,8 @@
 #'   the table subtitle. We can elect to use the [md()] and [html()] helper
 #'   functions to style the text as Markdown or to retain HTML elements in the
 #'   text.
+#' @param preheader Optional preheader content that is rendered above the table.
+#'   Can be supplied as a vector of text.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -43,16 +45,18 @@
 tab_header <- function(
     data,
     title,
-    subtitle = NULL
+    subtitle = NULL,
+    preheader = NULL
 ) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  dt_heading_title_subtitle(
+  dt_set_heading_components(
     data = data,
     title = title,
-    subtitle = subtitle
+    subtitle = subtitle,
+    preheader = preheader
   )
 }
 
@@ -1873,6 +1877,27 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   when striping rows.
 #' @param row.striping.include_table_body An option for whether to include the
 #'   table body when striping rows.
+#' @param page.orientation For RTF output, this provides an two options for page
+#'   orientation: `"portrait"` (the default) and `"landscape"`.
+#' @param page.numbering Within RTF output, should page numbering be displayed?
+#'   By default, this is set to `FALSE` but if `TRUE` then page numbering text
+#'   will be added to the document header.
+#' @param page.header.use_tbl_headings If `TRUE` then RTF output tables will
+#'   migrate all table headings (including the table title and all column
+#'   labels) to the page header. This page header content will repeat across
+#'   pages. By default, this is `FALSE`.
+#' @param page.footer.use_tbl_notes If `TRUE` then RTF output tables will
+#'   migrate all table footer content (this includes footnotes and source notes)
+#'   to the page footer. This page footer content will repeat across pages. By
+#'   default, this is `FALSE`.
+#' @param page.width,page.height The page width and height in the standard
+#'   portrait orientation. This is for RTF table output and the default
+#'   values (in inches) are `8.5in` and `11.0in`.
+#' @param page.margin.left,page.margin.right,page.margin.top,page.margin.bottom
+#'   For RTF table output, these options correspond to the left, right, top, and
+#'   bottom page margins. The default values for each of these is `1.0in`.
+#' @param page.header.height,page.footer.height The heights of the page header
+#'   and footer for RTF table outputs. Default values for both are `0.5in`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -2141,7 +2166,19 @@ tab_options <- function(
     source_notes.sep = NULL,
     row.striping.background_color = NULL,
     row.striping.include_stub = NULL,
-    row.striping.include_table_body = NULL
+    row.striping.include_table_body = NULL,
+    page.orientation = NULL,
+    page.numbering = NULL,
+    page.header.use_tbl_headings = NULL,
+    page.footer.use_tbl_notes = NULL,
+    page.width = NULL,
+    page.height = NULL,
+    page.margin.left = NULL,
+    page.margin.right = NULL,
+    page.margin.top = NULL,
+    page.margin.bottom = NULL,
+    page.header.height = NULL,
+    page.footer.height = NULL
 ) {
 
   # TODO: add helper functions to divide the options into those by location
