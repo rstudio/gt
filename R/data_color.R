@@ -65,15 +65,14 @@
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # library(paletteer)
+#' @section Examples:
 #'
-#' # Use `countrypops` to create a gt table;
-#' # Apply a color scale to the `population`
-#' # column with `scales::col_numeric`,
-#' # four supplied colors, and a domain
-#' tab_1 <-
-#'   countrypops %>%
+#' Use [`countrypops`] to create a **gt** table. Apply a color scale to the
+#' `population` column with `scales::col_numeric`, four supplied colors, and a
+#' domain.
+#'
+#' ```r
+#' countrypops %>%
 #'   dplyr::filter(country_name == "Mongolia") %>%
 #'   dplyr::select(-contains("code")) %>%
 #'   tail(10) %>%
@@ -81,57 +80,66 @@
 #'   data_color(
 #'     columns = population,
 #'     colors = scales::col_numeric(
-#'       palette = c(
-#'         "red", "orange", "green", "blue"),
-#'       domain = c(0.2E7, 0.4E7))
+#'       palette = c("red", "orange", "green", "blue"),
+#'       domain = c(0.2E7, 0.4E7)
+#'     )
 #'   )
+#' ```
 #'
-#' # Use `pizzaplace` to create a gt table;
-#' # Apply colors from the `red_material`
-#' # palette (in the `ggsci` pkg but
-#' # more easily gotten from the `paletteer`
-#' # package, info at `info_paletteer()`) to
-#' # to `sold` and `income` columns; setting
-#' # the `domain` of `scales::col_numeric()`
-#' # to `NULL` will use the bounds of the
-#' # available data as the domain
-#' tab_2 <-
-#'   pizzaplace %>%
-#'   dplyr::filter(
-#'     type %in% c("chicken", "supreme")) %>%
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_data_color_1.png")`
+#' }}
+#'
+#' Use [`pizzaplace`] to create a **gt** table. Apply colors from the
+#' `"ggsci::red_material"` palette (it's in the **ggsci** R package but more
+#' easily gotten from the **paletteer** package, info at [info_paletteer()]) to
+#' to `sold` and `income` columns. Setting the `domain` of
+#' `scales::col_numeric()` to `NULL` will use the bounds of the available data
+#' as the domain.
+#'
+#' ```r
+#' pizzaplace %>%
+#'   dplyr::filter(type %in% c("chicken", "supreme")) %>%
 #'   dplyr::group_by(type, size) %>%
 #'   dplyr::summarize(
 #'     sold = dplyr::n(),
-#'     income = sum(price)
+#'     income = sum(price),
+#'     .groups = "drop"
 #'   ) %>%
-#'   gt(rowname_col = "size") %>%
+#'   gt(
+#'     rowname_col = "size",
+#'     groupname_col = "type"
+#'   ) %>%
 #'   data_color(
 #'     columns = c(sold, income),
 #'     colors = scales::col_numeric(
 #'       palette = paletteer::paletteer_d(
 #'         palette = "ggsci::red_material"
-#'         ) %>% as.character(),
+#'       ) %>%
+#'         as.character(),
 #'       domain = NULL
-#'       )
+#'     )
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_data_color_1.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_data_color_2.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_data_color_2.png")`
+#' }}
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-21
+#' 3-18
 #'
 #' @import rlang
 #' @export
-data_color <- function(data,
-                       columns,
-                       colors,
-                       alpha = NULL,
-                       apply_to = c("fill", "text"),
-                       autocolor_text = TRUE) {
+data_color <- function(
+    data,
+    columns,
+    colors,
+    alpha = NULL,
+    apply_to = c("fill", "text"),
+    autocolor_text = TRUE
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -335,9 +343,11 @@ expand_short_hex <- function(colors) {
 #' output is a single color value in #RRGGBB hexadecimal format
 #'
 #' @noRd
-ideal_fgnd_color <- function(bgnd_color,
-                             light = "#FFFFFF",
-                             dark = "#000000") {
+ideal_fgnd_color <- function(
+    bgnd_color,
+    light = "#FFFFFF",
+    dark = "#000000"
+) {
 
   # Normalize color to hexadecimal color if it is in the 'rgba()' string format
   bgnd_color <- rgba_to_hex(colors = bgnd_color)
@@ -555,4 +565,3 @@ check_named_colors <- function(named_colors) {
     )
   }
 }
-

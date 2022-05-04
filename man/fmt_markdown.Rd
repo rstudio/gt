@@ -102,6 +102,7 @@ Other Format Data:
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_fraction}()},
 \code{\link{fmt_integer}()},
+\code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},

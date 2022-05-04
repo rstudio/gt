@@ -67,7 +67,7 @@ Use \code{\link{sza}} to create a \strong{gt} table, adding three footnotes. Cal
   ) \%>\%
   gt(rowname_col = "tst") \%>\%
   tab_spanner_delim(delim = ".") \%>\%
-  fmt_missing(
+  sub_missing(
     columns = everything(),
     missing_text = "90+"
   ) \%>\%
@@ -99,54 +99,6 @@ Use \code{\link{sza}} to create a \strong{gt} table, adding three footnotes. Cal
 9-1
 }
 
-<<<<<<< HEAD
-\examples{
-# Use `sza` to create a gt table,
-# adding three footnotes; call
-# `opt_footnote_marks()` to specify
-# which footnote marks to use
-tab_1 <-
-  sza \%>\%
-    dplyr::filter(latitude == 30) \%>\%
-    dplyr::group_by(tst) \%>\%
-    dplyr::summarize(
-      SZA.Max = if (
-        all(is.na(sza))) {
-        NA
-      } else {
-        max(sza, na.rm = TRUE)
-      },
-      SZA.Min = if (
-        all(is.na(sza))) {
-        NA
-      } else {
-        min(sza, na.rm = TRUE)
-      },
-      .groups = "drop"
-    ) \%>\%
-    gt(rowname_col = "tst") \%>\%
-    tab_spanner_delim(delim = ".") \%>\%
-    sub_missing(missing_text = "90+") \%>\%
-    tab_stubhead(label = "TST") \%>\%
-    tab_footnote(
-      footnote = "True solar time.",
-      locations = cells_stubhead()
-    ) \%>\%
-    tab_footnote(
-      footnote = "Solar zenith angle.",
-      locations = cells_column_spanners(
-        spanners = "SZA.Max"
-      )
-    ) \%>\%
-    tab_footnote(
-      footnote = "The Lowest SZA.",
-      locations = cells_stub(rows = "1200")
-    ) \%>\%
-    opt_footnote_marks(marks = "standard")
-
-}
-=======
->>>>>>> master
 \seealso{
 Other Table Option Functions: 
 \code{\link{opt_align_table_header}()},

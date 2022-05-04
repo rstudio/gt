@@ -25,16 +25,6 @@ Perform targeted text transformation with a function
 }
 \section{Examples}{
 
-<<<<<<< HEAD
-\if{html}{\figure{man_text_transform_1.png}{options: width=100\%}}
-}
-
-\section{Function ID}{
-
-3-20
-}
-=======
->>>>>>> master
 
 Use \code{\link{exibble}} to create a \strong{gt} table. transform the formatted text in the
 \code{num} column using a function supplied to \code{text_transform()} (via the \code{fn}
@@ -79,6 +69,7 @@ Other Format Data:
 \code{\link{fmt_fraction}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
+\code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},

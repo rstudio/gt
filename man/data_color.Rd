@@ -90,29 +90,9 @@ hexadecimal colors.
 \section{Examples}{
 
 
-<<<<<<< HEAD
-\if{html}{\figure{man_data_color_2.png}{options: width=100\%}}
-}
-
-\section{Function ID}{
-
-3-21
-}
-
-\examples{
-# library(paletteer)
-
-# Use `countrypops` to create a gt table;
-# Apply a color scale to the `population`
-# column with `scales::col_numeric`,
-# four supplied colors, and a domain
-tab_1 <-
-  countrypops \%>\%
-=======
 Use \code{\link{countrypops}} to create a \strong{gt} table. Apply a color scale to the
 \code{population} column with \code{scales::col_numeric}, four supplied colors, and a
 domain.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
->>>>>>> master
   dplyr::filter(country_name == "Mongolia") \%>\%
   dplyr::select(-contains("code")) \%>\%
   tail(10) \%>\%
@@ -179,6 +159,7 @@ Other Format Data:
 \code{\link{fmt_fraction}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
+\code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},

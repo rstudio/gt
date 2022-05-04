@@ -12,19 +12,21 @@
 #' @return A character object of class `from_markdown`. It's tagged as being
 #'   Markdown text and it will undergo conversion to HTML.
 #'
-#' @examples
-#' # Use `exibble` to create a gt table;
-#' # when adding a title, use the `md()`
-#' # helper to use Markdown formatting
-#' tab_1 <-
-#'   exibble %>%
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table. When adding a title, use the `md()`
+#' helper to use Markdown formatting.
+#'
+#' ```r
+#' exibble %>%
 #'   dplyr::select(currency, char) %>%
 #'   gt() %>%
-#'   tab_header(
-#'     title = md("Using *Markdown*"))
+#'   tab_header(title = md("Using *Markdown*"))
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_md_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_md_1.png")`
+#' }}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -57,19 +59,21 @@ md <- function(text) {
 #' @return A character object of class `html`. It's tagged as an HTML fragment
 #'   that is not to be sanitized.
 #'
-#' @examples
-#' # Use `exibble` to create a gt table;
-#' # when adding a title, use the `html()`
-#' # helper to use html formatting
-#' tab_1 <-
-#'   exibble %>%
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table. When adding a title, use the
+#' `html()` helper to use HTML formatting.
+#'
+#' ```r
+#' exibble %>%
 #'   dplyr::select(currency, char) %>%
 #'   gt() %>%
-#'   tab_header(
-#'     title = html("<em>HTML</em>"))
+#'   tab_header(title = html("<em>HTML</em>"))
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_html_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_html_1.png")`
+#' }}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -110,20 +114,23 @@ is_rtf <- function(x) {
 #'
 #' @return A character vector with a single value in pixel units.
 #'
-#' @examples
-#' # Use `exibble` to create a gt table;
-#' # use the `px()` helper to define the
-#' # font size for the column labels
-#' tab_1 <-
-#'   exibble %>%
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table. Use the `px()` helper to define the
+#' font size for the column labels.
+#'
+#' ```r
+#' exibble %>%
 #'   gt() %>%
 #'   tab_style(
 #'     style = cell_text(size = px(20)),
 #'     locations = cells_column_labels()
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_px_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_px_1.png")`
+#' }}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -157,20 +164,23 @@ px <- function(x) {
 #'
 #' @return A character vector with a single value in percentage units.
 #'
-#' @examples
-#' # Use `exibble` to create a gt table;
-#' # use the `pct()` helper to define the
-#' # font size for the column labels
-#' tab_1 <-
-#'   exibble %>%
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table. Use the `pct()` helper to define
+#' the font size for the column labels.
+#'
+#' ```r
+#' exibble %>%
 #'   gt() %>%
 #'   tab_style(
 #'     style = cell_text(size = pct(75)),
 #'     locations = cells_column_labels()
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_pct_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_pct_1.png")`
+#' }}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -240,29 +250,27 @@ pct <- function(x) {
 #'
 #' @return A list object of classes `cells_title` and `location_cells`.
 #'
-#' @examples
-#' # Use `sp500` to create a gt table; add
-#' # a header with a title, and then add a
-#' # footnote to the title with `tab_footnote()`
-#' # and `cells_title()` (in `locations`)
-#' tab_1 <-
-#'   sp500 %>%
-#'   dplyr::filter(
-#'     date >= "2015-01-05" &
-#'       date <="2015-01-10"
-#'   ) %>%
-#'   dplyr::select(
-#'     -c(adj_close, volume, high, low)
-#'   ) %>%
+#' @section Examples:
+#'
+#' Use [`sp500`] to create a **gt** table. Add a header with a title, and then
+#' add a footnote to the title with [tab_footnote()] and `cells_title()` (in
+#' `locations`).
+#'
+#' ```r
+#' sp500 %>%
+#'   dplyr::filter(date >= "2015-01-05" & date <="2015-01-10") %>%
+#'   dplyr::select(-c(adj_close, volume, high, low)) %>%
 #'   gt() %>%
 #'   tab_header(title = "S&P 500") %>%
 #'   tab_footnote(
 #'     footnote = "All values in USD.",
 #'     locations = cells_title(groups = "title")
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_cells_title_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cells_title_1.png")`
+#' }}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -348,16 +356,16 @@ cells_title <- function(groups = c("title", "subtitle")) {
 #'
 #' @return A list object with the classes `cells_stubhead` and `location_cells`.
 #'
-#' @examples
-#' # Use `pizzaplace` to create a gt table;
-#' # add a stubhead label and then style it
-#' # with `tab_style()` and `cells_stubhead()`
-#' tab_1 <-
-#'   pizzaplace %>%
+#' @section Examples:
+#'
+#' Use [`pizzaplace`] to create a **gt** table. Add a stubhead label with
+#' [tab_stubhead()] and then style it with [tab_style()] and `cells_stubhead()`.
+#'
+#' ```r
+#' pizzaplace %>%
 #'   dplyr::mutate(month = as.numeric(substr(date, 6, 7))) %>%
 #'   dplyr::group_by(month, type) %>%
-#'   dplyr::summarize(sold = dplyr::n()) %>%
-#'   dplyr::ungroup() %>%
+#'   dplyr::summarize(sold = dplyr::n(), .groups = "drop") %>%
 #'   dplyr::filter(month %in% 1:2) %>%
 #'   gt(rowname_col = "type") %>%
 #'   tab_stubhead(label = "type") %>%
@@ -365,9 +373,11 @@ cells_title <- function(groups = c("title", "subtitle")) {
 #'     style = cell_fill(color = "lightblue"),
 #'     locations = cells_stubhead()
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_cells_stubhead_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cells_stubhead_1.png")`
+#' }}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -439,13 +449,14 @@ cells_stubhead <- function() {
 #' @return A list object with the classes `cells_column_spanners` and
 #' `location_cells`.
 #'
-#' @examples
-#' # Use `exibble` to create a gt table; add a
-#' # spanner column label over three column
-#' # labels and then use `tab_style()` to make
-#' # the spanner label text bold
-#' tab_1 <-
-#'   exibble %>%
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table. Add a spanner column label over
+#' three column labels with [tab_spanner()] and then use [tab_style()] and
+#' `cells_column_spanners()` to make the spanner label text bold.
+#'
+#' ```r
+#' exibble %>%
 #'   dplyr::select(-fctr, -currency, -group) %>%
 #'   gt(rowname_col = "row") %>%
 #'   tab_spanner(
@@ -457,9 +468,11 @@ cells_stubhead <- function() {
 #'     style = cell_text(weight = "bold"),
 #'     locations = cells_column_spanners(spanners = "dt")
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_cells_column_spanners_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cells_column_spanners_1.png")`
+#' }}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -534,13 +547,13 @@ cells_column_spanners <- function(spanners = everything()) {
 #' @return A list object with the classes `cells_column_labels` and
 #'   `location_cells`.
 #'
-#' @examples
-#' # Use `sza` to create a gt table; add a
-#' # header and then add footnotes to the
-#' # column labels with `tab_footnote()` and
-#' # `cells_column_labels()` in `locations`
-#' tab_1 <-
-#'   sza %>%
+#' @section Examples:
+#'
+#' Use [`sza`] to create a **gt** table. Add footnotes to the column labels with
+#' [tab_footnote()] and `cells_column_labels()` in `locations`.
+#'
+#' ```r
+#' sza %>%
 #'   dplyr::filter(
 #'     latitude == 20 & month == "jan" &
 #'       !is.na(sza)
@@ -559,9 +572,11 @@ cells_column_spanners <- function(spanners = everything()) {
 #'       columns = sza
 #'     )
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_cells_column_labels_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cells_column_labels_1.png")`
+#' }}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -638,23 +653,19 @@ cells_column_labels <- function(columns = everything()) {
 #' @return A list object with the classes `cells_row_groups` and
 #'   `location_cells`.
 #'
-#' @examples
-#' # Use `pizzaplace` to create a gt table
-#' # with grouped data; add a summary with the
-#' # `summary_rows()` function and then add a
-#' # footnote to the "peppr_salami" row group
-#' # label with `tab_footnote()` and with
-#' # `cells_row_groups()` in `locations`
-#' tab_1 <-
-#'   pizzaplace %>%
-#'   dplyr::filter(
-#'     name %in% c("soppressata", "peppr_salami")
-#'   ) %>%
+#' @section Examples:
+#'
+#' Use [`pizzaplace`] to create a **gt** table with grouped data. Add a summary
+#' with the [summary_rows()] function and then add a footnote to the
+#' `"peppr_salami"` row group label with [tab_footnote()] and with
+#' `cells_row_groups()` in `locations`.
+#'
+#' ```r
+#' pizzaplace %>%
+#'   dplyr::filter(name %in% c("soppressata", "peppr_salami")) %>%
 #'   dplyr::group_by(name, size) %>%
-#'   dplyr::summarize(
-#'     `Pizzas Sold` = dplyr::n()
-#'   ) %>%
-#'   gt(rowname_col = "size") %>%
+#'   dplyr::summarize(`Pizzas Sold` = dplyr::n(), .groups = "drop") %>%
+#'   gt(rowname_col = "size", groupname_col = "name") %>%
 #'   summary_rows(
 #'     groups = TRUE,
 #'     columns = `Pizzas Sold`,
@@ -667,9 +678,11 @@ cells_column_labels <- function(columns = everything()) {
 #'     footnote = "The Pepper-Salami.",
 #'     cells_row_groups(groups = "peppr_salami")
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_cells_row_groups_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cells_row_groups_1.png")`
+#' }}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -762,16 +775,13 @@ cells_group <- function(groups = TRUE) {
 #'
 #' @return A list object with the classes `cells_stub` and `location_cells`.
 #'
-#' @examples
-#' library(tidyr)
+#' @section Examples:
 #'
-#' # Use `sza` to create a gt table; color
-#' # all of the `month` values in the table
-#' # stub with `tab_style()`, using `cells_stub()`
-#' # in `locations` (`rows = TRUE` targets
-#' # all stub rows)
-#' tab_1 <-
-#'   sza %>%
+#' Use [`sza`] to create a **gt** table. Color all of the `month` values in the
+#' table stub with [tab_style()], using `cells_stub()` in `locations`.
+#'
+#' ```r
+#' sza %>%
 #'   dplyr::filter(latitude == 20 & tst <= "1000") %>%
 #'   dplyr::select(-latitude) %>%
 #'   dplyr::filter(!is.na(sza)) %>%
@@ -785,9 +795,11 @@ cells_group <- function(groups = TRUE) {
 #'       ),
 #'     locations = cells_stub()
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_cells_stub_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cells_stub_1.png")`
+#' }}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -863,14 +875,14 @@ cells_stub <- function(rows = everything()) {
 #'
 #' @return A list object with the classes `cells_body` and `location_cells`.
 #'
-#' @examples
-#' # Use `gtcars` to create a gt table; add
-#' # a footnote that targets a single data cell
-#' # with `tab_footnote()`, using `cells_body()`
-#' # in `locations` (`rows = hp == max(hp)` will
-#' # target a single row in the `hp` column)
-#' tab_1 <-
-#'   gtcars %>%
+#' @section Examples:
+#'
+#' Use [`gtcars`] to create a **gt** table. Add a footnote that targets a single
+#' data cell with [tab_footnote()], using `cells_body()` in `locations`
+#' (`rows = hp == max(hp)` will target a single row in the `hp` column).
+#'
+#' ```r
+#' gtcars %>%
 #'   dplyr::filter(ctry_origin == "United Kingdom") %>%
 #'   dplyr::select(mfr, model, year, hp) %>%
 #'   gt() %>%
@@ -878,12 +890,15 @@ cells_stub <- function(rows = everything()) {
 #'     footnote = "Highest horsepower.",
 #'     locations = cells_body(
 #'       columns = hp,
-#'       rows = hp == max(hp))
+#'       rows = hp == max(hp)
+#'     )
 #'   ) %>%
 #'   opt_footnote_marks(marks = c("*", "+"))
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_cells_body_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cells_body_1.png")`
+#' }}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -891,8 +906,10 @@ cells_stub <- function(rows = everything()) {
 #'
 #' @import rlang
 #' @export
-cells_body <- function(columns = everything(),
-                       rows = everything()) {
+cells_body <- function(
+    columns = everything(),
+    rows = everything()
+) {
 
   # Capture expressions for the `columns` and `rows` arguments
   columns_expr <- rlang::enquo(columns)
@@ -965,21 +982,16 @@ cells_body <- function(columns = everything(),
 #'
 #' @return A list object with the classes `cells_summary` and `location_cells`.
 #'
-#' @examples
-#' # Use `countrypops` to create a gt table; add
-#' # some styling to the summary data cells with
-#' # with `tab_style()`, using `cells_summary()`
-#' # in `locations`
-#' tab_1 <-
-#'   countrypops %>%
-#'   dplyr::filter(
-#'     country_name == "Japan",
-#'     year < 1970) %>%
+#' @section Examples:
+#'
+#' Use [`countrypops`] to create a **gt** table. Add some styling to the summary
+#' data cells with with [tab_style()], using `cells_summary()` in `locations`.
+#'
+#' ```r
+#' countrypops %>%
+#'   dplyr::filter(country_name == "Japan", year < 1970) %>%
 #'   dplyr::select(-contains("country")) %>%
-#'   dplyr::mutate(
-#'     decade = paste0(substr(year, 1, 3), "0s")
-#'   ) %>%
-#'   dplyr::group_by(decade) %>%
+#'   dplyr::mutate(decade = paste0(substr(year, 1, 3), "0s")) %>%
 #'   gt(
 #'     rowname_col = "year",
 #'     groupname_col = "decade"
@@ -999,7 +1011,7 @@ cells_body <- function(columns = everything(),
 #'     style = list(
 #'       cell_text(style = "italic"),
 #'       cell_fill(color = "lightblue")
-#'       ),
+#'     ),
 #'     locations = cells_summary(
 #'       groups = "1960s",
 #'       columns = population,
@@ -1010,16 +1022,18 @@ cells_body <- function(columns = everything(),
 #'     style = list(
 #'       cell_text(style = "italic"),
 #'       cell_fill(color = "lightgreen")
-#'       ),
+#'     ),
 #'     locations = cells_summary(
 #'       groups = "1960s",
 #'       columns = population,
 #'       rows = 2
 #'     )
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_cells_summary_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cells_summary_1.png")`
+#' }}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -1027,9 +1041,11 @@ cells_body <- function(columns = everything(),
 #'
 #' @import rlang
 #' @export
-cells_summary <- function(groups = everything(),
-                          columns = everything(),
-                          rows = everything()) {
+cells_summary <- function(
+    groups = everything(),
+    columns = everything(),
+    rows = everything()
+) {
 
   # Capture expressions for the `groups`,
   # `columns`, and `rows` arguments
@@ -1104,16 +1120,14 @@ cells_summary <- function(groups = everything(),
 #'
 #' @return A list object with the classes `cells_summary` and `location_cells`.
 #'
-#' @examples
-#' # Use `countrypops` to create a gt table; add
-#' # some styling to a grand summary cell with
-#' # with `tab_style()` and `cells_grand_summary()`
-#' tab_1 <-
-#'   countrypops %>%
-#'   dplyr::filter(
-#'     country_name == "Spain",
-#'     year < 1970
-#'   ) %>%
+#' @section Examples:
+#'
+#' Use [`countrypops`] to create a **gt** table. Add some styling to a grand
+#' summary cell with with [tab_style()] and `cells_grand_summary()`.
+#'
+#' ```r
+#' countrypops %>%
+#'   dplyr::filter(country_name == "Spain", year < 1970) %>%
 #'   dplyr::select(-contains("country")) %>%
 #'   gt(rowname_col = "year") %>%
 #'   fmt_number(
@@ -1135,11 +1149,14 @@ cells_summary <- function(groups = everything(),
 #'     ),
 #'     locations = cells_grand_summary(
 #'       columns = population,
-#'       rows = 1)
+#'       rows = 1
+#'     )
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_cells_grand_summary_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cells_grand_summary_1.png")`
+#' }}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -1147,8 +1164,10 @@ cells_summary <- function(groups = everything(),
 #'
 #' @import rlang
 #' @export
-cells_grand_summary <- function(columns = everything(),
-                                rows = everything()) {
+cells_grand_summary <- function(
+    columns = everything(),
+    rows = everything()
+) {
 
   # Capture expressions for the `columns` and `rows` arguments
   columns_expr <- rlang::enquo(columns)
@@ -1221,20 +1240,16 @@ cells_grand_summary <- function(columns = everything(),
 #' @return A list object with the classes `cells_stub_summary` and
 #'   `location_cells`.
 #'
-#' @examples
-#' # Use `countrypops` to create a gt table; add
-#' # some styling to the summary data stub cells
-#' # with `tab_style()` and `cells_stub_summary()`
-#' tab_1 <-
-#'   countrypops %>%
-#'   dplyr::filter(
-#'     country_name == "Japan",
-#'     year < 1970) %>%
+#' @section Examples:
+#'
+#' Use [`countrypops`] to create a **gt** table. Add some styling to the summary
+#' data stub cells with [tab_style()] and `cells_stub_summary()`.
+#'
+#' ```r
+#' countrypops %>%
+#'   dplyr::filter(country_name == "Japan", year < 1970) %>%
 #'   dplyr::select(-contains("country")) %>%
-#'   dplyr::mutate(
-#'     decade = paste0(substr(year, 1, 3), "0s")
-#'   ) %>%
-#'   dplyr::group_by(decade) %>%
+#'   dplyr::mutate(decade = paste0(substr(year, 1, 3), "0s")) %>%
 #'   gt(
 #'     rowname_col = "year",
 #'     groupname_col = "decade"
@@ -1265,9 +1280,11 @@ cells_grand_summary <- function(columns = everything(),
 #'       groups = "1960s"
 #'     )
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_cells_stub_summary_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cells_stub_summary_1.png")`
+#' }}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -1275,8 +1292,10 @@ cells_grand_summary <- function(columns = everything(),
 #'
 #' @import rlang
 #' @export
-cells_stub_summary <- function(groups = everything(),
-                               rows = everything()) {
+cells_stub_summary <- function(
+    groups = everything(),
+    rows = everything()
+) {
 
   # Capture expressions for the `groups` and `rows` arguments
   groups_expr <- rlang::enquo(groups)
@@ -1349,17 +1368,15 @@ cells_stub_summary <- function(groups = everything(),
 #' @return A list object with the classes `cells_stub_grand_summary` and
 #'   `location_cells`.
 #'
-#' @examples
-#' # Use `countrypops` to create a gt table;
-#' # add some styling to a grand summary stub
-#' # cell with with the `tab_style()` and
-#' # `cells_stub_grand_summary()` functions
-#' tab_1 <-
-#'   countrypops %>%
-#'   dplyr::filter(
-#'     country_name == "Spain",
-#'     year < 1970
-#'   ) %>%
+#' @section Examples:
+#'
+#' Use [`countrypops`] to create a **gt** table. Add some styling to a grand
+#' summary stub cell with with the [tab_style()] and
+#' `cells_stub_grand_summary()` functions.
+#'
+#' ```r
+#' countrypops %>%
+#'   dplyr::filter(country_name == "Spain", year < 1970) %>%
 #'   dplyr::select(-contains("country")) %>%
 #'   gt(rowname_col = "year") %>%
 #'   fmt_number(
@@ -1368,9 +1385,7 @@ cells_stub_summary <- function(groups = everything(),
 #'   ) %>%
 #'   grand_summary_rows(
 #'     columns = population,
-#'     fns = list(
-#'       change = ~max(.) - min(.)
-#'     ),
+#'     fns = list(change = ~max(.) - min(.)),
 #'     formatter = fmt_number,
 #'     decimals = 0
 #'   ) %>%
@@ -1378,9 +1393,11 @@ cells_stub_summary <- function(groups = everything(),
 #'     style = cell_text(weight = "bold", transform = "uppercase"),
 #'     locations = cells_stub_grand_summary(rows = "change")
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_cells_stub_grand_summary_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cells_stub_grand_summary_1.png")`
+#' }}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -1455,13 +1472,13 @@ cells_stub_grand_summary <- function(rows = everything()) {
 #' @return A list object with the classes `cells_footnotes` and
 #'   `location_cells`.
 #'
-#' @examples
-#' # Use `sza` to create a gt table; color
-#' # the `sza` column using the `data_color()`
-#' # function, add a footnote and also style
-#' # the footnotes section
-#' tab_1 <-
-#'   sza %>%
+#' @section Examples:
+#'
+#' Use [`sza`] to create a **gt** table. Color the `sza` column using the
+#' `data_color()` function, add a footnote and also style the footnotes section.
+#'
+#' ```r
+#' sza %>%
 #'   dplyr::filter(
 #'     latitude == 20 &
 #'       month == "jan" &
@@ -1478,9 +1495,7 @@ cells_stub_grand_summary <- function(rows = everything()) {
 #'   ) %>%
 #'   tab_footnote(
 #'     footnote = "Color indicates height of sun.",
-#'     locations = cells_column_labels(
-#'       columns = sza
-#'     )
+#'     locations = cells_column_labels(columns = sza)
 #'   ) %>%
 #'   tab_options(table.width = px(320)) %>%
 #'   tab_style(
@@ -1490,9 +1505,11 @@ cells_stub_grand_summary <- function(rows = everything()) {
 #'       ),
 #'     locations = cells_footnotes()
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_cells_footnotes_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cells_footnotes_1.png")`
+#' }}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -1564,18 +1581,17 @@ cells_footnotes <- function() {
 #' @return A list object with the classes `cells_source_notes` and
 #'   `location_cells`.
 #'
-#' @examples
-#' # Use `gtcars` to create a gt table;
-#' # add a source note and style the
-#' # source notes section
-#' tab_1 <-
-#'   gtcars %>%
+#' @section Examples:
+#'
+#' Use [`gtcars`] to create a **gt** table. Add a source note and style the
+#' source notes section.
+#'
+#' ```r
+#' gtcars %>%
 #'   dplyr::select(mfr, model, msrp) %>%
 #'   dplyr::slice(1:5) %>%
 #'   gt() %>%
-#'   tab_source_note(
-#'     source_note = "From edmunds.com"
-#'   ) %>%
+#'   tab_source_note(source_note = "From edmunds.com") %>%
 #'   tab_style(
 #'     style = cell_text(
 #'       color = "#A9A9A9",
@@ -1583,9 +1599,11 @@ cells_footnotes <- function() {
 #'     ),
 #'     locations = cells_source_notes()
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_cells_source_notes_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cells_source_notes_1.png")`
+#' }}
 #'
 #' @family Helper Functions
 #' @section Function ID:
@@ -1633,32 +1651,37 @@ cells_source_notes <- function() {
 #'
 #' @return A list object of class `gt_currency`.
 #'
-#' @examples
-#' # Use `exibble` to create a gt table;
-#' # format the `currency` column to have
-#' # currency values in guilder (a defunct
-#' # Dutch currency)
-#' tab_1 <-
-#'   exibble %>%
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table. Format the `currency` column to
+#' have currency values in guilder (a defunct Dutch currency).
+#'
+#' ```r
+#' exibble %>%
 #'   gt() %>%
 #'   fmt_currency(
 #'     columns = currency,
 #'     currency = currency(
 #'       html = "&fnof;",
-#'       default = "f"),
+#'       default = "f"
+#'     ),
 #'     decimals = 2
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_currency_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_currency_1.png")`
+#' }}
 #'
 #' @family Helper Functions
 #' @section Function ID:
 #' 7-18
 #'
 #' @export
-currency <- function(...,
-                     .list = list2(...)) {
+currency <- function(
+    ...,
+    .list = list2(...)
+) {
 
   # Collect a named list of currencies
   currency_list <- .list
@@ -1745,12 +1768,13 @@ currency <- function(...,
 #'
 #' @return A list object of class `cell_styles`.
 #'
-#' @examples
-#' # Use `exibble` to create a gt table;
-#' # add styles with `tab_style()` and
-#' # the `cell_text()` helper function
-#' tab_1 <-
-#'   exibble %>%
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table. Add styles with [tab_style()] and
+#' the `cell_text()` helper function.
+#'
+#' ```r
+#' exibble %>%
 #'   dplyr::select(num, currency) %>%
 #'   gt() %>%
 #'   fmt_number(
@@ -1761,7 +1785,8 @@ currency <- function(...,
 #'     style = cell_text(weight = "bold"),
 #'     locations = cells_body(
 #'       columns = num,
-#'       rows = num >= 5000)
+#'       rows = num >= 5000
+#'     )
 #'   ) %>%
 #'   tab_style(
 #'     style = cell_text(style = "italic"),
@@ -1770,27 +1795,31 @@ currency <- function(...,
 #'       rows = currency < 100
 #'     )
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_cell_text_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cell_text_1.png")`
+#' }}
 #'
 #' @family Helper Functions
 #' @section Function ID:
 #' 7-19
 #'
 #' @export
-cell_text <- function(color = NULL,
-                      font = NULL,
-                      size = NULL,
-                      align = NULL,
-                      v_align = NULL,
-                      style = NULL,
-                      weight = NULL,
-                      stretch = NULL,
-                      decorate = NULL,
-                      transform = NULL,
-                      whitespace = NULL,
-                      indent = NULL) {
+cell_text <- function(
+    color = NULL,
+    font = NULL,
+    size = NULL,
+    align = NULL,
+    v_align = NULL,
+    style = NULL,
+    weight = NULL,
+    stretch = NULL,
+    decorate = NULL,
+    transform = NULL,
+    whitespace = NULL,
+    indent = NULL
+) {
 
   # Get all assigned values for the functions' arguments
   style_names <- mget(names(formals(cell_text)))
@@ -1914,12 +1943,13 @@ cell_style_to_html.cell_text <- function(style) {
 #'
 #' @return A list object of class `cell_styles`.
 #'
-#' @examples
-#' # Use `exibble` to create a gt table;
-#' # add styles with `tab_style()` and
-#' # the `cell_fill()` helper function
-#' tab_1 <-
-#'   exibble %>%
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table. Add styles with [tab_style()] and
+#' the `cell_fill()` helper function.
+#'
+#' ```r
+#' exibble %>%
 #'   dplyr::select(num, currency) %>%
 #'   gt() %>%
 #'   fmt_number(
@@ -1930,7 +1960,8 @@ cell_style_to_html.cell_text <- function(style) {
 #'     style = cell_fill(color = "lightblue"),
 #'     locations = cells_body(
 #'       columns = num,
-#'       rows = num >= 5000)
+#'       rows = num >= 5000
+#'     )
 #'   ) %>%
 #'   tab_style(
 #'     style = cell_fill(color = "gray85"),
@@ -1939,17 +1970,21 @@ cell_style_to_html.cell_text <- function(style) {
 #'       rows = currency < 100
 #'     )
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_cell_fill_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cell_fill_1.png")`
+#' }}
 #'
 #' @family Helper Functions
 #' @section Function ID:
 #' 7-20
 #'
 #' @export
-cell_fill <- function(color = "#D3D3D3",
-                      alpha = NULL) {
+cell_fill <- function(
+    color = "#D3D3D3",
+    alpha = NULL
+) {
 
   if (length(color) != 1) {
     stop("The length of the `color` vector must be `1`", call. = FALSE)
@@ -2001,72 +2036,81 @@ cell_style_to_html.cell_fill <- function(style) {
 #'
 #' @return A list object of class `cell_styles`.
 #'
-#' @examples
-#' # Add horizontal border lines for
-#' # all table body rows in `exibble`
-#' tab_1 <-
-#'   exibble %>%
-#'     gt() %>%
-#'     tab_options(row.striping.include_table_body = FALSE) %>%
-#'     tab_style(
-#'       style = cell_borders(
+#' @section Examples:
+#'
+#' Add horizontal border lines for all table body rows in [`exibble`] using
+#' [tab_style()] and `cell_borders()`.
+#'
+#' ```r
+#' exibble %>%
+#'   gt() %>%
+#'   tab_options(row.striping.include_table_body = FALSE) %>%
+#'   tab_style(
+#'     style = cell_borders(
+#'       sides = c("top", "bottom"),
+#'       color = "red",
+#'       weight = px(1.5),
+#'       style = "solid"
+#'     ),
+#'     locations = cells_body(
+#'       columns = everything(),
+#'       rows = everything()
+#'     )
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cell_borders_1.png")`
+#' }}
+#'
+#' Incorporate different horizontal and vertical borders at several locations.
+#' This uses multiple `cell_borders()` and [cells_body()] calls within
+#' `list()`s.
+#'
+#' ```r
+#' exibble %>%
+#'   gt() %>%
+#'   tab_style(
+#'     style = list(
+#'       cell_borders(
 #'         sides = c("top", "bottom"),
-#'         color = "#BBBBBB",
-#'         weight = px(1.5),
-#'         style = "solid"
+#'         color = "#FF0000",
+#'         weight = px(2)
 #'       ),
-#'       locations = cells_body(
-#'         columns = everything(),
-#'         rows = everything()
+#'       cell_borders(
+#'         sides = c("left", "right"),
+#'         color = "#0000FF",
+#'         weight = px(2)
+#'       )
+#'     ),
+#'     locations = list(
+#'       cells_body(
+#'         columns = num,
+#'         rows = is.na(num)
+#'       ),
+#'       cells_body(
+#'         columns = currency,
+#'         rows = is.na(currency)
 #'       )
 #'     )
+#'   )
+#' ```
 #'
-#' # Incorporate different horizontal and
-#' # vertical borders at several locations;
-#' # this uses multiple `cell_borders()` and
-#' # `cells_body()` calls within `list()`s
-#' tab_2 <-
-#'   exibble %>%
-#'     gt() %>%
-#'     tab_style(
-#'       style = list(
-#'         cell_borders(
-#'           sides = c("top", "bottom"),
-#'           color = "#FF0000",
-#'           weight = px(2)
-#'         ),
-#'         cell_borders(
-#'           sides = c("left", "right"),
-#'           color = "#0000FF",
-#'           weight = px(2)
-#'         )
-#'       ),
-#'       locations = list(
-#'         cells_body(
-#'           columns = num,
-#'           rows = is.na(num)
-#'         ),
-#'         cells_body(
-#'           columns = currency,
-#'           rows = is.na(currency)
-#'         )
-#'       )
-#'     )
-#'
-#' @section Figures:
-#' \if{html}{\figure{man_cell_borders_1.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_cell_borders_2.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cell_borders_2.png")`
+#' }}
 #'
 #' @family Helper Functions
 #' @section Function ID:
 #' 7-21
 #'
 #' @export
-cell_borders <- function(sides = "all",
-                         color = "#000000",
-                         style = "solid",
-                         weight = px(1)) {
+cell_borders <- function(
+    sides = "all",
+    color = "#000000",
+    style = "solid",
+    weight = px(1)
+) {
 
   if (is.null(weight)) {
     weight <- "0"
@@ -2163,7 +2207,7 @@ cell_style_structure <- function(name, obj, subclass = name) {
   style_obj
 }
 
-#' Helper function for specifying a font from the Google Fonts service
+#' Helper function for specifying a font from the *Google Fonts* service
 #'
 #' @description
 #' The `google_font()` helper function can be used wherever a font name should
@@ -2172,22 +2216,19 @@ cell_style_structure <- function(name, obj, subclass = name) {
 #' of [cell_text()] (used with [tab_style()]). To get a helpful listing of fonts
 #' that work well in tables, use the [info_google_fonts()] function.
 #'
-#' @param name The complete name of a font available in Google Fonts.
+#' @param name The complete name of a font available in *Google Fonts*.
 #'
 #' @return An object of class `font_css`.
 #'
-#' @examples
-#' if (interactive()) {
+#' @section Examples:
 #'
-#' # Use `exibble` to create a gt table of
-#' # eight rows, replace missing values with
-#' # em dashes; for text in the `time` column,
-#' # we use the Google font 'IBM Plex Mono'
-#' # and set up the `default_fonts()` as
-#' # fallbacks (just in case the webfont is
-#' # not accessible)
-#' tab_1 <-
-#'   exibble %>%
+#' Use [`exibble`] to create a **gt** table of eight rows, replace missing values
+#' with em dashes. For text in the `time` column, we use the Google font
+#' `"IBM Plex Mono"` and set up the [default_fonts()] as fallbacks (just in case
+#' the webfont is not accessible).
+#'
+#' ```r
+#' exibble %>%
 #'   dplyr::select(char, time) %>%
 #'   gt() %>%
 #'   sub_missing() %>%
@@ -2200,17 +2241,20 @@ cell_style_structure <- function(name, obj, subclass = name) {
 #'     ),
 #'     locations = cells_body(columns = time)
 #'   )
+#' ```
 #'
-#' # Use `sp500` to create a small gt table,
-#' # using `fmt_currency()` to provide a
-#' # dollar sign for the first row of monetary
-#' # values; then, set a larger font size for
-#' # the table and use the 'Merriweather' font
-#' # using the `google_font()` function (with
-#' # two font fallbacks: 'Cochin' and the
-#' # catchall 'Serif' group)
-#' tab_2 <-
-#'   sp500 %>%
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_google_font_1.png")`
+#' }}
+#'
+#' Use [`sp500`] to create a small **gt** table, using [fmt_currency()] to
+#' provide a dollar sign for the first row of monetary values. Then, set a
+#' larger font size for the table and use the `"Merriweather"` font using the
+#' `google_font()` function (with two font fallbacks: `"Cochin"` and the
+#' catchall `"Serif"` group).
+#'
+#' ```r
+#' sp500 %>%
 #'   dplyr::slice(1:10) %>%
 #'   dplyr::select(-volume, -adj_close) %>%
 #'   gt() %>%
@@ -2227,16 +2271,15 @@ cell_style_structure <- function(name, obj, subclass = name) {
 #'       "Cochin", "Serif"
 #'     )
 #'   )
-#' }
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_google_font_1.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_google_font_2.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_google_font_2.png")`
+#' }}
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-22
+#' 7-27
 #'
 #' @export
 google_font <- function(name) {
@@ -2273,18 +2316,16 @@ google_font <- function(name) {
 #'
 #' @return A character vector of font names.
 #'
-#' @examples
-#' # Use `exibble` to create a gt table;
-#' # attempting to modify the fonts used
-#' # for the `time` column is much safer
-#' # if `default_fonts()` is appended to
-#' # the end of the `font` listing in the
-#' # `cell_text()` call (the "Comic Sansa"
-#' # and "Menloa" fonts don't exist, but,
-#' # we'll get the first available font
-#' # from the `default_fonts()` set)
-#' tab_1 <-
-#'   exibble %>%
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table. Attempting to modify the fonts used
+#' for the `time` column is much safer if `default_fonts()` is appended to the
+#' end of the `font` listing in the `cell_text()` call (the `"Comic Sansa"` and
+#' `"Menloa"` fonts don't exist, but, we'll get the first available font from
+#' the `default_fonts()` set).
+#'
+#' ```r
+#' exibble %>%
 #'   dplyr::select(char, time) %>%
 #'   gt() %>%
 #'   tab_style(
@@ -2296,14 +2337,16 @@ google_font <- function(name) {
 #'     ),
 #'     locations = cells_body(columns = time)
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_default_fonts_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_default_fonts_1.png")`
+#' }}
 #'
 #' @family Helper Functions
 #'
 #' @section Function ID:
-#' 7-23
+#' 7-26
 #'
 #' @export
 default_fonts <- function() {
@@ -2338,23 +2381,27 @@ default_fonts <- function() {
 #'
 #' @return A vector of color values.
 #'
-#' @examples
-#' # Get a palette of 8 pastel colors from
-#' # the RColorBrewer package
-#' pal <- RColorBrewer::brewer.pal(8, "Pastel2")
+#' @section Examples:
 #'
-#' # Create lighter and darker variants
-#' # of the base palette (one step lower, one
-#' # step higher)
+#' Get a palette of 8 pastel colors from the **RColorBrewer** package.
+#'
+#' ```r
+#' pal <- RColorBrewer::brewer.pal(8, "Pastel2")
+#' ```
+#'
+#' Create lighter and darker variants of the base palette (one step lower, one
+#' step higher).
+#'
+#' ```r
 #' pal_darker  <- pal %>% adjust_luminance(-1.0)
 #' pal_lighter <- pal %>% adjust_luminance(+1.0)
+#' ```
 #'
-#' # Create a tibble and make a gt table
-#' # from it; color each column in order of
-#' # increasingly darker palettes (with
-#' # `data_color()`)
-#' tab_1 <-
-#'   dplyr::tibble(a = 1:8, b = 1:8, c = 1:8) %>%
+#' Create a tibble and make a **gt** table from it. Color each column in order
+#' of increasingly darker palettes (with [data_color()]).
+#'
+#' ```r
+#' dplyr::tibble(a = 1:8, b = 1:8, c = 1:8) %>%
 #'   gt() %>%
 #'   data_color(
 #'     columns = a,
@@ -2377,17 +2424,21 @@ default_fonts <- function() {
 #'       domain = c(1, 8)
 #'     )
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_adjust_luminance_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_adjust_luminance_1.png")`
+#' }}
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-24
+#' 7-22
 #'
 #' @export
-adjust_luminance <- function(colors,
-                             steps) {
+adjust_luminance <- function(
+    colors,
+    steps
+) {
 
   # Stop if steps is beyond an acceptable range
   if (steps > 2.0 | steps < -2.0) {
@@ -2437,7 +2488,7 @@ adjust_luminance <- function(colors,
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-25
+#' 7-23
 #'
 #' @export
 random_id <- function(n = 10) {
@@ -2472,7 +2523,7 @@ latex_special_chars <- c(
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-26
+#' 7-24
 #'
 #' @export
 escape_latex <- function(text) {
@@ -2529,7 +2580,7 @@ escape_latex <- function(text) {
 #'
 #' @family Helper Functions
 #' @section Function ID:
-#' 7-27
+#' 7-25
 #'
 #' @export
 gt_latex_dependencies <- function() {

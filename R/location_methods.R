@@ -26,6 +26,7 @@ add_summary_location_row <- function(
     loc,
     data,
     style,
+    placement = NULL,
     df_type = "styles_df"
 ) {
 
@@ -114,7 +115,8 @@ add_summary_location_row <- function(
           colname = columns,
           locnum = 5,
           rownum = rows,
-          footnotes = style
+          footnotes = style,
+          placement = placement
         )
 
     } else {
@@ -139,6 +141,7 @@ add_grand_summary_location_row <- function(
     loc,
     data,
     style,
+    placement = NULL,
     df_type = "styles_df"
 ) {
 
@@ -194,7 +197,8 @@ add_grand_summary_location_row <- function(
         colname = columns,
         locnum = 6,
         rownum = rows,
-        footnotes = style
+        footnotes = style,
+        placement = placement
       )
 
   } else {
@@ -274,6 +278,17 @@ resolve_location.cells_stub <- function(loc, data) {
   resolved <- resolve_cells_stub(data = data, object = loc)
 
   loc$rows <- resolved$rows
+
+  class(loc) <- c("resolved", class(loc))
+
+  loc
+}
+
+resolve_location.cells_row_groups <- function(loc, data) {
+
+  resolved <- resolve_cells_row_groups(data = data, object = loc)
+
+  loc$groups <- resolved$groups
 
   class(loc) <- c("resolved", class(loc))
 

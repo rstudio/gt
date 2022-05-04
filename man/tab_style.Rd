@@ -112,20 +112,9 @@ values in a particular column.\if{html}{\out{<div class="sourceCode r">}}\prefor
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_2.png" style="width:100\%;">
 }}
 
-<<<<<<< HEAD
-# Use `exibble` to create a gt table;
-# replace missing values with the
-# `sub_missing()` function and then
-# add styling to the `char` column
-# with `cell_fill()` and with a
-# CSS style declaration
-tab_3 <-
-  exibble \%>\%
-=======
 Use \code{\link{exibble}} to create a \strong{gt} table. Replace missing values with the
-\code{\link[=fmt_missing]{fmt_missing()}} function and then add styling to the \code{char} column with
+\code{\link[=sub_missing]{sub_missing()}} function and then add styling to the \code{char} column with
 \code{\link[=cell_fill]{cell_fill()}} and with a CSS style declaration.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
->>>>>>> master
   dplyr::select(char, fctr) \%>\%
   gt() \%>\%
   sub_missing() \%>\%
