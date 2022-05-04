@@ -4,7 +4,12 @@
 \alias{tab_footnote}
 \title{Add a table footnote}
 \usage{
-tab_footnote(data, footnote, locations = NULL)
+tab_footnote(
+  data,
+  footnote,
+  locations = NULL,
+  placement = c("auto", "right", "left")
+)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -22,9 +27,13 @@ functions are: \code{\link[=cells_title]{cells_title()}}, \code{\link[=cells_stu
 \code{\link[=cells_stub_summary]{cells_stub_summary()}}, and \code{\link[=cells_stub_grand_summary]{cells_stub_grand_summary()}}. Additionally, we
 can enclose several \verb{cells_*()} calls within a \code{list()} if we wish to link
 the footnote text to different types of locations (e.g., body cells, row
-group labels, the table title, etc.). If \code{NULL}, then the footnote text
-will be treated as standalone text in the table footer and will appear
-before any footnotes with marks.}
+group labels, the table title, etc.).}
+
+\item{placement}{Where to affix footnote marks to the table content. Two
+options for this are \verb{"left} or \code{"right"}, where the placement is to the
+absolute left or right of the cell content. By default, however, this is
+set to \code{"auto"} whereby \strong{gt} will choose a preferred left-or-right
+placement depending on the alignment of the cell content.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -42,8 +51,11 @@ functions (e.g., \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_col
 The formatting of the footnotes can be controlled through the use of various
 parameters in the \code{\link[=tab_options]{tab_options()}} function:
 \itemize{
+\item \code{footnotes.multiline}: a setting that determines whether footnotes each
+start on a new line or are combined into a single block.
 \item \code{footnotes.sep}: allows for a choice of the separator between consecutive
-footnotes in the table footer. By default, this is set to a linebreak.
+footnotes in the table footer. By default, this is set to a single space
+character.
 \item \code{footnotes.marks}: the set of sequential characters or numbers used to
 identify the footnotes.
 \item \code{footnotes.font.size}: the size of the font used in the footnote section.
@@ -51,24 +63,12 @@ identify the footnotes.
 and source note sections in the table footer.
 }
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_tab_footnote_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
-
-2-6
-}
-
-\examples{
-# Use `sza` to create a gt table; color
-# the `sza` column using the `data_color()`
-# function, then, add a footnote to the
-# `sza` column label explaining what the
-# color scale signifies
-tab_1 <-
-  sza \%>\%
+Use \code{\link{sza}} to create a \strong{gt} table. Color the \code{sza} column using the
+\code{\link[=data_color]{data_color()}} function, then, use \code{tab_footnote()} to add a footnote to the
+\code{sza} column label (explaining what the color scale signifies).\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza \%>\%
   dplyr::filter(
     latitude == 20 &
       month == "jan" &
@@ -89,8 +89,18 @@ tab_1 <-
       columns = sza
     )
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_footnote_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+2-6
+}
+
 \seealso{
 Other Create or Modify Parts: 
 \code{\link{tab_header}()},

@@ -33,6 +33,66 @@ to filter down to the rows we need (e.g.,
 rendered table.}
 }
 \description{
+<<<<<<< HEAD
 Format missing values (deprecated)
+=======
+Wherever there is missing data (i.e., \code{NA} values) a customizable mark may
+present better than the standard \code{NA} text that would otherwise appear. The
+\code{fmt_missing()} function allows for this replacement through its
+\code{missing_text} argument (where an em dash serves as the default).
+}
+\details{
+Targeting of values is done through \code{columns} and additionally by \code{rows} (if
+nothing is provided for \code{rows} then entire columns are selected). Conditional
+formatting is possible by providing a conditional expression to the \code{rows}
+argument. See the \emph{Arguments} section for more information on this.
+}
+\section{Examples}{
+
+
+Use \code{\link{exibble}} to create a \strong{gt} table. The \code{NA} values in different
+columns will be given replacement text.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+  dplyr::select(-row, -group) \%>\%
+  gt() \%>\%
+  fmt_missing(
+    columns = 1:2,
+    missing_text = "missing"
+  ) \%>\%
+  fmt_missing(
+    columns = 4:7,
+    missing_text = "nothing"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_missing_1.png" style="width:100\%;">
+}}
+}
+
+\section{Function ID}{
+
+3-15
+}
+
+\seealso{
+Other Format Data: 
+\code{\link{data_color}()},
+\code{\link{fmt_bytes}()},
+\code{\link{fmt_currency}()},
+\code{\link{fmt_datetime}()},
+\code{\link{fmt_date}()},
+\code{\link{fmt_engineering}()},
+\code{\link{fmt_fraction}()},
+\code{\link{fmt_integer}()},
+\code{\link{fmt_markdown}()},
+\code{\link{fmt_number}()},
+\code{\link{fmt_partsper}()},
+\code{\link{fmt_passthrough}()},
+\code{\link{fmt_percent}()},
+\code{\link{fmt_scientific}()},
+\code{\link{fmt_time}()},
+\code{\link{fmt}()},
+\code{\link{text_transform}()}
+>>>>>>> master
 }
 \keyword{internal}

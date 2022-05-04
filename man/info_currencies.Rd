@@ -36,11 +36,24 @@ corresponding to the 3-letter currency code to \code{begins_with}. This will
 filter currencies in the info table to just the set beginning with the
 supplied letter.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_info_currencies_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_info_currencies_2.png}{options: width=100\%}}
+Get a table of info on all of the currencies where the three-letter code
+begins with an \code{"h"}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{info_currencies(begins_with = "h")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_info_currencies_1.png" style="width:100\%;">
+}}
+
+Get a table of info on all of the common currency name/symbols that can be
+used with \code{\link[=fmt_currency]{fmt_currency()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{info_currencies(type = "symbol")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_info_currencies_2.png" style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
@@ -48,18 +61,6 @@ supplied letter.
 10-3
 }
 
-\examples{
-# Get a table of info on all of
-# the currencies where the three-
-# letter code begins with a "h"
-tab_1 <- info_currencies(begins_with = "h")
-
-# Get a table of info on all of the
-# common currency name/symbols that
-# can be used with `fmt_currency()`
-tab_2 <- info_currencies(type = "symbol")
-
-}
 \seealso{
 Other Information Functions: 
 \code{\link{info_date_style}()},

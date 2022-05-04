@@ -63,23 +63,12 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \code{list()} (e.g., \code{list(cells_body(), cells_grand_summary())}).
 }
 
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cells_column_spanners_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
-
-7-7
-}
-
-\examples{
-# Use `exibble` to create a gt table; add a
-# spanner column label over three column
-# labels and then use `tab_style()` to make
-# the spanner label text bold
-tab_1 <-
-  exibble \%>\%
+Use \code{\link{exibble}} to create a \strong{gt} table. Add a spanner column label over
+three column labels with \code{\link[=tab_spanner]{tab_spanner()}} and then use \code{\link[=tab_style]{tab_style()}} and
+\code{cells_column_spanners()} to make the spanner label text bold.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(-fctr, -currency, -group) \%>\%
   gt(rowname_col = "row") \%>\%
   tab_spanner(
@@ -91,8 +80,18 @@ tab_1 <-
     style = cell_text(weight = "bold"),
     locations = cells_column_spanners(spanners = "dt")
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_column_spanners_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+7-7
+}
+
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},

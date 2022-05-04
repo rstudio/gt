@@ -58,25 +58,13 @@ two are the general \code{\link[=cols_merge]{cols_merge()}} function and the spe
 operate similarly, where the non-target columns can be optionally hidden from
 the output table through the \code{hide_columns} or \code{autohide} options.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cols_merge_range_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
-
-4-10
-}
-
-\examples{
-# Use `gtcars` to create a gt table,
-# keeping only the `model`, `mpg_c`,
-# and `mpg_h` columns; merge the mpg
-# columns together as a single range
-# column (which is labeled as MPG,
-# in italics)
-tab_1 <-
-  gtcars \%>\%
+Use \code{\link{gtcars}} to create a \strong{gt} table, keeping only the \code{model}, \code{mpg_c},
+and \code{mpg_h} columns. Merge the \code{"mpg*"} columns together as a single range
+column (which is labeled as MPG, in italics) using the \code{cols_merge_range()}
+function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
   dplyr::select(model, starts_with("mpg")) \%>\%
   dplyr::slice(1:8) \%>\%
   gt() \%>\%
@@ -84,11 +72,19 @@ tab_1 <-
     col_begin = mpg_c,
     col_end = mpg_h
   ) \%>\%
-  cols_label(
-    mpg_c = md("*MPG*")
-  )
+  cols_label(mpg_c = md("*MPG*"))
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_merge_range_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+4-10
+}
+
 \seealso{
 Other Modify Columns: 
 \code{\link{cols_align}()},

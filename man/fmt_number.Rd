@@ -151,46 +151,29 @@ formatting specific to the chosen locale
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
 nothing is provided for \code{rows} then entire columns are selected). Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the Arguments section for more information on this.
+argument. See the \emph{Arguments} section for more information on this.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_fmt_number_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_fmt_number_2.png}{options: width=100\%}}
-}
-
-\section{Function ID}{
-
-3-1
-}
-
-\examples{
-library(tidyr)
-
-# Use `exibble` to create a gt table;
-# format the `num` column as numeric
-# with three decimal places and with no
-# use of digit separators
-tab_1 <-
-  exibble \%>\%
+Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{num} column as numeric
+with three decimal places and with no use of digit separators.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt() \%>\%
   fmt_number(
     columns = num,
     decimals = 3,
     use_seps = FALSE
   )
+}\if{html}{\out{</div>}}
 
-# Use `countrypops` to create a gt
-# table; format all numeric columns
-# to use large-number suffixing
-tab_2 <-
-  countrypops \%>\%
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_number_1.png" style="width:100\%;">
+}}
+
+Use \code{\link{countrypops}} to create a \strong{gt} table. Format all numeric columns to
+use large-number suffixing with the \code{suffixing = TRUE} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::select(country_code_3, year, population) \%>\%
-  dplyr::filter(
-    country_code_3 \%in\% c(
-      "CHN", "IND", "USA", "PAK", "IDN")
-  ) \%>\%
+  dplyr::filter(country_code_3 \%in\% c("CHN", "IND", "USA", "PAK", "IDN")) \%>\%
   dplyr::filter(year > 1975 & year \%\% 5 == 0) \%>\%
   tidyr::spread(year, population) \%>\%
   dplyr::arrange(desc(`2015`)) \%>\%
@@ -200,8 +183,18 @@ tab_2 <-
     decimals = 2,
     suffixing = TRUE
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_number_2.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+3-1
+}
+
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},
@@ -213,6 +206,11 @@ Other Format Data:
 \code{\link{fmt_fraction}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
+<<<<<<< HEAD
+=======
+\code{\link{fmt_missing}()},
+\code{\link{fmt_partsper}()},
+>>>>>>> master
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
 \code{\link{fmt_scientific}()},

@@ -73,7 +73,7 @@ expect_tab <- function(tab, df) {
 
   dt_heading_get(data = tab) %>%
     length() %>%
-    expect_equal(2)
+    expect_equal(3)
 
   dt_spanners_get(data = tab) %>%
     dim() %>%
@@ -85,7 +85,7 @@ expect_tab <- function(tab, df) {
 
   dt_footnotes_get(data = tab) %>%
     dim() %>%
-    expect_equal(c(0, 7))
+    expect_equal(c(0, 8))
 
   dt_source_notes_get(data = tab) %>%
     length() %>%
@@ -105,7 +105,7 @@ expect_tab <- function(tab, df) {
 
   dt_options_get(data = tab) %>%
     dim() %>%
-    expect_equal(c(156, 5))
+    expect_equal(c(168, 5))
 
   dt_transforms_get(data = tab) %>%
     length() %>%
