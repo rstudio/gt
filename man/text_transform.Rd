@@ -55,7 +55,7 @@ vector of column values from the \code{num} column.\if{html}{\out{<div class="so
 
 \section{Function ID}{
 
-3-17
+3-21
 }
 
 \seealso{
@@ -69,7 +69,6 @@ Other Format Data:
 \code{\link{fmt_fraction}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
-\code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},

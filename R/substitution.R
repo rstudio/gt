@@ -18,29 +18,30 @@
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `exibble` to create a gt table;
-#' # NA values in different columns will
-#' # be given replacement text
-#' tab_1 <-
-#'   exibble %>%
+#' Use [`exibble`] to create a **gt** table. The `NA` values in different
+#' columns will be given replacement text.
+#'
+#' ```r
+#' exibble %>%
 #'   dplyr::select(-row, -group) %>%
 #'   gt() %>%
-#'   sub_missing(
+#'   fmt_missing(
 #'     columns = 1:2,
 #'     missing_text = "missing"
 #'   ) %>%
-#'   sub_missing(
+#'   fmt_missing(
 #'     columns = 4:7,
 #'     missing_text = "nothing"
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_sub_missing_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_sub_missing_1.png")`
+#' }}
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-15
+#' 3-16
 #'
 #' @import rlang
 #' @export
@@ -149,7 +150,7 @@ fmt_missing <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-16
+#' 3-17
 #'
 #' @import rlang
 #' @export
@@ -218,7 +219,7 @@ sub_zero <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-17
+#' 3-18
 #'
 #' @import rlang
 #' @export
@@ -348,7 +349,7 @@ sub_small_vals <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-18
+#' 3-19
 #'
 #' @import rlang
 #' @export
@@ -491,7 +492,7 @@ check_sub_fn_sign <- function(sign) {
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-19
+#' 3-20
 #'
 #' @import rlang
 #' @export

@@ -43,7 +43,7 @@ argument. See the Arguments section for more information on this.
 }
 \section{Function ID}{
 
-3-16
+3-17
 }
 
 \seealso{
@@ -57,7 +57,6 @@ Other Format Data:
 \code{\link{fmt_fraction}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
-\code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
