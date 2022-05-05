@@ -41,6 +41,39 @@ nothing is provided for \code{rows} then entire columns are selected). Condition
 formatting is possible by providing a conditional expression to the \code{rows}
 argument. See the Arguments section for more information on this.
 }
+\section{Examples}{
+
+
+Let's generate a simple, single-column tibble that contains an assortment of
+values that could potentially undergo some substitution.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- dplyr::tibble(num = c(10^(-1:2), 0, 0, 10^(4:6)))
+
+tbl
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 9 × 1
+##         num
+##       <dbl>
+## 1       0.1
+## 2       1  
+## 3      10  
+## 4     100  
+## 5       0  
+## 6       0  
+## 7   10000  
+## 8  100000  
+## 9 1000000
+}
+
+With this table, the zero values in will be given replacement text with a
+single call of \code{sub_zero()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
+  gt() \%>\%
+  fmt_number(columns = num) \%>\%
+  sub_zero()
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_zero_1.png" style="width:100\%;">
+}}
+}
+
 \section{Function ID}{
 
 3-17
