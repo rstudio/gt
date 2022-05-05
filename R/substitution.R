@@ -150,6 +150,31 @@ fmt_missing <- function(
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @section Examples:
+#'
+#' Let's generate a simple, single-column tibble that contains an assortment of
+#' values that could potentially undergo some substitution.
+#'
+#' ```{r}
+#' tbl <- dplyr::tibble(num = c(10^(-1:2), 0, 0, 10^(4:6)))
+#'
+#' tbl
+#' ```
+#'
+#' With this table, the zero values in will be given replacement text with a
+#' single call of `sub_zero()`.
+#'
+#' ```r
+#' tbl %>%
+#'   gt() %>%
+#'   fmt_number(columns = num) %>%
+#'   sub_zero()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_sub_zero_1.png")`
+#' }}
+#'
 #' @family Format Data
 #' @section Function ID:
 #' 3-17
