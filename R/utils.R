@@ -210,6 +210,118 @@ get_currency_str <- function(currency,
   }
 }
 
+resolve_footnote_placement <- function(
+    data,
+    colname,
+    rownum,
+    input_placement,
+    cell_content,
+    context
+) {
+
+  if (input_placement %in% c("left", "right")) {
+    return(input_placement)
+  }
+
+  cell_alignment <-
+    get_alignment_at_body_cell(
+      data = data,
+      colname = colname,
+      rownum = rownum,
+      context = context
+    )
+
+  if (cell_alignment == "right") {
+    return("left")
+  } else {
+    return("right")
+  }
+}
+
+get_alignment_at_body_cell <- function(
+    data,
+    colname,
+    rownum,
+    context
+) {
+
+  column_alignment <-
+    dt_boxhead_get_alignment_by_var(
+      data = data,
+      var = colname
+    )
+
+  if (context != "html") {
+    return(column_alignment)
+  }
+
+  stub_layout <- get_stub_layout(data = data)
+
+  if (colname %in% stub_layout) {
+    column_alignment <- "right"
+  }
+
+  # Get cell alignment set by `tab_style`
+  styles_tbl <- dt_styles_get(data = data)
+
+  if (nrow(styles_tbl) < 1) {
+    return(column_alignment)
+  }
+
+  #
+  # Check HTML styles to determine whether column alignment is
+  # set there (this has higher specificity)
+  #
+
+  styles_filtered_tbl <-
+    styles_tbl %>%
+    dplyr::filter(locname == "data" && colname == .env$colname && rownum == .env$rownum)
+
+  if (nrow(styles_tbl) < 1) {
+    return(column_alignment)
+  }
+
+  # Extract the list of styles from the table
+  cell_styles_list <- styles_filtered_tbl$styles
+
+  if (length(cell_styles_list) < 1) {
+    return(column_alignment)
+  }
+
+  # Get the `align` property in `cell_styles_list` (element may not be present)
+  cell_text_align <- cell_styles_list[[1]]$cell_text$align
+
+  # Get the `cell_style` property in `cell_styles_list` (may not be present)
+  # This is a user-defined string with CSS style rules that should look
+  # something like this: "text-align: right; background: green;"
+  cell_style <- cell_styles_list[[1]]$cell_style
+
+  # Return the value of the last `text-align` property, if present
+  if (!is.null(cell_style) && grepl("text-align", cell_style)) {
+
+    m <- gregexec("(?:^|;)\\s*text-align\\s*:\\s*([\\w-]+)\\s*(!important)?", cell_style, perl = TRUE)
+    cell_style_match_mat <- regmatches(cell_style, m)[[1]]
+
+    is_important <- grepl("!important", cell_style_match_mat[1, ], fixed = TRUE)
+
+    # Pick last !important, or if no !important, then last anything
+    if (any(is_important)) {
+      cell_alignment <- cell_style_match_mat[2, max(which(is_important))]
+    } else {
+      cell_alignment <- cell_style_match_mat[2, ncol(cell_style_match_mat)]
+    }
+
+    return(cell_alignment)
+  }
+
+  # Return the value of the `cell_text$align` property, if present
+  if (!is.null(cell_text_align)) {
+    return(cell_text_align)
+  }
+
+  column_alignment
+}
+
 #' Get a currency exponent from a currency code
 #'
 #' @noRd
@@ -700,17 +812,11 @@ non_na_index <- function(values,
                          index,
                          default_value = NA) {
 
-  if (is.logical(index)) {
-    index <- is.integer(index)
-  }
-
   stopifnot(is.integer(index) || is.numeric(index))
+  stopifnot(all(index >= 1 | is.na(index)))
+  stopifnot(all(length(values) >= index | is.na(index)))
 
-  # The algorithm requires `-Inf` not being present
-  stopifnot(!any(is.infinite(values) & values < 0))
-
-  # Get a vector of suffixes, which may include
-  # NA values
+  # Get a vector of suffixes, which may include NA values
   res <- values[index]
 
   # If there are no NA values to reconcile, return
@@ -777,7 +883,7 @@ num_suffix <- function(x,
   }
 
   # Obtain a vector of index values that places
-  # each value of `x` (either postive or negative)
+  # each value of `x` (either positive or negative)
   # in the correct scale category, according to
   # the base value (defaulting to 1000); this works
   # in tandem with the `suffixes` vector, where each
@@ -828,6 +934,84 @@ num_suffix <- function(x,
   )
 }
 
+#' Get a tibble of scaling values and suffixes for the Indian numbering system
+#'
+#' The `num_suffix()` function operates on a vector of numerical values and
+#' returns a tibble where each row represents a scaled value for `x` and the
+#' correct suffix to use during `x`'s character-based formatting.
+#' @noRd
+num_suffix_ind <- function(x,
+                           suffixes = c(NA, "L", "Cr"),
+                           scale_by) {
+
+  # If `suffixes` is a zero-length vector, we
+  # provide a tibble that will ultimately not
+  # scale value or apply any suffixes
+  if (length(suffixes) == 0) {
+
+    return(
+      dplyr::tibble(
+        scale_by = rep_len(scale_by, length(x)),
+        suffix = rep_len("", length(x))
+      )
+    )
+  }
+
+  # Obtain a vector of index values that places
+  # each value of `x` (either positive or negative)
+  # in the correct scale category, according to
+  # the base value; this works in tandem with the
+  # `suffixes` vector, where each index position
+  # (starting from 1) represents the index here
+  exponent <- log(abs(x), base = 10)
+
+  # Transform the `exponent` vector to a vector of
+  # indices (each index represents the suffix in the
+  # Indian numbering system); replace any `0` values
+  # in `i` (represents values less than 1000) with NA
+  # (this is required for the `non_na_index()` function)
+  i <- pmin(length(suffixes), pmax(0, ceiling(floor(exponent) / 2) - 1))
+  i[i == 0] <- NA_integer_
+
+  # Using the `non_na_index()` function on the
+  # vector of index values (`i`) is required
+  # to enable inheritance of scalars/suffixes
+  # to ranges where the user prefers the last
+  # suffix given
+  suffix_index <-
+    non_na_index(
+      values = suffixes,
+      index = i,
+      default_value = 0
+    )
+
+  # Replace any zero values in `suffix_index`
+  # with NA values
+  suffix_index[suffix_index == 0] <- NA_integer_
+
+  # Get a vector of suffix labels; this vector
+  # is to be applied to the scaled values
+  suffix_labels <- suffixes[suffix_index]
+
+  # Replace any NAs in `suffix_labels` with an
+  # empty string
+  suffix_labels[is.na(suffix_labels)] <- ""
+
+  # Replace any NAs in `suffix_index` with zeros
+  suffix_index[is.na(suffix_index)] <- 0
+
+  # Add a leading space to all non-empty suffix labels
+  suffix_labels[suffix_labels != ""] <-
+    paste0(" ", suffix_labels[suffix_labels != ""])
+
+  # Create and return a tibble with `scale_by`
+  # and `suffix` values
+  dplyr::tibble(
+    scale_by = 10^(-ifelse(suffix_index == 0, 0, (suffix_index * 2) + 1)),
+    suffix = suffix_labels
+  )
+}
+
 #' An `isFALSE`-based helper function
 #'
 #' The `is_false()` function is similar to the `isFALSE()` function that was
@@ -849,7 +1033,8 @@ is_false = function(x) {
 #'   `fmt_*()` functions.
 #' @noRd
 normalize_suffixing_inputs <- function(suffixing,
-                                       scale_by) {
+                                       scale_by,
+                                       system) {
 
   if (is_false(suffixing)) {
 
@@ -864,8 +1049,12 @@ normalize_suffixing_inputs <- function(suffixing,
     warn_on_scale_by_input(scale_by)
 
     # If `suffixing` is TRUE, return the default
-    # set of suffixes
-    return(c("K", "M", "B", "T"))
+    # set of suffixes depending on the `system`
+    if (system == "intl") {
+      return(c("K", "M", "B", "T"))
+    } else {
+      return(c(NA, "Lac", "Cr"))
+    }
 
   } else if (is.character(suffixing)) {
 
@@ -876,8 +1065,10 @@ normalize_suffixing_inputs <- function(suffixing,
     # to `suffixing`, we first want to check if there
     # are any names provided
     if (!is.null(names(suffixing))) {
-      stop("The character vector supplied to `suffixed` cannot contain names.",
-           call. = FALSE)
+      stop(
+        "The character vector supplied to `suffixed` cannot contain names.",
+        call. = FALSE
+      )
     }
 
     # We can now return the character vector, having
@@ -889,10 +1080,12 @@ normalize_suffixing_inputs <- function(suffixing,
     # Stop function if the input to `suffixing` isn't
     # valid (i.e., isn't logical and isn't a valid
     # character vector)
-    stop("The value provided to `suffixing` must either be:\n",
-         " * `TRUE` or `FALSE` (the default)\n",
-         " * a character vector with suffixing labels",
-         call. = FALSE)
+    stop(
+      "The value provided to `suffixing` must either be:\n",
+      "* `TRUE` or `FALSE` (the default)\n",
+      "* a character vector with suffixing labels",
+      call. = FALSE
+    )
   }
 }
 
@@ -1321,9 +1514,13 @@ check_spanner_id_unique <- function(data,
   existing_ids <- dt_spanners_get_ids(data = data)
 
   if (spanner_id %in% existing_ids) {
-    stop("The spanner `id` provided (`\"", spanner_id, "\"`) is not unique:\n",
-         "* provide a unique ID value for this spanner",
-         call. = FALSE)
+
+    stop(
+      "The spanner `id` provided (`\"", spanner_id, "\"`) is not unique:\n",
+      "* The `id` must be unique across existing spanners\n",
+      "* Provide a unique ID value for this spanner",
+      call. = FALSE
+    )
   }
 }
 
@@ -1331,12 +1528,16 @@ check_row_group_id_unique <- function(data,
                                       row_group_id) {
 
   stub_df <- dt_stub_df_get(data = data)
+
   existing_ids <- stub_df$group_id
 
   if (row_group_id %in% existing_ids) {
-    stop("The row group `id` provided (`\"", row_group_id, "\"`) is not unique:\n",
-         "* provide a unique ID value for this row group",
-         call. = FALSE)
+
+    stop(
+      "The row group `id` provided (`\"", row_group_id, "\"`) is not unique:\n",
+      "* Provide a unique ID value for this row group",
+      call. = FALSE
+    )
   }
 }
 
@@ -1449,3 +1650,12 @@ column_classes_are_valid <- function(data, columns, valid_classes) {
 #
 #   print(x)
 # }
+
+man_get_image_tag <- function(file, dir = "images") {
+
+  repo_url <- "https://raw.githubusercontent.com/rstudio/gt/master"
+
+  image_url <- file.path(repo_url, dir, file)
+
+  paste0("<img src=\"", image_url, "\" style=\"width:100\\%;\">")
+}

@@ -4,7 +4,16 @@
 \alias{tab_spanner}
 \title{Add a spanner column label}
 \usage{
-tab_spanner(data, label, columns, id = label, gather = TRUE)
+tab_spanner(
+  data,
+  label,
+  columns = NULL,
+  spanners = NULL,
+  level = NULL,
+  id = label,
+  gather = TRUE,
+  replace = FALSE
+)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -12,6 +21,14 @@ tab_spanner(data, label, columns, id = label, gather = TRUE)
 \item{label}{The text to use for the spanner column label.}
 
 \item{columns}{The columns to be components of the spanner heading.}
+
+\item{spanners}{The spanners that should be spanned over, should they already
+be defined.}
+
+\item{level}{An explicit level to which the spanner should be placed. If not
+provided, \strong{gt} will choose the level based on the inputs provided within
+\code{columns} and \code{spanners}, placing the spanner label where it will fit. The
+first spanner level (right above the column labels) is \code{1}.}
 
 \item{id}{The ID for the spanner column label. When accessing a spanner
 column label through \code{\link[=cells_column_spanners]{cells_column_spanners()}} (when using \code{\link[=tab_style]{tab_style()}} or
@@ -27,6 +44,11 @@ unique).}
 \item{gather}{An option to move the specified \code{columns} such that they are
 unified under the spanner column label. Ordering of the moved-into-place
 columns will be preserved in all cases. By default, this is set to \code{TRUE}.}
+
+\item{replace}{Should new spanners be allowed to partially or fully replace
+existing spanners? (This is a possibility if setting spanners at an already
+populated \code{level}.) By default, this is set to \code{FALSE} and an error will
+occur if some replacement is attempted.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -36,23 +58,12 @@ Set a spanner column label by mapping it to columns already in the table.
 This label is placed above one or more column labels, spanning the width of
 those columns and column labels.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_tab_spanner_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
-
-2-2
-}
-
-\examples{
-# Use `gtcars` to create a gt table;
-# Group several columns related to car
-# performance under a spanner column
-# with the label `performance`
-tab_1 <-
-  gtcars \%>\%
+Use \code{\link{gtcars}} to create a \strong{gt} table. Use the \code{tab_spanner()} function to
+effectively group several columns related to car performance under a spanner
+column with the label \code{"performance"}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
   dplyr::select(
     -mfr, -trim, bdy_style, drivetrain,
     -drivetrain, -trsmn, -ctry_origin
@@ -63,10 +74,21 @@ tab_1 <-
     label = "performance",
     columns = c(
       hp, hp_rpm, trq, trq_rpm,
-      mpg_c, mpg_h)
+      mpg_c, mpg_h
+    )
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_spanner_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+2-2
+}
+
 \seealso{
 Other Create or Modify Parts: 
 \code{\link{tab_footnote}()},

@@ -1,22 +1,35 @@
 rtf_paste0 <- function(..., collapse = NULL) {
-  args <- lapply(list(...), function(x) {
-    if (is.null(x) || is_rtf(x)) {
-      x
-    } else {
-      rtf_escape(as.character(x))
-    }
-  })
+
+  args <-
+    lapply(list(...), function(x) {
+      if (is.null(x) || is_rtf(x)) {
+        x
+      } else {
+        rtf_escape(as.character(x))
+      }
+    })
+
   args$collapse <- collapse
+
   rtf_raw(do.call(paste0, args))
 }
+
+# Conversion factors from absolute width units to twips (`tw`)
+twip_factors <-
+  c(
+    `in` = 1440, `pt` = 20, `px` = 15,
+    `cm` = 566.9291, `mm` = 56.69291, `tw` = 1
+  )
 
 rtf_key <- function(word, val = NULL, space = FALSE) {
   rtf_raw(paste0("\\", word, val %||% "", if (space) " "))
 }
 
-rtf_fonttbl <- function(...,
-                        .font_names = NULL,
-                        .default_n = NULL) {
+rtf_fonttbl <- function(
+    ...,
+    .font_names = NULL,
+    .default_n = NULL
+) {
 
   fonts <- list(...)
 
@@ -27,8 +40,8 @@ rtf_fonttbl <- function(...,
   if (length(fonts) < 1) {
     fonts <-
       list(
-        rtf_font_def(font = "Calibri", family = "roman"),
-        rtf_font_def(font = "Courier", family = "roman")
+        rtf_font_def(font = "Courier New", family = "roman"),
+        rtf_font_def(font = "Times", family = "roman")
       )
   }
 
@@ -39,7 +52,9 @@ rtf_fonttbl <- function(...,
 
   fontinfo_values <-
     vapply(
-      seq_along(fonts),FUN.VALUE = character(1), USE.NAMES = FALSE,
+      seq_along(fonts),
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
       FUN = function(x) {
         fonts[x] %>% unlist() %>% gsub("{x}", font_sequence[x], ., fixed = TRUE)
       }
@@ -50,14 +65,17 @@ rtf_fonttbl <- function(...,
   rtf_fonttbl <- list(paste0(default_n, paste0("{", fonttbl_values, "}")))
 
   class(rtf_fonttbl) <- "rtf_fonttbl"
+
   rtf_fonttbl
 }
 
-rtf_font_def <- function(font,
-                         family = NULL,
-                         number = NULL,
-                         charset = NULL,
-                         pitch = NULL) {
+rtf_font_def <- function(
+    font,
+    family = NULL,
+    number = NULL,
+    charset = NULL,
+    pitch = NULL
+) {
 
   font_family_name <- family %||% "nil"
   font_charset <- charset %||% 0
@@ -86,9 +104,11 @@ rtf_font_def <- function(font,
   rtf_font
 }
 
-rtf_colortbl <- function(...,
-                         .hexadecimal_colors = NULL,
-                         .add_default = TRUE) {
+rtf_colortbl <- function(
+    ...,
+    .hexadecimal_colors = NULL,
+    .add_default = TRUE
+) {
 
   colors <- list(...)
 
@@ -131,7 +151,11 @@ rtf_color <- function(color = NULL, rgb = NULL) {
   rtf_color
 }
 
-rtf_header <- function(..., .charset = "ansi", .ansi_code_page = 1252) {
+rtf_header <- function(
+    ...,
+    .charset = "ansi",
+    .ansi_code_page = 1252
+) {
 
   # Requires the font table (<fonttbl>)
 
@@ -181,94 +205,118 @@ rtf_header <- function(..., .charset = "ansi", .ansi_code_page = 1252) {
   rtf_header
 }
 
-rtf_file <- function(header = NULL,
-                     document = NULL,
-                     page_numbering) {
+rtf_file <- function(
+    data,
+    document
+) {
 
-  if (is.null(header) && is.null(document)) {
-    header <- document <- ""
-  } else if (is.null(header) && !is.null(document)) {
+  #
+  # Generate the header based on the RTF `document` content
+  # (and also modify the document)
+  #
 
-    # If `header` is NULL then generate the header based on the
-    # `document` content (and also modify the document)
+  # Scan for hexadecimal colors in the document; generate
+  # a <colortbl> object
+  matched_colors <-
+    unique(unlist(stringr::str_extract_all(document, "<<COLOR:#[0-9a-fA-F]{6}>>")))
 
-    # Scan for hexadecimal colors in the document; generate
-    # a <colortbl> object
-    matched_colors <-
-      unique(unlist(stringr::str_extract_all(document, "<<COLOR:#[0-9a-fA-F]{6}>>")))
+  if (length(matched_colors) > 0) {
 
-    if (length(matched_colors) > 0) {
+    colortbl <-
+      rtf_colortbl(.hexadecimal_colors = gsub("<<COLOR:|>>", "", matched_colors))
 
-      colortbl <-
-        rtf_colortbl(.hexadecimal_colors = gsub("<<COLOR:|>>", "", matched_colors))
-
-      for (i in seq_along(matched_colors)) {
-        document <- gsub(matched_colors[i], as.character(i), document, fixed = TRUE)
-      }
-    } else {
-      colortbl <- rtf_colortbl(.hexadecimal_colors = "#FFFFFF")
+    for (i in seq_along(matched_colors)) {
+      document <- gsub(matched_colors[i], as.character(i), document, fixed = TRUE)
     }
-
-    # Scan for hexadecimal colors in the document; generate
-    # a <fonttbl> object
-    matched_fonts <-
-      unique(unlist(stringr::str_extract_all(document, "<<FONT:.*?>>")))
-
-    if (length(matched_fonts) > 0) {
-
-      fonttbl <-
-        rtf_fonttbl(.font_names = c("Calibri", gsub("<<FONT:|>>", "", matched_fonts)), .default_n = 1)
-
-      for (i in seq_along(matched_fonts)) {
-        document <- gsub(matched_fonts[i], as.character(i), document, fixed = TRUE)
-      }
-    } else {
-      fonttbl <- rtf_fonttbl()
-    }
-
-    # Create the document header
-    header <- rtf_header(fonttbl, colortbl)
+  } else {
+    colortbl <- rtf_colortbl(.hexadecimal_colors = "#FFFFFF")
   }
 
-  # Include RTF code to express page numbering if `page_numbering != "none"`
-  if (page_numbering != "none") {
+  # Scan for hexadecimal colors in the document; generate a <fonttbl> object
+  matched_fonts <- unique(unlist(stringr::str_extract_all(document, "<<FONT:.*?>>")))
 
-    document <-
-      paste(
-        document,
-        "\n\n",
-        rtf_raw(
-          "{",
-          if (page_numbering == "footer") "\\footer" else "\\header",
-          "\\qr{\n{\\field{\\*\\fldinst {PAGE}}{\\fldrslt {Refresh >F9<}}}}\\par}"
-        )
-      )
+  if (length(matched_fonts) > 0) {
+
+    fonttbl <-
+      rtf_fonttbl(.font_names = c("Times", gsub("<<FONT:|>>", "", matched_fonts)), .default_n = 1)
+
+    for (i in seq_along(matched_fonts)) {
+      document <- gsub(matched_fonts[i], as.character(i), document, fixed = TRUE)
+    }
+
+  } else {
+    fonttbl <- rtf_fonttbl()
   }
 
-  rtf_file <- list(header = header, document = document)
+  # Create the document header
+  header <- rtf_header(fonttbl, colortbl)
+
+  #
+  # Create the `page_information` statements
+  #
+
+  page_orientation <- dt_options_get_value(data = data, option = "page_orientation")
+
+  page_width_val <-
+    dt_options_get_page_value_in_twips(
+      data = data,
+      option = if (page_orientation == "portrait") "page_width" else "page_height"
+    )
+
+  page_height_val <-
+    dt_options_get_page_value_in_twips(
+      data = data,
+      option = if (page_orientation == "portrait") "page_height" else "page_width"
+    )
+
+  page_margin_left_val <- dt_options_get_page_value_in_twips(data = data, option = "page_margin_left")
+  page_margin_right_val <- dt_options_get_page_value_in_twips(data = data, option = "page_margin_right")
+  page_margin_top_val <- dt_options_get_page_value_in_twips(data = data, option = "page_margin_top")
+  page_margin_bottom_val <- dt_options_get_page_value_in_twips(data = data, option = "page_margin_bottom")
+  page_header_height_val <- dt_options_get_page_value_in_twips(data = data, option = "page_header_height")
+  page_footer_height_val <- dt_options_get_page_value_in_twips(data = data, option = "page_footer_height")
+
+  page_information <-
+    rtf_raw(
+      paste0("\\paperw", page_width_val),
+      paste0("\\paperh", page_height_val),
+      "\\widowctrl\\ftnbj\\fet0\\sectd\\linex0\n",
+      "\\lndscpsxn\n",
+      paste0("\\margl", page_margin_left_val),
+      paste0("\\margr", page_margin_right_val),
+      paste0("\\margt", page_margin_top_val),
+      paste0("\\margb", page_margin_bottom_val),
+      "\n",
+      paste0("\\headery", page_header_height_val),
+      paste0("\\footery", page_footer_height_val),
+      "\\fs20\n"
+    )
+
+  rtf_file <-
+    list(
+      header = header,
+      page_information = page_information,
+      document = document
+    )
 
   class(rtf_file) <- c("rtf_file", "rtf")
   rtf_file
 }
 
 rtf_table <- function(rows) {
-
   rtf_raw(paste(unlist(rows), collapse = ""))
 }
 
-# Conversion factors from absolute width units to twips (`tw`)
-twip_factors <-
-  c(
-    `in` = 1440, `pt` = 20, `px` = 15,
-    `cm` = 566.9291, `mm` = 56.69291, `tw` = 1
-  )
+
 
 # Input: character vector of any length. Valid values are numbers with
 # suffix of in, pt, px, cm, mm, tw; you can also include `""`.
 # Output: data frame with columns `value` and `unit`, with NA for both
 # if input element was `""`. Values that cannot be parsed will throw errors.
-parse_length_str <- function(lengths_vec,
-                             allow_negative = FALSE) {
+parse_length_str <- function(
+    lengths_vec,
+    allow_negative = FALSE
+) {
 
   match <- regexec("^([0-9.-]+)(%|[a-z]+)$", lengths_vec)
   match <- regmatches(lengths_vec, match)
@@ -341,16 +389,17 @@ abs_len_to_twips <- function(lengths_df) {
 # a numeric portion followed by the unit; the first should be a
 # length-1 vector and the latter should be a vector with as many
 # elements as there are visible columns in the gt table
-col_width_resolver_rtf <- function(table_width,
-                                   col_widths = NULL,
-                                   n_cols = length(col_widths)) {
-
-  rtf_page_width <- getOption("gt.rtf_page_width")
+col_width_resolver_rtf <- function(
+    page_body_width,
+    table_width,
+    col_widths = NULL,
+    n_cols = length(col_widths)
+) {
 
   stopifnot(length(table_width) == 1)
 
   if (table_width == "auto") {
-    table_width <- paste0(rtf_page_width, "tw")
+    table_width <- paste0(page_body_width, "tw")
   }
 
   if (is.null(col_widths)) {
@@ -363,7 +412,7 @@ col_width_resolver_rtf <- function(table_width,
   # using the assumed width of a table set in a page
   if (table_width$unit == "%") {
 
-    table_width$value <- (table_width$value / 100) * rtf_page_width
+    table_width$value <- (table_width$value / 100) * page_body_width
     table_width$unit <- "tw"
   }
 
@@ -408,13 +457,14 @@ col_width_resolver_rtf <- function(table_width,
   round(col_widths[["value"]])
 }
 
-rtf_tbl_row <- function(x,
-                        widths = NULL,
-                        height = NULL,
-                        borders = NULL,
-                        repeat_header = FALSE) {
-
-  rtf_page_width <- getOption("gt.rtf_page_width")
+rtf_tbl_row <- function(
+    x,
+    page_body_width,
+    widths = NULL,
+    height = NULL,
+    borders = NULL,
+    repeat_header = FALSE
+) {
 
   if (is.list(x)) x <- unlist(x)
 
@@ -423,7 +473,7 @@ rtf_tbl_row <- function(x,
   if (!is.null(widths)) {
     widths_twips <- cumsum(widths)
   } else {
-    widths_twips <- cumsum(rep(rtf_page_width / cell_count, cell_count))
+    widths_twips <- cumsum(rep(page_body_width / cell_count, cell_count))
   }
 
   if (is.null(height)) height <- 425
@@ -502,7 +552,7 @@ rtf_tbl_row <- function(x,
   x <- strsplit(x, "\n")
 
   # Combine additional row components to the first element
-  row_components <- paste0(tb_borders, paste0("\\cellx", floor(widths_twips)))
+  row_components <- paste(tb_borders, paste0("\\cellx", floor(widths_twips)))
 
   for (i in seq_along(row_components)) {
     x[[i]][1] <- rtf_paste0(rtf_raw(x[[i]][1]), rtf_raw(row_components[i]))
@@ -521,19 +571,21 @@ rtf_tbl_row <- function(x,
   )
 }
 
-rtf_tbl_cell <- function(x,
-                         borders = NULL,
-                         h_align = c("left", "center", "right"),
-                         v_align = c("center", "top", "bottom"),
-                         h_merge = NULL,
-                         padding = NULL,
-                         cell_background_color = NULL,
-                         font = NULL,
-                         font_size = NULL,
-                         font_color = NULL,
-                         bold = FALSE,
-                         italic = FALSE,
-                         super_sub = NULL) {
+rtf_tbl_cell <- function(
+    x,
+    borders = NULL,
+    h_align = c("left", "center", "right"),
+    v_align = c("center", "top", "bottom"),
+    h_merge = NULL,
+    padding = NULL,
+    cell_background_color = NULL,
+    font = NULL,
+    font_size = NULL,
+    font_color = NULL,
+    bold = FALSE,
+    italic = FALSE,
+    super_sub = NULL
+) {
 
   x <- paste(x, collapse = " ")
 
@@ -541,21 +593,21 @@ rtf_tbl_cell <- function(x,
   v_align <- substr(match.arg(v_align), 1, 1)
 
   # Set default padding values if `padding = NULL`
-  if (is.null(padding)) padding <- c(50, 50, 50, 50)
+  if (is.null(padding)) padding <- c(25, 85, 25, 85)
 
-  # Set padding in units of twips, in the order bottom, right, left, and top
-  padding_values <-
-    c(
-      rtf_key("clpadb", padding[1]), rtf_key("clpadr", padding[2]),
-      rtf_key("clpadl", padding[3]), rtf_key("clpadt", padding[4])
-    )
+  # Set padding in units of twips, in the order left, top, bottom, right
   padding_units <-
     c(
-      rtf_key("clpadfb", 3), rtf_key("clpadfr", 3),
-      rtf_key("clpadfl", 3), rtf_key("clpadft", 3)
+      rtf_key("clpadfl", 3), rtf_key("clpadft", 3),
+      rtf_key("clpadfb", 3), rtf_key("clpadfr", 3)
+    )
+  padding_values <-
+    c(
+      rtf_key("clpadl", padding[1]), rtf_key("clpadt", padding[2]),
+      rtf_key("clpadb", padding[3]), rtf_key("clpadr", padding[4])
     )
 
-  cell_padding <- paste(paste0(padding_values, padding_units), collapse = "")
+  cell_padding <- paste(paste0(padding_units, padding_values), collapse = " ")
 
   # Set border values
   if (!is.null(borders)) {
@@ -629,7 +681,7 @@ rtf_tbl_cell <- function(x,
       rtf_key("plain"),
       rtf_key("uc", 0),
       rtf_key("q", h_align),
-      rtf_key("clvertal", v_align),
+      rtf_key("clvertal", v_align), " ",
       rtf_raw(cell_padding),
       rtf_raw(cell_borders),
       rtf_raw(cell_background_color),
@@ -642,22 +694,22 @@ rtf_tbl_cell <- function(x,
       rtf_key("intbl"),
       " ",
       cell_text,
-      rtf_key("cell"), "\n",
-      rtf_key("pard"),
-      rtf_key("plain")
+      rtf_key("cell")
     )
 
   # Return a complete RTF table cell (marked as `rtf_text`)
   rtf_paste0(cell_settings, "\n", cell_content)
 }
 
-rtf_font <- function(...,
-                     font = NULL,
-                     font_size = NULL,
-                     font_color = NULL,
-                     bold = FALSE,
-                     italic = FALSE,
-                     super_sub = NULL) {
+rtf_font <- function(
+    ...,
+    font = NULL,
+    font_size = NULL,
+    font_color = NULL,
+    bold = FALSE,
+    italic = FALSE,
+    super_sub = NULL
+) {
 
   # Obtain font-specific settings
   font_styles <-
@@ -683,7 +735,13 @@ rtf_raw <- function(...) {
 
 # Transform a footnote mark to an RTF representation as a superscript
 footnote_mark_to_rtf <- function(mark) {
-  rtf_paste0(rtf_raw("{\\super \\i "), mark, rtf_raw("}"))
+  stopifnot(length(mark) == 1)
+
+  if (is.na(mark)) {
+    ""
+  } else {
+    rtf_paste0(rtf_raw("{\\super \\i "), mark, rtf_raw("}"))
+  }
 }
 
 rtf_escape <- function(x) {
@@ -722,12 +780,14 @@ rtf_escape_unicode <- function(x) {
   paste(chars, collapse = "")
 }
 
-rtf_font_styling <- function(font = NULL,
-                             font_size = NULL,
-                             font_color = NULL,
-                             bold = FALSE,
-                             italic = FALSE,
-                             super_sub = NULL) {
+rtf_font_styling <- function(
+    font = NULL,
+    font_size = NULL,
+    font_color = NULL,
+    bold = FALSE,
+    italic = FALSE,
+    super_sub = NULL
+) {
 
   # Set font for text
   if (!is.null(font)) {
@@ -787,10 +847,12 @@ rtf_font_styling <- function(font = NULL,
   )
 }
 
-rtf_border <- function(direction,
-                       style = "s",
-                       width = 20,
-                       color = 0) {
+rtf_border <- function(
+    direction,
+    style = "s",
+    width = 20,
+    color = 0
+) {
 
   if (direction == "all") {
     direction <- c("top", "bottom", "left", "right")
@@ -823,18 +885,30 @@ as_rtf_string <- function(x) {
     rtf_raw("{"),
     rtf_raw(as.character(x$header)),
     "\n",
+    rtf_raw(as.character(x$page_information)),
+    "\n",
     rtf_raw(as.character(x$document)),
     rtf_raw("}")
   )
 }
 
+rtf_header_page_numbering <-
+  paste0(
+    "{\\f0\\fs20\\i Page }{\\f0\\fs20\\i \\field\\flddirty{\\*\\fldinst{  PAGE   ",
+    "\\\\* MERGEFORMAT }}}{\\f0\\fs20\\i  of }{\\f0\\fs20\\i \\field{\\*\\fldinst{ NUMPAGES}}}\n"
+  )
+
 #
 # Table Header
 #
+
 create_heading_component_rtf <- function(data) {
 
-  if (!dt_heading_has_title(data = data) &&
-      !dt_heading_has_subtitle(data = data)) {
+  if (
+    !dt_heading_has_title(data = data) &&
+    !dt_heading_has_subtitle(data = data) &&
+    !dt_heading_has_preheader(data = data)
+  ) {
     return(list())
   }
 
@@ -843,8 +917,9 @@ create_heading_component_rtf <- function(data) {
   heading <- dt_heading_get(data)
   footnotes_tbl <- dt_footnotes_get(data)
 
-  # Get table width
+  # Get the table width and the page body width
   table_width <- dt_options_get_value(data = data, option = "table_width")
+  page_body_width <- get_page_body_width(data = data)
 
   # Obtain widths for each visible column label
   col_widths <-
@@ -866,6 +941,7 @@ create_heading_component_rtf <- function(data) {
 
   col_widths <-
     col_width_resolver_rtf(
+      page_body_width = page_body_width,
       table_width = table_width,
       col_widths = col_widths,
       n_cols = length(col_widths)
@@ -875,9 +951,9 @@ create_heading_component_rtf <- function(data) {
 
   # Get table options
   table_font_color <- dt_options_get_value(data, option = "table_font_color")
-  table_border_top_include <- dt_options_get_value(data, option = "table_border_top_include")
+  #table_border_top_include <- dt_options_get_value(data, option = "table_border_top_include")
+  table_border_top_include <- FALSE
   table_border_top_color <- dt_options_get_value(data, option = "table_border_top_color")
-
 
   if ("title" %in% footnotes_tbl$locname) {
     footnote_title_marks <- footnotes_tbl %>% coalesce_marks(locname = "title")
@@ -894,51 +970,117 @@ create_heading_component_rtf <- function(data) {
   }
 
   if (dt_heading_has_subtitle(data = data)) {
+
     subtitle_component <-
       c(
         rtf_key("line"),
         rtf_font(
-          font_size = 8,
+          font_size = 10,
           rtf_raw(heading$subtitle)
         ),
         rtf_font(
           italic = TRUE,
           super_sub = "super",
-          font_size = 8,
+          font_size = 10,
           rtf_raw(footnote_subtitle_marks)
         )
       )
+
   } else {
     subtitle_component <- NULL
+  }
+
+  # Generate the RTF lines that will generate content in the table preheader
+  if (
+    dt_heading_has_preheader(data = data) &&
+    !dt_options_get_value(data, option = "page_numbering")
+    ) {
+
+    # Case where one or more preheader lines are present
+
+    preheader_component <-
+      rtf_raw(
+        "\n",
+        paste0("{\\f0\\fs20 ", heading$preheader, "}\\par\n"),
+        "\n"
+      )
+
+  } else if (
+    !dt_heading_has_preheader(data = data) &&
+    dt_options_get_value(data, option = "page_numbering")
+  ) {
+
+    # Case where page numbering is present (but no preheader lines)
+
+    preheader_component <-
+      rtf_raw(
+        "\n",
+        "\\ql\\tx7245\\tqr\\tx12360\n",
+        "\\pmartabqr ",
+        rtf_header_page_numbering,
+        "\\par\\ql\n"
+      )
+
+  } else if (
+    dt_heading_has_preheader(data = data) &&
+    dt_options_get_value(data, option = "page_numbering")
+  ) {
+
+    # Case where one or more preheader lines and page numbering are present
+
+    preheader_length <- length(heading$preheader)
+
+    preheader_component <-
+      rtf_raw(
+        "\n",
+        "\\ql\\tx7245\\tqr\\tx12360\n",
+        paste0("{\\f0\\fs20 ", heading$preheader[1], "}\\pmartabqr "),
+        rtf_header_page_numbering,
+        "\\par\\ql\n",
+        if (preheader_length > 1) paste0("{\\f0\\fs20 ", heading$preheader[2:preheader_length], "}\\par\n") else "",
+        "\n"
+      )
+
+  } else {
+    preheader_component <- NULL
   }
 
   tbl_cell <-
     rtf_tbl_cell(
       c(
         rtf_font(
-          font_size = 14,
+          font_size = 10,
           rtf_raw(heading$title)
         ),
         rtf_font(
           italic = TRUE,
           super_sub = "super",
-          font_size = 14,
+          font_size = 10,
           rtf_raw(footnote_title_marks)
         ),
         subtitle_component
       ),
       h_align = "center",
-      borders = if (table_border_top_include) list(rtf_border("top", color = table_border_top_color, width = 40)) else NULL,
+      borders =
+        if (table_border_top_include) {
+          list(rtf_border("top", color = table_border_top_color, width = 40))
+        } else {
+          NULL
+        },
       font_color = table_font_color
     )
 
   # Return a list of RTF table rows (in this case, a single row)
   list(
-    rtf_tbl_row(
-      tbl_cell,
-      widths = table_width,
-      height = 0,
-      repeat_header = TRUE
+    rtf_paste0(
+      preheader_component,
+      rtf_tbl_row(
+        tbl_cell,
+        page_body_width = page_body_width,
+        widths = table_width,
+        height = 0,
+        repeat_header = TRUE
+      )
     )
   )
 }
@@ -955,13 +1097,20 @@ create_columns_component_rtf <- function(data) {
     return(list())
   }
 
+  # Get the page body width
+  page_body_width <- get_page_body_width(data = data)
+
   stubh <- dt_stubhead_get(data = data)
 
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
 
-  # Determine if there are any spanners present
-  spanners_present <- dt_spanners_exists(data)
+  # Determine the finalized number of spanner rows
+  spanner_row_count <-
+    dt_spanners_matrix_height(
+      data = data,
+      omit_columns_row = TRUE
+    )
 
   # Get options related to column label border colors
   column_labels_border_top_color <- dt_options_get_value(data = data, option = "column_labels_border_top_color")
@@ -984,6 +1133,7 @@ create_columns_component_rtf <- function(data) {
     dplyr::pull(column_width) %>%
     unlist() %>%
     col_width_resolver_rtf(
+      page_body_width = page_body_width,
       table_width = dt_options_get_value(data = data, option = "table_width"),
       col_widths = .,
       n_cols = get_effective_number_of_columns(data = data)
@@ -1011,54 +1161,6 @@ create_columns_component_rtf <- function(data) {
       dt_boxhead_get_vars_align_default(data = data)
     )
 
-  if (spanners_present) {
-
-    spanners <- dt_spanners_print(data = data, include_hidden = FALSE)
-    spanner_ids <- dt_spanners_print(data = data, include_hidden = FALSE, ids = TRUE)
-
-    spanners[is.na(spanners)] <- ""
-
-    if (length(stub_layout) > 0) {
-      spanners <- c(rep("", length(stub_layout)), spanners)
-      spanner_ids <- c(rep("", length(stub_layout)), spanner_ids)
-    }
-
-    spanners_lengths <- unclass(rle(spanner_ids))
-
-    merge_keys_spanners <- c()
-
-    for (i in seq_along(spanners_lengths$lengths)) {
-      if (spanners_lengths$lengths[i] == 1) {
-        merge_keys_spanners <- c(merge_keys_spanners, 0)
-      } else {
-        merge_keys_spanners <- c(merge_keys_spanners, 1, rep(2, spanners_lengths$lengths[i] - 1))
-      }
-    }
-
-    spanners_list <-
-      lapply(
-        seq_along(spanner_ids),
-        FUN = function(x) {
-          rtf_tbl_cell(
-            rtf_font(
-              font_size = 10,
-              rtf_raw(spanners[x])
-            ),
-            h_align = "center",
-            h_merge = merge_keys_spanners[x],
-            borders = list(
-              rtf_border("top", color = column_labels_border_top_color, width = 40),
-              rtf_border("bottom", color = column_labels_border_bottom_color),
-              rtf_border("left", color = column_labels_vlines_color),
-              rtf_border("right", color = column_labels_vlines_color)
-            )
-          )
-        }
-      )
-  } else {
-    spanners_list <- list()
-  }
-
   merge_keys_cells <- rep(0, get_effective_number_of_columns(data = data))
 
   if (length(stub_layout) == 2) {
@@ -1079,45 +1181,135 @@ create_columns_component_rtf <- function(data) {
           h_align = col_alignment[x],
           h_merge = merge_keys_cells[x],
           borders = list(
-            rtf_border("top", color = column_labels_border_top_color, width = 40),
-            rtf_border("bottom", color = column_labels_border_bottom_color, width = 40),
-            rtf_border("left", color = column_labels_vlines_color),
-            rtf_border("right", color = column_labels_vlines_color)
+            rtf_border("bottom", color = column_labels_border_bottom_color, width = 20)#,
+          # rtf_border("top", color = column_labels_border_top_color, width = 40),
+          # rtf_border("left", color = column_labels_vlines_color),
+          # rtf_border("right", color = column_labels_vlines_color)
           )
         )
       }
     )
 
-  if (spanners_present) {
+  if (spanner_row_count > 0) {
 
-    row_list_column_labels <-
-      list(
-        rtf_tbl_row(
-          spanners_list,
-          widths = col_widths,
-          height = 0,
-          repeat_header = TRUE
-        ),
-        rtf_tbl_row(
-          cell_list,
-          widths = col_widths,
-          height = 0,
-          repeat_header = TRUE
-        )
+    spanner_rows <- list()
+
+    spanners <-
+      dt_spanners_print_matrix(
+        data = data,
+        include_hidden = FALSE,
+        omit_columns_row = TRUE
       )
 
+    spanner_ids <-
+      dt_spanners_print_matrix(
+        data = data,
+        include_hidden = FALSE,
+        ids = TRUE,
+        omit_columns_row = TRUE
+      )
+
+    higher_spanner_rows_idx <- seq_len(nrow(spanner_ids))
+
+    for (i in higher_spanner_rows_idx) {
+
+      spanner_ids_row <- spanner_ids[i, ]
+      spanners_row <- spanners[i, ]
+      spanners_vars <- unique(spanner_ids_row[!is.na(spanner_ids_row)])
+
+      # Replace NA values with an empty string ID
+      spanner_ids_row[is.na(spanner_ids_row)] <- ""
+      spanners_row[is.na(spanners_row)] <- ""
+
+      spanners_lengths <- unclass(rle(spanner_ids[i, ]))
+
+      merge_keys_spanners <- c()
+
+      for (j in seq_along(spanners_lengths$lengths)) {
+        if (spanners_lengths$lengths[j] == 1) {
+          merge_keys_spanners <- c(merge_keys_spanners, 0)
+        } else {
+          merge_keys_spanners <- c(merge_keys_spanners, 1, rep(2, spanners_lengths$lengths[j] - 1))
+        }
+      }
+
+      level_i_spanners <-
+        lapply(
+          seq_along(spanner_ids_row),
+          FUN = function(x) {
+            rtf_tbl_cell(
+              rtf_font(
+                font_size = 10,
+                rtf_raw(spanners_row[x])
+              ),
+              h_align = "center",
+              h_merge = merge_keys_spanners[x],
+              borders = list(
+                if (spanners_row[x] != "") {
+                  rtf_border("bottom", color = column_labels_border_bottom_color, width = 20)
+                } else {
+                  NULL
+                }
+              )
+            )
+          }
+        )
+
+      if (length(stub_layout) > 0) {
+
+        level_i_spanners <-
+          c(
+            rep(
+              list(
+                rtf_tbl_cell(
+                  rtf_font(
+                    font_size = 10,
+                    rtf_raw("")
+                  ),
+                  h_align = "center"#,
+                  # borders = list(
+                  #   rtf_border("top", color = column_labels_border_top_color, width = 40),
+                  #   rtf_border("bottom", color = column_labels_border_bottom_color),
+                  #   rtf_border("left", color = column_labels_vlines_color),
+                  #   rtf_border("right", color = column_labels_vlines_color)
+                  # )
+                )
+              ),
+              length(stub_layout)
+            ),
+            level_i_spanners
+          )
+      }
+
+      spanner_rows <-
+        c(
+          spanner_rows,
+          list(
+            rtf_tbl_row(
+              level_i_spanners,
+              page_body_width = page_body_width,
+              widths = col_widths,
+              height = 0,
+              repeat_header = TRUE
+            )
+          )
+        )
+    }
   } else {
-
-    row_list_column_labels <-
-      list(
-        rtf_tbl_row(
-          cell_list,
-          widths = col_widths,
-          height = 0,
-          repeat_header = TRUE
-        )
-      )
+    spanner_rows <- ""
   }
+
+  row_list_column_labels <-
+    list(
+      spanner_rows,
+      rtf_tbl_row(
+        cell_list,
+        page_body_width = page_body_width,
+        widths = col_widths,
+        height = 0,
+        repeat_header = TRUE
+      )
+    )
 
   # Return a list of RTF table rows (either one or two rows)
   row_list_column_labels
@@ -1140,6 +1332,10 @@ create_body_component_rtf <- function(data) {
   table_body_hlines_color <- dt_options_get_value(data = data, option = "table_body_hlines_color")
   table_body_vlines_color <- dt_options_get_value(data = data, option = "table_body_vlines_color")
   table_border_bottom_color <- dt_options_get_value(data, option = "table_border_bottom_color")
+
+  # Get the table width and page body width
+  table_width <- dt_options_get_value(data = data, option = "table_width")
+  page_body_width <- get_page_body_width(data = data)
 
   # Obtain all of the visible (`"default"`), non-stub
   # column names for the table
@@ -1181,7 +1377,8 @@ create_body_component_rtf <- function(data) {
     dplyr::pull(column_width) %>%
     unlist() %>%
     col_width_resolver_rtf(
-      table_width = dt_options_get_value(data = data, option = "table_width"),
+      page_body_width = page_body_width,
+      table_width = table_width,
       col_widths = .,
       n_cols = n_cols
     )
@@ -1213,15 +1410,16 @@ create_body_component_rtf <- function(data) {
               rtf_tbl_cell(
                 row_group_labels[which(row_group_rows == i)],
                 font_size = 10,
-                h_align = "left",
-                borders = list(
-                  rtf_border("top", color = row_group_border_top_color, width = 40),
-                  rtf_border("bottom", color = row_group_border_bottom_color, width = 40),
-                  rtf_border("left", color = row_group_border_left_color),
-                  rtf_border("right", color = row_group_border_right_color)
-                )
+                h_align = "left"#,
+                # borders = list(
+                #   rtf_border("top", color = row_group_border_top_color, width = 40),
+                #   rtf_border("bottom", color = row_group_border_bottom_color, width = 40),
+                #   rtf_border("left", color = row_group_border_left_color),
+                #   rtf_border("right", color = row_group_border_right_color)
+                # )
               )
             ),
+            page_body_width = page_body_width,
             widths = sum(col_widths),
             height = 0
           )
@@ -1279,12 +1477,12 @@ create_body_component_rtf <- function(data) {
               font_size = 10,
               rtf_raw(cell_matrix[[i, x]])
             ),
-            h_align = col_alignment[x],
-            borders = list(
-              top_bottom_borders,
-              rtf_border("left", color = table_body_vlines_color, width = 10),
-              rtf_border("right", color = table_body_vlines_color, width = 10)
-            )
+            h_align = col_alignment[x]#,
+            # borders = list(
+            #   top_bottom_borders,
+            #   rtf_border("left", color = table_body_vlines_color, width = 10),
+            #   rtf_border("right", color = table_body_vlines_color, width = 10)
+            # )
           )
         }
       )
@@ -1294,6 +1492,7 @@ create_body_component_rtf <- function(data) {
       body_row <-
         rtf_tbl_row(
           cell_list,
+          page_body_width = page_body_width,
           borders = list(
             rtf_border(direction = "top", color = table_body_hlines_color)
           ),
@@ -1305,6 +1504,7 @@ create_body_component_rtf <- function(data) {
       body_row <-
         rtf_tbl_row(
           cell_list,
+          page_body_width = page_body_width,
           widths = col_widths,
           height = 0
         )
@@ -1370,12 +1570,12 @@ create_body_component_rtf <- function(data) {
                     font_size = 10,
                     rtf_raw(summary_row[x])
                   ),
-                  h_align = col_alignment[x],
-                  borders = list(
-                    bottom_border,
-                    rtf_border("left", color = table_body_vlines_color, width = 10),
-                    rtf_border("right", color = table_body_vlines_color, width = 10)
-                  )
+                  h_align = col_alignment[x]#,
+                  # borders = list(
+                  #   bottom_border,
+                  #   rtf_border("left", color = table_body_vlines_color, width = 10),
+                  #   rtf_border("right", color = table_body_vlines_color, width = 10)
+                  # )
                 )
               }
             )
@@ -1385,6 +1585,7 @@ create_body_component_rtf <- function(data) {
               row_list_body,
               rtf_tbl_row(
                 cell_list,
+                page_body_width = page_body_width,
                 widths = col_widths,
                 height = 0
               )
@@ -1427,16 +1628,16 @@ create_body_component_rtf <- function(data) {
                 rtf_raw(grand_summary_row[x])
               ),
               h_align = col_alignment[x],
-              h_merge = merge_keys_cells[x],
-              borders = list(
-                rtf_border(
-                  "bottom",
-                  color = table_body_hlines_color,
-                  width = ifelse(j == nrow(grand_summary_df), 50, 10)
-                  ),
-                rtf_border("left", color = table_body_vlines_color, width = 10),
-                rtf_border("right", color = table_body_vlines_color, width = 10)
-              )
+              h_merge = merge_keys_cells[x]#,
+              # borders = list(
+              #   rtf_border(
+              #     "bottom",
+              #     color = table_body_hlines_color,
+              #     width = ifelse(j == nrow(grand_summary_df), 50, 10)
+              #     ),
+              #   rtf_border("left", color = table_body_vlines_color, width = 10),
+              #   rtf_border("right", color = table_body_vlines_color, width = 10)
+              # )
             )
           }
         )
@@ -1446,16 +1647,17 @@ create_body_component_rtf <- function(data) {
           row_list_body,
           rtf_tbl_row(
             cell_list,
+            page_body_width = page_body_width,
             widths = col_widths,
-            height = 0,
-            borders = list(
-              rtf_border(
-                "top",
-                style = ifelse(j == 1, "db", "s"),
-                color = table_body_hlines_color,
-                width = ifelse(j == 1, 50, 10)
-              )
-            ),
+            height = 0#,
+            # borders = list(
+            #   rtf_border(
+            #     "top",
+            #     style = ifelse(j == 1, "db", "s"),
+            #     color = table_body_hlines_color,
+            #     width = ifelse(j == 1, 50, 10)
+            #   )
+            # )
           )
         )
     }
@@ -1470,6 +1672,17 @@ create_body_component_rtf <- function(data) {
 #
 create_footer_component_rtf <- function(data) {
 
+  # Obtain the option on whether to place the footer component in the
+  # RTF document's page footer
+  page_footer_use_tbl_notes <-
+    dt_options_get_value(data = data, option = "page_footer_use_tbl_notes")
+
+  # If option is taken to display table notes in the page footer,
+  # return an empty list
+  if (page_footer_use_tbl_notes) {
+    return(list())
+  }
+
   # Get table components and metadata using the `data`
   source_notes <- dt_source_notes_get(data)
 
@@ -1483,8 +1696,9 @@ create_footer_component_rtf <- function(data) {
 
   boxh <- dt_boxhead_get(data)
 
-  # Get table width
+  # Get table width and page body width
   table_width <- dt_options_get_value(data = data, option = "table_width")
+  page_body_width <- get_page_body_width(data = data)
 
   # Obtain widths for each visible column label
   col_widths <-
@@ -1506,6 +1720,7 @@ create_footer_component_rtf <- function(data) {
 
   col_widths <-
     col_width_resolver_rtf(
+      page_body_width = page_body_width,
       table_width = table_width,
       col_widths = col_widths,
       n_cols = length(col_widths)
@@ -1513,13 +1728,110 @@ create_footer_component_rtf <- function(data) {
 
   table_width <- sum(col_widths)
 
-  cell_list <- ""
+  # Get the multiline and separator options for footnotes and source notes
+  footnotes_multiline <- dt_options_get_value(data = data, option = "footnotes_multiline")
+  footnotes_sep <- dt_options_get_value(data = data, option = "footnotes_sep")
+  source_notes_multiline <- dt_options_get_value(data = data, option = "source_notes_multiline")
+  source_notes_sep <- dt_options_get_value(data = data, option = "source_notes_sep")
+
+  # Generate a list containing formatted footnotes and source notes
+  notes_list <-
+    generate_notes_list(
+      footnotes_tbl = footnotes_tbl,
+      source_notes_vec = source_notes_vec,
+      footnotes_multiline = footnotes_multiline,
+      source_notes_multiline = source_notes_multiline,
+      footnotes_sep = footnotes_sep,
+      source_notes_sep = source_notes_sep
+    )
+
+  # Return a list of RTF table rows (up to two rows) for the footer
+  list(
+    if (notes_list$footnotes != "") {
+      rtf_tbl_row(
+        rtf_tbl_cell(
+          rtf_font(
+            font_size = 10,
+            rtf_raw(notes_list$footnotes)
+          )
+        ),
+        page_body_width = page_body_width,
+        widths = table_width,
+        height = 0
+      )
+    },
+    if (notes_list$source_notes != "") {
+      rtf_tbl_row(
+        rtf_tbl_cell(
+          rtf_font(
+            font_size = 10,
+            rtf_raw(notes_list$source_notes)
+          )
+        ),
+        page_body_width = page_body_width,
+        widths = table_width,
+        height = 0
+      )
+    }
+  )
+}
+
+create_page_footer_component_rtf <- function(data) {
+
+  # Obtain the option on whether to place the footer component in the
+  # RTF document's page footer
+  page_footer_use_tbl_notes <-
+    dt_options_get_value(data = data, option = "page_footer_use_tbl_notes")
+
+  # If option not taken to display table notes in the page footer,
+  # return an empty list
+  if (!page_footer_use_tbl_notes) {
+    return(list())
+  }
+
+  # Get table components and metadata using the `data`
+  footnotes_tbl <- dt_footnotes_get(data = data)
+  source_notes_vec <- dt_source_notes_get(data = data)
+
+  # If there are no footnotes or source notes return an empty list
+  if (nrow(footnotes_tbl) == 0 && length(source_notes_vec) == 0){
+    return(list())
+  }
 
   # Get the multiline and separator options for footnotes and source notes
   footnotes_multiline <- dt_options_get_value(data = data, option = "footnotes_multiline")
   footnotes_sep <- dt_options_get_value(data = data, option = "footnotes_sep")
   source_notes_multiline <- dt_options_get_value(data = data, option = "source_notes_multiline")
   source_notes_sep <- dt_options_get_value(data = data, option = "source_notes_sep")
+
+  # Generate a list containing formatted footnotes and source notes
+  notes_list <-
+    generate_notes_list(
+      footnotes_tbl = footnotes_tbl,
+      source_notes_vec = source_notes_vec,
+      footnotes_multiline = footnotes_multiline,
+      source_notes_multiline = source_notes_multiline,
+      footnotes_sep = footnotes_sep,
+      source_notes_sep = source_notes_sep
+    )
+
+  # Generate the RTF lines that will generate content in the page footer
+  rtf_raw(
+    "{\\footer\n",
+    paste0("{\\f0\\fs20 ", notes_list$footnotes, "}\\par\n"),
+    paste0("{\\f0\\fs20 ", notes_list$source_notes, "}\\par\n"),
+    "}\n"
+  )
+}
+
+generate_notes_list <- function(
+    footnotes_tbl,
+    source_notes_vec,
+    footnotes_multiline,
+    source_notes_multiline,
+    footnotes_sep,
+    source_notes_sep
+) {
 
   # Create a formatted footnotes string
   if (nrow(footnotes_tbl) > 0) {
@@ -1546,23 +1858,14 @@ create_footer_component_rtf <- function(data) {
         c(
           footnotes,
           rtf_paste0(
-            cell_list,
-            rtf_font(
-              italic = TRUE,
-              super_sub = "super",
-              font_size = 10,
-              rtf_raw(footnote_mark[i])
-            ),
-            rtf_font(
-              font_size = 10,
-              rtf_raw(footnote_text[i])
-            )
+            footnote_mark_to_rtf(footnote_mark[i]),
+            rtf_raw(footnote_text[i])
           )
         )
     }
 
     if (footnotes_multiline) {
-      footnotes <- paste(footnotes, collapse = rtf_raw("\\line"))
+      footnotes <- paste(footnotes, collapse = rtf_raw("\\line "))
     } else {
       footnotes <- paste(footnotes, collapse = footnotes_sep)
     }
@@ -1576,22 +1879,11 @@ create_footer_component_rtf <- function(data) {
     source_notes <- c()
 
     for (i in seq_along(source_notes_vec)) {
-
-      source_notes <-
-        c(
-          source_notes,
-          rtf_paste0(
-            cell_list,
-            rtf_font(
-              font_size = 10,
-              rtf_raw(source_notes_vec[i])
-            )
-          )
-        )
+      source_notes <- c(source_notes, rtf_raw(source_notes_vec[i]))
     }
 
     if (source_notes_multiline) {
-      source_notes <- paste(source_notes, collapse = "\\line")
+      source_notes <- paste(source_notes, collapse = "\\line ")
     } else {
       source_notes <- paste(source_notes, collapse = source_notes_sep)
     }
@@ -1599,37 +1891,34 @@ create_footer_component_rtf <- function(data) {
     source_notes <- ""
   }
 
-  # Return a list of RTF table rows (up to two rows) for the footer
   list(
-    if (footnotes != "") {
-      rtf_tbl_row(
-        rtf_tbl_cell(
-          rtf_paste0(
-            cell_list,
-            rtf_font(
-              font_size = 10,
-              rtf_raw(footnotes)
-            )
-          )
-        ),
-        widths = table_width,
-        height = 0
-      )
-    },
-    if (source_notes != "") {
-      rtf_tbl_row(
-        rtf_tbl_cell(
-          rtf_paste0(
-            cell_list,
-            rtf_font(
-              font_size = 10,
-              rtf_raw(source_notes)
-            )
-          )
-        ),
-        widths = table_width,
-        height = 0
-      )
-    }
+    footnotes = footnotes,
+    source_notes = source_notes
   )
+}
+
+# Convert value given in different length units to twips
+dt_options_get_page_value_in_twips <- function(data, option) {
+
+  value <- dt_options_get_value(data = data, option = option)
+
+  tw_tbl <- abs_len_to_twips(parse_length_str(value))
+
+  tw_tbl$value
+}
+
+get_page_body_width <- function(data) {
+
+  page_orientation <- dt_options_get_value(data = data, option = "page_orientation")
+
+  page_width_val <-
+    dt_options_get_page_value_in_twips(
+      data = data,
+      option = if (page_orientation == "portrait") "page_width" else "page_height"
+    )
+
+  page_margin_left_val <- dt_options_get_page_value_in_twips(data = data, option = "page_margin_left")
+  page_margin_right_val <- dt_options_get_page_value_in_twips(data = data, option = "page_margin_right")
+
+  page_width_val - page_margin_left_val - page_margin_right_val
 }

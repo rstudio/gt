@@ -1452,7 +1452,7 @@ test_that("the internal `opts_df` table can be correctly modified", {
 test_that("the `opts_df` getter/setter functions properly", {
 
   # Obtain a local copy of the internal `_options` table
-  dt_options_get(data = data) %>% expect_is("tbl_df")
+  dt_options_get(data = data) %>% expect_s3_class("tbl_df")
 
   # Get a value
   dt_options_get_value(data = data, option = "footnotes_font_size") %>%

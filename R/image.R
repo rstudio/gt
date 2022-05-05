@@ -25,24 +25,24 @@
 #' @return A character object with an HTML fragment that can be placed inside of
 #'   a cell.
 #'
-#' @examples
-#' # Get the PNG-based logo for the R
-#' # Project from an image URL
-#' r_png_url <-
-#'   "https://www.r-project.org/logo/Rlogo.png"
+#' @section Examples:
 #'
-#' # Create a tibble that contains heights
-#' # of an image in pixels (one column as a
-#' # string, the other as numerical values),
-#' # then, create a gt table; use the
-#' # `text_transform()` function to insert
-#' # the R logo PNG image with the various
-#' # sizes
-#' tab_1 <-
-#'   dplyr::tibble(
-#'     pixels = px(seq(10, 35, 5)),
-#'     image = seq(10, 35, 5)
-#'   ) %>%
+#' Get the PNG-based logo for the R Project from an image URL.
+#'
+#' ```r
+#' r_png_url <- "https://www.r-project.org/logo/Rlogo.png"
+#' ```
+#'
+#' Create a tibble that contains heights of an image in pixels (one column as a
+#' string, the other as numerical values), then, create a **gt** table. Use the
+#' [text_transform()] function to insert the R logo PNG image with the various
+#' sizes.
+#'
+#' ```r
+#' dplyr::tibble(
+#'   pixels = px(seq(10, 35, 5)),
+#'   image = seq(10, 35, 5)
+#' ) %>%
 #'   gt() %>%
 #'   text_transform(
 #'     locations = cells_body(columns = image),
@@ -53,24 +53,28 @@
 #'       )
 #'     }
 #'   )
+#' ```
 #'
-#' # Get the SVG-based logo for the R
-#' # Project from an image URL
-#' r_svg_url <-
-#'   "https://www.r-project.org/logo/Rlogo.svg"
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_web_image_1.png")`
+#' }}
 #'
-#' # Create a tibble that contains heights
-#' # of an image in pixels (one column as a
-#' # string, the other as numerical values),
-#' # then, create a gt table; use the
-#' # `tab_header()` function to insert
-#' # the R logo SVG image once in the title
-#' # and five times in the subtitle
-#' tab_2 <-
-#'   dplyr::tibble(
-#'     pixels = px(seq(10, 35, 5)),
-#'     image = seq(10, 35, 5)
-#'   ) %>%
+#' Get the SVG-based logo for the R Project from an image URL.
+#'
+#' ```r
+#' r_svg_url <- "https://www.r-project.org/logo/Rlogo.svg"
+#' ```
+#'
+#' Create a tibble that contains heights of an image in pixels (one column as a
+#' string, the other as numerical values), then, create a **gt** table. Use the
+#' [tab_header()] function to insert the **R** logo SVG image once in the title
+#' and five times in the subtitle.
+#'
+#' ```r
+#' dplyr::tibble(
+#'   pixels = px(seq(10, 35, 5)),
+#'   image = seq(10, 35, 5)
+#' ) %>%
 #'   gt() %>%
 #'   tab_header(
 #'     title = html(
@@ -88,19 +92,21 @@
 #'         rep(5)
 #'     )
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_web_image_1.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_web_image_2.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_web_image_2.png")`
+#' }}
 #'
 #' @family Image Addition Functions
 #' @section Function ID:
 #' 8-1
 #'
 #' @export
-web_image <- function(url,
-                      height = 30) {
+web_image <- function(
+    url,
+    height = 30
+) {
 
   if (is.numeric(height)) {
     height <- paste0(height, "px")
@@ -138,19 +144,18 @@ web_image <- function(url,
 #' @return A character object with an HTML fragment that can be placed inside of
 #'   a cell.
 #'
-#' @examples
-#' # Create a tibble that contains heights
-#' # of an image in pixels (one column as a
-#' # string, the other as numerical values),
-#' # then, create a gt table; use the
-#' # `text_transform()` function to insert
-#' # a local test image (PNG) image with the
-#' # various sizes
-#' tab_1 <-
-#'   dplyr::tibble(
-#'     pixels = px(seq(10, 35, 5)),
-#'     image = seq(10, 35, 5)
-#'   ) %>%
+#' @section Examples:
+#'
+#' Create a tibble that contains heights of an image in pixels (one column as a
+#' string, the other as numerical values), then, create a **gt** table. Use the
+#' [text_transform()] function to insert a local test image (PNG) image with the
+#' various sizes.
+#'
+#' ```r
+#' dplyr::tibble(
+#'   pixels = px(seq(10, 35, 5)),
+#'   image = seq(10, 35, 5)
+#' ) %>%
 #'   gt() %>%
 #'   text_transform(
 #'     locations = cells_body(columns = image),
@@ -161,17 +166,21 @@ web_image <- function(url,
 #'       )
 #'     }
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_local_image_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_local_image_1.png")`
+#' }}
 #'
 #' @family Image Addition Functions
 #' @section Function ID:
 #' 8-2
 #'
 #' @export
-local_image <- function(filename,
-                        height = 30) {
+local_image <- function(
+    filename,
+    height = 30
+) {
 
   # Normalize file path
   filename <- path_expand(filename)
@@ -223,30 +232,32 @@ local_image <- function(filename,
 #' @return A character object with an HTML fragment that can be placed inside of
 #'   a cell.
 #'
-#' @examples
+#' @section Examples:
+#'
+#' Create a **ggplot** plot.
+#'
+#' ```r
 #' library(ggplot2)
 #'
-#' # Create a ggplot plot
 #' plot_object <-
 #'   ggplot(
 #'     data = gtcars,
-#'     aes(x = hp, y = trq,
-#'         size = msrp)) +
+#'     aes(x = hp, y = trq, size = msrp)
+#'   ) +
 #'   geom_point(color = "blue") +
 #'   theme(legend.position = "none")
+#' ```
 #'
-#' # Create a tibble that contains two
-#' # cells (where one is a placeholder for
-#' # an image), then, create a gt table;
-#' # use the `text_transform()` function
-#' # to insert the plot using by calling
-#' # `ggplot_object()` within the user-
-#' # defined function
-#' tab_1 <-
-#'   dplyr::tibble(
-#'     text = "Here is a ggplot:",
-#'     ggplot = NA
-#'   ) %>%
+#' Create a tibble that contains two cells (where one is a placeholder for an
+#' image), then, create a **gt** table. Use the `text_transform()` function to
+#' insert the plot using by calling `ggplot_object()` within the user- defined
+#' function.
+#'
+#' ```r
+#' dplyr::tibble(
+#'   text = "Here is a ggplot:",
+#'   ggplot = NA
+#' ) %>%
 #'   gt() %>%
 #'   text_transform(
 #'     locations = cells_body(columns = ggplot),
@@ -255,9 +266,11 @@ local_image <- function(filename,
 #'         ggplot_image(height = px(200))
 #'     }
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_ggplot_image_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_ggplot_image_1.png")`
+#' }}
 #'
 #' @family Image Addition Functions
 #' @section Function ID:
@@ -265,9 +278,11 @@ local_image <- function(filename,
 #'
 #' @importFrom ggplot2 ggsave
 #' @export
-ggplot_image <- function(plot_object,
-                         height = 100,
-                         aspect_ratio = 1.0) {
+ggplot_image <- function(
+    plot_object,
+    height = 100,
+    aspect_ratio = 1.0
+) {
 
   if (is.numeric(height)) {
     height <- paste0(height, "px")

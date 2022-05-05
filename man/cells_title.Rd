@@ -63,9 +63,25 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \code{list()} (e.g., \code{list(cells_body(), cells_grand_summary())}).
 }
 
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cells_title_1.png}{options: width=100\%}}
+
+Use \code{\link{sp500}} to create a \strong{gt} table. Add a header with a title, and then
+add a footnote to the title with \code{\link[=tab_footnote]{tab_footnote()}} and \code{cells_title()} (in
+\code{locations}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
+  dplyr::filter(date >= "2015-01-05" & date <="2015-01-10") \%>\%
+  dplyr::select(-c(adj_close, volume, high, low)) \%>\%
+  gt() \%>\%
+  tab_header(title = "S&P 500") \%>\%
+  tab_footnote(
+    footnote = "All values in USD.",
+    locations = cells_title(groups = "title")
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_title_1.png" style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
@@ -73,28 +89,6 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 7-5
 }
 
-\examples{
-# Use `sp500` to create a gt table; add
-# a header with a title, and then add a
-# footnote to the title with `tab_footnote()`
-# and `cells_title()` (in `locations`)
-tab_1 <-
-  sp500 \%>\%
-  dplyr::filter(
-    date >= "2015-01-05" &
-      date <="2015-01-10"
-  ) \%>\%
-  dplyr::select(
-    -c(adj_close, volume, high, low)
-  ) \%>\%
-  gt() \%>\%
-  tab_header(title = "S&P 500") \%>\%
-  tab_footnote(
-    footnote = "All values in USD.",
-    locations = cells_title(groups = "title")
-  )
-
-}
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},

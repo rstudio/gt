@@ -14,6 +14,7 @@ fmt_fraction(
   use_seps = TRUE,
   pattern = "{x}",
   sep_mark = ",",
+  system = c("intl", "ind"),
   locale = NULL
 )
 }
@@ -65,6 +66,12 @@ characters are taken to be string literals.}
 (e.g., using \code{sep_mark = ","} with \code{1000} would result in a formatted value
 of \verb{1,000}).}
 
+\item{system}{The numbering system to use. By default, this is the
+international numbering system (\code{"intl"}) whereby grouping separators
+(i.e., \code{sep_mark}) are separated by three digits. The alternative system,
+the Indian numbering system (\code{"ind"}) uses grouping separators that
+correspond to thousand, lakh, crore, and higher quantities.}
+
 \item{locale}{An optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include \code{"en_US"} for English
 (United States) and \code{"fr_FR"} for French (France). The use of a valid
@@ -103,24 +110,13 @@ Targeting of values is done through \code{columns} and additionally by \code{row
 nothing is provided for \code{rows} then entire columns are selected). A number of
 helper functions exist to make targeting more effective. Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the Arguments section for more information on this.
+argument. See the \emph{Arguments} section for more information on this.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_fmt_fraction_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
-
-3-6
-}
-
-\examples{
-# Use `pizzaplace` to create a gt table;
-# format the `f_sold` and `f_income`
-# columns to display fractions
-tab_1 <-
-  pizzaplace \%>\%
+Use \code{\link{pizzaplace}} to create a \strong{gt} table. Format the \code{f_sold} and
+\code{f_income} columns to display fractions.\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
   dplyr::group_by(type, size) \%>\%
   dplyr::summarize(
     sold = dplyr::n(),
@@ -159,12 +155,12 @@ tab_1 <-
   ) \%>\%
   text_transform(
     locations = cells_body(),
-    fn = function(x) {
+    fn = function(x) \{
       dplyr::case_when(
         x == 0 ~ "<em>nil</em>",
         x != 0 ~ x
       )
-    }
+    \}
   ) \%>\%
   cols_label(
     sold = "Amount",
@@ -177,8 +173,18 @@ tab_1 <-
     table.width = px(400),
     row_group.as_column = TRUE
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_fraction_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+3-7
+}
+
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},
@@ -191,6 +197,7 @@ Other Format Data:
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
+\code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
 \code{\link{fmt_scientific}()},
