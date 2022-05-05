@@ -523,35 +523,28 @@ context_large_vals_text <- function(
     context
 ) {
 
-  if (large_pattern == ">={x}" && sign == "-") {
-    large_pattern <- "<{x}"
+  if (large_pattern == ">={x}") {
+    if (sign == "-") {
+      large_pattern <- paste0(context_lte_mark(context = context), "{x}")
+    } else {
+      large_pattern <- paste0(context_gte_mark(context = context), "{x}")
+    }
   }
 
-  large_vals_text <- gsub("{x}", abs(threshold), large_pattern, fixed = TRUE)
+  gsub("{x}", abs(threshold), large_pattern, fixed = TRUE)
+}
+
+#' Obtain the contextually correct less than or equal to
+#'
+#' @param context The output context.
+#' @noRd
+context_lte_mark <- function(context) {
 
   switch(
     context,
-    html = {
-      if (large_pattern == ">={x}") {
-        gsub(">=", context_gte_mark(context = "html"), large_vals_text)
-      } else {
-        large_vals_text
-      }
-    },
-    latex = {
-      if (large_pattern == ">={x}") {
-        gsub(">=", context_gte_mark(context = "latex"), large_vals_text)
-      } else {
-        large_vals_text
-      }
-    },
-    rtf = {
-      if (large_pattern == ">={x}") {
-        gsub(">=", context_gte_mark(context = "rtf"), large_vals_text)
-      } else {
-        large_vals_text
-      }
-    }
+    html = "\U02264",
+    latex = "$\\\\leq$",
+    "<="
   )
 }
 
