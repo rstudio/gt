@@ -34,6 +34,21 @@ rendered table.}
 }
 \value{
 An object of class \code{gt_tbl}.
+}
+\description{
+Wherever there is missing data (i.e., \code{NA} values) customizable content may
+present better than the standard \code{NA} text that would otherwise appear. The
+\code{sub_missing()} function allows for this replacement through its
+\code{missing_text} argument (where an em dash serves as the default).
+}
+\details{
+Targeting of values is done through \code{columns} and additionally by \code{rows} (if
+nothing is provided for \code{rows} then entire columns are selected). Conditional
+formatting is possible by providing a conditional expression to the \code{rows}
+argument. See the Arguments section for more information on this.
+}
+\section{Examples}{
+
 
 Use \code{\link{exibble}} to create a \strong{gt} table. The \code{NA} values in different
 columns will be given replacement text.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
@@ -53,18 +68,7 @@ columns will be given replacement text.\if{html}{\out{<div class="sourceCode r">
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_missing_1.png" style="width:100\%;">
 }}
 }
-\description{
-Wherever there is missing data (i.e., \code{NA} values) customizable content may
-present better than the standard \code{NA} text that would otherwise appear. The
-\code{sub_missing()} function allows for this replacement through its
-\code{missing_text} argument (where an em dash serves as the default).
-}
-\details{
-Targeting of values is done through \code{columns} and additionally by \code{rows} (if
-nothing is provided for \code{rows} then entire columns are selected). Conditional
-formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the Arguments section for more information on this.
-}
+
 \section{Function ID}{
 
 3-16

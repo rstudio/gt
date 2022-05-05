@@ -56,6 +56,69 @@ nothing is provided for \code{rows} then entire columns are selected). Condition
 formatting is possible by providing a conditional expression to the \code{rows}
 argument. See the Arguments section for more information on this.
 }
+\section{Examples}{
+
+
+Let's generate a simple, single-column tibble that contains an assortment of
+values that could potentially undergo some substitution.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- dplyr::tibble(num = c(10^(-4:2), 0, NA))
+
+tbl
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 9 × 1
+##        num
+##      <dbl>
+## 1   0.0001
+## 2   0.001 
+## 3   0.01  
+## 4   0.1   
+## 5   1     
+## 6  10     
+## 7 100     
+## 8   0     
+## 9  NA
+}
+
+The \code{tbl} contains a variety of smaller numbers and some might be small
+enough to reformat with a threshold value. With \code{sub_small_vals()} we can
+do just that:\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
+  gt() \%>\%
+  fmt_number(columns = num) \%>\%
+  sub_small_vals()
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_small_vals_1.png" style="width:100\%;">
+}}
+
+Small and negative value can also be handled but they are handled specially
+by the \code{sign} parameter. Setting that to \code{"-"} will format only the small,
+negative values.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
+  dplyr::mutate(num = -num) \%>\%
+  gt() \%>\%
+  fmt_number(columns = num) \%>\%
+  sub_small_vals(sign = "-")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_small_vals_2.png" style="width:100\%;">
+}}
+
+You don't have to settle with the default \code{threshold} value or the default
+replacement pattern (in \code{small_pattern}). This can be changed and the
+\code{"{x}"} in \code{small_pattern} (which uses the threshold value) can even be
+omitted.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
+  gt() \%>\%
+  fmt_number(columns = num) \%>\%
+  sub_small_vals(
+    threshold = 0.0005,
+    small_pattern = "smol"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_small_vals_3.png" style="width:100\%;">
+}}
+}
+
 \section{Function ID}{
 
 3-18

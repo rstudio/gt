@@ -18,6 +18,8 @@
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @section Examples:
+#'
 #' Use [`exibble`] to create a **gt** table. The `NA` values in different
 #' columns will be given replacement text.
 #'
@@ -216,6 +218,67 @@ sub_zero <- function(
 #'   can be used to consider only negative values.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Let's generate a simple, single-column tibble that contains an assortment of
+#' values that could potentially undergo some substitution.
+#'
+#' ```{r}
+#' tbl <- dplyr::tibble(num = c(10^(-4:2), 0, NA))
+#'
+#' tbl
+#' ```
+#'
+#' The `tbl` contains a variety of smaller numbers and some might be small
+#' enough to reformat with a threshold value. With `sub_small_vals()` we can
+#' do just that:
+#'
+#' ```r
+#' tbl %>%
+#'   gt() %>%
+#'   fmt_number(columns = num) %>%
+#'   sub_small_vals()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_sub_small_vals_1.png")`
+#' }}
+#'
+#' Small and negative value can also be handled but they are handled specially
+#' by the `sign` parameter. Setting that to `"-"` will format only the small,
+#' negative values.
+#'
+#' ```r
+#' tbl %>%
+#'   dplyr::mutate(num = -num) %>%
+#'   gt() %>%
+#'   fmt_number(columns = num) %>%
+#'   sub_small_vals(sign = "-")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_sub_small_vals_2.png")`
+#' }}
+#'
+#' You don't have to settle with the default `threshold` value or the default
+#' replacement pattern (in `small_pattern`). This can be changed and the
+#' `"{x}"` in `small_pattern` (which uses the threshold value) can even be
+#' omitted.
+#'
+#' ```r
+#' tbl %>%
+#'   gt() %>%
+#'   fmt_number(columns = num) %>%
+#'   sub_small_vals(
+#'     threshold = 0.0005,
+#'     small_pattern = "smol"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_sub_small_vals_3.png")`
+#' }}
 #'
 #' @family Format Data
 #' @section Function ID:
