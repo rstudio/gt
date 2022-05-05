@@ -21,7 +21,7 @@
 #' @section Examples:
 #'
 #' Use [`exibble`] to create a **gt** table. The `NA` values in different
-#' columns will be given replacement text.
+#' columns will be given replacement text with two calls of `sub_missing()`.
 #'
 #' ```r
 #' exibble %>%
