@@ -236,8 +236,44 @@ gt_save_webshot <- function(data,
 
   } else {
 
+    getBoxModel <- function(b, selector = "html", wait_ = TRUE) {
+      p <- b$DOM$getDocument(wait_ = FALSE) %...>%
+        { b$DOM$querySelector(.$root$nodeId, selector, wait_ = FALSE) } %...>%
+        { b$DOM$getBoxModel(.$nodeId, wait_ = FALSE) }
+
+      if (wait_) {
+        b$wait_for(p)
+      } else {
+        p
+      }
+    }
+
+    chr_sess <- chromote::ChromoteSession$new()
+
+    chr_sess$Page$navigate(paste0("file:///", tempfile_))
+
+    chr_sess$view()
+
+    # Provides info for borders, padding, margins and can be focussed
+    # on the `table` selector
+    getBoxModel(chr_sess, selector = "table") %>% str()
+
+    x <- chr_sess$Page$printToPDF(preferCSSPageSize = TRUE)
+
+    # Perhaps set margins to 0
+
+    writeBin(jsonlite::base64_dec(x$data), filename)
+
+    # ,
+    #   file = filename,
+    #   selector = "table",
+    #   zoom = zoom,
+    #   expand = expand,
+    #   ...
+    # )
+
     # Save the image in the working directory
-    webshot::webshot(
+    webshot2::webshot(
       url = paste0("file:///", tempfile_),
       file = filename,
       selector = "table",
