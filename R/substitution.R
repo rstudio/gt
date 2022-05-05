@@ -242,7 +242,7 @@ sub_small_vals <- function(
     op_fn_threshold <- `<`
     op_fn_zero_away <- `>`
   } else {
-    op_fn_threshold <- `>=`
+    op_fn_threshold <- `>`
     op_fn_zero_away <- `<`
   }
 
