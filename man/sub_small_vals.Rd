@@ -89,7 +89,7 @@ do just that:\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_small_vals_1.png" style="width:100\%;">
 }}
 
-Small and negative value can also be handled but they are handled specially
+Small and negative values can also be handled but they are handled specially
 by the \code{sign} parameter. Setting that to \code{"-"} will format only the small,
 negative values.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   dplyr::mutate(num = -num) \%>\%
@@ -104,7 +104,7 @@ negative values.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>
 
 You don't have to settle with the default \code{threshold} value or the default
 replacement pattern (in \code{small_pattern}). This can be changed and the
-\code{"{x}"} in \code{small_pattern} (which uses the threshold value) can even be
+\code{"{x}"} in \code{small_pattern} (which uses the \code{threshold} value) can even be
 omitted.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   gt() \%>\%
   fmt_number(columns = num) \%>\%

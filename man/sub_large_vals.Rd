@@ -56,6 +56,70 @@ nothing is provided for \code{rows} then entire columns are selected). Condition
 formatting is possible by providing a conditional expression to the \code{rows}
 argument. See the Arguments section for more information on this.
 }
+\section{Examples}{
+
+
+Let's generate a simple, single-column tibble that contains an assortment of
+values that could potentially undergo some substitution.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- dplyr::tibble(num = c(0, NA, 10^(8:14)))
+
+tbl
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 9 × 1
+##     num
+##   <dbl>
+## 1  0   
+## 2 NA   
+## 3  1e 8
+## 4  1e 9
+## 5  1e10
+## 6  1e11
+## 7  1e12
+## 8  1e13
+## 9  1e14
+}
+
+The \code{tbl} contains a variety of smaller numbers and some might be small
+enough to reformat with a threshold value. With \code{sub_small_vals()} we can
+do just that:\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
+  gt() \%>\%
+  fmt_number(columns = num) \%>\%
+  sub_large_vals()
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_large_vals_1.png" style="width:100\%;">
+}}
+
+Large negative values can also be handled but they are handled specially
+by the \code{sign} parameter. Setting that to \code{"-"} will format only the large
+values that are negative. Notice that with the default \code{large_pattern}
+value of \code{">={x}"} the \code{">="} is automatically changed to \code{"<="}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
+  dplyr::mutate(num = -num) \%>\%
+  gt() \%>\%
+  fmt_number(columns = num) \%>\%
+  sub_large_vals(sign = "-")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_large_vals_2.png" style="width:100\%;">
+}}
+
+You don't have to settle with the default \code{threshold} value or the default
+replacement pattern (in \code{large_pattern}). This can be changed and the
+\code{"{x}"} in \code{large_pattern} (which uses the \code{threshold} value) can even be
+omitted.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
+  gt() \%>\%
+  fmt_number(columns = num) \%>\%
+  sub_large_vals(
+    threshold = 5E10,
+    large_pattern = "hugemongous"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_large_vals_3.png" style="width:100\%;">
+}}
+}
+
 \section{Function ID}{
 
 3-19
