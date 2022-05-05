@@ -1,3 +1,5 @@
+skip_on_cran()
+
 test_that("the `sub_missing()` function works correctly", {
 
   # Create an input table with two columns, both numeric
@@ -322,7 +324,7 @@ test_that("the `sub_large_vals()` function works correctly", {
        fmt_number(columns = num_1) %>%
        sub_large_vals(columns = "int_1", threshold = 500, sign = "-") %>%
        render_formats_test(context = "html"))[["int_1"]],
-    c("1", "&lt;500", "800", "5", "NA", "0", "-32")
+    c("1", "≤500", "800", "5", "NA", "0", "-32")
   )
 
   expect_equal(
