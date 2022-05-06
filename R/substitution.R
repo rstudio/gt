@@ -640,6 +640,28 @@ check_sub_fn_sign <- function(sign) {
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @section Examples:
+#'
+#' Let's use the `currency` column from [`exibble`] to generate a **gt** table.
+#' After formatting that column with [fmt_integer()], let's substitute any
+#' values that are `NA` or less than `5` with the word `"insignificant"`.
+#'
+#' ```r
+#' exibble %>%
+#'   dplyr::select(currency) %>%
+#'   gt() %>%
+#'   fmt_integer(columns = currency) %>%
+#'   sub_x(
+#'     fns = function(x) {
+#'       ifelse(is.na(x) | x < 5, "insignificant", x)
+#'     }
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_sub_x_1.png")`
+#' }}
+#'
 #' @family Format Data
 #' @section Function ID:
 #' 3-20
