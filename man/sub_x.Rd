@@ -57,6 +57,27 @@ entire columns are selected). Conditional substitution is possible by
 providing a conditional expression to the \code{rows} argument. See the
 \emph{Arguments} section for more information on this.
 }
+\section{Examples}{
+
+
+Let's use the \code{currency} column from \code{\link{exibble}} to generate a \strong{gt} table.
+After formatting that column with \code{\link[=fmt_integer]{fmt_integer()}}, let's substitute any
+values that are \code{NA} or less than \code{5} with the word \code{"insignificant"}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+  dplyr::select(currency) \%>\%
+  gt() \%>\%
+  fmt_integer(columns = currency) \%>\%
+  sub_x(
+    fns = function(x) \{
+      ifelse(is.na(x) | x < 5, "insignificant", x)
+    \}
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_x_1.png" style="width:100\%;">
+}}
+}
+
 \section{Function ID}{
 
 3-20
