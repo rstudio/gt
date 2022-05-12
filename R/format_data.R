@@ -2963,11 +2963,11 @@ fmt_passthrough <- function(
 #' RTF).
 #'
 #' If you require formatting of `x` that depends on the output format, a list of
-#' functions can be provided for the `html`, `latex`, and `default` contexts.
-#' This can be in the form of `fns = list(html = function(x) ..., latex =
-#' function(x) ..., default = function(x) ...)`. In this multiple-function case,
-#' we recommended including the `default` function as a fallback if all contexts
-#' aren't provided.
+#' functions can be provided for the `html`, `latex`, `rtf`, and `default`
+#' contexts. This can be in the form of `fns = list(html = function(x) ...,
+#' latex = function(x) ..., default = function(x) ...)`. In this
+#' multiple-function case, we recommended including the `default` function as a
+#' fallback if all contexts aren't provided.
 #'
 #' @details
 #' As with all of the `fmt_*()` functions, targeting of values is done through
@@ -2978,6 +2978,9 @@ fmt_passthrough <- function(
 #'
 #' @inheritParams fmt_number
 #' @param fns Either a single formatting function or a named list of functions.
+#' @param prepend Should the formatting function(s) be brought to the beginning
+#' of the formatting queue (`TRUE`) or placed at the end (`FALSE`). By default,
+#' this is `FALSE` and this leads to 'last-one-wins' semantics.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -3012,7 +3015,8 @@ fmt <- function(
     data,
     columns = everything(),
     rows = everything(),
-    fns
+    fns,
+    prepend = FALSE
 ) {
 
   # Perform input object validation
@@ -3053,7 +3057,11 @@ fmt <- function(
       rows = resolved_rows_idx
     )
 
-  dt_formats_add(data = data, formats = formatter_list)
+  dt_formats_add(
+    data = data,
+    formats = formatter_list,
+    prepend = prepend
+  )
 }
 
 #' Insert separator marks to an integer to conform to Indian numbering system

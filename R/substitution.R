@@ -704,14 +704,14 @@ sub_x <- function(
     fns <- list(default = fns)
   }
 
-  # Create the `subst_list`, which is a bundle of
+  # Create the `formatter_list`, which is a bundle of
   # substitution functions for specific columns and rows
-  subst_list <-
+  formatter_list <-
     list(
       func = fns,
       cols = resolved_columns,
       rows = resolved_rows_idx
     )
 
-  dt_substitutions_add(data = data, substitutions = subst_list)
+  dt_formats_add(data = data, formats = formatter_list, prepend = TRUE)
 }
