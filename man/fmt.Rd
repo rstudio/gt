@@ -48,10 +48,10 @@ data cells the same way regardless of the output format (e.g., HTML, LaTeX,
 RTF).
 
 If you require formatting of \code{x} that depends on the output format, a list of
-functions can be provided for the \code{html}, \code{latex}, and \code{default} contexts.
-This can be in the form of \code{fns = list(html = function(x) ..., latex = function(x) ..., default = function(x) ...)}. In this multiple-function case,
-we recommended including the \code{default} function as a fallback if all contexts
-aren't provided.
+functions can be provided for the \code{html}, \code{latex}, \code{rtf}, and \code{default}
+contexts. This can be in the form of \code{fns = list(html = function(x) ..., latex = function(x) ..., default = function(x) ...)}. In this
+multiple-function case, we recommended including the \code{default} function as a
+fallback if all contexts aren't provided.
 }
 \details{
 As with all of the \verb{fmt_*()} functions, targeting of values is done through
