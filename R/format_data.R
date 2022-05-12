@@ -2910,7 +2910,7 @@ fmt_passthrough <- function(
 
         x_str
       },
-      latex = function(x) {
+      rtf = function(x) {
 
         # Create `x_str` with same length as `x`
         x_str <- rep(NA_character_, length(x))
