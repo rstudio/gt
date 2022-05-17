@@ -525,7 +525,7 @@ context_large_vals_text <- function(
 
   if (large_pattern == ">={x}") {
     if (sign == "-") {
-      large_pattern <- paste0(context_lte_mark(context = context), "{x}")
+      large_pattern <- paste0(context_lte_mark(context = context), "-{x}")
     } else {
       large_pattern <- paste0(context_gte_mark(context = context), "{x}")
     }
