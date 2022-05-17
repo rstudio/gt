@@ -97,7 +97,9 @@ argument. See the \emph{Arguments} section for more information on this.
 
 Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{num} column as
 partially numeric  and partially in scientific notation (using the
-\code{num > 500} and \code{num <= 500} expressions in the respective \code{rows} arguments).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+\code{num > 500} and \code{num <= 500} expressions in the respective \code{rows} arguments).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt() \%>\%
   fmt_number(
     columns = num,

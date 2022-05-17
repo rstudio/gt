@@ -20,7 +20,9 @@ number codes, the format names, and example outputs using a fixed time
 
 
 Get a table of info on the different time-formatting styles (which are used
-by supplying a number code to the \code{\link[=fmt_time]{fmt_time()}} function).\if{html}{\out{<div class="sourceCode r">}}\preformatted{info_time_style()
+by supplying a number code to the \code{\link[=fmt_time]{fmt_time()}} function).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{info_time_style()
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{

@@ -36,7 +36,9 @@ as a vector of lines or as a single string.
 
 Use \code{\link{exibble}} to create a \strong{gt} table and format the data in both columns.
 With \code{opt_css()}, insert CSS rulesets as as string and be sure to set the
-table ID explicitly (here as \code{"one"}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+table ID explicitly (here as \code{"one"}).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(num, currency) \%>\%
   gt(id = "one") \%>\%
   fmt_currency(

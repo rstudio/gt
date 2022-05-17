@@ -66,7 +66,9 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 
 
 Use \code{\link{sza}} to create a \strong{gt} table. Add footnotes to the column labels with
-\code{\link[=tab_footnote]{tab_footnote()}} and \code{cells_column_labels()} in \code{locations}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza \%>\%
+\code{\link[=tab_footnote]{tab_footnote()}} and \code{cells_column_labels()} in \code{locations}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza \%>\%
   dplyr::filter(
     latitude == 20 & month == "jan" &
       !is.na(sza)

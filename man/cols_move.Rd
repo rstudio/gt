@@ -40,7 +40,9 @@ end of the column series then use \code{\link[=cols_move_to_end]{cols_move_to_en
 
 
 Use \code{\link{countrypops}} to create a \strong{gt} table. With the remaining columns,
-position \code{population} after \code{country_name} with the \code{cols_move()} function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
+position \code{population} after \code{country_name} with the \code{cols_move()} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::select(-contains("code")) \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%

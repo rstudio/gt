@@ -127,7 +127,9 @@ argument. See the \emph{Arguments} section for more information on this.
 
 
 Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{num} column to have
-byte sizes in the decimal standard.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+byte sizes in the decimal standard.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(num) \%>\%
   gt() \%>\%
   fmt_bytes(columns = num)
@@ -138,7 +140,9 @@ byte sizes in the decimal standard.\if{html}{\out{<div class="sourceCode r">}}\p
 }}
 
 Create a similar table with the \code{fmt_bytes()} function, this time showing
-byte sizes as binary values.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+byte sizes as binary values.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(num) \%>\%
   gt() \%>\%
   fmt_bytes(

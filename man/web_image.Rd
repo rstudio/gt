@@ -39,13 +39,17 @@ heights of most table rows.
 \section{Examples}{
 
 
-Get the PNG-based logo for the R Project from an image URL.\if{html}{\out{<div class="sourceCode r">}}\preformatted{r_png_url <- "https://www.r-project.org/logo/Rlogo.png"
+Get the PNG-based logo for the R Project from an image URL.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{r_png_url <- "https://www.r-project.org/logo/Rlogo.png"
 }\if{html}{\out{</div>}}
 
 Create a tibble that contains heights of an image in pixels (one column as a
 string, the other as numerical values), then, create a \strong{gt} table. Use the
 \code{\link[=text_transform]{text_transform()}} function to insert the R logo PNG image with the various
-sizes.\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
+sizes.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
   pixels = px(seq(10, 35, 5)),
   image = seq(10, 35, 5)
 ) \%>\%
@@ -65,13 +69,17 @@ sizes.\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_web_image_1.png" style="width:100\%;">
 }}
 
-Get the SVG-based logo for the R Project from an image URL.\if{html}{\out{<div class="sourceCode r">}}\preformatted{r_svg_url <- "https://www.r-project.org/logo/Rlogo.svg"
+Get the SVG-based logo for the R Project from an image URL.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{r_svg_url <- "https://www.r-project.org/logo/Rlogo.svg"
 }\if{html}{\out{</div>}}
 
 Create a tibble that contains heights of an image in pixels (one column as a
 string, the other as numerical values), then, create a \strong{gt} table. Use the
 \code{\link[=tab_header]{tab_header()}} function to insert the \strong{R} logo SVG image once in the title
-and five times in the subtitle.\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
+and five times in the subtitle.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
   pixels = px(seq(10, 35, 5)),
   image = seq(10, 35, 5)
 ) \%>\%

@@ -65,7 +65,9 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 
 
 Use \code{\link{gtcars}} to create a \strong{gt} table. Add a source note and style the
-source notes section.\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
+source notes section.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
   dplyr::select(mfr, model, msrp) \%>\%
   dplyr::slice(1:5) \%>\%
   gt() \%>\%

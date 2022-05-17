@@ -77,7 +77,9 @@ argument. See the \emph{Arguments} section for more information on this.
 
 Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{date} and \code{time}
 columns. Format the \code{date} column to have dates formatted as \code{month_day_year}
-(date style \code{5}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+(date style \code{5}).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(date, time) \%>\%
   gt() \%>\%
   fmt_date(
@@ -93,7 +95,9 @@ columns. Format the \code{date} column to have dates formatted as \code{month_da
 Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{date} and \code{time}
 columns. Format the \code{date} column to have mixed date formats (dates after
 April will be different than the others because of the expressions used
-in the \code{rows} argument).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+in the \code{rows} argument).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(date, time) \%>\%
   gt() \%>\%
   fmt_date(

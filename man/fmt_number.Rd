@@ -157,7 +157,9 @@ argument. See the \emph{Arguments} section for more information on this.
 
 
 Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{num} column as numeric
-with three decimal places and with no use of digit separators.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+with three decimal places and with no use of digit separators.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt() \%>\%
   fmt_number(
     columns = num,
@@ -171,7 +173,9 @@ with three decimal places and with no use of digit separators.\if{html}{\out{<di
 }}
 
 Use \code{\link{countrypops}} to create a \strong{gt} table. Format all numeric columns to
-use large-number suffixing with the \code{suffixing = TRUE} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
+use large-number suffixing with the \code{suffixing = TRUE} option.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::select(country_code_3, year, population) \%>\%
   dplyr::filter(country_code_3 \%in\% c("CHN", "IND", "USA", "PAK", "IDN")) \%>\%
   dplyr::filter(year > 1975 & year \%\% 5 == 0) \%>\%

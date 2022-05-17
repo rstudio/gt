@@ -116,7 +116,9 @@ argument. See the \emph{Arguments} section for more information on this.
 
 
 Use \code{\link{pizzaplace}} to create a \strong{gt} table. Format the \code{f_sold} and
-\code{f_income} columns to display fractions.\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
+\code{f_income} columns to display fractions.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
   dplyr::group_by(type, size) \%>\%
   dplyr::summarize(
     sold = dplyr::n(),

@@ -65,7 +65,9 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 
 
 Use \code{\link{sza}} to create a \strong{gt} table. Color the \code{sza} column using the
-\code{data_color()} function, add a footnote and also style the footnotes section.\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza \%>\%
+\code{data_color()} function, add a footnote and also style the footnotes section.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza \%>\%
   dplyr::filter(
     latitude == 20 &
       month == "jan" &

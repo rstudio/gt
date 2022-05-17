@@ -100,7 +100,9 @@ argument. See the \emph{Arguments} section for more information on this.
 
 
 Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{num} column in
-engineering notation.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+engineering notation.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt() \%>\%
   fmt_engineering(columns = num)
 }\if{html}{\out{</div>}}

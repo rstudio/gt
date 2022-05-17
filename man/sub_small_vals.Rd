@@ -60,10 +60,14 @@ argument. See the Arguments section for more information on this.
 
 
 Let's generate a simple, single-column tibble that contains an assortment of
-values that could potentially undergo some substitution.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- dplyr::tibble(num = c(10^(-4:2), 0, NA))
+values that could potentially undergo some substitution.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- dplyr::tibble(num = c(10^(-4:2), 0, NA))
 
 tbl
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 9 × 1
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 9 × 1
 ##        num
 ##      <dbl>
 ## 1   0.0001
@@ -75,11 +79,13 @@ tbl
 ## 7 100     
 ## 8   0     
 ## 9  NA
-}
+}\if{html}{\out{</div>}}
 
 The \code{tbl} contains a variety of smaller numbers and some might be small
 enough to reformat with a threshold value. With \code{sub_small_vals()} we can
-do just that:\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
+do just that:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   gt() \%>\%
   fmt_number(columns = num) \%>\%
   sub_small_vals()
@@ -91,7 +97,9 @@ do just that:\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
 
 Small and negative values can also be handled but they are handled specially
 by the \code{sign} parameter. Setting that to \code{"-"} will format only the small,
-negative values.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
+negative values.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   dplyr::mutate(num = -num) \%>\%
   gt() \%>\%
   fmt_number(columns = num) \%>\%
@@ -105,7 +113,9 @@ negative values.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>
 You don't have to settle with the default \code{threshold} value or the default
 replacement pattern (in \code{small_pattern}). This can be changed and the
 \code{"{x}"} in \code{small_pattern} (which uses the \code{threshold} value) can even be
-omitted.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
+omitted.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   gt() \%>\%
   fmt_number(columns = num) \%>\%
   sub_small_vals(

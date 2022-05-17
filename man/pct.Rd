@@ -28,7 +28,9 @@ analogous helper function \code{\link[=pct]{pct()}} will be more useful.
 
 
 Use \code{\link{exibble}} to create a \strong{gt} table. Use the \code{pct()} helper to define
-the font size for the column labels.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+the font size for the column labels.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt() \%>\%
   tab_style(
     style = cell_text(size = pct(75)),

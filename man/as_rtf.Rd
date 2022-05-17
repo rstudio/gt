@@ -18,7 +18,9 @@ file that can be opened by RTF readers.
 
 
 Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header and then export as RTF
-code.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_rtf <-
+code.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_rtf <-
   gtcars \%>\%
   dplyr::select(mfr, model) \%>\%
   dplyr::slice(1:2) \%>\%
