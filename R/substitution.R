@@ -58,11 +58,12 @@ sub_missing <- function(
   stop_if_not_gt(data = data)
 
   # Pass `data`, `columns`, `rows`, and the formatting
-  # functions (as a function list) to `sub_x()`
-  sub_x(
+  # functions (as a function list) to `fmt()`
+  fmt(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
+    prepend = TRUE,
     fns = list(
       # Any values of `x` that are `NA` get `missing_text` as output; any values
       # that are not missing get `NA` as their output (meaning, the existing
@@ -192,11 +193,12 @@ sub_zero <- function(
   stop_if_not_gt(data = data)
 
   # Pass `data`, `columns`, `rows`, and the formatting
-  # functions (as a function list) to `sub_x()`
-  sub_x(
+  # functions (as a function list) to `fmt()`
+  fmt(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
+    prepend = TRUE,
     fns = list(
       # Any values of `x` that are exactly 0 get `zero_text` as output;
       # any values that aren't 0 won't be affected
@@ -335,11 +337,12 @@ sub_small_vals <- function(
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
-  # functions (as a function list) to `sub_x()`
-  sub_x(
+  # functions (as a function list) to `fmt()`
+  fmt(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
+    prepend = TRUE,
     fns = list(
       # Any values of `x` that are below the threshold will be processed
       # according to the `small_pattern`, the `threshold` value (interacts with
@@ -525,11 +528,12 @@ sub_large_vals <- function(
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
-  # functions (as a function list) to `sub_x()`
-  sub_x(
+  # functions (as a function list) to `fmt()`
+  fmt(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
+    prepend = TRUE,
     fns = list(
       # Any values of `x` that are above the threshold will be processed
       # according to the `large_pattern`, the `threshold` value (interacts with
@@ -602,116 +606,4 @@ check_sub_fn_sign <- function(sign) {
       call. = FALSE
     )
   }
-}
-
-#' Set a substitution scheme with custom functions
-#'
-#' @description
-#' The `sub_x()` function provides a way to execute custom substitution
-#' functionality with raw data values in a way that can consider all output
-#' contexts.
-#'
-#' Along with the `columns` and `rows` arguments that provide some
-#' precision in targeting data cells, the `fns` argument allows you to define
-#' one or more functions for manipulating the raw data.
-#'
-#' If providing a single function to `fns`, the recommended format is in the
-#' form: `fns = function(x) ...`. This single function will format the targeted
-#' data cells the same way regardless of the output format (e.g., HTML, LaTeX,
-#' RTF).
-#'
-#' If you require formatting of `x` that depends on the output format, a list of
-#' functions can be provided for the `html`, `latex`, and `default` contexts.
-#' This can be in the form of `fns = list(html = function(x) ..., latex =
-#' function(x) ..., default = function(x) ...)`. In this multiple-function case,
-#' we recommended including the `default` function as a fallback if all contexts
-#' aren't provided.
-#'
-#' @details
-#' As with all of the `sub_*()` functions, targeting of values is done through
-#' `columns` and additionally by `rows` (if nothing is provided for `rows` then
-#' entire columns are selected). Conditional substitution is possible by
-#' providing a conditional expression to the `rows` argument. See the
-#' *Arguments* section for more information on this.
-#'
-#' @inheritParams fmt_number
-#' @param fns Either a single substitution function or a named list of
-#'   functions.
-#'
-#' @return An object of class `gt_tbl`.
-#'
-#' @section Examples:
-#'
-#' Let's use the `currency` column from [`exibble`] to generate a **gt** table.
-#' After formatting that column with [fmt_integer()], let's substitute any
-#' values that are `NA` or less than `5` with the word `"insignificant"`.
-#'
-#' ```r
-#' exibble %>%
-#'   dplyr::select(currency) %>%
-#'   gt() %>%
-#'   fmt_integer(columns = currency) %>%
-#'   sub_x(
-#'     fns = function(x) {
-#'       ifelse(is.na(x) | x < 5, "insignificant", x)
-#'     }
-#'   )
-#' ```
-#'
-#' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_sub_x_1.png")`
-#' }}
-#'
-#' @family Format Data
-#' @section Function ID:
-#' 3-20
-#'
-#' @import rlang
-#' @export
-sub_x <- function(
-    data,
-    columns = everything(),
-    rows = everything(),
-    fns
-) {
-
-  # Perform input object validation
-  stop_if_not_gt(data = data)
-
-  # Get the `stub_df` and `data_tbl` tables from `data`
-  stub_df <- dt_stub_df_get(data = data)
-  data_tbl <- dt_data_get(data = data)
-
-  #
-  # Resolution of columns and rows as character vectors
-  #
-
-  resolved_columns <-
-    resolve_cols_c(
-      expr = {{ columns }},
-      data = data
-    )
-
-  resolved_rows_idx <-
-    resolve_rows_i(
-      expr = {{ rows }},
-      data = data
-    )
-
-  # If a single function is supplied to `fns` then
-  # repackage that into a list as the `default` function
-  if (is.function(fns)) {
-    fns <- list(default = fns)
-  }
-
-  # Create the `formatter_list`, which is a bundle of
-  # substitution functions for specific columns and rows
-  formatter_list <-
-    list(
-      func = fns,
-      cols = resolved_columns,
-      rows = resolved_rows_idx
-    )
-
-  dt_formats_add(data = data, formats = formatter_list, prepend = TRUE)
 }

@@ -79,7 +79,6 @@ Other Format Data:
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},
-\code{\link{sub_x}()},
 \code{\link{sub_zero}()}
 }
 \concept{Format Data}

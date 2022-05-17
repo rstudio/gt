@@ -144,7 +144,6 @@ Other Format Data:
 \code{\link{fmt}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
-\code{\link{sub_x}()},
 \code{\link{sub_zero}()},
 \code{\link{text_transform}()}
 }
