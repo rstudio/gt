@@ -27,11 +27,11 @@
 #' exibble %>%
 #'   dplyr::select(-row, -group) %>%
 #'   gt() %>%
-#'   fmt_missing(
+#'   sub_missing(
 #'     columns = 1:2,
 #'     missing_text = "missing"
 #'   ) %>%
-#'   fmt_missing(
+#'   sub_missing(
 #'     columns = 4:7,
 #'     missing_text = "nothing"
 #'   )
