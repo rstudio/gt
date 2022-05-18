@@ -62,7 +62,9 @@ summary rows were added via \code{grand_summary_rows()}.
 
 Use \code{\link{sp500}} to create a \strong{gt} table with row groups. Create the grand
 summary rows \code{min}, \code{max}, and \code{avg} for the table with the
-\code{grand_summary_rows()} function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
+\code{grand_summary_rows()} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
   dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") \%>\%
   dplyr::arrange(date) \%>\%
   dplyr::mutate(week = paste0("W", strftime(date, format = "\%V"))) \%>\%

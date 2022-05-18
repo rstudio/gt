@@ -125,7 +125,9 @@ argument. See the \emph{Arguments} section for more information on this.
 
 
 Use \code{\link{exibble}} to create a \strong{gt} table. format the \code{num} column as integer
-values having no digit separators (with the \code{use_seps = FALSE} option).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+values having no digit separators (with the \code{use_seps = FALSE} option).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(num, char) \%>\%
   gt() \%>\%
   fmt_integer(

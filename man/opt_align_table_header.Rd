@@ -27,7 +27,9 @@ convenient shortcut for \verb{<gt_tbl> \%>\% tab_options(heading.align = <align>
 
 Use \code{\link{exibble}} to create a \strong{gt} table with a number of table parts added.
 The header (consisting of the title and the subtitle) are to be aligned to
-the left with the \code{opt_align_table_header()} function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+the left with the \code{opt_align_table_header()} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt(rowname_col = "row", groupname_col = "group") \%>\%
   summary_rows(
     groups = "grp_a",

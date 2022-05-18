@@ -26,7 +26,9 @@ emailing context.
 
 
 Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header and then export as HTML
-code with inlined CSS styles.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_html <-
+code with inlined CSS styles.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_html <-
   gtcars \%>\%
   dplyr::select(mfr, model, msrp) \%>\%
   dplyr::slice(1:5) \%>\%

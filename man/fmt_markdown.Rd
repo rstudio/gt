@@ -40,7 +40,9 @@ argument. See the \emph{Arguments} section for more information on this.
 \section{Examples}{
 
 
-Create a few Markdown-based text snippets.\if{html}{\out{<div class="sourceCode r">}}\preformatted{text_1a <- "
+Create a few Markdown-based text snippets.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{text_1a <- "
 ### This is Markdown.
 
 Markdown’s syntax is comprised entirely of
@@ -72,7 +74,9 @@ There's a quick reference [here](https://commonmark.org/help/).
 }\if{html}{\out{</div>}}
 
 Arrange the text snippets as a tibble using the \code{dplyr::tribble()} function.
-then, create a \strong{gt} table and format all columns with \code{fmt_markdown()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tribble(
+then, create a \strong{gt} table and format all columns with \code{fmt_markdown()}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tribble(
   ~Markdown, ~md,
   text_1a,   text_2a,
   text_1b,   text_2b,

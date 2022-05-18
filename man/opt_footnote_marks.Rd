@@ -47,7 +47,9 @@ more symbols, making six
 
 
 Use \code{\link{sza}} to create a \strong{gt} table, adding three footnotes. Call
-\code{opt_footnote_marks()} to specify which footnote marks to use.\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza \%>\%
+\code{opt_footnote_marks()} to specify which footnote marks to use.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza \%>\%
   dplyr::filter(latitude == 30) \%>\%
   dplyr::group_by(tst) \%>\%
   dplyr::summarize(

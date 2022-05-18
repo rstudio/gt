@@ -35,7 +35,9 @@ column.
 
 Use \code{\link{countrypops}} to create a \strong{gt} table. With the remaining columns,
 move the \code{year} column to the end of the column series with the
-\code{cols_move_to_end()} function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
+\code{cols_move_to_end()} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::select(-contains("code")) \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%
@@ -48,7 +50,9 @@ move the \code{year} column to the end of the column series with the
 }}
 
 Use \code{\link{countrypops}} to create a \strong{gt} table. With the remaining columns,
-move \code{year} and \code{country_name} to the end of the column series.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
+move \code{year} and \code{country_name} to the end of the column series.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::select(-contains("code")) \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%

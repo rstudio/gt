@@ -140,7 +140,9 @@ argument. See the \emph{Arguments} section for more information on this.
 
 
 Use \code{\link{pizzaplace}} to create a \strong{gt} table. Format the \code{frac_of_quota}
-column to display values as percentages.\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
+column to display values as percentages.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
   dplyr::mutate(month = as.numeric(substr(date, 6, 7))) \%>\%
   dplyr::group_by(month) \%>\%
   dplyr::summarize(pizzas_sold = dplyr::n()) \%>\%
