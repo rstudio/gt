@@ -57,7 +57,7 @@ vector of column values from the \code{num} column.
 
 \section{Function ID}{
 
-3-21
+3-20
 }
 
 \seealso{
