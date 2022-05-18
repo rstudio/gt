@@ -215,6 +215,7 @@ sub_zero <- function(
         ifelse(is.numeric(x) & x == 0, zero_text, NA_character_)
       },
       default = function(x) {
+        zero_text <- process_text(zero_text, context = "default")
         ifelse(is.numeric(x) & x == 0, zero_text, NA_character_)
       }
     )
@@ -318,7 +319,7 @@ sub_small_vals <- function(
     columns = everything(),
     rows = everything(),
     threshold = 0.01,
-    small_pattern = "<{x}",
+    small_pattern = if (sign == "+") "<{x}" else md("<*abs*(-{x})"),
     sign = "+"
 ) {
 
@@ -336,6 +337,32 @@ sub_small_vals <- function(
     op_fn_zero_away <- `<`
   }
 
+  # Get the absolute value of the supplied `threshold`
+  threshold <- abs(threshold)
+
+  sub_replace_small_vals <- function(
+    x,
+    threshold,
+    sign,
+    small_pattern,
+    context
+  ) {
+    ifelse(
+      !is.na(x) &
+        x != 0 &
+        op_fn_threshold(x, threshold * ifelse(sign == "-", -1, 1)) &
+        op_fn_zero_away(x, 0),
+      process_text(
+        resolve_small_vals_text(
+          threshold = threshold,
+          small_pattern = small_pattern
+        ),
+        context = context
+      ),
+      NA_character_
+    )
+  }
+
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions (as a function list) to `fmt()`
   fmt(
@@ -348,67 +375,59 @@ sub_small_vals <- function(
       # according to the `small_pattern`, the `threshold` value (interacts with
       # the `small_pattern`, and the sign (changes the default `small_pattern`))
       html = function(x) {
-        ifelse(
-          is.numeric(x) &
-            !is.na(x) &
-            x != 0 &
-            op_fn_threshold(x, abs(threshold) * ifelse(sign == "-", -1, 1)) &
-            op_fn_zero_away(x, 0),
-          process_text(
-            context_small_vals_text(
-              threshold = threshold,
-              small_pattern = small_pattern,
-              sign = sign
-            ),
-            context = "html"
-          )
-            ,
-          NA_character_
+
+        if (!is.numeric(x)) {
+          return(rep_len(NA_character_, length(x)))
+        }
+
+        sub_replace_small_vals(
+          x,
+          threshold = threshold,
+          sign = sign,
+          small_pattern = small_pattern,
+          context = "html"
         )
       },
       rtf = function(x) {
-        ifelse(
-          is.numeric(x) &
-            !is.na(x) &
-            x != 0 &
-            op_fn_threshold(x, abs(threshold) * ifelse(sign == "-", -1, 1)) &
-            op_fn_zero_away(x, 0),
-          context_small_vals_text(
-            threshold = threshold,
-            small_pattern = small_pattern,
-            sign = sign
-          ),
-          NA_character_
+
+        if (!is.numeric(x)) {
+          return(rep_len(NA_character_, length(x)))
+        }
+
+        sub_replace_small_vals(
+          x,
+          threshold = threshold,
+          sign = sign,
+          small_pattern = small_pattern,
+          context = "rtf"
         )
       },
       latex = function(x) {
-        ifelse(
-          is.numeric(x) &
-            !is.na(x) &
-            x != 0 &
-            op_fn_threshold(x, abs(threshold) * ifelse(sign == "-", -1, 1)) &
-            op_fn_zero_away(x, 0),
-          context_small_vals_text(
-            threshold = threshold,
-            small_pattern = small_pattern,
-            sign = sign
-          ),
-          NA_character_
+
+        if (!is.numeric(x)) {
+          return(rep_len(NA_character_, length(x)))
+        }
+
+        sub_replace_small_vals(
+          x,
+          threshold = threshold,
+          sign = sign,
+          small_pattern = small_pattern,
+          context = "latex"
         )
       },
       default = function(x) {
-        ifelse(
-          is.numeric(x) &
-            !is.na(x) &
-            x != 0 &
-            op_fn_threshold(x, abs(threshold) * ifelse(sign == "-", -1, 1)) &
-            op_fn_zero_away(x, 0),
-          context_small_vals_text(
-            threshold = threshold,
-            small_pattern = small_pattern,
-            sign = sign
-          ),
-          NA_character_
+
+        if (!is.numeric(x)) {
+          return(rep_len(NA_character_, length(x)))
+        }
+
+        sub_replace_small_vals(
+          x,
+          threshold = threshold,
+          sign = sign,
+          small_pattern = small_pattern,
+          context = "default"
         )
       }
     )
@@ -527,6 +546,33 @@ sub_large_vals <- function(
     op_fn <- `<=`
   }
 
+  # Get the absolute value of the supplied `threshold`
+  threshold <- abs(threshold)
+
+  sub_replace_large_vals <- function(
+    x,
+    threshold,
+    large_pattern,
+    sign,
+    context
+  ) {
+    ifelse(
+      !is.na(x) &
+        x != 0 &
+        op_fn(x, threshold * ifelse(sign == "-", -1, 1)),
+      process_text(
+        context_large_vals_text(
+          threshold = threshold,
+          large_pattern = large_pattern,
+          sign = sign,
+          context = context
+        ),
+        context = context
+      ),
+      NA_character_
+    )
+  }
+
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions (as a function list) to `fmt()`
   fmt(
@@ -539,57 +585,59 @@ sub_large_vals <- function(
       # according to the `large_pattern`, the `threshold` value (interacts with
       # the `large_pattern`, and the sign (changes the default `large_pattern`))
       html = function(x) {
-        ifelse(
-          is.numeric(x) &
-            op_fn(x, abs(threshold) * ifelse(sign == "-", -1, 1)),
-          process_text(
-            context_large_vals_text(
-              threshold = threshold,
-              large_pattern = large_pattern,
-              sign = sign,
-              context = "html"
-            ),
-            context = "html"
-          ),
-          NA_character_
+
+        if (!is.numeric(x)) {
+          return(rep_len(NA_character_, length(x)))
+        }
+
+        sub_replace_large_vals(
+          x,
+          threshold = threshold,
+          sign = sign,
+          large_pattern = large_pattern,
+          context = "html"
         )
       },
       rtf = function(x) {
-        ifelse(
-          is.numeric(x) &
-            op_fn(x, abs(threshold) * ifelse(sign == "-", -1, 1)),
-          context_large_vals_text(
-            threshold = threshold,
-            large_pattern = large_pattern,
-            sign = sign,
-            context = "rtf"
-          ),
-          NA_character_
+
+        if (!is.numeric(x)) {
+          return(rep_len(NA_character_, length(x)))
+        }
+
+        sub_replace_large_vals(
+          x,
+          threshold = threshold,
+          sign = sign,
+          large_pattern = large_pattern,
+          context = "rtf"
         )
       },
       latex = function(x) {
-        ifelse(
-          is.numeric(x) &
-            op_fn(x, abs(threshold) * ifelse(sign == "-", -1, 1)),
-          context_large_vals_text(
-            threshold = threshold,
-            large_pattern = large_pattern,
-            sign = sign,
-            context = "latex"
-          ),
-          NA_character_
+
+        if (!is.numeric(x)) {
+          return(rep_len(NA_character_, length(x)))
+        }
+
+        sub_replace_large_vals(
+          x,
+          threshold = threshold,
+          sign = sign,
+          large_pattern = large_pattern,
+          context = "latex"
         )
       },
       default = function(x) {
-        ifelse(
-          is.numeric(x) & op_fn(x, abs(threshold) * ifelse(sign == "-", -1, 1)),
-          context_large_vals_text(
-            threshold = threshold,
-            large_pattern = large_pattern,
-            sign = sign,
-            context = "default"
-          ),
-          NA_character_
+
+        if (!is.numeric(x)) {
+          return(rep_len(NA_character_, length(x)))
+        }
+
+        sub_replace_large_vals(
+          x,
+          threshold = threshold,
+          sign = sign,
+          large_pattern = large_pattern,
+          context = "default"
         )
       }
     )

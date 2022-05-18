@@ -500,15 +500,11 @@ context_plusminus_mark <- function(plusminus_mark,
 #'
 #' @param context The output context.
 #' @noRd
-context_small_vals_text <- function(
+resolve_small_vals_text <- function(
     threshold,
-    small_pattern,
-    sign
+    small_pattern
 ) {
 
-  if (small_pattern == "<{x}" && sign == "-") {
-    small_pattern <- md("<*abs*(-{x})")
-  }
   gsub("{x}", abs(threshold), small_pattern, fixed = TRUE)
 }
 

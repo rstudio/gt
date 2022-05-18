@@ -9,7 +9,7 @@ sub_small_vals(
   columns = everything(),
   rows = everything(),
   threshold = 0.01,
-  small_pattern = "<{x}",
+  small_pattern = if (sign == "+") "<{x}" else md("<*abs*(-{x})"),
   sign = "+"
 )
 }
