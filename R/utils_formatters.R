@@ -539,7 +539,7 @@ context_lte_mark <- function(context) {
   switch(
     context,
     html = "\U02264",
-    latex = "$\\\\leq$",
+    latex = "$\\leq$",
     "<="
   )
 }
@@ -553,7 +553,7 @@ context_gte_mark <- function(context) {
   switch(
     context,
     html = "\U02265",
-    latex = "$\\\\geq$",
+    latex = "$\\geq$",
     ">="
   )
 }
