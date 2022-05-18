@@ -521,13 +521,13 @@ context_large_vals_text <- function(
 
   if (large_pattern == ">={x}") {
     if (sign == "-") {
-      large_pattern <- paste0(context_lte_mark(context = context), "-{x}")
+      return(I(paste0(context_lte_mark(context = context), "-", threshold)))
     } else {
-      large_pattern <- paste0(context_gte_mark(context = context), "{x}")
+      return(I(paste0(context_gte_mark(context = context), threshold)))
     }
   }
 
-  gsub("{x}", abs(threshold), large_pattern, fixed = TRUE)
+  gsub("{x}", threshold, large_pattern, fixed = TRUE)
 }
 
 #' Obtain the contextually correct less than or equal to
