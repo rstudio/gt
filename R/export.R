@@ -538,6 +538,11 @@ as_rtf <- function(data,
 #' single-element character vector.
 #'
 #' @param data A table object that is created using the `gt()` function.
+#' @param align left, center (default) or right.
+#' @param split set to TRUE if you want to activate Word
+#' option 'Allow row to break across pages'.
+#' @param keepnext Word option 'keep rows together' can be
+#' activated when TRUE, or is a vector that matches the number of rows in `data`. It avoids page break within tables.
 #'
 #' @examples
 #' # Use `gtcars` to create a gt table;
@@ -559,7 +564,7 @@ as_rtf <- function(data,
 #' 13-5
 #'
 #' @export
-as_word <- function(data) {
+as_word <- function(data, align = "center", split = FALSE, keep_with_next = FALSE) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -570,22 +575,22 @@ as_word <- function(data) {
   # Composition of Word OOXML -----------------------------------------------
 
   # Create the table properties component
-  table_props_component <- create_table_props_component_xml(data = data)
+  table_props_component <- create_table_props_component_xml(data = data, align = align)
 
   # Create the heading component
-  heading_component <- create_heading_component_xml(data = data)
+  heading_component <- create_heading_component_xml(data = data, split = split)
 
   # Create the columns component
-  columns_component <- create_columns_component_xml(data = data)
+  columns_component <- create_columns_component_xml(data = data, split = split)
 
   # Create the body component
-  body_component <- create_body_component_xml(data = data)
+  body_component <- create_body_component_xml(data = data, split = split)
 
   # Create the footnotes component
-  footnotes_component <- create_footnotes_component_xml(data = data)
+  footnotes_component <- create_footnotes_component_xml(data = data, split = split)
 
   # Create the source notes component
-  source_notes_component <- create_source_notes_component_xml(data = data)
+  source_notes_component <- create_source_notes_component_xml(data = data, split = split)
 
   # Compose the Word OOXML table
   word_tbl <-
@@ -604,6 +609,54 @@ as_word <- function(data) {
     )
 
   word_tbl
+}
+
+
+
+#' @export
+#' @title add gt table into a Word document
+#' @description add a gt into a Word document.
+#' @param value `gt` object
+#' @param align left, center (default) or right.
+#' @param split set to TRUE if you want to activate Word
+#' option 'Allow row to break across pages'.
+#' @param keepnext Word option 'keep rows together' can be
+#' activated when TRUE. It avoids page break within tables.
+#' @param pos where to add the gt table relative to the cursor,
+#' one of "after", "before", "on" (end of line).
+#'
+#' @seealso \pkg{\link{flextable::body_add_flextable}}
+#'
+#' @examples
+#'
+#' library(gskofficer)
+#' library(gt)
+#'
+#' gt_tbl <- gt( head( exibble ) )
+#'
+#' doc <- read_docx()
+#' doc <- body_add_gt(doc, value = gt_tbl)
+#' fileout <- tempfile(fileext = ".docx")
+#' # fileout <- "test.docx" # uncomment to write in your working directory
+#' print(doc, target = fileout)
+#'
+body_add_gt <- function(x, value, align = "center", pos = c("after","before","on"), split = FALSE, keepnext = FALSE){
+
+  if(!rlang::is_installed("officer")){
+    stop("{officer} package is necessary to add gt tables to word documents.")
+  }
+
+  stopifnot(inherits(x, "rdocx"))
+  stopifnot(inherits(value, "gt_tbl"))
+
+  pos <- match.arg(pos)
+
+  gt_o_xml <- as_word(data = value, align = align, split = split, keepnext = keepnext)
+
+  x <- officer::body_add_xml(x, str = gt_o_xml, pos)
+
+  x
+
 }
 
 #' Extract a summary list from a **gt** object

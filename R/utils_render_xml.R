@@ -447,6 +447,26 @@ xml_cr <- function(app = "word") {
   )
 }
 
+# contents within the current cell shall be rendered on a single page
+xml_cantSplit <- function(app = "word"){
+
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("cantSplit", app),
+    varArgs = list()
+  )
+}
+
+# keep with Next
+# contents of this paragraph are at least partly rendered on the same page
+# as the following paragraph whenever possibl
+xml_keepNext <- function(app = "word"){
+
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("keepNext", app),
+    varArgs = list()
+  )
+}
+
 #' Transform a footnote mark to an XML representation
 #'
 #' @noRd
@@ -475,7 +495,7 @@ xml_raw <- function(...) {
 
 # TODO: make table widths work for XML
 # Get the attributes for the table tag
-create_table_props_component_xml <- function(data) {
+create_table_props_component_xml <- function(data, alignment = "center") {
 
   boxh <- dt_boxhead_get(data = data)
 
@@ -540,7 +560,8 @@ create_table_props_component_xml <- function(data) {
         xml_width("right", width = 60)
       ),
       xml_tblW(),
-      xml_tblLook()
+      xml_tblLook(),
+      xml_jc(val = alignment)
     )
 
   htmltools::tagList(table_properties)
@@ -553,7 +574,7 @@ create_table_props_component_xml <- function(data) {
 #' string.
 #'
 #' @noRd
-create_heading_component_xml <- function(data) {
+create_heading_component_xml <- function(data, split = FALSE, keep_with_next = FALSE) {
 
   # If there is no title or heading component, then return an empty string
   if (!dt_heading_has_title(data = data)) {
@@ -619,6 +640,10 @@ create_heading_component_xml <- function(data) {
 
   title_row <-
     xml_tr(
+      xml_trPr(
+        if(split){xml_cantSplit()},
+        xml_tbl_header(),
+      ),
       xml_tc(
         xml_tcPr(
           if (table_border_top_include) {
@@ -635,7 +660,8 @@ create_heading_component_xml <- function(data) {
             xml_gridSpan(val = as.character(n_cols)),
             xml_color(color = table_font_color),
             xml_jc(val = "center"),
-            xml_spacing(before = 0, after = 30)
+            xml_spacing(before = 0, after = 30),
+            if(keep_with_next){xml_keepNext()}
           ),
           xml_r(
             xml_rPr(
@@ -670,7 +696,7 @@ create_heading_component_xml <- function(data) {
 #' Create the columns component of a table (OOXML)
 #'
 #' @noRd
-create_columns_component_xml <- function(data) {
+create_columns_component_xml <- function(data, split = FALSE, keep_with_next = FALSE) {
 
   boxh <- dt_boxhead_get(data = data)
   stubh <- dt_stubhead_get(data = data)
@@ -735,7 +761,10 @@ create_columns_component_xml <- function(data) {
             )
           ),
           xml_p(
-            xml_pPr(xml_spacing(before = 0, after = 60)),
+            xml_pPr(
+              xml_spacing(before = 0, after = 60),
+              if(keep_with_next){xml_keepNext()}
+              ),
             xml_r(
               xml_rPr(
                 xml_r_font(),
@@ -765,7 +794,10 @@ create_columns_component_xml <- function(data) {
             )
           ),
           xml_p(
-            xml_pPr(xml_spacing(before = 0, after = 60)),
+            xml_pPr(
+              xml_spacing(before = 0, after = 60),
+              if(keep_with_next){xml_keepNext()}
+              ),
             xml_r(
               xml_rPr(
                 xml_r_font(),
@@ -969,8 +1001,20 @@ create_columns_component_xml <- function(data) {
 
     table_col_headings <-
       htmltools::tagList(
-        xml_tr(htmltools::tagList(first_set)),
-        xml_tr(htmltools::tagList(second_set))
+        xml_tr(
+          xml_trPr(
+            if(split){xml_cantSplit()},
+            if(keep_with_next){xml_keepNext()}
+          ),
+          htmltools::tagList(first_set)
+        ),
+        xml_tr(
+          xml_trPr(
+            if(split){xml_cantSplit()},
+            if(keep_with_next){xml_keepNext()}
+          ),
+          htmltools::tagList(second_set)
+        )
       )
   }
 
