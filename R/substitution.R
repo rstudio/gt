@@ -347,6 +347,11 @@ sub_small_vals <- function(
     small_pattern,
     context
   ) {
+
+    if (!is.numeric(x)) {
+      return(rep_len(NA_character_, length(x)))
+    }
+
     ifelse(
       !is.na(x) &
         x != 0 &
@@ -376,10 +381,6 @@ sub_small_vals <- function(
       # the `small_pattern`, and the sign (changes the default `small_pattern`))
       html = function(x) {
 
-        if (!is.numeric(x)) {
-          return(rep_len(NA_character_, length(x)))
-        }
-
         sub_replace_small_vals(
           x,
           threshold = threshold,
@@ -389,10 +390,6 @@ sub_small_vals <- function(
         )
       },
       rtf = function(x) {
-
-        if (!is.numeric(x)) {
-          return(rep_len(NA_character_, length(x)))
-        }
 
         sub_replace_small_vals(
           x,
@@ -404,10 +401,6 @@ sub_small_vals <- function(
       },
       latex = function(x) {
 
-        if (!is.numeric(x)) {
-          return(rep_len(NA_character_, length(x)))
-        }
-
         sub_replace_small_vals(
           x,
           threshold = threshold,
@@ -417,10 +410,6 @@ sub_small_vals <- function(
         )
       },
       default = function(x) {
-
-        if (!is.numeric(x)) {
-          return(rep_len(NA_character_, length(x)))
-        }
 
         sub_replace_small_vals(
           x,
@@ -556,9 +545,13 @@ sub_large_vals <- function(
     sign,
     context
   ) {
+
+    if (!is.numeric(x)) {
+      return(rep_len(NA_character_, length(x)))
+    }
+
     ifelse(
       !is.na(x) &
-        x != 0 &
         op_fn(x, threshold * ifelse(sign == "-", -1, 1)),
       process_text(
         context_large_vals_text(
@@ -586,10 +579,6 @@ sub_large_vals <- function(
       # the `large_pattern`, and the sign (changes the default `large_pattern`))
       html = function(x) {
 
-        if (!is.numeric(x)) {
-          return(rep_len(NA_character_, length(x)))
-        }
-
         sub_replace_large_vals(
           x,
           threshold = threshold,
@@ -599,10 +588,6 @@ sub_large_vals <- function(
         )
       },
       rtf = function(x) {
-
-        if (!is.numeric(x)) {
-          return(rep_len(NA_character_, length(x)))
-        }
 
         sub_replace_large_vals(
           x,
@@ -614,10 +599,6 @@ sub_large_vals <- function(
       },
       latex = function(x) {
 
-        if (!is.numeric(x)) {
-          return(rep_len(NA_character_, length(x)))
-        }
-
         sub_replace_large_vals(
           x,
           threshold = threshold,
@@ -627,10 +608,6 @@ sub_large_vals <- function(
         )
       },
       default = function(x) {
-
-        if (!is.numeric(x)) {
-          return(rep_len(NA_character_, length(x)))
-        }
 
         sub_replace_large_vals(
           x,
