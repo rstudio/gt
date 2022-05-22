@@ -483,7 +483,8 @@ and footer for RTF table outputs. Default values for both are <code>0.5in</code>
 
 <p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table with all the main parts added. We
 can use this <strong>gt</strong> object going forward to demo some of what's available in
-the <code>tab_options()</code> function.</p><div class="sourceCode r"><pre><code><span class="va">tab_1</span> <span class="op">&lt;-</span>
+the <code>tab_options()</code> function.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">tab_1</span> <span class="op">&lt;-</span>
   <span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">fctr</span>, <span class="va">date</span>, <span class="va">time</span>, <span class="va">datetime</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>
@@ -518,23 +519,28 @@ the <code>tab_options()</code> function.</p><div class="sourceCode r"><pre><code
 <span class="va">tab_1</span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_1.png" style="width:100%;"></p>
 <p>Modify the table width to be 100% (which spans the entire content width
-area).</p><div class="sourceCode r"><pre><code><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>table.width <span class="op">=</span> <span class="fu"><a href="../reference/pct.html">pct</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></code></pre><p></p></div>
+area).</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>table.width <span class="op">=</span> <span class="fu"><a href="../reference/pct.html">pct</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_2.png" style="width:100%;"></p>
-<p>Modify the table's background color to be <code>"lightcyan"</code>.</p><div class="sourceCode r"><pre><code><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>table.background.color <span class="op">=</span> <span class="st">"lightcyan"</span><span class="op">)</span></code></pre><p></p></div>
+<p>Modify the table's background color to be <code>"lightcyan"</code>.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>table.background.color <span class="op">=</span> <span class="st">"lightcyan"</span><span class="op">)</span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_3.png" style="width:100%;"></p>
 <p>Use letters as the marks for footnote references. Also, separate footnotes in
-the footer by spaces instead of newlines.</p><div class="sourceCode r"><pre><code><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+the footer by spaces instead of newlines.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>
     footnotes.marks <span class="op">=</span> <span class="va">letters</span>,
     footnotes.multiline <span class="op">=</span> <span class="cn">FALSE</span>
   <span class="op">)</span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_4.png" style="width:100%;"></p>
-<p>Change the padding of data rows to 5 px.</p><div class="sourceCode r"><pre><code><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+<p>Change the padding of data rows to 5 px.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>
     data_row.padding <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
   <span class="op">)</span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_5.png" style="width:100%;"></p>
-<p>Reduce the size of the title and the subtitle text.</p><div class="sourceCode r"><pre><code><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+<p>Reduce the size of the title and the subtitle text.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>
     heading.title.font.size <span class="op">=</span> <span class="st">"small"</span>,
     heading.subtitle.font.size <span class="op">=</span> <span class="st">"small"</span>

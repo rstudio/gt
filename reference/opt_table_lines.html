@@ -101,7 +101,8 @@ are <code>"all"</code>, <code>"none"</code>, or <code>"default"</code>.</p></dd>
 
 <p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table with a number of table parts added.
 Then, use the <code>opt_table_lines()</code> function to haves lines everywhere there
-can possibly be lines.</p><div class="sourceCode r"><pre><code><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+can possibly be lines.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"row"</span>, groupname_col <span class="op">=</span> <span class="st">"group"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/summary_rows.html">summary_rows</a></span><span class="op">(</span>
     groups <span class="op">=</span> <span class="st">"grp_a"</span>,

@@ -130,7 +130,8 @@ occur if some replacement is attempted.</p></dd>
 
 <p>Use <code><a href="gtcars.html">gtcars</a></code> to create a <strong>gt</strong> table. Use the <code>tab_spanner()</code> function to
 effectively group several columns related to car performance under a spanner
-column with the label <code>"performance"</code>.</p><div class="sourceCode r"><pre><code><span class="va">gtcars</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+column with the label <code>"performance"</code>.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">gtcars</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span>
     <span class="op">-</span><span class="va">mfr</span>, <span class="op">-</span><span class="va">trim</span>, <span class="va">bdy_style</span>, <span class="va">drivetrain</span>,
     <span class="op">-</span><span class="va">drivetrain</span>, <span class="op">-</span><span class="va">trsmn</span>, <span class="op">-</span><span class="va">ctry_origin</span>

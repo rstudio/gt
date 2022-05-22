@@ -116,7 +116,8 @@ numbering option can be deactivated by setting <code>incl_rownums</code> to <cod
 
 
 <p>Use <code><a href="gtcars.html">gtcars</a></code> to create a <strong>gt</strong> table preview (with only a few of its
-columns). You'll see the first five rows and the last row.</p><div class="sourceCode r"><pre><code><span class="va">gtcars</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+columns). You'll see the first five rows and the last row.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">gtcars</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">mfr</span>, <span class="va">model</span>, <span class="va">year</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/gt_preview.html">gt_preview</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_gt_preview_1.png" style="width:100%;"></p>

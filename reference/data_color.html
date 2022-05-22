@@ -169,7 +169,8 @@ hexadecimal colors.</p>
 
 <p>Use <code><a href="countrypops.html">countrypops</a></code> to create a <strong>gt</strong> table. Apply a color scale to the
 <code>population</code> column with <code><a href="https://scales.r-lib.org/reference/col_numeric.html" class="external-link">scales::col_numeric</a></code>, four supplied colors, and a
-domain.</p><div class="sourceCode r"><pre><code><span class="va">countrypops</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+domain.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">countrypops</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">country_name</span> <span class="op">==</span> <span class="st">"Mongolia"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"code"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
@@ -187,7 +188,8 @@ domain.</p><div class="sourceCode r"><pre><code><span class="va">countrypops</sp
 easily gotten from the <strong>paletteer</strong> package, info at <code><a href="info_paletteer.html">info_paletteer()</a></code>) to
 to <code>sold</code> and <code>income</code> columns. Setting the <code>domain</code> of
 <code><a href="https://scales.r-lib.org/reference/col_numeric.html" class="external-link">scales::col_numeric()</a></code> to <code>NULL</code> will use the bounds of the available data
-as the domain.</p><div class="sourceCode r"><pre><code><span class="va">pizzaplace</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+as the domain.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">pizzaplace</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">type</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"chicken"</span>, <span class="st">"supreme"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">type</span>, <span class="va">size</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span>
@@ -215,7 +217,7 @@ as the domain.</p><div class="sourceCode r"><pre><code><span class="va">pizzapla
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
     
 
-<p>3-18</p>
+<p>3-21</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -228,7 +230,6 @@ as the domain.</p><div class="sourceCode r"><pre><code><span class="va">pizzapla
 <code><a href="fmt_fraction.html">fmt_fraction</a>()</code>,
 <code><a href="fmt_integer.html">fmt_integer</a>()</code>,
 <code><a href="fmt_markdown.html">fmt_markdown</a>()</code>,
-<code><a href="fmt_missing.html">fmt_missing</a>()</code>,
 <code><a href="fmt_number.html">fmt_number</a>()</code>,
 <code><a href="fmt_partsper.html">fmt_partsper</a>()</code>,
 <code><a href="fmt_passthrough.html">fmt_passthrough</a>()</code>,
@@ -236,6 +237,10 @@ as the domain.</p><div class="sourceCode r"><pre><code><span class="va">pizzapla
 <code><a href="fmt_scientific.html">fmt_scientific</a>()</code>,
 <code><a href="fmt_time.html">fmt_time</a>()</code>,
 <code><a href="fmt.html">fmt</a>()</code>,
+<code><a href="sub_large_vals.html">sub_large_vals</a>()</code>,
+<code><a href="sub_missing.html">sub_missing</a>()</code>,
+<code><a href="sub_small_vals.html">sub_small_vals</a>()</code>,
+<code><a href="sub_zero.html">sub_zero</a>()</code>,
 <code><a href="text_transform.html">text_transform</a>()</code></p></div>
     </div>
 

@@ -136,7 +136,8 @@ can be targeted by enclosing several <code>cells_*()</code> helper functions in 
 
 <p>Use <code><a href="sp500.html">sp500</a></code> to create a <strong>gt</strong> table. Add a header with a title, and then
 add a footnote to the title with <code><a href="tab_footnote.html">tab_footnote()</a></code> and <code>cells_title()</code> (in
-<code>locations</code>).</p><div class="sourceCode r"><pre><code><span class="va">sp500</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+<code>locations</code>).</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">sp500</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">date</span> <span class="op">&gt;=</span> <span class="st">"2015-01-05"</span> <span class="op">&amp;</span> <span class="va">date</span> <span class="op">&lt;=</span><span class="st">"2015-01-10"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">adj_close</span>, <span class="va">volume</span>, <span class="va">high</span>, <span class="va">low</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>

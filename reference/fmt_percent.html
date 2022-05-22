@@ -243,7 +243,8 @@ argument. See the <em>Arguments</em> section for more information on this.</p>
 
 
 <p>Use <code><a href="pizzaplace.html">pizzaplace</a></code> to create a <strong>gt</strong> table. Format the <code>frac_of_quota</code>
-column to display values as percentages.</p><div class="sourceCode r"><pre><code><span class="va">pizzaplace</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+column to display values as percentages.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">pizzaplace</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>month <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substr</a></span><span class="op">(</span><span class="va">date</span>, <span class="fl">6</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span>pizzas_sold <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
@@ -274,13 +275,16 @@ column to display values as percentages.</p><div class="sourceCode r"><pre><code
 <code><a href="fmt_fraction.html">fmt_fraction</a>()</code>,
 <code><a href="fmt_integer.html">fmt_integer</a>()</code>,
 <code><a href="fmt_markdown.html">fmt_markdown</a>()</code>,
-<code><a href="fmt_missing.html">fmt_missing</a>()</code>,
 <code><a href="fmt_number.html">fmt_number</a>()</code>,
 <code><a href="fmt_partsper.html">fmt_partsper</a>()</code>,
 <code><a href="fmt_passthrough.html">fmt_passthrough</a>()</code>,
 <code><a href="fmt_scientific.html">fmt_scientific</a>()</code>,
 <code><a href="fmt_time.html">fmt_time</a>()</code>,
 <code><a href="fmt.html">fmt</a>()</code>,
+<code><a href="sub_large_vals.html">sub_large_vals</a>()</code>,
+<code><a href="sub_missing.html">sub_missing</a>()</code>,
+<code><a href="sub_small_vals.html">sub_small_vals</a>()</code>,
+<code><a href="sub_zero.html">sub_zero</a>()</code>,
 <code><a href="text_transform.html">text_transform</a>()</code></p></div>
     </div>
 

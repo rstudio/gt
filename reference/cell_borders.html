@@ -111,7 +111,8 @@ any defined <code>sides</code> can be removed by supplying <code>NULL</code> to 
 
 
 <p>Add horizontal border lines for all table body rows in <code><a href="exibble.html">exibble</a></code> using
-<code><a href="tab_style.html">tab_style()</a></code> and <code>cell_borders()</code>.</p><div class="sourceCode r"><pre><code><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+<code><a href="tab_style.html">tab_style()</a></code> and <code>cell_borders()</code>.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>row.striping.include_table_body <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span>
@@ -129,7 +130,8 @@ any defined <code>sides</code> can be removed by supplying <code>NULL</code> to 
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cell_borders_1.png" style="width:100%;"></p>
 <p>Incorporate different horizontal and vertical borders at several locations.
 This uses multiple <code>cell_borders()</code> and <code><a href="cells_body.html">cells_body()</a></code> calls within
-<code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>s.</p><div class="sourceCode r"><pre><code><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+<code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>s.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span>
     style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>

@@ -225,13 +225,15 @@ argument. See the <em>Arguments</em> section for more information on this.</p>
 
 
 <p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table. Format the <code>num</code> column to have
-byte sizes in the decimal standard.</p><div class="sourceCode r"><pre><code><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+byte sizes in the decimal standard.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">num</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/fmt_bytes.html">fmt_bytes</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">num</span><span class="op">)</span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_bytes_1.png" style="width:100%;"></p>
 <p>Create a similar table with the <code>fmt_bytes()</code> function, this time showing
-byte sizes as binary values.</p><div class="sourceCode r"><pre><code><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+byte sizes as binary values.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">num</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/fmt_bytes.html">fmt_bytes</a></span><span class="op">(</span>
@@ -257,7 +259,6 @@ byte sizes as binary values.</p><div class="sourceCode r"><pre><code><span class
 <code><a href="fmt_fraction.html">fmt_fraction</a>()</code>,
 <code><a href="fmt_integer.html">fmt_integer</a>()</code>,
 <code><a href="fmt_markdown.html">fmt_markdown</a>()</code>,
-<code><a href="fmt_missing.html">fmt_missing</a>()</code>,
 <code><a href="fmt_number.html">fmt_number</a>()</code>,
 <code><a href="fmt_partsper.html">fmt_partsper</a>()</code>,
 <code><a href="fmt_passthrough.html">fmt_passthrough</a>()</code>,
@@ -265,6 +266,10 @@ byte sizes as binary values.</p><div class="sourceCode r"><pre><code><span class
 <code><a href="fmt_scientific.html">fmt_scientific</a>()</code>,
 <code><a href="fmt_time.html">fmt_time</a>()</code>,
 <code><a href="fmt.html">fmt</a>()</code>,
+<code><a href="sub_large_vals.html">sub_large_vals</a>()</code>,
+<code><a href="sub_missing.html">sub_missing</a>()</code>,
+<code><a href="sub_small_vals.html">sub_small_vals</a>()</code>,
+<code><a href="sub_zero.html">sub_zero</a>()</code>,
 <code><a href="text_transform.html">text_transform</a>()</code></p></div>
     </div>
 

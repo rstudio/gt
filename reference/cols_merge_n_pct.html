@@ -114,8 +114,8 @@ missing values for the merged column (e.g., <code>NA</code> + <code>NA</code> = 
 <li><p>If a zero (<code>0</code>) value is in <code>col_n</code> then the formatted output will be
 <code>"0"</code> (i.e., no percentage will be shown)</p></li>
 </ol><p>Any resulting <code>NA</code> values in the <code>col_n</code> column following the merge
-operation can be easily formatted using the <code><a href="fmt_missing.html">fmt_missing()</a></code> function.
-Separate calls of <code><a href="fmt_missing.html">fmt_missing()</a></code> can be used for the <code>col_n</code> and
+operation can be easily formatted using the <code><a href="sub_missing.html">sub_missing()</a></code> function.
+Separate calls of <code><a href="sub_missing.html">sub_missing()</a></code> can be used for the <code>col_n</code> and
 <code>col_pct</code> columns for finer control of the replacement values. It is the
 responsibility of the user to ensure that values are correct in both the
 <code>col_n</code> and <code>col_pct</code> columns (this function neither generates nor
@@ -135,7 +135,8 @@ the output table through the <code>hide_columns</code> or <code>autohide</code> 
 <p>Use <code><a href="pizzaplace.html">pizzaplace</a></code> to create a <strong>gt</strong> table that displays the counts and
 percentages of the top 3 pizzas sold by pizza category in 2015. The
 <code>cols_merge_n_pct()</code> function is used to merge the <code>n</code> and <code>frac</code> columns
-(and the <code>frac</code> column is formatted using <code><a href="fmt_percent.html">fmt_percent()</a></code>).</p><div class="sourceCode r"><pre><code><span class="va">pizzaplace</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+(and the <code>frac</code> column is formatted using <code><a href="fmt_percent.html">fmt_percent()</a></code>).</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">pizzaplace</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">type</span>, <span class="va">price</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span>
     n <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span>,

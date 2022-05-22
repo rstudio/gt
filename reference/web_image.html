@@ -119,11 +119,13 @@ heights of most table rows.</p>
     
 
 
-<p>Get the PNG-based logo for the R Project from an image URL.</p><div class="sourceCode r"><pre><code><span class="va">r_png_url</span> <span class="op">&lt;-</span> <span class="st">"https://www.r-project.org/logo/Rlogo.png"</span></code></pre><p></p></div>
+<p>Get the PNG-based logo for the R Project from an image URL.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">r_png_url</span> <span class="op">&lt;-</span> <span class="st">"https://www.r-project.org/logo/Rlogo.png"</span></code></pre><p></p></div>
 <p>Create a tibble that contains heights of an image in pixels (one column as a
 string, the other as numerical values), then, create a <strong>gt</strong> table. Use the
 <code><a href="text_transform.html">text_transform()</a></code> function to insert the R logo PNG image with the various
-sizes.</p><div class="sourceCode r"><pre><code><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>
+sizes.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>
   pixels <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">35</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>,
   image <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">35</span>, <span class="fl">5</span><span class="op">)</span>
 <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
@@ -138,11 +140,13 @@ sizes.</p><div class="sourceCode r"><pre><code><span class="fu">dplyr</span><spa
     <span class="op">}</span>
   <span class="op">)</span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_web_image_1.png" style="width:100%;"></p>
-<p>Get the SVG-based logo for the R Project from an image URL.</p><div class="sourceCode r"><pre><code><span class="va">r_svg_url</span> <span class="op">&lt;-</span> <span class="st">"https://www.r-project.org/logo/Rlogo.svg"</span></code></pre><p></p></div>
+<p>Get the SVG-based logo for the R Project from an image URL.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">r_svg_url</span> <span class="op">&lt;-</span> <span class="st">"https://www.r-project.org/logo/Rlogo.svg"</span></code></pre><p></p></div>
 <p>Create a tibble that contains heights of an image in pixels (one column as a
 string, the other as numerical values), then, create a <strong>gt</strong> table. Use the
 <code><a href="tab_header.html">tab_header()</a></code> function to insert the <strong>R</strong> logo SVG image once in the title
-and five times in the subtitle.</p><div class="sourceCode r"><pre><code><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>
+and five times in the subtitle.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>
   pixels <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">35</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>,
   image <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">35</span>, <span class="fl">5</span><span class="op">)</span>
 <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>

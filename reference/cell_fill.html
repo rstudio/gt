@@ -97,7 +97,8 @@ information from the color value if it is supplied in the #RRGGBBAA format.</p><
 
 
 <p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table. Add styles with <code><a href="tab_style.html">tab_style()</a></code> and
-the <code>cell_fill()</code> helper function.</p><div class="sourceCode r"><pre><code><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+the <code>cell_fill()</code> helper function.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">num</span>, <span class="va">currency</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span>

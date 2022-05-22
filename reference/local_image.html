@@ -124,7 +124,8 @@ heights of most table rows.</p>
 <p>Create a tibble that contains heights of an image in pixels (one column as a
 string, the other as numerical values), then, create a <strong>gt</strong> table. Use the
 <code><a href="text_transform.html">text_transform()</a></code> function to insert a local test image (PNG) image with the
-various sizes.</p><div class="sourceCode r"><pre><code><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>
+various sizes.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>
   pixels <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">35</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>,
   image <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">35</span>, <span class="fl">5</span><span class="op">)</span>
 <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>

@@ -210,7 +210,8 @@ argument. See the <em>Arguments</em> section for more information on this.</p>
 
 
 <p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table. format the <code>num</code> column as integer
-values having no digit separators (with the <code>use_seps = FALSE</code> option).</p><div class="sourceCode r"><pre><code><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+values having no digit separators (with the <code>use_seps = FALSE</code> option).</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">num</span>, <span class="va">char</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/fmt_integer.html">fmt_integer</a></span><span class="op">(</span>
@@ -236,7 +237,6 @@ values having no digit separators (with the <code>use_seps = FALSE</code> option
 <code><a href="fmt_engineering.html">fmt_engineering</a>()</code>,
 <code><a href="fmt_fraction.html">fmt_fraction</a>()</code>,
 <code><a href="fmt_markdown.html">fmt_markdown</a>()</code>,
-<code><a href="fmt_missing.html">fmt_missing</a>()</code>,
 <code><a href="fmt_number.html">fmt_number</a>()</code>,
 <code><a href="fmt_partsper.html">fmt_partsper</a>()</code>,
 <code><a href="fmt_passthrough.html">fmt_passthrough</a>()</code>,
@@ -244,6 +244,10 @@ values having no digit separators (with the <code>use_seps = FALSE</code> option
 <code><a href="fmt_scientific.html">fmt_scientific</a>()</code>,
 <code><a href="fmt_time.html">fmt_time</a>()</code>,
 <code><a href="fmt.html">fmt</a>()</code>,
+<code><a href="sub_large_vals.html">sub_large_vals</a>()</code>,
+<code><a href="sub_missing.html">sub_missing</a>()</code>,
+<code><a href="sub_small_vals.html">sub_small_vals</a>()</code>,
+<code><a href="sub_zero.html">sub_zero</a>()</code>,
 <code><a href="text_transform.html">text_transform</a>()</code></p></div>
     </div>
 

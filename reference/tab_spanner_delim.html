@@ -127,7 +127,8 @@ rendered output table).</p>
 <p>Use <code>iris</code> to create a <strong>gt</strong> table and use the <code>tab_spanner_delim()</code>
 function to automatically generate column spanner labels. This splits any
 columns that are dot-separated between column spanner labels (first part) and
-column labels (second part).</p><div class="sourceCode r"><pre><code><span class="va">iris</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+column labels (second part).</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">iris</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>

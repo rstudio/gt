@@ -133,7 +133,8 @@ output table through the <code>autohide</code> option.</p>
 
 <p>Use <code><a href="sp500.html">sp500</a></code> to create a <strong>gt</strong> table. Use the <code>cols_merge()</code> function to
 merge the <code>open</code> &amp; <code>close</code> columns together, and, the <code>low</code> &amp; <code>high</code> columns
-(putting an em dash between both). Relabel the columns with <code><a href="cols_label.html">cols_label()</a></code>.</p><div class="sourceCode r"><pre><code><span class="va">sp500</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+(putting an em dash between both). Relabel the columns with <code><a href="cols_label.html">cols_label()</a></code>.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">sp500</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">50</span><span class="op">:</span><span class="fl">55</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">volume</span>, <span class="op">-</span><span class="va">adj_close</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>

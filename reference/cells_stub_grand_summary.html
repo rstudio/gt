@@ -138,7 +138,8 @@ can be targeted by enclosing several <code>cells_*()</code> helper functions in 
 
 <p>Use <code><a href="countrypops.html">countrypops</a></code> to create a <strong>gt</strong> table. Add some styling to a grand
 summary stub cell with with the <code><a href="tab_style.html">tab_style()</a></code> and
-<code>cells_stub_grand_summary()</code> functions.</p><div class="sourceCode r"><pre><code><span class="va">countrypops</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+<code>cells_stub_grand_summary()</code> functions.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">countrypops</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">country_name</span> <span class="op">==</span> <span class="st">"Spain"</span>, <span class="va">year</span> <span class="op">&lt;</span> <span class="fl">1970</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"country"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"year"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>

@@ -96,10 +96,11 @@ that work well in tables, use the <code><a href="info_google_fonts.html">info_go
 <p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table of eight rows, replace missing values
 with em dashes. For text in the <code>time</code> column, we use the Google font
 <code>"IBM Plex Mono"</code> and set up the <code><a href="default_fonts.html">default_fonts()</a></code> as fallbacks (just in case
-the webfont is not accessible).</p><div class="sourceCode r"><pre><code><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+the webfont is not accessible).</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">char</span>, <span class="va">time</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/fmt_missing.html">fmt_missing</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/sub_missing.html">sub_missing</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span>
     style <span class="op">=</span> <span class="fu"><a href="../reference/cell_text.html">cell_text</a></span><span class="op">(</span>
       font <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
@@ -114,7 +115,8 @@ the webfont is not accessible).</p><div class="sourceCode r"><pre><code><span cl
 provide a dollar sign for the first row of monetary values. Then, set a
 larger font size for the table and use the <code>"Merriweather"</code> font using the
 <code>google_font()</code> function (with two font fallbacks: <code>"Cochin"</code> and the
-catchall <code>"Serif"</code> group).</p><div class="sourceCode r"><pre><code><span class="va">sp500</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+catchall <code>"Serif"</code> group).</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">sp500</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">volume</span>, <span class="op">-</span><span class="va">adj_close</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>

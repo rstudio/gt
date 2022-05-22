@@ -134,7 +134,8 @@ can be targeted by enclosing several <code>cells_*()</code> helper functions in 
 
 
 <p>Use <code><a href="sza.html">sza</a></code> to create a <strong>gt</strong> table. Add footnotes to the column labels with
-<code><a href="tab_footnote.html">tab_footnote()</a></code> and <code>cells_column_labels()</code> in <code>locations</code>.</p><div class="sourceCode r"><pre><code><span class="va">sza</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+<code><a href="tab_footnote.html">tab_footnote()</a></code> and <code>cells_column_labels()</code> in <code>locations</code>.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">sza</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span>
     <span class="va">latitude</span> <span class="op">==</span> <span class="fl">20</span> <span class="op">&amp;</span> <span class="va">month</span> <span class="op">==</span> <span class="st">"jan"</span> <span class="op">&amp;</span>
       <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">sza</span><span class="op">)</span>

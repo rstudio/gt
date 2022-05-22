@@ -128,7 +128,8 @@ and <code>container.width</code> arguments within <code><a href="tab_options.htm
 <p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table. We can specify the widths of
 columns with <code>cols_width()</code>. This is done with named arguments in <code>...</code>,
 specifying the exact widths for table columns (using <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code> at the
-end will capture all remaining columns).</p><div class="sourceCode r"><pre><code><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+end will capture all remaining columns).</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span>
     <span class="va">num</span>, <span class="va">char</span>, <span class="va">date</span>,
     <span class="va">datetime</span>, <span class="va">row</span>

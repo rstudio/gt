@@ -125,7 +125,8 @@ to <code>...</code>.</p>
 
 
 <p>Use <code><a href="gtcars.html">gtcars</a></code> to create a <strong>gt</strong> table. Add a stubhead label with the
-<code><a href="tab_stubhead.html">tab_stubhead()</a></code> function to describe what is in the stub.</p><div class="sourceCode r"><pre><code><span class="va">tab_1</span> <span class="op">&lt;-</span>
+<code><a href="tab_stubhead.html">tab_stubhead()</a></code> function to describe what is in the stub.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">tab_1</span> <span class="op">&lt;-</span>
   <span class="va">gtcars</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">year</span>, <span class="va">hp</span>, <span class="va">trq</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
@@ -133,14 +134,19 @@ to <code>...</code>.</p>
   <span class="fu"><a href="../reference/tab_stubhead.html">tab_stubhead</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"car"</span><span class="op">)</span></code></pre><p></p></div>
 <p>Export the <strong>gt</strong> table to an HTML file with inlined CSS (which is necessary
 for including the table as part of an HTML email) using <code>gtsave()</code> and the
-<code>inline_css = TRUE</code> option.</p><div class="sourceCode r"><pre><code><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/gtsave.html">gtsave</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="st">"tab_1.html"</span>, inline_css <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre><p></p></div>
+<code>inline_css = TRUE</code> option.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/gtsave.html">gtsave</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="st">"tab_1.html"</span>, inline_css <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre><p></p></div>
 <p>By leaving out the <code>inline_css</code> option, we get a more conventional HTML file
-with embedded CSS styles.</p><div class="sourceCode r"><pre><code><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/gtsave.html">gtsave</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="st">"tab_1.html"</span><span class="op">)</span></code></pre><p></p></div>
+with embedded CSS styles.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/gtsave.html">gtsave</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="st">"tab_1.html"</span><span class="op">)</span></code></pre><p></p></div>
 <p>Saving as a PNG file results in a cropped image of an HTML table. The amount
-of whitespace can be set with the <code>expand</code> option.</p><div class="sourceCode r"><pre><code><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/gtsave.html">gtsave</a></span><span class="op">(</span><span class="st">"tab_1.png"</span>, expand <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre><p></p></div>
+of whitespace can be set with the <code>expand</code> option.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/gtsave.html">gtsave</a></span><span class="op">(</span><span class="st">"tab_1.png"</span>, expand <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre><p></p></div>
 <p>Any use of the <code>.tex</code>, <code>.ltx</code>, or <code>.rnw</code> will result in the output of a LaTeX
-document.</p><div class="sourceCode r"><pre><code><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/gtsave.html">gtsave</a></span><span class="op">(</span><span class="st">"tab_1.tex"</span><span class="op">)</span></code></pre><p></p></div>
-<p>With the <code>.rtf</code> extension, we'll get an RTF document.</p><div class="sourceCode r"><pre><code><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/gtsave.html">gtsave</a></span><span class="op">(</span><span class="st">"tab_1.rtf"</span><span class="op">)</span></code></pre><p></p></div>
+document.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/gtsave.html">gtsave</a></span><span class="op">(</span><span class="st">"tab_1.tex"</span><span class="op">)</span></code></pre><p></p></div>
+<p>With the <code>.rtf</code> extension, we'll get an RTF document.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/gtsave.html">gtsave</a></span><span class="op">(</span><span class="st">"tab_1.rtf"</span><span class="op">)</span></code></pre><p></p></div>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>

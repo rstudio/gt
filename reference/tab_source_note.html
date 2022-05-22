@@ -98,7 +98,8 @@ retain HTML elements in the text.</p></dd>
 
 
 <p>Use <code><a href="gtcars.html">gtcars</a></code> to create a <strong>gt</strong> table. Use <code>tab_source_note()</code> to add a
-source note to the table footer that cites the data source.</p><div class="sourceCode r"><pre><code><span class="va">gtcars</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+source note to the table footer that cites the data source.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">gtcars</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">mfr</span>, <span class="va">model</span>, <span class="va">msrp</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>

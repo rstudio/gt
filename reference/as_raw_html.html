@@ -98,7 +98,8 @@ clients over using CSS in a <code>&lt;style&gt;</code> block.</p></dd>
 
 
 <p>Use <code><a href="gtcars.html">gtcars</a></code> to create a <strong>gt</strong> table. Add a header and then export as HTML
-code with inlined CSS styles.</p><div class="sourceCode r"><pre><code><span class="va">tab_html</span> <span class="op">&lt;-</span>
+code with inlined CSS styles.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">tab_html</span> <span class="op">&lt;-</span>
   <span class="va">gtcars</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">mfr</span>, <span class="va">model</span>, <span class="va">msrp</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
