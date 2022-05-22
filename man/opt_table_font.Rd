@@ -46,7 +46,9 @@ Use \code{\link{sp500}} to create a small \strong{gt} table, using \code{\link[=
 provide a dollar sign for the first row of monetary values. Then, set a
 larger font size for the table and use the \code{"Merriweather"} font (from
 \emph{Google Fonts}, via \code{\link[=google_font]{google_font()}}) with two font fallbacks (\code{"Cochin"} and
-the catchall \code{"Serif"} group).\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
+the catchall \code{"Serif"} group).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
   dplyr::slice(1:10) \%>\%
   dplyr::select(-volume, -adj_close) \%>\%
   gt() \%>\%
@@ -71,7 +73,9 @@ the catchall \code{"Serif"} group).\if{html}{\out{<div class="sourceCode r">}}\p
 
 Use \code{\link{sza}} to create an eleven-row table. Within \code{opt_table_font()}, set up
 a preferred list of sans-serif fonts that are commonly available in macOS
-(using part of the \code{\link[=default_fonts]{default_fonts()}} vector as a fallback).\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza \%>\%
+(using part of the \code{\link[=default_fonts]{default_fonts()}} vector as a fallback).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza \%>\%
   dplyr::filter(
     latitude == 20 &
       month == "jan" &

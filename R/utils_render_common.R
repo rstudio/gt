@@ -61,8 +61,10 @@ rownum_translation <- function(body,
 #' Render any formatting directives available in the `formats` list
 #'
 #' @noRd
-render_formats <- function(data,
-                           context) {
+render_formats <- function(
+    data,
+    context
+) {
 
   body <- dt_body_get(data = data)
   data_tbl <- dt_data_get(data = data)

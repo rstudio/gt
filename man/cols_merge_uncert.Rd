@@ -59,7 +59,7 @@ merged column (e.g., \code{NA} + \code{NA} = \code{NA})
 }
 
 Any resulting \code{NA} values in the \code{col_val} column following the merge
-operation can be easily formatted using the \code{\link[=fmt_missing]{fmt_missing()}} function.
+operation can be easily formatted using the \code{\link[=sub_missing]{sub_missing()}} function.
 
 This function is part of a set of four column-merging functions. The other
 two are the general \code{\link[=cols_merge]{cols_merge()}} function and the specialized
@@ -72,7 +72,9 @@ the output table through the \code{hide_columns} or \code{autohide} options.
 
 Use \code{\link{exibble}} to create a \strong{gt} table, keeping only the \code{currency} and
 \code{num} columns. Merge columns into one with a base value and uncertainty
-(after formatting the \code{num} column) using the \code{cols_merge_uncert()} function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+(after formatting the \code{num} column) using the \code{cols_merge_uncert()} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(currency, num) \%>\%
   dplyr::slice(1:7) \%>\%
   gt() \%>\%

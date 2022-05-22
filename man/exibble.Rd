@@ -39,8 +39,12 @@ character-based dates/times in the familiar ISO 8601 format. The \code{row} and
 \section{Examples}{
 
 
-Here is the \code{exibble}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 8 × 9
+Here is the \code{exibble}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 8 × 9
 ##           num char       fctr  date       time  datetime    currency row   group
 ##         <dbl> <chr>      <fct> <chr>      <chr> <chr>          <dbl> <chr> <chr>
 ## 1       0.111 apricot    one   2015-01-15 13:35 2018-01-01…    50.0  row_1 grp_a
@@ -51,7 +55,7 @@ Here is the \code{exibble}.\if{html}{\out{<div class="sourceCode r">}}\preformat
 ## 6      NA     fig        six   2015-06-15 <NA>  2018-06-06…    13.3  row_6 grp_b
 ## 7  777000     grapefruit seven <NA>       19:10 2018-07-07…    NA    row_7 grp_b
 ## 8 8880000     honeydew   eight 2015-08-15 20:20 <NA>            0.44 row_8 grp_b
-}
+}\if{html}{\out{</div>}}
 }
 
 \section{Function ID}{

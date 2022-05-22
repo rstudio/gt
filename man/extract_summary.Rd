@@ -23,7 +23,9 @@ descriptive stub labels for the summary rows.
 
 Use \code{\link{sp500}} to create a \strong{gt} table with row groups. Create summary rows
 labeled as \code{min}, \code{max}, and \code{avg} for every row group with \code{\link[=summary_rows]{summary_rows()}}.
-Then, extract the summary rows as a list object.\if{html}{\out{<div class="sourceCode r">}}\preformatted{summary_extracted <-
+Then, extract the summary rows as a list object.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{summary_extracted <-
   sp500 \%>\%
   dplyr::filter(date >= "2015-01-05" & date <="2015-01-30") \%>\%
   dplyr::arrange(date) \%>\%
@@ -47,7 +49,9 @@ Then, extract the summary rows as a list object.\if{html}{\out{<div class="sourc
   extract_summary()
 
 summary_extracted
-}\if{html}{\out{</div>}}\preformatted{## $summary_df_data_list
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## $summary_df_data_list
 ## $summary_df_data_list$W02
 ## # A tibble: 3 × 8
 ##   group_id rowname  date  open  high   low close  week
@@ -79,10 +83,12 @@ summary_extracted
 ## 1 W05      min        NA 2002. 2023. 1989. 1995.    NA
 ## 2 W05      max        NA 2050. 2058. 2041. 2057.    NA
 ## 3 W05      avg        NA 2030. 2039. 2009. 2021.    NA
-}
+}\if{html}{\out{</div>}}
 
 Use the summary list to make a new \strong{gt} table. The key thing is to use
-\code{dplyr::bind_rows()} and then pass the tibble to \code{\link[=gt]{gt()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{summary_extracted \%>\%
+\code{dplyr::bind_rows()} and then pass the tibble to \code{\link[=gt]{gt()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{summary_extracted \%>\%
   unlist(recursive = FALSE) \%>\%
   dplyr::bind_rows() \%>\%
   gt(groupname_col = "group_id")

@@ -157,7 +157,9 @@ argument. See the \emph{Arguments} section for more information on this.
 
 
 Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{num} column as numeric
-with three decimal places and with no use of digit separators.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+with three decimal places and with no use of digit separators.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt() \%>\%
   fmt_number(
     columns = num,
@@ -171,7 +173,9 @@ with three decimal places and with no use of digit separators.\if{html}{\out{<di
 }}
 
 Use \code{\link{countrypops}} to create a \strong{gt} table. Format all numeric columns to
-use large-number suffixing with the \code{suffixing = TRUE} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
+use large-number suffixing with the \code{suffixing = TRUE} option.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::select(country_code_3, year, population) \%>\%
   dplyr::filter(country_code_3 \%in\% c("CHN", "IND", "USA", "PAK", "IDN")) \%>\%
   dplyr::filter(year > 1975 & year \%\% 5 == 0) \%>\%
@@ -206,13 +210,16 @@ Other Format Data:
 \code{\link{fmt_fraction}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
-\code{\link{fmt_missing}()},
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt}()},
+\code{\link{sub_large_vals}()},
+\code{\link{sub_missing}()},
+\code{\link{sub_small_vals}()},
+\code{\link{sub_zero}()},
 \code{\link{text_transform}()}
 }
 \concept{Format Data}

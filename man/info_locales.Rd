@@ -34,7 +34,9 @@ letter.
 
 
 Get a table of info on all of the locales where the base locale ID begins
-with a \code{"v"}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{info_locales(begins_with = "v")
+with a \code{"v"}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{info_locales(begins_with = "v")
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{

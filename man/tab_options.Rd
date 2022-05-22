@@ -418,7 +418,9 @@ components, the subcomponents, and the element that can adjusted.
 
 Use \code{\link{exibble}} to create a \strong{gt} table with all the main parts added. We
 can use this \strong{gt} object going forward to demo some of what's available in
-the \code{tab_options()} function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
+the \code{tab_options()} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
   exibble \%>\%
   dplyr::select(-c(fctr, date, time, datetime)) \%>\%
   gt(
@@ -458,14 +460,18 @@ tab_1
 }}
 
 Modify the table width to be 100\% (which spans the entire content width
-area).\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% tab_options(table.width = pct(100))
+area).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% tab_options(table.width = pct(100))
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_2.png" style="width:100\%;">
 }}
 
-Modify the table's background color to be \code{"lightcyan"}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% tab_options(table.background.color = "lightcyan")
+Modify the table's background color to be \code{"lightcyan"}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% tab_options(table.background.color = "lightcyan")
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
@@ -473,7 +479,9 @@ Modify the table's background color to be \code{"lightcyan"}.\if{html}{\out{<div
 }}
 
 Use letters as the marks for footnote references. Also, separate footnotes in
-the footer by spaces instead of newlines.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\%
+the footer by spaces instead of newlines.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\%
   tab_options(
     footnotes.marks = letters,
     footnotes.multiline = FALSE
@@ -484,7 +492,9 @@ the footer by spaces instead of newlines.\if{html}{\out{<div class="sourceCode r
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_4.png" style="width:100\%;">
 }}
 
-Change the padding of data rows to 5 px.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\%
+Change the padding of data rows to 5 px.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\%
   tab_options(
     data_row.padding = px(5)
   )
@@ -494,7 +504,9 @@ Change the padding of data rows to 5 px.\if{html}{\out{<div class="sourceCode r"
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_5.png" style="width:100\%;">
 }}
 
-Reduce the size of the title and the subtitle text.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\%
+Reduce the size of the title and the subtitle text.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\%
   tab_options(
     heading.title.font.size = "small",
     heading.subtitle.font.size = "small"

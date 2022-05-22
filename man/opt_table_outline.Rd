@@ -28,7 +28,9 @@ will remove any present outline.
 
 
 Use \code{\link{exibble}} to create a \strong{gt} table with a number of table parts added.
-Have an outline wrap around the entire table by using \code{opt_table_outline()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
+Have an outline wrap around the entire table by using \code{opt_table_outline()}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
   exibble \%>\%
   gt(rowname_col = "row", groupname_col = "group") \%>\%
   summary_rows(
@@ -61,7 +63,9 @@ tab_1
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_table_outline_1.png" style="width:100\%;">
 }}
 
-Remove the table outline with the \code{style = "none"} option.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% opt_table_outline(style = "none")
+Remove the table outline with the \code{style = "none"} option.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% opt_table_outline(style = "none")
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{

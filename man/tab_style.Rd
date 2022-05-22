@@ -54,7 +54,9 @@ bold text (the degree of choice is greater with variable fonts)
 
 
 Use \code{\link{exibble}} to create a \strong{gt} table. Add styles that are to be applied
-to data cells that satisfy a condition (using \code{tab_style()}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+to data cells that satisfy a condition (using \code{tab_style()}).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(num, currency) \%>\%
   gt() \%>\%
   fmt_number(
@@ -88,7 +90,9 @@ to data cells that satisfy a condition (using \code{tab_style()}).\if{html}{\out
 }}
 
 Use \code{\link{sp500}} to create a \strong{gt} table. Color entire rows of cells based on
-values in a particular column.\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
+values in a particular column.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
   dplyr::filter(
     date >= "2015-12-01" &
     date <= "2015-12-15"
@@ -113,11 +117,13 @@ values in a particular column.\if{html}{\out{<div class="sourceCode r">}}\prefor
 }}
 
 Use \code{\link{exibble}} to create a \strong{gt} table. Replace missing values with the
-\code{\link[=fmt_missing]{fmt_missing()}} function and then add styling to the \code{char} column with
-\code{\link[=cell_fill]{cell_fill()}} and with a CSS style declaration.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+\code{\link[=sub_missing]{sub_missing()}} function and then add styling to the \code{char} column with
+\code{\link[=cell_fill]{cell_fill()}} and with a CSS style declaration.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(char, fctr) \%>\%
   gt() \%>\%
-  fmt_missing(everything()) \%>\%
+  sub_missing() \%>\%
   tab_style(
     style = list(
       cell_fill(color = "lightcyan"),

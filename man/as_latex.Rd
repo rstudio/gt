@@ -20,7 +20,9 @@ containing the LaTeX code.
 
 
 Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header and then export as an
-object with LaTeX code.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_latex <-
+object with LaTeX code.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_latex <-
   gtcars \%>\%
   dplyr::select(mfr, model, msrp) \%>\%
   dplyr::slice(1:5) \%>\%

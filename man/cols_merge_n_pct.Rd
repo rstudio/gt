@@ -46,8 +46,8 @@ missing values for the merged column (e.g., \code{NA} + \code{NA} = \code{NA})
 }
 
 Any resulting \code{NA} values in the \code{col_n} column following the merge
-operation can be easily formatted using the \code{\link[=fmt_missing]{fmt_missing()}} function.
-Separate calls of \code{\link[=fmt_missing]{fmt_missing()}} can be used for the \code{col_n} and
+operation can be easily formatted using the \code{\link[=sub_missing]{sub_missing()}} function.
+Separate calls of \code{\link[=sub_missing]{sub_missing()}} can be used for the \code{col_n} and
 \code{col_pct} columns for finer control of the replacement values. It is the
 responsibility of the user to ensure that values are correct in both the
 \code{col_n} and \code{col_pct} columns (this function neither generates nor
@@ -66,7 +66,9 @@ the output table through the \code{hide_columns} or \code{autohide} options.
 Use \code{\link{pizzaplace}} to create a \strong{gt} table that displays the counts and
 percentages of the top 3 pizzas sold by pizza category in 2015. The
 \code{cols_merge_n_pct()} function is used to merge the \code{n} and \code{frac} columns
-(and the \code{frac} column is formatted using \code{\link[=fmt_percent]{fmt_percent()}}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
+(and the \code{frac} column is formatted using \code{\link[=fmt_percent]{fmt_percent()}}).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
   dplyr::group_by(name, type, price) \%>\%
   dplyr::summarize(
     n = dplyr::n(),

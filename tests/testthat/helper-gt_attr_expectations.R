@@ -38,8 +38,7 @@ expect_tab_colnames <- function(tab,
   }
 }
 
-expect_tab <- function(tab,
-                       df) {
+expect_tab <- function(tab, df) {
 
   # Expect that the object has the correct classes
   expect_s3_class(tab, "gt_tbl")

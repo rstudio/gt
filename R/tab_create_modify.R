@@ -1293,14 +1293,14 @@ tab_source_note <- function(
 #' }}
 #'
 #' Use [`exibble`] to create a **gt** table. Replace missing values with the
-#' [fmt_missing()] function and then add styling to the `char` column with
+#' [sub_missing()] function and then add styling to the `char` column with
 #' [cell_fill()] and with a CSS style declaration.
 #'
 #' ```r
 #' exibble %>%
 #'   dplyr::select(char, fctr) %>%
 #'   gt() %>%
-#'   fmt_missing(everything()) %>%
+#'   sub_missing() %>%
 #'   tab_style(
 #'     style = list(
 #'       cell_fill(color = "lightcyan"),

@@ -59,7 +59,7 @@
 #'   ) %>%
 #'   gt(rowname_col = "tst") %>%
 #'   tab_spanner_delim(delim = ".") %>%
-#'   fmt_missing(
+#'   sub_missing(
 #'     columns = everything(),
 #'     missing_text = "90+"
 #'   ) %>%
