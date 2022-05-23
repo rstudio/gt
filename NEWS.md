@@ -1,4 +1,4 @@
-# gt (development version)
+# gt 0.6.0
 
 # gt 0.5.0
 
