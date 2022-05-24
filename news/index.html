@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,7 +57,16 @@
       <small>Source: <a href="https://github.com/rstudio/gt/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
-    <div class="section level2"><h2 class="pkg-version" data-toc-text="development version" id="gt-development-version">gt (development version)<a class="anchor" aria-label="anchor" href="#gt-development-version"></a></h2></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.6.0" id="gt-060">gt 0.6.0<a class="anchor" aria-label="anchor" href="#gt-060"></a></h2><p class="text-muted">CRAN release: 2022-05-24</p>
+<div class="section level3">
+<h3 id="new-features-0-6-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-6-0"></a></h3>
+<ul><li><p>RTF output support more suitable for Pharma users: (1) table styling now defaults to a look with far less table borders, which is more common for Pharma-based applications; (2) RTF table generation can make use of the new page-layout options (<code>page.*</code>) added to the <code><a href="../reference/tab_options.html">tab_options()</a></code> function (e.g., <code>page.orientation</code>, <code>page.numbering</code>, etc.) (<a href="https://github.com/rstudio/gt/issues/311" class="external-link">#311</a>, <a href="https://github.com/rstudio/gt/issues/653" class="external-link">#653</a>). (<a href="https://github.com/rstudio/gt/issues/927" class="external-link">#927</a>)</p></li>
+<li><p>The <code><a href="../reference/tab_footnote.html">tab_footnote()</a></code> function now allows for non-location footnote by making the <code>locations</code> argument optional; Any footnotes declared in this way will have their notes precede any location-based notes in the footer area (<a href="https://github.com/rstudio/gt/issues/879" class="external-link">#879</a>). (<a href="https://github.com/rstudio/gt/issues/925" class="external-link">#925</a>)</p></li>
+<li><p>The <code><a href="../reference/fmt_partsper.html">fmt_partsper()</a></code> function was added so that we can format values as high-ratio, dimensionless quantities (e.g., <code>"per-mille"</code>, <code>"ppm"</code>, etc.). These are less common that percentage values but no less important (<a href="https://github.com/rstudio/gt/issues/608" class="external-link">#608</a>). (<a href="https://github.com/rstudio/gt/issues/914" class="external-link">#914</a>)</p></li>
+<li><p>The <code>sub_*()</code> group of functions were added to make simple and common substitutions of data in a gt table with not-too-much effort. The functions added are: <code><a href="../reference/sub_missing.html">sub_missing()</a></code>, <code><a href="../reference/sub_zero.html">sub_zero()</a></code>, <code><a href="../reference/sub_small_vals.html">sub_small_vals()</a></code>, and <code><a href="../reference/sub_large_vals.html">sub_large_vals()</a></code>. The <code><a href="../reference/sub_missing.html">sub_missing()</a></code> function replaces <code><a href="../reference/fmt_missing.html">fmt_missing()</a></code> (and this deprecates the latter) (<a href="https://github.com/rstudio/gt/issues/904" class="external-link">#904</a>, <a href="https://github.com/rstudio/gt/issues/910" class="external-link">#910</a>, <a href="https://github.com/rstudio/gt/issues/911" class="external-link">#911</a>). (<a href="https://github.com/rstudio/gt/issues/912" class="external-link">#912</a>)</p></li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.5.0" id="gt-050">gt 0.5.0<a class="anchor" aria-label="anchor" href="#gt-050"></a></h2><p class="text-muted">CRAN release: 2022-04-21</p>
 <div class="section level3">
