@@ -37,7 +37,9 @@ This function serves as a convenient shortcut for \verb{<gt_tbl> \%>\% tab_optio
 
 Use \code{\link{exibble}} to create a \strong{gt} table with a number of table parts added.
 All text in the column labels, the stub, and in all row groups is to be
-transformed to all caps using \code{opt_all_caps()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+transformed to all caps using \code{opt_all_caps()}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt(rowname_col = "row", groupname_col = "group") \%>\%
   summary_rows(
     groups = "grp_a",

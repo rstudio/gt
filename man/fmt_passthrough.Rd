@@ -63,7 +63,9 @@ argument. See the \emph{Arguments} section for more information on this.
 
 Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{char} column. Pass
 the data in that column through but apply a simple pattern that adds an \code{"s"}
-to the non-\code{NA} values.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+to the non-\code{NA} values.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(char) \%>\%
   gt() \%>\%
   fmt_passthrough(
@@ -94,13 +96,16 @@ Other Format Data:
 \code{\link{fmt_fraction}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
-\code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_percent}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt}()},
+\code{\link{sub_large_vals}()},
+\code{\link{sub_missing}()},
+\code{\link{sub_small_vals}()},
+\code{\link{sub_zero}()},
 \code{\link{text_transform}()}
 }
 \concept{Format Data}

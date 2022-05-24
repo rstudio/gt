@@ -25,7 +25,9 @@ Use \code{\link{exibble}} to create a \strong{gt} table. Attempting to modify th
 for the \code{time} column is much safer if \code{default_fonts()} is appended to the
 end of the \code{font} listing in the \code{cell_text()} call (the \code{"Comic Sansa"} and
 \code{"Menloa"} fonts don't exist, but, we'll get the first available font from
-the \code{default_fonts()} set).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+the \code{default_fonts()} set).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(char, time) \%>\%
   gt() \%>\%
   tab_style(

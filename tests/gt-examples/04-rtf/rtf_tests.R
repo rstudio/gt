@@ -115,8 +115,8 @@ airquality_tbl <-
     label = "Measurement Period",
     columns = c(Month, Day)
   ) %>%
-  fmt_missing(columns = c(Solar.R, Wind, Temp)) %>%
-  fmt_missing(columns = Ozone, missing_text = I("---"))
+  sub_missing(columns = c(Solar.R, Wind, Temp)) %>%
+  sub_missing(columns = Ozone, missing_text = I("---"))
 
 airquality_tbl %>% gtsave("tests/gt-examples/rtf_output/airquality.rtf")
 
@@ -192,7 +192,7 @@ summary_tbl <-
     locations = cells_summary(
       groups = "C", columns = 1, rows = 1)
   ) %>%
-  fmt_missing(columns = c(value, value_2)) %>%
+  sub_missing(columns = c(value, value_2)) %>%
   tab_options(
     summary_row.background.color = "#FFFEEE",
     row_group.background.color = "lightblue"
@@ -225,7 +225,7 @@ uncert_tbl <-
     columns = c(value_1, value_2),
     decimals = 2
   ) %>%
-  fmt_missing(columns = c(value_1, value_2))
+  sub_missing(columns = c(value_1, value_2))
 
 uncert_tbl %>% gtsave("tests/gt-examples/rtf_output/uncert.rtf")
 

@@ -50,8 +50,12 @@ safety.
 \section{Examples}{
 
 
-Here is a glimpse at the data available in \code{gtcars}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::glimpse(gtcars)
-}\if{html}{\out{</div>}}\preformatted{## Rows: 47
+Here is a glimpse at the data available in \code{gtcars}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::glimpse(gtcars)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## Rows: 47
 ## Columns: 15
 ## $ mfr         <chr> "Ford", "Ferrari", "Ferrari", "Ferrari", "Ferrari", "Ferra…
 ## $ model       <chr> "GT", "458 Speciale", "458 Spider", "458 Italia", "488 GTB…
@@ -68,7 +72,7 @@ Here is a glimpse at the data available in \code{gtcars}.\if{html}{\out{<div cla
 ## $ trsmn       <chr> "7a", "7a", "7a", "7a", "7a", "7a", "7a", "7a", "7a", "7a"…
 ## $ ctry_origin <chr> "United States", "Italy", "Italy", "Italy", "Italy", "Ital…
 ## $ msrp        <dbl> 447000, 291744, 263553, 233509, 245400, 198973, 298000, 29…
-}
+}\if{html}{\out{</div>}}
 }
 
 \section{Function ID}{

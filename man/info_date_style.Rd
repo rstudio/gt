@@ -20,7 +20,9 @@ codes, the format names, and example outputs using a fixed date
 
 
 Get a table of info on the different date-formatting styles (which are used
-by supplying a number code to the \code{\link[=fmt_date]{fmt_date()}} function).\if{html}{\out{<div class="sourceCode r">}}\preformatted{info_date_style()
+by supplying a number code to the \code{\link[=fmt_date]{fmt_date()}} function).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{info_date_style()
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
