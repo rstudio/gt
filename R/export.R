@@ -106,14 +106,11 @@ gtsave <- function(
     data,
     filename,
     path = NULL,
-    image_lib = c("auto", "wkhtml", "webshot"),
     ...
 ) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
-
-  image_lib <- match.arg(image_lib)
 
   # Get the lowercased file extension
   file_ext <- gtsave_file_ext(filename)
@@ -138,21 +135,6 @@ gtsave <- function(
     )
   }
 
-  # Determine which graphics library to use for image export
-  if (file_ext %in% c("png", "pdf")) {
-
-    if (image_lib == "auto") {
-
-      if (file_ext == "png" && wkhtml_binary_available(type = "image")) {
-        image_lib <- "wkhtml"
-      }
-
-      if (file_ext == "pdf" && wkhtml_binary_available(type = "pdf")) {
-        image_lib <- "wkhtml"
-      }
-    }
-  }
-
   # Use the appropriate save function based
   # on the filename extension
   switch(
@@ -164,11 +146,7 @@ gtsave <- function(
     "tex" = gt_save_latex(data = data, filename, path, ...),
     "rtf" = gt_save_rtf(data = data, filename, path, ...),
     "png" = ,
-    "pdf" = if (image_lib == "webshot") {
-      gt_save_webshot(data = data, filename, path, ...)
-    } else {
-      gt_save_wkhtml(data = data, filename, path)
-    },
+    "pdf" = gt_save_webshot(data = data, filename, path, ...),
     {
       stop(
         "The file extension used (`.", file_ext, "`) doesn't have an ",
@@ -236,217 +214,59 @@ gt_save_webshot <- function(
     path = NULL
   )
 
-  # Saving an image requires the webshot package; if it's
-  # not present, stop with a message
-  if (!requireNamespace("webshot", quietly = TRUE)) {
+  # Edit the document to inject styles in the head
+  style_old <- "<style>body{background-color:white;}</style>"
 
-    stop(
-      "The `webshot` package is required for saving images of gt tables.",
-      call. = FALSE
+  chr_sess <- chromote::ChromoteSession$new()
+
+  Sys.sleep(0.5)
+
+  chr_sess$Page$navigate(paste0("file:///", tempfile_))
+
+  Sys.sleep(0.1)
+
+  document <- chr_sess$DOM$getDocument()
+  table_node <- chr_sess$DOM$querySelector(document$root$nodeId, ".gt_table")
+  box_model <- chr_sess$DOM$getBoxModel(nodeId = table_node$nodeId)
+
+  width <- box_model$model$width + 3
+  height <- box_model$model$height - box_model$model$margin[[7]]
+
+  style_new <-
+    paste0(
+    "<head>
+     <style>
+       html, body {
+         width:  fit-content;
+         height: fit-content;
+         margin:  0px;
+         padding: 0px;
+       }
+
+       @page { size: ", width, "px ", height, "px; margin: 0px; }
+     </style>
+     </head>
+    "
     )
 
-  } else {
+  html_table <- readLines(con = tempfile_)
+  html_table <- gsub(style_old, style_new, html_table, fixed = TRUE)
 
-    getBoxModel <- function(b, selector = "html", wait_ = TRUE) {
-      p <- b$DOM$getDocument(wait_ = FALSE) %...>%
-        { b$DOM$querySelector(.$root$nodeId, selector, wait_ = FALSE) } %...>%
-        { b$DOM$getBoxModel(.$nodeId, wait_ = FALSE) }
+  writeLines(text = html_table, con = tempfile_)
 
-      if (wait_) {
-        b$wait_for(p)
-      } else {
-        p
-      }
-    }
+  chr_sess <- chromote::ChromoteSession$new()
 
-    chr_sess <- chromote::ChromoteSession$new()
+  Sys.sleep(0.1)
 
-    chr_sess$Page$navigate(paste0("file:///", tempfile_))
+  chr_sess$Page$navigate(paste0("file:///", tempfile_))
 
-    chr_sess$view()
+  x <- chr_sess$Page$printToPDF(preferCSSPageSize = TRUE)
 
-    # Provides info for borders, padding, margins and can be focussed
-    # on the `table` selector
-    getBoxModel(chr_sess, selector = "table") %>% str()
+  Sys.sleep(0.1)
 
-    x <- chr_sess$Page$printToPDF(preferCSSPageSize = TRUE)
-
-    # Perhaps set margins to 0
-
-    writeBin(jsonlite::base64_dec(x$data), filename)
-
-    # ,
-    #   file = filename,
-    #   selector = "table",
-    #   zoom = zoom,
-    #   expand = expand,
-    #   ...
-    # )
-
-    # Save the image in the working directory
-    webshot2::webshot(
-      url = paste0("file:///", tempfile_),
-      file = filename,
-      selector = "table",
-      zoom = zoom,
-      expand = expand,
-      ...
-    )
-  }
+  writeBin(jsonlite::base64_dec(x$data), filename)
 }
 
-# Export PDF or PNG using `wkhtmltopdf`/`wkhtmltoimage` binaries
-# if available
-gt_save_wkhtml <- function(data,
-                           filename,
-                           path = NULL) {
-
-  filename <- gtsave_filename(path = path, filename = filename)
-
-  # Get the lowercased file extension to determine the output type
-  output_type <- gtsave_file_ext(filename)
-
-  # Create a path to a temporary directory
-  tempdir <- tempdir()
-
-  # Write the table HTML to a temporary file
-  data %>%
-    tab_options(table.width = "100%") %>%
-    as_raw_html(inline_css = TRUE) %>%
-    cat(file = paste0(tempdir, "/gt_table.html"))
-
-  # Create a path for temporary storage of the HTML file
-  gt_table_path <- path.expand(paste0(tempdir, "/gt_table.html"))
-
-  if (output_type == "pdf") {
-
-    png_args <- "--quiet --format png --width 0 --enable-smart-width"
-
-    # Get the dimensions of the table by converting to PNG first
-    system(
-      paste(
-        find_wkhtml_binary(type = "image"),
-        png_args,
-        gt_table_path,
-        path.expand(paste0(tempdir, "/gt_table.png"))
-      )
-    )
-
-    # Create a temporary PNG file to obtain cropbox dimensions
-    png_info <-
-      png::readPNG(
-        path.expand(paste0(tempdir, "/gt_table.png")),
-        info = TRUE
-      )
-
-    # Get the dimensions of the temporary PNG file
-    png_dim <- attributes(png_info)$info$dim
-
-    # Determine if the `wkhtmltopdf` binary is in the path
-    wkhtml_pdf_bin <- find_wkhtml_binary(type = "pdf")
-
-    # Use an approximate pixels to mm conversion to get
-    # width and height for PDF cropping
-    width <- png_dim[1] * 0.225
-    height <- png_dim[2] * 0.225
-
-    # Define the `quiet` argument for squelching console messages
-    quiet_arg <- "--quiet "
-
-    # Create args for page margins and page sizing
-    margins_args <-
-      paste0(
-        "-B 1 -L 1 -R 1 -T 3.4 ",
-        "--no-outline ",
-        "--page-width ", width, "mm ",
-        "--page-height ", height, "mm"
-      )
-
-    # Use the `wkhtmltopdf` binary to generate a PDF file
-    # in the working directory
-    system(
-      paste(
-        wkhtml_pdf_bin,
-        quiet_arg, margins_args,
-        gt_table_path, filename
-      )
-    )
-  }
-
-  if (output_type == "png") {
-
-    # Determine if the `wkhtmltoimage` binary is in the path
-    wkhtml_img_bin <- find_wkhtml_binary(type = "image")
-
-    # Define the `quiet` argument for squelching console messages
-    quiet_arg <- "--quiet"
-
-    # Create a `format` argument with the value being the output type
-    format_arg <- paste0("--format ", output_type)
-
-    # Create a `quality` argument with the value set at 95
-    quality_arg <- "--quality 100 --zoom 2"
-
-    # Set the width argument with 0; enable the smart-width feature
-    trim_lr_args <- "--width 0 --enable-smart-width"
-
-    # Use the `wkhtmltoimage` binary to generate an image
-    # file in the working directory
-    system(
-      paste(
-        wkhtml_img_bin,
-        quiet_arg, format_arg, quality_arg, trim_lr_args,
-        gt_table_path, filename
-      )
-    )
-  }
-}
-
-wkhtml_binary_available <- function(type = c("pdf", "image")) {
-
-  type <- match.arg(type)
-
-  if (type == "pdf" && Sys.which("wkhtmltopdf") != "") {
-    return(TRUE)
-  }
-
-  if (type == "png" && Sys.which("wkhtmltoimage") != "") {
-    return(TRUE)
-  }
-
-  FALSE
-}
-
-find_wkhtml_binary <- function(type = c("pdf", "image")) {
-
-  type <- match.arg(type)
-
-  # Get the path of the appropriate binary executable file
-  if (type == "pdf") {
-    path <- Sys.which("wkhtmltopdf")
-  } else if (type == "image") {
-    path <- Sys.which("wkhtmltoimage")
-  }
-
-  # if (path != "") {
-  #   return(path)
-  # }
-
-  if (path == "") {
-
-    # Stop function if a suitable binary cannot be found
-    stop(
-      "To enable exporting to image formats or PDF, you need to have the ",
-      "appropriate binary executable files available on your PATH. They can ",
-      "be easily added by getting the installation file for your system at ",
-      "`https://wkhtmltopdf.org/downloads.html`. Once installed, please retry ",
-      "exporting the gt table.",
-      call. = FALSE
-    )
-  }
-
-  path.expand(path)
-}
 
 #' Saving function for a LaTeX file
 #'
