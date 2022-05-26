@@ -163,7 +163,7 @@ tab_options(
   ihtml.use_filters = NULL,
   ihtml.use_resizers = NULL,
   ihtml.use_highlight = NULL,
-  ihtml.use_compact_mode = NULL
+  ihtml.use_compact_mode = NULL,
   page.orientation = NULL,
   page.numbering = NULL,
   page.header.use_tbl_headings = NULL,
@@ -531,7 +531,7 @@ Reduce the size of the title and the subtitle text.
 }
 
 \seealso{
-Other Create or Modify Parts:
+Other Create or Modify Parts: 
 \code{\link{tab_footnote}()},
 \code{\link{tab_header}()},
 \code{\link{tab_row_group}()},
