@@ -2173,7 +2173,7 @@ tab_options <- function(
     ihtml.use_filters = NULL,
     ihtml.use_resizers = NULL,
     ihtml.use_highlight = NULL,
-    ihtml.use_compact_mode = NULL
+    ihtml.use_compact_mode = NULL,
     page.orientation = NULL,
     page.numbering = NULL,
     page.header.use_tbl_headings = NULL,
