@@ -496,15 +496,79 @@ context_plusminus_mark <- function(plusminus_mark,
   )
 }
 
+#' Obtain the contextually correct small values text for `sub_small_vals()`
+#'
+#' @param context The output context.
+#' @noRd
+resolve_small_vals_text <- function(
+    threshold,
+    small_pattern
+) {
+
+  gsub("{x}", abs(threshold), small_pattern, fixed = TRUE)
+}
+
+#' Obtain the contextually correct large values text for `sub_large_vals()`
+#'
+#' @param context The output context.
+#' @noRd
+context_large_vals_text <- function(
+    threshold,
+    large_pattern,
+    sign,
+    context
+) {
+
+  if (large_pattern == ">={x}") {
+    if (sign == "-") {
+      return(I(paste0(context_lte_mark(context = context), "-", threshold)))
+    } else {
+      return(I(paste0(context_gte_mark(context = context), threshold)))
+    }
+  }
+
+  gsub("{x}", threshold, large_pattern, fixed = TRUE)
+}
+
+#' Obtain the contextually correct less than or equal to
+#'
+#' @param context The output context.
+#' @noRd
+context_lte_mark <- function(context) {
+
+  switch(
+    context,
+    html = "\U02264",
+    latex = "$\\leq$",
+    "<="
+  )
+}
+
+#' Obtain the contextually correct greater than or equal to
+#'
+#' @param context The output context.
+#' @noRd
+context_gte_mark <- function(context) {
+
+  switch(
+    context,
+    html = "\U02265",
+    latex = "$\\geq$",
+    ">="
+  )
+}
+
 #' Obtain the contextually correct minus mark
 #'
 #' @param context The output context.
 #' @noRd
 context_minus_mark <- function(context) {
 
-  switch(context,
-         html = "&minus;",
-         "-")
+  switch(
+    context,
+    html = "&minus;",
+    "-"
+  )
 }
 
 #' Obtain the contextually correct percent mark
@@ -515,6 +579,7 @@ context_percent_mark <- function(context) {
 
   switch(
     context,
+    html = "%",
     latex = "\\%",
     "%"
   )
@@ -556,9 +621,11 @@ context_permyriad_mark <- function(context) {
 #' @noRd
 context_parens_marks <- function(context) {
 
-  switch(context,
-         latex = c("(", ")"),
-         c("(", ")"))
+  switch(
+    context,
+    latex = c("(", ")"),
+    c("(", ")")
+  )
 }
 
 #' Obtain the contextually correct pair of opening/closing exponential strings
@@ -567,11 +634,13 @@ context_parens_marks <- function(context) {
 #' @noRd
 context_exp_marks <- function(context) {
 
-  switch(context,
-         html = c(" &times; 10<sup class='gt_super'>", "</sup>"),
-         latex = c(" \\times 10^{", "}"),
-         rtf = c(" \\'d7 10{\\super ", "}"),
-         c(" x 10(", ")"))
+  switch(
+    context,
+    html = c(" &times; 10<sup class='gt_super'>", "</sup>"),
+    latex = c(" \\times 10^{", "}"),
+    rtf = c(" \\'d7 10{\\super ", "}"),
+    c(" x 10(", ")")
+  )
 }
 
 

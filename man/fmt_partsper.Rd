@@ -155,7 +155,9 @@ argument. See the \emph{Arguments} section for more information on this.
 
 Create a tibble of small numeric values and generate a \strong{gt} table. Format
 the \code{a} column to appear in scientific notation with \code{\link[=fmt_scientific]{fmt_scientific()}} and
-format the \code{b} column as \emph{per mille} values with \code{fmt_partsper()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(x = 0:-5, a = 10^(0:-5), b = a) \%>\%
+format the \code{b} column as \emph{per mille} values with \code{fmt_partsper()}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(x = 0:-5, a = 10^(0:-5), b = a) \%>\%
   gt(rowname_col = "x") \%>\%
   fmt_scientific(a, decimals = 0) \%>\%
   fmt_partsper(
@@ -185,13 +187,16 @@ Other Format Data:
 \code{\link{fmt_fraction}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
-\code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt}()},
+\code{\link{sub_large_vals}()},
+\code{\link{sub_missing}()},
+\code{\link{sub_small_vals}()},
+\code{\link{sub_zero}()},
 \code{\link{text_transform}()}
 }
 \concept{Format Data}

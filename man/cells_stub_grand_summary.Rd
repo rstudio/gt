@@ -68,7 +68,9 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 
 Use \code{\link{countrypops}} to create a \strong{gt} table. Add some styling to a grand
 summary stub cell with with the \code{\link[=tab_style]{tab_style()}} and
-\code{cells_stub_grand_summary()} functions.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
+\code{cells_stub_grand_summary()} functions.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::filter(country_name == "Spain", year < 1970) \%>\%
   dplyr::select(-contains("country")) \%>\%
   gt(rowname_col = "year") \%>\%

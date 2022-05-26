@@ -53,7 +53,9 @@ labels for row groups not explicitly assigned a group,
 
 Use \code{\link{gtcars}} to create a \strong{gt} table and use \code{tab_row_group()} to add two
 row groups with the labels: \code{numbered} and \code{NA}. The row group with the \code{NA}
-label ends up being rendered without a label at all.\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
+label ends up being rendered without a label at all.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
   dplyr::select(model, year, hp, trq) \%>\%
   dplyr::slice(1:8) \%>\%
   gt(rowname_col = "model") \%>\%
@@ -70,7 +72,9 @@ label ends up being rendered without a label at all.\if{html}{\out{<div class="s
 Use \code{\link{gtcars}} to create a \strong{gt} table. Add two row groups with the labels
 \code{powerful} and \verb{super powerful}. The distinction between the groups is
 whether \code{hp} is lesser or greater than \code{600} (governed by the expressions
-provided to the \code{rows} argument).\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
+provided to the \code{rows} argument).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
   dplyr::select(model, year, hp, trq) \%>\%
   dplyr::slice(1:8) \%>\%
   gt(rowname_col = "model") \%>\%

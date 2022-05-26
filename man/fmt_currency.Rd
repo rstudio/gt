@@ -192,7 +192,9 @@ argument. See the \emph{Arguments} section for more information on this.
 
 
 Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{currency} column to
-have currency values in euros (\code{"EUR"}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+have currency values in euros (\code{"EUR"}).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt() \%>\%
   fmt_currency(
     columns = currency,
@@ -205,7 +207,9 @@ have currency values in euros (\code{"EUR"}).\if{html}{\out{<div class="sourceCo
 }}
 
 Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{num} and \code{currency},
-columns, then, format those columns using the \code{"CNY"} and \code{"GBP"} currencies.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+columns, then, format those columns using the \code{"CNY"} and \code{"GBP"} currencies.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(num, currency) \%>\%
   gt() \%>\%
   fmt_currency(
@@ -238,7 +242,6 @@ Other Format Data:
 \code{\link{fmt_fraction}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
-\code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
@@ -246,6 +249,10 @@ Other Format Data:
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt}()},
+\code{\link{sub_large_vals}()},
+\code{\link{sub_missing}()},
+\code{\link{sub_small_vals}()},
+\code{\link{sub_zero}()},
 \code{\link{text_transform}()}
 }
 \concept{Format Data}

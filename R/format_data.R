@@ -1345,10 +1345,7 @@ fmt_partsper <- function(
 #'     accuracy = 10,
 #'     simplify = FALSE
 #'   ) %>%
-#'   fmt_missing(
-#'     columns = everything(),
-#'     missing_text = ""
-#'   ) %>%
+#'   sub_missing(missing_text = "") %>%
 #'   tab_spanner(
 #'     label = "Sold",
 #'     columns = contains("sold")
@@ -2913,7 +2910,7 @@ fmt_passthrough <- function(
 
         x_str
       },
-      latex = function(x) {
+      rtf = function(x) {
 
         # Create `x_str` with same length as `x`
         x_str <- rep(NA_character_, length(x))
@@ -2949,123 +2946,16 @@ fmt_passthrough <- function(
   )
 }
 
-#' Format missing values
-#'
-#' @description
-#' Wherever there is missing data (i.e., `NA` values) a customizable mark may
-#' present better than the standard `NA` text that would otherwise appear. The
-#' `fmt_missing()` function allows for this replacement through its
-#' `missing_text` argument (where an em dash serves as the default).
-#'
-#' @details
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). Conditional
-#' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the *Arguments* section for more information on this.
-#'
-#' @inheritParams fmt_number
-#' @param missing_text The text to be used in place of `NA` values in the
-#'   rendered table.
-#'
-#' @return An object of class `gt_tbl`.
-#'
-#' @section Examples:
-#'
-#' Use [`exibble`] to create a **gt** table. The `NA` values in different
-#' columns will be given replacement text.
-#'
-#' ```r
-#' exibble %>%
-#'   dplyr::select(-row, -group) %>%
-#'   gt() %>%
-#'   fmt_missing(
-#'     columns = 1:2,
-#'     missing_text = "missing"
-#'   ) %>%
-#'   fmt_missing(
-#'     columns = 4:7,
-#'     missing_text = "nothing"
-#'   )
-#' ```
-#'
-#' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_fmt_missing_1.png")`
-#' }}
-#'
-#' @family Format Data
-#' @section Function ID:
-#' 3-15
-#'
-#' @import rlang
-#' @export
-fmt_missing <- function(
-    data,
-    columns,
-    rows = everything(),
-    missing_text = "---"
-) {
-
-  # Perform input object validation
-  stop_if_not_gt(data = data)
-
-  # Pass `data`, `columns`, `rows`, and the formatting
-  # functions (as a function list) to `fmt()`
-  fmt(
-    data = data,
-    columns = {{ columns }},
-    rows = {{ rows }},
-    fns = list(
-      html = function(x) {
-
-        missing_text <-
-          context_missing_text(
-            missing_text = missing_text,
-            context = "html"
-          )
-
-        # Any values of `x` that are `NA` get
-        # `missing_text` as output; any values that
-        # are not missing get `NA` as their output
-        # (meaning, the existing output for that
-        # value, if it exists, should be inherited)
-        ifelse(is.na(x), missing_text, NA_character_)
-      },
-      rtf = function(x) {
-
-        missing_text <-
-          context_missing_text(
-            missing_text = missing_text,
-            context = "rtf"
-          )
-
-        # Any values of `x` that are `NA` get
-        # `missing_text` as output; any values that
-        # are not missing get `NA` as their output
-        # (meaning, the existing output for that
-        # value, if it exists, should be inherited)
-        ifelse(is.na(x), missing_text, NA_character_)
-      },
-      default = function(x) {
-
-        # Any values of `x` that are `NA` get
-        # `missing_text` as output; any values that
-        # are not missing get `NA` as their output
-        # (meaning, the existing output for that
-        # value, if it exists, should be inherited)
-        ifelse(is.na(x), missing_text, NA_character_)
-      }
-    )
-  )
-}
-
 #' Set a column format with a formatter function
 #'
 #' @description
-#' The `fmt()` function provides greater control in formatting raw data values
-#' than any of the specialized `fmt_*()` functions that are available in
-#' **gt**. Along with the `columns` and `rows` arguments that provide some
-#' precision in targeting data cells, the `fns` argument allows you to define
-#' one or more functions for manipulating the raw data.
+#' The `fmt()` function provides a way to execute custom formatting
+#' functionality with raw data values in a way that can consider all output
+#' contexts.
+#'
+#' Along with the `columns` and `rows` arguments that provide some precision in
+#' targeting data cells, the `fns` argument allows you to define one or more
+#' functions for manipulating the raw data.
 #'
 #' If providing a single function to `fns`, the recommended format is in the
 #' form: `fns = function(x) ...`. This single function will format the targeted
@@ -3073,11 +2963,11 @@ fmt_missing <- function(
 #' RTF).
 #'
 #' If you require formatting of `x` that depends on the output format, a list of
-#' functions can be provided for the `html`, `latex`, and `default` contexts.
-#' This can be in the form of `fns = list(html = function(x) ..., latex =
-#' function(x) ..., default = function(x) ...)`. In this multiple-function case,
-#' we recommended including the `default` function as a fallback if all contexts
-#' aren't provided.
+#' functions can be provided for the `html`, `latex`, `rtf`, and `default`
+#' contexts. This can be in the form of `fns = list(html = function(x) ...,
+#' latex = function(x) ..., default = function(x) ...)`. In this
+#' multiple-function case, we recommended including the `default` function as a
+#' fallback if all contexts aren't provided.
 #'
 #' @details
 #' As with all of the `fmt_*()` functions, targeting of values is done through
@@ -3088,6 +2978,9 @@ fmt_missing <- function(
 #'
 #' @inheritParams fmt_number
 #' @param fns Either a single formatting function or a named list of functions.
+#' @param prepend Should the formatting function(s) be brought to the beginning
+#' of the formatting queue (`TRUE`) or placed at the end (`FALSE`). By default,
+#' this is `FALSE` and this leads to 'last-one-wins' semantics.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -3114,7 +3007,7 @@ fmt_missing <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-16
+#' 3-15
 #'
 #' @import rlang
 #' @export
@@ -3122,13 +3015,14 @@ fmt <- function(
     data,
     columns = everything(),
     rows = everything(),
-    fns
+    fns,
+    prepend = FALSE
 ) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Get the `stub_df` data frame from `data`
+  # Get the `stub_df` and `data_tbl` tables from `data`
   stub_df <- dt_stub_df_get(data = data)
   data_tbl <- dt_data_get(data = data)
 
@@ -3163,7 +3057,11 @@ fmt <- function(
       rows = resolved_rows_idx
     )
 
-  dt_formats_add(data = data, formats = formatter_list)
+  dt_formats_add(
+    data = data,
+    formats = formatter_list,
+    prepend = prepend
+  )
 }
 
 #' Insert separator marks to an integer to conform to Indian numbering system

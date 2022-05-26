@@ -164,6 +164,18 @@ tab_options(
   ihtml.use_resizers = NULL,
   ihtml.use_highlight = NULL,
   ihtml.use_compact_mode = NULL
+  page.orientation = NULL,
+  page.numbering = NULL,
+  page.header.use_tbl_headings = NULL,
+  page.footer.use_tbl_notes = NULL,
+  page.width = NULL,
+  page.height = NULL,
+  page.margin.left = NULL,
+  page.margin.right = NULL,
+  page.margin.top = NULL,
+  page.margin.bottom = NULL,
+  page.header.height = NULL,
+  page.footer.height = NULL
 )
 }
 \arguments{
@@ -373,6 +385,33 @@ when striping rows.}
 
 \item{row.striping.include_table_body}{An option for whether to include the
 table body when striping rows.}
+
+\item{page.orientation}{For RTF output, this provides an two options for page
+orientation: \code{"portrait"} (the default) and \code{"landscape"}.}
+
+\item{page.numbering}{Within RTF output, should page numbering be displayed?
+By default, this is set to \code{FALSE} but if \code{TRUE} then page numbering text
+will be added to the document header.}
+
+\item{page.header.use_tbl_headings}{If \code{TRUE} then RTF output tables will
+migrate all table headings (including the table title and all column
+labels) to the page header. This page header content will repeat across
+pages. By default, this is \code{FALSE}.}
+
+\item{page.footer.use_tbl_notes}{If \code{TRUE} then RTF output tables will
+migrate all table footer content (this includes footnotes and source notes)
+to the page footer. This page footer content will repeat across pages. By
+default, this is \code{FALSE}.}
+
+\item{page.width, page.height}{The page width and height in the standard
+portrait orientation. This is for RTF table output and the default
+values (in inches) are \verb{8.5in} and \verb{11.0in}.}
+
+\item{page.margin.left, page.margin.right, page.margin.top, page.margin.bottom}{For RTF table output, these options correspond to the left, right, top, and
+bottom page margins. The default values for each of these is \verb{1.0in}.}
+
+\item{page.header.height, page.footer.height}{The heights of the page header
+and footer for RTF table outputs. Default values for both are \verb{0.5in}.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -386,7 +425,9 @@ components, the subcomponents, and the element that can adjusted.
 
 Use \code{\link{exibble}} to create a \strong{gt} table with all the main parts added. We
 can use this \strong{gt} object going forward to demo some of what's available in
-the \code{tab_options()} function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
+the \code{tab_options()} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
   exibble \%>\%
   dplyr::select(-c(fctr, date, time, datetime)) \%>\%
   gt(
@@ -426,14 +467,18 @@ tab_1
 }}
 
 Modify the table width to be 100\% (which spans the entire content width
-area).\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% tab_options(table.width = pct(100))
+area).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% tab_options(table.width = pct(100))
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_2.png" style="width:100\%;">
 }}
 
-Modify the table's background color to be \code{"lightcyan"}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% tab_options(table.background.color = "lightcyan")
+Modify the table's background color to be \code{"lightcyan"}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% tab_options(table.background.color = "lightcyan")
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
@@ -441,7 +486,9 @@ Modify the table's background color to be \code{"lightcyan"}.\if{html}{\out{<div
 }}
 
 Use letters as the marks for footnote references. Also, separate footnotes in
-the footer by spaces instead of newlines.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\%
+the footer by spaces instead of newlines.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\%
   tab_options(
     footnotes.marks = letters,
     footnotes.multiline = FALSE
@@ -452,7 +499,9 @@ the footer by spaces instead of newlines.\if{html}{\out{<div class="sourceCode r
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_4.png" style="width:100\%;">
 }}
 
-Change the padding of data rows to 5 px.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\%
+Change the padding of data rows to 5 px.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\%
   tab_options(
     data_row.padding = px(5)
   )
@@ -462,7 +511,9 @@ Change the padding of data rows to 5 px.\if{html}{\out{<div class="sourceCode r"
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_5.png" style="width:100\%;">
 }}
 
-Reduce the size of the title and the subtitle text.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\%
+Reduce the size of the title and the subtitle text.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\%
   tab_options(
     heading.title.font.size = "small",
     heading.subtitle.font.size = "small"
@@ -480,7 +531,7 @@ Reduce the size of the title and the subtitle text.\if{html}{\out{<div class="so
 }
 
 \seealso{
-Other Create or Modify Parts: 
+Other Create or Modify Parts:
 \code{\link{tab_footnote}()},
 \code{\link{tab_header}()},
 \code{\link{tab_row_group}()},

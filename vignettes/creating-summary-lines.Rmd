@@ -42,7 +42,7 @@ exibble_a <-
   exibble %>%
   select(-c(fctr, date, time, datetime)) %>%
   gt(rowname_col = "row", groupname_col = "group") %>%
-  fmt_missing(columns = everything())
+  sub_missing()
 
 exibble_a
 ```
@@ -363,9 +363,7 @@ exibble_d %>%
     columns = num,
     decimals = 1
   ) %>%
-  fmt_missing(
-    columns = c(char, currency, row, group)
-  )
+  sub_missing(columns = c(char, currency, row, group))
 ```
 
 ### Providing Our Own Aggregation Functions to Generate Summary Rows

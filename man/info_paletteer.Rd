@@ -65,7 +65,9 @@ are shown by default with \code{info_paletteer()}:
 
 
 Get a table of info on just the \code{"ggthemes"} color palette (easily accessible
-from the \strong{paletteer} package).\if{html}{\out{<div class="sourceCode r">}}\preformatted{info_paletteer(color_pkgs = "ggthemes")
+from the \strong{paletteer} package).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{info_paletteer(color_pkgs = "ggthemes")
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{

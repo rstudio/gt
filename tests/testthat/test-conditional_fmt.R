@@ -225,13 +225,14 @@ test_that("the `fmt_passthrough()` function works with conditional `rows`", {
   )
 })
 
-test_that("the `fmt_missing()` function works with conditional `rows`", {
+test_that("the `sub_missing()` function works with conditional `rows`", {
 
   expect_equal(
     (tab %>%
-       fmt_missing(
+       sub_missing(
          columns = num_2,
-         rows = num_1 <= 0) %>%
+         rows = num_1 <= 0
+       ) %>%
        render_formats_test(context = "html"))[["num_2"]],
     c("34", "74", "23", "NA", "35", rep("&mdash;", 2))
   )

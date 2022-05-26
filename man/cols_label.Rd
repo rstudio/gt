@@ -44,7 +44,9 @@ labels once they have been relabeled.
 
 
 Use \code{\link{countrypops}} to create a \strong{gt} table. Relabel all the table's columns
-with the \code{cols_label()} function to improve its presentation.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
+with the \code{cols_label()} function to improve its presentation.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::select(-contains("code")) \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%
@@ -62,7 +64,9 @@ with the \code{cols_label()} function to improve its presentation.\if{html}{\out
 
 Using \code{\link{countrypops}} again to create a \strong{gt} table, we label columns just
 as before but this time make the column labels bold through Markdown
-formatting.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
+formatting.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::select(-contains("code")) \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%

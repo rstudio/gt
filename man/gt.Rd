@@ -85,7 +85,9 @@ appear in the display table.
 
 Create a \strong{gt} table object using the \code{\link{exibble}} dataset. Use the \code{row} and
 \code{group} columns to add a stub and row groups via the \code{rowname_col} and
-\code{groupname_col} arguments.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
+\code{groupname_col} arguments.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
   exibble \%>\%
   gt(
     rowname_col = "row",
@@ -101,7 +103,9 @@ tab_1
 
 The resulting \strong{gt} table object can be used in transformations with a
 variety of \verb{tab_*()}, \verb{fmt_*()}, \verb{cols_*()}, and even more functions
-available in the package.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\%
+available in the package.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\%
   tab_header(
     title = "Table Title",
     subtitle = "Subtitle"

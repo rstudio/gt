@@ -4,7 +4,7 @@
 \alias{tab_header}
 \title{Add a table header}
 \usage{
-tab_header(data, title, subtitle = NULL)
+tab_header(data, title, subtitle = NULL, preheader = NULL)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -13,6 +13,9 @@ tab_header(data, title, subtitle = NULL)
 the table subtitle. We can elect to use the \code{\link[=md]{md()}} and \code{\link[=html]{html()}} helper
 functions to style the text as Markdown or to retain HTML elements in the
 text.}
+
+\item{preheader}{Optional preheader content that is rendered above the table.
+Can be supplied as a vector of text.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -28,7 +31,9 @@ output, we can use HTML in either of the title or subtitle.
 
 
 Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header part with the
-\code{tab_header()} function so that we get a title and a subtitle for the table.\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
+\code{tab_header()} function so that we get a title and a subtitle for the table.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
   dplyr::select(mfr, model, msrp) \%>\%
   dplyr::slice(1:5) \%>\%
   gt() \%>\%

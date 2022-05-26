@@ -55,7 +55,9 @@ output table through the \code{autohide} option.
 
 Use \code{\link{sp500}} to create a \strong{gt} table. Use the \code{cols_merge()} function to
 merge the \code{open} & \code{close} columns together, and, the \code{low} & \code{high} columns
-(putting an em dash between both). Relabel the columns with \code{\link[=cols_label]{cols_label()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
+(putting an em dash between both). Relabel the columns with \code{\link[=cols_label]{cols_label()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
   dplyr::slice(50:55) \%>\%
   dplyr::select(-volume, -adj_close) \%>\%
   gt() \%>\%
