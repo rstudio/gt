@@ -1,5 +1,3 @@
-context("LaTeX -- Ensuring that the `fmt_markdown()` function works as expected")
-
 test_that("the `fmt_markdown()` function works correctly", {
 
   # Create a few Markdown-based text snippets

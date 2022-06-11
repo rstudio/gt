@@ -1,5 +1,3 @@
-context("Ensuring that the `gt()` function works as expected")
-
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")

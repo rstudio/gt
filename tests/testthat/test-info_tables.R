@@ -1,5 +1,3 @@
-context("Ensuring that the information-providing functions work as expected")
-
 test_that("the `info_date_style()` function works correctly", {
 
   # Expect that the `info_date_style()` function produces an

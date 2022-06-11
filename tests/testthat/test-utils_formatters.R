@@ -1,5 +1,3 @@
-context("Ensuring that the utility functions for the formatters work correctly")
-
 test_that("the `filter_table_to_value()` function works correctly", {
 
   # Expect that filtering the `locales` table with

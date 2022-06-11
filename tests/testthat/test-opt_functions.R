@@ -1,5 +1,3 @@
-context("Ensuring that the `opt_*()` functions work properly")
-
 # Helper function to compare a contiguous set of HTML fragments with raw html
 html_fragment_within <- function(raw_html, ...) {
   grepl(paste0("\\Q", c(...), "\\E", "[\\n\\s]*?", collapse = ""), raw_html, perl = TRUE)

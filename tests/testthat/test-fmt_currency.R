@@ -1,5 +1,3 @@
-context("Ensuring that the `fmt_currency()` function works as expected")
-
 test_that("the `fmt_currency()` function works correctly", {
 
   # Create an input data frame four columns: two

@@ -1,5 +1,3 @@
-context("Ensuring that the md() and html() functions work for HTML tables")
-
 tab <-
   exibble %>%
   gt(rowname_col = "row", groupname_col = "group")

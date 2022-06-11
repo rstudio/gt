@@ -1,5 +1,3 @@
-context("Ensuring that the `tab_style()` function works as expected")
-
 # Create a table from `mtcars` that has all the different components
 data <-
   gt(mtcars, rownames_to_stub = TRUE) %>%

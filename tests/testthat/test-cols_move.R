@@ -1,5 +1,3 @@
-context("Ensuring that the `cols_move*()` functions work as expected")
-
 # Create a shortened version of `mtcars`
 mtcars_short <- mtcars[1:5, ]
 

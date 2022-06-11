@@ -1,5 +1,3 @@
-context("Ensuring that the incoming `data` object is of class `gt_tbl`")
-
 test_that("all exported functions validate the incoming `data` object", {
 
   regexp_stop <- "The object to `data` is not a `gt_tbl` object"
