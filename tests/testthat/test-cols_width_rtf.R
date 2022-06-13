@@ -1,4 +1,3 @@
-local_edition(3)
 skip_on_cran()
 
 test_that("The `cols_width()` function works in making RTF tables", {
