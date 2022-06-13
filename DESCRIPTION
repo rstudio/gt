@@ -53,7 +53,8 @@ Suggests:
     shiny,
     tidyr,
     webshot,
-    xml2
+    xml2,
+    officer 
 Roxygen: list(markdown = TRUE)
 Collate: 
     'as_data_frame.R'
