@@ -233,7 +233,7 @@ test_that("the `cols_merge_uncert()` function works correctly", {
   sep <- dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep
 
   # Expect that `sep` has the `AsIs` class
-  expect_is(sep, "AsIs")
+  expect_s3_class(sep, "AsIs")
   expect_equal(as.character(sep), " +/- ")
   expect_equal(sep, I(" +/- "))
 })
@@ -410,7 +410,7 @@ test_that("the `cols_merge_range()` function works correctly", {
   sep <- dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep
 
   # Expect that `sep` has the `AsIs` class
-  expect_is(sep, "AsIs")
+  expect_s3_class(sep, "AsIs")
   expect_equal(as.character(sep), "--")
   expect_equal(sep, I("--"))
 
@@ -440,7 +440,7 @@ test_that("the `cols_merge_range()` function works correctly", {
   sep <- dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep
 
   # Expect that `sep` has the `AsIs` class
-  expect_is(sep, "AsIs")
+  expect_s3_class(sep, "AsIs")
   expect_equal(as.character(sep), "---")
   expect_equal(sep, I("---"))
 
