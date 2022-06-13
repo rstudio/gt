@@ -1,5 +1,3 @@
-context("LaTeX -- Ensuring that the `row_group_order()` function works as expected")
-
 test_that("the `row_group_order()` function works correctly", {
 
   # Create a table with group names, rownames, and four columns of values

@@ -1,9 +1,7 @@
-local_edition(3)
 skip_on_cran()
 
-# Create a table based on `sp500`, with
-# group names, rownames, and four
-# columns of values
+# Create a table based on `sp500`, with group names, rownames,
+# and four columns of values
 tbl <-
   sp500 %>%
   dplyr::filter(
@@ -1383,7 +1381,6 @@ test_that("creating summary rows works for hidden columns", {
 
 test_that("Situtations where `rowname` is a column name don't interfere with internals", {
 
-  local_edition(3)
   skip_on_cran()
 
   # The most basic table where rowname exists as a column; by default

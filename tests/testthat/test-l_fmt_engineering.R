@@ -39,7 +39,7 @@ test_that("the `fmt_engineering()` function works correctly in the LaTeX context
   tab <- gt(data_tbl)
 
   # Expect that the object has the correct classes
-  expect_is(tab, c("gt_tbl", "data.frame"))
+  expect_s3_class(tab, c("gt_tbl", "data.frame"))
 
   # Expect the extracted values to match those of the
   # original dataset
