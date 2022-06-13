@@ -97,26 +97,35 @@ subsequent columns given in <code>columns</code>).</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p>A table object that is created using the <code><a href="gt.html">gt()</a></code> function.</p></dd>
+
+
 <dt>columns</dt>
 <dd><p>The columns that will participate in the merging process. The
 first column name provided will be the target column (i.e., undergo
 mutation) and the other columns will serve to provide input.</p></dd>
+
+
 <dt>hide_columns</dt>
 <dd><p>Any column names provided here will have their state
 changed to <code>hidden</code> (via internal use of <code><a href="cols_hide.html">cols_hide()</a></code> if they aren't
 already hidden. This is convenient if the shared purpose of these specified
 columns is only to provide string input to the target column. To suppress
 any hiding of columns, <code>FALSE</code> can be used here.</p></dd>
+
+
 <dt>pattern</dt>
 <dd><p>A formatting pattern that specifies the arrangement of the
 <code>column</code> values and any string literals. We need to use column numbers
 (corresponding to the position of columns provided in <code>columns</code>) within the
 pattern. These indices are to be placed in curly braces (e.g., <code>{1}</code>). All
 characters outside of braces are taken to be string literals.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An object of class <code>gt_tbl</code>.</p>
+    
+
+<p>An object of class <code>gt_tbl</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -183,7 +192,7 @@ merge the <code>open</code> &amp; <code>close</code> columns together, and, the 
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

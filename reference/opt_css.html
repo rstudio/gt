@@ -80,23 +80,32 @@ as a vector of lines or as a single string.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p>A table object that is created using the <code><a href="gt.html">gt()</a></code> function.</p></dd>
+
+
 <dt>css</dt>
 <dd><p>The CSS to include as part of the rendered table's <code>&lt;style&gt;</code>
 element.</p></dd>
+
+
 <dt>add</dt>
 <dd><p>If <code>TRUE</code>, the default, the CSS is added to any already-defined
 CSS (typically from previous calls of <code><a href="opt_table_font.html">opt_table_font()</a></code>, <code>opt_css()</code>, or,
 directly setting CSS the <code>table.additional_css</code> value in <code><a href="tab_options.html">tab_options()</a></code>).
 If this is set to <code>FALSE</code>, the CSS provided here will replace any
 previously-stored CSS.</p></dd>
+
+
 <dt>allow_duplicates</dt>
 <dd><p>When this is <code>FALSE</code> (the default), the CSS provided
 here won't be added (provided that <code>add = TRUE</code>) if it is seen in the
 already-defined CSS.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An object of class <code>gt_tbl</code>.</p>
+    
+
+<p>An object of class <code>gt_tbl</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
@@ -160,7 +169,7 @@ table ID explicitly (here as <code>"one"</code>).</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

@@ -93,29 +93,43 @@ also define several styles within a single call of <code>cell_text()</code> and
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>color</dt>
 <dd><p>The text color.</p></dd>
+
+
 <dt>font</dt>
 <dd><p>The font or collection of fonts (subsequent font names are) used
 as fallbacks.</p></dd>
+
+
 <dt>size</dt>
 <dd><p>The size of the font. Can be provided as a number that is assumed
 to represent <code>px</code> values (or could be wrapped in the <code><a href="px.html">px()</a></code>) helper
 function. We can also use one of the following absolute size keywords:
 <code>"xx-small"</code>, <code>"x-small"</code>, <code>"small"</code>, <code>"medium"</code>, <code>"large"</code>, <code>"x-large"</code>,
 or <code>"xx-large"</code>.</p></dd>
+
+
 <dt>align</dt>
 <dd><p>The text alignment. Can be one of either <code>"center"</code>, <code>"left"</code>,
 <code>"right"</code>, or <code>"justify"</code>.</p></dd>
+
+
 <dt>v_align</dt>
 <dd><p>The vertical alignment of the text in the cell. Options are
 <code>"middle"</code>, <code>"top"</code>, or <code>"bottom"</code>.</p></dd>
+
+
 <dt>style</dt>
 <dd><p>The text style. Can be one of either <code>"normal"</code>, <code>"italic"</code>, or
 <code>"oblique"</code>.</p></dd>
+
+
 <dt>weight</dt>
 <dd><p>The weight of the font. Can be a text-based keyword such as
 <code>"normal"</code>, <code>"bold"</code>, <code>"lighter"</code>, <code>"bolder"</code>, or, a numeric value between
 <code>1</code> and <code>1000</code>, inclusive. Note that only variable fonts may support the
 numeric mapping of weight.</p></dd>
+
+
 <dt>stretch</dt>
 <dd><p>Allows for text to either be condensed or expanded. We can use
 one of the following text-based keywords to describe the degree of
@@ -124,27 +138,38 @@ condensation/expansion: <code>"ultra-condensed"</code>, <code>"extra-condensed"<
 <code>"expanded"</code>, <code>"extra-expanded"</code>, or <code>"ultra-expanded"</code>. Alternatively, we
 can supply percentage values from <code>0\%</code> to <code>200\%</code>, inclusive. Negative
 percentage values are not allowed.</p></dd>
+
+
 <dt>decorate</dt>
 <dd><p>Allows for text decoration effect to be applied. Here, we can
 use <code>"overline"</code>, <code>"line-through"</code>, or <code>"underline"</code>.</p></dd>
+
+
 <dt>transform</dt>
 <dd><p>Allows for the transformation of text. Options are
 <code>"uppercase"</code>, <code>"lowercase"</code>, or <code>"capitalize"</code>.</p></dd>
+
+
 <dt>whitespace</dt>
 <dd><p>A white-space preservation option. By default, runs of
 white-space will be collapsed into single spaces but several options exist
 to govern how white-space is collapsed and how lines might wrap at
 soft-wrap opportunities. The keyword options are <code>"normal"</code>, <code>"nowrap"</code>,
 <code>"pre"</code>, <code>"pre-wrap"</code>, <code>"pre-line"</code>, and <code>"break-spaces"</code>.</p></dd>
+
+
 <dt>indent</dt>
 <dd><p>The indentation of the text. Can be provided as a number that
 is assumed to represent <code>px</code> values (or could be wrapped in the <code><a href="px.html">px()</a></code>)
 helper function. Alternatively, this can be given as a percentage (easily
 constructed with <code><a href="pct.html">pct()</a></code>).</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A list object of class <code>cell_styles</code>.</p>
+    
+
+<p>A list object of class <code>cell_styles</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
@@ -222,7 +247,7 @@ the <code>cell_text()</code> helper function.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

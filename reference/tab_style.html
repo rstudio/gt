@@ -119,12 +119,16 @@ bold text (the degree of choice is greater with variable fonts)</p></li>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p>A table object that is created using the <code><a href="gt.html">gt()</a></code> function.</p></dd>
+
+
 <dt>style</dt>
 <dd><p>a vector of styles to use. The <code><a href="cell_text.html">cell_text()</a></code>, <code><a href="cell_fill.html">cell_fill()</a></code>, and
 <code><a href="cell_borders.html">cell_borders()</a></code> helper functions can be used here to more easily generate
 valid styles.  If using more than one helper function to define styles, all
 calls must be enclosed in a <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>. Custom CSS declarations can be used
 for HTML output by including a <code><a href="https://rdrr.io/pkg/htmltools/man/css.html" class="external-link">css()</a></code>-based statement as a list item.</p></dd>
+
+
 <dt>locations</dt>
 <dd><p>the cell or set of cells to be associated with the style.
 Supplying any of the <code>cells_*()</code> helper functions is a useful way to target
@@ -137,10 +141,13 @@ and <code><a href="cells_source_notes.html">cells_source_notes()</a></code>. Add
 <code>cells_*()</code> calls within a <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> if we wish to apply styling to
 different types of locations (e.g., body cells, row group labels, the table
 title, etc.).</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An object of class <code>gt_tbl</code>.</p>
+    
+
+<p>An object of class <code>gt_tbl</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
@@ -245,7 +252,7 @@ functions for targeting the locations to be styled.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

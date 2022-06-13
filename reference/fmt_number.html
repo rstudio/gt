@@ -134,12 +134,16 @@ formatting specific to the chosen locale</p></li>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p>A table object that is created using the <code><a href="gt.html">gt()</a></code> function.</p></dd>
+
+
 <dt>columns</dt>
 <dd><p>The columns to format. Can either be a series of column names
 provided in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a vector of column indices, or a helper function
 focused on selections. The select helper functions are: <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>,
 <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/one_of.html" class="external-link">one_of()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">num_range()</a></code>, and
 <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>.</p></dd>
+
+
 <dt>rows</dt>
 <dd><p>Optional rows to format. Providing <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code> (the
 default) results in all rows in <code>columns</code> being formatted. Alternatively,
@@ -149,9 +153,13 @@ functions are: <code><a href="https://tidyselect.r-lib.org/reference/starts_with
 <code><a href="https://tidyselect.r-lib.org/reference/one_of.html" class="external-link">one_of()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">num_range()</a></code>, and <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>. We can also use expressions
 to filter down to the rows we need (e.g.,
 <code>[colname_1] &gt; 100 &amp; [colname_2] &lt; 50</code>).</p></dd>
+
+
 <dt>decimals</dt>
 <dd><p>An option to specify the exact number of decimal places to
 use. The default number of decimal places is <code>2</code>.</p></dd>
+
+
 <dt>n_sigfig</dt>
 <dd><p>A option to format numbers to <em>n</em> significant figures. By
 default, this is <code>NULL</code> and thus number values will be formatted according
@@ -159,27 +167,39 @@ to the number of decimal places set via <code>decimals</code>. If opting to form
 according to the rules of significant figures, <code>n_sigfig</code> must be a number
 greater than or equal to <code>1</code>. Any values passed to the <code>decimals</code> and
 <code>drop_trailing_zeros</code> arguments will be ignored.</p></dd>
+
+
 <dt>drop_trailing_zeros</dt>
 <dd><p>A logical value that allows for removal of
 trailing zeros (those redundant zeros after the decimal mark).</p></dd>
+
+
 <dt>drop_trailing_dec_mark</dt>
 <dd><p>A logical value that determines whether decimal
 marks should always appear even if there are no decimal digits to display
 after formatting (e.g, <code>23</code> becomes <code>23.</code>). The default for this is <code>TRUE</code>,
 which means that trailing decimal marks are not shown.</p></dd>
+
+
 <dt>use_seps</dt>
 <dd><p>An option to use digit group separators. The type of digit
 group separator is set by <code>sep_mark</code> and overridden if a locale ID is
 provided to <code>locale</code>. This setting is <code>TRUE</code> by default.</p></dd>
+
+
 <dt>accounting</dt>
 <dd><p>An option to use accounting style for values. With <code>FALSE</code>
 (the default), negative values will be shown with a minus sign. Using
 <code>accounting = TRUE</code> will put negative values in parentheses.</p></dd>
+
+
 <dt>scale_by</dt>
 <dd><p>A value to scale the input. The default is <code>1.0</code>. All numeric
 values will be multiplied by this value first before undergoing formatting.
 This value will be ignored if using any of the <code>suffixing</code> options (i.e.,
 where <code>suffixing</code> is not set to <code>FALSE</code>).</p></dd>
+
+
 <dt>suffixing</dt>
 <dd><p>An option to scale and apply suffixes to larger numbers
 (e.g., <code>1924000</code> can be transformed to <code>1.92M</code>). This option can accept a
@@ -198,28 +218,40 @@ that any value provided to <code>scale_by</code> will be ignored.</p>
 <p>If using <code>system = "ind"</code> then the default suffix set provided by
 <code>suffixing = TRUE</code> will be <code>c(NA, "L", "Cr")</code>. This doesn't apply suffixes
 to the thousands range, but does express values in lakhs and crores.</p></dd>
+
+
 <dt>pattern</dt>
 <dd><p>A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by <code>{x}</code> and all other
 characters are taken to be string literals.</p></dd>
+
+
 <dt>sep_mark</dt>
 <dd><p>The mark to use as a separator between groups of digits
 (e.g., using <code>sep_mark = ","</code> with <code>1000</code> would result in a formatted value
 of <code>1,000</code>).</p></dd>
+
+
 <dt>dec_mark</dt>
 <dd><p>The character to use as a decimal mark (e.g., using <code>dec_mark = ","</code> with <code>0.152</code> would result in a formatted value of <code>0,152</code>).</p></dd>
+
+
 <dt>force_sign</dt>
 <dd><p>Should the positive sign be shown for positive values
 (effectively showing a sign for all values except zero)? If so, use <code>TRUE</code>
 for this option. The default is <code>FALSE</code>, where only negative numbers will
 display a minus sign. This option is disregarded when using accounting
 notation with <code>accounting = TRUE</code>.</p></dd>
+
+
 <dt>system</dt>
 <dd><p>The numbering system to use. By default, this is the
 international numbering system (<code>"intl"</code>) whereby grouping separators
 (i.e., <code>sep_mark</code>) are separated by three digits. The alternative system,
 the Indian numbering system (<code>"ind"</code>) uses grouping separators that
 correspond to thousand, lakh, crore, and higher quantities.</p></dd>
+
+
 <dt>locale</dt>
 <dd><p>An optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include <code>"en_US"</code> for English
@@ -229,10 +261,13 @@ We can use the <code><a href="info_locales.html">info_locales()</a></code> funct
 the locales that are supported. Any <code>locale</code> value provided here will
 override any global locale setting performed in <code><a href="gt.html">gt()</a></code>'s own <code>locale</code>
 argument.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An object of class <code>gt_tbl</code>.</p>
+    
+
+<p>An object of class <code>gt_tbl</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -312,7 +347,7 @@ use large-number suffixing with the <code>suffixing = TRUE</code> option.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>
