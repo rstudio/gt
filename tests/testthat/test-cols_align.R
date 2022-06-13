@@ -5,7 +5,8 @@ mtcars_short <- mtcars[1:5, ]
 sp500 <-
   read.csv(
     system.file("extdata", "sp500.csv", package = "gt"),
-    stringsAsFactors = FALSE)
+    stringsAsFactors = FALSE
+  )
 
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
