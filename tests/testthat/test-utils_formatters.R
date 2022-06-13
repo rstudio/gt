@@ -39,14 +39,12 @@ test_that("the `get_locale_sep_mark()` function works correctly", {
 
   # Expect that when `use_seps` is `FALSE`, we always
   # get an empty string `""` returned
-  expect_equal(
-    get_locale_sep_mark(locale = "en_US", default = ",", use_seps = FALSE),
-    get_locale_sep_mark(locale = "do_IT", default = ",", use_seps = FALSE),
-    get_locale_sep_mark(locale = NULL, default = ",", use_seps = FALSE),
-    get_locale_sep_mark(locale = NULL, use_seps = FALSE),
-    get_locale_sep_mark(use_seps = FALSE),
-    ""
-  )
+  expect_equal("", get_locale_sep_mark(locale = "en_US", default = ",", use_seps = FALSE))
+  expect_equal("", get_locale_sep_mark(locale = "do_IT", default = ",", use_seps = FALSE))
+  expect_equal("", get_locale_sep_mark(locale = NULL, default = ",", use_seps = FALSE))
+  expect_equal("", get_locale_sep_mark(locale = NULL, default = ",", use_seps = FALSE))
+  expect_equal("", get_locale_sep_mark(locale = NULL, use_seps = FALSE))
+  expect_equal("", get_locale_sep_mark(use_seps = FALSE))
 
   # Expect the correct `sep_mark` values for a range of locales
   expect_equal(
@@ -136,9 +134,11 @@ test_that("the `has_order_zero()` function works correctly", {
   # vectors that have and don't have NA values
   expect_equal(
     x %>% has_order_zero(),
+    c(FALSE, FALSE, TRUE, FALSE, FALSE, TRUE, FALSE, FALSE, TRUE, FALSE, FALSE)
+  )
+  expect_equal(
     x_has_NA %>% has_order_zero(),
-    c(FALSE, FALSE, TRUE, FALSE, FALSE, TRUE,
-      FALSE, FALSE, TRUE, FALSE, FALSE)
+    c(FALSE, FALSE, TRUE, FALSE, FALSE, TRUE,FALSE, FALSE, TRUE, FALSE, FALSE)
   )
 })
 
