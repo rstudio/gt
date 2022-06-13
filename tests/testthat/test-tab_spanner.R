@@ -1,4 +1,3 @@
-local_edition(3)
 skip_on_cran()
 
 # Function to skip tests if Suggested packages not available on system
