@@ -328,7 +328,7 @@ test_that("the various color utility functions work correctly", {
 
   # Expect that the vector of light and dark colors returned is not affected
   # by any of the colors' alpha values
-  expect_equivalent(
+  expect_equal(
     ideal_fgnd_color(
       bgnd_color = c(
         c(
