@@ -34,7 +34,7 @@ test_that("the `fmt_bytes()` function works correctly", {
   tab <- gt(data_tbl)
 
   # Expect that the object has the correct classes
-  expect_is(tab, c("gt_tbl", "data.frame"))
+  expect_s3_class(tab, c("gt_tbl", "data.frame"))
 
   # Extract vectors from the table object for comparison
   # to the original dataset
