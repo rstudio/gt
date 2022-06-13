@@ -18,7 +18,7 @@ test_that("the `fmt_currency()` function works correctly", {
   tab <- gt(data_tbl)
 
   # Expect that the object has the correct classes
-  expect_is(tab, c("gt_tbl", "data.frame"))
+  expect_s3_class(tab, c("gt_tbl", "data.frame"))
 
   # Extract vectors from the table object for comparison
   # to the original dataset
@@ -445,7 +445,7 @@ test_that("the `currency()` helper function works correctly", {
       is.list()
   )
 
-  expect_is(
+  expect_s3_class(
     currency(html = "&#8383;", latex = "BTC", default = "BTC"),
     "gt_currency"
   )
@@ -468,7 +468,7 @@ test_that("the `currency()` helper function works correctly", {
   single_default_currency <- currency("BTC")
 
   single_default_currency %>% is.list() %>% expect_true()
-  single_default_currency %>% expect_is("gt_currency")
+  single_default_currency %>% expect_s3_class("gt_currency")
   single_default_currency %>% length() %>% expect_equal(1)
   single_default_currency %>% names() %>% expect_equal("default")
   single_default_currency[[1]] %>% expect_equal("BTC")
