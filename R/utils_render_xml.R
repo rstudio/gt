@@ -9,10 +9,15 @@ xml_tag_type <- function(tag_name, app) {
 # Table
 xml_tbl <- function(...,
                     app = "word") {
-
   htmltools::tag(
     `_tag_name` = xml_tag_type("tbl", app),
-    varArgs = list(htmltools::HTML(paste0(...)))
+
+    varArgs = list(
+      "xmlns:w"="http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+      "xmlns:wp"="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing",
+      "xmlns:r"="http://schemas.openxmlformats.org/officeDocument/2006/relationships",
+      "xmlns:w14"="http://schemas.microsoft.com/office/word/2010/wordml",
+      htmltools::HTML(paste0(...)))
   )
 }
 
@@ -127,7 +132,9 @@ xml_tr <- function(...,
 
   htmltools::tag(
     `_tag_name` = xml_tag_type("tr", app),
-    varArgs = list(htmltools::HTML(paste0(...)))
+    varArgs = list(
+      htmltools::HTML(paste0(...))
+      )
   )
 }
 
@@ -272,9 +279,27 @@ xml_p <- function(..., app = "word") {
 
   htmltools::tag(
     `_tag_name` = xml_tag_type("p", app),
-    varArgs = list(htmltools::HTML(paste0(...)))
+    varArgs = list(
+      htmltools::HTML(paste0(...))
+      )
   )
 }
+
+# Paragraph with namespace defined
+xml_p_ns <- function(..., app = "word") {
+
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("p", app),
+    varArgs = list(
+      "xmlns:w"="http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+      "xmlns:wp"="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing",
+      "xmlns:r"="http://schemas.openxmlformats.org/officeDocument/2006/relationships",
+      "xmlns:w14"="http://schemas.microsoft.com/office/word/2010/wordml",
+      htmltools::HTML(paste0(...))
+      )
+  )
+}
+
 
 # Paragraph properties
 xml_pPr <- function(..., app = "word") {
@@ -458,7 +483,7 @@ xml_cantSplit <- function(app = "word"){
 
 # keep with Next
 # contents of this paragraph are at least partly rendered on the same page
-# as the following paragraph whenever possibl
+# as the following paragraph whenever possible
 xml_keepNext <- function(app = "word"){
 
   htmltools::tag(
@@ -466,6 +491,90 @@ xml_keepNext <- function(app = "word"){
     varArgs = list()
   )
 }
+
+
+# Specifies the start or end of a complex field
+xml_fldChar <- function(fldCharType = c("begin","separate","end"), dirty = TRUE, app = "word"){
+
+  fldCharType <- match.arg(fldCharType)
+  stopifnot(is_bool(dirty))
+
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("fldChar", app),
+    varArgs = list(
+      `w:fldCharType` = fldCharType,
+      `w:dirty` = tolower(dirty))
+  )
+}
+
+# field instructions for specify the codes for the fields.
+# used within a fldChar's
+xml_instrText <- function(instr, dirty = TRUE, app = "word"){
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("instrText", app),
+    varArgs = list(
+      `xml:space` = "preserve",
+      `w:dirty` = tolower(dirty),
+      instr),
+  )
+}
+
+# declares that the noProof property
+xml_noProof <- function(app = "word"){
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("noProof", app),
+    varArgs = list()
+  )
+}
+
+# Add automatic table numbering
+# Add components necessary for table auto-numbering
+xml_table_autonum <- function(font = xml_r_font(), size = xml_sz(val = 24), app = "word"){
+
+  htmltools::tagList(
+    xml_r(
+      xml_rPr(
+        font,
+        size
+      ),
+      xml_t(
+        xml_space = "preserve",
+        "Table "
+      )
+    ),
+    xml_r(
+      xml_fldChar(fldCharType = "begin")
+    ),
+    xml_r(
+      xml_instrText(" SEQ Table \\* ARABIC ")
+    ),
+    xml_r(
+      xml_fldChar(fldCharType = "separate")
+    ),
+    xml_r(
+      xml_rPr(
+        xml_noProof(),
+        font,
+        size
+      ),
+      xml_t(1)
+    ),
+    xml_r(
+      xml_fldChar(fldCharType = "end")
+    ),
+    xml_r(
+      xml_rPr(
+        font,
+        size
+      ),
+      xml_t(
+        ": ",
+        xml_space = "preserve"
+      )
+    )
+  )
+}
+
 
 #' Transform a footnote mark to an XML representation
 #'
@@ -567,6 +676,115 @@ create_table_props_component_xml <- function(data, alignment = "center") {
   htmltools::tagList(table_properties)
 }
 
+#' Create the caption component of a table (OOXML)
+#'
+#' The table heading component contains the title and possibly a subtitle; if
+#' there are no heading components defined this function will return an empty
+#' string.
+#'
+#' @noRd
+create_table_caption_component_xml <- function(data, align = "center", keep_with_next = TRUE) {
+
+  # If there is no title or heading component, then return an empty string
+  if (!dt_heading_has_title(data = data)) {
+    return(list(""))
+  }
+
+  heading <- dt_heading_get(data = data)
+  footnotes_tbl <- dt_footnotes_get(data = data)
+  styles_tbl <- dt_styles_get(data = data)
+  subtitle_defined <- dt_heading_has_subtitle(data = data)
+
+  # Get table options
+  table_font_color <- dt_options_get_value(data, option = "table_font_color")
+
+  # Get the footnote marks for the title
+  if ("title" %in% footnotes_tbl$locname) {
+
+    footnote_title_marks <-
+      coalesce_marks(
+        fn_tbl = footnotes_tbl,
+        locname = "title"
+      )
+
+    footnote_title_marks <-
+      footnote_mark_to_xml(mark = footnote_title_marks$fs_id_c)
+
+  } else {
+    footnote_title_marks <- ""
+  }
+
+  title_caption <- list(
+    xml_p_ns(
+      xml_pPr(
+        xml_pStyle(val = "caption"),
+        xml_color(color = table_font_color),
+        xml_jc(val = align),
+        if(keep_with_next){xml_keepNext()}
+      ),
+      xml_table_autonum(
+        font = xml_r_font(),
+        size = xml_sz(val = 24)
+      ),
+      xml_r(
+        xml_rPr(
+          xml_r_font(),
+          xml_sz(val = 24)
+        ),
+        xml_t(
+          paste0(heading$title, footnote_title_marks)
+        )
+      )
+    )
+  )
+
+  if(subtitle_defined){
+
+    # Get the footnote marks for the subtitle
+    if ("subtitle" %in% footnotes_tbl$locname) {
+
+      footnote_subtitle_marks <-
+        coalesce_marks(
+          fn_tbl = footnotes_tbl,
+          locname = "subtitle"
+        )
+
+      footnote_subtitle_marks <-
+        footnote_mark_to_xml(mark = footnote_subtitle_marks$fs_id_c)
+
+    } else {
+      footnote_subtitle_marks <- ""
+    }
+
+    subtitle_caption <-list(
+      xml_p_ns(
+        xml_pPr(
+          xml_pStyle(val = "caption"),
+          xml_color(color = table_font_color),
+          xml_jc(val = align),
+          if(keep_with_next){xml_keepNext()}
+        ),
+        xml_r(
+          xml_rPr(
+            xml_r_font(),
+            xml_sz(val = 16)
+          ),
+          xml_t(
+            paste0(heading$subtitle, footnote_subtitle_marks),
+            xml_space = "preserve"
+          )
+        )
+    ))
+
+    title_caption <- c(title_caption, subtitle_caption)
+
+  }
+
+
+  title_caption
+}
+
+
 #' Create the heading component of a table (OOXML)
 #'
 #' The table heading component contains the title and possibly a subtitle; if
@@ -574,7 +792,7 @@ create_table_props_component_xml <- function(data, alignment = "center") {
 #' string.
 #'
 #' @noRd
-create_heading_component_xml <- function(data, split = FALSE, keep_with_next = FALSE) {
+create_heading_component_xml <- function(data, split = FALSE) {
 
   # If there is no title or heading component, then return an empty string
   if (!dt_heading_has_title(data = data)) {
@@ -599,6 +817,12 @@ create_heading_component_xml <- function(data, split = FALSE, keep_with_next = F
   } else {
     n_cols <- n_data_cols
   }
+
+  # Get table options
+  table_font_color <- dt_options_get_value(data, option = "table_font_color")
+  table_border_top_include <- dt_options_get_value(data, option = "table_border_top_include")
+  table_border_top_color <- dt_options_get_value(data, option = "table_border_top_color")
+  heading_border_bottom_color <- dt_options_get_value(data, option = "heading_border_bottom_color")
 
   # Get the footnote marks for the title
   if ("title" %in% footnotes_tbl$locname) {
@@ -632,17 +856,13 @@ create_heading_component_xml <- function(data, split = FALSE, keep_with_next = F
     footnote_subtitle_marks <- ""
   }
 
-  # Get table options
-  table_font_color <- dt_options_get_value(data, option = "table_font_color")
-  table_border_top_include <- dt_options_get_value(data, option = "table_border_top_include")
-  table_border_top_color <- dt_options_get_value(data, option = "table_border_top_color")
-  heading_border_bottom_color <- dt_options_get_value(data, option = "heading_border_bottom_color")
+
 
   title_row <-
     xml_tr(
       xml_trPr(
-        if(split){xml_cantSplit()},
-        xml_tbl_header(),
+        if(!split){xml_cantSplit()},
+        xml_tbl_header()
       ),
       xml_tc(
         xml_tcPr(
@@ -660,8 +880,8 @@ create_heading_component_xml <- function(data, split = FALSE, keep_with_next = F
             xml_gridSpan(val = as.character(n_cols)),
             xml_color(color = table_font_color),
             xml_jc(val = "center"),
-            xml_spacing(before = 0, after = 30),
-            if(keep_with_next){xml_keepNext()}
+            xml_spacing(before = 0, after = 30)#,
+            # if(keep_with_next){xml_keepNext()}
           ),
           xml_r(
             xml_rPr(
@@ -696,7 +916,7 @@ create_heading_component_xml <- function(data, split = FALSE, keep_with_next = F
 #' Create the columns component of a table (OOXML)
 #'
 #' @noRd
-create_columns_component_xml <- function(data, split = FALSE, keep_with_next = FALSE) {
+create_columns_component_xml <- function(data, split = FALSE) {
 
   boxh <- dt_boxhead_get(data = data)
   stubh <- dt_stubhead_get(data = data)
@@ -724,6 +944,7 @@ create_columns_component_xml <- function(data, split = FALSE, keep_with_next = F
   }
 
   # Get table options
+  table_border_top_include <- dt_options_get_value(data, option = "table_border_top_include")
   column_labels_border_top_color <- dt_options_get_value(data = data, option = "column_labels_border_top_color")
   column_labels_border_bottom_color <- dt_options_get_value(data = data, option = "column_labels_border_bottom_color")
   column_labels_vlines_color <- dt_options_get_value(data = data, option = "column_labels_vlines_color")
@@ -762,8 +983,8 @@ create_columns_component_xml <- function(data, split = FALSE, keep_with_next = F
           ),
           xml_p(
             xml_pPr(
-              xml_spacing(before = 0, after = 60),
-              if(keep_with_next){xml_keepNext()}
+              xml_spacing(before = 0, after = 60)#,
+              # if(keep_with_next){xml_keepNext()}
               ),
             xml_r(
               xml_rPr(
@@ -795,8 +1016,8 @@ create_columns_component_xml <- function(data, split = FALSE, keep_with_next = F
           ),
           xml_p(
             xml_pPr(
-              xml_spacing(before = 0, after = 60),
-              if(keep_with_next){xml_keepNext()}
+              xml_spacing(before = 0, after = 60)#,
+              # if(keep_with_next){xml_keepNext()}
               ),
             xml_r(
               xml_rPr(
@@ -813,6 +1034,10 @@ create_columns_component_xml <- function(data, split = FALSE, keep_with_next = F
 
     table_col_headings <-
       xml_tr(
+        xml_trPr(
+          if(!split){xml_cantSplit()},
+          xml_tbl_header()
+        ),
         paste(
           vapply(
             table_col_headings,
@@ -908,7 +1133,8 @@ create_columns_component_xml <- function(data, split = FALSE, keep_with_next = F
               xml_v_align(v_align = "bottom"),
               xml_tc_borders(
                 xml_border("left", color = column_labels_vlines_color),
-                xml_border("right", color = column_labels_vlines_color)
+                xml_border("right", color = column_labels_vlines_color),
+                xml_border("top", size = 16, color = column_labels_border_top_color)
               )
             ),
             xml_p(
@@ -951,7 +1177,8 @@ create_columns_component_xml <- function(data, split = FALSE, keep_with_next = F
                 xml_tc_borders(
                   xml_border("left", color = column_labels_vlines_color),
                   xml_border("right", color = column_labels_vlines_color),
-                  xml_border("bottom", size = 16, color = column_labels_border_bottom_color)
+                  xml_border("bottom", size = 16, color = column_labels_border_bottom_color),
+                  xml_border("top", size = 16, color = column_labels_border_top_color)
                 )
               ),
               xml_p(
@@ -1003,15 +1230,15 @@ create_columns_component_xml <- function(data, split = FALSE, keep_with_next = F
       htmltools::tagList(
         xml_tr(
           xml_trPr(
-            if(split){xml_cantSplit()},
-            if(keep_with_next){xml_keepNext()}
+            if(!split){xml_cantSplit()},
+            xml_tbl_header()
           ),
           htmltools::tagList(first_set)
         ),
         xml_tr(
           xml_trPr(
-            if(split){xml_cantSplit()},
-            if(keep_with_next){xml_keepNext()}
+            if(!split){xml_cantSplit()},
+            xml_tbl_header()
           ),
           htmltools::tagList(second_set)
         )
@@ -1024,7 +1251,7 @@ create_columns_component_xml <- function(data, split = FALSE, keep_with_next = F
 #' Create the table body component (OOXML)
 #'
 #' @noRd
-create_body_component_xml <- function(data) {
+create_body_component_xml <- function(data, split = FALSE) {
 
   boxh <- dt_boxhead_get(data = data)
   body <- dt_body_get(data = data)
@@ -1122,6 +1349,9 @@ create_body_component_xml <- function(data) {
 
           group_heading_row <-
             xml_tr(
+              xml_trPr(
+                if(!split){xml_cantSplit()}
+              ),
               xml_tc(
                 xml_tcPr(
                   xml_tc_borders(
@@ -1193,6 +1423,9 @@ create_body_component_xml <- function(data) {
 
         body_row <-
           xml_tr(
+            xml_trPr(
+              if(!split){xml_cantSplit()}
+            ),
             paste(
               vapply(
                 row_cells,
@@ -1225,7 +1458,8 @@ create_body_component_xml <- function(data) {
               locname = "summary_cells",
               col_alignment = col_alignment,
               table_body_hlines_color = table_body_hlines_color,
-              table_body_vlines_color = table_body_vlines_color
+              table_body_vlines_color = table_body_vlines_color,
+              split = split
             )
 
           body_section <- append(body_section, summary_section)
@@ -1252,7 +1486,8 @@ create_body_component_xml <- function(data) {
         locname = "grand_summary_cells",
         col_alignment = col_alignment,
         table_body_hlines_color = table_body_hlines_color,
-        table_body_vlines_color = table_body_vlines_color
+        table_body_vlines_color = table_body_vlines_color,
+        split = split
       )
 
     body_rows <- c(body_rows, grand_summary_section)
@@ -1264,7 +1499,7 @@ create_body_component_xml <- function(data) {
 #' Create the table source note component (OOXML)
 #'
 #' @noRd
-create_source_notes_component_xml <- function(data) {
+create_source_notes_component_xml <- function(data, split = FALSE) {
 
   source_note <- dt_source_notes_get(data = data)
 
@@ -1294,6 +1529,9 @@ create_source_notes_component_xml <- function(data) {
 
         as.character(
           xml_tr(
+            xml_trPr(
+              if(!split){xml_cantSplit()}
+            ),
             xml_tc(
               xml_p(
                 xml_pPr(
@@ -1322,7 +1560,7 @@ create_source_notes_component_xml <- function(data) {
 #' Create the table footnote component (OOXML)
 #'
 #' @noRd
-create_footnotes_component_xml <- function(data) {
+create_footnotes_component_xml <- function(data, split = FALSE) {
 
   footnotes_tbl <- dt_footnotes_get(data = data)
 
@@ -1380,6 +1618,9 @@ create_footnotes_component_xml <- function(data) {
 
         as.character(
           xml_tr(
+            xml_trPr(
+              if(!split){xml_cantSplit()}
+            ),
             xml_tc(
               xml_p(
                 xml_pPr(
@@ -1419,7 +1660,8 @@ summary_rows_xml <- function(list_of_summaries,
                              locname,
                              col_alignment,
                              table_body_hlines_color,
-                             table_body_vlines_color) {
+                             table_body_vlines_color,
+                             split = FALSE) {
 
   # Obtain all of the visible (`"default"`), non-stub column names
   # for the table from the `boxh` object
@@ -1477,6 +1719,9 @@ summary_rows_xml <- function(list_of_summaries,
 
       summary_row <-
         xml_tr(
+          xml_trPr(
+            if(!split){xml_cantSplit()}
+          ),
           paste(
             vapply(
               summary_row_cells,
