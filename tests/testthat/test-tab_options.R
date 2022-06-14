@@ -1,4 +1,3 @@
-local_edition(3)
 skip_on_cran()
 
 # Create a table with rownames and four columns of values
@@ -1803,8 +1802,6 @@ test_that("certain X11 color names are replaced in HTML tables", {
 })
 
 test_that("vertical padding across several table parts can be applied", {
-
-  testthat::local_edition(3)
 
   snap_padded_tbl <- function(padding_px) {
 

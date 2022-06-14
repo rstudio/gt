@@ -1,5 +1,3 @@
-context("Ensuring that the `tab_style()` function works as expected")
-
 # Create a table from `mtcars` that has all the different components
 data <-
   gt(mtcars, rownames_to_stub = TRUE) %>%
@@ -429,10 +427,7 @@ test_that("a gt table can store the correct style statements", {
 
   # Check that `tab_row_group(others_label = ...)` still works but
   # issues a warning
-  expect_equivalent(
-    expect_warning(data %>% tab_row_group(others_label = "Others1")),
-    data %>% tab_options(row_group.default_label = "Others1")
-  )
+  expect_warning(data %>% tab_row_group(others_label = "Others1"))
 })
 
 test_that("using fonts in `cell_text()` works", {

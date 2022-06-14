@@ -109,7 +109,7 @@ test_that("the correct color values are obtained when defining a palette", {
 
   # Expect that the background colors are in the same form as
   # those supplied (`pal_12`) and the order is identical as well
-  expect_equivalent(
+  expect_equal(
     tbl_html_2 %>%
       selection_value("style") %>%
       gsub("(background-color: |; color: .*)", "", .),
@@ -1258,7 +1258,7 @@ test_that("the various color utility functions work correctly", {
 
   # Expect that the vector of light and dark colors returned is not affected
   # by any of the colors' alpha values
-  expect_equivalent(
+  expect_equal(
     ideal_fgnd_color(
       bgnd_color = c(
         c(

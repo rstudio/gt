@@ -174,17 +174,14 @@ test_that("the `text_transform()` function works correctly", {
   # Expect that `resolved` subcomponent of `transforms` has the class
   # names and `resolved`, `cells_body`, `location_cells`
   transforms[[1]]$resolved %>%
-    expect_is(c("resolved", "cells_body", "location_cells"))
+    expect_s3_class(c("resolved", "cells_body", "location_cells"))
 
   transforms[[2]]$resolved %>%
-    expect_is(c("resolved", "cells_body", "location_cells"))
+    expect_s3_class(c("resolved", "cells_body", "location_cells"))
 
   # Expect that `fn` subcomponent of `transforms` is a function
-  transforms[[1]]$fn %>%
-    expect_is("function")
-
-  transforms[[2]]$fn %>%
-    expect_is("function")
+  expect_equal(class(transforms[[1]]$fn), "function")
+  expect_equal(class(transforms[[2]]$fn), "function")
 
   # Define a function that converts vector of `x` to numeric
   # and rounds values to a specific multiple

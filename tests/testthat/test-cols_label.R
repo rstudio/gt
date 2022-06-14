@@ -1,5 +1,3 @@
-context("Ensuring that the `cols_label()` function works as expected")
-
 # Create a table with four columns of values
 tbl <-
   dplyr::tribble(
@@ -11,9 +9,10 @@ tbl <-
     198.5,   65.1,  127.4,  219.3,
     132.1,  118.1,   91.2,  874.3,
     349.7,  307.1,  566.7,  542.9,
-    63.7,  504.3,  152.0,  724.5,
+    63.7,   504.3,  152.0,  724.5,
     105.4,  729.8,  962.4,  336.4,
-    924.2,  424.6,  740.8,  104.2)
+    924.2,  424.6,  740.8,  104.2
+  )
 
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
@@ -106,7 +105,8 @@ test_that("the function `cols_label()` works correctly", {
         col_1 = "col_a",
         col_2 = "col_b",
         col_3 = "col_c",
-        col_4 = "col_d")
+        col_4 = "col_d"
+      )
     )
 
   # Expect that the values for the column labels are set
@@ -125,14 +125,10 @@ test_that("the function `cols_label()` works correctly", {
     expect_equal(c("col_a", "col_b", "col_c", "col_d"))
 
   # Expect an error if any names are missing
-  expect_error(
-    gt(tbl) %>%
-      cols_label("col_a"))
+  expect_error(gt(tbl) %>% cols_label("col_a"))
 
   # Expect an error if any columns are not part of the original dataset
-  expect_error(
-    gt(tbl) %>%
-      cols_label(col_a = "col_1"))
+  expect_error(gt(tbl) %>% cols_label(col_a = "col_1"))
 
   # Expect no partial matching issues with column names and arguments
   expect_error(

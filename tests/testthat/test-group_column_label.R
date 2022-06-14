@@ -1,4 +1,3 @@
-local_edition(3)
 skip_on_cran()
 
 exibble_test <- function(row_group_column = FALSE,

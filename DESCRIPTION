@@ -47,7 +47,7 @@ Suggests:
     covr,
     knitr,
     paletteer,
-    testthat (>= 2.1.0),
+    testthat (>= 3.0.0),
     RColorBrewer,
     lubridate,
     rmarkdown,
@@ -115,3 +115,4 @@ Collate:
     'utils_render_latex.R'
     'utils_render_rtf.R'
     'zzz.R'
+Config/testthat/edition: 3

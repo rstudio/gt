@@ -1,4 +1,3 @@
-local_edition(3)
 skip_on_cran()
 
 # Create a table from `mtcars` that has all the different components
