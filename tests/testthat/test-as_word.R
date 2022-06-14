@@ -682,7 +682,7 @@ test_that("long tables with spans can be added to a word doc", {
     docx_table_body_header %>%
       xml2::xml_find_all(".//w:p") %>%
       xml2::xml_text(),
-    c("upper_case", "lower_case")
+    c("LETTERS", "upper_case", "lower_case")
   )
 
   expect_equal(
