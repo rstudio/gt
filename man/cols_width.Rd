@@ -20,7 +20,7 @@ column-based select helpers \code{\link[=starts_with]{starts_with()}}, \code{\li
 Subsequent expressions that operate on the columns assigned previously will
 result in overwriting column width values (both in the same \code{cols_width()}
 call and across separate calls). All other columns can be assigned a
-default width value by using \code{TRUE} or \code{everything()} on the left-hand
+default width value by using \code{everything()} on the left-hand
 side.}
 
 \item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
@@ -46,25 +46,15 @@ could, itself, be expressed as an absolute or relative value). Widths for the
 table and its container can be individually modified with the \code{table.width}
 and \code{container.width} arguments within \code{\link[=tab_options]{tab_options()}}).
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cols_width_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
+Use \code{\link{exibble}} to create a \strong{gt} table. We can specify the widths of
+columns with \code{cols_width()}. This is done with named arguments in \code{...},
+specifying the exact widths for table columns (using \code{everything()} at the
+end will capture all remaining columns).
 
-4-2
-}
-
-\examples{
-# Use `exibble` to create a gt table;
-# with named arguments in `...`, we
-# can specify the exact widths for
-# table columns (using `everything()`
-# or `TRUE` at the end will capture
-# all remaining columns)
-tab_1 <-
-  exibble \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(
     num, char, date,
     datetime, row
@@ -76,8 +66,18 @@ tab_1 <-
     starts_with("date") ~ px(200),
     everything() ~ px(60)
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_width_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+4-2
+}
+
 \seealso{
 Other Modify Columns: 
 \code{\link{cols_align}()},

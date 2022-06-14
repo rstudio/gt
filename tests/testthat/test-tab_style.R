@@ -1,5 +1,3 @@
-context("Ensuring that the `tab_style()` function works as expected")
-
 # Create a table from `mtcars` that has all the different components
 data <-
   gt(mtcars, rownames_to_stub = TRUE) %>%
@@ -429,10 +427,7 @@ test_that("a gt table can store the correct style statements", {
 
   # Check that `tab_row_group(others_label = ...)` still works but
   # issues a warning
-  expect_equivalent(
-    expect_warning(data %>% tab_row_group(others_label = "Others1")),
-    data %>% tab_options(row_group.default_label = "Others1")
-  )
+  expect_warning(data %>% tab_row_group(others_label = "Others1"))
 })
 
 test_that("using fonts in `cell_text()` works", {
@@ -449,7 +444,7 @@ test_that("using fonts in `cell_text()` works", {
     ) %>%
     as_raw_html() %>%
     expect_match(
-      "<td style=\"padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; text-align: left; font-family: 'Comic Sans MS', Menlo, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;\">13:35</td>"
+      "<td style=\"padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; text-align: left; font-family: &#39;Comic Sans MS&#39;, Menlo, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, Oxygen, Ubuntu, Cantarell, &#39;Helvetica Neue&#39;, &#39;Fira Sans&#39;, &#39;Droid Sans&#39;, Arial, sans-serif;\">13:35</td>"
     )
 
   # Expect that a Google Fonts and system fonts can be combined
@@ -461,7 +456,7 @@ test_that("using fonts in `cell_text()` works", {
     ) %>%
     as_raw_html() %>%
     expect_match(
-      "<td style=\"padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; text-align: left; font-family: 'Dancing Script', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;\">13:35</td>"
+      "<td style=\"padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; text-align: left; font-family: &#39;Dancing Script&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, Oxygen, Ubuntu, Cantarell, &#39;Helvetica Neue&#39;, &#39;Fira Sans&#39;, &#39;Droid Sans&#39;, Arial, sans-serif;\">13:35</td>"
     )
 
   tbl %>%
@@ -471,6 +466,115 @@ test_that("using fonts in `cell_text()` works", {
     ) %>%
     as_raw_html() %>%
     expect_match(
-      "<td style=\"padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; text-align: left; font-family: 'Dancing Script', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;\">13:35</td>"
+      "<td style=\"padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; text-align: left; font-family: &#39;Dancing Script&#39;, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, Oxygen, Ubuntu, Cantarell, &#39;Helvetica Neue&#39;, &#39;Fira Sans&#39;, &#39;Droid Sans&#39;, Arial, sans-serif;\">13:35</td>"
+    )
+
+  gtcars_tbl <-
+    gtcars %>%
+    dplyr::filter(ctry_origin == "United Kingdom") %>%
+    dplyr::select(mfr, model, year, hp) %>%
+    gt()
+
+  # Expect no difference in output when using styles within a list or without
+  expect_equal(
+    gtcars_tbl %>%
+      tab_style(
+        style =
+          cell_text(
+            weight = "bold",
+            font = c("Helvetica", "Times New Roman"),
+            color = "red"
+          ),
+        locations = cells_body(columns = hp, rows = 1:2)
+      ) %>%
+      as_raw_html(),
+    gtcars_tbl %>%
+      tab_style(
+        style =
+          list(
+            cell_text(
+              weight = "bold",
+              font = c("Helvetica", "Times New Roman"),
+              color = "red"
+            )
+          ),
+        locations = cells_body(columns = hp, rows = 1:2)
+      ) %>%
+      as_raw_html()
+  )
+
+  # Don't expect any errors when styling with different fonts
+  expect_error(
+    regexp = NA,
+    gtcars_tbl %>%
+      tab_style(
+        style = list(cell_text(font = c("Helvetica", "serif")), "font-size: 14px;"),
+        locations = cells_body(columns = hp)
+      )
+  )
+  expect_error(
+    regexp = NA,
+    gtcars_tbl %>%
+      tab_style(
+        style = list("font-size: 14px;", cell_text(font = c("Helvetica", "serif"))),
+        locations = cells_body(columns = hp)
+      )
+  )
+  expect_error(
+    regexp = NA,
+    gtcars_tbl %>%
+      tab_style(
+        style = list(cell_text(font = c("Helvetica", "serif")), cell_borders()),
+        locations = cells_body(columns = hp)
+      )
+  )
+  expect_error(
+    regexp = NA,
+    gtcars_tbl %>%
+      tab_style(
+        style = list(cell_borders(), cell_text(font = c("Helvetica", "serif"))),
+        locations = cells_body(columns = hp)
+      )
+  )
+  expect_error(
+    regexp = NA,
+    gtcars_tbl %>%
+      tab_style(
+        style = list(
+          cell_borders(sides = "b", color = "blue", weight = px(3)),
+          cell_text(size = px(18), font = c("Helvetica", "serif"), weight = "bold"),
+          cell_fill(color = "red", alpha = 0.5)
+          ),
+        locations = cells_body(columns = hp)
+      )
+  )
+  expect_error(
+    regexp = NA,
+    gtcars_tbl %>%
+      tab_style(
+        style = cell_text(font = c("Times New Roman", "serif")),
+        locations = cells_body(columns = hp)
+      )
+  )
+})
+
+test_that("setting white-space options in `cell_text()` works", {
+
+  tbl_ws <-
+    dplyr::tibble(
+      ws = c("   space   ", "   space", "space   ", " a  b  c  d  e  f")
+    ) %>%
+    gt()
+
+  # Expect that the white space `"pre"` style option will be present
+  # when using `tab_style(style = cell_text(whitespace = "pre"), ... )`
+  tbl_ws %>%
+    tab_style(
+      style = cell_text(whitespace = "pre"),
+      locations = cells_body()
+    ) %>%
+    as_raw_html() %>%
+    expect_match(
+      "<td style=\"padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; text-align: left; white-space: pre;\">   space   </td>"
     )
 })

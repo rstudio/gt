@@ -7,7 +7,7 @@
 escape_latex(text)
 }
 \arguments{
-\item{text}{a character vector containing the text that is to be
+\item{text}{A character vector containing the text that is to be
 LaTeX-escaped.}
 }
 \value{
@@ -20,7 +20,7 @@ LaTeX tables.
 }
 \section{Function ID}{
 
-7-26
+7-24
 }
 
 \seealso{

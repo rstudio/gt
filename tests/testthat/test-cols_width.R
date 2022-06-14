@@ -1,5 +1,3 @@
-context("Ensuring that the `cols_width()` function works as expected")
-
 # Create a table with four columns of values
 tbl <-
   dplyr::tribble(

@@ -78,6 +78,8 @@ globalVariables(
     "row_start",
     "rownum",
     "rownum_i",
+    "spanner_id",
+    "spanner_level",
     "styles",
     "styles_appended",
     "symbol",
@@ -126,7 +128,6 @@ NULL
 
 gt_default_options <- list(
   gt.row_group.sep = " - ",
-  gt.rtf_page_width = 9468L,
   gt.html_tag_check = TRUE
 )
 

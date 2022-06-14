@@ -61,23 +61,13 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \code{list()} (e.g., \code{list(cells_body(), cells_grand_summary())}).
 }
 
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cells_footnotes_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
+Use \code{\link{sza}} to create a \strong{gt} table. Color the \code{sza} column using the
+\code{data_color()} function, add a footnote and also style the footnotes section.
 
-7-16
-}
-
-\examples{
-# Use `sza` to create a gt table; color
-# the `sza` column using the `data_color()`
-# function, add a footnote and also style
-# the footnotes section
-tab_1 <-
-  sza \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza \%>\%
   dplyr::filter(
     latitude == 20 &
       month == "jan" &
@@ -94,9 +84,7 @@ tab_1 <-
   ) \%>\%
   tab_footnote(
     footnote = "Color indicates height of sun.",
-    locations = cells_column_labels(
-      columns = sza
-    )
+    locations = cells_column_labels(columns = sza)
   ) \%>\%
   tab_options(table.width = px(320)) \%>\%
   tab_style(
@@ -106,8 +94,18 @@ tab_1 <-
       ),
     locations = cells_footnotes()
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_footnotes_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+7-16
+}
+
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},

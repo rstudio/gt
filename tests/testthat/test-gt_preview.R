@@ -1,5 +1,3 @@
-context("Ensuring that the `gt_preview()` function works as expected")
-
 test_that("the `gt_preview()` function works correctly", {
 
   # Ensure that gt objects still work with `gt_preview()`

@@ -1,7 +1,12 @@
-url: https://gt.rstudio.com
+destination: docs
 
 home:
   strip_header: true
+
+url: https://gt.rstudio.com
+
+template:
+  bootstrap: 5
 
 reference:
   - title: Create Table
@@ -53,6 +58,8 @@ reference:
     - fmt_scientific
     - fmt_engineering
     - fmt_percent
+    - fmt_partsper
+    - fmt_fraction
     - fmt_currency
     - fmt_bytes
     - fmt_date
@@ -60,8 +67,11 @@ reference:
     - fmt_datetime
     - fmt_markdown
     - fmt_passthrough
-    - fmt_missing
     - fmt
+    - sub_missing
+    - sub_zero
+    - sub_small_vals
+    - sub_large_vals
     - text_transform
     - data_color
 
@@ -71,7 +81,7 @@ reference:
       columns. This includes alignment of the data in columns
       (`cols_align()`), hiding columns from view (`cols_hide()`),
       re-labeling the column labels (`cols_label()`), merging two columns
-      together (`cols_merge*()`), moving columns around (`cols_move*()`)
+      together (`cols_merge*()`), moving columns around (`cols_move*()`).
     contents:
     - cols_align
     - cols_width
@@ -81,8 +91,8 @@ reference:
     - cols_move
     - cols_hide
     - cols_unhide
-    - cols_merge_range
     - cols_merge_uncert
+    - cols_merge_range
     - cols_merge_n_pct
     - cols_merge
 
@@ -167,6 +177,8 @@ reference:
     - opt_footnote_marks
     - opt_row_striping
     - opt_align_table_header
+    - opt_vertical_padding
+    - opt_horizontal_padding
     - opt_all_caps
     - opt_table_lines
     - opt_table_outline

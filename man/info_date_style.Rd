@@ -16,9 +16,18 @@ function provides a quick reference to all 14 styles, with associated number
 codes, the format names, and example outputs using a fixed date
 (\code{2000-02-29}).
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_info_date_style_1.png}{options: width=100\%}}
+
+Get a table of info on the different date-formatting styles (which are used
+by supplying a number code to the \code{\link[=fmt_date]{fmt_date()}} function).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{info_date_style()
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_info_date_style_1.png" style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
@@ -26,14 +35,6 @@ codes, the format names, and example outputs using a fixed date
 10-1
 }
 
-\examples{
-# Get a table of info on the different
-# date-formatting styles (which are used
-# by supplying a number code to the
-# `fmt_date()` function)
-tab_1 <- info_date_style()
-
-}
 \seealso{
 Other Information Functions: 
 \code{\link{info_currencies}()},

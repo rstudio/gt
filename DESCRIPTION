@@ -1,6 +1,6 @@
 Type: Package
 Package: gt
-Version: 0.3.0.9000
+Version: 0.6.0.9000
 Title: Easily Create Presentation-Ready Display Tables
 Description: Build display tables from tabular data with an easy-to-use set of
     functions. With its progressive approach, we can construct display tables
@@ -23,31 +23,33 @@ BugReports: https://github.com/rstudio/gt/issues
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.0
 Depends:
     R (>= 3.2.0)
-Imports: 
+Imports:
+    base64enc (>= 0.1-3),
     bitops (>= 1.0.6),
     checkmate (>= 2.0.0),
     commonmark (>= 1.7),
-    dplyr (>= 0.8.5),
-    fs (>= 1.3.2),
-    ggplot2 (>= 3.3.0),
-    glue (>= 1.3.2),
-    htmltools (>= 0.5.0),
-    magrittr (>= 1.5),
-    rlang (>= 0.4.5),
-    sass (>= 0.1.1),
-    scales (>= 1.1.0),
-    stringr (>= 1.3.1),
-    tibble (>= 3.0.0),
-    tidyselect (>= 1.0.0)
+    dplyr (>= 1.0.8),
+    fs (>= 1.5.2),
+    ggplot2 (>= 3.3.5),
+    glue (>= 1.6.1),
+    htmltools (>= 0.5.2),
+    magrittr (>= 2.0.2),
+    rlang (>= 1.0.1),
+    sass (>= 0.4.0),
+    scales (>= 1.1.1),
+    stringr (>= 1.4.0),
+    tibble (>= 3.1.6),
+    tidyselect (>= 1.1.1)
 Suggests:
     covr,
     knitr,
     paletteer,
-    testthat (>= 2.1.0),
+    testthat (>= 3.0.0),
     RColorBrewer,
+    lubridate,
     rmarkdown,
     rvest,
     shiny,
@@ -58,7 +60,6 @@ Suggests:
 Roxygen: list(markdown = TRUE)
 Collate: 
     'as_data_frame.R'
-    'base64.R'
     'build_data.R'
     'compile_scss.R'
     'data_color.R'
@@ -73,6 +74,7 @@ Collate:
     'dt_groups_rows.R'
     'dt_has_built.R'
     'dt_heading.R'
+    'dt_locale.R'
     'dt_options.R'
     'dt_row_groups.R'
     'dt_source_notes.R'
@@ -101,6 +103,7 @@ Collate:
     'render_as_html.R'
     'resolver.R'
     'shiny.R'
+    'substitution.R'
     'summary_rows.R'
     'text_transform.R'
     'utils.R'
@@ -114,3 +117,4 @@ Collate:
     'utils_render_rtf.R'
     'utils_render_xml.R'
     'zzz.R'
+Config/testthat/edition: 3

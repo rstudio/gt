@@ -27,9 +27,9 @@ focused on selections. The select helper functions are: \code{\link[=starts_with
 \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
 \code{\link[=everything]{everything()}}.}
 
-\item{rows}{Optional rows to format. Providing either \code{\link[=everything]{everything()}} (the
-default) or \code{TRUE} results in all rows in \code{columns} being formatted. Can
-either be a vector of row captions provided in \code{\link[=c]{c()}}, a vector of row
+\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
+default) results in all rows in \code{columns} being formatted. Alternatively,
+we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
 indices, or a helper function focused on selections. The select helper
 functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
 \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
@@ -65,7 +65,9 @@ according the locale's rules. Examples include \code{"en_US"} for English
 (United States) and \code{"fr_FR"} for French (France). The use of a valid
 locale ID will override any values provided in \code{sep_mark} and \code{dec_mark}.
 We can use the \code{\link[=info_locales]{info_locales()}} function as a useful reference for all of
-the locales that are supported.}
+the locales that are supported. Any \code{locale} value provided here will
+override any global locale setting performed in \code{\link[=gt]{gt()}}'s own \code{locale}
+argument.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -92,11 +94,22 @@ Targeting of values is done through \code{columns} and additionally by \code{row
 nothing is provided for \code{rows} then entire columns are selected). A number of
 helper functions exist to make targeting more effective. Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the Arguments section for more information on this.
+argument. See the \emph{Arguments} section for more information on this.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_fmt_engineering_1.png}{options: width=100\%}}
+
+Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{num} column in
+engineering notation.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+  gt() \%>\%
+  fmt_engineering(columns = num)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_engineering_1.png" style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
@@ -104,16 +117,6 @@ argument. See the Arguments section for more information on this.
 3-4
 }
 
-\examples{
-# Use `exibble` to create a gt table;
-# format the `num` column in
-# engineering notation
-tab_1 <-
-  exibble \%>\%
-  gt() \%>\%
-  fmt_engineering(columns = num)
-
-}
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},
@@ -121,15 +124,20 @@ Other Format Data:
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_fraction}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
-\code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
+\code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt}()},
+\code{\link{sub_large_vals}()},
+\code{\link{sub_missing}()},
+\code{\link{sub_small_vals}()},
+\code{\link{sub_zero}()},
 \code{\link{text_transform}()}
 }
 \concept{Format Data}

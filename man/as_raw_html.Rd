@@ -22,16 +22,13 @@ styles (that were previously contained in CSS rule sets external to the
 tags. This option is preferable when using the output HTML table in an
 emailing context.
 }
-\section{Function ID}{
+\section{Examples}{
 
-13-2
-}
 
-\examples{
-# Use `gtcars` to create a gt table;
-# add a header and then export as
-# HTML code with CSS inlined
-tab_html <-
+Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header and then export as HTML
+code with inlined CSS styles.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_html <-
   gtcars \%>\%
   dplyr::select(mfr, model, msrp) \%>\%
   dplyr::slice(1:5) \%>\%
@@ -41,17 +38,18 @@ tab_html <-
     subtitle = md("`gtcars` is an R dataset")
   ) \%>\%
   as_raw_html()
+}\if{html}{\out{</div>}}
 
-# `tab_html` is a single-element vector
-# containing inlined HTML for the table;
-# it has only the `<table>...</table>` part
-# so it's not a complete HTML document but
-# rather an HTML fragment
-tab_html \%>\%
-  substr(1, 700) \%>\%
-  cat()
-
+What's returned is a single-element vector containing the HTML for the table.
+It has only the \verb{<table>...</table>} part so it's not a complete HTML
+document but rather an HTML fragment.
 }
+
+\section{Function ID}{
+
+13-2
+}
+
 \seealso{
 Other Export Functions: 
 \code{\link{as_latex}()},

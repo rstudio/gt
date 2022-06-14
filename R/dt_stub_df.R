@@ -55,7 +55,7 @@ dt_stub_df_init <- function(data,
 
     # Place the `group_labels` values into `stub_df$group_id`
     stub_df[["group_id"]] <- row_group_ids
-    stub_df[["group_label"]] <- row_group_ids
+    stub_df[["group_label"]] <- as.list(row_group_ids)
 
     data <- data %>% dt_boxhead_set_row_group(vars = groupname_col)
   }
@@ -133,12 +133,12 @@ dt_stub_components <- function(data) {
 
   stub_components <- c()
 
-  if (any(!is.na(stub_df[["rowname"]]))) {
-    stub_components <- c(stub_components, "rowname")
-  }
-
   if (any(!is.na(stub_df[["group_id"]]))) {
     stub_components <- c(stub_components, "group_id")
+  }
+
+  if (any(!is.na(stub_df[["rowname"]])) && !all(stub_df[["rowname"]] == "")) {
+    stub_components <- c(stub_components, "rowname")
   }
 
   stub_components
@@ -165,7 +165,7 @@ dt_stub_components_is_groupname <- function(stub_components) {
 # working with a table with rownames and groups
 dt_stub_components_is_rowname_groupname <- function(stub_components) {
 
-  identical(stub_components, c("rowname", "group_id"))
+  identical(stub_components, c("group_id", "rowname"))
 }
 
 dt_stub_components_has_rowname <- function(stub_components) {

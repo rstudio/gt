@@ -23,24 +23,14 @@ is great if you want to start off with lots of lines and subtract just a few
 of them with \code{\link[=tab_options]{tab_options()}} or \code{\link[=tab_style]{tab_style()}}. Or, use it to start with a
 completely lineless table, adding individual lines as needed.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_opt_table_lines_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
+Use \code{\link{exibble}} to create a \strong{gt} table with a number of table parts added.
+Then, use the \code{opt_table_lines()} function to haves lines everywhere there
+can possibly be lines.
 
-9-5
-}
-
-\examples{
-# Use `exibble` to create a gt table with
-# a number of table parts added; then, use
-# the `opt_table_lines()` function to
-# haves lines everywhere there can possibly
-# be lines
-tab_1 <-
-  exibble \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt(rowname_col = "row", groupname_col = "group") \%>\%
   summary_rows(
     groups = "grp_a",
@@ -64,16 +54,28 @@ tab_1 <-
     subtitle = "The table's subtitle"
   ) \%>\%
   opt_table_lines()
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_table_lines_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+9-7
+}
+
 \seealso{
 Other Table Option Functions: 
 \code{\link{opt_align_table_header}()},
 \code{\link{opt_all_caps}()},
 \code{\link{opt_css}()},
 \code{\link{opt_footnote_marks}()},
+\code{\link{opt_horizontal_padding}()},
 \code{\link{opt_row_striping}()},
 \code{\link{opt_table_font}()},
-\code{\link{opt_table_outline}()}
+\code{\link{opt_table_outline}()},
+\code{\link{opt_vertical_padding}()}
 }
 \concept{Table Option Functions}

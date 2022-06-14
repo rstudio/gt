@@ -13,9 +13,10 @@ cell_text(
   style = NULL,
   weight = NULL,
   stretch = NULL,
-  indent = NULL,
   decorate = NULL,
-  transform = NULL
+  transform = NULL,
+  whitespace = NULL,
+  indent = NULL
 )
 }
 \arguments{
@@ -52,16 +53,22 @@ condensation/expansion: \code{"ultra-condensed"}, \code{"extra-condensed"},
 can supply percentage values from \verb{0\\\%} to \verb{200\\\%}, inclusive. Negative
 percentage values are not allowed.}
 
-\item{indent}{The indentation of the text. Can be provided as a number that
-is assumed to represent \code{px} values (or could be wrapped in the \code{\link[=px]{px()}})
-helper function. Alternatively, this can be given as a percentage (easily
-constructed with \code{\link[=pct]{pct()}}).}
-
-\item{decorate}{allows for text decoration effect to be applied. Here, we can
+\item{decorate}{Allows for text decoration effect to be applied. Here, we can
 use \code{"overline"}, \code{"line-through"}, or \code{"underline"}.}
 
 \item{transform}{Allows for the transformation of text. Options are
 \code{"uppercase"}, \code{"lowercase"}, or \code{"capitalize"}.}
+
+\item{whitespace}{A white-space preservation option. By default, runs of
+white-space will be collapsed into single spaces but several options exist
+to govern how white-space is collapsed and how lines might wrap at
+soft-wrap opportunities. The keyword options are \code{"normal"}, \code{"nowrap"},
+\code{"pre"}, \code{"pre-wrap"}, \code{"pre-line"}, and \code{"break-spaces"}.}
+
+\item{indent}{The indentation of the text. Can be provided as a number that
+is assumed to represent \code{px} values (or could be wrapped in the \code{\link[=px]{px()}})
+helper function. Alternatively, this can be given as a percentage (easily
+constructed with \code{\link[=pct]{pct()}}).}
 }
 \value{
 A list object of class \code{cell_styles}.
@@ -72,22 +79,13 @@ itself allows for the setting of custom styles to one or more cells. We can
 also define several styles within a single call of \code{cell_text()} and
 \code{\link[=tab_style]{tab_style()}} will reliably apply those styles to the targeted element.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cell_text_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
+Use \code{\link{exibble}} to create a \strong{gt} table. Add styles with \code{\link[=tab_style]{tab_style()}} and
+the \code{cell_text()} helper function.
 
-7-19
-}
-
-\examples{
-# Use `exibble` to create a gt table;
-# add styles with `tab_style()` and
-# the `cell_text()` helper function
-tab_1 <-
-  exibble \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(num, currency) \%>\%
   gt() \%>\%
   fmt_number(
@@ -98,7 +96,8 @@ tab_1 <-
     style = cell_text(weight = "bold"),
     locations = cells_body(
       columns = num,
-      rows = num >= 5000)
+      rows = num >= 5000
+    )
   ) \%>\%
   tab_style(
     style = cell_text(style = "italic"),
@@ -107,8 +106,18 @@ tab_1 <-
       rows = currency < 100
     )
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cell_text_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+7-19
+}
+
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},

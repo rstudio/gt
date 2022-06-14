@@ -29,71 +29,60 @@ header, within footnote text, etc.) we need to use \code{web_image()} within the
 }
 \details{
 By itself, the function creates an HTML image tag, so, the call
-\code{web_image("http://some.web.site/image.png")} evaluates to:
+\code{web_image("http://example.com/image.png")} evaluates to:
 
-\verb{<img src=\\"http://some.web.site/image.png\\" style=\\"height:30px;\\">}
+\verb{<img src=\\"http://example.com/image.png\\" style=\\"height:30px;\\">}
 
 where a height of \verb{30px} is a default height chosen to work well within the
 heights of most table rows.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_web_image_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_web_image_2.png}{options: width=100\%}}
-}
+Get the PNG-based logo for the R Project from an image URL.
 
-\section{Function ID}{
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{r_png_url <- "https://www.r-project.org/logo/Rlogo.png"
+}\if{html}{\out{</div>}}
 
-8-1
-}
+Create a tibble that contains heights of an image in pixels (one column as a
+string, the other as numerical values), then, create a \strong{gt} table. Use the
+\code{\link[=text_transform]{text_transform()}} function to insert the R logo PNG image with the various
+sizes.
 
-\examples{
-# Get the PNG-based logo for the R
-# Project from an image URL
-r_png_url <-
-  "https://www.r-project.org/logo/Rlogo.png"
-
-# Create a tibble that contains heights
-# of an image in pixels (one column as a
-# string, the other as numerical values),
-# then, create a gt table; use the
-# `text_transform()` function to insert
-# the R logo PNG image with the various
-# sizes
-tab_1 <-
-  dplyr::tibble(
-    pixels = px(seq(10, 35, 5)),
-    image = seq(10, 35, 5)
-  ) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
+  pixels = px(seq(10, 35, 5)),
+  image = seq(10, 35, 5)
+) \%>\%
   gt() \%>\%
   text_transform(
     locations = cells_body(columns = image),
-    fn = function(x) {
+    fn = function(x) \{
       web_image(
         url = r_png_url,
         height = as.numeric(x)
       )
-    }
+    \}
   )
+}\if{html}{\out{</div>}}
 
-# Get the SVG-based logo for the R
-# Project from an image URL
-r_svg_url <-
-  "https://www.r-project.org/logo/Rlogo.svg"
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_web_image_1.png" style="width:100\%;">
+}}
 
-# Create a tibble that contains heights
-# of an image in pixels (one column as a
-# string, the other as numerical values),
-# then, create a gt table; use the
-# `tab_header()` function to insert
-# the R logo SVG image once in the title
-# and five times in the subtitle
-tab_2 <-
-  dplyr::tibble(
-    pixels = px(seq(10, 35, 5)),
-    image = seq(10, 35, 5)
-  ) \%>\%
+Get the SVG-based logo for the R Project from an image URL.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{r_svg_url <- "https://www.r-project.org/logo/Rlogo.svg"
+}\if{html}{\out{</div>}}
+
+Create a tibble that contains heights of an image in pixels (one column as a
+string, the other as numerical values), then, create a \strong{gt} table. Use the
+\code{\link[=tab_header]{tab_header()}} function to insert the \strong{R} logo SVG image once in the title
+and five times in the subtitle.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
+  pixels = px(seq(10, 35, 5)),
+  image = seq(10, 35, 5)
+) \%>\%
   gt() \%>\%
   tab_header(
     title = html(
@@ -111,8 +100,18 @@ tab_2 <-
         rep(5)
     )
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_web_image_2.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+8-1
+}
+
 \seealso{
 Other Image Addition Functions: 
 \code{\link{ggplot_image}()},

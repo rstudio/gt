@@ -12,18 +12,20 @@ dt_formats_set <- function(data, formats) {
 
 dt_formats_init <- function(data) {
 
-  list() %>%
-    dt_formats_set(formats = ., data = data)
+  dt_formats_set(data = data, formats = list())
 }
 
-dt_formats_add <- function(data, formats) {
+dt_formats_add <- function(data, formats, prepend) {
 
-  data %>%
-    dt_formats_get() %>%
-    append(
-      list(formats)
-    ) %>%
-    dt_formats_set(formats = ., data = data)
+  formats_list <- dt_formats_get(data = data)
+
+  if (prepend) {
+    formats <- prepend_vec(list(formats), values = formats_list)
+  } else {
+    formats <- append(list(formats), values = formats_list)
+  }
+
+  dt_formats_set(data = data, formats = formats)
 }
 
 # This function is used in `dt_summary_build()` to get a

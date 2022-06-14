@@ -12,15 +12,18 @@
 #'   the table subtitle. We can elect to use the [md()] and [html()] helper
 #'   functions to style the text as Markdown or to retain HTML elements in the
 #'   text.
+#' @param preheader Optional preheader content that is rendered above the table.
+#'   Can be supplied as a vector of text.
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `gtcars` to create a gt table;
-#' # add a header part to contain a title
-#' # and subtitle
-#' tab_1 <-
-#'   gtcars %>%
+#' @section Examples:
+#'
+#' Use [`gtcars`] to create a **gt** table. Add a header part with the
+#' `tab_header()` function so that we get a title and a subtitle for the table.
+#'
+#' ```r
+#' gtcars %>%
 #'   dplyr::select(mfr, model, msrp) %>%
 #'   dplyr::slice(1:5) %>%
 #'   gt() %>%
@@ -28,26 +31,32 @@
 #'     title = md("Data listing from **gtcars**"),
 #'     subtitle = md("`gtcars` is an R dataset")
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_tab_header_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_header_1.png")`
+#' }}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
 #' 2-1
 #'
 #' @export
-tab_header <- function(data,
-                       title,
-                       subtitle = NULL) {
+tab_header <- function(
+    data,
+    title,
+    subtitle = NULL,
+    preheader = NULL
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  dt_heading_title_subtitle(
+  dt_set_heading_components(
     data = data,
     title = title,
-    subtitle = subtitle
+    subtitle = subtitle,
+    preheader = preheader
   )
 }
 
@@ -61,6 +70,12 @@ tab_header <- function(data,
 #' @inheritParams fmt_number
 #' @param label The text to use for the spanner column label.
 #' @param columns The columns to be components of the spanner heading.
+#' @param spanners The spanners that should be spanned over, should they already
+#'   be defined.
+#' @param level An explicit level to which the spanner should be placed. If not
+#'   provided, **gt** will choose the level based on the inputs provided within
+#'   `columns` and `spanners`, placing the spanner label where it will fit. The
+#'   first spanner level (right above the column labels) is `1`.
 #' @param id The ID for the spanner column label. When accessing a spanner
 #'   column label through [cells_column_spanners()] (when using [tab_style()] or
 #'   [tab_footnote()]) the `id` value is used as the reference (and not the
@@ -74,16 +89,21 @@ tab_header <- function(data,
 #' @param gather An option to move the specified `columns` such that they are
 #'   unified under the spanner column label. Ordering of the moved-into-place
 #'   columns will be preserved in all cases. By default, this is set to `TRUE`.
+#' @param replace Should new spanners be allowed to partially or fully replace
+#'   existing spanners? (This is a possibility if setting spanners at an already
+#'   populated `level`.) By default, this is set to `FALSE` and an error will
+#'   occur if some replacement is attempted.
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `gtcars` to create a gt table;
-#' # Group several columns related to car
-#' # performance under a spanner column
-#' # with the label `performance`
-#' tab_1 <-
-#'   gtcars %>%
+#' @section Examples:
+#'
+#' Use [`gtcars`] to create a **gt** table. Use the `tab_spanner()` function to
+#' effectively group several columns related to car performance under a spanner
+#' column with the label `"performance"`.
+#'
+#' ```r
+#' gtcars %>%
 #'   dplyr::select(
 #'     -mfr, -trim, bdy_style, drivetrain,
 #'     -drivetrain, -trsmn, -ctry_origin
@@ -94,49 +114,112 @@ tab_header <- function(data,
 #'     label = "performance",
 #'     columns = c(
 #'       hp, hp_rpm, trq, trq_rpm,
-#'       mpg_c, mpg_h)
+#'       mpg_c, mpg_h
+#'     )
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_tab_spanner_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_spanner_1.png")`
+#' }}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
 #' 2-2
 #'
 #' @export
-tab_spanner <- function(data,
-                        label,
-                        columns,
-                        id = label,
-                        gather = TRUE) {
+tab_spanner <- function(
+    data,
+    label,
+    columns = NULL,
+    spanners = NULL,
+    level = NULL,
+    id = label,
+    gather = TRUE,
+    replace = FALSE
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  checkmate::assert_character(
-    label, len = 1, any.missing = FALSE, null.ok = FALSE
-  )
-
-  checkmate::assert_character(
-    id, len = 1, any.missing = FALSE, null.ok = FALSE
-  )
+  present_spanner_ids <- dt_spanners_get_ids(data = data)
 
   # Get the columns supplied in `columns` as a character vector
   column_names <-
     resolve_cols_c(
       expr = {{ columns }},
-      data = data
+      data = data,
+      null_means = "nothing"
     )
 
-  # If `column_names` evaluates to an empty vector or is NULL,
+  # Get the spanner IDs supplied in `spanners` as a character vector
+  spanner_id_idx <-
+    tidyselect::with_vars(
+      vars = present_spanner_ids,
+      expr = spanners
+    )
+
+  # Stop function if `level` is provided and is less than `1`
+  if (!is.null(level) && level < 1) {
+    stop(
+      "A spanner level of ", level, " cannot be set:\n",
+      "* Please choose a `level` value greater than or equal to `1`",
+      call. = FALSE
+    )
+  }
+
+  if (is.numeric(spanner_id_idx)) {
+
+    spanner_ids <- present_spanner_ids[spanner_id_idx]
+
+  } else {
+
+    if (
+      !is.null(spanner_id_idx) &&
+      !all(spanner_id_idx %in% present_spanner_ids)
+    ) {
+
+      error_vars <-
+        paste(
+          base::setdiff(spanner_id_idx, present_spanner_ids),
+          collapse = ", "
+        )
+
+      stop(
+        "One or more spanner ID(s) supplied in `spanners` (", error_vars, ") ",
+        "for the new spanner with the ID `",  id, "` doesn't belong to any ",
+        "existing spanners.",
+        call. = FALSE
+      )
+    }
+
+    spanner_ids <- spanner_id_idx
+  }
+
+  # If `column_names` and `spanner_ids` have zero lengths then
   # return the data unchanged
-  if (length(column_names) < 1) {
+  if (length(column_names) < 1 && length(spanner_ids) < 1) {
     return(data)
   }
 
-  # Check `id` against existing `id` values and stop if necessary
+  # Check new `id` against existing `id` values and stop if necessary
   check_spanner_id_unique(data = data, spanner_id = id)
+
+  # Resolve the `column_names` that new spanner will span over
+  column_names <-
+    resolve_spanned_column_names(
+      data = data,
+      column_names = column_names,
+      spanner_ids = spanner_ids
+    )
+
+  # Resolve the `level` of the new spanner
+  level <-
+    resolve_spanner_level(
+      data = data,
+      column_names = column_names,
+      level = level
+    )
 
   # Add the spanner to the `_spanners` table
   data <-
@@ -145,12 +228,22 @@ tab_spanner <- function(data,
       vars = column_names,
       spanner_label = label,
       spanner_id = id,
-      gather = gather
+      spanner_level = level,
+      gather = gather,
+      replace = replace
     )
 
-  if (isTRUE(gather) && length(column_names) >= 1) {
+  # Move columns into place with `cols_move()` only if specific
+  # conditions are met:
+  # - `gather` should be TRUE
+  # - `spanner_ids` should be empty
+  # - `level` is NULL or `1`
+  if (
+    gather &&
+    length(spanner_ids) < 1 &&
+    (is.null(level) || level == 1)
+    ) {
 
-    # Move columns into place
     data <-
       cols_move(
         data = data,
@@ -160,6 +253,63 @@ tab_spanner <- function(data,
   }
 
   data
+}
+
+resolve_spanner_level <- function(
+  data,
+  column_names,
+  level
+) {
+
+  # If explicitly providing a `level` simply return that value
+  if (!is.null(level)) {
+    return(as.integer(level))
+  }
+
+  # Determine if there are any existing spanners
+  any_existing_spanners <- dt_spanners_exists(data = data)
+
+  # If there aren't any existing spanners, then the new spanner
+  # level will always be `1`
+  if (!any_existing_spanners) {
+    return(1L)
+  }
+
+  # Get the present `spanners_tbl`
+  spanners_tbl <- dt_spanners_get(data = data)
+
+  highest_level <- 0L
+
+  spanners_tbl <- dplyr::select(spanners_tbl, spanner_id, vars, spanner_level)
+  highest_level <- spanners_tbl %>%
+    dplyr::filter(vapply(vars, function(x) any(column_names %in% x), logical(1))) %>%
+    dplyr::pull("spanner_level") %>%
+    max(0) # Max of ^ and 0
+
+  highest_level + 1L
+}
+
+resolve_spanned_column_names <- function(
+  data,
+  column_names,
+  spanner_ids
+) {
+
+  if (length(spanner_ids) > 0) {
+
+    spanners_existing <- dt_spanners_get(data = data)
+
+    column_names_associated <-
+      unlist(
+        spanners_existing[["vars"]][
+          spanners_existing[["spanner_id"]] %in% spanner_ids
+        ]
+      )
+
+    column_names <- c(column_names, column_names_associated)
+  }
+
+  unique(column_names)
 }
 
 #' Create column labels and spanners via delimited names
@@ -183,7 +333,6 @@ tab_spanner <- function(data,
 #' unique even though there may eventually be repeated column labels in the
 #' rendered output table).
 #'
-#' @inheritParams cols_align
 #' @inheritParams tab_spanner
 #' @param delim The delimiter to use to split an input column name. The
 #'   delimiter supplied will be autoescaped for the internal splitting
@@ -192,38 +341,42 @@ tab_spanner <- function(data,
 #'   in those locations) and the second component will be the column label.
 #' @param columns An optional vector of column names that this operation should
 #'   be limited to. The default is to consider all columns in the table.
-#' @param split Should the delimiter splitting occur at the `"last"` instance of
-#'   `delim` or the `"first"`? By default column name splitting happens at the
-#'   last instance of the delimiter. This relevant only in the case that column
-#'   names included in `columns` have multiple instances of the `delim`.
+#' @param split Should the delimiter splitting occur from the `"last"` instance
+#'   of the `delim` character or from the `"first"`? By default, column name
+#'   splitting begins at the last instance of the delimiter.
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `iris` to create a gt table; split
-#' # any columns that are dot-separated
-#' # between column spanner labels (first
-#' # part) and column labels (second part)
-#' tab_1 <-
-#'   iris %>%
+#' @section Examples:
+#'
+#' Use `iris` to create a **gt** table and use the `tab_spanner_delim()`
+#' function to automatically generate column spanner labels. This splits any
+#' columns that are dot-separated between column spanner labels (first part) and
+#' column labels (second part).
+#'
+#' ```r
+#' iris %>%
 #'   dplyr::group_by(Species) %>%
 #'   dplyr::slice(1:4) %>%
 #'   gt() %>%
 #'   tab_spanner_delim(delim = ".")
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_tab_spanner_delim_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_spanner_delim_1.png")`
+#' }}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
 #' 2-3
 #'
 #' @export
-tab_spanner_delim <- function(data,
-                              delim,
-                              columns = everything(),
-                              gather = TRUE,
-                              split = c("last", "first")) {
+tab_spanner_delim <- function(
+    data,
+    delim,
+    columns = everything(),
+    split = c("last", "first")
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -239,72 +392,140 @@ tab_spanner_delim <- function(data,
       expr = {{ columns }},
       data = data
     )
-
   if (!is.null(columns)) {
-    colnames <- base::intersect(all_cols, columns)
+    colnames_spanners <- base::intersect(all_cols, columns)
   } else {
-    colnames <- all_cols
+    colnames_spanners <- all_cols
   }
 
-  if (length(colnames) == 0) {
+  if (length(colnames_spanners) == 0) {
     return(data)
   }
 
-  colnames_has_delim <- grepl(pattern = delim, x = colnames, fixed = TRUE)
+  if (split == "first") {
 
-  if (any(colnames_has_delim)) {
-
-    colnames_with_delim <- colnames[colnames_has_delim]
-
-    # Perform regexec match where the delimiter is either declared
-    # to be the 'first' instance or the 'last' instance
-    regexec_m <-
-      regexec(
-        paste0(
-          "^(.*",
-          ifelse(split == "first", "?", ""),
-          ")\\Q", delim, "\\E(.*)$"
-        ),
-        colnames_with_delim
+    colnames_spanners_ordered <-
+      vapply(
+        colnames_spanners,
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = function(x) {
+          paste(
+            rev(unlist(strsplit(x, split = delim, fixed = TRUE))),
+            collapse = delim
+          )
+        }
       )
 
-    split_colnames <-
-      lapply(regmatches(colnames_with_delim, regexec_m), FUN = `[`, 2:3)
+  } else {
+    colnames_spanners_ordered <- colnames_spanners
+  }
 
-    spanners <- vapply(split_colnames, FUN.VALUE = character(1), `[[`, 1)
+  #
+  # Determine the highest spanner level from these column names
+  #
 
-    spanner_var_list <- split(colnames_with_delim, spanners)
+  max_level <-
+    max(
+      vapply(
+        colnames_spanners_ordered,
+        FUN.VALUE = integer(1), FUN = function(x) {
+          length(unlist(strsplit(x, split = delim, fixed = TRUE)))
+        }
+      ),
+      na.rm = TRUE
+    )
 
-    for (label in names(spanner_var_list)) {
+  #
+  # Create a matrix representation of the spanners
+  #
 
-      data <-
-        tab_spanner(
-          data = data,
-          label = label,
-          columns = spanner_var_list[[label]],
-          gather = gather
+  spanner_matrix <- matrix(data = NA_character_, nrow = max_level, ncol = 0)
+
+  for (col in all_cols) {
+
+    if (col %in% colnames_spanners) {
+
+      col_name <- colnames_spanners_ordered[colnames_spanners %in% col]
+
+      elements <- unlist(strsplit(col_name, split = delim, fixed = TRUE))
+
+      elements_n <- length(elements)
+
+      matrix_col_i <-
+        matrix(
+          c(rep(NA_character_, max_level - elements_n), elements),
+          ncol = 1
         )
+
+    } else {
+
+      matrix_col_i <- matrix(c(rep(NA_character_, max_level - 1), col))
     }
 
-    new_labels <-
-      lapply(split_colnames, `[[`, -1) %>%
-      vapply(paste0, FUN.VALUE = character(1), collapse = delim)
+    spanner_matrix <- cbind(spanner_matrix, matrix_col_i)
+  }
 
-    for (i in seq_along(split_colnames)) {
+  # If the height of the spanner matrix isn't greater than
+  # one then return the data untouched
+  if (nrow(spanner_matrix) == 1) {
+    return(data)
+  }
 
-      new_labels_i <- new_labels[i]
-      var_i <- colnames_with_delim[i]
+  for (i in rev(seq_len(nrow(spanner_matrix)))) {
 
-      data <-
-        dt_boxhead_edit(
-          data = data,
-          var = var_i,
-          column_label = new_labels_i
-        )
+    if (i == nrow(spanner_matrix)) next
+
+    level <- nrow(spanner_matrix) - i
+
+    rle_spanners_i <- rle(spanner_matrix[i, ])
+    spanners_i_lengths <- rle_spanners_i$lengths
+    spanners_i_values <- rle_spanners_i$values
+    spanners_i_col_i <- utils::head(cumsum(c(1, spanners_i_lengths)), -1)
+
+    for (j in seq_along(spanners_i_lengths)) {
+
+      if (!is.na(spanners_i_values[j])) {
+
+        # Obtain the ID for the spanner
+        spanner_id <-
+          paste(
+            spanner_matrix[seq(i, nrow(spanner_matrix)), spanners_i_col_i[j]],
+            collapse = delim
+          )
+
+        spanner_columns <-
+          seq(
+            spanners_i_col_i[j],
+            spanners_i_col_i[j] + spanners_i_lengths[j] - 1
+          )
+
+        # Set the spanner with a call to `tab_spanner()`
+        data <-
+          tab_spanner(
+            data = data,
+            label = spanners_i_values[j],
+            columns = spanner_columns,
+            spanners = NULL,
+            level = level,
+            id = spanner_id,
+            gather = FALSE
+          )
+      }
     }
   }
 
-  data
+  #
+  # Re-label column labels included in `colnames_spanners`
+  #
+
+  new_labels <-
+    strsplit(colnames_spanners_ordered, split = delim, fixed = TRUE) %>%
+    vapply(FUN.VALUE = character(1), utils::tail, 1)
+
+  new_label_list <- stats::setNames(as.list(new_labels), colnames_spanners)
+
+  cols_label(data, .list = new_label_list)
 }
 
 #' Add a row group to a **gt** table
@@ -345,13 +566,14 @@ tab_spanner_delim <- function(data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `gtcars` to create a gt table and
-#' # add two row groups with the labels:
-#' # `numbered` and `NA` (a group without
-#' # a title, or, the rest)
-#' tab_1 <-
-#'   gtcars %>%
+#' @section Examples:
+#'
+#' Use [`gtcars`] to create a **gt** table and use `tab_row_group()` to add two
+#' row groups with the labels: `numbered` and `NA`. The row group with the `NA`
+#' label ends up being rendered without a label at all.
+#'
+#' ```r
+#' gtcars %>%
 #'   dplyr::select(model, year, hp, trq) %>%
 #'   dplyr::slice(1:8) %>%
 #'   gt(rowname_col = "model") %>%
@@ -359,14 +581,19 @@ tab_spanner_delim <- function(data,
 #'     label = "numbered",
 #'     rows = matches("^[0-9]")
 #'   )
+#' ```
 #'
-#' # Use `gtcars` to create a gt table;
-#' # add two row groups with the labels
-#' # `powerful` and `super powerful`: the
-#' # distinction being `hp` lesser or
-#' # greater than `600`
-#' tab_2 <-
-#'   gtcars %>%
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_row_group_1.png")`
+#' }}
+#'
+#' Use [`gtcars`] to create a **gt** table. Add two row groups with the labels
+#' `powerful` and `super powerful`. The distinction between the groups is
+#' whether `hp` is lesser or greater than `600` (governed by the expressions
+#' provided to the `rows` argument).
+#'
+#' ```r
+#' gtcars %>%
 #'   dplyr::select(model, year, hp, trq) %>%
 #'   dplyr::slice(1:8) %>%
 #'   gt(rowname_col = "model") %>%
@@ -378,11 +605,11 @@ tab_spanner_delim <- function(data,
 #'     label = "super powerful",
 #'     rows = hp > 600
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_tab_row_group_1.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_tab_row_group_2.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_row_group_2.png")`
+#' }}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
@@ -390,12 +617,14 @@ tab_spanner_delim <- function(data,
 #'
 #' @import rlang
 #' @export
-tab_row_group <- function(data,
-                          label,
-                          rows,
-                          id = label,
-                          others_label = NULL,
-                          group = NULL) {
+tab_row_group <- function(
+    data,
+    label,
+    rows,
+    id = label,
+    others_label = NULL,
+    group = NULL
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -497,27 +726,33 @@ tab_row_group <- function(data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `gtcars` to create a gt table; add
-#' # a stubhead label to describe what is
-#' # in the stub
-#' tab_1 <-
-#'   gtcars %>%
+#' @section Examples:
+#'
+#' Use [`gtcars`] to create a **gt** table. With `tab_stubhead()` we can add a
+#' stubhead label. This appears in the top-left and can be used to describe what
+#' is in the stub.
+#'
+#' ```r
+#' gtcars %>%
 #'   dplyr::select(model, year, hp, trq) %>%
 #'   dplyr::slice(1:5) %>%
 #'   gt(rowname_col = "model") %>%
 #'   tab_stubhead(label = "car")
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_tab_stubhead_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_stubhead_1.png")`
+#' }}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
 #' 2-5
 #'
 #' @export
-tab_stubhead <- function(data,
-                         label) {
+tab_stubhead <- function(
+    data,
+    label
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -539,8 +774,11 @@ tab_stubhead <- function(data,
 #' @details
 #' The formatting of the footnotes can be controlled through the use of various
 #' parameters in the [tab_options()] function:
+#' - `footnotes.multiline`: a setting that determines whether footnotes each
+#' start on a new line or are combined into a single block.
 #' - `footnotes.sep`: allows for a choice of the separator between consecutive
-#' footnotes in the table footer. By default, this is set to a linebreak.
+#' footnotes in the table footer. By default, this is set to a single space
+#' character.
 #' - `footnotes.marks`: the set of sequential characters or numbers used to
 #' identify the footnotes.
 #' - `footnotes.font.size`: the size of the font used in the footnote section.
@@ -561,17 +799,22 @@ tab_stubhead <- function(data,
 #'   can enclose several `cells_*()` calls within a `list()` if we wish to link
 #'   the footnote text to different types of locations (e.g., body cells, row
 #'   group labels, the table title, etc.).
+#' @param placement Where to affix footnote marks to the table content. Two
+#'   options for this are `"left` or `"right"`, where the placement is to the
+#'   absolute left or right of the cell content. By default, however, this is
+#'   set to `"auto"` whereby **gt** will choose a preferred left-or-right
+#'   placement depending on the alignment of the cell content.
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `sza` to create a gt table; color
-#' # the `sza` column using the `data_color()`
-#' # function, then, add a footnote to the
-#' # `sza` column label explaining what the
-#' # color scale signifies
-#' tab_1 <-
-#'   sza %>%
+#' @section Examples:
+#'
+#' Use [`sza`] to create a **gt** table. Color the `sza` column using the
+#' [data_color()] function, then, use `tab_footnote()` to add a footnote to the
+#' `sza` column label (explaining what the color scale signifies).
+#'
+#' ```r
+#' sza %>%
 #'   dplyr::filter(
 #'     latitude == 20 &
 #'       month == "jan" &
@@ -592,21 +835,49 @@ tab_stubhead <- function(data,
 #'       columns = sza
 #'     )
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_tab_footnote_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_footnote_1.png")`
+#' }}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
 #' 2-6
 #'
 #' @export
-tab_footnote <- function(data,
-                         footnote,
-                         locations) {
+tab_footnote <- function(
+    data,
+    footnote,
+    locations = NULL,
+    placement = c("auto", "right", "left")
+) {
+
+  placement <- match.arg(placement)
 
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  if (is.null(locations)) {
+
+    # We need to invoke `dt_footnotes_add()` here (and not use
+    # `as_locations()`/`set_footnote()`) because there is no
+    # method for NULL
+
+    data <-
+      dt_footnotes_add(
+        data = data,
+        locname = "none",
+        grpname = NA_character_,
+        colname = NA_character_,
+        locnum = 0,
+        rownum = NA_integer_,
+        footnotes = footnote,
+        placement = placement
+      )
+
+    return(data)
+  }
 
   # Resolve into a list of locations
   locations <- as_locations(locations)
@@ -619,20 +890,23 @@ tab_footnote <- function(data,
       set_footnote(
         loc = loc,
         data = data,
-        footnote = process_text(footnote)
+        footnote = footnote,
+        placement = placement
       )
   }
 
   data
 }
 
-set_footnote <- function(loc, data, footnote) {
+set_footnote <- function(loc, data, footnote, placement) {
   UseMethod("set_footnote")
 }
 
-set_footnote.cells_title <- function(loc, data, footnote) {
+set_footnote.cells_title <- function(loc, data, footnote, placement) {
 
-  if ((loc$groups %>% rlang::eval_tidy()) == "title") {
+  title_components <- rlang::eval_tidy(loc$groups)
+
+  if ("title" %in% title_components) {
 
     data <-
       dt_footnotes_add(
@@ -642,10 +916,12 @@ set_footnote.cells_title <- function(loc, data, footnote) {
         colname = NA_character_,
         locnum = 1,
         rownum = NA_integer_,
-        footnotes = footnote
+        footnotes = footnote,
+        placement = placement
       )
+  }
 
-  } else if ((loc$groups %>% rlang::eval_tidy()) == "subtitle") {
+  if ("subtitle" %in% title_components) {
 
     data <-
       dt_footnotes_add(
@@ -655,14 +931,15 @@ set_footnote.cells_title <- function(loc, data, footnote) {
         colname = NA_character_,
         locnum = 2,
         rownum = NA_integer_,
-        footnotes = footnote
+        footnotes = footnote,
+        placement = placement
       )
   }
 
   data
 }
 
-set_footnote.cells_stubhead <- function(loc, data, footnote) {
+set_footnote.cells_stubhead <- function(loc, data, footnote, placement) {
 
   data <-
     dt_footnotes_add(
@@ -672,13 +949,14 @@ set_footnote.cells_stubhead <- function(loc, data, footnote) {
       colname = NA_character_,
       locnum = 2.5,
       rownum = NA_integer_,
-      footnotes = footnote
+      footnotes = footnote,
+      placement = placement
     )
 
   data
 }
 
-set_footnote.cells_column_labels <- function(loc, data, footnote) {
+set_footnote.cells_column_labels <- function(loc, data, footnote, placement) {
 
   resolved <- resolve_cells_column_labels(data = data, object = loc)
 
@@ -694,13 +972,14 @@ set_footnote.cells_column_labels <- function(loc, data, footnote) {
       colname = colnames,
       locnum = 4,
       rownum = NA_integer_,
-      footnotes = footnote
+      footnotes = footnote,
+      placement = placement
     )
 
   data
 }
 
-set_footnote.cells_column_spanners <- function(loc, data, footnote) {
+set_footnote.cells_column_spanners <- function(loc, data, footnote, placement) {
 
   resolved <- resolve_cells_column_spanners(data = data, object = loc)
 
@@ -714,13 +993,14 @@ set_footnote.cells_column_spanners <- function(loc, data, footnote) {
       colname = NA_character_,
       locnum = 3,
       rownum = NA_integer_,
-      footnotes = footnote
+      footnotes = footnote,
+      placement = placement
     )
 
   data
 }
 
-set_footnote.cells_row_groups <- function(loc, data, footnote) {
+set_footnote.cells_row_groups <- function(loc, data, footnote, placement) {
 
   row_groups <- dt_row_groups_get(data = data)
 
@@ -742,13 +1022,14 @@ set_footnote.cells_row_groups <- function(loc, data, footnote) {
       colname = NA_character_,
       locnum = 5,
       rownum = NA_integer_,
-      footnotes = footnote
+      footnotes = footnote,
+      placement = placement
     )
 
   data
 }
 
-set_footnote.cells_body <- function(loc, data, footnote) {
+set_footnote.cells_body <- function(loc, data, footnote, placement) {
 
   resolved <- resolve_cells_body(data = data, object = loc)
 
@@ -765,13 +1046,14 @@ set_footnote.cells_body <- function(loc, data, footnote) {
       colname = colnames,
       locnum = 5,
       rownum = rows,
-      footnotes = footnote
+      footnotes = footnote,
+      placement = placement
     )
 
   data
 }
 
-set_footnote.cells_stub <- function(loc, data, footnote) {
+set_footnote.cells_stub <- function(loc, data, footnote, placement) {
 
   resolved <- resolve_cells_stub(data = data, object = loc)
 
@@ -785,60 +1067,65 @@ set_footnote.cells_stub <- function(loc, data, footnote) {
       colname = NA_character_,
       locnum = 5,
       rownum = rows,
-      footnotes = footnote
+      footnotes = footnote,
+      placement = placement
     )
 
   data
 }
 
-set_footnote.cells_summary <- function(loc, data, footnote) {
+set_footnote.cells_summary <- function(loc, data, footnote, placement) {
 
   add_summary_location_row(
     loc = loc,
     data = data,
     style = footnote,
+    placement = placement,
     df_type = "footnotes_df"
   )
 }
 
-set_footnote.cells_grand_summary <- function(loc, data, footnote) {
+set_footnote.cells_grand_summary <- function(loc, data, footnote, placement) {
 
   add_grand_summary_location_row(
     loc = loc,
     data = data,
     style = footnote,
+    placement = placement,
     df_type = "footnotes_df"
   )
 }
 
-set_footnote.cells_stub_summary <- function(loc, data, footnote) {
+set_footnote.cells_stub_summary <- function(loc, data, footnote, placement) {
 
   add_summary_location_row(
     loc = loc,
     data = data,
     style = footnote,
+    placement = placement,
     df_type = "footnotes_df"
   )
 }
 
-set_footnote.cells_stub_grand_summary <- function(loc, data, footnote) {
+set_footnote.cells_stub_grand_summary <- function(loc, data, footnote, placement) {
 
   add_grand_summary_location_row(
     loc = loc,
     data = data,
     style = footnote,
+    placement = placement,
     df_type = "footnotes_df"
   )
 }
 
-set_footnote.cells_source_notes <- function(loc, data, footnote) {
+set_footnote.cells_source_notes <- function(loc, data, footnote, placement) {
 
   stop("Footnotes cannot be applied to source notes.", call. = FALSE)
 
   data
 }
 
-set_footnote.cells_footnotes <- function(loc, data, footnote) {
+set_footnote.cells_footnotes <- function(loc, data, footnote, placement) {
 
   stop("Footnotes cannot be applied to other footnotes.", call. = FALSE)
 
@@ -861,29 +1148,32 @@ set_footnote.cells_footnotes <- function(loc, data, footnote) {
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `gtcars` to create a gt table;
-#' # add a source note to the table
-#' # footer that cites the data source
-#' tab_1 <-
-#'   gtcars %>%
+#' @section Examples:
+#'
+#' Use [`gtcars`] to create a **gt** table. Use `tab_source_note()` to add a
+#' source note to the table footer that cites the data source.
+#'
+#' ```r
+#' gtcars %>%
 #'   dplyr::select(mfr, model, msrp) %>%
 #'   dplyr::slice(1:5) %>%
 #'   gt() %>%
-#'   tab_source_note(
-#'     source_note = "From edmunds.com"
-#'   )
+#'   tab_source_note(source_note = "From edmunds.com")
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_tab_source_note_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_source_note_1.png")`
+#' }}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
 #' 2-7
 #'
 #' @export
-tab_source_note <- function(data,
-                            source_note) {
+tab_source_note <- function(
+    data,
+    source_note
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -935,13 +1225,13 @@ tab_source_note <- function(data,
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `exibble` to create a gt table;
-#' # add styles that are to be applied
-#' # to data cells that satisfy a
-#' # condition (using `tab_style()`)
-#' tab_1 <-
-#'   exibble %>%
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table. Add styles that are to be applied
+#' to data cells that satisfy a condition (using `tab_style()`).
+#'
+#' ```r
+#' exibble %>%
 #'   dplyr::select(num, currency) %>%
 #'   gt() %>%
 #'   fmt_number(
@@ -968,12 +1258,17 @@ tab_source_note <- function(data,
 #'       rows = currency < 100
 #'     )
 #'   )
+#' ```
 #'
-#' # Use `sp500` to create a gt table;
-#' # color entire rows of cells based
-#' # on values in a particular column
-#' tab_2 <-
-#'   sp500 %>%
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_style_1.png")`
+#' }}
+#'
+#' Use [`sp500`] to create a **gt** table. Color entire rows of cells based on
+#' values in a particular column.
+#'
+#' ```r
+#' sp500 %>%
 #'   dplyr::filter(
 #'     date >= "2015-12-01" &
 #'     date <= "2015-12-15"
@@ -982,29 +1277,30 @@ tab_source_note <- function(data,
 #'   gt() %>%
 #'   tab_style(
 #'     style = cell_fill(color = "lightgreen"),
-#'     locations = cells_body(
-#'       rows = close > open)
+#'     locations = cells_body(rows = close > open)
 #'   ) %>%
 #'   tab_style(
 #'     style = list(
 #'       cell_fill(color = "red"),
 #'       cell_text(color = "white")
 #'       ),
-#'     locations = cells_body(
-#'       rows = open > close)
+#'     locations = cells_body(rows = open > close)
 #'   )
+#' ```
 #'
-#' # Use `exibble` to create a gt table;
-#' # replace missing values with the
-#' # `fmt_missing()` function and then
-#' # add styling to the `char` column
-#' # with `cell_fill()` and with a
-#' # CSS style declaration
-#' tab_3 <-
-#'   exibble %>%
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_style_2.png")`
+#' }}
+#'
+#' Use [`exibble`] to create a **gt** table. Replace missing values with the
+#' [sub_missing()] function and then add styling to the `char` column with
+#' [cell_fill()] and with a CSS style declaration.
+#'
+#' ```r
+#' exibble %>%
 #'   dplyr::select(char, fctr) %>%
 #'   gt() %>%
-#'   fmt_missing(everything()) %>%
+#'   sub_missing() %>%
 #'   tab_style(
 #'     style = list(
 #'       cell_fill(color = "lightcyan"),
@@ -1012,13 +1308,11 @@ tab_source_note <- function(data,
 #'     ),
 #'     locations = cells_body(columns = char)
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_tab_style_1.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_tab_style_2.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_tab_style_3.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_style_3.png")`
+#' }}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
@@ -1029,19 +1323,42 @@ tab_source_note <- function(data,
 #'   functions for targeting the locations to be styled.
 #'
 #' @export
-tab_style <- function(data,
-                      style,
-                      locations) {
+tab_style <- function(
+    data,
+    style,
+    locations
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Intercept font styles that require registration
-  if ("cell_text" %in% names(style)) {
+  # Upgrade `style` to be within a list if not provided as such
+  if (inherits(style, "cell_styles")) {
+    style <- list(style)
+  }
 
-    if ("font" %in% names(style[["cell_text"]])) {
+  # Determine if there is a `cell_text` list within the main list;
+  # because we need to intercept any provided `font` inputs in `cell_text`
+  # this is the first thing we need to know
+  has_cell_text <- "cell_text" %in% names(unlist(style, recursive = FALSE))
 
-      font <- style[["cell_text"]][["font"]]
+  # If the `cell_text` list is present we now need to determine if there
+  # is indeed a `font` input within that list
+  if (has_cell_text) {
+
+    # The `style` list will itself contain several lists and it's
+    # important to identify which one represents `cell_text`
+    for (i in seq_along(style)) {
+      if ("cell_text" %in% names(style[[i]])) {
+        cell_text_idx <- i
+      }
+    }
+
+    # If the `cell_text` list contains a `font` input then intercept
+    # the font styles that require registration
+    if ("font" %in% names(style[[cell_text_idx]][["cell_text"]])) {
+
+      font <- style[[cell_text_idx]][["cell_text"]][["font"]]
       font <- normalize_font_input(font_input = font)
 
       existing_additional_css <-
@@ -1058,11 +1375,9 @@ tab_style <- function(data,
           table.additional_css = additional_css
         )
 
-      font_names <- font$name
-
-      style[["cell_text"]][["font"]] <-
+      style[[cell_text_idx]][["cell_text"]][["font"]] <-
         as_css_font_family_attr(
-          font_vec = font_names,
+          font_vec = font$name,
           value_only = TRUE
         )
     }
@@ -1139,7 +1454,9 @@ set_style <- function(loc, data, style) {
 
 set_style.cells_title <- function(loc, data, style) {
 
-  if ((loc$groups %>% rlang::eval_tidy()) == "title") {
+  title_components <- rlang::eval_tidy(loc$groups)
+
+  if ("title" %in% title_components) {
 
     data <-
       dt_styles_add(
@@ -1151,8 +1468,9 @@ set_style.cells_title <- function(loc, data, style) {
         rownum = NA_integer_,
         styles = style
       )
+  }
 
-  } else if ((loc$groups %>% rlang::eval_tidy()) == "subtitle") {
+  if ("subtitle" %in% title_components) {
 
     data <-
       dt_styles_add(
@@ -1209,11 +1527,7 @@ set_style.cells_column_labels <- function(loc, data, style) {
 
 set_style.cells_column_spanners <- function(loc, data, style) {
 
-  resolved <-
-    resolve_cells_column_spanners(
-      data = data,
-      object = {{ loc }}
-    )
+  resolved <- resolve_cells_column_spanners(data = data, object = loc)
 
   groups <- resolved$spanners
 
@@ -1457,6 +1771,14 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   (`data_row.padding`), in summary rows (`summary_row.padding` or
 #'   `grand_summary_row.padding`), or in the footnotes and source notes
 #'   (`footnotes.padding` and `source_notes.padding`).
+#' @param heading.padding.horizontal,column_labels.padding.horizontal,data_row.padding.horizontal,row_group.padding.horizontal,summary_row.padding.horizontal,grand_summary_row.padding.horizontal,footnotes.padding.horizontal,source_notes.padding.horizontal
+#'   The amount of horizontal padding to incorporate in the `heading` (title and
+#'   subtitle), the `column_labels` (this includes the column spanners), the row
+#'   group labels (`row_group.padding.horizontal`), in the body/stub rows
+#'   (`data_row.padding`), in summary rows (`summary_row.padding.horizontal` or
+#'   `grand_summary_row.padding.horizontal`), or in the footnotes and source
+#'   notes (`footnotes.padding.horizontal` and
+#'   `source_notes.padding.horizontal`).
 #' @param table.border.top.style,table.border.top.width,table.border.top.color,table.border.right.style,table.border.right.width,table.border.right.color,table.border.bottom.style,table.border.bottom.width,table.border.bottom.color,table.border.left.style,table.border.left.width,table.border.left.color
 #'   The style, width, and color properties of the table's absolute top and
 #'   absolute bottom borders.
@@ -1496,12 +1818,21 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' @param stub.border.style,stub.border.width,stub.border.color
 #'   The style, width, and color properties for the vertical border of the table
 #'   stub.
+#' @param stub_row_group.font.size,stub_row_group.font.weight,stub_row_group.text_transform,stub_row_group.border.style,stub_row_group.border.width,stub_row_group.border.color
+#'   Options for the row group column in the stub (made possible when using
+#'   `row_group.as_column = TRUE`). The defaults for these options mirror that
+#'   of the `stub.*` variants (except for `stub_row_group.border.width`, which
+#'   is `"1px"` instead of `"2px"`).
 #' @param row_group.default_label An option to set a default row group label for
 #'   any rows not formally placed in a row group named by `group` in any call of
 #'   `tab_row_group()`. If this is set as `NA_character` and there are rows that
 #'   haven't been placed into a row group (where one or more row groups already
 #'   exist), those rows will be automatically placed into a row group without a
 #'   label.
+#' @param row_group.as_column How should row groups be structured? By default,
+#'   they are separate rows that lie above the each of the groups. Setting this
+#'   to `TRUE` will structure row group labels are columns to the far left of
+#'   the table.
 #' @param summary_row.border.style,summary_row.border.width,summary_row.border.color
 #'   The style, width, and color properties for all horizontal borders of the
 #'   `summary_row` location.
@@ -1514,8 +1845,6 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' @param footnotes.border.lr.style,footnotes.border.lr.width,footnotes.border.lr.color
 #'   The style, width, and color properties for the left and right borders of
 #'   the `footnotes` location.
-#' @param footnotes.sep The separating characters between adjacent footnotes in
-#'   the footnotes section. The default value produces a linebreak.
 #' @param footnotes.marks The set of sequential marks used to reference and
 #'   identify each of the footnotes (same input as the [opt_footnote_marks()]
 #'   function. We can supply a vector that represents the series of footnote
@@ -1527,6 +1856,15 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   `"LETTERS"`. There is the option for using a traditional symbol set where
 #'   `"standard"` provides four symbols, and, `"extended"` adds two more
 #'   symbols, making six.
+#' @param footnotes.multiline,source_notes.multiline An option to either put
+#'   footnotes and source notes in separate lines (the default, or `TRUE`) or
+#'   render them as a continuous line of text with `footnotes.sep` providing the
+#'   separator (by default `" "`) between notes.
+#' @param footnotes.sep,source_notes.sep The separating characters between
+#'   adjacent footnotes and source notes in their respective footer sections
+#'   when rendered as a continuous line of text (when
+#'   `footnotes.multiline == FALSE`). The default value is a single space
+#'   character (`" "`).
 #' @param source_notes.border.bottom.style,source_notes.border.bottom.width,source_notes.border.bottom.color
 #'   The style, width, and color properties for the bottom border of the
 #'   `source_notes` location.
@@ -1539,18 +1877,40 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   when striping rows.
 #' @param row.striping.include_table_body An option for whether to include the
 #'   table body when striping rows.
+#' @param page.orientation For RTF output, this provides an two options for page
+#'   orientation: `"portrait"` (the default) and `"landscape"`.
+#' @param page.numbering Within RTF output, should page numbering be displayed?
+#'   By default, this is set to `FALSE` but if `TRUE` then page numbering text
+#'   will be added to the document header.
+#' @param page.header.use_tbl_headings If `TRUE` then RTF output tables will
+#'   migrate all table headings (including the table title and all column
+#'   labels) to the page header. This page header content will repeat across
+#'   pages. By default, this is `FALSE`.
+#' @param page.footer.use_tbl_notes If `TRUE` then RTF output tables will
+#'   migrate all table footer content (this includes footnotes and source notes)
+#'   to the page footer. This page footer content will repeat across pages. By
+#'   default, this is `FALSE`.
+#' @param page.width,page.height The page width and height in the standard
+#'   portrait orientation. This is for RTF table output and the default
+#'   values (in inches) are `8.5in` and `11.0in`.
+#' @param page.margin.left,page.margin.right,page.margin.top,page.margin.bottom
+#'   For RTF table output, these options correspond to the left, right, top, and
+#'   bottom page margins. The default values for each of these is `1.0in`.
+#' @param page.header.height,page.footer.height The heights of the page header
+#'   and footer for RTF table outputs. Default values for both are `0.5in`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `exibble` to create a gt table with
-#' # all the main parts added; we can use this
-#' # going forward to demo some `tab_options()`
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table with all the main parts added. We
+#' can use this **gt** object going forward to demo some of what's available in
+#' the `tab_options()` function.
+#'
+#' ```r
 #' tab_1 <-
 #'   exibble %>%
-#'   dplyr::select(
-#'     -c(fctr, date, time, datetime)
-#'   ) %>%
+#'   dplyr::select(-c(fctr, date, time, datetime)) %>%
 #'   gt(
 #'     rowname_col = "row",
 #'     groupname_col = "group"
@@ -1577,205 +1937,249 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   ) %>%
 #'   tab_footnote(
 #'     footnote = "Alphabetical fruit.",
-#'     locations = cells_column_labels(
-#'       columns = char
-#'     )
+#'     locations = cells_column_labels(columns = char)
 #'   )
 #'
-#' # Modify the table width to 100% (which
-#' # spans the entire content width area)
-#' tab_2 <-
-#'   tab_1 %>%
+#' tab_1
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_options_1.png")`
+#' }}
+#'
+#' Modify the table width to be 100% (which spans the entire content width
+#' area).
+#'
+#' ```r
+#' tab_1 %>% tab_options(table.width = pct(100))
+#' ```
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_options_2.png")`
+#' }}
+#'
+#' Modify the table's background color to be `"lightcyan"`.
+#'
+#' ```r
+#' tab_1 %>% tab_options(table.background.color = "lightcyan")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_options_3.png")`
+#' }}
+#'
+#' Use letters as the marks for footnote references. Also, separate footnotes in
+#' the footer by spaces instead of newlines.
+#'
+#' ```r
+#' tab_1 %>%
 #'   tab_options(
-#'     table.width = pct(100)
+#'     footnotes.marks = letters,
+#'     footnotes.multiline = FALSE
 #'   )
+#' ```
 #'
-#' # Modify the table's background color
-#' # to be "lightcyan"
-#' tab_3 <-
-#'   tab_1 %>%
-#'   tab_options(
-#'     table.background.color = "lightcyan"
-#'   )
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_options_4.png")`
+#' }}
 #'
-#' # Use letters as the marks for footnote
-#' # references; also, separate footnotes in
-#' # the footer by spaces instead of newlines
-#' tab_4 <-
-#'   tab_1 %>%
-#'   tab_options(
-#'     footnotes.sep = " ",
-#'     footnotes.marks = letters
-#'   )
+#' Change the padding of data rows to 5 px.
 #'
-#' # Change the padding of data rows to 5px
-#' tab_5 <-
-#'   tab_1 %>%
+#' ```r
+#' tab_1 %>%
 #'   tab_options(
 #'     data_row.padding = px(5)
 #'   )
+#' ```
 #'
-#' # Reduce the size of the title and the
-#' # subtitle text
-#' tab_6 <-
-#'   tab_1 %>%
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_options_5.png")`
+#' }}
+#'
+#' Reduce the size of the title and the subtitle text.
+#'
+#' ```r
+#' tab_1 %>%
 #'   tab_options(
 #'     heading.title.font.size = "small",
 #'     heading.subtitle.font.size = "small"
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_tab_options_1.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_tab_options_2.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_tab_options_3.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_tab_options_4.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_tab_options_5.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_tab_options_6.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_options_6.png")`
+#' }}
 #'
 #' @family Create or Modify Parts
 #' @section Function ID:
 #' 2-9
 #'
 #' @export
-tab_options <- function(data,
-                        container.width = NULL,
-                        container.height = NULL,
-                        container.overflow.x = NULL,
-                        container.overflow.y = NULL,
-                        table.width = NULL,
-                        table.layout = NULL,
-                        table.align = NULL,
-                        table.margin.left = NULL,
-                        table.margin.right = NULL,
-                        table.background.color = NULL,
-                        table.additional_css = NULL,
-                        table.font.names = NULL,
-                        table.font.size = NULL,
-                        table.font.weight = NULL,
-                        table.font.style = NULL,
-                        table.font.color = NULL,
-                        table.font.color.light = NULL,
-                        table.border.top.style = NULL,
-                        table.border.top.width = NULL,
-                        table.border.top.color = NULL,
-                        table.border.right.style = NULL,
-                        table.border.right.width = NULL,
-                        table.border.right.color = NULL,
-                        table.border.bottom.style = NULL,
-                        table.border.bottom.width = NULL,
-                        table.border.bottom.color = NULL,
-                        table.border.left.style = NULL,
-                        table.border.left.width = NULL,
-                        table.border.left.color = NULL,
-                        heading.background.color = NULL,
-                        heading.align = NULL,
-                        heading.title.font.size = NULL,
-                        heading.title.font.weight = NULL,
-                        heading.subtitle.font.size = NULL,
-                        heading.subtitle.font.weight = NULL,
-                        heading.padding = NULL,
-                        heading.border.bottom.style = NULL,
-                        heading.border.bottom.width = NULL,
-                        heading.border.bottom.color = NULL,
-                        heading.border.lr.style = NULL,
-                        heading.border.lr.width = NULL,
-                        heading.border.lr.color = NULL,
-                        column_labels.background.color = NULL,
-                        column_labels.font.size = NULL,
-                        column_labels.font.weight = NULL,
-                        column_labels.text_transform = NULL,
-                        column_labels.padding = NULL,
-                        column_labels.vlines.style = NULL,
-                        column_labels.vlines.width = NULL,
-                        column_labels.vlines.color = NULL,
-                        column_labels.border.top.style = NULL,
-                        column_labels.border.top.width = NULL,
-                        column_labels.border.top.color = NULL,
-                        column_labels.border.bottom.style = NULL,
-                        column_labels.border.bottom.width = NULL,
-                        column_labels.border.bottom.color = NULL,
-                        column_labels.border.lr.style = NULL,
-                        column_labels.border.lr.width = NULL,
-                        column_labels.border.lr.color = NULL,
-                        column_labels.hidden = NULL,
-                        row_group.background.color = NULL,
-                        row_group.font.size = NULL,
-                        row_group.font.weight = NULL,
-                        row_group.text_transform = NULL,
-                        row_group.padding = NULL,
-                        row_group.border.top.style = NULL,
-                        row_group.border.top.width = NULL,
-                        row_group.border.top.color = NULL,
-                        row_group.border.bottom.style = NULL,
-                        row_group.border.bottom.width = NULL,
-                        row_group.border.bottom.color = NULL,
-                        row_group.border.left.style = NULL,
-                        row_group.border.left.width = NULL,
-                        row_group.border.left.color = NULL,
-                        row_group.border.right.style = NULL,
-                        row_group.border.right.width = NULL,
-                        row_group.border.right.color = NULL,
-                        row_group.default_label = NULL,
-                        table_body.hlines.style = NULL,
-                        table_body.hlines.width = NULL,
-                        table_body.hlines.color = NULL,
-                        table_body.vlines.style = NULL,
-                        table_body.vlines.width = NULL,
-                        table_body.vlines.color = NULL,
-                        table_body.border.top.style = NULL,
-                        table_body.border.top.width = NULL,
-                        table_body.border.top.color = NULL,
-                        table_body.border.bottom.style = NULL,
-                        table_body.border.bottom.width = NULL,
-                        table_body.border.bottom.color = NULL,
-                        stub.background.color = NULL,
-                        stub.font.size = NULL,
-                        stub.font.weight = NULL,
-                        stub.text_transform = NULL,
-                        stub.border.style = NULL,
-                        stub.border.width = NULL,
-                        stub.border.color = NULL,
-                        data_row.padding = NULL,
-                        summary_row.background.color = NULL,
-                        summary_row.text_transform = NULL,
-                        summary_row.padding = NULL,
-                        summary_row.border.style = NULL,
-                        summary_row.border.width = NULL,
-                        summary_row.border.color = NULL,
-                        grand_summary_row.background.color = NULL,
-                        grand_summary_row.text_transform = NULL,
-                        grand_summary_row.padding = NULL,
-                        grand_summary_row.border.style = NULL,
-                        grand_summary_row.border.width = NULL,
-                        grand_summary_row.border.color = NULL,
-                        footnotes.background.color = NULL,
-                        footnotes.font.size = NULL,
-                        footnotes.padding = NULL,
-                        footnotes.border.bottom.style = NULL,
-                        footnotes.border.bottom.width = NULL,
-                        footnotes.border.bottom.color = NULL,
-                        footnotes.border.lr.style = NULL,
-                        footnotes.border.lr.width = NULL,
-                        footnotes.border.lr.color = NULL,
-                        footnotes.sep = NULL,
-                        footnotes.marks = NULL,
-                        source_notes.background.color = NULL,
-                        source_notes.font.size = NULL,
-                        source_notes.padding = NULL,
-                        source_notes.border.bottom.style = NULL,
-                        source_notes.border.bottom.width = NULL,
-                        source_notes.border.bottom.color = NULL,
-                        source_notes.border.lr.style = NULL,
-                        source_notes.border.lr.width = NULL,
-                        source_notes.border.lr.color = NULL,
-                        row.striping.background_color = NULL,
-                        row.striping.include_stub = NULL,
-                        row.striping.include_table_body = NULL) {
+tab_options <- function(
+    data,
+    container.width = NULL,
+    container.height = NULL,
+    container.overflow.x = NULL,
+    container.overflow.y = NULL,
+    table.width = NULL,
+    table.layout = NULL,
+    table.align = NULL,
+    table.margin.left = NULL,
+    table.margin.right = NULL,
+    table.background.color = NULL,
+    table.additional_css = NULL,
+    table.font.names = NULL,
+    table.font.size = NULL,
+    table.font.weight = NULL,
+    table.font.style = NULL,
+    table.font.color = NULL,
+    table.font.color.light = NULL,
+    table.border.top.style = NULL,
+    table.border.top.width = NULL,
+    table.border.top.color = NULL,
+    table.border.right.style = NULL,
+    table.border.right.width = NULL,
+    table.border.right.color = NULL,
+    table.border.bottom.style = NULL,
+    table.border.bottom.width = NULL,
+    table.border.bottom.color = NULL,
+    table.border.left.style = NULL,
+    table.border.left.width = NULL,
+    table.border.left.color = NULL,
+    heading.background.color = NULL,
+    heading.align = NULL,
+    heading.title.font.size = NULL,
+    heading.title.font.weight = NULL,
+    heading.subtitle.font.size = NULL,
+    heading.subtitle.font.weight = NULL,
+    heading.padding = NULL,
+    heading.padding.horizontal = NULL,
+    heading.border.bottom.style = NULL,
+    heading.border.bottom.width = NULL,
+    heading.border.bottom.color = NULL,
+    heading.border.lr.style = NULL,
+    heading.border.lr.width = NULL,
+    heading.border.lr.color = NULL,
+    column_labels.background.color = NULL,
+    column_labels.font.size = NULL,
+    column_labels.font.weight = NULL,
+    column_labels.text_transform = NULL,
+    column_labels.padding = NULL,
+    column_labels.padding.horizontal = NULL,
+    column_labels.vlines.style = NULL,
+    column_labels.vlines.width = NULL,
+    column_labels.vlines.color = NULL,
+    column_labels.border.top.style = NULL,
+    column_labels.border.top.width = NULL,
+    column_labels.border.top.color = NULL,
+    column_labels.border.bottom.style = NULL,
+    column_labels.border.bottom.width = NULL,
+    column_labels.border.bottom.color = NULL,
+    column_labels.border.lr.style = NULL,
+    column_labels.border.lr.width = NULL,
+    column_labels.border.lr.color = NULL,
+    column_labels.hidden = NULL,
+    row_group.background.color = NULL,
+    row_group.font.size = NULL,
+    row_group.font.weight = NULL,
+    row_group.text_transform = NULL,
+    row_group.padding = NULL,
+    row_group.padding.horizontal = NULL,
+    row_group.border.top.style = NULL,
+    row_group.border.top.width = NULL,
+    row_group.border.top.color = NULL,
+    row_group.border.bottom.style = NULL,
+    row_group.border.bottom.width = NULL,
+    row_group.border.bottom.color = NULL,
+    row_group.border.left.style = NULL,
+    row_group.border.left.width = NULL,
+    row_group.border.left.color = NULL,
+    row_group.border.right.style = NULL,
+    row_group.border.right.width = NULL,
+    row_group.border.right.color = NULL,
+    row_group.default_label = NULL,
+    row_group.as_column = NULL,
+    table_body.hlines.style = NULL,
+    table_body.hlines.width = NULL,
+    table_body.hlines.color = NULL,
+    table_body.vlines.style = NULL,
+    table_body.vlines.width = NULL,
+    table_body.vlines.color = NULL,
+    table_body.border.top.style = NULL,
+    table_body.border.top.width = NULL,
+    table_body.border.top.color = NULL,
+    table_body.border.bottom.style = NULL,
+    table_body.border.bottom.width = NULL,
+    table_body.border.bottom.color = NULL,
+    stub.background.color = NULL,
+    stub.font.size = NULL,
+    stub.font.weight = NULL,
+    stub.text_transform = NULL,
+    stub.border.style = NULL,
+    stub.border.width = NULL,
+    stub.border.color = NULL,
+    stub_row_group.font.size = NULL,
+    stub_row_group.font.weight = NULL,
+    stub_row_group.text_transform = NULL,
+    stub_row_group.border.style = NULL,
+    stub_row_group.border.width = NULL,
+    stub_row_group.border.color = NULL,
+    data_row.padding = NULL,
+    data_row.padding.horizontal = NULL,
+    summary_row.background.color = NULL,
+    summary_row.text_transform = NULL,
+    summary_row.padding = NULL,
+    summary_row.padding.horizontal = NULL,
+    summary_row.border.style = NULL,
+    summary_row.border.width = NULL,
+    summary_row.border.color = NULL,
+    grand_summary_row.background.color = NULL,
+    grand_summary_row.text_transform = NULL,
+    grand_summary_row.padding = NULL,
+    grand_summary_row.padding.horizontal = NULL,
+    grand_summary_row.border.style = NULL,
+    grand_summary_row.border.width = NULL,
+    grand_summary_row.border.color = NULL,
+    footnotes.background.color = NULL,
+    footnotes.font.size = NULL,
+    footnotes.padding = NULL,
+    footnotes.padding.horizontal = NULL,
+    footnotes.border.bottom.style = NULL,
+    footnotes.border.bottom.width = NULL,
+    footnotes.border.bottom.color = NULL,
+    footnotes.border.lr.style = NULL,
+    footnotes.border.lr.width = NULL,
+    footnotes.border.lr.color = NULL,
+    footnotes.marks = NULL,
+    footnotes.multiline = NULL,
+    footnotes.sep = NULL,
+    source_notes.background.color = NULL,
+    source_notes.font.size = NULL,
+    source_notes.padding = NULL,
+    source_notes.padding.horizontal = NULL,
+    source_notes.border.bottom.style = NULL,
+    source_notes.border.bottom.width = NULL,
+    source_notes.border.bottom.color = NULL,
+    source_notes.border.lr.style = NULL,
+    source_notes.border.lr.width = NULL,
+    source_notes.border.lr.color = NULL,
+    source_notes.multiline = NULL,
+    source_notes.sep = NULL,
+    row.striping.background_color = NULL,
+    row.striping.include_stub = NULL,
+    row.striping.include_table_body = NULL,
+    page.orientation = NULL,
+    page.numbering = NULL,
+    page.header.use_tbl_headings = NULL,
+    page.footer.use_tbl_notes = NULL,
+    page.width = NULL,
+    page.height = NULL,
+    page.margin.left = NULL,
+    page.margin.right = NULL,
+    page.margin.top = NULL,
+    page.margin.bottom = NULL,
+    page.header.height = NULL,
+    page.footer.height = NULL
+) {
 
   # TODO: add helper functions to divide the options into those by location
   # TODO: add helper functions to divide the options into those by parameter
@@ -1831,36 +2235,41 @@ preprocess_tab_option <- function(option, var_name, type) {
 
   # Perform pre-processing on the option depending on `type`
   option <-
-    switch(type,
-           overflow = {
-             if (isTRUE(option)) {
-               "auto"
-             } else if (isFALSE(option)) {
-               "hidden"
-             } else {
-               option
-             }
-           },
-           px = {
-             if (is.numeric(option)) {
-               px(option)
-             } else {
-               option
-             }
-           },
-           option
+    switch(
+      type,
+      overflow = {
+        if (isTRUE(option)) {
+          "auto"
+        } else if (is_false(option)) {
+          "hidden"
+        } else {
+          option
+        }
+      },
+      px = {
+        if (is.numeric(option)) {
+          px(option)
+        } else {
+          option
+        }
+      },
+      option
     )
 
   # Perform checkmate assertions by `type`
-  switch(type,
-         logical = checkmate::assert_logical(
-           option, len = 1, any.missing = FALSE, .var.name = var_name),
-         overflow =,
-         px =,
-         value = checkmate::assert_character(
-           option, len = 1, any.missing = FALSE, .var.name = var_name),
-         values = checkmate::assert_character(
-           option, min.len = 1, any.missing = FALSE, .var.name = var_name)
+  switch(
+    type,
+    logical = checkmate::assert_logical(
+      option, len = 1, any.missing = FALSE, .var.name = var_name
+    ),
+    overflow =,
+    px =,
+    value = checkmate::assert_character(
+      option, len = 1, any.missing = FALSE, .var.name = var_name
+    ),
+    values = checkmate::assert_character(
+      option, min.len = 1, any.missing = FALSE, .var.name = var_name
+    )
   )
 
   option

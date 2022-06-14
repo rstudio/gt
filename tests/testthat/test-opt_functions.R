@@ -1,5 +1,3 @@
-context("Ensuring that the `opt_*()` functions work properly")
-
 # Helper function to compare a contiguous set of HTML fragments with raw html
 html_fragment_within <- function(raw_html, ...) {
   grepl(paste0("\\Q", c(...), "\\E", "[\\n\\s]*?", collapse = ""), raw_html, perl = TRUE)
@@ -351,10 +349,16 @@ test_that("The `opt_table_font()` function sets the correct options", {
     ) %>% expect_true()
 
   # Expect that equally valid inputs include wrapping in a list or `c()`
-  expect_equivalent(
+  expect_equal(
     tbl %>% opt_table_font(font = google_font(name = "Dancing Script")) %>% compile_scss(),
     tbl %>% opt_table_font(font = list(google_font(name = "Dancing Script"))) %>% compile_scss(),
-    tbl %>% opt_table_font(font = c(google_font(name = "Dancing Script"))) %>% compile_scss()
+    ignore_attr = TRUE
+  )
+
+  expect_equal(
+    tbl %>% opt_table_font(font = google_font(name = "Dancing Script")) %>% compile_scss(),
+    tbl %>% opt_table_font(font = c(google_font(name = "Dancing Script"))) %>% compile_scss(),
+    ignore_attr = TRUE
   )
 
   # Expect `google_font()` with system fonts inside of
@@ -403,9 +407,10 @@ test_that("The `opt_table_font()` function sets the correct options", {
 
   # Expect that weights given as numbers or strings create the
   # same outputs (e.g., 500 and "500")
-  expect_equivalent(
+  expect_equal(
     tbl %>% opt_table_font(font = google_font(name = "Dancing Script"), weight = 500) %>% compile_scss(),
-    tbl %>% opt_table_font(font = google_font(name = "Dancing Script"), weight = "500") %>% compile_scss()
+    tbl %>% opt_table_font(font = google_font(name = "Dancing Script"), weight = "500") %>% compile_scss(),
+    ignore_attr = TRUE
   )
 
   # Expect an error if input to `font` is not a character vector

@@ -60,7 +60,7 @@ summary_tbl <-
       rows = 1
     )
   ) %>%
-  fmt_missing(columns = c(value, value_2)) %>%
+  sub_missing(columns = c(value, value_2)) %>%
   tab_options(
     summary_row.background.color = "#FFFEEE",
     row_group.background.color = "lightblue"
