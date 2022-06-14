@@ -692,3 +692,127 @@ test_that("long tables with spans can be added to a word doc", {
   )
 
 })
+
+test_that("tables with cell & text coloring can be added to a word doc", {
+
+  check_suggests_xml()
+
+  local_edition(3)
+
+  ## simple table
+  gt_exibble_min <- exibble[1:2,] %>%
+    gt() %>%
+    tab_style(
+      style = cell_fill(color = "lightblue"),
+      locations = cells_body(
+        columns = c(num,fctr,time,currency, group)
+      )
+    ) %>%
+    tab_style(
+      style = cell_text(
+         color = "pink",
+         font = "NULL",
+      ),
+      locations = cells_body(
+        columns = c(num,fctr,time,currency, group)
+      )
+    ) %>%
+    tab_style(
+      style = cell_text(
+        color = "pink",
+        font = "NULL",
+      ),
+      locations = c(
+        columns = c(num,fctr,time,currency, group)
+      )
+    )
+
+  ## Add table to empty word document
+  word_doc <- officer::read_docx() %>%
+    body_add_gt(
+      gt_exibble_min,
+      align = "center"
+    )
+
+  ## save word doc to temporary file
+  temp_word_file <- tempfile(fileext = ".docx")
+  print(word_doc,target = temp_word_file)
+
+  ## Manual Review
+  if(!testthat::is_testing() & interactive()){
+    shell.exec(temp_word_file)
+  }
+
+  ## Programmatic Review
+  docx <- officer::read_docx(temp_word_file)
+
+  ## get docx table contents
+  docx_contents <- docx$doc_obj$get() %>%
+    xml2::xml_children() %>%
+    xml2::xml_children()
+
+  ## extract table contents
+  docx_table_body_header <- docx_contents[1] %>%
+    xml2::xml_find_all(".//w:tblHeader/ancestor::w:tr")
+
+  docx_table_body_contents <- docx_contents[1] %>%
+    xml2::xml_find_all(".//w:tr") %>%
+    setdiff(docx_table_body_header)
+
+  expect_equal(
+    docx_table_body_header %>%
+      xml2::xml_find_all(".//w:p") %>%
+      xml2::xml_text(),
+    c("num", "char", "fctr",
+      "date", "time","datetime",
+      "currency",  "row", "group")
+  )
+
+  ## cell background styling
+  expect_equal(
+    lapply(docx_table_body_contents, function(x) x %>% xml2::xml_find_all(".//w:shd") %>% xml2::xml_attr(attr = "fill")),
+    list(
+      c("ADD8E6",NA,"ADD8E6",NA,"ADD8E6",NA,"ADD8E6",NA,"ADD8E6"),
+      c("ADD8E6",NA,"ADD8E6",NA,"ADD8E6",NA,"ADD8E6",NA,"ADD8E6")
+    )
+  )
+
+  ## cell text styling
+  expect_equal(
+    lapply(docx_table_body_contents, function(x) x %>% xml2::xml_find_all(".//w:tcPr") %>% as.character),
+    list(
+      c("ADD8E6",NA,"ADD8E6",NA,"ADD8E6",NA,"ADD8E6",NA,"ADD8E6"),
+      c("ADD8E6",NA,"ADD8E6",NA,"ADD8E6",NA,"ADD8E6",NA,"ADD8E6")
+    )
+  )
+
+  expect_equal(
+    lapply(docx_table_body_contents, function(x)
+      x %>% xml2::xml_find_all(".//w:p") %>% xml2::xml_text()),
+    list(
+      c(
+        "0.1111",
+        "apricot",
+        "one",
+        "2015-01-15",
+        "13:35",
+        "2018-01-01 02:22",
+        "49.95",
+        "row_1",
+        "grp_a"
+      ),
+      c(
+        "2.2220",
+        "banana",
+        "two",
+        "2015-02-15",
+        "14:40",
+        "2018-02-02 14:33",
+        "17.95",
+        "row_2",
+        "grp_a"
+      )
+    )
+  )
+
+})

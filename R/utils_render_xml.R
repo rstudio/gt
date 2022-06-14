@@ -342,13 +342,14 @@ xml_jc <- function(val = c("left", "center", "right"), app = "word") {
 }
 
 # Paragraph spacing
-xml_spacing <- function(before = 120, after = 120, app = "word") {
+xml_spacing <- function(before = 120, after = 120, val = NULL, app = "word") {
 
   htmltools::tag(
     `_tag_name` = xml_tag_type("spacing", app),
     varArgs = list(
       `w:before` = before,
-      `w:after` = after
+      `w:after` = after,
+      `w:val` = val
     )
   )
 }
@@ -451,6 +452,20 @@ xml_color <- function(color = "D3D3D3", app = "word") {
   htmltools::tag(
     `_tag_name` = xml_tag_type("color", app),
     varArgs = list(`w:val` = color)
+  )
+}
+
+xml_shd <- function(fill = "auto", app = "word"){
+
+  fill <- toupper(gsub("#", "", fill))
+
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("shd", app),
+    varArgs = list(
+      `w:val` = "clear",
+      `w:color` = "auto",
+      `w:fill` = fill
+    )
   )
 }
 
@@ -822,8 +837,9 @@ create_heading_component_xml <- function(data, split = FALSE, keep_with_next = T
   # Get table options
   table_font_color <- dt_options_get_value(data, option = "table_font_color")
   table_border_top_include <- dt_options_get_value(data, option = "table_border_top_include")
-  table_border_top_color <- dt_options_get_value(data, option = "table_border_top_color")
+  table_border_top_color <- dt_options_get_value(data, option = "heading_border_top_color")
   heading_border_bottom_color <- dt_options_get_value(data, option = "heading_border_bottom_color")
+
 
   # Get the footnote marks for the title
   if ("title" %in% footnotes_tbl$locname) {
@@ -881,8 +897,8 @@ create_heading_component_xml <- function(data, split = FALSE, keep_with_next = T
             xml_gridSpan(val = as.character(n_cols)),
             xml_color(color = table_font_color),
             xml_jc(val = "center"),
-            xml_spacing(before = 0, after = 30)#,
-            # if(keep_with_next){xml_keepNext()}
+            xml_spacing(before = 0, after = 30),
+            if(keep_with_next){xml_keepNext()}
           ),
           xml_r(
             xml_rPr(
@@ -1259,6 +1275,7 @@ create_columns_component_xml <- function(data, split = FALSE, keep_with_next = T
 
 #' Create the table body component (OOXML)
 #'
+#' @importFrom rlang `%||%`
 #' @noRd
 create_body_component_xml <- function(data, split = FALSE, keep_with_next = TRUE) {
 
@@ -1270,6 +1287,7 @@ create_body_component_xml <- function(data, split = FALSE, keep_with_next = TRUE
   groups_rows_df <- dt_groups_rows_get(data = data)
   stub_components <- dt_stub_components(data = data)
 
+  # Get table styles
   styles_tbl <- dt_styles_get(data = data)
 
   # Get table options
@@ -1403,6 +1421,15 @@ create_body_component_xml <- function(data, split = FALSE, keep_with_next = TRUE
 
         for (y in seq_along(output_df_row_as_vec(i))) {
 
+          cell_style <- styles_tbl %>%
+            dplyr::filter(
+              locname == "data",
+              rownum == i,
+              colnum == y
+            ) %>%
+            dplyr::pull("styles") %>%
+            purrr::pluck(1)
+
           row_cells[[length(row_cells) + 1]] <-
             xml_tc(
               xml_tcPr(
@@ -1414,7 +1441,8 @@ create_body_component_xml <- function(data, split = FALSE, keep_with_next = TRUE
                 ),
                 xml_tc_margins(
                   xml_width("top", width = 50)
-                )
+                ),
+                xml_shd(fill = cell_style[["cell_fill"]][["color"]])
               ),
               xml_p(
                 xml_pPr(
@@ -1423,8 +1451,14 @@ create_body_component_xml <- function(data, split = FALSE, keep_with_next = TRUE
                 ),
                 xml_r(
                   xml_rPr(
-                    xml_r_font(),
-                    xml_sz(val = 20)
+                    xml_r_font(
+                      ascii_font= cell_style[["cell_text"]][["font"]] %||% "Calibri",
+                      ansi_font= cell_style[["cell_text"]][["font"]] %||% "Calibri"
+                    ),
+                    xml_sz(val = cell_style[["cell_text"]][["size"]] %||% 20),
+                    if(!is.null(cell_style[["cell_text"]][["color"]])){
+                      xml_color(color = cell_style[["cell_text"]][["color"]])
+                    }
                   ),
                   xml_t(
                     output_df_row_as_vec(i)[y]
