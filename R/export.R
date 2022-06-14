@@ -540,7 +540,7 @@ as_rtf <- function(data,
 #' @param data A table object that is created using the `gt()` function.
 #' @param align left, center (default) or right.
 #' @param caption_location top (default), bottom, or embed Indicating if the title and subtitle should be listed above, below, or be embedded in the table
-#' @param caption_align left, center, or right. default matches `align` value. Alignment of caption (title and subtitle). Used when `caption_location` is not "embed".
+#' @param caption_align left (default), center, or right. Alignment of caption (title and subtitle). Used when `caption_location` is not "embed".
 #' @param split TRUE or FALSE (default) indicating whether activate Word option 'Allow row to break across pages'.
 #' @param keep_with_next  TRUE (default) or FALSE indicating whether a table should use Word option 'keep rows
 #' together' is activated when TRUEd
@@ -566,7 +566,7 @@ as_rtf <- function(data,
 #' 13-5
 #'
 #' @export
-as_word <- function(data, align = "center", caption_location = c("top","bottom","embed"), caption_align = align, split = FALSE,  keep_with_next = FALSE) {
+as_word <- function(data, align = "center", caption_location = c("top","bottom","embed"), caption_align = "left", split = FALSE,  keep_with_next = TRUE) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -579,7 +579,7 @@ as_word <- function(data, align = "center", caption_location = c("top","bottom",
 
   # Composition of Word table OOXML -----------------------------------------------
   if(caption_location %in% c("top")){
-    header_xml <- as_word_tbl_caption(data = value, align = caption_align, split = split, keep_with_next = keep_with_next)
+    header_xml <- as_word_tbl_header_caption(data = value, align = caption_align, split = split, keep_with_next = keep_with_next)
     gt_xml <- c(gt_xml, header_xml)
   }
 
@@ -588,7 +588,8 @@ as_word <- function(data, align = "center", caption_location = c("top","bottom",
 
 
   if(caption_location %in% c("bottom")){
-    header_xml <- as_word_tbl_caption(data = value, align = caption_align, split = split, keep_with_next = keep_with_next)
+    ## set keep_with_next to false here to prevent it trying to keep with non-table content
+    header_xml <- as_word_tbl_header_caption(data = value, align = caption_align, split = split, keep_with_next = FALSE)
     gt_xml <- c(gt_xml, header_xml)
   }
 
@@ -601,24 +602,23 @@ as_word <- function(data, align = "center", caption_location = c("top","bottom",
 #' Generate ooxml for the table caption
 #'
 #' @param data A processed table object that is created using the `build_data()` function.
-#' @param align left, center (default) or right.
+#' @param align left (default), center or right.
 #' @param split TRUE or FALSE (default) indicating whether activate Word option 'Allow row to break across pages'.
 #' @param keep_with_next  TRUE (default) or FALSE indicating whether a table should use Word option 'keep rows
 #' together' is activated when TRUE
 #'
 #' @noRd
-as_word_tbl_caption <- function(data, align = "center", split = FALSE,  keep_with_next = TRUE) {
+as_word_tbl_header_caption <- function(data, align = "left", split = FALSE,  keep_with_next = TRUE) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Build all table data objects through a common pipeline
-  data <- build_data(data = data, context = "word")
-
-  # Composition of Word OOXML -----------------------------------------------
+  # Composition of caption OOXML -----------------------------------------------
 
   # Create the table caption
-  create_table_caption_component_xml(data = data, align = align, keep_with_next = keep_with_next)
+  caption_xml <- create_table_caption_component_xml(data = data, align = align, keep_with_next = keep_with_next)
+
+  caption_xml
 
 }
 
@@ -638,29 +638,29 @@ as_word_tbl_body <- function(data, align = "center", split = FALSE,  keep_with_n
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Composition of Word OOXML -----------------------------------------------
+  # Composition of table Word OOXML -----------------------------------------------
 
   # Create the table properties component
   table_props_component <- create_table_props_component_xml(data = data, align = align)
 
   # # Create the heading component
   if(embedded_heading){
-    heading_component <- create_heading_component_xml(data = data, split = split)
+    heading_component <- create_heading_component_xml(data = data, split = split, keep_with_next = keep_with_next)
   }else{
     heading_component <- NULL
   }
 
   # Create the columns component
-  columns_component <- create_columns_component_xml(data = data, split = split)
+  columns_component <- create_columns_component_xml(data = data, split = split, keep_with_next = keep_with_next)
 
   # Create the body component
-  body_component <- create_body_component_xml(data = data, split = split)
+  body_component <- create_body_component_xml(data = data, split = split, keep_with_next = keep_with_next)
 
   # Create the footnotes component
-  footnotes_component <- create_footnotes_component_xml(data = data, split = split)
+  footnotes_component <- create_footnotes_component_xml(data = data, split = split, keep_with_next = keep_with_next)
 
   # Create the source notes component
-  source_notes_component <- create_source_notes_component_xml(data = data, split = split)
+  source_notes_component <- create_source_notes_component_xml(data = data, split = split, keep_with_next = keep_with_next)
 
   # Compose the Word OOXML table
   word_tbl <-
@@ -686,12 +686,14 @@ as_word_tbl_body <- function(data, align = "center", split = FALSE,  keep_with_n
 #' @description Add a gt into a Word document.
 #' @param value `gt` object
 #' @param align left, center (default) or right.
+#' @param caption_location top (default), bottom, or embed Indicating if the title and subtitle should be listed above, below, or be embedded in the table
+#' @param caption_align left (default), center, or right. Alignment of caption (title and subtitle). Used when `caption_location` is not "embed".
 #' @param split set to TRUE if you want to activate Word
 #' option 'Allow row to break across pages'.
 #' @param keepnext Word option 'keep rows together' can be
 #' activated when TRUE. It avoids page break within tables.
 #' @param pos where to add the gt table relative to the cursor,
-#' one of "after", "before", "on" (end of line).
+#' one of "after" (default), "before", "on" (end of line).
 #'
 #' @seealso \pkg{\link{flextable::body_add_flextable}}
 #'
@@ -708,12 +710,14 @@ as_word_tbl_body <- function(data, align = "center", split = FALSE,  keep_with_n
 #' # fileout <- "test.docx" # uncomment to write in your working directory
 #' print(doc, target = fileout)
 #'
-body_add_gt <- function(x, value, align = "center", pos = c("after","before","on"), caption_location = c("top","bottom","embed"), caption_align = align, split = FALSE, keepnext = FALSE){
+body_add_gt <- function(x, value, align = "center", pos = c("after","before","on"), caption_location = c("top","bottom","embed"), caption_align = "left", split = FALSE, keep_with_next = TRUE){
 
+  ## check that officer is available
   if(!rlang::is_installed("officer")){
     stop("{officer} package is necessary to add gt tables to word documents.")
   }
 
+  ## check that inputs are an officer rdocx and gt tbl
   stopifnot(inherits(x, "rdocx"))
   stopifnot(inherits(value, "gt_tbl"))
 
@@ -723,24 +727,27 @@ body_add_gt <- function(x, value, align = "center", pos = c("after","before","on
   # Build all table data objects through a common pipeline
   value <- build_data(data = value, context = "word")
 
+  ## Create and add table caption if it is to come before the table
   if(caption_location %in% c("top")){
-    header_xml <- as_word_tbl_caption(data = value, align = caption_align, split = split, keep_with_next = keep_with_next)
-    if(!identical(header_xml,list(""))){
+    header_xml <- as_word_tbl_header_caption(data = value, align = caption_align, split = split, keep_with_next = keep_with_next)
+    if(!identical(header_xml,c(""))){
       for(header_component in header_xml){
-        x <- officer::body_add_xml(x, str = as.character(header_component), pos)
+        x <- officer::body_add_xml(x, str = header_component, pos)
       }
     }
   }
 
+  ## Create and add the table to the docxr. If the
   tbl_xml <- as_word_tbl_body(data = value, align = align, split = split, keep_with_next = keep_with_next, embedded_heading = identical(caption_location, "embed"))
   x <- officer::body_add_xml(x, str = tbl_xml, pos)
 
-
+  ## Create and add table caption if it is to come after the table
   if(caption_location %in% c("bottom")){
-    header_xml <- as_word_tbl_caption(data = value, align = caption_align, split = split, keep_with_next = keep_with_next)
-    if(!identical(header_xml,list(""))){
+    ## set keep_with_next to false here to prevent it trying to keep with non-table content
+    header_xml <- as_word_tbl_header_caption(data = value, align = caption_align, split = split, keep_with_next = FALSE)
+    if(!identical(header_xml,c(""))){
       for(header_component in header_xml){
-        x <- officer::body_add_xml(x, str = as.character(header_component), pos)
+        x <- officer::body_add_xml(x, str = header_component, pos)
       }
     }
   }

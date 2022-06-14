@@ -604,7 +604,7 @@ xml_raw <- function(...) {
 
 # TODO: make table widths work for XML
 # Get the attributes for the table tag
-create_table_props_component_xml <- function(data, alignment = "center") {
+create_table_props_component_xml <- function(data, align = "center") {
 
   boxh <- dt_boxhead_get(data = data)
 
@@ -670,7 +670,7 @@ create_table_props_component_xml <- function(data, alignment = "center") {
       ),
       xml_tblW(),
       xml_tblLook(),
-      xml_jc(val = alignment)
+      xml_jc(val = align)
     )
 
   htmltools::tagList(table_properties)
@@ -687,7 +687,7 @@ create_table_caption_component_xml <- function(data, align = "center", keep_with
 
   # If there is no title or heading component, then return an empty string
   if (!dt_heading_has_title(data = data)) {
-    return(list(""))
+    return(c(""))
   }
 
   heading <- dt_heading_get(data = data)
@@ -714,7 +714,7 @@ create_table_caption_component_xml <- function(data, align = "center", keep_with
     footnote_title_marks <- ""
   }
 
-  title_caption <- list(
+  title_caption <- as.character(
     xml_p_ns(
       xml_pPr(
         xml_pStyle(val = "caption"),
@@ -756,7 +756,7 @@ create_table_caption_component_xml <- function(data, align = "center", keep_with
       footnote_subtitle_marks <- ""
     }
 
-    subtitle_caption <-list(
+    subtitle_caption <- as.character(
       xml_p_ns(
         xml_pPr(
           xml_pStyle(val = "caption"),
@@ -774,7 +774,8 @@ create_table_caption_component_xml <- function(data, align = "center", keep_with
             xml_space = "preserve"
           )
         )
-    ))
+      )
+    )
 
     title_caption <- c(title_caption, subtitle_caption)
 
@@ -792,7 +793,7 @@ create_table_caption_component_xml <- function(data, align = "center", keep_with
 #' string.
 #'
 #' @noRd
-create_heading_component_xml <- function(data, split = FALSE) {
+create_heading_component_xml <- function(data, split = FALSE, keep_with_next = TRUE) {
 
   # If there is no title or heading component, then return an empty string
   if (!dt_heading_has_title(data = data)) {
@@ -916,7 +917,7 @@ create_heading_component_xml <- function(data, split = FALSE) {
 #' Create the columns component of a table (OOXML)
 #'
 #' @noRd
-create_columns_component_xml <- function(data, split = FALSE) {
+create_columns_component_xml <- function(data, split = FALSE, keep_with_next = TRUE) {
 
   boxh <- dt_boxhead_get(data = data)
   stubh <- dt_stubhead_get(data = data)
@@ -983,8 +984,8 @@ create_columns_component_xml <- function(data, split = FALSE) {
           ),
           xml_p(
             xml_pPr(
-              xml_spacing(before = 0, after = 60)#,
-              # if(keep_with_next){xml_keepNext()}
+              xml_spacing(before = 0, after = 60),
+              if(keep_with_next){xml_keepNext()}
               ),
             xml_r(
               xml_rPr(
@@ -1016,8 +1017,8 @@ create_columns_component_xml <- function(data, split = FALSE) {
           ),
           xml_p(
             xml_pPr(
-              xml_spacing(before = 0, after = 60)#,
-              # if(keep_with_next){xml_keepNext()}
+              xml_spacing(before = 0, after = 60),
+              if(keep_with_next){xml_keepNext()}
               ),
             xml_r(
               xml_rPr(
@@ -1074,7 +1075,10 @@ create_columns_component_xml <- function(data, split = FALSE) {
             )
           ),
           xml_p(
-            xml_pPr(xml_spacing(before = 0, after = 60)),
+            xml_pPr(
+              xml_spacing(before = 0, after = 60),
+              if(keep_with_next){xml_keepNext()}
+              ),
             xml_r(
               xml_rPr(
                 xml_r_font(),
@@ -1138,7 +1142,10 @@ create_columns_component_xml <- function(data, split = FALSE) {
               )
             ),
             xml_p(
-              xml_pPr(xml_spacing(before = 0, after = 60)),
+              xml_pPr(
+                xml_spacing(before = 0, after = 60),
+                if(keep_with_next){xml_keepNext()}
+              ),
               xml_r(
                 xml_rPr(
                   xml_r_font(),
@@ -1185,7 +1192,8 @@ create_columns_component_xml <- function(data, split = FALSE) {
                 xml_pPr(
                   xml_spacing(before = 0, after = 60),
                   xml_jc(val = "center"),
-                  xml_gridSpan(val = as.character(colspans[i]))
+                  xml_gridSpan(val = as.character(colspans[i])),
+                  if(keep_with_next){xml_keepNext()}
                 ),
                 xml_r(
                   xml_rPr(
@@ -1209,7 +1217,8 @@ create_columns_component_xml <- function(data, split = FALSE) {
                 ),
                 xml_p(
                   xml_pPr(
-                    xml_spacing(before = 0, after = 60)
+                    xml_spacing(before = 0, after = 60),
+                    if(keep_with_next){xml_keepNext()}
                   ),
                   xml_r(
                     xml_rPr(
@@ -1251,7 +1260,7 @@ create_columns_component_xml <- function(data, split = FALSE) {
 #' Create the table body component (OOXML)
 #'
 #' @noRd
-create_body_component_xml <- function(data, split = FALSE) {
+create_body_component_xml <- function(data, split = FALSE, keep_with_next = TRUE) {
 
   boxh <- dt_boxhead_get(data = data)
   body <- dt_body_get(data = data)
@@ -1367,7 +1376,8 @@ create_body_component_xml <- function(data, split = FALSE) {
                 xml_p(
                   xml_pPr(
                     xml_gridSpan(val = as.character(n_cols)),
-                    xml_spacing(before = 0, after = 60)
+                    xml_spacing(before = 0, after = 60),
+                    if(keep_with_next){xml_keepNext()}
                   ),
                   xml_r(
                     xml_rPr(
@@ -1407,7 +1417,10 @@ create_body_component_xml <- function(data, split = FALSE) {
                 )
               ),
               xml_p(
-                xml_pPr(xml_spacing(before = 0, after = 60)),
+                xml_pPr(
+                  xml_spacing(before = 0, after = 60),
+                  if(keep_with_next){xml_keepNext()}
+                ),
                 xml_r(
                   xml_rPr(
                     xml_r_font(),
@@ -1459,7 +1472,8 @@ create_body_component_xml <- function(data, split = FALSE) {
               col_alignment = col_alignment,
               table_body_hlines_color = table_body_hlines_color,
               table_body_vlines_color = table_body_vlines_color,
-              split = split
+              split = split,
+              keep_with_next = keep_with_next
             )
 
           body_section <- append(body_section, summary_section)
@@ -1487,7 +1501,8 @@ create_body_component_xml <- function(data, split = FALSE) {
         col_alignment = col_alignment,
         table_body_hlines_color = table_body_hlines_color,
         table_body_vlines_color = table_body_vlines_color,
-        split = split
+        split = split,
+        keep_with_next = keep_with_next
       )
 
     body_rows <- c(body_rows, grand_summary_section)
@@ -1499,7 +1514,7 @@ create_body_component_xml <- function(data, split = FALSE) {
 #' Create the table source note component (OOXML)
 #'
 #' @noRd
-create_source_notes_component_xml <- function(data, split = FALSE) {
+create_source_notes_component_xml <- function(data, split = FALSE, keep_with_next = TRUE) {
 
   source_note <- dt_source_notes_get(data = data)
 
@@ -1536,7 +1551,8 @@ create_source_notes_component_xml <- function(data, split = FALSE) {
               xml_p(
                 xml_pPr(
                   xml_gridSpan(val = as.character(n_cols)),
-                  xml_spacing(before = 0, after = 30)
+                  xml_spacing(before = 0, after = 30),
+                  if(keep_with_next){xml_keepNext()}
                 ),
                 xml_r(
                   xml_rPr(
@@ -1560,7 +1576,7 @@ create_source_notes_component_xml <- function(data, split = FALSE) {
 #' Create the table footnote component (OOXML)
 #'
 #' @noRd
-create_footnotes_component_xml <- function(data, split = FALSE) {
+create_footnotes_component_xml <- function(data, split = FALSE, keep_with_next = TRUE) {
 
   footnotes_tbl <- dt_footnotes_get(data = data)
 
@@ -1625,7 +1641,8 @@ create_footnotes_component_xml <- function(data, split = FALSE) {
               xml_p(
                 xml_pPr(
                   xml_gridSpan(val = as.character(n_cols)),
-                  xml_spacing(before = 0, after = 30)
+                  xml_spacing(before = 0, after = 30),
+                  if(keep_with_next){xml_keepNext()}
                 ),
                 xml_r(
                   xml_rPr(
@@ -1651,7 +1668,7 @@ create_footnotes_component_xml <- function(data, split = FALSE) {
       }
     )
 
-  paste0(unlist(footnote_rows), collapse = "<w:br/>")
+  paste0(unlist(footnote_rows), collapse = "")
 }
 
 summary_rows_xml <- function(list_of_summaries,
@@ -1661,7 +1678,8 @@ summary_rows_xml <- function(list_of_summaries,
                              col_alignment,
                              table_body_hlines_color,
                              table_body_vlines_color,
-                             split = FALSE) {
+                             split = FALSE,
+                             keep_with_next = TRUE) {
 
   # Obtain all of the visible (`"default"`), non-stub column names
   # for the table from the `boxh` object
@@ -1703,7 +1721,10 @@ summary_rows_xml <- function(list_of_summaries,
               )
             ),
             xml_p(
-              xml_pPr(xml_spacing(before = 0, after = 60)),
+              xml_pPr(
+                xml_spacing(before = 0, after = 60),
+                if(keep_with_next){xml_keepNext()}
+              ),
               xml_r(
                 xml_rPr(
                   xml_r_font(),
