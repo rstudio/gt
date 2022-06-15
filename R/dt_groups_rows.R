@@ -5,7 +5,7 @@ dt_groups_rows_get <- function(data) {
   ret <- dt__get(data, .dt_groups_rows_key)
 
   if (is.null(ret)) {
-    stop("Must call `dt_groups_rows_build()` first.")
+    cli::cli_abort("Must call `dt_groups_rows_build()` first.")
   }
 
   ret
