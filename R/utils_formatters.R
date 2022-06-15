@@ -15,10 +15,11 @@ filter_table_to_value <- function(table,
   filtered_tbl <- dplyr::filter(table, !!!filter_args_enquos)
 
   if (nrow(filtered_tbl) != 1) {
-    stop("Internal error in `gt:::filter_table_to_row()`:\n",
-         " * The filtered table doesn't result in a table of exactly one row. ",
-         "Found ", nrow(filtered_tbl), " rows.",
-         call. = FALSE)
+    cli::cli_abort(c(
+      "Internal error in `gt:::filter_table_to_row()`.",
+      "*" = "The filtered table doesn't result in a table of exactly one row.",
+      "*" = "Found {nrow(filtered_tbl)) rows."
+    ))
   }
 
   filtered_tbl %>% dplyr::pull(!!column_enquo)
@@ -34,11 +35,11 @@ validate_locale <- function(locale) {
   # Stop function if the `locale` provided
   # isn't a valid one
   if (!is.null(locale) && !(locale %in% locales$base_locale_id)) {
-    stop(
-      "The supplied `locale` is not available in the list of supported locales.\n",
-      " * Use the `info_locales()` function to see which locales can be used.",
-      call. = FALSE
-    )
+
+    cli::cli_abort(c(
+      "The supplied `locale` is not available in the list of supported locales.",
+      "*" = "Use the `info_locales()` function to see which locales can be used."
+    ))
   }
 }
 
@@ -58,14 +59,18 @@ validate_currency <- function(currency) {
   currency_char <- as.character(currency)
 
   # Stop function if the `currency` provided isn't a valid one
-  if (!(
-    currency_char %in% currency_symbols$curr_symbol |
-    currency_char %in% currencies$curr_code |
-    currency_char %in% currencies$curr_number)) {
-    stop("The supplied `currency` is not available in the list of supported currencies.\n",
-         " * Use the `info_currencies()` function to see which currencies can be used.\n",
-         " * See `?fmt_currency` to understand which input types are valid.",
-         call. = FALSE)
+  if (
+    !(
+      currency_char %in% currency_symbols$curr_symbol |
+      currency_char %in% currencies$curr_code |
+      currency_char %in% currencies$curr_number
+    )
+  ) {
+    cli::cli_abort(c(
+      "The supplied `currency` is not available in the list of supported currencies.",
+      "*" = "Use the `info_currencies()` function to see which currencies can be used.",
+      "*" = "See `?fmt_currency` to better understand which input types are valid."
+    ))
   }
 }
 
@@ -228,8 +233,9 @@ scale_x_values <- function(x,
   # Stop function if the length of `scale_by`
   # is not 1 of the length of `x`
   if (!any(len == 1, len == length(x))) {
-    stop("The length of the `scale_by` vector must be 1 or the length of `x`.",
-         call. = FALSE)
+    cli::cli_abort(
+      "The length of the `scale_by` vector must be 1 or the length of `x`."
+    )
   }
 
   x * scale_by
@@ -285,7 +291,7 @@ format_num_to_str <- function(x,
     flag <- ""
     drop0trailing <- drop_trailing_zeros
   } else {
-    stop("The format provided isn't recognized.")
+    cli::cli_abort("The format provided isn't recognized.")
   }
 
   x_str <-
@@ -664,9 +670,10 @@ context_symbol_str <- function(context,
     symbol <-
       symbol[[context]] %||%
       symbol[["default"]] %||%
-      stop("The `", context, "` output context isn't available in the ",
-           "`currency()` object (and there isn't a `default` context either).",
-           call. = FALSE)
+      cli::cli_abort(
+        "The `{context}` output context isn't available in the
+        `currency()` object (and there isn't a `default` context either)."
+      )
   }
 
   # If we supply a percent sign as `symbol`,
