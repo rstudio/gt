@@ -95,13 +95,11 @@ dt_summary_build <- function(data,
 
     if (length(labels) != length(unique(labels))) {
 
-      stop(
-        "All summary labels must be unique:\n",
-        " * Review the names provided in `fns`\n",
-        " * These labels are in conflict: ",
-        paste0(labels, collapse = ", "), ".",
-        call. = FALSE
-      )
+      cli::cli_abort(c(
+        "All summary labels must be unique.",
+        "*" = "Review the names provided in `fns`.",
+        "*" = "These labels are in conflict: {paste0(labels, collapse = ', ')}."
+      ))
     }
 
     # Resolve the `missing_text`
@@ -112,12 +110,11 @@ dt_summary_build <- function(data,
 
       if (all(is.na(stub_df$group_id))) {
 
-        stop(
-          "There are no row groups in the gt object:\n",
-          " * Use `groups = NULL` to create a grand summary\n",
-          " * Define row groups using `gt()` or `tab_row_group()`",
-          call. = FALSE
-        )
+        cli::cli_abort(c(
+          "There are no row groups in the gt object.",
+          "*" = "Use `groups = NULL` to create a grand summary.",
+          "*" = "Define row groups using `gt()` or `tab_row_group()`."
+        ))
       }
     }
 
@@ -140,15 +137,18 @@ dt_summary_build <- function(data,
 
       if (any(!(groups %in% groups_available))) {
 
+        not_present_groups <-
+          paste0(
+            base::setdiff(groups, groups_available),
+            collapse = ", "
+          )
+
         # Stop function if one or more `groups`
         # are not present in the gt table
-        stop("All `groups` should be available in the gt object:\n",
-             " * The following groups aren't present: ",
-             paste0(
-               base::setdiff(groups, groups_available),
-               collapse = ", "
-             ), "\n",
-             call. = FALSE)
+        cli::cli_abort(c(
+          "All `groups` should be available in the gt object.",
+          "*" = "The following groups are not present: {not_present_groups}."
+        ))
       }
 
     } else if (is.null(groups)) {
@@ -196,11 +196,11 @@ dt_summary_build <- function(data,
             result <- fn(x)
 
             if (length(result) != 1) {
-              stop(
-                "Failure in the evaluation of summary cells:\n",
-                "* We must always return a vector of length `1`.",
-                call. = FALSE
-              )
+
+              cli::cli_abort(c(
+                "Failure in the evaluation of summary cells.",
+                "*" = "We must always return a vector of length `1`."
+              ))
             }
             result
           }
