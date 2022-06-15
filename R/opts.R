@@ -416,9 +416,8 @@ get_padding_option_value_list <- function(scale, type) {
 
   # Stop if `scale` is beyond an acceptable range
   if (scale < 0 | scale > 3) {
-    stop(
-      "The value provided for `scale` (", scale, ") must be between `0` and `3`.",
-      call. = FALSE
+    cli::cli_abort(
+      "The value provided for `scale` ({scale}) must be between `0` and `3`."
     )
   }
 
@@ -523,10 +522,8 @@ opt_all_caps <- function(
 
   # Ensure that all named locations are valid
   if (!all(locations %in% c("column_labels", "stub", "row_group"))) {
-
-    stop(
-      "The available locations are `column_labels`, `stub`, and `row_group`.",
-      call. = FALSE
+    cli::cli_abort(
+      "The available locations are `column_labels`, `stub`, and `row_group`."
     )
   }
 
@@ -1011,11 +1008,14 @@ opt_css <- function(
 
 normalize_font_input <- function(font_input) {
 
-  if (!inherits(font_input, "character") &&
-      !inherits(font_input, "list") &&
-      !inherits(font_input, "font_css")) {
-    stop("Values provided to `font` must either be a list or a character vector.",
-         call. = FALSE)
+  if (
+    !inherits(font_input, "character") &&
+    !inherits(font_input, "list") &&
+    !inherits(font_input, "font_css")
+  ) {
+    cli::cli_abort(
+      "Values provided to `font` must either be a list or a character vector."
+    )
   }
 
   if (inherits(font_input, "character")) {
@@ -1055,7 +1055,10 @@ create_option_value_list <- function(tab_options_args, values) {
   if (length(values) == 1) {
     values <- rep_len(values, length(tab_options_args))
   } else if (length(values) != length(tab_options_args)) {
-    stop("The length of the `values` vector must be 1 or the length of `tab_options_args`")
+    cli::cli_abort(
+      "The length of the `values` vector must be `1` or the length of
+      `tab_options_args`."
+    )
   }
 
   stats::setNames(object = values, tab_options_args) %>% as.list()
@@ -1072,10 +1075,10 @@ dt_options_get_default_value <- function(option) {
 
   # Validate the provided `option` value
   if (length(option) != 1) {
-    stop("A character vector of length one must be provided")
+    cli::cli_abort("A character vector of length one must be provided.")
   }
   if (!(option %in% dt_options_tbl$parameter)) {
-    stop("The `option` provided is invalid")
+    cli::cli_abort("The `option` provided is invalid.")
   }
 
   dt_options_tbl$value[[which(dt_options_tbl$parameter == option)]]
@@ -1095,7 +1098,7 @@ get_tab_options_arg_vec <- function(pattern) {
 validate_tab_options_args <- function(tab_options_args) {
 
   if (!all(tab_options_args %in% tab_options_arg_names)) {
-    stop("All `tab_options_args` must be valid names.")
+    cli::cli_abort("All `tab_options_args` must be valid names.")
   }
 }
 

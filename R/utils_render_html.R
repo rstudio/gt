@@ -54,7 +54,7 @@ cell_style_to_html.default <- function(style) {
 
   utils::str(style)
 
-  stop("Implement `cell_style_to_html()` for the object above.", call. = FALSE)
+  cli::cli_abort("Implement `cell_style_to_html()` for the object above.")
 }
 
 # Upgrade `_styles` to gain a `html_style` column with CSS style rules
@@ -1308,12 +1308,11 @@ get_body_component_cell_matrix <- function(data) {
   body_matrix
 }
 
-summary_row_tags_i <- function(data,
-                               group_id) {
+summary_row_tags_i <- function(data, group_id) {
 
   # Check that `group_id` isn't NULL and that length is exactly 1
   if (is.null(group_id) || length(group_id) != 1) {
-    stop("`group_id` cannot be NULL and must be of length 1.")
+    cli::cli_abort("`group_id` cannot be `NULL` and must be of length 1.")
   }
 
   list_of_summaries <- dt_summary_df_get(data = data)
@@ -1466,9 +1465,12 @@ summary_row_tags_i <- function(data,
   summary_row_lines
 }
 
-build_row_styles <- function(styles_resolved_row,
-                             include_stub,
-                             n_cols) {
+build_row_styles <- function(
+    styles_resolved_row,
+    include_stub,
+    n_cols
+) {
+
   # The styles_resolved_row data frame should contain the columns `colnum` and
   # `html_style`. Each colnum should match the number of a data column in the
   # output table; the first data column is number 1. No colnum should appear
@@ -1482,7 +1484,9 @@ build_row_styles <- function(styles_resolved_row,
   # colnum values. Check and throw early.
   if (!isTRUE(all(styles_resolved_row$colnum %in% c(0, seq_len(n_cols)))) ||
       any(duplicated(styles_resolved_row$colnum))) {
-    stop("build_row_styles was called with invalid colnum values")
+    cli::cli_abort(
+      "`build_row_styles()` was called with invalid `colnum` values."
+    )
   }
 
   # This will hold the resulting styles
