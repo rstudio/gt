@@ -17,7 +17,7 @@ resolve_footnotes_styles <- function(data,
   } else if (tbl_type == "styles") {
     tbl <- dt_styles_get(data = data)
   } else {
-    stop("The `tbl_type` must be either `\"footnotes\"` or `\"styles\"`")
+    cli::cli_abort("The `tbl_type` must be either \"footnotes\" or \"styles\".")
   }
 
   # Return `data` unchanged if there are no rows in `tbl`
