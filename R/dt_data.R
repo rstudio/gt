@@ -20,9 +20,10 @@ dt_data_init <- function(data, data_tbl, rownames_to_column = NA) {
 
     if (rownames_to_column %in% colnames(data_tbl)) {
 
-      stop("Reserved column name `", rownames_to_column, "` was detected in ",
-        "the data; please rename this column",
-        call. = FALSE)
+      cli::cli_abort(c(
+        "Reserved column name `{rownames_to_column}` was detected in the data.",
+        "*" = "Please rename this column."
+      ))
     }
 
     data_tbl <-
