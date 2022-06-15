@@ -146,11 +146,15 @@ gtsave <- function(
     "png" = ,
     "pdf" = gt_save_webshot(data = data, filename, path, ...),
     {
-      stop(
-        "The file extension used (`.", file_ext, "`) doesn't have an ",
-        "associated saving function. ", ext_supported_text,
-        call. = FALSE
-      )
+      cli::cli_abort(c(
+        "The file extension supplied (`.{file_ext}`) cannot be used.",
+        "i" = "We can use:",
+        "*" = "`.html`, `.htm` (HTML file)",
+        "*" = "`.png`          (PNG file)",
+        "*" = "`.pdf`          (PDF file)",
+        "*" = "`.tex`, `.rnw`  (LaTeX file)",
+        "*" = "`.rtf`          (RTF file)"
+      ))
     }
   )
 }
