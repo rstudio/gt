@@ -115,22 +115,18 @@ gtsave <- function(
   # Get the lowercased file extension
   file_ext <- gtsave_file_ext(filename)
 
-  ext_supported_text <-
-    paste0(
-      "We can use:\n",
-      " * `.html`, `.htm` (HTML file)\n",
-      " * `.png`          (PNG file)\n",
-      " * `.pdf`          (PDF file)\n",
-      " * `.tex`, `.rnw`  (LaTeX file)\n",
-      " * `.rtf`          (RTF file)\n"
-    )
-
   # Stop function if a file extension is not provided
   if (file_ext == "") {
 
-    stop("A file extension is required in the provided filename. ",
-         ext_supported_text,
-         call. = FALSE)
+    cli::cli_abort(c(
+      "A file extension is required in the provided filename.",
+      "i" = "We can use:",
+      "*" = "`.html`, `.htm` (HTML file)",
+      "*" = "`.png`          (PNG file)",
+      "*" = "`.pdf`          (PDF file)",
+      "*" = "`.tex`, `.rnw`  (LaTeX file)",
+      "*" = "`.rtf`          (RTF file)"
+    ))
   }
 
   # Use the appropriate save function based
@@ -220,8 +216,9 @@ gt_save_webshot <- function(
   # not present, stop with a message
   if (!requireNamespace("webshot", quietly = TRUE)) {
 
-    stop("The `webshot` package is required for saving images of gt tables.",
-         call. = FALSE)
+    cli::cli_abort(
+      "The `webshot` package is required for saving images of gt tables."
+    )
 
   } else {
 
@@ -626,11 +623,11 @@ extract_summary <- function(data) {
   # directives to create summary rows
   if (!dt_summary_exists(data = data)) {
 
-    stop(
-      "There is no summary list to extract.\n",
-      "Use the `summary_rows()`/`grand_summary_rows()` functions to generate summaries.",
-      call. = FALSE
-    )
+    cli::cli_abort(c(
+      "There is no summary list to extract.",
+      "*" = "Use the `summary_rows()`/`grand_summary_rows()` functions
+      to generate summaries."
+    ))
   }
 
   # Build the `data` using the standard
