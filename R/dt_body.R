@@ -5,7 +5,7 @@ dt_body_get <- function(data) {
   ret <- dt__get(data, .dt_body_key)
 
   if (is.null(ret)) {
-    stop("Must call `dt_body_build_init()` first.")
+    cli::cli_abort("Must call `dt_body_build_init()` first.")
   }
 
   ret
