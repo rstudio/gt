@@ -23,6 +23,9 @@ dt_has_built <- function(data) {
 dt_has_built_assert <- function(data) {
 
   if (!dt_has_built(data = data)) {
-    stop("The build hasn't occurred; must call `build_data()` before retrieving.")
+    cli::cli_abort(c(
+      "The build hasn't yet occurred.",
+      "*" = "Call `build_data()` before retrieving."
+    ))
   }
 }
