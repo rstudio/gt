@@ -56,12 +56,12 @@ get_date_format <- function(date_style) {
   if (is.numeric(date_style)) {
 
     if (!(date_style %in% date_format_num_range)) {
-      stop(
+
+      cli::cli_abort(c(
         "If using a numeric value for a `date_style`, it must be ",
-        "between `1` and `", nrow((date_format_tbl)), "`:\n",
-        "* Use `info_date_style()` for a useful visual reference",
-        call. = FALSE
-      )
+        "between `1` and `{nrow(date_format_tbl)}`.",
+        "*" = "Use `info_date_style()` for a useful visual reference."
+      ))
     }
   }
 
@@ -69,11 +69,10 @@ get_date_format <- function(date_style) {
   if (is.character(date_style)) {
 
     if (!(date_style %in% date_format_tbl$format_name)) {
-      stop(
-        "If using a `date_style` name, it must be in the valid set:\n",
-        "* Use `info_date_style()` for a useful visual reference",
-        call. = FALSE
-      )
+      cli::cli_abort(c(
+        "If using a `date_style` name, it must be in the valid set.",
+        "*" = "Use `info_date_style()` for a useful visual reference."
+      ))
     }
 
     # Normalize `date_style` to be a numeric index value
@@ -105,12 +104,11 @@ get_time_format <- function(time_style) {
   if (is.numeric(time_style)) {
 
     if (!(time_style %in% time_format_num_range)) {
-      stop(
-        "If using a numeric value for a `time_style`, it must be ",
-        "between `1` and `", nrow((time_format_tbl)), "`:\n",
-        "* Use `info_time_style()` for a useful visual reference",
-        call. = FALSE
-      )
+      cli::cli_abort(c(
+        "If using a numeric value for a `time_style`, it must be
+        between `1` and `{nrow((time_format_tbl))}`.",
+        "*" = "Use `info_time_style()` for a useful visual reference."
+      ))
     }
   }
 
@@ -118,11 +116,10 @@ get_time_format <- function(time_style) {
   if (is.character(time_style)) {
 
     if (!(time_style %in% time_format_tbl$format_name)) {
-      stop(
-        "If using a `time_style` name, it must be in the valid set:\n",
-        "* Use `info_time_style()` for a useful visual reference",
-        call. = FALSE
-      )
+      cli::cli_abort(c(
+        "If using a `time_style` name, it must be in the valid set.",
+        "*" = "Use `info_time_style()` for a useful visual reference."
+      ))
     }
 
     # Normalize `time_style` to be a numeric index value
@@ -148,9 +145,8 @@ is_string_time <- function(x) {
 check_format_string <- function(format) {
 
   if (!is.character(format) || length(format) != 1) {
-    stop(
-      "The `format` code must be a character string of length 1.",
-      call. = FALSE
+    cli::cli_abort(
+      "The `format` code must be a character string of length 1."
     )
   }
 }
@@ -158,8 +154,10 @@ check_format_string <- function(format) {
 #' Transform a `currency` code to a currency string
 #'
 #' @noRd
-get_currency_str <- function(currency,
-                             fallback_to_code = FALSE) {
+get_currency_str <- function(
+    currency,
+    fallback_to_code = FALSE
+) {
 
   # Create bindings for specific variables
   curr_symbol <- symbol <- curr_code <- curr_number <- NULL
@@ -360,8 +358,7 @@ get_currency_exponent <- function(currency) {
 #' helper function), then the text will be seen as HTML and it won't undergo
 #' sanitization.
 #' @noRd
-process_text <- function(text,
-                         context = "html") {
+process_text <- function(text, context = "html") {
 
   # If text is marked `AsIs` (by using `I()`) then just
   # return the text unchanged
@@ -515,9 +512,10 @@ markdown_to_latex <- function(text) {
     if (isTRUE(getOption("gt.html_tag_check", TRUE))) {
 
       if (grepl("<[a-zA-Z\\/][^>]*>", x)) {
-        warning("HTML tags found, and they will be removed.\n",
-                " * set `options(gt.html_tag_check = FALSE)` to disable this check",
-                call. = FALSE)
+        cli::cli_warn(c(
+          "HTML tags found, and they will be removed.",
+          "*" = "Set `options(gt.html_tag_check = FALSE)` to disable this check."
+        ))
       }
     }
 
@@ -695,16 +693,23 @@ markdown_to_rtf <- function(text) {
       FUN.VALUE = character(1),
       USE.NAMES = FALSE,
       FUN = function(cmark) {
-        # cat(cmark)
+
         x <- xml2::read_xml(cmark)
+
         if (!identical(xml2::xml_name(x), "document")) {
-          stop("Unexpected result from markdown parsing: `document` element not found")
+          cli::cli_abort(c(
+            "Unexpected result from markdown parsing.",
+            "*" = "`document` element not found."
+          ))
         }
 
         children <- xml2::xml_children(x)
-        if (length(children) == 1 &&
-            xml2::xml_type(children[[1]]) == "element" &&
-            xml2::xml_name(children[[1]]) == "paragraph") {
+
+        if (
+          length(children) == 1 &&
+          xml2::xml_type(children[[1]]) == "element" &&
+          xml2::xml_name(children[[1]]) == "paragraph"
+        ) {
           children <- xml2::xml_children(children[[1]])
         }
 
@@ -736,7 +741,7 @@ markdown_to_rtf <- function(text) {
               }
             }
             if (!is_rtf(output)) {
-              warning("Rule for ", xml2::xml_name(x), " did not return RTF")
+              cli::cli_warn("Rule for {xml2::xml_name(x)} did not return RTF.")
             }
             # TODO: is collapse = "" correct?
             rtf_raw(paste0("", output, collapse = ""))
@@ -771,9 +776,10 @@ markdown_to_text <- function(text) {
     if (isTRUE(getOption("gt.html_tag_check", TRUE))) {
 
       if (grepl("<[a-zA-Z\\/][^>]*>", x)) {
-        warning("HTML tags found, and they will be removed.\n",
-                " * set `options(gt.html_tag_check = FALSE)` to disable this check",
-                call. = FALSE)
+        cli::cli_warn(c(
+          "HTML tags found, and they will be removed.",
+          "*" = "Set `options(gt.html_tag_check = FALSE)` to disable this check."
+        ))
       }
     }
 
@@ -794,8 +800,7 @@ markdown_to_text <- function(text) {
 #' @param pattern A formatting pattern that allows for decoration of the
 #'   formatted value (defined here as `x`).
 #' @noRd
-apply_pattern_fmt_x <- function(values,
-                                pattern) {
+apply_pattern_fmt_x <- function(values, pattern) {
 
   vapply(
     values,
@@ -808,9 +813,11 @@ apply_pattern_fmt_x <- function(values,
 #' Get a vector of indices for large-number suffixing
 #'
 #' @noRd
-non_na_index <- function(values,
-                         index,
-                         default_value = NA) {
+non_na_index <- function(
+    values,
+    index,
+    default_value = NA
+) {
 
   stopifnot(is.integer(index) || is.numeric(index))
   stopifnot(all(index >= 1 | is.na(index)))
@@ -864,10 +871,12 @@ non_na_index <- function(values,
 #' returns a tibble where each row represents a scaled value for `x` and the
 #' correct suffix to use during `x`'s character-based formatting.
 #' @noRd
-num_suffix <- function(x,
-                       suffixes = c("K", "M", "B", "T"),
-                       base = 1000,
-                       scale_by) {
+num_suffix <- function(
+    x,
+    suffixes = c("K", "M", "B", "T"),
+    base = 1000,
+    scale_by
+) {
 
   # If `suffixes` is a zero-length vector, we
   # provide a tibble that will ultimately not
@@ -940,9 +949,11 @@ num_suffix <- function(x,
 #' returns a tibble where each row represents a scaled value for `x` and the
 #' correct suffix to use during `x`'s character-based formatting.
 #' @noRd
-num_suffix_ind <- function(x,
-                           suffixes = c(NA, "L", "Cr"),
-                           scale_by) {
+num_suffix_ind <- function(
+    x,
+    suffixes = c(NA, "L", "Cr"),
+    scale_by
+) {
 
   # If `suffixes` is a zero-length vector, we
   # provide a tibble that will ultimately not
@@ -1020,7 +1031,6 @@ num_suffix_ind <- function(x,
 #' @param x The single value to test for whether it is `FALSE`.
 #' @noRd
 is_false = function(x) {
-
   is.logical(x) && length(x) == 1L && !is.na(x) && !x
 }
 
@@ -1032,9 +1042,11 @@ is_false = function(x) {
 #' @param suffixing,scale_by The `suffixing` and `scale_by` options in some
 #'   `fmt_*()` functions.
 #' @noRd
-normalize_suffixing_inputs <- function(suffixing,
-                                       scale_by,
-                                       system) {
+normalize_suffixing_inputs <- function(
+    suffixing,
+    scale_by,
+    system
+) {
 
   if (is_false(suffixing)) {
 
@@ -1065,9 +1077,8 @@ normalize_suffixing_inputs <- function(suffixing,
     # to `suffixing`, we first want to check if there
     # are any names provided
     if (!is.null(names(suffixing))) {
-      stop(
-        "The character vector supplied to `suffixed` cannot contain names.",
-        call. = FALSE
+      cli::cli_abort(
+        "The character vector supplied to `suffixed` cannot contain names."
       )
     }
 
@@ -1080,12 +1091,11 @@ normalize_suffixing_inputs <- function(suffixing,
     # Stop function if the input to `suffixing` isn't
     # valid (i.e., isn't logical and isn't a valid
     # character vector)
-    stop(
-      "The value provided to `suffixing` must either be:\n",
-      "* `TRUE` or `FALSE` (the default)\n",
-      "* a character vector with suffixing labels",
-      call. = FALSE
-    )
+    cli::cli_abort(c(
+      "The value provided to `suffixing` must either be:",
+      "*" = "`TRUE` or `FALSE` (the default), or",
+      "*" = "A character vector with suffixing labels."
+    ))
   }
 }
 
@@ -1096,10 +1106,11 @@ normalize_suffixing_inputs <- function(suffixing,
 warn_on_scale_by_input <- function(scale_by) {
 
   if (scale_by != 1) {
-    warning("The value for `scale_by` cannot be changed if `suffixing` is ",
-            "anything other than `FALSE`. The value provided to `scale_by` ",
-            "will be ignored.",
-            call. = FALSE)
+    cli::cli_warn(c(
+      "The value for `scale_by` cannot be changed if `suffixing` is
+      anything other than `FALSE`.",
+      "*" = "The value provided to `scale_by` will be ignored."
+    ))
   }
 }
 
@@ -1113,13 +1124,12 @@ derive_summary_label <- function(fn) {
     # Stop the function if any functions provided
     # as bare names (e.g., `mean`) don't have
     # names provided
-    stop("All functions provided as bare names in `fns` need a label.",
-         call. = FALSE)
+    cli::cli_abort(
+      "All functions provided as bare names in `fns` need a label."
+    )
 
   } else if (inherits(fn, "formula")) {
-
     as.character(rlang::f_rhs(fn)[[1]])
-
   } else {
     as.character(fn)
   }
@@ -1195,7 +1205,7 @@ get_css_tbl <- function(data) {
   # Stop function if any NA values found while inspecting the
   # selector names (e.g., not determined to be class selectors)
   if (any(is.na(css_tbl %>% dplyr::pull(type)))) {
-    stop("All selectors must be class selectors", call. = FALSE)
+    cli::cli_abort("All selectors must be class selectors.")
   }
 
   css_tbl
@@ -1204,9 +1214,11 @@ get_css_tbl <- function(data) {
 #' Create an inlined style block from a CSS tibble
 #'
 #' @noRd
-create_inline_styles <- function(class_names,
-                                 css_tbl,
-                                 extra_style = "") {
+create_inline_styles <- function(
+    class_names,
+    css_tbl,
+    extra_style = ""
+) {
 
   class_names <-
     class_names %>%
@@ -1398,7 +1410,6 @@ process_footnote_marks <- function(x,
 #' @param data A table object that is created using the [gt()] function.
 #' @noRd
 is_gt <- function(data) {
-
   checkmate::test_class(data, "gt_tbl")
 }
 
@@ -1407,7 +1418,6 @@ is_gt <- function(data) {
 #' @param x A character vector.
 #' @noRd
 is_nonempty_string <- function(x) {
-
   length(x) > 0 && any(grepl("\\S", x))
 }
 
@@ -1417,9 +1427,8 @@ is_nonempty_string <- function(x) {
 #'
 #' @noRd
 stop_if_not_gt <- function(data) {
-
   if (!is_gt(data)) {
-    stop("The object to `data` is not a `gt_tbl` object.", call. = FALSE)
+    cli::cli_abort("The object to `data` is not a `gt_tbl` object.")
   }
 }
 
@@ -1428,25 +1437,26 @@ stop_if_not_gt <- function(data) {
 #' @noRd
 resolve_border_side <- function(side) {
 
-  switch(side,
-         l = "left",
-         left = "left",
-         r = "right",
-         right = "right",
-         t = "top",
-         top = "top",
-         b = "bottom",
-         bottom = "bottom",
-         a = "all",
-         everything = "all",
-         all = "all")
+  switch(
+    side,
+    l = "left",
+    left = "left",
+    r = "right",
+    right = "right",
+    t = "top",
+    top = "top",
+    b = "bottom",
+    bottom = "bottom",
+    a = "all",
+    everything = "all",
+    all = "all"
+  )
 }
 
 #' Expand a path using fs::path_expand
 #'
 #' @noRd
 path_expand <- function(file) {
-
   fs::path_expand(file)
 }
 
@@ -1457,7 +1467,6 @@ path_expand <- function(file) {
 #'
 #' @noRd
 get_file_ext <- function(file) {
-
   pos <- regexpr("\\.([[:alnum:]]+)$", file)
   ifelse(pos > -1L, substring(file, pos + 1L), "")
 }
@@ -1465,29 +1474,34 @@ get_file_ext <- function(file) {
 validate_marks <- function(marks) {
 
   if (is.null(marks)) {
-    stop("The value for `marks` must not be `NULL`.", call. = FALSE)
+    cli::cli_abort("The value for `marks` must not be `NULL`.")
   }
   if (!is.character(marks)) {
-    stop("The value for `marks` must be a character vector.", call. = FALSE)
+    cli::cli_abort("The value for `marks` must be a character vector.")
   }
   if (length(marks) == 0) {
-    stop("The length of `marks` must not be zero.", call. = FALSE)
+    cli::cli_abort("The length of `marks` must not be zero.")
   }
 
   marks_keywords <- c("numbers", "letters", "LETTERS", "standard", "extended")
 
   if (length(marks) == 1 && !any(marks_keywords %in% marks)) {
-    stop("The `marks` keyword provided (\"", marks, "\") is not valid\n",
-         " * \"numbers\", \"letters\", \"LETTERS\", \"standard\", or \"extended\" can be used",
-         call. = FALSE)
+
+    cli::cli_abort(c(
+      "The `marks` keyword provided (\"{marks}\") is not valid.",
+      "*" = "Either of \"numbers\", \"letters\", \"LETTERS\", \"standard\",
+      or \"extended\" can be used."
+    ))
   }
 }
 
-validate_style_in <- function(style_vals,
-                              style_names,
-                              arg_name,
-                              in_vector,
-                              with_pattern = NULL) {
+validate_style_in <- function(
+    style_vals,
+    style_names,
+    arg_name,
+    in_vector,
+    with_pattern = NULL
+) {
 
   if (arg_name %in% style_names) {
 
@@ -1500,44 +1514,41 @@ validate_style_in <- function(style_vals,
     }
 
     if (!(arg_value %in% in_vector)) {
-      stop("The provided `", arg_name, "` value cannot be `",
-           arg_value, "`; it can only be either of the following:\n",
-           " * ", str_catalog(in_vector, conj = "or"),
-           call. = FALSE)
+
+      cli::cli_abort(c(
+        "The provided `{arg_name}` value cannot be `{arg_value}`.",
+        "*" = "It can only be either of the following:
+        {str_catalog(in_vector, conj = 'or')}."
+      ))
     }
   }
 }
 
-check_spanner_id_unique <- function(data,
-                                    spanner_id) {
+check_spanner_id_unique <- function(data, spanner_id) {
 
   existing_ids <- dt_spanners_get_ids(data = data)
 
   if (spanner_id %in% existing_ids) {
 
-    stop(
-      "The spanner `id` provided (`\"", spanner_id, "\"`) is not unique:\n",
-      "* The `id` must be unique across existing spanners\n",
-      "* Provide a unique ID value for this spanner",
-      call. = FALSE
-    )
+    cli::cli_abort(c(
+      "The spanner `id` provided (\"{spanner_id}\") is not unique.",
+      "*" = "The `id` must be unique across existing spanners.",
+      "*" = "Provide a unique ID value for this spanner."
+    ))
   }
 }
 
-check_row_group_id_unique <- function(data,
-                                      row_group_id) {
+check_row_group_id_unique <- function(data, row_group_id) {
 
   stub_df <- dt_stub_df_get(data = data)
 
   existing_ids <- stub_df$group_id
 
   if (row_group_id %in% existing_ids) {
-
-    stop(
-      "The row group `id` provided (`\"", row_group_id, "\"`) is not unique:\n",
-      "* Provide a unique ID value for this row group",
-      call. = FALSE
-    )
+    cli::cli_abort(c(
+      "The row group `id` provided (\"{row_group_id}\") is not unique.",
+      "*" = "Provide a unique ID value for this row group"
+    ))
   }
 }
 
@@ -1549,10 +1560,7 @@ flatten_list <- function(x) {
 #'
 #' @inheritParams append
 #' @noRd
-prepend_vec <- function(x,
-                        values,
-                        after = 0) {
-
+prepend_vec <- function(x, values, after = 0) {
   append(x, values, after = after)
 }
 
@@ -1560,14 +1568,12 @@ prepend_vec <- function(x,
 #'
 #' @noRd
 rep_vec_as_list <- function(x, length_out) {
-
   rep_len(list(x), length_out)
 }
 
 validate_length_one <- function(x, name) {
   if (length(x) != 1) {
-    stop("The value for `", name, "` should have a length of one",
-         call. = FALSE)
+    cli::cli_abort("The value for `{name}` should have a length of one.")
   }
 }
 
@@ -1578,29 +1584,29 @@ validate_table_id <- function(id) {
   }
 
   if (length(id) != 1) {
-    stop("The length of `id` must be 1", call. = FALSE)
+    cli::cli_abort("The length of `id` must be `1`.")
   }
   if (is.na(id)) {
-    stop("The value for `id` must not be `NA`", call. = FALSE)
+    cli::cli_abort("The value for `id` must not be `NA`.")
   }
   if (!is.character(id)) {
-    stop("Any input for `id` must be of the `character` class", call. = FALSE)
+    cli::cli_abort("Any input for `id` must be of the `character` class.")
   }
 }
 
 validate_n_sigfig <- function(n_sigfig) {
 
   if (length(n_sigfig) != 1) {
-    stop("The length of `n_sigfig` must be 1.", call. = FALSE)
+    cli::cli_abort("The length of `n_sigfig` must be 1.")
   }
   if (is.na(n_sigfig)) {
-    stop("The value for `n_sigfig` must not be `NA`.", call. = FALSE)
+    cli::cli_abort("The value for `n_sigfig` must not be `NA`.")
   }
   if (!is.numeric(n_sigfig)) {
-    stop("Any input for `n_sigfig` must be numeric.", call. = FALSE)
+    cli::cli_abort("Any input for `n_sigfig` must be numeric.")
   }
   if (n_sigfig < 1) {
-    stop("The value for `n_sigfig` must be greater than or equal to 1.", call. = FALSE)
+    cli::cli_abort("The value for `n_sigfig` must be greater than or equal to `1`.")
   }
 }
 
