@@ -29,13 +29,10 @@ resolve_footnotes_styles <- function(data,
   # column names for the table
   default_vars <- dt_boxhead_get_vars_default(data = data)
 
-  tbl <-
-    dplyr::bind_rows(
-      tbl %>% dplyr::filter(!(locname %in% c("data", "columns_columns"))),
-      tbl %>%
-        dplyr::filter(locname %in% c("data", "columns_columns")) %>%
-        dplyr::filter(colname %in% default_vars)
-    )
+  cond <- (tbl$locname != "data" & tbl$locname != "columns_columns") |
+    (tbl$colname %in% default_vars)
+
+  tbl <- tbl[cond,]
 
   # Return `data` unchanged if there are no rows in `tbl`
   if (nrow(tbl) == 0) {
@@ -52,14 +49,12 @@ resolve_footnotes_styles <- function(data,
 
   # Filter by `title`
   if (!dt_heading_has_title(data = data)) {
-
-    tbl <- dplyr::filter(tbl, locname != "title")
+    cond <- cond & tbl$locname != "title"
   }
 
   # Filter by `subtitle`
   if (!dt_heading_has_subtitle(data = data)) {
-
-    tbl <- dplyr::filter(tbl, locname != "subtitle")
+    cond <- cond & tbl$locname != "subtitle"
   }
 
   # Filter by `grpname` in columns groups
@@ -67,31 +62,17 @@ resolve_footnotes_styles <- function(data,
 
     spanner_ids <- unique(unlist(spanners$spanner_id))
 
-    tbl <-
-      dplyr::filter(
-        tbl,
-        locname != "columns_groups" | grpname %in% spanner_ids
-      )
+    cond <- cond & (tbl$locname != "columns_groups" | tbl$grpname %in% spanner_ids)
   }
 
   # Filter by `grpname` in row groups
   if ("row_groups" %in% tbl[["locname"]]) {
-
-    tbl <-
-      dplyr::bind_rows(
-        dplyr::filter(tbl, locname != "row_groups"),
-        tbl %>%
-          dplyr::filter(locname == "row_groups") %>%
-          dplyr::filter(grpname %in% groups_rows_df$group_id)
-      )
+    cond <- cond & (tbl$locname != "row_groups" | tbl$grpname %in% grops_rows_df$group_id)
   }
 
   # Filter `tbl` by the remaining columns in `body`
-  tbl <-
-    dplyr::filter(
-      tbl,
-      colname %in% c(NA_character_, dt_boxhead_get_vars_default(data = data))
-    )
+  cond <- cond & (tbl$colname %in% c(NA_character_, dt_boxhead_get_vars_default(data = data)))
+  tbl <- tbl[cond,]
 
   # Return `data` unchanged if there are no rows in `tbl`
   if (nrow(tbl) == 0) {
@@ -101,54 +82,52 @@ resolve_footnotes_styles <- function(data,
   # Reorganize records that target the data rows
   if (any(tbl[["locname"]] %in% c("data", "stub"))) {
 
-    tbl_not_data <- dplyr::filter(tbl, !(locname %in% c("data", "stub")))
+    data_cond <- tbl$locname %in% c("data", "stub")
+    tbl_not_data <- tbl[!data_cond,]
 
-    tbl_data <- dplyr::filter(tbl, locname %in% c("data", "stub"))
+    tbl_data <- tbl[data_cond,]
 
     if (nrow(tbl_data) > 0) {
 
       # Re-map the `rownum` to the new row numbers for the
       # data rows
-      tbl_data <-
-        dplyr::mutate(
-          tbl_data,
-          rownum = rownum_translation(
-            body = body,
-            rownum_start = rownum)
-        )
+      tbl_data$rownum = rownum_translation(
+        body = body,
+        rownum_start = tbl_data$rownum)
 
       # Add a `colnum` column that's required for
       # arranging `tbl` in such a way that the order
       # of records moves from top-to-bottom, left-to-right
-      tbl_data <-
-        tbl_data %>%
-        dplyr::mutate(colnum = colname_to_colnum(data = data, colname = colname)) %>%
-        dplyr::mutate(colnum = ifelse(locname == "stub", 0L, colnum))
+      tbl_data$colnum = ifelse(
+        tbl_data$locname == "stub",
+        0L, colname_to_colnum(
+              data = data, colname = tbl_data$colname))
     }
 
     # Re-combine `tbl_data` with `tbl`
     tbl <- dplyr::bind_rows(tbl_not_data, tbl_data)
 
   } else {
-
-    tbl <- dplyr::mutate(tbl, colnum = NA_integer_)
+    tbl$colnum = NA_integer_
   }
 
   # For the row groups, insert a `rownum` based on `groups_rows_df`
   if ("row_groups" %in% tbl[["locname"]]) {
 
-    tbl_not_row_groups <- dplyr::filter(tbl, locname != "row_groups")
+    cond <- tbl$locname != "row_groups"
+    tbl_not_row_groups <- tbl[cond,]
 
-    tbl_row_groups <-
-      tbl %>%
-      dplyr::filter(locname == "row_groups") %>%
+    tbl_row_groups <- tbl[!cond,] %>%
       dplyr::inner_join(
         groups_rows_df %>% dplyr::select(-group_label),
         by = c("grpname" = "group_id")
-      ) %>%
-      dplyr::mutate(rownum = row_start - 0.1) %>%
-      dplyr::mutate(colnum = 1) %>%
-      dplyr::select(-row_start, -row_end)
+      )
+
+    tbl_row_groups$rownum <- tbl_row_groups$row_start - 0.1
+    tbl_row_groups$colnum <- 1
+    tbl_row_groups$row_start <- NULL
+    tbl_row_groups$row_end <- NULL
+
 
     # Re-combine `tbl_not_row_groups`
     # with `tbl_row_groups`
@@ -159,25 +138,25 @@ resolve_footnotes_styles <- function(data,
   # on `groups_rows_df`
   if ("summary_cells" %in% tbl[["locname"]]) {
 
-    tbl_not_summary_cells <- dplyr::filter(tbl, locname != "summary_cells")
+    cond <- tbl$locname != "summary_cells"
+    tbl_not_summary_cells <- tbl[cond,]
 
-    tbl_summary_cells <-
-      tbl %>%
+    tbl_summary_cells <- tbl[!cond,]
       dplyr::filter(locname == "summary_cells") %>%
       dplyr::inner_join(
         groups_rows_df %>% dplyr::select(-group_label),
         by = c("grpname" = "group_id")
-      ) %>%
-      dplyr::mutate(rownum = (rownum / 100) + row_end) %>%
-      dplyr::select(-row_start, -row_end) %>%
-      dplyr::mutate(colnum = colname_to_colnum(
-        data = data,
-        colname = colname,
-        missing_is_zero = TRUE
-      ))
+      )
+    tbl_summary_cells$rownum = tbl_summary_cells$rownum / 100 +
+      tbl_summary_cells$row_end
+    tbl_summary_cells$row_start <- NULL
+    tbl_summary_cells$row_end <- NULL
+    tbl_summary_cells$colnum <- colname_to_colnum(
+      data,
+      tbl_summary_cells$colname,
+      missing_is_zero=TRUE)
 
-    # Re-combine `tbl_not_summary_cells`
-    # with `tbl_summary_cells`
+    # Re-combine `tbl_not_summary_cells` with `tbl_summary_cells`
     tbl <- dplyr::bind_rows(tbl_not_summary_cells, tbl_summary_cells)
   }
 
@@ -185,16 +164,14 @@ resolve_footnotes_styles <- function(data,
   # on `groups_rows_df`
   if (6 %in% tbl[["locnum"]]) {
 
-    tbl_not_g_summary_cells <- dplyr::filter(tbl, locnum != 6)
+    cond <- tbl$locnum != 6
+    tbl_not_g_summary_cells <- tbl[cond,]
 
-    tbl_g_summary_cells <-
-      tbl %>%
-      dplyr::filter(locnum == 6) %>%
-      dplyr::mutate(colnum = colname_to_colnum(
-        data = data,
-        colname = colname,
-        missing_is_zero = TRUE
-      ))
+    tbl_g_summary_cells <- tbl[!cond,]
+    tbl_g_summary_cells$colnum = colname_to_colnum(
+      data = data,
+      colname = tbl_g_summary_cells$colname,
+      missing_is_zero = TRUE)
 
     # Re-combine `tbl_not_g_summary_cells`
     # with `tbl_g_summary_cells`
