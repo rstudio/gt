@@ -1410,7 +1410,7 @@ process_footnote_marks <- function(x,
 #' @param data A table object that is created using the [gt()] function.
 #' @noRd
 is_gt <- function(data) {
-  checkmate::test_class(data, "gt_tbl")
+  inherits(data, "gt_tbl")
 }
 
 #' Determines whether a character vector is non-empty

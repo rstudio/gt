@@ -22,26 +22,12 @@ colname_to_colnum <- function(
     colname,
     missing_is_zero = FALSE
 ) {
-
-  col_nums <- c()
-
-  for (col in colname) {
-    if (is.na(col)) {
-      if (missing_is_zero) {
-        col_nums <- c(col_nums, 0L)
-      } else {
-        col_nums <- c(col_nums, NA_integer_)
-      }
-    } else {
-      col_nums <-
-        c(
-          col_nums,
-          which(dt_boxhead_get_vars_default(data = data) == col)
-        )
-    }
+  vars_default <- dt_boxhead_get_vars_default(data = data)
+  result <- match(colname, vars_default)
+  if (missing_is_zero) {
+    result[is.na(result)] <- 0L
   }
-
-  col_nums
+  result
 }
 
 # Utility function to generate finalized row numbers;
@@ -244,17 +230,22 @@ reorder_styles <- function(data) {
 
   rownum_final <- as.numeric(stub_df[, "rownum_i", drop = TRUE])
 
-  for (i in seq_len(nrow(styles_tbl))) {
+  sz <- nrow(styles_tbl)
+  tmp_rownum <- vector("integer", sz)
+  tmp_mask <- vector("logical", sz)
 
+  for (i in seq_len(sz)) {
     if (
-      !is.na(styles_tbl[i, ][["rownum"]]) &&
-      !grepl("summary_cells", styles_tbl[i, ][["locname"]])
+      !is.na(styles_tbl$rownum[i]) &&
+      !grepl("summary_cells", styles_tbl$locname[i])
     ) {
-
-      styles_tbl[i, ][["rownum"]] <-
-        which(rownum_final == styles_tbl[i, ][["rownum"]])
+      tmp_mask[i] = TRUE
+      tmp_rownum[i] = which(rownum_final == styles_tbl$rownum[i])
     }
   }
+  final_rownum = styles_tbl$rownum
+  final_rownum[tmp_mask] = tmp_rownum[tmp_mask]
+  styles_tbl$rownum = final_rownum
 
   dt_styles_set(data = data, styles = styles_tbl)
 }

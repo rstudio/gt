@@ -33,6 +33,7 @@ dt_styles_add <- function(
     rownum,
     styles
 ) {
+  # TODO: optimize this
 
   data %>%
     dt_styles_get() %>%
