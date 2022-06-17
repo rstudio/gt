@@ -767,7 +767,7 @@ create_table_caption_component_xml <- function(data, align = "center", keep_with
         xml_r(
           xml_rPr(
             xml_r_font(),
-            xml_sz(val = 16)
+            xml_sz(val = 20)
           ),
           xml_t(
             paste0(heading$subtitle, footnote_subtitle_marks),
@@ -933,6 +933,13 @@ create_columns_component_xml <- function(data, split = FALSE, keep_with_next = T
   headings_vars <- dplyr::pull(subset(boxh, type == "default"), var)
   headings_labels <- dt_boxhead_get_vars_labels_default(data = data)
 
+  # Determine the finalized number of spanner rows
+  spanner_row_count <-
+    dt_spanners_matrix_height(
+      data = data,
+      omit_columns_row = TRUE
+    )
+
   # Should the column labels be hidden?
   column_labels_hidden <-
     dt_options_get_value(
@@ -965,180 +972,122 @@ create_columns_component_xml <- function(data, split = FALSE, keep_with_next = T
 
   stubhead_label_alignment <- "left"
 
-  table_col_headings <- list()
+  table_col_headings_list <- list()
 
-  if (!spanners_present) {
+  ## Create first row of table column headings -
+  table_cell_vals <- list()
 
-    # Create the cell for the stubhead label
-    if (isTRUE(stub_available)) {
+  # Create the cell for the stubhead label
+  if (isTRUE(stub_available)) {
 
-      table_col_headings[[length(table_col_headings) + 1]] <-
-        xml_tc(
-          xml_tcPr(
-            xml_tc_borders(
-              xml_border("top", size = 16, color = column_labels_border_top_color),
-              xml_border("bottom", size = 16, color = column_labels_border_bottom_color),
-              xml_border("left", color = column_labels_vlines_color),
-              xml_border("right", color = column_labels_vlines_color)
-            )
-          ),
-          xml_p(
-            xml_pPr(
-              xml_spacing(before = 0, after = 60),
-              if(keep_with_next){xml_keepNext()}
-              ),
-            xml_r(
-              xml_rPr(
-                xml_r_font(),
-                xml_sz(val = 20)
-              ),
-              xml_t(
-                headings_labels[1]
-              )
-            )
+    table_cell_vals[[length(table_cell_vals) + 1]] <-
+      xml_tc(
+        xml_tcPr(
+          xml_tc_borders(
+            if(spanner_row_count < 1 ){xml_border("top", size = 16, color = column_labels_border_top_color)},
+            xml_border("bottom", size = 16, color = column_labels_border_bottom_color),
+            xml_border("left", color = column_labels_vlines_color),
+            xml_border("right", color = column_labels_vlines_color)
           )
-        )
-
-      headings_vars <- headings_vars[-1]
-      headings_labels <- headings_labels[-1]
-    }
-
-    for (i in seq(headings_vars)) {
-
-      table_col_headings[[length(table_col_headings) + 1]] <-
-        xml_tc(
-          xml_tcPr(
-            xml_tc_borders(
-              xml_border("top", size = 16, color = column_labels_border_top_color),
-              xml_border("bottom", size = 16, color = column_labels_border_bottom_color),
-              xml_border("left", color = column_labels_vlines_color),
-              xml_border("right", color = column_labels_vlines_color)
-            )
-          ),
-          xml_p(
-            xml_pPr(
-              xml_spacing(before = 0, after = 60),
-              if(keep_with_next){xml_keepNext()}
-              ),
-            xml_r(
-              xml_rPr(
-                xml_r_font(),
-                xml_sz(val = 20)
-              ),
-              xml_t(
-                headings_labels[i]
-              )
-            )
-          )
-        )
-    }
-
-    table_col_headings <-
-      xml_tr(
-        xml_trPr(
-          if(!split){xml_cantSplit()},
-          xml_tbl_header()
         ),
-        paste(
-          vapply(
-            table_col_headings,
-            FUN.VALUE = character(1),
-            FUN = paste
-          ),
-          collapse = ""
+        xml_p(
+          xml_pPr(
+            xml_spacing(before = 0, after = 60),
+            if(keep_with_next){xml_keepNext()}
+            ),
+          xml_r(
+            xml_rPr(
+              xml_r_font(),
+              xml_sz(val = 20)
+            ),
+            xml_t(
+              headings_labels[1]
+            )
+          )
+        )
+      )
+
+  }
+
+  for (i in seq_len(length(headings_vars) - stub_available)) {
+
+    table_cell_vals[[length(table_cell_vals) + 1]] <-
+      xml_tc(
+        xml_tcPr(
+          xml_tc_borders(
+            if(spanner_row_count < 1 ){xml_border("top", size = 16, color = column_labels_border_top_color)},
+            xml_border("bottom", size = 16, color = column_labels_border_bottom_color),
+            if(i == 1){xml_border("left", color = column_labels_vlines_color)},
+            if(i == length(headings_vars) - stub_available){ xml_border("right", color = column_labels_vlines_color)}
+          )
+        ),
+        xml_p(
+          xml_pPr(
+            xml_spacing(before = 0, after = 60),
+            if(keep_with_next){xml_keepNext()}
+            ),
+          xml_r(
+            xml_rPr(
+              xml_r_font(),
+              xml_sz(val = 20)
+            ),
+            xml_t(
+              headings_labels[i + stub_available]
+            )
+          )
         )
       )
   }
 
-  if (spanners_present) {
-
-    spanners <- dt_spanners_print(data = data, include_hidden = FALSE)
-    spanner_ids <- dt_spanners_print(data = data, include_hidden = FALSE, ids = TRUE)
-
-    # The list of elements that will go in the top row will be the spanners
-    first_set <- list()
-
-    # The list of elements that will go in the second row
-    second_set <- list()
-
-    # Create the cell for the stubhead label
-    if (stub_available) {
-
-      first_set[[length(first_set) + 1]] <-
-        xml_tc(
-          xml_tcPr(
-            xml_v_merge(val = "restart"),
-            xml_v_align(v_align = "bottom"),
-            xml_tc_borders(
-              xml_border("left", color = column_labels_vlines_color),
-              xml_border("right", color = column_labels_vlines_color)
-            )
-          ),
-          xml_p(
-            xml_pPr(
-              xml_spacing(before = 0, after = 60),
-              if(keep_with_next){xml_keepNext()}
-              ),
-            xml_r(
-              xml_rPr(
-                xml_r_font(),
-                xml_sz(val = 20)
-              ),
-              xml_t(
-                headings_labels[1]
-              )
-            )
-          )
-        )
-
-      second_set[[length(second_set) + 1]] <-
-        xml_tc(
-          xml_tcPr(
-            xml_v_merge(val = "continue"),
-            xml_tc_borders(
-              xml_border("left", color = column_labels_vlines_color),
-              xml_border("right", color = column_labels_vlines_color)
-            )
-          ),
-          xml_p(xml_r(xml_t()))
-        )
-
-      headings_vars <- headings_vars[-1]
-      headings_labels <- headings_labels[-1]
-    }
-
-    # NOTE: rle treats NA values as distinct from each other; in other words,
-    # each NA value starts a new run of length 1.
-    spanners_rle <- rle(spanner_ids)
-    # sig_cells contains the indices of spanners' elements where the value is
-    # either NA, or, is different than the previous value. (Because NAs are
-    # distinct, every NA element will be present sig_cells.)
-    sig_cells <- c(1, utils::head(cumsum(spanners_rle$lengths) + 1, -1))
-    # colspans matches spanners in length; each element is the number of
-    # columns that the <th> at that position should span. If 0, then skip the
-    # <th> at that position.
-    colspans <- ifelse(
-      seq_along(spanners) %in% sig_cells,
-      # Index back into the rle result, working backward through sig_cells
-      spanners_rle$lengths[match(seq_along(spanner_ids), sig_cells)],
-      0
+  table_col_headings_list[[1]] <-
+    xml_tr(
+      xml_trPr(
+        if(!split){xml_cantSplit()},
+        xml_tbl_header()
+      ),
+      paste(
+        vapply(
+          table_cell_vals,
+          FUN.VALUE = character(1),
+          FUN = paste
+        ),
+        collapse = ""
+      )
     )
 
-    for (i in seq_along(headings_vars)) {
+  if (spanners_present) {
 
-      if (is.na(spanner_ids[i])) {
+    spanners <-
+      dt_spanners_print_matrix(
+        data = data,
+        include_hidden = FALSE
+      )
 
-        # Case with no spanner labels in top row
-        # (merge both cells vertically and align text to bottom)
-        first_set[[length(first_set) + 1]] <-
+    spanner_ids <-
+      dt_spanners_print_matrix(
+        data = data,
+        include_hidden = FALSE,
+        ids = TRUE
+      )
+
+    for(span_row_idx in rev(seq_len(spanner_row_count))){
+
+      spanner_row_values <- spanners[span_row_idx,]
+      spanner_row_ids <- spanner_ids[span_row_idx,]
+
+      spanner_cell_vals <- list()
+
+      # Create the cell for the stub head label
+
+      if (stub_available) {
+
+        spanner_cell_vals[[length(spanner_cell_vals) + 1]] <-
           xml_tc(
             xml_tcPr(
-              xml_v_merge(val = "restart"),
-              xml_v_align(v_align = "bottom"),
               xml_tc_borders(
                 xml_border("left", color = column_labels_vlines_color),
                 xml_border("right", color = column_labels_vlines_color),
-                xml_border("top", size = 16, color = column_labels_border_top_color)
+                if(span_row_idx == 1){xml_border("top", size = 16, color = column_labels_border_top_color)}
               )
             ),
             xml_p(
@@ -1151,48 +1100,45 @@ create_columns_component_xml <- function(data, split = FALSE, keep_with_next = T
                   xml_r_font(),
                   xml_sz(val = 20)
                 ),
-                xml_t(
-                  headings_labels[i]
-                )
+                xml_t()
               )
             )
           )
+      }
+
+      # NOTE: rle treats NA values as distinct from each other; in other words,
+      # each NA value starts a new run of length 1.
+      spanners_rle <- rle(spanner_row_ids)
+      # sig_cells contains the indices of spanners' elements where the value is
+      # either NA, or, is different than the previous value. (Because NAs are
+      # distinct, every NA element will be present sig_cells.)
+      sig_cells <- c(1, utils::head(cumsum(spanners_rle$lengths) + 1, -1))
+      # colspans matches spanners in length; each element is the number of
+      # columns that the <th> at that position should span. If 0, then skip the
+      # <th> at that position.
+      colspans <- ifelse(
+        seq_along(spanner_row_values) %in% sig_cells,
+        spanners_rle$lengths[match(seq_along(spanner_row_ids), sig_cells)],
+        0
+      )
 
 
-        second_set[[length(second_set) + 1]] <-
-          xml_tc(
-            xml_tcPr(
-              xml_v_merge(val = "continue"),
-              xml_tc_borders(
-                xml_border("left", color = column_labels_vlines_color),
-                xml_border("right", color = column_labels_vlines_color),
-                xml_border("bottom", size = 16, color = column_labels_border_bottom_color)
-              )
-            ),
-            xml_p(xml_r(xml_t()))
-          )
+      for (i in seq_along(spanner_row_values)) {
 
-      } else if (!is.na(spanner_ids[i])) {
+        if (is.na(spanner_row_ids[i])) {
 
-        # Case with no spanner labels are in top row
-        # (merge cells horizontally and align text to bottom)
-        if (colspans[i] > 0) {
-
-          first_set[[length(first_set) + 1]] <-
+          spanner_cell_vals[[length(spanner_cell_vals) + 1]] <-
             xml_tc(
               xml_tcPr(
                 xml_tc_borders(
-                  xml_border("left", color = column_labels_vlines_color),
-                  xml_border("right", color = column_labels_vlines_color),
-                  xml_border("bottom", size = 16, color = column_labels_border_bottom_color),
-                  xml_border("top", size = 16, color = column_labels_border_top_color)
+                  if(i == 1){xml_border("left", color = column_labels_vlines_color)},
+                  if(i == length(spanner_row_values)){ xml_border("right", color = column_labels_vlines_color)},
+                  if(span_row_idx == 1){xml_border("top", size = 16, color = column_labels_border_top_color)}
                 )
               ),
               xml_p(
                 xml_pPr(
                   xml_spacing(before = 0, after = 60),
-                  xml_jc(val = "center"),
-                  xml_gridSpan(val = as.character(colspans[i])),
                   if(keep_with_next){xml_keepNext()}
                 ),
                 xml_r(
@@ -1200,24 +1146,32 @@ create_columns_component_xml <- function(data, split = FALSE, keep_with_next = T
                     xml_r_font(),
                     xml_sz(val = 20)
                   ),
-                  xml_t(spanners[i])
+                  xml_t()
                 )
               )
             )
 
-          for (j in seq_len(colspans[i])) {
+        } else {
 
-            second_set[[length(second_set) + 1]] <-
+          # Case with no spanner labels are in top row
+          # (merge cells horizontally and align text to bottom)
+          if (colspans[i] > 0) {
+
+            spanner_cell_vals[[length(spanner_cell_vals) + 1]] <-
               xml_tc(
                 xml_tcPr(
                   xml_tc_borders(
-                    xml_border("left", color = column_labels_vlines_color),
-                    xml_border("right", color = column_labels_vlines_color)
+                    if(i == 1){xml_border("left", color = column_labels_vlines_color)},
+                    if(i == (length(spanner_row_values) + 1 - colspans[i] )){ xml_border("right", color = column_labels_vlines_color)},
+                    xml_border("bottom", size = 16, color = column_labels_border_bottom_color),
+                    if(span_row_idx == 1){xml_border("top", size = 16, color = column_labels_border_top_color)}
                   )
                 ),
                 xml_p(
                   xml_pPr(
                     xml_spacing(before = 0, after = 60),
+                    xml_jc(val = "center"),
+                    xml_gridSpan(val = as.character(colspans[i])),
                     if(keep_with_next){xml_keepNext()}
                   ),
                   xml_r(
@@ -1225,36 +1179,39 @@ create_columns_component_xml <- function(data, split = FALSE, keep_with_next = T
                       xml_r_font(),
                       xml_sz(val = 20)
                     ),
-                    xml_t(headings_labels[i + j - 1])
+                    xml_t(spanner_row_values[i])
                   )
                 )
               )
+
           }
         }
+
       }
+
+
+      table_col_headings_list[[length(table_col_headings_list) + 1 ]] <-
+        xml_tr(
+          xml_trPr(
+            if(!split){xml_cantSplit()},
+            xml_tbl_header()
+          ),
+          paste(
+            vapply(
+              spanner_cell_vals,
+              FUN.VALUE = character(1),
+              FUN = paste
+            ),
+            collapse = ""
+          )
+        )
 
     }
 
-    table_col_headings <-
-      htmltools::tagList(
-        xml_tr(
-          xml_trPr(
-            if(!split){xml_cantSplit()},
-            xml_tbl_header()
-          ),
-          htmltools::tagList(first_set)
-        ),
-        xml_tr(
-          xml_trPr(
-            if(!split){xml_cantSplit()},
-            xml_tbl_header()
-          ),
-          htmltools::tagList(second_set)
-        )
-      )
   }
 
-  htmltools::tagList(table_col_headings)
+  do.call(htmltools::tagList, rev(table_col_headings_list))
+
 }
 
 #' Create the table body component (OOXML)

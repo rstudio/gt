@@ -434,7 +434,7 @@ set_footnote_marks_columns <- function(data,
         spanner_ids <- dt_spanners_print_matrix(data = data, ids = TRUE, omit_columns_row = TRUE) %>% as.vector()
         vector_indices <- which(spanner_ids == footnotes_columns_group_marks$grpname[i])
 
-        text <- unique(spanner_labels[column_indices])
+        text <- unique(spanner_labels[vector_indices])
 
         if (context == "html") {
 

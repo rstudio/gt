@@ -233,8 +233,116 @@ test_that("tables with spans can be added to a word doc", {
     docx_table_body_header %>%
       xml2::xml_find_all(".//w:p") %>%
       xml2::xml_text(),
-    c("num", "char", "My Column Span", "datetime", "currency", "row",
-      "group", "", "", "fctr", "date", "time", "", "", "", "")
+    c( "","","My Column Span", "","","","",
+      "num", "char","fctr", "date", "time","datetime", "currency", "row","group")
+  )
+
+  expect_equal(
+    lapply(docx_table_body_contents, function(x)
+      x %>% xml2::xml_find_all(".//w:p") %>% xml2::xml_text()),
+    list(
+      c(
+        "0.1111",
+        "apricot",
+        "one",
+        "2015-01-15",
+        "13:35",
+        "2018-01-01 02:22",
+        "49.95",
+        "row_1",
+        "grp_a"
+      ),
+      c(
+        "2.2220",
+        "banana",
+        "two",
+        "2015-02-15",
+        "14:40",
+        "2018-02-02 14:33",
+        "17.95",
+        "row_2",
+        "grp_a"
+      )
+    )
+  )
+
+})
+
+test_that("tables with multi-level spans can be added to a word doc", {
+
+  check_suggests_xml()
+
+  local_edition(3)
+
+  ## simple table
+  gt_exibble_min <- exibble[1:2,] %>%
+    gt() %>%
+    tab_header(
+      title = "table title",
+      subtitle = "table subtitle"
+    ) %>%
+    ## add spanner across columns 1:5
+    tab_spanner(
+      "My 1st Column Span L1",
+      columns = 1:5
+    ) %>%
+    tab_spanner(
+      "My Column Span L2",
+      columns = 2:5,level = 2
+    ) %>%
+    tab_spanner(
+      "My 2nd Column Span L1",
+      columns = 8:9
+    )
+
+  ## Add table to empty word document
+  word_doc <- officer::read_docx() %>%
+    body_add_gt(
+      gt_exibble_min,
+      align = "center"
+    )
+
+  ## save word doc to temporary file
+  temp_word_file <- tempfile(fileext = ".docx")
+  print(word_doc,target = temp_word_file)
+
+  ## Manual Review
+  if(!testthat::is_testing() & interactive()){
+    shell.exec(temp_word_file)
+  }
+
+  ## Programmatic Review
+  docx <- officer::read_docx(temp_word_file)
+
+  ## get docx table contents
+  docx_contents <- docx$doc_obj$get() %>%
+    xml2::xml_children() %>%
+    xml2::xml_children()
+
+  ## extract table caption
+  docx_table_caption_text <- docx_contents[1:2] %>%
+    xml2::xml_text()
+
+  ## extract table contents
+  docx_table_body_header <- docx_contents[3] %>%
+    xml2::xml_find_all(".//w:tblHeader/ancestor::w:tr")
+
+  docx_table_body_contents <- docx_contents[3] %>%
+    xml2::xml_find_all(".//w:tr") %>%
+    setdiff(docx_table_body_header)
+
+  expect_equal(
+    docx_table_caption_text,
+    c("Table  SEQ Table \\* ARABIC 1: table title", "table subtitle")
+  )
+
+  expect_equal(
+    docx_table_body_header %>%
+      xml2::xml_find_all(".//w:p") %>%
+      xml2::xml_text(),
+    c("", "My Column Span L2", "","","","",
+      "My 1st Column Span L1", "","", "My 2nd Column Span L1",
+      "num", "char","fctr", "date", "time","datetime", "currency", "row","group")
   )
 
   expect_equal(
