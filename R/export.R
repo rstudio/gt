@@ -701,30 +701,29 @@ as_word_tbl_body <- function(data, align = "center", split = FALSE,  keep_with_n
 #' @export
 #' @title Add gt table into a Word document
 #' @description Add a gt into a Word document.
+#' @param x `rdocx` object
 #' @param value `gt` object
 #' @param align left, center (default) or right.
 #' @param caption_location top (default), bottom, or embed Indicating if the title and subtitle should be listed above, below, or be embedded in the table
 #' @param caption_align left (default), center, or right. Alignment of caption (title and subtitle). Used when `caption_location` is not "embed".
 #' @param split set to TRUE if you want to activate Word
 #' option 'Allow row to break across pages'.
-#' @param keepnext Word option 'keep rows together' can be
+#' @param keep_with_next Word option 'keep rows together' can be
 #' activated when TRUE. It avoids page break within tables.
 #' @param pos where to add the gt table relative to the cursor,
 #' one of "after" (default), "before", "on" (end of line).
 #'
-#' @seealso \pkg{\link{flextable::body_add_flextable}}
+#' @seealso \link[flextable]{body_add_flextable}
 #'
 #' @examples
 #'
-#' library(gskofficer)
+#' library(officer)
 #' library(gt)
-#'
 #' gt_tbl <- gt( head( exibble ) )
 #'
 #' doc <- read_docx()
 #' doc <- body_add_gt(doc, value = gt_tbl)
 #' fileout <- tempfile(fileext = ".docx")
-#' # fileout <- "test.docx" # uncomment to write in your working directory
 #' print(doc, target = fileout)
 #'
 body_add_gt <- function(x, value, align = "center", pos = c("after","before","on"), caption_location = c("top","bottom","embed"), caption_align = "left", split = FALSE, keep_with_next = TRUE){
