@@ -190,7 +190,7 @@ dt_boxhead_get_var_by_type <- function(data, type) {
 
 dt_boxhead_get_vars_labels_default <- function(data) {
   boxhead <- dt_boxhead_get(data = data)
-  boxhead$column_label[boxhead$type == "default"]
+  unlist(boxhead$column_label[boxhead$type == "default"])
 }
 
 dt_boxhead_get_vars_align_default <- function(data) {

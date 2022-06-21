@@ -33,15 +33,33 @@ dt_styles_add <- function(
     rownum,
     styles
 ) {
-  # TODO: optimize this
+  # cscheid: I don't understand why the commented-out code below
+  # doesn't work..
+  #
+  #result <- dt_styles_get(data)
+  #grid <- dplyr::bind_rows(result, expand.grid(
+  #  colname = unique(result$colname),
+  #  grpname = unique(result$grpname),
+  #  rownum = unique(result$rownum),
+  #  stringsAsFactors = FALSE
+  #))
+  #df <- dplyr::tibble(
+  #  locname = grid$locname,
+  #  grpname = grid$grpname,
+  #  colname = grid$colname,
+  #  locnum = grid$locnum,
+  #  colnum = NA_integer_,
+  #  rownum = grid$rownum,
+  #  styles = list(grid$styles)
+  #)
+  #dt_styles_set(styles = df, data = data)
 
-  data %>%
-    dt_styles_get() %>%
+  dt_styles_get(data) %>%
     dplyr::bind_rows(
       expand.grid(
-        grpname = grpname,
-        colname = colname,
-        rownum = rownum,
+        grpname = unique(grpname),
+        colname = unique(colname),
+        rownum = unique(rownum),
         stringsAsFactors = FALSE
       ) %>%
         dplyr::as_tibble() %>%
@@ -50,10 +68,7 @@ dt_styles_add <- function(
           locnum = locnum,
           colnum = NA_integer_,
           styles = list(styles)
-        ) %>%
-        dplyr::distinct() %>%
-        dplyr::select(locname, grpname, colname, locnum, rownum, styles)
-    ) %>%
+        )) %>%
     dt_styles_set(styles = ., data = data)
 }
 
