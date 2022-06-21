@@ -458,7 +458,7 @@ set_footnote_marks_stubhead <- function(data,
 
   if ("stubhead" %in% footnotes_tbl$locname) {
 
-    footnotes_tbl <- dplyr::filter(footnotes_tbl, locname == "stubhead")
+    footnotes_tbl <- footnotes_tbl[footnotes_tbl$locname == "stubhead",]
 
     if (nrow(footnotes_tbl) > 0) {
 
@@ -502,8 +502,7 @@ apply_footnotes_to_output <- function(data,
   footnotes_tbl <- dt_footnotes_get(data = data)
 
   # `data` location
-  footnotes_tbl_data <-
-    dplyr::filter(footnotes_tbl, locname %in% c("data", "stub"))
+  footnotes_tbl_data <- footnotes_tbl[footnotes_tbl$locname %in% c("data", "stub"), ]
 
   if (nrow(footnotes_tbl_data) > 0) {
 
@@ -575,7 +574,7 @@ set_footnote_marks_row_groups <- function(data,
   groups_rows_df <- dt_groups_rows_get(data = data)
   footnotes_tbl <- dt_footnotes_get(data = data)
 
-  footnotes_row_groups_tbl <- dplyr::filter(footnotes_tbl, locname == "row_groups")
+  footnotes_row_groups_tbl <- footnotes_tbl[footnotes_tbl$locname == "row_groups", ]
 
   if (nrow(footnotes_row_groups_tbl) > 0) {
 
