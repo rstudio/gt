@@ -143,8 +143,7 @@ resolve_footnotes_styles <- function(data,
     tbl_not_summary_cells <- tbl[cond,]
 
     tbl_summary_cells <-
-      tbl[!cond,] %>%
-      dplyr::filter(locname == "summary_cells") %>%
+      tbl[!cond & tbl$locname == "summary_cells",] %>%
       dplyr::inner_join(
         groups_rows_df,
         by = c("grpname" = "group_id")
@@ -315,9 +314,8 @@ resolve_footnotes_styles <- function(data,
 
 
     # Join the lookup table to `tbl`
-    tbl <-
-      dplyr::left_join(tbl, lookup_tbl, by = "footnotes") %>%
-      dplyr::mutate(fs_id = ifelse(locname == "none", NA_character_, fs_id))
+    tbl <- dplyr::left_join(tbl, lookup_tbl, by = "footnotes")
+    tbl$fs_id <- ifelse(tbl$locname == "none", NA_character_, tbl$fs_id)
 
     if (nrow(tbl) > 0) {
 
@@ -329,15 +327,10 @@ resolve_footnotes_styles <- function(data,
       tbl <- tbl[!cond, ]
 
       if (nrow(tbl) > 0) {
-
-        tbl <-
-          dplyr::mutate(
-            tbl,
-            fs_id = process_footnote_marks(
-              x = as.integer(fs_id),
-              marks = footnote_marks
-            )
-          )
+        tbl$fs_id <- process_footnote_marks(
+          x = as.integer(fs_id),
+          marks = footnote_marks
+        )
       }
 
       tbl <- dplyr::bind_rows(tbl_no_loc, tbl)
@@ -386,19 +379,11 @@ set_footnote_marks_columns <- function(data,
   # for the column label groups
   if (any(c("columns_columns", "columns_groups") %in% footnotes_tbl$locname)) {
 
-    footnotes_tbl <-
-      dplyr::filter(
-        footnotes_tbl,
-        locname %in% c("columns_columns", "columns_groups")
-      )
-
     # Filter the spanner column footnotes
-    footnotes_columns_groups_tbl <-
-      dplyr::filter(footnotes_tbl, locname == "columns_groups")
+    footnotes_columns_groups_tbl <- footnotes_tbl[footnotes_tbl$locname == "columns_groups", ]
 
     # Filter the column label footnotes
-    footnotes_columns_columns_tbl <-
-      dplyr::filter(footnotes_tbl, locname == "columns_columns")
+    footnotes_columns_columns_tbl <- footnotes_tbl[footnotes_tbl$locname == "columns_columns", ]
 
     if (nrow(footnotes_columns_groups_tbl) > 0) {
 
@@ -434,8 +419,7 @@ set_footnote_marks_columns <- function(data,
     if (nrow(footnotes_columns_columns_tbl) > 0) {
 
       footnotes_columns_column_marks <-
-        footnotes_columns_columns_tbl %>%
-        dplyr::filter(locname == "columns_columns") %>%
+        footnotes_columns_columns_tbl[footnotes_columns_columns_tbl$locname == "columns_columns"] %>%
         dplyr::group_by(colname) %>%
         dplyr::mutate(fs_id_coalesced = paste(fs_id, collapse = ",")) %>%
         dplyr::ungroup() %>%
@@ -444,23 +428,15 @@ set_footnote_marks_columns <- function(data,
 
       for (i in seq(nrow(footnotes_columns_column_marks))) {
 
-        text <-
-          boxh %>%
-          dplyr::filter(var == footnotes_columns_column_marks$colname[i]) %>%
-          dplyr::pull(column_label) %>%
-          .[[1]]
+        text <- boxh$column_label[
+          boxh$var == footnotes_columns_column_marks$colname[i]][[1]]
 
         text <- paste0(text, footnote_mark_fn(footnotes_columns_column_marks$fs_id_coalesced[i]))
 
-        boxh <-
-          dplyr::mutate(
-            boxh,
-            column_label = dplyr::case_when(
-              var == footnotes_columns_column_marks$colname[i] ~ list(text),
-              TRUE ~ column_label
-            )
-          )
-
+        boxh$column_label <- dplyr::case_when(
+          var == footnotes_columns_column_marks$colname[i] ~ list(text),
+          TRUE ~ column_label
+        )
         data <- dt_boxhead_set(data = data, boxh = boxh)
       }
     }
@@ -677,7 +653,7 @@ apply_footnotes_to_summary <- function(data,
 
   if ("summary_cells" %in% footnotes_tbl$locname) {
 
-    footnotes_tbl_data <- dplyr::filter(footnotes_tbl, locname == "summary_cells")
+    footnotes_tbl_data <- footnotes_tbl[footnotes_tbl$locname == "summary_cells", ]
 
     footnotes_data_marks <-
       footnotes_tbl_data %>%
@@ -720,7 +696,7 @@ apply_footnotes_to_summary <- function(data,
 
   if ("grand_summary_cells" %in% footnotes_tbl$locname) {
 
-    footnotes_tbl_data <- dplyr::filter(footnotes_tbl, locname == "grand_summary_cells")
+    footnotes_tbl_data <- footnotes_tbl[footnotes_tbl$locname == "grand_summary_cells", ]
 
     footnotes_data_marks <-
       footnotes_tbl_data %>%
