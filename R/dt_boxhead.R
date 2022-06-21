@@ -186,7 +186,7 @@ dt_boxhead_get_vars_groups <- function(data) {
 
 dt_boxhead_get_var_by_type <- function(data, type) {
   boxhead <- dt_boxhead_get(data = data)
-  boxhead[boxhead$type == type, "var"]
+  unlist(boxhead[boxhead$type == type, "var"])
 }
 
 dt_boxhead_get_vars_labels_default <- function(data) {

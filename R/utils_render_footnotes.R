@@ -67,7 +67,7 @@ resolve_footnotes_styles <- function(data,
 
   # Filter by `grpname` in row groups
   if ("row_groups" %in% tbl[["locname"]]) {
-    cond <- cond & (tbl$locname != "row_groups" | tbl$grpname %in% grops_rows_df$group_id)
+    cond <- cond & (tbl$locname != "row_groups" | tbl$grpname %in% groups_rows_df$group_id)
   }
 
   # Filter `tbl` by the remaining columns in `body`
@@ -141,13 +141,14 @@ resolve_footnotes_styles <- function(data,
     cond <- tbl$locname != "summary_cells"
     tbl_not_summary_cells <- tbl[cond,]
 
-    tbl_summary_cells <- tbl[!cond,]
+    tbl_summary_cells <-
+      tbl[!cond,] %>%
       dplyr::filter(locname == "summary_cells") %>%
       dplyr::inner_join(
         groups_rows_df %>% dplyr::select(-group_label),
         by = c("grpname" = "group_id")
       )
-    tbl_summary_cells$rownum = tbl_summary_cells$rownum / 100 +
+    tbl_summary_cells$rownum <- tbl_summary_cells$rownum / 100 +
       tbl_summary_cells$row_end
     tbl_summary_cells$row_start <- NULL
     tbl_summary_cells$row_end <- NULL
