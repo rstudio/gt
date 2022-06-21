@@ -33,43 +33,22 @@ dt_styles_add <- function(
     rownum,
     styles
 ) {
-  # cscheid: I don't understand why the commented-out code below
-  # doesn't work..
-  #
-  #result <- dt_styles_get(data)
-  #grid <- dplyr::bind_rows(result, expand.grid(
-  #  colname = unique(result$colname),
-  #  grpname = unique(result$grpname),
-  #  rownum = unique(result$rownum),
-  #  stringsAsFactors = FALSE
-  #))
-  #df <- dplyr::tibble(
-  #  locname = grid$locname,
-  #  grpname = grid$grpname,
-  #  colname = grid$colname,
-  #  locnum = grid$locnum,
-  #  colnum = NA_integer_,
-  #  rownum = grid$rownum,
-  #  styles = list(grid$styles)
-  #)
-  #dt_styles_set(styles = df, data = data)
-
-  dt_styles_get(data) %>%
-    dplyr::bind_rows(
-      expand.grid(
-        grpname = unique(grpname),
-        colname = unique(colname),
-        rownum = unique(rownum),
-        stringsAsFactors = FALSE
-      ) %>%
-        dplyr::as_tibble() %>%
-        dplyr::mutate(
-          locname = locname,
-          locnum = locnum,
-          colnum = NA_integer_,
-          styles = list(styles)
-        )) %>%
-    dt_styles_set(styles = ., data = data)
+  grid <- expand.grid(
+    colname = unique(colname),
+    grpname = unique(grpname),
+    rownum = unique(rownum),
+    stringsAsFactors = FALSE
+  )
+  result <- dplyr::tibble(
+    locname = locname,
+    grpname = grid$grpname,
+    colname = grid$colname,
+    locnum = locnum,
+    colnum = NA_integer_,
+    rownum = grid$rownum,
+    styles = list(styles)
+  )
+  dt_styles_set(styles = dplyr::bind_rows(dt_styles_get(data), result), data = data)
 }
 
 dt_styles_pluck <- function(styles_tbl,
