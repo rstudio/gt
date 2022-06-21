@@ -35,14 +35,12 @@ dt_footnotes_add <- function(
     footnotes,
     placement
 ) {
-
-  data %>%
-    dt_footnotes_get() %>%
+  dt_footnotes_get(data) %>%
     dplyr::bind_rows(
       expand.grid(
-        grpname = grpname,
-        colname = colname,
-        rownum = rownum,
+        grpname = unique(grpname),
+        colname = unique(colname),
+        rownum = unique(rownum),
         stringsAsFactors = FALSE
       ) %>%
         dplyr::as_tibble() %>%
@@ -52,9 +50,6 @@ dt_footnotes_add <- function(
           colnum = NA_integer_,
           footnotes = list(footnotes),
           placement = placement,
-        ) %>%
-        dplyr::distinct() %>%
-        dplyr::select(locname, grpname, colname, locnum, rownum, footnotes, placement)
-    ) %>%
+        )    ) %>%
     dt_footnotes_set(footnotes = ., data = data)
 }
