@@ -2146,10 +2146,14 @@ cell_borders <- function(
   # Resolve the selection of borders into a vector of
   # standardized sides
   sides <-
-    vapply(
-      sides, resolve_border_side,
-      FUN.VALUE = character(1), USE.NAMES = FALSE) %>%
-    unique()
+    unique(
+      vapply(
+        sides,
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = resolve_border_side
+      )
+    )
 
   # Should the `all` selection appear in the
   # `sides` vector, use all possible sides
@@ -2157,29 +2161,38 @@ cell_borders <- function(
     sides <- c("left", "right", "top", "bottom")
   }
 
-  lapply(sides, function(side) {
+  style_list <-
+    lapply(
+      sides,
+      FUN = function(side) {
 
-    style_vals <-
-      list(
-        side = side,
-        width = weight,
-        style = style,
-        color = color
-      )
+        style_vals <-
+          list(
+            side = side,
+            width = weight,
+            style = style,
+            color = color
+          )
 
-    validate_style_in(
-      style_vals, names(style_vals), "style",
-      c("solid", "dashed", "dotted")
+        validate_style_in(
+          style_vals, names(style_vals), "style",
+          c("solid", "dashed", "dotted")
+        )
+
+        cell_style_structure(
+          name = paste0("cell_border_", side),
+          obj = style_vals,
+          subclass =  "cell_border"
+        )
+      }
     )
 
-    cell_style_structure(paste0("cell_border_", side), style_vals, "cell_border")
-  }) %>%
-    as_style()
+  as_style(style = style_list)
 }
 
 cell_style_to_html.cell_border <- function(style) {
 
-  css <- style %>% unclass()
+  css <- unclass(style)
 
   side <- css$side
 
