@@ -2293,9 +2293,11 @@ cell_style_structure <- function(name, obj, subclass = name) {
 #' @export
 google_font <- function(name) {
 
+  name <- gsub(" ", "+", name)
+
   import_stmt <-
-    name %>% tidy_gsub(" ", "+") %>%
     paste_between(
+      name,
       c(
         "@import url('https://fonts.googleapis.com/css2?family=",
         ":ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');"
@@ -2597,14 +2599,15 @@ gt_latex_dependencies <- function() {
 
   if (requireNamespace("knitr", quietly = TRUE)) {
 
-    paste(
-      "",
-      "% gt packages",
-      paste0("\\usepackage{", latex_packages(), "}", collapse = "\n"),
-      "",
-      sep = "\n"
-    ) %>%
-      knitr::asis_output()
+    knitr::asis_output(
+      paste(
+        "",
+        "% gt packages",
+        paste0("\\usepackage{", latex_packages(), "}", collapse = "\n"),
+        "",
+        sep = "\n"
+      )
+    )
 
   } else {
     cli::cli_abort(
