@@ -1,12 +1,10 @@
 .dt_boxhead_key <- "_boxhead"
 
 dt_boxhead_get <- function(data) {
-
   dt__get(data, .dt_boxhead_key)
 }
 
 dt_boxhead_set <- function(data, boxh) {
-
   dt__set(data, .dt_boxhead_key, boxh)
 }
 
@@ -77,14 +75,16 @@ dt_boxhead_edit <- function(data, var, ...) {
   dt_boxhead_set(data = data, boxh = dt_boxhead)
 }
 
-dt_boxhead_add_var <- function(data,
-                               var,
-                               type,
-                               column_label = list(var),
-                               column_align = "left",
-                               column_width = list(NULL),
-                               hidden_px = list(NULL),
-                               add_where = "top") {
+dt_boxhead_add_var <- function(
+    data,
+    var,
+    type,
+    column_label = list(var),
+    column_align = "left",
+    column_width = list(NULL),
+    hidden_px = list(NULL),
+    add_where = "top"
+) {
 
   dt_boxhead <- dt_boxhead_get(data = data)
 
@@ -114,6 +114,7 @@ dt_boxhead_set_hidden <- function(data, vars) {
   dt_boxhead <- dt_boxhead_get(data = data)
 
   dt_boxhead[which(dt_boxhead$var %in% vars), "type"] <- "hidden"
+
   dt_boxhead_set(data = data, boxh = dt_boxhead)
 }
 
@@ -122,6 +123,7 @@ dt_boxhead_set_not_hidden <- function(data, vars) {
   dt_boxhead <- dt_boxhead_get(data = data)
 
   dt_boxhead[which(dt_boxhead$var %in% vars), "type"] <- "default"
+
   dt_boxhead_set(data = data, boxh = dt_boxhead)
 }
 
@@ -131,6 +133,7 @@ dt_boxhead_set_stub <- function(data, var) {
 
   dt_boxhead[which(dt_boxhead$var == var), "type"] <- "stub"
   dt_boxhead[which(dt_boxhead$var == var), "column_align"] <- "left"
+
   dt_boxhead_set(data = data, boxh = dt_boxhead)
 }
 
@@ -140,6 +143,7 @@ dt_boxhead_set_row_group <- function(data, vars) {
 
   dt_boxhead[which(dt_boxhead$var %in% vars), "type"] <- "row_group"
   dt_boxhead[which(dt_boxhead$var %in% vars), "column_align"] <- "left"
+
   dt_boxhead_set(data = data, boxh = dt_boxhead)
 }
 
@@ -226,19 +230,18 @@ dt_boxhead_build <- function(data, context) {
   boxh$column_label <-
     lapply(boxh$column_label, function(label) process_text(label, context))
 
-  data <- dt_boxhead_set(data = data, boxh = boxh)
-
-  data
+  dt_boxhead_set(data = data, boxh = boxh)
 }
 
 dt_boxhead_set_var_order <- function(data, vars) {
 
   boxh <- dt_boxhead_get(data = data)
 
-  if (length(vars) != nrow(boxh) ||
-      length(unique(vars)) != nrow(boxh) ||
-      !all(vars %in% boxh$var)
-      ) {
+  if (
+    length(vars) != nrow(boxh) ||
+    length(unique(vars)) != nrow(boxh) ||
+    !all(vars %in% boxh$var)
+  ) {
     cli::cli_abort("The length of `vars` must equal the row count of `_boxh`.")
   }
 
@@ -246,7 +249,5 @@ dt_boxhead_set_var_order <- function(data, vars) {
 
   boxh <- boxh[order_vars, ]
 
-  data <- dt_boxhead_set(data = data, boxh = boxh)
-
-  data
+  dt_boxhead_set(data = data, boxh = boxh)
 }
