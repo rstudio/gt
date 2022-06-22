@@ -7,18 +7,21 @@ validate_contexts <- function(contexts) {
 
     invalid_contexts <- base::setdiff(contexts, all_contexts)
 
-    stop("All output contexts must be in the set of supported contexts\n",
-         " * Supported: ", paste0(all_contexts, collapse = ", "), "\n",
-         " * Invalid: ", paste0(invalid_contexts, collapse = ", "),
-         call. = FALSE)
+    cli::cli_abort(c(
+      "All output contexts must be in the set of supported contexts.",
+      "*" = "Supported: {paste0(all_contexts, collapse = ', ')}",
+      "*" = "Invalid: {paste0(invalid_contexts, collapse = ', ')}"
+    ))
   }
 }
 
 # Utility function to generate column numbers from column names;
 # used in: `resolve_footnotes_styles()`
-colname_to_colnum <- function(data,
-                              colname,
-                              missing_is_zero = FALSE) {
+colname_to_colnum <- function(
+    data,
+    colname,
+    missing_is_zero = FALSE
+) {
 
   col_nums <- c()
 
@@ -43,8 +46,7 @@ colname_to_colnum <- function(data,
 
 # Utility function to generate finalized row numbers;
 # used in: `resolve_footnotes_styles()`
-rownum_translation <- function(body,
-                               rownum_start) {
+rownum_translation <- function(body, rownum_start) {
 
   rownum_final <- c()
   for (rownum_s in rownum_start) {
@@ -61,10 +63,7 @@ rownum_translation <- function(body,
 #' Render any formatting directives available in the `formats` list
 #'
 #' @noRd
-render_formats <- function(
-    data,
-    context
-) {
+render_formats <- function(data, context) {
 
   body <- dt_body_get(data = data)
   data_tbl <- dt_data_get(data = data)
@@ -106,8 +105,7 @@ render_formats <- function(
 
 # Move input data cells to `body` that didn't have any rendering applied
 # during the `render_formats()` call
-migrate_unformatted_to_output <- function(data,
-                                          context) {
+migrate_unformatted_to_output <- function(data, context) {
 
   body <- dt_body_get(data = data)
   data_tbl <- dt_data_get(data = data)
@@ -188,8 +186,7 @@ perform_text_transforms <- function(data) {
 #' Obtain a reordering df for the data rows
 #'
 #' @noRd
-get_row_reorder_df <- function(groups,
-                               stub_df) {
+get_row_reorder_df <- function(groups, stub_df) {
 
   # If there are no group, there there is no reordering
   # so just return a data frame where the starting row
@@ -268,8 +265,7 @@ reorder_styles <- function(data) {
 #' that specifies additional operations
 #'
 #' @noRd
-perform_col_merge <- function(data,
-                              context) {
+perform_col_merge <- function(data, context) {
 
   col_merge <- dt_col_merge_get(data = data)
   body <- dt_body_get(data = data)
@@ -284,7 +280,7 @@ perform_col_merge <- function(data,
     type <- col_merge[[i]]$type
 
     if (!(type %in% c("merge", "merge_range", "merge_uncert", "merge_n_pct"))) {
-      stop("Unknown `type` supplied.")
+      cli::cli_abort("Unknown `type` supplied.")
     }
 
     if (type == "merge") {
@@ -531,9 +527,9 @@ get_effective_number_of_columns <- function(data) {
 
   # Check if the table has been built, return an error if that's not the case
   if (!dt_has_built(data)) {
-    stop(
-      "The `get_effective_number_of_columns()` function can only be used on ",
-      "gt objects that have tables 'built'."
+    cli::cli_abort(
+      "The `get_effective_number_of_columns()` function can only be used on
+      gt objects that have tables 'built'."
     )
   }
 

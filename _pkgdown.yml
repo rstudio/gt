@@ -246,24 +246,12 @@ reference:
     - body_add_gt
 
 navbar:
-  type: default
-  left:
-  - text: Intro
-    href: articles/intro-creating-gt-tables.html
-  - text: Articles
-    menu:
-    - text: How to Use
-    - text: gt Datasets
-      href: articles/gt-datasets.html
-    - text: Summary Lines
-      href: articles/creating-summary-lines.html
-    - text: Case Studies
-    - text: 'Case Study: gtcars'
-      href: articles/case-study-gtcars.html
-  - text: Reference
-    href: reference/index.html
-  - text: News
-    href: news/index.html
+  structure:
+    left: [intro, articles, reference, news]
+  components:
+    intro:
+      text: Intro
+      href: articles/intro-creating-gt-tables.html
 
 development:
   version_tooltip: "Development version"

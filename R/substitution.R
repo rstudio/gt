@@ -118,11 +118,11 @@ fmt_missing <- function(
     missing_text = "---"
 ) {
 
-  warning(
-    "The `fmt_missing()` function is deprecated and will soon be removed\n",
-    "* Use the `sub_missing()` function instead",
-    call. = FALSE
-  )
+  cli::cli_warn(c(
+    "Since gt v0.6.0 the `fmt_missing()` function is deprecated and will
+    soon be removed.",
+    "*" = "Use the `sub_missing()` function instead."
+  ))
 
   sub_missing(
     data = data,
@@ -624,11 +624,10 @@ sub_large_vals <- function(
 check_sub_fn_sign <- function(sign) {
 
   if (!(sign %in% c("+", "-"))) {
-    stop(
-      "The `sign` option should either be `\"+\"` or `\"-\"`:\n",
-      "* With `\"+\"`, we consider only positive large values\n",
-      "* Using `\"-\"` means that the focus is on negative values\n",
-      call. = FALSE
-    )
+    cli::cli_abort(c(
+      "The `sign` option should either be \"+\" or \"-\".",
+      "*" = "With \"+\", we consider only positive large values.",
+      "*" = "Using \"-\" means that the focus is on negative values."
+    ))
   }
 }

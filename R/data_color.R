@@ -207,8 +207,9 @@ data_color <- function(
 
       } else {
 
-        stop("Don't know how to map colors to a column of class ", class(data_vals)[1], ".",
-             call. = FALSE)
+        cli::cli_abort(
+          "Don't know how to map colors to a column of class {class(data_vals)[1]}."
+        )
       }
 
     } else if (inherits(colors, "function")) {
@@ -218,8 +219,9 @@ data_color <- function(
 
     } else {
 
-      stop("The `colors` arg must be either a character vector of colors or a function",
-           call. = FALSE)
+      cli::cli_abort(
+        "The `colors` arg must be either a character vector of colors or a function."
+      )
     }
 
     # Evaluate `color_fn` with `eval_tidy()` (supports quosures)
@@ -420,7 +422,8 @@ html_color <- function(colors, alpha = NULL) {
 
   # Stop function if there are any NA values in `colors`
   if (any(is.na(colors))) {
-    stop("No values supplied in `colors` should be NA")
+
+    cli::cli_abort("No values supplied in `colors` should be `NA`.")
   }
 
   is_rgba <- is_rgba_col(colors = colors)
@@ -554,14 +557,16 @@ check_named_colors <- function(named_colors) {
 
     invalid_colors <- base::setdiff(unique(named_colors), valid_color_names())
 
-    stop(
+    one_several_invalid <-
       ifelse(
         length(invalid_colors) > 1,
         "Several invalid color names were ",
         "An invalid color name was "
-      ), "used (", str_catalog(invalid_colors, conj = "and"), "):\n",
-      " * Only R/X11 color names and CSS 3.0 color names can be used",
-      call. = FALSE
-    )
+      )
+
+    cli::cli_abort(c(
+      "{one_several_invalid} used ({str_catalog(invalid_colors, conj = 'and')}).",
+      "*" = "Only R/X11 color names and CSS 3.0 color names can be used."
+    ))
   }
 }

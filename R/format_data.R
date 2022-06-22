@@ -205,10 +205,9 @@ fmt_number <- function(
       valid_classes = c("numeric", "integer")
     )
   ) {
-    stop(
-      "The `fmt_number()` and `fmt_integer()` functions can only be ",
-      "used on `columns` with numeric data",
-      call. = FALSE
+    cli::cli_abort(
+      "The `fmt_number()` and `fmt_integer()` functions can only be
+      used on `columns` with numeric data."
     )
   }
 
@@ -497,9 +496,9 @@ fmt_scientific <- function(
       valid_classes = c("numeric", "integer")
     )
   ) {
-    stop(
-      "The `fmt_scientific()` function can only be used on `columns` with numeric data.",
-      call. = FALSE
+    cli::cli_abort(
+      "The `fmt_scientific()` function can only be used on `columns`
+      with numeric data."
     )
   }
 
@@ -673,9 +672,18 @@ fmt_engineering <- function(
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(data, {{ columns }}, valid_classes = c("numeric", "integer"))) {
-    stop("The `fmt_scientific()` function can only be used on `columns` with numeric data",
-         call. = FALSE)
+
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = c("numeric", "integer")
+    )
+  ) {
+    cli::cli_abort(
+      "The `fmt_engineering()` function can only be used on `columns`
+      with numeric data."
+    )
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -1027,9 +1035,9 @@ fmt_percent <- function(
       valid_classes = c("numeric", "integer")
     )
   ) {
-    stop(
-      "The `fmt_percent()` function can only be used on `columns` with numeric data.",
-      call. = FALSE
+    cli::cli_abort(
+      "The `fmt_percent()` function can only be used on `columns`
+      with numeric data."
     )
   }
 
@@ -1186,10 +1194,9 @@ fmt_partsper <- function(
       valid_classes = c("numeric", "integer")
     )
   ) {
-    stop(
-      "The `fmt_per_x()` function can only be used on `columns` ",
-      "with numeric data.",
-      call. = FALSE
+    cli::cli_abort(
+      "The `fmt_partsper()` function can only be used on `columns`
+      with numeric data."
     )
   }
 
@@ -1416,32 +1423,29 @@ fmt_fraction <- function(
 
       if (!(accuracy %in% c("low", "med", "high"))) {
 
-        stop(
-          "The value supplied for `accuracy` is invalid:\n",
-          "* Must be either \"low\", \"med\", or \"high\"",
-          call. = FALSE
-        )
+        cli::cli_abort(c(
+          "The value supplied for `accuracy` is invalid.",
+          "*" = "Must be either \"low\", \"med\", or \"high\"."
+        ))
       }
 
     } else if (is.numeric(accuracy)) {
 
       if (accuracy < 1) {
 
-        stop(
-          "The numeric value supplied for `accuracy` is invalid:\n",
-          "* Must be an integer value greater than zero",
-          call. = FALSE
-        )
+        cli::cli_abort(c(
+          "The numeric value supplied for `accuracy` is invalid.",
+          "*" = "Must be an integer value greater than zero."
+        ))
       }
 
     } else {
 
-      stop(
-        "The input for `accuracy` is invalid:\n",
-        "* Must be a keyword \"low\", \"med\", or \"high\", or\n",
-        "* Must be an integer value greater than zero",
-        call. = FALSE
-      )
+      cli::cli_abort(c(
+        "The input for `accuracy` is invalid.",
+        "*" = "Must be a keyword \"low\", \"med\", or \"high\", or",
+        "*" = "Must be an integer value greater than zero."
+      ))
     }
   }
 
@@ -1450,16 +1454,16 @@ fmt_fraction <- function(
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(
-    data = data,
-    columns = {{ columns }},
-    valid_classes = c("numeric", "integer")
-  )
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = c("numeric", "integer")
+    )
   ) {
-    stop(
-      "The `fmt_fraction()` function can only be used on `columns` ",
-      "with numeric data",
-      call. = FALSE
+    cli::cli_abort(
+      "The `fmt_fraction()` function can only be used on `columns`
+      with numeric data."
     )
   }
 
@@ -1864,9 +1868,9 @@ fmt_currency <- function(
       valid_classes = c("numeric", "integer")
     )
   ) {
-    stop(
-      "The `fmt_currency()` function can only be used on `columns` with numeric data.",
-      call. = FALSE
+    cli::cli_abort(
+      "The `fmt_currency()` function can only be used on `columns`
+      with numeric data."
     )
   }
 
@@ -2207,11 +2211,11 @@ fmt_date <- function(
       valid_classes = c("Date", "POSIXt", "character")
     )
   ) {
-    stop(
-      "The `fmt_date()` function can only be used on `columns` of certain types:\n",
-      "* Allowed types are `Date`, `POSIXt`, and `character` (in ISO 8601 format).",
-      call. = FALSE
-    )
+    cli::cli_abort(c(
+      "The `fmt_date()` function can only be used on `columns` of certain types.",
+      "*" = "Allowed types are `Date`, `POSIXt`, and `character` (with
+      ISO-8601 formatted dates)."
+    ))
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -2231,9 +2235,8 @@ fmt_date <- function(
           tryCatch(
             as.POSIXlt(x),
             error = function(cond) {
-              stop(
-                "One or more of the provided date/date-time values are invalid.",
-                call. = FALSE
+              cli::cli_abort(
+                "One or more of the provided date/datetime values are invalid."
               )
             }
           )
@@ -2363,11 +2366,11 @@ fmt_time <- function(
       columns = {{ columns }},
       valid_classes = c("Date", "POSIXt", "character"))
   ) {
-    stop(
-      "The `fmt_time()` function can only be used on `columns` of certain types:\n",
-      "* Allowed types are `Date`, `POSIXt`, and `character` (in `HH:MM:SS` format).",
-      call. = FALSE
-    )
+    cli::cli_abort(c(
+      "The `fmt_time()` function can only be used on `columns` of certain types.",
+      "*" = "Allowed types are `Date`, `POSIXt`, and `character` (in
+      `HH:MM:SS` format)."
+    ))
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -2394,9 +2397,8 @@ fmt_time <- function(
           tryCatch(
             as.POSIXlt(x),
             error = function(cond) {
-              stop(
-                "One or more of the provided date/time/date-time values are invalid.",
-                call. = FALSE
+              cli::cli_abort(
+                "One or more of the provided date/time/datetime values are invalid."
               )
             }
           )
@@ -2598,13 +2600,14 @@ fmt_datetime <- function(
     !column_classes_are_valid(
       data = data,
       columns = {{ columns }},
-      valid_classes = c("Date", "POSIXct", "character"))
-    ) {
-      stop(
-        "The `fmt_datetime()` function can only be used on `columns` of certain types:\n",
-        "* Allowed types are `Date`, `POSIXct`, and `character` (in ISO 8601 format).",
-        call. = FALSE
-      )
+      valid_classes = c("Date", "POSIXct", "character")
+    )
+  ) {
+    cli::cli_abort(c(
+      "The `fmt_datetime()` function can only be used on `columns` of certain types.",
+      "*" = "Allowed types are `Date`, `POSIXt`, and `character` (with
+      ISO-8601 formatted dates)"
+    ))
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -2648,9 +2651,8 @@ fmt_datetime <- function(
           tryCatch(
             as.POSIXlt(x),
             error = function(cond) {
-              stop(
-                "One or more of the provided date/date-time values are invalid.",
-                call. = FALSE
+              cli::cli_abort(
+                "One or more of the provided date/datetime values are invalid."
               )
             }
           )
@@ -3084,7 +3086,7 @@ insert_seps_ind <- function(integer) {
 
   # Ensure that integer-based strings only contain numbers
   if (!grepl("^[0-9]+?$", integer)) {
-    stop(
+    cli::cli_abort(
       "The `integer` string must only contain numbers."
     )
   }

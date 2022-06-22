@@ -53,10 +53,9 @@ dt_spanners_add <- function(data,
         collapse = ", "
       )
 
-    stop(
-      "The column(s) used (", error_vars ,") for the new spanner `",
-      spanner_id, "` belong to an existing spanner",
-      call. = FALSE
+    cli::cli_abort(
+      "The column(s) used (`{error_vars}`) for the new spanner `{spanner_id}`
+      belong to an existing spanner."
     )
   }
 

@@ -60,11 +60,11 @@ dt_stub_df_init <- function(data,
     data <- data %>% dt_boxhead_set_row_group(vars = groupname_col)
   }
 
-  # Stop if input `data` has no columns (after modifying
-  # `data` for groups)
+  # Stop if input `data` has no columns (after modifying `data` for groups)
   if (ncol(data_tbl) == 0) {
-    stop("The `data` must have at least one column that isn't a 'group' column.",
-         call. = FALSE)
+    cli::cli_abort(
+      "The `data` must have at least one column that isn't a 'group' column."
+    )
   }
 
   data %>% dt_stub_df_set(stub_df = stub_df)

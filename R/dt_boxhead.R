@@ -61,7 +61,7 @@ dt_boxhead_edit <- function(data, var, ...) {
   val_list <- list(...)
 
   if (length(val_list) != 1) {
-    stop("`dt_boxhead_edit()` expects a single value at ...")
+    cli::cli_abort("`dt_boxhead_edit()` expects a single value at `...`.")
   }
 
   check_names_dt_boxhead_expr(val_list)
@@ -103,7 +103,7 @@ dt_boxhead_add_var <- function(data,
   } else if (add_where == "bottom") {
     dt_boxhead <- dplyr::bind_rows(dt_boxhead, dt_boxhead_row)
   } else {
-    stop("The `add_where` value must be either `top` or `bottom`.")
+    cli::cli_abort("The `add_where` value must be either `top` or `bottom`.")
   }
 
   dt_boxhead %>% dt_boxhead_set(data = data)
@@ -219,16 +219,14 @@ check_names_dt_boxhead_expr <- function(expr) {
   if (!all(names(expr) %in% c(
     "type", "column_label", "column_align", "column_width", "hidden_px"
   ))) {
-    stop("Expressions must use names available in `dt_boxhead`.",
-         call. = FALSE)
+    cli::cli_abort("Expressions must use names available in `dt_boxhead`.")
   }
 }
 
 check_vars_dt_boxhead <- function(var, dt_boxhead) {
 
   if (!(var %in% dt_boxhead$var)) {
-    stop("The `var` value must be value in `dt_boxhead$var`.",
-         call. = FALSE)
+    cli::cli_abort("The `var` value must be value in `dt_boxhead$var`.")
   }
 }
 
@@ -252,7 +250,7 @@ dt_boxhead_set_var_order <- function(data, vars) {
       length(unique(vars)) != nrow(boxh) ||
       !all(vars %in% boxh$var)
       ) {
-    stop("The length of `vars` must be the same the number of rows in `_boxh.")
+    cli::cli_abort("The length of `vars` must equal the row count of `_boxh`.")
   }
 
   order_vars <- vapply(vars, function(x) {which(boxh$var == x)}, numeric(1))

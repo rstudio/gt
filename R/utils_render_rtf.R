@@ -339,14 +339,15 @@ parse_length_str <- function(
 
   # Check for negative values and stop of `allow_negative = FALSE`
   non_na_vals <- vals[!is.na(vals)]
-  if (!allow_negative &&
-      length(non_na_vals) > 0 &&
-      any(!is.na(non_na_vals)) &&
-      is.numeric(non_na_vals) &&
-      any(non_na_vals < 0)) {
 
-    stop("Negative values supplied to widths cannot be used.",
-         call. = FALSE)
+  if (
+    !allow_negative &&
+    length(non_na_vals) > 0 &&
+    any(!is.na(non_na_vals)) &&
+    is.numeric(non_na_vals) &&
+    any(non_na_vals < 0)
+  ) {
+    cli::cli_abort("Negative values supplied to widths cannot be used.")
   }
 
   # Check for bad values and stop if necessary
@@ -355,14 +356,13 @@ parse_length_str <- function(
 
     bad_values <- lengths_vec[nzchar(lengths_vec) & is.na(vals)]
 
-    stop(
-      "Some of the values supplied cannot be interpreted:\n",
-      "* Problem values are: ",
-      str_catalog(bad_values, surround = c("\"")), "\n",
-      "* Use either of: `px`, `pt`, `in`, `cm`, `mm`, or `tw` ",
-      "(e.g., \"12px\")",
-      call. = FALSE
-    )
+    cli::cli_abort(c(
+      "Some of the values supplied cannot be interpreted.",
+      "*" = "Problem values are:
+      {str_catalog(bad_values, surround = c('\"'))}.",
+      "*" = "Use either of: `px`, `pt`, `in`, `cm`, `mm`, or `tw`
+      (e.g., \"12px\")"
+    ))
   }
 
   dplyr::tibble(value = vals, unit = units)
@@ -831,7 +831,9 @@ rtf_font_styling <- function(
     } else if (super_sub == "sub") {
       cell_super_sub <- rtf_key("sub")
     } else {
-      stop("The super_sub value must be either `\"super\"` or `\"sub\"`.")
+      cli::cli_abort(
+        "The `super_sub` value must be either \"super\" or \"sub\"."
+      )
     }
   } else {
     cell_super_sub <- ""
