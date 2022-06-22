@@ -241,7 +241,9 @@ reference:
     - as_raw_html
     - as_latex
     - as_rtf
+    - as_word
     - extract_summary
+    - body_add_gt
 
 navbar:
   type: default
