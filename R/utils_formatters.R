@@ -906,9 +906,11 @@ num_fmt_factory_multi <- function(pattern,
 
   # Generate a named list of factory functions, with one
   # component per context
-  all_contexts %>%
-    magrittr::set_names(all_contexts) %>%
-    lapply(function(x) {
+  names(all_contexts) <- all_contexts
+
+  lapply(
+    all_contexts,
+    FUN = function(x) {
       num_fmt_factory(
         context = x,
         pattern = pattern,
