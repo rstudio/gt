@@ -285,7 +285,8 @@ resolve_footnotes_styles <- function(data,
       tmp$rownum <- NULL
       tmp <- tmp[tmp$locname == "columns_groups", ]
 
-      tbl_column_spanner_cells <- tmp
+      tbl_column_spanner_cells <-
+        tmp %>%
         dplyr::inner_join(spanner_label_df, by = "grpname")
 
       # Re-combine `tbl_not_col_spanner_cells` with `tbl_not_col_spanner_cells`
