@@ -2171,19 +2171,16 @@ tab_options <- function(
     page.footer.height = NULL
 ) {
 
-  # TODO: add helper functions to divide the options into those by location
-  # TODO: add helper functions to divide the options into those by parameter
-
   # Perform input object validation
   stop_if_not_gt(data = data)
 
   # Extract the options table from `data`
   opts_df <- dt_options_get(data = data)
 
-  arg_names <- formals(tab_options) %>% names() %>% base::setdiff("data")
+  arg_names <- base::setdiff(names(formals(tab_options)), "data")
   arg_vals <- mget(arg_names)
   arg_vals <- arg_vals[!vapply(arg_vals, FUN = is.null, FUN.VALUE = logical(1))]
-  arg_vals <- arg_vals %>% set_super_options()
+  arg_vals <- set_super_options(arg_vals)
 
   new_df <-
     dplyr::tibble(
