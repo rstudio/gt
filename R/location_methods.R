@@ -32,19 +32,15 @@ add_summary_location_row <- function(
 ) {
 
   stub_df <- dt_stub_df_get(data = data)
-
-  row_groups <-
-    stub_df %>%
-    dplyr::pull(group_id) %>%
-    unique()
+  row_groups <- unique(stub_df$group_id)
 
   summary_data <- dt_summary_get(data = data)
 
   summary_data_summaries <-
     vapply(
       seq(summary_data),
-      function(x) !is.null(summary_data[[x]]$groups),
-      logical(1)
+      FUN.VALUE = logical(1),
+      FUN = function(x) !is.null(summary_data[[x]]$groups)
     )
 
   summary_data <- summary_data[summary_data_summaries]
@@ -63,18 +59,20 @@ add_summary_location_row <- function(
   for (group in groups) {
 
     summary_labels <-
-      lapply(
-        summary_data,
-        function(summary_data_item) {
-          if (isTRUE(summary_data_item$groups)) {
-            summary_data_item$summary_labels
-          } else if (group %in% summary_data_item$groups){
-            summary_data_item$summary_labels
-          }
-        }
-      ) %>%
-      unlist() %>%
-      unique()
+      unique(
+        unlist(
+          lapply(
+            summary_data,
+            FUN = function(summary_data_item) {
+              if (isTRUE(summary_data_item$groups)) {
+                summary_data_item$summary_labels
+              } else if (group %in% summary_data_item$groups){
+                summary_data_item$summary_labels
+              }
+            }
+          )
+        )
+      )
 
     if (!inherits(loc, "cells_stub_summary")) {
 
@@ -151,14 +149,19 @@ add_grand_summary_location_row <- function(
   summary_data <- dt_summary_get(data = data)
 
   grand_summary_labels <-
-    lapply(summary_data, function(summary_data_item) {
-      if (is.null(summary_data_item$groups)) {
-        return(summary_data_item$summary_labels)
-      }
-      NULL
-    }) %>%
-    unlist() %>%
-    unique()
+    unique(
+      unlist(
+        lapply(
+          summary_data,
+          FUN = function(summary_data_item) {
+            if (is.null(summary_data_item$groups)) {
+              return(summary_data_item$summary_labels)
+            }
+            NULL
+          }
+        )
+      )
+    )
 
   if (!inherits(loc, "cells_stub_grand_summary")) {
 
@@ -236,9 +239,6 @@ resolve_location.resolved <- function(loc, data) {
 }
 
 resolve_location.cells_body <- function(loc, data) {
-
-  data_tbl <- dt_data_get(data = data)
-  stub_df <- dt_stub_df_get(data = data)
 
   loc$colnames <-
     resolve_cols_c(
