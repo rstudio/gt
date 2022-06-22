@@ -159,9 +159,7 @@ data_color <- function(
   colnames <- names(data_tbl)
 
   # Resolution of `columns` as column names in the table
-  #columns <- rlang::enquo(columns)
-  resolved_columns <-
-    resolve_cols_c(expr = {{ columns }}, data = data)
+  resolved_columns <- resolve_cols_c(expr = {{ columns }}, data = data)
 
   # Get the sequence of row indices for the table
   rows <- seq_len(nrow(data_tbl))
@@ -191,19 +189,22 @@ data_color <- function(
         # of levels. Instead, colors should be subsetted. scales does the right
         # thing for palette names though, so we need to screen those cases out.
         if (length(colors) > 1) {
+
           nlvl <-
             if (is.factor(data_vals)) {
               nlevels(data_vals)
             } else {
               nlevels(factor(data_vals))
             }
+
           if (length(colors) > nlvl) {
             colors <- colors[seq_len(nlvl)]
           }
         }
 
         # Create a color function based on `scales::col_factor()`
-        color_fn <- scales::col_factor(palette = colors, domain = data_vals, alpha = TRUE)
+        color_fn <-
+          scales::col_factor(palette = colors, domain = data_vals, alpha = TRUE)
 
       } else {
 
@@ -380,19 +381,19 @@ rgba_to_hex <- function(colors) {
 
   colors_vec[!colors_rgba] <- colors[!colors_rgba]
 
+  rgba_str <- gsub(pattern = "(rgba\\(|\\))", replacement = "", x = colors[colors_rgba])
+
+  rgba_vec <- as.numeric(unlist(strsplit(rgba_str, ",")))
+
   color_matrix <-
-    colors[colors_rgba] %>%
-    gsub(pattern = "(rgba\\(|\\))", replacement = "", x = .) %>%
-    strsplit(",") %>%
-    unlist() %>%
-    as.numeric() %>%
     matrix(
-      ., ncol = 4,
+      rgba_vec,
+      ncol = 4,
       dimnames = list(c(), c("r", "g", "b", "alpha")),
       byrow = TRUE
     )
 
-  alpha <- color_matrix[, "alpha"] %>% unname()
+  alpha <- unname(color_matrix[, "alpha"])
 
   # Convert color matrix to hexadecimal colors in the #RRGGBBAA format
   colors_to_hex <-
@@ -524,8 +525,7 @@ normalize_colors <- function(colors, alpha) {
 
   # Generate rgba() color values for `colors_html`
   colors_html[!colors_alpha_1] <-
-    color_matrix[!colors_alpha_1, , drop = FALSE] %>%
-    col_matrix_to_rgba()
+    col_matrix_to_rgba(color_matrix[!colors_alpha_1, , drop = FALSE])
 
   colors_html
 }
