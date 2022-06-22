@@ -5,11 +5,13 @@ compile_scss <- function(data, id = NULL) {
   gt_options_tbl <- dt_options_get(data = data)
 
   gt_options_tbl <- gt_options_tbl[gt_options_tbl$scss & !is.na(gt_options_tbl$value), ]
-  gt_options_tbl <- dplyr::mutate(gt_options_tbl,
-      value = {
-        color_rows <- grepl("_color", .data$parameter)
-        value[color_rows] <- lapply(value[color_rows], html_color)
-        value
+
+  color_rows <- grepl("_color", gt_options_tbl$parameter)
+
+  gt_options_tbl <-
+    within(
+      gt_options_tbl,{
+        value[color_rows] = value[color_rows] <- lapply(value[color_rows], html_color)
       }
     )
 
