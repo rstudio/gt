@@ -35,12 +35,14 @@ dt_footnotes_add <- function(
     footnotes,
     placement
 ) {
+
   grid <- expand.grid(
     colname = unique(colname),
     grpname = unique(grpname),
     rownum = unique(rownum),
     stringsAsFactors = FALSE
   )
+
   result <- dplyr::tibble(
     locname = locname,
     grpname = grid$grpname,
@@ -51,7 +53,11 @@ dt_footnotes_add <- function(
     footnotes = list(footnotes),
     placement = placement
   )
-  dt_styles_set(styles = dplyr::bind_rows(dt_styles_get(data), result), data = data)
+
+  dt_footnotes_set(
+    data = data,
+    footnotes = dplyr::bind_rows(dt_footnotes_get(data), result)
+  )
 
   #dt_footnotes_get(data) %>%
   #  dplyr::bind_rows(
