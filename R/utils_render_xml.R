@@ -1749,3 +1749,69 @@ summary_rows_xml <- function(list_of_summaries,
 
   summary_row_lines
 }
+
+cell_border <- function(color = "#D3D3D3", size = NULL){
+  list(
+    color = color,
+    size = size
+  )
+}
+
+xml_table_cell <-
+  function(text = NULL,
+           font_size = NULL,
+           font = NULL,
+           color = NULL,
+           stretch = NULL,
+           align = NULL,
+           v_align = NULL,
+           border = NULL,
+           fill = NULL,
+           keep_with_next = TRUE) {
+
+  xml_tc(
+    xml_tcPr(
+      if(!is.null(border)){
+        xml_tc_borders(
+          if(!is.null(border[["top"]])){xml_border("top", color = border[["top"]][["color"]], size = border[["top"]][["size"]])},
+          if(!is.null(border[["bottom"]])){xml_border("bottom", color = border[["bottom"]][["color"]], size = border[["bottom"]][["size"]])},
+          if(!is.null(border[["left"]])){xml_border("left", color = border[["left"]][["color"]], size = border[["left"]][["size"]])},
+          if(!is.null(border[["right"]])){xml_border("right", color = border[["right"]][["color"]], size = border[["right"]][["size"]])}
+        )
+      },
+      xml_tc_margins(
+        xml_width("top", width = 50)
+      ),
+      if(!is.null(fill)){xml_shd(fill = fill)},
+      if(!is.null(v_align)){xml_v_align(v_align = v_align)}
+    ),
+    xml_p(
+      xml_pPr(
+        xml_spacing(before = 0, after = 60),
+        if(keep_with_next){xml_keepNext()},
+        if(!is.null(stretch)){
+          xml_rPr(
+            xml_spacing(val = stretch)
+          )
+        },
+        if(!is.null(align)){xml_jc(val = align)}
+      ),
+      xml_r(
+        xml_rPr(
+          xml_r_font(
+            ascii_font= font %||% "Calibri",
+            ansi_font= font %||% "Calibri"
+          ),
+          xml_sz(val = font_size %||% 20),
+          if(!is.null(color)){
+            xml_color(color = color)
+          }
+        ),
+        xml_t(
+          text
+        )
+      )
+    )
+  )
+
+}
