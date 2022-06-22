@@ -199,8 +199,9 @@ check_shiny <- function() {
 
   if (!requireNamespace("shiny", quietly = TRUE)) {
 
-    stop("Please install the *shiny* package before using this function:\n",
-         "* Use `install.packages(\"shiny\")`",
-         call. = FALSE)
+    cli::cli_abort(c(
+      "Please install the shiny package before using this function.",
+      "*" = "Use `install.packages(\"shiny\")`."
+    ))
   }
 }

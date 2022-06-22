@@ -12,8 +12,9 @@ as_locations <- function(locations) {
     if (!is.list(locations) &&
         any(!vapply(locations, inherits, logical(1), "location_cells"))) {
 
-      stop("The `locations` object should be a list of `cells_*()`.",
-           .call = FALSE)
+      cli::cli_abort(
+        "The `locations` object should be a list of `cells_*()` objects."
+      )
     }
   } else {
     locations <- list(locations)
@@ -84,9 +85,10 @@ add_summary_location_row <- function(
         )
 
       if (length(columns) == 0) {
-        stop("The location requested could not be resolved:\n",
-             " * Review the expression provided as `columns`",
-             call. = FALSE)
+        cli::cli_abort(c(
+          "The location requested could not be resolved.",
+          "*" = "Review the expression provided as `columns`."
+        ))
       }
     } else {
       columns <- NA_character_
@@ -100,9 +102,10 @@ add_summary_location_row <- function(
       )
 
     if (length(rows) == 0) {
-      stop("The location requested could not be resolved:\n",
-           " * Review the expression provided as `rows`",
-           call. = FALSE)
+      cli::cli_abort(c(
+        "The location requested could not be resolved.",
+        "*" = "Review the expression provided as `rows`."
+      ))
     }
 
     if (df_type == "footnotes_df") {
@@ -166,9 +169,10 @@ add_grand_summary_location_row <- function(
       )
 
     if (length(columns) == 0) {
-      stop("The location requested could not be resolved:\n",
-           " * Review the expression provided as `columns`",
-           call. = FALSE)
+      cli::cli_abort(c(
+        "The location requested could not be resolved.",
+        "*" = "Review the expression provided as `columns`."
+      ))
     }
   } else {
     columns <- NA_character_
@@ -182,9 +186,10 @@ add_grand_summary_location_row <- function(
     )
 
   if (length(rows) == 0) {
-    stop("The location requested could not be resolved:\n",
-         " * Review the expression provided as `rows`",
-         call. = FALSE)
+    cli::cli_abort(c(
+      "The location requested could not be resolved.",
+      "*" = "Review the expression provided as `rows`."
+    ))
   }
 
   if (df_type == "footnotes_df") {
@@ -262,12 +267,10 @@ resolve_location.cells_column_labels <- function(loc, data) {
       )
   }
 
-  # TODO: for now, when groups is set to TRUE, the
-  # behavior is not to select all groups; this
-  # should be changed to select all group
+  # TODO: for now, when groups is set to TRUE, the behavior is not to
+  #       select all groups; this should be changed to select all groups
 
-  # TODO: implement a stop() if groups provided not
-  # in the available set of groups
+  # TODO: abort() if groups provided not in the available set of groups
   class(loc) <- c("resolved", class(loc))
 
   loc

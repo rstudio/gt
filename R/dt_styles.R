@@ -65,7 +65,9 @@ dt_styles_pluck <- function(styles_tbl,
   grprow = missing_arg()) {
 
   if (is.null(styles_tbl$html_style)) {
-    stop("dt_styles_pluck must be passed a built styles table")
+    cli::cli_abort(
+      "The `dt_styles_pluck()` function must be passed a built 'styles' table."
+    )
   }
 
   idx <- rep_len(TRUE, nrow(styles_tbl))
