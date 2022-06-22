@@ -309,9 +309,15 @@ resolve_footnotes_styles <- function(data,
 
     # Generate a lookup table with ID'd footnote
     # text elements (that are distinct)
-    tmp <- unique(tbl$footnotes[tbl$locname != "none"])
-    lookup_tbl <- tibble(footnotes = tmp, fs_id = rownames(tmp))
+    # tmp <- unique(tbl$footnotes[tbl$locname != "none"])
+    # lookup_tbl <- dplyr::tibble(footnotes = tmp, fs_id = rownames(tmp))
 
+    lookup_tbl <-
+      tbl %>%
+      dplyr::filter(locname != "none") %>%
+      dplyr::select(footnotes) %>%
+      dplyr::distinct() %>%
+      tibble::rownames_to_column(var = "fs_id")
 
     # Join the lookup table to `tbl`
     tbl <- dplyr::left_join(tbl, lookup_tbl, by = "footnotes")
@@ -321,16 +327,28 @@ resolve_footnotes_styles <- function(data,
 
       cond <- tbl$locname == "none"
       # Retain the row that only contain `locname == "none"`
-      tbl_no_loc <- tbl[cond, ]
+      #tbl_no_loc <- tbl[cond, ]
+      tbl_no_loc <- dplyr::filter(tbl, locname == "none")
 
       # Modify `fs_id` to contain the footnote marks we need
-      tbl <- tbl[!cond, ]
+      #tbl <- tbl[!cond, ]
+      tbl <- dplyr::filter(tbl, locname != "none")
 
       if (nrow(tbl) > 0) {
-        tbl$fs_id <- process_footnote_marks(
-          x = as.integer(fs_id),
-          marks = footnote_marks
-        )
+
+        # tbl$fs_id <- process_footnote_marks(
+        #   x = as.integer(fs_id),
+        #   marks = footnote_marks
+        # )
+
+        tbl <-
+          dplyr::mutate(
+            tbl,
+            fs_id = process_footnote_marks(
+              x = as.integer(fs_id),
+              marks = footnote_marks
+            )
+          )
       }
 
       tbl <- dplyr::bind_rows(tbl_no_loc, tbl)
@@ -419,7 +437,8 @@ set_footnote_marks_columns <- function(data,
     if (nrow(footnotes_columns_columns_tbl) > 0) {
 
       footnotes_columns_column_marks <-
-        footnotes_columns_columns_tbl[footnotes_columns_columns_tbl$locname == "columns_columns"] %>%
+        footnotes_columns_columns_tbl %>%
+        dplyr::filter(locname == "columns_columns") %>%
         dplyr::group_by(colname) %>%
         dplyr::mutate(fs_id_coalesced = paste(fs_id, collapse = ",")) %>%
         dplyr::ungroup() %>%
@@ -433,10 +452,19 @@ set_footnote_marks_columns <- function(data,
 
         text <- paste0(text, footnote_mark_fn(footnotes_columns_column_marks$fs_id_coalesced[i]))
 
-        boxh$column_label <- dplyr::case_when(
-          var == footnotes_columns_column_marks$colname[i] ~ list(text),
-          TRUE ~ column_label
-        )
+        # boxh$column_label <- dplyr::case_when(
+        #   var == footnotes_columns_column_marks$colname[i] ~ list(text),
+        #   TRUE ~ column_label
+        # )
+        boxh <-
+          dplyr::mutate(
+            boxh,
+            column_label = dplyr::case_when(
+              var == footnotes_columns_column_marks$colname[i] ~ list(text),
+              TRUE ~ column_label
+            )
+          )
+
         data <- dt_boxhead_set(data = data, boxh = boxh)
       }
     }
