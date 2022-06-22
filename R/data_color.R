@@ -219,7 +219,6 @@ data_color <- function(
       color_fn <- colors
 
     } else {
-
       cli::cli_abort(
         "The `colors` arg must be either a character vector of colors or a function."
       )
@@ -536,13 +535,10 @@ css_exclusive_colors <- function() {
 
   color_values <- color_tbl_subset[["hexadecimal"]]
 
-  color_values <-
-    stats::setNames(
-      color_values,
-      tolower(color_tbl_subset[["color_name"]])
-    )
-
-  color_values
+  stats::setNames(
+    color_values,
+    tolower(color_tbl_subset[["color_name"]])
+  )
 }
 
 valid_color_names <- function() {
