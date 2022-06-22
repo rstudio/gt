@@ -117,3 +117,4 @@ Collate:
     'utils_render_rtf.R'
     'zzz.R'
 Config/testthat/edition: 3
+Config/testthat/parallel: true
