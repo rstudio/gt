@@ -118,23 +118,18 @@ resolve_cells_column_labels <- function(data,
 #' @param object The list object created by the `cells_column_labels()`
 #'   function.
 #' @noRd
-resolve_cells_column_spanners <- function(data,
-                                          object) {
+resolve_cells_column_spanners <- function(data, object) {
+
+  spanners <- dt_spanners_get(data = data)
 
   #
   # Resolution of spanners as column spanner names
   #
-  spanner_labels <-
-    dt_spanners_get(data = data) %>%
-    .$spanner_label %>%
-    unlist() %>%
-    .[!is.na(.)] %>%
-    unique()
+  spanner_labels <- unlist(spanners$spanner_label)
+  spanner_labels <- unique(spanner_labels[!is.na(spanner_labels)])
 
-  spanner_ids <-
-    dt_spanners_get(data = data) %>%
-    .$spanner_id %>%
-    .[!is.na(.)]
+  spanner_ids <- spanners$spanner_id
+  spanner_ids <- spanner_ids[!is.na(spanner_ids)]
 
   resolved_spanners_idx <-
     resolve_vector_i(
