@@ -62,17 +62,40 @@ resolve_footnotes_styles <- function(data,
 
     spanner_ids <- unique(unlist(spanners$spanner_id))
 
-    cond <- cond & (tbl$locname != "columns_groups" | tbl$grpname %in% spanner_ids)
+    # cond <- cond & (tbl$locname != "columns_groups" | tbl$grpname %in% spanner_ids)
+
+    tbl <-
+      dplyr::filter(
+        tbl,
+        locname != "columns_groups" | grpname %in% spanner_ids
+      )
   }
 
   # Filter by `grpname` in row groups
   if ("row_groups" %in% tbl[["locname"]]) {
-    cond <- cond & (tbl$locname != "row_groups" | tbl$grpname %in% groups_rows_df$group_id)
+
+    # cond <- cond & (tbl$locname != "row_groups" | tbl$grpname %in% groups_rows_df$group_id)
+    #
+    # # Filter `tbl` by the remaining columns in `body`
+    # cond <- cond & (tbl$colname %in% c(NA_character_, dt_boxhead_get_vars_default(data = data)))
+    # tbl <- tbl[cond,]
+
+    tbl <-
+      dplyr::bind_rows(
+        dplyr::filter(tbl, locname != "row_groups"),
+        tbl %>%
+          dplyr::filter(locname == "row_groups") %>%
+          dplyr::filter(grpname %in% groups_rows_df$group_id)
+      )
   }
 
   # Filter `tbl` by the remaining columns in `body`
-  cond <- cond & (tbl$colname %in% c(NA_character_, dt_boxhead_get_vars_default(data = data)))
-  tbl <- tbl[cond,]
+  tbl <-
+    dplyr::filter(
+      tbl,
+      colname %in% c(NA_character_, dt_boxhead_get_vars_default(data = data))
+    )
+
 
   # Return `data` unchanged if there are no rows in `tbl`
   if (nrow(tbl) == 0) {
