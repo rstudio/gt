@@ -14,18 +14,15 @@ footnote_mark_to_latex <- function(mark) {
 }
 
 #' @noRd
-latex_body_row <- function(content,
-                           type) {
+latex_body_row <- function(content, type) {
 
   if (type == "row") {
 
-    return(
-      paste(paste(content, collapse = " & "), "\\\\ \n"))
+    return(paste(paste(content, collapse = " & "), "\\\\ \n"))
 
   } else if (type == "group") {
 
-    return(
-      paste(paste(content, collapse = " & "), "\\\\ \n"))
+    return(paste(paste(content, collapse = " & "), "\\\\ \n"))
   }
 }
 
@@ -35,20 +32,24 @@ latex_heading_row <- function(content) {
   paste0(
     paste(paste(content, collapse = " & "), "\\\\ \n"),
     "\\midrule\n",
-    collapse = "")
+    collapse = ""
+  )
 }
 
 #' @noRd
-latex_group_row <- function(group_name,
-                            top_border = TRUE,
-                            bottom_border = TRUE) {
+latex_group_row <- function(
+    group_name,
+    top_border = TRUE,
+    bottom_border = TRUE
+) {
 
   paste0(
     ifelse(top_border, "\\midrule\n", ""),
     "\\multicolumn{1}{l}{", group_name,
     "} \\\\ \n",
     ifelse(bottom_border, "\\midrule\n", ""),
-    collapse = "")
+    collapse = ""
+  )
 }
 
 #' @noRd
@@ -137,8 +138,7 @@ create_heading_component_l <- function(data) {
     footnote_subtitle_marks <- ""
   }
 
-  title_row <-
-    latex_group("\\large ", heading$title, footnote_title_marks)
+  title_row <- latex_group("\\large ", heading$title, footnote_title_marks)
 
   if (subtitle_defined) {
 
@@ -152,17 +152,16 @@ create_heading_component_l <- function(data) {
     subtitle_row <- ""
   }
 
-  paste0(title_row, subtitle_row) %>%
-    paste_between(x_2 = c("\\caption*{\n", "\n} \\\\ \n"))
+  paste_between(
+    paste0(title_row, subtitle_row),
+    x_2 = c("\\caption*{\n", "\n} \\\\ \n")
+  )
 }
 
 #' Create the columns component of a table
 #'
 #' @noRd
 create_columns_component_l <- function(data) {
-
-  boxh <- dt_boxhead_get(data = data)
-  stubh <- dt_stubhead_get(data = data)
 
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
@@ -180,6 +179,8 @@ create_columns_component_l <- function(data) {
 
   # If there is a stub then modify the `headings_vars` and `headings_labels`
   if (length(stub_layout) > 0) {
+
+    stubh <- dt_stubhead_get(data = data)
 
     headings_vars <- prepend_vec(headings_vars, "::stub")
 
@@ -278,15 +279,17 @@ create_columns_component_l <- function(data) {
     table_col_spanners <- ""
   }
 
-  paste0("\\toprule\n", paste0(table_col_spanners, collapse = ""), table_col_headings)
+  paste0(
+    "\\toprule\n",
+    paste0(table_col_spanners, collapse = ""),
+    table_col_headings
+  )
 }
 
 #' @noRd
 create_body_component_l <- function(data) {
 
   body <- dt_body_get(data = data)
-  boxh <- dt_boxhead_get(data = data)
-
   groups_rows_df <- dt_groups_rows_get(data = data)
 
   n_rows <- nrow(body)
@@ -308,8 +311,8 @@ create_body_component_l <- function(data) {
   if (any(is.na(groups_rows_df$group_label))) {
 
     groups_rows_df <-
-      groups_rows_df %>%
       dplyr::mutate(
+        groups_rows_df,
         group_label = ifelse(
           is.na(group_label), "\\vspace*{-5mm}", group_label
         )
@@ -360,7 +363,8 @@ create_table_end_l <- function() {
   paste0(
     "\\bottomrule\n",
     "\\end{longtable}\n",
-    collapse = "")
+    collapse = ""
+  )
 }
 
 #' @noRd
@@ -384,9 +388,7 @@ create_footer_component_l <- function(data) {
   if (nrow(footnotes_tbl) > 0) {
 
     footnotes_tbl <-
-      footnotes_tbl %>%
-      dplyr::select(fs_id, footnotes) %>%
-      dplyr::distinct()
+      dplyr::distinct(dplyr::select(footnotes_tbl, fs_id, footnotes))
 
     # Create a vector of formatted footnotes
     footnotes <-
@@ -432,8 +434,7 @@ create_footer_component_l <- function(data) {
 }
 
 # Function to build a vector of `group` rows in the table body
-create_group_rows_l <- function(groups_rows_df,
-                                n_rows) {
+create_group_rows_l <- function(groups_rows_df, n_rows) {
 
   unname(
     unlist(
@@ -456,8 +457,7 @@ create_group_rows_l <- function(groups_rows_df,
   )
 }
 
-create_group_dividers_l <- function(groups_rows_df,
-                                    n_rows) {
+create_group_dividers_l <- function(groups_rows_df, n_rows) {
 
   dividers <- rep_len("", n_rows)
 
@@ -488,9 +488,11 @@ create_body_rows_l <- function(row_splits_body) {
 }
 
 # Function to build a vector of `summary` rows in the table body
-create_summary_rows_l <- function(data,
-                                  groups_rows_df,
-                                  n_rows) {
+create_summary_rows_l <- function(
+    data,
+    groups_rows_df,
+    n_rows
+) {
 
   list_of_summaries <- dt_summary_df_get(data = data)
 
