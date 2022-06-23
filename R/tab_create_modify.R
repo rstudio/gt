@@ -669,7 +669,6 @@ tab_row_group <- function(
 
   # Get the `stub_df` data frame from `data`
   stub_df <- dt_stub_df_get(data = data)
-  data_tbl <- dt_data_get(data = data)
 
   # Resolve the row numbers using the `resolve_vars` function
   resolved_rows_idx <-
@@ -1030,7 +1029,6 @@ set_footnote.cells_body <- function(loc, data, footnote, placement) {
 
   resolved <- resolve_cells_body(data = data, object = loc)
 
-  cols <- resolved$columns
   rows <- resolved$rows
 
   colnames <- resolved$colnames
@@ -1567,7 +1565,6 @@ set_style.cells_body <- function(loc, data, style) {
 
   resolved <- resolve_cells_body(data = data, object = loc)
 
-  cols <- resolved$columns
   rows <- resolved$rows
 
   colnames <- resolved$colnames
