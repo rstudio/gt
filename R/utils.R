@@ -1239,29 +1239,28 @@ create_inline_styles <- function(
     tidy_gsub(" \\\"$", "\\\"")
 }
 
+extract_strings <- function(text, pattern, perl = TRUE) {
+  sapply(regmatches(text, regexec(pattern, text, perl = perl)), "[", 1)
+}
+
 #' Transform HTML to inlined HTML using a CSS tibble
 #'
 #' @noRd
 inline_html_styles <- function(html, css_tbl) {
 
   cls_sty_pattern <- "class=\\\"(.*?)\\\"\\s+style=\\\"(.*?)\\\""
+  cls_names_pattern <- "(?<=\\\").*?(?=\\\")"
+  sty_exist_pattern <- "style=\\\"(.*?)\\\""
 
   repeat {
 
-    matching_css_style <- html %>% stringr::str_extract(cls_sty_pattern)
+    matching_css_style <- extract_strings(html, cls_sty_pattern)
 
-    if (is.na(matching_css_style)) {
-      break
-    }
+    if (is.na(matching_css_style)) break
 
-    class_names <-
-      matching_css_style %>%
-      stringr::str_extract("(?<=\\\").*?(?=\\\")")
+    class_names <- extract_strings(matching_css_style, cls_names_pattern)
 
-    existing_style <-
-      matching_css_style %>%
-      stringr::str_match("style=\\\"(.*?)\\\"") %>%
-      magrittr::extract(1, 2)
+    existing_style <- stringr::str_match(matching_css_style, sty_exist_pattern)[, 2]
 
     inline_styles <-
       create_inline_styles(
