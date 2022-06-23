@@ -297,10 +297,6 @@ create_body_component_l <- function(data) {
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
 
-  # Obtain all of the visible (`"default"`), non-stub
-  # column names for the table
-  default_vars <- dt_boxhead_get_vars_default(data = data)
-
   # Get a matrix of body cells to render, split into a list of
   # character vectors by row, and create a vector of LaTeX body rows
   cell_matrix <- get_body_component_cell_matrix(data = data)
