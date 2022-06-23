@@ -6,7 +6,7 @@ tbl <-
   sp500 %>%
   dplyr::filter(
     date >= "2015-01-05" &
-      date <="2015-01-16"
+      date <= "2015-01-16"
   ) %>%
   dplyr::arrange(date) %>%
   dplyr::mutate(
@@ -127,7 +127,7 @@ test_that("the `summary_rows()` can make groupwise summaries", {
   summary[[1]]$fns$`std dev` %>% expect_s3_class("formula")
 
   # Expect that `summary[[1]]$missing_text` has a specific value
-  summary[[1]]$missing_text %>%expect_equal("---")
+  summary[[1]]$missing_text %>% expect_equal("---")
 
   # Expect that `summary[[1]]$formatter` is a `function` object
   expect_equal(class(summary[[1]]$formatter), "function")
@@ -955,7 +955,7 @@ test_that("summary rows can be created when there is no stub", {
     sp500 %>%
     dplyr::filter(
       date >= "2015-01-05" &
-        date <="2015-01-09"
+        date <= "2015-01-09"
     ) %>%
     dplyr::arrange(date) %>%
     dplyr::select(-adj_close, -volume) %>%
@@ -1273,7 +1273,7 @@ test_that("creating summary rows works for hidden columns", {
     sp500 %>%
     dplyr::filter(
       date >= "2015-01-05" &
-        date <="2015-01-16"
+        date <= "2015-01-16"
     ) %>%
     dplyr::arrange(date) %>%
     dplyr::mutate(
