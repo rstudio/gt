@@ -1255,6 +1255,7 @@ create_body_component_xml <- function(data, split = FALSE, keep_with_next = TRUE
   table_body_hlines_color <- dt_options_get_value(data = data, option = "table_body_hlines_color")
   table_body_vlines_color <- dt_options_get_value(data = data, option = "table_body_vlines_color")
   table_border_bottom_color <- dt_options_get_value(data, option = "table_border_bottom_color")
+  table_border_top_color <- dt_options_get_value(data, option = "table_border_top_color")
 
   n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
   n_rows <- nrow(body)
@@ -1320,7 +1321,6 @@ create_body_component_xml <- function(data, split = FALSE, keep_with_next = TRUE
       function(i) {
 
         body_section <- list()
-
         #
         # Create a group heading row
         #
@@ -1331,39 +1331,39 @@ create_body_component_xml <- function(data, split = FALSE, keep_with_next = TRUE
               which(groups_rows_df$row_start %in% i), "group_label"
             ][[1]]
 
+          cell_style <- styles_tbl %>%
+            dplyr::filter(
+              locname == "row_groups",
+              rownum == (i-.1)
+            ) %>%
+            dplyr::pull("styles") %>%
+            purrr::pluck(1)
+
           group_heading_row <-
             xml_tr(
               xml_trPr(
                 if(!split){xml_cantSplit()}
               ),
-              xml_tc(
-                xml_tcPr(
-                  xml_tc_borders(
-                    xml_border("top", size = 16, color = row_group_border_top_color),
-                    xml_border("bottom", size = 16, color = row_group_border_bottom_color),
-                    xml_border("left", color = row_group_border_left_color),
-                    xml_border("right", color = row_group_border_right_color)
-                  ),
-                  xml_tc_margins(
-                    xml_width("top", width = 25)
-                  )
+              xml_table_cell(
+                text = htmltools::HTML(group_label),
+                font = cell_style[["cell_text"]][["font"]],
+                font_size = cell_style[["cell_text"]][["size"]] %||% 20,
+                color = cell_style[["cell_text"]][["color"]],
+                stretch = stretch_to_xml_stretch(cell_style[["cell_text"]][["stretch"]]),
+                align = cell_style[["cell_text"]][["align"]],
+                v_align = cell_style[["cell_text"]][["v_align"]],
+                col_span = n_cols,
+                fill = cell_style[["cell_fill"]][["color"]],
+                margins = list(
+                  top = cell_margin(width = 25)
                 ),
-                xml_p(
-                  xml_pPr(
-                    xml_gridSpan(val = as.character(n_cols)),
-                    xml_spacing(before = 0, after = 60),
-                    if(keep_with_next){xml_keepNext()}
-                  ),
-                  xml_r(
-                    xml_rPr(
-                      xml_r_font(),
-                      xml_sz(val = 20)
-                    ),
-                    xml_t(
-                      htmltools::HTML(group_label)
-                    )
-                  )
-                )
+                border = list(
+                  top = cell_border(size = 16, color = row_group_border_top_color),
+                  bottom = cell_border(size = 16, color = row_group_border_bottom_color),
+                  left = cell_border(color = row_group_border_left_color),
+                  right = cell_border(color = row_group_border_right_color)
+                ),
+                keep_with_next = keep_with_next
               )
             )
 
@@ -1375,53 +1375,40 @@ create_body_component_xml <- function(data, split = FALSE, keep_with_next = TRUE
         #
 
         row_cells <- list()
+        col_idx <-
+
+        i
 
         for (y in seq_along(output_df_row_as_vec(i))) {
 
+          style_col_idx <- ifelse(stub_available, y - 1, y )
+
           cell_style <- styles_tbl %>%
             dplyr::filter(
-              locname == "data",
+              locname %in% c("data","stub"),
               rownum == i,
-              colnum == y
+              colnum == style_col_idx
             ) %>%
             dplyr::pull("styles") %>%
             purrr::pluck(1)
 
           row_cells[[length(row_cells) + 1]] <-
-            xml_tc(
-              xml_tcPr(
-                xml_tc_borders(
-                  xml_border("top", color = table_body_hlines_color),
-                  xml_border("bottom", color = table_body_hlines_color),
-                  xml_border("left", color = table_body_vlines_color),
-                  xml_border("right", color = table_body_vlines_color)
-                ),
-                xml_tc_margins(
-                  xml_width("top", width = 50)
-                ),
-                xml_shd(fill = cell_style[["cell_fill"]][["color"]])
+            xml_table_cell(
+              text = output_df_row_as_vec(i)[y],
+              font = cell_style[["cell_text"]][["font"]],
+              font_size = cell_style[["cell_text"]][["size"]],
+              color = cell_style[["cell_text"]][["color"]],
+              stretch = stretch_to_xml_stretch(cell_style[["cell_text"]][["stretch"]]),
+              align = cell_style[["cell_text"]][["align"]],
+              v_align = cell_style[["cell_text"]][["v_align"]],
+              border = list(
+                top = cell_border(color = table_body_hlines_color),
+                bottom = cell_border(color = table_body_hlines_color),
+                left = cell_border(color = table_body_vlines_color),
+                right = cell_border(color = table_body_vlines_color)
               ),
-              xml_p(
-                xml_pPr(
-                  xml_spacing(before = 0, after = 60),
-                  if(keep_with_next){xml_keepNext()}
-                ),
-                xml_r(
-                  xml_rPr(
-                    xml_r_font(
-                      ascii_font= cell_style[["cell_text"]][["font"]] %||% "Calibri",
-                      ansi_font= cell_style[["cell_text"]][["font"]] %||% "Calibri"
-                    ),
-                    xml_sz(val = cell_style[["cell_text"]][["size"]] %||% 20),
-                    if(!is.null(cell_style[["cell_text"]][["color"]])){
-                      xml_color(color = cell_style[["cell_text"]][["color"]])
-                    }
-                  ),
-                  xml_t(
-                    output_df_row_as_vec(i)[y]
-                  )
-                )
-              )
+              fill = cell_style[["cell_fill"]][["color"]],
+              keep_with_next = keep_with_next
             )
         }
 
@@ -1757,6 +1744,46 @@ cell_border <- function(color = "#D3D3D3", size = NULL){
   )
 }
 
+cell_margin <- function(width, type = c("dxa", "nil")){
+  type <- match.arg(type)
+  list(
+    width = width,
+    type = type
+  )
+}
+
+stretch_to_xml_stretch <- function(x){
+  x <-
+    match.arg(
+      x,
+      choices = c(
+        "ultra-condensed",
+        "extra-condensed",
+        "condensed",
+        "semi-condensed",
+        "normal",
+        "semi-expanded",
+        "expanded",
+        "extra-expanded",
+        "ultra-expanded"
+      )
+    )
+
+  switch(
+    x,
+    "ultra-condensed" = -60,
+    "extra-condensed" = -40,
+    "condensed" = -20,
+    "semi-condensed" = 0,
+    "normal" = 20,
+    "semi-expanded" = 40,
+    "expanded" = 60,
+    "extra-expanded" = 80,
+    "ultra-expanded" = 100
+  )
+}
+
+# define ooxml table cells
 xml_table_cell <-
   function(text = NULL,
            font_size = NULL,
@@ -1765,53 +1792,61 @@ xml_table_cell <-
            stretch = NULL,
            align = NULL,
            v_align = NULL,
-           border = NULL,
+           col_span = NULL,
            fill = NULL,
+           margins = NULL,
+           border = NULL,
            keep_with_next = TRUE) {
 
-  xml_tc(
-    xml_tcPr(
-      if(!is.null(border)){
-        xml_tc_borders(
-          if(!is.null(border[["top"]])){xml_border("top", color = border[["top"]][["color"]], size = border[["top"]][["size"]])},
-          if(!is.null(border[["bottom"]])){xml_border("bottom", color = border[["bottom"]][["color"]], size = border[["bottom"]][["size"]])},
-          if(!is.null(border[["left"]])){xml_border("left", color = border[["left"]][["color"]], size = border[["left"]][["size"]])},
-          if(!is.null(border[["right"]])){xml_border("right", color = border[["right"]][["color"]], size = border[["right"]][["size"]])}
-        )
-      },
-      xml_tc_margins(
-        xml_width("top", width = 50)
-      ),
-      if(!is.null(fill)){xml_shd(fill = fill)},
-      if(!is.null(v_align)){xml_v_align(v_align = v_align)}
-    ),
-    xml_p(
-      xml_pPr(
-        xml_spacing(before = 0, after = 60),
-        if(keep_with_next){xml_keepNext()},
-        if(!is.null(stretch)){
-          xml_rPr(
-            xml_spacing(val = stretch)
+    xml_tc(
+      xml_tcPr(
+        if(!is.null(border)){
+          xml_tc_borders(
+            if(!is.null(border[["top"]])){xml_border("top", color = border[["top"]][["color"]], size = border[["top"]][["size"]])},
+            if(!is.null(border[["bottom"]])){xml_border("bottom", color = border[["bottom"]][["color"]], size = border[["bottom"]][["size"]])},
+            if(!is.null(border[["left"]])){xml_border("left", color = border[["left"]][["color"]], size = border[["left"]][["size"]])},
+            if(!is.null(border[["right"]])){xml_border("right", color = border[["right"]][["color"]], size = border[["right"]][["size"]])}
           )
         },
-        if(!is.null(align)){xml_jc(val = align)}
+        if(!is.null(fill)){xml_shd(fill = fill)},
+        if(!is.null(v_align)){xml_v_align(v_align = v_align)},
+        if(!is.null(margins)){
+          xml_tc_margins(
+            if(!is.null(margins[["top"]])){xml_width("top", width = margins[["top"]][["width"]], type = margins[["top"]][["type"]])},
+            if(!is.null(margins[["bottom"]])){xml_width("bottom", width = margins[["bottom"]][["width"]], type = margins[["bottom"]][["type"]])},
+            if(!is.null(margins[["left"]])){xml_width("left", width = margins[["left"]][["width"]], type = margins[["left"]][["type"]])},
+            if(!is.null(margins[["right"]])){xml_width("right", width = margins[["right"]][["width"]], type = margins[["right"]][["type"]])}
+          )
+        }
       ),
-      xml_r(
-        xml_rPr(
-          xml_r_font(
-            ascii_font= font %||% "Calibri",
-            ansi_font= font %||% "Calibri"
-          ),
-          xml_sz(val = font_size %||% 20),
-          if(!is.null(color)){
-            xml_color(color = color)
-          }
+      xml_p(
+        xml_pPr(
+          xml_spacing(before = 0, after = 60),
+          if(!is.null(col_span)){xml_gridSpan(val = as.character(col_span))},
+          if(keep_with_next){xml_keepNext()},
+          if(!is.null(stretch)){
+            xml_rPr(
+              xml_spacing(val = stretch)
+            )
+          },
+          if(!is.null(align)){xml_jc(val = align)}
         ),
-        xml_t(
-          text
+        xml_r(
+          xml_rPr(
+            xml_r_font(
+              ascii_font= font %||% "Calibri",
+              ansi_font= font %||% "Calibri"
+            ),
+            xml_sz(val = font_size %||% 20),
+            if(!is.null(color)){
+              xml_color(color = color)
+            }
+          ),
+          xml_t(
+            text
+          )
         )
       )
     )
-  )
 
 }
