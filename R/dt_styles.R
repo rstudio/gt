@@ -55,7 +55,7 @@ dt_styles_add <- function(
 
   dt_styles_set(
     data = data,
-    styles = rbind(dt_styles_get(data = data), result)
+    styles = dplyr::bind_rows(dt_styles_get(data = data), result)
   )
 }
 
