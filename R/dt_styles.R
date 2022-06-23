@@ -48,14 +48,14 @@ dt_styles_add <- function(
       grpname = grid$grpname,
       colname = grid$colname,
       locnum = locnum,
-      colnum = NA_integer_,
       rownum = grid$rownum,
+      colnum = NA_integer_,
       styles = list(styles)
     )
 
   dt_styles_set(
     data = data,
-    styles = dplyr::bind_rows(dt_styles_get(data = data), result)
+    styles = rbind(dt_styles_get(data = data), result)
   )
 }
 

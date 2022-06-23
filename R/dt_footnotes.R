@@ -50,14 +50,14 @@ dt_footnotes_add <- function(
       grpname = grid$grpname,
       colname = grid$colname,
       locnum = locnum,
-      colnum = NA_integer_,
       rownum = grid$rownum,
+      colnum = NA_integer_,
       footnotes = list(footnotes),
       placement = placement
     )
 
   dt_footnotes_set(
     data = data,
-    footnotes = dplyr::bind_rows(dt_footnotes_get(data = data), result)
+    footnotes = rbind(dt_footnotes_get(data = data), result)
   )
 }
