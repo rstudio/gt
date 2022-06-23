@@ -1347,7 +1347,7 @@ create_body_component_xml <- function(data, split = FALSE, keep_with_next = TRUE
               xml_table_cell(
                 text = htmltools::HTML(group_label),
                 font = cell_style[["cell_text"]][["font"]],
-                font_size = cell_style[["cell_text"]][["size"]] %||% 20,
+                size = cell_style[["cell_text"]][["size"]] %||% 20,
                 color = cell_style[["cell_text"]][["color"]],
                 stretch = stretch_to_xml_stretch(cell_style[["cell_text"]][["stretch"]]),
                 align = cell_style[["cell_text"]][["align"]],
@@ -1396,7 +1396,7 @@ create_body_component_xml <- function(data, split = FALSE, keep_with_next = TRUE
             xml_table_cell(
               text = output_df_row_as_vec(i)[y],
               font = cell_style[["cell_text"]][["font"]],
-              font_size = cell_style[["cell_text"]][["size"]],
+              size = cell_style[["cell_text"]][["size"]],
               color = cell_style[["cell_text"]][["color"]],
               stretch = stretch_to_xml_stretch(cell_style[["cell_text"]][["stretch"]]),
               align = cell_style[["cell_text"]][["align"]],
@@ -1786,7 +1786,7 @@ stretch_to_xml_stretch <- function(x){
 # define ooxml table cells
 xml_table_cell <-
   function(text = NULL,
-           font_size = NULL,
+           size = NULL,
            font = NULL,
            color = NULL,
            stretch = NULL,
@@ -1837,7 +1837,7 @@ xml_table_cell <-
               ascii_font= font %||% "Calibri",
               ansi_font= font %||% "Calibri"
             ),
-            xml_sz(val = font_size %||% 20),
+            xml_sz(val = size %||% 20),
             if(!is.null(color)){
               xml_color(color = color)
             }

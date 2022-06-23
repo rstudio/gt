@@ -72,6 +72,42 @@ test_that("word ooxlm can be generated from gt object", {
     ) %>%
     expect_snapshot()
 
+  ## Table with cell styling
+  exibble[1:4,] %>%
+    gt(rowname_col = "char") %>%
+    tab_row_group("My Row Group 1",c(1:2)) %>%
+    tab_row_group("My Row Group 2",c(3:4)) %>%
+    tab_style(
+      style = cell_fill(color = "orange"),
+      locations = cells_body(
+        columns = c(num,fctr,time,currency, group)
+      )
+    ) %>%
+    tab_style(
+      style = cell_fill(color = "orange"),
+      locations = cells_body(
+        columns = c(num,fctr,time,currency, group)
+      )
+    ) %>%
+    tab_style(
+      style = cell_text(
+        color = "green",
+        font = "Biome",
+      ),
+      locations = cells_stub()
+    ) %>%
+    tab_style(
+      style = cell_text(
+        color = "blue"
+      ),
+      locations = cells_row_groups()
+    ) %>%
+    as_word(
+      keep_with_next = FALSE
+    ) %>%
+    expect_snapshot()
+
+
 })
 
 test_that("tables can be added to a word doc", {
@@ -808,32 +844,40 @@ test_that("tables with cell & text coloring can be added to a word doc", {
   local_edition(3)
 
   ## simple table
-  gt_exibble_min <- exibble[1:2,] %>%
-    gt() %>%
+  gt_exibble_min <- exibble[1:4,] %>%
+    gt(rowname_col = "char") %>%
+    tab_row_group("My Row Group 1",c(1:2)) %>%
+    tab_row_group("My Row Group 2",c(3:4)) %>%
+    tab_spanner("My Span Label", columns = 1:5) %>%
     tab_style(
-      style = cell_fill(color = "lightblue"),
+      style = cell_fill(color = "orange"),
       locations = cells_body(
         columns = c(num,fctr,time,currency, group)
       )
     ) %>%
     tab_style(
       style = cell_text(
-         color = "pink",
-         font = "NULL",
+        color = "green",
+        font = "Biome"
       ),
+      locations = cells_stub()
+    ) %>%
+    tab_style(
+      style = cell_text(size = 15),
       locations = cells_body(
         columns = c(num,fctr,time,currency, group)
       )
     ) %>%
     tab_style(
       style = cell_text(
-        color = "pink",
-        font = "NULL",
+        color = "blue",stretch = "ultra-condensed"
       ),
-      locations = c(
-        columns = c(num,fctr,time,currency, group)
-      )
+      locations = cells_row_groups()
+    ) %>%
+    tab_style(
+      style =
     )
+
 
   ## Add table to empty word document
   word_doc <- officer::read_docx() %>%
