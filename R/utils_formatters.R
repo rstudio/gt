@@ -22,7 +22,7 @@ filter_table_to_value <- function(table,
     ))
   }
 
-  filtered_tbl %>% dplyr::pull(!!column_enquo)
+  dplyr::pull(filtered_tbl, !!column_enquo)
 }
 
 #' Validate the user-supplied `locale` value
@@ -330,9 +330,8 @@ format_num_to_str <- function(x,
     integer_parts <- sub("\\..*", "", x_str_numeric)
 
     integer_parts <-
-      integer_parts %>%
-      gsub("(,|-)", "", .) %>%
       vapply(
+        gsub("(,|-)", "", integer_parts),
         FUN.VALUE = character(1),
         USE.NAMES = FALSE,
         FUN = insert_seps_ind
@@ -656,8 +655,7 @@ context_exp_marks <- function(context) {
 #' @param symbol A symbol, which could be empty (NULL), a percent sign (`%`), or
 #'   a currency symbol, or a `gt_currency` object.
 #' @noRd
-context_symbol_str <- function(context,
-                               symbol) {
+context_symbol_str <- function(context, symbol) {
 
   # If we supply `NULL` as `symbol`, then
   # return an empty string
@@ -689,10 +687,12 @@ context_symbol_str <- function(context,
       html = get_currency_str(currency = symbol),
       latex = {
         if (!inherits(symbol, "AsIs")) {
-          symbol %>%
-            get_currency_str(fallback_to_code = TRUE) %>%
-            markdown_to_latex() %>%
-            paste_between(x_2 = c("\\text{", "}"))
+          paste_between(
+            markdown_to_latex(
+              get_currency_str(currency = symbol, fallback_to_code = TRUE)
+            ),
+            c("\\text{", "}")
+          )
         } else {
           symbol
         }
@@ -726,37 +726,42 @@ format_symbol_str <- function(x_abs_str,
     return(x_abs_str)
   }
 
-  vapply(FUN.VALUE = character(1), USE.NAMES = FALSE, seq_along(x), function(i) {
+  vapply(
+    seq_along(x),
+    FUN.VALUE = character(1),
+    USE.NAMES = FALSE,
+    FUN = function(i) {
 
-    # Using absolute value format, the minus mark will
-    # be added later
-    x_i <- x[i]
-    x_str_i <- x_abs_str[i]
+      # Using absolute value format, the minus mark will
+      # be added later
+      x_i <- x[i]
+      x_str_i <- x_abs_str[i]
 
-    # Place possible space and symbol on correct side of value
-    x_str_i <-
-      x_str_i %>%
-      paste_on_side(
-        x_side = ifelse(incl_space, " ", ""),
-        direction = placement
-      ) %>%
-      paste_on_side(
-        x_side = as.character(symbol_str),
-        direction = placement
-      )
-
-    # Create the minus mark for the context
-    minus_mark <- context_minus_mark(context)
-
-    # Place the `minus_mark` onto the formatted strings
-    if (x_i < 0) {
+      # Place possible space and symbol on correct side of value
       x_str_i <-
-        x_str_i %>%
-        paste_left(minus_mark)
-    }
+        paste_on_side(
+          x_str_i,
+          x_side = ifelse(incl_space, " ", ""),
+          direction = placement
+        )
+      x_str_i <-
+        paste_on_side(
+          x_str_i,
+          x_side = as.character(symbol_str),
+          direction = placement
+        )
 
-    x_str_i
-  })
+      # Create the minus mark for the context
+      minus_mark <- context_minus_mark(context)
+
+      # Place the `minus_mark` onto the formatted strings
+      if (x_i < 0) {
+        x_str_i <- paste_left(x_str_i, minus_mark)
+      }
+
+      x_str_i
+    }
+  )
 }
 
 #' Transform currency values to accounting style
