@@ -166,8 +166,13 @@ data_color <- function(
 
   data_color_styles_tbl <-
     dplyr::tibble(
-      locname = character(0), grpname = character(0), colname = character(0),
-      locnum = numeric(0), rownum = integer(0), colnum = integer(0), styles = list()
+      locname = character(0),
+      grpname = character(0),
+      colname = character(0),
+      locnum = numeric(0),
+      rownum = integer(0),
+      colnum = integer(0),
+      styles = list()
     )
 
   for (column in resolved_columns) {
@@ -179,7 +184,12 @@ data_color <- function(
       if (is.numeric(data_vals)) {
 
         # Create a color function based on `scales::col_numeric()`
-        color_fn <- scales::col_numeric(palette = colors, domain = data_vals, alpha = TRUE)
+        color_fn <-
+          scales::col_numeric(
+            palette = colors,
+            domain = data_vals,
+            alpha = TRUE
+          )
 
       } else if (is.character(data_vals) || is.factor(data_vals)) {
 
@@ -204,7 +214,11 @@ data_color <- function(
 
         # Create a color function based on `scales::col_factor()`
         color_fn <-
-          scales::col_factor(palette = colors, domain = data_vals, alpha = TRUE)
+          scales::col_factor(
+            palette = colors,
+            domain = data_vals,
+            alpha = TRUE
+          )
 
       } else {
 
@@ -245,7 +259,8 @@ data_color <- function(
       dplyr::bind_rows(
         data_color_styles_tbl,
         generate_data_color_styles_tbl(
-          column = column, rows = rows,
+          column = column,
+          rows = rows,
           color_styles = color_styles
         )
       )
@@ -260,7 +275,8 @@ data_color <- function(
         dplyr::bind_rows(
           data_color_styles_tbl,
           generate_data_color_styles_tbl(
-            column = column, rows = rows,
+            column = column,
+            rows = rows,
             color_styles = color_styles
           )
         )
@@ -276,8 +292,12 @@ data_color <- function(
 generate_data_color_styles_tbl <- function(column, rows, color_styles) {
 
   dplyr::tibble(
-    locname = "data", grpname = NA_character_,
-    colname = column, locnum = 5, rownum = rows,
+    locname = "data",
+    grpname = NA_character_,
+    colname = column,
+    locnum = 5,
+    rownum = rows,
+    colnum = NA_integer_,
     styles = color_styles
   )
 }
