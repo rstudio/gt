@@ -132,7 +132,7 @@ data_4 <-
   sp500 %>%
   dplyr::filter(
     date >= "2015-01-05" &
-      date <="2015-01-10"
+      date <= "2015-01-10"
   ) %>%
   dplyr::select(
     -c(adj_close, volume, high, low)
