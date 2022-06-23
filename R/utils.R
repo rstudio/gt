@@ -494,27 +494,32 @@ md_to_html <- function(x) {
 markdown_to_latex <- function(text) {
 
   # Vectorize `commonmark::markdown_latex` and modify output
-  # behavior to passthrough NAs
-  lapply(text, function(x) {
+  # behavior to pass through NAs
+  unname(
+    unlist(
+      lapply(
+        text,
+        FUN = function(x) {
 
-    if (is.na(x)) {
-      return(NA_character_)
-    }
+          if (is.na(x)) {
+            return(NA_character_)
+          }
 
-    if (isTRUE(getOption("gt.html_tag_check", TRUE))) {
+          if (isTRUE(getOption("gt.html_tag_check", TRUE))) {
 
-      if (grepl("<[a-zA-Z\\/][^>]*>", x)) {
-        cli::cli_warn(c(
-          "HTML tags found, and they will be removed.",
-          "*" = "Set `options(gt.html_tag_check = FALSE)` to disable this check."
-        ))
-      }
-    }
+            if (grepl("<[a-zA-Z\\/][^>]*>", x)) {
+              cli::cli_warn(c(
+                "HTML tags found, and they will be removed.",
+                "*" = "Set `options(gt.html_tag_check = FALSE)` to disable this check."
+              ))
+            }
+          }
 
-    commonmark::markdown_latex(x) %>% tidy_gsub("\\n$", "")
-  }) %>%
-    unlist() %>%
-    unname()
+          tidy_gsub(commonmark::markdown_latex(x), "\\n$", "")
+        }
+      )
+    )
+  )
 }
 
 cmark_rules <- list(
@@ -666,7 +671,7 @@ cmark_rules <- list(
 )
 
 is_last <- function(x) {
-  children <- xml2::xml_parent(x) %>% xml2::xml_children()
+  children <- xml2::xml_children(xml2::xml_parent(x))
   last <- children[[xml2::xml_length(xml2::xml_parent(x))]]
   identical(last, x)
 }
@@ -674,14 +679,16 @@ is_last <- function(x) {
 markdown_to_rtf <- function(text) {
 
   text <-
-    text %>%
-    as.character() %>%
     vapply(
+      as.character(text),
       FUN.VALUE = character(1),
       USE.NAMES = FALSE,
       FUN = commonmark::markdown_xml
-    ) %>%
+    )
+
+  text <-
     vapply(
+      text,
       FUN.VALUE = character(1),
       USE.NAMES = FALSE,
       FUN = function(cmark) {
@@ -758,27 +765,32 @@ rtf_wrap <- function(control, x, process) {
 markdown_to_text <- function(text) {
 
   # Vectorize `commonmark::markdown_text` and modify output
-  # behavior to passthrough NAs
-  lapply(text, function(x) {
+  # behavior to pass through NAs
+  unname(
+    unlist(
+      lapply(
+        text,
+        FUN = function(x) {
 
-    if (is.na(x)) {
-      return(NA_character_)
-    }
+          if (is.na(x)) {
+            return(NA_character_)
+          }
 
-    if (isTRUE(getOption("gt.html_tag_check", TRUE))) {
+          if (isTRUE(getOption("gt.html_tag_check", TRUE))) {
 
-      if (grepl("<[a-zA-Z\\/][^>]*>", x)) {
-        cli::cli_warn(c(
-          "HTML tags found, and they will be removed.",
-          "*" = "Set `options(gt.html_tag_check = FALSE)` to disable this check."
-        ))
-      }
-    }
+            if (grepl("<[a-zA-Z\\/][^>]*>", x)) {
+              cli::cli_warn(c(
+                "HTML tags found, and they will be removed.",
+                "*" = "Set `options(gt.html_tag_check = FALSE)` to disable this check."
+              ))
+            }
+          }
 
-    commonmark::markdown_text(x) %>% tidy_gsub("\\n$", "")
-  }) %>%
-    unlist() %>%
-    unname()
+          tidy_gsub(commonmark::markdown_text(x), "\\n$", "")
+        }
+      )
+    )
+  )
 }
 
 #' Handle formatting of a pattern in a `fmt_*()` function
@@ -796,9 +808,9 @@ apply_pattern_fmt_x <- function(values, pattern) {
 
   vapply(
     values,
-    function(x) tidy_gsub(x = pattern, "{x}", x, fixed = TRUE),
     FUN.VALUE = character(1),
-    USE.NAMES = FALSE
+    USE.NAMES = FALSE,
+    FUN = function(x) tidy_gsub(x = pattern, "{x}", x, fixed = TRUE)
   )
 }
 
@@ -1150,11 +1162,7 @@ remove_html <- function(text) {
 #' @noRd
 get_css_tbl <- function(data) {
 
-  raw_css_vec <-
-    compile_scss(data) %>%
-    as.character() %>%
-    strsplit("\n") %>%
-    unlist()
+  raw_css_vec <- unlist(strsplit(as.character(compile_scss(data)), "\n"))
 
   ruleset_start <- which(grepl("\\{\\s*", raw_css_vec))
   ruleset_end <- which(grepl("\\s*\\}\\s*", raw_css_vec))
@@ -1187,16 +1195,18 @@ get_css_tbl <- function(data) {
   # For anything other than a class selector, the class type
   # will entered as NA
   css_tbl <-
-    css_tbl %>%
-    dplyr::mutate(type = dplyr::case_when(
-      stringr::str_detect(selector, "^\\.") ~ "class",
-      !stringr::str_detect(selector, "^\\.") ~ NA_character_)
-    ) %>%
-    dplyr::select(selector, type, property, value)
+    dplyr::mutate(
+      css_tbl,
+      type = dplyr::case_when(
+        stringr::str_detect(selector, "^\\.") ~ "class",
+        !stringr::str_detect(selector, "^\\.") ~ NA_character_
+      )
+    )
+  css_tbl <- dplyr::select(css_tbl, selector, type, property, value)
 
   # Stop function if any NA values found while inspecting the
   # selector names (e.g., not determined to be class selectors)
-  if (any(is.na(css_tbl %>% dplyr::pull(type)))) {
+  if (any(is.na(css_tbl$type))) {
     cli::cli_abort("All selectors must be class selectors.")
   }
 
@@ -1212,10 +1222,7 @@ create_inline_styles <- function(
     extra_style = ""
 ) {
 
-  class_names <-
-    class_names %>%
-    stringr::str_split("\\s+") %>%
-    unlist()
+  class_names <- unlist(stringr::str_split(class_names, "\\s+"))
 
   paste0(
     "style=\"",
@@ -1263,8 +1270,8 @@ inline_html_styles <- function(html, css_tbl) {
       )
 
     html <-
-      html %>%
       stringr::str_replace(
+        html,
         pattern = cls_sty_pattern,
         replacement = inline_styles
       )
@@ -1302,8 +1309,8 @@ inline_html_styles <- function(html, css_tbl) {
 split_scientific_notn <- function(x_str) {
 
   exp_parts <- strsplit(x_str, "e|E")
-  num_part <- exp_parts %>% vapply(`[[`, character(1), 1)
-  exp_part <- exp_parts %>% vapply(`[[`, character(1), 2) %>% as.numeric()
+  num_part <- vapply(exp_parts, FUN.VALUE = character(1), `[[`, 1)
+  exp_part <- as.numeric(vapply(exp_parts, FUN.VALUE = character(1), `[[`, 2))
 
   list(num = num_part, exp = exp_part)
 }
@@ -1387,12 +1394,13 @@ process_footnote_marks <- function(x,
 
   marks_val <- marks[(x - 1) %% length(marks) + 1]
 
-  mapply(
-    marks_val, marks_rep,
-    FUN = function(val_i, rep_i) {
-      paste(rep(val_i, rep_i), collapse = "")}
-  ) %>%
-    unname()
+  unname(
+    mapply(
+      marks_val, marks_rep,
+      FUN = function(val_i, rep_i) {
+        paste(rep(val_i, rep_i), collapse = "")}
+    )
+  )
 }
 
 #' Determine whether an object is a `gt_tbl`
