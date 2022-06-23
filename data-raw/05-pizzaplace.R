@@ -255,7 +255,7 @@ convert_time <- function(frac_time) {
 
   hours <- ifelse(hours < 10, paste0("0", hours), as.character(hours))
   minutes <- ifelse(minutes < 10, paste0("0", minutes), as.character(minutes))
-  seconds <- ifelse (seconds < 10, paste0("0", round(seconds, 0)), as.character(round(seconds, 0)))
+  seconds <- ifelse(seconds < 10, paste0("0", round(seconds, 0)), as.character(round(seconds, 0)))
 
   paste(hours, minutes, seconds, sep = ":")
 }
@@ -263,7 +263,7 @@ convert_time <- function(frac_time) {
 next_random_factory <- function(closing_time, mean, sd) {
 
   function() {
-    while(TRUE) {
+    while (TRUE) {
       ret <- rnorm(1, mean = mean, sd = sd)
       if (ret < closing_time) {
         return(ret)
