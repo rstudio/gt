@@ -80,9 +80,7 @@ split_string_2 <- function(
     }
 
     # Define the start position for the matched characters
-    split_start <-
-      regexpr_out %>%
-      as.numeric()
+    split_start <- as.numeric(regexpr_out)
 
     # Define the stop position for the matched characters
     split_stop <-
@@ -122,8 +120,7 @@ split_string_2 <- function(
 #'   first and second elements of `x_2`.
 #' @param x_2 A character vector of length 2.
 #' @noRd
-paste_between <- function(x,
-                          x_2) {
+paste_between <- function(x, x_2) {
 
   # Stop function if `x_2` is not of class character
   if (!inherits(x_2, "character")) {
@@ -161,9 +158,11 @@ paste_between <- function(x,
 #' @param direction The side that `x_side` will be relative to `x`. This can
 #'   be `left` or `right`.
 #' @noRd
-paste_on_side <- function(x,
-                          x_side,
-                          direction) {
+paste_on_side <- function(
+    x,
+    x_side,
+    direction
+) {
 
   # Stop function if `direction` is not valid
   if (!(direction %in% c("left", "right"))) {
@@ -227,9 +226,11 @@ paste_right <- function(x, x_right) {
 #'   characters. The order of regex patterns does not need to be in the order of
 #'   matching in `x`.
 #' @noRd
-swap_adjacent_text_groups <- function(x,
-                                      pattern_1,
-                                      pattern_2) {
+swap_adjacent_text_groups <- function(
+    x,
+    pattern_1,
+    pattern_2
+) {
 
   # Stop function if `x` is not of class character
   if (!inherits(x, "character")) {
@@ -296,8 +297,7 @@ swap_adjacent_text_groups <- function(x,
 #' @param x A text string.
 #' @param pattern A regular expression pattern.
 #' @noRd
-get_start_stop_positions <- function(x,
-                                     pattern) {
+get_start_stop_positions <- function(x, pattern) {
 
   # Use the pattern (`input`) with the input string
   # `x` with `regexpr()` to get the matching output
@@ -335,11 +335,13 @@ is_adjacent_separate <- function(group_1,
   return(TRUE)
 }
 
-str_catalog <- function(item_vector,
-                        conj = "and",
-                        surround = c("\"", "`"),
-                        sep = ",",
-                        oxford = TRUE) {
+str_catalog <- function(
+    item_vector,
+    conj = "and",
+    surround = c("\"", "`"),
+    sep = ",",
+    oxford = TRUE
+) {
 
   item_count <- length(item_vector)
 
@@ -366,13 +368,12 @@ str_catalog <- function(item_vector,
 
     separators[length(separators)] <-
       separators[length(separators)] %>%
-      paste_right(conj) %>% paste_right(" ")
+      paste_right(conj) %>%
+      paste_right(" ")
 
     separators[length(separators) + 1] <- ""
 
-    cat_str <-
-      paste0(cat_str, separators) %>%
-      paste(collapse = "")
+    cat_str <- paste(paste0(cat_str, separators), collapse = "")
 
     return(cat_str)
   }
