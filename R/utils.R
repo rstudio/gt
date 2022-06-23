@@ -1251,6 +1251,7 @@ inline_html_styles <- function(html, css_tbl) {
   cls_sty_pattern <- "class=\\\"(.*?)\\\"\\s+style=\\\"(.*?)\\\""
   cls_names_pattern <- "(?<=\\\").*?(?=\\\")"
   sty_exist_pattern <- "style=\\\"(.*?)\\\""
+  cls_pattern <- "class=\\\"(.*?)\\\""
 
   repeat {
 
@@ -1277,24 +1278,22 @@ inline_html_styles <- function(html, css_tbl) {
       )
   }
 
-  cls_pattern <- "class=\\\"(.*?)\\\""
-
   repeat {
 
-    class_names <-
-      html %>%
-      stringr::str_extract(pattern = cls_pattern) %>%
-      stringr::str_extract("(?<=\\\").*?(?=\\\")")
+    class_names <- stringr::str_extract(html, pattern = cls_pattern)
+    class_names <- stringr::str_extract(class_names, pattern = cls_names_pattern)
 
-    if (is.na(class_names)) {
-      break
-    }
+    if (is.na(class_names)) break
 
-    inline_styles <- create_inline_styles(class_names = class_names, css_tbl)
+    inline_styles <-
+      create_inline_styles(
+        class_names = class_names,
+        css_tbl = css_tbl
+      )
 
     html <-
-      html %>%
       stringr::str_replace(
+        html,
         pattern = cls_pattern,
         replacement = inline_styles
       )
