@@ -325,7 +325,7 @@ test_that("row groups can be successfully generated with `tab_row_group()", {
   # Expect a warning if using the `others_label` argument
   expect_warning(
     gt(exibble, rowname_col = "row") %>%
-      tab_row_group(others = "foo")
+      tab_row_group(others_label = "foo")
   )
 
   # Expect a warning if using the `group` argument
