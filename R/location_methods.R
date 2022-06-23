@@ -66,7 +66,7 @@ add_summary_location_row <- function(
             FUN = function(summary_data_item) {
               if (isTRUE(summary_data_item$groups)) {
                 summary_data_item$summary_labels
-              } else if (group %in% summary_data_item$groups){
+              } else if (group %in% summary_data_item$groups) {
                 summary_data_item$summary_labels
               }
             }
@@ -94,7 +94,7 @@ add_summary_location_row <- function(
 
     rows <-
       resolve_vector_i(
-        expr= !!loc$rows,
+        expr = !!loc$rows,
         vector = summary_labels,
         item_label = "summary row"
       )
