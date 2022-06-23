@@ -5,12 +5,7 @@
 #'
 #' @import rlang
 #' @noRd
-resolve_cells_body <- function(data,
-                               object) {
-
-  # Get the `stub_df` data frame from `data`
-  stub_df <- dt_stub_df_get(data = data)
-  data_tbl <- dt_data_get(data = data)
+resolve_cells_body <- function(data, object) {
 
   #
   # Resolution of columns and rows as integer vectors
@@ -221,8 +216,6 @@ resolve_cols_i <- function(expr,
   null_means <- match.arg(null_means)
 
   if (is_gt(data)) {
-
-    cols <- colnames(dt_data_get(data = data))
 
     # In most cases we would want to exclude the column that
     # represents the stub but that isn't always the case (e.g.,
