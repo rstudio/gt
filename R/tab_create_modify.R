@@ -2180,21 +2180,23 @@ tab_options <- function(
   arg_names <- base::setdiff(names(formals(tab_options)), "data")
   arg_vals <- mget(arg_names)
   arg_vals <- arg_vals[!vapply(arg_vals, FUN = is.null, FUN.VALUE = logical(1))]
-  arg_vals <- set_super_options(arg_vals)
+  arg_vals <- set_super_options(arg_vals = arg_vals)
 
   new_df <-
     dplyr::tibble(
-      parameter = names(arg_vals) %>% tidy_gsub(".", "_", fixed = TRUE),
-      value = unname(arg_vals)) %>%
+      parameter = tidy_gsub(names(arg_vals), ".", "_", fixed = TRUE),
+      value = unname(arg_vals)
+    ) %>%
     dplyr::left_join(
-      opts_df %>% dplyr::select(parameter, type),
+      dplyr::select(opts_df, parameter, type),
       by = "parameter"
     ) %>%
     dplyr::mutate(
       value = mapply(
         preprocess_tab_option,
         option = value, var_name = parameter, type = type,
-        SIMPLIFY = FALSE)
+        SIMPLIFY = FALSE
+      )
     ) %>%
     dplyr::select(-type)
 
@@ -2202,20 +2204,16 @@ tab_options <- function(
   # shouldn't be a problem
   opts_df <-
     dplyr::bind_rows(
-      new_df %>%
-        dplyr::inner_join(
-          opts_df %>% dplyr::select(-value),
-          by = "parameter"
-        ),
-      opts_df %>%
-        dplyr::anti_join(new_df, by = "parameter")
+      dplyr::inner_join(
+        new_df,
+        dplyr::select(opts_df, -value),
+        by = "parameter"
+      ),
+      dplyr::anti_join(opts_df, new_df, by = "parameter")
     )
 
   # Write the modified options table back to `data`
-  dt_options_set(
-    data = data,
-    options = opts_df
-  )
+  dt_options_set(data = data, options = opts_df)
 }
 
 preprocess_tab_option <- function(option, var_name, type) {
