@@ -22,11 +22,15 @@ colname_to_colnum <- function(
     colname,
     missing_is_zero = FALSE
 ) {
+
   vars_default <- dt_boxhead_get_vars_default(data = data)
+
   result <- match(colname, vars_default)
+
   if (missing_is_zero) {
     result[is.na(result)] <- 0L
   }
+
   result
 }
 
@@ -35,7 +39,9 @@ colname_to_colnum <- function(
 rownum_translation <- function(body, rownum_start) {
 
   rownum_final <- c()
+
   for (rownum_s in rownum_start) {
+
     rownum_final <-
       c(
         rownum_final,
@@ -84,9 +90,7 @@ render_formats <- function(data, context) {
     }
   }
 
-  data <- dt_body_set(data = data, body = body)
-
-  data
+  dt_body_set(data = data, body = body)
 }
 
 # Move input data cells to `body` that didn't have any rendering applied
@@ -144,9 +148,7 @@ migrate_unformatted_to_output <- function(data, context) {
     }
   }
 
-  data <- dt_body_set(data = data, body = body)
-
-  data
+  dt_body_set(data = data, body = body)
 }
 
 #' Perform any text transformations
@@ -243,9 +245,10 @@ reorder_styles <- function(data) {
       tmp_rownum[i] = which(rownum_final == styles_tbl$rownum[i])
     }
   }
-  final_rownum = styles_tbl$rownum
-  final_rownum[tmp_mask] = tmp_rownum[tmp_mask]
-  styles_tbl$rownum = final_rownum
+
+  final_rownum <- styles_tbl$rownum
+  final_rownum[tmp_mask] <- tmp_rownum[tmp_mask]
+  styles_tbl$rownum <- final_rownum
 
   dt_styles_set(data = data, styles = styles_tbl)
 }
@@ -337,10 +340,8 @@ perform_col_merge <- function(data, context) {
 
       # Transform the separator text depending on specific
       # inputs and the `context`
-      sep <-
-        sep %>%
-        context_dash_mark(context = context) %>%
-        context_plusminus_mark(context = context)
+      sep <- context_dash_mark(sep, context = context)
+      sep <- context_plusminus_mark(sep, context = context)
 
       if (context == "html") {
 
@@ -408,10 +409,8 @@ perform_col_merge <- function(data, context) {
 
       # Transform the separator text depending on specific
       # inputs and the `context`
-      sep <-
-        sep %>%
-        context_dash_mark(context = context) %>%
-        context_plusminus_mark(context = context)
+      sep <- context_dash_mark(sep, context = context)
+      sep <- context_plusminus_mark(sep, context = context)
 
       # Determine rows where NA values exist
       na_1_rows <- is.na(data_tbl[[mutated_column]])
@@ -446,8 +445,7 @@ perform_col_merge <- function(data, context) {
 #' @param groups_df The `groups_df` data frame.
 #' @param others_group The `others_group` vector.
 #' @noRd
-replace_na_groups_df <- function(groups_df,
-                                 others_group) {
+replace_na_groups_df <- function(groups_df, others_group) {
 
   if (nrow(groups_df) > 0) {
     groups_df[is.na(groups_df[, "group_id"]), "group_id"] <- others_group
@@ -461,8 +459,7 @@ replace_na_groups_df <- function(groups_df,
 #' @param groups_rows_df The `groups_rows_df` data frame.
 #' @param others_group The `others_group` vector.
 #' @noRd
-replace_na_groups_rows_df <- function(groups_rows_df,
-                                      others_group) {
+replace_na_groups_rows_df <- function(groups_rows_df, others_group) {
 
   if (nrow(groups_rows_df) > 0) {
     groups_rows_df[
@@ -488,7 +485,6 @@ last_non_na <- function(vect) {
 # Determine whether the table should have row labels
 # set within a column in the stub
 stub_rownames_has_column <- function(data) {
-
   isTRUE("rowname" %in% dt_stub_components(data = data))
 }
 
@@ -506,7 +502,6 @@ stub_group_names_has_column <- function(data) {
   # located in the stub; if set as TRUE then that's the return value
   dt_options_get_value(data = data, option = "row_group_as_column")
 }
-
 
 # Get the number of columns for the visible (not hidden) data; this
 # excludes the number of columns required for the table stub
