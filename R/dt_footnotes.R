@@ -58,6 +58,6 @@ dt_footnotes_add <- function(
 
   dt_footnotes_set(
     data = data,
-    footnotes = rbind(dt_footnotes_get(data = data), result)
+    footnotes = dplyr::bind_rows(dt_footnotes_get(data = data), result)
   )
 }
