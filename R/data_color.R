@@ -155,9 +155,6 @@ data_color <- function(
   # Evaluate `colors` with `eval_tidy()` (supports quosures)
   colors <- rlang::eval_tidy(colors, data_tbl)
 
-  # Collect the column names from `data_tbl`
-  colnames <- names(data_tbl)
-
   # Resolution of `columns` as column names in the table
   resolved_columns <- resolve_cols_c(expr = {{ columns }}, data = data)
 
