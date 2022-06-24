@@ -10,7 +10,8 @@ initial_months <-
   c(" ",
     "J", "F", "M", "A", "M", "J",
     "J", "A", "S", "O", "N", "D",
-    " ")
+    " "
+  )
 
 # Get the total pizzaplace sales in the
 # 2015 year; format as a currency value
@@ -55,13 +56,12 @@ pizza_plot <-
     plot.subtitle = element_text(color = "grey25"),
     plot.margin = unit(c(20, 20, 20, 20), "points"),
     legend.box.spacing = unit(2, "points"),
-    legend.position = "bottom")
+    legend.position = "bottom"
+  )
 
 # Make the plot suitable for mailing by
 # converting it to an HTML fragment
-pizza_plot_email <-
-  pizza_plot %>%
-  blastula::add_ggplot()
+pizza_plot_email <- blastula::add_ggplot(plot_object = pizza_plot)
 
 # Create `sizes_order` and `types_order` to
 # support the ordering of pizza sizes and types

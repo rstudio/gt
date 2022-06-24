@@ -13,7 +13,7 @@ get_package_docs <- function(pkg) {
 
 # Get a list of topic names from `gt`'s RdDB; work was done to
 # ensure that each of gt's exported function has it's own topic
-fn_names <- get_package_docs(pkg = "gt") %>% names()
+fn_names <- names(get_package_docs(pkg = "gt"))
 
 # Have a list of topics to be excluded from the image-generation
 # process; all of these don't produce `gt_tbl` objects
@@ -45,7 +45,7 @@ name_exclusions <-
   )
 
 # Revise the list of topic names by removing the excluded ones
-fn_names <- fn_names %>% base::setdiff(name_exclusions)
+fn_names <- base::setdiff(fn_names, name_exclusions)
 
 # Declare a fixed image width
 image_width <- 1100
@@ -60,7 +60,13 @@ for (fn_name in fn_names) {
 
   # Evaluate the examples in the examples for each topic/function; the
   # objects we'd want to create images from all begin with `tab_`
-  utils::example(topic = fn_name, package = "gt", character.only = TRUE, give.lines = FALSE, echo = FALSE)
+  utils::example(
+    topic = fn_name,
+    package = "gt",
+    character.only = TRUE,
+    give.lines = FALSE,
+    echo = FALSE
+  )
 
   # Get a separate vector of objects that begin with `tab_`
   tab_obj <- ls(pattern = "^tab_[0-9]*?$")
@@ -76,10 +82,11 @@ for (fn_name in fn_names) {
 
     # Save the image with a high `zoom` value for clarity,
     # but resized down to 50% of the original
-    gt:::gt_save_webshot(data = get(tab_obj[i]), filename = filename, zoom = 3) %>% webshot::resize("50%")
+    gt:::gt_save_webshot(data = get(tab_obj[i]), filename = filename, zoom = 3) %>%
+      webshot::resize(geometry = "50%")
 
     # Get the height and width of the image produced by webshot
-    image_dim <- readPNG(filename) %>% dim()
+    image_dim <- dim(readPNG(filename))
 
     if (image_dim[2] > image_width) eff_image_x <- image_dim[2] else eff_image_x <- image_width
     if (image_dim[1] >= 1500) eff_image_y <- 1500 else eff_image_y <- image_dim[1]
@@ -102,4 +109,8 @@ webshot::shrink(filename = file.path(temp_dir, png_list))
 system(glue::glue("cd {shQuote(temp_dir)}; pngquant --force --ext=.png --skip-if-larger --nofs --speed 1 *.png"))
 
 # Move the files into the `man/figures` directory
-file.copy(file.path(temp_dir, png_list), here::here("man", "figures", png_list), overwrite = TRUE)
+file.copy(
+  from = file.path(temp_dir, png_list),
+  to = here::here("man", "figures", png_list),
+  overwrite = TRUE
+)

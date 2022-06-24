@@ -2146,10 +2146,14 @@ cell_borders <- function(
   # Resolve the selection of borders into a vector of
   # standardized sides
   sides <-
-    vapply(
-      sides, resolve_border_side,
-      FUN.VALUE = character(1), USE.NAMES = FALSE) %>%
-    unique()
+    unique(
+      vapply(
+        sides,
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = resolve_border_side
+      )
+    )
 
   # Should the `all` selection appear in the
   # `sides` vector, use all possible sides
@@ -2157,29 +2161,38 @@ cell_borders <- function(
     sides <- c("left", "right", "top", "bottom")
   }
 
-  lapply(sides, function(side) {
+  style_list <-
+    lapply(
+      sides,
+      FUN = function(side) {
 
-    style_vals <-
-      list(
-        side = side,
-        width = weight,
-        style = style,
-        color = color
-      )
+        style_vals <-
+          list(
+            side = side,
+            width = weight,
+            style = style,
+            color = color
+          )
 
-    validate_style_in(
-      style_vals, names(style_vals), "style",
-      c("solid", "dashed", "dotted")
+        validate_style_in(
+          style_vals, names(style_vals), "style",
+          c("solid", "dashed", "dotted")
+        )
+
+        cell_style_structure(
+          name = paste0("cell_border_", side),
+          obj = style_vals,
+          subclass =  "cell_border"
+        )
+      }
     )
 
-    cell_style_structure(paste0("cell_border_", side), style_vals, "cell_border")
-  }) %>%
-    as_style()
+  as_style(style = style_list)
 }
 
 cell_style_to_html.cell_border <- function(style) {
 
-  css <- style %>% unclass()
+  css <- unclass(style)
 
   side <- css$side
 
@@ -2281,8 +2294,8 @@ cell_style_structure <- function(name, obj, subclass = name) {
 google_font <- function(name) {
 
   import_stmt <-
-    name %>% tidy_gsub(" ", "+") %>%
     paste_between(
+      gsub(" ", "+", name),
       c(
         "@import url('https://fonts.googleapis.com/css2?family=",
         ":ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');"
@@ -2584,14 +2597,15 @@ gt_latex_dependencies <- function() {
 
   if (requireNamespace("knitr", quietly = TRUE)) {
 
-    paste(
-      "",
-      "% gt packages",
-      paste0("\\usepackage{", latex_packages(), "}", collapse = "\n"),
-      "",
-      sep = "\n"
-    ) %>%
-      knitr::asis_output()
+    knitr::asis_output(
+      paste(
+        "",
+        "% gt packages",
+        paste0("\\usepackage{", latex_packages(), "}", collapse = "\n"),
+        "",
+        sep = "\n"
+      )
+    )
 
   } else {
     cli::cli_abort(

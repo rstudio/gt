@@ -238,15 +238,13 @@ cols_width <- function(
         expr = !!cols,
         data = .data,
         excl_stub = FALSE
-      ) %>%
-      base::setdiff(columns_used)
+      )
+
+    columns <- base::setdiff(columns, columns_used)
 
     columns_used <- c(columns_used, columns)
 
-    width <-
-      width_item %>%
-      rlang::f_rhs() %>%
-      rlang::eval_tidy()
+    width <- rlang::eval_tidy(rlang::f_rhs(width_item))
 
     # If a bare numeric value is provided, give that the `px` dimension
     if (is.numeric(width)) width <- paste_right(as.character(width), "px")
@@ -262,11 +260,9 @@ cols_width <- function(
     }
   }
 
-  unset_widths <-
-    dt_boxhead_get(data = .data) %>%
-    .$column_width %>%
-    lapply(is.null) %>%
-    unlist()
+  boxh <- dt_boxhead_get(data = .data)
+
+  unset_widths <- unlist(lapply(boxh$column_width, FUN = is.null))
 
   if (any(unset_widths)) {
 

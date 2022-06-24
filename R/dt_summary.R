@@ -3,12 +3,10 @@
 .dt_summary_build_key <- paste0(.dt_summary_key, "_build")
 
 dt_summary_get <- function(data) {
-
   dt__get(data, .dt_summary_key)
 }
 
 dt_summary_df_get <- function(data) {
-
   dt__get(data, .dt_summary_build_key)
 }
 
@@ -31,47 +29,40 @@ dt_summary_df_display_get <- function(data) {
 }
 
 dt_summary_set <- function(data, summary) {
-
   dt__set(data, .dt_summary_key, summary)
 }
 
 dt_summary_data_set <- function(data, summary) {
-
   dt__set(data, .dt_summary_build_key, summary)
 }
 
 dt_summary_init <- function(data) {
-
-  dt_summary_set(summary = list(), data = data)
+  dt_summary_set(data = data, summary = list())
 }
 
 dt_summary_add <- function(data, summary) {
 
-  data %>%
-    dt_summary_get() %>%
-    append(list(summary)) %>%
-    dt_summary_set(summary = ., data = data)
+  summary_list <- dt_summary_get(data = data)
+  summary_list <- append(summary_list, list(summary))
+
+  dt_summary_set(data = data, summary = summary_list)
 }
 
 dt_summary_exists <- function(data) {
-
   length(dt_summary_get(data = data)) > 0
 }
 
-dt_summary_build <- function(data,
-                             context) {
+dt_summary_build <- function(data, context) {
 
   # TODO: is `dt_body_get()` necessary here? `dt_boxh_vars_default()` could be used
   summary_list <- dt_summary_get(data = data)
   body <- dt_body_get(data = data)
   data_tbl <- dt_data_get(data = data)
   stub_df <- dt_stub_df_get(data = data)
-  boxh_df <- dt_boxhead_get(data = data)
 
   # If the `summary_list` object is an empty list,
   # return an empty list as the `list_of_summaries`
   if (length(summary_list) == 0) {
-
     return(dt_summary_data_set(data = data, list()))
   }
 

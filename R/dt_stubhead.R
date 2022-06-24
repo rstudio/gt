@@ -1,21 +1,15 @@
 .dt_stubhead_key <- "_stubhead"
 
 dt_stubhead_get <- function(data) {
-
   dt__get(data, .dt_stubhead_key)
 }
 
 dt_stubhead_set <- function(data, stubhead) {
-
   dt__set(data, .dt_stubhead_key, stubhead)
 }
 
 dt_stubhead_init <- function(data) {
-
-  list(
-    label = NULL
-  ) %>%
-    dt_stubhead_set(data = data)
+  dt_stubhead_set(data = data, stubhead = list(label = NULL))
 }
 
 dt_stubhead_label <- function(data, label) {

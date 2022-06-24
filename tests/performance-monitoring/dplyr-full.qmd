@@ -1,0 +1,2172 @@
+--
+title: "dplyr <-> data.table"
+subtitle: "Notes I took while learning to use data.table"
+author:
+  - name: "Marc-Aurèle Rivière"
+    url: https://ma-riviere.me
+    orcid: 0000-0002-5108-3382
+date: "2022-05-19"
+editor: source
+
+format:
+  html:
+    theme:
+      light: [default, css/light.scss]
+      dark: [darkly, css/dark.scss]
+    css: css/style.css
+    toc: true
+    toc-title: "On this page"
+    anchor-sections: true
+    number-sections: true
+    code-link: true
+    fig-align: center
+    fig-dpi: 300
+    fig-format: svg
+    self-contained: true
+    code-tools:
+      source: true
+      toggle: false
+    highlight-style: arrow
+    code-block-bg: true
+    code-block-border-left: "#31BAE9"
+    link-external-newwindow: true
+
+execute:
+  warning: false
+  message: false
+  output: asis
+  freeze: true
+---
+
+:::{.callout-tip collapse="true"}
+
+# Expand for Version History
+
+- **V1:** 2022-05-19  
+- **V2:** 2022-05-26   
+  - Improved the section on **keys** (for ordering & filtering)  
+  - Adding a [section](#tidyr-others) for translations of `Tidyr` (and other similar packages)      
+  - Capping tables to display 15 rows max when unfolded  
+  - Improving table display (stripping, hiding the contents of nested columns, ...)
+
+:::
+
+```{r}
+#| echo: false
+
+library(here)
+
+if (!startsWith(.libPaths()[1], here::here())) {
+  v <- paste0("R-", version$major, ".", strsplit(version$minor, ".", fixed = TRUE)[[1]][1])
+  .libPaths(here::here("renv", "library", v, "x86_64-w64-mingw32"))
+}
+```
+
+```{r}
+library(data.table) # Make sure you have data.table version >= 1.14.3
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(purrr)
+library(lubridate)
+
+data.table::setDTthreads(parallel::detectCores(logical = TRUE))
+```
+
+:::{.callout-tip collapse="true"}
+
+# Expand for Session Info
+
+```{r}
+#| echo: false
+#| results: html
+
+sessioninfo::session_info(pkgs = "attached")
+```
+
+:::
+
+```{r}
+#| echo: false
+
+## This section is for Quarto (purely cosmetic)
+
+library(gt)         # Printing nice tables
+library(gtExtras)   # Printing nice tables
+library(ggplot2)    # Plots
+library(knitr)      # Generating the html document
+library(downlit)    # For code linking
+library(xml2)       # For code linking
+library(withr)      # For code linking
+
+knitr::opts_chunk$set(
+  warning = FALSE,
+  message = FALSE,
+  fig.align = "center",
+  fig.retina = 2,
+  dpi = 500,
+  dev = 'svg',
+  dev.args = list(bg = "transparent")
+)
+
+bg_color_light <- "white"
+primary_color_light <- "black"
+secondary_color_light <- "#0d6efd"
+
+bg_color_dark <- "#222"
+primary_color_dark <- "white"
+secondary_color_dark <- "#20c997"
+
+
+#--------------------#
+#### Table themes ####
+#--------------------#
+
+format_pvalue <- function(p) glue::glue("{scales::pvalue(p)} {gtools::stars.pval(p) |> str_remove_all(fixed('.'))}")
+
+get_cell_dim <- function(x) {
+  dim <- NULL
+  if (is.list(x) || is.vector(x)) dim <- length(x)
+  if (length(dim(x) > 1)) dim <- glue::glue('{dim(x)[1]} x {dim(x)[2]}')
+  return(dim)
+}
+
+summarize_nested_col <- \(x) lapply(x, \(r) glue::glue("<{class(r)[[1]]} [{get_cell_dim(r)}]>"))
+
+format_gt <- function(gt_tbl) {
+  
+  gt_tbl <- gt::fmt(
+    gt_tbl,
+    columns = select(gt_tbl[["_data"]], where(is.list)) |> colnames(),
+    fns = \(x) summarize_nested_col(x)
+  )
+  
+  gt_tbl <- gt::fmt(
+    gt_tbl,
+    columns = select(gt_tbl[["_data"]], matches("p.val|^pr|pr\\(.*\\)|^p$")) |> colnames(),
+    fns = \(x) purrr::map_chr(x, \(v) ifelse(!is.na(v) && utils::type.convert(v, as.is = TRUE) |> is.numeric(), format_pvalue(as.numeric(v)), v))
+  )
+  
+  gt_tbl <- gt::fmt_number(
+    gt_tbl,
+    columns = select(gt_tbl[["_data"]], where(\(v) is.numeric(v))) |> colnames(),
+    decimals = 3, sep_mark = " ", drop_trailing_zeros = TRUE # n_sigfig = 2
+  )
+  
+  return(gt_tbl)
+}
+
+gt_style_light <- function(gt_tbl) {
+  gt_tbl <- (gt_tbl 
+    |> format_gt()
+    |> gt::tab_style(
+      style = list(
+        cell_fill(color = bg_color_light, alpha = 1),
+        cell_text(color = secondary_color_light, weight = "bold"),
+        cell_borders(sides = c("top", "bottom"), color = secondary_color_light, style = "solid", weight = px(2))
+      ),
+      locations = list(cells_title(), cells_column_labels())
+    ) 
+    |> gt::tab_style(
+      style = list(
+        cell_fill(color = bg_color_light, alpha = 1),
+        cell_text(color = primary_color_light)
+      ),
+      locations = list(cells_stub(), cells_body(), cells_row_groups(), cells_footnotes(), cells_source_notes())
+    )
+    |> gt::tab_style(
+      style = list(cell_text(weight = "bold")),
+      locations = list(cells_row_groups())
+    )
+    |> gt::tab_options(container.width = pct(100), table.width = pct(100))
+  )
+  
+  if (nrow(gt_tbl[["_data"]]) > 2) 
+    gt_tbl <- gt_tbl |> gtExtras::gt_highlight_rows(rows = seq(2, nrow(gt_tbl[["_data"]]), by = 2), fill = "#E9E9E9", font_weight = "normal")
+  
+  return(gt_tbl)
+}
+
+gt_style_dark <- function(gt_tbl) {
+  gt_tbl <- (gt_tbl 
+    |> format_gt()
+    |> gt::tab_style(
+      style = list(
+        cell_fill(color = bg_color_dark, alpha = 1),
+        cell_text(color = secondary_color_dark, weight = "bold"),
+        cell_borders(sides = c("top", "bottom"), color = secondary_color_dark, style = "solid", weight = px(2))
+      ),
+      locations = list(cells_title(), cells_column_labels())
+    ) 
+    |> gt::tab_style(
+      style = list(
+        cell_fill(color = bg_color_dark, alpha = 1),
+        cell_text(color = primary_color_dark)
+      ),
+      locations = list(cells_stub(), cells_body(), cells_row_groups(), cells_footnotes(), cells_source_notes())
+    )
+    |> gt::tab_style(
+      style = list(cell_text(weight = "bold")),
+      locations = list(cells_row_groups())
+    )
+    |> gt::tab_options(container.width = pct(100), table.width = pct(100))
+  )
+  
+  if (nrow(gt_tbl[["_data"]]) > 2) 
+    gt_tbl <- gt_tbl |> gtExtras::gt_highlight_rows(rows = seq(2, nrow(gt_tbl[["_data"]]), by = 2), fill = "#1e1e1e", font_weight = "normal")
+  
+  return(gt_tbl)
+}
+
+style_table <- function(data, theme = "light", nrow_max = 15) {
+  if (theme == "light") tbl <- gt::gt(data |> head(nrow_max)) |> gt_style_light()
+  if (theme == "dark") tbl <- gt::gt(data |> head(nrow_max)) |> gt_style_dark()
+  
+  if (nrow(data) > nrow_max) tbl <- tbl |> tab_source_note(md(glue::glue("*[ omitted {nrow(data) - nrow_max} entries ]*")))
+  
+  return(tbl)
+}
+
+
+#--------------------------#
+#### Custom knit_prints ####
+#--------------------------#
+
+knit_print.grouped_df <- function(x, options, ...) {
+  if ("grouped_df" %in% class(x)) x <- ungroup(x)
+
+  cl <- intersect(class(x), c("data.table", "data.frame"))[1]
+  
+  cat("\n<details>\n")
+  cat("<summary>\n")
+  cat(glue::glue("\n*{cl} [{dim(x)[1]} x {dim(x)[2]}]*\n"))
+  cat("</summary>\n<br>\n")
+  cat("<div class='light-mode'>")
+  print(style_table(x))
+  cat("</div>")
+  cat("<div class='dark-mode'>")
+  print(style_table(x, "dark"))
+  cat("</div>")
+  cat("</details>\n\n")
+}
+registerS3method("knit_print", "grouped_df", knit_print.grouped_df)
+
+knit_print.data.frame <- function(x, options, ...) {
+  cl <- intersect(class(x), c("data.table", "data.frame"))[1]
+  
+  cat("\n<details>\n")
+  cat("<summary>\n")
+  cat(glue::glue("\n*{cl} [{dim(x)[1]} x {dim(x)[2]}]*\n"))
+  cat("</summary>\n<br>\n")
+  cat("<div class='light-mode'>")
+  print(style_table(x))
+  cat("</div>")
+  cat("<div class='dark-mode'>")
+  print(style_table(x, "dark"))
+  cat("</div>")
+  cat("</details>\n\n")
+}
+registerS3method("knit_print", "data.frame", knit_print.data.frame)
+```
+
+
+<!-------------------------------------------------------->
+<!-------------------------------------------------------->
+# Basic operations:
+***
+
+:::{.callout-tip}
+
+## `data.table` general syntax:
+
+DT[`row selector` (filter/sort), `col selector` (select/mutate/summarize/rename), `modifiers` (group)]
+:::
+
+**Data**
+
+```{r}
+MT <- as.data.table(mtcars)
+IRIS <- as.data.table(iris)[, Species := as.character(Species)]
+```
+
+
+<!-------------------------------------------------------->
+## Arrange / Order:
+
+```{r}
+mtcars |> arrange(desc(cyl))
+
+MT[order(-cyl)]
+
+IRIS[chorder(Species)]
+```
+
+```{r}
+setorder(MT, -cyl)[]
+```
+
+
+**Ordering with keys**
+
+- Keys physically reorders the dataset within the RAM (by reference)  
+  - No memory is used for sorting (other than marking which columns is the key)  
+- The dataset is marked with an attribute _"sorted"_  
+- The dataset is always sorted in _ascending order_, with _NAs_ first  
+- Using `keyby` instead of `by` when grouping will set the grouping factors as keys
+
+:::{.callout-tip}
+See [this SO post](https://stackoverflow.com/questions/20039335/what-is-the-purpose-of-setting-a-key-in-data-table?rq=1) for more information on keys.
+:::
+
+```{r}
+setkey(MT, cyl, gear)
+
+setkeyv(MT, c("cyl", "gear"))
+
+MT
+```
+
+To see over which keys (if any) the dataset is currently ordered:
+
+```{r}
+haskey(MT)
+
+key(MT)
+```
+
+:::{.callout-warning}
+Unless our task involves repeated subsetting on the same column, the speed gain from key-based subsetting could effectively be nullified by the time needed to reorder the data in RAM, especially for large datasets.
+:::
+
+
+**Ordering with (secondary) indices**
+
+- `setindex` creates an index for the provided columns, but doesn’t physically reorder the dataset in RAM.  
+- It computes the ordering vector of the dataset's rows according to the provided columns in an additional attribute called _index_  
+
+
+```{r}
+#| echo: false
+
+MT <- as.data.table(mtcars)
+```
+
+
+```{r}
+setindex(MT, cyl, gear)
+
+setindexv(MT, c("cyl", "gear"))
+
+MT
+```
+
+We can see the additional _index_ attribute added to the `data.table`:
+
+```{r}
+names(attributes(MT))
+```
+
+We can get the currently used indices with:
+
+```{r}
+indices(MT)
+```
+
+Adding a new index doesn't remove a previously existing one:
+
+```{r}
+setindex(MT, hp)
+
+indices(MT)
+```
+
+We can thus use indices to pre-compute the ordering for the columns (or combinations of columns) that we will be using to group or subset by frequently !
+
+
+
+<!-------------------------------------------------------->
+## Subset / Filter:
+
+```{r}
+#| echo: false
+
+MT <- as.data.table(mtcars)
+IRIS <- as.data.table(iris)[, Species := as.character(Species)]
+```
+
+
+```{r}
+mtcars |> filter(cyl >= 6 & disp < 180)
+
+MT[cyl >= 6 & disp < 180]
+```
+
+
+**Filtering on characters:**
+
+For non-regex, use `%chin%`, which is a character-optimized version of `%in%`.  
+
+```{r}
+IRIS[Species %chin% c("setosa")]
+```
+
+
+**Filter with pattern:**
+
+For regex patterns, use `%like%`
+
+```{r}
+mtcars |> filter(str_detect(disp, "^\\d{3}\\."))
+
+MT[like(disp, "^\\d{3}\\.")]
+```
+
+Alternatively:
+
+```{r}
+MT[disp %like% "^\\d{3}\\."]
+```
+
+
+**Filter by keys**
+
+When keys or indices are defined, we can filter based on them, which is often a lot faster.  
+- _N.B.: We do not even need to specify the column name we are filtering on: the values will be attributed to the keys in order._
+
+
+```{r}
+setkey(MT, cyl)
+
+MT[.(6)] # Equivalent to MT[cyl == 6]
+```
+
+```{r}
+setkey(MT, cyl, gear)
+
+MT[.(6, 4)] # Equivalent to MT[cyl == 6 & gear == 4]
+```
+
+
+**Filter by indices**
+
+To filter by indices, we can use the `on` argument, which creates a **temporary secondary index** on the fly (if it doesn't already exist).
+
+```{r}
+IRIS["setosa", on = "Species"]
+```
+
+Since the time to compute the secondary indices is quite small, we don’t have to use `setindex`, unless the task involves repeated subsetting on the same columns.
+
+
+:::{.callout-tip}
+When using `on` with multiple values, the `nomatch = NULL` argument avoids 
+creating combinations that do not exist in the original data (i.e. for `cyl == 5` here)
+:::
+
+```{r}
+MT[.(4:6, 4), on = c("cyl", "gear"), nomatch = NULL]
+```
+
+
+**Distinct / Unique**
+
+```{r}
+mtcars |> distinct(mpg, hp, .keep_all = TRUE)
+
+unique(MT, by = c("mpg", "hp"))
+```
+
+
+**N Distinct / Unique N**
+
+```{r}
+n_distinct(mtcars$gear)
+
+uniqueN(MT, by = "gear")
+```
+
+
+<!-------------------------------------------------------->
+## Select:
+
+```{r}
+#| echo: false
+
+MT <- as.data.table(mtcars)
+IRIS <- as.data.table(iris)[, Species := as.character(Species)]
+```
+
+```{r}
+MT |> select(matches("cyl|disp"))
+
+MT[, .(mpg, disp)]
+
+MT[ , .SD, .SDcols = c("mpg", "disp")]
+MT[, .SD, .SDcols = patterns("mpg|disp")]
+```
+
+By dynamic name:
+
+```{r}
+cols <- c("cyl", "disp")
+
+mtcars |> select(all_of(cols))
+
+copy(MT)[, ..cols]
+
+copy(MT)[, cols, with = FALSE]
+```
+
+**Remove a column**
+
+```{r}
+mtcars |> select(-cyl)
+
+copy(MT)[, c("cyl") := NULL][]
+copy(MT)[, !"cyl"] # MT[, -"cyl"]
+```
+
+By dynamic name:
+
+```{r}
+col <- "cyl"
+
+copy(MT)[, (col) := NULL][]
+```
+
+```{r}
+cols <- c("cyl", "disp")
+
+mtcars |> select(!matches(cols))
+
+copy(MT)[, !..cols]
+
+copy(MT)[, !cols, with = FALSE]
+```
+
+By pattern:
+
+```{r}
+mtcars |> select(-matches("^d"))
+
+copy(MT)[, .SD, .SDcols = !patterns("^d")]
+
+copy(MT)[, grep("^d", colnames(MT)) := NULL][]
+```
+
+
+**Select + pull**
+
+```{r}
+#| eval: false
+
+mtcars |> pull(disp)
+```
+
+```{r}
+#| eval: false
+
+MT[, disp]
+```
+
+
+**Select + rename**
+
+```{r}
+mtcars |> select(dispp = disp)
+
+MT[, .(dispp = disp)]
+```
+
+
+<!-------------------------------------------------------->
+## Rename:
+
+```{r}
+#| echo: false
+
+MT <- as.data.table(mtcars)
+IRIS <- as.data.table(iris)[, Species := as.character(Species)]
+```
+
+**Manually:**
+
+```{r}
+mtcars |> rename(CYL = cyl, MPG = mpg)
+
+setnames(copy(MT), c("cyl", "mpg"), c("CYL", "MPG"))[]
+```
+
+
+**Programmatically:**
+
+```{r}
+mtcars |> rename_with(\(c) toupper(c), .cols = matches("^d"))
+
+setnames(copy(MT), grep("^d", names(MT)), \(c) toupper(c))[]
+```
+
+
+<!-------------------------------------------------------->
+## Mutate:
+
+```{r}
+#| echo: false
+
+MT <- as.data.table(mtcars)
+IRIS <- as.data.table(iris)[, Species := as.character(Species)]
+```
+
+**`data.table` can mutate in 2 ways:**  
+- Using `=` creates a new DT with the new columns only (like `dplyr::transmute`)   
+- Using `:=` modifies the current dt *in place* (like `dplyr::mutate`)
+
+The function modifying a column should be the same size as the original column (or group).  
+If only one value is provided with `:=`, it will be recycled to the whole column/group.
+
+If the number of values provided is smaller than the original column/group:  
+- With `:=`, an error will be raised, asking to manually specify how to recycle the values.  
+- With `=`, it will behave like `dplyr::summarize` (if a grouping has been specified).
+
+### Transmute:
+
+```{r}
+MT[, .(cyl = cyl * 2)]
+```
+
+
+### In-Place:
+
+#### Single column:
+
+```{r}
+mtcars |> mutate(cyl = 200)
+
+copy(MT)[, cyl := 200][]
+```
+
+**Mutate a single column with a function:**
+
+```{r}
+mtcars |> mutate(mean_cyl = mean(cyl, na.rm = TRUE))
+
+copy(MT)[, mean_cyl := mean(cyl, na.rm = TRUE)][]
+copy(MT)[, `:=`(mean_cyl = mean(cyl, na.rm = TRUE))][]
+```
+
+
+**Dynamic mutate:**
+
+Dynamic name on the LHS:
+
+```{r}
+CN <- "MPG"
+
+mtcars |> mutate({{CN}} := mean(mpg))
+
+mtcars |> mutate("{CN}" := mean(mpg))
+
+copy(MT)[, (CN) := mean(mpg)][] # (CN) <=> c(CN)
+```
+
+Dynamic name on both LHS & RHS:
+
+`data.table` requires the use of `base::get()` on the LHS
+
+```{r}
+cn <- "mpg"
+
+mtcars |> mutate("{CN}" := as.character(.data[[cn]]))
+
+mtcars |> mutate({{CN}} := as.character(cur_data()[[cn]]))
+
+copy(MT)[, c(CN) := as.character(get(cn))][]
+```
+
+
+**Conditional mutate:**
+
+`if_else:`
+
+```{r}
+mtcars |> mutate(Size = if_else(cyl >= 6, "BIG", "small"))
+
+copy(MT)[, Size := fifelse(cyl >= 6, "BIG", "small")][]
+```
+
+`case_when:`
+
+```{r}
+mtcars |> mutate(Size = case_when(
+  cyl %between% c(2,4) ~ "small",
+  cyl %between% c(4,8) ~ "BIG"
+))
+
+copy(MT)[, Size := fcase(
+  cyl %between% c(2,4), "small", 
+  cyl %between% c(4,8), "BIG"
+)][]
+```
+
+
+**Lag / Lead**
+
+```{r}
+mtcars |> mutate(gear1 = lead(gear))
+
+copy(MT)[, gear1 := shift(gear, 1, type = "lead")][]
+```
+
+
+#### Mutate multiple columns:
+
+```{r}
+mtcars |> mutate(cyl = 200, gear = 5)
+
+copy(MT)[, `:=`(cyl = 200, gear = 5)][]
+copy(MT)[, c("cyl", "gear") := list(200, 5)][]
+```
+
+
+**One function applied to multiple columns (across rows):**
+
+```{r}
+mtcars |> mutate(across(c("mpg", "disp"), \(c) min(c), .names = "min_{col}"))
+
+copy(MT)[, c("min_mpg", "min_disp") := lapply(.SD, \(c) min(c)), .SDcols = c("mpg", "disp")][]
+```
+
+
+**Multiple functions on one column (across rows):**
+
+```{r}
+copy(MT)[, c("min_mpg", "max_mpg") := lapply(.SD, \(x) list(min(x), max(x))) |> rbindlist(), .SDcols = "mpg"][]
+```
+
+
+**One function applied to multiple columns (across columns)**
+
+```{r}
+mtcars |> rowwise() |> mutate(RowSum = sum(c_across(where(is.numeric)))) |> ungroup()
+
+copy(MT)[, RowSum := rowSums(.SD), .SDcols = is.numeric][]
+```
+
+More general option using row-wise `apply`:
+
+```{r}
+copy(MT)[, RowMean := apply(.SD, 1, \(x) mean(x)), .SDcols = is.numeric][]
+```
+
+
+**Multiple functions applied to multiple columns (across columns)**
+
+```{r}
+copy(MT)[, c("row_mean", "row_sum") := apply(.SD, 1, \(x) list(mean(x), sum(x))) |> rbindlist(), .SDcols = is.numeric][]
+```
+
+
+<!-------------------------------------------------------->
+## Group / Aggregate:
+
+```{r}
+#| echo: false
+
+MT <- as.data.table(mtcars)
+IRIS <- as.data.table(iris)[, Species := as.character(Species)]
+```
+
+The examples listed apply a grouping but do nothing (using `.SD` to simply keep all columns as is)
+
+**One group:**
+
+```{r}
+mtcars |> group_by(cyl)
+
+MT[, .SD, by = cyl]
+```
+
+
+**Multiple groups:**
+
+```{r}
+MT[, .SD, by = .(cyl, gear)]
+```
+
+
+**Dynamic grouping:**
+
+```{r}
+cols <- c("cyl", "disp")
+
+mtcars |> group_by(across(any_of(cols)))
+
+MT[, .SD, by = cols]
+```
+
+With potentially absent columns:
+
+```{r}
+cols <- c("cyl", "disp", "fake_col")
+
+mtcars |> group_by(across(any_of(cols)))
+
+MT[, .SD, by = intersect(cols, colnames(MT))]
+```
+
+**Getting the current group name:**
+
+Use the `.BY` argument to get the current group name:
+
+```{r}
+#| layout-nrow: 1
+#| layout-ncol: 3
+
+mtcars |> group_by(cyl) |> 
+  group_walk(
+    \(d, g) with(d, plot(gear, mpg, main = paste("Cylinders:", g$cyl)))
+  )
+```
+
+```{r}
+#| layout-nrow: 1
+#| layout-ncol: 3
+
+MT[, with(.SD, plot(gear, mpg, main = paste("Cylinders:", .BY))), by = cyl] -> void
+```
+
+
+<!-------------------------------------------------------->
+## Row numbers & indices:
+
+```{r}
+#| echo: false
+
+MT <- as.data.table(mtcars)
+IRIS <- as.data.table(iris)[, Species := as.character(Species)]
+```
+
+`.I`: Row indices  
+`.N`: Number of rows  
+
+`.GRP`: Group indices  
+`.NGRP`: Number of groups  
+
+**Getting rows indices:**
+
+```{r}
+#| results: html
+
+MT[, .I]
+```
+
+
+**Adding rows indices:**
+
+```{r}
+mtcars |> mutate(I = row_number())
+
+copy(MT)[ , I := .I][]
+```
+
+
+**Getting row indices (after filtering):**
+
+:::{.callout-important}
+`.I` gives the vector of row numbers after any subsetting/filtering has been done
+:::
+
+Returns the row numbers in the original dataset:
+
+```{r}
+mtcars |> mutate(I = row_number()) |> filter(gear == 4) |> pull(I)
+
+MT[, .I[gear == 4]]
+```
+
+Returns the row numbers in the new dataset (after filtering):
+
+```{r}
+mtcars |> filter(gear == 4) |> mutate(I = row_number()) |> pull(I)
+
+MT[gear == 4, .I]
+```
+
+
+**Filtering based on row numbers:**
+
+```{r}
+mtcars |> tail(10)
+
+MT[(.N-10):.N] # Get the last 10 rows
+```
+
+```{r}
+MT[MT[, .I[(.N-10):.N]]]
+```
+
+(Gets the indices of the last 10 rows and filters based on them)
+
+
+**Adding group indices:**
+
+```{r}
+mtcars |> group_by(cyl) |> summarize(GRP = cur_group_id())
+
+MT[, .GRP, by = cyl]
+```
+
+Mutate instead of summarize:
+
+```{r}
+mtcars |> arrange(cyl) |> group_by(cyl) |> mutate(GRP = cur_group_id())
+
+copy(MT)[, GRP := .GRP, keyby = cyl][]
+```
+
+
+**Row numbers by group:**
+
+```{r}
+mtcars |> arrange(gear) |> group_by(gear) |> mutate(I_GRP = row_number())
+
+copy(MT)[, I_GRP := 1:.N, keyby = gear][]
+```
+
+
+**Random sample:**
+
+```{r}
+mtcars |> slice_sample(n = 5)
+
+MT[sample(.N, 5)]
+```
+
+Sample by group:
+
+```{r}
+mtcars |> group_by(cyl) |> slice_sample(n = 5)
+
+MT[, .SD[sample(.N, 5)], keyby = cyl]
+```
+
+
+**Filter by group size:**
+
+```{r}
+mtcars |> group_by(cyl) |> filter(n() >= 8)
+
+MT[, if(.N >= 8) .SD, by = cyl]
+```
+
+
+
+<!-------------------------------------------------------->
+## Relocate:
+
+```{r}
+mtcars |> group_by(cyl) |> mutate(GRP = cur_group_id(), .before = 1)
+
+(copy(MT)[ , GRP := .GRP, by = cyl] |> setcolorder(c("GRP", .SD)))[]
+```
+
+
+<!-------------------------------------------------------->
+## Summarize:
+
+```{r}
+#| echo: false
+
+MT <- as.data.table(mtcars)
+IRIS <- as.data.table(iris)[, Species := as.character(Species)]
+```
+
+Summarizes uses the `=` operator.  
+It's only difference with `mutate` is that it takes a function that returns a list of values smaller than the original column (or group) size.  
+By default, it will only keep the modified columns (like `transmute`).
+
+```{r}
+mtcars |> summarize(mean_cyl = mean(cyl, na.rm = T))
+
+MT[, .(mean_cyl = mean(cyl, na.rm = T))]
+```
+
+**Group > summarize**
+
+```{r}
+mtcars |> group_by(cyl) |> summarize(N = n())
+
+MT[, .N, by = cyl]
+```
+
+`dplyr` automatically `arrange` the result by the grouping factor.  
+To mimic this with `data.table`:
+
+```{r}
+MT[, .N, keyby = cyl]
+MT[order(cyl), .N, by = cyl]
+MT[, .N, by = cyl][order(cyl)]
+```
+
+Grouping on a condition:
+
+```{r}
+mtcars |> group_by(cyl > 6) |> summarize(N = n())
+
+MT[, .N, by = .(cyl > 6)]
+```
+
+
+**Group > filter > summarize**
+
+```{r}
+mtcars |> filter(cyl >= 6 & disp >= 200) |> summarize(N = n())
+
+MT[cyl >= 6 & disp >= 200, .(.N)]
+```
+
+
+```{r}
+mtcars |> summarize(N = sum(cyl >= 6 & disp >= 200, na.rm = T))
+
+MT[, .(N = sum(cyl >= 6 & disp >= 200, na.rm = T))]
+```
+
+
+**Obtaining one summary statistic on multiple columns**
+
+```{r}
+mtcars |> group_by(cyl) |> summarize(across(everything(), \(col) mean(col)))
+
+MT[, lapply(.SD, \(col) mean(col)), keyby = cyl]
+```
+
+Apply summary function based on column type:
+
+```{r}
+mtcars |> group_by(cyl) |> summarize(across(where(is.double), \(col) mean(col)))
+
+MT[, lapply(.SD, \(col) mean(col)), keyby = cyl, .SDcols = is.double][, cyl := NULL][]
+```
+
+Apply summary function to specific columns:
+
+```{r}
+mtcars |> group_by(cyl) |> summarize(across(c(mpg, disp), \(.x) mean(.x)))
+
+MT[, lapply(.SD, \(.x) mean(.x)), keyby = cyl, .SDcols = c("mpg", "disp")]
+MT[, lapply(.SD[, .(mpg, disp)], \(.x) mean(.x)), keyby = cyl]
+```
+
+Apply summary function to specific columns (by pattern):
+
+```{r}
+mtcars |> group_by(cyl) |> summarize(across(matches("^mpg|^disp"), \(.x) mean(.x)))
+
+MT[, lapply(.SD, mean), keyby = cyl, .SDcols = patterns("^mpg|^disp")]
+```
+
+
+**Obtaining multiple summary statistics for one column:**
+
+```{r}
+mtcars |> group_by(cyl) |> summarize(mean_mpg = mean(mpg), sd_mpg = sd(mpg))
+
+MT[, .(mean_mpg = mean(mpg), sd_mpg = sd(mpg)), keyby = cyl]
+
+MT[, lapply(.SD, \(x) list(mean_mpg = mean(x), sd_mpg = sd(x))) |> rbindlist(), keyby = cyl, .SDcols = "mpg"]
+```
+
+
+**Obtaining multiple summary statistics on multiple columns (as rows):**
+
+```{r}
+MT[, lapply(.SD, \(v) c(mean(v), sd(v)))]
+```
+
+```{r}
+list_of_funs <- list(mean = \(x) mean(x, na.rm = TRUE), sd = \(x) sd(x, na.rm = TRUE))
+```
+
+```{r}
+MT[, lapply(list_of_funs, \(fun) lapply(.SD, fun)) |> rbindlist()]
+```
+
+
+**Obtaining multiple summary statistics on multiple columns (as columns):**
+
+```{r}
+cols <- c("mpg", "cyl")
+
+funs_as_list <- \(x) list(mean = mean(x, na.rm = TRUE), sd = sd(x, na.rm = TRUE))
+```
+
+:::{.callout-warning}
+`dplyr` & `data.table` don't use the same "format" when pre-defining a list of function to be applied:  
+- `dplyr` needs a list of individual functions  
+- `data.table` needs a function returning a list  
+:::
+
+```{r}
+mtcars |> group_by(gear) |> summarize(across(cols, .fns = list_of_funs, .names = "{.col}.{.fn}"))
+
+MT[, lapply(.SD, funs_as_list) |> unlist(recursive = FALSE), keyby = gear, .SDcols = cols]
+
+MT[, lapply(.SD, funs_as_list) |> do.call(c, args = _), keyby = gear, .SDcols = cols]
+```
+
+Different column order & naming scheme:
+
+:::{.callout-tip}
+Here we can use the `list_of_funs` with `data.table` since we apply them individually.
+:::
+
+```{r}
+MT[, lapply(list_of_funs, \(f) lapply(.SD, f)) |> do.call(c, args = _), keyby = gear, .SDcols = cols]
+```
+
+Using `dcast` (see next section):
+
+```{r}
+dcast(MT, gear ~ ., fun.aggregate = list(mean, sd), value.var = cols)
+```
+
+
+
+<!-------------------------------------------------------->
+<!-------------------------------------------------------->
+# Pivots:
+***
+
+<!-------------------------------------------------------->
+## Melt / Longer:
+
+**Data:**
+
+```{r}
+#| echo: false
+#| output: false
+
+fam1 <- "family_id age_mother dob_child1 dob_child2 dob_child3
+1         30 1998-11-26 2000-01-29         NA
+2         27 1996-06-22         NA         NA
+3         26 2002-07-11 2004-04-05 2007-09-02
+4         32 2004-10-10 2009-08-27 2012-07-21
+5         29 2000-12-05 2005-02-28         NA"
+
+FAM1 <- fread(fam1)
+```
+
+```{r}
+FAM1
+```
+
+```{r}
+#| echo: false
+#| output: false
+
+fam2 <- "family_id age_mother dob_child1 dob_child2 dob_child3 gender_child1 gender_child2 gender_child3
+1         30 1998-11-26 2000-01-29         NA             1             2            NA
+2         27 1996-06-22         NA         NA             2            NA            NA
+3         26 2002-07-11 2004-04-05 2007-09-02             2             2             1
+4         32 2004-10-10 2009-08-27 2012-07-21             1             1             1
+5         29 2000-12-05 2005-02-28         NA             2             1            NA"
+
+FAM2 <- fread(fam2)
+```
+
+```{r}
+FAM2
+```
+
+**One group of columns --> single value column**
+
+```{r}
+FAM1 |> pivot_longer(cols = matches("dob_"), names_to = "variable")
+
+FAM1 |> melt(measure.vars = c("dob_child1", "dob_child2", "dob_child3"))
+FAM1 |> melt(measure.vars = patterns("^dob_"))
+```
+
+
+**One group of columns --> multiple value columns**
+
+```{r}
+FAM1 |> melt(measure.vars = patterns(child1 = "child1$", child2 = "child2$|child3$"))
+```
+
+
+**Multiple groups of columns --> multiple value columns**
+
+Manually:
+
+```{r}
+colA <- paste0("dob_child", 1:3) # "dob_child1" "dob_child2" "dob_child3"
+colB <- paste0("gender_child", 1:3)
+
+FAM2 |> melt(measure.vars = list(colA, colB), value.name = c("dob", "gender"), variable.name = "child")
+```
+
+Using the `.value` special identifier:
+
+:::{.callout-tip}
+Using the `.value` special identifier allows to do a "half" pivot: the values that would be listed as rows under `.value` are instead used as columns.
+:::
+
+```{r}
+FAM2 |> pivot_longer(cols = matches("^dob|^gender"), names_to = c(".value", "child"), names_sep = "_child")
+FAM2 |> pivot_longer(cols = matches("^dob|^gender"), names_to = c(".value", "child"), names_pattern = "(.*)_child(\\d{1})")
+
+FAM2 |> melt(measure.vars = patterns("^dob", "^gender"), value.name = c("dob", "gender"), variable.name = "child")
+```
+
+Using `measure` and `value.name` (similar to `.value`):
+
+```{r}
+FAM2 |> melt(measure.vars = measure(value.name, child = \(.x) as.integer(.x), sep = "_child"))
+
+FAM2 |> melt(measure.vars = measurev(list(value.name = NULL, child = as.integer), pattern = "(.*)_child(.)"))
+
+FAM2 |> melt(measure.vars = measure(value.name, child = \(.x) as.integer(.x), pattern = "(.*)_child(\\d{1})"))
+```
+
+
+<!-------------------------------------------------------->
+## Dcast / Wider:
+
+**General idea:**  
+- Pivot around the combination of `id.vars` (LHS of the formula)  
+- The `measure.vars` (RHS of the formula) are the ones whose values become column names  
+- The `value.var` are the ones the values are taken from to fill the new columns
+
+
+**Data**
+
+```{r}
+(FAM1L <- FAM1 |> melt(measure.vars = c("dob_child1", "dob_child2", "dob_child3")))
+(FAM2L <- FAM2 |> melt(measure.vars = measure(value.name, child = \(.x) as.integer(.x), sep = "_child")))
+```
+
+**Basic pivot wider:**
+
+```{r}
+FAM1L |> pivot_wider(id_cols = c("family_id", "age_mother"), names_from = "variable")
+
+FAM1L |> dcast(family_id + age_mother ~ variable)
+```
+
+`...` => "every unused column"
+
+```{r}
+FAM1L |> dcast(... ~ variable)
+```
+
+**Multiple value columns --> Multiple groups of columns:**
+
+```{r}
+FAM2L |> dcast(family_id + age_mother ~ child, value.var = c("dob", "gender"), sep = "_child")
+
+FAM2L |> dcast(... ~ child, value.var = c("dob", "gender"), sep = "_child")
+```
+
+
+**Dynamic names in the formula:**
+
+```{r}
+var_var <- "variable"
+
+FAM1L |> dcast(family_id + age_mother ~ base::get(var_var))
+```
+
+```{r}
+id_vars <- c("family_id", "age_mother")
+
+FAM1L |> dcast(str_c(str_c(id_vars, collapse = " + "), " ~ variable"))
+```
+
+
+### Handling unused combinations:
+
+:::{.callout-warning}
+The logic is inverted between `dplyr` (keep) and `data.table` (drop)
+:::
+
+```{r}
+FAM1L |> pivot_wider(names_from = variable, values_from = value, id_expand = TRUE, names_expand = FALSE) # (keep_id, keep_names)
+
+FAM1L |> dcast(family_id + age_mother ~ variable, drop = c(F, T)) # (drop_LHS, drop_RHS)
+```
+
+
+### Subsetting:
+
+```{r}
+FAM1L |> dcast(family_id + age_mother ~ variable, subset = .(value >= lubridate::ymd(20030101)))
+```
+
+
+### Casting & aggregating:
+
+Not specifying the column holding the measure vars (the names) will result in an empty column summing the number of columns that should have been created for all the measures.
+
+```{r}
+FAM1L |> dcast(family_id + age_mother ~ .)
+```
+
+We can customize that behavior using the `fun.aggregate` argument:
+
+*Here, we count the number of child for each each combination of (family_id + age_mother) -> sum all non-NA `value`*
+
+```{r}
+FAM1L |> pivot_wider(id_cols = c(family_id, age_mother), names_from = variable, values_fn = \(.x) sum(!is.na(.x))) |>
+  rowwise() |> mutate(child_count = sum(c_across(matches("_child")))) |> ungroup()
+
+(FAM1L |> dcast(family_id + age_mother ~ ., fun.agg = \(.x) sum(!is.na(.x))) |> setnames(".", "child_count"))
+```
+
+
+**Applying multiple `fun.agg`:**
+
+Data:
+
+```{r}
+(DTL <- data.table(id1 = sample(5, 20, TRUE), id2 = sample(2, 20, TRUE), group = sample(letters[1:2], 20, TRUE), v1 = runif(20), v2 = 1L))
+```
+
+Multiple `fun.agg` applied to one variable:
+
+```{r}
+DTL |> dcast(id1 + id2 ~ group, fun.aggregate = list(sum, mean), value.var = "v1")
+```
+
+Multiple `fun.agg` to multiple `value.var` (all combinations):
+
+```{r}
+DTL |> dcast(id1 + id2 ~ group, fun.aggregate = list(sum, mean), value.var = c("v1", "v2"))
+```
+
+Multiple `fun.agg` and multiple `value.var` (one-to-one):
+
+*Here, we apply `sum` to `v1` (for both `group` a & b), and `mean` to `v2` (for both `group` a & b)*
+
+```{r}
+DTL |> dcast(id1 + id2 ~ group, fun.aggregate = list(sum, mean), value.var = list("v1", "v2"))
+```
+
+
+<!-------------------------------------------------------->
+<!-------------------------------------------------------->
+# Joins:
+***
+
+:::{.callout-tip}
+In `data.table`, a JOIN is just another type of SUBSET: we subset the rows of one `data.table` with the rows of a second one, based on some conditions that define the type of JOIN.
+:::
+
+Matching two tables based on their rows can be done:  
+- Either on equivalences (**equi-joins**)  
+- Or functions comparing one row to another (**non-equi joins**)
+
+
+**Data:**
+
+```{r}
+(DT1 <- data.table( 
+  ID = LETTERS[1:10],
+  A = sample(1:5, 10, replace = TRUE),
+  B = sample(10:20, 10)
+))
+
+(DT2 <- data.table(
+  ID = LETTERS[5:14],
+  C = sample(1:5, 10, replace = TRUE),
+  D = sample(10:20, 10) 
+))
+```
+
+
+**Basic (right) join example:**
+
+```{r}
+right_join(
+  DT1 |> select(ID, A),
+  DT2 |> select(ID, C), 
+  by = "ID"
+) |> as_tibble()
+
+DT1[DT2, .(ID, A, C), on = .(ID)]
+```
+
+
+<!-------------------------------------------------------->
+## Outer (right, left):
+
+Appends data of one at the end of the other.
+
+:::{.callout-note}
+`data.table` doesn't do left joins natively
+:::
+
+
+**Subsetting DT1 by DT2:**
+
+:::{.callout-note}
+DT2 (everything) + DT1 (all columns, but only the rows that match those in DT1).  
+  > Looking up DT1's rows using DT2 (or DT2's key, if it has one) as an index.
+:::
+
+As a **right join**:
+
+```{r}
+right_join(DT1, DT2, by = "ID") # DT1 into DT2
+
+DT1[DT2, on = .(ID)]
+```
+
+As a **left join:**
+
+:::{.callout-note}
+Not exactly equivalent to the right join: same columns, but DT2 is first instead of DT1
+:::
+
+```{r}
+left_join(DT2, DT1, by = "ID") # DT1 into DT2
+
+copy(DT2)[DT1, c("A", "B") := list(i.A, i.B), on = .(ID)][]
+```
+
+
+**Subsetting DT2 by DT1:**
+
+:::{.callout-note}
+DT1 (everything) + DT2 (all columns, but only the rows that match those in DT1).  
+  > Looking up DT2's rows using DT1 (or DT1's key, if it has one) as an index.
+:::
+
+As a **right join**:
+
+```{r}
+right_join(DT2, DT1, by = "ID") # DT2 into DT1
+
+DT2[DT1, on = .(ID)]
+```
+
+As a **left join:**
+
+:::{.callout-note}
+Not exactly equivalent to the right join: same columns, but DT1 is first instead of DT2
+:::
+
+```{r}
+left_join(DT1, DT2, by = "ID") # DT2 into DT1
+
+copy(DT1)[DT2, c("C", "D") := list(i.C, i.D), on = .(ID)][]
+```
+
+
+<!-------------------------------------------------------->
+## Full (outer):
+
+```{r}
+full_join(DT1, DT2, by = "ID")
+
+data.table::merge.data.table(DT1, DT2, by = "ID", all = TRUE)
+```
+
+Alternatively:
+
+```{r}
+setkey(DT1, ID)
+setkey(DT2, ID)
+
+# Getting the union of the unique keys of both DT
+unique_keys <- union(DT1[, ID], DT2[, ID])
+
+DT1[DT2[unique_keys, on = "ID"]]
+```
+
+
+<!-------------------------------------------------------->
+## Inner:
+
+**Only returns the ROWS matching both tables:**  
+- **Inner**: rows matching both DT1 and DT2, columns of both (add DT2's columns to the right)  
+- **Semi**: rows matching both DT1 and DT2, columns of first one  
+
+
+**Inner:**
+
+```{r}
+inner_join(DT1, DT2, by = "ID") 
+
+DT1[DT2, on = .(ID), nomatch = NULL]
+```
+
+**Semi:**
+
+```{r}
+semi_join(DT1, DT2, by = "ID")
+
+DT1[na.omit(DT1[DT2, on = .(ID), which = TRUE])]
+```
+
+:::{.callout-note}
+`which = TRUE` returns the row numbers instead of the rows themselves.
+:::
+
+<!-------------------------------------------------------->
+## Anti:
+
+ROWS of DT1 that are NOT in DT2, and only the columns of DT1.
+
+```{r}
+anti_join(DT1, DT2, by = "ID")
+
+DT1[!DT2, on = .(ID)]
+```
+
+ROWS of DT2 that are NOT in DT1, and only the columns of DT2.
+
+```{r}
+anti_join(DT2, DT1, by = "ID")
+
+DT2[!DT1, on = .(ID)]
+```
+
+
+<!-------------------------------------------------------->
+## Non-equi joins:
+
+<!--
+See:  
+- https://scitilab.com/post_data/non_equi_joins/2020_11_17_non_equi_merge/  
+- https://medium.com/analytics-vidhya/r-data-table-joins-48f00b46ce29  
+- https://gist.github.com/nacnudus/ef3b22b79164bbf9c0ebafbf558f22a0  
+-->
+
+```{r}
+DT1[DT2, on = .(ID, A <= C)]
+```
+
+
+<!-------------------------------------------------------->
+## Rolling joins:
+
+```{r}
+DT1[DT2, on = "ID", roll = TRUE]
+```
+
+Inverse the rolling direction:
+
+```{r}
+DT1[DT2, on = "ID", roll = -Inf]
+```
+
+```{r}
+DT1[DT2, on = "ID", rollends = TRUE]
+```
+
+
+
+<!-------------------------------------------------------->
+<!-------------------------------------------------------->
+# Tidyr & Others:
+***
+
+## Unite:
+
+```{r}
+mtcars |> tidyr::unite("x", gear, carb, sep = "_")
+
+copy(MT)[, x := paste(gear, carb, sep = "_")][]
+```
+
+
+## Extract:
+
+```{r}
+MT.ext <- MT[, .(x = paste(gear, carb, sep = "_"))]
+```
+
+```{r}
+MT.ext |> tidyr::extract(col = x, into = c("a", "b"), regex = "(.*)_(.*)", remove = F)
+
+MT.ext[, c("a", "b") := tstrsplit(x, "_", fixed = TRUE)][] 
+```
+
+
+## Separate rows:
+
+**Data**
+
+```{r}
+(SP <- data.table(
+  val = c(1,"2,3",4), 
+  date = as.Date(c("2020-01-01", "2020-01-02", "2020-01-03"), origin = "1970-01-01")
+  )
+)
+```
+
+```{r}
+SP |> tidyr::separate_rows(val, sep = ",", convert = TRUE)
+```
+
+**Solution 1:**
+
+```{r}
+copy(SP)[, c(V1 = strsplit(val, ",", fixed = TRUE), .SD), by = val][, `:=`(val = V1, V1 = NULL)][]
+```
+
+**Solution 2:**
+
+```{r}
+SP[, strsplit(val, ",", fixed = TRUE), by = val][SP, on = "val"][, `:=`(val = V1, V1 = NULL)][]
+```
+
+**Solution 3:**
+
+_(With type conversion)_
+
+```{r}
+SP[, unlist(tstrsplit(val, ",", type.convert = TRUE)), by = val][SP, on = "val"][, `:=`(val = V1, V1 = NULL)][]
+```
+
+**Solution 4:**
+
+```{r}
+copy(SP)[rep(1:.N, lengths(strsplit(val, ",")))][, val := strsplit(val, ","), by = val][]
+```
+
+```{r}
+#| eval: false
+#| echo: false
+
+# copy(SP)[rep(1:.N, lengths(strsplit(val, ",")))][, val := unlist(strsplit(SP$val, ","))][]
+```
+
+_(With type conversion)_
+
+```{r}
+#| eval: false
+#| echo: false
+
+# copy(SP)[rep(1:.N, lengths(strsplit(val, ",")))
+#   ][, val := utils::type.convert(unlist(strsplit(SP$val, ",")), as.is = T, na.strings = "")][]
+```
+
+```{r}
+copy(SP)[rep(1:.N, lengths(strsplit(val, ",")))
+  ][, val := strsplit(val, ","), by = val
+  ][, val := utils::type.convert(val, as.is = T)][]
+```
+
+
+<!-------------------------------------------------------->
+## Duplicates:
+
+```{r}
+mtcars |> group_by(mpg, hp) |> filter(n() > 1)
+
+MT[, if(.N > 1) .SD, by = .(mpg, hp)]
+```
+
+**Only keeping non-duplicated rows:**
+
+
+:::{.callout-note}
+This is different from distinct/unique, which will keep one of the duplicated rows of each group.
+
+This removes all groups which have duplicated rows.
+:::
+
+Solution 1:
+
+```{r}
+mtcars |> group_by(mpg, hp) |> filter(n() == 1)
+
+MT[, if(.N == 1) .SD, by = .(mpg, hp)]
+```
+
+Solution 2:
+
+_More convoluted_
+
+```{r}
+mtcars |> group_by(mpg, hp) |> filter(n() > 1) |> anti_join(mtcars, y = _)
+
+MT[!MT[, if(.N > 1) .SD, by = .(mpg, hp)], on = names(MT)]
+
+fsetdiff(MT, setcolorder(MT[, if(.N > 1) .SD, by = .(mpg, hp)], names(MT)))
+```
+
+
+<!-------------------------------------------------------->
+## List / Unlist:
+
+When a column contains a simple vector/list of values (of the same type, without structure)
+
+### One listed column:
+
+**Single ID (grouping) column:**
+
+```{r}
+(mtcars_list <- mtcars |> group_by(cyl) |> summarize(mpg = list(mpg)) |> ungroup())
+
+(MT_LIST <- MT[, .(mpg = .(mpg)), keyby = cyl])
+```
+
+Solution 1:
+
+```{r}
+mtcars_list |> unnest(mpg)
+
+MT_LIST[, .(mpg = unlist(mpg)), keyby = cyl]
+```
+
+Solution 2:
+
+Bypasses the need of grouping when unlisting by growing the `data.table` back to its original number of rows before unlisting.
+
+```{r}
+MT_LIST[rep(MT_LIST[, .I], lengths(mpg))][, mpg := unlist(MT_LIST$mpg)][]
+```
+
+
+**Multiple ID (grouping) columns:**
+
+```{r}
+(mtcars_list2 <- mtcars |> group_by(cyl, gear) |> summarize(mpg = list(mpg)) |> ungroup())
+
+(MT_LIST2 <- MT[, .(mpg = .(mpg)), keyby = .(cyl, gear)])
+```
+
+Solution 1:
+
+```{r}
+mtcars_list2 |> unnest(mpg) # group_by(cyl, gear) is optional
+
+MT_LIST2[, .(mpg = unlist(mpg)), by = setdiff(names(MT_LIST2), 'mpg')]
+```
+
+Solution 2:
+
+_Same as with one grouping column_
+
+```{r}
+MT_LIST2[rep(MT_LIST2[, .I], lengths(mpg))][, mpg := unlist(MT_LIST2$mpg)][]
+```
+
+
+### Multiple listed column:
+
+```{r}
+(mtcars_list_mult <- mtcars |> group_by(cyl, gear) |> summarize(across(c(mpg, disp), \(c) list(c))) |> ungroup())
+
+(MT_LIST_MULT <- MT[, lapply(.SD, \(c) .(c)), keyby = .(cyl, gear), .SDcols = c("mpg", "disp")])
+```
+
+Solution 1:
+
+```{r}
+mtcars_list_mult |> unnest(c(mpg, disp)) # group_by(cyl, gear) is optional
+
+MT_LIST_MULT[, lapply(.SD, \(c) unlist(c)), by = setdiff(names(MT_LIST_MULT), c("mpg", "disp"))]
+```
+
+
+<!-------------------------------------------------------->
+## Nest / Unnest:
+
+When a column contains a data.table (with multiple columns, structured)
+
+### One nested column:
+
+**Nesting**
+
+```{r}
+(mtcars_nest <- mtcars |> nest_by(cyl) |> ungroup())
+
+(MT_NEST <- MT[, .(data = .(.SD)), keyby = cyl])
+```
+
+**Unnesting**
+
+```{r}
+mtcars_nest |> unnest(data) |> ungroup()
+
+MT_NEST[, rbindlist(data), keyby = cyl]
+# MT_NEST[, do.call(c, data), keyby = cyl]
+```
+
+
+### Multiple nested column:
+
+**Nesting:**
+
+```{r}
+(mtcars_nest_mult <- mtcars |> group_by(cyl, gear) |> nest(data1 = c(mpg, hp), data2 = !c(cyl, gear, mpg, hp)) |> ungroup())
+
+(MT_NEST_MULT <- MT[, .(data1 = .(.SD[, .(mpg, hp)]), data2 = .(.SD[, !c("mpg", "hp")])), keyby = .(cyl, gear)])
+```
+
+**Unnesting:**
+
+```{r}
+mtcars_nest_mult |> unnest(c(data1, data2)) |> ungroup()
+
+MT_NEST_MULT[, c(rbindlist(data1), rbindlist(data2)), keyby = .(cyl, gear)]
+
+MT_NEST_MULT[, do.call(c, unname(lapply(.SD, \(c) rbindlist(c)))), .SDcols = patterns('data'), keyby = .(cyl, gear)]
+```
+
+
+<!-------------------------------------------------------->
+## Operate on nested/list columns:
+
+```{r}
+(mtcars_nest <- mtcars |> nest_by(cyl) |> ungroup())
+
+(MT_NEST <- MT[, .(data = .(.SD)), keyby = cyl])
+```
+
+**On output column:**
+
+Keeping the nested column:
+
+```{r}
+mtcars_nest |> group_by(cyl) |> mutate(sum = sum(unlist(data))) |> ungroup()
+
+copy(MT_NEST)[, sum := sapply(data, \(r) sum(r)), keyby = cyl][]
+```
+
+Dropping the nested column:
+
+```{r}
+mtcars_nest |> group_by(cyl) |> summarize(sum = sum(unlist(data))) |> ungroup()
+
+MT_NEST[, .(sum = sapply(data, \(r) sum(r))), keyby = cyl]
+```
+
+
+**Multiple output columns:**
+
+```{r}
+linreg <- \(data) lm(mpg ~ hp, data = data) |> broom::tidy()
+```
+
+```{r}
+mtcars_nest |> group_by(cyl) |> group_modify(\(d, g) linreg(unnest(d, everything()))) |> ungroup()
+
+MT_NEST[, rbindlist(lapply(data, \(ndt) linreg(ndt))), keyby = cyl][]
+```
+
+
+<!-------------------------------------------------------->
+<!-------------------------------------------------------->
+# Multipart queries:
+***
+
+<!-------------------------------------------------------->
+## GROUP > FILTER > MUTATE
+
+**Data**
+
+```{r}
+(DAT <- structure(list(
+  id = c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L), 
+  name = c("Jane", "Jane", "Jane", "Jane", "Jane", "Jane", "Jane", "Jane", "Bob", "Bob", "Bob", "Bob", "Bob", "Bob", "Bob", "Bob"), 
+  year = c(1980L, 1981L, 1982L, 1983L, 1984L, 1985L, 1986L, 1987L, 1985L, 1986L, 1987L, 1988L, 1989L, 1990L, 1991L, 1992L), 
+  job = c("Manager", "Manager", "Manager", "Manager", "Manager", "Manager", "Boss", "Boss", "Manager", "Manager", "Manager", "Boss", "Boss", "Boss", "Boss", "Boss"), 
+  job2 = c(1L, 1L, 1L, 1L, 1L, 1L, 0L, 0L, 1L, 1L, 1L, 0L, 0L, 0L, 0L, 0L)
+  ), 
+  .Names = c("id", "name", "year", "job", "job2"), 
+  class = "data.frame", 
+  row.names = c(NA, -16L)
+) |> setDT())
+```
+
+**`dplyr`**
+
+```{r}
+DAT |> group_by(name, job) |> 
+  filter(job != "Boss" | year == min(year)) |> 
+  mutate(cumu_job2 = cumsum(job2)) |> 
+  ungroup()
+```
+
+:::{.callout-note}
+Here, the grouping is done BEFORE the filter -> there will be empty groups, meaning they will sum to 0
+:::
+
+**`data.table`**
+
+Solution 1:
+
+```{r}
+DAT[ , .SD[job != "Boss" | year == min(year), .(cumu_job2 = cumsum(job2))], by = .(name, job)]
+```
+
+Solution 2:
+
+```{r}
+DAT[ , .(cum_job2 = cumsum(job2[job != "Boss" | year == min(year)])), by = .(name, job)]
+```
+
+Solution 3:
+
+```{r}
+DAT[
+    DAT[, .I[job != "Boss" | year == min(year)], by = .(name, job)]$V1 # Row indices
+  ][
+    , cumu_job2 := cumsum(job2), by = .(name, job)
+  ][]
+```
+
+**If we filtered after the grouping:**
+
+```{r}
+DAT[job != "Boss" | year == min(year), list(cumu_job2 = cumsum(job2)), by = .(name, job)]
+```
+
+
+<!-------------------------------------------------------->
+## GROUP > SUMMARIZE > JOIN > MUTATE
+
+**Data**
+
+```{r}
+(GSJM1 <- data.table(x = c(1,1,1,1,2,2,2,2), y = c("a", "a", "b", "b"), z = 1:8, key = c("x", "y")))
+(GSJM2 <- data.table(x = 1:2, y = c("a", "b"), mul = 4:3, key = c("x", "y")))
+```
+
+**`dplyr`**
+
+```{r}
+as.data.frame(GSJM1) |> 
+  group_by(x, y) |>
+  summarise(z = sum(z)) |>
+  ungroup() |> 
+  right_join(GSJM2) |>
+  mutate(z = z * mul) |> 
+  select(-mul)
+```
+
+**`data.table`**
+
+Basic:
+
+```{r}
+GSJM1[, .(z = sum(z)), by = .(x, y)][GSJM2][, `:=`(z = z * mul, mul = NULL)][]
+```
+
+Advanced (using `.EACHI`):
+
+<!-- See: https://stackoverflow.com/questions/27004002/eachi-in-data-table/27004566#27004566 -->
+
+```{r}
+GSJM1[GSJM2, .(z = sum(z) * mul), by = .EACHI]
+```
+
+
+<!-------------------------------------------------------->
+## Multiple choice questions:
+
+**Data**
+
+```{r}
+response <- c(
+  "I read the assigned readings.|I reread my notes.|I worked with one or more classmates.",
+  "I read the assigned readings.|I reviewed this week's slides.",
+  "I worked on practice problems.|I read the assigned readings.|I reread my notes.",
+  "I worked on practice problems.|I read the assigned readings.|I reread my notes.",
+  "I worked on practice problems.|I read the assigned readings.|I reread my notes.|I reviewed this week's slides.|I worked with one or more classmates."
+)
+ID <- c(1:5)
+
+(SURV <- data.table(response, ID))
+```
+
+**`dplyr`**
+
+```{r}
+SURV |> 
+  separate(response, paste0("Opt", 1:7), sep="([|])") |> 
+  pivot_longer(cols = -ID) |> 
+  pivot_wider(id_cols = ID, names_from = value, values_fn = \(.x) sum(!is.na(.x)), values_fill = 0) |> 
+  select(-"NA")
+```
+
+**`data.table`**
+
+```{r}
+SURV[, c(.SD, tstrsplit(response, "|", fixed = T))][, -"response"] |> 
+  melt(measure.vars = patterns("^V")) |> 
+  dcast(ID ~ value, fun.agg = \(.x) sum(!is.na(.x)), subset = .(!is.na(value)))
+```
+
+
+<!-------------------------------------------------------->
+## Separating rows & cleaning text:
+
+**Data**
+
+```{r}
+(DT_COMA <- data.table(
+  first = c(1,"2,3",3,4,5,6.5,7,8,9,0), 
+  second = c(1,"2,,5",3,4,5,"6,5,9",7,8,9,0), 
+  third = c("one", "two", "thr,ee", "four", "five", "six", "sev,en", "eight", "nine", "zero"), 
+  fourth = as.Date(c(1/1/2020, 2/1/2020, 3/1/2020, 4/1/2020, 5/1/2020, 6/1/2020, 7/1/2020, 8/1/2020, 9/1/2020, 10/1/2020), origin = "1970-01-01")
+  )
+)
+```
+
+### Step1: Cleaning
+
+Removing unwanted commas within words
+
+**`dplyr`**
+
+```{r}
+DT_COMA |> mutate(across(where(\(v) is.character(v) & all(is.na(as.numeric(v)))), \(v) stringr::str_remove_all(v, ",")))
+```
+
+**`data.table`**
+
+```{r}
+cols_to_clean <- DT_COMA[, .SD, .SDcols = \(v) is.character(v) & all(is.na(as.numeric(v)))] |> colnames()
+
+copy(DT_COMA)[, c(cols_to_clean) := purrr::map(.SD[, cols_to_clean, with = F], \(v) stringr::str_remove_all(v, ","))][]
+```
+
+
+### Step 2: Separating rows
+
+Each numeric row that has multiple comma-separated values has to be split into multiple rows (one value per row)
+
+**`dplyr`**
+
+```{r}
+cols_to_separate <- DT_COMA |> select(where(\(v) is.character(v) & any(!is.na(as.numeric(v))))) |> colnames()
+
+purrr::reduce(
+  cols_to_separate, 
+  \(acc, col) acc |> tidyr::separate_rows(col, sep = ",", convert = T), 
+  .init = DT_COMA
+)
+```
+
+**`data.table`**
+
+```{r}
+cols_to_separate <- DT_COMA[, .SD, .SDcols = \(v) is.character(v) & any(!is.na(as.numeric(v)))] |> colnames()
+
+(purrr::reduce(
+  cols_to_separate,
+  \(acc, col) acc[rep(1:.N, lengths(strsplit(get(col), ",")))][, (col) := type.convert(unlist(strsplit(acc[[col]], ",", fixed = T)), as.is = T, na.strings = "")],
+  .init = DT_COMA
+))[]
+```
+
+
+### Combining both steps:
+
+**`dplyr`**
+
+```{r}
+DT_COMA <- DT_COMA |> mutate(across(where(\(v) is.character(v) & all(is.na(as.numeric(v)))), \(v) stringr::str_remove_all(v, ",")))
+
+purrr::reduce(
+  select(DT_COMA, where(\(v) is.character(v) & any(!is.na(as.numeric(v))))) |> colnames(), 
+  \(acc, col) acc |> tidyr::separate_rows(col, sep = ",", convert = T), 
+  .init = DT_COMA
+)
+```
+
+**`data.table`**
+
+```{r}
+cols_to_clean <- DT_COMA[, .SD, .SDcols = \(v) is.character(v) & all(is.na(as.numeric(v)))] |> colnames()
+cols_to_separate <- DT_COMA[, .SD, .SDcols = \(v) is.character(v) & any(!is.na(as.numeric(v)))] |> colnames()
+
+DT_COMA[, c(cols_to_clean) := purrr::map(.SD[, cols_to_clean, with = F], \(v) stringr::str_remove_all(v, ","))]
+
+(purrr::reduce(
+  cols_to_separate,
+  \(acc, col) acc[rep(1:.N, lengths(strsplit(get(col), ",")))][, (col) := type.convert(unlist(strsplit(acc[[col]], ",", fixed = T)), as.is = T, na.strings = "")],
+  .init = DT_COMA
+))[]
+```
+
+
+<!-------------------------------------------------------->
+## Filling with lagging conditions:
+
+See [this SO question](https://stackoverflow.com/questions/71952593/filling-rows-of-multiple-columns-based-on-multiple-conditions).
+
+**Data**
+
+```{r}
+ZIP <- structure(
+  list(
+    zipcode = c(1001, 1002, 1003, 1004, 1101, 1102, 1103, 1104, 1201, 1202, 1203, 1302), 
+    areacode = c(4, 4, NA, 4, 4, 4, NA, 1, 4, 4, NA, 4), 
+    type = structure(c(1L, 1L, NA, 1L, 2L, 2L, NA, 1L, 1L, 1L, NA, 1L), .Label = c("clay", "sand"), class = "factor"), 
+    region = c(3, 3, NA, 3, 3, 3, NA, 3, 3, 3, NA, 3), 
+    do_not_fill = c(1, NA, NA, 1, 1, NA, NA, 1, NA, NA, NA, 1)
+    ), 
+  class = c("data.table", "data.frame"), row.names = c(NA, -4L)
+)
+```
+
+**`dplyr`**
+
+```{r}
+as_tibble(ZIP) |>
+  mutate(type = as.character(type)) |>
+  mutate(
+    across(1:4, ~ ifelse(
+        is.na(.) & lag(areacode) == lead(areacode) & 
+          lag(as.numeric(substr(zipcode, 1, 2))) == lead(as.numeric(substr(zipcode, 1, 2))),
+        lag(.), .
+      )
+    )
+  )
+```
+
+**`data.table`**
+
+```{r}
+ZIP[, c(lapply(.SD, \(v) {fifelse(
+  is.na(areacode) & lag(areacode) == lead(areacode) &
+    lag(as.numeric(substr(zipcode, 1, 2))) == lead(as.numeric(substr(zipcode, 1, 2))), lag(v), v)}), 
+  .SD[, .(do_not_fill)]), .SDcols = !patterns("do_not_fill")]
+```
+
+
+
+<!-------------------------------------------------------->
+<!-------------------------------------------------------->
+# Miscellaneous:
+***
+
+<!-------------------------------------------------------->
+## Keywords:
+
+.SD  
+.I, .N  
+.GRP, .NGRP  
+.BY  
+.EACHI  
+
+<!-------------------------------------------------------->
+## Useful functions:
+
+`fsetdiff`, `fintersect`, `funion` and `fsetequal` (apply to data.tables instead of vectors)
+
+`nafill`, `fcoalesce`
+
+`as.IDate`
+
+***
+
+![](http://vignette2.wikia.nocookie.net/creepypasta/images/1/11/Thats_all_folks.svg.png)
