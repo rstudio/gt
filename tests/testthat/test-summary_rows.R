@@ -21,10 +21,7 @@ tbl <-
 
 # Gets the inner HTML text from a single value
 selection_text <- function(html, selection) {
-
-  html %>%
-    rvest::html_nodes(selection) %>%
-    rvest::html_text()
+  rvest::html_text(rvest::html_nodes(html, selection))
 }
 
 test_that("the `summary_rows()` can make groupwise summaries", {
