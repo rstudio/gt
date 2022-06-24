@@ -397,7 +397,7 @@ rgba_to_hex <- function(colors) {
 
   colors_vec[!colors_rgba] <- colors[!colors_rgba]
 
-  rgba_str <- gsub(pattern = "(rgba\\(|\\))", replacement = "", x = colors[colors_rgba])
+  rgba_str <- gsub("(rgba\\(|\\))", "", colors[colors_rgba])
 
   rgba_vec <- as.numeric(unlist(strsplit(rgba_str, ",")))
 
