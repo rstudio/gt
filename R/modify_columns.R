@@ -202,11 +202,10 @@ cols_width <- function(
 
   # If nothing is provided, return `.data` unchanged
   if (length(widths_list) == 0) {
-    stop(
-      "Nothing was provided to `...`:\n",
-      " * Use formula expressions to define custom column widths",
-      call. = FALSE
-    )
+    cli::cli_abort(c(
+      "Nothing was provided to `...`.",
+      "*" = "Use formula expressions to define custom column widths."
+    ))
   }
 
   all_formulas <-
@@ -219,9 +218,8 @@ cols_width <- function(
     )
 
   if (!all_formulas) {
-    stop(
-      "Only two-sided formulas should be provided to `...`",
-      call. = FALSE
+    cli::cli_abort(
+      "Only two-sided formulas should be provided to `...`."
     )
   }
 
@@ -240,15 +238,13 @@ cols_width <- function(
         expr = !!cols,
         data = .data,
         excl_stub = FALSE
-      ) %>%
-      base::setdiff(columns_used)
+      )
+
+    columns <- base::setdiff(columns, columns_used)
 
     columns_used <- c(columns_used, columns)
 
-    width <-
-      width_item %>%
-      rlang::f_rhs() %>%
-      rlang::eval_tidy()
+    width <- rlang::eval_tidy(rlang::f_rhs(width_item))
 
     # If a bare numeric value is provided, give that the `px` dimension
     if (is.numeric(width)) width <- paste_right(as.character(width), "px")
@@ -264,11 +260,9 @@ cols_width <- function(
     }
   }
 
-  unset_widths <-
-    dt_boxhead_get(data = .data) %>%
-    .$column_width %>%
-    lapply(is.null) %>%
-    unlist()
+  boxh <- dt_boxhead_get(data = .data)
+
+  unset_widths <- unlist(lapply(boxh$column_width, FUN = is.null))
 
   if (any(unset_widths)) {
 
@@ -388,25 +382,22 @@ cols_label <- function(
 
   # Test for names being NULL
   if (is.null(names(labels_list))) {
-    stop(
-      "Named arguments are required for `cols_label()`.",
-      call. = FALSE
+    cli::cli_abort(
+      "Named arguments are required for `cols_label()`."
     )
   }
 
   # Test for any missing names
   if (any(names(labels_list) == "")) {
-    stop(
-      "All arguments to `cols_label()` must be named.",
-      call. = FALSE
+    cli::cli_abort(
+      "All arguments to `cols_label()` must be named."
     )
   }
 
   # Stop function if any of the column names specified are not in `cols_labels`
   if (!all(names(labels_list) %in% dt_boxhead_get_vars(data = .data))) {
-    stop(
-      "All column names provided must exist in the input `.data` table.",
-      call. = FALSE
+    cli::cli_abort(
+      "All column names provided must exist in the input `.data` table."
     )
   }
 
@@ -519,17 +510,13 @@ cols_move_to_start <- function(
 
   # Stop function if no `columns` are provided
   if (length(columns) == 0) {
-    stop(
-      "Columns must be provided.",
-      call. = FALSE
-    )
+    cli::cli_abort("Columns must be provided.")
   }
 
   # Stop function if any of the `columns` don't exist in `vars`
   if (!all(columns %in% vars)) {
-    stop(
-      "All `columns` must exist and be visible in the input `data` table.",
-      call. = FALSE
+    cli::cli_abort(
+      "All `columns` must exist and be visible in the input `data` table."
     )
   }
 
@@ -627,17 +614,13 @@ cols_move_to_end <- function(
 
   # Stop function if no `columns` are provided
   if (length(columns) == 0) {
-    stop(
-      "Columns must be provided.",
-      call. = FALSE
-    )
+    cli::cli_abort("Columns must be provided.")
   }
 
   # Stop function if any of the `columns` don't exist in `vars`
   if (!all(columns %in% vars)) {
-    stop(
-      "All `columns` must exist and be visible in the input `data` table.",
-      call. = FALSE
+    cli::cli_abort(
+      "All `columns` must exist and be visible in the input `data` table."
     )
   }
 
@@ -734,33 +717,25 @@ cols_move <- function(
 
   # Stop function if `after` contains multiple columns
   if (length(after) > 1) {
-    stop(
-      "Only one column name should be supplied to `after`.",
-      call. = FALSE
-    )
+    cli::cli_abort("Only one column name should be supplied to `after`.")
   }
 
   # Stop function if `after` doesn't exist in `vars`
   if (!(after %in% vars)) {
-    stop(
-      "The column supplied to `after` doesn't exist in the input `data` table.",
-      call. = FALSE
+    cli::cli_abort(
+      "The column supplied to `after` doesn't exist in the input `data` table."
     )
   }
 
   # Stop function if no `columns` are provided
   if (length(columns) == 0) {
-    stop(
-      "Columns must be provided.",
-      call. = FALSE
-    )
+    cli::cli_abort("Columns must be provided.")
   }
 
   # Stop function if any of the `columns` don't exist in `vars`
   if (!all(columns %in% vars)) {
-    stop(
-      "All `columns` must exist and be visible in the input `data` table.",
-      call. = FALSE
+    cli::cli_abort(
+      "All `columns` must exist and be visible in the input `data` table."
     )
   }
 
@@ -875,18 +850,12 @@ cols_hide <- function(
 
   # Stop function if no `columns` are provided
   if (length(columns) == 0) {
-    stop(
-      "Columns must be provided.",
-      call. = FALSE
-    )
+    cli::cli_abort("Columns must be provided.")
   }
 
   # Stop function if any of the `columns` don't exist in `vars`
   if (!all(columns %in% vars)) {
-    stop(
-      "All `columns` must exist in the input `data` table.",
-      call. = FALSE
-    )
+    cli::cli_abort("All `columns` must exist in the input `data` table.")
   }
 
   # Set the `"hidden"` type for the `columns` in `_dt_boxhead`
@@ -978,18 +947,12 @@ cols_unhide <- function(
 
   # Stop function if no `columns` are provided
   if (length(columns) == 0) {
-    stop(
-      "Columns must be provided.",
-      call. = FALSE
-    )
+    cli::cli_abort("Columns must be provided.")
   }
 
   # Stop function if any of the `columns` don't exist in `vars`
   if (!all(columns %in% vars)) {
-    stop(
-      "All `columns` must exist in the input `data` table.",
-      call. = FALSE
-    )
+    cli::cli_abort("All `columns` must exist in the input `data` table.")
   }
 
   # Set the `"visible"` type for the `columns` in `_dt_boxhead`
@@ -1544,11 +1507,10 @@ cols_merge <- function(
     hide_columns_from_supplied <- base::intersect(hide_columns, columns)
 
     if (length(base::setdiff(hide_columns, columns) > 0)) {
-      warning(
-        "Only the columns supplied in `columns` will be hidden.\n",
-        " * use `cols_hide()` to hide any out of scope columns",
-        call. = FALSE
-      )
+      cli::cli_warn(c(
+        "Only the columns supplied in `columns` will be hidden.",
+        "*" = "Use `cols_hide()` to hide any out of scope columns."
+      ))
     }
 
     if (length(hide_columns_from_supplied) > 0) {

@@ -7,47 +7,41 @@ validate_contexts <- function(contexts) {
 
     invalid_contexts <- base::setdiff(contexts, all_contexts)
 
-    stop("All output contexts must be in the set of supported contexts\n",
-         " * Supported: ", paste0(all_contexts, collapse = ", "), "\n",
-         " * Invalid: ", paste0(invalid_contexts, collapse = ", "),
-         call. = FALSE)
+    cli::cli_abort(c(
+      "All output contexts must be in the set of supported contexts.",
+      "*" = "Supported: {paste0(all_contexts, collapse = ', ')}",
+      "*" = "Invalid: {paste0(invalid_contexts, collapse = ', ')}"
+    ))
   }
 }
 
 # Utility function to generate column numbers from column names;
 # used in: `resolve_footnotes_styles()`
-colname_to_colnum <- function(data,
-                              colname,
-                              missing_is_zero = FALSE) {
+colname_to_colnum <- function(
+    data,
+    colname,
+    missing_is_zero = FALSE
+) {
 
-  col_nums <- c()
+  vars_default <- dt_boxhead_get_vars_default(data = data)
 
-  for (col in colname) {
-    if (is.na(col)) {
-      if (missing_is_zero) {
-        col_nums <- c(col_nums, 0L)
-      } else {
-        col_nums <- c(col_nums, NA_integer_)
-      }
-    } else {
-      col_nums <-
-        c(
-          col_nums,
-          which(dt_boxhead_get_vars_default(data = data) == col)
-        )
-    }
+  result <- match(colname, vars_default)
+
+  if (missing_is_zero) {
+    result[is.na(result)] <- 0L
   }
 
-  col_nums
+  result
 }
 
 # Utility function to generate finalized row numbers;
 # used in: `resolve_footnotes_styles()`
-rownum_translation <- function(body,
-                               rownum_start) {
+rownum_translation <- function(body, rownum_start) {
 
   rownum_final <- c()
+
   for (rownum_s in rownum_start) {
+
     rownum_final <-
       c(
         rownum_final,
@@ -61,10 +55,7 @@ rownum_translation <- function(body,
 #' Render any formatting directives available in the `formats` list
 #'
 #' @noRd
-render_formats <- function(
-    data,
-    context
-) {
+render_formats <- function(data, context) {
 
   body <- dt_body_get(data = data)
   data_tbl <- dt_data_get(data = data)
@@ -99,15 +90,12 @@ render_formats <- function(
     }
   }
 
-  data <- dt_body_set(data = data, body = body)
-
-  data
+  dt_body_set(data = data, body = body)
 }
 
 # Move input data cells to `body` that didn't have any rendering applied
 # during the `render_formats()` call
-migrate_unformatted_to_output <- function(data,
-                                          context) {
+migrate_unformatted_to_output <- function(data, context) {
 
   body <- dt_body_get(data = data)
   data_tbl <- dt_data_get(data = data)
@@ -160,9 +148,7 @@ migrate_unformatted_to_output <- function(data,
     }
   }
 
-  data <- dt_body_set(data = data, body = body)
-
-  data
+  dt_body_set(data = data, body = body)
 }
 
 #' Perform any text transformations
@@ -188,8 +174,7 @@ perform_text_transforms <- function(data) {
 #' Obtain a reordering df for the data rows
 #'
 #' @noRd
-get_row_reorder_df <- function(groups,
-                               stub_df) {
+get_row_reorder_df <- function(groups, stub_df) {
 
   # If there are no group, there there is no reordering
   # so just return a data frame where the starting row
@@ -247,17 +232,23 @@ reorder_styles <- function(data) {
 
   rownum_final <- as.numeric(stub_df[, "rownum_i", drop = TRUE])
 
-  for (i in seq_len(nrow(styles_tbl))) {
+  sz <- nrow(styles_tbl)
+  tmp_rownum <- vector("integer", sz)
+  tmp_mask <- vector("logical", sz)
 
+  for (i in seq_len(sz)) {
     if (
-      !is.na(styles_tbl[i, ][["rownum"]]) &&
-      !grepl("summary_cells", styles_tbl[i, ][["locname"]])
+      !is.na(styles_tbl$rownum[i]) &&
+      !grepl("summary_cells", styles_tbl$locname[i])
     ) {
-
-      styles_tbl[i, ][["rownum"]] <-
-        which(rownum_final == styles_tbl[i, ][["rownum"]])
+      tmp_mask[i] = TRUE
+      tmp_rownum[i] = which(rownum_final == styles_tbl$rownum[i])
     }
   }
+
+  final_rownum <- styles_tbl$rownum
+  final_rownum[tmp_mask] <- tmp_rownum[tmp_mask]
+  styles_tbl$rownum <- final_rownum
 
   dt_styles_set(data = data, styles = styles_tbl)
 }
@@ -268,8 +259,7 @@ reorder_styles <- function(data) {
 #' that specifies additional operations
 #'
 #' @noRd
-perform_col_merge <- function(data,
-                              context) {
+perform_col_merge <- function(data, context) {
 
   col_merge <- dt_col_merge_get(data = data)
   body <- dt_body_get(data = data)
@@ -284,7 +274,7 @@ perform_col_merge <- function(data,
     type <- col_merge[[i]]$type
 
     if (!(type %in% c("merge", "merge_range", "merge_uncert", "merge_n_pct"))) {
-      stop("Unknown `type` supplied.")
+      cli::cli_abort("Unknown `type` supplied.")
     }
 
     if (type == "merge") {
@@ -350,10 +340,8 @@ perform_col_merge <- function(data,
 
       # Transform the separator text depending on specific
       # inputs and the `context`
-      sep <-
-        sep %>%
-        context_dash_mark(context = context) %>%
-        context_plusminus_mark(context = context)
+      sep <- context_dash_mark(sep, context = context)
+      sep <- context_plusminus_mark(sep, context = context)
 
       if (context == "html") {
 
@@ -421,10 +409,8 @@ perform_col_merge <- function(data,
 
       # Transform the separator text depending on specific
       # inputs and the `context`
-      sep <-
-        sep %>%
-        context_dash_mark(context = context) %>%
-        context_plusminus_mark(context = context)
+      sep <- context_dash_mark(sep, context = context)
+      sep <- context_plusminus_mark(sep, context = context)
 
       # Determine rows where NA values exist
       na_1_rows <- is.na(data_tbl[[mutated_column]])
@@ -459,8 +445,7 @@ perform_col_merge <- function(data,
 #' @param groups_df The `groups_df` data frame.
 #' @param others_group The `others_group` vector.
 #' @noRd
-replace_na_groups_df <- function(groups_df,
-                                 others_group) {
+replace_na_groups_df <- function(groups_df, others_group) {
 
   if (nrow(groups_df) > 0) {
     groups_df[is.na(groups_df[, "group_id"]), "group_id"] <- others_group
@@ -474,8 +459,7 @@ replace_na_groups_df <- function(groups_df,
 #' @param groups_rows_df The `groups_rows_df` data frame.
 #' @param others_group The `others_group` vector.
 #' @noRd
-replace_na_groups_rows_df <- function(groups_rows_df,
-                                      others_group) {
+replace_na_groups_rows_df <- function(groups_rows_df, others_group) {
 
   if (nrow(groups_rows_df) > 0) {
     groups_rows_df[
@@ -501,7 +485,6 @@ last_non_na <- function(vect) {
 # Determine whether the table should have row labels
 # set within a column in the stub
 stub_rownames_has_column <- function(data) {
-
   isTRUE("rowname" %in% dt_stub_components(data = data))
 }
 
@@ -520,7 +503,6 @@ stub_group_names_has_column <- function(data) {
   dt_options_get_value(data = data, option = "row_group_as_column")
 }
 
-
 # Get the number of columns for the visible (not hidden) data; this
 # excludes the number of columns required for the table stub
 get_number_of_visible_data_columns <- function(data) {
@@ -531,9 +513,9 @@ get_effective_number_of_columns <- function(data) {
 
   # Check if the table has been built, return an error if that's not the case
   if (!dt_has_built(data)) {
-    stop(
-      "The `get_effective_number_of_columns()` function can only be used on ",
-      "gt objects that have tables 'built'."
+    cli::cli_abort(
+      "The `get_effective_number_of_columns()` function can only be used on
+      gt objects that have tables 'built'."
     )
   }
 

@@ -115,22 +115,18 @@ gtsave <- function(
   # Get the lowercased file extension
   file_ext <- gtsave_file_ext(filename)
 
-  ext_supported_text <-
-    paste0(
-      "We can use:\n",
-      " * `.html`, `.htm` (HTML file)\n",
-      " * `.png`          (PNG file)\n",
-      " * `.pdf`          (PDF file)\n",
-      " * `.tex`, `.rnw`  (LaTeX file)\n",
-      " * `.rtf`          (RTF file)\n"
-    )
-
   # Stop function if a file extension is not provided
   if (file_ext == "") {
 
-    stop("A file extension is required in the provided filename. ",
-         ext_supported_text,
-         call. = FALSE)
+    cli::cli_abort(c(
+      "A file extension is required in the provided filename.",
+      "i" = "We can use:",
+      "*" = "`.html`, `.htm` (HTML file)",
+      "*" = "`.png`          (PNG file)",
+      "*" = "`.pdf`          (PDF file)",
+      "*" = "`.tex`, `.rnw`  (LaTeX file)",
+      "*" = "`.rtf`          (RTF file)"
+    ))
   }
 
   # Use the appropriate save function based
@@ -146,11 +142,15 @@ gtsave <- function(
     "png" = ,
     "pdf" = gt_save_webshot(data = data, filename, path, ...),
     {
-      stop(
-        "The file extension used (`.", file_ext, "`) doesn't have an ",
-        "associated saving function. ", ext_supported_text,
-        call. = FALSE
-      )
+      cli::cli_abort(c(
+        "The file extension supplied (`.{file_ext}`) cannot be used.",
+        "i" = "We can use:",
+        "*" = "`.html`, `.htm` (HTML file)",
+        "*" = "`.png`          (PNG file)",
+        "*" = "`.pdf`          (PDF file)",
+        "*" = "`.tex`, `.rnw`  (LaTeX file)",
+        "*" = "`.rtf`          (RTF file)"
+      ))
     }
   )
 }
@@ -201,9 +201,7 @@ gt_save_webshot <- function(
   tempfile_ <- tempfile(fileext = ".html")
 
   # Reverse slashes on Windows filesystems
-  tempfile_ <-
-    tempfile_ %>%
-    tidy_gsub("\\\\", "/")
+  tempfile_ <- tidy_gsub(tempfile_, "\\\\", "/")
 
   # Save gt table as HTML using the `gt_save_html()` function
   gt_save_html(
@@ -216,8 +214,9 @@ gt_save_webshot <- function(
   # not present, stop with a message
   if (!requireNamespace("webshot", quietly = TRUE)) {
 
-    stop("The `webshot` package is required for saving images of gt tables.",
-         call. = FALSE)
+    cli::cli_abort(
+      "The `webshot` package is required for saving images of gt tables."
+    )
 
   } else {
 
@@ -260,9 +259,7 @@ gt_save_rtf <- function(
 
   filename <- gtsave_filename(path = path, filename = filename)
 
-  data %>%
-    as_rtf() %>%
-    writeLines(con = filename)
+  writeLines(as_rtf(data = data), con = filename)
 }
 
 #' Get the lowercase extension from a filename
@@ -270,7 +267,7 @@ gt_save_rtf <- function(
 #' @noRd
 gtsave_file_ext <- function(filename) {
 
-  tools::file_ext(filename) %>% tolower()
+  tolower(tools::file_ext(filename))
 }
 
 #' Combine `path` with `filename` and normalize the path
@@ -283,13 +280,14 @@ gtsave_filename <- function(path, filename) {
   # The use of `fs::path_abs()` works around
   # the saving code in `htmltools::save_html()`
   # See htmltools Issue #165 for more details
-
-  fs::path_abs(
-    path = filename,
-    start = path
-  ) %>%
-    fs::path_expand() %>%
-    as.character()
+  as.character(
+    fs::path_expand(
+      fs::path_abs(
+        path = filename,
+        start = path
+      )
+    )
+  )
 }
 
 #' Get the HTML content of a **gt** table
@@ -438,16 +436,18 @@ as_latex <- function(data) {
   }
 
   # Compose the LaTeX table
-  paste0(
-    table_start,
-    heading_component,
-    columns_component,
-    body_component,
-    table_end,
-    footer_component,
-    collapse = ""
-  ) %>%
-    knitr::asis_output(meta = latex_packages)
+  knitr::asis_output(
+    paste0(
+      table_start,
+      heading_component,
+      columns_component,
+      body_component,
+      table_end,
+      footer_component,
+      collapse = ""
+    ),
+    meta = latex_packages
+  )
 }
 
 #' Output a **gt** object as RTF
@@ -622,11 +622,11 @@ extract_summary <- function(data) {
   # directives to create summary rows
   if (!dt_summary_exists(data = data)) {
 
-    stop(
-      "There is no summary list to extract.\n",
-      "Use the `summary_rows()`/`grand_summary_rows()` functions to generate summaries.",
-      call. = FALSE
-    )
+    cli::cli_abort(c(
+      "There is no summary list to extract.",
+      "*" = "Use the `summary_rows()`/`grand_summary_rows()` functions
+      to generate summaries."
+    ))
   }
 
   # Build the `data` using the standard
@@ -636,16 +636,18 @@ extract_summary <- function(data) {
   # Extract the list of summary data frames
   # that contains tidy, unformatted data
   summary_tbl <-
-    dt_summary_df_data_get(data = built_data) %>%
-    lapply(FUN = function(x) {
-      lapply(x, function(y) {
-        dplyr::rename(
-          y,
-          rowname = .env$rowname_col_private,
-          group_id = .env$group_id_col_private
-        )
-      })
-    })
+    lapply(
+      dt_summary_df_data_get(data = built_data),
+      FUN = function(x) {
+        lapply(x, function(y) {
+          dplyr::rename(
+            y,
+            rowname = .env$rowname_col_private,
+            group_id = .env$group_id_col_private
+          )
+        })
+      }
+    )
 
   as.list(summary_tbl)
 }

@@ -1,36 +1,27 @@
 .dt_options_key <- "_options"
 
 dt_options_get <- function(data) {
-
   dt__get(data, .dt_options_key)
 }
 
 dt_options_set <- function(data, options) {
-
   dt__set(data, .dt_options_key, options)
 }
 
 dt_options_init <- function(data) {
-
-  dt_options_tbl %>% dt_options_set(options = ., data = data)
+  dt_options_set(data = data, options = dt_options_tbl)
 }
 
 dt_options_set_value <- function(data, option, value) {
 
-  dt_options <-
-    data %>%
-    dt_options_get()
-
+  dt_options <- dt_options_get(data = data)
   dt_options$value[[which(dt_options$parameter == option)]] <- value
 
-  dt_options %>%
-    dt_options_set(options = ., data = data)
+  dt_options_set(data = data, options = dt_options)
 }
 
 dt_options_get_value <- function(data, option) {
-
   dt_options <- dt_options_get(data = data)
-
   dt_options$value[[which(dt_options$parameter == option)]]
 }
 

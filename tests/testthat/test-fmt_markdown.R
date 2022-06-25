@@ -1,5 +1,3 @@
-context("Ensuring that the `fmt_markdown()` function works as expected")
-
 test_that("the `fmt_markdown()` function works correctly", {
 
   # Create a few Markdown-based text snippets
@@ -45,7 +43,7 @@ There's a quick reference [here](https://commonmark.org/help/).
     fmt_markdown(columns = everything())
 
   # Expect that the object has the correct classes
-  expect_is(tab, c("gt_tbl", "data.frame"))
+  expect_s3_class(tab, c("gt_tbl", "data.frame"))
 
   # Expect an error when attempting to format a column
   # that does not exist

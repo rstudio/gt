@@ -1,17 +1,14 @@
 .dt_formats_key <- "_formats"
 
 dt_formats_get <- function(data) {
-
   dt__get(data, .dt_formats_key)
 }
 
 dt_formats_set <- function(data, formats) {
-
   dt__set(data, .dt_formats_key, formats)
 }
 
 dt_formats_init <- function(data) {
-
   dt_formats_set(data = data, formats = list())
 }
 
@@ -36,10 +33,9 @@ dt_formats_add <- function(data, formats, prepend) {
 # index used here)
 dt_formats_summary_formatter <- function(data, context) {
 
-  formatter <-
-    data %>%
-    dt_formats_get() %>%
-    {.[[1]]$func}
+  formats_list <- dt_formats_get(data = data)
+
+  formatter <- formats_list[[1]]$func
 
   formatter[[context]] %||% formatter$default
 }

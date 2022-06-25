@@ -1,5 +1,3 @@
-context("Ensuring that the `tab_style()` function works as expected")
-
 # Create a table from `mtcars` that has all the different components
 data <-
   gt(mtcars, rownames_to_stub = TRUE) %>%
@@ -53,20 +51,13 @@ check_suggests <- function() {
 
 # Gets the HTML attr value from a single key
 selection_value <- function(html, key) {
-
   selection <- paste0("[", key, "]")
-
-  html %>%
-    rvest::html_nodes(selection) %>%
-    rvest::html_attr(key)
+  rvest::html_attr(rvest::html_nodes(html, selection), key)
 }
 
 # Gets the inner HTML text from a single value
 selection_text <- function(html, selection) {
-
-  html %>%
-    rvest::html_nodes(selection) %>%
-    rvest::html_text()
+  rvest::html_text(rvest::html_nodes(html, selection))
 }
 
 test_that("a gt table can store the correct style statements", {
@@ -429,10 +420,7 @@ test_that("a gt table can store the correct style statements", {
 
   # Check that `tab_row_group(others_label = ...)` still works but
   # issues a warning
-  expect_equivalent(
-    expect_warning(data %>% tab_row_group(others_label = "Others1")),
-    data %>% tab_options(row_group.default_label = "Others1")
-  )
+  expect_warning(data %>% tab_row_group(others_label = "Others1"))
 })
 
 test_that("using fonts in `cell_text()` works", {

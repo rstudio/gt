@@ -5,9 +5,11 @@
 #' @param ... The arguments passed to `dplyr::filter()`.
 #' @import rlang
 #' @noRd
-filter_table_to_value <- function(table,
-                                  column,
-                                  ...) {
+filter_table_to_value <- function(
+    table,
+    column,
+    ...
+) {
 
   filter_args_enquos <- rlang::enquos(...)
   column_enquo <- rlang::enquo(column)
@@ -15,13 +17,14 @@ filter_table_to_value <- function(table,
   filtered_tbl <- dplyr::filter(table, !!!filter_args_enquos)
 
   if (nrow(filtered_tbl) != 1) {
-    stop("Internal error in `gt:::filter_table_to_row()`:\n",
-         " * The filtered table doesn't result in a table of exactly one row. ",
-         "Found ", nrow(filtered_tbl), " rows.",
-         call. = FALSE)
+    cli::cli_abort(c(
+      "Internal error in `gt:::filter_table_to_row()`.",
+      "*" = "The filtered table doesn't result in a table of exactly one row.",
+      "*" = "Found {nrow(filtered_tbl)) rows."
+    ))
   }
 
-  filtered_tbl %>% dplyr::pull(!!column_enquo)
+  dplyr::pull(filtered_tbl, !!column_enquo)
 }
 
 #' Validate the user-supplied `locale` value
@@ -34,11 +37,11 @@ validate_locale <- function(locale) {
   # Stop function if the `locale` provided
   # isn't a valid one
   if (!is.null(locale) && !(locale %in% locales$base_locale_id)) {
-    stop(
-      "The supplied `locale` is not available in the list of supported locales.\n",
-      " * Use the `info_locales()` function to see which locales can be used.",
-      call. = FALSE
-    )
+
+    cli::cli_abort(c(
+      "The supplied `locale` is not available in the list of supported locales.",
+      "*" = "Use the `info_locales()` function to see which locales can be used."
+    ))
   }
 }
 
@@ -58,14 +61,18 @@ validate_currency <- function(currency) {
   currency_char <- as.character(currency)
 
   # Stop function if the `currency` provided isn't a valid one
-  if (!(
-    currency_char %in% currency_symbols$curr_symbol |
-    currency_char %in% currencies$curr_code |
-    currency_char %in% currencies$curr_number)) {
-    stop("The supplied `currency` is not available in the list of supported currencies.\n",
-         " * Use the `info_currencies()` function to see which currencies can be used.\n",
-         " * See `?fmt_currency` to understand which input types are valid.",
-         call. = FALSE)
+  if (
+    !(
+      currency_char %in% currency_symbols$curr_symbol |
+      currency_char %in% currencies$curr_code |
+      currency_char %in% currencies$curr_number
+    )
+  ) {
+    cli::cli_abort(c(
+      "The supplied `currency` is not available in the list of supported currencies.",
+      "*" = "Use the `info_currencies()` function to see which currencies can be used.",
+      "*" = "See `?fmt_currency` to better understand which input types are valid."
+    ))
   }
 }
 
@@ -76,9 +83,11 @@ validate_currency <- function(currency) {
 #' @param default The default value for the `sep_mark`.
 #' @param use_seps A logical value for whether to use separators at all.
 #' @noRd
-get_locale_sep_mark <- function(locale = NULL,
-                                default,
-                                use_seps) {
+get_locale_sep_mark <- function(
+    locale = NULL,
+    default,
+    use_seps
+) {
 
   # If `use_seps` is FALSE, then force
   # `sep_mark` to be an empty string
@@ -111,8 +120,7 @@ get_locale_sep_mark <- function(locale = NULL,
 #'   functions. This is expected as `NULL` if not supplied by the user.
 #' @param default The default value for the `dec_mark`.
 #' @noRd
-get_locale_dec_mark <- function(locale = NULL,
-                                default) {
+get_locale_dec_mark <- function(locale = NULL, default) {
 
   # If `locale` is NULL then return the
   # default `dec_mark`
@@ -153,10 +161,7 @@ resolve_locale <- function(data, locale) {
 #' @param x A vector of numeric values, including `NA` values
 #' @noRd
 has_order_zero <- function(x) {
-
-  (
-    (x >= 1 & x < 10) | (x <= -1 & x > -10) | x == 0
-  ) & !is.na(x)
+  ((x >= 1 & x < 10) | (x <= -1 & x > -10) | x == 0) & !is.na(x)
 }
 
 #' Get the correct number of decimal places for a specified currency
@@ -166,9 +171,11 @@ has_order_zero <- function(x) {
 #' @param use_subunits An option for whether the subunits portion of a currency
 #'   value should be displayed.
 #' @noRd
-get_currency_decimals <- function(currency,
-                                  decimals,
-                                  use_subunits) {
+get_currency_decimals <- function(
+    currency,
+    decimals,
+    use_subunits
+) {
 
   # Stop function if using the `currency()` helper function
   # without providing a value for `decimals`
@@ -216,20 +223,22 @@ get_currency_decimals <- function(currency,
 #' @param x A vector of numeric values.
 #' @param scale_by A numeric scalar.
 #' @noRd
-scale_x_values <- function(x,
-                           scale_by) {
+scale_x_values <- function(x, scale_by) {
+
   checkmate::assert_numeric(
     scale_by,
     finite = TRUE,
-    any.missing = FALSE)
+    any.missing = FALSE
+  )
 
   len <- length(scale_by)
 
   # Stop function if the length of `scale_by`
   # is not 1 of the length of `x`
   if (!any(len == 1, len == length(x))) {
-    stop("The length of the `scale_by` vector must be 1 or the length of `x`.",
-         call. = FALSE)
+    cli::cli_abort(
+      "The length of the `scale_by` vector must be 1 or the length of `x`."
+    )
   }
 
   x * scale_by
@@ -247,17 +256,19 @@ scale_x_values <- function(x,
 #' @param replace_minus_mark An option for whether the minus sign should be
 #'   replaced with the minus mark.
 #' @noRd
-format_num_to_str <- function(x,
-                              context,
-                              decimals,
-                              n_sigfig,
-                              sep_mark,
-                              dec_mark,
-                              drop_trailing_zeros,
-                              drop_trailing_dec_mark,
-                              format = "f",
-                              replace_minus_mark = TRUE,
-                              system = c("intl", "ind")) {
+format_num_to_str <- function(
+    x,
+    context,
+    decimals,
+    n_sigfig,
+    sep_mark,
+    dec_mark,
+    drop_trailing_zeros,
+    drop_trailing_dec_mark,
+    format = "f",
+    replace_minus_mark = TRUE,
+    system = c("intl", "ind")
+) {
 
   system <- match.arg(system)
 
@@ -285,7 +296,7 @@ format_num_to_str <- function(x,
     flag <- ""
     drop0trailing <- drop_trailing_zeros
   } else {
-    stop("The format provided isn't recognized.")
+    cli::cli_abort("The format provided isn't recognized.")
   }
 
   x_str <-
@@ -324,15 +335,15 @@ format_num_to_str <- function(x,
     integer_parts <- sub("\\..*", "", x_str_numeric)
 
     integer_parts <-
-      integer_parts %>%
-      gsub("(,|-)", "", .) %>%
       vapply(
+        gsub("(,|-)", "", integer_parts),
         FUN.VALUE = character(1),
         USE.NAMES = FALSE,
         FUN = insert_seps_ind
       )
 
     decimal_str <- rep("", length(x_str_numeric))
+
     decimal_str[has_decimal] <-
       gsub("^.*?(\\..*)", "\\1", x_str_numeric[has_decimal])
 
@@ -356,14 +367,16 @@ format_num_to_str <- function(x,
 #'
 #' @inheritParams format_num_to_str
 #' @noRd
-format_num_to_str_c <- function(x,
-                                context,
-                                decimals,
-                                sep_mark,
-                                dec_mark,
-                                drop_trailing_zeros = FALSE,
-                                drop_trailing_dec_mark,
-                                system = c("intl", "ind")) {
+format_num_to_str_c <- function(
+    x,
+    context,
+    decimals,
+    sep_mark,
+    dec_mark,
+    drop_trailing_zeros = FALSE,
+    drop_trailing_dec_mark,
+    system = c("intl", "ind")
+) {
 
   system <- match.arg(system)
 
@@ -386,10 +399,7 @@ format_num_to_str_c <- function(x,
 #' @param context The output context.
 #'
 #' @noRd
-to_latex_math_mode <- function(
-    x,
-    context
-) {
+to_latex_math_mode <- function(x, context) {
 
   if (context != "latex") {
 
@@ -418,8 +428,7 @@ to_latex_math_mode <- function(
 #'
 #' @param context The output context.
 #' @noRd
-context_missing_text <- function(missing_text,
-                                 context) {
+context_missing_text <- function(missing_text, context) {
 
   switch(
     context,
@@ -455,21 +464,20 @@ context_missing_text <- function(missing_text,
       }
   )
 }
+
 context_dash_mark <- context_missing_text
 
 #' Obtain the contextually correct plus or minus mark
 #'
 #' @param context The output context.
 #' @noRd
-context_plusminus_mark <- function(plusminus_mark,
-                                   context) {
+context_plusminus_mark <- function(plusminus_mark, context) {
 
   switch(
     context,
     html =
       {
-        if (!inherits(plusminus_mark, "AsIs") &&
-            plusminus_mark == " +/- ") {
+        if (!inherits(plusminus_mark, "AsIs") && plusminus_mark == " +/- ") {
           " &plusmn; "
         } else {
           plusminus_mark
@@ -477,8 +485,7 @@ context_plusminus_mark <- function(plusminus_mark,
       },
     latex =
       {
-        if (!inherits(plusminus_mark, "AsIs") &&
-            plusminus_mark == " +/- ") {
+        if (!inherits(plusminus_mark, "AsIs") && plusminus_mark == " +/- ") {
           " \u00B1 "
         } else {
           plusminus_mark
@@ -486,8 +493,7 @@ context_plusminus_mark <- function(plusminus_mark,
       },
     rtf =
       {
-        if (!inherits(plusminus_mark, "AsIs") &&
-            plusminus_mark == " +/- ") {
+        if (!inherits(plusminus_mark, "AsIs") && plusminus_mark == " +/- ") {
           " \\'b1 "
         } else {
           plusminus_mark
@@ -650,8 +656,7 @@ context_exp_marks <- function(context) {
 #' @param symbol A symbol, which could be empty (NULL), a percent sign (`%`), or
 #'   a currency symbol, or a `gt_currency` object.
 #' @noRd
-context_symbol_str <- function(context,
-                               symbol) {
+context_symbol_str <- function(context, symbol) {
 
   # If we supply `NULL` as `symbol`, then
   # return an empty string
@@ -664,9 +669,10 @@ context_symbol_str <- function(context,
     symbol <-
       symbol[[context]] %||%
       symbol[["default"]] %||%
-      stop("The `", context, "` output context isn't available in the ",
-           "`currency()` object (and there isn't a `default` context either).",
-           call. = FALSE)
+      cli::cli_abort(
+        "The `{context}` output context isn't available in the
+        `currency()` object (and there isn't a `default` context either)."
+      )
   }
 
   # If we supply a percent sign as `symbol`,
@@ -682,10 +688,12 @@ context_symbol_str <- function(context,
       html = get_currency_str(currency = symbol),
       latex = {
         if (!inherits(symbol, "AsIs")) {
-          symbol %>%
-            get_currency_str(fallback_to_code = TRUE) %>%
-            markdown_to_latex() %>%
-            paste_between(x_2 = c("\\text{", "}"))
+          paste_between(
+            markdown_to_latex(
+              get_currency_str(currency = symbol, fallback_to_code = TRUE)
+            ),
+            c("\\text{", "}")
+          )
         } else {
           symbol
         }
@@ -705,13 +713,14 @@ context_symbol_str <- function(context,
 #' @param placement Either `left` or `right` (this is the placement of the
 #'   symbol string relative to the formatted, numeric values).
 #' @noRd
-format_symbol_str <- function(x_abs_str,
-                              x,
-                              context,
-                              symbol,
-                              incl_space,
-                              placement) {
-
+format_symbol_str <- function(
+    x_abs_str,
+    x,
+    context,
+    symbol,
+    incl_space,
+    placement
+) {
 
   symbol_str <- context_symbol_str(context, symbol)
 
@@ -719,37 +728,42 @@ format_symbol_str <- function(x_abs_str,
     return(x_abs_str)
   }
 
-  vapply(FUN.VALUE = character(1), USE.NAMES = FALSE, seq_along(x), function(i) {
+  vapply(
+    seq_along(x),
+    FUN.VALUE = character(1),
+    USE.NAMES = FALSE,
+    FUN = function(i) {
 
-    # Using absolute value format, the minus mark will
-    # be added later
-    x_i <- x[i]
-    x_str_i <- x_abs_str[i]
+      # Using absolute value format, the minus mark will
+      # be added later
+      x_i <- x[i]
+      x_str_i <- x_abs_str[i]
 
-    # Place possible space and symbol on correct side of value
-    x_str_i <-
-      x_str_i %>%
-      paste_on_side(
-        x_side = ifelse(incl_space, " ", ""),
-        direction = placement
-      ) %>%
-      paste_on_side(
-        x_side = as.character(symbol_str),
-        direction = placement
-      )
-
-    # Create the minus mark for the context
-    minus_mark <- context_minus_mark(context)
-
-    # Place the `minus_mark` onto the formatted strings
-    if (x_i < 0) {
+      # Place possible space and symbol on correct side of value
       x_str_i <-
-        x_str_i %>%
-        paste_left(minus_mark)
-    }
+        paste_on_side(
+          x_str_i,
+          x_side = ifelse(incl_space, " ", ""),
+          direction = placement
+        )
+      x_str_i <-
+        paste_on_side(
+          x_str_i,
+          x_side = as.character(symbol_str),
+          direction = placement
+        )
 
-    x_str_i
-  })
+      # Create the minus mark for the context
+      minus_mark <- context_minus_mark(context)
+
+      # Place the `minus_mark` onto the formatted strings
+      if (x_i < 0) {
+        x_str_i <- paste_left(x_str_i, minus_mark)
+      }
+
+      x_str_i
+    }
+  )
 }
 
 #' Transform currency values to accounting style
@@ -758,9 +772,11 @@ format_symbol_str <- function(x_abs_str,
 #' @param x Numeric values in `numeric` form.
 #' @param context The output context.
 #' @noRd
-format_minus <- function(x_str,
-                         x,
-                         context) {
+format_minus <- function(
+    x_str,
+    x,
+    context
+) {
 
   # Store logical vector of `x_vals` < 0
   x_lt0 <- x < 0
@@ -774,7 +790,7 @@ format_minus <- function(x_str,
   minus_mark <- context_minus_mark(context)
 
   # Handle replacement of the minus mark
-  x_str %>% tidy_gsub("-", minus_mark, fixed = TRUE)
+  tidy_gsub(x_str, "-", minus_mark, fixed = TRUE)
 }
 
 #' Transform currency values to accounting style
@@ -785,10 +801,12 @@ format_minus <- function(x_str,
 #' @param accounting A logical value that indicates whether accounting style
 #'   should be used.
 #' @noRd
-format_as_accounting <- function(x_str,
-                                 x,
-                                 context,
-                                 accounting) {
+format_as_accounting <- function(
+    x_str,
+    x,
+    context,
+    accounting
+) {
 
   if (!accounting) {
     return(x_str)
@@ -826,10 +844,12 @@ format_as_accounting <- function(x_str,
 #' @param exp_marks A character vector (length of two) that encloses the
 #'   exponential power value.
 #' @noRd
-prettify_scientific_notation <- function(x,
-                                         context,
-                                         small_pos,
-                                         exp_marks) {
+prettify_scientific_notation <- function(
+    x,
+    context,
+    small_pos,
+    exp_marks
+) {
 
   if (!any(grepl("e|E", x))) {
     return(x)
@@ -837,8 +857,7 @@ prettify_scientific_notation <- function(x,
 
   # For any numbers that shouldn't have an exponent, remove
   # that portion from the character version
-  x[small_pos] <-
-    split_scientific_notn(x[small_pos])$num
+  x[small_pos] <- split_scientific_notn(x[small_pos])$num
 
   # For any non-NA numbers that do have an exponent, format
   # those according to the output context
@@ -853,10 +872,8 @@ prettify_scientific_notation <- function(x,
   # Create the minus mark for the context
   minus_mark <- context_minus_mark(context)
 
-  # Handle replacement of the minus mark in number
-  # and exponent parts
-  x %>%
-    tidy_gsub("-", minus_mark, fixed = TRUE)
+  # Handle replacement of the minus mark in number and exponent parts
+  tidy_gsub(x, "-", minus_mark, fixed = TRUE)
 }
 
 #' Create the tibble with suffixes and scaling values
@@ -870,11 +887,13 @@ prettify_scientific_notation <- function(x,
 #' @param suffix_labels The vector of suffix labels to use.
 #' @param scale_by A value to scale the input.
 #' @noRd
-create_suffix_df <- function(x,
-                             decimals,
-                             suffix_labels,
-                             scale_by,
-                             system) {
+create_suffix_df <- function(
+    x,
+    decimals,
+    suffix_labels,
+    scale_by,
+    system
+) {
 
   suffix_fn <- if (system == "intl") num_suffix else num_suffix_ind
 
@@ -893,22 +912,27 @@ create_suffix_df <- function(x,
 #'   of the formatted value.
 #' @param format_fn A function for formatting the numeric values.
 #' @noRd
-num_fmt_factory_multi <- function(pattern,
-                                  use_latex_math_mode = TRUE,
-                                  format_fn) {
+num_fmt_factory_multi <- function(
+    pattern,
+    use_latex_math_mode = TRUE,
+    format_fn
+) {
 
   # Generate a named list of factory functions, with one
   # component per context
-  all_contexts %>%
-    magrittr::set_names(all_contexts) %>%
-    lapply(function(x) {
+  names(all_contexts) <- all_contexts
+
+  lapply(
+    all_contexts,
+    FUN = function(x) {
       num_fmt_factory(
         context = x,
         pattern = pattern,
         use_latex_math_mode = use_latex_math_mode,
         format_fn = format_fn
       )
-    })
+    }
+  )
 }
 
 #' A factory function used for all numeric `fmt_*()` functions
@@ -918,10 +942,12 @@ num_fmt_factory_multi <- function(pattern,
 #'   of the formatted value.
 #' @param format_fn A function for formatting the numeric values.
 #' @noRd
-num_fmt_factory <- function(context,
-                            pattern,
-                            use_latex_math_mode = TRUE,
-                            format_fn) {
+num_fmt_factory <- function(
+    context,
+    pattern,
+    use_latex_math_mode = TRUE,
+    format_fn
+) {
 
   # Force all arguments
   force(context)

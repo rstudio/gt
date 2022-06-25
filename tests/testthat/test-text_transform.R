@@ -9,20 +9,13 @@ check_suggests <- function() {
 
 # Gets the HTML attr value from a single key
 selection_value <- function(html, key) {
-
   selection <- paste0("[", key, "]")
-
-  html %>%
-    rvest::html_nodes(selection) %>%
-    rvest::html_attr(key)
+  rvest::html_attr(rvest::html_nodes(html, selection), key)
 }
 
 # Gets the inner HTML text from a single value
 selection_text <- function(html, selection) {
-
-  html %>%
-    rvest::html_nodes(selection) %>%
-    rvest::html_text()
+  rvest::html_text(rvest::html_nodes(html, selection))
 }
 
 test_that("the `text_transform()` function works correctly", {
@@ -174,17 +167,14 @@ test_that("the `text_transform()` function works correctly", {
   # Expect that `resolved` subcomponent of `transforms` has the class
   # names and `resolved`, `cells_body`, `location_cells`
   transforms[[1]]$resolved %>%
-    expect_is(c("resolved", "cells_body", "location_cells"))
+    expect_s3_class(c("resolved", "cells_body", "location_cells"))
 
   transforms[[2]]$resolved %>%
-    expect_is(c("resolved", "cells_body", "location_cells"))
+    expect_s3_class(c("resolved", "cells_body", "location_cells"))
 
   # Expect that `fn` subcomponent of `transforms` is a function
-  transforms[[1]]$fn %>%
-    expect_is("function")
-
-  transforms[[2]]$fn %>%
-    expect_is("function")
+  expect_equal(class(transforms[[1]]$fn), "function")
+  expect_equal(class(transforms[[2]]$fn), "function")
 
   # Define a function that converts vector of `x` to numeric
   # and rounds values to a specific multiple

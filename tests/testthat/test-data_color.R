@@ -3,9 +3,7 @@ skip_on_cran()
 # Create a table that can be used for testing
 test_tbl <-
   sza %>%
-  dplyr::filter(
-    latitude == 50 & !is.na(sza)
-  ) %>%
+  dplyr::filter(latitude == 50 & !is.na(sza)) %>%
   dplyr::group_by(month) %>%
   dplyr::summarize(min_sza = min(sza))
 
@@ -17,20 +15,13 @@ check_suggests <- function() {
 
 # Gets the HTML attr value from a single key
 selection_value <- function(html, key) {
-
   selection <- paste0("[", key, "]")
-
-  html %>%
-    rvest::html_nodes(selection) %>%
-    rvest::html_attr(key)
+  rvest::html_attr(rvest::html_nodes(html, selection), key)
 }
 
 # Gets the inner HTML text from a single value
 selection_text <- function(html, selection) {
-
-  html %>%
-    rvest::html_nodes(selection) %>%
-    rvest::html_text()
+  rvest::html_text(rvest::html_nodes(html, selection))
 }
 
 test_that("the correct color values are obtained when defining a palette", {
@@ -109,7 +100,7 @@ test_that("the correct color values are obtained when defining a palette", {
 
   # Expect that the background colors are in the same form as
   # those supplied (`pal_12`) and the order is identical as well
-  expect_equivalent(
+  expect_equal(
     tbl_html_2 %>%
       selection_value("style") %>%
       gsub("(background-color: |; color: .*)", "", .),
@@ -1258,7 +1249,7 @@ test_that("the various color utility functions work correctly", {
 
   # Expect that the vector of light and dark colors returned is not affected
   # by any of the colors' alpha values
-  expect_equivalent(
+  expect_equal(
     ideal_fgnd_color(
       bgnd_color = c(
         c(

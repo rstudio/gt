@@ -1,5 +1,3 @@
-context("Ensuring that conditional formatting works as expected")
-
 # Create an input data frame four columns: two
 # character-based and two that are numeric
 data_tbl <-
