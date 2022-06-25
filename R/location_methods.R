@@ -12,8 +12,9 @@ as_locations <- function(locations) {
     if (!is.list(locations) &&
         any(!vapply(locations, inherits, logical(1), "location_cells"))) {
 
-      stop("The `locations` object should be a list of `cells_*()`.",
-           .call = FALSE)
+      cli::cli_abort(
+        "The `locations` object should be a list of `cells_*()` objects."
+      )
     }
   } else {
     locations <- list(locations)
@@ -31,19 +32,15 @@ add_summary_location_row <- function(
 ) {
 
   stub_df <- dt_stub_df_get(data = data)
-
-  row_groups <-
-    stub_df %>%
-    dplyr::pull(group_id) %>%
-    unique()
+  row_groups <- unique(stub_df$group_id)
 
   summary_data <- dt_summary_get(data = data)
 
   summary_data_summaries <-
     vapply(
       seq(summary_data),
-      function(x) !is.null(summary_data[[x]]$groups),
-      logical(1)
+      FUN.VALUE = logical(1),
+      FUN = function(x) !is.null(summary_data[[x]]$groups)
     )
 
   summary_data <- summary_data[summary_data_summaries]
@@ -62,18 +59,20 @@ add_summary_location_row <- function(
   for (group in groups) {
 
     summary_labels <-
-      lapply(
-        summary_data,
-        function(summary_data_item) {
-          if (isTRUE(summary_data_item$groups)) {
-            summary_data_item$summary_labels
-          } else if (group %in% summary_data_item$groups){
-            summary_data_item$summary_labels
-          }
-        }
-      ) %>%
-      unlist() %>%
-      unique()
+      unique(
+        unlist(
+          lapply(
+            summary_data,
+            FUN = function(summary_data_item) {
+              if (isTRUE(summary_data_item$groups)) {
+                summary_data_item$summary_labels
+              } else if (group %in% summary_data_item$groups) {
+                summary_data_item$summary_labels
+              }
+            }
+          )
+        )
+      )
 
     if (!inherits(loc, "cells_stub_summary")) {
 
@@ -84,9 +83,10 @@ add_summary_location_row <- function(
         )
 
       if (length(columns) == 0) {
-        stop("The location requested could not be resolved:\n",
-             " * Review the expression provided as `columns`",
-             call. = FALSE)
+        cli::cli_abort(c(
+          "The location requested could not be resolved.",
+          "*" = "Review the expression provided as `columns`."
+        ))
       }
     } else {
       columns <- NA_character_
@@ -94,15 +94,16 @@ add_summary_location_row <- function(
 
     rows <-
       resolve_vector_i(
-        expr= !!loc$rows,
+        expr = !!loc$rows,
         vector = summary_labels,
         item_label = "summary row"
       )
 
     if (length(rows) == 0) {
-      stop("The location requested could not be resolved:\n",
-           " * Review the expression provided as `rows`",
-           call. = FALSE)
+      cli::cli_abort(c(
+        "The location requested could not be resolved.",
+        "*" = "Review the expression provided as `rows`."
+      ))
     }
 
     if (df_type == "footnotes_df") {
@@ -148,14 +149,19 @@ add_grand_summary_location_row <- function(
   summary_data <- dt_summary_get(data = data)
 
   grand_summary_labels <-
-    lapply(summary_data, function(summary_data_item) {
-      if (is.null(summary_data_item$groups)) {
-        return(summary_data_item$summary_labels)
-      }
-      NULL
-    }) %>%
-    unlist() %>%
-    unique()
+    unique(
+      unlist(
+        lapply(
+          summary_data,
+          FUN = function(summary_data_item) {
+            if (is.null(summary_data_item$groups)) {
+              return(summary_data_item$summary_labels)
+            }
+            NULL
+          }
+        )
+      )
+    )
 
   if (!inherits(loc, "cells_stub_grand_summary")) {
 
@@ -166,9 +172,10 @@ add_grand_summary_location_row <- function(
       )
 
     if (length(columns) == 0) {
-      stop("The location requested could not be resolved:\n",
-           " * Review the expression provided as `columns`",
-           call. = FALSE)
+      cli::cli_abort(c(
+        "The location requested could not be resolved.",
+        "*" = "Review the expression provided as `columns`."
+      ))
     }
   } else {
     columns <- NA_character_
@@ -182,9 +189,10 @@ add_grand_summary_location_row <- function(
     )
 
   if (length(rows) == 0) {
-    stop("The location requested could not be resolved:\n",
-         " * Review the expression provided as `rows`",
-         call. = FALSE)
+    cli::cli_abort(c(
+      "The location requested could not be resolved.",
+      "*" = "Review the expression provided as `rows`."
+    ))
   }
 
   if (df_type == "footnotes_df") {
@@ -232,9 +240,6 @@ resolve_location.resolved <- function(loc, data) {
 
 resolve_location.cells_body <- function(loc, data) {
 
-  data_tbl <- dt_data_get(data = data)
-  stub_df <- dt_stub_df_get(data = data)
-
   loc$colnames <-
     resolve_cols_c(
       expr = !!loc[["columns"]],
@@ -262,12 +267,10 @@ resolve_location.cells_column_labels <- function(loc, data) {
       )
   }
 
-  # TODO: for now, when groups is set to TRUE, the
-  # behavior is not to select all groups; this
-  # should be changed to select all group
+  # TODO: for now, when groups is set to TRUE, the behavior is not to
+  #       select all groups; this should be changed to select all groups
 
-  # TODO: implement a stop() if groups provided not
-  # in the available set of groups
+  # TODO: abort() if groups provided not in the available set of groups
   class(loc) <- c("resolved", class(loc))
 
   loc

@@ -5,12 +5,7 @@
 #'
 #' @import rlang
 #' @noRd
-resolve_cells_body <- function(data,
-                               object) {
-
-  # Get the `stub_df` data frame from `data`
-  stub_df <- dt_stub_df_get(data = data)
-  data_tbl <- dt_data_get(data = data)
+resolve_cells_body <- function(data, object) {
 
   #
   # Resolution of columns and rows as integer vectors
@@ -118,23 +113,18 @@ resolve_cells_column_labels <- function(data,
 #' @param object The list object created by the `cells_column_labels()`
 #'   function.
 #' @noRd
-resolve_cells_column_spanners <- function(data,
-                                          object) {
+resolve_cells_column_spanners <- function(data, object) {
+
+  spanners <- dt_spanners_get(data = data)
 
   #
   # Resolution of spanners as column spanner names
   #
-  spanner_labels <-
-    dt_spanners_get(data = data) %>%
-    .$spanner_label %>%
-    unlist() %>%
-    .[!is.na(.)] %>%
-    unique()
+  spanner_labels <- unlist(spanners$spanner_label)
+  spanner_labels <- unique(spanner_labels[!is.na(spanner_labels)])
 
-  spanner_ids <-
-    dt_spanners_get(data = data) %>%
-    .$spanner_id %>%
-    .[!is.na(.)]
+  spanner_ids <- spanners$spanner_id
+  spanner_ids <- spanner_ids[!is.na(spanner_ids)]
 
   resolved_spanners_idx <-
     resolve_vector_i(
@@ -227,8 +217,6 @@ resolve_cols_i <- function(expr,
 
   if (is_gt(data)) {
 
-    cols <- colnames(dt_data_get(data = data))
-
     # In most cases we would want to exclude the column that
     # represents the stub but that isn't always the case (e.g.,
     # when considering the stub for column sizing); the `excl_stub`
@@ -271,21 +259,19 @@ translate_legacy_resolver_expr <- function(quo, null_means) {
   expr <- rlang::quo_get_expr(quo = quo)
 
   if (identical(expr, FALSE)) {
-    warning(
-      "`columns = FALSE` has been deprecated in gt 0.3.0:\n",
-      "* please use `columns = c()` instead",
-      call. = FALSE
-    )
+    cli::cli_warn(c(
+      "Since gt v0.3.0, `columns = FALSE` has been deprecated.",
+      "*" = "Please use `columns = c()` instead."
+    ))
 
     rlang::quo_set_expr(quo = quo, expr = quote(NULL))
 
   } else if (identical(expr, TRUE)) {
 
-    warning(
-      "`columns = TRUE` has been deprecated in gt 0.3.0:\n",
-      "* please use `columns = everything()` instead",
-      call. = FALSE
-    )
+    cli::cli_warn(c(
+      "Since gt v0.3.0, `columns = TRUE` has been deprecated.",
+      "*" = "Please use `columns = everything()` instead."
+    ))
 
     rlang::quo_set_expr(quo = quo, expr = quote(everything()))
 
@@ -293,11 +279,10 @@ translate_legacy_resolver_expr <- function(quo, null_means) {
 
     if (null_means == "everything") {
 
-      warning(
-        "`columns = NULL` has been deprecated in gt 0.3.0:\n",
-        "* please use `columns = everything()` instead",
-        call. = FALSE
-      )
+      cli::cli_warn(c(
+        "Since gt v0.3.0, `columns = NULL` has been deprecated.",
+        "*" = "Please use `columns = everything()` instead."
+      ))
 
       rlang::quo_set_expr(quo = quo, expr = quote(everything()))
 
@@ -307,11 +292,10 @@ translate_legacy_resolver_expr <- function(quo, null_means) {
 
   } else if (rlang::quo_is_call(quo = quo, name = "vars")) {
 
-    warning(
-      "`columns = vars(...)` has been deprecated in gt 0.3.0:\n",
-      "* please use `columns = c(...)` instead",
-      call. = FALSE
-    )
+    cli::cli_warn(c(
+      "Since gt v0.3.0, `columns = vars(...)` has been deprecated.",
+      "*" = "Please use `columns = c(...)` instead."
+    ))
 
     rlang::quo_set_expr(
       quo = quo,
@@ -345,11 +329,10 @@ resolve_rows_l <- function(expr, data) {
 
   if (is.null(resolved)) {
 
-    warning(
-      "The use of `NULL` for rows has been deprecated in gt 0.3.0:\n",
-      "* please use `TRUE` instead",
-      call. = FALSE
-    )
+    cli::cli_warn(c(
+      "Since gt v0.3.0, the use of `NULL` for `rows` has been deprecated.",
+      "*" = "Please use `TRUE` instead."
+    ))
 
     # Modify the NULL value of `resolved` to `TRUE` (which is
     # fully supported for selecting all rows)
@@ -413,11 +396,10 @@ normalize_resolved <- function(resolved,
     # TODO: this may not apply to all types of resolution so we may
     # want to either make this warning conditional (after investigating which
     # resolving contexts still allow `NULL`)
-    warning(
-      "The use of `NULL` for ", item_label , "s has been deprecated in gt 0.3.0:\n",
-      "* please use `everything()` instead",
-      call. = FALSE
-    )
+    cli::cli_warn(c(
+      "Since gt v0.3.0, the use of `NULL` for {item_label} has been deprecated.",
+      "*" = "Please use `everything()` instead."
+    ))
 
   } else if (is.logical(resolved)) {
 
@@ -454,36 +436,32 @@ normalize_resolved <- function(resolved,
 
 resolver_stop_on_logical <- function(item_label) {
 
-  stop(
-    "The number of logical values must either be 1 or the number of ",
-    item_label, "s",
-    call. = FALSE
+  cli::cli_abort(
+    "The number of logical values must either be `1` or the number
+    of {item_label}s."
   )
 }
 
 resolver_stop_on_numeric <- function(item_label, unknown_resolved) {
 
-  stop(
-    "The following ", item_label, " indices do not exist in the data: ",
-    paste0(unknown_resolved, collapse = ", "),
-    call. = FALSE
+  cli::cli_abort(
+    "The following {item_label} indices do not exist in the data:
+    {paste0(unknown_resolved, collapse = ', ')}."
   )
 }
 
 resolver_stop_on_character <- function(item_label, unknown_resolved) {
 
-  stop(
-    "The following ", item_label, "(s) do not exist in the data: ",
-    paste0(unknown_resolved, collapse = ", "),
-    call. = FALSE
+  cli::cli_abort(
+    "The following {item_label}(s) do not exist in the data:
+    {paste0(unknown_resolved, collapse = ', ')}."
   )
 }
 
 resolver_stop_unknown <- function(item_label, resolved) {
 
-  stop(
-    "Don't know how to select ", item_label, "s using an object of class ",
-    class(resolved)[1],
-    call. = FALSE
+  cli::cli_abort(
+    "Don't know how to select {item_label}s using an object of class
+    {class(resolved)[1]}."
   )
 }

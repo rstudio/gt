@@ -14,7 +14,7 @@ test_that("the `fmt_date()` function works correctly", {
   tab <- gt(data_tbl)
 
   # Expect that the object has the correct classes
-  expect_is(tab, c("gt_tbl", "data.frame"))
+  expect_s3_class(tab, c("gt_tbl", "data.frame"))
 
   # Extract a vector from the table object for comparison
   # to the original dataset
@@ -234,7 +234,7 @@ test_that("the `fmt_time()` function works correctly", {
   tab <- gt(data_tbl)
 
   # Expect that the object has the correct classes
-  expect_is(tab, c("gt_tbl", "data.frame"))
+  expect_s3_class(tab, c("gt_tbl", "data.frame"))
 
   # Extract a vector from the table object for comparison
   # to the original dataset
@@ -445,7 +445,7 @@ test_that("the `fmt_datetime()` function works correctly", {
   tab <- gt(data_tbl)
 
   # Expect that the object has the correct classes
-  expect_is(tab, c("gt_tbl", "data.frame"))
+  expect_s3_class(tab, c("gt_tbl", "data.frame"))
 
   # Extract a vector from the table object for comparison
   # to the original dataset
@@ -598,7 +598,7 @@ test_that("the `fmt_datetime()` function works correctly", {
 
   # Using a string to represent a date or date-time doesn't allow the
   # output time to be altered by `tz`
-  expect_equivalent(
+  expect_equal(
     gt_tables[[1]] %>% # table where `datetime` column was `character`
       fmt_datetime(
         columns = "datetime",

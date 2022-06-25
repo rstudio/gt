@@ -28,7 +28,9 @@ cells. Specifically, the call to \code{cell_fill()} should be bound to the
 
 
 Use \code{\link{exibble}} to create a \strong{gt} table. Add styles with \code{\link[=tab_style]{tab_style()}} and
-the \code{cell_fill()} helper function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+the \code{cell_fill()} helper function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(num, currency) \%>\%
   gt() \%>\%
   fmt_number(

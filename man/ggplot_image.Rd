@@ -49,7 +49,9 @@ elongating any given plot to fit better within the table construct.
 \section{Examples}{
 
 
-Create a \strong{ggplot} plot.\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(ggplot2)
+Create a \strong{ggplot} plot.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(ggplot2)
 
 plot_object <-
   ggplot(
@@ -63,7 +65,9 @@ plot_object <-
 Create a tibble that contains two cells (where one is a placeholder for an
 image), then, create a \strong{gt} table. Use the \code{text_transform()} function to
 insert the plot using by calling \code{ggplot_object()} within the user- defined
-function.\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
+function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
   text = "Here is a ggplot:",
   ggplot = NA
 ) \%>\%

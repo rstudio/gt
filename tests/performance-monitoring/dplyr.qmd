@@ -1,0 +1,480 @@
+---
+title: "dplyr <-> data.table"
+subtitle: "Notes I took while learning to use data.table"
+author:
+  - name: "Marc-Aurèle Rivière"
+    url: https://ma-riviere.me
+    orcid: 0000-0002-5108-3382
+date: "2022-05-19"
+editor: source
+
+keep-md: true
+
+format:
+  html:
+    theme:
+      light: [default, css/light.scss]
+      dark: [darkly, css/dark.scss]
+    css: css/style.css
+    toc: true
+    toc-title: "On this page"
+    # self-contained: true
+    anchor-sections: true
+    number-sections: true
+    # code-link: true
+    fig-align: center
+    fig-dpi: 300
+    fig-format: svg
+    code-tools:
+      source: true
+      toggle: false
+    highlight-style: arrow
+    code-block-bg: true
+    code-block-border-left: "#31BAE9"
+    link-external-newwindow: true
+
+execute:
+  warning: false
+  message: false
+  output: asis
+  freeze: true
+---
+
+:::{.callout-tip collapse="true"}
+
+# Expand for Version History
+
+- **V1:** 2022-05-19  
+- **V2:** 2022-05-26   
+  - Improved the section on **keys** (for ordering & filtering)  
+  - Adding a [section](#tidyr-others) for translations of `Tidyr` (and other similar packages)      
+  - Capping tables to display 15 rows max when unfolded  
+  - Improving table display (stripping, hiding the contents of nested columns, ...)
+
+:::
+
+```{r}
+#| echo: false
+
+library(here)
+
+if (!startsWith(.libPaths()[1], here::here())) {
+  v <- paste0("R-", version$major, ".", strsplit(version$minor, ".", fixed = TRUE)[[1]][1])
+  .libPaths(here::here("renv", "library", v, "x86_64-w64-mingw32"))
+}
+```
+
+```{r}
+library(data.table) # Make sure you have data.table version >= 1.14.3
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(purrr)
+library(lubridate)
+
+data.table::setDTthreads(parallel::detectCores(logical = TRUE))
+```
+
+:::{.callout-tip collapse="true"}
+
+# Expand for Session Info
+
+```{r}
+#| echo: false
+#| results: markup
+
+sessioninfo::session_info(pkgs = "attached")
+```
+
+:::
+
+```{r}
+#| echo: false
+
+## This section is for Quarto (purely cosmetic)
+
+library(gt)         # Printing nice tables
+library(gtExtras)   # Printing nice tables
+library(ggplot2)    # Plots
+library(knitr)      # Generating the html document
+#library(downlit)    # For code linking
+#library(xml2)       # For code linking
+#library(withr)      # For code linking
+
+knitr::opts_chunk$set(
+  warning = FALSE,
+  message = FALSE,
+  fig.align = "center",
+  fig.retina = 2,
+  dpi = 500,
+  dev = 'svg',
+  dev.args = list(bg = "transparent")
+)
+
+bg_color_light <- "white"
+primary_color_light <- "black"
+secondary_color_light <- "#0d6efd"
+
+bg_color_dark <- "#222"
+primary_color_dark <- "white"
+secondary_color_dark <- "#20c997"
+
+
+#--------------------#
+#### Table themes ####
+#--------------------#
+
+format_pvalue <- function(p) glue::glue("{scales::pvalue(p)} {gtools::stars.pval(p) |> str_remove_all(fixed('.'))}")
+
+get_cell_dim <- function(x) {
+  dim <- NULL
+  if (is.list(x) || is.vector(x)) dim <- length(x)
+  if (length(dim(x) > 1)) dim <- glue::glue('{dim(x)[1]} x {dim(x)[2]}')
+  return(dim)
+}
+
+summarize_nested_col <- \(x) lapply(x, \(r) glue::glue("<{class(r)[[1]]} [{get_cell_dim(r)}]>"))
+
+format_gt <- function(gt_tbl) {
+  
+  gt_tbl <- gt::fmt(
+    gt_tbl,
+    columns = select(gt_tbl[["_data"]], where(is.list)) |> colnames(),
+    fns = \(x) summarize_nested_col(x)
+  )
+
+  gt_tbl <- gt::fmt(
+    gt_tbl,
+    columns = select(gt_tbl[["_data"]], matches("p.val|^pr|pr\\(.*\\)|^p$")) |> colnames(),
+    fns = \(x) purrr::map_chr(x, \(v) ifelse(!is.na(v) && utils::type.convert(v, as.is = TRUE) |> is.numeric(), format_pvalue(as.numeric(v)), v))
+  )
+
+  gt_tbl <- gt::fmt_number(
+    gt_tbl,
+    columns = select(gt_tbl[["_data"]], where(\(v) is.numeric(v))) |> colnames(),
+    decimals = 3, sep_mark = " ", drop_trailing_zeros = TRUE # n_sigfig = 2
+  )
+  
+  return(gt_tbl)
+}
+
+gt_style_light <- function(gt_tbl) {
+  gt_tbl <- (gt_tbl 
+    |> format_gt()
+    |> gt::tab_options(
+        
+    )
+    |> gt::tab_style(
+      style = list(
+        cell_fill(color = bg_color_light, alpha = 1),
+        cell_text(color = secondary_color_light, weight = "bold"),
+        cell_borders(sides = c("top", "bottom"), color = secondary_color_light, style = "solid", weight = px(2))
+      ),
+      locations = list(cells_title(), cells_column_labels())
+    ) 
+    |> gt::tab_style(
+      style = list(
+        cell_fill(color = bg_color_light, alpha = 1),
+        cell_text(color = primary_color_light)
+      ),
+      locations = list(cells_stub(), cells_body(), cells_row_groups(), cells_footnotes(), cells_source_notes())
+    )
+    |> gt::tab_style(
+      style = list(cell_text(weight = "bold")),
+      locations = list(cells_row_groups())
+    )
+    |> gt::tab_options(container.width = pct(100), table.width = pct(100))
+  )
+  
+  if (nrow(gt_tbl[["_data"]]) > 2) 
+    gt_tbl <- gt_tbl |> gtExtras::gt_highlight_rows(rows = seq(2, nrow(gt_tbl[["_data"]]), by = 2), fill = "#E9E9E9", font_weight = "normal")
+  
+  return(gt_tbl)
+}
+
+gt_style_dark <- function(gt_tbl) {
+  gt_tbl <- (gt_tbl 
+    |> format_gt()
+    |> gt::tab_style(
+      style = list(
+        cell_fill(color = bg_color_dark, alpha = 1),
+        cell_text(color = secondary_color_dark, weight = "bold"),
+        cell_borders(sides = c("top", "bottom"), color = secondary_color_dark, style = "solid", weight = px(2))
+      ),
+      locations = list(cells_title(), cells_column_labels())
+    ) 
+    |> gt::tab_style(
+      style = list(
+        cell_fill(color = bg_color_dark, alpha = 1),
+        cell_text(color = primary_color_dark)
+      ),
+      locations = list(cells_stub(), cells_body(), cells_row_groups(), cells_footnotes(), cells_source_notes())
+    )
+    |> gt::tab_style(
+      style = list(cell_text(weight = "bold")),
+      locations = list(cells_row_groups())
+    )
+    |> gt::tab_options(container.width = pct(100), table.width = pct(100))
+  )
+  
+  if (nrow(gt_tbl[["_data"]]) > 2) 
+    gt_tbl <- gt_tbl |> gtExtras::gt_highlight_rows(rows = seq(2, nrow(gt_tbl[["_data"]]), by = 2), fill = "#1e1e1e", font_weight = "normal")
+  
+  return(gt_tbl)
+}
+
+style_table <- function(data, theme = "light", nrow_max = 15) {
+  #return(gt::gt(data |> head(nrow_max)))
+  
+  if (theme == "light") tbl <- gt::gt(data |> head(nrow_max)) |> gt_style_light()
+  if (theme == "dark") tbl <- gt::gt(data |> head(nrow_max)) |> gt_style_dark()
+  
+  if (nrow(data) > nrow_max) tbl <- tbl |> tab_source_note(md(glue::glue("*[ omitted {nrow(data) - nrow_max} entries ]*")))
+  
+  return(tbl)
+}
+
+
+#--------------------------#
+#### Custom knit_prints ####
+#--------------------------#
+
+knit_print.grouped_df <- function(x, options, ...) {
+  if ("grouped_df" %in% class(x)) x <- ungroup(x)
+
+  cl <- intersect(class(x), c("data.table", "data.frame"))[1]
+
+  cat("```{=html}\n")
+  cat("\n<details>\n")
+  cat("<summary>\n")
+  cat(glue::glue("\n*{cl} [{dim(x)[1]} x {dim(x)[2]}]*\n"))
+  cat("</summary>\n<br>\n")
+  cat("<div class='light-mode'>")
+  print(style_table(x))
+  cat("</div>")
+  cat("<div class='dark-mode'>")
+  print(style_table(x, "dark"))
+  cat("</div>")
+  cat("</details>\n\n")
+  cat("```\n\n")
+}
+registerS3method("knit_print", "grouped_df", knit_print.grouped_df)
+knit_print.data.frame <- function(x, options, ...) {
+  cl <- intersect(class(x), c("data.table", "data.frame"))[1]
+  
+  cat("```{=html}\n")
+  cat("\n<details>\n")
+  cat("<summary>\n")
+  cat(glue::glue("\n*{cl} [{dim(x)[1]} x {dim(x)[2]}]*\n"))
+  cat("</summary>\n<br>\n")
+  cat("<div class='light-mode'>\n")
+  print(style_table(x))
+  cat("</div>")
+  cat("<div class='dark-mode'>")
+  print(style_table(x, "dark"))
+  cat("</div>")
+  cat("</details>\n\n")
+  cat("```\n\n")
+
+}
+registerS3method("knit_print", "data.frame", knit_print.data.frame)
+```
+
+
+<!-------------------------------------------------------->
+<!-------------------------------------------------------->
+# Basic operations:
+***
+
+:::{.callout-tip}
+
+## `data.table` general syntax:
+
+DT[`row selector` (filter/sort), `col selector` (select/mutate/summarize/rename), `modifiers` (group)]
+:::
+
+**Data**
+
+```{r}
+MT <- as.data.table(mtcars)
+IRIS <- as.data.table(iris)[, Species := as.character(Species)]
+```
+
+
+<!-------------------------------------------------------->
+## Arrange / Order:
+
+```{r}
+mtcars |> arrange(desc(cyl))
+
+MT[order(-cyl)]
+
+IRIS[chorder(Species)]
+```
+
+```{r}
+setorder(MT, -cyl)[]
+```
+
+
+**Ordering with keys**
+
+- Keys physically reorders the dataset within the RAM (by reference)  
+  - No memory is used for sorting (other than marking which columns is the key)  
+- The dataset is marked with an attribute _"sorted"_  
+- The dataset is always sorted in _ascending order_, with _NAs_ first  
+- Using `keyby` instead of `by` when grouping will set the grouping factors as keys
+
+:::{.callout-tip}
+See [this SO post](https://stackoverflow.com/questions/20039335/what-is-the-purpose-of-setting-a-key-in-data-table?rq=1) for more information on keys.
+:::
+
+```{r}
+setkey(MT, cyl, gear)
+
+setkeyv(MT, c("cyl", "gear"))
+
+MT
+```
+
+To see over which keys (if any) the dataset is currently ordered:
+
+```{r}
+haskey(MT)
+
+key(MT)
+```
+
+:::{.callout-warning}
+Unless our task involves repeated subsetting on the same column, the speed gain from key-based subsetting could effectively be nullified by the time needed to reorder the data in RAM, especially for large datasets.
+:::
+
+
+**Ordering with (secondary) indices**
+
+- `setindex` creates an index for the provided columns, but doesn’t physically reorder the dataset in RAM.  
+- It computes the ordering vector of the dataset's rows according to the provided columns in an additional attribute called _index_  
+
+
+```{r}
+#| label: chunk-line-350
+#| echo: false
+
+MT <- as.data.table(mtcars)
+```
+
+
+```{r}
+setindex(MT, cyl, gear)
+
+setindexv(MT, c("cyl", "gear"))
+
+MT
+```
+
+We can see the additional _index_ attribute added to the `data.table`:
+
+```{r}
+names(attributes(MT))
+```
+
+We can get the currently used indices with:
+
+```{r}
+indices(MT)
+```
+
+Adding a new index doesn't remove a previously existing one:
+
+```{r}
+setindex(MT, hp)
+
+indices(MT)
+```
+
+We can thus use indices to pre-compute the ordering for the columns (or combinations of columns) that we will be using to group or subset by frequently !
+
+
+
+<!-------------------------------------------------------->
+## Subset / Filter:
+
+```{r}
+#| echo: false
+
+MT <- as.data.table(mtcars)
+IRIS <- as.data.table(iris)[, Species := as.character(Species)]
+```
+
+
+```{r}
+mtcars |> filter(cyl >= 6 & disp < 180)
+
+MT[cyl >= 6 & disp < 180]
+```
+
+
+**Filtering on characters:**
+
+For non-regex, use `%chin%`, which is a character-optimized version of `%in%`.  
+
+```{r}
+IRIS[Species %chin% c("setosa")]
+```
+
+
+**Filter with pattern:**
+
+For regex patterns, use `%like%`
+
+```{r}
+mtcars |> filter(str_detect(disp, "^\\d{3}\\."))
+
+MT[like(disp, "^\\d{3}\\.")]
+```
+
+Alternatively:
+
+```{r}
+MT[disp %like% "^\\d{3}\\."]
+```
+
+
+**Filter by keys**
+
+When keys or indices are defined, we can filter based on them, which is often a lot faster.  
+- _N.B.: We do not even need to specify the column name we are filtering on: the values will be attributed to the keys in order._
+
+
+```{r}
+setkey(MT, cyl)
+
+MT[.(6)] # Equivalent to MT[cyl == 6]
+```
+
+```{r}
+setkey(MT, cyl, gear)
+
+MT[.(6, 4)] # Equivalent to MT[cyl == 6 & gear == 4]
+```
+
+
+**Filter by indices**
+
+To filter by indices, we can use the `on` argument, which creates a **temporary secondary index** on the fly (if it doesn't already exist).
+
+```{r}
+IRIS["setosa", on = "Species"]
+```
+
+Since the time to compute the secondary indices is quite small, we don’t have to use `setindex`, unless the task involves repeated subsetting on the same columns.
+
+
+:::{.callout-tip}
+When using `on` with multiple values, the `nomatch = NULL` argument avoids 
+creating combinations that do not exist in the original data (i.e. for `cyl == 5` here)
+:::
+
+```{r}
+MT[.(4:6, 4), on = c("cyl", "gear"), nomatch = NULL]
+```

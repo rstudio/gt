@@ -25,10 +25,12 @@ that work well in tables, use the \code{\link[=info_google_fonts]{info_google_fo
 Use \code{\link{exibble}} to create a \strong{gt} table of eight rows, replace missing values
 with em dashes. For text in the \code{time} column, we use the Google font
 \code{"IBM Plex Mono"} and set up the \code{\link[=default_fonts]{default_fonts()}} as fallbacks (just in case
-the webfont is not accessible).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+the webfont is not accessible).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(char, time) \%>\%
   gt() \%>\%
-  fmt_missing(columns = everything()) \%>\%
+  sub_missing() \%>\%
   tab_style(
     style = cell_text(
       font = c(
@@ -48,7 +50,9 @@ Use \code{\link{sp500}} to create a small \strong{gt} table, using \code{\link[=
 provide a dollar sign for the first row of monetary values. Then, set a
 larger font size for the table and use the \code{"Merriweather"} font using the
 \code{google_font()} function (with two font fallbacks: \code{"Cochin"} and the
-catchall \code{"Serif"} group).\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
+catchall \code{"Serif"} group).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
   dplyr::slice(1:10) \%>\%
   dplyr::select(-volume, -adj_close) \%>\%
   gt() \%>\%

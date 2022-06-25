@@ -63,7 +63,9 @@ those columns and column labels.
 
 Use \code{\link{gtcars}} to create a \strong{gt} table. Use the \code{tab_spanner()} function to
 effectively group several columns related to car performance under a spanner
-column with the label \code{"performance"}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
+column with the label \code{"performance"}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
   dplyr::select(
     -mfr, -trim, bdy_style, drivetrain,
     -drivetrain, -trsmn, -ctry_origin

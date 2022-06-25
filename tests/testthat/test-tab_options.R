@@ -1,4 +1,3 @@
-local_edition(3)
 skip_on_cran()
 
 # Create a table with rownames and four columns of values
@@ -61,20 +60,13 @@ check_suggests <- function() {
 
 # Gets the HTML attr value from a single key
 selection_value <- function(html, key) {
-
   selection <- paste0("[", key, "]")
-
-  html %>%
-    rvest::html_nodes(selection) %>%
-    rvest::html_attr(key)
+  rvest::html_attr(rvest::html_nodes(html, selection), key)
 }
 
 # Gets the inner HTML text from a single value
 selection_text <- function(html, selection) {
-
-  html %>%
-    rvest::html_nodes(selection) %>%
-    rvest::html_text()
+  rvest::html_text(rvest::html_nodes(html, selection))
 }
 
 test_that("the internal `opts_df` table can be correctly modified", {
@@ -1803,8 +1795,6 @@ test_that("certain X11 color names are replaced in HTML tables", {
 })
 
 test_that("vertical padding across several table parts can be applied", {
-
-  testthat::local_edition(3)
 
   snap_padded_tbl <- function(padding_px) {
 

@@ -34,16 +34,22 @@ argument).
 \section{Examples}{
 
 
-Get a palette of 8 pastel colors from the \strong{RColorBrewer} package.\if{html}{\out{<div class="sourceCode r">}}\preformatted{pal <- RColorBrewer::brewer.pal(8, "Pastel2")
+Get a palette of 8 pastel colors from the \strong{RColorBrewer} package.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pal <- RColorBrewer::brewer.pal(8, "Pastel2")
 }\if{html}{\out{</div>}}
 
 Create lighter and darker variants of the base palette (one step lower, one
-step higher).\if{html}{\out{<div class="sourceCode r">}}\preformatted{pal_darker  <- pal \%>\% adjust_luminance(-1.0)
+step higher).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pal_darker  <- pal \%>\% adjust_luminance(-1.0)
 pal_lighter <- pal \%>\% adjust_luminance(+1.0)
 }\if{html}{\out{</div>}}
 
 Create a tibble and make a \strong{gt} table from it. Color each column in order
-of increasingly darker palettes (with \code{\link[=data_color]{data_color()}}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(a = 1:8, b = 1:8, c = 1:8) \%>\%
+of increasingly darker palettes (with \code{\link[=data_color]{data_color()}}).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(a = 1:8, b = 1:8, c = 1:8) \%>\%
   gt() \%>\%
   data_color(
     columns = a,

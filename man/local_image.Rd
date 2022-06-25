@@ -44,7 +44,9 @@ heights of most table rows.
 Create a tibble that contains heights of an image in pixels (one column as a
 string, the other as numerical values), then, create a \strong{gt} table. Use the
 \code{\link[=text_transform]{text_transform()}} function to insert a local test image (PNG) image with the
-various sizes.\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
+various sizes.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
   pixels = px(seq(10, 35, 5)),
   image = seq(10, 35, 5)
 ) \%>\%

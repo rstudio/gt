@@ -36,7 +36,9 @@ the following eight options in \code{\link[=tab_options]{tab_options()}}:
 
 Use \code{\link{exibble}} to create a \strong{gt} table with a number of table parts added.
 Expand the horizontal padding across the entire table with
-\code{opt_horizontal_padding()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+\code{opt_horizontal_padding()}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt(rowname_col = "row", groupname_col = "group") \%>\%
   summary_rows(
     groups = "grp_a",

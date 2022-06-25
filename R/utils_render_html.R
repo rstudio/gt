@@ -54,7 +54,7 @@ cell_style_to_html.default <- function(style) {
 
   utils::str(style)
 
-  stop("Implement `cell_style_to_html()` for the object above.", call. = FALSE)
+  cli::cli_abort("Implement `cell_style_to_html()` for the object above.")
 }
 
 # Upgrade `_styles` to gain a `html_style` column with CSS style rules
@@ -73,14 +73,13 @@ add_css_styles <- function(data) {
 #' @param locname The location name for the footnotes.
 #' @param delimiter The delimiter to use for the coalesced footnote marks.
 #' @noRd
-coalesce_marks <- function(fn_tbl,
-                           locname,
-                           delimiter = ",") {
+coalesce_marks <- function(
+    fn_tbl,
+    locname,
+    delimiter = ","
+) {
 
-  locname_enquo <- rlang::enquo(locname)
-
-  fn_tbl %>%
-    dplyr::filter(locname == !!locname) %>%
+  dplyr::filter(fn_tbl, locname == !!locname) %>%
     dplyr::summarize(fs_id_c = paste(fs_id, collapse = delimiter))
 }
 
@@ -550,11 +549,9 @@ create_columns_component_h <- function(data) {
 
       } else if (!is.na(spanner_ids[level_1_index, ][i])) {
 
-        # If colspans[i] == 0, it means that a previous cell's `colspan`
-        # will cover us
+        # If colspans[i] == 0, it means that a previous cell's
+        # `colspan` will cover us
         if (colspans[i] > 0) {
-
-          class <- "gt_column_spanner"
 
           styles_spanners <-
             dplyr::filter(
@@ -1308,12 +1305,11 @@ get_body_component_cell_matrix <- function(data) {
   body_matrix
 }
 
-summary_row_tags_i <- function(data,
-                               group_id) {
+summary_row_tags_i <- function(data, group_id) {
 
   # Check that `group_id` isn't NULL and that length is exactly 1
   if (is.null(group_id) || length(group_id) != 1) {
-    stop("`group_id` cannot be NULL and must be of length 1.")
+    cli::cli_abort("`group_id` cannot be `NULL` and must be of length 1.")
   }
 
   list_of_summaries <- dt_summary_df_get(data = data)
@@ -1351,8 +1347,10 @@ summary_row_tags_i <- function(data,
   # Obtain the summary data table specific to the group ID and
   # select the column named `rowname` and all of the visible columns
   summary_df <-
-    list_of_summaries$summary_df_display_list[[group_id]] %>%
-    dplyr::select(.env$rowname_col_private, .env$default_vars)
+    dplyr::select(
+      list_of_summaries$summary_df_display_list[[group_id]],
+      .env$rowname_col_private, .env$default_vars
+    )
 
   # Get effective number of columns
   n_cols_total <- get_effective_number_of_columns(data = data)
@@ -1466,9 +1464,12 @@ summary_row_tags_i <- function(data,
   summary_row_lines
 }
 
-build_row_styles <- function(styles_resolved_row,
-                             include_stub,
-                             n_cols) {
+build_row_styles <- function(
+    styles_resolved_row,
+    include_stub,
+    n_cols
+) {
+
   # The styles_resolved_row data frame should contain the columns `colnum` and
   # `html_style`. Each colnum should match the number of a data column in the
   # output table; the first data column is number 1. No colnum should appear
@@ -1482,7 +1483,9 @@ build_row_styles <- function(styles_resolved_row,
   # colnum values. Check and throw early.
   if (!isTRUE(all(styles_resolved_row$colnum %in% c(0, seq_len(n_cols)))) ||
       any(duplicated(styles_resolved_row$colnum))) {
-    stop("build_row_styles was called with invalid colnum values")
+    cli::cli_abort(
+      "`build_row_styles()` was called with invalid `colnum` values."
+    )
   }
 
   # This will hold the resulting styles

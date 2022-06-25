@@ -26,6 +26,6 @@ uncert_tbl <-
     columns = c(value_1, value_2),
     decimals = 2
   ) %>%
-  fmt_missing(columns = c(value_1, value_2))
+  sub_missing(columns = c(value_1, value_2))
 
 uncert_tbl

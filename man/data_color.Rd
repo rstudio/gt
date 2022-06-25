@@ -92,7 +92,9 @@ hexadecimal colors.
 
 Use \code{\link{countrypops}} to create a \strong{gt} table. Apply a color scale to the
 \code{population} column with \code{scales::col_numeric}, four supplied colors, and a
-domain.\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
+domain.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   dplyr::select(-contains("code")) \%>\%
   tail(10) \%>\%
@@ -115,7 +117,9 @@ Use \code{\link{pizzaplace}} to create a \strong{gt} table. Apply colors from th
 easily gotten from the \strong{paletteer} package, info at \code{\link[=info_paletteer]{info_paletteer()}}) to
 to \code{sold} and \code{income} columns. Setting the \code{domain} of
 \code{scales::col_numeric()} to \code{NULL} will use the bounds of the available data
-as the domain.\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
+as the domain.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
   dplyr::filter(type \%in\% c("chicken", "supreme")) \%>\%
   dplyr::group_by(type, size) \%>\%
   dplyr::summarize(
@@ -146,7 +150,7 @@ as the domain.\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplac
 
 \section{Function ID}{
 
-3-18
+3-21
 }
 
 \seealso{
@@ -159,7 +163,6 @@ Other Format Data:
 \code{\link{fmt_fraction}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
-\code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
@@ -167,6 +170,10 @@ Other Format Data:
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt}()},
+\code{\link{sub_large_vals}()},
+\code{\link{sub_missing}()},
+\code{\link{sub_small_vals}()},
+\code{\link{sub_zero}()},
 \code{\link{text_transform}()}
 }
 \concept{Format Data}
