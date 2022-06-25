@@ -40,7 +40,9 @@ argument. See the \emph{Arguments} section for more information on this.
 \section{Examples}{
 
 
-Create a few Markdown-based text snippets.\if{html}{\out{<div class="sourceCode r">}}\preformatted{text_1a <- "
+Create a few Markdown-based text snippets.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{text_1a <- "
 ### This is Markdown.
 
 Markdown’s syntax is comprised entirely of
@@ -72,7 +74,9 @@ There's a quick reference [here](https://commonmark.org/help/).
 }\if{html}{\out{</div>}}
 
 Arrange the text snippets as a tibble using the \code{dplyr::tribble()} function.
-then, create a \strong{gt} table and format all columns with \code{fmt_markdown()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tribble(
+then, create a \strong{gt} table and format all columns with \code{fmt_markdown()}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tribble(
   ~Markdown, ~md,
   text_1a,   text_2a,
   text_1b,   text_2b,
@@ -103,7 +107,6 @@ Other Format Data:
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_fraction}()},
 \code{\link{fmt_integer}()},
-\code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
@@ -111,6 +114,10 @@ Other Format Data:
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt}()},
+\code{\link{sub_large_vals}()},
+\code{\link{sub_missing}()},
+\code{\link{sub_small_vals}()},
+\code{\link{sub_zero}()},
 \code{\link{text_transform}()}
 }
 \concept{Format Data}

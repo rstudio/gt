@@ -140,7 +140,7 @@ is_rtf <- function(x) {
 px <- function(x) {
 
   if (mode(x) != "numeric") {
-    stop("The supplied value must be numeric", call. = FALSE)
+    cli::cli_abort("The supplied value must be numeric.")
   }
 
   paste0(x, "px")
@@ -190,7 +190,7 @@ px <- function(x) {
 pct <- function(x) {
 
   if (mode(x) != "numeric") {
-    stop("The supplied value must be numeric", call. = FALSE)
+    cli::cli_abort("The supplied value must be numeric.")
   }
 
   paste0(x, "%")
@@ -288,9 +288,8 @@ cells_title <- function(groups = c("title", "subtitle")) {
     !all(groups %in% c("title", "subtitle")) ||
     any(duplicated(groups))
   ) {
-    stop(
-      "The input to `groups` must be either `\"title\"`, `\"subtitle\"`, or both.",
-      call. = FALSE
+    cli::cli_abort(
+      "The input to `groups` must be either \"title\", \"subtitle\", or both."
     )
   }
 
@@ -712,9 +711,10 @@ cells_row_groups <- function(groups = everything()) {
 #' @export
 cells_group <- function(groups = TRUE) {
 
-  warning("The `cells_group()` function is deprecated and will soon be removed\n",
-          " * Use the `cells_row_groups()` function instead",
-          call. = FALSE)
+  cli::cli_warn(c(
+    "The `cells_group()` function is deprecated and will soon be removed.",
+    "*" = "Use the `cells_row_groups()` function instead."
+  ))
 
   cells_row_groups(groups = {{groups}})
 }
@@ -787,10 +787,7 @@ cells_group <- function(groups = TRUE) {
 #'   dplyr::filter(!is.na(sza)) %>%
 #'   tidyr::spread(key = "tst", value = sza) %>%
 #'   gt(rowname_col = "month") %>%
-#'   fmt_missing(
-#'     columns = everything(),
-#'     missing_text = ""
-#'   ) %>%
+#'   sub_missing(missing_text = "") %>%
 #'   tab_style(
 #'     style = list(
 #'       cell_fill(color = "darkblue"),
@@ -1691,8 +1688,7 @@ currency <- function(
 
   # Stop function if the currency list contains no values
   if (length(currency_list) == 0) {
-    stop("The `currency()` function must be provided with currency symbols.",
-         call. = FALSE)
+    cli::cli_abort("The `currency()` function must be provided with currency symbols.")
   }
 
   # If only a single string is provided, upgrade the `currency_list`
@@ -1703,8 +1699,7 @@ currency <- function(
 
   # Stop function if `currency_list` isn't entirely named
   if (!rlang::is_named(currency_list)) {
-    stop("Names must be provided for all output contexts.",
-         call. = FALSE)
+    cli::cli_abort("Names must be provided for all output contexts.")
   }
 
   # Stop function if all names are not part of the supported contexts
@@ -1712,8 +1707,7 @@ currency <- function(
 
   # Stop function if there are duplicated names
   if (!rlang::is_dictionaryish(currency_list)) {
-    stop("There cannot be any duplicate names for output contexts.",
-         call. = FALSE)
+    cli::cli_abort("There cannot be any duplicate names for output contexts.")
   }
 
   # Set the `gt_currency` class
@@ -1990,11 +1984,11 @@ cell_fill <- function(
 ) {
 
   if (length(color) != 1) {
-    stop("The length of the `color` vector must be `1`", call. = FALSE)
+    cli::cli_abort("The length of the `color` vector must be `1`.")
   }
 
   if (!is.null(alpha) && length(alpha) != 1) {
-    stop("If provided, `alpha` must be a single value", call. = FALSE)
+    cli::cli_abort("If provided, `alpha` must be a single value.")
   }
 
   # Transform the `color` value, if present, so that X11 color names
@@ -2138,25 +2132,28 @@ cell_borders <- function(
     "bottom", "b",
     "all", "everything", "a"
   ))) {
-    stop(
+    cli::cli_abort(c(
       "The `sides` vector for `cell_borders()` has to include one ",
-      "or more of the following keywords (or short forms):\n",
-      " * \"left\" (or: \"l\")\n",
-      " * \"right\" (or: \"r\")\n",
-      " * \"top\" (or: \"t\")\n",
-      " * \"bottom\" (or: \"b\")\n",
-      " * \"all\" (or: \"a\", \"everything\"",
-      call. = FALSE
-    )
+      "or more of the following keywords (or short forms):",
+      "*" = "\"left\" (or: \"l\")",
+      "*" = "\"right\" (or: \"r\")",
+      "*" = "\"top\" (or: \"t\")",
+      "*" = "\"bottom\" (or: \"b\")",
+      "*" = "\"all\" (or: \"a\", \"everything\")"
+    ))
   }
 
   # Resolve the selection of borders into a vector of
   # standardized sides
   sides <-
-    vapply(
-      sides, resolve_border_side,
-      FUN.VALUE = character(1), USE.NAMES = FALSE) %>%
-    unique()
+    unique(
+      vapply(
+        sides,
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = resolve_border_side
+      )
+    )
 
   # Should the `all` selection appear in the
   # `sides` vector, use all possible sides
@@ -2164,29 +2161,38 @@ cell_borders <- function(
     sides <- c("left", "right", "top", "bottom")
   }
 
-  lapply(sides, function(side) {
+  style_list <-
+    lapply(
+      sides,
+      FUN = function(side) {
 
-    style_vals <-
-      list(
-        side = side,
-        width = weight,
-        style = style,
-        color = color
-      )
+        style_vals <-
+          list(
+            side = side,
+            width = weight,
+            style = style,
+            color = color
+          )
 
-    validate_style_in(
-      style_vals, names(style_vals), "style",
-      c("solid", "dashed", "dotted")
+        validate_style_in(
+          style_vals, names(style_vals), "style",
+          c("solid", "dashed", "dotted")
+        )
+
+        cell_style_structure(
+          name = paste0("cell_border_", side),
+          obj = style_vals,
+          subclass =  "cell_border"
+        )
+      }
     )
 
-    cell_style_structure(paste0("cell_border_", side), style_vals, "cell_border")
-  }) %>%
-    as_style()
+  as_style(style = style_list)
 }
 
 cell_style_to_html.cell_border <- function(style) {
 
-  css <- style %>% unclass()
+  css <- unclass(style)
 
   side <- css$side
 
@@ -2234,7 +2240,7 @@ cell_style_structure <- function(name, obj, subclass = name) {
 #' exibble %>%
 #'   dplyr::select(char, time) %>%
 #'   gt() %>%
-#'   fmt_missing(columns = everything()) %>%
+#'   sub_missing() %>%
 #'   tab_style(
 #'     style = cell_text(
 #'       font = c(
@@ -2288,8 +2294,8 @@ cell_style_structure <- function(name, obj, subclass = name) {
 google_font <- function(name) {
 
   import_stmt <-
-    name %>% tidy_gsub(" ", "+") %>%
     paste_between(
+      gsub(" ", "+", name),
       c(
         "@import url('https://fonts.googleapis.com/css2?family=",
         ":ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');"
@@ -2445,8 +2451,9 @@ adjust_luminance <- function(
 
   # Stop if steps is beyond an acceptable range
   if (steps > 2.0 | steps < -2.0) {
-    stop("The value provided for `steps` (", steps, ") must be between `-2.0` and `+2.0`.",
-         call. = FALSE)
+    cli::cli_abort(
+      "The value provided for `steps` (`{steps}`) must be between `-2.0` and `+2.0`."
+    )
   }
 
   # Get a matrix of values in the RGB color space
@@ -2590,17 +2597,19 @@ gt_latex_dependencies <- function() {
 
   if (requireNamespace("knitr", quietly = TRUE)) {
 
-    paste(
-      "",
-      "% gt packages",
-      paste0("\\usepackage{", latex_packages(), "}", collapse = "\n"),
-      "",
-      sep = "\n"
-    ) %>%
-      knitr::asis_output()
+    knitr::asis_output(
+      paste(
+        "",
+        "% gt packages",
+        paste0("\\usepackage{", latex_packages(), "}", collapse = "\n"),
+        "",
+        sep = "\n"
+      )
+    )
 
   } else {
-    stop("The `knitr` package is required for getting the LaTeX dependency headers.",
-         call. = FALSE)
+    cli::cli_abort(
+      "The `knitr` package is required for getting the LaTeX dependency headers."
+    )
   }
 }

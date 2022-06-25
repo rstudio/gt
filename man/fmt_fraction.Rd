@@ -116,7 +116,9 @@ argument. See the \emph{Arguments} section for more information on this.
 
 
 Use \code{\link{pizzaplace}} to create a \strong{gt} table. Format the \code{f_sold} and
-\code{f_income} columns to display fractions.\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
+\code{f_income} columns to display fractions.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
   dplyr::group_by(type, size) \%>\%
   dplyr::summarize(
     sold = dplyr::n(),
@@ -141,10 +143,7 @@ Use \code{\link{pizzaplace}} to create a \strong{gt} table. Format the \code{f_s
     accuracy = 10,
     simplify = FALSE
   ) \%>\%
-  fmt_missing(
-    columns = everything(),
-    missing_text = ""
-  ) \%>\%
+  sub_missing(missing_text = "") \%>\%
   tab_spanner(
     label = "Sold",
     columns = contains("sold")
@@ -196,7 +195,6 @@ Other Format Data:
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
-\code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
@@ -204,6 +202,10 @@ Other Format Data:
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt}()},
+\code{\link{sub_large_vals}()},
+\code{\link{sub_missing}()},
+\code{\link{sub_small_vals}()},
+\code{\link{sub_zero}()},
 \code{\link{text_transform}()}
 }
 \concept{Format Data}

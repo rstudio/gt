@@ -1,7 +1,5 @@
 test_that("The `col_width_resolver_rtf()` function works correctly", {
 
-  local_edition(3)
-
   tw <- function(x) {
     paste0(x, "tw")
   }

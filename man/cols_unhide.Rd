@@ -34,7 +34,9 @@ already-visible columns.
 
 
 Use \code{\link{countrypops}} to create a \strong{gt} table. Hide the \code{country_code_2} and
-\code{country_code_3} columns with \code{\link[=cols_hide]{cols_hide()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
+\code{country_code_3} columns with \code{\link[=cols_hide]{cols_hide()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
   countrypops \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%
@@ -50,7 +52,9 @@ tab_1
 
 If the \code{tab_1} object is provided without the code or source data to
 regenerate it, and, the user wants to reveal otherwise hidden columns then
-the \code{cols_unhide()} function becomes useful.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% cols_unhide(columns = country_code_2)
+the \code{cols_unhide()} function becomes useful.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% cols_unhide(columns = country_code_2)
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{

@@ -68,7 +68,9 @@ argument. See the \emph{Arguments} section for more information on this.
 
 Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{date} and \code{time}
 columns. Format the \code{time} column to have times formatted as \code{hms_p} (time
-style \code{3}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+style \code{3}).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(date, time) \%>\%
   gt() \%>\%
   fmt_time(
@@ -84,7 +86,9 @@ style \code{3}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble
 Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{date} and \code{time}
 columns. Format the \code{time} column to have mixed time formats (times after
 16:00 will be different than the others because of the expressions used
-in the \code{rows} argument).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+in the \code{rows} argument).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(date, time) \%>\%
   gt() \%>\%
   fmt_time(
@@ -121,13 +125,16 @@ Other Format Data:
 \code{\link{fmt_fraction}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
-\code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt}()},
+\code{\link{sub_large_vals}()},
+\code{\link{sub_missing}()},
+\code{\link{sub_small_vals}()},
+\code{\link{sub_zero}()},
 \code{\link{text_transform}()}
 }
 \concept{Format Data}

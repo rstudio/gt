@@ -1,46 +1,47 @@
 .dt_spanners_key <- "_spanners"
 
 dt_spanners_get <- function(data) {
-
   dt__get(data, .dt_spanners_key)
 }
 
 dt_spanners_set <- function(data, spanners) {
-
   dt__set(data, .dt_spanners_key, spanners)
 }
 
 dt_spanners_init <- function(data) {
 
-  empty_list <- lapply(seq_along(names(data)), function(x) NULL)
+  spanners <-
+    dplyr::tibble(
+      # Column names that are part of the spanner
+      vars = list(),
+      # The spanner label
+      spanner_label = list(),
+      # The spanner id
+      spanner_id = character(0),
+      # The spanner level
+      spanner_level = integer(0),
+      # Should be columns be gathered under a single spanner label?
+      gather = logical(0),
+      built = NA_character_
+    )
 
-  dplyr::tibble(
-    # Column names that are part of the spanner
-    vars = list(),
-    # The spanner label
-    spanner_label = list(),
-    # The spanner id
-    spanner_id = character(0),
-    # The spanner level
-    spanner_level = integer(0),
-    # Should be columns be gathered under a single spanner label?
-    gather = logical(0),
-    built = NA_character_
-  ) %>%
-    dt_spanners_set(spanners = ., data = data)
+  dt_spanners_set(data = data, spanners = spanners)
 }
 
-dt_spanners_add <- function(data,
-                            vars,
-                            spanner_label,
-                            spanner_id,
-                            spanner_level,
-                            gather,
-                            replace) {
+dt_spanners_add <- function(
+    data,
+    vars,
+    spanner_label,
+    spanner_id,
+    spanner_level,
+    gather,
+    replace
+) {
+
+  spanners <- dt_spanners_get(data = data)
 
   spanners_at_level <-
-    dt_spanners_get(data = data) %>%
-    dplyr::filter(.env$spanner_level == .data$spanner_level)
+    dplyr::filter(spanners, .env$spanner_level == .data$spanner_level)
 
   if (
     !replace &&
@@ -53,15 +54,15 @@ dt_spanners_add <- function(data,
         collapse = ", "
       )
 
-    stop(
-      "The column(s) used (", error_vars ,") for the new spanner `",
-      spanner_id, "` belong to an existing spanner",
-      call. = FALSE
+    cli::cli_abort(
+      "The column(s) used (`{error_vars}`) for the new spanner `{spanner_id}`
+      belong to an existing spanner."
     )
   }
 
-  dt_spanners_get(data = data) %>%
+  spanners <-
     dplyr::bind_rows(
+      spanners,
       dplyr::tibble(
         vars = list(vars),
         spanner_label = list(spanner_label),
@@ -70,8 +71,9 @@ dt_spanners_add <- function(data,
         gather = gather,
         built = NA_character_
       )
-    ) %>%
-    dt_spanners_set(spanners = ., data = data)
+    )
+
+  dt_spanners_set(data = data, spanners = spanners)
 }
 
 dt_spanners_exists <- function(data) {
@@ -89,19 +91,14 @@ dt_spanners_build <- function(data, context) {
     vapply(
       spanners$spanner_label,
       FUN.VALUE = character(1),
-      FUN = function(label) process_text(label, context)
+      FUN = function(label) process_text(label, context = context)
     )
 
-  data <- dt_spanners_set(data = data, spanners = spanners)
-
-  data
+  dt_spanners_set(data = data, spanners = spanners)
 }
 
 dt_spanners_get_ids <- function(data) {
-
-  spanners <- dt_spanners_get(data = data)
-
-  spanners$spanner_id
+  dt_spanners_get(data = data)$spanner_id
 }
 
 dt_spanners_print_matrix <- function(

@@ -69,7 +69,9 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 
 Use \code{\link{gtcars}} to create a \strong{gt} table. Add a footnote that targets a single
 data cell with \code{\link[=tab_footnote]{tab_footnote()}}, using \code{cells_body()} in \code{locations}
-(\code{rows = hp == max(hp)} will target a single row in the \code{hp} column).\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
+(\code{rows = hp == max(hp)} will target a single row in the \code{hp} column).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
   dplyr::filter(ctry_origin == "United Kingdom") \%>\%
   dplyr::select(mfr, model, year, hp) \%>\%
   gt() \%>\%

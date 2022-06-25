@@ -171,10 +171,7 @@ sza %>%
   filter(!is.na(sza)) %>%
   pivot_wider(names_from = "tst", values_from = sza) %>%
   gt(rowname_col = "month") %>%
-  fmt_missing(
-    columns = everything(),
-    missing_text = ""
-  ) %>%
+  sub_missing(missing_text = "") %>%
   tab_stubhead(label = html("month<br>(20&deg;N)")) %>%
   tab_header(title = html("&#x2600; Solar Zenith Angles &#x2600;")) %>%
   tab_options(

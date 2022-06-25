@@ -29,7 +29,9 @@ Perform targeted text transformation with a function
 Use \code{\link{exibble}} to create a \strong{gt} table. transform the formatted text in the
 \code{num} column using a function supplied to \code{text_transform()} (via the \code{fn}
 argument). Note that the \code{x} in the \verb{fn = function (x)} part is a formatted
-vector of column values from the \code{num} column.\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+vector of column values from the \code{num} column.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(num, char, currency) \%>\%
   dplyr::slice(1:4) \%>\%
   gt() \%>\%
@@ -55,7 +57,7 @@ vector of column values from the \code{num} column.\if{html}{\out{<div class="so
 
 \section{Function ID}{
 
-3-18
+3-20
 }
 
 \seealso{
@@ -70,13 +72,16 @@ Other Format Data:
 \code{\link{fmt_fraction}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
-\code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
-\code{\link{fmt}()}
+\code{\link{fmt}()},
+\code{\link{sub_large_vals}()},
+\code{\link{sub_missing}()},
+\code{\link{sub_small_vals}()},
+\code{\link{sub_zero}()}
 }
 \concept{Format Data}

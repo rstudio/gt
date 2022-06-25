@@ -77,7 +77,9 @@ argument. See the \emph{Arguments} section for more information on this.
 
 Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{date} and \code{time}
 columns. Format the \code{date} column to have dates formatted as \code{month_day_year}
-(date style \code{5}).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+(date style \code{5}).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(date, time) \%>\%
   gt() \%>\%
   fmt_date(
@@ -93,7 +95,9 @@ columns. Format the \code{date} column to have dates formatted as \code{month_da
 Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{date} and \code{time}
 columns. Format the \code{date} column to have mixed date formats (dates after
 April will be different than the others because of the expressions used
-in the \code{rows} argument).\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+in the \code{rows} argument).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(date, time) \%>\%
   gt() \%>\%
   fmt_date(
@@ -129,7 +133,6 @@ Other Format Data:
 \code{\link{fmt_fraction}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
-\code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
@@ -137,6 +140,10 @@ Other Format Data:
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt}()},
+\code{\link{sub_large_vals}()},
+\code{\link{sub_missing}()},
+\code{\link{sub_small_vals}()},
+\code{\link{sub_zero}()},
 \code{\link{text_transform}()}
 }
 \concept{Format Data}

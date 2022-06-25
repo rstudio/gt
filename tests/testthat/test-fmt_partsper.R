@@ -1,4 +1,3 @@
-local_edition(3)
 skip_on_cran()
 
 test_that("the `fmt_partsper()` function works correctly", {

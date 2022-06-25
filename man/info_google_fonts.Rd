@@ -24,7 +24,9 @@ font features all make for high legibility at smaller sizes.
 \section{Examples}{
 
 
-Get a table of info on some of the recommended \emph{Google Fonts} for tables.\if{html}{\out{<div class="sourceCode r">}}\preformatted{info_google_fonts()
+Get a table of info on some of the recommended \emph{Google Fonts} for tables.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{info_google_fonts()
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{

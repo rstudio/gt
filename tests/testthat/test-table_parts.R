@@ -1,4 +1,3 @@
-local_edition(3)
 skip_on_cran()
 
 # Create a shorter version of `mtcars`
@@ -12,20 +11,13 @@ check_suggests <- function() {
 
 # Gets the HTML attr value from a single key
 selection_value <- function(html, key) {
-
   selection <- paste0("[", key, "]")
-
-  html %>%
-    rvest::html_nodes(selection) %>%
-    rvest::html_attr(key)
+  rvest::html_attr(rvest::html_nodes(html, selection), key)
 }
 
 # Gets the inner HTML text from a single value
 selection_text <- function(html, selection) {
-
-  html %>%
-    rvest::html_nodes(selection) %>%
-    rvest::html_text()
+  rvest::html_text(rvest::html_nodes(html, selection))
 }
 
 # Gets the text from a row group label
@@ -326,7 +318,7 @@ test_that("row groups can be successfully generated with `tab_row_group()", {
   # Expect a warning if using the `others_label` argument
   expect_warning(
     gt(exibble, rowname_col = "row") %>%
-      tab_row_group(others = "foo")
+      tab_row_group(others_label = "foo")
   )
 
   # Expect a warning if using the `group` argument

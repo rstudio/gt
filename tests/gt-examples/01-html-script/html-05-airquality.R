@@ -13,6 +13,6 @@ airquality_tbl <-
     label = "Measurement Period",
     columns = c(Month, Day)
   ) %>%
-  fmt_missing(columns = c(Ozone, Solar.R, Wind, Temp))
+  sub_missing(columns = c(Ozone, Solar.R, Wind, Temp))
 
 airquality_tbl

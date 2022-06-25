@@ -13,8 +13,7 @@
 ^README\.md$
 ^LICENSE\.md$
 vignettes
-man/figures/.*svg$
-man/figures/[^m].*png$
+man/figures/
 tests/gt-examples
 tests/testthat/_snaps
 tests/testthat/test-cols_width_rtf.R
@@ -28,6 +27,7 @@ tests/testthat/test-image.R
 tests/testthat/test-l_table_parts.R
 tests/testthat/test-location_cells.R
 tests/testthat/test-rtf_page_numbering.R
+tests/testthat/test-substitution.R
 tests/testthat/test-summary_rows.R
 tests/testthat/test-summary_rows_latex.R
 tests/testthat/test-summary_rows_rtf.R

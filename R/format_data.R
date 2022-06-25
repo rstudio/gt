@@ -205,10 +205,9 @@ fmt_number <- function(
       valid_classes = c("numeric", "integer")
     )
   ) {
-    stop(
-      "The `fmt_number()` and `fmt_integer()` functions can only be ",
-      "used on `columns` with numeric data",
-      call. = FALSE
+    cli::cli_abort(
+      "The `fmt_number()` and `fmt_integer()` functions can only be
+      used on `columns` with numeric data."
     )
   }
 
@@ -497,9 +496,9 @@ fmt_scientific <- function(
       valid_classes = c("numeric", "integer")
     )
   ) {
-    stop(
-      "The `fmt_scientific()` function can only be used on `columns` with numeric data.",
-      call. = FALSE
+    cli::cli_abort(
+      "The `fmt_scientific()` function can only be used on `columns`
+      with numeric data."
     )
   }
 
@@ -673,9 +672,18 @@ fmt_engineering <- function(
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(data, {{ columns }}, valid_classes = c("numeric", "integer"))) {
-    stop("The `fmt_scientific()` function can only be used on `columns` with numeric data",
-         call. = FALSE)
+
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = c("numeric", "integer")
+    )
+  ) {
+    cli::cli_abort(
+      "The `fmt_engineering()` function can only be used on `columns`
+      with numeric data."
+    )
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -1027,9 +1035,9 @@ fmt_percent <- function(
       valid_classes = c("numeric", "integer")
     )
   ) {
-    stop(
-      "The `fmt_percent()` function can only be used on `columns` with numeric data.",
-      call. = FALSE
+    cli::cli_abort(
+      "The `fmt_percent()` function can only be used on `columns`
+      with numeric data."
     )
   }
 
@@ -1186,10 +1194,9 @@ fmt_partsper <- function(
       valid_classes = c("numeric", "integer")
     )
   ) {
-    stop(
-      "The `fmt_per_x()` function can only be used on `columns` ",
-      "with numeric data.",
-      call. = FALSE
+    cli::cli_abort(
+      "The `fmt_partsper()` function can only be used on `columns`
+      with numeric data."
     )
   }
 
@@ -1345,10 +1352,7 @@ fmt_partsper <- function(
 #'     accuracy = 10,
 #'     simplify = FALSE
 #'   ) %>%
-#'   fmt_missing(
-#'     columns = everything(),
-#'     missing_text = ""
-#'   ) %>%
+#'   sub_missing(missing_text = "") %>%
 #'   tab_spanner(
 #'     label = "Sold",
 #'     columns = contains("sold")
@@ -1419,32 +1423,29 @@ fmt_fraction <- function(
 
       if (!(accuracy %in% c("low", "med", "high"))) {
 
-        stop(
-          "The value supplied for `accuracy` is invalid:\n",
-          "* Must be either \"low\", \"med\", or \"high\"",
-          call. = FALSE
-        )
+        cli::cli_abort(c(
+          "The value supplied for `accuracy` is invalid.",
+          "*" = "Must be either \"low\", \"med\", or \"high\"."
+        ))
       }
 
     } else if (is.numeric(accuracy)) {
 
       if (accuracy < 1) {
 
-        stop(
-          "The numeric value supplied for `accuracy` is invalid:\n",
-          "* Must be an integer value greater than zero",
-          call. = FALSE
-        )
+        cli::cli_abort(c(
+          "The numeric value supplied for `accuracy` is invalid.",
+          "*" = "Must be an integer value greater than zero."
+        ))
       }
 
     } else {
 
-      stop(
-        "The input for `accuracy` is invalid:\n",
-        "* Must be a keyword \"low\", \"med\", or \"high\", or\n",
-        "* Must be an integer value greater than zero",
-        call. = FALSE
-      )
+      cli::cli_abort(c(
+        "The input for `accuracy` is invalid.",
+        "*" = "Must be a keyword \"low\", \"med\", or \"high\", or",
+        "*" = "Must be an integer value greater than zero."
+      ))
     }
   }
 
@@ -1453,16 +1454,16 @@ fmt_fraction <- function(
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
-  if (!column_classes_are_valid(
-    data = data,
-    columns = {{ columns }},
-    valid_classes = c("numeric", "integer")
-  )
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = c("numeric", "integer")
+    )
   ) {
-    stop(
-      "The `fmt_fraction()` function can only be used on `columns` ",
-      "with numeric data",
-      call. = FALSE
+    cli::cli_abort(
+      "The `fmt_fraction()` function can only be used on `columns`
+      with numeric data."
     )
   }
 
@@ -1867,9 +1868,9 @@ fmt_currency <- function(
       valid_classes = c("numeric", "integer")
     )
   ) {
-    stop(
-      "The `fmt_currency()` function can only be used on `columns` with numeric data.",
-      call. = FALSE
+    cli::cli_abort(
+      "The `fmt_currency()` function can only be used on `columns`
+      with numeric data."
     )
   }
 
@@ -2061,7 +2062,7 @@ fmt_bytes <- function(
         num_power_idx <- pmax(1, pmin(length(byte_units), num_power_idx))
 
         units_str <- byte_units[num_power_idx]
-        x <- x / base^(num_power_idx-1)
+        x <- x / base^(num_power_idx - 1)
 
         # Format numeric values to character-based numbers
         x_str <-
@@ -2210,11 +2211,11 @@ fmt_date <- function(
       valid_classes = c("Date", "POSIXt", "character")
     )
   ) {
-    stop(
-      "The `fmt_date()` function can only be used on `columns` of certain types:\n",
-      "* Allowed types are `Date`, `POSIXt`, and `character` (in ISO 8601 format).",
-      call. = FALSE
-    )
+    cli::cli_abort(c(
+      "The `fmt_date()` function can only be used on `columns` of certain types.",
+      "*" = "Allowed types are `Date`, `POSIXt`, and `character` (with
+      ISO-8601 formatted dates)."
+    ))
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -2234,9 +2235,8 @@ fmt_date <- function(
           tryCatch(
             as.POSIXlt(x),
             error = function(cond) {
-              stop(
-                "One or more of the provided date/date-time values are invalid.",
-                call. = FALSE
+              cli::cli_abort(
+                "One or more of the provided date/datetime values are invalid."
               )
             }
           )
@@ -2366,11 +2366,11 @@ fmt_time <- function(
       columns = {{ columns }},
       valid_classes = c("Date", "POSIXt", "character"))
   ) {
-    stop(
-      "The `fmt_time()` function can only be used on `columns` of certain types:\n",
-      "* Allowed types are `Date`, `POSIXt`, and `character` (in `HH:MM:SS` format).",
-      call. = FALSE
-    )
+    cli::cli_abort(c(
+      "The `fmt_time()` function can only be used on `columns` of certain types.",
+      "*" = "Allowed types are `Date`, `POSIXt`, and `character` (in
+      `HH:MM:SS` format)."
+    ))
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -2397,9 +2397,8 @@ fmt_time <- function(
           tryCatch(
             as.POSIXlt(x),
             error = function(cond) {
-              stop(
-                "One or more of the provided date/time/date-time values are invalid.",
-                call. = FALSE
+              cli::cli_abort(
+                "One or more of the provided date/time/datetime values are invalid."
               )
             }
           )
@@ -2601,13 +2600,14 @@ fmt_datetime <- function(
     !column_classes_are_valid(
       data = data,
       columns = {{ columns }},
-      valid_classes = c("Date", "POSIXct", "character"))
-    ) {
-      stop(
-        "The `fmt_datetime()` function can only be used on `columns` of certain types:\n",
-        "* Allowed types are `Date`, `POSIXct`, and `character` (in ISO 8601 format).",
-        call. = FALSE
-      )
+      valid_classes = c("Date", "POSIXct", "character")
+    )
+  ) {
+    cli::cli_abort(c(
+      "The `fmt_datetime()` function can only be used on `columns` of certain types.",
+      "*" = "Allowed types are `Date`, `POSIXt`, and `character` (with
+      ISO-8601 formatted dates)"
+    ))
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -2651,9 +2651,8 @@ fmt_datetime <- function(
           tryCatch(
             as.POSIXlt(x),
             error = function(cond) {
-              stop(
-                "One or more of the provided date/date-time values are invalid.",
-                call. = FALSE
+              cli::cli_abort(
+                "One or more of the provided date/datetime values are invalid."
               )
             }
           )
@@ -3653,7 +3652,7 @@ fmt_passthrough <- function(
 
         x_str
       },
-      latex = function(x) {
+      rtf = function(x) {
 
         # Create `x_str` with same length as `x`
         x_str <- rep(NA_character_, length(x))
@@ -3689,123 +3688,17 @@ fmt_passthrough <- function(
   )
 }
 
-#' Format missing values
-#'
-#' @description
-#' Wherever there is missing data (i.e., `NA` values) a customizable mark may
-#' present better than the standard `NA` text that would otherwise appear. The
-#' `fmt_missing()` function allows for this replacement through its
-#' `missing_text` argument (where an em dash serves as the default).
-#'
-#' @details
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). Conditional
-#' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the *Arguments* section for more information on this.
-#'
-#' @inheritParams fmt_number
-#' @param missing_text The text to be used in place of `NA` values in the
-#'   rendered table.
-#'
-#' @return An object of class `gt_tbl`.
-#'
-#' @section Examples:
-#'
-#' Use [`exibble`] to create a **gt** table. The `NA` values in different
-#' columns will be given replacement text.
-#'
-#' ```r
-#' exibble %>%
-#'   dplyr::select(-row, -group) %>%
-#'   gt() %>%
-#'   fmt_missing(
-#'     columns = 1:2,
-#'     missing_text = "missing"
-#'   ) %>%
-#'   fmt_missing(
-#'     columns = 4:7,
-#'     missing_text = "nothing"
-#'   )
-#' ```
-#'
-#' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_fmt_missing_1.png")`
-#' }}
-#'
-#' @family Format Data
-#' @section Function ID:
-#' 3-16
-#'
-#' @import rlang
-#' @export
-fmt_missing <- function(
-    data,
-    columns,
-    rows = everything(),
-    missing_text = "---"
-) {
-
-  # Perform input object validation
-  stop_if_not_gt(data = data)
-
-  # Pass `data`, `columns`, `rows`, and the formatting
-  # functions (as a function list) to `fmt()`
-  fmt(
-    data = data,
-    columns = {{ columns }},
-    rows = {{ rows }},
-    fns = list(
-      html = function(x) {
-
-        missing_text <-
-          context_missing_text(
-            missing_text = missing_text,
-            context = "html"
-          )
-
-        # Any values of `x` that are `NA` get
-        # `missing_text` as output; any values that
-        # are not missing get `NA` as their output
-        # (meaning, the existing output for that
-        # value, if it exists, should be inherited)
-        ifelse(is.na(x), missing_text, NA_character_)
-      },
-      rtf = function(x) {
-
-        missing_text <-
-          context_missing_text(
-            missing_text = missing_text,
-            context = "rtf"
-          )
-
-        # Any values of `x` that are `NA` get
-        # `missing_text` as output; any values that
-        # are not missing get `NA` as their output
-        # (meaning, the existing output for that
-        # value, if it exists, should be inherited)
-        ifelse(is.na(x), missing_text, NA_character_)
-      },
-      default = function(x) {
-
-        # Any values of `x` that are `NA` get
-        # `missing_text` as output; any values that
-        # are not missing get `NA` as their output
-        # (meaning, the existing output for that
-        # value, if it exists, should be inherited)
-        ifelse(is.na(x), missing_text, NA_character_)
-      }
-    )
-  )
-}
 
 #' Set a column format with a formatter function
 #'
 #' @description
-#' The `fmt()` function provides greater control in formatting raw data values
-#' than any of the specialized `fmt_*()` functions that are available in
-#' **gt**. Along with the `columns` and `rows` arguments that provide some
-#' precision in targeting data cells, the `fns` argument allows you to define
-#' one or more functions for manipulating the raw data.
+#' The `fmt()` function provides a way to execute custom formatting
+#' functionality with raw data values in a way that can consider all output
+#' contexts.
+#'
+#' Along with the `columns` and `rows` arguments that provide some precision in
+#' targeting data cells, the `fns` argument allows you to define one or more
+#' functions for manipulating the raw data.
 #'
 #' If providing a single function to `fns`, the recommended format is in the
 #' form: `fns = function(x) ...`. This single function will format the targeted
@@ -3813,11 +3706,11 @@ fmt_missing <- function(
 #' RTF).
 #'
 #' If you require formatting of `x` that depends on the output format, a list of
-#' functions can be provided for the `html`, `latex`, and `default` contexts.
-#' This can be in the form of `fns = list(html = function(x) ..., latex =
-#' function(x) ..., default = function(x) ...)`. In this multiple-function case,
-#' we recommended including the `default` function as a fallback if all contexts
-#' aren't provided.
+#' functions can be provided for the `html`, `latex`, `rtf`, and `default`
+#' contexts. This can be in the form of `fns = list(html = function(x) ...,
+#' latex = function(x) ..., default = function(x) ...)`. In this
+#' multiple-function case, we recommended including the `default` function as a
+#' fallback if all contexts aren't provided.
 #'
 #' @details
 #' As with all of the `fmt_*()` functions, targeting of values is done through
@@ -3828,6 +3721,9 @@ fmt_missing <- function(
 #'
 #' @inheritParams fmt_number
 #' @param fns Either a single formatting function or a named list of functions.
+#' @param prepend Should the formatting function(s) be brought to the beginning
+#' of the formatting queue (`TRUE`) or placed at the end (`FALSE`). By default,
+#' this is `FALSE` and this leads to 'last-one-wins' semantics.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -3854,7 +3750,7 @@ fmt_missing <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-17
+#' 3-15
 #'
 #' @import rlang
 #' @export
@@ -3862,15 +3758,12 @@ fmt <- function(
     data,
     columns = everything(),
     rows = everything(),
-    fns
+    fns,
+    prepend = FALSE
 ) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
-
-  # Get the `stub_df` data frame from `data`
-  stub_df <- dt_stub_df_get(data = data)
-  data_tbl <- dt_data_get(data = data)
 
   #
   # Resolution of columns and rows as character vectors
@@ -3903,7 +3796,11 @@ fmt <- function(
       rows = resolved_rows_idx
     )
 
-  dt_formats_add(data = data, formats = formatter_list)
+  dt_formats_add(
+    data = data,
+    formats = formatter_list,
+    prepend = prepend
+  )
 }
 
 #' Insert separator marks to an integer to conform to Indian numbering system
@@ -3923,7 +3820,7 @@ insert_seps_ind <- function(integer) {
 
   # Ensure that integer-based strings only contain numbers
   if (!grepl("^[0-9]+?$", integer)) {
-    stop(
+    cli::cli_abort(
       "The `integer` string must only contain numbers."
     )
   }

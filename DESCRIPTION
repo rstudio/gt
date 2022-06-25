@@ -1,6 +1,6 @@
 Type: Package
 Package: gt
-Version: 0.5.0.9000
+Version: 0.6.0.9000
 Title: Easily Create Presentation-Ready Display Tables
 Description: Build display tables from tabular data with an easy-to-use set of
     functions. With its progressive approach, we can construct display tables
@@ -23,23 +23,24 @@ BugReports: https://github.com/rstudio/gt/issues
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0
 Depends:
     R (>= 3.2.0)
 Imports:
     base64enc (>= 0.1-3),
-    bitops (>= 1.0.6),
+    bitops (>= 1.0-7),
     checkmate (>= 2.0.0),
-    commonmark (>= 1.7),
+    cli (>= 3.3.0),
+    commonmark (>= 1.8),
     dplyr (>= 1.0.8),
     fs (>= 1.5.2),
     ggplot2 (>= 3.3.5),
     glue (>= 1.6.1),
     htmltools (>= 0.5.2),
     magrittr (>= 2.0.2),
-    rlang (>= 1.0.1),
-    sass (>= 0.4.0),
-    scales (>= 1.1.1),
+    rlang (>= 1.0.2),
+    sass (>= 0.4.1),
+    scales (>= 1.2.0),
     stringr (>= 1.4.0),
     tibble (>= 3.1.6),
     tidyselect (>= 1.1.1)
@@ -47,7 +48,7 @@ Suggests:
     covr,
     knitr,
     paletteer,
-    testthat (>= 2.1.0),
+    testthat (>= 3.0.0),
     RColorBrewer,
     lubridate,
     rmarkdown,
@@ -102,6 +103,7 @@ Collate:
     'render_as_html.R'
     'resolver.R'
     'shiny.R'
+    'substitution.R'
     'summary_rows.R'
     'text_transform.R'
     'utils.R'
@@ -114,3 +116,5 @@ Collate:
     'utils_render_latex.R'
     'utils_render_rtf.R'
     'zzz.R'
+Config/testthat/edition: 3
+Config/testthat/parallel: true

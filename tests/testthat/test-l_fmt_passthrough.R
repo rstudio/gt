@@ -1,5 +1,3 @@
-context("LaTeX -- Ensuring that the `fmt_passthrough()` function works as expected")
-
 test_that("the `fmt_passthrough()` function works correctly", {
 
   # Create an input data frame four columns: two
