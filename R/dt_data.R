@@ -1,13 +1,11 @@
 .dt_data_key <- "_data"
 
 dt_data_get <- function(data) {
-
   dt__get(data, .dt_data_key)
 }
 
 dt_data_set <- function(data, data_tbl) {
-
-  dt__set(data, .dt_data_key, data_tbl %>% dplyr::as_tibble())
+  dt__set(data, .dt_data_key, dplyr::as_tibble(data_tbl))
 }
 
 # rownames_to_column is a string; if not NA, it means the row.names(data_tbl)

@@ -1,23 +1,23 @@
 .dt_heading_key <- "_heading"
 
 dt_heading_get <- function(data) {
-
   dt__get(data, .dt_heading_key)
 }
 
 dt_heading_set <- function(data, heading) {
-
   dt__set(data, .dt_heading_key, heading)
 }
 
 dt_heading_init <- function(data) {
 
-  list(
-    title = NULL,
-    subtitle = NULL,
-    preheader = NULL
-  ) %>%
-    dt_heading_set(heading = ., data = data)
+  heading <-
+    list(
+      title = NULL,
+      subtitle = NULL,
+      preheader = NULL
+    )
+
+  dt_heading_set(data = data, heading = heading)
 }
 
 dt_set_heading_components <- function(data, title, subtitle, preheader) {

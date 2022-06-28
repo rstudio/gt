@@ -5,12 +5,7 @@
 #'
 #' @import rlang
 #' @noRd
-resolve_cells_body <- function(data,
-                               object) {
-
-  # Get the `stub_df` data frame from `data`
-  stub_df <- dt_stub_df_get(data = data)
-  data_tbl <- dt_data_get(data = data)
+resolve_cells_body <- function(data, object) {
 
   #
   # Resolution of columns and rows as integer vectors
@@ -118,23 +113,18 @@ resolve_cells_column_labels <- function(data,
 #' @param object The list object created by the `cells_column_labels()`
 #'   function.
 #' @noRd
-resolve_cells_column_spanners <- function(data,
-                                          object) {
+resolve_cells_column_spanners <- function(data, object) {
+
+  spanners <- dt_spanners_get(data = data)
 
   #
   # Resolution of spanners as column spanner names
   #
-  spanner_labels <-
-    dt_spanners_get(data = data) %>%
-    .$spanner_label %>%
-    unlist() %>%
-    .[!is.na(.)] %>%
-    unique()
+  spanner_labels <- unlist(spanners$spanner_label)
+  spanner_labels <- unique(spanner_labels[!is.na(spanner_labels)])
 
-  spanner_ids <-
-    dt_spanners_get(data = data) %>%
-    .$spanner_id %>%
-    .[!is.na(.)]
+  spanner_ids <- spanners$spanner_id
+  spanner_ids <- spanner_ids[!is.na(spanner_ids)]
 
   resolved_spanners_idx <-
     resolve_vector_i(
@@ -226,8 +216,6 @@ resolve_cols_i <- function(expr,
   null_means <- match.arg(null_means)
 
   if (is_gt(data)) {
-
-    cols <- colnames(dt_data_get(data = data))
 
     # In most cases we would want to exclude the column that
     # represents the stub but that isn't always the case (e.g.,

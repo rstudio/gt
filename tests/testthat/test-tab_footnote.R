@@ -52,7 +52,7 @@ data_2 <-
   gtcars %>%
   dplyr::filter(ctry_origin == "Germany") %>%
   dplyr::group_by(mfr) %>%
-  dplyr::top_n(2, msrp) %>%
+  dplyr::top_n(n = 2, msrp) %>%
   dplyr::ungroup() %>%
   dplyr::select(mfr, model, drivetrain, msrp) %>%
   gt() %>%
@@ -132,7 +132,7 @@ data_4 <-
   sp500 %>%
   dplyr::filter(
     date >= "2015-01-05" &
-      date <="2015-01-10"
+      date <= "2015-01-10"
   ) %>%
   dplyr::select(
     -c(adj_close, volume, high, low)
@@ -163,20 +163,13 @@ check_suggests <- function() {
 
 # Gets the HTML attr value from a single key
 selection_value <- function(html, key) {
-
   selection <- paste0("[", key, "]")
-
-  html %>%
-    rvest::html_nodes(selection) %>%
-    rvest::html_attr(key)
+  rvest::html_attr(rvest::html_nodes(html, selection), key)
 }
 
 # Gets the inner HTML text from a single value
 selection_text <- function(html, selection) {
-
-  html %>%
-    rvest::html_nodes(selection) %>%
-    rvest::html_text()
+  rvest::html_text(rvest::html_nodes(html, selection))
 }
 
 test_that("the `tab_footnote()` function works correctly", {

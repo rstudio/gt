@@ -2062,7 +2062,7 @@ fmt_bytes <- function(
         num_power_idx <- pmax(1, pmin(length(byte_units), num_power_idx))
 
         units_str <- byte_units[num_power_idx]
-        x <- x / base^(num_power_idx-1)
+        x <- x / base^(num_power_idx - 1)
 
         # Format numeric values to character-based numbers
         x_str <-
@@ -3026,10 +3026,6 @@ fmt <- function(
 
   # Perform input object validation
   stop_if_not_gt(data = data)
-
-  # Get the `stub_df` and `data_tbl` tables from `data`
-  stub_df <- dt_stub_df_get(data = data)
-  data_tbl <- dt_data_get(data = data)
 
   #
   # Resolution of columns and rows as character vectors

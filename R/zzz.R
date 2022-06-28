@@ -23,7 +23,7 @@ register_s3_method <- function(pkg, generic, class, fun = NULL) {
   )
 }
 
-globalVariables(
+utils::globalVariables(
   c(
     ".",
     "are_groups_present",
