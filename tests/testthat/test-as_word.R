@@ -1308,7 +1308,7 @@ test_that("tables with cell & text coloring can be added to a word doc - with so
       c("My Source Note")
     )
   )
-  s
+
   expect_equal(
     lapply(docx_table_meta_info, function(x) {
       x %>% xml2::xml_find_all(".//w:tc") %>% lapply(function(y) {
@@ -1330,9 +1330,9 @@ test_that("tables with cell & text coloring can be added to a word doc - with su
   local_edition(3)
 
   ## simple table
-  gt_exibble_min <- gt_exibble_min <- exibble %>%
+  gt_exibble_min <- exibble %>%
     dplyr::select(-c(fctr, date, time, datetime)) %>%
-    gt(groupname_col = "group") %>%
+    gt(rowname_col = "row", groupname_col = "group") %>%
     summary_rows(
       groups = TRUE,
       columns = num,
