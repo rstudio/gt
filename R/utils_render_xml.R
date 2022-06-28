@@ -1001,7 +1001,7 @@ create_columns_component_xml <- function(data, split = FALSE, keep_with_next = T
           locname %in% c("stubhead")
         ) %>%
         dplyr::pull("styles") %>%
-        .[[1]]
+        .[1] %>% .[[1]]
 
       table_cell_vals[[length(table_cell_vals) + 1]] <-
         xml_table_cell(
@@ -1038,6 +1038,7 @@ create_columns_component_xml <- function(data, split = FALSE, keep_with_next = T
   }
 
   for (i in seq_len(length(headings_vars) - stub_available)) {
+
     cell_style <- styles_tbl %>%
       dplyr::filter(
         locname %in% c("columns_columns"),
@@ -1045,6 +1046,7 @@ create_columns_component_xml <- function(data, split = FALSE, keep_with_next = T
         colnum == i
       ) %>%
       dplyr::pull("styles") %>%
+      .[1] %>%
       .[[1]]
 
     table_cell_vals[[length(table_cell_vals) + 1]] <-
@@ -1116,7 +1118,8 @@ create_columns_component_xml <- function(data, split = FALSE, keep_with_next = T
               locname %in% c("stubhead")
             ) %>%
             dplyr::pull("styles") %>%
-            .[[1]]
+            .[1] %>% .[[1]]
+
 
           spanner_cell_vals[[length(spanner_cell_vals) + 1]] <-
             xml_table_cell(
@@ -1193,7 +1196,7 @@ create_columns_component_xml <- function(data, split = FALSE, keep_with_next = T
                 grpname %in% spanner_row_ids[i]
               ) %>%
               dplyr::pull("styles") %>%
-              .[[1]]
+              .[1] %>% .[[1]]
 
             ## check if there are any open cells above to determine
             spanner_cell_vals[[length(spanner_cell_vals) + 1]] <-
@@ -1353,7 +1356,7 @@ create_body_component_xml <- function(data, split = FALSE, keep_with_next = TRUE
               rownum == (i-.1)
             ) %>%
             dplyr::pull("styles") %>%
-            .[[1]]
+            .[1] %>% .[[1]]
 
           group_heading_row <-
             xml_tr(
@@ -1406,7 +1409,7 @@ create_body_component_xml <- function(data, split = FALSE, keep_with_next = TRUE
               colnum == style_col_idx
             ) %>%
             dplyr::pull("styles") %>%
-            .[[1]]
+            .[1] %>% .[[1]]
 
           row_cells[[length(row_cells) + 1]] <-
             xml_table_cell(
@@ -1540,7 +1543,7 @@ create_source_notes_component_xml <- function(data, split = FALSE, keep_with_nex
       locname == "source_notes"
     ) %>%
     dplyr::pull("styles") %>%
-    .[[1]]
+    .[1] %>% .[[1]]
 
   n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
 
@@ -1603,7 +1606,7 @@ create_footnotes_component_xml <- function(data, split = FALSE, keep_with_next =
       locname == "footnotes"
     ) %>%
     dplyr::pull("styles") %>%
-    .[[1]]
+    .[1] %>% .[[1]]
 
   n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
 
@@ -1727,7 +1730,7 @@ summary_rows_xml <- function(list_of_summaries,
             colnum == y -1
           ) %>%
           dplyr::pull("styles") %>%
-          .[[1]]
+          .[1] %>% .[[1]]
 
         summary_row_cells[[length(summary_row_cells) + 1]] <-
           xml_table_cell(
