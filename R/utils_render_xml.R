@@ -1001,7 +1001,7 @@ create_columns_component_xml <- function(data, split = FALSE, keep_with_next = T
           locname %in% c("stubhead")
         ) %>%
         dplyr::pull("styles") %>%
-        purrr::pluck(1)
+        .[[1]]
 
       table_cell_vals[[length(table_cell_vals) + 1]] <-
         xml_table_cell(
@@ -1045,7 +1045,7 @@ create_columns_component_xml <- function(data, split = FALSE, keep_with_next = T
         colnum == i
       ) %>%
       dplyr::pull("styles") %>%
-      purrr::pluck(1)
+      .[[1]]
 
     table_cell_vals[[length(table_cell_vals) + 1]] <-
       xml_table_cell(
@@ -1111,14 +1111,12 @@ create_columns_component_xml <- function(data, split = FALSE, keep_with_next = T
 
         if(span_row_idx == 1){
 
-          browser()
-
           cell_style <- styles_tbl %>%
             dplyr::filter(
               locname %in% c("stubhead")
             ) %>%
             dplyr::pull("styles") %>%
-            purrr::pluck(1)
+            .[[1]]
 
           spanner_cell_vals[[length(spanner_cell_vals) + 1]] <-
             xml_table_cell(
@@ -1195,7 +1193,7 @@ create_columns_component_xml <- function(data, split = FALSE, keep_with_next = T
                 grpname %in% spanner_row_ids[i]
               ) %>%
               dplyr::pull("styles") %>%
-              purrr::pluck(1)
+              .[[1]]
 
             ## check if there are any open cells above to determine
             spanner_cell_vals[[length(spanner_cell_vals) + 1]] <-
@@ -1355,7 +1353,7 @@ create_body_component_xml <- function(data, split = FALSE, keep_with_next = TRUE
               rownum == (i-.1)
             ) %>%
             dplyr::pull("styles") %>%
-            purrr::pluck(1)
+            .[[1]]
 
           group_heading_row <-
             xml_tr(
@@ -1408,7 +1406,7 @@ create_body_component_xml <- function(data, split = FALSE, keep_with_next = TRUE
               colnum == style_col_idx
             ) %>%
             dplyr::pull("styles") %>%
-            purrr::pluck(1)
+            .[[1]]
 
           row_cells[[length(row_cells) + 1]] <-
             xml_table_cell(
@@ -1542,7 +1540,7 @@ create_source_notes_component_xml <- function(data, split = FALSE, keep_with_nex
       locname == "source_notes"
     ) %>%
     dplyr::pull("styles") %>%
-    purrr::pluck(1)
+    .[[1]]
 
   n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
 
@@ -1605,7 +1603,7 @@ create_footnotes_component_xml <- function(data, split = FALSE, keep_with_next =
       locname == "footnotes"
     ) %>%
     dplyr::pull("styles") %>%
-    purrr::pluck(1)
+    .[[1]]
 
   n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
 
@@ -1629,8 +1627,6 @@ create_footnotes_component_xml <- function(data, split = FALSE, keep_with_next =
   footnote_ids <- footnotes_tbl[["fs_id"]]
   footnote_text <- footnotes_tbl[["footnotes"]]
 
-  browser()
-
   footnote_rows <-
     lapply(
       seq_along(footnote_ids),
@@ -1642,7 +1638,7 @@ create_footnotes_component_xml <- function(data, split = FALSE, keep_with_next =
               if(!split){xml_cantSplit()}
             ),
             xml_table_cell(
-              paragraph = htmltools::tagList(
+              paragraph_xml = htmltools::tagList(
                 xml_r(
                   xml_rPr(
                     xml_r_font(
@@ -1731,7 +1727,7 @@ summary_rows_xml <- function(list_of_summaries,
             colnum == y -1
           ) %>%
           dplyr::pull("styles") %>%
-          purrr::pluck(1)
+          .[[1]]
 
         summary_row_cells[[length(summary_row_cells) + 1]] <-
           xml_table_cell(
