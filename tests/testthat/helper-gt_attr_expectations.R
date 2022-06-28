@@ -11,7 +11,7 @@ expect_tab_colnames <- function(tab,
       all(is.na(dt_stub_df_get(data = tab)[["rowname"]]))
     )
 
-  } else if (rowname == "col"){
+  } else if (rowname == "col") {
 
     # Expect that the `rowname` column of the `stub_df`
     # object is entirely filled with NAs

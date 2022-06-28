@@ -41,12 +41,8 @@ tbl_summary <-
 
 # Gets the HTML attr value from a single key
 selection_value <- function(html, key) {
-
   selection <- paste0("[", key, "]")
-
-  html %>%
-    rvest::html_nodes(selection) %>%
-    rvest::html_attr(key)
+  rvest::html_attr(rvest::html_nodes(html, selection), key)
 }
 
 test_that("the `cells_title()` function works correctly", {

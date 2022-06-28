@@ -101,13 +101,13 @@ render_gt <- function(
       # If the `expr` is an object that doesn't inherit from `gt_tbl`,
       # simply use `gt()` with no options to create the gt table
       if (!inherits(result, "gt_tbl")) {
-        result <- result %>% gt()
+        result <- gt(result)
       }
 
       # Modify some gt table options via `tab_options()`
       result <-
-        result %>%
         tab_options(
+          result,
           container.width = width,
           container.height = height,
           table.align = align

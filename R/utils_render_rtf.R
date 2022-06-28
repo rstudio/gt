@@ -772,7 +772,7 @@ rtf_escape_unicode <- function(x) {
 
   # RTF wants the code points as signed 16 bit integers
   codepoints_subset_signed <- ifelse(
-    codepoints_subset > 2^15-1,
+    codepoints_subset > 2^15 - 1,
     -(bitops::bitFlip(codepoints_subset, 16) + 1), # twos complement
     codepoints_subset)
 
@@ -1120,10 +1120,6 @@ create_columns_component_rtf <- function(data) {
   column_labels_vlines_color <- dt_options_get_value(data = data, option = "column_labels_vlines_color")
   column_labels_border_lr_color <- dt_options_get_value(data = data, option = "column_labels_border_lr_color") # not used currently
 
-  # Get the column headings
-  headings_vars <- dt_boxhead_get_vars_default(data = data)
-  headings_labels <- dt_boxhead_get_vars_labels_default(data = data)
-
   # Obtain alignments for each visible column label
   col_alignment <- dt_boxhead_get_vars_align_default(data = data)
 
@@ -1217,7 +1213,6 @@ create_columns_component_rtf <- function(data) {
 
       spanner_ids_row <- spanner_ids[i, ]
       spanners_row <- spanners[i, ]
-      spanners_vars <- unique(spanner_ids_row[!is.na(spanner_ids_row)])
 
       # Replace NA values with an empty string ID
       spanner_ids_row[is.na(spanner_ids_row)] <- ""
@@ -1333,7 +1328,6 @@ create_body_component_rtf <- function(data) {
   row_group_border_right_color <- dt_options_get_value(data = data, option = "row_group_border_right_color")
   table_body_hlines_color <- dt_options_get_value(data = data, option = "table_body_hlines_color")
   table_body_vlines_color <- dt_options_get_value(data = data, option = "table_body_vlines_color")
-  table_border_bottom_color <- dt_options_get_value(data, option = "table_border_bottom_color")
 
   # Get the table width and page body width
   table_width <- dt_options_get_value(data = data, option = "table_width")
@@ -1686,8 +1680,6 @@ create_footer_component_rtf <- function(data) {
   }
 
   # Get table components and metadata using the `data`
-  source_notes <- dt_source_notes_get(data)
-
   footnotes_tbl <- dt_footnotes_get(data = data)
   source_notes_vec <- dt_source_notes_get(data = data)
 
@@ -1704,19 +1696,14 @@ create_footer_component_rtf <- function(data) {
 
   # Obtain widths for each visible column label
   col_widths <-
-    boxh %>%
-    dplyr::filter(type %in% c("default", "stub")) %>%
+    dplyr::filter(boxh, type %in% c("default", "stub")) %>%
     dplyr::arrange(dplyr::desc(type)) %>%
     dplyr::pull(column_width) %>%
     unlist()
 
   if (is.null(col_widths)) {
 
-    n_cols <-
-      boxh %>%
-      dplyr::filter(type %in% c("default", "stub")) %>%
-      nrow()
-
+    n_cols <- nrow(dplyr::filter(boxh, type %in% c("default", "stub")))
     col_widths <- rep("100%", n_cols)
   }
 
@@ -1796,7 +1783,7 @@ create_page_footer_component_rtf <- function(data) {
   source_notes_vec <- dt_source_notes_get(data = data)
 
   # If there are no footnotes or source notes return an empty list
-  if (nrow(footnotes_tbl) == 0 && length(source_notes_vec) == 0){
+  if (nrow(footnotes_tbl) == 0 && length(source_notes_vec) == 0) {
     return(list())
   }
 
@@ -1848,8 +1835,11 @@ generate_notes_list <- function(
 
     footnote_text <-
       vapply(
-        footnote_text, FUN.VALUE = character(1), USE.NAMES = FALSE,
-        FUN = process_text, context = "rtf"
+        footnote_text,
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = process_text,
+        context = "rtf"
       )
 
     footnotes <- c()
@@ -1919,8 +1909,11 @@ get_page_body_width <- function(data) {
       option = if (page_orientation == "portrait") "page_width" else "page_height"
     )
 
-  page_margin_left_val <- dt_options_get_page_value_in_twips(data = data, option = "page_margin_left")
-  page_margin_right_val <- dt_options_get_page_value_in_twips(data = data, option = "page_margin_right")
+  page_margin_left_val <-
+    dt_options_get_page_value_in_twips(data = data, option = "page_margin_left")
+
+  page_margin_right_val <-
+    dt_options_get_page_value_in_twips(data = data, option = "page_margin_right")
 
   page_width_val - page_margin_left_val - page_margin_right_val
 }

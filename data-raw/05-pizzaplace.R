@@ -142,19 +142,19 @@ exceptional_tbl <-
 
 # Days where the pizzaplace was fully closed (i.e., no sales)
 full_closures <-
-  c(
-    "2015-09-24", "2015-09-25", # electrical fire causing equipment malfunctions! 2-day closure.
-    "2015-10-05", # --- trying out closing on Mondays for October (could use the break, :\)
-    "2015-10-12", # -|
-    "2015-10-19", # -|
-    "2015-10-26", # -|
-    "2015-12-25"  # closed on Christmas Day
-  ) %>%
-  as.Date()
+  as.Date(
+    c(
+      "2015-09-24", "2015-09-25", # electrical fire causing equipment malfunctions! 2-day closure.
+      "2015-10-05", # --- trying out closing on Mondays for October (could use the break, :\)
+      "2015-10-12", # -|
+      "2015-10-19", # -|
+      "2015-10-26", # -|
+      "2015-12-25"  # closed on Christmas Day
+    )
+  )
 
 # Function to make changes to days based on exceptional circumstances
-apply_exceptional_days <- function(orders_year_df,
-                                   exceptional_df) {
+apply_exceptional_days <- function(orders_year_df, exceptional_df) {
 
   for (i in seq(nrow(exceptional_df))) {
 
@@ -189,9 +189,11 @@ apply_exceptional_days <- function(orders_year_df,
 
 # Function to randomly choose `n` pizzas and a
 # size for a given date and time
-randomly_choose_pizzas <- function(date,
-                                   time,
-                                   n = 1) {
+randomly_choose_pizzas <- function(
+    date,
+    time,
+    n = 1
+) {
 
   pizza_list <-
     pizzas %>%
@@ -255,7 +257,7 @@ convert_time <- function(frac_time) {
 
   hours <- ifelse(hours < 10, paste0("0", hours), as.character(hours))
   minutes <- ifelse(minutes < 10, paste0("0", minutes), as.character(minutes))
-  seconds <- ifelse (seconds < 10, paste0("0", round(seconds, 0)), as.character(round(seconds, 0)))
+  seconds <- ifelse(seconds < 10, paste0("0", round(seconds, 0)), as.character(round(seconds, 0)))
 
   paste(hours, minutes, seconds, sep = ":")
 }
@@ -263,7 +265,7 @@ convert_time <- function(frac_time) {
 next_random_factory <- function(closing_time, mean, sd) {
 
   function() {
-    while(TRUE) {
+    while (TRUE) {
       ret <- rnorm(1, mean = mean, sd = sd)
       if (ret < closing_time) {
         return(ret)
@@ -273,9 +275,11 @@ next_random_factory <- function(closing_time, mean, sd) {
 }
 
 # Function to generate a tibble of `n` pizza orders for the dinner period
-dinner_orders <- function(date,
-                          busy_night = TRUE,
-                          n) {
+dinner_orders <- function(
+    date,
+    busy_night = TRUE,
+    n
+) {
 
   if (busy_night) {
     next_random <- next_random_factory(23.1, 19, 2.5)
@@ -301,9 +305,11 @@ dinner_orders <- function(date,
 }
 
 # Function to generate a tibble of `n` pizza orders for the lunchtime period
-lunch_orders <- function(date,
-                         busy_day = TRUE,
-                         n) {
+lunch_orders <- function(
+    date,
+    busy_day = TRUE,
+    n
+) {
 
   if (busy_day) {
     hours <- rnorm(100, mean = 12.5, sd = 1)
@@ -378,13 +384,15 @@ group_orders <- function(date, n) {
 # Function to get a tibble of pizza orders for a given date,
 # based on daily numbers for each period and whether the periods
 # are considered busy or not
-orders_for_day <- function(date,
-                           n_dinner,
-                           n_lunch,
-                           n_group,
-                           n_random,
-                           busy_day,
-                           busy_night) {
+orders_for_day <- function(
+    date,
+    n_dinner,
+    n_lunch,
+    n_group,
+    n_random,
+    busy_day,
+    busy_night
+) {
 
   dplyr::bind_rows(
     dinner_orders(
@@ -505,8 +513,8 @@ pizzaplace <- orders_for_year(orders_year_df = orders_year)
 
 # Join in the `type` and `price` data
 pizzaplace <-
-  pizzaplace %>%
   dplyr::inner_join(
+    pizzaplace,
     pizzas %>% dplyr::select(name, size, type, price),
     by = c("name", "size")
   )
@@ -525,6 +533,4 @@ pizzaplace <-
   )
 
 # Convert `date` back to character
-pizzaplace <-
-  pizzaplace %>%
-  dplyr::mutate(date = as.character(date))
+pizzaplace <- dplyr::mutate(pizzaplace, date = as.character(date))

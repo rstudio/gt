@@ -425,6 +425,7 @@ get_padding_option_value_list <- function(scale, type) {
 
   # Get the padding parameters from `dt_options_tbl` that relate
   # to the `type` (either vertical or horizontal padding)
+  # TODO: refactor these stmts to remove dplyr fns
   padding_params <-
     dt_options_tbl %>%
     dplyr::filter(grepl(paste0(pattern, "$"), parameter)) %>%
@@ -1053,8 +1054,11 @@ create_option_value_list <- function(tab_options_args, values) {
 
   # Validate the length of the `values` vector
   if (length(values) == 1) {
+
     values <- rep_len(values, length(tab_options_args))
+
   } else if (length(values) != length(tab_options_args)) {
+
     cli::cli_abort(
       "The length of the `values` vector must be `1` or the length of
       `tab_options_args`."
@@ -1066,9 +1070,12 @@ create_option_value_list <- function(tab_options_args, values) {
 
 create_default_option_value_list <- function(tab_options_args) {
 
-  lapply(stats::setNames(, tab_options_args), function(x) {
-    dt_options_get_default_value(tidy_gsub(x, ".", "_", fixed = TRUE))
-  })
+  lapply(
+    stats::setNames(, tab_options_args),
+    FUN = function(x) {
+      dt_options_get_default_value(tidy_gsub(x, ".", "_", fixed = TRUE))
+    }
+  )
 }
 
 dt_options_get_default_value <- function(option) {
@@ -1086,7 +1093,7 @@ dt_options_get_default_value <- function(option) {
 
 # Get vector of argument names (excluding `data`) from `tab_options`
 #' @include tab_create_modify.R
-tab_options_arg_names <- formals(tab_options) %>% names() %>% base::setdiff("data")
+tab_options_arg_names <- base::setdiff(names(formals(tab_options)), "data")
 
 # Create vector of all args from `tab_options()` by
 # use of a regex pattern

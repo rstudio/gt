@@ -73,14 +73,13 @@ add_css_styles <- function(data) {
 #' @param locname The location name for the footnotes.
 #' @param delimiter The delimiter to use for the coalesced footnote marks.
 #' @noRd
-coalesce_marks <- function(fn_tbl,
-                           locname,
-                           delimiter = ",") {
+coalesce_marks <- function(
+    fn_tbl,
+    locname,
+    delimiter = ","
+) {
 
-  locname_enquo <- rlang::enquo(locname)
-
-  fn_tbl %>%
-    dplyr::filter(locname == !!locname) %>%
+  dplyr::filter(fn_tbl, locname == !!locname) %>%
     dplyr::summarize(fs_id_c = paste(fs_id, collapse = delimiter))
 }
 
@@ -550,11 +549,9 @@ create_columns_component_h <- function(data) {
 
       } else if (!is.na(spanner_ids[level_1_index, ][i])) {
 
-        # If colspans[i] == 0, it means that a previous cell's `colspan`
-        # will cover us
+        # If colspans[i] == 0, it means that a previous cell's
+        # `colspan` will cover us
         if (colspans[i] > 0) {
-
-          class <- "gt_column_spanner"
 
           styles_spanners <-
             dplyr::filter(
@@ -1350,8 +1347,10 @@ summary_row_tags_i <- function(data, group_id) {
   # Obtain the summary data table specific to the group ID and
   # select the column named `rowname` and all of the visible columns
   summary_df <-
-    list_of_summaries$summary_df_display_list[[group_id]] %>%
-    dplyr::select(.env$rowname_col_private, .env$default_vars)
+    dplyr::select(
+      list_of_summaries$summary_df_display_list[[group_id]],
+      .env$rowname_col_private, .env$default_vars
+    )
 
   # Get effective number of columns
   n_cols_total <- get_effective_number_of_columns(data = data)

@@ -12,7 +12,6 @@ dt_body_get <- function(data) {
 }
 
 dt_body_set <- function(data, body) {
-
   dt__set(data, .dt_body_key, dplyr::as_tibble(body))
 }
 
@@ -24,8 +23,7 @@ dt_body_build_init <- function(data) {
     body[] <- NA_character_
   }
 
-  body %>%
-    dt_body_set(body = ., data = data)
+  dt_body_set(body = body, data = data)
 }
 
 # Function to reassemble the rows and columns of the `body`
@@ -48,6 +46,5 @@ dt_body_reassemble <- function(data) {
 }
 
 dt_body_build <- function(data) {
-
   dt_body_build_init(data = data)
 }
