@@ -287,7 +287,7 @@ create_heading_component_h <- function(data) {
 
   title_row <-
     htmltools::tags$tr(
-      htmltools::tags$th(
+      htmltools::tags$td(
         colspan = n_cols_total,
         class = paste(title_classes, collapse = " "),
         style = title_styles,
@@ -301,7 +301,7 @@ create_heading_component_h <- function(data) {
 
     subtitle_row <-
       htmltools::tags$tr(
-        htmltools::tags$th(
+        htmltools::tags$td(
           colspan = n_cols_total,
           class = paste(subtitle_classes, collapse = " "),
           style = subtitle_styles,
