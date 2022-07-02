@@ -1002,7 +1002,7 @@ create_body_component_h <- function(data) {
                         "th"
                       } else {
                         "td"
-                      },
+                      }
                     )
                   }
                 ),
