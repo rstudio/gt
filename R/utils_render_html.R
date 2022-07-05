@@ -405,6 +405,7 @@ create_columns_component_h <- function(data) {
           rowspan = 1,
           colspan = length(stub_layout),
           style = stubhead_style,
+          scope = "col",
           htmltools::HTML(headings_labels[1])
         )
 
@@ -432,6 +433,7 @@ create_columns_component_h <- function(data) {
           rowspan = 1,
           colspan = 1,
           style = column_style,
+          scope = "col",
           htmltools::HTML(headings_labels[i])
         )
     }
@@ -484,6 +486,7 @@ create_columns_component_h <- function(data) {
           rowspan = 2,
           colspan = length(stub_layout),
           style = stubhead_style,
+          scope = "col",
           htmltools::HTML(headings_labels[1])
         )
 
@@ -544,6 +547,7 @@ create_columns_component_h <- function(data) {
             rowspan = 2,
             colspan = 1,
             style = heading_style,
+            scope = "col",
             htmltools::HTML(headings_labels[i])
           )
 
@@ -580,6 +584,7 @@ create_columns_component_h <- function(data) {
               rowspan = 1,
               colspan = colspans[i],
               style = spanner_style,
+              scope = "col",
               htmltools::tags$span(
                 class = "gt_column_spanner",
                 htmltools::HTML(spanners[level_1_index, ][i])
@@ -635,6 +640,7 @@ create_columns_component_h <- function(data) {
             ),
             rowspan = 1, colspan = 1,
             style = remaining_style,
+            scope = "col",
             htmltools::HTML(remaining_headings_labels[j])
           )
       }
@@ -710,6 +716,7 @@ create_columns_component_h <- function(data) {
               rowspan = 1,
               colspan = colspans[j],
               style = spanner_style,
+              scope = "col",
               if (spanner_ids_row[j] != "") {
                 htmltools::tags$span(
                   class = "gt_column_spanner",
@@ -727,7 +734,8 @@ create_columns_component_h <- function(data) {
           htmltools::tagList(
             htmltools::tags$th(
               rowspan = max(higher_spanner_rows_idx),
-              colspan = length(stub_layout)
+              colspan = length(stub_layout),
+              scope = "col"
             ),
             level_i_spanners
           )
