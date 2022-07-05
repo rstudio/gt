@@ -58,8 +58,7 @@ Suggests:
     shiny,
     tidyr,
     webshot,
-    xml2,
-    officer 
+    xml2
 Roxygen: list(markdown = TRUE)
 Collate: 
     'as_data_frame.R'
@@ -114,11 +113,11 @@ Collate:
     'utils_general_str_formatting.R'
     'utils_pipe.R'
     'utils_render_common.R'
-    'utils_render_footnotes.R'
     'utils_render_html.R'
     'utils_render_latex.R'
     'utils_render_rtf.R'
     'utils_render_xml.R'
+    'z_utils_render_footnotes.R'
     'zzz.R'
 Config/testthat/edition: 3
 Config/testthat/parallel: true
