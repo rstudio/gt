@@ -461,6 +461,16 @@ context_missing_text <- function(missing_text, context) {
         } else {
           process_text(missing_text, context)
         }
+      },
+    word =
+      {
+        if (!inherits(missing_text, "AsIs") && missing_text == "---") {
+          "\u2014"
+        } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
+          "\u2013"
+        } else {
+          process_text(missing_text, context)
+        }
       }
   )
 }
@@ -495,6 +505,15 @@ context_plusminus_mark <- function(plusminus_mark, context) {
       {
         if (!inherits(plusminus_mark, "AsIs") && plusminus_mark == " +/- ") {
           " \\'b1 "
+        } else {
+          plusminus_mark
+        }
+      },
+    word =
+      {
+        if (!inherits(plusminus_mark, "AsIs") &&
+            plusminus_mark == " +/- ") {
+          " +/- "
         } else {
           plusminus_mark
         }
@@ -645,6 +664,7 @@ context_exp_marks <- function(context) {
     html = c(" &times; 10<sup class='gt_super'>", "</sup>"),
     latex = c(" \\times 10^{", "}"),
     rtf = c(" \\'d7 10{\\super ", "}"),
+    word = c(" x 10^", ""),
     c(" x 10(", ")")
   )
 }
