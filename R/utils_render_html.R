@@ -965,7 +965,12 @@ create_body_component_h <- function(data) {
                   FUN = function(x, row_span, alignment_class, extra_class, cell_style) {
 
                     sprintf(
-                      "<td %sclass=\"%s\"%s>%s</td>",
+                      "<%s %sclass=\"%s\"%s>%s</%s>",
+                      if ("gt_stub" %in% extra_class) {
+                        "th scope=\"row\""
+                      } else {
+                        "td"
+                      },
                       if (is.null(row_span)) {
                         ""
                       } else {
@@ -992,7 +997,12 @@ create_body_component_h <- function(data) {
                           "\""
                         )
                       },
-                      as.character(x)
+                      as.character(x),
+                      if ("gt_stub" %in% extra_class) {
+                        "th"
+                      } else {
+                        "td"
+                      }
                     )
                   }
                 ),
