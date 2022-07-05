@@ -536,7 +536,6 @@ markdown_to_latex <- function(text) {
   )
 }
 
-# TODO: Make this work
 markdown_to_xml <- function(text) {
 
   text <-
@@ -595,19 +594,12 @@ markdown_to_xml <- function(text) {
 
                 apply_rules(xml2::xml_contents(x))
 
-              # } else if (is.character(rule)) {
-              #
-              #   xml_wrap(rule, x, apply_rules)
-
               } else if (is.function(rule)) {
 
                 rule(x, apply_rules)
               }
             }
-            # if (!is_xml(output)) {
-            #   warning("Rule for ", xml2::xml_name(x), " did not return RTF")
-            # }
-            # TODO: is collapse = "" correct?
+
             xml_raw(paste0("", output, collapse = ""))
           }
         }
@@ -774,13 +766,7 @@ cmark_rules_xml <- list(
   }
 )
 
-# xml_wrap <- function(control, x, process) {
-#   content <- paste0("", process(xml2::xml_contents(x))) # coerce even NULL to string
-#   paste0("\\", control, " ", content, "\\", control, "0 ")
-# }
-
 cmark_rules_rtf <- list(
-
   heading = function(x, process) {
     heading_sizes <- c(36, 32, 28, 24, 20, 16)
     fs <- heading_sizes[as.numeric(xml2::xml_attr(x, attr = "level"))]
