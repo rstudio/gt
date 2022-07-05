@@ -443,7 +443,12 @@ set_footnote_marks_columns <- function(data,
         vector_indices <- which(spanner_ids == footnotes_columns_group_marks$grpname[i])
 
         text <- unique(spanner_labels[vector_indices])
-        text <- paste0(text, footnote_mark_fn(footnotes_columns_group_marks$fs_id_coalesced[i]))
+
+        text <-
+          paste0(
+            text,
+            footnotes_dispatch[[context]](footnotes_columns_group_marks$fs_id_coalesced[i])
+          )
 
         spanners_i <-
           which(
@@ -467,17 +472,15 @@ set_footnote_marks_columns <- function(data,
         dplyr::select(colname, fs_id_coalesced) %>%
         dplyr::distinct()
 
+
       for (i in seq(nrow(footnotes_columns_column_marks))) {
+        text <-
+          paste0(
+            boxh$column_label[
+              boxh$var == footnotes_columns_column_marks$colname[i]][[1]],
+            footnotes_dispatch[[context]](footnotes_columns_column_marks$fs_id_coalesced[i])
+          )
 
-        text <- boxh$column_label[
-          boxh$var == footnotes_columns_column_marks$colname[i]][[1]]
-
-        text <- paste0(text, footnote_mark_fn(footnotes_columns_column_marks$fs_id_coalesced[i]))
-
-        # boxh$column_label <- dplyr::case_when(
-        #   var == footnotes_columns_column_marks$colname[i] ~ list(text),
-        #   TRUE ~ column_label
-        # )
         boxh <-
           dplyr::mutate(
             boxh,
@@ -521,21 +524,7 @@ set_footnote_marks_stubhead <- function(data,
         dplyr::distinct() %>%
         dplyr::pull(fs_id_coalesced)
 
-      if (context == "html") {
-
-        label <-
-          paste0(label, footnote_mark_to_html(footnotes_stubhead_marks))
-
-      } else if (context == "rtf") {
-
-        label <-
-          paste0(label, footnote_mark_to_rtf(footnotes_stubhead_marks))
-
-      } else if (context == "latex") {
-
-        label <-
-          paste0(label, footnote_mark_to_latex(footnotes_stubhead_marks))
-      }
+      label <- paste0(label, footnotes_dispatch[[context]](footnotes_stubhead_marks))
     }
   }
 
@@ -593,13 +582,7 @@ apply_footnotes_to_output <- function(data,
           context = context
         )
 
-      if (context == "html") {
-        mark <- footnote_mark_to_html(footnotes_data_marks$fs_id_coalesced[i])
-      } else if (context == "rtf") {
-        mark <- footnote_mark_to_rtf(footnotes_data_marks$fs_id_coalesced[i])
-      } else if (context == "latex") {
-        mark <- footnote_mark_to_latex(footnotes_data_marks$fs_id_coalesced[i])
-      }
+      mark <- footnotes_dispatch[[context]](footnotes_data_marks$fs_id_coalesced[i])
 
       if (footnote_placement == "right") {
         text <- paste0(text, mark)
@@ -635,42 +618,17 @@ set_footnote_marks_row_groups <- function(data,
       dplyr::select(grpname, fs_id_coalesced) %>%
       dplyr::distinct()
 
+    fn <- footnotes_dispatch[[context]]
+
     for (i in seq(nrow(footnotes_row_groups_marks))) {
 
       row_index <-
         which(groups_rows_df[, "group_id"] == footnotes_row_groups_marks$grpname[i])
 
-      text <- groups_rows_df[row_index, "group_label"]
-
-      if (context == "html") {
-
-        text <-
-          paste0(
-            text,
-            footnote_mark_to_html(
-              footnotes_row_groups_marks$fs_id_coalesced[i])
-          )
-
-      } else if (context == "rtf") {
-
-        text <-
-          paste0(
-            text,
-            footnote_mark_to_rtf(
-              footnotes_row_groups_marks$fs_id_coalesced[i])
-          )
-
-      } else if (context == "latex") {
-
-        text <-
-          paste0(
-            text,
-            footnote_mark_to_latex(
-              footnotes_row_groups_marks$fs_id_coalesced[i])
-          )
-      }
-
-      groups_rows_df[row_index, "group_label"] <- text
+      groups_rows_df[row_index, "group_label"] <- paste0(
+        groups_rows_df[row_index, "group_label"],
+        fn(footnotes_row_groups_marks$fs_id_coalesced[i])
+      )
     }
   }
 
@@ -694,11 +652,6 @@ apply_footnotes_to_summary <- function(data,
 
   summary_df_list <- list_of_summaries$summary_df_display_list
 
-  # if (!("summary_cells" %in% footnotes_tbl$locname |
-  #       "grand_summary_cells" %in% footnotes_tbl$locname)) {
-  #   return(list_of_summaries)
-  # }
-
   if ("summary_cells" %in% footnotes_tbl$locname) {
 
     footnotes_tbl_data <- footnotes_tbl[footnotes_tbl$locname == "summary_cells", ]
@@ -714,29 +667,11 @@ apply_footnotes_to_summary <- function(data,
       dplyr::distinct()
 
     for (i in seq(nrow(footnotes_data_marks))) {
-
-      text <-
-        summary_df_list[[footnotes_data_marks[i, ][["grpname"]]]][[
-          footnotes_data_marks$row[i], footnotes_data_marks$colname[i]]]
-
-      if (context == "html") {
-
-        text <-
-          paste0(text, footnote_mark_to_html(footnotes_data_marks$fs_id_coalesced[i]))
-
-      } else if (context == "rtf") {
-
-        text <-
-          paste0(text, footnote_mark_to_rtf(footnotes_data_marks$fs_id_coalesced[i]))
-
-      } else if (context == "latex") {
-
-        text <-
-          paste0(text, footnote_mark_to_latex(footnotes_data_marks$fs_id_coalesced[i]))
-      }
-
       summary_df_list[[footnotes_data_marks[i, ][["grpname"]]]][[
-        footnotes_data_marks$row[i], footnotes_data_marks$colname[i]]] <- text
+        footnotes_data_marks$row[i], footnotes_data_marks$colname[i]]] <- paste0(
+          summary_df_list[[footnotes_data_marks[i, ][["grpname"]]]][[
+            footnotes_data_marks$row[i], footnotes_data_marks$colname[i]]],
+          footnotes_dispatch[[context]](footnotes_data_marks$fs_id_coalesced[i]))
     }
 
     list_of_summaries$summary_df_display_list <- summary_df_list
@@ -756,29 +691,11 @@ apply_footnotes_to_summary <- function(data,
       dplyr::distinct()
 
     for (i in seq(nrow(footnotes_data_marks))) {
-
-      text <-
-        summary_df_list[[grand_summary_col]][[
-          footnotes_data_marks$rownum[i], footnotes_data_marks$colname[i]]]
-
-      if (context == "html") {
-
-        text <-
-          paste0(text, footnote_mark_to_html(footnotes_data_marks$fs_id_coalesced[i]))
-
-      } else if (context == "rtf") {
-
-        text <-
-          paste0(text, footnote_mark_to_rtf(footnotes_data_marks$fs_id_coalesced[i]))
-
-      } else if (context == "latex") {
-
-        text <-
-          paste0(text, footnote_mark_to_latex(footnotes_data_marks$fs_id_coalesced[i]))
-      }
-
       summary_df_list[[grand_summary_col]][[
-        footnotes_data_marks$rownum[i], footnotes_data_marks$colname[i]]] <- text
+        footnotes_data_marks$rownum[i], footnotes_data_marks$colname[i]]] <- paste0(
+          summary_df_list[[grand_summary_col]][[
+            footnotes_data_marks$rownum[i], footnotes_data_marks$colname[i]]],
+          footnotes_dispatch[[context]](footnotes_data_marks$fs_id_coalesced[i]))
     }
 
     list_of_summaries$summary_df_display_list[[grand_summary_col]] <-
@@ -793,3 +710,11 @@ apply_footnotes_to_summary <- function(data,
 
   data
 }
+
+# TODO DOCUMENT THIS
+footnotes_dispatch <- list(
+  html = footnote_mark_to_html,
+  rtf = footnote_mark_to_rtf,
+  latex = footnote_mark_to_latex,
+  word = footnote_mark_to_xml
+)

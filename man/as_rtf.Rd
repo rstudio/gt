@@ -42,6 +42,7 @@ code.
 Other Export Functions: 
 \code{\link{as_latex}()},
 \code{\link{as_raw_html}()},
+\code{\link{as_word}()},
 \code{\link{extract_summary}()},
 \code{\link{gtsave}()}
 }

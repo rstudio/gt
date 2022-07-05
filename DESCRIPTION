@@ -15,6 +15,8 @@ Authors@R: c(
     person("Joe", "Cheng", , "joe@rstudio.com", "aut"),
     person("Barret", "Schloerke", , "barret@rstudio.com", "aut",
            comment = c(ORCID = "0000-0001-9986-114X")),
+    person("Ellis", "Hughes", , "ellis.h.hughes@gsk.com", "aut",
+           comment = c(ORCID = "0000-0003-0637-4436")),       
     person("RStudio", role = c("cph", "fnd"))
     )
 License: MIT + file LICENSE
@@ -112,10 +114,11 @@ Collate:
     'utils_general_str_formatting.R'
     'utils_pipe.R'
     'utils_render_common.R'
-    'utils_render_footnotes.R'
     'utils_render_html.R'
     'utils_render_latex.R'
     'utils_render_rtf.R'
+    'utils_render_xml.R'
+    'z_utils_render_footnotes.R'
     'zzz.R'
 Config/testthat/edition: 3
 Config/testthat/parallel: true
