@@ -1,12 +1,94 @@
+skip_on_cran()
+
+#' @title Add gt table into a Word document
+#' @description Add a gt into a Word document.
+#' @param x `rdocx` object
+#' @param value `gt` object
+#' @param align left, center (default) or right.
+#' @param caption_location top (default), bottom, or embed Indicating if the title and subtitle should be listed above, below, or be embedded in the table
+#' @param caption_align left (default), center, or right. Alignment of caption (title and subtitle). Used when `caption_location` is not "embed".
+#' @param split set to TRUE if you want to activate Word
+#' option 'Allow row to break across pages'.
+#' @param keep_with_next Word option 'keep rows together' can be
+#' activated when TRUE. It avoids page break within tables.
+#' @param pos where to add the gt table relative to the cursor,
+#' one of "after" (default), "before", "on" (end of line).
+#'
+#' @seealso \link[flextable]{body_add_flextable}
+#'
+#' @examples
+#'
+#' library(officer)
+#' library(gt)
+#' gt_tbl <- gt( head( exibble ) )
+#'
+#' doc <- read_docx()
+#' doc <- body_add_gt(doc, value = gt_tbl)
+#' fileout <- tempfile(fileext = ".docx")
+#' print(doc, target = fileout)
+#' @noRd
+body_add_gt <- function(
+    x,
+    value,
+    align = "center",
+    pos = c("after","before","on"),
+    caption_location = c("top","bottom","embed"),
+    caption_align = "left",
+    split = FALSE,
+    keep_with_next = TRUE
+) {
+
+  ## check that officer is available
+  if (!rlang::is_installed("officer")) {
+    stop("{officer} package is necessary to add gt tables to word documents.")
+  }
+
+  ## check that inputs are an officer rdocx and gt tbl
+  stopifnot(inherits(x, "rdocx"))
+  stopifnot(inherits(value, "gt_tbl"))
+
+  pos <- match.arg(pos)
+  caption_location <- match.arg(caption_location)
+
+  # Build all table data objects through a common pipeline
+  value <- build_data(data = value, context = "word")
+
+  ## Create and add table caption if it is to come before the table
+  if (caption_location %in% c("top")) {
+    header_xml <- as_word_tbl_header_caption(data = value, align = caption_align, split = split, keep_with_next = keep_with_next)
+    if (!identical(header_xml,c(""))) {
+      for (header_component in header_xml) {
+        x <- officer::body_add_xml(x, str = header_component, pos)
+      }
+    }
+  }
+
+  ## Create and add the table to the docxr. If the
+  tbl_xml <- as_word_tbl_body(data = value, align = align, split = split, keep_with_next = keep_with_next, embedded_heading = identical(caption_location, "embed"))
+  x <- officer::body_add_xml(x, str = tbl_xml, pos)
+
+  ## Create and add table caption if it is to come after the table
+  if (caption_location %in% c("bottom")) {
+    ## set keep_with_next to false here to prevent it trying to keep with non-table content
+    header_xml <- as_word_tbl_header_caption(data = value, align = caption_align, split = split, keep_with_next = FALSE)
+    if (!identical(header_xml,c(""))) {
+      for (header_component in header_xml) {
+        x <- officer::body_add_xml(x, str = header_component, pos)
+      }
+    }
+  }
+
+  x
+}
+
 # Function to skip tests if Suggested packages not available on system
 check_suggests_xml <- function() {
   skip_if_not_installed("officer")
   skip_if_not_installed("xml2")
 }
 
-test_that("word ooxlm can be generated from gt object", {
+test_that("word ooxml can be generated from gt object", {
 
-  local_edition(3)
 
   # Create a one-row table for these tests
   exibble_min <- exibble[1, ]
@@ -129,23 +211,19 @@ test_that("word ooxlm can be generated from gt object", {
     tab_style(
       style = cell_fill(color = "red"),
       locations = cells_column_spanners("My Span Label top")
-    )%>%
+    ) %>%
     tab_style(
       style = cell_fill(color = "pink"),
       locations = cells_stubhead()
     ) %>%
     as_word() %>%
     expect_snapshot()
-
-
-
 })
 
 test_that("tables can be added to a word doc", {
 
+  skip_on_ci()
   check_suggests_xml()
-
-  local_edition(3)
 
   ## simple table
   gt_exibble_min <- exibble[1:2,] %>%
@@ -167,7 +245,7 @@ test_that("tables can be added to a word doc", {
   print(word_doc,target = temp_word_file)
 
   ## Manual Review
-  if(!testthat::is_testing() & interactive()){
+  if (!testthat::is_testing() & interactive()) {
     shell.exec(temp_word_file)
   }
 
@@ -233,14 +311,12 @@ test_that("tables can be added to a word doc", {
       )
     )
   )
-
 })
 
 test_that("tables with embedded titles can be added to a word doc", {
 
+  skip_on_ci()
   check_suggests_xml()
-
-  local_edition(3)
 
   ## simple table
   gt_exibble_min <- exibble[1:2,] %>%
@@ -263,7 +339,7 @@ test_that("tables with embedded titles can be added to a word doc", {
   print(word_doc,target = temp_word_file)
 
   ## Manual Review
-  if(!testthat::is_testing() & interactive()){
+  if (!testthat::is_testing() & interactive()) {
     shell.exec(temp_word_file)
   }
 
@@ -322,14 +398,12 @@ test_that("tables with embedded titles can be added to a word doc", {
       )
     )
   )
-
 })
 
 test_that("tables with spans can be added to a word doc", {
 
+  skip_on_ci()
   check_suggests_xml()
-
-  local_edition(3)
 
   ## simple table
   gt_exibble_min <- exibble[1:2,] %>%
@@ -356,7 +430,7 @@ test_that("tables with spans can be added to a word doc", {
   print(word_doc,target = temp_word_file)
 
   ## Manual Review
-  if(!testthat::is_testing() & interactive()){
+  if (!testthat::is_testing() & interactive()) {
     shell.exec(temp_word_file)
   }
 
@@ -421,14 +495,12 @@ test_that("tables with spans can be added to a word doc", {
       )
     )
   )
-
 })
 
 test_that("tables with multi-level spans can be added to a word doc", {
 
+  skip_on_ci()
   check_suggests_xml()
-
-  local_edition(3)
 
   ## simple table
   gt_exibble_min <- exibble[1:2,] %>%
@@ -463,7 +535,7 @@ test_that("tables with multi-level spans can be added to a word doc", {
   print(word_doc,target = temp_word_file)
 
   ## Manual Review
-  if(!testthat::is_testing() & interactive()){
+  if (!testthat::is_testing() & interactive()) {
     shell.exec(temp_word_file)
   }
 
@@ -529,14 +601,12 @@ test_that("tables with multi-level spans can be added to a word doc", {
       )
     )
   )
-
 })
 
 test_that("tables with summaries can be added to a word doc", {
 
+  skip_on_ci()
   check_suggests_xml()
-
-  local_edition(3)
 
   ## simple table
   gt_exibble_min <- exibble %>%
@@ -564,7 +634,7 @@ test_that("tables with summaries can be added to a word doc", {
   print(word_doc,target = temp_word_file)
 
   ## Manual Review
-  if(!testthat::is_testing() & interactive()){
+  if (!testthat::is_testing() & interactive()) {
     shell.exec(temp_word_file)
   }
 
@@ -614,14 +684,12 @@ test_that("tables with summaries can be added to a word doc", {
       c("s.d.", "4,916,123.25",          "—", "—")
     )
   )
-
 })
 
 test_that("tables with footnotes can be added to a word doc", {
 
+  skip_on_ci()
   check_suggests_xml()
-
-  local_edition(3)
 
   ## simple table
   gt_exibble_min <- exibble[1:2,] %>%
@@ -629,7 +697,7 @@ test_that("tables with footnotes can be added to a word doc", {
     tab_footnote(
       footnote = md("this is a footer example"),
       locations = cells_column_labels(columns = num )
-    )%>%
+    ) %>%
     tab_footnote(
       footnote = md("this is a second footer example"),
       locations = cells_column_labels(columns = char )
@@ -647,7 +715,7 @@ test_that("tables with footnotes can be added to a word doc", {
   print(word_doc,target = temp_word_file)
 
   ## Manual Review
-  if(!testthat::is_testing() & interactive()){
+  if (!testthat::is_testing() & interactive()) {
     shell.exec(temp_word_file)
   }
 
@@ -715,15 +783,12 @@ test_that("tables with footnotes can be added to a word doc", {
       c("true2this is a second footer example")
     )
   )
-
 })
 
 test_that("tables with source notes can be added to a word doc", {
 
+  skip_on_ci()
   check_suggests_xml()
-
-
-  local_edition(3)
 
   ## simple table
   gt_exibble_min <- exibble[1:2, ] %>%
@@ -806,20 +871,18 @@ test_that("tables with source notes can be added to a word doc", {
       c("this is a source note example")
     )
   )
-
 })
 
 test_that("long tables can be added to a word doc", {
 
+  skip_on_ci()
   check_suggests_xml()
-
-  local_edition(3)
 
   ## simple table
   gt_letters <- tibble::tibble(
     upper_case = c(LETTERS,LETTERS),
     lower_case = c(letters,letters)
-    )%>%
+    ) %>%
     gt() %>%
     tab_header(
       title = "LETTERS"
@@ -837,7 +900,7 @@ test_that("long tables can be added to a word doc", {
   print(word_doc,target = temp_word_file)
 
   ## Manual Review
-  if(!testthat::is_testing() & interactive()){
+  if (!testthat::is_testing() & interactive()) {
     shell.exec(temp_word_file)
   }
 
@@ -878,20 +941,18 @@ test_that("long tables can be added to a word doc", {
       x %>% xml2::xml_find_all(".//w:p") %>% xml2::xml_text()),
     lapply(c(1:26,1:26),function(i)c(LETTERS[i], letters[i]))
   )
-
 })
 
 test_that("long tables with spans can be added to a word doc", {
 
+  skip_on_ci()
   check_suggests_xml()
-
-  local_edition(3)
 
   ## simple table
   gt_letters <- tibble::tibble(
     upper_case = c(LETTERS,LETTERS),
     lower_case = c(letters,letters)
-    )%>%
+    ) %>%
     gt() %>%
     tab_header(
       title = "LETTERS"
@@ -913,7 +974,7 @@ test_that("long tables with spans can be added to a word doc", {
   print(word_doc,target = temp_word_file)
 
   ## Manual Review
-  if(!testthat::is_testing() & interactive()){
+  if (!testthat::is_testing() & interactive()) {
     shell.exec(temp_word_file)
   }
 
@@ -954,14 +1015,12 @@ test_that("long tables with spans can be added to a word doc", {
       x %>% xml2::xml_find_all(".//w:p") %>% xml2::xml_text()),
     lapply(c(1:26,1:26),function(i)c(LETTERS[i], letters[i]))
   )
-
 })
 
 test_that("tables with cell & text coloring can be added to a word doc - no spanner", {
 
+  skip_on_ci()
   check_suggests_xml()
-
-  local_edition(3)
 
   ## simple table
   gt_exibble_min <- exibble[1:4,] %>%
@@ -1001,13 +1060,13 @@ test_that("tables with cell & text coloring can be added to a word doc - no span
     tab_style(
       style = cell_fill(color = "green"),
       locations = cells_column_labels()
-    )%>%
+    ) %>%
     tab_style(
       style = cell_fill(color = "pink"),
       locations = cells_stubhead()
     )
 
-  if(!testthat::is_testing() & interactive()){
+  if (!testthat::is_testing() & interactive()) {
     print(gt_exibble_min)
   }
 
@@ -1023,7 +1082,7 @@ test_that("tables with cell & text coloring can be added to a word doc - no span
   print(word_doc,target = temp_word_file)
 
   ## Manual Review
-  if(!testthat::is_testing() & interactive()){
+  if (!testthat::is_testing() & interactive()) {
     shell.exec(temp_word_file)
   }
 
@@ -1141,14 +1200,12 @@ test_that("tables with cell & text coloring can be added to a word doc - no span
       )
     )
   )
-
 })
 
 test_that("tables with cell & text coloring can be added to a word doc - with spanners", {
 
+  skip_on_ci()
   check_suggests_xml()
-
-  local_edition(3)
 
   ## simple table
   gt_exibble_min <- exibble[1:4,] %>%
@@ -1172,13 +1229,13 @@ test_that("tables with cell & text coloring can be added to a word doc - with sp
     tab_style(
       style = cell_fill(color = "red"),
       locations = cells_column_spanners("My Span Label top")
-    )%>%
+    ) %>%
     tab_style(
       style = cell_fill(color = "pink"),
       locations = cells_stubhead()
     )
 
-  if(!testthat::is_testing() & interactive()){
+  if (!testthat::is_testing() & interactive()) {
     print(gt_exibble_min)
   }
 
@@ -1194,7 +1251,7 @@ test_that("tables with cell & text coloring can be added to a word doc - with sp
   print(word_doc,target = temp_word_file)
 
   ## Manual Review
-  if(!testthat::is_testing() & interactive()){
+  if (!testthat::is_testing() & interactive()) {
     shell.exec(temp_word_file)
   }
 
@@ -1239,14 +1296,12 @@ test_that("tables with cell & text coloring can be added to a word doc - with sp
       list(character(0), "A020F0","A020F0", "A020F0", "A020F0", "A020F0", "A020F0", "A020F0","A020F0")
       )
   )
-
 })
 
 test_that("tables with cell & text coloring can be added to a word doc - with source_notes and footnotes", {
 
+  skip_on_ci()
   check_suggests_xml()
-
-  local_edition(3)
 
   ## simple table
   gt_exibble_min <- exibble[1:2,] %>%
@@ -1263,7 +1318,7 @@ test_that("tables with cell & text coloring can be added to a word doc - with so
       locations = cells_footnotes()
     )
 
-  if(!testthat::is_testing() & interactive()){
+  if (!testthat::is_testing() & interactive()) {
     print(gt_exibble_min)
   }
 
@@ -1279,7 +1334,7 @@ test_that("tables with cell & text coloring can be added to a word doc - with so
   print(word_doc,target = temp_word_file)
 
   ## Manual Review
-  if(!testthat::is_testing() & interactive()){
+  if (!testthat::is_testing() & interactive()) {
     shell.exec(temp_word_file)
   }
 
@@ -1325,9 +1380,8 @@ test_that("tables with cell & text coloring can be added to a word doc - with so
 
 test_that("tables with cell & text coloring can be added to a word doc - with summaries (grand/group)", {
 
+  skip_on_ci()
   check_suggests_xml()
-
-  local_edition(3)
 
   ## simple table
   gt_exibble_min <- exibble %>%
@@ -1350,7 +1404,6 @@ test_that("tables with cell & text coloring can be added to a word doc - with su
         s.d. = ~sd(., na.rm = TRUE)
       )
     ) %>%
-
     tab_style(
       style = cell_text(color = "orange"),
       locations = cells_summary(groups = "grp_a", columns = char)
@@ -1359,7 +1412,6 @@ test_that("tables with cell & text coloring can be added to a word doc - with su
       style = cell_text(color = "green"),
       locations = cells_stub_summary()
     ) %>%
-
     tab_style(
       style = cell_text(color = "purple"),
       locations = cells_grand_summary(columns = num, rows = 3)
@@ -1369,7 +1421,7 @@ test_that("tables with cell & text coloring can be added to a word doc - with su
       locations = cells_stub_grand_summary()
     )
 
-  if(!testthat::is_testing() & interactive()){
+  if (!testthat::is_testing() & interactive()) {
     print(gt_exibble_min)
   }
 
@@ -1385,7 +1437,7 @@ test_that("tables with cell & text coloring can be added to a word doc - with su
   print(word_doc,target = temp_word_file)
 
   ## Manual Review
-  if(!testthat::is_testing() & interactive()){
+  if (!testthat::is_testing() & interactive()) {
     shell.exec(temp_word_file)
   }
 
@@ -1437,7 +1489,7 @@ test_that("tables with cell & text coloring can be added to a word doc - with su
     lapply(docx_table_body_contents, function(x) {
       x %>% xml2::xml_find_all(".//w:tc") %>% sapply(function(y) {
         val <- y %>% xml2::xml_find_all(".//w:color") %>% xml2::xml_attr(attr = "val")
-        if(identical(val, character())){
+        if (identical(val, character())) {
           ""
         }else{
           val
@@ -1470,7 +1522,7 @@ test_that("tables with cell & text coloring can be added to a word doc - with su
     lapply(docx_table_body_contents, function(x) {
       x %>% xml2::xml_find_all(".//w:tc") %>% sapply(function(y) {
         val <- y %>% xml2::xml_find_all(".//w:shd") %>% xml2::xml_attr(attr = "fill")
-        if(identical(val, character())){
+        if (identical(val, character())) {
           ""
         }else{
           val
@@ -1497,5 +1549,4 @@ test_that("tables with cell & text coloring can be added to a word doc - with su
          c("FFFF00", "", "", "")
          )
   )
-
 })

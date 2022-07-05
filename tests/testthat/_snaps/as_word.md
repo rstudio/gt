@@ -1,4 +1,4 @@
-# word ooxlm can be generated from gt object
+# word ooxml can be generated from gt object
 
     Code
       .
