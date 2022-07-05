@@ -243,7 +243,6 @@ reference:
     - as_rtf
     - as_word
     - extract_summary
-    - body_add_gt
 
 navbar:
   structure:
