@@ -52,7 +52,7 @@ values that could potentially undergo some substitution.
 tbl
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 9 x 1
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 9 × 1
 ##         num
 ##       <dbl>
 ## 1       0.1

@@ -18,14 +18,18 @@ as_word(
 
 \item{align}{left, center (default) or right.}
 
-\item{caption_location}{top (default), bottom, or embed Indicating if the title and subtitle should be listed above, below, or be embedded in the table}
+\item{caption_location}{top (default), bottom, or embed Indicating if the
+title and subtitle should be listed above, below, or be embedded in the
+table}
 
-\item{caption_align}{left (default), center, or right. Alignment of caption (title and subtitle). Used when \code{caption_location} is not "embed".}
+\item{caption_align}{left (default), center, or right. Alignment of caption
+(title and subtitle). Used when \code{caption_location} is not "embed".}
 
-\item{split}{TRUE or FALSE (default) indicating whether activate Word option 'Allow row to break across pages'.}
+\item{split}{TRUE or FALSE (default) indicating whether activate Word option
+'Allow row to break across pages'.}
 
-\item{keep_with_next}{TRUE (default) or FALSE indicating whether a table should use Word option 'keep rows
-together' is activated when TRUEd}
+\item{keep_with_next}{TRUE (default) or FALSE indicating whether a table
+should use Word option 'keep rows together' is activated when TRUEd}
 }
 \description{
 Get the Open Office XML table tag content from a \code{gt_tbl} object as as a

@@ -53,7 +53,7 @@ summary_extracted
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{## $summary_df_data_list
 ## $summary_df_data_list$W02
-## # A tibble: 3 x 8
+## # A tibble: 3 × 8
 ##   group_id rowname  date  open  high   low close  week
 ##   <chr>    <chr>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
 ## 1 W02      min        NA 2006. 2030. 1992. 2003.    NA
@@ -61,7 +61,7 @@ summary_extracted
 ## 3 W02      avg        NA 2035. 2049. 2017. 2031.    NA
 ## 
 ## $summary_df_data_list$W03
-## # A tibble: 3 x 8
+## # A tibble: 3 × 8
 ##   group_id rowname  date  open  high   low close  week
 ##   <chr>    <chr>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
 ## 1 W03      min        NA 1992. 2018. 1988. 1993.    NA
@@ -69,7 +69,7 @@ summary_extracted
 ## 3 W03      avg        NA 2020. 2033. 2000. 2015.    NA
 ## 
 ## $summary_df_data_list$W04
-## # A tibble: 3 x 8
+## # A tibble: 3 × 8
 ##   group_id rowname  date  open  high   low close  week
 ##   <chr>    <chr>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
 ## 1 W04      min        NA 2020. 2029. 2004. 2023.    NA
@@ -77,7 +77,7 @@ summary_extracted
 ## 3 W04      avg        NA 2035. 2049. 2023. 2042.    NA
 ## 
 ## $summary_df_data_list$W05
-## # A tibble: 3 x 8
+## # A tibble: 3 × 8
 ##   group_id rowname  date  open  high   low close  week
 ##   <chr>    <chr>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
 ## 1 W05      min        NA 2002. 2023. 1989. 1995.    NA
