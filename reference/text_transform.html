@@ -63,7 +63,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">text_transform</span><span class="op">(</span><span class="va">data</span>, <span class="va">locations</span>, <span class="va">fn</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">text_transform</span><span class="op">(</span><span class="va">data</span>, <span class="va">locations</span>, <span class="va">fn</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -99,23 +99,23 @@ wish to make the transformation happen at different locations.</p></dd>
 <code>num</code> column using a function supplied to <code>text_transform()</code> (via the <code>fn</code>
 argument). Note that the <code>x</code> in the <code>fn = function (x)</code> part is a formatted
 vector of column values from the <code>num</code> column.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">num</span>, <span class="va">char</span>, <span class="va">currency</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">num</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/fmt_currency.html">fmt_currency</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">currency</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/text_transform.html">text_transform</a></span><span class="op">(</span>
-    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">num</span><span class="op">)</span>,
-    fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
-      <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span>
-        <span class="va">x</span>, <span class="st">" ("</span>,
-        <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span>
-          <span class="va">x</span> <span class="op">&gt;</span> <span class="fl">20</span>   <span class="op">~</span> <span class="st">"large"</span>,
-          <span class="va">x</span> <span class="op">&lt;=</span> <span class="fl">20</span>  <span class="op">~</span> <span class="st">"small"</span><span class="op">)</span>,
-        <span class="st">")"</span><span class="op">)</span>
-    <span class="op">}</span>
-  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">num</span>, <span class="va">char</span>, <span class="va">currency</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">num</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/fmt_currency.html">fmt_currency</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">currency</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/text_transform.html">text_transform</a></span><span class="op">(</span></span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">num</span><span class="op">)</span>,</span>
+<span>    fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span></span>
+<span>        <span class="va">x</span>, <span class="st">" ("</span>,</span>
+<span>        <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span></span>
+<span>          <span class="va">x</span> <span class="op">&gt;</span> <span class="fl">20</span>   <span class="op">~</span> <span class="st">"large"</span>,</span>
+<span>          <span class="va">x</span> <span class="op">&lt;=</span> <span class="fl">20</span>  <span class="op">~</span> <span class="st">"small"</span><span class="op">)</span>,</span>
+<span>        <span class="st">")"</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_text_transform_1.png" style="width:100%;"></p>
     </div>
     <div class="section level2">
@@ -154,7 +154,7 @@ vector of column values from the <code>num</code> column.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, RStudio.</p>
+  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, Ellis Hughes, RStudio.</p>
 </div>
 
 <div class="pkgdown-footer-right">

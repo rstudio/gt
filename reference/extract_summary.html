@@ -72,7 +72,7 @@ descriptive stub labels for the summary rows.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">extract_summary</span><span class="op">(</span><span class="va">data</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">extract_summary</span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -95,30 +95,30 @@ descriptive stub labels for the summary rows.</p>
 <p>Use <code><a href="sp500.html">sp500</a></code> to create a <strong>gt</strong> table with row groups. Create summary rows
 labeled as <code>min</code>, <code>max</code>, and <code>avg</code> for every row group with <code><a href="summary_rows.html">summary_rows()</a></code>.
 Then, extract the summary rows as a list object.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">summary_extracted</span> <span class="op">&lt;-</span>
-  <span class="va">sp500</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">date</span> <span class="op">&gt;=</span> <span class="st">"2015-01-05"</span> <span class="op">&amp;</span> <span class="va">date</span> <span class="op">&lt;=</span><span class="st">"2015-01-30"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>week <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"W"</span>, <span class="fu"><a href="https://rdrr.io/r/base/strptime.html" class="external-link">strftime</a></span><span class="op">(</span><span class="va">date</span>, format <span class="op">=</span> <span class="st">"%V"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">adj_close</span>, <span class="op">-</span><span class="va">volume</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>
-    rowname_col <span class="op">=</span> <span class="st">"date"</span>,
-    groupname_col <span class="op">=</span> <span class="st">"week"</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/summary_rows.html">summary_rows</a></span><span class="op">(</span>
-    groups <span class="op">=</span> <span class="cn">TRUE</span>,
-    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">open</span>, <span class="va">high</span>, <span class="va">low</span>, <span class="va">close</span><span class="op">)</span>,
-    fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
-      min <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span>,
-      max <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span>,
-      avg <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span>
-    <span class="op">)</span>,
-    formatter <span class="op">=</span> <span class="va">fmt_number</span>,
-    use_seps <span class="op">=</span> <span class="cn">FALSE</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/extract_summary.html">extract_summary</a></span><span class="op">(</span><span class="op">)</span>
-
-<span class="va">summary_extracted</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">summary_extracted</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">sp500</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">date</span> <span class="op">&gt;=</span> <span class="st">"2015-01-05"</span> <span class="op">&amp;</span> <span class="va">date</span> <span class="op">&lt;=</span><span class="st">"2015-01-30"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>week <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"W"</span>, <span class="fu"><a href="https://rdrr.io/r/base/strptime.html" class="external-link">strftime</a></span><span class="op">(</span><span class="va">date</span>, format <span class="op">=</span> <span class="st">"%V"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">adj_close</span>, <span class="op">-</span><span class="va">volume</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span></span>
+<span>    rowname_col <span class="op">=</span> <span class="st">"date"</span>,</span>
+<span>    groupname_col <span class="op">=</span> <span class="st">"week"</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/summary_rows.html">summary_rows</a></span><span class="op">(</span></span>
+<span>    groups <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">open</span>, <span class="va">high</span>, <span class="va">low</span>, <span class="va">close</span><span class="op">)</span>,</span>
+<span>    fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      min <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span>,</span>
+<span>      max <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span>,</span>
+<span>      avg <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    formatter <span class="op">=</span> <span class="va">fmt_number</span>,</span>
+<span>    use_seps <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/extract_summary.html">extract_summary</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">summary_extracted</span></span></code></pre><p></p></div>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1"></a><span class="co">## $summary_df_data_list</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="co">## $summary_df_data_list$W02</span></span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="co">## # A tibble: 3 × 8</span></span>
@@ -153,17 +153,17 @@ Then, extract the summary rows as a list object.</p>
 <span id="cb1-32"><a href="#cb1-32"></a><span class="co">## 3 W05      avg        NA 2030. 2039. 2009. 2021.    NA</span></span></code></pre><p></p></div>
 <p>Use the summary list to make a new <strong>gt</strong> table. The key thing is to use
 <code><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">dplyr::bind_rows()</a></code> and then pass the tibble to <code><a href="gt.html">gt()</a></code>.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">summary_extracted</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span>recursive <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>groupname_col <span class="op">=</span> <span class="st">"group_id"</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">summary_extracted</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span>recursive <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>groupname_col <span class="op">=</span> <span class="st">"group_id"</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_extract_summary_1.png" style="width:100%;"></p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
     
 
-<p>13-5</p>
+<p>13-6</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -171,6 +171,7 @@ Then, extract the summary rows as a list object.</p>
 <code><a href="as_latex.html">as_latex</a>()</code>,
 <code><a href="as_raw_html.html">as_raw_html</a>()</code>,
 <code><a href="as_rtf.html">as_rtf</a>()</code>,
+<code><a href="as_word.html">as_word</a>()</code>,
 <code><a href="gtsave.html">gtsave</a>()</code></p></div>
     </div>
 
@@ -179,7 +180,7 @@ Then, extract the summary rows as a list object.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, RStudio.</p>
+  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, Ellis Hughes, RStudio.</p>
 </div>
 
 <div class="pkgdown-footer-right">

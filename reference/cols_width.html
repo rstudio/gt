@@ -81,7 +81,7 @@ dimension.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">cols_width</span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span>, .list <span class="op">=</span> <span class="fu">list2</span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cols_width</span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span>, .list <span class="op">=</span> <span class="fu">list2</span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -135,18 +135,18 @@ and <code>container.width</code> arguments within <code><a href="tab_options.htm
 columns with <code>cols_width()</code>. This is done with named arguments in <code>...</code>,
 specifying the exact widths for table columns (using <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code> at the
 end will capture all remaining columns).</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span>
-    <span class="va">num</span>, <span class="va">char</span>, <span class="va">date</span>,
-    <span class="va">datetime</span>, <span class="va">row</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/cols_width.html">cols_width</a></span><span class="op">(</span>
-    <span class="va">num</span> <span class="op">~</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">150</span><span class="op">)</span>,
-    <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with</a></span><span class="op">(</span><span class="st">"r"</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>,
-    <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"date"</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">200</span><span class="op">)</span>,
-    <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">60</span><span class="op">)</span>
-  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span></span>
+<span>    <span class="va">num</span>, <span class="va">char</span>, <span class="va">date</span>,</span>
+<span>    <span class="va">datetime</span>, <span class="va">row</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/cols_width.html">cols_width</a></span><span class="op">(</span></span>
+<span>    <span class="va">num</span> <span class="op">~</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">150</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with</a></span><span class="op">(</span><span class="st">"r"</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"date"</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">200</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">60</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_width_1.png" style="width:100%;"></p>
     </div>
     <div class="section level2">
@@ -176,7 +176,7 @@ end will capture all remaining columns).</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, RStudio.</p>
+  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, Ellis Hughes, RStudio.</p>
 </div>
 
 <div class="pkgdown-footer-right">

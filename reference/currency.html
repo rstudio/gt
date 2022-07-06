@@ -81,7 +81,7 @@ argument of <code><a href="fmt_currency.html">fmt_currency()</a></code> will tak
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">currency</span><span class="op">(</span><span class="va">...</span>, .list <span class="op">=</span> <span class="fu">list2</span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">currency</span><span class="op">(</span><span class="va">...</span>, .list <span class="op">=</span> <span class="fu">list2</span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -121,16 +121,16 @@ required each and every context.</p>
 
 <p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table. Format the <code>currency</code> column to
 have currency values in guilder (a defunct Dutch currency).</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/fmt_currency.html">fmt_currency</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="va">currency</span>,
-    currency <span class="op">=</span> <span class="fu"><a href="../reference/currency.html">currency</a></span><span class="op">(</span>
-      html <span class="op">=</span> <span class="st">"&amp;fnof;"</span>,
-      default <span class="op">=</span> <span class="st">"f"</span>
-    <span class="op">)</span>,
-    decimals <span class="op">=</span> <span class="fl">2</span>
-  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/fmt_currency.html">fmt_currency</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="va">currency</span>,</span>
+<span>    currency <span class="op">=</span> <span class="fu"><a href="../reference/currency.html">currency</a></span><span class="op">(</span></span>
+<span>      html <span class="op">=</span> <span class="st">"&amp;fnof;"</span>,</span>
+<span>      default <span class="op">=</span> <span class="st">"f"</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    decimals <span class="op">=</span> <span class="fl">2</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_currency_1.png" style="width:100%;"></p>
     </div>
     <div class="section level2">
@@ -175,7 +175,7 @@ have currency values in guilder (a defunct Dutch currency).</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, RStudio.</p>
+  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, Ellis Hughes, RStudio.</p>
 </div>
 
 <div class="pkgdown-footer-right">

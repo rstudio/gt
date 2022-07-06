@@ -84,7 +84,7 @@ ID given during the <code><a href="render_gt.html">render_gt()</a></code> call i
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">gt_output</span><span class="op">(</span><span class="va">outputId</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">gt_output</span><span class="op">(</span><span class="va">outputId</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -108,29 +108,29 @@ Shiny apps can be found at the <a href="https://shiny.rstudio.com" class="extern
 <strong>gt</strong> table, (2) sets up the <code>ui</code> with <code>gt_output()</code>, and (3) sets up the
 <code>server</code> with a <code><a href="render_gt.html">render_gt()</a></code> that uses the <code>gt_tbl</code> object as the input
 expression.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span>
-
-<span class="va">gt_tbl</span> <span class="op">&lt;-</span>
-  <span class="va">gtcars</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/cols_hide.html">cols_hide</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"_"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span>
-
-  <span class="fu"><a href="../reference/gt_output.html">gt_output</a></span><span class="op">(</span>outputId <span class="op">=</span> <span class="st">"table"</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>,
-                   <span class="va">output</span>,
-                   <span class="va">session</span><span class="op">)</span> <span class="op">{</span>
-
-  <span class="va">output</span><span class="op">$</span><span class="va">table</span> <span class="op">&lt;-</span>
-    <span class="fu"><a href="../reference/render_gt.html">render_gt</a></span><span class="op">(</span>
-      expr <span class="op">=</span> <span class="va">gt_tbl</span>,
-      height <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">600</span><span class="op">)</span>,
-      width <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">600</span><span class="op">)</span>
-    <span class="op">)</span>
-<span class="op">}</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">gt_tbl</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">gtcars</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/cols_hide.html">cols_hide</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"_"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span></span>
+<span></span>
+<span>  <span class="fu"><a href="../reference/gt_output.html">gt_output</a></span><span class="op">(</span>outputId <span class="op">=</span> <span class="st">"table"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>,</span>
+<span>                   <span class="va">output</span>,</span>
+<span>                   <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
+<span></span>
+<span>  <span class="va">output</span><span class="op">$</span><span class="va">table</span> <span class="op">&lt;-</span></span>
+<span>    <span class="fu"><a href="../reference/render_gt.html">render_gt</a></span><span class="op">(</span></span>
+<span>      expr <span class="op">=</span> <span class="va">gt_tbl</span>,</span>
+<span>      height <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">600</span><span class="op">)</span>,</span>
+<span>      width <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">600</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre><p></p></div>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
@@ -149,7 +149,7 @@ expression.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, RStudio.</p>
+  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, Ellis Hughes, RStudio.</p>
 </div>
 
 <div class="pkgdown-footer-right">

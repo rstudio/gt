@@ -107,36 +107,36 @@
 <hr>
 <p>The <strong>gt</strong> package is designed to be both straightforward yet powerful. The emphasis is on simple functions for the everyday display table needs. Here is a brief example of how to use <strong>gt</strong> to create a table from the included <code>sp500</code> dataset:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://gt.rstudio.com/">gt</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidyverse/glue" class="external-link">glue</a></span><span class="op">)</span>
-
-<span class="co"># Define the start and end dates for the data range</span>
-<span class="va">start_date</span> <span class="op">&lt;-</span> <span class="st">"2010-06-07"</span>
-<span class="va">end_date</span> <span class="op">&lt;-</span> <span class="st">"2010-06-14"</span>
-
-<span class="co"># Create a gt table based on preprocessed</span>
-<span class="co"># `sp500` table data</span>
-<span class="va">sp500</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">date</span> <span class="op">&gt;=</span> <span class="va">start_date</span> <span class="op">&amp;</span> <span class="va">date</span> <span class="op">&lt;=</span> <span class="va">end_date</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">adj_close</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="reference/tab_header.html">tab_header</a></span><span class="op">(</span>
-    title <span class="op">=</span> <span class="st">"S&amp;P 500"</span>,
-    subtitle <span class="op">=</span> <span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"{start_date} to {end_date}"</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="reference/fmt_date.html">fmt_date</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="va">date</span>,
-    date_style <span class="op">=</span> <span class="fl">3</span>
-  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="reference/fmt_currency.html">fmt_currency</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">open</span>, <span class="va">high</span>, <span class="va">low</span>, <span class="va">close</span><span class="op">)</span>,
-    currency <span class="op">=</span> <span class="st">"USD"</span>
-  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="reference/fmt_number.html">fmt_number</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="va">volume</span>,
-    suffixing <span class="op">=</span> <span class="cn">TRUE</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://gt.rstudio.com/">gt</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidyverse/glue" class="external-link">glue</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Define the start and end dates for the data range</span></span>
+<span><span class="va">start_date</span> <span class="op">&lt;-</span> <span class="st">"2010-06-07"</span></span>
+<span><span class="va">end_date</span> <span class="op">&lt;-</span> <span class="st">"2010-06-14"</span></span>
+<span></span>
+<span><span class="co"># Create a gt table based on preprocessed</span></span>
+<span><span class="co"># `sp500` table data</span></span>
+<span><span class="va">sp500</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">date</span> <span class="op">&gt;=</span> <span class="va">start_date</span> <span class="op">&amp;</span> <span class="va">date</span> <span class="op">&lt;=</span> <span class="va">end_date</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">adj_close</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="reference/tab_header.html">tab_header</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"S&amp;P 500"</span>,</span>
+<span>    subtitle <span class="op">=</span> <span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"{start_date} to {end_date}"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="reference/fmt_date.html">fmt_date</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="va">date</span>,</span>
+<span>    date_style <span class="op">=</span> <span class="fl">3</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="reference/fmt_currency.html">fmt_currency</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">open</span>, <span class="va">high</span>, <span class="va">low</span>, <span class="va">close</span><span class="op">)</span>,</span>
+<span>    currency <span class="op">=</span> <span class="st">"USD"</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="reference/fmt_number.html">fmt_number</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="va">volume</span>,</span>
+<span>    suffixing <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <div align="center"><p><img src="reference/figures/gt_sp500_table.svg" width="800px"></p></div>
 <p>There are six datasets included in <strong>gt</strong>: <code>countrypops</code>, <code>sza</code>, <code>gtcars</code>, <code>sp500</code>, <code>pizzaplace</code>, and <code>exibble</code>. All of them are useful for experimenting with <strong>gt</strong>’s functions.</p>
 <p>Beyond this simple example, there are many functions available in <strong>gt</strong> for creating super-customized tables. For much more information on these, visit the <a href="https://gt.rstudio.com/">documentation website</a> or take a <em>Test Drive</em> in the <a href="https://rstudio.cloud/project/779965" class="external-link">RStudio Cloud project</a>.</p>
@@ -150,10 +150,10 @@
 </h2>
 <p>The <strong>gt</strong> package can be installed from <strong>CRAN</strong> with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"gt"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"gt"</span><span class="op">)</span></span></code></pre></div>
 <p>You can also choose to install the development version of <strong>gt</strong> from <strong>GitHub</strong>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"rstudio/gt"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"rstudio/gt"</span><span class="op">)</span></span></code></pre></div>
 <p>If you encounter a bug, have usage questions, or want to share ideas to make this package better, please feel free to file an <a href="https://github.com/rstudio/gt/issues" class="external-link">issue</a>.</p>
 <hr>
 </div>
@@ -264,6 +264,7 @@
 <li>Richard Iannone <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-3925-190X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Joe Cheng <br><small class="roles"> Author </small>  </li>
 <li>Barret Schloerke <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-9986-114X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Ellis Hughes <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-0637-4436" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>RStudio <br><small class="roles"> Copyright holder, funder </small>  </li>
 </ul>
 </div>
@@ -288,7 +289,7 @@
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, RStudio.</p>
+<p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, Ellis Hughes, RStudio.</p>
 </div>
 
 <div class="pkgdown-footer-right">

@@ -72,14 +72,14 @@ allows for this replacement through specification of a <code>threshold</code>, a
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">sub_small_vals</span><span class="op">(</span>
-  <span class="va">data</span>,
-  columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,
-  rows <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,
-  threshold <span class="op">=</span> <span class="fl">0.01</span>,
-  small_pattern <span class="op">=</span> <span class="kw">if</span> <span class="op">(</span><span class="va">sign</span> <span class="op">==</span> <span class="st">"+"</span><span class="op">)</span> <span class="st">"&lt;{x}"</span> <span class="kw">else</span> <span class="fu"><a href="md.html">md</a></span><span class="op">(</span><span class="st">"&lt;*abs*(-{x})"</span><span class="op">)</span>,
-  sign <span class="op">=</span> <span class="st">"+"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">sub_small_vals</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  rows <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  threshold <span class="op">=</span> <span class="fl">0.01</span>,</span>
+<span>  small_pattern <span class="op">=</span> <span class="kw">if</span> <span class="op">(</span><span class="va">sign</span> <span class="op">==</span> <span class="st">"+"</span><span class="op">)</span> <span class="st">"&lt;{x}"</span> <span class="kw">else</span> <span class="fu"><a href="md.html">md</a></span><span class="op">(</span><span class="st">"&lt;*abs*(-{x})"</span><span class="op">)</span>,</span>
+<span>  sign <span class="op">=</span> <span class="st">"+"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -143,9 +143,9 @@ argument. See the Arguments section for more information on this.</p>
 
 <p>Let's generate a simple, single-column tibble that contains an assortment of
 values that could potentially undergo some substitution.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>num <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span><span class="op">^</span><span class="op">(</span><span class="op">-</span><span class="fl">4</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span>, <span class="fl">0</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">tbl</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">tbl</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>num <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span><span class="op">^</span><span class="op">(</span><span class="op">-</span><span class="fl">4</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span>, <span class="fl">0</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">tbl</span></span></code></pre><p></p></div>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1"></a><span class="co">## # A tibble: 9 × 1</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="co">##        num</span></span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="co">##      &lt;dbl&gt;</span></span>
@@ -161,31 +161,31 @@ values that could potentially undergo some substitution.</p>
 <p>The <code>tbl</code> contains a variety of smaller numbers and some might be small
 enough to reformat with a threshold value. With <code>sub_small_vals()</code> we can
 do just that:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">num</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/sub_small_vals.html">sub_small_vals</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">num</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/sub_small_vals.html">sub_small_vals</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_small_vals_1.png" style="width:100%;"></p>
 <p>Small and negative values can also be handled but they are handled specially
 by the <code>sign</code> parameter. Setting that to <code>"-"</code> will format only the small,
 negative values.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>num <span class="op">=</span> <span class="op">-</span><span class="va">num</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">num</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/sub_small_vals.html">sub_small_vals</a></span><span class="op">(</span>sign <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>num <span class="op">=</span> <span class="op">-</span><span class="va">num</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">num</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/sub_small_vals.html">sub_small_vals</a></span><span class="op">(</span>sign <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_small_vals_2.png" style="width:100%;"></p>
 <p>You don't have to settle with the default <code>threshold</code> value or the default
 replacement pattern (in <code>small_pattern</code>). This can be changed and the
 <code>"{x}"</code> in <code>small_pattern</code> (which uses the <code>threshold</code> value) can even be
 omitted.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">num</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/sub_small_vals.html">sub_small_vals</a></span><span class="op">(</span>
-    threshold <span class="op">=</span> <span class="fl">0.0005</span>,
-    small_pattern <span class="op">=</span> <span class="st">"smol"</span>
-  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">num</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/sub_small_vals.html">sub_small_vals</a></span><span class="op">(</span></span>
+<span>    threshold <span class="op">=</span> <span class="fl">0.0005</span>,</span>
+<span>    small_pattern <span class="op">=</span> <span class="st">"smol"</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_small_vals_3.png" style="width:100%;"></p>
     </div>
     <div class="section level2">
@@ -224,7 +224,7 @@ omitted.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, RStudio.</p>
+  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, Ellis Hughes, RStudio.</p>
 </div>
 
 <div class="pkgdown-footer-right">

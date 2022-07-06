@@ -66,172 +66,172 @@ components, the subcomponents, and the element that can adjusted.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">tab_options</span><span class="op">(</span>
-  <span class="va">data</span>,
-  container.width <span class="op">=</span> <span class="cn">NULL</span>,
-  container.height <span class="op">=</span> <span class="cn">NULL</span>,
-  container.overflow.x <span class="op">=</span> <span class="cn">NULL</span>,
-  container.overflow.y <span class="op">=</span> <span class="cn">NULL</span>,
-  table.width <span class="op">=</span> <span class="cn">NULL</span>,
-  table.layout <span class="op">=</span> <span class="cn">NULL</span>,
-  table.align <span class="op">=</span> <span class="cn">NULL</span>,
-  table.margin.left <span class="op">=</span> <span class="cn">NULL</span>,
-  table.margin.right <span class="op">=</span> <span class="cn">NULL</span>,
-  table.background.color <span class="op">=</span> <span class="cn">NULL</span>,
-  table.additional_css <span class="op">=</span> <span class="cn">NULL</span>,
-  table.font.names <span class="op">=</span> <span class="cn">NULL</span>,
-  table.font.size <span class="op">=</span> <span class="cn">NULL</span>,
-  table.font.weight <span class="op">=</span> <span class="cn">NULL</span>,
-  table.font.style <span class="op">=</span> <span class="cn">NULL</span>,
-  table.font.color <span class="op">=</span> <span class="cn">NULL</span>,
-  table.font.color.light <span class="op">=</span> <span class="cn">NULL</span>,
-  table.border.top.style <span class="op">=</span> <span class="cn">NULL</span>,
-  table.border.top.width <span class="op">=</span> <span class="cn">NULL</span>,
-  table.border.top.color <span class="op">=</span> <span class="cn">NULL</span>,
-  table.border.right.style <span class="op">=</span> <span class="cn">NULL</span>,
-  table.border.right.width <span class="op">=</span> <span class="cn">NULL</span>,
-  table.border.right.color <span class="op">=</span> <span class="cn">NULL</span>,
-  table.border.bottom.style <span class="op">=</span> <span class="cn">NULL</span>,
-  table.border.bottom.width <span class="op">=</span> <span class="cn">NULL</span>,
-  table.border.bottom.color <span class="op">=</span> <span class="cn">NULL</span>,
-  table.border.left.style <span class="op">=</span> <span class="cn">NULL</span>,
-  table.border.left.width <span class="op">=</span> <span class="cn">NULL</span>,
-  table.border.left.color <span class="op">=</span> <span class="cn">NULL</span>,
-  heading.background.color <span class="op">=</span> <span class="cn">NULL</span>,
-  heading.align <span class="op">=</span> <span class="cn">NULL</span>,
-  heading.title.font.size <span class="op">=</span> <span class="cn">NULL</span>,
-  heading.title.font.weight <span class="op">=</span> <span class="cn">NULL</span>,
-  heading.subtitle.font.size <span class="op">=</span> <span class="cn">NULL</span>,
-  heading.subtitle.font.weight <span class="op">=</span> <span class="cn">NULL</span>,
-  heading.padding <span class="op">=</span> <span class="cn">NULL</span>,
-  heading.padding.horizontal <span class="op">=</span> <span class="cn">NULL</span>,
-  heading.border.bottom.style <span class="op">=</span> <span class="cn">NULL</span>,
-  heading.border.bottom.width <span class="op">=</span> <span class="cn">NULL</span>,
-  heading.border.bottom.color <span class="op">=</span> <span class="cn">NULL</span>,
-  heading.border.lr.style <span class="op">=</span> <span class="cn">NULL</span>,
-  heading.border.lr.width <span class="op">=</span> <span class="cn">NULL</span>,
-  heading.border.lr.color <span class="op">=</span> <span class="cn">NULL</span>,
-  column_labels.background.color <span class="op">=</span> <span class="cn">NULL</span>,
-  column_labels.font.size <span class="op">=</span> <span class="cn">NULL</span>,
-  column_labels.font.weight <span class="op">=</span> <span class="cn">NULL</span>,
-  column_labels.text_transform <span class="op">=</span> <span class="cn">NULL</span>,
-  column_labels.padding <span class="op">=</span> <span class="cn">NULL</span>,
-  column_labels.padding.horizontal <span class="op">=</span> <span class="cn">NULL</span>,
-  column_labels.vlines.style <span class="op">=</span> <span class="cn">NULL</span>,
-  column_labels.vlines.width <span class="op">=</span> <span class="cn">NULL</span>,
-  column_labels.vlines.color <span class="op">=</span> <span class="cn">NULL</span>,
-  column_labels.border.top.style <span class="op">=</span> <span class="cn">NULL</span>,
-  column_labels.border.top.width <span class="op">=</span> <span class="cn">NULL</span>,
-  column_labels.border.top.color <span class="op">=</span> <span class="cn">NULL</span>,
-  column_labels.border.bottom.style <span class="op">=</span> <span class="cn">NULL</span>,
-  column_labels.border.bottom.width <span class="op">=</span> <span class="cn">NULL</span>,
-  column_labels.border.bottom.color <span class="op">=</span> <span class="cn">NULL</span>,
-  column_labels.border.lr.style <span class="op">=</span> <span class="cn">NULL</span>,
-  column_labels.border.lr.width <span class="op">=</span> <span class="cn">NULL</span>,
-  column_labels.border.lr.color <span class="op">=</span> <span class="cn">NULL</span>,
-  column_labels.hidden <span class="op">=</span> <span class="cn">NULL</span>,
-  row_group.background.color <span class="op">=</span> <span class="cn">NULL</span>,
-  row_group.font.size <span class="op">=</span> <span class="cn">NULL</span>,
-  row_group.font.weight <span class="op">=</span> <span class="cn">NULL</span>,
-  row_group.text_transform <span class="op">=</span> <span class="cn">NULL</span>,
-  row_group.padding <span class="op">=</span> <span class="cn">NULL</span>,
-  row_group.padding.horizontal <span class="op">=</span> <span class="cn">NULL</span>,
-  row_group.border.top.style <span class="op">=</span> <span class="cn">NULL</span>,
-  row_group.border.top.width <span class="op">=</span> <span class="cn">NULL</span>,
-  row_group.border.top.color <span class="op">=</span> <span class="cn">NULL</span>,
-  row_group.border.bottom.style <span class="op">=</span> <span class="cn">NULL</span>,
-  row_group.border.bottom.width <span class="op">=</span> <span class="cn">NULL</span>,
-  row_group.border.bottom.color <span class="op">=</span> <span class="cn">NULL</span>,
-  row_group.border.left.style <span class="op">=</span> <span class="cn">NULL</span>,
-  row_group.border.left.width <span class="op">=</span> <span class="cn">NULL</span>,
-  row_group.border.left.color <span class="op">=</span> <span class="cn">NULL</span>,
-  row_group.border.right.style <span class="op">=</span> <span class="cn">NULL</span>,
-  row_group.border.right.width <span class="op">=</span> <span class="cn">NULL</span>,
-  row_group.border.right.color <span class="op">=</span> <span class="cn">NULL</span>,
-  row_group.default_label <span class="op">=</span> <span class="cn">NULL</span>,
-  row_group.as_column <span class="op">=</span> <span class="cn">NULL</span>,
-  table_body.hlines.style <span class="op">=</span> <span class="cn">NULL</span>,
-  table_body.hlines.width <span class="op">=</span> <span class="cn">NULL</span>,
-  table_body.hlines.color <span class="op">=</span> <span class="cn">NULL</span>,
-  table_body.vlines.style <span class="op">=</span> <span class="cn">NULL</span>,
-  table_body.vlines.width <span class="op">=</span> <span class="cn">NULL</span>,
-  table_body.vlines.color <span class="op">=</span> <span class="cn">NULL</span>,
-  table_body.border.top.style <span class="op">=</span> <span class="cn">NULL</span>,
-  table_body.border.top.width <span class="op">=</span> <span class="cn">NULL</span>,
-  table_body.border.top.color <span class="op">=</span> <span class="cn">NULL</span>,
-  table_body.border.bottom.style <span class="op">=</span> <span class="cn">NULL</span>,
-  table_body.border.bottom.width <span class="op">=</span> <span class="cn">NULL</span>,
-  table_body.border.bottom.color <span class="op">=</span> <span class="cn">NULL</span>,
-  stub.background.color <span class="op">=</span> <span class="cn">NULL</span>,
-  stub.font.size <span class="op">=</span> <span class="cn">NULL</span>,
-  stub.font.weight <span class="op">=</span> <span class="cn">NULL</span>,
-  stub.text_transform <span class="op">=</span> <span class="cn">NULL</span>,
-  stub.border.style <span class="op">=</span> <span class="cn">NULL</span>,
-  stub.border.width <span class="op">=</span> <span class="cn">NULL</span>,
-  stub.border.color <span class="op">=</span> <span class="cn">NULL</span>,
-  stub_row_group.font.size <span class="op">=</span> <span class="cn">NULL</span>,
-  stub_row_group.font.weight <span class="op">=</span> <span class="cn">NULL</span>,
-  stub_row_group.text_transform <span class="op">=</span> <span class="cn">NULL</span>,
-  stub_row_group.border.style <span class="op">=</span> <span class="cn">NULL</span>,
-  stub_row_group.border.width <span class="op">=</span> <span class="cn">NULL</span>,
-  stub_row_group.border.color <span class="op">=</span> <span class="cn">NULL</span>,
-  data_row.padding <span class="op">=</span> <span class="cn">NULL</span>,
-  data_row.padding.horizontal <span class="op">=</span> <span class="cn">NULL</span>,
-  summary_row.background.color <span class="op">=</span> <span class="cn">NULL</span>,
-  summary_row.text_transform <span class="op">=</span> <span class="cn">NULL</span>,
-  summary_row.padding <span class="op">=</span> <span class="cn">NULL</span>,
-  summary_row.padding.horizontal <span class="op">=</span> <span class="cn">NULL</span>,
-  summary_row.border.style <span class="op">=</span> <span class="cn">NULL</span>,
-  summary_row.border.width <span class="op">=</span> <span class="cn">NULL</span>,
-  summary_row.border.color <span class="op">=</span> <span class="cn">NULL</span>,
-  grand_summary_row.background.color <span class="op">=</span> <span class="cn">NULL</span>,
-  grand_summary_row.text_transform <span class="op">=</span> <span class="cn">NULL</span>,
-  grand_summary_row.padding <span class="op">=</span> <span class="cn">NULL</span>,
-  grand_summary_row.padding.horizontal <span class="op">=</span> <span class="cn">NULL</span>,
-  grand_summary_row.border.style <span class="op">=</span> <span class="cn">NULL</span>,
-  grand_summary_row.border.width <span class="op">=</span> <span class="cn">NULL</span>,
-  grand_summary_row.border.color <span class="op">=</span> <span class="cn">NULL</span>,
-  footnotes.background.color <span class="op">=</span> <span class="cn">NULL</span>,
-  footnotes.font.size <span class="op">=</span> <span class="cn">NULL</span>,
-  footnotes.padding <span class="op">=</span> <span class="cn">NULL</span>,
-  footnotes.padding.horizontal <span class="op">=</span> <span class="cn">NULL</span>,
-  footnotes.border.bottom.style <span class="op">=</span> <span class="cn">NULL</span>,
-  footnotes.border.bottom.width <span class="op">=</span> <span class="cn">NULL</span>,
-  footnotes.border.bottom.color <span class="op">=</span> <span class="cn">NULL</span>,
-  footnotes.border.lr.style <span class="op">=</span> <span class="cn">NULL</span>,
-  footnotes.border.lr.width <span class="op">=</span> <span class="cn">NULL</span>,
-  footnotes.border.lr.color <span class="op">=</span> <span class="cn">NULL</span>,
-  footnotes.marks <span class="op">=</span> <span class="cn">NULL</span>,
-  footnotes.multiline <span class="op">=</span> <span class="cn">NULL</span>,
-  footnotes.sep <span class="op">=</span> <span class="cn">NULL</span>,
-  source_notes.background.color <span class="op">=</span> <span class="cn">NULL</span>,
-  source_notes.font.size <span class="op">=</span> <span class="cn">NULL</span>,
-  source_notes.padding <span class="op">=</span> <span class="cn">NULL</span>,
-  source_notes.padding.horizontal <span class="op">=</span> <span class="cn">NULL</span>,
-  source_notes.border.bottom.style <span class="op">=</span> <span class="cn">NULL</span>,
-  source_notes.border.bottom.width <span class="op">=</span> <span class="cn">NULL</span>,
-  source_notes.border.bottom.color <span class="op">=</span> <span class="cn">NULL</span>,
-  source_notes.border.lr.style <span class="op">=</span> <span class="cn">NULL</span>,
-  source_notes.border.lr.width <span class="op">=</span> <span class="cn">NULL</span>,
-  source_notes.border.lr.color <span class="op">=</span> <span class="cn">NULL</span>,
-  source_notes.multiline <span class="op">=</span> <span class="cn">NULL</span>,
-  source_notes.sep <span class="op">=</span> <span class="cn">NULL</span>,
-  row.striping.background_color <span class="op">=</span> <span class="cn">NULL</span>,
-  row.striping.include_stub <span class="op">=</span> <span class="cn">NULL</span>,
-  row.striping.include_table_body <span class="op">=</span> <span class="cn">NULL</span>,
-  page.orientation <span class="op">=</span> <span class="cn">NULL</span>,
-  page.numbering <span class="op">=</span> <span class="cn">NULL</span>,
-  page.header.use_tbl_headings <span class="op">=</span> <span class="cn">NULL</span>,
-  page.footer.use_tbl_notes <span class="op">=</span> <span class="cn">NULL</span>,
-  page.width <span class="op">=</span> <span class="cn">NULL</span>,
-  page.height <span class="op">=</span> <span class="cn">NULL</span>,
-  page.margin.left <span class="op">=</span> <span class="cn">NULL</span>,
-  page.margin.right <span class="op">=</span> <span class="cn">NULL</span>,
-  page.margin.top <span class="op">=</span> <span class="cn">NULL</span>,
-  page.margin.bottom <span class="op">=</span> <span class="cn">NULL</span>,
-  page.header.height <span class="op">=</span> <span class="cn">NULL</span>,
-  page.footer.height <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">tab_options</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  container.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  container.height <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  container.overflow.x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  container.overflow.y <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table.layout <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table.align <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table.margin.left <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table.margin.right <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table.background.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table.additional_css <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table.font.names <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table.font.size <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table.font.weight <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table.font.style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table.font.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table.font.color.light <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table.border.top.style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table.border.top.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table.border.top.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table.border.right.style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table.border.right.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table.border.right.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table.border.bottom.style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table.border.bottom.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table.border.bottom.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table.border.left.style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table.border.left.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table.border.left.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  heading.background.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  heading.align <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  heading.title.font.size <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  heading.title.font.weight <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  heading.subtitle.font.size <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  heading.subtitle.font.weight <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  heading.padding <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  heading.padding.horizontal <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  heading.border.bottom.style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  heading.border.bottom.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  heading.border.bottom.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  heading.border.lr.style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  heading.border.lr.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  heading.border.lr.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  column_labels.background.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  column_labels.font.size <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  column_labels.font.weight <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  column_labels.text_transform <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  column_labels.padding <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  column_labels.padding.horizontal <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  column_labels.vlines.style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  column_labels.vlines.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  column_labels.vlines.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  column_labels.border.top.style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  column_labels.border.top.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  column_labels.border.top.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  column_labels.border.bottom.style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  column_labels.border.bottom.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  column_labels.border.bottom.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  column_labels.border.lr.style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  column_labels.border.lr.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  column_labels.border.lr.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  column_labels.hidden <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  row_group.background.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  row_group.font.size <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  row_group.font.weight <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  row_group.text_transform <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  row_group.padding <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  row_group.padding.horizontal <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  row_group.border.top.style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  row_group.border.top.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  row_group.border.top.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  row_group.border.bottom.style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  row_group.border.bottom.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  row_group.border.bottom.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  row_group.border.left.style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  row_group.border.left.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  row_group.border.left.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  row_group.border.right.style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  row_group.border.right.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  row_group.border.right.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  row_group.default_label <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  row_group.as_column <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table_body.hlines.style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table_body.hlines.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table_body.hlines.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table_body.vlines.style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table_body.vlines.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table_body.vlines.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table_body.border.top.style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table_body.border.top.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table_body.border.top.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table_body.border.bottom.style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table_body.border.bottom.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  table_body.border.bottom.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stub.background.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stub.font.size <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stub.font.weight <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stub.text_transform <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stub.border.style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stub.border.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stub.border.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stub_row_group.font.size <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stub_row_group.font.weight <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stub_row_group.text_transform <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stub_row_group.border.style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stub_row_group.border.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stub_row_group.border.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  data_row.padding <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  data_row.padding.horizontal <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  summary_row.background.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  summary_row.text_transform <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  summary_row.padding <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  summary_row.padding.horizontal <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  summary_row.border.style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  summary_row.border.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  summary_row.border.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  grand_summary_row.background.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  grand_summary_row.text_transform <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  grand_summary_row.padding <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  grand_summary_row.padding.horizontal <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  grand_summary_row.border.style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  grand_summary_row.border.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  grand_summary_row.border.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  footnotes.background.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  footnotes.font.size <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  footnotes.padding <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  footnotes.padding.horizontal <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  footnotes.border.bottom.style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  footnotes.border.bottom.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  footnotes.border.bottom.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  footnotes.border.lr.style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  footnotes.border.lr.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  footnotes.border.lr.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  footnotes.marks <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  footnotes.multiline <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  footnotes.sep <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  source_notes.background.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  source_notes.font.size <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  source_notes.padding <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  source_notes.padding.horizontal <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  source_notes.border.bottom.style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  source_notes.border.bottom.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  source_notes.border.bottom.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  source_notes.border.lr.style <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  source_notes.border.lr.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  source_notes.border.lr.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  source_notes.multiline <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  source_notes.sep <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  row.striping.background_color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  row.striping.include_stub <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  row.striping.include_table_body <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  page.orientation <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  page.numbering <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  page.header.use_tbl_headings <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  page.footer.use_tbl_notes <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  page.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  page.height <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  page.margin.left <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  page.margin.right <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  page.margin.top <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  page.margin.bottom <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  page.header.height <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  page.footer.height <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -588,67 +588,67 @@ and footer for RTF table outputs. Default values for both are <code>0.5in</code>
 <p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table with all the main parts added. We
 can use this <strong>gt</strong> object going forward to demo some of what's available in
 the <code>tab_options()</code> function.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">tab_1</span> <span class="op">&lt;-</span>
-  <span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">fctr</span>, <span class="va">date</span>, <span class="va">time</span>, <span class="va">datetime</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>
-    rowname_col <span class="op">=</span> <span class="st">"row"</span>,
-    groupname_col <span class="op">=</span> <span class="st">"group"</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/tab_header.html">tab_header</a></span><span class="op">(</span>
-    title <span class="op">=</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span><span class="st">"Data listing from **exibble**"</span><span class="op">)</span>,
-    subtitle <span class="op">=</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span><span class="st">"`exibble` is an R dataset"</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">num</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/fmt_currency.html">fmt_currency</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">currency</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/tab_footnote.html">tab_footnote</a></span><span class="op">(</span>
-    footnote <span class="op">=</span> <span class="st">"Using commas for separators."</span>,
-    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span>
-      columns <span class="op">=</span> <span class="va">num</span>,
-      rows <span class="op">=</span> <span class="va">num</span> <span class="op">&gt;</span> <span class="fl">1000</span>
-    <span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/tab_footnote.html">tab_footnote</a></span><span class="op">(</span>
-    footnote <span class="op">=</span> <span class="st">"Using commas for separators."</span>,
-    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span>
-      columns <span class="op">=</span> <span class="va">currency</span>,
-      rows <span class="op">=</span> <span class="va">currency</span> <span class="op">&gt;</span> <span class="fl">1000</span>
-    <span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/tab_footnote.html">tab_footnote</a></span><span class="op">(</span>
-    footnote <span class="op">=</span> <span class="st">"Alphabetical fruit."</span>,
-    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_column_labels.html">cells_column_labels</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">char</span><span class="op">)</span>
-  <span class="op">)</span>
-
-<span class="va">tab_1</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">tab_1</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">fctr</span>, <span class="va">date</span>, <span class="va">time</span>, <span class="va">datetime</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span></span>
+<span>    rowname_col <span class="op">=</span> <span class="st">"row"</span>,</span>
+<span>    groupname_col <span class="op">=</span> <span class="st">"group"</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/tab_header.html">tab_header</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span><span class="st">"Data listing from **exibble**"</span><span class="op">)</span>,</span>
+<span>    subtitle <span class="op">=</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span><span class="st">"`exibble` is an R dataset"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">num</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/fmt_currency.html">fmt_currency</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">currency</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/tab_footnote.html">tab_footnote</a></span><span class="op">(</span></span>
+<span>    footnote <span class="op">=</span> <span class="st">"Using commas for separators."</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span></span>
+<span>      columns <span class="op">=</span> <span class="va">num</span>,</span>
+<span>      rows <span class="op">=</span> <span class="va">num</span> <span class="op">&gt;</span> <span class="fl">1000</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/tab_footnote.html">tab_footnote</a></span><span class="op">(</span></span>
+<span>    footnote <span class="op">=</span> <span class="st">"Using commas for separators."</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span></span>
+<span>      columns <span class="op">=</span> <span class="va">currency</span>,</span>
+<span>      rows <span class="op">=</span> <span class="va">currency</span> <span class="op">&gt;</span> <span class="fl">1000</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/tab_footnote.html">tab_footnote</a></span><span class="op">(</span></span>
+<span>    footnote <span class="op">=</span> <span class="st">"Alphabetical fruit."</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_column_labels.html">cells_column_labels</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">char</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">tab_1</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_1.png" style="width:100%;"></p>
 <p>Modify the table width to be 100% (which spans the entire content width
 area).</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>table.width <span class="op">=</span> <span class="fu"><a href="../reference/pct.html">pct</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>table.width <span class="op">=</span> <span class="fu"><a href="../reference/pct.html">pct</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_2.png" style="width:100%;"></p>
 <p>Modify the table's background color to be <code>"lightcyan"</code>.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>table.background.color <span class="op">=</span> <span class="st">"lightcyan"</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>table.background.color <span class="op">=</span> <span class="st">"lightcyan"</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_3.png" style="width:100%;"></p>
 <p>Use letters as the marks for footnote references. Also, separate footnotes in
 the footer by spaces instead of newlines.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>
-    footnotes.marks <span class="op">=</span> <span class="va">letters</span>,
-    footnotes.multiline <span class="op">=</span> <span class="cn">FALSE</span>
-  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span></span>
+<span>    footnotes.marks <span class="op">=</span> <span class="va">letters</span>,</span>
+<span>    footnotes.multiline <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_4.png" style="width:100%;"></p>
 <p>Change the padding of data rows to 5 px.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>
-    data_row.padding <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
-  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span></span>
+<span>    data_row.padding <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_5.png" style="width:100%;"></p>
 <p>Reduce the size of the title and the subtitle text.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>
-    heading.title.font.size <span class="op">=</span> <span class="st">"small"</span>,
-    heading.subtitle.font.size <span class="op">=</span> <span class="st">"small"</span>
-  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span></span>
+<span>    heading.title.font.size <span class="op">=</span> <span class="st">"small"</span>,</span>
+<span>    heading.subtitle.font.size <span class="op">=</span> <span class="st">"small"</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_6.png" style="width:100%;"></p>
     </div>
     <div class="section level2">
@@ -675,7 +675,7 @@ the footer by spaces instead of newlines.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, RStudio.</p>
+  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, Ellis Hughes, RStudio.</p>
 </div>
 
 <div class="pkgdown-footer-right">

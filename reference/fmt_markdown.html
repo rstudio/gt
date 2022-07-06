@@ -66,7 +66,7 @@ appropriate output type during render when using <code>fmt_markdown()</code>.</p
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">fmt_markdown</span><span class="op">(</span><span class="va">data</span>, <span class="va">columns</span>, rows <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fmt_markdown</span><span class="op">(</span><span class="va">data</span>, <span class="va">columns</span>, rows <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -113,45 +113,45 @@ argument. See the <em>Arguments</em> section for more information on this.</p>
 
 
 <p>Create a few Markdown-based text snippets.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">text_1a</span> <span class="op">&lt;-</span> <span class="st">"
-### This is Markdown.
-
-Markdown’s syntax is comprised entirely of
-punctuation characters, which punctuation
-characters have been carefully chosen so as
-to look like what they mean... assuming
-you’ve ever used email.
-"</span>
-
-<span class="va">text_1b</span> <span class="op">&lt;-</span> <span class="st">"
-Info on Markdown syntax can be found
-[here](https://daringfireball.net/projects/markdown/).
-"</span>
-
-<span class="va">text_2a</span> <span class="op">&lt;-</span> <span class="st">"
-The **gt** package has these datasets:
-
- - `countrypops`
- - `sza`
- - `gtcars`
- - `sp500`
- - `pizzaplace`
- - `exibble`
-"</span>
-
-<span class="va">text_2b</span> <span class="op">&lt;-</span> <span class="st">"
-There's a quick reference [here](https://commonmark.org/help/).
-"</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">text_1a</span> <span class="op">&lt;-</span> <span class="st">"</span></span>
+<span><span class="st">### This is Markdown.</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">Markdown’s syntax is comprised entirely of</span></span>
+<span><span class="st">punctuation characters, which punctuation</span></span>
+<span><span class="st">characters have been carefully chosen so as</span></span>
+<span><span class="st">to look like what they mean... assuming</span></span>
+<span><span class="st">you’ve ever used email.</span></span>
+<span><span class="st">"</span></span>
+<span></span>
+<span><span class="va">text_1b</span> <span class="op">&lt;-</span> <span class="st">"</span></span>
+<span><span class="st">Info on Markdown syntax can be found</span></span>
+<span><span class="st">[here](https://daringfireball.net/projects/markdown/).</span></span>
+<span><span class="st">"</span></span>
+<span></span>
+<span><span class="va">text_2a</span> <span class="op">&lt;-</span> <span class="st">"</span></span>
+<span><span class="st">The **gt** package has these datasets:</span></span>
+<span><span class="st"></span></span>
+<span><span class="st"> - `countrypops`</span></span>
+<span><span class="st"> - `sza`</span></span>
+<span><span class="st"> - `gtcars`</span></span>
+<span><span class="st"> - `sp500`</span></span>
+<span><span class="st"> - `pizzaplace`</span></span>
+<span><span class="st"> - `exibble`</span></span>
+<span><span class="st">"</span></span>
+<span></span>
+<span><span class="va">text_2b</span> <span class="op">&lt;-</span> <span class="st">"</span></span>
+<span><span class="st">There's a quick reference [here](https://commonmark.org/help/).</span></span>
+<span><span class="st">"</span></span></code></pre><p></p></div>
 <p>Arrange the text snippets as a tibble using the <code><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">dplyr::tribble()</a></code> function.
 then, create a <strong>gt</strong> table and format all columns with <code>fmt_markdown()</code>.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span>
-  <span class="op">~</span><span class="va">Markdown</span>, <span class="op">~</span><span class="va">md</span>,
-  <span class="va">text_1a</span>,   <span class="va">text_2a</span>,
-  <span class="va">text_1b</span>,   <span class="va">text_2b</span>,
-<span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/fmt_markdown.html">fmt_markdown</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>table.width <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">400</span><span class="op">)</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
+<span>  <span class="op">~</span><span class="va">Markdown</span>, <span class="op">~</span><span class="va">md</span>,</span>
+<span>  <span class="va">text_1a</span>,   <span class="va">text_2a</span>,</span>
+<span>  <span class="va">text_1b</span>,   <span class="va">text_2b</span>,</span>
+<span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/fmt_markdown.html">fmt_markdown</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>table.width <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">400</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_markdown_1.png" style="width:100%;"></p>
     </div>
     <div class="section level2">
@@ -190,7 +190,7 @@ then, create a <strong>gt</strong> table and format all columns with <code>fmt_m
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, RStudio.</p>
+  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, Ellis Hughes, RStudio.</p>
 </div>
 
 <div class="pkgdown-footer-right">

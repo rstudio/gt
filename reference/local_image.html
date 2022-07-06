@@ -90,7 +90,7 @@ need to use <code>local_image()</code> within the <code><a href="html.html">html
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">local_image</span><span class="op">(</span><span class="va">filename</span>, height <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">local_image</span><span class="op">(</span><span class="va">filename</span>, height <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -129,20 +129,20 @@ heights of most table rows.</p>
 string, the other as numerical values), then, create a <strong>gt</strong> table. Use the
 <code><a href="text_transform.html">text_transform()</a></code> function to insert a local test image (PNG) image with the
 various sizes.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>
-  pixels <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">35</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>,
-  image <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">35</span>, <span class="fl">5</span><span class="op">)</span>
-<span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/text_transform.html">text_transform</a></span><span class="op">(</span>
-    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">image</span><span class="op">)</span>,
-    fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
-      <span class="fu"><a href="../reference/local_image.html">local_image</a></span><span class="op">(</span>
-        filename <span class="op">=</span> <span class="fu"><a href="../reference/test_image.html">test_image</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"png"</span><span class="op">)</span>,
-        height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-      <span class="op">)</span>
-    <span class="op">}</span>
-  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span>  pixels <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">35</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  image <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">35</span>, <span class="fl">5</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/text_transform.html">text_transform</a></span><span class="op">(</span></span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">image</span><span class="op">)</span>,</span>
+<span>    fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="fu"><a href="../reference/local_image.html">local_image</a></span><span class="op">(</span></span>
+<span>        filename <span class="op">=</span> <span class="fu"><a href="../reference/test_image.html">test_image</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"png"</span><span class="op">)</span>,</span>
+<span>        height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_local_image_1.png" style="width:100%;"></p>
     </div>
     <div class="section level2">
@@ -164,7 +164,7 @@ various sizes.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, RStudio.</p>
+  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, Ellis Hughes, RStudio.</p>
 </div>
 
 <div class="pkgdown-footer-right">

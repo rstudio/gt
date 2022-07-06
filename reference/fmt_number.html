@@ -108,25 +108,25 @@ formatting specific to the chosen locale</p></li>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">fmt_number</span><span class="op">(</span>
-  <span class="va">data</span>,
-  <span class="va">columns</span>,
-  rows <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,
-  decimals <span class="op">=</span> <span class="fl">2</span>,
-  n_sigfig <span class="op">=</span> <span class="cn">NULL</span>,
-  drop_trailing_zeros <span class="op">=</span> <span class="cn">FALSE</span>,
-  drop_trailing_dec_mark <span class="op">=</span> <span class="cn">TRUE</span>,
-  use_seps <span class="op">=</span> <span class="cn">TRUE</span>,
-  accounting <span class="op">=</span> <span class="cn">FALSE</span>,
-  scale_by <span class="op">=</span> <span class="fl">1</span>,
-  suffixing <span class="op">=</span> <span class="cn">FALSE</span>,
-  pattern <span class="op">=</span> <span class="st">"{x}"</span>,
-  sep_mark <span class="op">=</span> <span class="st">","</span>,
-  dec_mark <span class="op">=</span> <span class="st">"."</span>,
-  force_sign <span class="op">=</span> <span class="cn">FALSE</span>,
-  system <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"intl"</span>, <span class="st">"ind"</span><span class="op">)</span>,
-  locale <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fmt_number</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">columns</span>,</span>
+<span>  rows <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  decimals <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  n_sigfig <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  drop_trailing_zeros <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  drop_trailing_dec_mark <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  use_seps <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  accounting <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  scale_by <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  suffixing <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  pattern <span class="op">=</span> <span class="st">"{x}"</span>,</span>
+<span>  sep_mark <span class="op">=</span> <span class="st">","</span>,</span>
+<span>  dec_mark <span class="op">=</span> <span class="st">"."</span>,</span>
+<span>  force_sign <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  system <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"intl"</span>, <span class="st">"ind"</span><span class="op">)</span>,</span>
+<span>  locale <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -282,28 +282,28 @@ argument. See the <em>Arguments</em> section for more information on this.</p>
 
 <p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table. Format the <code>num</code> column as numeric
 with three decimal places and with no use of digit separators.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="va">num</span>,
-    decimals <span class="op">=</span> <span class="fl">3</span>,
-    use_seps <span class="op">=</span> <span class="cn">FALSE</span>
-  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="va">num</span>,</span>
+<span>    decimals <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>    use_seps <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_number_1.png" style="width:100%;"></p>
 <p>Use <code><a href="countrypops.html">countrypops</a></code> to create a <strong>gt</strong> table. Format all numeric columns to
 use large-number suffixing with the <code>suffixing = TRUE</code> option.</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">countrypops</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">country_code_3</span>, <span class="va">year</span>, <span class="va">population</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">country_code_3</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CHN"</span>, <span class="st">"IND"</span>, <span class="st">"USA"</span>, <span class="st">"PAK"</span>, <span class="st">"IDN"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op">&gt;</span> <span class="fl">1975</span> <span class="op">&amp;</span> <span class="va">year</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%%</a></span> <span class="fl">5</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/spread.html" class="external-link">spread</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">population</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">`2015`</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"country_code_3"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">9</span>,
-    decimals <span class="op">=</span> <span class="fl">2</span>,
-    suffixing <span class="op">=</span> <span class="cn">TRUE</span>
-  <span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">countrypops</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">country_code_3</span>, <span class="va">year</span>, <span class="va">population</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">country_code_3</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CHN"</span>, <span class="st">"IND"</span>, <span class="st">"USA"</span>, <span class="st">"PAK"</span>, <span class="st">"IDN"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op">&gt;</span> <span class="fl">1975</span> <span class="op">&amp;</span> <span class="va">year</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%%</a></span> <span class="fl">5</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/spread.html" class="external-link">spread</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">population</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">`2015`</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"country_code_3"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">9</span>,</span>
+<span>    decimals <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>    suffixing <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_number_2.png" style="width:100%;"></p>
     </div>
     <div class="section level2">
@@ -342,7 +342,7 @@ use large-number suffixing with the <code>suffixing = TRUE</code> option.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, RStudio.</p>
+  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, Ellis Hughes, RStudio.</p>
 </div>
 
 <div class="pkgdown-footer-right">
