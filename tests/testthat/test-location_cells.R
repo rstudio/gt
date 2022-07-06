@@ -517,7 +517,7 @@ test_that("styles are correctly applied to HTML output with location functions",
       paste0(
         "<th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" ",
         "rowspan=\"1\" colspan=\"2\" style=\"color: #FFFFFF; font-size: 20px; ",
-        "background-color: #FFA500;\" scope=\"col\">.*?<span class=\"gt_column_spanner\">",
+        "background-color: #FFA500;\" scope=\"colgroup\">.*?<span class=\"gt_column_spanner\">",
         "spanner</span>"
         )
       ) %>%
