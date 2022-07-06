@@ -5,7 +5,7 @@ test_that("`as_raw_html()` produces the same table every time", {
   gt(exibble) %>%
     as_raw_html(inline_css = TRUE) %>%
     nchar() %>%
-    expect_equal(35730)
+    expect_equal(35838)
 
   gt(
     mtcars,
@@ -109,5 +109,5 @@ test_that("`as_raw_html()` produces the same table every time", {
     ) %>%
     as_raw_html(inline_css = TRUE) %>%
     nchar() %>%
-    expect_equal(162967)
+    expect_equal(163435)
 })
