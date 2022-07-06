@@ -89,7 +89,6 @@ check_suggests_xml <- function() {
 
 test_that("word ooxml can be generated from gt object", {
 
-
   # Create a one-row table for these tests
   exibble_min <- exibble[1, ]
 
@@ -190,7 +189,8 @@ test_that("word ooxml can be generated from gt object", {
     expect_snapshot()
 
   ## table with column and span styling
-  gt_exibble_min <- exibble[1:4,] %>%
+  gt_exibble_min <-
+    exibble[1:4,] %>%
     gt(rowname_col = "char") %>%
     tab_row_group("My Row Group 1",c(1:2)) %>%
     tab_row_group("My Row Group 2",c(3:4)) %>%
@@ -217,7 +217,8 @@ test_that("word ooxml can be generated from gt object", {
       locations = cells_stubhead()
     ) %>%
     as_word() %>%
-    expect_snapshot()
+    nchar() %>%
+    expect_equal(32187)
 })
 
 test_that("tables can be added to a word doc", {
@@ -226,7 +227,8 @@ test_that("tables can be added to a word doc", {
   check_suggests_xml()
 
   ## simple table
-  gt_exibble_min <- exibble[1:2,] %>%
+  gt_exibble_min <-
+    exibble[1:2,] %>%
     gt() %>%
     tab_header(
       title = "table title",
@@ -234,7 +236,8 @@ test_that("tables can be added to a word doc", {
     )
 
   ## Add table to empty word document
-  word_doc <- officer::read_docx() %>%
+  word_doc <-
+    officer::read_docx() %>%
     body_add_gt(
       gt_exibble_min,
       align = "center"
@@ -253,19 +256,18 @@ test_that("tables can be added to a word doc", {
   docx <- officer::read_docx(temp_word_file)
 
   ## get docx table contents
-  docx_contents <- docx$doc_obj$get() %>%
-    xml2::xml_children() %>%
-    xml2::xml_children()
+  docx_contents <- xml2::xml_children(xml2::xml_children(docx$doc_obj$get()))
 
   ## extract table caption
-  docx_table_caption_text <- docx_contents[1:2] %>%
-    xml2::xml_text()
+  docx_table_caption_text <- xml2::xml_text(docx_contents[1:2])
 
   ## extract table contents
-  docx_table_body_header <- docx_contents[3] %>%
+  docx_table_body_header <-
+    docx_contents[3] %>%
     xml2::xml_find_all(".//w:tblHeader/ancestor::w:tr")
 
-  docx_table_body_contents <- docx_contents[3] %>%
+  docx_table_body_contents <-
+    docx_contents[3] %>%
     xml2::xml_find_all(".//w:tr") %>%
     setdiff(docx_table_body_header)
 
@@ -275,17 +277,18 @@ test_that("tables can be added to a word doc", {
   )
 
   expect_equal(
-    docx_table_body_header %>%
-      xml2::xml_find_all(".//w:p") %>%
-      xml2::xml_text(),
-    c("num", "char", "fctr",
-      "date", "time","datetime",
-      "currency",  "row", "group")
+    xml2::xml_text(xml2::xml_find_all(docx_table_body_header, ".//w:p")),
+    c(
+      "num", "char", "fctr", "date", "time",
+      "datetime", "currency", "row", "group"
+    )
   )
 
   expect_equal(
-    lapply(docx_table_body_contents, function(x)
-      x %>% xml2::xml_find_all(".//w:p") %>% xml2::xml_text()),
+    lapply(
+      docx_table_body_contents,
+      FUN = function(x) xml2::xml_text(xml2::xml_find_all(x, ".//w:p"))
+    ),
     list(
       c(
         "0.1111",
@@ -319,7 +322,8 @@ test_that("tables with embedded titles can be added to a word doc", {
   check_suggests_xml()
 
   ## simple table
-  gt_exibble_min <- exibble[1:2,] %>%
+  gt_exibble_min <-
+    exibble[1:2,] %>%
     gt() %>%
     tab_header(
       title = "table title",
@@ -327,7 +331,8 @@ test_that("tables with embedded titles can be added to a word doc", {
     )
 
   ## Add table to empty word document
-  word_doc <- officer::read_docx() %>%
+  word_doc <-
+    officer::read_docx() %>%
     body_add_gt(
       gt_exibble_min,
       caption_location = "embed",
@@ -347,27 +352,26 @@ test_that("tables with embedded titles can be added to a word doc", {
   docx <- officer::read_docx(temp_word_file)
 
   ## get docx table contents
-  docx_contents <- docx$doc_obj$get() %>%
-    xml2::xml_children() %>%
-    xml2::xml_children()
+  docx_contents <- xml2::xml_children(xml2::xml_children(docx$doc_obj$get()))
 
   ## extract table contents
-  docx_table_body_header <- docx_contents[1] %>%
+  docx_table_body_header <-
+    docx_contents[1] %>%
     xml2::xml_find_all(".//w:tblHeader/ancestor::w:tr")
 
-  docx_table_body_contents <- docx_contents[1] %>%
+  docx_table_body_contents <-
+    docx_contents[1] %>%
     xml2::xml_find_all(".//w:tr") %>%
     setdiff(docx_table_body_header)
-
 
   expect_equal(
     docx_table_body_header %>%
       xml2::xml_find_all(".//w:t") %>%
       xml2::xml_text(),
-    c("table title", "table subtitle",
-      "num", "char", "fctr",
-      "date", "time","datetime",
-      "currency",  "row", "group")
+    c(
+      "table title", "table subtitle", "num", "char", "fctr",
+      "date", "time","datetime", "currency", "row", "group"
+    )
   )
 
   expect_equal(
