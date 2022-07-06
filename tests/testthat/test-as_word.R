@@ -217,7 +217,8 @@ test_that("word ooxml can be generated from gt object", {
       locations = cells_stubhead()
     ) %>%
     as_word() %>%
-    expect_snapshot()
+    nchar() %>%
+    expect_equal(32187)
 })
 
 test_that("tables can be added to a word doc", {
