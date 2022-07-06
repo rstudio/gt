@@ -405,7 +405,7 @@ create_columns_component_h <- function(data) {
           rowspan = 1,
           colspan = length(stub_layout),
           style = stubhead_style,
-          scope = "col",
+          scope = ifelse(length(stub_layout) > 1, "colgroup", "col"),
           htmltools::HTML(headings_labels[1])
         )
 
@@ -486,7 +486,7 @@ create_columns_component_h <- function(data) {
           rowspan = 2,
           colspan = length(stub_layout),
           style = stubhead_style,
-          scope = "col",
+          scope = ifelse(length(stub_layout) > 1, "colgroup", "col"),
           htmltools::HTML(headings_labels[1])
         )
 
@@ -584,7 +584,7 @@ create_columns_component_h <- function(data) {
               rowspan = 1,
               colspan = colspans[i],
               style = spanner_style,
-              scope = "col",
+              scope = ifelse(colspans[i] > 1, "colgroup", "col"),
               htmltools::tags$span(
                 class = "gt_column_spanner",
                 htmltools::HTML(spanners[level_1_index, ][i])
@@ -716,7 +716,7 @@ create_columns_component_h <- function(data) {
               rowspan = 1,
               colspan = colspans[j],
               style = spanner_style,
-              scope = "col",
+              scope = ifelse(colspans[j] > 1, "colgroup", "col"),
               if (spanner_ids_row[j] != "") {
                 htmltools::tags$span(
                   class = "gt_column_spanner",
@@ -735,7 +735,7 @@ create_columns_component_h <- function(data) {
             htmltools::tags$th(
               rowspan = max(higher_spanner_rows_idx),
               colspan = length(stub_layout),
-              scope = "col"
+              scope = ifelse(length(stub_layout) > 1, "colgroup", "col")
             ),
             level_i_spanners
           )
