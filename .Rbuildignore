@@ -16,6 +16,8 @@ vignettes
 man/figures/
 tests/gt-examples
 tests/testthat/_snaps
+tests/testthat/test-as_raw_html.R
+tests/testthat/test-as_word.R
 tests/testthat/test-cols_width_rtf.R
 tests/testthat/test-data_color.R
 tests/testthat/test-fmt_fraction.R

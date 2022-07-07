@@ -24,6 +24,7 @@ Authors:
 \itemize{
   \item Joe Cheng \email{joe@rstudio.com}
   \item Barret Schloerke \email{barret@rstudio.com} (\href{https://orcid.org/0000-0001-9986-114X}{ORCID})
+  \item Ellis Hughes \email{ellis.h.hughes@gsk.com} (\href{https://orcid.org/0000-0003-0637-4436}{ORCID})
 }
 
 Other contributors:

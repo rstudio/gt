@@ -2792,6 +2792,9 @@ fmt_markdown <- function(
       rtf = function(x) {
         markdown_to_rtf(x)
       },
+      word = function(x) {
+        markdown_to_xml(x)
+      },
       default = function(x) {
         vapply(
           x,

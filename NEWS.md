@@ -1,5 +1,7 @@
 # gt (development version)
 
+* word table output via `as_word()`. (#929)
+
 # gt 0.6.0
 
 ## New features
