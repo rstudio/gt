@@ -49,6 +49,7 @@ Imports:
     tidyselect (>= 1.1.1)
 Suggests:
     covr,
+    digest (>= 0.6.29),
     knitr,
     paletteer,
     testthat (>= 3.0.0),
