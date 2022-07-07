@@ -2630,7 +2630,6 @@ fmt_datetime <- function(
           # input that will works with `strftime()`
           if (all(is_string_time(x))) {
             x <- paste("1970-01-01", x)
-
           }
 
           if (is.character(x) && is.null(tz)) {
@@ -2840,13 +2839,11 @@ fmt_duration <- function(
     # Validate that `trim_zero_units` contains only the allowed keywords
     validate_trim_zero_units(trim_zero_units = trim_zero_units)
   } else {
-    stop(
-      "The value provided for `trim_zero_units` is invalid. Either use:\n",
-      "* `TRUE` or `FALSE`, or\n",
-      "* A vector with any of the keywords `\"leading\"`, `\"trailing\"`, or ",
-      "`\"internal\"`",
-      call. = FALSE
-    )
+    cli::cli_abort(c(
+      "The value provided for `trim_zero_units` is invalid. Either use:",
+      "*" = "`TRUE` or `FALSE`, or",
+      "*" = "A vector with any of the keywords `\"leading\"`, `\"trailing\"`, or `\"internal\"`."
+    ))
   }
 
   if (
@@ -2858,11 +2855,10 @@ fmt_duration <- function(
     )
   ) {
 
-    stop(
-      "The numeric value supplied for `max_output_units` is invalid:\n",
-      "* Must either be `NULL` or an integer value greater than zero",
-      call. = FALSE
-    )
+    cli::cli_abort(c(
+      "The numeric value supplied for `max_output_units` is invalid.",
+      "*" = "Must either be `NULL` or an integer value greater than zero."
+    ))
   }
 
   # Stop function if any columns have data that is incompatible
@@ -2874,11 +2870,10 @@ fmt_duration <- function(
       valid_classes = c("numeric", "difftime")
     )
   ) {
-    stop(
-      "The `fmt_duration()` function can only be used on `columns` of certain types:\n",
-      "* Allowed types are `numeric` and `difftime`",
-      call. = FALSE
-    )
+    cli::cli_abort(c(
+      "The `fmt_duration()` function can only be used on `columns` of certain types:",
+      "*" = "Allowed types are `numeric` and `difftime`."
+    ))
   }
 
   # Stop function if any columns have numeric data and `input_units` is NULL
@@ -3049,9 +3044,8 @@ validate_duration_input_units <- function(input_units) {
 
   if (!is.character(input_units)) {
 
-    stop(
-      "The `input_units` input to `fmt_duration()` must be a character vector",
-      call. = FALSE
+    cli::cli_abort(
+      "The `input_units` input to `fmt_duration()` must be a character vector."
     )
   }
 
@@ -3059,12 +3053,11 @@ validate_duration_input_units <- function(input_units) {
 
   if (!all(input_units %in% time_parts_vec) || length(input_units) != 1) {
 
-    stop(
-      "The value of `input_units` for `fmt_duration()` is invalid:\n",
-      "* Only one of `\"weeks\"`, `\"days\"`, `\"hours\"`, `\"minutes\"`, or \n",
-      "the `\"seconds\"` time part should be present",
-      call. = FALSE
-    )
+    cli::cli_abort(c(
+      "The value of `input_units` for `fmt_duration()` is invalid:",
+      "*" = "Only one of the \"weeks\", \"days\", \"hours\", \"minutes\", or
+      \"seconds\" time parts should be present."
+    ))
   }
 }
 
@@ -3080,18 +3073,16 @@ validate_duration_output_units <- function(output_units) {
 
   if (!is.character(output_units)) {
 
-    stop(
-      "The `output_units` input to `fmt_duration()` must be a character vector",
-      call. = FALSE
+    cli::cli_abort(
+      "The `output_units` input to `fmt_duration()` must be a character vector."
     )
   }
 
   if (length(output_units) < 1) {
 
-    stop(
-      "The `output_units` input to `fmt_duration()` must be a vector with at ",
-      "least one element",
-      call. = FALSE
+    cli::cli_abort(
+      "The `output_units` input to `fmt_duration()` must be a vector with at
+      least one element."
     )
   }
 
@@ -3099,13 +3090,11 @@ validate_duration_output_units <- function(output_units) {
 
   if (!all(output_units %in% time_parts_vec)) {
 
-    stop(
-      "There are invalid components in the `output_units` input to ",
-      "`fmt_duration()`:\n",
-      "* Only the `\"weeks\"`, `\"days\"`, `\"hours\"`, `\"minutes\"`, and\n",
-      "`\"seconds\"` time parts should be present",
-      call. = FALSE
-    )
+    cli::cli_abort(c(
+      "There are invalid components in the `output_units` input to `fmt_duration()`:",
+      "*" = "Only the \"weeks\", \"days\", \"hours\", \"minutes\", and \"seconds\`
+      time parts should be present"
+    ))
   }
 }
 
