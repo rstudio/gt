@@ -57,7 +57,7 @@ Suggests:
     rvest,
     shiny,
     tidyr,
-    webshot,
+    webshot2,
     xml2
 Roxygen: list(markdown = TRUE)
 Collate: 
