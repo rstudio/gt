@@ -2,7 +2,7 @@
 % Please edit documentation in R/format_data.R
 \name{fmt_duration}
 \alias{fmt_duration}
-\title{Format values as time durations}
+\title{Format numeric or duration values as styled time duration strings}
 \usage{
 fmt_duration(
   data,
@@ -75,7 +75,9 @@ and \code{"internal"}, which removes all internal zero-value time units (e.g.,
 units are unspecified and left to \strong{gt} to handle, a numeric value
 provided for \code{max_output_units} will be taken as the maximum number of time
 units to display in all output time duration values. By default, this is
-\code{NULL} and all possible time units will be displayed.}
+\code{NULL} and all possible time units will be displayed. This option has no
+effect when \code{duration_style = "colon-sep"} (only \code{output_units} can be used
+to customize that type of duration output).}
 
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other
@@ -113,11 +115,12 @@ argument.}
 An object of class \code{gt_tbl}.
 }
 \description{
-Format input values to time durations whether those input values are numbers
-or of the \code{difftime} class. We can specify which time units any numeric input
-values have (as days, hours, minutes, or seconds) and the output can be
-customized with a duration style (corresponding to short, long, and
-colon-separated forms) and a choice of output units from weeks to seconds.
+Format input values to time duration values whether those input values are
+numbers or of the \code{difftime} class. We can specify which time units any
+numeric input values have (as weeks, days, hours, minutes, or seconds) and
+the output can be customized with a duration style (corresponding to narrow,
+wide, colon-separated, and ISO forms) and a choice of output units ranging
+from weeks to seconds.
 }
 \details{
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
@@ -125,25 +128,36 @@ nothing is provided for \code{rows} then entire columns are selected). Condition
 formatting is possible by providing a conditional expression to the \code{rows}
 argument. See the \emph{Arguments} section for more information on this.
 }
-\section{Figures}{
+\section{Output units for the colon-separated duration style}{
 
-\if{html}{\figure{man_fmt_duration_1.png}{options: width=100\%}}
+
+The colon-separated duration style (enabled when
+\code{duration_style = "colon-sep"}) is essentially a clock-based output format
+which uses the display logic of chronograph watch functionality. It will, by
+default, display duration values in the \verb{(D/)HH:MM:SS} format. Any duration
+values greater than or equal to 24 hours will have the number of days
+prepended with an adjoining slash mark. While this output format is
+versatile, it can be changed somewhat with the \code{output_units} option. The
+following combinations of output units are permitted:
+\itemize{
+\item \code{c("minutes", "seconds")} -> \code{MM:SS}
+\item \code{c("hours", "minutes")} -> \code{HH:MM}
+\item \code{c("hours", "minutes", "seconds")} -> \code{HH:MM:SS}
+\item \code{c("days", "hours", "minutes")} -> \verb{(D/)HH:MM}
 }
 
-\section{Function ID}{
-
-3-13
+Any other specialized combinations will result in the default set being used,
+which is \code{c("days", "hours", "minutes", "seconds")}
 }
 
-\examples{
-# Use part of the `sp500` table to
-# create a gt table; create a
-# difftime-based column and format
-# the duration values to be displayed
-# as the number of days since March
-# 30, 2020
-tab_1 <-
-  sp500 \%>\%
+\section{Examples}{
+
+
+Use part of the \code{sp500} table to create a \strong{gt} table. Create a
+\code{difftime}-based column and format the duration values to be displayed as the
+number of days since March 30, 2020.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
   dplyr::slice_head(n = 10) \%>\%
   dplyr::mutate(
     time_point = lubridate::ymd("2020-03-30"),
@@ -157,8 +171,18 @@ tab_1 <-
     duration_style = "wide"
   ) \%>\%
   fmt_currency(columns = c(open, close))
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_duration_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+3-13
+}
+
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},
