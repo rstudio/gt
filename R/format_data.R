@@ -2691,20 +2691,40 @@ fmt_datetime <- function(
   )
 }
 
-#' Format values as time durations
+#' Format numeric or duration values as styled time duration strings
 #'
 #' @description
-#' Format input values to time durations whether those input values are numbers
-#' or of the `difftime` class. We can specify which time units any numeric input
-#' values have (as days, hours, minutes, or seconds) and the output can be
-#' customized with a duration style (corresponding to short, long, and
-#' colon-separated forms) and a choice of output units from weeks to seconds.
+#' Format input values to time duration values whether those input values are
+#' numbers or of the `difftime` class. We can specify which time units any
+#' numeric input values have (as weeks, days, hours, minutes, or seconds) and
+#' the output can be customized with a duration style (corresponding to narrow,
+#' wide, colon-separated, and ISO forms) and a choice of output units ranging
+#' from weeks to seconds.
 #'
 #' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the *Arguments* section for more information on this.
+#'
+#' @section Output units for the colon-separated duration style
+#'
+#' The colon-separated duration style (enabled when
+#' `duration_style = "colon-sep"`) is essentially a clock-based output format
+#' which uses the display logic of chronograph watch functionality. It will, by
+#' default, display duration values in the `(D/)HH:MM:SS` format. Any duration
+#' values greater than or equal to 24 hours will have the number of days
+#' prepended with an adjoining slash mark. While this output format is
+#' versatile, it can be changed somewhat with the `output_units` option. The
+#' following combinations of output units are permitted:
+#'
+#' - `c("minutes", "seconds")` -> `MM:SS`
+#' - `c("hours", "minutes")` -> `HH:MM`
+#' - `c("hours", "minutes", "seconds")` -> `HH:MM:SS`
+#' - `c("days", "hours", "minutes")` -> `(D/)HH:MM`
+#'
+#' Any other specialized combinations will result in the default set being used,
+#' which is `c("days", "hours", "minutes", "seconds")`
 #'
 #' @inheritParams fmt_number
 #' @param input_units If one or more selected columns contains numeric values, a
@@ -2739,7 +2759,9 @@ fmt_datetime <- function(
 #'   units are unspecified and left to **gt** to handle, a numeric value
 #'   provided for `max_output_units` will be taken as the maximum number of time
 #'   units to display in all output time duration values. By default, this is
-#'   `NULL` and all possible time units will be displayed.
+#'   `NULL` and all possible time units will be displayed. This option has no
+#'   effect when `duration_style = "colon-sep"` (only `output_units` can be used
+#'   to customize that type of duration output).
 #' @param force_sign Should the positive sign be shown for positive values
 #'   (effectively showing a sign for all values except zero)? If so, use `TRUE`
 #'   for this option. The default is `FALSE`, where only negative value will
@@ -2747,15 +2769,14 @@ fmt_datetime <- function(
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use part of the `sp500` table to
-#' # create a gt table; create a
-#' # difftime-based column and format
-#' # the duration values to be displayed
-#' # as the number of days since March
-#' # 30, 2020
-#' tab_1 <-
-#'   sp500 %>%
+#' @section Examples:
+#'
+#' Use part of the `sp500` table to create a **gt** table. Create a
+#' `difftime`-based column and format the duration values to be displayed as the
+#' number of days since March 30, 2020.
+#'
+#' ```r
+#' sp500 %>%
 #'   dplyr::slice_head(n = 10) %>%
 #'   dplyr::mutate(
 #'     time_point = lubridate::ymd("2020-03-30"),
@@ -2769,9 +2790,12 @@ fmt_datetime <- function(
 #'     duration_style = "wide"
 #'   ) %>%
 #'   fmt_currency(columns = c(open, close))
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_fmt_duration_1.png}{options: width=100\%}}
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_duration_1.png")`
+#' }}
 #'
 #' @family Format Data
 #' @section Function ID:
@@ -2921,7 +2945,7 @@ fmt_duration <- function(
         identical(output_units, c("hours", "minutes", "seconds")),
         identical(output_units, c("days", "hours", "minutes"))
       )
-    ){
+    ) {
       colon_sep_output_units <- output_units
     } else {
       colon_sep_output_units <- c("days", "hours", "minutes", "seconds")
@@ -3131,9 +3155,9 @@ values_to_durations <- function(
         in_units,
         weeks = x * 7,
         hours = x / 24,
-        mins =,
+        mins = ,
         minutes = x / 1440,
-        secs =,
+        secs = ,
         seconds = x / 86400
       )
   }
