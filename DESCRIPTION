@@ -48,6 +48,7 @@ Imports:
     tidyselect (>= 1.1.1)
 Suggests:
     covr,
+    digest (>= 0.6.29),
     knitr,
     paletteer,
     testthat (>= 3.0.0),
@@ -57,7 +58,7 @@ Suggests:
     rvest,
     shiny,
     tidyr,
-    webshot,
+    webshot2,
     xml2
 Roxygen: list(markdown = TRUE)
 Collate: 
