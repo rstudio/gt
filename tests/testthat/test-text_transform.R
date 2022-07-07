@@ -245,11 +245,12 @@ test_that("`text_transform()` works in the body even when rows/columns are reord
   tbl_html %>%
     render_as_html() %>%
     xml2::read_html() %>%
-    selection_text("tr td:nth-child(1)") %>%
+    selection_text("tr th:nth-child(1)") %>%
     expect_equal(
       c(
-        "Mazda", "Mazda RX4", "Mazda RX4 Wag", "2 Hornets + a Datsun",
-        "Datsun 710", "Hornet 4 Drive", "Hornet Sportabout"
+        "",
+        "Mazda RX4", "Mazda RX4 Wag", "Datsun 710",
+        "Hornet 4 Drive", "Hornet Sportabout"
       )
     )
 
@@ -300,7 +301,7 @@ test_that("`text_transform()` works in column labels", {
   tbl_html %>%
     render_as_html() %>%
     xml2::read_html() %>%
-    selection_text("th") %>%
+    selection_text("tr:first-child th") %>%
     expect_equal(
       c(
         "", "MPG", "disp", "hp", "drat", "wt",
