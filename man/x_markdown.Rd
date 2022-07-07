@@ -25,7 +25,7 @@ appropriate output type.
 }
 
 \seealso{
-Other Vector Formatters: 
+Other vector formatting functions: 
 \code{\link{x_bytes}()},
 \code{\link{x_currency}()},
 \code{\link{x_datetime}()},
@@ -38,4 +38,4 @@ Other Vector Formatters:
 \code{\link{x_scientific}()},
 \code{\link{x_time}()}
 }
-\concept{Vector Formatters}
+\concept{vector formatting functions}

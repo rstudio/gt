@@ -50,7 +50,7 @@ the possible inputs to \code{time_style}.
 }
 
 \seealso{
-Other Vector Formatters: 
+Other vector formatting functions: 
 \code{\link{x_bytes}()},
 \code{\link{x_currency}()},
 \code{\link{x_datetime}()},
@@ -63,4 +63,4 @@ Other Vector Formatters:
 \code{\link{x_percent}()},
 \code{\link{x_scientific}()}
 }
-\concept{Vector Formatters}
+\concept{vector formatting functions}
