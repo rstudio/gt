@@ -84,7 +84,7 @@
 #'
 #' @return A character vector.
 #'
-#' @family Vector Formatters
+#' @family vector formatting functions
 #' @section Function ID:
 #' 14-1
 #'
@@ -119,10 +119,8 @@ x_number <- function(
       valid_classes = c("numeric", "integer")
     )
   ) {
-    stop(
-      "The `x_number()` and `x_integer()` functions can only be ",
-      "used with numeric vectors.",
-      call. = FALSE
+    cli::cli_abort(
+      "The `x_number()` and `x_integer()` functions can only be used with numeric vectors."
     )
   }
 
@@ -186,7 +184,7 @@ x_number <- function(
 #'
 #' @return A character vector.
 #'
-#' @family Vector Formatters
+#' @family vector formatting functions
 #' @section Function ID:
 #' 14-2
 #'
@@ -248,7 +246,7 @@ x_integer <- function(
 #'
 #' @return A character vector.
 #'
-#' @family Vector Formatters
+#' @family vector formatting functions
 #' @section Function ID:
 #' 14-3
 #'
@@ -278,9 +276,8 @@ x_scientific <- function(
       valid_classes = c("numeric", "integer")
     )
   ) {
-    stop(
-      "The `x_scientific()` function can only be used with numeric vectors.",
-      call. = FALSE
+    cli::cli_abort(
+      "The `x_scientific()` function can only be used with numeric vectors."
     )
   }
 
@@ -327,7 +324,7 @@ x_scientific <- function(
 #'
 #' @return A character vector.
 #'
-#' @family Vector Formatters
+#' @family vector formatting functions
 #' @section Function ID:
 #' 14-4
 #'
@@ -357,9 +354,8 @@ x_engineering <- function(
       valid_classes = c("numeric", "integer")
     )
   ) {
-    stop(
-      "The `x_engineering()` function can only be used with numeric vectors.",
-      call. = FALSE
+    cli::cli_abort(
+      "The `x_engineering()` function can only be used with numeric vectors."
     )
   }
 
@@ -414,7 +410,7 @@ x_engineering <- function(
 #'
 #' @return A character vector.
 #'
-#' @family Vector Formatters
+#' @family vector formatting functions
 #' @section Function ID:
 #' 14-5
 #'
@@ -449,9 +445,8 @@ x_percent <- function(
       valid_classes = c("numeric", "integer")
     )
   ) {
-    stop(
-      "The `x_percent()` function can only be used with numeric vectors.",
-      call. = FALSE
+    cli::cli_abort(
+      "The `x_percent()` function can only be used with numeric vectors."
     )
   }
 
@@ -518,7 +513,7 @@ x_percent <- function(
 #'
 #' @return A character vector.
 #'
-#' @family Vector Formatters
+#' @family vector formatting functions
 #' @section Function ID:
 #' 14-6
 #'
@@ -547,9 +542,8 @@ x_fraction <- function(
       valid_classes = c("numeric", "integer")
     )
   ) {
-    stop(
-      "The `x_fraction()` function can only be used with numeric vectors.",
-      call. = FALSE
+    cli::cli_abort(
+      "The `x_fraction()` function can only be used with numeric vectors."
     )
   }
 
@@ -632,7 +626,7 @@ x_fraction <- function(
 #'
 #' @return A character vector.
 #'
-#' @family Vector Formatters
+#' @family vector formatting functions
 #' @section Function ID:
 #' 14-7
 #'
@@ -669,9 +663,8 @@ x_currency <- function(
       valid_classes = c("numeric", "integer")
     )
   ) {
-    stop(
-      "The `x_currency()` function can only be used with numeric vectors.",
-      call. = FALSE
+    cli::cli_abort(
+      "The `x_currency()` function can only be used with numeric vectors."
     )
   }
 
@@ -736,7 +729,7 @@ x_currency <- function(
 #'
 #' @return A character vector.
 #'
-#' @family Vector Formatters
+#' @family vector formatting functions
 #' @section Function ID:
 #' 14-8
 #'
@@ -770,9 +763,8 @@ x_bytes <- function(
       valid_classes = c("numeric", "integer")
     )
   ) {
-    stop(
-      "The `x_bytes()` function can only be used with numeric vectors.",
-      call. = FALSE
+    cli::cli_abort(
+      "The `x_bytes()` function can only be used with numeric vectors."
     )
   }
 
@@ -835,7 +827,7 @@ x_bytes <- function(
 #'
 #' @return A character vector.
 #'
-#' @family Vector Formatters
+#' @family vector formatting functions
 #' @section Function ID:
 #' 14-9
 #'
@@ -859,9 +851,8 @@ x_date <- function(
       valid_classes = c("Date", "POSIXt", "character")
     )
   ) {
-    stop(
-      "The `x_date()` function can only be used with numeric vectors.",
-      call. = FALSE
+    cli::cli_abort(
+      "The `x_date()` function can only be used with numeric vectors."
     )
   }
 
@@ -905,7 +896,7 @@ x_date <- function(
 #'
 #' @return A character vector.
 #'
-#' @family Vector Formatters
+#' @family vector formatting functions
 #' @section Function ID:
 #' 14-10
 #'
@@ -929,9 +920,8 @@ x_time <- function(
       valid_classes = c("Date", "POSIXt", "character")
     )
   ) {
-    stop(
-      "The `x_time()` function can only be used with numeric vectors.",
-      call. = FALSE
+    cli::cli_abort(
+      "The `x_time()` function can only be used with numeric vectors."
     )
   }
 
@@ -1058,7 +1048,7 @@ x_time <- function(
 #'
 #' @return A character vector.
 #'
-#' @family Vector Formatters
+#' @family vector formatting functions
 #' @section Function ID:
 #' 14-11
 #'
@@ -1071,7 +1061,8 @@ x_datetime <- function(
     format = NULL,
     tz = NULL,
     pattern = "{x}",
-    output = c("html", "latex", "rtf")) {
+    output = c("html", "latex", "rtf")
+) {
 
   output <- match.arg(output)
 
@@ -1085,9 +1076,8 @@ x_datetime <- function(
       valid_classes = c("Date", "POSIXct", "character")
     )
   ) {
-    stop(
-      "The `x_datetime()` function can only be used with numeric vectors.",
-      call. = FALSE
+    cli::cli_abort(
+      "The `x_datetime()` function can only be used with numeric vectors."
     )
   }
 
@@ -1116,7 +1106,7 @@ x_datetime <- function(
 #'
 #' @return A character vector.
 #'
-#' @family Vector Formatters
+#' @family vector formatting functions
 #' @section Function ID:
 #' 14-12
 #'
@@ -1149,12 +1139,8 @@ x_markdown <- function(
 }
 
 stop_if_not_vector <- function(x) {
-
   if (!rlang::is_vector(x)) {
-    stop(
-      "The object provided as `x` should be a vector",
-      call. = FALSE
-    )
+    cli::cli_abort("The object provided as `x` should be a vector.")
   }
 }
 
@@ -1162,9 +1148,6 @@ vector_class_is_valid <- function(x, valid_classes) {
   inherits(x, valid_classes)
 }
 
-render_as_vector <- function(data,
-                             output) {
-
-  built <- build_data(data, context = output)
-  dplyr::pull(dt_body_get(built), "x")
+render_as_vector <- function(data, output) {
+  dt_body_get(build_data(data, context = output))[["x"]]
 }
