@@ -2707,7 +2707,7 @@ fmt_datetime <- function(
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the *Arguments* section for more information on this.
 #'
-#' @section Output units for the colon-separated duration style
+#' @section Output units for the colon-separated duration style:
 #'
 #' The colon-separated duration style (enabled when
 #' `duration_style = "colon-sep"`) is essentially a clock-based output format
@@ -2791,7 +2791,6 @@ fmt_datetime <- function(
 #'   ) %>%
 #'   fmt_currency(columns = c(open, close))
 #' ```
-#'
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_fmt_duration_1.png")`
@@ -3777,7 +3776,7 @@ fmt_passthrough <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-15
+#' 3-16
 #'
 #' @import rlang
 #' @export
