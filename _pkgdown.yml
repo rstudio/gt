@@ -244,7 +244,7 @@ reference:
     - as_word
     - extract_summary
 
-  - title: Vector Formatters
+  - title: Vector Formatting Functions
     desc: >
       Why should columns have all the formatting fun? If you have vectors in
       need of formatting, we have a set of `x_*()` functions that have been
