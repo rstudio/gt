@@ -1300,6 +1300,40 @@ x_date <- function(
 #'
 #' @return A character vector.
 #'
+#' @section Examples:
+#'
+#' Let's create a character vector of datetime values in the ISO-8601 format
+#' for the next few examples:
+#'
+#' ```{r}
+#' str_vals <- c("2022-06-13 18:36", "2019-01-25 01:08", NA)
+#' ```
+#'
+#' Using `x_date()` with the default options will create a character vector of
+#' formatted dates. Any `NA` values remain as `NA` values. The rendering context
+#' is HTML unless specified in the `output` argument.
+#'
+#' ```{r}
+#' x_time(str_vals)
+#' ```
+#'
+#' We can change the formatting style by choosing a number from `1` to `5`:
+#'
+#' ```{r}
+#' x_time(str_vals, time_style = 4)
+#' ```
+#'
+#' We can always use [info_time_style()] to call up an info table that serves as
+#' a handy reference to all of the time styles.
+#'
+#' As a last example, one can wrap the time values in a pattern with the
+#' `pattern` argument. Note here that `NA` values won't have the pattern
+#' applied.
+#'
+#' ```{r}
+#' x_time(str_vals, time_style = 4, pattern = "Time: {x}")
+#' ```
+#'
 #' @family vector formatting functions
 #' @section Function ID:
 #' 14-10
@@ -1452,6 +1486,61 @@ x_time <- function(
 #'
 #' @return A character vector.
 #'
+#' @section Examples:
+#'
+#' Let's create a character vector of datetime values in the ISO-8601 format
+#' for the next few examples:
+#'
+#' ```{r}
+#' str_vals <- c("2022-06-13 18:36", "2019-01-25 01:08", NA)
+#' ```
+#'
+#' Using `x_datetime()` with the default options will create a character vector
+#' of formatted datetime values. Any `NA` values remain as `NA` values. The
+#' rendering context is HTML unless specified in the `output` argument.
+#'
+#' ```{r}
+#' x_datetime(str_vals)
+#' ```
+#'
+#' We can change the formatting style of the date and time portions separately
+#' with the `date_style` (values `1`-`14`) and `time_style` (values `1`-`5`)
+#' arguments. The `sep` option allows for a customized string between the date
+#' and time.
+#'
+#' ```{r}
+#' x_datetime(
+#'   str_vals,
+#'   date_style = 2,
+#'   time_style = 4,
+#'   sep = " at "
+#' )
+#' ```
+#'
+#' We can always use [info_date_style()] or [info_time_style()] to call up info
+#' tables that serve as handy references to all of the date and time styles.
+#'
+#' It's possible to supply our own time formatting pattern and have greater
+#' control over the final formatting (even including string literals as please):
+#'
+#' ```{r}
+#' x_datetime(str_vals, format = "%A, %B %e, %Y at %I:%M %p")
+#' ```
+#'
+#' As a last example, one can wrap the datetime values in a pattern with the
+#' `pattern` argument. Note here that `NA` values won't have the pattern
+#' applied.
+#'
+#' ```{r}
+#' x_datetime(
+#'   str_vals,
+#'   date_style = 6,
+#'   time_style = 4,
+#'   sep = " at ",
+#'   pattern = "Date and Time: {x}"
+#' )
+#' ```
+#'
 #' @family vector formatting functions
 #' @section Function ID:
 #' 14-11
@@ -1509,6 +1598,39 @@ x_datetime <- function(
 #' @inheritParams x_number
 #'
 #' @return A character vector.
+#'
+#' @section Examples:
+#'
+#' Create a vector of Markdown-based text snippets.
+#'
+#' ```{r}
+#' text_vec <-
+#'   c(
+#'     "This **is** *Markdown*.",
+#'     "Info on Markdown syntax can be found
+#' [here](https://daringfireball.net/projects/markdown/).",
+#'     "The **gt** package has these datasets:
+#' - `countrypops`
+#' - `sza`
+#' - `gtcars`
+#' - `sp500`
+#' - `pizzaplace`
+#' - `exibble`"
+#'   )
+#' ```
+#'
+#' With `x_markdown()` we can easily convert these to different output types,
+#' like HTML
+#'
+#' ```{r}
+#' x_markdown(text_vec, output = "html")
+#' ```
+#'
+#' or LaTeX
+#'
+#' ```{r}
+#' x_markdown(text_vec, output = "latex")
+#' ```
 #'
 #' @family vector formatting functions
 #' @section Function ID:
