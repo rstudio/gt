@@ -21,23 +21,14 @@ function allows us to easily enable or disable striped rows in the table
 body. This function serves as a convenient shortcut for
 \verb{<gt_tbl> \%>\% tab_options(row.striping.include_table_body = TRUE|FALSE)}.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_opt_row_striping_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
+Use \code{\link{exibble}} to create a \strong{gt} table with a number of table parts added.
+Next, we add row striping to every second row with the \code{opt_row_striping()}
+function.
 
-9-2
-}
-
-\examples{
-# Use `exibble` to create a gt table with
-# a number of table parts added; next, we
-# add row striping to every second row with
-# the `opt_row_striping()` function
-tab_1 <-
-  exibble \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt(rowname_col = "row", groupname_col = "group") \%>\%
   summary_rows(
     groups = "grp_a",
@@ -61,8 +52,18 @@ tab_1 <-
     subtitle = "The table's subtitle"
   ) \%>\%
   opt_row_striping()
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_row_striping_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+9-2
+}
+
 \seealso{
 Other Table Option Functions: 
 \code{\link{opt_align_table_header}()},

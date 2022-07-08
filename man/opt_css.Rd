@@ -31,24 +31,14 @@ CSS will be added after the compiled CSS that \strong{gt} generates automaticall
 when the object is transformed to an HTML output table. You can supply \code{css}
 as a vector of lines or as a single string.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_opt_css_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
+Use \code{\link{exibble}} to create a \strong{gt} table and format the data in both columns.
+With \code{opt_css()}, insert CSS rulesets as as string and be sure to set the
+table ID explicitly (here as \code{"one"}).
 
-9-10
-}
-
-\examples{
-# Use `exibble` to create a gt table and
-# format the data in both columns; with
-# `opt_css()` insert CSS rulesets as
-# as string and be sure to set the table
-# ID explicitly (here as "one")
-tab_1 <-
-  exibble \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(num, currency) \%>\%
   gt(id = "one") \%>\%
   fmt_currency(
@@ -60,19 +50,29 @@ tab_1 <-
   ) \%>\%
   opt_css(
     css = "
-    #one .gt_table {
+    #one .gt_table \{
       background-color: skyblue;
-    }
-    #one .gt_row {
+    \}
+    #one .gt_row \{
       padding: 20px 30px;
-    }
-    #one .gt_col_heading {
+    \}
+    #one .gt_col_heading \{
       text-align: center !important;
-    }
+    \}
     "
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_css_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+9-10
+}
+
 \seealso{
 Other Table Option Functions: 
 \code{\link{opt_align_table_header}()},

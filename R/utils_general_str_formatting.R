@@ -10,25 +10,29 @@
 #'   use either `before` or `after` (but not both) with this variable input to
 #'   accurately define which side of the match is the split position.
 #' @noRd
-split_string_2 <- function(x,
-                           before = NULL,
-                           after = NULL) {
+split_string_2 <- function(
+    x,
+    before = NULL,
+    after = NULL
+) {
 
   # TODO: use `split` instead of before/after and include
   # a `dir` option (for "before" or "after" splitting)
 
   # Stop function if `x` is not of class character
   if (!inherits(x, "character")) {
-    stop("Internal error in `gt:::paste_within()`:\n",
-         "* The `x` object must be of class character.",
-         call. = FALSE)
+    cli::cli_abort(c(
+      "Internal error in `gt:::paste_within()`.",
+      "*" = "The `x` object must be of class `character`."
+    ))
   }
 
   # Stop function if the length of `x` is not 1
   if (length(x) != 1) {
-    stop("Internal error in `gt:::paste_within()`:\n",
-         "* The length of the `x` must be exactly 1.",
-         call. = FALSE)
+    cli::cli_abort(c(
+      "Internal error in `gt:::paste_within()`.",
+      "*" = "The length of the `x` must be exactly 1."
+    ))
   }
 
   # Get the length of the string `x`
@@ -37,17 +41,19 @@ split_string_2 <- function(x,
   # If neither of `before` or `after` has a value,
   # stop the function
   if (is.null(before) && is.null(after)) {
-    stop("Internal error in `gt:::split_string_2()`:\n",
-         " * Both `before` and `after` cannot be `NULL`.",
-         call. = FALSE)
+    cli::cli_abort(c(
+      "Internal error in `gt:::split_string_2()`.",
+      "*" = "Both `before` and `after` cannot be `NULL`."
+    ))
   }
 
   # If both `before` and `after` have values, stop
   # the function
   if (!is.null(before) && !is.null(after)) {
-    stop("Internal error in `gt:::split_string_2()`:\n",
-         " * A value must be provided to either `before` or `after`, not both.",
-         call. = FALSE)
+    cli::cli_abort(c(
+      "Internal error in `gt:::split_string_2()`.",
+      "*" = "A value must be provided to either `before` or `after`, not both."
+    ))
   }
 
   # Collapse value for either `before` or `after`;
@@ -74,9 +80,7 @@ split_string_2 <- function(x,
     }
 
     # Define the start position for the matched characters
-    split_start <-
-      regexpr_out %>%
-      as.numeric()
+    split_start <- as.numeric(regexpr_out)
 
     # Define the stop position for the matched characters
     split_stop <-
@@ -86,9 +90,10 @@ split_string_2 <- function(x,
 
     # Stop function if the index position is not valid
     if (input > x_length) {
-      stop("Internal error in `gt:::split_string_2()`:\n",
-           "* The numeric value provided cannot be greater than ", x_length, ".",
-           call. = FALSE)
+      cli::cli_abort(c(
+        "Internal error in `gt:::split_string_2()`.",
+        "*" = "The numeric value provided cannot be greater than {x_length}."
+      ))
     }
 
     # Define the start and stop positions as
@@ -115,28 +120,30 @@ split_string_2 <- function(x,
 #'   first and second elements of `x_2`.
 #' @param x_2 A character vector of length 2.
 #' @noRd
-paste_between <- function(x,
-                          x_2) {
+paste_between <- function(x, x_2) {
 
   # Stop function if `x_2` is not of class character
   if (!inherits(x_2, "character")) {
-    stop("Internal error in `gt:::paste_between()`:\n",
-         "* The `x_2` object must be of class character.",
-         call. = FALSE)
+    cli::cli_abort(c(
+      "Internal error in `gt:::paste_between()`.",
+      "*" = "The `x_2` object must be of class `character`."
+    ))
   }
 
   # Stop function if the length of `x_2` is not 2
   if (length(x_2) != 2) {
-    stop("Internal error in `gt:::paste_between()`:\n",
-         "* The length of the `x_2` must be exactly 2.",
-         call. = FALSE)
+    cli::cli_abort(c(
+      "Internal error in `gt:::paste_between()`.",
+      "*" = "The length of the `x_2` must be exactly 2."
+    ))
   }
 
   # Stop function if `x` is not of class character
   if (!inherits(x, "character")) {
-    stop("Internal error in `gt:::paste_between()`:\n",
-         "* The `x` object must be of class character.",
-         call. = FALSE)
+    cli::cli_abort(c(
+      "Internal error in `gt:::paste_between()`.",
+      "*" = "The `x` object must be of class `character`."
+    ))
   }
 
   paste0(x_2[1], x, x_2[2])
@@ -151,30 +158,35 @@ paste_between <- function(x,
 #' @param direction The side that `x_side` will be relative to `x`. This can
 #'   be `left` or `right`.
 #' @noRd
-paste_on_side <- function(x,
-                          x_side,
-                          direction) {
+paste_on_side <- function(
+    x,
+    x_side,
+    direction
+) {
 
   # Stop function if `direction` is not valid
   if (!(direction %in% c("left", "right"))) {
-    stop("Internal error in `gt:::paste_on_side()`:\n",
-         "* The `direction` must be either `left` or `right`.",
-         call. = FALSE)
+    cli::cli_abort(c(
+      "Internal error in `gt:::paste_on_side()`.",
+      "*" = "The `direction` must be either `left` or `right`."
+    ))
   }
 
   # Stop function if `x` and `x_side` are not both of class character
   if (any(!inherits(x, "character"), !inherits(x_side, "character"))) {
-    stop("Internal error in `gt:::paste_on_side()`:\n",
-         "* The `x` and `x_side` objects must be of class character.",
-         call. = FALSE)
+    cli::cli_abort(c(
+      "Internal error in `gt:::paste_on_side()`.",
+      "*" = "The `x` and `x_side` objects must be of class `character`."
+    ))
   }
 
   len <- length(x_side)
 
   # Stop function if the length of `x_side` is not 1 of the length of `x`
   if (!any(len == 1, len == length(x))) {
-    stop("The length of the `x_side` vector must be 1 or the length of `x`.",
-         call. = FALSE)
+    cli::cli_abort(
+      "The length of the `x_side` vector must be 1 or the length of `x`."
+    )
   }
 
   if (direction == "left") {
@@ -214,64 +226,69 @@ paste_right <- function(x, x_right) {
 #'   characters. The order of regex patterns does not need to be in the order of
 #'   matching in `x`.
 #' @noRd
-swap_adjacent_text_groups <- function(x,
-                                      pattern_1,
-                                      pattern_2) {
+swap_adjacent_text_groups <- function(
+    x,
+    pattern_1,
+    pattern_2
+) {
 
   # Stop function if `x` is not of class character
   if (!inherits(x, "character")) {
-    stop("Internal error in `gt:::paste_within()`:\n",
-         "* The `x` object must be of class character.",
-         call. = FALSE)
+    cli::cli_abort(c(
+      "Internal error in `gt:::paste_within()`.",
+      "*" = "The `x` object must be of class `character`."
+    ))
   }
 
-  vapply(x, function(x) {
+  vapply(
+    x,
+    FUN.VALUE = character(1),
+    USE.NAMES = FALSE,
+    function(x) {
 
-    # Return `x` as is if both patterns aren't present
-    if (is_false(grepl(pattern_1, x)) || is_false(grepl(pattern_2, x))) {
-      return(x)
-    }
+      # Return `x` as is if both patterns aren't present
+      if (is_false(grepl(pattern_1, x)) || is_false(grepl(pattern_2, x))) {
+        return(x)
+      }
 
-    # Get the start and stop positions for the text groups
-    group_1 <- x %>% get_start_stop_positions(pattern = pattern_1)
-    group_2 <- x %>% get_start_stop_positions(pattern = pattern_2)
+      # Get the start and stop positions for the text groups
+      group_1 <- x %>% get_start_stop_positions(pattern = pattern_1)
+      group_2 <- x %>% get_start_stop_positions(pattern = pattern_2)
 
-    # Return `x` as is if the patterns don't encompass text ranges
-    # that aren't adjacent
-    if (!is_adjacent_separate(group_1, group_2)) {
-      return(x)
-    }
+      # Return `x` as is if the patterns don't encompass text ranges
+      # that aren't adjacent
+      if (!is_adjacent_separate(group_1, group_2)) {
+        return(x)
+      }
 
-    # Obtain a length-two vector of text groups based on the
-    # extracted substrings
-    substr <-
-      c(
-        substring(x, group_1[1], group_1[2]),
-        substring(x, group_2[1], group_2[2])
+      # Obtain a length-two vector of text groups based on the
+      # extracted substrings
+      substr <-
+        c(
+          substring(x, group_1[1], group_1[2]),
+          substring(x, group_2[1], group_2[2])
+        )
+
+      # Reverse the order of the elements in `substr`
+      # if necessary and paste elements together
+      if (group_1[1] < group_2[1]) {
+        rev_group <- paste0(rev(substr), collapse = "")
+      } else {
+        rev_group <- paste0(substr, collapse = "")
+      }
+
+      # Get the character indices that the contiguous text
+      # groups encompass
+      group_pos <- min(group_1, group_2):max(group_1, group_2)
+
+      # Return the reversed set of patterns
+      paste0(
+        substring(x, 0, min(group_pos) - 1),
+        rev_group,
+        substring(x, max(group_pos) + 1, nchar(x)),
+        collapse = ""
       )
-
-    # Reverse the order of the elements in `substr`
-    # if necessary and paste elements together
-    if (group_1[1] < group_2[1]) {
-      rev_group <- paste0(rev(substr), collapse = "")
-    } else {
-      rev_group <- paste0(substr, collapse = "")
     }
-
-    # Get the character indices that the contiguous text
-    # groups encompass
-    group_pos <- min(group_1, group_2):max(group_1, group_2)
-
-    # Return the reversed set of patterns
-    paste0(
-      substring(x, 0, min(group_pos) - 1),
-      rev_group,
-      substring(x, max(group_pos) + 1, nchar(x)),
-      collapse = ""
-    )
-  },
-  FUN.VALUE = character(1),
-  USE.NAMES = FALSE
   )
 }
 
@@ -280,8 +297,7 @@ swap_adjacent_text_groups <- function(x,
 #' @param x A text string.
 #' @param pattern A regular expression pattern.
 #' @noRd
-get_start_stop_positions <- function(x,
-                                     pattern) {
+get_start_stop_positions <- function(x, pattern) {
 
   # Use the pattern (`input`) with the input string
   # `x` with `regexpr()` to get the matching output
@@ -319,11 +335,13 @@ is_adjacent_separate <- function(group_1,
   return(TRUE)
 }
 
-str_catalog <- function(item_vector,
-                        conj = "and",
-                        surround = c("\"", "`"),
-                        sep = ",",
-                        oxford = TRUE) {
+str_catalog <- function(
+    item_vector,
+    conj = "and",
+    surround = c("\"", "`"),
+    sep = ",",
+    oxford = TRUE
+) {
 
   item_count <- length(item_vector)
 
@@ -350,13 +368,12 @@ str_catalog <- function(item_vector,
 
     separators[length(separators)] <-
       separators[length(separators)] %>%
-      paste_right(conj) %>% paste_right(" ")
+      paste_right(conj) %>%
+      paste_right(" ")
 
     separators[length(separators) + 1] <- ""
 
-    cat_str <-
-      paste0(cat_str, separators) %>%
-      paste(collapse = "")
+    cat_str <- paste(paste0(cat_str, separators), collapse = "")
 
     return(cat_str)
   }

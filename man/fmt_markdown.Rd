@@ -35,22 +35,14 @@ appropriate output type during render when using \code{fmt_markdown()}.
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
 nothing is provided for \code{rows} then entire columns are selected). Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the Arguments section for more information on this.
+argument. See the \emph{Arguments} section for more information on this.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_fmt_markdown_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
+Create a few Markdown-based text snippets.
 
-3-11
-}
-
-\examples{
-# Create a few Markdown-based
-# text snippets
-text_1a <- "
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{text_1a <- "
 ### This is Markdown.
 
 Markdown’s syntax is comprised entirely of
@@ -79,22 +71,31 @@ The **gt** package has these datasets:
 text_2b <- "
 There's a quick reference [here](https://commonmark.org/help/).
 "
+}\if{html}{\out{</div>}}
 
-# Arrange the text snippets as a tibble
-# using the `dplyr::tribble()` function;
-# then, create a gt table and format
-# all columns with `fmt_markdown()`
-tab_1 <-
-  dplyr::tribble(
-    ~Markdown, ~md,
-    text_1a,   text_2a,
-    text_1b,   text_2b,
-  ) \%>\%
-    gt() \%>\%
-    fmt_markdown(columns = everything()) \%>\%
-    tab_options(table.width = px(400))
+Arrange the text snippets as a tibble using the \code{dplyr::tribble()} function.
+then, create a \strong{gt} table and format all columns with \code{fmt_markdown()}.
 
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tribble(
+  ~Markdown, ~md,
+  text_1a,   text_2a,
+  text_1b,   text_2b,
+) \%>\%
+  gt() \%>\%
+  fmt_markdown(columns = everything()) \%>\%
+  tab_options(table.width = px(400))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_markdown_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+3-14
+}
+
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},
@@ -102,16 +103,21 @@ Other Format Data:
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_fraction}()},
 \code{\link{fmt_integer}()},
-\code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
+\code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt}()},
+\code{\link{sub_large_vals}()},
+\code{\link{sub_missing}()},
+\code{\link{sub_small_vals}()},
+\code{\link{sub_zero}()},
 \code{\link{text_transform}()}
 }
 \concept{Format Data}

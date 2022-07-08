@@ -1,4 +1,4 @@
-testthat::local_edition(3)
+skip_on_cran()
 
 tbl <-
   dplyr::tribble(

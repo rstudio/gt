@@ -23,7 +23,7 @@ register_s3_method <- function(pkg, generic, class, fun = NULL) {
   )
 }
 
-globalVariables(
+utils::globalVariables(
   c(
     ".",
     "are_groups_present",
@@ -78,6 +78,8 @@ globalVariables(
     "row_start",
     "rownum",
     "rownum_i",
+    "spanner_id",
+    "spanner_level",
     "styles",
     "styles_appended",
     "symbol",
@@ -115,10 +117,11 @@ globalVariables(
 #' @section Package options:
 #'
 #' **gt** uses the following [options()] to configure behavior:
-#' \itemize{
-#'   \item `gt.row_group.sep`: a separator between groups for the row group
+#'
+#' - `gt.html_tag_check`: A logical scalar indicating whether or not to print a
+#'   warning when HTML tags are found in a table that is being rendered to LaTeX.
+#' - `gt.row_group.sep`: A separator between groups for the row group
 #'   label.
-#' }
 #'
 #' @keywords internal
 #' @name gt-options
@@ -126,7 +129,6 @@ NULL
 
 gt_default_options <- list(
   gt.row_group.sep = " - ",
-  gt.rtf_page_width = 9468L,
   gt.html_tag_check = TRUE
 )
 

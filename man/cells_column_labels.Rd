@@ -62,23 +62,13 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \code{list()} (e.g., \code{list(cells_body(), cells_grand_summary())}).
 }
 
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cells_column_labels_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
+Use \code{\link{sza}} to create a \strong{gt} table. Add footnotes to the column labels with
+\code{\link[=tab_footnote]{tab_footnote()}} and \code{cells_column_labels()} in \code{locations}.
 
-7-8
-}
-
-\examples{
-# Use `sza` to create a gt table; add a
-# header and then add footnotes to the
-# column labels with `tab_footnote()` and
-# `cells_column_labels()` in `locations`
-tab_1 <-
-  sza \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza \%>\%
   dplyr::filter(
     latitude == 20 & month == "jan" &
       !is.na(sza)
@@ -97,8 +87,18 @@ tab_1 <-
       columns = sza
     )
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_column_labels_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+7-8
+}
+
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},

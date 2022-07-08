@@ -4,7 +4,7 @@
 \alias{fmt}
 \title{Set a column format with a formatter function}
 \usage{
-fmt(data, columns = everything(), rows = everything(), fns)
+fmt(data, columns = everything(), rows = everything(), fns, prepend = FALSE)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -25,16 +25,22 @@ to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{fns}{Either a single formatting function or a named list of functions.}
+
+\item{prepend}{Should the formatting function(s) be brought to the beginning
+of the formatting queue (\code{TRUE}) or placed at the end (\code{FALSE}). By default,
+this is \code{FALSE} and this leads to 'last-one-wins' semantics.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{fmt()} function provides greater control in formatting raw data values
-than any of the specialized \verb{fmt_*()} functions that are available in
-\strong{gt}. Along with the \code{columns} and \code{rows} arguments that provide some
-precision in targeting data cells, the \code{fns} argument allows you to define
-one or more functions for manipulating the raw data.
+The \code{fmt()} function provides a way to execute custom formatting
+functionality with raw data values in a way that can consider all output
+contexts.
+
+Along with the \code{columns} and \code{rows} arguments that provide some precision in
+targeting data cells, the \code{fns} argument allows you to define one or more
+functions for manipulating the raw data.
 
 If providing a single function to \code{fns}, the recommended format is in the
 form: \code{fns = function(x) ...}. This single function will format the targeted
@@ -42,45 +48,45 @@ data cells the same way regardless of the output format (e.g., HTML, LaTeX,
 RTF).
 
 If you require formatting of \code{x} that depends on the output format, a list of
-functions can be provided for the \code{html}, \code{latex}, and \code{default} contexts.
-This can be in the form of \code{fns = list(html = function(x) ..., latex = function(x) ..., default = function(x) ...)}. In this multiple-function case,
-we recommended including the \code{default} function as a fallback if all contexts
-aren't provided.
+functions can be provided for the \code{html}, \code{latex}, \code{rtf}, and \code{default}
+contexts. This can be in the form of \code{fns = list(html = function(x) ..., latex = function(x) ..., default = function(x) ...)}. In this
+multiple-function case, we recommended including the \code{default} function as a
+fallback if all contexts aren't provided.
 }
 \details{
 As with all of the \verb{fmt_*()} functions, targeting of values is done through
 \code{columns} and additionally by \code{rows} (if nothing is provided for \code{rows} then
 entire columns are selected). Conditional formatting is possible by providing
-a conditional expression to the \code{rows} argument. See the Arguments section
+a conditional expression to the \code{rows} argument. See the \emph{Arguments} section
 for more information on this.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_fmt_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
+Use \code{\link{exibble}} to create a \strong{gt} table. Format the numeric values in the
+\code{num} column with a function supplied to the \code{fns} argument.
 
-3-14
-}
-
-\examples{
-# Use `exibble` to create a gt table;
-# format the numeric values in the `num`
-# column with a function supplied to
-# the `fns` argument
-tab_1 <-
-  exibble \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(-row, -group) \%>\%
   gt() \%>\%
   fmt(
     columns = num,
-    fns = function(x) {
+    fns = function(x) \{
       paste0("'", x * 1000, "'")
-    }
+    \}
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+3-16
+}
+
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},
@@ -88,16 +94,21 @@ Other Format Data:
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_fraction}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
-\code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
+\code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
+\code{\link{sub_large_vals}()},
+\code{\link{sub_missing}()},
+\code{\link{sub_small_vals}()},
+\code{\link{sub_zero}()},
 \code{\link{text_transform}()}
 }
 \concept{Format Data}

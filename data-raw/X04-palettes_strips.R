@@ -2,9 +2,11 @@ library(tidyverse)
 library(glue)
 library(paletteer)
 
-make_rects <- function(colors,
-                       full_width = 400,
-                       height = 30) {
+make_rects <- function(
+    colors,
+    full_width = 400,
+    height = 30
+) {
 
   col_count <- length(colors)
   width_each <- full_width / col_count
@@ -27,6 +29,7 @@ make_color_strip_svg <- function(colors) {
 
   rects <- make_rects(colors)
 
+  as.character(
   glue::glue(
     '<svg width="403px" height="32px" viewBox="0 0 403 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
@@ -40,9 +43,8 @@ make_color_strip_svg <- function(colors) {
     </g>
   </g>
 </svg>
-') %>% as.character()
+'))
 }
-
 
 get_d_palettes <- function(color_packages = c(
   "awtools", "dichromat", "dutchmasters", "ggsci", "ggpomological",
@@ -52,8 +54,7 @@ get_d_palettes <- function(color_packages = c(
   "Redmonder", "tidyquant", "wesanderson", "yarrr")) {
 
   palettes <-
-    palettes_d_names %>%
-    dplyr::filter(package %in% color_packages) %>%
+    dplyr::filter(palettes_d_names, package %in% color_packages) %>%
     mutate(colors = "NA_character_")
 
   for (i in seq_len(nrow(palettes))) {
@@ -76,4 +77,3 @@ palettes_strips <- get_d_palettes()
 rm(get_d_palettes)
 rm(make_color_strip_svg)
 rm(make_rects)
-

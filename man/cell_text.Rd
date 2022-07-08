@@ -79,22 +79,13 @@ itself allows for the setting of custom styles to one or more cells. We can
 also define several styles within a single call of \code{cell_text()} and
 \code{\link[=tab_style]{tab_style()}} will reliably apply those styles to the targeted element.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cell_text_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
+Use \code{\link{exibble}} to create a \strong{gt} table. Add styles with \code{\link[=tab_style]{tab_style()}} and
+the \code{cell_text()} helper function.
 
-7-19
-}
-
-\examples{
-# Use `exibble` to create a gt table;
-# add styles with `tab_style()` and
-# the `cell_text()` helper function
-tab_1 <-
-  exibble \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(num, currency) \%>\%
   gt() \%>\%
   fmt_number(
@@ -105,7 +96,8 @@ tab_1 <-
     style = cell_text(weight = "bold"),
     locations = cells_body(
       columns = num,
-      rows = num >= 5000)
+      rows = num >= 5000
+    )
   ) \%>\%
   tab_style(
     style = cell_text(style = "italic"),
@@ -114,8 +106,18 @@ tab_1 <-
       rows = currency < 100
     )
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cell_text_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+7-19
+}
+
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},

@@ -32,24 +32,14 @@ of these locations are transformed).
 
 This function serves as a convenient shortcut for \verb{<gt_tbl> \%>\% tab_options(<location>.text_transform = "uppercase", <location>.font.size = pct(80), <location>.font.weight = "bolder")} (for all \code{locations} selected).
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_opt_all_caps_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
+Use \code{\link{exibble}} to create a \strong{gt} table with a number of table parts added.
+All text in the column labels, the stub, and in all row groups is to be
+transformed to all caps using \code{opt_all_caps()}.
 
-9-6
-}
-
-\examples{
-# Use `exibble` to create a gt table with
-# a number of table parts added; all text
-# in the column labels, the stub, and in
-# all row groups is to be transformed to
-# all caps using `opt_all_caps()`
-tab_1 <-
-  exibble \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt(rowname_col = "row", groupname_col = "group") \%>\%
   summary_rows(
     groups = "grp_a",
@@ -73,8 +63,18 @@ tab_1 <-
     subtitle = "The table's subtitle"
   ) \%>\%
   opt_all_caps()
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_all_caps_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+9-6
+}
+
 \seealso{
 Other Table Option Functions: 
 \code{\link{opt_align_table_header}()},

@@ -1,36 +1,27 @@
 .dt_options_key <- "_options"
 
 dt_options_get <- function(data) {
-
   dt__get(data, .dt_options_key)
 }
 
 dt_options_set <- function(data, options) {
-
   dt__set(data, .dt_options_key, options)
 }
 
 dt_options_init <- function(data) {
-
-  dt_options_tbl %>% dt_options_set(options = ., data = data)
+  dt_options_set(data = data, options = dt_options_tbl)
 }
 
 dt_options_set_value <- function(data, option, value) {
 
-  dt_options <-
-    data %>%
-    dt_options_get()
-
+  dt_options <- dt_options_get(data = data)
   dt_options$value[[which(dt_options$parameter == option)]] <- value
 
-  dt_options %>%
-    dt_options_set(options = ., data = data)
+  dt_options_set(data = data, options = dt_options)
 }
 
 dt_options_get_value <- function(data, option) {
-
   dt_options <- dt_options_get(data = data)
-
   dt_options$value[[which(dt_options$parameter == option)]]
 }
 
@@ -60,7 +51,7 @@ dt_options_tbl <-
     "table_font_names",                  FALSE,  "table",            "values",  default_fonts_vec,
     "table_font_size",                    TRUE,  "table",            "px",      "16px",
     "table_font_weight",                  TRUE,  "table",            "value",   "normal",
-    "table_font_style",                   TRUE,   "table",           "value",   "normal",
+    "table_font_style",                   TRUE,  "table",            "value",   "normal",
     "table_font_color",                   TRUE,  "table",            "value",   "#333333",
     "table_font_color_light",             TRUE,  "table",            "value",   "#FFFFFF",
     "table_border_top_include",          FALSE,  "table",            "logical", TRUE,
@@ -201,4 +192,16 @@ dt_options_tbl <-
     "row_striping_background_color",      TRUE,  "row",              "value",   "rgba(128,128,128,0.05)",
     "row_striping_include_stub",         FALSE,  "row",              "logical", FALSE,
     "row_striping_include_table_body",   FALSE,  "row",              "logical", FALSE,
+    "page_orientation",                  FALSE,  "page",             "value",   "portrait",
+    "page_numbering",                    FALSE,  "page",             "logical", FALSE,
+    "page_header_use_tbl_headings",      FALSE,  "page",             "logical", FALSE,
+    "page_footer_use_tbl_notes",         FALSE,  "page",             "logical", FALSE,
+    "page_width",                        FALSE,  "page",             "value",   "8.5in",
+    "page_height",                       FALSE,  "page",             "value",   "11.0in",
+    "page_margin_left",                  FALSE,  "page",             "value",   "1.0in",
+    "page_margin_right",                 FALSE,  "page",             "value",   "1.0in",
+    "page_margin_top",                   FALSE,  "page",             "value",   "1.0in",
+    "page_margin_bottom",                FALSE,  "page",             "value",   "1.0in",
+    "page_header_height",                FALSE,  "page",             "value",   "0.5in",
+    "page_footer_height",                FALSE,  "page",             "value",   "0.5in",
   )[-1, ]

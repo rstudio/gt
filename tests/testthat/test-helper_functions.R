@@ -1,5 +1,3 @@
-context("Ensuring that the helper functions work as expected")
-
 test_that("the the `pct()` helper function works correctly", {
 
   # Create a CSS percentage value string

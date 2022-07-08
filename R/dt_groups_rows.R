@@ -5,14 +5,13 @@ dt_groups_rows_get <- function(data) {
   ret <- dt__get(data, .dt_groups_rows_key)
 
   if (is.null(ret)) {
-    stop("Must call `dt_groups_rows_build()` first.")
+    cli::cli_abort("Must call `dt_groups_rows_build()` first.")
   }
 
   ret
 }
 
 dt_groups_rows_set <- function(data, groups_rows) {
-
   dt__set(data, .dt_groups_rows_key, groups_rows)
 }
 
@@ -43,8 +42,7 @@ dt_groups_rows_build <- function(data, context) {
     }
 
     # If `rows_matched` is NA then go to next iteration
-    if (length(ordering[i]) < 1 ||
-        length(rows_matched) < 1) next
+    if (length(ordering[i]) < 1 || length(rows_matched) < 1) next
 
     groups_rows[i, "group_id"] <- ordering[i]
     groups_rows[i, "row_start"] <- min(rows_matched)
@@ -54,27 +52,21 @@ dt_groups_rows_build <- function(data, context) {
   # Join `built` values to the `groups_rows` table
   if (nrow(groups_rows) > 0) {
 
-    groups_rows <-
-      groups_rows %>%
-      dplyr::left_join(
-        stub_df %>%
-          dplyr::select(built, group_id) %>%
-          dplyr::distinct(),
-        by = "group_id"
-      ) %>%
-      dplyr::rename(group_label = built) %>%
-      dplyr::select(group_id, group_label, dplyr::everything())
+    group_label_df <- dplyr::distinct(stub_df[, c("built", "group_id")])
 
-    others_group <-
-      dt_options_get_value(data = data, option = "row_group_default_label")
+    groups_rows <- dplyr::left_join(groups_rows, group_label_df, by = "group_id")
+    groups_rows <- dplyr::rename(groups_rows, group_label = built)
+    groups_rows <- dplyr::select(groups_rows, group_id, group_label, dplyr::everything())
+
+    others_group <- dt_options_get_value(data = data, option = "row_group_default_label")
 
     groups_rows[is.na(groups_rows[, "group_id"]), "group_label"] <- others_group
+
   } else {
-    # Resulting data frame must always have the same columns
+
+    # The resulting data frame must always have the same columns
     groups_rows <- cbind(groups_rows, group_label = character(0))
   }
 
-  data <- dt_groups_rows_set(data = data, groups_rows = groups_rows)
-
-  data
+  dt_groups_rows_set(data = data, groups_rows = groups_rows)
 }

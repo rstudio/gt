@@ -64,33 +64,19 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \code{list()} (e.g., \code{list(cells_body(), cells_grand_summary())}).
 }
 
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cells_row_groups_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
+Use \code{\link{pizzaplace}} to create a \strong{gt} table with grouped data. Add a summary
+with the \code{\link[=summary_rows]{summary_rows()}} function and then add a footnote to the
+\code{"peppr_salami"} row group label with \code{\link[=tab_footnote]{tab_footnote()}} and with
+\code{cells_row_groups()} in \code{locations}.
 
-7-9
-}
-
-\examples{
-# Use `pizzaplace` to create a gt table
-# with grouped data; add a summary with the
-# `summary_rows()` function and then add a
-# footnote to the "peppr_salami" row group
-# label with `tab_footnote()` and with
-# `cells_row_groups()` in `locations`
-tab_1 <-
-  pizzaplace \%>\%
-  dplyr::filter(
-    name \%in\% c("soppressata", "peppr_salami")
-  ) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
+  dplyr::filter(name \%in\% c("soppressata", "peppr_salami")) \%>\%
   dplyr::group_by(name, size) \%>\%
-  dplyr::summarize(
-    `Pizzas Sold` = dplyr::n()
-  ) \%>\%
-  gt(rowname_col = "size") \%>\%
+  dplyr::summarize(`Pizzas Sold` = dplyr::n(), .groups = "drop") \%>\%
+  gt(rowname_col = "size", groupname_col = "name") \%>\%
   summary_rows(
     groups = TRUE,
     columns = `Pizzas Sold`,
@@ -103,8 +89,18 @@ tab_1 <-
     footnote = "The Pepper-Salami.",
     cells_row_groups(groups = "peppr_salami")
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_row_groups_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+7-9
+}
+
 \seealso{
 Other Helper Functions: 
 \code{\link{adjust_luminance}()},

@@ -10,22 +10,19 @@ latex_packages <- function() {
 
 # Transform a footnote mark to a LaTeX representation as a superscript
 footnote_mark_to_latex <- function(mark) {
-  paste0("\\textsuperscript{", mark, "}")
+  ifelse(is.na(mark), "", paste0("\\textsuperscript{", mark, "}"))
 }
 
 #' @noRd
-latex_body_row <- function(content,
-                           type) {
+latex_body_row <- function(content, type) {
 
   if (type == "row") {
 
-    return(
-      paste(paste(content, collapse = " & "), "\\\\ \n"))
+    return(paste(paste(content, collapse = " & "), "\\\\ \n"))
 
   } else if (type == "group") {
 
-    return(
-      paste(paste(content, collapse = " & "), "\\\\ \n"))
+    return(paste(paste(content, collapse = " & "), "\\\\ \n"))
   }
 }
 
@@ -35,20 +32,24 @@ latex_heading_row <- function(content) {
   paste0(
     paste(paste(content, collapse = " & "), "\\\\ \n"),
     "\\midrule\n",
-    collapse = "")
+    collapse = ""
+  )
 }
 
 #' @noRd
-latex_group_row <- function(group_name,
-                            top_border = TRUE,
-                            bottom_border = TRUE) {
+latex_group_row <- function(
+    group_name,
+    top_border = TRUE,
+    bottom_border = TRUE
+) {
 
   paste0(
     ifelse(top_border, "\\midrule\n", ""),
     "\\multicolumn{1}{l}{", group_name,
     "} \\\\ \n",
     ifelse(bottom_border, "\\midrule\n", ""),
-    collapse = "")
+    collapse = ""
+  )
 }
 
 #' @noRd
@@ -137,8 +138,7 @@ create_heading_component_l <- function(data) {
     footnote_subtitle_marks <- ""
   }
 
-  title_row <-
-    latex_group("\\large ", heading$title, footnote_title_marks)
+  title_row <- latex_group("\\large ", heading$title, footnote_title_marks)
 
   if (subtitle_defined) {
 
@@ -152,8 +152,10 @@ create_heading_component_l <- function(data) {
     subtitle_row <- ""
   }
 
-  paste0(title_row, subtitle_row) %>%
-    paste_between(x_2 = c("\\caption*{\n", "\n} \\\\ \n"))
+  paste_between(
+    paste0(title_row, subtitle_row),
+    x_2 = c("\\caption*{\n", "\n} \\\\ \n")
+  )
 }
 
 #' Create the columns component of a table
@@ -161,14 +163,15 @@ create_heading_component_l <- function(data) {
 #' @noRd
 create_columns_component_l <- function(data) {
 
-  boxh <- dt_boxhead_get(data = data)
-  stubh <- dt_stubhead_get(data = data)
-
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
 
-  # Determine if there are any spanners present
-  spanners_present <- dt_spanners_exists(data = data)
+  # Determine the finalized number of spanner rows
+  spanner_row_count <-
+    dt_spanners_matrix_height(
+      data = data,
+      omit_columns_row = TRUE
+    )
 
   # Get the column headings
   headings_vars <- dt_boxhead_get_vars_default(data = data)
@@ -176,6 +179,8 @@ create_columns_component_l <- function(data) {
 
   # If there is a stub then modify the `headings_vars` and `headings_labels`
   if (length(stub_layout) > 0) {
+
+    stubh <- dt_stubhead_get(data = data)
 
     headings_vars <- prepend_vec(headings_vars, "::stub")
 
@@ -193,83 +198,104 @@ create_columns_component_l <- function(data) {
   table_col_headings <-
     paste0(latex_heading_row(content = headings_labels), collapse = "")
 
-  if (spanners_present) {
+  if (spanner_row_count > 0) {
 
-    # Get vector of group labels (spanners)
-    spanners <- dt_spanners_print(data = data, include_hidden = FALSE)
-    spanner_ids <- dt_spanners_print(data = data, include_hidden = FALSE, ids = TRUE)
+    table_col_spanners <- c()
 
-    if (length(stub_layout) > 0) {
-      spanners <- c(rep(NA_character_, length(stub_layout)), spanners)
-      spanner_ids <- c(rep(NA_character_, length(stub_layout)), spanner_ids)
-    }
-
-    spanners_rle <- unclass(rle(spanner_ids))
-
-    # We need a parallel vector of spanner labels and this could
-    # be part of the `spanners_rle` list
-    spanners_rle$labels <- spanners[cumsum(spanners_rle$lengths)]
-
-    begins <- (cumsum(utils::head(c(0, spanners_rle$lengths), -1)) + 1)[!is.na(spanners_rle$values)]
-    ends <- cumsum(spanners_rle$lengths)[!is.na(spanners_rle$values)]
-    cmidrule <- paste0("\\cmidrule(lr){", begins, "-", ends, "}")
-
-    is_spanner_na <- is.na(spanners_rle$values)
-    is_spanner_single <- spanners_rle$lengths == 1
-
-    multicol <-
-      ifelse(
-        is_spanner_na, "",
-        ifelse(
-          is_spanner_single, spanners_rle$labels,
-          sprintf(
-            "\\multicolumn{%d}{c}{%s}", spanners_rle$lengths, spanners_rle$labels
-          )
-        )
+    spanners <-
+      dt_spanners_print_matrix(
+        data = data,
+        include_hidden = FALSE,
+        omit_columns_row = TRUE
       )
 
-    # If there is a stub we need to tweak the spanners row with a blank
-    # multicolumn statement that's the same width as that in the columns
-    # row; this is to prevent the automatic vertical line that would otherwise
-    # appear here
+    spanner_ids <-
+      dt_spanners_print_matrix(
+        data = data,
+        include_hidden = FALSE,
+        ids = TRUE,
+        omit_columns_row = TRUE
+      )
+
     if (length(stub_layout) > 0) {
 
-      multicol <-
-        c(
-          paste0("\\multicolumn{", length(stub_layout), "}{l}{}"),
-          multicol[-seq_along(stub_layout)]
-        )
+      stub_matrix <- matrix(nrow = nrow(spanners), ncol = length(stub_layout))
+
+      spanners <- cbind(stub_matrix, spanners)
+      spanner_ids <- cbind(stub_matrix, spanner_ids)
     }
 
-    multicol <- paste0(paste(multicol, collapse = " & "), " \\\\ \n")
-    cmidrule <- paste0(paste(cmidrule, collapse = " "), "\n")
+    for (i in seq_len(nrow(spanners))) {
 
-    table_col_spanners <- paste0(multicol, cmidrule, collapse = "")
+      spanners_i <- spanners[i, ]
+      spanner_ids_i <- spanner_ids[i, ]
 
+      spanners_rle <- unclass(rle(spanner_ids_i))
+
+      # We need a parallel vector of spanner labels and this could
+      # be part of the `spanners_rle` list
+      spanners_rle$labels <- spanners_i[cumsum(spanners_rle$lengths)]
+
+      begins <- (cumsum(utils::head(c(0, spanners_rle$lengths), -1)) + 1)[!is.na(spanners_rle$values)]
+      ends <- cumsum(spanners_rle$lengths)[!is.na(spanners_rle$values)]
+      cmidrule <- paste0("\\cmidrule(lr){", begins, "-", ends, "}")
+
+      is_spanner_na <- is.na(spanners_rle$values)
+      is_spanner_single <- spanners_rle$lengths == 1
+
+      multicol <-
+        ifelse(
+          is_spanner_na, "",
+          ifelse(
+            is_spanner_single, spanners_rle$labels,
+            sprintf(
+              "\\multicolumn{%d}{c}{%s}", spanners_rle$lengths, spanners_rle$labels
+            )
+          )
+        )
+
+      # If there is a stub we need to tweak the spanners row with a blank
+      # multicolumn statement that's the same width as that in the columns
+      # row; this is to prevent the automatic vertical line that would otherwise
+      # appear here
+      if (length(stub_layout) > 0) {
+
+        multicol <-
+          c(
+            paste0("\\multicolumn{", length(stub_layout), "}{l}{}"),
+            multicol[-seq_along(stub_layout)]
+          )
+      }
+
+      multicol <- paste0(paste(multicol, collapse = " & "), " \\\\ \n")
+      cmidrule <- paste0(paste(cmidrule, collapse = " "), "\n")
+
+      col_spanners_i <- paste0(multicol, cmidrule, collapse = "")
+
+      table_col_spanners <- c(table_col_spanners, col_spanners_i)
+    }
 
   } else {
     table_col_spanners <- ""
   }
 
-  paste0("\\toprule\n", table_col_spanners, table_col_headings)
+  paste0(
+    "\\toprule\n",
+    paste0(table_col_spanners, collapse = ""),
+    table_col_headings
+  )
 }
 
 #' @noRd
 create_body_component_l <- function(data) {
 
   body <- dt_body_get(data = data)
-  boxh <- dt_boxhead_get(data = data)
-
   groups_rows_df <- dt_groups_rows_get(data = data)
 
   n_rows <- nrow(body)
 
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
-
-  # Obtain all of the visible (`"default"`), non-stub
-  # column names for the table
-  default_vars <- dt_boxhead_get_vars_default(data = data)
 
   # Get a matrix of body cells to render, split into a list of
   # character vectors by row, and create a vector of LaTeX body rows
@@ -281,8 +307,8 @@ create_body_component_l <- function(data) {
   if (any(is.na(groups_rows_df$group_label))) {
 
     groups_rows_df <-
-      groups_rows_df %>%
       dplyr::mutate(
+        groups_rows_df,
         group_label = ifelse(
           is.na(group_label), "\\vspace*{-5mm}", group_label
         )
@@ -333,7 +359,8 @@ create_table_end_l <- function() {
   paste0(
     "\\bottomrule\n",
     "\\end{longtable}\n",
-    collapse = "")
+    collapse = ""
+  )
 }
 
 #' @noRd
@@ -357,9 +384,7 @@ create_footer_component_l <- function(data) {
   if (nrow(footnotes_tbl) > 0) {
 
     footnotes_tbl <-
-      footnotes_tbl %>%
-      dplyr::select(fs_id, footnotes) %>%
-      dplyr::distinct()
+      dplyr::distinct(dplyr::select(footnotes_tbl, fs_id, footnotes))
 
     # Create a vector of formatted footnotes
     footnotes <-
@@ -405,8 +430,7 @@ create_footer_component_l <- function(data) {
 }
 
 # Function to build a vector of `group` rows in the table body
-create_group_rows_l <- function(groups_rows_df,
-                                n_rows) {
+create_group_rows_l <- function(groups_rows_df, n_rows) {
 
   unname(
     unlist(
@@ -429,8 +453,7 @@ create_group_rows_l <- function(groups_rows_df,
   )
 }
 
-create_group_dividers_l <- function(groups_rows_df,
-                                    n_rows) {
+create_group_dividers_l <- function(groups_rows_df, n_rows) {
 
   dividers <- rep_len("", n_rows)
 
@@ -461,9 +484,11 @@ create_body_rows_l <- function(row_splits_body) {
 }
 
 # Function to build a vector of `summary` rows in the table body
-create_summary_rows_l <- function(data,
-                                  groups_rows_df,
-                                  n_rows) {
+create_summary_rows_l <- function(
+    data,
+    groups_rows_df,
+    n_rows
+) {
 
   list_of_summaries <- dt_summary_df_get(data = data)
 

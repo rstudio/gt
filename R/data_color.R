@@ -65,15 +65,14 @@
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # library(paletteer)
+#' @section Examples:
 #'
-#' # Use `countrypops` to create a gt table;
-#' # Apply a color scale to the `population`
-#' # column with `scales::col_numeric`,
-#' # four supplied colors, and a domain
-#' tab_1 <-
-#'   countrypops %>%
+#' Use [`countrypops`] to create a **gt** table. Apply a color scale to the
+#' `population` column with `scales::col_numeric`, four supplied colors, and a
+#' domain.
+#'
+#' ```r
+#' countrypops %>%
 #'   dplyr::filter(country_name == "Mongolia") %>%
 #'   dplyr::select(-contains("code")) %>%
 #'   tail(10) %>%
@@ -81,57 +80,66 @@
 #'   data_color(
 #'     columns = population,
 #'     colors = scales::col_numeric(
-#'       palette = c(
-#'         "red", "orange", "green", "blue"),
-#'       domain = c(0.2E7, 0.4E7))
+#'       palette = c("red", "orange", "green", "blue"),
+#'       domain = c(0.2E7, 0.4E7)
+#'     )
 #'   )
+#' ```
 #'
-#' # Use `pizzaplace` to create a gt table;
-#' # Apply colors from the `red_material`
-#' # palette (in the `ggsci` pkg but
-#' # more easily gotten from the `paletteer`
-#' # package, info at `info_paletteer()`) to
-#' # to `sold` and `income` columns; setting
-#' # the `domain` of `scales::col_numeric()`
-#' # to `NULL` will use the bounds of the
-#' # available data as the domain
-#' tab_2 <-
-#'   pizzaplace %>%
-#'   dplyr::filter(
-#'     type %in% c("chicken", "supreme")) %>%
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_data_color_1.png")`
+#' }}
+#'
+#' Use [`pizzaplace`] to create a **gt** table. Apply colors from the
+#' `"ggsci::red_material"` palette (it's in the **ggsci** R package but more
+#' easily gotten from the **paletteer** package, info at [info_paletteer()]) to
+#' to `sold` and `income` columns. Setting the `domain` of
+#' `scales::col_numeric()` to `NULL` will use the bounds of the available data
+#' as the domain.
+#'
+#' ```r
+#' pizzaplace %>%
+#'   dplyr::filter(type %in% c("chicken", "supreme")) %>%
 #'   dplyr::group_by(type, size) %>%
 #'   dplyr::summarize(
 #'     sold = dplyr::n(),
-#'     income = sum(price)
+#'     income = sum(price),
+#'     .groups = "drop"
 #'   ) %>%
-#'   gt(rowname_col = "size") %>%
+#'   gt(
+#'     rowname_col = "size",
+#'     groupname_col = "type"
+#'   ) %>%
 #'   data_color(
 #'     columns = c(sold, income),
 #'     colors = scales::col_numeric(
 #'       palette = paletteer::paletteer_d(
 #'         palette = "ggsci::red_material"
-#'         ) %>% as.character(),
+#'       ) %>%
+#'         as.character(),
 #'       domain = NULL
-#'       )
+#'     )
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_data_color_1.png}{options: width=100\%}}
-#'
-#' \if{html}{\figure{man_data_color_2.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_data_color_2.png")`
+#' }}
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-15
+#' 3-21
 #'
 #' @import rlang
 #' @export
-data_color <- function(data,
-                       columns,
-                       colors,
-                       alpha = NULL,
-                       apply_to = c("fill", "text"),
-                       autocolor_text = TRUE) {
+data_color <- function(
+    data,
+    columns,
+    colors,
+    alpha = NULL,
+    apply_to = c("fill", "text"),
+    autocolor_text = TRUE
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -147,21 +155,21 @@ data_color <- function(data,
   # Evaluate `colors` with `eval_tidy()` (supports quosures)
   colors <- rlang::eval_tidy(colors, data_tbl)
 
-  # Collect the column names from `data_tbl`
-  colnames <- names(data_tbl)
-
   # Resolution of `columns` as column names in the table
-  #columns <- rlang::enquo(columns)
-  resolved_columns <-
-    resolve_cols_c(expr = {{ columns }}, data = data)
+  resolved_columns <- resolve_cols_c(expr = {{ columns }}, data = data)
 
   # Get the sequence of row indices for the table
   rows <- seq_len(nrow(data_tbl))
 
   data_color_styles_tbl <-
     dplyr::tibble(
-      locname = character(0), grpname = character(0), colname = character(0),
-      locnum = numeric(0), rownum = integer(0), colnum = integer(0), styles = list()
+      locname = character(0),
+      grpname = character(0),
+      colname = character(0),
+      locnum = numeric(0),
+      rownum = integer(0),
+      colnum = integer(0),
+      styles = list()
     )
 
   for (column in resolved_columns) {
@@ -173,7 +181,12 @@ data_color <- function(data,
       if (is.numeric(data_vals)) {
 
         # Create a color function based on `scales::col_numeric()`
-        color_fn <- scales::col_numeric(palette = colors, domain = data_vals, alpha = TRUE)
+        color_fn <-
+          scales::col_numeric(
+            palette = colors,
+            domain = data_vals,
+            alpha = TRUE
+          )
 
       } else if (is.character(data_vals) || is.factor(data_vals)) {
 
@@ -183,24 +196,32 @@ data_color <- function(data,
         # of levels. Instead, colors should be subsetted. scales does the right
         # thing for palette names though, so we need to screen those cases out.
         if (length(colors) > 1) {
+
           nlvl <-
             if (is.factor(data_vals)) {
               nlevels(data_vals)
             } else {
               nlevels(factor(data_vals))
             }
+
           if (length(colors) > nlvl) {
             colors <- colors[seq_len(nlvl)]
           }
         }
 
         # Create a color function based on `scales::col_factor()`
-        color_fn <- scales::col_factor(palette = colors, domain = data_vals, alpha = TRUE)
+        color_fn <-
+          scales::col_factor(
+            palette = colors,
+            domain = data_vals,
+            alpha = TRUE
+          )
 
       } else {
 
-        stop("Don't know how to map colors to a column of class ", class(data_vals)[1], ".",
-             call. = FALSE)
+        cli::cli_abort(
+          "Don't know how to map colors to a column of class {class(data_vals)[1]}."
+        )
       }
 
     } else if (inherits(colors, "function")) {
@@ -209,9 +230,9 @@ data_color <- function(data,
       color_fn <- colors
 
     } else {
-
-      stop("The `colors` arg must be either a character vector of colors or a function",
-           call. = FALSE)
+      cli::cli_abort(
+        "The `colors` arg must be either a character vector of colors or a function."
+      )
     }
 
     # Evaluate `color_fn` with `eval_tidy()` (supports quosures)
@@ -235,7 +256,8 @@ data_color <- function(data,
       dplyr::bind_rows(
         data_color_styles_tbl,
         generate_data_color_styles_tbl(
-          column = column, rows = rows,
+          column = column,
+          rows = rows,
           color_styles = color_styles
         )
       )
@@ -250,7 +272,8 @@ data_color <- function(data,
         dplyr::bind_rows(
           data_color_styles_tbl,
           generate_data_color_styles_tbl(
-            column = column, rows = rows,
+            column = column,
+            rows = rows,
             color_styles = color_styles
           )
         )
@@ -266,8 +289,12 @@ data_color <- function(data,
 generate_data_color_styles_tbl <- function(column, rows, color_styles) {
 
   dplyr::tibble(
-    locname = "data", grpname = NA_character_,
-    colname = column, locnum = 5, rownum = rows,
+    locname = "data",
+    grpname = NA_character_,
+    colname = column,
+    locnum = 5,
+    rownum = rows,
+    colnum = NA_integer_,
     styles = color_styles
   )
 }
@@ -335,9 +362,11 @@ expand_short_hex <- function(colors) {
 #' output is a single color value in #RRGGBB hexadecimal format
 #'
 #' @noRd
-ideal_fgnd_color <- function(bgnd_color,
-                             light = "#FFFFFF",
-                             dark = "#000000") {
+ideal_fgnd_color <- function(
+    bgnd_color,
+    light = "#FFFFFF",
+    dark = "#000000"
+) {
 
   # Normalize color to hexadecimal color if it is in the 'rgba()' string format
   bgnd_color <- rgba_to_hex(colors = bgnd_color)
@@ -368,19 +397,19 @@ rgba_to_hex <- function(colors) {
 
   colors_vec[!colors_rgba] <- colors[!colors_rgba]
 
+  rgba_str <- gsub("(rgba\\(|\\))", "", colors[colors_rgba])
+
+  rgba_vec <- as.numeric(unlist(strsplit(rgba_str, ",")))
+
   color_matrix <-
-    colors[colors_rgba] %>%
-    gsub(pattern = "(rgba\\(|\\))", replacement = "", x = .) %>%
-    strsplit(",") %>%
-    unlist() %>%
-    as.numeric() %>%
     matrix(
-      ., ncol = 4,
+      rgba_vec,
+      ncol = 4,
       dimnames = list(c(), c("r", "g", "b", "alpha")),
       byrow = TRUE
     )
 
-  alpha <- color_matrix[, "alpha"] %>% unname()
+  alpha <- unname(color_matrix[, "alpha"])
 
   # Convert color matrix to hexadecimal colors in the #RRGGBBAA format
   colors_to_hex <-
@@ -410,7 +439,8 @@ html_color <- function(colors, alpha = NULL) {
 
   # Stop function if there are any NA values in `colors`
   if (any(is.na(colors))) {
-    stop("No values supplied in `colors` should be NA")
+
+    cli::cli_abort("No values supplied in `colors` should be `NA`.")
   }
 
   is_rgba <- is_rgba_col(colors = colors)
@@ -511,8 +541,7 @@ normalize_colors <- function(colors, alpha) {
 
   # Generate rgba() color values for `colors_html`
   colors_html[!colors_alpha_1] <-
-    color_matrix[!colors_alpha_1, , drop = FALSE] %>%
-    col_matrix_to_rgba()
+    col_matrix_to_rgba(color_matrix[!colors_alpha_1, , drop = FALSE])
 
   colors_html
 }
@@ -523,13 +552,10 @@ css_exclusive_colors <- function() {
 
   color_values <- color_tbl_subset[["hexadecimal"]]
 
-  color_values <-
-    stats::setNames(
-      color_values,
-      tolower(color_tbl_subset[["color_name"]])
-    )
-
-  color_values
+  stats::setNames(
+    color_values,
+    tolower(color_tbl_subset[["color_name"]])
+  )
 }
 
 valid_color_names <- function() {
@@ -544,15 +570,16 @@ check_named_colors <- function(named_colors) {
 
     invalid_colors <- base::setdiff(unique(named_colors), valid_color_names())
 
-    stop(
+    one_several_invalid <-
       ifelse(
         length(invalid_colors) > 1,
         "Several invalid color names were ",
         "An invalid color name was "
-      ), "used (", str_catalog(invalid_colors, conj = "and"), "):\n",
-      " * Only R/X11 color names and CSS 3.0 color names can be used",
-      call. = FALSE
-    )
+      )
+
+    cli::cli_abort(c(
+      "{one_several_invalid} used ({str_catalog(invalid_colors, conj = 'and')}).",
+      "*" = "Only R/X11 color names and CSS 3.0 color names can be used."
+    ))
   }
 }
-

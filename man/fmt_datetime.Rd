@@ -171,24 +171,14 @@ Here are some extra formats that you may find useful:
 }
 }
 
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_fmt_datetime_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
+Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{datetime} column.
+Format the column to have dates formatted as \code{month_day_year} and times to be
+\code{hms_p}.
 
-3-10
-}
-
-\examples{
-# Use `exibble` to create a gt table;
-# keep only the `datetime` column;
-# format the column to have dates
-# formatted as `month_day_year` and
-# times to be `hms_p`
-tab_1 <-
-  exibble \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(datetime) \%>\%
   gt() \%>\%
   fmt_datetime(
@@ -196,25 +186,40 @@ tab_1 <-
     date_style = 5,
     time_style = 3
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_datetime_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+3-12
+}
+
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_fraction}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
-\code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
+\code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt}()},
+\code{\link{sub_large_vals}()},
+\code{\link{sub_missing}()},
+\code{\link{sub_small_vals}()},
+\code{\link{sub_zero}()},
 \code{\link{text_transform}()}
 }
 \concept{Format Data}
