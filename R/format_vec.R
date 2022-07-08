@@ -84,6 +84,59 @@
 #'
 #' @return A character vector.
 #'
+#' @section Examples:
+#'
+#' Let's create a numeric vector for the next few examples:
+#'
+#' ```{r}
+#' num_vals <- c(5.2, 8.35, 0, -5.3, NA)
+#' ```
+#'
+#' Using `x_number()` with the default options will create a character vector
+#' where the numeric values have two decimal places and `NA` values will render
+#' as `"NA"`. Also, the rendering context is HTML unless specified in the
+#' `output` argument.
+#'
+#' ```{r}
+#' x_number(num_vals)
+#' ```
+#'
+#' We can change the decimal mark to a comma, and we have to be sure to change
+#' the digit separator mark from the default comma to something else (a period
+#' works here):
+#'
+#' ```{r}
+#' x_number(num_vals, sep_mark = ".", dec_mark = ",")
+#' ```
+#'
+#' If we are formatting for a different locale, we could supply the locale ID
+#' and let **gt** handle these locale-specific formatting options:
+#'
+#' ```{r}
+#' x_number(num_vals, locale = "fr")
+#' ```
+#'
+#' There are many options for formatting values. Perhaps you need to have
+#' explicit positive and negative signs? Use `force_sign = TRUE` for that.
+#'
+#' ```{r}
+#' x_number(num_vals, force_sign = TRUE)
+#' ```
+#'
+#' Those trailing zeros past the decimal mark can be stripped out by using the
+#' `drop_trailing_zeros` option.
+#'
+#' ```{r}
+#' x_number(num_vals, drop_trailing_zeros = TRUE)
+#' ```
+#'
+#' As a last example, one can wrap the values in a pattern with the `pattern`
+#' argument. Note here that `NA` values won't have the pattern applied.
+#'
+#' ```{r}
+#' x_number(num_vals, pattern = "`{x}`")
+#' ```
+#'
 #' @family vector formatting functions
 #' @section Function ID:
 #' 14-1
