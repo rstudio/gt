@@ -44,6 +44,47 @@ the example output times):
 We can use the \code{\link[=info_time_style]{info_time_style()}} function for a useful reference on all of
 the possible inputs to \code{time_style}.
 }
+\section{Examples}{
+
+
+Let's create a character vector of datetime values in the ISO-8601 format
+for the next few examples:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{str_vals <- c("2022-06-13 18:36", "2019-01-25 01:08", NA)
+}\if{html}{\out{</div>}}
+
+Using \code{x_date()} with the default options will create a character vector of
+formatted dates. Any \code{NA} values remain as \code{NA} values. The rendering context
+is HTML unless specified in the \code{output} argument.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_time(str_vals)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "18:36" "01:08" NA
+}\if{html}{\out{</div>}}
+
+We can change the formatting style by choosing a number from \code{1} to \code{5}:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_time(str_vals, time_style = 4)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "6:36 PM" "1:08 AM" NA
+}\if{html}{\out{</div>}}
+
+We can always use \code{\link[=info_time_style]{info_time_style()}} to call up an info table that serves as
+a handy reference to all of the time styles.
+
+As a last example, one can wrap the time values in a pattern with the
+\code{pattern} argument. Note here that \code{NA} values won't have the pattern
+applied.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_time(str_vals, time_style = 4, pattern = "Time: \{x\}")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "Time: 6:36 PM" "Time: 1:08 AM" NA
+}\if{html}{\out{</div>}}
+}
+
 \section{Function ID}{
 
 14-10
