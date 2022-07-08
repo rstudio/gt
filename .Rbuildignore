@@ -38,3 +38,4 @@ tests/testthat/test-tab_options.R
 tests/testthat/test-tab_spanner.R
 tests/testthat/test-tab_spanner_delim.R
 tests/testthat/test-table_parts.R
+tests/testthat/test-vec_fmt.R
