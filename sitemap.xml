@@ -397,6 +397,42 @@
     <loc>https://gt.rstudio.com/reference/text_transform.html</loc>
   </url>
   <url>
+    <loc>https://gt.rstudio.com/reference/vec_fmt_bytes.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/reference/vec_fmt_currency.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/reference/vec_fmt_date.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/reference/vec_fmt_datetime.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/reference/vec_fmt_engineering.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/reference/vec_fmt_fraction.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/reference/vec_fmt_integer.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/reference/vec_fmt_markdown.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/reference/vec_fmt_number.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/reference/vec_fmt_percent.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/reference/vec_fmt_scientific.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/reference/vec_fmt_time.html</loc>
+  </url>
+  <url>
     <loc>https://gt.rstudio.com/reference/web_image.html</loc>
   </url>
 </urlset>
