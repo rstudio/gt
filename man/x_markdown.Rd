@@ -19,6 +19,48 @@ A character vector.
 Any Markdown-formatted text in the input vector will be transformed to the
 appropriate output type.
 }
+\section{Examples}{
+
+
+Create a vector of Markdown-based text snippets.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{text_vec <-
+  c(
+    "This **is** *Markdown*.",
+    "Info on Markdown syntax can be found
+[here](https://daringfireball.net/projects/markdown/).",
+    "The **gt** package has these datasets:
+- `countrypops`
+- `sza`
+- `gtcars`
+- `sp500`
+- `pizzaplace`
+- `exibble`"
+  )
+}\if{html}{\out{</div>}}
+
+With \code{x_markdown()} we can easily convert these to different output types,
+like HTML
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_markdown(text_vec, output = "html")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "<p>This <strong>is</strong> <em>Markdown</em>.</p>"                                                                                                                                                                                                               
+## [2] "<p>Info on Markdown syntax can be found\\n<a href=\\"https://daringfireball.net/projects/markdown/\\">here</a>.</p>"                                                                                                                                                 
+## [3] "<p>The <strong>gt</strong> package has these datasets:</p>\\n<ul>\\n<li><code>countrypops</code></li>\\n<li><code>sza</code></li>\\n<li><code>gtcars</code></li>\\n<li><code>sp500</code></li>\\n<li><code>pizzaplace</code></li>\\n<li><code>exibble</code></li>\\n</ul>"
+}\if{html}{\out{</div>}}
+
+or LaTeX
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_markdown(text_vec, output = "latex")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "This \\\\textbf\{is\} \\\\emph\{Markdown\}."                                                                                                                                                                                                                     
+## [2] "Info on Markdown syntax can be found\\n\\\\href\{https://daringfireball.net/projects/markdown/\}\{here\}."                                                                                                                                                      
+## [3] "The \\\\textbf\{gt\} package has these datasets:\\n\\n\\\\begin\{itemize\}\\n\\\\item \\\\texttt\{countrypops\}\\n\\n\\\\item \\\\texttt\{sza\}\\n\\n\\\\item \\\\texttt\{gtcars\}\\n\\n\\\\item \\\\texttt\{sp500\}\\n\\n\\\\item \\\\texttt\{pizzaplace\}\\n\\n\\\\item \\\\texttt\{exibble\}\\n\\n\\\\end\{itemize\}"
+}\if{html}{\out{</div>}}
+}
+
 \section{Function ID}{
 
 14-12
