@@ -268,8 +268,8 @@ x_number <- function(
 #' x_integer(num_vals, locale = "de")
 #' ```
 #'
-#' There are many options for formatting values. Perhaps you need to have
-#' explicit positive and negative signs? Use `force_sign = TRUE` for that.
+#' Many options abound for formatting values. If you have a need for positive
+#' and negative signs in front of each and every value, use `force_sign = TRUE`:
 #'
 #' ```{r}
 #' x_integer(num_vals, force_sign = TRUE)
@@ -343,6 +343,50 @@ x_integer <- function(
 #'   display a minus sign.
 #'
 #' @return A character vector.
+#'
+#' @section Examples:
+#'
+#' Let's create a numeric vector for the next few examples:
+#'
+#' ```{r}
+#' num_vals <- c(3.24e-4, 8.65, 1362902.2, -59027.3, NA)
+#' ```
+#'
+#' Using `x_scientific()` with the default options will create a character
+#' vector with values scientific notation. Any `NA` values remain as `NA`
+#' values. The rendering context is HTML unless specified in the `output`
+#' argument.
+#'
+#' ```{r}
+#' x_scientific(num_vals)
+#' ```
+#'
+#' We can change the number of decimal places with the `decimals` option:
+#'
+#' ```{r}
+#' x_scientific(num_vals, decimals = 1)
+#' ```
+#'
+#' If we are formatting for a different locale, we could supply the locale ID
+#' and **gt** will handle any locale-specific formatting options:
+#'
+#' ```{r}
+#' x_scientific(num_vals, locale = "es")
+#' ```
+#'
+#' Should you need to have positive and negative signs on each of the output
+#' values, use `force_sign = TRUE`:
+#'
+#' ```{r}
+#' x_scientific(num_vals, force_sign = TRUE)
+#' ```
+#'
+#' As a last example, one can wrap the values in a pattern with the `pattern`
+#' argument. Note here that `NA` values won't have the pattern applied.
+#'
+#' ```{r}
+#' x_scientific(num_vals, pattern = "[{x}]")
+#' ```
 #'
 #' @family vector formatting functions
 #' @section Function ID:
