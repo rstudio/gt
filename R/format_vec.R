@@ -907,6 +907,51 @@ x_fraction <- function(
 #'
 #' @return A character vector.
 #'
+#' @section Examples:
+#'
+#' Let's create a numeric vector for the next few examples:
+#'
+#' ```{r}
+#' num_vals <- c(5.2, 8.65, 0, -5.3, NA)
+#' ```
+#'
+#' Using `x_currency()` with the default options will create a character vector
+#' where the numeric values have been transformed to U.S. Dollars (`"USD"`).
+#' Furthermore, the rendering context is HTML unless specified otherwise in the
+#' `output` argument.
+#'
+#' ```{r}
+#' x_currency(num_vals)
+#' ```
+#'
+#' We can supply a currency code to the `currency` argument. Let's use British
+#' Pounds by using `currency = "GBP"`:
+#'
+#' ```{r}
+#' x_currency(num_vals, currency = "GBP")
+#' ```
+#'
+#' If we are formatting for a different locale, we could supply the locale ID
+#' and let **gt** handle qll locale-specific formatting options:
+#'
+#' ```{r}
+#' x_currency(num_vals, currency = "EUR", locale = "fr")
+#' ```
+#'
+#' There are many options for formatting values. Perhaps you need to have
+#' explicit positive and negative signs? Use `force_sign = TRUE` for that.
+#'
+#' ```{r}
+#' x_currency(num_vals, force_sign = TRUE)
+#' ```
+#'
+#' As a last example, one can wrap the values in a pattern with the `pattern`
+#' argument. Note here that `NA` values won't have the pattern applied.
+#'
+#' ```{r}
+#' x_currency(num_vals, pattern = "`{x}`")
+#' ```
+#'
 #' @family vector formatting functions
 #' @section Function ID:
 #' 14-7
@@ -1009,6 +1054,48 @@ x_currency <- function(
 #'   display a minus sign.
 #'
 #' @return A character vector.
+#'
+#' Let's create a numeric vector for the next few examples:
+#'
+#' ```{r}
+#' num_vals <- c(3.24294e14, 8, 1362902, -59027, NA)
+#' ```
+#'
+#' Using `x_bytes()` with the default options will create a character
+#' vector with values in bytes. Any `NA` values remain as `NA` values. The
+#' rendering context is HTML unless specified in the `output`
+#' argument.
+#'
+#' ```{r}
+#' x_bytes(num_vals)
+#' ```
+#'
+#' We can change the number of decimal places with the `decimals` option:
+#'
+#' ```{r}
+#' x_bytes(num_vals, decimals = 2)
+#' ```
+#'
+#' If we are formatting for a different locale, we could supply the locale ID
+#' and **gt** will handle any locale-specific formatting options:
+#'
+#' ```{r}
+#' x_bytes(num_vals, locale = "fi")
+#' ```
+#'
+#' Should you need to have positive and negative signs on each of the output
+#' values, use `force_sign = TRUE`:
+#'
+#' ```{r}
+#' x_bytes(num_vals, force_sign = TRUE)
+#' ```
+#'
+#' As a last example, one can wrap the values in a pattern with the `pattern`
+#' argument. Note here that `NA` values won't have the pattern applied.
+#'
+#' ```{r}
+#' x_bytes(num_vals, pattern = "[{x}]")
+#' ```
 #'
 #' @family vector formatting functions
 #' @section Function ID:
