@@ -130,8 +130,8 @@ and let \strong{gt} handle these locale-specific formatting options:
 \if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "5"        "9"        "13.602"   "&minus;5" "NA"
 }\if{html}{\out{</div>}}
 
-There are many options for formatting values. Perhaps you need to have
-explicit positive and negative signs? Use \code{force_sign = TRUE} for that.
+Many options abound for formatting values. If you have a need for positive
+and negative signs in front of each and every value, use \code{force_sign = TRUE}:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{x_integer(num_vals, force_sign = TRUE)
 }\if{html}{\out{</div>}}
