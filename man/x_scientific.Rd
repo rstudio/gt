@@ -82,7 +82,7 @@ Let's create a numeric vector for the next few examples:
 }\if{html}{\out{</div>}}
 
 Using \code{x_scientific()} with the default options will create a character
-vector with values scientific notation. Any \code{NA} values remain as \code{NA}
+vector with values in scientific notation. Any \code{NA} values remain as \code{NA}
 values. The rendering context is HTML unless specified in the \code{output}
 argument.
 
