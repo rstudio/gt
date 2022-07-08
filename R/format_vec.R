@@ -89,7 +89,7 @@
 #' Let's create a numeric vector for the next few examples:
 #'
 #' ```{r}
-#' num_vals <- c(5.2, 8.35, 0, -5.3, NA)
+#' num_vals <- c(5.2, 8.65, 0, -5.3, NA)
 #' ```
 #'
 #' Using `x_number()` with the default options will create a character vector
@@ -236,6 +236,51 @@ x_number <- function(
 #'   that any value provided to `scale_by` will be ignored.
 #'
 #' @return A character vector.
+#'
+#' @section Examples:
+#'
+#' Let's create a numeric vector for the next few examples:
+#'
+#' ```{r}
+#' num_vals <- c(5.2, 8.65, 13602, -5.3, NA)
+#' ```
+#'
+#' Using `x_integer()` with the default options will create a character vector
+#' where the input values undergo rounding to become integers and `NA` values
+#' will render as `"NA"`. Also, the rendering context is HTML unless specified
+#' in the `output` argument.
+#'
+#' ```{r}
+#' x_integer(num_vals)
+#' ```
+#'
+#' We can change the digit separator mark to a period with the `sep_mark`
+#' option:
+#'
+#' ```{r}
+#' x_integer(num_vals, sep_mark = ".")
+#' ```
+#'
+#' If we are formatting for a different locale, we could supply the locale ID
+#' and let **gt** handle these locale-specific formatting options:
+#'
+#' ```{r}
+#' x_integer(num_vals, locale = "de")
+#' ```
+#'
+#' There are many options for formatting values. Perhaps you need to have
+#' explicit positive and negative signs? Use `force_sign = TRUE` for that.
+#'
+#' ```{r}
+#' x_integer(num_vals, force_sign = TRUE)
+#' ```
+#'
+#' As a last example, one can wrap the values in a pattern with the `pattern`
+#' argument. Note here that `NA` values won't have the pattern applied.
+#'
+#' ```{r}
+#' x_integer(num_vals, pattern = "`{x}`")
+#' ```
 #'
 #' @family vector formatting functions
 #' @section Function ID:
