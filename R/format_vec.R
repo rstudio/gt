@@ -1055,6 +1055,8 @@ x_currency <- function(
 #'
 #' @return A character vector.
 #'
+#' @section Examples:
+#'
 #' Let's create a numeric vector for the next few examples:
 #'
 #' ```{r}
@@ -1194,6 +1196,40 @@ x_bytes <- function(
 #'   [info_date_style()] to see the different numbered and named date presets.
 #'
 #' @return A character vector.
+#'
+#' @section Examples:
+#'
+#' Let's create a character vector of dates in the ISO-8601 format for the next
+#' few examples:
+#'
+#' ```{r}
+#' str_vals <- c("2022-06-13", "2019-01-25", "2015-03-23", NA)
+#' ```
+#'
+#' Using `x_date()` with the default options will create a character vector of
+#' formatted dates. Any `NA` values remain as `NA` values. The rendering context
+#' is HTML unless specified in the `output` argument.
+#'
+#' ```{r}
+#' x_date(str_vals)
+#' ```
+#'
+#' We can change the formatting style by choosing a number from `1` to `14`:
+#'
+#' ```{r}
+#' x_date(str_vals, date_style = 6)
+#' ```
+#'
+#' We can always use [info_date_style()] to call up an info table that serves as
+#' a handy reference to all of the date styles.
+#'
+#' As a last example, one can wrap the date values in a pattern with the
+#' `pattern` argument. Note here that `NA` values won't have the pattern
+#' applied.
+#'
+#' ```{r}
+#' x_date(str_vals, pattern = "Date: {x}")
+#' ```
 #'
 #' @family vector formatting functions
 #' @section Function ID:
