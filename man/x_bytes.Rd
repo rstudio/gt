@@ -80,6 +80,59 @@ either be \code{"html"} (the default), \code{"latex"}, or \code{"rtf"}.}
 }
 \value{
 A character vector.
+
+Let's create a numeric vector for the next few examples:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{num_vals <- c(3.24294e14, 8, 1362902, -59027, NA)
+}\if{html}{\out{</div>}}
+
+Using \code{x_bytes()} with the default options will create a character
+vector with values in bytes. Any \code{NA} values remain as \code{NA} values. The
+rendering context is HTML unless specified in the \code{output}
+argument.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_bytes(num_vals)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "324.3 TB"     "8 B"          "1.4 MB"       "&minus;59 kB" "NA"
+}\if{html}{\out{</div>}}
+
+We can change the number of decimal places with the \code{decimals} option:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_bytes(num_vals, decimals = 2)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "324.29 TB"       "8 B"             "1.36 MB"         "&minus;59.03 kB"
+## [5] "NA"
+}\if{html}{\out{</div>}}
+
+If we are formatting for a different locale, we could supply the locale ID
+and \strong{gt} will handle any locale-specific formatting options:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_bytes(num_vals, locale = "fi")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "324,3 TB"     "8 B"          "1,4 MB"       "&minus;59 kB" "NA"
+}\if{html}{\out{</div>}}
+
+Should you need to have positive and negative signs on each of the output
+values, use \code{force_sign = TRUE}:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_bytes(num_vals, force_sign = TRUE)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "+324.3 TB"    "+8 B"         "+1.4 MB"      "&minus;59 kB" "NA"
+}\if{html}{\out{</div>}}
+
+As a last example, one can wrap the values in a pattern with the \code{pattern}
+argument. Note here that \code{NA} values won't have the pattern applied.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_bytes(num_vals, pattern = "[\{x\}]")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "[324.3 TB]"     "[8 B]"          "[1.4 MB]"       "[&minus;59 kB]"
+## [5] "NA"
+}\if{html}{\out{</div>}}
 }
 \description{
 With numeric values in a vector, we can transform each into byte values with
