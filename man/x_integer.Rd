@@ -93,6 +93,62 @@ values
 formatting specific to the chosen locale
 }
 }
+\section{Examples}{
+
+
+Let's create a numeric vector for the next few examples:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{num_vals <- c(5.2, 8.65, 13602, -5.3, NA)
+}\if{html}{\out{</div>}}
+
+Using \code{x_integer()} with the default options will create a character vector
+where the input values undergo rounding to become integers and \code{NA} values
+will render as \code{"NA"}. Also, the rendering context is HTML unless specified
+in the \code{output} argument.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_integer(num_vals)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "5"        "9"        "13,602"   "&minus;5" "NA"
+}\if{html}{\out{</div>}}
+
+We can change the digit separator mark to a period with the \code{sep_mark}
+option:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_integer(num_vals, sep_mark = ".")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "5"        "9"        "13.602"   "&minus;5" "NA"
+}\if{html}{\out{</div>}}
+
+If we are formatting for a different locale, we could supply the locale ID
+and let \strong{gt} handle these locale-specific formatting options:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_integer(num_vals, locale = "de")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "5"        "9"        "13.602"   "&minus;5" "NA"
+}\if{html}{\out{</div>}}
+
+There are many options for formatting values. Perhaps you need to have
+explicit positive and negative signs? Use \code{force_sign = TRUE} for that.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_integer(num_vals, force_sign = TRUE)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "+5"       "+9"       "+13,602"  "&minus;5" "NA"
+}\if{html}{\out{</div>}}
+
+As a last example, one can wrap the values in a pattern with the \code{pattern}
+argument. Note here that \code{NA} values won't have the pattern applied.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_integer(num_vals, pattern = "`\{x\}`")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "`5`"        "`9`"        "`13,602`"   "`&minus;5`" "NA"
+}\if{html}{\out{</div>}}
+}
+
 \section{Function ID}{
 
 14-2
