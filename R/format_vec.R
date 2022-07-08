@@ -353,7 +353,7 @@ x_integer <- function(
 #' ```
 #'
 #' Using `x_scientific()` with the default options will create a character
-#' vector with values scientific notation. Any `NA` values remain as `NA`
+#' vector with values in scientific notation. Any `NA` values remain as `NA`
 #' values. The rendering context is HTML unless specified in the `output`
 #' argument.
 #'
@@ -466,6 +466,50 @@ x_scientific <- function(
 #'
 #' @return A character vector.
 #'
+#' @section Examples:
+#'
+#' Let's create a numeric vector for the next few examples:
+#'
+#' ```{r}
+#' num_vals <- c(3.24e-4, 8.65, 1362902.2, -59027.3, NA)
+#' ```
+#'
+#' Using `x_engineering()` with the default options will create a character
+#' vector with values engineering notation. Any `NA` values remain as `NA`
+#' values. The rendering context is HTML unless specified in the `output`
+#' argument.
+#'
+#' ```{r}
+#' x_engineering(num_vals)
+#' ```
+#'
+#' We can change the number of decimal places with the `decimals` option:
+#'
+#' ```{r}
+#' x_engineering(num_vals, decimals = 1)
+#' ```
+#'
+#' If we are formatting for a different locale, we could supply the locale ID
+#' and **gt** will handle any locale-specific formatting options:
+#'
+#' ```{r}
+#' x_engineering(num_vals, locale = "da")
+#' ```
+#'
+#' Should you need to have positive and negative signs on each of the output
+#' values, use `force_sign = TRUE`:
+#'
+#' ```{r}
+#' x_engineering(num_vals, force_sign = TRUE)
+#' ```
+#'
+#' As a last example, one can wrap the values in a pattern with the `pattern`
+#' argument. Note here that `NA` values won't have the pattern applied.
+#'
+#' ```{r}
+#' x_engineering(num_vals, pattern = "/{x}/")
+#' ```
+#'
 #' @family vector formatting functions
 #' @section Function ID:
 #' 14-4
@@ -551,6 +595,59 @@ x_engineering <- function(
 #'   `right` (the default) or `left`.
 #'
 #' @return A character vector.
+#'
+#' @section Examples:
+#'
+#' Let's create a numeric vector for the next few examples:
+#'
+#' ```{r}
+#' num_vals <- c(0.0052, 0.08, 0, -0.535, NA)
+#' ```
+#'
+#' Using `x_percent()` with the default options will create a character vector
+#' where the resultant percentage values have two decimal places and `NA` values
+#' will render as `"NA"`. Also, the rendering context is HTML unless specified
+#' in the `output` argument.
+#'
+#' ```{r}
+#' x_percent(num_vals)
+#' ```
+#'
+#' We can change the decimal mark to a comma, and we have to be sure to change
+#' the digit separator mark from the default comma to something else (a period
+#' works here):
+#'
+#' ```{r}
+#' x_percent(num_vals, sep_mark = ".", dec_mark = ",")
+#' ```
+#'
+#' If we are formatting for a different locale, we could supply the locale ID
+#' and let **gt** handle these locale-specific formatting options:
+#'
+#' ```{r}
+#' x_percent(num_vals, locale = "pt")
+#' ```
+#'
+#' There are many options for formatting values. Perhaps you need to have
+#' explicit positive and negative signs? Use `force_sign = TRUE` for that.
+#'
+#' ```{r}
+#' x_percent(num_vals, force_sign = TRUE)
+#' ```
+#'
+#' Those trailing zeros past the decimal mark can be stripped out by using the
+#' `drop_trailing_zeros` option.
+#'
+#' ```{r}
+#' x_percent(num_vals, drop_trailing_zeros = TRUE)
+#' ```
+#'
+#' As a last example, one can wrap the values in a pattern with the `pattern`
+#' argument. Note here that `NA` values won't have the pattern applied.
+#'
+#' ```{r}
+#' x_percent(num_vals, pattern = "{x}wt")
+#' ```
 #'
 #' @family vector formatting functions
 #' @section Function ID:
@@ -654,6 +751,48 @@ x_percent <- function(
 #'   baseline and uses a standard slash character.
 #'
 #' @return A character vector.
+#'
+#' @section Examples:
+#'
+#' Let's create a numeric vector for the next few examples:
+#'
+#' ```{r}
+#' num_vals <- c(0.0052, 0.08, 0, -0.535, NA)
+#' ```
+#'
+#' Using `x_fraction()` with the default options will create a character vector
+#' of fractions in HTML. Any `NA` values will render as `"NA"`.
+#'
+#' ```{r}
+#' x_fraction(num_vals)
+#' ```
+#'
+#' We can change these fractions to appear with an `"inline"` layout (the
+#' default is `"diagonal"`):
+#'
+#' ```{r}
+#' x_fraction(num_vals, layout = "inline")
+#' ```
+#'
+#' There are many options for formatting as fractions. If you'd like a higher
+#' degree of accuracy in the computation of fractions we can supply the `"med"`
+#' or `"high"` keywords to the `accuracy` argument:
+#'
+#' ```{r}
+#' x_fraction(num_vals, accuracy = "high", layout = "inline")
+#' ```
+#'
+#' As a last example, one can wrap the values in a pattern with the `pattern`
+#' argument. Note here that `NA` values won't have the pattern applied.
+#'
+#' ```{r}
+#' x_fraction(
+#'   num_vals,
+#'   accuracy = "high",
+#'   layout = "inline",
+#'   pattern = "[{x}]"
+#' )
+#' ```
 #'
 #' @family vector formatting functions
 #' @section Function ID:
