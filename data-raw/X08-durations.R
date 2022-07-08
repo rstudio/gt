@@ -1,6 +1,14 @@
 library(tidyverse)
-library(i18n)
 
+# Note: the following code generates all of the locale-specific word fragments
+#       for the `fmt_duration()` function. The package is still somewhat
+#       unstable (as of 2022-07-08) but it will soon get another CRAN release
+#       focused on API stability. When that occurs, the following code will be
+#       uncommented and regular updates to the `duration_units` dataset will be
+#       made.
+
+# library(i18n)
+#
 # duration_units <-
 #   i18n::units %>%
 #   dplyr::select(
