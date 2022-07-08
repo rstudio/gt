@@ -158,6 +158,65 @@ currency formatting specific to the chosen locale
 We can use the \code{\link[=info_currencies]{info_currencies()}} function for a useful reference on all of
 the possible inputs to the \code{currency} argument.
 }
+\section{Examples}{
+
+
+Let's create a numeric vector for the next few examples:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{num_vals <- c(5.2, 8.65, 0, -5.3, NA)
+}\if{html}{\out{</div>}}
+
+Using \code{x_currency()} with the default options will create a character vector
+where the numeric values have been transformed to U.S. Dollars (\code{"USD"}).
+Furthermore, the rendering context is HTML unless specified otherwise in the
+\code{output} argument.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_currency(num_vals)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "$5.20"        "$8.65"        "$0.00"        "&minus;$5.30" "NA"
+}\if{html}{\out{</div>}}
+
+We can supply a currency code to the \code{currency} argument. Let's use British
+Pounds by using \code{currency = "GBP"}:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_currency(num_vals, currency = "GBP")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "&#163;5.20"        "&#163;8.65"        "&#163;0.00"       
+## [4] "&minus;&#163;5.30" "NA"
+}\if{html}{\out{</div>}}
+
+If we are formatting for a different locale, we could supply the locale ID
+and let \strong{gt} handle qll locale-specific formatting options:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_currency(num_vals, currency = "EUR", locale = "fr")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "&#8364;5,20"        "&#8364;8,65"        "&#8364;0,00"       
+## [4] "&minus;&#8364;5,30" "NA"
+}\if{html}{\out{</div>}}
+
+There are many options for formatting values. Perhaps you need to have
+explicit positive and negative signs? Use \code{force_sign = TRUE} for that.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_currency(num_vals, force_sign = TRUE)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "+$5.20"       "+$8.65"       "$0.00"        "&minus;$5.30" "NA"
+}\if{html}{\out{</div>}}
+
+As a last example, one can wrap the values in a pattern with the \code{pattern}
+argument. Note here that \code{NA} values won't have the pattern applied.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_currency(num_vals, pattern = "`\{x\}`")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "`$5.20`"        "`$8.65`"        "`$0.00`"        "`&minus;$5.30`"
+## [5] "NA"
+}\if{html}{\out{</div>}}
+}
+
 \section{Function ID}{
 
 14-7
