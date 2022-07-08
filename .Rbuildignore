@@ -20,6 +20,7 @@ tests/testthat/test-as_raw_html.R
 tests/testthat/test-as_word.R
 tests/testthat/test-cols_width_rtf.R
 tests/testthat/test-data_color.R
+tests/testthat/test-fmt_duration.R
 tests/testthat/test-fmt_fraction.R
 tests/testthat/test-fmt_ratio.R
 tests/testthat/test-footer.R
