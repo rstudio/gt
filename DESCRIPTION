@@ -90,6 +90,7 @@ Collate:
     'dt_transforms.R'
     'export.R'
     'format_data.R'
+    'format_vec.R'
     'gt-package.R'
     'gt.R'
     'gt_preview.R'

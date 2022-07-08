@@ -245,6 +245,26 @@ reference:
     - as_word
     - extract_summary
 
+  - title: Vector Formatting Functions
+    desc: >
+      Why should columns have all the formatting fun? If you have vectors in
+      need of formatting, we have a set of `vec_fmt_*()` functions that have been
+      adapted from the corresponding `fmt_*()` functions. You can choose which
+      output format you'd like (either HTML, LaTeX, or RTF) with each of these.
+    contents:
+    - vec_fmt_number
+    - vec_fmt_integer
+    - vec_fmt_scientific
+    - vec_fmt_engineering
+    - vec_fmt_percent
+    - vec_fmt_fraction
+    - vec_fmt_currency
+    - vec_fmt_bytes
+    - vec_fmt_date
+    - vec_fmt_time
+    - vec_fmt_datetime
+    - vec_fmt_markdown
+
 navbar:
   structure:
     left: [intro, articles, reference, news]
