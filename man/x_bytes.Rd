@@ -80,6 +80,32 @@ either be \code{"html"} (the default), \code{"latex"}, or \code{"rtf"}.}
 }
 \value{
 A character vector.
+}
+\description{
+With numeric values in a vector, we can transform each into byte values with
+human readable units. The \code{x_bytes()} function allows for the formatting of
+byte sizes to either of two common representations: (1) with decimal units
+(powers of 1000, examples being \code{"kB"} and \code{"MB"}), and (2) with binary units
+(powers of 1024, examples being \code{"KiB"} and \code{"MiB"}).
+
+It is assumed the input numeric values represent the number of bytes and
+automatic truncation of values will occur. The numeric values will be scaled
+to be in the range of 1 to <1000 and then decorated with the correct unit
+symbol according to the standard chosen. For more control over the formatting
+of byte sizes, we can use the following options:
+\itemize{
+\item decimals: choice of the number of decimal places, option to drop
+trailing zeros, and a choice of the decimal symbol
+\item digit grouping separators: options to enable/disable digit separators
+and provide a choice of separator symbol
+\item pattern: option to use a text pattern for decoration of the formatted
+values
+\item locale-based formatting: providing a locale ID will result in number
+formatting specific to the chosen locale
+}
+}
+\section{Examples}{
+
 
 Let's create a numeric vector for the next few examples:
 
@@ -134,29 +160,7 @@ argument. Note here that \code{NA} values won't have the pattern applied.
 ## [5] "NA"
 }\if{html}{\out{</div>}}
 }
-\description{
-With numeric values in a vector, we can transform each into byte values with
-human readable units. The \code{x_bytes()} function allows for the formatting of
-byte sizes to either of two common representations: (1) with decimal units
-(powers of 1000, examples being \code{"kB"} and \code{"MB"}), and (2) with binary units
-(powers of 1024, examples being \code{"KiB"} and \code{"MiB"}).
 
-It is assumed the input numeric values represent the number of bytes and
-automatic truncation of values will occur. The numeric values will be scaled
-to be in the range of 1 to <1000 and then decorated with the correct unit
-symbol according to the standard chosen. For more control over the formatting
-of byte sizes, we can use the following options:
-\itemize{
-\item decimals: choice of the number of decimal places, option to drop
-trailing zeros, and a choice of the decimal symbol
-\item digit grouping separators: options to enable/disable digit separators
-and provide a choice of separator symbol
-\item pattern: option to use a text pattern for decoration of the formatted
-values
-\item locale-based formatting: providing a locale ID will result in number
-formatting specific to the chosen locale
-}
-}
 \section{Function ID}{
 
 14-8
