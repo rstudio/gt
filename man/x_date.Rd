@@ -53,6 +53,49 @@ in the example output dates):
 We can use the \code{\link[=info_date_style]{info_date_style()}} function for a useful reference on all of
 the possible inputs to \code{date_style}.
 }
+\section{Examples}{
+
+
+Let's create a character vector of dates in the ISO-8601 format for the next
+few examples:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{str_vals <- c("2022-06-13", "2019-01-25", "2015-03-23", NA)
+}\if{html}{\out{</div>}}
+
+Using \code{x_date()} with the default options will create a character vector of
+formatted dates. Any \code{NA} values remain as \code{NA} values. The rendering context
+is HTML unless specified in the \code{output} argument.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_date(str_vals)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "Monday, June 13, 2022"    "Friday, January 25, 2019"
+## [3] "Monday, March 23, 2015"   NA
+}\if{html}{\out{</div>}}
+
+We can change the formatting style by choosing a number from \code{1} to \code{14}:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_date(str_vals, date_style = 6)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "Jun 13, 2022" "Jan 25, 2019" "Mar 23, 2015" NA
+}\if{html}{\out{</div>}}
+
+We can always use \code{\link[=info_date_style]{info_date_style()}} to call up an info table that serves as
+a handy reference to all of the date styles.
+
+As a last example, one can wrap the date values in a pattern with the
+\code{pattern} argument. Note here that \code{NA} values won't have the pattern
+applied.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_date(str_vals, pattern = "Date: \{x\}")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "Date: Monday, June 13, 2022"    "Date: Friday, January 25, 2019"
+## [3] "Date: Monday, March 23, 2015"   NA
+}\if{html}{\out{</div>}}
+}
+
 \section{Function ID}{
 
 14-9
