@@ -37,9 +37,9 @@ datetimes <-
 dates <- as.Date(datetimes)
 times <- paste0(hours, ":", minutes)
 
-test_that("The `x_number()` function works", {
+test_that("The `vec_fmt_number()` function works", {
 
-  x_number(vec_num_1, output = "html") %>%
+  vec_fmt_number(vec_num_1, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.50", "&minus;2.00", "&minus;1.50", "&minus;1.00",
@@ -47,7 +47,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_1, output = "latex") %>%
+  vec_fmt_number(vec_num_1, output = "latex") %>%
     expect_equal(
       c(
         "$-2.50$", "$-2.00$", "$-1.50$", "$-1.00$", "$-0.50$", "$0.00$",
@@ -55,7 +55,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_1, output = "rtf") %>%
+  vec_fmt_number(vec_num_1, output = "rtf") %>%
     expect_equal(
       c(
         "-2.50", "-2.00", "-1.50", "-1.00", "-0.50", "0.00", "0.50",
@@ -63,7 +63,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_6, decimals = 4, output = "html") %>%
+  vec_fmt_number(vec_num_6, decimals = 4, output = "html") %>%
     expect_equal(
       c(
         "0.0000", "0.1000", "0.2000", "0.3000", "0.4000", "0.5000", "0.6000",
@@ -72,7 +72,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_6, decimals = 4, output = "latex") %>%
+  vec_fmt_number(vec_num_6, decimals = 4, output = "latex") %>%
     expect_equal(
       c(
         "$0.0000$", "$0.1000$", "$0.2000$", "$0.3000$", "$0.4000$", "$0.5000$",
@@ -82,7 +82,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_6, decimals = 4, output = "rtf") %>%
+  vec_fmt_number(vec_num_6, decimals = 4, output = "rtf") %>%
     expect_equal(
       c(
         "0.0000", "0.1000", "0.2000", "0.3000", "0.4000", "0.5000", "0.6000",
@@ -91,7 +91,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_1, drop_trailing_zeros = TRUE, output = "html") %>%
+  vec_fmt_number(vec_num_1, drop_trailing_zeros = TRUE, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.5", "&minus;2", "&minus;1.5", "&minus;1", "&minus;0.5",
@@ -99,7 +99,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_1, drop_trailing_zeros = TRUE, output = "latex") %>%
+  vec_fmt_number(vec_num_1, drop_trailing_zeros = TRUE, output = "latex") %>%
     expect_equal(
       c(
         "$-2.5$", "$-2$", "$-1.5$", "$-1$", "$-0.5$", "$0$", "$0.5$",
@@ -107,7 +107,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_1, drop_trailing_zeros = TRUE, output = "rtf") %>%
+  vec_fmt_number(vec_num_1, drop_trailing_zeros = TRUE, output = "rtf") %>%
     expect_equal(
       c(
         "-2.5", "-2", "-1.5", "-1", "-0.5", "0", "0.5", "1", "1.5",
@@ -115,7 +115,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_1, n_sigfig = 3, output = "html") %>%
+  vec_fmt_number(vec_num_1, n_sigfig = 3, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.50", "&minus;2.00", "&minus;1.50", "&minus;1.00",
@@ -124,7 +124,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_1, n_sigfig = 3, output = "latex") %>%
+  vec_fmt_number(vec_num_1, n_sigfig = 3, output = "latex") %>%
     expect_equal(
       c(
         "$-2.50$", "$-2.00$", "$-1.50$", "$-1.00$", "$-0.500$", "$0$",
@@ -132,7 +132,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_1, n_sigfig = 3, output = "rtf") %>%
+  vec_fmt_number(vec_num_1, n_sigfig = 3, output = "rtf") %>%
     expect_equal(
       c(
         "-2.50", "-2.00", "-1.50", "-1.00", "-0.500", "0", "0.500",
@@ -140,7 +140,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_4, use_seps = FALSE, output = "html") %>%
+  vec_fmt_number(vec_num_4, use_seps = FALSE, output = "html") %>%
     expect_equal(
       c(
         "&minus;2500000.00", "&minus;2000000.00", "&minus;1500000.00",
@@ -150,7 +150,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_4, use_seps = FALSE, output = "latex") %>%
+  vec_fmt_number(vec_num_4, use_seps = FALSE, output = "latex") %>%
     expect_equal(
       c(
         "$-2500000.00$", "$-2000000.00$", "$-1500000.00$", "$-1000000.00$",
@@ -159,7 +159,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_4, use_seps = FALSE, output = "rtf") %>%
+  vec_fmt_number(vec_num_4, use_seps = FALSE, output = "rtf") %>%
     expect_equal(
       c(
         "-2500000.00", "-2000000.00", "-1500000.00", "-1000000.00",
@@ -168,7 +168,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_1, accounting = TRUE, output = "html") %>%
+  vec_fmt_number(vec_num_1, accounting = TRUE, output = "html") %>%
     expect_equal(
       c(
         "(2.50)", "(2.00)", "(1.50)", "(1.00)", "(0.50)", "0.00", "0.50",
@@ -176,7 +176,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_1, accounting = TRUE, output = "latex") %>%
+  vec_fmt_number(vec_num_1, accounting = TRUE, output = "latex") %>%
     expect_equal(
       c(
         "$(2.50)$", "$(2.00)$", "$(1.50)$", "$(1.00)$", "$(0.50)$",
@@ -185,7 +185,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_4, accounting = TRUE, output = "rtf") %>%
+  vec_fmt_number(vec_num_4, accounting = TRUE, output = "rtf") %>%
     expect_equal(
       c(
         "(2,500,000.00)", "(2,000,000.00)", "(1,500,000.00)", "(1,000,000.00)",
@@ -194,7 +194,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_1, scale_by = 2.5, output = "html") %>%
+  vec_fmt_number(vec_num_1, scale_by = 2.5, output = "html") %>%
     expect_equal(
       c(
         "&minus;6.25", "&minus;5.00", "&minus;3.75", "&minus;2.50",
@@ -203,7 +203,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_1, scale_by = 2.5, output = "latex") %>%
+  vec_fmt_number(vec_num_1, scale_by = 2.5, output = "latex") %>%
     expect_equal(
       c(
         "$-6.25$", "$-5.00$", "$-3.75$", "$-2.50$", "$-1.25$", "$0.00$",
@@ -211,7 +211,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_1, scale_by = 2.5, output = "rtf") %>%
+  vec_fmt_number(vec_num_1, scale_by = 2.5, output = "rtf") %>%
     expect_equal(
       c(
         "-6.25", "-5.00", "-3.75", "-2.50", "-1.25", "0.00", "1.25",
@@ -219,7 +219,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_4, locale = "de", output = "html") %>%
+  vec_fmt_number(vec_num_4, locale = "de", output = "html") %>%
     expect_equal(
       c(
         "&minus;2.500.000,00", "&minus;2.000.000,00", "&minus;1.500.000,00",
@@ -229,7 +229,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_4, locale = "de", output = "latex") %>%
+  vec_fmt_number(vec_num_4, locale = "de", output = "latex") %>%
     expect_equal(
       c(
         "$-2.500.000,00$", "$-2.000.000,00$", "$-1.500.000,00$", "$-1.000.000,00$",
@@ -238,7 +238,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_4, locale = "de", output = "rtf") %>%
+  vec_fmt_number(vec_num_4, locale = "de", output = "rtf") %>%
     expect_equal(
       c(
         "-2.500.000,00", "-2.000.000,00", "-1.500.000,00", "-1.000.000,00",
@@ -247,7 +247,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_4, suffixing = TRUE, output = "html") %>%
+  vec_fmt_number(vec_num_4, suffixing = TRUE, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.50M", "&minus;2.00M", "&minus;1.50M", "&minus;1.00M",
@@ -256,7 +256,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_4, suffixing = TRUE, output = "latex") %>%
+  vec_fmt_number(vec_num_4, suffixing = TRUE, output = "latex") %>%
     expect_equal(
       c(
         "$-2.50M$", "$-2.00M$", "$-1.50M$", "$-1.00M$", "$-500.00K$",
@@ -265,7 +265,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_4, suffixing = TRUE, output = "rtf") %>%
+  vec_fmt_number(vec_num_4, suffixing = TRUE, output = "rtf") %>%
     expect_equal(
       c(
         "-2.50M", "-2.00M", "-1.50M", "-1.00M", "-500.00K", "0.00",
@@ -273,7 +273,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_1, pattern = "a{x}b", output = "html") %>%
+  vec_fmt_number(vec_num_1, pattern = "a{x}b", output = "html") %>%
     expect_equal(
       c(
         "a&minus;2.50b", "a&minus;2.00b", "a&minus;1.50b", "a&minus;1.00b",
@@ -282,7 +282,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_1, pattern = "a{x}b", output = "latex") %>%
+  vec_fmt_number(vec_num_1, pattern = "a{x}b", output = "latex") %>%
     expect_equal(
       c(
         "a$-2.50$b", "a$-2.00$b", "a$-1.50$b", "a$-1.00$b", "a$-0.50$b",
@@ -291,7 +291,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_1, pattern = "a{x}b", output = "rtf") %>%
+  vec_fmt_number(vec_num_1, pattern = "a{x}b", output = "rtf") %>%
     expect_equal(
       c(
         "a-2.50b", "a-2.00b", "a-1.50b", "a-1.00b", "a-0.50b", "a0.00b",
@@ -299,7 +299,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_1, force_sign = TRUE, output = "html") %>%
+  vec_fmt_number(vec_num_1, force_sign = TRUE, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.50", "&minus;2.00", "&minus;1.50", "&minus;1.00",
@@ -308,7 +308,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_1, force_sign = TRUE, output = "latex") %>%
+  vec_fmt_number(vec_num_1, force_sign = TRUE, output = "latex") %>%
     expect_equal(
       c(
         "$-2.50$", "$-2.00$", "$-1.50$", "$-1.00$", "$-0.50$", "$0.00$",
@@ -316,7 +316,7 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  x_number(vec_num_1, force_sign = TRUE, output = "rtf") %>%
+  vec_fmt_number(vec_num_1, force_sign = TRUE, output = "rtf") %>%
     expect_equal(
       c(
         "-2.50", "-2.00", "-1.50", "-1.00", "-0.50", "0.00", "+0.50",
@@ -324,18 +324,18 @@ test_that("The `x_number()` function works", {
       )
     )
 
-  expect_equal(x_number(numeric(0)), character(0))
-  expect_equal(x_number(integer(0)), character(0))
+  expect_equal(vec_fmt_number(numeric(0)), character(0))
+  expect_equal(vec_fmt_number(integer(0)), character(0))
 
-  expect_error(x_number(letters))
-  expect_error(x_number(TRUE))
-  expect_error(x_number(list(1, 2, 3)))
-  expect_error(x_number(dplyr::tibble(a = c(1, 2, 3))))
+  expect_error(vec_fmt_number(letters))
+  expect_error(vec_fmt_number(TRUE))
+  expect_error(vec_fmt_number(list(1, 2, 3)))
+  expect_error(vec_fmt_number(dplyr::tibble(a = c(1, 2, 3))))
 })
 
-test_that("The `x_integer()` function works", {
+test_that("The `vec_fmt_integer()` function works", {
 
-  x_integer(vec_num_1, output = "html") %>%
+  vec_fmt_integer(vec_num_1, output = "html") %>%
     expect_equal(
       c(
         "&minus;2", "&minus;2", "&minus;2", "&minus;1", "0", "0", "0",
@@ -343,7 +343,7 @@ test_that("The `x_integer()` function works", {
       )
     )
 
-  x_integer(vec_num_1, output = "latex") %>%
+  vec_fmt_integer(vec_num_1, output = "latex") %>%
     expect_equal(
       c(
         "$-2$", "$-2$", "$-2$", "$-1$", "$0$", "$0$", "$0$", "$1$",
@@ -351,7 +351,7 @@ test_that("The `x_integer()` function works", {
       )
     )
 
-  x_integer(vec_num_1, output = "rtf") %>%
+  vec_fmt_integer(vec_num_1, output = "rtf") %>%
     expect_equal(
       c(
         "-2", "-2", "-2", "-1", "0", "0", "0", "1", "2", "2", "2",
@@ -359,7 +359,7 @@ test_that("The `x_integer()` function works", {
       )
     )
 
-  x_integer(vec_num_4, locale = "de", output = "html") %>%
+  vec_fmt_integer(vec_num_4, locale = "de", output = "html") %>%
     expect_equal(
       c(
         "&minus;2.500.000", "&minus;2.000.000", "&minus;1.500.000",
@@ -368,7 +368,7 @@ test_that("The `x_integer()` function works", {
       )
     )
 
-  x_integer(vec_num_4, locale = "de", output = "latex") %>%
+  vec_fmt_integer(vec_num_4, locale = "de", output = "latex") %>%
     expect_equal(
       c(
         "$-2.500.000$", "$-2.000.000$", "$-1.500.000$", "$-1.000.000$",
@@ -377,7 +377,7 @@ test_that("The `x_integer()` function works", {
       )
     )
 
-  x_integer(vec_num_4, locale = "de", output = "rtf") %>%
+  vec_fmt_integer(vec_num_4, locale = "de", output = "rtf") %>%
     expect_equal(
       c(
         "-2.500.000", "-2.000.000", "-1.500.000", "-1.000.000", "-500.000",
@@ -386,7 +386,7 @@ test_that("The `x_integer()` function works", {
       )
     )
 
-  x_integer(vec_num_4, suffixing = TRUE, output = "html") %>%
+  vec_fmt_integer(vec_num_4, suffixing = TRUE, output = "html") %>%
     expect_equal(
       c(
         "&minus;2M", "&minus;2M", "&minus;2M", "&minus;1M", "&minus;500K",
@@ -394,7 +394,7 @@ test_that("The `x_integer()` function works", {
       )
     )
 
-  x_integer(vec_num_4, suffixing = TRUE, output = "latex") %>%
+  vec_fmt_integer(vec_num_4, suffixing = TRUE, output = "latex") %>%
     expect_equal(
       c(
         "$-2M$", "$-2M$", "$-2M$", "$-1M$", "$-500K$", "$0$", "$500K$",
@@ -402,7 +402,7 @@ test_that("The `x_integer()` function works", {
       )
     )
 
-  x_integer(vec_num_4, suffixing = TRUE, output = "rtf") %>%
+  vec_fmt_integer(vec_num_4, suffixing = TRUE, output = "rtf") %>%
     expect_equal(
       c(
         "-2M", "-2M", "-2M", "-1M", "-500K", "0", "500K", "1M", "2M",
@@ -410,7 +410,7 @@ test_that("The `x_integer()` function works", {
       )
     )
 
-  x_integer(vec_num_1, pattern = "a{x}b", output = "html") %>%
+  vec_fmt_integer(vec_num_1, pattern = "a{x}b", output = "html") %>%
     expect_equal(
       c(
         "a&minus;2b", "a&minus;2b", "a&minus;2b", "a&minus;1b", "a0b",
@@ -418,7 +418,7 @@ test_that("The `x_integer()` function works", {
       )
     )
 
-  x_integer(vec_num_1, pattern = "a{x}b", output = "latex") %>%
+  vec_fmt_integer(vec_num_1, pattern = "a{x}b", output = "latex") %>%
     expect_equal(
       c(
         "a$-2$b", "a$-2$b", "a$-2$b", "a$-1$b", "a$0$b", "a$0$b", "a$0$b",
@@ -426,7 +426,7 @@ test_that("The `x_integer()` function works", {
       )
     )
 
-  x_integer(vec_num_1, pattern = "a{x}b", output = "rtf") %>%
+  vec_fmt_integer(vec_num_1, pattern = "a{x}b", output = "rtf") %>%
     expect_equal(
       c(
         "a-2b", "a-2b", "a-2b", "a-1b", "a0b", "a0b", "a0b", "a1b",
@@ -434,7 +434,7 @@ test_that("The `x_integer()` function works", {
       )
     )
 
-  x_integer(vec_num_1, force_sign = TRUE, output = "html") %>%
+  vec_fmt_integer(vec_num_1, force_sign = TRUE, output = "html") %>%
     expect_equal(
       c(
         "&minus;2", "&minus;2", "&minus;2", "&minus;1", "0", "0", "+0",
@@ -442,7 +442,7 @@ test_that("The `x_integer()` function works", {
       )
     )
 
-  x_integer(vec_num_1, force_sign = TRUE, output = "latex") %>%
+  vec_fmt_integer(vec_num_1, force_sign = TRUE, output = "latex") %>%
     expect_equal(
       c(
         "$-2$", "$-2$", "$-2$", "$-1$", "$0$", "$0$", "$+0$", "$+1$",
@@ -450,7 +450,7 @@ test_that("The `x_integer()` function works", {
       )
     )
 
-  x_integer(vec_num_1, force_sign = TRUE, output = "rtf") %>%
+  vec_fmt_integer(vec_num_1, force_sign = TRUE, output = "rtf") %>%
     expect_equal(
       c(
         "-2", "-2", "-2", "-1", "0", "0", "+0", "+1", "+2", "+2", "+2",
@@ -458,25 +458,25 @@ test_that("The `x_integer()` function works", {
       )
     )
 
-  expect_equal(x_integer(numeric(0)), character(0))
-  expect_equal(x_integer(integer(0)), character(0))
+  expect_equal(vec_fmt_integer(numeric(0)), character(0))
+  expect_equal(vec_fmt_integer(integer(0)), character(0))
 
-  expect_error(x_integer(letters))
-  expect_error(x_integer(TRUE))
-  expect_error(x_integer(list(1, 2, 3)))
-  expect_error(x_integer(dplyr::tibble(a = c(1, 2, 3))))
+  expect_error(vec_fmt_integer(letters))
+  expect_error(vec_fmt_integer(TRUE))
+  expect_error(vec_fmt_integer(list(1, 2, 3)))
+  expect_error(vec_fmt_integer(dplyr::tibble(a = c(1, 2, 3))))
 })
 
-test_that("The `x_scientific()` function works", {
+test_that("The `vec_fmt_scientific()` function works", {
 
-  # TODO: `x_scientifc()` and `fmt_scientific()` are incompatible with
+  # TODO: `vec_fmt_scientifc()` and `fmt_scientific()` are incompatible with
   # Inf values so we will omit them from the test vectors until a fix is
   # available
 
   vec_num_1_m <- vec_num_1[-13]
   vec_num_4_m <- vec_num_4[-13]
 
-  x_scientific(vec_num_1_m, output = "html") %>%
+  vec_fmt_scientific(vec_num_1_m, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.50", "&minus;2.00", "&minus;1.50", "&minus;1.00",
@@ -486,7 +486,7 @@ test_that("The `x_scientific()` function works", {
       )
     )
 
-  x_scientific(vec_num_1_m, output = "latex") %>%
+  vec_fmt_scientific(vec_num_1_m, output = "latex") %>%
     expect_equal(
       c(
         "$-2.50$", "$-2.00$", "$-1.50$", "$-1.00$", "$-5.00 \\times 10^{-1}$",
@@ -495,7 +495,7 @@ test_that("The `x_scientific()` function works", {
       )
     )
 
-  x_scientific(vec_num_1_m, output = "rtf") %>%
+  vec_fmt_scientific(vec_num_1_m, output = "rtf") %>%
     expect_equal(
       c(
         "-2.50", "-2.00", "-1.50", "-1.00", "-5.00 \\'d7 10{\\super -1}",
@@ -504,7 +504,7 @@ test_that("The `x_scientific()` function works", {
       )
     )
 
-  x_scientific(vec_num_4_m, output = "html") %>%
+  vec_fmt_scientific(vec_num_4_m, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.50 &times; 10<sup class='gt_super'>6</sup>", "&minus;2.00 &times; 10<sup class='gt_super'>6</sup>",
@@ -516,7 +516,7 @@ test_that("The `x_scientific()` function works", {
       )
     )
 
-  x_scientific(vec_num_4_m, output = "latex") %>%
+  vec_fmt_scientific(vec_num_4_m, output = "latex") %>%
     expect_equal(
       c(
         "$-2.50 \\times 10^{6}$", "$-2.00 \\times 10^{6}$", "$-1.50 \\times 10^{6}$",
@@ -526,7 +526,7 @@ test_that("The `x_scientific()` function works", {
       )
     )
 
-  x_scientific(vec_num_4_m, output = "rtf") %>%
+  vec_fmt_scientific(vec_num_4_m, output = "rtf") %>%
     expect_equal(
       c(
         "-2.50 \\'d7 10{\\super 6}", "-2.00 \\'d7 10{\\super 6}", "-1.50 \\'d7 10{\\super 6}",
@@ -536,28 +536,28 @@ test_that("The `x_scientific()` function works", {
       )
     )
 
-  # TODO: `x_scientifc()` and `fmt_scientific()` both error when
+  # TODO: `vec_fmt_scientifc()` and `fmt_scientific()` both error when
   # `drop_trailing_zeros = TRUE`; omit these test until a fix is available
-  # x_scientific(vec_num_4_m, drop_trailing_zeros = TRUE, output = "html") %>%
+  # vec_fmt_scientific(vec_num_4_m, drop_trailing_zeros = TRUE, output = "html") %>%
   #   expect_equal(
   #     c(
   #     )
   #   )
   #
-  # x_scientific(vec_num_1, drop_trailing_zeros = TRUE, output = "latex") %>%
+  # vec_fmt_scientific(vec_num_1, drop_trailing_zeros = TRUE, output = "latex") %>%
   #   expect_equal(
   #     c(
   #     )
   #   )
   #
-  # x_scientific(vec_num_1, drop_trailing_zeros = TRUE, output = "rtf") %>%
+  # vec_fmt_scientific(vec_num_1, drop_trailing_zeros = TRUE, output = "rtf") %>%
   #   expect_equal(
   #     c(
   #     )
   #   )
 
 
-  x_scientific(vec_num_4_m, locale = "de", output = "html") %>%
+  vec_fmt_scientific(vec_num_4_m, locale = "de", output = "html") %>%
     expect_equal(
       c(
         "&minus;2,50 &times; 10<sup class='gt_super'>6</sup>", "&minus;2,00 &times; 10<sup class='gt_super'>6</sup>",
@@ -569,7 +569,7 @@ test_that("The `x_scientific()` function works", {
       )
     )
 
-  x_scientific(vec_num_4_m, locale = "de", output = "latex") %>%
+  vec_fmt_scientific(vec_num_4_m, locale = "de", output = "latex") %>%
     expect_equal(
       c(
         "$-2,50 \\times 10^{6}$", "$-2,00 \\times 10^{6}$", "$-1,50 \\times 10^{6}$",
@@ -579,7 +579,7 @@ test_that("The `x_scientific()` function works", {
       )
     )
 
-  x_scientific(vec_num_4_m, locale = "de", output = "rtf") %>%
+  vec_fmt_scientific(vec_num_4_m, locale = "de", output = "rtf") %>%
     expect_equal(
       c(
         "-2,50 \\'d7 10{\\super 6}", "-2,00 \\'d7 10{\\super 6}", "-1,50 \\'d7 10{\\super 6}",
@@ -589,7 +589,7 @@ test_that("The `x_scientific()` function works", {
       )
     )
 
-  x_scientific(vec_num_4_m, pattern = "a{x}b", output = "html") %>%
+  vec_fmt_scientific(vec_num_4_m, pattern = "a{x}b", output = "html") %>%
     expect_equal(
       c(
         "a&minus;2.50 &times; 10<sup class='gt_super'>6</sup>b", "a&minus;2.00 &times; 10<sup class='gt_super'>6</sup>b",
@@ -601,7 +601,7 @@ test_that("The `x_scientific()` function works", {
       )
     )
 
-  x_scientific(vec_num_4_m, pattern = "a{x}b", output = "latex") %>%
+  vec_fmt_scientific(vec_num_4_m, pattern = "a{x}b", output = "latex") %>%
     expect_equal(
       c(
         "a$-2.50 \\times 10^{6}$b", "a$-2.00 \\times 10^{6}$b", "a$-1.50 \\times 10^{6}$b",
@@ -611,7 +611,7 @@ test_that("The `x_scientific()` function works", {
       )
     )
 
-  x_scientific(vec_num_4_m, pattern = "a{x}b", output = "rtf") %>%
+  vec_fmt_scientific(vec_num_4_m, pattern = "a{x}b", output = "rtf") %>%
     expect_equal(
       c(
         "a-2.50 \\'d7 10{\\super 6}b", "a-2.00 \\'d7 10{\\super 6}b",
@@ -622,7 +622,7 @@ test_that("The `x_scientific()` function works", {
       )
     )
 
-  x_scientific(vec_num_4_m, force_sign = TRUE, output = "html") %>%
+  vec_fmt_scientific(vec_num_4_m, force_sign = TRUE, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.50 &times; 10<sup class='gt_super'>6</sup>", "&minus;2.00 &times; 10<sup class='gt_super'>6</sup>",
@@ -634,7 +634,7 @@ test_that("The `x_scientific()` function works", {
       )
     )
 
-  x_scientific(vec_num_4_m, force_sign = TRUE, output = "latex") %>%
+  vec_fmt_scientific(vec_num_4_m, force_sign = TRUE, output = "latex") %>%
     expect_equal(
       c(
         "$-2.50 \\times 10^{6}$", "$-2.00 \\times 10^{6}$", "$-1.50 \\times 10^{6}$",
@@ -644,7 +644,7 @@ test_that("The `x_scientific()` function works", {
       )
     )
 
-  x_scientific(vec_num_4_m, force_sign = TRUE, output = "rtf") %>%
+  vec_fmt_scientific(vec_num_4_m, force_sign = TRUE, output = "rtf") %>%
     expect_equal(
       c(
         "-2.50 \\'d7 10{\\super 6}", "-2.00 \\'d7 10{\\super 6}", "-1.50 \\'d7 10{\\super 6}",
@@ -654,18 +654,18 @@ test_that("The `x_scientific()` function works", {
       )
     )
 
-  expect_equal(x_scientific(numeric(0)), character(0))
-  expect_equal(x_scientific(integer(0)), character(0))
+  expect_equal(vec_fmt_scientific(numeric(0)), character(0))
+  expect_equal(vec_fmt_scientific(integer(0)), character(0))
 
-  expect_error(x_scientific(letters))
-  expect_error(x_scientific(TRUE))
-  expect_error(x_scientific(list(1, 2, 3)))
-  expect_error(x_scientific(dplyr::tibble(a = c(1, 2, 3))))
+  expect_error(vec_fmt_scientific(letters))
+  expect_error(vec_fmt_scientific(TRUE))
+  expect_error(vec_fmt_scientific(list(1, 2, 3)))
+  expect_error(vec_fmt_scientific(dplyr::tibble(a = c(1, 2, 3))))
 })
 
-test_that("The `x_engineering()` function works", {
+test_that("The `vec_fmt_engineering()` function works", {
 
-  x_engineering(vec_num_1, output = "html") %>%
+  vec_fmt_engineering(vec_num_1, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.50", "&minus;2.00", "&minus;1.50", "&minus;1.00",
@@ -675,7 +675,7 @@ test_that("The `x_engineering()` function works", {
       )
     )
 
-  x_engineering(vec_num_1, output = "latex") %>%
+  vec_fmt_engineering(vec_num_1, output = "latex") %>%
     expect_equal(
       c(
         "$-2.50$", "$-2.00$", "$-1.50$", "$-1.00$", "$-500.00 \\times 10^{-3}$",
@@ -684,7 +684,7 @@ test_that("The `x_engineering()` function works", {
       )
     )
 
-  x_engineering(vec_num_1, output = "rtf") %>%
+  vec_fmt_engineering(vec_num_1, output = "rtf") %>%
     expect_equal(
       c(
         "-2.50", "-2.00", "-1.50", "-1.00", "-500.00 \\'d7 10{\\super -3}",
@@ -693,7 +693,7 @@ test_that("The `x_engineering()` function works", {
       )
     )
 
-  x_engineering(vec_num_4, output = "html") %>%
+  vec_fmt_engineering(vec_num_4, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.50 &times; 10<sup class='gt_super'>6</sup>", "&minus;2.00 &times; 10<sup class='gt_super'>6</sup>",
@@ -705,7 +705,7 @@ test_that("The `x_engineering()` function works", {
       )
     )
 
-  x_engineering(vec_num_4, output = "latex") %>%
+  vec_fmt_engineering(vec_num_4, output = "latex") %>%
     expect_equal(
       c(
         "$-2.50 \\times 10^{6}$", "$-2.00 \\times 10^{6}$", "$-1.50 \\times 10^{6}$",
@@ -715,7 +715,7 @@ test_that("The `x_engineering()` function works", {
       )
     )
 
-  x_engineering(vec_num_4, output = "rtf") %>%
+  vec_fmt_engineering(vec_num_4, output = "rtf") %>%
     expect_equal(
       c(
         "-2.50 \\'d7 10{\\super 6}", "-2.00 \\'d7 10{\\super 6}", "-1.50 \\'d7 10{\\super 6}",
@@ -726,7 +726,7 @@ test_that("The `x_engineering()` function works", {
       )
     )
 
-  x_engineering(vec_num_5, output = "html") %>%
+  vec_fmt_engineering(vec_num_5, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.50 &times; 10<sup class='gt_super'>12</sup>", "&minus;2.00 &times; 10<sup class='gt_super'>12</sup>",
@@ -738,7 +738,7 @@ test_that("The `x_engineering()` function works", {
       )
     )
 
-  x_engineering(vec_num_5, output = "latex") %>%
+  vec_fmt_engineering(vec_num_5, output = "latex") %>%
     expect_equal(
       c(
         "$-2.50 \\times 10^{12}$", "$-2.00 \\times 10^{12}$", "$-1.50 \\times 10^{12}$",
@@ -748,7 +748,7 @@ test_that("The `x_engineering()` function works", {
       )
     )
 
-  x_engineering(vec_num_5, output = "rtf") %>%
+  vec_fmt_engineering(vec_num_5, output = "rtf") %>%
     expect_equal(
       c(
         "-2.50 \\'d7 10{\\super 12}", "-2.00 \\'d7 10{\\super 12}",
@@ -759,7 +759,7 @@ test_that("The `x_engineering()` function works", {
       )
     )
 
-  x_engineering(vec_num_4, drop_trailing_zeros = TRUE, output = "html") %>%
+  vec_fmt_engineering(vec_num_4, drop_trailing_zeros = TRUE, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.5 &times; 10<sup class='gt_super'>6</sup>", "&minus;2. &times; 10<sup class='gt_super'>6</sup>",
@@ -771,7 +771,7 @@ test_that("The `x_engineering()` function works", {
       )
     )
 
-  x_engineering(vec_num_4, drop_trailing_zeros = TRUE, output = "latex") %>%
+  vec_fmt_engineering(vec_num_4, drop_trailing_zeros = TRUE, output = "latex") %>%
     expect_equal(
       c(
         "$-2.5 \\times 10^{6}$", "$-2. \\times 10^{6}$", "$-1.5 \\times 10^{6}$",
@@ -781,7 +781,7 @@ test_that("The `x_engineering()` function works", {
       )
     )
 
-  x_engineering(vec_num_4, drop_trailing_zeros = TRUE, output = "rtf") %>%
+  vec_fmt_engineering(vec_num_4, drop_trailing_zeros = TRUE, output = "rtf") %>%
     expect_equal(
       c(
         "-2.5 \\'d7 10{\\super 6}", "-2. \\'d7 10{\\super 6}", "-1.5 \\'d7 10{\\super 6}",
@@ -792,7 +792,7 @@ test_that("The `x_engineering()` function works", {
     )
 
 
-  x_engineering(vec_num_4, locale = "de", output = "html") %>%
+  vec_fmt_engineering(vec_num_4, locale = "de", output = "html") %>%
     expect_equal(
       c(
         "&minus;2,50 &times; 10<sup class='gt_super'>6</sup>", "&minus;2,00 &times; 10<sup class='gt_super'>6</sup>",
@@ -804,7 +804,7 @@ test_that("The `x_engineering()` function works", {
       )
     )
 
-  x_engineering(vec_num_4, locale = "de", output = "latex") %>%
+  vec_fmt_engineering(vec_num_4, locale = "de", output = "latex") %>%
     expect_equal(
       c(
         "$-2,50 \\times 10^{6}$", "$-2,00 \\times 10^{6}$", "$-1,50 \\times 10^{6}$",
@@ -814,7 +814,7 @@ test_that("The `x_engineering()` function works", {
       )
     )
 
-  x_engineering(vec_num_4, locale = "de", output = "rtf") %>%
+  vec_fmt_engineering(vec_num_4, locale = "de", output = "rtf") %>%
     expect_equal(
       c(
         "-2,50 \\'d7 10{\\super 6}", "-2,00 \\'d7 10{\\super 6}", "-1,50 \\'d7 10{\\super 6}",
@@ -825,7 +825,7 @@ test_that("The `x_engineering()` function works", {
       )
     )
 
-  x_engineering(vec_num_4, pattern = "a{x}b", output = "html") %>%
+  vec_fmt_engineering(vec_num_4, pattern = "a{x}b", output = "html") %>%
     expect_equal(
       c(
         "a&minus;2.50 &times; 10<sup class='gt_super'>6</sup>b", "a&minus;2.00 &times; 10<sup class='gt_super'>6</sup>b",
@@ -837,7 +837,7 @@ test_that("The `x_engineering()` function works", {
       )
     )
 
-  x_engineering(vec_num_4, pattern = "a{x}b", output = "latex") %>%
+  vec_fmt_engineering(vec_num_4, pattern = "a{x}b", output = "latex") %>%
     expect_equal(
       c(
         "a$-2.50 \\times 10^{6}$b", "a$-2.00 \\times 10^{6}$b", "a$-1.50 \\times 10^{6}$b",
@@ -847,7 +847,7 @@ test_that("The `x_engineering()` function works", {
       )
     )
 
-  x_engineering(vec_num_4, pattern = "a{x}b", output = "rtf") %>%
+  vec_fmt_engineering(vec_num_4, pattern = "a{x}b", output = "rtf") %>%
     expect_equal(
       c(
         "a-2.50 \\'d7 10{\\super 6}b", "a-2.00 \\'d7 10{\\super 6}b",
@@ -858,7 +858,7 @@ test_that("The `x_engineering()` function works", {
       )
     )
 
-  x_engineering(vec_num_4, force_sign = TRUE, output = "html") %>%
+  vec_fmt_engineering(vec_num_4, force_sign = TRUE, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.50 &times; 10<sup class='gt_super'>6</sup>", "&minus;2.00 &times; 10<sup class='gt_super'>6</sup>",
@@ -870,7 +870,7 @@ test_that("The `x_engineering()` function works", {
       )
     )
 
-  x_engineering(vec_num_4, force_sign = TRUE, output = "latex") %>%
+  vec_fmt_engineering(vec_num_4, force_sign = TRUE, output = "latex") %>%
     expect_equal(
       c(
         "$-2.50 \\times 10^{6}$", "$-2.00 \\times 10^{6}$", "$-1.50 \\times 10^{6}$",
@@ -880,7 +880,7 @@ test_that("The `x_engineering()` function works", {
       )
     )
 
-  x_engineering(vec_num_4, force_sign = TRUE, output = "rtf") %>%
+  vec_fmt_engineering(vec_num_4, force_sign = TRUE, output = "rtf") %>%
     expect_equal(
       c(
         "-2.50 \\'d7 10{\\super 6}", "-2.00 \\'d7 10{\\super 6}", "-1.50 \\'d7 10{\\super 6}",
@@ -891,18 +891,18 @@ test_that("The `x_engineering()` function works", {
       )
     )
 
-  expect_equal(x_engineering(numeric(0)), character(0))
-  expect_equal(x_engineering(integer(0)), character(0))
+  expect_equal(vec_fmt_engineering(numeric(0)), character(0))
+  expect_equal(vec_fmt_engineering(integer(0)), character(0))
 
-  expect_error(x_engineering(letters))
-  expect_error(x_engineering(TRUE))
-  expect_error(x_engineering(list(1, 2, 3)))
-  expect_error(x_engineering(dplyr::tibble(a = c(1, 2, 3))))
+  expect_error(vec_fmt_engineering(letters))
+  expect_error(vec_fmt_engineering(TRUE))
+  expect_error(vec_fmt_engineering(list(1, 2, 3)))
+  expect_error(vec_fmt_engineering(dplyr::tibble(a = c(1, 2, 3))))
 })
 
-test_that("The `x_percent()` function works", {
+test_that("The `vec_fmt_percent()` function works", {
 
-  x_percent(vec_num_1, output = "html") %>%
+  vec_fmt_percent(vec_num_1, output = "html") %>%
     expect_equal(
       c(
         "&minus;250.00%", "&minus;200.00%", "&minus;150.00%", "&minus;100.00%",
@@ -911,7 +911,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, output = "latex") %>%
+  vec_fmt_percent(vec_num_1, output = "latex") %>%
     expect_equal(
       c(
         "$-250.00\\%$", "$-200.00\\%$", "$-150.00\\%$", "$-100.00\\%$",
@@ -920,7 +920,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, output = "rtf") %>%
+  vec_fmt_percent(vec_num_1, output = "rtf") %>%
     expect_equal(
       c(
         "-250.00%", "-200.00%", "-150.00%", "-100.00%", "-50.00%",
@@ -929,7 +929,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, decimals = 4, output = "html") %>%
+  vec_fmt_percent(vec_num_1, decimals = 4, output = "html") %>%
     expect_equal(
       c(
         "&minus;250.0000%", "&minus;200.0000%", "&minus;150.0000%",
@@ -938,7 +938,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, decimals = 4, output = "latex") %>%
+  vec_fmt_percent(vec_num_1, decimals = 4, output = "latex") %>%
     expect_equal(
       c(
         "$-250.0000\\%$", "$-200.0000\\%$", "$-150.0000\\%$", "$-100.0000\\%$",
@@ -947,7 +947,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, decimals = 4, output = "rtf") %>%
+  vec_fmt_percent(vec_num_1, decimals = 4, output = "rtf") %>%
     expect_equal(
       c(
         "-250.0000%", "-200.0000%", "-150.0000%", "-100.0000%", "-50.0000%",
@@ -956,7 +956,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, scale_values = FALSE, output = "html") %>%
+  vec_fmt_percent(vec_num_1, scale_values = FALSE, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.50%", "&minus;2.00%", "&minus;1.50%", "&minus;1.00%",
@@ -965,7 +965,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, scale_values = FALSE, output = "latex") %>%
+  vec_fmt_percent(vec_num_1, scale_values = FALSE, output = "latex") %>%
     expect_equal(
       c(
         "$-2.50\\%$", "$-2.00\\%$", "$-1.50\\%$", "$-1.00\\%$", "$-0.50\\%$",
@@ -974,7 +974,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, scale_values = FALSE, output = "rtf") %>%
+  vec_fmt_percent(vec_num_1, scale_values = FALSE, output = "rtf") %>%
     expect_equal(
       c(
         "-2.50%", "-2.00%", "-1.50%", "-1.00%", "-0.50%", "0.00%",
@@ -982,7 +982,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, scale_values = FALSE, drop_trailing_zeros = TRUE, output = "html") %>%
+  vec_fmt_percent(vec_num_1, scale_values = FALSE, drop_trailing_zeros = TRUE, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.5%", "&minus;2%", "&minus;1.5%", "&minus;1%", "&minus;0.5%",
@@ -990,7 +990,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, scale_values = FALSE, drop_trailing_zeros = TRUE, output = "latex") %>%
+  vec_fmt_percent(vec_num_1, scale_values = FALSE, drop_trailing_zeros = TRUE, output = "latex") %>%
     expect_equal(
       c(
         "$-2.5\\%$", "$-2\\%$", "$-1.5\\%$", "$-1\\%$", "$-0.5\\%$",
@@ -999,7 +999,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, scale_values = FALSE, drop_trailing_zeros = TRUE, output = "rtf") %>%
+  vec_fmt_percent(vec_num_1, scale_values = FALSE, drop_trailing_zeros = TRUE, output = "rtf") %>%
     expect_equal(
       c(
         "-2.5%", "-2%", "-1.5%", "-1%", "-0.5%", "0%", "0.5%", "1%",
@@ -1007,7 +1007,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_4, use_seps = FALSE, output = "html") %>%
+  vec_fmt_percent(vec_num_4, use_seps = FALSE, output = "html") %>%
     expect_equal(
       c(
         "&minus;250000000.00%", "&minus;200000000.00%", "&minus;150000000.00%",
@@ -1017,7 +1017,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_4, use_seps = FALSE, output = "latex") %>%
+  vec_fmt_percent(vec_num_4, use_seps = FALSE, output = "latex") %>%
     expect_equal(
       c(
         "$-250000000.00\\%$", "$-200000000.00\\%$", "$-150000000.00\\%$",
@@ -1027,7 +1027,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_4, use_seps = FALSE, output = "rtf") %>%
+  vec_fmt_percent(vec_num_4, use_seps = FALSE, output = "rtf") %>%
     expect_equal(
       c(
         "-250000000.00%", "-200000000.00%", "-150000000.00%", "-100000000.00%",
@@ -1036,7 +1036,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, accounting = TRUE, output = "html") %>%
+  vec_fmt_percent(vec_num_1, accounting = TRUE, output = "html") %>%
     expect_equal(
       c(
         "(250.00%)", "(200.00%)", "(150.00%)", "(100.00%)", "(50.00%)",
@@ -1045,7 +1045,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, accounting = TRUE, output = "latex") %>%
+  vec_fmt_percent(vec_num_1, accounting = TRUE, output = "latex") %>%
     expect_equal(
       c(
         "$(250.00\\%)$", "$(200.00\\%)$", "$(150.00\\%)$", "$(100.00\\%)$",
@@ -1054,7 +1054,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_4, accounting = TRUE, output = "rtf") %>%
+  vec_fmt_percent(vec_num_4, accounting = TRUE, output = "rtf") %>%
     expect_equal(
       c(
         "(250,000,000.00%)", "(200,000,000.00%)", "(150,000,000.00%)",
@@ -1064,7 +1064,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_4, locale = "de", output = "html") %>%
+  vec_fmt_percent(vec_num_4, locale = "de", output = "html") %>%
     expect_equal(
       c(
         "&minus;250.000.000,00%", "&minus;200.000.000,00%", "&minus;150.000.000,00%",
@@ -1074,7 +1074,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_4, locale = "de", output = "latex") %>%
+  vec_fmt_percent(vec_num_4, locale = "de", output = "latex") %>%
     expect_equal(
       c(
         "$-250.000.000,00\\%$", "$-200.000.000,00\\%$", "$-150.000.000,00\\%$",
@@ -1084,7 +1084,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_4, locale = "de", output = "rtf") %>%
+  vec_fmt_percent(vec_num_4, locale = "de", output = "rtf") %>%
     expect_equal(
       c(
         "-250.000.000,00%", "-200.000.000,00%", "-150.000.000,00%",
@@ -1094,7 +1094,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, pattern = "a{x}b", output = "html") %>%
+  vec_fmt_percent(vec_num_1, pattern = "a{x}b", output = "html") %>%
     expect_equal(
       c(
         "a&minus;250.00%b", "a&minus;200.00%b", "a&minus;150.00%b",
@@ -1103,7 +1103,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, pattern = "a{x}b", output = "latex") %>%
+  vec_fmt_percent(vec_num_1, pattern = "a{x}b", output = "latex") %>%
     expect_equal(
       c(
         "a$-250.00\\%$b", "a$-200.00\\%$b", "a$-150.00\\%$b", "a$-100.00\\%$b",
@@ -1112,7 +1112,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, pattern = "a{x}b", output = "rtf") %>%
+  vec_fmt_percent(vec_num_1, pattern = "a{x}b", output = "rtf") %>%
     expect_equal(
       c(
         "a-250.00%b", "a-200.00%b", "a-150.00%b", "a-100.00%b", "a-50.00%b",
@@ -1121,7 +1121,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, force_sign = TRUE, output = "html") %>%
+  vec_fmt_percent(vec_num_1, force_sign = TRUE, output = "html") %>%
     expect_equal(
       c(
         "&minus;250.00%", "&minus;200.00%", "&minus;150.00%", "&minus;100.00%",
@@ -1130,7 +1130,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, force_sign = TRUE, output = "latex") %>%
+  vec_fmt_percent(vec_num_1, force_sign = TRUE, output = "latex") %>%
     expect_equal(
       c(
         "$-250.00\\%$", "$-200.00\\%$", "$-150.00\\%$", "$-100.00\\%$",
@@ -1139,7 +1139,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, force_sign = TRUE, output = "rtf") %>%
+  vec_fmt_percent(vec_num_1, force_sign = TRUE, output = "rtf") %>%
     expect_equal(
       c(
         "-250.00%", "-200.00%", "-150.00%", "-100.00%", "-50.00%",
@@ -1148,7 +1148,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, placement = "left", output = "html") %>%
+  vec_fmt_percent(vec_num_1, placement = "left", output = "html") %>%
     expect_equal(
       c(
         "&minus;%250.00", "&minus;%200.00", "&minus;%150.00", "&minus;%100.00",
@@ -1157,7 +1157,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, placement = "left", output = "latex") %>%
+  vec_fmt_percent(vec_num_1, placement = "left", output = "latex") %>%
     expect_equal(
       c(
         "$-\\%250.00$", "$-\\%200.00$", "$-\\%150.00$", "$-\\%100.00$",
@@ -1166,7 +1166,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, placement = "left", output = "rtf") %>%
+  vec_fmt_percent(vec_num_1, placement = "left", output = "rtf") %>%
     expect_equal(
       c(
         "-%250.00", "-%200.00", "-%150.00", "-%100.00", "-%50.00",
@@ -1175,7 +1175,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, incl_space = TRUE, output = "html") %>%
+  vec_fmt_percent(vec_num_1, incl_space = TRUE, output = "html") %>%
     expect_equal(
       c(
         "&minus;250.00 %", "&minus;200.00 %", "&minus;150.00 %", "&minus;100.00 %",
@@ -1184,7 +1184,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, incl_space = TRUE, output = "latex") %>%
+  vec_fmt_percent(vec_num_1, incl_space = TRUE, output = "latex") %>%
     expect_equal(
       c(
         "$-250.00 \\%$", "$-200.00 \\%$", "$-150.00 \\%$", "$-100.00 \\%$",
@@ -1193,7 +1193,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, incl_space = TRUE, output = "rtf") %>%
+  vec_fmt_percent(vec_num_1, incl_space = TRUE, output = "rtf") %>%
     expect_equal(
       c(
         "-250.00 %", "-200.00 %", "-150.00 %", "-100.00 %", "-50.00 %",
@@ -1202,7 +1202,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, placement = "left", incl_space = TRUE, output = "html") %>%
+  vec_fmt_percent(vec_num_1, placement = "left", incl_space = TRUE, output = "html") %>%
     expect_equal(
       c(
         "&minus;% 250.00", "&minus;% 200.00", "&minus;% 150.00", "&minus;% 100.00",
@@ -1211,7 +1211,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, placement = "left", incl_space = TRUE, output = "latex") %>%
+  vec_fmt_percent(vec_num_1, placement = "left", incl_space = TRUE, output = "latex") %>%
     expect_equal(
       c(
         "$-\\% 250.00$", "$-\\% 200.00$", "$-\\% 150.00$", "$-\\% 100.00$",
@@ -1220,7 +1220,7 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  x_percent(vec_num_1, placement = "left", incl_space = TRUE, output = "rtf") %>%
+  vec_fmt_percent(vec_num_1, placement = "left", incl_space = TRUE, output = "rtf") %>%
     expect_equal(
       c(
         "-% 250.00", "-% 200.00", "-% 150.00", "-% 100.00", "-% 50.00",
@@ -1229,18 +1229,18 @@ test_that("The `x_percent()` function works", {
       )
     )
 
-  expect_equal(x_percent(numeric(0)), character(0))
-  expect_equal(x_percent(integer(0)), character(0))
+  expect_equal(vec_fmt_percent(numeric(0)), character(0))
+  expect_equal(vec_fmt_percent(integer(0)), character(0))
 
-  expect_error(x_percent(letters))
-  expect_error(x_percent(TRUE))
-  expect_error(x_percent(list(1, 2, 3)))
-  expect_error(x_percent(dplyr::tibble(a = c(1, 2, 3))))
+  expect_error(vec_fmt_percent(letters))
+  expect_error(vec_fmt_percent(TRUE))
+  expect_error(vec_fmt_percent(list(1, 2, 3)))
+  expect_error(vec_fmt_percent(dplyr::tibble(a = c(1, 2, 3))))
 })
 
-test_that("The `x_fraction()` function works", {
+test_that("The `vec_fmt_fraction()` function works", {
 
-  x_fraction(range_0_1, output = "html") %>%
+  vec_fmt_fraction(range_0_1, output = "html") %>%
     expect_equal(
       c(
         "0", "0", "0", "<span class=\"gt_fraction_numerator\">1</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">9</span>",
@@ -1254,7 +1254,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(range_0_1, output = "latex") %>%
+  vec_fmt_fraction(range_0_1, output = "latex") %>%
     expect_equal(
       c(
         "$0$", "$0$", "$0$", "${{}^{1}\\!/_{9}}$", "${{}^{1}\\!/_{4}}$",
@@ -1263,7 +1263,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(range_0_1, output = "rtf") %>%
+  vec_fmt_fraction(range_0_1, output = "rtf") %>%
     expect_equal(
       c(
         "0", "0", "0", "{\\super 1}/{\\sub 9}", "{\\super 1}/{\\sub 4}",
@@ -1272,7 +1272,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(range_0_1_minus, output = "html") %>%
+  vec_fmt_fraction(range_0_1_minus, output = "html") %>%
     expect_equal(
       c(
         "0", "0", "0", "&minus;<span class=\"gt_fraction_numerator\">1</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">9</span>",
@@ -1286,7 +1286,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(range_0_1_minus, output = "latex") %>%
+  vec_fmt_fraction(range_0_1_minus, output = "latex") %>%
     expect_equal(
       c(
         "$0$", "$0$", "$0$", "$-{{}^{1}\\!/_{9}}$", "$-{{}^{1}\\!/_{4}}$",
@@ -1296,7 +1296,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(range_0_1_minus, output = "rtf") %>%
+  vec_fmt_fraction(range_0_1_minus, output = "rtf") %>%
     expect_equal(
       c(
         "0", "0", "0", "-{\\super 1}/{\\sub 9}", "-{\\super 1}/{\\sub 4}",
@@ -1306,7 +1306,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(range_1_2, output = "html") %>%
+  vec_fmt_fraction(range_1_2, output = "html") %>%
     expect_equal(
       c(
         "1", "1", "1", "1&#8239;<span class=\"gt_fraction_numerator\">1</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">9</span>",
@@ -1320,7 +1320,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(range_1_2, output = "latex") %>%
+  vec_fmt_fraction(range_1_2, output = "latex") %>%
     expect_equal(
       c(
         "$1$", "$1$", "$1$", "$1\\, {{}^{1}\\!/_{9}}$", "$1\\, {{}^{1}\\!/_{4}}$",
@@ -1330,7 +1330,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(range_1_2, output = "rtf") %>%
+  vec_fmt_fraction(range_1_2, output = "rtf") %>%
     expect_equal(
       c(
         "1", "1", "1", "1{\\super 1}/{\\sub 9}", "1{\\super 1}/{\\sub 4}",
@@ -1340,7 +1340,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(range_1_2_minus, output = "html") %>%
+  vec_fmt_fraction(range_1_2_minus, output = "html") %>%
     expect_equal(
       c(
         "&minus;1", "&minus;1", "&minus;1", "&minus;1&#8239;<span class=\"gt_fraction_numerator\">1</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">9</span>",
@@ -1354,7 +1354,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(range_1_2_minus, output = "latex") %>%
+  vec_fmt_fraction(range_1_2_minus, output = "latex") %>%
     expect_equal(
       c(
         "$-1$", "$-1$", "$-1$", "$-1\\, {{}^{1}\\!/_{9}}$", "$-1\\, {{}^{1}\\!/_{4}}$",
@@ -1364,7 +1364,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(range_1_2_minus, output = "rtf") %>%
+  vec_fmt_fraction(range_1_2_minus, output = "rtf") %>%
     expect_equal(
       c(
         "-1", "-1", "-1", "-1{\\super 1}/{\\sub 9}", "-1{\\super 1}/{\\sub 4}",
@@ -1374,7 +1374,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(range_0_1, layout = "inline", output = "html") %>%
+  vec_fmt_fraction(range_0_1, layout = "inline", output = "html") %>%
     expect_equal(
       c(
         "0", "0", "0", "1/9", "1/4", "2/5", "1/2", "3/5", "3/4", "8/9",
@@ -1382,7 +1382,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(range_0_1, layout = "inline", output = "latex") %>%
+  vec_fmt_fraction(range_0_1, layout = "inline", output = "latex") %>%
     expect_equal(
       c(
         "$0$", "$0$", "$0$", "$1/9$", "$1/4$", "$2/5$", "$1/2$", "$3/5$",
@@ -1390,7 +1390,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(range_0_1, layout = "inline", output = "rtf") %>%
+  vec_fmt_fraction(range_0_1, layout = "inline", output = "rtf") %>%
     expect_equal(
       c(
         "0", "0", "0", "1/9", "1/4", "2/5", "1/2", "3/5", "3/4", "8/9",
@@ -1398,7 +1398,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(range_0_1_minus, layout = "inline", output = "html") %>%
+  vec_fmt_fraction(range_0_1_minus, layout = "inline", output = "html") %>%
     expect_equal(
       c(
         "0", "0", "0", "&minus;1/9", "&minus;1/4", "&minus;2/5", "&minus;1/2",
@@ -1407,7 +1407,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(range_0_1_minus, layout = "inline", output = "latex") %>%
+  vec_fmt_fraction(range_0_1_minus, layout = "inline", output = "latex") %>%
     expect_equal(
       c(
         "$0$", "$0$", "$0$", "$-1/9$", "$-1/4$", "$-2/5$", "$-1/2$",
@@ -1415,7 +1415,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(range_0_1_minus, layout = "inline", output = "rtf") %>%
+  vec_fmt_fraction(range_0_1_minus, layout = "inline", output = "rtf") %>%
     expect_equal(
       c(
         "0", "0", "0", "-1/9", "-1/4", "-2/5", "-1/2", "-3/5", "-3/4",
@@ -1423,7 +1423,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(range_1_2, layout = "inline", output = "html") %>%
+  vec_fmt_fraction(range_1_2, layout = "inline", output = "html") %>%
     expect_equal(
       c(
         "1", "1", "1", "1 1/9", "1 1/4", "1 2/5", "1 1/2", "1 3/5",
@@ -1431,7 +1431,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(range_1_2, layout = "inline", output = "latex") %>%
+  vec_fmt_fraction(range_1_2, layout = "inline", output = "latex") %>%
     expect_equal(
       c(
         "$1$", "$1$", "$1$", "$1\\ 1/9$", "$1\\ 1/4$", "$1\\ 2/5$",
@@ -1440,7 +1440,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(range_1_2, layout = "inline", output = "rtf") %>%
+  vec_fmt_fraction(range_1_2, layout = "inline", output = "rtf") %>%
     expect_equal(
       c(
         "1", "1", "1", "1 1/9", "1 1/4", "1 2/5", "1 1/2", "1 3/5",
@@ -1448,7 +1448,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(range_1_2_minus, layout = "inline", output = "html") %>%
+  vec_fmt_fraction(range_1_2_minus, layout = "inline", output = "html") %>%
     expect_equal(
       c(
         "&minus;1", "&minus;1", "&minus;1", "&minus;1 1/9", "&minus;1 1/4",
@@ -1457,7 +1457,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(range_1_2_minus, layout = "inline", output = "latex") %>%
+  vec_fmt_fraction(range_1_2_minus, layout = "inline", output = "latex") %>%
     expect_equal(
       c(
         "$-1$", "$-1$", "$-1$", "$-1\\ 1/9$", "$-1\\ 1/4$", "$-1\\ 2/5$",
@@ -1466,7 +1466,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(range_1_2_minus, layout = "inline", output = "rtf") %>%
+  vec_fmt_fraction(range_1_2_minus, layout = "inline", output = "rtf") %>%
     expect_equal(
       c(
         "-1", "-1", "-1", "-1 1/9", "-1 1/4", "-1 2/5", "-1 1/2", "-1 3/5",
@@ -1476,7 +1476,7 @@ test_that("The `x_fraction()` function works", {
 
   w_range <- sort(c(range_1_2_minus, range_0_1_minus, range_0_1, range_1_2))
 
-  x_fraction(w_range, layout = "inline", output = "rtf", accuracy = "med") %>%
+  vec_fmt_fraction(w_range, layout = "inline", output = "rtf", accuracy = "med") %>%
     expect_equal(
       c(
         "-2", "-2", "-1 98/99", "-1 9/10", "-1 3/4", "-1 3/5", "-1 1/2",
@@ -1489,7 +1489,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(w_range, layout = "inline", output = "rtf", accuracy = "high") %>%
+  vec_fmt_fraction(w_range, layout = "inline", output = "rtf", accuracy = "high") %>%
     expect_equal(
       c(
         "-2", "-1 998/999", "-1 99/100", "-1 9/10", "-1 3/4", "-1 3/5",
@@ -1503,7 +1503,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(w_range, layout = "inline", output = "rtf", accuracy = 1) %>%
+  vec_fmt_fraction(w_range, layout = "inline", output = "rtf", accuracy = 1) %>%
     expect_equal(
       c(
         "-2", "-2", "-2", "-2", "-2", "-2", "-2", "-1", "-1", "-1",
@@ -1514,7 +1514,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(w_range, layout = "inline", output = "rtf", accuracy = 1, simplify = FALSE) %>%
+  vec_fmt_fraction(w_range, layout = "inline", output = "rtf", accuracy = 1, simplify = FALSE) %>%
     expect_equal(
       c(
         "-2", "-2", "-2", "-2", "-2", "-2", "-2", "-1", "-1", "-1",
@@ -1525,7 +1525,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(w_range, layout = "inline", output = "rtf", accuracy = 2) %>%
+  vec_fmt_fraction(w_range, layout = "inline", output = "rtf", accuracy = 2) %>%
     expect_equal(
       c(
         "-2", "-2", "-2", "-2", "-2", "-1 1/2", "-1 1/2", "-1 1/2",
@@ -1537,7 +1537,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(w_range, layout = "inline", output = "rtf", accuracy = 2, simplify = FALSE) %>%
+  vec_fmt_fraction(w_range, layout = "inline", output = "rtf", accuracy = 2, simplify = FALSE) %>%
     expect_equal(
       c(
         "-2", "-2", "-2", "-2", "-2", "-1 1/2", "-1 1/2", "-1 1/2",
@@ -1549,7 +1549,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(w_range, layout = "inline", output = "rtf", accuracy = 3) %>%
+  vec_fmt_fraction(w_range, layout = "inline", output = "rtf", accuracy = 3) %>%
     expect_equal(
       c(
         "-2", "-2", "-2", "-2", "-1 2/3", "-1 2/3", "-1 2/3", "-1 1/3",
@@ -1561,7 +1561,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(w_range, layout = "inline", output = "rtf", accuracy = 3, simplify = FALSE) %>%
+  vec_fmt_fraction(w_range, layout = "inline", output = "rtf", accuracy = 3, simplify = FALSE) %>%
     expect_equal(
       c(
         "-2", "-2", "-2", "-2", "-1 2/3", "-1 2/3", "-1 2/3", "-1 1/3",
@@ -1573,7 +1573,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(w_range, layout = "inline", output = "rtf", accuracy = 4) %>%
+  vec_fmt_fraction(w_range, layout = "inline", output = "rtf", accuracy = 4) %>%
     expect_equal(
       c(
         "-2", "-2", "-2", "-2", "-1 3/4", "-1 1/2", "-1 1/2", "-1 1/2",
@@ -1585,7 +1585,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(w_range, layout = "inline", output = "rtf", accuracy = 4, simplify = FALSE) %>%
+  vec_fmt_fraction(w_range, layout = "inline", output = "rtf", accuracy = 4, simplify = FALSE) %>%
     expect_equal(
       c(
         "-2", "-2", "-2", "-2", "-1 3/4", "-1 2/4", "-1 2/4", "-1 2/4",
@@ -1597,7 +1597,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(w_range, layout = "inline", output = "rtf", accuracy = 10) %>%
+  vec_fmt_fraction(w_range, layout = "inline", output = "rtf", accuracy = 10) %>%
     expect_equal(
       c(
         "-2", "-2", "-2", "-1 9/10", "-1 4/5", "-1 3/5", "-1 1/2",
@@ -1609,7 +1609,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(w_range, layout = "inline", output = "rtf", accuracy = 10, simplify = FALSE) %>%
+  vec_fmt_fraction(w_range, layout = "inline", output = "rtf", accuracy = 10, simplify = FALSE) %>%
     expect_equal(
       c(
         "-2", "-2", "-2", "-1 9/10", "-1 8/10", "-1 6/10", "-1 5/10",
@@ -1622,7 +1622,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(w_range, layout = "inline", output = "rtf", accuracy = 100) %>%
+  vec_fmt_fraction(w_range, layout = "inline", output = "rtf", accuracy = 100) %>%
     expect_equal(
       c(
         "-2", "-2", "-1 99/100", "-1 9/10", "-1 3/4", "-1 3/5", "-1 1/2",
@@ -1635,7 +1635,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(w_range, layout = "inline", output = "rtf", accuracy = 100, simplify = FALSE) %>%
+  vec_fmt_fraction(w_range, layout = "inline", output = "rtf", accuracy = 100, simplify = FALSE) %>%
     expect_equal(
       c(
         "-2", "-2", "-1 99/100", "-1 90/100", "-1 75/100", "-1 60/100",
@@ -1649,7 +1649,7 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(c(5000.3, 10000.8), output = "html") %>%
+  vec_fmt_fraction(c(5000.3, 10000.8), output = "html") %>%
     expect_equal(
       c(
         "5,000&#8239;<span class=\"gt_fraction_numerator\">2</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">7</span>",
@@ -1657,29 +1657,29 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(c(5000.3, 10000.8), output = "latex") %>%
+  vec_fmt_fraction(c(5000.3, 10000.8), output = "latex") %>%
     expect_equal(c("$5,000\\, {{}^{2}\\!/_{7}}$", "$10,000\\, {{}^{4}\\!/_{5}}$"))
 
-  x_fraction(c(5000.3, 10000.8), output = "rtf") %>%
+  vec_fmt_fraction(c(5000.3, 10000.8), output = "rtf") %>%
     expect_equal(c("5,000{\\super 2}/{\\sub 7}", "10,000{\\super 4}/{\\sub 5}"))
 
   # TODO: With `use_seps = FALSE` we get the following warning that requires
   # a fix in `fmt_fraction()`:
   # In prettyNum(r, big.mark = big.mark, big.interval = big.interval,  :
   #                'big.mark' and 'decimal.mark' are both '', which could be confusing
-  # x_fraction(c(5000.3, 10000.8), use_seps = FALSE) %>%
+  # vec_fmt_fraction(c(5000.3, 10000.8), use_seps = FALSE) %>%
   #   expect_equal(
   #     c(
   #     )
   #   )
   #
-  # x_fraction(c(5000.3, 10000.8), use_seps = FALSE, output = "latex") %>%
+  # vec_fmt_fraction(c(5000.3, 10000.8), use_seps = FALSE, output = "latex") %>%
   #   expect_equal(c())
   #
-  # x_fraction(c(5000.3, 10000.8), use_seps = FALSE, output = "rtf") %>%
+  # vec_fmt_fraction(c(5000.3, 10000.8), use_seps = FALSE, output = "rtf") %>%
   #   expect_equal(c())
 
-  x_fraction(c(5000.3, 10000.8), sep_mark = ".", output = "html") %>%
+  vec_fmt_fraction(c(5000.3, 10000.8), sep_mark = ".", output = "html") %>%
     expect_equal(
       c(
         "5.000&#8239;<span class=\"gt_fraction_numerator\">2</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">7</span>",
@@ -1687,13 +1687,13 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(c(5000.3, 10000.8), sep_mark = ".", output = "latex") %>%
+  vec_fmt_fraction(c(5000.3, 10000.8), sep_mark = ".", output = "latex") %>%
     expect_equal(c("$5.000\\, {{}^{2}\\!/_{7}}$", "$10.000\\, {{}^{4}\\!/_{5}}$"))
 
-  x_fraction(c(5000.3, 10000.8), sep_mark = ".", output = "rtf") %>%
+  vec_fmt_fraction(c(5000.3, 10000.8), sep_mark = ".", output = "rtf") %>%
     expect_equal(c("5.000{\\super 2}/{\\sub 7}", "10.000{\\super 4}/{\\sub 5}"))
 
-  x_fraction(c(0.5, 1.5), pattern = "a{x}b", output = "html") %>%
+  vec_fmt_fraction(c(0.5, 1.5), pattern = "a{x}b", output = "html") %>%
     expect_equal(
       c(
         "a<span class=\"gt_fraction_numerator\">1</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">2</span>b",
@@ -1701,71 +1701,71 @@ test_that("The `x_fraction()` function works", {
       )
     )
 
-  x_fraction(c(0.5, 1.5), pattern = "a{x}b", output = "latex") %>%
+  vec_fmt_fraction(c(0.5, 1.5), pattern = "a{x}b", output = "latex") %>%
     expect_equal(c("a${{}^{1}\\!/_{2}}$b", "a$1\\, {{}^{1}\\!/_{2}}$b"))
 
-  x_fraction(c(0.5, 1.5), pattern = "a{x}b", output = "rtf") %>%
+  vec_fmt_fraction(c(0.5, 1.5), pattern = "a{x}b", output = "rtf") %>%
     expect_equal(c("a{\\super 1}/{\\sub 2}b", "a1{\\super 1}/{\\sub 2}b"))
 
-  x_fraction(c(0.5, 1.5), pattern = "a{x}b", layout = "inline", output = "html") %>%
+  vec_fmt_fraction(c(0.5, 1.5), pattern = "a{x}b", layout = "inline", output = "html") %>%
     expect_equal(c("a1/2b", "a1 1/2b"))
 
-  x_fraction(c(0.5, 1.5), pattern = "a{x}b", layout = "inline", output = "latex") %>%
+  vec_fmt_fraction(c(0.5, 1.5), pattern = "a{x}b", layout = "inline", output = "latex") %>%
     expect_equal(c("a$1/2$b", "a$1\\ 1/2$b"))
 
-  x_fraction(c(0.5, 1.5), pattern = "a{x}b", layout = "inline", output = "rtf") %>%
+  vec_fmt_fraction(c(0.5, 1.5), pattern = "a{x}b", layout = "inline", output = "rtf") %>%
     expect_equal(c("a1/2b", "a1 1/2b"))
 
-  x_fraction(exact_numbers, output = "html") %>%
+  vec_fmt_fraction(exact_numbers, output = "html") %>%
     expect_equal(c("&minus;1", "0", "1"))
 
-  x_fraction(exact_numbers, output = "latex") %>%
+  vec_fmt_fraction(exact_numbers, output = "latex") %>%
     expect_equal(c("$-1$", "$0$", "$1$"))
 
-  x_fraction(exact_numbers, output = "rtf") %>%
+  vec_fmt_fraction(exact_numbers, output = "rtf") %>%
     expect_equal(c("-1", "0", "1"))
 
-  x_fraction(exact_numbers, layout = "inline", output = "html") %>%
+  vec_fmt_fraction(exact_numbers, layout = "inline", output = "html") %>%
     expect_equal(c("&minus;1", "0", "1"))
 
-  x_fraction(exact_numbers, layout = "inline", output = "latex") %>%
+  vec_fmt_fraction(exact_numbers, layout = "inline", output = "latex") %>%
     expect_equal(c("$-1$", "$0$", "$1$"))
 
-  x_fraction(exact_numbers, layout = "inline", output = "rtf") %>%
+  vec_fmt_fraction(exact_numbers, layout = "inline", output = "rtf") %>%
     expect_equal(c("-1", "0", "1"))
 
-  x_fraction(not_numbers, output = "html") %>%
+  vec_fmt_fraction(not_numbers, output = "html") %>%
     expect_equal(c("NA", "NaN", "Inf", "-Inf"))
 
-  x_fraction(not_numbers, output = "latex") %>%
+  vec_fmt_fraction(not_numbers, output = "latex") %>%
     expect_equal(c("NA", "NaN", "$Inf$", "$-Inf$"))
 
-  x_fraction(not_numbers, output = "rtf") %>%
+  vec_fmt_fraction(not_numbers, output = "rtf") %>%
     expect_equal(c("NA", "NaN", "Inf", "-Inf"))
 
-  x_fraction(not_numbers, layout = "inline", output = "html") %>%
+  vec_fmt_fraction(not_numbers, layout = "inline", output = "html") %>%
     expect_equal(c("NA", "NaN", "Inf", "-Inf"))
 
-  x_fraction(not_numbers, layout = "inline", output = "latex") %>%
+  vec_fmt_fraction(not_numbers, layout = "inline", output = "latex") %>%
     expect_equal(c("NA", "NaN", "$Inf$", "$-Inf$"))
 
-  x_fraction(not_numbers, layout = "inline", output = "rtf") %>%
+  vec_fmt_fraction(not_numbers, layout = "inline", output = "rtf") %>%
     expect_equal(c("NA", "NaN", "Inf", "-Inf"))
 
-  expect_equal(x_fraction(numeric(0)), character(0))
-  expect_equal(x_fraction(integer(0)), character(0))
+  expect_equal(vec_fmt_fraction(numeric(0)), character(0))
+  expect_equal(vec_fmt_fraction(integer(0)), character(0))
 
-  expect_error(x_fraction(letters))
-  expect_error(x_fraction(c(1, 2, 3), accuracy = 0))
-  expect_error(x_fraction(c(1, 2, 3), accuracy = -1))
-  expect_error(x_fraction(TRUE))
-  expect_error(x_fraction(list(1, 2, 3)))
-  expect_error(x_fraction(dplyr::tibble(a = c(1, 2, 3))))
+  expect_error(vec_fmt_fraction(letters))
+  expect_error(vec_fmt_fraction(c(1, 2, 3), accuracy = 0))
+  expect_error(vec_fmt_fraction(c(1, 2, 3), accuracy = -1))
+  expect_error(vec_fmt_fraction(TRUE))
+  expect_error(vec_fmt_fraction(list(1, 2, 3)))
+  expect_error(vec_fmt_fraction(dplyr::tibble(a = c(1, 2, 3))))
 })
 
-test_that("The `x_currency()` function works", {
+test_that("The `vec_fmt_currency()` function works", {
 
-  x_currency(vec_num_1, output = "html") %>%
+  vec_fmt_currency(vec_num_1, output = "html") %>%
     expect_equal(
       c(
         "&minus;$2.50", "&minus;$2.00", "&minus;$1.50", "&minus;$1.00",
@@ -1774,7 +1774,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, output = "latex") %>%
+  vec_fmt_currency(vec_num_1, output = "latex") %>%
     expect_equal(
       c(
         "$-\\text{\\$}2.50$", "$-\\text{\\$}2.00$", "$-\\text{\\$}1.50$",
@@ -1784,7 +1784,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, output = "rtf") %>%
+  vec_fmt_currency(vec_num_1, output = "rtf") %>%
     expect_equal(
       c(
         "-$2.50", "-$2.00", "-$1.50", "-$1.00", "-$0.50", "$0.00",
@@ -1792,7 +1792,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, use_subunits = FALSE, output = "html") %>%
+  vec_fmt_currency(vec_num_1, use_subunits = FALSE, output = "html") %>%
     expect_equal(
       c(
         "&minus;$2", "&minus;$2", "&minus;$2", "&minus;$1", "&minus;$0",
@@ -1800,7 +1800,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, use_subunits = FALSE, output = "latex") %>%
+  vec_fmt_currency(vec_num_1, use_subunits = FALSE, output = "latex") %>%
     expect_equal(
       c(
         "$-\\text{\\$}2$", "$-\\text{\\$}2$", "$-\\text{\\$}2$", "$-\\text{\\$}1$",
@@ -1809,7 +1809,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, use_subunits = FALSE, output = "rtf") %>%
+  vec_fmt_currency(vec_num_1, use_subunits = FALSE, output = "rtf") %>%
     expect_equal(
       c(
         "-$2", "-$2", "-$2", "-$1", "-$0", "$0", "$0", "$1", "$2",
@@ -1817,7 +1817,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_6, decimals = 4, output = "html") %>%
+  vec_fmt_currency(vec_num_6, decimals = 4, output = "html") %>%
     expect_equal(
       c(
         "$0.0000", "$0.1000", "$0.2000", "$0.3000", "$0.4000", "$0.5000",
@@ -1827,7 +1827,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_6, decimals = 4, output = "latex") %>%
+  vec_fmt_currency(vec_num_6, decimals = 4, output = "latex") %>%
     expect_equal(
       c(
         "$\\text{\\$}0.0000$", "$\\text{\\$}0.1000$", "$\\text{\\$}0.2000$",
@@ -1840,7 +1840,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_6, decimals = 4, output = "rtf") %>%
+  vec_fmt_currency(vec_num_6, decimals = 4, output = "rtf") %>%
     expect_equal(
       c(
         "$0.0000", "$0.1000", "$0.2000", "$0.3000", "$0.4000", "$0.5000",
@@ -1852,11 +1852,11 @@ test_that("The `x_currency()` function works", {
 
   # Expect that using `decimals = 0` is equivalent to `use_subunits = FALSE`
   expect_equal(
-    x_currency(seq(-5, 5, 0.1), decimals = 0, output = "html"),
-    x_currency(seq(-5, 5, 0.1), use_subunits = FALSE, output = "html")
+    vec_fmt_currency(seq(-5, 5, 0.1), decimals = 0, output = "html"),
+    vec_fmt_currency(seq(-5, 5, 0.1), use_subunits = FALSE, output = "html")
   )
 
-  x_currency(vec_num_6, decimals = 0, drop_trailing_dec_mark = FALSE, output = "html") %>%
+  vec_fmt_currency(vec_num_6, decimals = 0, drop_trailing_dec_mark = FALSE, output = "html") %>%
     expect_equal(
       c(
         "$0.", "$0.", "$0.", "$0.", "$0.", "$0.", "$1.", "$1.", "$1.",
@@ -1865,7 +1865,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_6, decimals = 0, drop_trailing_dec_mark = FALSE, output = "latex") %>%
+  vec_fmt_currency(vec_num_6, decimals = 0, drop_trailing_dec_mark = FALSE, output = "latex") %>%
     expect_equal(
       c(
         "$\\text{\\$}0.$", "$\\text{\\$}0.$", "$\\text{\\$}0.$", "$\\text{\\$}0.$",
@@ -1877,7 +1877,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_6, decimals = 0, drop_trailing_dec_mark = FALSE, output = "rtf") %>%
+  vec_fmt_currency(vec_num_6, decimals = 0, drop_trailing_dec_mark = FALSE, output = "rtf") %>%
     expect_equal(
       c(
         "$0.", "$0.", "$0.", "$0.", "$0.", "$0.", "$1.", "$1.", "$1.",
@@ -1886,7 +1886,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_4, use_seps = FALSE, output = "html") %>%
+  vec_fmt_currency(vec_num_4, use_seps = FALSE, output = "html") %>%
     expect_equal(
       c(
         "&minus;$2500000.00", "&minus;$2000000.00", "&minus;$1500000.00",
@@ -1896,7 +1896,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_4, use_seps = FALSE, output = "latex") %>%
+  vec_fmt_currency(vec_num_4, use_seps = FALSE, output = "latex") %>%
     expect_equal(
       c(
         "$-\\text{\\$}2500000.00$", "$-\\text{\\$}2000000.00$", "$-\\text{\\$}1500000.00$",
@@ -1906,7 +1906,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_4, use_seps = FALSE, output = "rtf") %>%
+  vec_fmt_currency(vec_num_4, use_seps = FALSE, output = "rtf") %>%
     expect_equal(
       c(
         "-$2500000.00", "-$2000000.00", "-$1500000.00", "-$1000000.00",
@@ -1915,7 +1915,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, accounting = TRUE, output = "html") %>%
+  vec_fmt_currency(vec_num_1, accounting = TRUE, output = "html") %>%
     expect_equal(
       c(
         "($2.50)", "($2.00)", "($1.50)", "($1.00)", "($0.50)", "$0.00",
@@ -1923,7 +1923,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, accounting = TRUE, output = "latex") %>%
+  vec_fmt_currency(vec_num_1, accounting = TRUE, output = "latex") %>%
     expect_equal(
       c(
         "$(\\text{\\$}2.50)$", "$(\\text{\\$}2.00)$", "$(\\text{\\$}1.50)$",
@@ -1933,7 +1933,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_4, accounting = TRUE, output = "rtf") %>%
+  vec_fmt_currency(vec_num_4, accounting = TRUE, output = "rtf") %>%
     expect_equal(
       c(
         "($2,500,000.00)", "($2,000,000.00)", "($1,500,000.00)", "($1,000,000.00)",
@@ -1942,7 +1942,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, scale_by = 2.5, output = "html") %>%
+  vec_fmt_currency(vec_num_1, scale_by = 2.5, output = "html") %>%
     expect_equal(
       c(
         "&minus;$6.25", "&minus;$5.00", "&minus;$3.75", "&minus;$2.50",
@@ -1951,7 +1951,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, scale_by = 2.5, output = "latex") %>%
+  vec_fmt_currency(vec_num_1, scale_by = 2.5, output = "latex") %>%
     expect_equal(
       c(
         "$-\\text{\\$}6.25$", "$-\\text{\\$}5.00$", "$-\\text{\\$}3.75$",
@@ -1961,7 +1961,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, scale_by = 2.5, output = "rtf") %>%
+  vec_fmt_currency(vec_num_1, scale_by = 2.5, output = "rtf") %>%
     expect_equal(
       c(
         "-$6.25", "-$5.00", "-$3.75", "-$2.50", "-$1.25", "$0.00",
@@ -1969,7 +1969,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_4, locale = "de", output = "html") %>%
+  vec_fmt_currency(vec_num_4, locale = "de", output = "html") %>%
     expect_equal(
       c(
         "&minus;$2.500.000,00", "&minus;$2.000.000,00", "&minus;$1.500.000,00",
@@ -1979,7 +1979,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_4, locale = "de", output = "latex") %>%
+  vec_fmt_currency(vec_num_4, locale = "de", output = "latex") %>%
     expect_equal(
       c(
         "$-\\text{\\$}2.500.000,00$", "$-\\text{\\$}2.000.000,00$",
@@ -1990,7 +1990,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_4, locale = "de", output = "rtf") %>%
+  vec_fmt_currency(vec_num_4, locale = "de", output = "rtf") %>%
     expect_equal(
       c(
         "-$2.500.000,00", "-$2.000.000,00", "-$1.500.000,00", "-$1.000.000,00",
@@ -1999,7 +1999,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_4, suffixing = TRUE, output = "html") %>%
+  vec_fmt_currency(vec_num_4, suffixing = TRUE, output = "html") %>%
     expect_equal(
       c(
         "&minus;$2.50M", "&minus;$2.00M", "&minus;$1.50M", "&minus;$1.00M",
@@ -2008,7 +2008,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_4, suffixing = TRUE, output = "latex") %>%
+  vec_fmt_currency(vec_num_4, suffixing = TRUE, output = "latex") %>%
     expect_equal(
       c(
         "$-\\text{\\$}2.50M$", "$-\\text{\\$}2.00M$", "$-\\text{\\$}1.50M$",
@@ -2018,7 +2018,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_4, suffixing = TRUE, output = "rtf") %>%
+  vec_fmt_currency(vec_num_4, suffixing = TRUE, output = "rtf") %>%
     expect_equal(
       c(
         "-$2.50M", "-$2.00M", "-$1.50M", "-$1.00M", "-$500.00K", "$0.00",
@@ -2026,7 +2026,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, pattern = "a{x}b", output = "html") %>%
+  vec_fmt_currency(vec_num_1, pattern = "a{x}b", output = "html") %>%
     expect_equal(
       c(
         "a&minus;$2.50b", "a&minus;$2.00b", "a&minus;$1.50b", "a&minus;$1.00b",
@@ -2035,7 +2035,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, pattern = "a{x}b", output = "latex") %>%
+  vec_fmt_currency(vec_num_1, pattern = "a{x}b", output = "latex") %>%
     expect_equal(
       c(
         "a$-\\text{\\$}2.50$b", "a$-\\text{\\$}2.00$b", "a$-\\text{\\$}1.50$b",
@@ -2045,7 +2045,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, pattern = "a{x}b", output = "rtf") %>%
+  vec_fmt_currency(vec_num_1, pattern = "a{x}b", output = "rtf") %>%
     expect_equal(
       c(
         "a-$2.50b", "a-$2.00b", "a-$1.50b", "a-$1.00b", "a-$0.50b",
@@ -2054,7 +2054,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_4, sep_mark = " ", dec_mark = ",", output = "html") %>%
+  vec_fmt_currency(vec_num_4, sep_mark = " ", dec_mark = ",", output = "html") %>%
     expect_equal(
       c(
         "&minus;$2 500 000,00", "&minus;$2 000 000,00", "&minus;$1 500 000,00",
@@ -2064,7 +2064,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_4, sep_mark = " ", dec_mark = ",", output = "latex") %>%
+  vec_fmt_currency(vec_num_4, sep_mark = " ", dec_mark = ",", output = "latex") %>%
     expect_equal(
       c(
         "$-\\text{\\$}2 500 000,00$", "$-\\text{\\$}2 000 000,00$",
@@ -2075,7 +2075,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_4, sep_mark = " ", dec_mark = ",", output = "rtf") %>%
+  vec_fmt_currency(vec_num_4, sep_mark = " ", dec_mark = ",", output = "rtf") %>%
     expect_equal(
       c(
         "-$2 500 000,00", "-$2 000 000,00", "-$1 500 000,00", "-$1 000 000,00",
@@ -2084,7 +2084,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, force_sign = TRUE, output = "html") %>%
+  vec_fmt_currency(vec_num_1, force_sign = TRUE, output = "html") %>%
     expect_equal(
       c(
         "&minus;$2.50", "&minus;$2.00", "&minus;$1.50", "&minus;$1.00",
@@ -2093,7 +2093,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, force_sign = TRUE, output = "latex") %>%
+  vec_fmt_currency(vec_num_1, force_sign = TRUE, output = "latex") %>%
     expect_equal(
       c(
         "$-\\text{\\$}2.50$", "$-\\text{\\$}2.00$", "$-\\text{\\$}1.50$",
@@ -2103,7 +2103,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, force_sign = TRUE, output = "rtf") %>%
+  vec_fmt_currency(vec_num_1, force_sign = TRUE, output = "rtf") %>%
     expect_equal(
       c(
         "-$2.50", "-$2.00", "-$1.50", "-$1.00", "-$0.50", "$0.00",
@@ -2111,7 +2111,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, incl_space = TRUE, output = "html") %>%
+  vec_fmt_currency(vec_num_1, incl_space = TRUE, output = "html") %>%
     expect_equal(
       c(
         "&minus;$ 2.50", "&minus;$ 2.00", "&minus;$ 1.50", "&minus;$ 1.00",
@@ -2120,7 +2120,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, incl_space = TRUE, output = "latex") %>%
+  vec_fmt_currency(vec_num_1, incl_space = TRUE, output = "latex") %>%
     expect_equal(
       c(
         "$-\\text{\\$} 2.50$", "$-\\text{\\$} 2.00$", "$-\\text{\\$} 1.50$",
@@ -2130,7 +2130,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, incl_space = TRUE, output = "rtf") %>%
+  vec_fmt_currency(vec_num_1, incl_space = TRUE, output = "rtf") %>%
     expect_equal(
       c(
         "-$ 2.50", "-$ 2.00", "-$ 1.50", "-$ 1.00", "-$ 0.50", "$ 0.00",
@@ -2138,7 +2138,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, placement = "right", output = "html") %>%
+  vec_fmt_currency(vec_num_1, placement = "right", output = "html") %>%
     expect_equal(
       c(
         "&minus;2.50$", "&minus;2.00$", "&minus;1.50$", "&minus;1.00$",
@@ -2147,7 +2147,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, placement = "right", output = "latex") %>%
+  vec_fmt_currency(vec_num_1, placement = "right", output = "latex") %>%
     expect_equal(
       c(
         "$-2.50\\text{\\$}$", "$-2.00\\text{\\$}$", "$-1.50\\text{\\$}$",
@@ -2157,7 +2157,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, placement = "right", output = "rtf") %>%
+  vec_fmt_currency(vec_num_1, placement = "right", output = "rtf") %>%
     expect_equal(
       c(
         "-2.50$", "-2.00$", "-1.50$", "-1.00$", "-0.50$", "0.00$",
@@ -2165,7 +2165,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, incl_space = TRUE, placement = "right", output = "html") %>%
+  vec_fmt_currency(vec_num_1, incl_space = TRUE, placement = "right", output = "html") %>%
     expect_equal(
       c(
         "&minus;2.50 $", "&minus;2.00 $", "&minus;1.50 $", "&minus;1.00 $",
@@ -2174,7 +2174,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, incl_space = TRUE, placement = "right", output = "latex") %>%
+  vec_fmt_currency(vec_num_1, incl_space = TRUE, placement = "right", output = "latex") %>%
     expect_equal(
       c(
         "$-2.50 \\text{\\$}$", "$-2.00 \\text{\\$}$", "$-1.50 \\text{\\$}$",
@@ -2184,7 +2184,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, incl_space = TRUE, placement = "right", output = "rtf") %>%
+  vec_fmt_currency(vec_num_1, incl_space = TRUE, placement = "right", output = "rtf") %>%
     expect_equal(
       c(
         "-2.50 $", "-2.00 $", "-1.50 $", "-1.00 $", "-0.50 $", "0.00 $",
@@ -2192,7 +2192,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, currency = "EUR", output = "html") %>%
+  vec_fmt_currency(vec_num_1, currency = "EUR", output = "html") %>%
     expect_equal(
       c(
         "&minus;&#8364;2.50", "&minus;&#8364;2.00", "&minus;&#8364;1.50",
@@ -2202,7 +2202,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, currency = "EUR", output = "latex") %>%
+  vec_fmt_currency(vec_num_1, currency = "EUR", output = "latex") %>%
     expect_equal(
       c(
         "$-\\text{EUR}2.50$", "$-\\text{EUR}2.00$", "$-\\text{EUR}1.50$",
@@ -2212,7 +2212,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, currency = "EUR", output = "rtf") %>%
+  vec_fmt_currency(vec_num_1, currency = "EUR", output = "rtf") %>%
     expect_equal(
       c(
         "-EUR2.50", "-EUR2.00", "-EUR1.50", "-EUR1.00", "-EUR0.50",
@@ -2221,7 +2221,7 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  x_currency(vec_num_1, currency = "yen", output = "html") %>%
+  vec_fmt_currency(vec_num_1, currency = "yen", output = "html") %>%
     expect_equal(
       c(
         "&minus;&#165;2.50", "&minus;&#165;2.00", "&minus;&#165;1.50",
@@ -2231,19 +2231,19 @@ test_that("The `x_currency()` function works", {
       )
     )
 
-  expect_equal(x_currency(numeric(0)), character(0))
-  expect_equal(x_currency(integer(0)), character(0))
+  expect_equal(vec_fmt_currency(numeric(0)), character(0))
+  expect_equal(vec_fmt_currency(integer(0)), character(0))
 
-  expect_error(x_currency(c(1, 2), currency = "NOTREAL"))
-  expect_error(x_currency(letters))
-  expect_error(x_currency(TRUE))
-  expect_error(x_currency(list(1, 2, 3)))
-  expect_error(x_currency(dplyr::tibble(a = c(1, 2, 3))))
+  expect_error(vec_fmt_currency(c(1, 2), currency = "NOTREAL"))
+  expect_error(vec_fmt_currency(letters))
+  expect_error(vec_fmt_currency(TRUE))
+  expect_error(vec_fmt_currency(list(1, 2, 3)))
+  expect_error(vec_fmt_currency(dplyr::tibble(a = c(1, 2, 3))))
 })
 
-test_that("The `x_bytes()` function works", {
+test_that("The `vec_fmt_bytes()` function works", {
 
-  x_bytes(vec_num_1, standard = "decimal", output = "html") %>%
+  vec_fmt_bytes(vec_num_1, standard = "decimal", output = "html") %>%
     expect_equal(
       c(
         "&minus;2 B", "&minus;2 B", "&minus;1 B", "&minus;1 B", "0 B",
@@ -2251,7 +2251,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_1, standard = "decimal", output = "latex") %>%
+  vec_fmt_bytes(vec_num_1, standard = "decimal", output = "latex") %>%
     expect_equal(
       c(
         "$-2 B$", "$-2 B$", "$-1 B$", "$-1 B$", "$0 B$", "$0 B$", "$0 B$",
@@ -2259,7 +2259,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_1, standard = "decimal", output = "rtf") %>%
+  vec_fmt_bytes(vec_num_1, standard = "decimal", output = "rtf") %>%
     expect_equal(
       c(
         "-2 B", "-2 B", "-1 B", "-1 B", "0 B", "0 B", "0 B", "1 B",
@@ -2267,7 +2267,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_2, standard = "decimal", output = "html") %>%
+  vec_fmt_bytes(vec_num_2, standard = "decimal", output = "html") %>%
     expect_equal(
       c(
         "&minus;25 B", "&minus;20 B", "&minus;15 B", "&minus;10 B",
@@ -2276,7 +2276,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_2, standard = "decimal", output = "latex") %>%
+  vec_fmt_bytes(vec_num_2, standard = "decimal", output = "latex") %>%
     expect_equal(
       c(
         "$-25 B$", "$-20 B$", "$-15 B$", "$-10 B$", "$-5 B$", "$0 B$",
@@ -2284,7 +2284,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_2, standard = "decimal", output = "rtf") %>%
+  vec_fmt_bytes(vec_num_2, standard = "decimal", output = "rtf") %>%
     expect_equal(
       c(
         "-25 B", "-20 B", "-15 B", "-10 B", "-5 B", "0 B", "5 B", "10 B",
@@ -2292,7 +2292,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_3, standard = "decimal", output = "html") %>%
+  vec_fmt_bytes(vec_num_3, standard = "decimal", output = "html") %>%
     expect_equal(
       c(
         "&minus;250 B", "&minus;200 B", "&minus;150 B", "&minus;100 B",
@@ -2301,7 +2301,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_3, standard = "decimal", output = "latex") %>%
+  vec_fmt_bytes(vec_num_3, standard = "decimal", output = "latex") %>%
     expect_equal(
       c(
         "$-250 B$", "$-200 B$", "$-150 B$", "$-100 B$", "$-50 B$",
@@ -2310,7 +2310,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_3, standard = "decimal", output = "rtf") %>%
+  vec_fmt_bytes(vec_num_3, standard = "decimal", output = "rtf") %>%
     expect_equal(
       c(
         "-250 B", "-200 B", "-150 B", "-100 B", "-50 B", "0 B", "50 B",
@@ -2318,7 +2318,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_4, standard = "decimal", output = "html") %>%
+  vec_fmt_bytes(vec_num_4, standard = "decimal", output = "html") %>%
     expect_equal(
       c(
         "&minus;2.5 MB", "&minus;2 MB", "&minus;1.5 MB", "&minus;1 MB",
@@ -2327,7 +2327,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_4, standard = "decimal", output = "latex") %>%
+  vec_fmt_bytes(vec_num_4, standard = "decimal", output = "latex") %>%
     expect_equal(
       c(
         "$-2.5 MB$", "$-2 MB$", "$-1.5 MB$", "$-1 MB$", "$-500 kB$",
@@ -2336,7 +2336,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_4, standard = "decimal", output = "rtf") %>%
+  vec_fmt_bytes(vec_num_4, standard = "decimal", output = "rtf") %>%
     expect_equal(
       c(
         "-2.5 MB", "-2 MB", "-1.5 MB", "-1 MB", "-500 kB", "0 B", "500 kB",
@@ -2344,7 +2344,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_5, standard = "decimal", output = "html") %>%
+  vec_fmt_bytes(vec_num_5, standard = "decimal", output = "html") %>%
     expect_equal(
       c(
         "&minus;2.5 TB", "&minus;2 TB", "&minus;1.5 TB", "&minus;1 TB",
@@ -2353,7 +2353,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_5, standard = "decimal", output = "latex") %>%
+  vec_fmt_bytes(vec_num_5, standard = "decimal", output = "latex") %>%
     expect_equal(
       c(
         "$-2.5 TB$", "$-2 TB$", "$-1.5 TB$", "$-1 TB$", "$-500 GB$",
@@ -2362,7 +2362,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_5, standard = "decimal", output = "rtf") %>%
+  vec_fmt_bytes(vec_num_5, standard = "decimal", output = "rtf") %>%
     expect_equal(
       c(
         "-2.5 TB", "-2 TB", "-1.5 TB", "-1 TB", "-500 GB", "0 B", "500 GB",
@@ -2370,7 +2370,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_6, standard = "decimal", output = "html") %>%
+  vec_fmt_bytes(vec_num_6, standard = "decimal", output = "html") %>%
     expect_equal(
       c(
         "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B",
@@ -2379,7 +2379,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_6, standard = "decimal", output = "latex") %>%
+  vec_fmt_bytes(vec_num_6, standard = "decimal", output = "latex") %>%
     expect_equal(
       c(
         "$0 B$", "$0 B$", "$0 B$", "$0 B$", "$0 B$", "$0 B$", "$0 B$",
@@ -2388,7 +2388,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_6, standard = "decimal", output = "rtf") %>%
+  vec_fmt_bytes(vec_num_6, standard = "decimal", output = "rtf") %>%
     expect_equal(
       c(
         "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B",
@@ -2397,7 +2397,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_1, standard = "binary", output = "html") %>%
+  vec_fmt_bytes(vec_num_1, standard = "binary", output = "html") %>%
     expect_equal(
       c(
         "&minus;2 B", "&minus;2 B", "&minus;1 B", "&minus;1 B", "0 B",
@@ -2405,7 +2405,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_1, standard = "binary", output = "latex") %>%
+  vec_fmt_bytes(vec_num_1, standard = "binary", output = "latex") %>%
     expect_equal(
       c(
         "$-2 B$", "$-2 B$", "$-1 B$", "$-1 B$", "$0 B$", "$0 B$", "$0 B$",
@@ -2413,7 +2413,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_1, standard = "binary", output = "rtf") %>%
+  vec_fmt_bytes(vec_num_1, standard = "binary", output = "rtf") %>%
     expect_equal(
       c(
         "-2 B", "-2 B", "-1 B", "-1 B", "0 B", "0 B", "0 B", "1 B",
@@ -2421,7 +2421,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_2, standard = "binary", output = "html") %>%
+  vec_fmt_bytes(vec_num_2, standard = "binary", output = "html") %>%
     expect_equal(
       c(
         "&minus;25 B", "&minus;20 B", "&minus;15 B", "&minus;10 B",
@@ -2430,7 +2430,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_2, standard = "binary", output = "latex") %>%
+  vec_fmt_bytes(vec_num_2, standard = "binary", output = "latex") %>%
     expect_equal(
       c(
         "$-25 B$", "$-20 B$", "$-15 B$", "$-10 B$", "$-5 B$", "$0 B$",
@@ -2438,7 +2438,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_2, standard = "binary", output = "rtf") %>%
+  vec_fmt_bytes(vec_num_2, standard = "binary", output = "rtf") %>%
     expect_equal(
       c(
         "-25 B", "-20 B", "-15 B", "-10 B", "-5 B", "0 B", "5 B", "10 B",
@@ -2446,7 +2446,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_3, standard = "binary", output = "html") %>%
+  vec_fmt_bytes(vec_num_3, standard = "binary", output = "html") %>%
     expect_equal(
       c(
         "&minus;250 B", "&minus;200 B", "&minus;150 B", "&minus;100 B",
@@ -2455,7 +2455,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_3, standard = "binary", output = "latex") %>%
+  vec_fmt_bytes(vec_num_3, standard = "binary", output = "latex") %>%
     expect_equal(
       c(
         "$-250 B$", "$-200 B$", "$-150 B$", "$-100 B$", "$-50 B$",
@@ -2464,7 +2464,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_3, standard = "binary", output = "rtf") %>%
+  vec_fmt_bytes(vec_num_3, standard = "binary", output = "rtf") %>%
     expect_equal(
       c(
         "-250 B", "-200 B", "-150 B", "-100 B", "-50 B", "0 B", "50 B",
@@ -2472,7 +2472,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_4, standard = "binary", output = "html") %>%
+  vec_fmt_bytes(vec_num_4, standard = "binary", output = "html") %>%
     expect_equal(
       c(
         "&minus;2.4 MiB", "&minus;1.9 MiB", "&minus;1.4 MiB", "&minus;976.6 KiB",
@@ -2481,7 +2481,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_4, standard = "binary", output = "latex") %>%
+  vec_fmt_bytes(vec_num_4, standard = "binary", output = "latex") %>%
     expect_equal(
       c(
         "$-2.4 MiB$", "$-1.9 MiB$", "$-1.4 MiB$", "$-976.6 KiB$", "$-488.3 KiB$",
@@ -2490,7 +2490,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_4, standard = "binary", output = "rtf") %>%
+  vec_fmt_bytes(vec_num_4, standard = "binary", output = "rtf") %>%
     expect_equal(
       c(
         "-2.4 MiB", "-1.9 MiB", "-1.4 MiB", "-976.6 KiB", "-488.3 KiB",
@@ -2499,7 +2499,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_5, standard = "binary", output = "html") %>%
+  vec_fmt_bytes(vec_num_5, standard = "binary", output = "html") %>%
     expect_equal(
       c(
         "&minus;2.3 TiB", "&minus;1.8 TiB", "&minus;1.4 TiB", "&minus;931.3 GiB",
@@ -2508,7 +2508,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_5, standard = "binary", output = "latex") %>%
+  vec_fmt_bytes(vec_num_5, standard = "binary", output = "latex") %>%
     expect_equal(
       c(
         "$-2.3 TiB$", "$-1.8 TiB$", "$-1.4 TiB$", "$-931.3 GiB$", "$-465.7 GiB$",
@@ -2517,7 +2517,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_5, standard = "binary", output = "rtf") %>%
+  vec_fmt_bytes(vec_num_5, standard = "binary", output = "rtf") %>%
     expect_equal(
       c(
         "-2.3 TiB", "-1.8 TiB", "-1.4 TiB", "-931.3 GiB", "-465.7 GiB",
@@ -2526,7 +2526,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_6, standard = "binary", output = "html") %>%
+  vec_fmt_bytes(vec_num_6, standard = "binary", output = "html") %>%
     expect_equal(
       c(
         "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B",
@@ -2535,7 +2535,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_6, standard = "binary", output = "latex") %>%
+  vec_fmt_bytes(vec_num_6, standard = "binary", output = "latex") %>%
     expect_equal(
       c(
         "$0 B$", "$0 B$", "$0 B$", "$0 B$", "$0 B$", "$0 B$", "$0 B$",
@@ -2544,7 +2544,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_6, standard = "binary", output = "rtf") %>%
+  vec_fmt_bytes(vec_num_6, standard = "binary", output = "rtf") %>%
     expect_equal(
       c(
         "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B",
@@ -2553,7 +2553,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_5, decimals = 4, drop_trailing_zeros = TRUE, output = "html") %>%
+  vec_fmt_bytes(vec_num_5, decimals = 4, drop_trailing_zeros = TRUE, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.5 TB", "&minus;2 TB", "&minus;1.5 TB", "&minus;1 TB",
@@ -2562,7 +2562,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_5, decimals = 4, drop_trailing_zeros = TRUE, output = "latex") %>%
+  vec_fmt_bytes(vec_num_5, decimals = 4, drop_trailing_zeros = TRUE, output = "latex") %>%
     expect_equal(
       c(
         "$-2.5 TB$", "$-2 TB$", "$-1.5 TB$", "$-1 TB$", "$-500 GB$",
@@ -2571,7 +2571,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_5, decimals = 4, drop_trailing_zeros = TRUE, output = "rtf") %>%
+  vec_fmt_bytes(vec_num_5, decimals = 4, drop_trailing_zeros = TRUE, output = "rtf") %>%
     expect_equal(
       c(
         "-2.5 TB", "-2 TB", "-1.5 TB", "-1 TB", "-500 GB", "0 B", "500 GB",
@@ -2579,7 +2579,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_5, decimals = 4, drop_trailing_zeros = FALSE, output = "html") %>%
+  vec_fmt_bytes(vec_num_5, decimals = 4, drop_trailing_zeros = FALSE, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.5000 TB", "&minus;2.0000 TB", "&minus;1.5000 TB",
@@ -2588,7 +2588,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_5, decimals = 4, drop_trailing_zeros = FALSE, output = "latex") %>%
+  vec_fmt_bytes(vec_num_5, decimals = 4, drop_trailing_zeros = FALSE, output = "latex") %>%
     expect_equal(
       c(
         "$-2.5000 TB$", "$-2.0000 TB$", "$-1.5000 TB$", "$-1.0000 TB$",
@@ -2597,7 +2597,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_5, decimals = 4, drop_trailing_zeros = FALSE, output = "rtf") %>%
+  vec_fmt_bytes(vec_num_5, decimals = 4, drop_trailing_zeros = FALSE, output = "rtf") %>%
     expect_equal(
       c(
         "-2.5000 TB", "-2.0000 TB", "-1.5000 TB", "-1.0000 TB", "-500.0000 GB",
@@ -2606,7 +2606,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_5, decimals = 0, drop_trailing_dec_mark = FALSE, output = "html") %>%
+  vec_fmt_bytes(vec_num_5, decimals = 0, drop_trailing_dec_mark = FALSE, output = "html") %>%
     expect_equal(
       c(
         "&minus;2. TB", "&minus;2. TB", "&minus;2. TB", "&minus;1. TB",
@@ -2615,7 +2615,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_5, decimals = 0, drop_trailing_dec_mark = FALSE, output = "latex") %>%
+  vec_fmt_bytes(vec_num_5, decimals = 0, drop_trailing_dec_mark = FALSE, output = "latex") %>%
     expect_equal(
       c(
         "$-2. TB$", "$-2. TB$", "$-2. TB$", "$-1. TB$", "$-500. GB$",
@@ -2624,7 +2624,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_5, decimals = 0, drop_trailing_dec_mark = FALSE, output = "rtf") %>%
+  vec_fmt_bytes(vec_num_5, decimals = 0, drop_trailing_dec_mark = FALSE, output = "rtf") %>%
     expect_equal(
       c(
         "-2. TB", "-2. TB", "-2. TB", "-1. TB", "-500. GB", "0. B",
@@ -2632,7 +2632,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_4, n_sigfig = 3, output = "html") %>%
+  vec_fmt_bytes(vec_num_4, n_sigfig = 3, output = "html") %>%
     expect_equal(
       c(
         "&minus;2.50 MB", "&minus;2.00 MB", "&minus;1.50 MB", "&minus;1.00 MB",
@@ -2641,7 +2641,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_1, n_sigfig = 3, output = "latex") %>%
+  vec_fmt_bytes(vec_num_1, n_sigfig = 3, output = "latex") %>%
     expect_equal(
       c(
         "$-2.00 B$", "$-2.00 B$", "$-1.00 B$", "$-1.00 B$", "$0 B$",
@@ -2650,7 +2650,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_1, n_sigfig = 3, output = "rtf") %>%
+  vec_fmt_bytes(vec_num_1, n_sigfig = 3, output = "rtf") %>%
     expect_equal(
       c(
         "-2.00 B", "-2.00 B", "-1.00 B", "-1.00 B", "0 B", "0 B", "0 B",
@@ -2658,16 +2658,16 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(c(1e6, 1e9, 1e12, 1e15, 1e18, 1e21, 1e24, 1e27), use_seps = FALSE, output = "html") %>%
+  vec_fmt_bytes(c(1e6, 1e9, 1e12, 1e15, 1e18, 1e21, 1e24, 1e27), use_seps = FALSE, output = "html") %>%
     expect_equal(c("1 MB", "1 GB", "1 TB", "1 PB", "1 EB", "1 ZB", "1 YB", "1000 YB"))
 
-  x_bytes(c(1e6, 1e9, 1e12, 1e15, 1e18, 1e21, 1e24, 1e27), use_seps = FALSE, output = "latex") %>%
+  vec_fmt_bytes(c(1e6, 1e9, 1e12, 1e15, 1e18, 1e21, 1e24, 1e27), use_seps = FALSE, output = "latex") %>%
     expect_equal(c("$1 MB$", "$1 GB$", "$1 TB$", "$1 PB$", "$1 EB$", "$1 ZB$", "$1 YB$", "$1000 YB$"))
 
-  x_bytes(c(1e6, 1e9, 1e12, 1e15, 1e18, 1e21, 1e24, 1e27), use_seps = FALSE, output = "rtf") %>%
+  vec_fmt_bytes(c(1e6, 1e9, 1e12, 1e15, 1e18, 1e21, 1e24, 1e27), use_seps = FALSE, output = "rtf") %>%
     expect_equal(c("1 MB", "1 GB", "1 TB", "1 PB", "1 EB", "1 ZB", "1 YB", "1000 YB"))
 
-  x_bytes(vec_num_1, pattern = "a{x}b", output = "html") %>%
+  vec_fmt_bytes(vec_num_1, pattern = "a{x}b", output = "html") %>%
     expect_equal(
       c(
         "a&minus;2 Bb", "a&minus;2 Bb", "a&minus;1 Bb", "a&minus;1 Bb",
@@ -2676,7 +2676,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_1, pattern = "a{x}b", output = "latex") %>%
+  vec_fmt_bytes(vec_num_1, pattern = "a{x}b", output = "latex") %>%
     expect_equal(
       c(
         "a$-2 B$b", "a$-2 B$b", "a$-1 B$b", "a$-1 B$b", "a$0 B$b",
@@ -2685,7 +2685,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_1, pattern = "a{x}b", output = "rtf") %>%
+  vec_fmt_bytes(vec_num_1, pattern = "a{x}b", output = "rtf") %>%
     expect_equal(
       c(
         "a-2 Bb", "a-2 Bb", "a-1 Bb", "a-1 Bb", "a0 Bb", "a0 Bb", "a0 Bb",
@@ -2693,7 +2693,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_5, locale = "de", output = "html") %>%
+  vec_fmt_bytes(vec_num_5, locale = "de", output = "html") %>%
     expect_equal(
       c(
         "&minus;2,5 TB", "&minus;2 TB", "&minus;1,5 TB", "&minus;1 TB",
@@ -2702,7 +2702,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_5, locale = "de", output = "latex") %>%
+  vec_fmt_bytes(vec_num_5, locale = "de", output = "latex") %>%
     expect_equal(
       c(
         "$-2,5 TB$", "$-2 TB$", "$-1,5 TB$", "$-1 TB$", "$-500 GB$",
@@ -2711,7 +2711,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_5, locale = "de", output = "rtf") %>%
+  vec_fmt_bytes(vec_num_5, locale = "de", output = "rtf") %>%
     expect_equal(
       c(
         "-2,5 TB", "-2 TB", "-1,5 TB", "-1 TB", "-500 GB", "0 B", "500 GB",
@@ -2719,7 +2719,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(
+  vec_fmt_bytes(
     vec_num_5 * 1e15, decimals = 1, drop_trailing_zeros = FALSE,
     sep_mark = " ", dec_mark = ",", output = "html"
   ) %>%
@@ -2732,7 +2732,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(
+  vec_fmt_bytes(
     vec_num_5 * 1e15, decimals = 1, drop_trailing_zeros = FALSE,
     sep_mark = " ", dec_mark = ",", output = "latex"
   ) %>%
@@ -2744,7 +2744,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(
+  vec_fmt_bytes(
     vec_num_5 * 1e15, decimals = 1, drop_trailing_zeros = FALSE,
     sep_mark = " ", dec_mark = ",", output = "rtf"
   ) %>%
@@ -2756,7 +2756,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_1, force_sign = TRUE, output = "html") %>%
+  vec_fmt_bytes(vec_num_1, force_sign = TRUE, output = "html") %>%
     expect_equal(
       c(
         "&minus;2 B", "&minus;2 B", "&minus;1 B", "&minus;1 B", "0 B",
@@ -2764,7 +2764,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_1, force_sign = TRUE, output = "latex") %>%
+  vec_fmt_bytes(vec_num_1, force_sign = TRUE, output = "latex") %>%
     expect_equal(
       c(
         "$-2 B$", "$-2 B$", "$-1 B$", "$-1 B$", "$0 B$", "$0 B$", "$0 B$",
@@ -2772,7 +2772,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_1, force_sign = TRUE, output = "rtf") %>%
+  vec_fmt_bytes(vec_num_1, force_sign = TRUE, output = "rtf") %>%
     expect_equal(
       c(
         "-2 B", "-2 B", "-1 B", "-1 B", "0 B", "0 B", "0 B", "+1 B",
@@ -2780,7 +2780,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_1, incl_space = FALSE, output = "html") %>%
+  vec_fmt_bytes(vec_num_1, incl_space = FALSE, output = "html") %>%
     expect_equal(
       c(
         "&minus;2B", "&minus;2B", "&minus;1B", "&minus;1B", "0B", "0B",
@@ -2788,7 +2788,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_1, incl_space = FALSE, output = "latex") %>%
+  vec_fmt_bytes(vec_num_1, incl_space = FALSE, output = "latex") %>%
     expect_equal(
       c(
         "$-2B$", "$-2B$", "$-1B$", "$-1B$", "$0B$", "$0B$", "$0B$",
@@ -2796,7 +2796,7 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  x_bytes(vec_num_1, incl_space = FALSE, output = "rtf") %>%
+  vec_fmt_bytes(vec_num_1, incl_space = FALSE, output = "rtf") %>%
     expect_equal(
       c(
         "-2B", "-2B", "-1B", "-1B", "0B", "0B", "0B", "1B", "1B", "2B",
@@ -2804,20 +2804,20 @@ test_that("The `x_bytes()` function works", {
       )
     )
 
-  expect_equal(x_bytes(numeric(0)), character(0))
-  expect_equal(x_bytes(integer(0)), character(0))
+  expect_equal(vec_fmt_bytes(numeric(0)), character(0))
+  expect_equal(vec_fmt_bytes(integer(0)), character(0))
 
-  expect_error(x_bytes(c(1, 2), standard = "NONE"))
-  expect_error(x_bytes(letters))
-  expect_error(x_bytes(TRUE))
-  expect_error(x_bytes(list(1, 2, 3)))
-  expect_error(x_bytes(dplyr::tibble(a = c(1, 2, 3))))
+  expect_error(vec_fmt_bytes(c(1, 2), standard = "NONE"))
+  expect_error(vec_fmt_bytes(letters))
+  expect_error(vec_fmt_bytes(TRUE))
+  expect_error(vec_fmt_bytes(list(1, 2, 3)))
+  expect_error(vec_fmt_bytes(dplyr::tibble(a = c(1, 2, 3))))
 })
 
 
-test_that("The `x_date()` function works", {
+test_that("The `vec_fmt_date()` function works", {
 
-  x_date(dates, date_style = 2, output = "html") %>%
+  vec_fmt_date(dates, date_style = 2, output = "html") %>%
     expect_equal(
       c(
         "Sunday, January 5, 2020", "Saturday, February 6, 2021",
@@ -2826,41 +2826,41 @@ test_that("The `x_date()` function works", {
       )
     )
   expect_equal(
-    x_date(dates, date_style = 2, output = "html"),
-    x_date(dates, date_style = 2, output = "latex")
+    vec_fmt_date(dates, date_style = 2, output = "html"),
+    vec_fmt_date(dates, date_style = 2, output = "latex")
   )
   expect_equal(
-    x_date(dates, date_style = 2, output = "html"),
-    x_date(dates, date_style = 2, output = "rtf")
+    vec_fmt_date(dates, date_style = 2, output = "html"),
+    vec_fmt_date(dates, date_style = 2, output = "rtf")
   )
 
   expect_equal(
-    x_date(dates, date_style = 1, output = "html"),
+    vec_fmt_date(dates, date_style = 1, output = "html"),
     as.character(dates)
   )
   expect_equal(
-    x_date(dates, date_style = 1, output = "html"),
-    x_date(dates, date_style = 1, output = "latex")
+    vec_fmt_date(dates, date_style = 1, output = "html"),
+    vec_fmt_date(dates, date_style = 1, output = "latex")
   )
   expect_equal(
-    x_date(dates, date_style = 1, output = "html"),
-    x_date(dates, date_style = 1, output = "rtf")
+    vec_fmt_date(dates, date_style = 1, output = "html"),
+    vec_fmt_date(dates, date_style = 1, output = "rtf")
   )
 
   expect_equal(
-    x_date(as.character(dates), date_style = 1, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 1, output = "html"),
     as.character(dates)
   )
   expect_equal(
-    x_date(as.character(dates), date_style = 1, output = "html"),
-    x_date(as.character(dates), date_style = 1, output = "latex")
+    vec_fmt_date(as.character(dates), date_style = 1, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 1, output = "latex")
   )
   expect_equal(
-    x_date(as.character(dates), date_style = 1, output = "html"),
-    x_date(as.character(dates), date_style = 1, output = "rtf")
+    vec_fmt_date(as.character(dates), date_style = 1, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 1, output = "rtf")
   )
 
-  x_date(dates, date_style = 3, output = "html") %>%
+  vec_fmt_date(dates, date_style = 3, output = "html") %>%
     expect_equal(
       c(
         "Sun, Jan 5, 2020", "Sat, Feb 6, 2021", "Mon, Mar 7, 2022",
@@ -2868,15 +2868,15 @@ test_that("The `x_date()` function works", {
       )
     )
   expect_equal(
-    x_date(as.character(dates), date_style = 3, output = "html"),
-    x_date(as.character(dates), date_style = 3, output = "latex")
+    vec_fmt_date(as.character(dates), date_style = 3, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 3, output = "latex")
   )
   expect_equal(
-    x_date(as.character(dates), date_style = 3, output = "html"),
-    x_date(as.character(dates), date_style = 3, output = "rtf")
+    vec_fmt_date(as.character(dates), date_style = 3, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 3, output = "rtf")
   )
 
-  x_date(dates, date_style = 4, output = "html") %>%
+  vec_fmt_date(dates, date_style = 4, output = "html") %>%
     expect_equal(
       c(
         "Sunday 5 January 2020", "Saturday 6 February 2021",
@@ -2884,15 +2884,15 @@ test_that("The `x_date()` function works", {
       )
     )
   expect_equal(
-    x_date(as.character(dates), date_style = 4, output = "html"),
-    x_date(as.character(dates), date_style = 4, output = "latex")
+    vec_fmt_date(as.character(dates), date_style = 4, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 4, output = "latex")
   )
   expect_equal(
-    x_date(as.character(dates), date_style = 4, output = "html"),
-    x_date(as.character(dates), date_style = 4, output = "rtf")
+    vec_fmt_date(as.character(dates), date_style = 4, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 4, output = "rtf")
   )
 
-  x_date(dates, date_style = 5, output = "html") %>%
+  vec_fmt_date(dates, date_style = 5, output = "html") %>%
     expect_equal(
       c(
         "January 5, 2020", "February 6, 2021", "March 7, 2022",
@@ -2900,15 +2900,15 @@ test_that("The `x_date()` function works", {
       )
     )
   expect_equal(
-    x_date(as.character(dates), date_style = 5, output = "html"),
-    x_date(as.character(dates), date_style = 5, output = "latex")
+    vec_fmt_date(as.character(dates), date_style = 5, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 5, output = "latex")
   )
   expect_equal(
-    x_date(as.character(dates), date_style = 5, output = "html"),
-    x_date(as.character(dates), date_style = 5, output = "rtf")
+    vec_fmt_date(as.character(dates), date_style = 5, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 5, output = "rtf")
   )
 
-  x_date(dates, date_style = 6, output = "html") %>%
+  vec_fmt_date(dates, date_style = 6, output = "html") %>%
     expect_equal(
       c(
         "Jan 5, 2020", "Feb 6, 2021", "Mar 7, 2022",
@@ -2916,30 +2916,30 @@ test_that("The `x_date()` function works", {
       )
     )
   expect_equal(
-    x_date(as.character(dates), date_style = 6, output = "html"),
-    x_date(as.character(dates), date_style = 6, output = "latex")
+    vec_fmt_date(as.character(dates), date_style = 6, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 6, output = "latex")
   )
   expect_equal(
-    x_date(as.character(dates), date_style = 6, output = "html"),
-    x_date(as.character(dates), date_style = 6, output = "rtf")
+    vec_fmt_date(as.character(dates), date_style = 6, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 6, output = "rtf")
   )
 
-  x_date(dates, date_style = 7, output = "html") %>%
+  vec_fmt_date(dates, date_style = 7, output = "html") %>%
     expect_equal(
       c(
         "5 Jan 2020", "6 Feb 2021", "7 Mar 2022", "8 Apr 2023", "9 May 2024"
       )
     )
   expect_equal(
-    x_date(as.character(dates), date_style = 7, output = "html"),
-    x_date(as.character(dates), date_style = 7, output = "latex")
+    vec_fmt_date(as.character(dates), date_style = 7, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 7, output = "latex")
   )
   expect_equal(
-    x_date(as.character(dates), date_style = 7, output = "html"),
-    x_date(as.character(dates), date_style = 7, output = "rtf")
+    vec_fmt_date(as.character(dates), date_style = 7, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 7, output = "rtf")
   )
 
-  x_date(dates, date_style = 8, output = "html") %>%
+  vec_fmt_date(dates, date_style = 8, output = "html") %>%
     expect_equal(
       c(
         "5 January 2020", "6 February 2021", "7 March 2022",
@@ -2947,91 +2947,91 @@ test_that("The `x_date()` function works", {
       )
     )
   expect_equal(
-    x_date(as.character(dates), date_style = 8, output = "html"),
-    x_date(as.character(dates), date_style = 8, output = "latex")
+    vec_fmt_date(as.character(dates), date_style = 8, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 8, output = "latex")
   )
   expect_equal(
-    x_date(as.character(dates), date_style = 8, output = "html"),
-    x_date(as.character(dates), date_style = 8, output = "rtf")
+    vec_fmt_date(as.character(dates), date_style = 8, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 8, output = "rtf")
   )
 
-  x_date(dates, date_style = 9, output = "html") %>%
+  vec_fmt_date(dates, date_style = 9, output = "html") %>%
     expect_equal(
       c("5 January", "6 February", "7 March", "8 April", "9 May")
     )
   expect_equal(
-    x_date(as.character(dates), date_style = 9, output = "html"),
-    x_date(as.character(dates), date_style = 9, output = "latex")
+    vec_fmt_date(as.character(dates), date_style = 9, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 9, output = "latex")
   )
   expect_equal(
-    x_date(as.character(dates), date_style = 9, output = "html"),
-    x_date(as.character(dates), date_style = 9, output = "rtf")
+    vec_fmt_date(as.character(dates), date_style = 9, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 9, output = "rtf")
   )
 
-  x_date(dates, date_style = 10, output = "html") %>%
+  vec_fmt_date(dates, date_style = 10, output = "html") %>%
     expect_equal(c("2020", "2021", "2022", "2023", "2024"))
   expect_equal(
-    x_date(as.character(dates), date_style = 10, output = "html"),
-    x_date(as.character(dates), date_style = 10, output = "latex")
+    vec_fmt_date(as.character(dates), date_style = 10, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 10, output = "latex")
   )
   expect_equal(
-    x_date(as.character(dates), date_style = 10, output = "html"),
-    x_date(as.character(dates), date_style = 10, output = "rtf")
+    vec_fmt_date(as.character(dates), date_style = 10, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 10, output = "rtf")
   )
 
-  x_date(dates, date_style = 11, output = "html") %>%
+  vec_fmt_date(dates, date_style = 11, output = "html") %>%
     expect_equal(c("January", "February", "March", "April", "May"))
   expect_equal(
-    x_date(as.character(dates), date_style = 11, output = "html"),
-    x_date(as.character(dates), date_style = 11, output = "latex")
+    vec_fmt_date(as.character(dates), date_style = 11, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 11, output = "latex")
   )
   expect_equal(
-    x_date(as.character(dates), date_style = 11, output = "html"),
-    x_date(as.character(dates), date_style = 11, output = "rtf")
+    vec_fmt_date(as.character(dates), date_style = 11, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 11, output = "rtf")
   )
 
-  x_date(dates, date_style = 12, output = "html") %>%
+  vec_fmt_date(dates, date_style = 12, output = "html") %>%
     expect_equal(c("05", "06", "07", "08", "09"))
   expect_equal(
-    x_date(as.character(dates), date_style = 12, output = "html"),
-    x_date(as.character(dates), date_style = 12, output = "latex")
+    vec_fmt_date(as.character(dates), date_style = 12, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 12, output = "latex")
   )
   expect_equal(
-    x_date(as.character(dates), date_style = 12, output = "html"),
-    x_date(as.character(dates), date_style = 12, output = "rtf")
+    vec_fmt_date(as.character(dates), date_style = 12, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 12, output = "rtf")
   )
 
-  x_date(dates, date_style = 13, output = "html") %>%
+  vec_fmt_date(dates, date_style = 13, output = "html") %>%
     expect_equal(
       c(
         "2020/01/05", "2021/02/06", "2022/03/07", "2023/04/08", "2024/05/09"
       )
     )
   expect_equal(
-    x_date(as.character(dates), date_style = 13, output = "html"),
-    x_date(as.character(dates), date_style = 13, output = "latex")
+    vec_fmt_date(as.character(dates), date_style = 13, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 13, output = "latex")
   )
   expect_equal(
-    x_date(as.character(dates), date_style = 13, output = "html"),
-    x_date(as.character(dates), date_style = 13, output = "rtf")
+    vec_fmt_date(as.character(dates), date_style = 13, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 13, output = "rtf")
   )
 
-  x_date(dates, date_style = 14, output = "html") %>%
+  vec_fmt_date(dates, date_style = 14, output = "html") %>%
     expect_equal(
       c(
         "20/01/05", "21/02/06", "22/03/07", "23/04/08", "24/05/09"
       )
     )
   expect_equal(
-    x_date(as.character(dates), date_style = 14, output = "html"),
-    x_date(as.character(dates), date_style = 14, output = "latex")
+    vec_fmt_date(as.character(dates), date_style = 14, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 14, output = "latex")
   )
   expect_equal(
-    x_date(as.character(dates), date_style = 14, output = "html"),
-    x_date(as.character(dates), date_style = 14, output = "rtf")
+    vec_fmt_date(as.character(dates), date_style = 14, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 14, output = "rtf")
   )
 
-  x_date(dates, date_style = 2, pattern = "d{x}d", output = "html") %>%
+  vec_fmt_date(dates, date_style = 2, pattern = "d{x}d", output = "html") %>%
     expect_equal(
       c(
         "dSunday, January 5, 2020d", "dSaturday, February 6, 2021d",

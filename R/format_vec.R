@@ -92,13 +92,13 @@
 #' num_vals <- c(5.2, 8.65, 0, -5.3, NA)
 #' ```
 #'
-#' Using `x_number()` with the default options will create a character vector
+#' Using `vec_fmt_number()` with the default options will create a character vector
 #' where the numeric values have two decimal places and `NA` values will render
 #' as `"NA"`. Also, the rendering context is HTML unless specified in the
 #' `output` argument.
 #'
 #' ```{r}
-#' x_number(num_vals)
+#' vec_fmt_number(num_vals)
 #' ```
 #'
 #' We can change the decimal mark to a comma, and we have to be sure to change
@@ -106,35 +106,35 @@
 #' works here):
 #'
 #' ```{r}
-#' x_number(num_vals, sep_mark = ".", dec_mark = ",")
+#' vec_fmt_number(num_vals, sep_mark = ".", dec_mark = ",")
 #' ```
 #'
 #' If we are formatting for a different locale, we could supply the locale ID
 #' and let **gt** handle these locale-specific formatting options:
 #'
 #' ```{r}
-#' x_number(num_vals, locale = "fr")
+#' vec_fmt_number(num_vals, locale = "fr")
 #' ```
 #'
 #' There are many options for formatting values. Perhaps you need to have
 #' explicit positive and negative signs? Use `force_sign = TRUE` for that.
 #'
 #' ```{r}
-#' x_number(num_vals, force_sign = TRUE)
+#' vec_fmt_number(num_vals, force_sign = TRUE)
 #' ```
 #'
 #' Those trailing zeros past the decimal mark can be stripped out by using the
 #' `drop_trailing_zeros` option.
 #'
 #' ```{r}
-#' x_number(num_vals, drop_trailing_zeros = TRUE)
+#' vec_fmt_number(num_vals, drop_trailing_zeros = TRUE)
 #' ```
 #'
 #' As a last example, one can wrap the values in a pattern with the `pattern`
 #' argument. Note here that `NA` values won't have the pattern applied.
 #'
 #' ```{r}
-#' x_number(num_vals, pattern = "`{x}`")
+#' vec_fmt_number(num_vals, pattern = "`{x}`")
 #' ```
 #'
 #' @family vector formatting functions
@@ -142,7 +142,7 @@
 #' 14-1
 #'
 #' @export
-x_number <- function(
+vec_fmt_number <- function(
     x,
     decimals = 2,
     n_sigfig = NULL,
@@ -173,7 +173,7 @@ x_number <- function(
     )
   ) {
     cli::cli_abort(
-      "The `x_number()` and `x_integer()` functions can only be used with numeric vectors."
+      "The `vec_fmt_number()` and `vec_fmt_integer()` functions can only be used with numeric vectors."
     )
   }
 
@@ -216,7 +216,7 @@ x_number <- function(
 #' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
 #'
-#' @inheritParams x_number
+#' @inheritParams vec_fmt_number
 #' @param suffixing An option to scale and apply suffixes to larger numbers
 #'   (e.g., `1924000` can be transformed to `2M`). This option can accept a
 #'   logical value, where `FALSE` (the default) will not perform this
@@ -245,41 +245,41 @@ x_number <- function(
 #' num_vals <- c(5.2, 8.65, 13602, -5.3, NA)
 #' ```
 #'
-#' Using `x_integer()` with the default options will create a character vector
+#' Using `vec_fmt_integer()` with the default options will create a character vector
 #' where the input values undergo rounding to become integers and `NA` values
 #' will render as `"NA"`. Also, the rendering context is HTML unless specified
 #' in the `output` argument.
 #'
 #' ```{r}
-#' x_integer(num_vals)
+#' vec_fmt_integer(num_vals)
 #' ```
 #'
 #' We can change the digit separator mark to a period with the `sep_mark`
 #' option:
 #'
 #' ```{r}
-#' x_integer(num_vals, sep_mark = ".")
+#' vec_fmt_integer(num_vals, sep_mark = ".")
 #' ```
 #'
 #' If we are formatting for a different locale, we could supply the locale ID
 #' and let **gt** handle these locale-specific formatting options:
 #'
 #' ```{r}
-#' x_integer(num_vals, locale = "de")
+#' vec_fmt_integer(num_vals, locale = "de")
 #' ```
 #'
 #' Many options abound for formatting values. If you have a need for positive
 #' and negative signs in front of each and every value, use `force_sign = TRUE`:
 #'
 #' ```{r}
-#' x_integer(num_vals, force_sign = TRUE)
+#' vec_fmt_integer(num_vals, force_sign = TRUE)
 #' ```
 #'
 #' As a last example, one can wrap the values in a pattern with the `pattern`
 #' argument. Note here that `NA` values won't have the pattern applied.
 #'
 #' ```{r}
-#' x_integer(num_vals, pattern = "`{x}`")
+#' vec_fmt_integer(num_vals, pattern = "`{x}`")
 #' ```
 #'
 #' @family vector formatting functions
@@ -287,7 +287,7 @@ x_number <- function(
 #' 14-2
 #'
 #' @export
-x_integer <- function(
+vec_fmt_integer <- function(
     x,
     use_seps = TRUE,
     accounting = FALSE,
@@ -300,7 +300,7 @@ x_integer <- function(
     output = c("html", "latex", "rtf")
 ) {
 
-  x_number(
+  vec_fmt_number(
     x,
     decimals = 0,
     n_sigfig = NULL,
@@ -334,7 +334,7 @@ x_integer <- function(
 #' - locale-based formatting: providing a locale ID will result in
 #' formatting specific to the chosen locale
 #'
-#' @inheritParams x_number
+#' @inheritParams vec_fmt_number
 #' @param scale_by A value to scale the input. The default is `1.0`. All numeric
 #'   values will be multiplied by this value first before undergoing formatting.
 #' @param force_sign Should the positive sign be shown for positive values
@@ -352,40 +352,40 @@ x_integer <- function(
 #' num_vals <- c(3.24e-4, 8.65, 1362902.2, -59027.3, NA)
 #' ```
 #'
-#' Using `x_scientific()` with the default options will create a character
+#' Using `vec_fmt_scientific()` with the default options will create a character
 #' vector with values in scientific notation. Any `NA` values remain as `NA`
 #' values. The rendering context is HTML unless specified in the `output`
 #' argument.
 #'
 #' ```{r}
-#' x_scientific(num_vals)
+#' vec_fmt_scientific(num_vals)
 #' ```
 #'
 #' We can change the number of decimal places with the `decimals` option:
 #'
 #' ```{r}
-#' x_scientific(num_vals, decimals = 1)
+#' vec_fmt_scientific(num_vals, decimals = 1)
 #' ```
 #'
 #' If we are formatting for a different locale, we could supply the locale ID
 #' and **gt** will handle any locale-specific formatting options:
 #'
 #' ```{r}
-#' x_scientific(num_vals, locale = "es")
+#' vec_fmt_scientific(num_vals, locale = "es")
 #' ```
 #'
 #' Should you need to have positive and negative signs on each of the output
 #' values, use `force_sign = TRUE`:
 #'
 #' ```{r}
-#' x_scientific(num_vals, force_sign = TRUE)
+#' vec_fmt_scientific(num_vals, force_sign = TRUE)
 #' ```
 #'
 #' As a last example, one can wrap the values in a pattern with the `pattern`
 #' argument. Note here that `NA` values won't have the pattern applied.
 #'
 #' ```{r}
-#' x_scientific(num_vals, pattern = "[{x}]")
+#' vec_fmt_scientific(num_vals, pattern = "[{x}]")
 #' ```
 #'
 #' @family vector formatting functions
@@ -393,7 +393,7 @@ x_integer <- function(
 #' 14-3
 #'
 #' @export
-x_scientific <- function(
+vec_fmt_scientific <- function(
     x,
     decimals = 2,
     drop_trailing_zeros = FALSE,
@@ -419,7 +419,7 @@ x_scientific <- function(
     )
   ) {
     cli::cli_abort(
-      "The `x_scientific()` function can only be used with numeric vectors."
+      "The `vec_fmt_scientific()` function can only be used with numeric vectors."
     )
   }
 
@@ -456,7 +456,7 @@ x_scientific <- function(
 #' - locale-based formatting: providing a locale ID will result in
 #' formatting specific to the chosen locale
 #'
-#' @inheritParams x_number
+#' @inheritParams vec_fmt_number
 #' @param scale_by A value to scale the input. The default is `1.0`. All numeric
 #'   values will be multiplied by this value first before undergoing formatting.
 #' @param force_sign Should the positive sign be shown for positive values
@@ -474,40 +474,40 @@ x_scientific <- function(
 #' num_vals <- c(3.24e-4, 8.65, 1362902.2, -59027.3, NA)
 #' ```
 #'
-#' Using `x_engineering()` with the default options will create a character
+#' Using `vec_fmt_engineering()` with the default options will create a character
 #' vector with values engineering notation. Any `NA` values remain as `NA`
 #' values. The rendering context is HTML unless specified in the `output`
 #' argument.
 #'
 #' ```{r}
-#' x_engineering(num_vals)
+#' vec_fmt_engineering(num_vals)
 #' ```
 #'
 #' We can change the number of decimal places with the `decimals` option:
 #'
 #' ```{r}
-#' x_engineering(num_vals, decimals = 1)
+#' vec_fmt_engineering(num_vals, decimals = 1)
 #' ```
 #'
 #' If we are formatting for a different locale, we could supply the locale ID
 #' and **gt** will handle any locale-specific formatting options:
 #'
 #' ```{r}
-#' x_engineering(num_vals, locale = "da")
+#' vec_fmt_engineering(num_vals, locale = "da")
 #' ```
 #'
 #' Should you need to have positive and negative signs on each of the output
 #' values, use `force_sign = TRUE`:
 #'
 #' ```{r}
-#' x_engineering(num_vals, force_sign = TRUE)
+#' vec_fmt_engineering(num_vals, force_sign = TRUE)
 #' ```
 #'
 #' As a last example, one can wrap the values in a pattern with the `pattern`
 #' argument. Note here that `NA` values won't have the pattern applied.
 #'
 #' ```{r}
-#' x_engineering(num_vals, pattern = "/{x}/")
+#' vec_fmt_engineering(num_vals, pattern = "/{x}/")
 #' ```
 #'
 #' @family vector formatting functions
@@ -515,7 +515,7 @@ x_scientific <- function(
 #' 14-4
 #'
 #' @export
-x_engineering <- function(
+vec_fmt_engineering <- function(
     x,
     decimals = 2,
     drop_trailing_zeros = FALSE,
@@ -541,7 +541,7 @@ x_engineering <- function(
     )
   ) {
     cli::cli_abort(
-      "The `x_engineering()` function can only be used with numeric vectors."
+      "The `vec_fmt_engineering()` function can only be used with numeric vectors."
     )
   }
 
@@ -584,7 +584,7 @@ x_engineering <- function(
 #' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
 #'
-#' @inheritParams x_number
+#' @inheritParams vec_fmt_number
 #' @param scale_values Should the values be scaled through multiplication by
 #'   100? By default this is `TRUE` since the expectation is that normally
 #'   values are proportions. Setting to `FALSE` signifies that the values are
@@ -604,13 +604,13 @@ x_engineering <- function(
 #' num_vals <- c(0.0052, 0.08, 0, -0.535, NA)
 #' ```
 #'
-#' Using `x_percent()` with the default options will create a character vector
+#' Using `vec_fmt_percent()` with the default options will create a character vector
 #' where the resultant percentage values have two decimal places and `NA` values
 #' will render as `"NA"`. Also, the rendering context is HTML unless specified
 #' in the `output` argument.
 #'
 #' ```{r}
-#' x_percent(num_vals)
+#' vec_fmt_percent(num_vals)
 #' ```
 #'
 #' We can change the decimal mark to a comma, and we have to be sure to change
@@ -618,35 +618,35 @@ x_engineering <- function(
 #' works here):
 #'
 #' ```{r}
-#' x_percent(num_vals, sep_mark = ".", dec_mark = ",")
+#' vec_fmt_percent(num_vals, sep_mark = ".", dec_mark = ",")
 #' ```
 #'
 #' If we are formatting for a different locale, we could supply the locale ID
 #' and let **gt** handle these locale-specific formatting options:
 #'
 #' ```{r}
-#' x_percent(num_vals, locale = "pt")
+#' vec_fmt_percent(num_vals, locale = "pt")
 #' ```
 #'
 #' There are many options for formatting values. Perhaps you need to have
 #' explicit positive and negative signs? Use `force_sign = TRUE` for that.
 #'
 #' ```{r}
-#' x_percent(num_vals, force_sign = TRUE)
+#' vec_fmt_percent(num_vals, force_sign = TRUE)
 #' ```
 #'
 #' Those trailing zeros past the decimal mark can be stripped out by using the
 #' `drop_trailing_zeros` option.
 #'
 #' ```{r}
-#' x_percent(num_vals, drop_trailing_zeros = TRUE)
+#' vec_fmt_percent(num_vals, drop_trailing_zeros = TRUE)
 #' ```
 #'
 #' As a last example, one can wrap the values in a pattern with the `pattern`
 #' argument. Note here that `NA` values won't have the pattern applied.
 #'
 #' ```{r}
-#' x_percent(num_vals, pattern = "{x}wt")
+#' vec_fmt_percent(num_vals, pattern = "{x}wt")
 #' ```
 #'
 #' @family vector formatting functions
@@ -654,7 +654,7 @@ x_engineering <- function(
 #' 14-5
 #'
 #' @export
-x_percent <- function(
+vec_fmt_percent <- function(
     x,
     decimals = 2,
     drop_trailing_zeros = FALSE,
@@ -685,7 +685,7 @@ x_percent <- function(
     )
   ) {
     cli::cli_abort(
-      "The `x_percent()` function can only be used with numeric vectors."
+      "The `vec_fmt_percent()` function can only be used with numeric vectors."
     )
   }
 
@@ -733,7 +733,7 @@ x_percent <- function(
 #' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
 #'
-#' @inheritParams x_number
+#' @inheritParams vec_fmt_number
 #' @param accuracy The type of fractions to generate. This can either be one of
 #'   the keywords `"low"`, `"med"`, or `"high"` (to generate fractions with
 #'   denominators of up to 1, 2, or 3 digits, respectively) or an integer value
@@ -760,18 +760,18 @@ x_percent <- function(
 #' num_vals <- c(0.0052, 0.08, 0, -0.535, NA)
 #' ```
 #'
-#' Using `x_fraction()` with the default options will create a character vector
+#' Using `vec_fmt_fraction()` with the default options will create a character vector
 #' of fractions in HTML. Any `NA` values will render as `"NA"`.
 #'
 #' ```{r}
-#' x_fraction(num_vals)
+#' vec_fmt_fraction(num_vals)
 #' ```
 #'
 #' We can change these fractions to appear with an `"inline"` layout (the
 #' default is `"diagonal"`):
 #'
 #' ```{r}
-#' x_fraction(num_vals, layout = "inline")
+#' vec_fmt_fraction(num_vals, layout = "inline")
 #' ```
 #'
 #' There are many options for formatting as fractions. If you'd like a higher
@@ -779,14 +779,14 @@ x_percent <- function(
 #' or `"high"` keywords to the `accuracy` argument:
 #'
 #' ```{r}
-#' x_fraction(num_vals, accuracy = "high", layout = "inline")
+#' vec_fmt_fraction(num_vals, accuracy = "high", layout = "inline")
 #' ```
 #'
 #' As a last example, one can wrap the values in a pattern with the `pattern`
 #' argument. Note here that `NA` values won't have the pattern applied.
 #'
 #' ```{r}
-#' x_fraction(
+#' vec_fmt_fraction(
 #'   num_vals,
 #'   accuracy = "high",
 #'   layout = "inline",
@@ -799,7 +799,7 @@ x_percent <- function(
 #' 14-6
 #'
 #' @export
-x_fraction <- function(
+vec_fmt_fraction <- function(
     x,
     accuracy = NULL,
     simplify = TRUE,
@@ -824,7 +824,7 @@ x_fraction <- function(
     )
   ) {
     cli::cli_abort(
-      "The `x_fraction()` function can only be used with numeric vectors."
+      "The `vec_fmt_fraction()` function can only be used with numeric vectors."
     )
   }
 
@@ -878,7 +878,7 @@ x_fraction <- function(
 #' We can use the [info_currencies()] function for a useful reference on all of
 #' the possible inputs to the `currency` argument.
 #'
-#' @inheritParams x_number
+#' @inheritParams vec_fmt_number
 #' @param currency The currency to use for the numeric value. This input can be
 #'   supplied as a 3-letter currency code (e.g., `"USD"` for U.S. Dollars,
 #'   `"EUR"` for the Euro currency). Use [info_currencies()] to get an
@@ -915,41 +915,41 @@ x_fraction <- function(
 #' num_vals <- c(5.2, 8.65, 0, -5.3, NA)
 #' ```
 #'
-#' Using `x_currency()` with the default options will create a character vector
+#' Using `vec_fmt_currency()` with the default options will create a character vector
 #' where the numeric values have been transformed to U.S. Dollars (`"USD"`).
 #' Furthermore, the rendering context is HTML unless specified otherwise in the
 #' `output` argument.
 #'
 #' ```{r}
-#' x_currency(num_vals)
+#' vec_fmt_currency(num_vals)
 #' ```
 #'
 #' We can supply a currency code to the `currency` argument. Let's use British
 #' Pounds by using `currency = "GBP"`:
 #'
 #' ```{r}
-#' x_currency(num_vals, currency = "GBP")
+#' vec_fmt_currency(num_vals, currency = "GBP")
 #' ```
 #'
 #' If we are formatting for a different locale, we could supply the locale ID
 #' and let **gt** handle qll locale-specific formatting options:
 #'
 #' ```{r}
-#' x_currency(num_vals, currency = "EUR", locale = "fr")
+#' vec_fmt_currency(num_vals, currency = "EUR", locale = "fr")
 #' ```
 #'
 #' There are many options for formatting values. Perhaps you need to have
 #' explicit positive and negative signs? Use `force_sign = TRUE` for that.
 #'
 #' ```{r}
-#' x_currency(num_vals, force_sign = TRUE)
+#' vec_fmt_currency(num_vals, force_sign = TRUE)
 #' ```
 #'
 #' As a last example, one can wrap the values in a pattern with the `pattern`
 #' argument. Note here that `NA` values won't have the pattern applied.
 #'
 #' ```{r}
-#' x_currency(num_vals, pattern = "`{x}`")
+#' vec_fmt_currency(num_vals, pattern = "`{x}`")
 #' ```
 #'
 #' @family vector formatting functions
@@ -957,7 +957,7 @@ x_fraction <- function(
 #' 14-7
 #'
 #' @export
-x_currency <- function(
+vec_fmt_currency <- function(
     x,
     currency = "USD",
     use_subunits = TRUE,
@@ -990,7 +990,7 @@ x_currency <- function(
     )
   ) {
     cli::cli_abort(
-      "The `x_currency()` function can only be used with numeric vectors."
+      "The `vec_fmt_currency()` function can only be used with numeric vectors."
     )
   }
 
@@ -1022,7 +1022,7 @@ x_currency <- function(
 #'
 #' @description
 #' With numeric values in a vector, we can transform each into byte values with
-#' human readable units. The `x_bytes()` function allows for the formatting of
+#' human readable units. The `vec_fmt_bytes()` function allows for the formatting of
 #' byte sizes to either of two common representations: (1) with decimal units
 #' (powers of 1000, examples being `"kB"` and `"MB"`), and (2) with binary units
 #' (powers of 1024, examples being `"KiB"` and `"MiB"`).
@@ -1042,7 +1042,7 @@ x_currency <- function(
 #' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
 #'
-#' @inheritParams x_number
+#' @inheritParams vec_fmt_number
 #' @param standard The way to express large byte sizes.
 #' @param decimals An option to specify the exact number of decimal places to
 #'   use. The default number of decimal places is `1`.
@@ -1063,40 +1063,40 @@ x_currency <- function(
 #' num_vals <- c(3.24294e14, 8, 1362902, -59027, NA)
 #' ```
 #'
-#' Using `x_bytes()` with the default options will create a character
+#' Using `vec_fmt_bytes()` with the default options will create a character
 #' vector with values in bytes. Any `NA` values remain as `NA` values. The
 #' rendering context is HTML unless specified in the `output`
 #' argument.
 #'
 #' ```{r}
-#' x_bytes(num_vals)
+#' vec_fmt_bytes(num_vals)
 #' ```
 #'
 #' We can change the number of decimal places with the `decimals` option:
 #'
 #' ```{r}
-#' x_bytes(num_vals, decimals = 2)
+#' vec_fmt_bytes(num_vals, decimals = 2)
 #' ```
 #'
 #' If we are formatting for a different locale, we could supply the locale ID
 #' and **gt** will handle any locale-specific formatting options:
 #'
 #' ```{r}
-#' x_bytes(num_vals, locale = "fi")
+#' vec_fmt_bytes(num_vals, locale = "fi")
 #' ```
 #'
 #' Should you need to have positive and negative signs on each of the output
 #' values, use `force_sign = TRUE`:
 #'
 #' ```{r}
-#' x_bytes(num_vals, force_sign = TRUE)
+#' vec_fmt_bytes(num_vals, force_sign = TRUE)
 #' ```
 #'
 #' As a last example, one can wrap the values in a pattern with the `pattern`
 #' argument. Note here that `NA` values won't have the pattern applied.
 #'
 #' ```{r}
-#' x_bytes(num_vals, pattern = "[{x}]")
+#' vec_fmt_bytes(num_vals, pattern = "[{x}]")
 #' ```
 #'
 #' @family vector formatting functions
@@ -1104,7 +1104,7 @@ x_currency <- function(
 #' 14-8
 #'
 #' @export
-x_bytes <- function(
+vec_fmt_bytes <- function(
     x,
     standard = c("decimal", "binary"),
     decimals = 1,
@@ -1134,7 +1134,7 @@ x_bytes <- function(
     )
   ) {
     cli::cli_abort(
-      "The `x_bytes()` function can only be used with numeric vectors."
+      "The `vec_fmt_bytes()` function can only be used with numeric vectors."
     )
   }
 
@@ -1189,7 +1189,7 @@ x_bytes <- function(
 #' We can use the [info_date_style()] function for a useful reference on all of
 #' the possible inputs to `date_style`.
 #'
-#' @inheritParams x_number
+#' @inheritParams vec_fmt_number
 #' @param date_style The date style to use. Supply a number (from `1` to `14`)
 #'   that corresponds to the preferred date style, or, provide a named date
 #'   style (`"wday_month_day_year"`, `"m_day_year"`, `"year.mn.day"`, etc.). Use
@@ -1206,18 +1206,18 @@ x_bytes <- function(
 #' str_vals <- c("2022-06-13", "2019-01-25", "2015-03-23", NA)
 #' ```
 #'
-#' Using `x_date()` with the default options will create a character vector of
+#' Using `vec_fmt_date()` with the default options will create a character vector of
 #' formatted dates. Any `NA` values remain as `NA` values. The rendering context
 #' is HTML unless specified in the `output` argument.
 #'
 #' ```{r}
-#' x_date(str_vals)
+#' vec_fmt_date(str_vals)
 #' ```
 #'
 #' We can change the formatting style by choosing a number from `1` to `14`:
 #'
 #' ```{r}
-#' x_date(str_vals, date_style = 6)
+#' vec_fmt_date(str_vals, date_style = 6)
 #' ```
 #'
 #' We can always use [info_date_style()] to call up an info table that serves as
@@ -1228,7 +1228,7 @@ x_bytes <- function(
 #' applied.
 #'
 #' ```{r}
-#' x_date(str_vals, pattern = "Date: {x}")
+#' vec_fmt_date(str_vals, pattern = "Date: {x}")
 #' ```
 #'
 #' @family vector formatting functions
@@ -1236,7 +1236,7 @@ x_bytes <- function(
 #' 14-9
 #'
 #' @export
-x_date <- function(
+vec_fmt_date <- function(
     x,
     date_style = 2,
     pattern = "{x}",
@@ -1256,7 +1256,7 @@ x_date <- function(
     )
   ) {
     cli::cli_abort(
-      "The `x_date()` function can only be used with numeric vectors."
+      "The `vec_fmt_date()` function can only be used with numeric vectors."
     )
   }
 
@@ -1292,7 +1292,7 @@ x_date <- function(
 #' We can use the [info_time_style()] function for a useful reference on all of
 #' the possible inputs to `time_style`.
 #'
-#' @inheritParams x_number
+#' @inheritParams vec_fmt_number
 #' @param time_style The time style to use. Supply a number (from `1` to `5`)
 #'   that corresponds to the preferred time style, or, provide a named time
 #'   style (`"hms"`, `"hms_p"`, `"h_p"`, etc.). Use [info_time_style()] to see
@@ -1309,18 +1309,18 @@ x_date <- function(
 #' str_vals <- c("2022-06-13 18:36", "2019-01-25 01:08", NA)
 #' ```
 #'
-#' Using `x_date()` with the default options will create a character vector of
+#' Using `vec_fmt_date()` with the default options will create a character vector of
 #' formatted dates. Any `NA` values remain as `NA` values. The rendering context
 #' is HTML unless specified in the `output` argument.
 #'
 #' ```{r}
-#' x_time(str_vals)
+#' vec_fmt_time(str_vals)
 #' ```
 #'
 #' We can change the formatting style by choosing a number from `1` to `5`:
 #'
 #' ```{r}
-#' x_time(str_vals, time_style = 4)
+#' vec_fmt_time(str_vals, time_style = 4)
 #' ```
 #'
 #' We can always use [info_time_style()] to call up an info table that serves as
@@ -1331,7 +1331,7 @@ x_date <- function(
 #' applied.
 #'
 #' ```{r}
-#' x_time(str_vals, time_style = 4, pattern = "Time: {x}")
+#' vec_fmt_time(str_vals, time_style = 4, pattern = "Time: {x}")
 #' ```
 #'
 #' @family vector formatting functions
@@ -1339,7 +1339,7 @@ x_date <- function(
 #' 14-10
 #'
 #' @export
-x_time <- function(
+vec_fmt_time <- function(
     x,
     time_style = 2,
     pattern = "{x}",
@@ -1359,7 +1359,7 @@ x_time <- function(
     )
   ) {
     cli::cli_abort(
-      "The `x_time()` function can only be used with numeric vectors."
+      "The `vec_fmt_time()` function can only be used with numeric vectors."
     )
   }
 
@@ -1468,9 +1468,9 @@ x_time <- function(
 #' - `"%F"` -> `"2015-06-08"` (the date in the ISO 8601 date format)
 #' - `"%%"` -> `"%"` (the literal "`%`" character, in case you need it)
 #'
-#' @inheritParams x_number
-#' @inheritParams x_date
-#' @inheritParams x_time
+#' @inheritParams vec_fmt_number
+#' @inheritParams vec_fmt_date
+#' @inheritParams vec_fmt_time
 #' @param sep The separator string to use between the date and time components.
 #'   By default, this is a single space character (`" "`). Only used when not
 #'   specifying a `format` code.
@@ -1495,12 +1495,12 @@ x_time <- function(
 #' str_vals <- c("2022-06-13 18:36", "2019-01-25 01:08", NA)
 #' ```
 #'
-#' Using `x_datetime()` with the default options will create a character vector
+#' Using `vec_fmt_datetime()` with the default options will create a character vector
 #' of formatted datetime values. Any `NA` values remain as `NA` values. The
 #' rendering context is HTML unless specified in the `output` argument.
 #'
 #' ```{r}
-#' x_datetime(str_vals)
+#' vec_fmt_datetime(str_vals)
 #' ```
 #'
 #' We can change the formatting style of the date and time portions separately
@@ -1509,7 +1509,7 @@ x_time <- function(
 #' and time.
 #'
 #' ```{r}
-#' x_datetime(
+#' vec_fmt_datetime(
 #'   str_vals,
 #'   date_style = 2,
 #'   time_style = 4,
@@ -1524,7 +1524,7 @@ x_time <- function(
 #' control over the final formatting (even including string literals as please):
 #'
 #' ```{r}
-#' x_datetime(str_vals, format = "%A, %B %e, %Y at %I:%M %p")
+#' vec_fmt_datetime(str_vals, format = "%A, %B %e, %Y at %I:%M %p")
 #' ```
 #'
 #' As a last example, one can wrap the datetime values in a pattern with the
@@ -1532,7 +1532,7 @@ x_time <- function(
 #' applied.
 #'
 #' ```{r}
-#' x_datetime(
+#' vec_fmt_datetime(
 #'   str_vals,
 #'   date_style = 6,
 #'   time_style = 4,
@@ -1546,7 +1546,7 @@ x_time <- function(
 #' 14-11
 #'
 #' @export
-x_datetime <- function(
+vec_fmt_datetime <- function(
     x,
     date_style = 2,
     time_style = 2,
@@ -1570,7 +1570,7 @@ x_datetime <- function(
     )
   ) {
     cli::cli_abort(
-      "The `x_datetime()` function can only be used with numeric vectors."
+      "The `vec_fmt_datetime()` function can only be used with numeric vectors."
     )
   }
 
@@ -1595,7 +1595,7 @@ x_datetime <- function(
 #' Any Markdown-formatted text in the input vector will be transformed to the
 #' appropriate output type.
 #'
-#' @inheritParams x_number
+#' @inheritParams vec_fmt_number
 #'
 #' @return A character vector.
 #'
@@ -1619,17 +1619,17 @@ x_datetime <- function(
 #'   )
 #' ```
 #'
-#' With `x_markdown()` we can easily convert these to different output types,
+#' With `vec_fmt_markdown()` we can easily convert these to different output types,
 #' like HTML
 #'
 #' ```{r}
-#' x_markdown(text_vec, output = "html")
+#' vec_fmt_markdown(text_vec, output = "html")
 #' ```
 #'
 #' or LaTeX
 #'
 #' ```{r}
-#' x_markdown(text_vec, output = "latex")
+#' vec_fmt_markdown(text_vec, output = "latex")
 #' ```
 #'
 #' @family vector formatting functions
@@ -1637,7 +1637,7 @@ x_datetime <- function(
 #' 14-12
 #'
 #' @export
-x_markdown <- function(
+vec_fmt_markdown <- function(
     x,
     output = c("html", "latex", "rtf")
 ) {
@@ -1647,7 +1647,7 @@ x_markdown <- function(
   # Ensure that `x` is strictly a vector with `rlang::is_vector()`
   stop_if_not_vector(x)
 
-  x_out <-
+  vec_fmt_out <-
     render_as_vector(
       fmt_markdown(
         gt(dplyr::tibble(x = x)),
@@ -1657,11 +1657,11 @@ x_markdown <- function(
     )
 
   if (output == "html") {
-    x_out <- gsub("^<div class='gt_from_md'>(.*)", "\\1", x_out)
-    x_out <- gsub("(.*)\n</div>", "\\1", x_out)
+    vec_fmt_out <- gsub("^<div class='gt_from_md'>(.*)", "\\1", vec_fmt_out)
+    vec_fmt_out <- gsub("(.*)\n</div>", "\\1", vec_fmt_out)
   }
 
-  x_out
+  vec_fmt_out
 }
 
 stop_if_not_vector <- function(x) {
