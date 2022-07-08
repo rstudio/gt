@@ -153,6 +153,76 @@ Here are some extra formats that you may find useful:
 }
 }
 
+\section{Examples}{
+
+
+Let's create a character vector of datetime values in the ISO-8601 format
+for the next few examples:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{str_vals <- c("2022-06-13 18:36", "2019-01-25 01:08", NA)
+}\if{html}{\out{</div>}}
+
+Using \code{x_datetime()} with the default options will create a character vector
+of formatted datetime values. Any \code{NA} values remain as \code{NA} values. The
+rendering context is HTML unless specified in the \code{output} argument.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_datetime(str_vals)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "Monday, June 13, 2022 18:36"    "Friday, January 25, 2019 01:08"
+## [3] NA
+}\if{html}{\out{</div>}}
+
+We can change the formatting style of the date and time portions separately
+with the \code{date_style} (values \code{1}-\code{14}) and \code{time_style} (values \code{1}-\code{5})
+arguments. The \code{sep} option allows for a customized string between the date
+and time.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_datetime(
+  str_vals,
+  date_style = 2,
+  time_style = 4,
+  sep = " at "
+)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "Monday, June 13, 2022 at 6:36 PM"    "Friday, January 25, 2019 at 1:08 AM"
+## [3] NA
+}\if{html}{\out{</div>}}
+
+We can always use \code{\link[=info_date_style]{info_date_style()}} or \code{\link[=info_time_style]{info_time_style()}} to call up info
+tables that serve as handy references to all of the date and time styles.
+
+It's possible to supply our own time formatting pattern and have greater
+control over the final formatting (even including string literals as please):
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_datetime(str_vals, format = "\%A, \%B \%e, \%Y at \%I:\%M \%p")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "Monday, June 13, 2022 at 06:36 PM"   
+## [2] "Friday, January 25, 2019 at 01:08 AM"
+## [3] NA
+}\if{html}{\out{</div>}}
+
+As a last example, one can wrap the datetime values in a pattern with the
+\code{pattern} argument. Note here that \code{NA} values won't have the pattern
+applied.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x_datetime(
+  str_vals,
+  date_style = 6,
+  time_style = 4,
+  sep = " at ",
+  pattern = "Date and Time: \{x\}"
+)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "Date and Time: Jun 13, 2022 at 6:36 PM"
+## [2] "Date and Time: Jan 25, 2019 at 1:08 AM"
+## [3] NA
+}\if{html}{\out{</div>}}
+}
+
 \section{Function ID}{
 
 14-11
