@@ -1467,7 +1467,7 @@ fmt_fraction <- function(
     )
   }
 
-  # Use locale-based marks if a locale ID is provided
+  # Use locale-based `sep_mark` if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -2630,7 +2630,6 @@ fmt_datetime <- function(
           # input that will works with `strftime()`
           if (all(is_string_time(x))) {
             x <- paste("1970-01-01", x)
-
           }
 
           if (is.character(x) && is.null(tz)) {
@@ -2689,6 +2688,759 @@ fmt_datetime <- function(
       }
     )
   )
+}
+
+#' Format numeric or duration values as styled time duration strings
+#'
+#' @description
+#' Format input values to time duration values whether those input values are
+#' numbers or of the `difftime` class. We can specify which time units any
+#' numeric input values have (as weeks, days, hours, minutes, or seconds) and
+#' the output can be customized with a duration style (corresponding to narrow,
+#' wide, colon-separated, and ISO forms) and a choice of output units ranging
+#' from weeks to seconds.
+#'
+#' @details
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the *Arguments* section for more information on this.
+#'
+#' @section Output units for the colon-separated duration style:
+#'
+#' The colon-separated duration style (enabled when
+#' `duration_style = "colon-sep"`) is essentially a clock-based output format
+#' which uses the display logic of chronograph watch functionality. It will, by
+#' default, display duration values in the `(D/)HH:MM:SS` format. Any duration
+#' values greater than or equal to 24 hours will have the number of days
+#' prepended with an adjoining slash mark. While this output format is
+#' versatile, it can be changed somewhat with the `output_units` option. The
+#' following combinations of output units are permitted:
+#'
+#' - `c("minutes", "seconds")` -> `MM:SS`
+#' - `c("hours", "minutes")` -> `HH:MM`
+#' - `c("hours", "minutes", "seconds")` -> `HH:MM:SS`
+#' - `c("days", "hours", "minutes")` -> `(D/)HH:MM`
+#'
+#' Any other specialized combinations will result in the default set being used,
+#' which is `c("days", "hours", "minutes", "seconds")`
+#'
+#' @inheritParams fmt_number
+#' @param input_units If one or more selected columns contains numeric values, a
+#'   keyword must be provided for `input_units` for **gt** to determine how
+#'   those values are to be interpreted in terms of duration. The accepted units
+#'   are: `"seconds"`, `"minutes"`, `"hours"`, `"days"`, and `"weeks"`.
+#' @param output_units Controls the output time units. The default, `NULL`,
+#'   means that **gt** will automatically choose time units based on the input
+#'   duration value. To control which time units are to be considered for output
+#'   (before trimming with `trim_zero_units`) we can specify a vector of one or
+#'   more of the following keywords: `"weeks"`, `"days"`, `"hours"`,
+#'   `"minutes"`, or `"seconds"`.
+#' @param duration_style A choice of four formatting styles for the output
+#'   duration values. With `"narrow"` (the default style), duration values will
+#'   be formatted with single letter time-part units (e.g., 1.35 days will be
+#'   styled as `"1d 8h 24m`). With `"wide"`, this example value will be expanded
+#'   to `"1 day 8 hours 24 minutes"` after formatting. The `"colon-sep"` style
+#'   will put days, hours, minutes, and seconds in the `"([D]/)[HH]:[MM]:[SS]"`
+#'   format. The `"iso"` style will produce a value that conforms to the ISO
+#'   8601 rules for duration values (e.g., 1.35 days will become `"P1DT8H24M"`).
+#' @param trim_zero_units Provides methods to remove output time units that have
+#'   zero values. By default this is `TRUE` and duration values that might
+#'   otherwise be formatted as `"0w 1d 0h 4m 19s"` with
+#'   `trim_zero_units = FALSE` are instead displayed as `"1d 4m 19s"`. Aside
+#'   from using `TRUE`/`FALSE` we could provide a vector of keywords for more
+#'   precise control. These keywords are: (1) `"leading"`, to omit all leading
+#'   zero-value time units (e.g., `"0w 1d"` -> `"1d"`), (2) `"trailing"`, to
+#'   omit all trailing zero-value time units (e.g., `"3d 5h 0s"` -> `"3d 5h"`),
+#'   and `"internal"`, which removes all internal zero-value time units (e.g.,
+#'   `"5d 0h 33m"` -> `"5d 33m"`).
+#' @param max_output_units If `output_units` is `NULL`, where the output time
+#'   units are unspecified and left to **gt** to handle, a numeric value
+#'   provided for `max_output_units` will be taken as the maximum number of time
+#'   units to display in all output time duration values. By default, this is
+#'   `NULL` and all possible time units will be displayed. This option has no
+#'   effect when `duration_style = "colon-sep"` (only `output_units` can be used
+#'   to customize that type of duration output).
+#' @param force_sign Should the positive sign be shown for positive values
+#'   (effectively showing a sign for all values except zero)? If so, use `TRUE`
+#'   for this option. The default is `FALSE`, where only negative value will
+#'   display a minus sign.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Use part of the `sp500` table to create a **gt** table. Create a
+#' `difftime`-based column and format the duration values to be displayed as the
+#' number of days since March 30, 2020.
+#'
+#' ```r
+#' sp500 %>%
+#'   dplyr::slice_head(n = 10) %>%
+#'   dplyr::mutate(
+#'     time_point = lubridate::ymd("2020-03-30"),
+#'     time_passed = difftime(time_point, date)
+#'   ) %>%
+#'   dplyr::select(time_passed, open, close) %>%
+#'   gt(rowname_col = "month") %>%
+#'   fmt_duration(
+#'     columns = time_passed,
+#'     output_units = "days",
+#'     duration_style = "wide"
+#'   ) %>%
+#'   fmt_currency(columns = c(open, close))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_duration_1.png")`
+#' }}
+#'
+#' @family Format Data
+#' @section Function ID:
+#' 3-13
+#'
+#' @import rlang
+#' @export
+fmt_duration <- function(
+    data,
+    columns,
+    rows = everything(),
+    input_units = NULL,
+    output_units = NULL,
+    duration_style = c("narrow", "wide", "colon-sep", "iso"),
+    trim_zero_units = TRUE,
+    max_output_units = NULL,
+    pattern = "{x}",
+    use_seps = TRUE,
+    sep_mark = ",",
+    force_sign = FALSE,
+    system = c("intl", "ind"),
+    locale = NULL
+) {
+
+  duration_style <- match.arg(duration_style)
+  system <- match.arg(system)
+  dec_mark <- "unused"
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  # Resolve the `locale` value here with the global locale value
+  locale <- resolve_locale(data = data, locale = locale)
+
+  # Use locale-based marks if a locale ID is provided
+  sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
+
+  if (is_true(trim_zero_units)) {
+    trim_zero_units <- c("leading", "trailing", "internal")
+  } else if (is_false(trim_zero_units)) {
+    trim_zero_units <- NULL
+  } else if (is.character(trim_zero_units) && length(trim_zero_units) > 0) {
+    # Validate that `trim_zero_units` contains only the allowed keywords
+    validate_trim_zero_units(trim_zero_units = trim_zero_units)
+  } else {
+    cli::cli_abort(c(
+      "The value provided for `trim_zero_units` is invalid. Either use:",
+      "*" = "`TRUE` or `FALSE`, or",
+      "*" = "A vector with any of the keywords `\"leading\"`, `\"trailing\"`, or `\"internal\"`."
+    ))
+  }
+
+  if (
+    !is.null(max_output_units) &&
+    (
+      !is.numeric(max_output_units) ||
+      length(max_output_units) != 1 ||
+      max_output_units < 1
+    )
+  ) {
+
+    cli::cli_abort(c(
+      "The numeric value supplied for `max_output_units` is invalid.",
+      "*" = "Must either be `NULL` or an integer value greater than zero."
+    ))
+  }
+
+  # Stop function if any columns have data that is incompatible
+  # with this formatter
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = c("numeric", "difftime")
+    )
+  ) {
+    cli::cli_abort(c(
+      "The `fmt_duration()` function can only be used on `columns` of certain types:",
+      "*" = "Allowed types are `numeric` and `difftime`."
+    ))
+  }
+
+  # Stop function if any columns have numeric data and `input_units` is NULL
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = "difftime"
+    ) &&
+    is.null(input_units)
+  ) {
+    stop(
+      "When there are numeric columns to format, `input_units` must not be `NULL`:\n",
+      "* Use one of `\"seconds\"`, `\"minutes\"`, `\"hours\"`, `\"days\"`, or `\"weeks\"`",
+      call. = FALSE
+    )
+  }
+
+  # Initialize `colon_sep_params` list
+  colon_sep_params <- list()
+
+  # Resolve input units
+  if (!is.null(input_units)) {
+
+    # Stop function if `input_units` isn't a character vector, isn't of
+    # the right length (1 or greater), and does not contain valid values
+    validate_duration_input_units(input_units = input_units)
+
+    # Normalize the valid set of provided `input_units`
+    input_units <- normalize_duration_input_units(input_units = input_units)
+  }
+
+  # Resolve output units
+  if (is.null(output_units)) {
+
+    output_units <- c("weeks", "days", "hours", "minutes", "seconds")
+
+  } else {
+
+    # Stop function if `output_units` isn't a character vector, isn't of
+    # the right length (1 or greater), and does not contain valid values
+    validate_duration_output_units(output_units = output_units)
+
+    # Normalize the valid set of provided `output_units`
+    output_units <- normalize_duration_output_units(output_units = output_units)
+  }
+
+  # If `duration_style` is of the "iso" or "colon-sep" types, then
+  # some options need to be overridden
+
+  if (duration_style == "iso") {
+    output_units <- c("days", "hours", "minutes", "seconds")
+    max_output_units <- NULL
+    trim_zero_units <- c("leading", "trailing")
+  }
+
+  if (duration_style == "colon-sep") {
+
+    if (
+      any(
+        identical(output_units, c("minutes", "seconds")),
+        identical(output_units, c("hours", "minutes")),
+        identical(output_units, c("hours", "minutes", "seconds")),
+        identical(output_units, c("days", "hours", "minutes"))
+      )
+    ) {
+      colon_sep_output_units <- output_units
+    } else {
+      colon_sep_output_units <- c("days", "hours", "minutes", "seconds")
+    }
+
+    output_units <- c("days", "hours", "minutes", "seconds")
+
+    if (identical(trim_zero_units, "leading")) {
+      colon_sep_trim_zero_units <- "leading"
+    } else {
+      colon_sep_trim_zero_units <- FALSE
+    }
+
+    colon_sep_params <-
+      list(
+        output_units = colon_sep_output_units,
+        trim_zero_units = colon_sep_trim_zero_units
+      )
+
+    trim_zero_units <- FALSE
+    max_output_units <- NULL
+  }
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    fns = num_fmt_factory_multi(
+      pattern = pattern,
+      use_latex_math_mode = FALSE,
+      format_fn = function(x, context) {
+
+        if (duration_style %in% c("narrow", "wide")) {
+
+          patterns <-
+            get_localized_duration_patterns(
+              value = x,
+              type = duration_style,
+              locale = locale
+            )
+
+        } else {
+          patterns <- NULL
+        }
+
+        x_str <-
+          values_to_durations(
+            x,
+            in_units = input_units,
+            out_units = output_units,
+            out_style = duration_style,
+            trim_zero_units = trim_zero_units,
+            max_output_units = max_output_units,
+            colon_sep_params = colon_sep_params,
+            sep_mark = sep_mark,
+            dec_mark = dec_mark,
+            system = system,
+            locale = locale,
+            patterns = patterns
+          )
+
+        #
+        # Prefix with plus and minus signs where necessary
+        #
+
+        x_str[x < 0 & !is.infinite(x)] <-
+          paste0(
+            context_minus_mark(context = context),
+            x_str[x < 0 & !is.infinite(x)]
+          )
+
+        if (force_sign) {
+          x_str[x > 0 & !is.infinite(x)] <-
+            paste0("+", x_str[x > 0 & !is.infinite(x)])
+        }
+
+        x_str
+      }
+    )
+  )
+}
+
+validate_trim_zero_units <- function(trim_zero_units) {
+
+  if (!all(trim_zero_units %in% c("leading", "trailing", "internal"))) {
+    stop(
+      "The character vector provided for `trim_zero_units` is invalid:\n",
+      "* It should only contain any of the keywords `\"leading\"`, `\"trailing\"`,
+      or ", "`\"internal\"`",
+      call. = FALSE
+    )
+  }
+}
+
+validate_duration_input_units <- function(input_units) {
+
+  if (is.null(input_units)) {
+    return(NULL)
+  }
+
+  if (!is.character(input_units)) {
+
+    cli::cli_abort(
+      "The `input_units` input to `fmt_duration()` must be a character vector."
+    )
+  }
+
+  time_parts_vec <- c("weeks", "days", "hours", "mins", "minutes", "secs", "seconds")
+
+  if (!all(input_units %in% time_parts_vec) || length(input_units) != 1) {
+
+    cli::cli_abort(c(
+      "The value of `input_units` for `fmt_duration()` is invalid:",
+      "*" = "Only one of the \"weeks\", \"days\", \"hours\", \"minutes\", or
+      \"seconds\" time parts should be present."
+    ))
+  }
+}
+
+normalize_duration_input_units <- function(input_units) {
+
+  # Ensure that key transforms occur
+  input_units %>%
+    tidy_sub("secs", "seconds") %>%
+    tidy_sub("mins", "minutes")
+}
+
+validate_duration_output_units <- function(output_units) {
+
+  if (!is.character(output_units)) {
+
+    cli::cli_abort(
+      "The `output_units` input to `fmt_duration()` must be a character vector."
+    )
+  }
+
+  if (length(output_units) < 1) {
+
+    cli::cli_abort(
+      "The `output_units` input to `fmt_duration()` must be a vector with at
+      least one element."
+    )
+  }
+
+  time_parts_vec <- c("weeks", "days", "hours", "mins", "minutes", "secs", "seconds")
+
+  if (!all(output_units %in% time_parts_vec)) {
+
+    cli::cli_abort(c(
+      "There are invalid components in the `output_units` input to `fmt_duration()`:",
+      "*" = "Only the \"weeks\", \"days\", \"hours\", \"minutes\", and \"seconds\`
+      time parts should be present"
+    ))
+  }
+}
+
+normalize_duration_output_units <- function(output_units) {
+
+  # Ensure that key transforms occur and that the output units are a unique set
+  output_units <-
+    output_units %>%
+    tidy_sub("secs", "seconds") %>%
+    tidy_sub("mins", "minutes") %>%
+    unique()
+
+  # Ensure that the order of output units is from greatest to smallest
+  time_parts <- c("weeks", "days", "hours", "minutes", "seconds")
+  output_units[order(match(output_units, time_parts))]
+}
+
+values_to_durations <- function(
+    x,
+    in_units,
+    out_units,
+    out_style,
+    trim_zero_units,
+    max_output_units,
+    colon_sep_params,
+    sep_mark,
+    dec_mark,
+    system,
+    locale,
+    patterns
+) {
+
+  # Obtain the units of `x` if it is of the difftime class (and
+  # drop difftime attrs with `as.numeric()`)
+  if (inherits(x, "difftime")) {
+    in_units <- units(x)
+    x <- as.numeric(x)
+  }
+
+  # Should `in_units` be anything other than days then
+  # convert all `x` values to days
+  if (in_units != "days") {
+
+    x <-
+      switch(
+        in_units,
+        weeks = x * 7,
+        hours = x / 24,
+        mins = ,
+        minutes = x / 1440,
+        secs = ,
+        seconds = x / 86400
+      )
+  }
+
+  x_str <- character(length(x))
+
+  for (i in seq_along(x)) {
+
+    x_df_i <-
+      dplyr::tibble(
+        value = numeric(0),
+        time_part = character(0),
+        formatted = character(0)
+      )
+
+    x_rem_i <- abs(x[i])
+
+    for (time_p in out_units) {
+
+      time_part_val <- get_time_part_val(x_rem_i, time_part = time_p)
+
+      x_df_i <-
+        dplyr::bind_rows(
+          x_df_i,
+          dplyr::tibble(
+            value = time_part_val,
+            time_part = time_p,
+            formatted = NA_character_
+          )
+        )
+
+      x_rem_i <-
+        subtract_time_with_val(
+          x = x_rem_i,
+          time_part = time_p,
+          val = time_part_val
+        )
+    }
+
+    # Remove time parts according to keywords in `trim_zero_units`
+    total_time_units <- nrow(x_df_i)
+
+    first_non_zero_unit_idx <- utils::head(which(x_df_i$value != 0), 1)
+    last_non_zero_unit_idx <- utils::tail(which(x_df_i$value != 0), 1)
+
+    remove_idx <- c()
+
+    # Possibly add leading zero time parts to `remove_idx`
+    if (
+      "leading" %in% trim_zero_units &&
+      length(first_non_zero_unit_idx) > 0 &&
+      first_non_zero_unit_idx > 1
+    ) {
+      remove_idx <- c(remove_idx, seq(1, first_non_zero_unit_idx - 1))
+    }
+
+    # Possibly add trailing zero time parts to `remove_idx`
+    if (
+      "trailing" %in% trim_zero_units &&
+      length(last_non_zero_unit_idx) > 0 &&
+      last_non_zero_unit_idx < total_time_units
+    ) {
+      remove_idx <- c(remove_idx, seq(last_non_zero_unit_idx + 1, total_time_units))
+    }
+
+    # Possibly add internal zero time parts to `remove_idx`
+    if (
+      "internal" %in% trim_zero_units &&
+      length(first_non_zero_unit_idx) > 0
+    ) {
+      internal_idx <- first_non_zero_unit_idx:last_non_zero_unit_idx
+      remove_idx <- c(remove_idx, base::intersect(internal_idx, which(x_df_i$value == 0)))
+    }
+
+    # Remove rows from `x_df_i`
+    if (length(remove_idx) > 0) {
+      x_df_i <- x_df_i[-remove_idx, ]
+    }
+
+    if (all(x_df_i$value == 0) && length(trim_zero_units) > 0) {
+      # Remove all but the final row
+      x_df_i <- utils::tail(x_df_i, n = 1)
+    }
+
+    # Remove units that exceed a maximum number according to `max_output_units`
+    if (!is.null(max_output_units) && nrow(x_df_i) > max_output_units) {
+      x_df_i <- x_df_i[seq_len(max_output_units), ]
+    }
+
+    for (j in seq_len(nrow(x_df_i))) {
+
+      pattern <-
+        extract_duration_pattern(
+          value = x_df_i$value[j],
+          time_p = x_df_i$time_part[j],
+          patterns = patterns
+        )
+
+      x_df_i[j, "formatted"] <-
+        format_time_part(
+          x = x_df_i$value[j],
+          time_part = x_df_i$time_part[j],
+          out_style = out_style,
+          sep_mark = sep_mark,
+          dec_mark = dec_mark,
+          locale = locale,
+          system = system,
+          pattern = pattern
+        )
+    }
+
+    # Handle edge cases where duration is smaller
+    # than the smallest unit in `out_units`
+    if (all(x_df_i$value == 0)) {
+
+      # If the time duration is zero then use `0` as the value,
+      # otherwise, use `1` and indicate that the value is less than that
+      pattern <-
+        extract_duration_pattern(
+          value = if (x_rem_i == 0) 0 else 1,
+          time_p = time_p,
+          patterns = patterns
+        )
+
+      x_df_i[nrow(x_df_i), "formatted"] <-
+        format_time_part(
+          x = if (x_rem_i == 0) 0 else 1,
+          time_part = time_p,
+          out_style = out_style,
+          sep_mark = sep_mark,
+          dec_mark = dec_mark,
+          locale = locale,
+          system = system,
+          pattern = pattern
+        )
+
+      if (x_rem_i != 0 ) {
+        x_df_i[1, "formatted"] <- paste0("<", x_df_i[1, "formatted"])
+      }
+    }
+
+    if (out_style == "colon-sep") {
+
+      colon_sep_output_units <- colon_sep_params$output_units
+      colon_sep_trim_zero_units <- colon_sep_params$trim_zero_units
+
+      # Filter to only the output units needed
+      x_df_i <- dplyr::filter(x_df_i, time_part %in% .env$colon_sep_output_units)
+
+      # If days has a zero value, remove that entry unconditionally
+      if ("days" %in% x_df_i$time_part && x_df_i[[1, "value"]] == 0) {
+        x_df_i <- dplyr::filter(x_df_i, time_part != "days")
+      }
+
+      if (colon_sep_trim_zero_units == "leading") {
+        if (
+          identical(x_df_i$time_part, c("hours", "minutes", "seconds")) &&
+          x_df_i[[1, "value"]] == 0
+        ) {
+          x_df_i <- dplyr::filter(x_df_i, time_part != "hours")
+        }
+      }
+
+      # Assemble the remaining time parts
+      hms_part <-
+        x_df_i %>%
+        dplyr::filter(time_part %in% c("hours", "minutes", "seconds")) %>%
+        dplyr::pull(formatted) %>%
+        paste(collapse = ":")
+
+      d_part <-
+        ifelse("days" %in% x_df_i$time_part, paste0(x_df_i$formatted[1], "/"), "")
+
+      x_str[i] <- paste0(d_part, hms_part)
+
+    } else if (out_style == "iso") {
+
+      x_str[i] <-
+        paste0("P", paste0(x_df_i$formatted, collapse = "")) %>%
+        tidy_sub("D", "DT", fixed = TRUE)
+
+    } else {
+      x_str[i] <- paste0(x_df_i$formatted, collapse = " ")
+    }
+  }
+
+  x_str
+}
+
+day_conversion_factor <- function(time_part) {
+
+  switch(
+    time_part,
+    weeks = 1/7,
+    days = 1,
+    hours = 24,
+    minutes = 1440,
+    seconds = 86400
+  )
+}
+
+get_time_part_val <- function(x, time_part) {
+  floor(x * day_conversion_factor(time_part = time_part))
+}
+
+subtract_time_with_val <- function(x, time_part, val) {
+  x - (val / day_conversion_factor(time_part = time_part))
+}
+
+format_time_part <- function(
+    x,
+    time_part,
+    out_style,
+    sep_mark,
+    dec_mark,
+    locale,
+    system,
+    pattern
+) {
+
+  x_val <-
+    format_num_to_str(
+      x,
+      context = "plain",
+      decimals = 0,
+      n_sigfig = NULL,
+      sep_mark = if (out_style != "iso") sep_mark else "",
+      dec_mark = dec_mark,
+      drop_trailing_zeros = TRUE,
+      drop_trailing_dec_mark = TRUE,
+      format = "f",
+      system = system
+    )
+
+  if (out_style %in% c("narrow", "wide")) {
+    out <- gsub("{0}", x_val, pattern, fixed = TRUE)
+  } else if (out_style == "iso") {
+    out <- paste0(x_val, toupper(substr(time_part, 1, 1)))
+  } else {
+    if (time_part %in% c("hours", "minutes", "seconds") && x < 10) {
+      out <- paste0("0", x_val)
+    } else {
+      out <- as.character(x_val)
+    }
+  }
+
+  out
+}
+
+get_localized_duration_patterns <- function(
+    value,
+    type,
+    locale
+) {
+
+  if (is.null(locale)) locale <- "en"
+
+  if (type == "wide") type <- "long"
+
+  pattern_tbl <-
+    durations[
+      durations$locale == locale,
+      grepl(
+        "^duration-(week|day|hour|minute|second).unitPattern-count-(zero|one|other)$",
+        colnames(durations)
+      ) |
+        grepl("type", colnames(durations), fixed = TRUE)
+    ] %>%
+    dplyr::filter(type == .env$type) %>%
+    dplyr::select(-type)
+
+  colnames(pattern_tbl) <- gsub("(duration|-|unitPattern-count)", "", colnames(pattern_tbl))
+
+  as.list(pattern_tbl)
+}
+
+extract_duration_pattern <- function(
+    value,
+    time_p,
+    patterns
+) {
+
+  x_val_i_type <-
+    dplyr::case_when(
+      value == 1 ~ "one",
+      value == 0 ~ "zero",
+      TRUE ~ "other"
+    )
+
+  pattern <- patterns[grepl(paste0(gsub("s$", "", time_p), ".*?.", x_val_i_type), names(patterns))][[1]]
+  if (!is.null(pattern) && is.na(pattern)) {
+    pattern <- patterns[grepl(paste0(gsub("s$", "", time_p), ".*?.other"), names(patterns))][[1]]
+  }
+
+  pattern
 }
 
 #' Format Markdown text
@@ -2763,7 +3515,7 @@ fmt_datetime <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-13
+#' 3-14
 #'
 #' @import rlang
 #' @export
@@ -2857,7 +3609,7 @@ fmt_markdown <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-14
+#' 3-15
 #'
 #' @import rlang
 #' @export
@@ -2951,6 +3703,7 @@ fmt_passthrough <- function(
   )
 }
 
+
 #' Set a column format with a formatter function
 #'
 #' @description
@@ -3012,7 +3765,7 @@ fmt_passthrough <- function(
 #'
 #' @family Format Data
 #' @section Function ID:
-#' 3-15
+#' 3-16
 #'
 #' @import rlang
 #' @export
