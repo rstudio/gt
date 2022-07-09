@@ -65,7 +65,7 @@ function.
 }
 
 \seealso{
-Other Table Option Functions: 
+Other table option functions: 
 \code{\link{opt_align_table_header}()},
 \code{\link{opt_all_caps}()},
 \code{\link{opt_css}()},
@@ -77,4 +77,4 @@ Other Table Option Functions:
 \code{\link{opt_table_outline}()},
 \code{\link{opt_vertical_padding}()}
 }
-\concept{Table Option Functions}
+\concept{table option functions}
