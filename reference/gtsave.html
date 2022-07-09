@@ -81,7 +81,7 @@ filename, producing either an HTML, PDF, PNG, LaTeX, or RTF file.</p>
 <dt>filename</dt>
 <dd><p>The file name to create on disk. Ensure that an extension
 compatible with the output types is provided (<code>.html</code>, <code>.tex</code>, <code>.ltx</code>,
-<code>.rtf</code>). If a custom save function is provided then the file extension is
+<code>.rtf</code>, <code>.docx</code>). If a custom save function is provided then the file extension is
 disregarded.</p></dd>
 
 
@@ -124,6 +124,9 @@ image, and has a default value of <code>5</code>), and <code>selector</code> (th
 LaTeX document is produced. An output filename of <code>.rtf</code> will generate an RTF
 document. The LaTeX and RTF saving functions don't have any options to pass
 to <code>...</code>.</p>
+<p>If the output filename extension is ".docx", a docx (word) file is produced. This process is
+facilitated by the <strong>rmarkdown</strong> package, so this package needs to be installed beofre attempting
+to save any table as a docx.</p>
     </div>
     <div class="section level2">
     <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
@@ -152,7 +155,10 @@ of whitespace can be set with the <code>expand</code> option.</p>
 document.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/gtsave.html">gtsave</a></span><span class="op">(</span><span class="st">"tab_1.tex"</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>With the <code>.rtf</code> extension, we'll get an RTF document.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/gtsave.html">gtsave</a></span><span class="op">(</span><span class="st">"tab_1.rtf"</span><span class="op">)</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/gtsave.html">gtsave</a></span><span class="op">(</span><span class="st">"tab_1.rtf"</span><span class="op">)</span></span>
+<span></span></code></pre><p></p></div>
+<p>With the <code>.docx</code> extension, we'll get a word/docx document.</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/gtsave.html">gtsave</a></span><span class="op">(</span><span class="st">"tab_1.docx"</span><span class="op">)</span></span></code></pre><p></p></div>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
