@@ -27,9 +27,7 @@ summary sections, and, some even have vertical lines. In addition to \code{style
 there are seven \code{color} variations that each use a range of five color tints.
 Each of the color tints have been fine-tuned to maximize the contrast between
 text and its background. In total, There are 42 combinations of \code{style} and
-\code{color}. We can use the \code{\link[=info_preset_colorized]{info_preset_colorized()}} function to get an
-information table which has the names and previews for each of the color list
-keywords.
+\code{color}.
 }
 \section{Examples}{
 
