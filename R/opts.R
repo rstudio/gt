@@ -85,7 +85,7 @@
 #' `r man_get_image_tag(file = "man_opt_footnote_marks_1.png")`
 #' }}
 #'
-#' @family Table Option Functions
+#' @family table option functions
 #' @section Function ID:
 #' 9-1
 #'
@@ -155,7 +155,7 @@ opt_footnote_marks <- function(
 #' `r man_get_image_tag(file = "man_opt_row_striping_1.png")`
 #' }}
 #'
-#' @family Table Option Functions
+#' @family table option functions
 #' @section Function ID:
 #' 9-2
 #'
@@ -226,7 +226,7 @@ opt_row_striping <- function(
 #' `r man_get_image_tag(file = "man_opt_align_table_header_1.png")`
 #' }}
 #'
-#' @family Table Option Functions
+#' @family table option functions
 #' @section Function ID:
 #' 9-3
 #'
@@ -308,7 +308,7 @@ opt_align_table_header <- function(
 #' `r man_get_image_tag(file = "man_opt_vertical_padding_1.png")`
 #' }}
 #'
-#' @family Table Option Functions
+#' @family table option functions
 #' @section Function ID:
 #' 9-4
 #'
@@ -390,7 +390,7 @@ opt_vertical_padding <- function(
 #' `r man_get_image_tag(file = "man_opt_horizontal_padding_1.png")`
 #' }}
 #'
-#' @family Table Option Functions
+#' @family table option functions
 #' @section Function ID:
 #' 9-5
 #'
@@ -507,7 +507,7 @@ get_padding_option_value_list <- function(scale, type) {
 #' `r man_get_image_tag(file = "man_opt_all_caps_1.png")`
 #' }}
 #'
-#' @family Table Option Functions
+#' @family table option functions
 #' @section Function ID:
 #' 9-6
 #'
@@ -611,7 +611,7 @@ opt_all_caps <- function(
 #' `r man_get_image_tag(file = "man_opt_table_lines_1.png")`
 #' }}
 #'
-#' @family Table Option Functions
+#' @family table option functions
 #' @section Function ID:
 #' 9-7
 #'
@@ -710,7 +710,7 @@ opt_table_lines <- function(
 #' `r man_get_image_tag(file = "man_opt_table_outline_2.png")`
 #' }}
 #'
-#' @family Table Option Functions
+#' @family table option functions
 #' @section Function ID:
 #' 9-8
 #'
@@ -847,7 +847,7 @@ opt_table_outline <- function(
 #' `r man_get_image_tag(file = "man_opt_table_font_2.png")`
 #' }}
 #'
-#' @family Table Option Functions
+#' @family table option functions
 #' @section Function ID:
 #' 9-9
 #'
@@ -976,7 +976,7 @@ opt_table_font <- function(
 #' `r man_get_image_tag(file = "man_opt_stylize_1.png")`
 #' }}
 #'
-#' @family Table Option Functions
+#' @family table option functions
 #' @section Function ID:
 #' 9-10
 #'
@@ -1270,7 +1270,7 @@ get_colorized_params <- function(
 #' `r man_get_image_tag(file = "man_opt_css_1.png")`
 #' }}
 #'
-#' @family Table Option Functions
+#' @family table option functions
 #' @section Function ID:
 #' 9-11
 #'
