@@ -1,6 +1,6 @@
 # gt (development version)
 
-* word table output via `as_word()`. (#929)
+* word table output via `as_word()`. `docx` files can now be made through gtsave. (#929)
 
 # gt 0.6.0
 

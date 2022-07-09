@@ -38,10 +38,14 @@
 #' document. The LaTeX and RTF saving functions don't have any options to pass
 #' to `...`.
 #'
+#' If the output filename extension is ".docx", a docx (word) file is produced. This process is
+#' facilitated by the **rmarkdown** package, so this package needs to be installed beofre attempting
+#' to save any table as a docx.
+#'
 #' @param data A table object that is created using the [gt()] function.
 #' @param filename The file name to create on disk. Ensure that an extension
 #'   compatible with the output types is provided (`.html`, `.tex`, `.ltx`,
-#'   `.rtf`). If a custom save function is provided then the file extension is
+#'   `.rtf`, `.docx`). If a custom save function is provided then the file extension is
 #'   disregarded.
 #' @param path An optional path to which the file should be saved (combined with
 #'   filename).
@@ -95,6 +99,12 @@
 #'
 #' ```r
 #' tab_1 %>% gtsave("tab_1.rtf")
+#'
+#' ```
+#' With the `.docx` extension, we'll get a word/docx document.
+#'
+#' ```r
+#' tab_1 %>% gtsave("tab_1.docx")
 #' ```
 #'
 #' @family Export Functions
@@ -125,7 +135,8 @@ gtsave <- function(
       "*" = "`.png`          (PNG file)",
       "*" = "`.pdf`          (PDF file)",
       "*" = "`.tex`, `.rnw`  (LaTeX file)",
-      "*" = "`.rtf`          (RTF file)"
+      "*" = "`.rtf`          (RTF file)",
+      "*" = "`.docx`         (Word file)"
     ))
   }
 
@@ -141,6 +152,7 @@ gtsave <- function(
     "rtf" = gt_save_rtf(data = data, filename, path, ...),
     "png" = ,
     "pdf" = gt_save_webshot(data = data, filename, path, ...),
+    "docx" = gt_save_docx(data = data, filename, path, ...),
     {
       cli::cli_abort(c(
         "The file extension supplied (`.{file_ext}`) cannot be used.",
@@ -263,6 +275,41 @@ gt_save_rtf <- function(
   writeLines(as_rtf(data = data), con = filename)
 }
 
+#' Saving function for a Word (docx) file
+#'
+#' @noRd
+gt_save_docx <- function(data, filename, path = NULL, ..., open = rlang::is_interactive()) {
+
+  if(!rlang::is_installed("rmarkdown")){
+    stop("{rmarkdown} package is necessary to save gt tables as word documents.")
+  }
+
+  filename <- gtsave_filename(path = path, filename = filename)
+
+  word_md_text <- paste0(c(
+    "```{=openxml}",
+    enc2utf8(as_word(data = data)),
+    "```",
+    ""),
+    collapse = "\n"
+  )
+
+  word_md_file <- tempfile(fileext = ".md")
+
+  writeChar(
+    word_md_text,
+    con = word_md_file
+  )
+
+  rmarkdown::pandoc_convert(
+    input = word_md_file,
+    output = filename
+  )
+
+}
+
+
+
 #' Get the lowercase extension from a filename
 #'
 #' @noRd
@@ -290,6 +337,8 @@ gtsave_filename <- function(path, filename) {
     )
   )
 }
+
+
 
 #' Get the HTML content of a **gt** table
 #'

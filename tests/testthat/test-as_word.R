@@ -174,6 +174,8 @@ test_that("word ooxml can be generated from gt object", {
       style = cell_text(
         color = "green",
         font = "Biome",
+        style = "italic",
+        weight = "bold"
       ),
       locations = cells_stub()
     ) %>%
