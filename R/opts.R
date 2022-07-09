@@ -939,9 +939,9 @@ opt_table_font <- function(
 #'
 #' @section Examples:
 #'
-#' Use `exibble` to create a gt table with a number of table parts added. Then,
-#' use the `opt_stylize()` function to give the table some additional style
-#' (using the `"aqua"` color variation and style number `6`).
+#' Use `exibble` to create a **gt** table with a number of table parts added.
+#' Then, use the `opt_stylize()` function to give the table some additional
+#' style (using the `"aqua"` color variation and style number `6`).
 #'
 #' ```r
 #' exibble %>%
