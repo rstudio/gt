@@ -1272,7 +1272,7 @@ get_colorized_params <- function(
 #'
 #' @family Table Option Functions
 #' @section Function ID:
-#' 9-10
+#' 9-11
 #'
 #' @export
 opt_css <- function(
