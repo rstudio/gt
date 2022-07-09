@@ -1009,6 +1009,7 @@ create_columns_component_xml <- function(data, split = FALSE, keep_with_next = T
           font = cell_style[["cell_text"]][["font"]],
           size = cell_style[["cell_text"]][["size"]] %||% 20,
           color = cell_style[["cell_text"]][["color"]],
+          style = cell_style[["cell_text"]][["style"]],
           stretch = cell_style[["cell_text"]][["stretch"]],
           align = cell_style[["cell_text"]][["align"]] %||% stubhead_label_alignment,
           v_align = cell_style[["cell_text"]][["v_align"]],
@@ -1055,6 +1056,7 @@ create_columns_component_xml <- function(data, split = FALSE, keep_with_next = T
         font = cell_style[["cell_text"]][["font"]],
         size = cell_style[["cell_text"]][["size"]] %||% 20,
         color = cell_style[["cell_text"]][["color"]],
+        style = cell_style[["cell_text"]][["style"]],
         stretch = cell_style[["cell_text"]][["stretch"]],
         align = cell_style[["cell_text"]][["align"]],
         v_align = cell_style[["cell_text"]][["v_align"]],
@@ -1127,6 +1129,8 @@ create_columns_component_xml <- function(data, split = FALSE, keep_with_next = T
               font = cell_style[["cell_text"]][["font"]] %||% "Calibri",
               size = cell_style[["cell_text"]][["size"]] %||% 20,
               color = cell_style[["cell_text"]][["color"]],
+              style = cell_style[["cell_text"]][["style"]],
+              weight = cell_style[["cell_text"]][["weight"]],
               stretch = cell_style[["cell_text"]][["stretch"]],
               align = cell_style[["cell_text"]][["align"]] %||% stubhead_label_alignment,
               v_align = cell_style[["cell_text"]][["v_align"]] %||% "bottom",
@@ -1205,6 +1209,8 @@ create_columns_component_xml <- function(data, split = FALSE, keep_with_next = T
                 font = cell_style[["cell_text"]][["font"]],
                 size = cell_style[["cell_text"]][["size"]] %||% 20,
                 color = cell_style[["cell_text"]][["color"]],
+                style = cell_style[["cell_text"]][["style"]],
+                weight = cell_style[["cell_text"]][["weight"]],
                 stretch = cell_style[["cell_text"]][["stretch"]],
                 align = cell_style[["cell_text"]][["align"]] %||% "center",
                 v_align = cell_style[["cell_text"]][["v_align"]],
@@ -1368,6 +1374,8 @@ create_body_component_xml <- function(data, split = FALSE, keep_with_next = TRUE
                 font = cell_style[["cell_text"]][["font"]],
                 size = cell_style[["cell_text"]][["size"]] %||% 20,
                 color = cell_style[["cell_text"]][["color"]],
+                style = cell_style[["cell_text"]][["style"]],
+                weight = cell_style[["cell_text"]][["weight"]],
                 stretch = cell_style[["cell_text"]][["stretch"]],
                 align = cell_style[["cell_text"]][["align"]],
                 v_align = cell_style[["cell_text"]][["v_align"]],
@@ -1417,6 +1425,8 @@ create_body_component_xml <- function(data, split = FALSE, keep_with_next = TRUE
               font = cell_style[["cell_text"]][["font"]],
               size = cell_style[["cell_text"]][["size"]],
               color = cell_style[["cell_text"]][["color"]],
+              style = cell_style[["cell_text"]][["style"]],
+              weight = cell_style[["cell_text"]][["weight"]],
               stretch = cell_style[["cell_text"]][["stretch"]],
               align = cell_style[["cell_text"]][["align"]],
               v_align = cell_style[["cell_text"]][["v_align"]],
@@ -1571,6 +1581,8 @@ create_source_notes_component_xml <- function(data, split = FALSE, keep_with_nex
               font = cell_style[["cell_text"]][["font"]],
               size = cell_style[["cell_text"]][["size"]] %||% 20,
               color = cell_style[["cell_text"]][["color"]],
+              style = cell_style[["cell_text"]][["style"]],
+              weight = cell_style[["cell_text"]][["weight"]],
               stretch = cell_style[["cell_text"]][["stretch"]],
               align = cell_style[["cell_text"]][["align"]],
               v_align = cell_style[["cell_text"]][["v_align"]],
@@ -1738,6 +1750,9 @@ summary_rows_xml <- function(list_of_summaries,
             font = cell_style[["cell_text"]][["font"]],
             size = cell_style[["cell_text"]][["size"]],
             color = cell_style[["cell_text"]][["color"]],
+            style = cell_style[["cell_text"]][["style"]],
+            weight = cell_style[["cell_text"]][["weight"]],
+            color = cell_style[["cell_text"]][["color"]],
             stretch = cell_style[["cell_text"]][["stretch"]],
             align = cell_style[["cell_text"]][["align"]],
             v_align = cell_style[["cell_text"]][["v_align"]],
@@ -1857,6 +1872,8 @@ xml_table_cell <-
            size = NULL,
            font = NULL,
            color = NULL,
+           style = NULL,
+           weight = NULL,
            stretch = NULL,
            align = NULL,
            v_align = NULL,
@@ -1911,11 +1928,17 @@ xml_table_cell <-
                   ascii_font= font %||% "Calibri",
                   ansi_font= font %||% "Calibri"
                 ),
-              xml_sz(val = size %||% 20),
-              if(!is.null(color)){
-                xml_color(color = color)
-              }
-            ),
+                xml_sz(val = size %||% 20),
+                if(!is.null(color)){
+                  xml_color(color = color)
+                },
+                if(identical(style,"italic")){
+                  xml_i()
+                },
+                if(identical(weight,"bold")){
+                  xml_b()
+                }
+              ),
             if(is.character(text)){
               xml_t(text)
             }else if(inherits(text, "shiny.tag.list")){
