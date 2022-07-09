@@ -32,9 +32,9 @@ text and its background. In total, There are 42 combinations of \code{style} and
 \section{Examples}{
 
 
-Use \code{exibble} to create a gt table with a number of table parts added. Then,
-use the \code{opt_stylize()} function to give the table some additional style
-(using the \code{"aqua"} color variation and style number \code{6}).
+Use \code{exibble} to create a \strong{gt} table with a number of table parts added.
+Then, use the \code{opt_stylize()} function to give the table some additional
+style (using the \code{"aqua"} color variation and style number \code{6}).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt(rowname_col = "row", groupname_col = "group") \%>\%
