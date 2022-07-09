@@ -38,10 +38,14 @@
 #' document. The LaTeX and RTF saving functions don't have any options to pass
 #' to `...`.
 #'
+#' If the output filename extension is ".docx", a docx (word) file is produced. This process is
+#' facilitated by the **rmarkdown** package, so this package needs to be installed beofre attempting
+#' to save any table as a docx.
+#'
 #' @param data A table object that is created using the [gt()] function.
 #' @param filename The file name to create on disk. Ensure that an extension
 #'   compatible with the output types is provided (`.html`, `.tex`, `.ltx`,
-#'   `.rtf`). If a custom save function is provided then the file extension is
+#'   `.rtf`, `.docx`). If a custom save function is provided then the file extension is
 #'   disregarded.
 #' @param path An optional path to which the file should be saved (combined with
 #'   filename).
@@ -95,6 +99,12 @@
 #'
 #' ```r
 #' tab_1 %>% gtsave("tab_1.rtf")
+#'
+#' ```
+#' With the `.docx` extension, we'll get a word/docx document.
+#'
+#' ```r
+#' tab_1 %>% gtsave("tab_1.docx")
 #' ```
 #'
 #' @family Export Functions
