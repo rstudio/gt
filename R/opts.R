@@ -927,9 +927,7 @@ opt_table_font <- function(
 #' there are seven `color` variations that each use a range of five color tints.
 #' Each of the color tints have been fine-tuned to maximize the contrast between
 #' text and its background. In total, There are 42 combinations of `style` and
-#' `color`. We can use the [info_preset_colorized()] function to get an
-#' information table which has the names and previews for each of the color list
-#' keywords.
+#' `color`.
 #'
 #' @inheritParams fmt_number
 #' @param style Six numbered styles are available. Simply provide a number from
