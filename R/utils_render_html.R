@@ -287,7 +287,7 @@ create_heading_component_h <- function(data) {
 
   title_row <-
     htmltools::tags$tr(
-      htmltools::tags$th(
+      htmltools::tags$td(
         colspan = n_cols_total,
         class = paste(title_classes, collapse = " "),
         style = title_styles,
@@ -301,7 +301,7 @@ create_heading_component_h <- function(data) {
 
     subtitle_row <-
       htmltools::tags$tr(
-        htmltools::tags$th(
+        htmltools::tags$td(
           colspan = n_cols_total,
           class = paste(subtitle_classes, collapse = " "),
           style = subtitle_styles,
@@ -405,6 +405,7 @@ create_columns_component_h <- function(data) {
           rowspan = 1,
           colspan = length(stub_layout),
           style = stubhead_style,
+          scope = ifelse(length(stub_layout) > 1, "colgroup", "col"),
           htmltools::HTML(headings_labels[1])
         )
 
@@ -432,6 +433,7 @@ create_columns_component_h <- function(data) {
           rowspan = 1,
           colspan = 1,
           style = column_style,
+          scope = "col",
           htmltools::HTML(headings_labels[i])
         )
     }
@@ -484,6 +486,7 @@ create_columns_component_h <- function(data) {
           rowspan = 2,
           colspan = length(stub_layout),
           style = stubhead_style,
+          scope = ifelse(length(stub_layout) > 1, "colgroup", "col"),
           htmltools::HTML(headings_labels[1])
         )
 
@@ -544,6 +547,7 @@ create_columns_component_h <- function(data) {
             rowspan = 2,
             colspan = 1,
             style = heading_style,
+            scope = "col",
             htmltools::HTML(headings_labels[i])
           )
 
@@ -580,6 +584,7 @@ create_columns_component_h <- function(data) {
               rowspan = 1,
               colspan = colspans[i],
               style = spanner_style,
+              scope = ifelse(colspans[i] > 1, "colgroup", "col"),
               htmltools::tags$span(
                 class = "gt_column_spanner",
                 htmltools::HTML(spanners[level_1_index, ][i])
@@ -635,6 +640,7 @@ create_columns_component_h <- function(data) {
             ),
             rowspan = 1, colspan = 1,
             style = remaining_style,
+            scope = "col",
             htmltools::HTML(remaining_headings_labels[j])
           )
       }
@@ -710,6 +716,7 @@ create_columns_component_h <- function(data) {
               rowspan = 1,
               colspan = colspans[j],
               style = spanner_style,
+              scope = ifelse(colspans[j] > 1, "colgroup", "col"),
               if (spanner_ids_row[j] != "") {
                 htmltools::tags$span(
                   class = "gt_column_spanner",
@@ -727,7 +734,8 @@ create_columns_component_h <- function(data) {
           htmltools::tagList(
             htmltools::tags$th(
               rowspan = max(higher_spanner_rows_idx),
-              colspan = length(stub_layout)
+              colspan = length(stub_layout),
+              scope = ifelse(length(stub_layout) > 1, "colgroup", "col")
             ),
             level_i_spanners
           )
@@ -965,7 +973,12 @@ create_body_component_h <- function(data) {
                   FUN = function(x, row_span, alignment_class, extra_class, cell_style) {
 
                     sprintf(
-                      "<td %sclass=\"%s\"%s>%s</td>",
+                      "<%s %sclass=\"%s\"%s>%s</%s>",
+                      if ("gt_stub" %in% extra_class) {
+                        "th scope=\"row\""
+                      } else {
+                        "td"
+                      },
                       if (is.null(row_span)) {
                         ""
                       } else {
@@ -992,7 +1005,12 @@ create_body_component_h <- function(data) {
                           "\""
                         )
                       },
-                      as.character(x)
+                      as.character(x),
+                      if ("gt_stub" %in% extra_class) {
+                        "th"
+                      } else {
+                        "td"
+                      }
                     )
                   }
                 ),

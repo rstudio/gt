@@ -477,7 +477,7 @@ test_that("the `inline_html_styles()` function works correctly", {
   # Expect that the `colspan` attr is preserved in both <th> elements
   # and that the `text-align:left` rule is present
   expect_true(
-    grepl("th colspan=\"11\" style=.*?text-align: left;", inlined_html)
+    grepl("td colspan=\"11\" style=.*?text-align: left;", inlined_html)
   )
 })
 

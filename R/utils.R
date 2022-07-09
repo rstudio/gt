@@ -427,6 +427,20 @@ process_text <- function(text, context = "html") {
 
       return(text)
     }
+
+  } else if (context == "word") {
+
+    # Text processing for Word output
+
+    if (inherits(text, "from_markdown")) {
+
+      return(markdown_to_xml(text))
+
+    } else {
+
+      return(as.character(text))
+    }
+
   } else {
 
     # Text processing in the default case
@@ -522,8 +536,237 @@ markdown_to_latex <- function(text) {
   )
 }
 
-cmark_rules <- list(
+markdown_to_xml <- function(text) {
 
+  text <-
+    text %>%
+    as.character() %>%
+    vapply(
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
+      FUN = commonmark::markdown_xml
+    ) %>%
+    vapply(
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
+      FUN = function(cmark) {
+        # cat(cmark)
+        x <- xml2::read_xml(cmark)
+        if (!identical(xml2::xml_name(x), "document")) {
+          stop("Unexpected result from markdown parsing: `document` element not found")
+        }
+
+        children <- xml2::xml_children(x)
+
+        if (length(children) == 1 &&
+            xml2::xml_type(children[[1]]) == "element" &&
+            xml2::xml_name(children[[1]]) == "paragraph") {
+          children <- xml2::xml_children(children[[1]])
+        }
+
+        apply_rules <- function(x) {
+
+          if (inherits(x, "xml_nodeset")) {
+
+            len <- length(x)
+            results <- character(len) # preallocate vector
+
+            for (i in seq_len(len)) {
+              results[[i]] <- apply_rules(x[[i]])
+            }
+
+            # TODO: is collapse = "" correct?
+            xml_raw(paste0("", results, collapse = ""))
+
+          } else {
+
+            output <- if (xml2::xml_type(x) == "element") {
+
+              rule <- cmark_rules_xml[[xml2::xml_name(x)]]
+
+              if (is.null(rule)) {
+
+                rlang::warn(
+                  paste0("Unknown commonmark element encountered: ", xml2::xml_name(x)),
+                  .frequency = "once",
+                  .frequency_id = "gt_commonmark_unknown_element"
+                )
+
+                apply_rules(xml2::xml_contents(x))
+
+              } else if (is.function(rule)) {
+
+                rule(x, apply_rules)
+              }
+            }
+
+            xml_raw(paste0("", output, collapse = ""))
+          }
+        }
+
+        apply_rules(children)
+      }
+    )
+
+  text
+}
+
+# TODO: Make XML versions of these
+cmark_rules_xml <- list(
+
+  heading = function(x, process) {
+
+    heading_sizes <- c(36, 32, 28, 24, 20, 16)
+    fs <- heading_sizes[as.numeric(xml2::xml_attr(x, attr = "level"))]
+
+    htmltools::tagList(
+      xml_sz(process(xml2::xml_children(x)), val = fs)
+    )
+  },
+  thematic_break = function(x, process) {
+    "<w:pict>
+      <v:rect style=\"width:500pt;height:1pt;\" o:hralign=\"center\" fillcolor=\"#bbbbbb\" stroked=\"f\"/>
+    </w:pict>"
+  },
+  link = function(x, process) {
+    # NOTE: Links are difficult to insert in OOXML documents because
+    # a relationship must be provided in the 'document.xml.rels' file
+    xml2::xml_text(x)
+  },
+  list = function(x, process) {
+
+    type <- xml2::xml_attr(x, attr = "type")
+    n_items <- length(xml2::xml_children(x))
+
+    # NOTE: `start`, `delim`, and `tight` attrs are ignored; we also
+    # assume there is only `type` values of "ordered" and "bullet" (unordered)
+    htmltools::HTML(
+      paste(
+        vapply(
+          seq_len(n_items),
+          FUN.VALUE = character(1),
+          USE.NAMES = FALSE,
+          FUN = function(n) {
+
+            paste(
+              ifelse(type == "bullet", "\u2022", ""),
+              process(xml2::xml_children(x)[n]),
+              collapse = ""
+            )
+          }
+        ),
+        collapse = "<w:br/>"
+      )
+    )
+  },
+  item = function(x, process) {
+    # TODO: probably needs something like process_children()
+    xml2::xml_text(x)
+  },
+  code_block = function(x, process) {
+    htmltools::tagList(
+      xml_rPr(xml_r_font(ascii_font = "Courier", ansi_font = "Courier")),
+      xml_t(xml2::xml_text(x), xml_space = "preserve"),
+      xml_rPr(xml_r_font(ascii_font = "Calibri", ansi_font = "Calibri"))
+    )
+  },
+  html_inline = function(x, process) {
+
+    # TODO: make this work for XML
+
+    tag <- xml2::xml_text(x)
+
+    match <- stringr::str_match(tag, pattern = "^<(/?)([a-zA-Z0-9\\-]+)")
+
+    if (!is.na(match[1, 1])) {
+
+      span_map <-
+        c(
+          sup = "super",
+          sub = "sub",
+          strong = "b",
+          b = "b",
+          em = "i",
+          i = "i",
+          code = "f1"
+        )
+
+      key_map <- c(br = "line")
+
+      is_closing <- match[1, 2] == "/"
+      tag_name <- match[1, 3]
+
+      if (!is_closing) {
+
+        if (tag_name %in% names(key_map)) {
+
+          return(rtf_key(key_map[tag_name], space = TRUE))
+
+        } else if (tag_name %in% names(span_map)) {
+
+          return(
+            rtf_paste0(
+              rtf_raw("{"),
+              rtf_key(span_map[tag_name], space = TRUE)
+            )
+          )
+        }
+
+      } else {
+
+        if (tag_name %in% names(span_map)) {
+          return(rtf_raw("}"))
+        }
+      }
+    }
+
+    # Any unrecognized HTML tags are stripped, returning nothing
+    return(rtf_raw(""))
+  },
+  softbreak = function(x, process) {
+    "\n "
+  },
+  linebreak = function(x, process) {
+    "<w:br/>"
+  },
+  block_quote = function(x, process) {
+    # TODO: Implement
+    process(xml2::xml_children(x))
+  },
+  code = function(x, process) {
+    htmltools::tagList(
+      xml_rPr(xml_r_font(ascii_font = "Courier", ansi_font = "Courier")),
+      xml_t(xml2::xml_text(x), xml_space = "preserve"),
+      xml_rPr(xml_r_font(ascii_font = "Calibri", ansi_font = "Calibri"))
+    )
+  },
+  strong = function(x, process) {
+    htmltools::HTML(
+      paste0(
+        xml_rPr(xml_b(active = TRUE)),
+        as.character(process(xml2::xml_children(x))),
+        xml_rPr(xml_b(active = FALSE))
+      )
+    )
+  },
+  emph = function(x, process) {
+    htmltools::HTML(
+      paste0(
+        xml_rPr(xml_i(active = TRUE)),
+        as.character(process(xml2::xml_children(x))),
+        xml_rPr(xml_i(active = FALSE))
+      )
+    )
+  },
+  text = function(x, process) {
+    xml2::xml_text(x)
+  },
+  paragraph = function(x, process) {
+    xml2::xml_text(x)
+  }
+)
+
+cmark_rules_rtf <- list(
   heading = function(x, process) {
     heading_sizes <- c(36, 32, 28, 24, 20, 16)
     fs <- heading_sizes[as.numeric(xml2::xml_attr(x, attr = "level"))]
@@ -725,7 +968,7 @@ markdown_to_rtf <- function(text) {
           } else {
             output <- if (xml2::xml_type(x) == "element") {
 
-              rule <- cmark_rules[[xml2::xml_name(x)]]
+              rule <- cmark_rules_rtf[[xml2::xml_name(x)]]
               if (is.null(rule)) {
                 rlang::warn(
                   paste0("Unknown commonmark element encountered: ", xml2::xml_name(x)),

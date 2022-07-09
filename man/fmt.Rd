@@ -84,7 +84,7 @@ Use \code{\link{exibble}} to create a \strong{gt} table. Format the numeric valu
 
 \section{Function ID}{
 
-3-15
+3-16
 }
 
 \seealso{
@@ -94,6 +94,7 @@ Other Format Data:
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_fraction}()},
 \code{\link{fmt_integer}()},

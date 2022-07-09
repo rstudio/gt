@@ -2,15 +2,18 @@ skip_on_cran()
 
 test_that("`as_raw_html()` produces the same table every time", {
 
-  gt(exibble) %>%
-    as_raw_html(inline_css = TRUE) %>%
-    nchar() %>%
-    expect_equal(35730)
+  gt_html_1 <-
+    gt(exibble) %>%
+    as_raw_html(inline_css = TRUE)
 
-  gt(
-    mtcars,
-    rownames_to_stub = TRUE
-  ) %>%
+  gt_html_1_sha1 <- digest::sha1(gt_html_1)
+  expect_equal(gt_html_1_sha1, "45813e5281fb9f9cc616d55551efff7ccaa17cca")
+
+  gt_html_2 <-
+    gt(
+      mtcars,
+      rownames_to_stub = TRUE
+    ) %>%
     cols_move_to_start(columns = c(gear, carb)) %>%
     tab_stubhead(label = "cars") %>%
     cols_hide(columns = "mpg") %>%
@@ -107,7 +110,8 @@ test_that("`as_raw_html()` produces the same table every time", {
         rows = "Mazda RX4"
       )
     ) %>%
-    as_raw_html(inline_css = TRUE) %>%
-    nchar() %>%
-    expect_equal(162967)
+    as_raw_html(inline_css = TRUE)
+
+  gt_html_2_sha1 <- digest::sha1(gt_html_2)
+  expect_equal(gt_html_2_sha1, "b300b93826ffd2de48f2514aecfeab9f43a3695b")
 })
