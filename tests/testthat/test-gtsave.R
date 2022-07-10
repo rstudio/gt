@@ -476,3 +476,27 @@ test_that("the `gtsave()` function stops in some cases", {
   # Expect an error if no file extension is provided
   expect_error(exibble %>% gt() %>% gtsave(filename = "exibble"))
 })
+
+test_that("`gtsave()` create docx as expected",{
+
+  skip_on_cran()
+
+  gt_exibble <- exibble %>% gt()
+
+  temp_docx <- file.path(tempdir(),"test.docx")
+  on.exit(unlink(temp_docx))
+  expect_false(file.exists(temp_docx))
+
+  gtsave(gt_exibble, filename = "test.docx", path = tempdir())
+
+  # Check for existence
+  expect_true(file.exists(temp_docx))
+
+  temp_docx_xml <- xml2::read_xml(unz(temp_docx,"word/document.xml"))
+
+  temp_docx_xml %>%
+    xml2::xml_find_first(".//w:tbl") %>%
+    as.character() %>%
+    expect_snapshot()
+
+})
