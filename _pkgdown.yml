@@ -58,16 +58,21 @@ reference:
     - fmt_scientific
     - fmt_engineering
     - fmt_percent
+    - fmt_partsper
     - fmt_fraction
     - fmt_currency
     - fmt_bytes
     - fmt_date
     - fmt_time
     - fmt_datetime
+    - fmt_duration
     - fmt_markdown
     - fmt_passthrough
-    - fmt_missing
     - fmt
+    - sub_missing
+    - sub_zero
+    - sub_small_vals
+    - sub_large_vals
     - text_transform
     - data_color
 
@@ -87,8 +92,8 @@ reference:
     - cols_move
     - cols_hide
     - cols_unhide
-    - cols_merge_range
     - cols_merge_uncert
+    - cols_merge_range
     - cols_merge_n_pct
     - cols_merge
 
@@ -173,6 +178,8 @@ reference:
     - opt_footnote_marks
     - opt_row_striping
     - opt_align_table_header
+    - opt_vertical_padding
+    - opt_horizontal_padding
     - opt_all_caps
     - opt_table_lines
     - opt_table_outline
@@ -235,27 +242,36 @@ reference:
     - as_raw_html
     - as_latex
     - as_rtf
+    - as_word
     - extract_summary
 
+  - title: Vector Formatting Functions
+    desc: >
+      Why should columns have all the formatting fun? If you have vectors in
+      need of formatting, we have a set of `vec_fmt_*()` functions that have been
+      adapted from the corresponding `fmt_*()` functions. You can choose which
+      output format you'd like (either HTML, LaTeX, or RTF) with each of these.
+    contents:
+    - vec_fmt_number
+    - vec_fmt_integer
+    - vec_fmt_scientific
+    - vec_fmt_engineering
+    - vec_fmt_percent
+    - vec_fmt_fraction
+    - vec_fmt_currency
+    - vec_fmt_bytes
+    - vec_fmt_date
+    - vec_fmt_time
+    - vec_fmt_datetime
+    - vec_fmt_markdown
+
 navbar:
-  type: default
-  left:
-  - text: Intro
-    href: articles/intro-creating-gt-tables.html
-  - text: Articles
-    menu:
-    - text: How to Use
-    - text: gt Datasets
-      href: articles/gt-datasets.html
-    - text: Summary Lines
-      href: articles/creating-summary-lines.html
-    - text: Case Studies
-    - text: 'Case Study: gtcars'
-      href: articles/case-study-gtcars.html
-  - text: Reference
-    href: reference/index.html
-  - text: News
-    href: news/index.html
+  structure:
+    left: [intro, articles, reference, news]
+  components:
+    intro:
+      text: Intro
+      href: articles/intro-creating-gt-tables.html
 
 development:
   version_tooltip: "Development version"

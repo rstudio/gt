@@ -3,12 +3,10 @@
 .dt_summary_build_key <- paste0(.dt_summary_key, "_build")
 
 dt_summary_get <- function(data) {
-
   dt__get(data, .dt_summary_key)
 }
 
 dt_summary_df_get <- function(data) {
-
   dt__get(data, .dt_summary_build_key)
 }
 
@@ -31,47 +29,40 @@ dt_summary_df_display_get <- function(data) {
 }
 
 dt_summary_set <- function(data, summary) {
-
   dt__set(data, .dt_summary_key, summary)
 }
 
 dt_summary_data_set <- function(data, summary) {
-
   dt__set(data, .dt_summary_build_key, summary)
 }
 
 dt_summary_init <- function(data) {
-
-  dt_summary_set(summary = list(), data = data)
+  dt_summary_set(data = data, summary = list())
 }
 
 dt_summary_add <- function(data, summary) {
 
-  data %>%
-    dt_summary_get() %>%
-    append(list(summary)) %>%
-    dt_summary_set(summary = ., data = data)
+  summary_list <- dt_summary_get(data = data)
+  summary_list <- append(summary_list, list(summary))
+
+  dt_summary_set(data = data, summary = summary_list)
 }
 
 dt_summary_exists <- function(data) {
-
   length(dt_summary_get(data = data)) > 0
 }
 
-dt_summary_build <- function(data,
-                             context) {
+dt_summary_build <- function(data, context) {
 
   # TODO: is `dt_body_get()` necessary here? `dt_boxh_vars_default()` could be used
   summary_list <- dt_summary_get(data = data)
   body <- dt_body_get(data = data)
   data_tbl <- dt_data_get(data = data)
   stub_df <- dt_stub_df_get(data = data)
-  boxh_df <- dt_boxhead_get(data = data)
 
   # If the `summary_list` object is an empty list,
   # return an empty list as the `list_of_summaries`
   if (length(summary_list) == 0) {
-
     return(dt_summary_data_set(data = data, list()))
   }
 
@@ -95,13 +86,11 @@ dt_summary_build <- function(data,
 
     if (length(labels) != length(unique(labels))) {
 
-      stop(
-        "All summary labels must be unique:\n",
-        " * Review the names provided in `fns`\n",
-        " * These labels are in conflict: ",
-        paste0(labels, collapse = ", "), ".",
-        call. = FALSE
-      )
+      cli::cli_abort(c(
+        "All summary labels must be unique.",
+        "*" = "Review the names provided in `fns`.",
+        "*" = "These labels are in conflict: {paste0(labels, collapse = ', ')}."
+      ))
     }
 
     # Resolve the `missing_text`
@@ -112,12 +101,11 @@ dt_summary_build <- function(data,
 
       if (all(is.na(stub_df$group_id))) {
 
-        stop(
-          "There are no row groups in the gt object:\n",
-          " * Use `groups = NULL` to create a grand summary\n",
-          " * Define row groups using `gt()` or `tab_row_group()`",
-          call. = FALSE
-        )
+        cli::cli_abort(c(
+          "There are no row groups in the gt object.",
+          "*" = "Use `groups = NULL` to create a grand summary.",
+          "*" = "Define row groups using `gt()` or `tab_row_group()`."
+        ))
       }
     }
 
@@ -140,15 +128,18 @@ dt_summary_build <- function(data,
 
       if (any(!(groups %in% groups_available))) {
 
+        not_present_groups <-
+          paste0(
+            base::setdiff(groups, groups_available),
+            collapse = ", "
+          )
+
         # Stop function if one or more `groups`
         # are not present in the gt table
-        stop("All `groups` should be available in the gt object:\n",
-             " * The following groups aren't present: ",
-             paste0(
-               base::setdiff(groups, groups_available),
-               collapse = ", "
-             ), "\n",
-             call. = FALSE)
+        cli::cli_abort(c(
+          "All `groups` should be available in the gt object.",
+          "*" = "The following groups are not present: {not_present_groups}."
+        ))
       }
 
     } else if (is.null(groups)) {
@@ -187,7 +178,25 @@ dt_summary_build <- function(data,
     }
 
     # Get the registered function calls
-    agg_funs <- lapply(fns, rlang::as_closure)
+    agg_funs <-
+      lapply(
+        fns, function(fn) {
+          fn <- rlang::as_closure(fn)
+          function(x) {
+
+            result <- fn(x)
+
+            if (length(result) != 1) {
+
+              cli::cli_abort(c(
+                "Failure in the evaluation of summary cells.",
+                "*" = "We must always return a vector of length `1`."
+              ))
+            }
+            result
+          }
+        }
+      )
 
     summary_dfs_data <-
       dplyr::bind_rows(
@@ -231,27 +240,25 @@ dt_summary_build <- function(data,
           # This creates a gt structure so that the
           # formatter can be easily extracted by using
           # the regular `dt_*()` methods
-          summary_data <- gt(data.frame(x = x))
+          summary_data <-
+            gt(
+              data.frame(x = x),
+              locale = resolve_locale(data = data, locale = NULL)
+            )
 
           format_data <-
             do.call(
-              summary_attrs$formatter,
-              append(
-                list(
-                  summary_data,
-                  columns = "x"
-                ),
-                summary_attrs$formatter_options
-              )
+              formatter,
+              append(list(summary_data, columns = "x"), formatter_options)
             )
 
-          formatter <-
+          formatter_fn <-
             dt_formats_summary_formatter(
               data = format_data,
               context = context
             )
 
-          formatter(x)
+          formatter_fn(x)
         }
       ) %>%
       dplyr::mutate_at(

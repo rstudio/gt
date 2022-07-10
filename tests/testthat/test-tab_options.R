@@ -1,4 +1,4 @@
-context("Ensuring that the `tab_options()` function works as expected")
+skip_on_cran()
 
 # Create a table with rownames and four columns of values
 tbl <-
@@ -60,20 +60,13 @@ check_suggests <- function() {
 
 # Gets the HTML attr value from a single key
 selection_value <- function(html, key) {
-
   selection <- paste0("[", key, "]")
-
-  html %>%
-    rvest::html_nodes(selection) %>%
-    rvest::html_attr(key)
+  rvest::html_attr(rvest::html_nodes(html, selection), key)
 }
 
 # Gets the inner HTML text from a single value
 selection_text <- function(html, selection) {
-
-  html %>%
-    rvest::html_nodes(selection) %>%
-    rvest::html_text()
+  rvest::html_text(rvest::html_nodes(html, selection))
 }
 
 test_that("the internal `opts_df` table can be correctly modified", {
@@ -1451,7 +1444,7 @@ test_that("the internal `opts_df` table can be correctly modified", {
 test_that("the `opts_df` getter/setter functions properly", {
 
   # Obtain a local copy of the internal `_options` table
-  dt_options_get(data = data) %>% expect_is("tbl_df")
+  dt_options_get(data = data) %>% expect_s3_class("tbl_df")
 
   # Get a value
   dt_options_get_value(data = data, option = "footnotes_font_size") %>%
@@ -1802,8 +1795,6 @@ test_that("certain X11 color names are replaced in HTML tables", {
 })
 
 test_that("vertical padding across several table parts can be applied", {
-
-  testthat::local_edition(3)
 
   snap_padded_tbl <- function(padding_px) {
 

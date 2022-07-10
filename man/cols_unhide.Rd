@@ -30,11 +30,36 @@ quietly changes the visible state of a column (much like the \code{\link[=cols_h
 function) and doesn't yield warnings or messages when changing the state of
 already-visible columns.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cols_unhide_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_cols_unhide_2.png}{options: width=100\%}}
+Use \code{\link{countrypops}} to create a \strong{gt} table. Hide the \code{country_code_2} and
+\code{country_code_3} columns with \code{\link[=cols_hide]{cols_hide()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
+  countrypops \%>\%
+  dplyr::filter(country_name == "Mongolia") \%>\%
+  tail(5) \%>\%
+  gt() \%>\%
+  cols_hide(columns = c(country_code_2, country_code_3))
+
+tab_1
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_unhide_1.png" style="width:100\%;">
+}}
+
+If the \code{tab_1} object is provided without the code or source data to
+regenerate it, and, the user wants to reveal otherwise hidden columns then
+the \code{cols_unhide()} function becomes useful.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% cols_unhide(columns = country_code_2)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_unhide_2.png" style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
@@ -42,32 +67,6 @@ already-visible columns.
 4-8
 }
 
-\examples{
-# Use `countrypops` to create a gt table;
-# Hide the columns `country_code_2` and
-# `country_code_3`
-tab_1 <-
-  countrypops \%>\%
-  dplyr::filter(country_name == "Mongolia") \%>\%
-  tail(5) \%>\%
-  gt() \%>\%
-  cols_hide(
-    columns = c(
-      country_code_2,
-      country_code_3
-     )
-  )
-
-# If the `tab_1` object is provided without
-# the code or source data to regenerate it, and,
-# the user wants to reveal otherwise hidden
-# columns then the `cols_unhide()` function
-# becomes useful
-tab_2 <-
-  tab_1 \%>\%
-  cols_unhide(columns = country_code_2)
-
-}
 \seealso{
 \code{\link[=cols_hide]{cols_hide()}} to perform the inverse operation.
 

@@ -8,6 +8,7 @@
 <a href="https://github.com/rstudio/gt/actions"><img src="https://github.com/rich-iannone/pointblank/workflows/R-CMD-check/badge.svg" alt="R build status" /></a>
 <a href="https://app.codecov.io/gh/rstudio/gt?branch=master"><img src="https://codecov.io/gh/rstudio/gt/branch/master/graph/badge.svg" alt="Coverage status" /></a>
 
+<a href="https://bestpractices.coreinfrastructure.org/projects/5593"><img src="https://bestpractices.coreinfrastructure.org/projects/5593/badge" alt="Best Practices"></a>
 <a href="https://www.repostatus.org/#active"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="The project has reached a stable, usable state and is being actively developed." /></a>
 <a href="https://CRAN.R-project.org/package=gt"><img src="https://cranlogs.r-pkg.org/badges/gt" alt="Monthly Downloads"></a>
 <a href="https://CRAN.R-project.org/package=gt"><img src="https://cranlogs.r-pkg.org/badges/grand-total/gt" alt="Total Downloads"></a>
@@ -155,7 +156,7 @@ pages:
   - **kableExtra** ([GITHUB](https://github.com/haozhu233/kableExtra), [WEBSITE](https://haozhu233.github.io/kableExtra/))
   - **formattable** ([GITHUB](https://github.com/renkun-ken/formattable), [WEBSITE](https://renkun-ken.github.io/formattable/))
   - **DT** ([GITHUB](https://github.com/rstudio/DT), [WEBSITE](https://rstudio.github.io/DT/))
-  - **pander** ([GITHUB](https://github.com/Rapporter/pander), [WEBSITE](http://rapporter.github.io/pander))
+  - **pander** ([GITHUB](https://github.com/Rapporter/pander), [WEBSITE](http://rapporter.github.io/pander/))
   - **huxtable** ([GITHUB](https://github.com/hughjonesd/huxtable), [WEBSITE](https://hughjonesd.github.io/huxtable/))
   - **reactable** ([GITHUB](https://github.com/glin/reactable), [WEBSITE](https://glin.github.io/reactable/))
   - **flextable** ([GITHUB](https://github.com/davidgohel/flextable), [WEBSITE](https://davidgohel.github.io/flextable/))

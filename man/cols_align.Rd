@@ -40,22 +40,13 @@ is applied to columns of class \code{character}, \code{Date}, or \code{POSIXct};
 center-alignment is for columns of class \code{logical}, \code{factor}, or \code{list}; and
 right-alignment is used for the \code{numeric} and \code{integer} columns.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cols_align_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
+Use \code{\link{countrypops}} to create a \strong{gt} table. Align the \code{population} column
+data to the left.
 
-4-1
-}
-
-\examples{
-# Use `countrypops` to create a gt table;
-# align the `population` column data to
-# the left
-tab_1 <-
-  countrypops \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::select(-contains("code")) \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%
@@ -64,8 +55,18 @@ tab_1 <-
     align = "left",
     columns = population
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_align_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+4-1
+}
+
 \seealso{
 Other Modify Columns: 
 \code{\link{cols_hide}()},

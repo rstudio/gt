@@ -17,43 +17,43 @@
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `exibble` to create a gt table
-#' # with a stub and with row groups;
-#' # modify the order of the row groups
-#' # with `row_group_order()`, specifying
-#' # the new ordering in `groups`
-#' tab_1 <-
-#'   exibble %>%
-#'   dplyr::select(char, currency, row, group) %>%
-#'     gt(
-#'       rowname_col = "row",
-#'       groupname_col = "group"
-#'     ) %>%
-#'     row_group_order(
-#'       groups = c("grp_b", "grp_a")
-#'     )
+#' @section Examples:
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_row_group_order_1.png}{options: width=100\%}}
+#' Use [`exibble`] to create a **gt** table with a stub and with row groups.
+#' Modify the order of the row groups with `row_group_order()`, specifying the
+#' new ordering in `groups`.
+#'
+#' ```r
+#' exibble %>%
+#'   dplyr::select(char, currency, row, group) %>%
+#'   gt(
+#'     rowname_col = "row",
+#'     groupname_col = "group"
+#'   ) %>%
+#'   row_group_order(groups = c("grp_b", "grp_a"))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_row_group_order_1.png")`
+#' }}
 #'
 #' @family Modify Rows
 #' @section Function ID:
 #' 5-1
 #'
 #' @export
-row_group_order <- function(data,
-                            groups) {
+row_group_order <- function(
+    data,
+    groups
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
   # Stop function if `groups` is not a `character` vector
   if (!inherits(groups, "character")) {
-
-    stop(
-      "The values provided for `groups` must be a character vector.",
-      call. = FALSE
+    cli::cli_abort(
+      "The values provided for `groups` must be a character vector."
     )
   }
 
@@ -63,12 +63,11 @@ row_group_order <- function(data,
   # Stop function if any value in `groups` doesn't match a group name
   if (any(!groups %in% arrange_groups)) {
 
-    stop(
-      "All values given as `groups` must correspond to `group_id` values:\n",
-      "The following `group_id` values can be used:\n",
-      str_catalog(arrange_groups),
-      call. = FALSE
-    )
+    cli::cli_abort(c(
+      "All values given as `groups` must correspond to `group_id` values.",
+      "*" = "The following `group_id` values can be
+      used {str_catalog(arrange_groups)}."
+    ))
   }
 
   # Arrange groups in the new order

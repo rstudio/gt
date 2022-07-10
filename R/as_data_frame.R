@@ -12,26 +12,19 @@ as.data.frame.gt_tbl <- function(x, ...) {
 
   data <- x
 
-  data_built <-
-    data %>%
-    build_data(context = "html")
+  data_built <- build_data(data, context = "html")
 
-  ret <-
-    data_built %>%
-    dt_body_get() %>%
-    as.data.frame(stringsAsFactors = FALSE)
+  ret <- as.data.frame(dt_body_get(data = data_built), stringsAsFactors = FALSE)
 
   has_rowname <-
-    data_built %>%
-    dt_stub_components() %>%
-    dt_stub_components_has_rowname()
+    dt_stub_components_has_rowname(dt_stub_components(data = data_built))
 
   if (has_rowname) {
-    rowname_vals <-
-      data_built %>%
-      dt_stub_df_get() %>%
-      dplyr::pull(rowname)
 
+    if ("__GT_ROWNAME_PRIVATE__" %in% colnames(ret)) {
+      ret$`__GT_ROWNAME_PRIVATE__` <- NULL
+    }
+    rowname_vals <- dt_stub_df_get(data = data_built)$rowname
     rownames(ret) <- rowname_vals
   }
 

@@ -1,4 +1,4 @@
-context("Ensuring that the `cells_*()` functions work as expected")
+skip_on_cran()
 
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
@@ -41,12 +41,8 @@ tbl_summary <-
 
 # Gets the HTML attr value from a single key
 selection_value <- function(html, key) {
-
   selection <- paste0("[", key, "]")
-
-  html %>%
-    rvest::html_nodes(selection) %>%
-    rvest::html_attr(key)
+  rvest::html_attr(rvest::html_nodes(html, selection), key)
 }
 
 test_that("the `cells_title()` function works correctly", {
@@ -56,7 +52,7 @@ test_that("the `cells_title()` function works correctly", {
 
   # Expect this has the `cells_title` and `location_cells` classes
   helper_cells_title %>%
-    expect_is(c("cells_title", "location_cells"))
+    expect_s3_class(c("cells_title", "location_cells"))
 
   # Expect the length of the object to be `1`
   helper_cells_title %>%
@@ -64,7 +60,7 @@ test_that("the `cells_title()` function works correctly", {
     expect_equal(1)
 
   # Expect the list component to have the `quosure` and `formula` classes
-  helper_cells_title[[1]] %>% expect_is(c("quosure", "formula"))
+  helper_cells_title[[1]] %>% expect_s3_class(c("quosure", "formula"))
 
   # Expect the RHS of the formula to be 'title'
   helper_cells_title[[1]] %>%
@@ -76,7 +72,7 @@ test_that("the `cells_title()` function works correctly", {
 
   # Expect this has the `cells_title` and `location_cells` classes
   helper_cells_title %>%
-    expect_is(c("cells_title", "location_cells"))
+    expect_s3_class(c("cells_title", "location_cells"))
 
   # Expect the length of the object to be `1`
   helper_cells_title %>%
@@ -84,12 +80,26 @@ test_that("the `cells_title()` function works correctly", {
     expect_equal(1)
 
   # Expect the list component to have the `quosure` and `formula` classes
-  helper_cells_title[[1]] %>% expect_is(c("quosure", "formula"))
+  helper_cells_title[[1]] %>% expect_s3_class(c("quosure", "formula"))
 
   # Expect the RHS of the formula to be 'subtitle'
   helper_cells_title[[1]] %>%
     rlang::eval_tidy() %>%
     expect_equal("subtitle")
+
+  # Expect an error if the input to `cells_title()` is invalid
+  expect_error(cells_title(groups = NULL))
+  expect_error(cells_title(groups = 1:2))
+  expect_error(cells_title(groups = vars(title)))
+  expect_error(cells_title(groups = "titles"))
+  expect_error(cells_title(groups = c("title", "stubtitle")))
+  expect_error(cells_title(groups = c("title", "subtitle", "title")))
+  expect_error(cells_title(groups = c("title", "subtitle", "subtitle")))
+  expect_error(cells_title(groups = c("title", "title")))
+  expect_error(cells_title(groups = c("subtitle", "subtitle")))
+  expect_error(cells_title(groups = rep("title", 3)))
+  expect_error(cells_title(groups = ""))
+  expect_error(cells_title(groups = character(0)))
 })
 
 test_that("the `cells_column_labels()` function works correctly", {
@@ -100,7 +110,7 @@ test_that("the `cells_column_labels()` function works correctly", {
 
   # Expect this has the `cells_column_labels` and `location_cells` classes
   helper_cells_column_labels %>%
-    expect_is(c("cells_column_labels", "location_cells"))
+    expect_s3_class(c("cells_column_labels", "location_cells"))
 
   # Expect the length of the object to be `1`
   helper_cells_column_labels %>%
@@ -113,7 +123,7 @@ test_that("the `cells_column_labels()` function works correctly", {
     expect_equal("columns")
 
   # Expect the first list component to have the `quosure` and `formula` classes
-  helper_cells_column_labels[[1]] %>% expect_is(c("quosure", "formula"))
+  helper_cells_column_labels[[1]] %>% expect_s3_class(c("quosure", "formula"))
 
   # Expect the RHS of the formula to contain the vector provided
   helper_cells_column_labels[[1]] %>%
@@ -126,7 +136,7 @@ test_that("the `cells_column_labels()` function works correctly", {
 
   # Expect this has the `cells_column_spanners` and `location_cells` classes
   helper_cells_column_spanners %>%
-    expect_is(c("cells_column_spanners", "location_cells"))
+    expect_s3_class(c("cells_column_spanners", "location_cells"))
 
   # Expect the length of the object to be `1`
   helper_cells_column_spanners %>%
@@ -139,7 +149,7 @@ test_that("the `cells_column_labels()` function works correctly", {
     expect_equal("spanners")
 
   # Expect the first list component to have the `quosure` and `formula` classes
-  helper_cells_column_spanners[[1]] %>% expect_is(c("quosure", "formula"))
+  helper_cells_column_spanners[[1]] %>% expect_s3_class(c("quosure", "formula"))
 
   # Expect the first list component to be not be NULL
   is.null(helper_cells_column_spanners[[1]]) %>% expect_false()
@@ -157,7 +167,7 @@ test_that("the `cells_row_groups()` function works correctly", {
 
   # Expect this has the `cells_row_groups` and `location_cells` classes
   helper_cells_row_groups %>%
-    expect_is(c("cells_row_groups", "location_cells"))
+    expect_s3_class(c("cells_row_groups", "location_cells"))
 
   # Expect the length of the object to be `1`
   helper_cells_row_groups %>%
@@ -170,7 +180,7 @@ test_that("the `cells_row_groups()` function works correctly", {
     expect_equal("groups")
 
   # Expect the first list component to have the `quosure` and `formula` classes
-  helper_cells_row_groups[[1]] %>% expect_is(c("quosure", "formula"))
+  helper_cells_row_groups[[1]] %>% expect_s3_class(c("quosure", "formula"))
 
   # Expect the RHS of the first component formula to contain the vector provided
   helper_cells_row_groups[[1]] %>%
@@ -185,7 +195,7 @@ test_that("the `cells_stub()` function works correctly", {
 
   # Expect this has the `cells_stub` and `location_cells` classes
   helper_cells_stub %>%
-    expect_is(c("cells_stub", "location_cells"))
+    expect_s3_class(c("cells_stub", "location_cells"))
 
   # Expect the length of the object to be `1`
   helper_cells_stub %>%
@@ -198,7 +208,7 @@ test_that("the `cells_stub()` function works correctly", {
     expect_equal("rows")
 
   # Expect the first list component to have the `quosure` and `formula` classes
-  helper_cells_stub[[1]] %>% expect_is(c("quosure", "formula"))
+  helper_cells_stub[[1]] %>% expect_s3_class(c("quosure", "formula"))
 
   # Expect the RHS of the first component formula to contain the vector provided
   helper_cells_stub[[1]] %>%
@@ -213,7 +223,7 @@ test_that("the `cells_body()` function works correctly", {
 
   # Expect this has the `cells_body` and `location_cells` classes
   helper_cells_body %>%
-    expect_is(c("cells_body", "location_cells"))
+    expect_s3_class(c("cells_body", "location_cells"))
 
   # Expect the length of the object to be `2`
   helper_cells_body %>%
@@ -226,7 +236,7 @@ test_that("the `cells_body()` function works correctly", {
     expect_equal(c("columns", "rows"))
 
   # Expect the first list component to have the `quosure` and `formula` classes
-  helper_cells_body[[1]] %>% expect_is(c("quosure", "formula"))
+  helper_cells_body[[1]] %>% expect_s3_class(c("quosure", "formula"))
 
   # Expect the RHS of the first component formula to contain the vector provided
   helper_cells_body[[1]] %>%
@@ -242,7 +252,7 @@ test_that("the `cells_body()` function works correctly", {
 
   # Expect this has the `cells_body` and `location_cells` classes
   helper_cells_body %>%
-    expect_is(c("cells_body", "location_cells"))
+    expect_s3_class(c("cells_body", "location_cells"))
 
   # Expect the length of the object to be `2`
   helper_cells_body %>%
@@ -255,10 +265,10 @@ test_that("the `cells_body()` function works correctly", {
     expect_equal(c("columns", "rows"))
 
   # Expect the first list component to have the `quosure` and `formula` classes
-  helper_cells_body[[1]] %>% expect_is(c("quosure", "formula"))
+  helper_cells_body[[1]] %>% expect_s3_class(c("quosure", "formula"))
 
   # Expect the second list component to have the `quosure` and `formula` classes
-  helper_cells_body[[2]] %>% expect_is(c("quosure", "formula"))
+  helper_cells_body[[2]] %>% expect_s3_class(c("quosure", "formula"))
 
   # Expect the RHS of the first component formula to contain the vector provided
   helper_cells_body[[1]] %>%
@@ -283,7 +293,7 @@ test_that("the `cells_summary()` function works correctly", {
 
   # Expect this has the `cells_summary` and `location_cells` classes
   helper_cells_summary %>%
-    expect_is(c("cells_summary", "location_cells"))
+    expect_s3_class(c("cells_summary", "location_cells"))
 
   # Expect the length of the object to be `3`
   helper_cells_summary %>%
@@ -296,13 +306,13 @@ test_that("the `cells_summary()` function works correctly", {
     expect_equal(c("groups", "columns", "rows"))
 
   # Expect the first list component to have the `quosure` and `formula` classes
-  helper_cells_summary[[1]] %>% expect_is(c("quosure", "formula"))
+  helper_cells_summary[[1]] %>% expect_s3_class(c("quosure", "formula"))
 
   # Expect the second list component to have the `quosure` and `formula` classes
-  helper_cells_summary[[2]] %>% expect_is(c("quosure", "formula"))
+  helper_cells_summary[[2]] %>% expect_s3_class(c("quosure", "formula"))
 
   # Expect the third list component to have the `quosure` and `formula` classes
-  helper_cells_summary[[3]] %>% expect_is(c("quosure", "formula"))
+  helper_cells_summary[[3]] %>% expect_s3_class(c("quosure", "formula"))
 
   # Expect the RHS of the first component formula to contain
   # the vector provided
@@ -335,7 +345,7 @@ test_that("the `cells_grand_summary()` function works correctly", {
 
   # Expect this has the `cells_summary` and `location_cells` classes
   helper_cells_grand_summary %>%
-    expect_is(c("cells_grand_summary", "location_cells"))
+    expect_s3_class(c("cells_grand_summary", "location_cells"))
 
   # Expect the length of the object to be `2`
   helper_cells_grand_summary %>%
@@ -348,10 +358,10 @@ test_that("the `cells_grand_summary()` function works correctly", {
     expect_equal(c("columns", "rows"))
 
   # Expect the first list component to have the `quosure` and `formula` classes
-  helper_cells_grand_summary[[1]] %>% expect_is(c("quosure", "formula"))
+  helper_cells_grand_summary[[1]] %>% expect_s3_class(c("quosure", "formula"))
 
   # Expect the second list component to have the `quosure` and `formula` classes
-  helper_cells_grand_summary[[2]] %>% expect_is(c("quosure", "formula"))
+  helper_cells_grand_summary[[2]] %>% expect_s3_class(c("quosure", "formula"))
 
   # Expect the RHS of the first component formula to contain
   # the vector provided
@@ -374,7 +384,7 @@ test_that("the `cells_stubhead()` function works correctly", {
 
   # Expect this has the `cells_stubhead` and `location_cells` classes
   helper_cells_stubhead %>%
-    expect_is(c("cells_stubhead", "location_cells"))
+    expect_s3_class(c("cells_stubhead", "location_cells"))
 
   # Expect the length of the object to be `1`
   helper_cells_stubhead %>%
@@ -386,8 +396,8 @@ test_that("the `cells_stubhead()` function works correctly", {
     names() %>%
     expect_equal("groups")
 
-  # Expect the first list component to have the `character`
-  helper_cells_stubhead[[1]] %>% expect_is("character")
+  # Expect the first list component to have the `character` type
+  helper_cells_stubhead[[1]] %>% expect_type("character")
 
   # Expect a specific value for the single list component
   helper_cells_stubhead[[1]] %>%
@@ -420,8 +430,8 @@ test_that("styles are correctly applied to HTML output with location functions",
     render_as_html() %>%
     tidy_grepl(
       paste0(
-        "<th colspan=\"4\" class=\"gt_heading gt_title gt_font_normal\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">The Title</th>.*",
-        "<th colspan=\"4\" class=\"gt_heading gt_subtitle gt_font_normal gt_bottom_border\" style>The Subtitle</th>"
+        "<td colspan=\"4\" class=\"gt_heading gt_title gt_font_normal\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">The Title</td>.*",
+        "<td colspan=\"4\" class=\"gt_heading gt_subtitle gt_font_normal gt_bottom_border\" style>The Subtitle</td>"
       )
     ) %>%
     expect_true()
@@ -444,8 +454,8 @@ test_that("styles are correctly applied to HTML output with location functions",
     render_as_html() %>%
     tidy_grepl(
       paste0(
-        "<th colspan=\"4\" class=\"gt_heading gt_title gt_font_normal\" style>The Title</th>.*",
-        "<th colspan=\"4\" class=\"gt_heading gt_subtitle gt_font_normal gt_bottom_border\" style=\"color: #FFFFFF; font-size: 10px; background-color: #FFA500;\">The Subtitle</th>"
+        "<td colspan=\"4\" class=\"gt_heading gt_title gt_font_normal\" style>The Title</td>.*",
+        "<td colspan=\"4\" class=\"gt_heading gt_subtitle gt_font_normal gt_bottom_border\" style=\"color: #FFFFFF; font-size: 10px; background-color: #FFA500;\">The Subtitle</td>"
       )
     ) %>%
     expect_true()
@@ -476,8 +486,8 @@ test_that("styles are correctly applied to HTML output with location functions",
     render_as_html() %>%
     tidy_grepl(
       paste0(
-        "<th colspan=\"4\" class=\"gt_heading gt_title gt_font_normal\" style=\"color: #FFFFFF; font-size: 10px; background-color: #FFA500;\">The Title</th>.*",
-        "<th colspan=\"4\" class=\"gt_heading gt_subtitle gt_font_normal gt_bottom_border\" style=\"color: #FFFFFF; font-size: 10px; background-color: #FFA500;\">The Subtitle</th>"
+        "<td colspan=\"4\" class=\"gt_heading gt_title gt_font_normal\" style=\"color: #FFFFFF; font-size: 10px; background-color: #FFA500;\">The Title</td>.*",
+        "<td colspan=\"4\" class=\"gt_heading gt_subtitle gt_font_normal gt_bottom_border\" style=\"color: #FFFFFF; font-size: 10px; background-color: #FFA500;\">The Subtitle</td>"
       )
     ) %>%
     expect_true()
@@ -507,7 +517,7 @@ test_that("styles are correctly applied to HTML output with location functions",
       paste0(
         "<th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" ",
         "rowspan=\"1\" colspan=\"2\" style=\"color: #FFFFFF; font-size: 20px; ",
-        "background-color: #FFA500;\">.*?<span class=\"gt_column_spanner\">",
+        "background-color: #FFA500;\" scope=\"colgroup\">.*?<span class=\"gt_column_spanner\">",
         "spanner</span>"
         )
       ) %>%
@@ -536,10 +546,10 @@ test_that("styles are correctly applied to HTML output with location functions",
     render_as_html() %>%
     tidy_grepl(
       paste0(
-        "<th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\"></th>.*",
-        "<th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\">value_2</th>.*",
-        "<th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">value_3</th>.*",
-        "<th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">value_1</th>"
+        "<th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\"></th>.*",
+        "<th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">value_2</th>.*",
+        "<th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\" scope=\"col\">value_3</th>.*",
+        "<th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\" scope=\"col\">value_1</th>"
       )
     ) %>%
     expect_true()
@@ -638,8 +648,8 @@ test_that("styles are correctly applied to HTML output with location functions",
     render_as_html() %>%
     tidy_grepl(
       paste0(
-        "<td class=\"gt_row gt_right gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">1</td>.*",
-        "<td class=\"gt_row gt_right gt_stub\">2</td>"
+        "<th scope=\"row\" class=\"gt_row gt_right gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">1</th>.*",
+        "<th scope=\"row\" class=\"gt_row gt_right gt_stub\">2</th>"
       )
     ) %>%
     expect_true()
@@ -661,8 +671,8 @@ test_that("styles are correctly applied to HTML output with location functions",
     render_as_html() %>%
     tidy_grepl(
       paste0(
-        "<td class=\"gt_row gt_right gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">1</td>.*",
-        "<td class=\"gt_row gt_right gt_stub\">2</td>"
+        "<th scope=\"row\" class=\"gt_row gt_right gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">1</th>.*",
+        "<th scope=\"row\" class=\"gt_row gt_right gt_stub\">2</th>"
       )
     ) %>%
     expect_true()
@@ -684,8 +694,8 @@ test_that("styles are correctly applied to HTML output with location functions",
     render_as_html() %>%
     tidy_grepl(
       paste0(
-        "<td class=\"gt_row gt_right gt_stub\">1</td>.*",
-        "<td class=\"gt_row gt_right gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">2</td>"
+        "<th scope=\"row\" class=\"gt_row gt_right gt_stub\">1</th>.*",
+        "<th scope=\"row\" class=\"gt_row gt_right gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">2</th>"
       )
     ) %>%
     expect_true()
@@ -707,8 +717,8 @@ test_that("styles are correctly applied to HTML output with location functions",
     render_as_html() %>%
     tidy_grepl(
       paste0(
-        "<td class=\"gt_row gt_right gt_stub\">1</td>.*",
-        "<td class=\"gt_row gt_right gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">2</td>"
+        "<th scope=\"row\" class=\"gt_row gt_right gt_stub\">1</th>.*",
+        "<th scope=\"row\" class=\"gt_row gt_right gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">2</th>"
       )
     ) %>%
     expect_true()
@@ -730,8 +740,8 @@ test_that("styles are correctly applied to HTML output with location functions",
     render_as_html() %>%
     tidy_grepl(
       paste0(
-        "<td class=\"gt_row gt_right gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">1</td>.*",
-        "<td class=\"gt_row gt_right gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">2</td>"
+        "<th scope=\"row\" class=\"gt_row gt_right gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">1</th>.*",
+        "<th scope=\"row\" class=\"gt_row gt_right gt_stub\" style=\"color: #FFFFFF; font-size: 20px; background-color: #FFA500;\">2</th>"
       )
     ) %>%
     expect_true()

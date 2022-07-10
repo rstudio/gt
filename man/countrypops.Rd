@@ -28,17 +28,29 @@ and the 2- and 3-letter ISO 3166-1 country codes. Each row contains a
 \code{population} value for a given \code{year} (from 1960 to 2017). Any \code{NA} values
 for \code{populations} indicate the non-existence of the country during that year.
 }
+\section{Examples}{
+
+
+Here is a glimpse at the data available in \code{countrypops}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::glimpse(countrypops)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## Rows: 12,470
+## Columns: 5
+## $ country_name   <chr> "Aruba", "Aruba", "Aruba", "Aruba", "Aruba", "Aruba", "…
+## $ country_code_2 <chr> "AW", "AW", "AW", "AW", "AW", "AW", "AW", "AW", "AW", "…
+## $ country_code_3 <chr> "ABW", "ABW", "ABW", "ABW", "ABW", "ABW", "ABW", "ABW",…
+## $ year           <int> 1960, 1961, 1962, 1963, 1964, 1965, 1966, 1967, 1968, 1…
+## $ population     <int> 54211, 55438, 56225, 56695, 57032, 57360, 57715, 58055,…
+}\if{html}{\out{</div>}}
+}
+
 \section{Function ID}{
 
 11-1
 }
 
-\examples{
-# Here is a glimpse at the data
-# available in `countrypops`
-dplyr::glimpse(countrypops)
-
-}
 \seealso{
 Other Datasets: 
 \code{\link{exibble}},

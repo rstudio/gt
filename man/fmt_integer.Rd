@@ -15,6 +15,7 @@ fmt_integer(
   pattern = "{x}",
   sep_mark = ",",
   force_sign = FALSE,
+  system = c("intl", "ind"),
   locale = NULL
 )
 }
@@ -80,6 +81,12 @@ for this option. The default is \code{FALSE}, where only negative numbers will
 display a minus sign. This option is disregarded when using accounting
 notation with \code{accounting = TRUE}.}
 
+\item{system}{The numbering system to use. By default, this is the
+international numbering system (\code{"intl"}) whereby grouping separators
+(i.e., \code{sep_mark}) are separated by three digits. The alternative system,
+the Indian numbering system (\code{"ind"}) uses grouping separators that
+correspond to thousand, lakh, crore, and higher quantities.}
+
 \item{locale}{An optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include \code{"en_US"} for English
 (United States) and \code{"fr_FR"} for French (France). The use of a valid
@@ -112,11 +119,26 @@ formatting specific to the chosen locale
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
 nothing is provided for \code{rows} then entire columns are selected). Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the Arguments section for more information on this.
+argument. See the \emph{Arguments} section for more information on this.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_fmt_integer_1.png}{options: width=100\%}}
+
+Use \code{\link{exibble}} to create a \strong{gt} table. format the \code{num} column as integer
+values having no digit separators (with the \code{use_seps = FALSE} option).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+  dplyr::select(num, char) \%>\%
+  gt() \%>\%
+  fmt_integer(
+    columns = num,
+    use_seps = FALSE
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_integer_1.png" style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
@@ -124,20 +146,6 @@ argument. See the Arguments section for more information on this.
 3-2
 }
 
-\examples{
-# Use `exibble` to create a gt table;
-# format the `num` column as integer
-# values having no digit separators
-tab_1 <-
-  exibble \%>\%
-  dplyr::select(num, char) \%>\%
-  gt() \%>\%
-  fmt_integer(
-    columns = num,
-    use_seps = FALSE
-  )
-
-}
 \seealso{
 Other Format Data: 
 \code{\link{data_color}()},
@@ -145,16 +153,21 @@ Other Format Data:
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_fraction}()},
 \code{\link{fmt_markdown}()},
-\code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
+\code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt}()},
+\code{\link{sub_large_vals}()},
+\code{\link{sub_missing}()},
+\code{\link{sub_small_vals}()},
+\code{\link{sub_zero}()},
 \code{\link{text_transform}()}
 }
 \concept{Format Data}

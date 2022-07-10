@@ -9,20 +9,13 @@ check_suggests <- function() {
 
 # Gets the HTML attr value from a single key
 selection_value <- function(html, key) {
-
   selection <- paste0("[", key, "]")
-
-  html %>%
-    rvest::html_nodes(selection) %>%
-    rvest::html_attr(key)
+  rvest::html_attr(rvest::html_nodes(html, selection), key)
 }
 
 # Gets the inner HTML text from a single value
 selection_text <- function(html, selection) {
-
-  html %>%
-    rvest::html_nodes(selection) %>%
-    rvest::html_text()
+  rvest::html_text(rvest::html_nodes(html, selection))
 }
 
 test_that("the `text_transform()` function works correctly", {
@@ -174,17 +167,14 @@ test_that("the `text_transform()` function works correctly", {
   # Expect that `resolved` subcomponent of `transforms` has the class
   # names and `resolved`, `cells_body`, `location_cells`
   transforms[[1]]$resolved %>%
-    expect_is(c("resolved", "cells_body", "location_cells"))
+    expect_s3_class(c("resolved", "cells_body", "location_cells"))
 
   transforms[[2]]$resolved %>%
-    expect_is(c("resolved", "cells_body", "location_cells"))
+    expect_s3_class(c("resolved", "cells_body", "location_cells"))
 
   # Expect that `fn` subcomponent of `transforms` is a function
-  transforms[[1]]$fn %>%
-    expect_is("function")
-
-  transforms[[2]]$fn %>%
-    expect_is("function")
+  expect_equal(class(transforms[[1]]$fn), "function")
+  expect_equal(class(transforms[[2]]$fn), "function")
 
   # Define a function that converts vector of `x` to numeric
   # and rounds values to a specific multiple
@@ -255,11 +245,12 @@ test_that("`text_transform()` works in the body even when rows/columns are reord
   tbl_html %>%
     render_as_html() %>%
     xml2::read_html() %>%
-    selection_text("tr td:nth-child(1)") %>%
+    selection_text("tr th:nth-child(1)") %>%
     expect_equal(
       c(
-        "Mazda", "Mazda RX4", "Mazda RX4 Wag", "2 Hornets + a Datsun",
-        "Datsun 710", "Hornet 4 Drive", "Hornet Sportabout"
+        "",
+        "Mazda RX4", "Mazda RX4 Wag", "Datsun 710",
+        "Hornet 4 Drive", "Hornet Sportabout"
       )
     )
 
@@ -310,7 +301,7 @@ test_that("`text_transform()` works in column labels", {
   tbl_html %>%
     render_as_html() %>%
     xml2::read_html() %>%
-    selection_text("th") %>%
+    selection_text("tr:first-child th") %>%
     expect_equal(
       c(
         "", "MPG", "disp", "hp", "drat", "wt",
@@ -353,4 +344,102 @@ test_that("`text_transform()` works on row labels in the stub", {
         "Mazda RX4", "MAZDA RX4 WAG"
       )
     )
+})
+
+test_that("`text_transform()` works on row group labels", {
+
+  # Create a gt table and modify the two different row group labels
+  # with the `text_transform()` function
+  tbl_html <-
+    exibble %>%
+    gt(rowname_col = "row", groupname_col = "group") %>%
+    text_transform(
+      locations = cells_row_groups(),
+      fn = toupper
+    )
+
+  # Expect row group labels to be transformed correctly
+  tbl_html %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_text("[class='gt_group_heading']") %>%
+    expect_equal(c("GRP_A", "GRP_B"))
+
+
+  # Create a gt table and modify the first row group label
+  # with the `text_transform()` function
+  tbl_html <-
+    exibble %>%
+    gt(rowname_col = "row", groupname_col = "group") %>%
+    text_transform(
+      locations = cells_row_groups(groups = "grp_a"),
+      fn = toupper
+    )
+
+  # Expect row group labels to be transformed correctly
+  tbl_html %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_text("[class='gt_group_heading']") %>%
+    expect_equal(c("GRP_A", "grp_b"))
+
+  # Create a new gt table for further testing
+  tbl_gt <-
+    gtcars %>%
+    dplyr::select(model, year, hp, trq) %>%
+    gt(rowname_col = "model") %>%
+    tab_row_group(
+      label = "powerful",
+      rows = hp >= 400 & hp < 600
+    ) %>%
+    tab_row_group(
+      label = "super powerful",
+      rows = hp > 600
+    )
+
+  # Modify the first row group label with
+  # the `text_transform()` function
+  tbl_html <-
+    tbl_gt %>%
+    text_transform(
+      locations = cells_row_groups(groups = "powerful"),
+      fn = toupper
+    )
+
+  # Expect row group labels to be transformed correctly
+  tbl_html %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_text("[class='gt_group_heading']") %>%
+    expect_equal(c("super powerful", "POWERFUL"))
+
+  # Modify all group labels with the `text_transform()` function
+  tbl_html <-
+    tbl_gt %>%
+    text_transform(
+      locations = cells_row_groups(),
+      fn = function(x) ""
+    )
+
+  # Expect row group labels to be transformed correctly
+  tbl_html %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_text("[class='gt_group_heading']") %>%
+    expect_equal(character(0))
+
+  # Modify all group labels with the `text_transform()` function
+  tbl_html <-
+    tbl_gt %>%
+    text_transform(
+      locations = cells_row_groups(),
+      fn = toupper
+    )
+
+  # Expect row group labels to be transformed correctly
+  tbl_html %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_text("[class='gt_group_heading']") %>%
+    expect_equal(c("SUPER POWERFUL", "POWERFUL"))
 })

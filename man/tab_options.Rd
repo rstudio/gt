@@ -42,6 +42,7 @@ tab_options(
   heading.subtitle.font.size = NULL,
   heading.subtitle.font.weight = NULL,
   heading.padding = NULL,
+  heading.padding.horizontal = NULL,
   heading.border.bottom.style = NULL,
   heading.border.bottom.width = NULL,
   heading.border.bottom.color = NULL,
@@ -53,6 +54,7 @@ tab_options(
   column_labels.font.weight = NULL,
   column_labels.text_transform = NULL,
   column_labels.padding = NULL,
+  column_labels.padding.horizontal = NULL,
   column_labels.vlines.style = NULL,
   column_labels.vlines.width = NULL,
   column_labels.vlines.color = NULL,
@@ -71,6 +73,7 @@ tab_options(
   row_group.font.weight = NULL,
   row_group.text_transform = NULL,
   row_group.padding = NULL,
+  row_group.padding.horizontal = NULL,
   row_group.border.top.style = NULL,
   row_group.border.top.width = NULL,
   row_group.border.top.color = NULL,
@@ -111,21 +114,25 @@ tab_options(
   stub_row_group.border.width = NULL,
   stub_row_group.border.color = NULL,
   data_row.padding = NULL,
+  data_row.padding.horizontal = NULL,
   summary_row.background.color = NULL,
   summary_row.text_transform = NULL,
   summary_row.padding = NULL,
+  summary_row.padding.horizontal = NULL,
   summary_row.border.style = NULL,
   summary_row.border.width = NULL,
   summary_row.border.color = NULL,
   grand_summary_row.background.color = NULL,
   grand_summary_row.text_transform = NULL,
   grand_summary_row.padding = NULL,
+  grand_summary_row.padding.horizontal = NULL,
   grand_summary_row.border.style = NULL,
   grand_summary_row.border.width = NULL,
   grand_summary_row.border.color = NULL,
   footnotes.background.color = NULL,
   footnotes.font.size = NULL,
   footnotes.padding = NULL,
+  footnotes.padding.horizontal = NULL,
   footnotes.border.bottom.style = NULL,
   footnotes.border.bottom.width = NULL,
   footnotes.border.bottom.color = NULL,
@@ -138,6 +145,7 @@ tab_options(
   source_notes.background.color = NULL,
   source_notes.font.size = NULL,
   source_notes.padding = NULL,
+  source_notes.padding.horizontal = NULL,
   source_notes.border.bottom.style = NULL,
   source_notes.border.bottom.width = NULL,
   source_notes.border.bottom.color = NULL,
@@ -148,7 +156,19 @@ tab_options(
   source_notes.sep = NULL,
   row.striping.background_color = NULL,
   row.striping.include_stub = NULL,
-  row.striping.include_table_body = NULL
+  row.striping.include_table_body = NULL,
+  page.orientation = NULL,
+  page.numbering = NULL,
+  page.header.use_tbl_headings = NULL,
+  page.footer.use_tbl_notes = NULL,
+  page.width = NULL,
+  page.height = NULL,
+  page.margin.left = NULL,
+  page.margin.right = NULL,
+  page.margin.top = NULL,
+  page.margin.bottom = NULL,
+  page.header.height = NULL,
+  page.footer.height = NULL
 )
 }
 \arguments{
@@ -242,6 +262,14 @@ group labels (\code{row_group.padding}), in the body/stub rows
 (\code{data_row.padding}), in summary rows (\code{summary_row.padding} or
 \code{grand_summary_row.padding}), or in the footnotes and source notes
 (\code{footnotes.padding} and \code{source_notes.padding}).}
+
+\item{heading.padding.horizontal, column_labels.padding.horizontal, data_row.padding.horizontal, row_group.padding.horizontal, summary_row.padding.horizontal, grand_summary_row.padding.horizontal, footnotes.padding.horizontal, source_notes.padding.horizontal}{The amount of horizontal padding to incorporate in the \code{heading} (title and
+subtitle), the \code{column_labels} (this includes the column spanners), the row
+group labels (\code{row_group.padding.horizontal}), in the body/stub rows
+(\code{data_row.padding}), in summary rows (\code{summary_row.padding.horizontal} or
+\code{grand_summary_row.padding.horizontal}), or in the footnotes and source
+notes (\code{footnotes.padding.horizontal} and
+\code{source_notes.padding.horizontal}).}
 
 \item{heading.border.bottom.style, heading.border.bottom.width, heading.border.bottom.color}{The style, width, and color properties of the header's bottom border. This
 border shares space with that of the \code{column_labels} location. If the
@@ -350,6 +378,33 @@ when striping rows.}
 
 \item{row.striping.include_table_body}{An option for whether to include the
 table body when striping rows.}
+
+\item{page.orientation}{For RTF output, this provides an two options for page
+orientation: \code{"portrait"} (the default) and \code{"landscape"}.}
+
+\item{page.numbering}{Within RTF output, should page numbering be displayed?
+By default, this is set to \code{FALSE} but if \code{TRUE} then page numbering text
+will be added to the document header.}
+
+\item{page.header.use_tbl_headings}{If \code{TRUE} then RTF output tables will
+migrate all table headings (including the table title and all column
+labels) to the page header. This page header content will repeat across
+pages. By default, this is \code{FALSE}.}
+
+\item{page.footer.use_tbl_notes}{If \code{TRUE} then RTF output tables will
+migrate all table footer content (this includes footnotes and source notes)
+to the page footer. This page footer content will repeat across pages. By
+default, this is \code{FALSE}.}
+
+\item{page.width, page.height}{The page width and height in the standard
+portrait orientation. This is for RTF table output and the default
+values (in inches) are \verb{8.5in} and \verb{11.0in}.}
+
+\item{page.margin.left, page.margin.right, page.margin.top, page.margin.bottom}{For RTF table output, these options correspond to the left, right, top, and
+bottom page margins. The default values for each of these is \verb{1.0in}.}
+
+\item{page.header.height, page.footer.height}{The heights of the page header
+and footer for RTF table outputs. Default values for both are \verb{0.5in}.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -358,35 +413,16 @@ An object of class \code{gt_tbl}.
 Modify the options available in a table. These options are named by the
 components, the subcomponents, and the element that can adjusted.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_tab_options_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_tab_options_2.png}{options: width=100\%}}
+Use \code{\link{exibble}} to create a \strong{gt} table with all the main parts added. We
+can use this \strong{gt} object going forward to demo some of what's available in
+the \code{tab_options()} function.
 
-\if{html}{\figure{man_tab_options_3.png}{options: width=100\%}}
-
-\if{html}{\figure{man_tab_options_4.png}{options: width=100\%}}
-
-\if{html}{\figure{man_tab_options_5.png}{options: width=100\%}}
-
-\if{html}{\figure{man_tab_options_6.png}{options: width=100\%}}
-}
-
-\section{Function ID}{
-
-2-9
-}
-
-\examples{
-# Use `exibble` to create a gt table with
-# all the main parts added; we can use this
-# going forward to demo some `tab_options()`
-tab_1 <-
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
   exibble \%>\%
-  dplyr::select(
-    -c(fctr, date, time, datetime)
-  ) \%>\%
+  dplyr::select(-c(fctr, date, time, datetime)) \%>\%
   gt(
     rowname_col = "row",
     groupname_col = "group"
@@ -413,54 +449,80 @@ tab_1 <-
   ) \%>\%
   tab_footnote(
     footnote = "Alphabetical fruit.",
-    locations = cells_column_labels(
-      columns = char
-    )
+    locations = cells_column_labels(columns = char)
   )
 
-# Modify the table width to 100\% (which
-# spans the entire content width area)
-tab_2 <-
-  tab_1 \%>\%
+tab_1
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_1.png" style="width:100\%;">
+}}
+
+Modify the table width to be 100\% (which spans the entire content width
+area).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% tab_options(table.width = pct(100))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_2.png" style="width:100\%;">
+}}
+
+Modify the table's background color to be \code{"lightcyan"}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% tab_options(table.background.color = "lightcyan")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_3.png" style="width:100\%;">
+}}
+
+Use letters as the marks for footnote references. Also, separate footnotes in
+the footer by spaces instead of newlines.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\%
   tab_options(
-    table.width = pct(100)
+    footnotes.marks = letters,
+    footnotes.multiline = FALSE
   )
+}\if{html}{\out{</div>}}
 
-# Modify the table's background color
-# to be "lightcyan"
-tab_3 <-
-  tab_1 \%>\%
-  tab_options(
-    table.background.color = "lightcyan"
-  )
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_4.png" style="width:100\%;">
+}}
 
-# Use letters as the marks for footnote
-# references; also, separate footnotes in
-# the footer by spaces instead of newlines
-tab_4 <-
-  tab_1 \%>\%
-  tab_options(
-    footnotes.sep = " ",
-    footnotes.marks = letters
-  )
+Change the padding of data rows to 5 px.
 
-# Change the padding of data rows to 5px
-tab_5 <-
-  tab_1 \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\%
   tab_options(
     data_row.padding = px(5)
   )
+}\if{html}{\out{</div>}}
 
-# Reduce the size of the title and the
-# subtitle text
-tab_6 <-
-  tab_1 \%>\%
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_5.png" style="width:100\%;">
+}}
+
+Reduce the size of the title and the subtitle text.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\%
   tab_options(
     heading.title.font.size = "small",
     heading.subtitle.font.size = "small"
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_6.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+2-9
+}
+
 \seealso{
 Other Create or Modify Parts: 
 \code{\link{tab_footnote}()},

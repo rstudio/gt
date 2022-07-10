@@ -11,7 +11,7 @@ expect_tab_colnames <- function(tab,
       all(is.na(dt_stub_df_get(data = tab)[["rowname"]]))
     )
 
-  } else if (rowname == "col"){
+  } else if (rowname == "col") {
 
     # Expect that the `rowname` column of the `stub_df`
     # object is entirely filled with NAs
@@ -38,8 +38,7 @@ expect_tab_colnames <- function(tab,
   }
 }
 
-expect_tab <- function(tab,
-                       df) {
+expect_tab <- function(tab, df) {
 
   # Expect that the object has the correct classes
   expect_s3_class(tab, "gt_tbl")
@@ -73,11 +72,11 @@ expect_tab <- function(tab,
 
   dt_heading_get(data = tab) %>%
     length() %>%
-    expect_equal(2)
+    expect_equal(3)
 
   dt_spanners_get(data = tab) %>%
     dim() %>%
-    expect_equal(c(0, 5))
+    expect_equal(c(0, 6))
 
   dt_stubhead_get(data = tab) %>%
     length() %>%
@@ -85,7 +84,7 @@ expect_tab <- function(tab,
 
   dt_footnotes_get(data = tab) %>%
     dim() %>%
-    expect_equal(c(0, 7))
+    expect_equal(c(0, 8))
 
   dt_source_notes_get(data = tab) %>%
     length() %>%
@@ -101,7 +100,7 @@ expect_tab <- function(tab,
 
   dt_options_get(data = tab) %>%
     dim() %>%
-    expect_equal(c(148, 5))
+    expect_equal(c(168, 5))
 
   dt_transforms_get(data = tab) %>%
     length() %>%

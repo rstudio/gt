@@ -14,7 +14,7 @@ fmt_fraction(
   use_seps = TRUE,
   pattern = "{x}",
   sep_mark = ",",
-  dec_mark = ".",
+  system = c("intl", "ind"),
   locale = NULL
 )
 }
@@ -42,7 +42,7 @@ denominators of up to 1, 2, or 3 digits, respectively) or an integer value
 greater than zero to obtain fractions with a fixed denominator (\code{2} yields
 halves, \code{3} is for thirds, \code{4} is quarters, etc.). For the latter option,
 using \code{simplify = TRUE} will simplify fractions where possible (e.g., \code{2/4}
-will be simplified as \code{1/2}).}
+will be simplified as \code{1/2}). By default, the \code{"low"} option is used.}
 
 \item{simplify}{If choosing to provide a numeric value for \code{accuracy}, the
 option to simplify the fraction (where possible) can be taken with \code{TRUE}
@@ -66,7 +66,11 @@ characters are taken to be string literals.}
 (e.g., using \code{sep_mark = ","} with \code{1000} would result in a formatted value
 of \verb{1,000}).}
 
-\item{dec_mark}{The character to use as a decimal mark (e.g., using \code{dec_mark = ","} with \code{0.152} would result in a formatted value of \verb{0,152}).}
+\item{system}{The numbering system to use. By default, this is the
+international numbering system (\code{"intl"}) whereby grouping separators
+(i.e., \code{sep_mark}) are separated by three digits. The alternative system,
+the Indian numbering system (\code{"ind"}) uses grouping separators that
+correspond to thousand, lakh, crore, and higher quantities.}
 
 \item{locale}{An optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include \code{"en_US"} for English
@@ -91,7 +95,8 @@ The following options are available for controlling this type of formatting:
 \item accuracy: how to express the fractional part of the mixed fractions; there
 are three keyword options for this and an allowance for arbitrary denominator
 settings
-\item layout: for HTML output, we can choose to use diagonal or inline fractions
+\item simplification: an option to simplify fractions whenever possible
+\item layout: We can choose to output values with diagonal or inline fractions
 \item digit grouping separators: options to enable/disable digit separators
 and provide a choice of separator symbol for the whole number portion
 \item pattern: option to use a text pattern for decoration of the formatted
@@ -105,11 +110,78 @@ Targeting of values is done through \code{columns} and additionally by \code{row
 nothing is provided for \code{rows} then entire columns are selected). A number of
 helper functions exist to make targeting more effective. Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the Arguments section for more information on this.
+argument. See the \emph{Arguments} section for more information on this.
 }
+\section{Examples}{
+
+
+Use \code{\link{pizzaplace}} to create a \strong{gt} table. Format the \code{f_sold} and
+\code{f_income} columns to display fractions.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
+  dplyr::group_by(type, size) \%>\%
+  dplyr::summarize(
+    sold = dplyr::n(),
+    income = sum(price),
+    .groups = "drop_last"
+  ) \%>\%
+  dplyr::group_by(type) \%>\%
+  dplyr::mutate(
+    f_sold = sold / sum(sold),
+    f_income = income / sum(income),
+  ) \%>\%
+  dplyr::arrange(type, dplyr::desc(income)) \%>\%
+  gt(rowname_col = "size") \%>\%
+  tab_header(
+    title = "Pizzas Sold in 2015",
+    subtitle = "Fraction of Sell Count and Revenue by Size per Type"
+  ) \%>\%
+  fmt_integer(columns = sold) \%>\%
+  fmt_currency(columns = income) \%>\%
+  fmt_fraction(
+    columns = starts_with("f_"),
+    accuracy = 10,
+    simplify = FALSE
+  ) \%>\%
+  sub_missing(missing_text = "") \%>\%
+  tab_spanner(
+    label = "Sold",
+    columns = contains("sold")
+  ) \%>\%
+  tab_spanner(
+    label = "Revenue",
+    columns = contains("income")
+  ) \%>\%
+  text_transform(
+    locations = cells_body(),
+    fn = function(x) \{
+      dplyr::case_when(
+        x == 0 ~ "<em>nil</em>",
+        x != 0 ~ x
+      )
+    \}
+  ) \%>\%
+  cols_label(
+    sold = "Amount",
+    income = "Amount",
+    f_sold = md("_f_"),
+    f_income = md("_f_")
+  ) \%>\%
+  cols_align(align = "center", columns = starts_with("f")) \%>\%
+  tab_options(
+    table.width = px(400),
+    row_group.as_column = TRUE
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_fraction_1.png" style="width:100\%;">
+}}
+}
+
 \section{Function ID}{
 
-3-6
+3-7
 }
 
 \seealso{
@@ -119,16 +191,21 @@ Other Format Data:
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
-\code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
+\code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt}()},
+\code{\link{sub_large_vals}()},
+\code{\link{sub_missing}()},
+\code{\link{sub_small_vals}()},
+\code{\link{sub_zero}()},
 \code{\link{text_transform}()}
 }
 \concept{Format Data}

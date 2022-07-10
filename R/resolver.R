@@ -5,12 +5,7 @@
 #'
 #' @import rlang
 #' @noRd
-resolve_cells_body <- function(data,
-                               object) {
-
-  # Get the `stub_df` data frame from `data`
-  stub_df <- dt_stub_df_get(data = data)
-  data_tbl <- dt_data_get(data = data)
+resolve_cells_body <- function(data, object) {
 
   #
   # Resolution of columns and rows as integer vectors
@@ -118,23 +113,18 @@ resolve_cells_column_labels <- function(data,
 #' @param object The list object created by the `cells_column_labels()`
 #'   function.
 #' @noRd
-resolve_cells_column_spanners <- function(data,
-                                          object) {
+resolve_cells_column_spanners <- function(data, object) {
+
+  spanners <- dt_spanners_get(data = data)
 
   #
   # Resolution of spanners as column spanner names
   #
-  spanner_labels <-
-    dt_spanners_get(data = data) %>%
-    .$spanner_label %>%
-    unlist() %>%
-    .[!is.na(.)] %>%
-    unique()
+  spanner_labels <- unlist(spanners$spanner_label)
+  spanner_labels <- unique(spanner_labels[!is.na(spanner_labels)])
 
-  spanner_ids <-
-    dt_spanners_get(data = data) %>%
-    .$spanner_id %>%
-    .[!is.na(.)]
+  spanner_ids <- spanners$spanner_id
+  spanner_ids <- spanner_ids[!is.na(spanner_ids)]
 
   resolved_spanners_idx <-
     resolve_vector_i(
@@ -154,6 +144,35 @@ resolve_cells_column_spanners <- function(data,
   cells_resolved
 }
 
+#' Resolve the row group values in the `cells_row_groups` object once it
+#' has access to the `data` object
+#'
+#' @param data A table object that is created using the `gt()` function.
+#' @param object The list object created by the `cells_row_groups()`
+#'   function.
+#' @noRd
+resolve_cells_row_groups <- function(data, object) {
+
+  row_groups <- dt_row_groups_get(data = data)
+
+  resolved_row_groups_idx <-
+    resolve_vector_i(
+      expr = !!object$groups,
+      vector = row_groups,
+      item_label = "group"
+    )
+
+  resolved_row_groups <- row_groups[resolved_row_groups_idx]
+
+  # Create a list object
+  cells_resolved <- list(groups = resolved_row_groups)
+
+  # Apply the `columns_cells_resolved` class
+  class(cells_resolved) <- "row_groups_resolved"
+
+  cells_resolved
+}
+
 #' @param expr An unquoted expression that follows **tidyselect** semantics
 #' @param data A gt object or data frame or tibble
 #' @return Character vector
@@ -161,14 +180,18 @@ resolve_cells_column_spanners <- function(data,
 resolve_cols_c <- function(expr,
                            data,
                            strict = TRUE,
-                           excl_stub = TRUE) {
+                           excl_stub = TRUE,
+                           null_means = c("everything", "nothing")) {
+
+  null_means <- match.arg(null_means)
 
   names(
     resolve_cols_i(
       expr = {{expr}},
       data = data,
       strict = strict,
-      excl_stub = excl_stub
+      excl_stub = excl_stub,
+      null_means = null_means
     )
   )
 }
@@ -185,14 +208,14 @@ resolve_cols_c <- function(expr,
 resolve_cols_i <- function(expr,
                            data,
                            strict = TRUE,
-                           excl_stub = TRUE) {
+                           excl_stub = TRUE,
+                           null_means = c("everything", "nothing")) {
 
   quo <- rlang::enquo(expr)
   cols_excl <- c()
+  null_means <- match.arg(null_means)
 
   if (is_gt(data)) {
-
-    cols <- colnames(dt_data_get(data = data))
 
     # In most cases we would want to exclude the column that
     # represents the stub but that isn't always the case (e.g.,
@@ -218,9 +241,11 @@ resolve_cols_i <- function(expr,
 
   stopifnot(is.data.frame(data))
 
-  quo <- translate_legacy_resolver_expr(quo)
+  quo <- translate_legacy_resolver_expr(quo, null_means)
 
-  # No env argument required, because the expr is a quosure
+  # With the quosure and the `data`, we can use `tidyselect::eval_select()`
+  # to resolve the expression to columns indices/names; no `env` argument
+  # is required here because the `expr` is a quosure
   selected <- tidyselect::eval_select(expr = quo, data = data, strict = strict)
 
   # Exclude certain columns (e.g., stub & group columns) if necessary
@@ -229,46 +254,48 @@ resolve_cols_i <- function(expr,
 
 #' @param quo A quosure that might contain legacy gt column criteria
 #' @noRd
-translate_legacy_resolver_expr <- function(quo) {
+translate_legacy_resolver_expr <- function(quo, null_means) {
 
   expr <- rlang::quo_get_expr(quo = quo)
 
   if (identical(expr, FALSE)) {
-    warning(
-      "`columns = FALSE` has been deprecated in gt 0.3.0:\n",
-      "* please use `columns = c()` instead",
-      call. = FALSE
-    )
+    cli::cli_warn(c(
+      "Since gt v0.3.0, `columns = FALSE` has been deprecated.",
+      "*" = "Please use `columns = c()` instead."
+    ))
 
     rlang::quo_set_expr(quo = quo, expr = quote(NULL))
 
   } else if (identical(expr, TRUE)) {
 
-    warning(
-      "`columns = TRUE` has been deprecated in gt 0.3.0:\n",
-      "* please use `columns = everything()` instead",
-      call. = FALSE
-    )
+    cli::cli_warn(c(
+      "Since gt v0.3.0, `columns = TRUE` has been deprecated.",
+      "*" = "Please use `columns = everything()` instead."
+    ))
 
     rlang::quo_set_expr(quo = quo, expr = quote(everything()))
 
   } else if (is.null(expr)) {
 
-    warning(
-      "`columns = NULL` has been deprecated in gt 0.3.0:\n",
-      "* please use `columns = everything()` instead",
-      call. = FALSE
-    )
+    if (null_means == "everything") {
 
-    rlang::quo_set_expr(quo = quo, expr = quote(everything()))
+      cli::cli_warn(c(
+        "Since gt v0.3.0, `columns = NULL` has been deprecated.",
+        "*" = "Please use `columns = everything()` instead."
+      ))
+
+      rlang::quo_set_expr(quo = quo, expr = quote(everything()))
+
+    } else {
+      rlang::quo_set_expr(quo = quo, expr = quote(NULL))
+    }
 
   } else if (rlang::quo_is_call(quo = quo, name = "vars")) {
 
-    warning(
-      "`columns = vars(...)` has been deprecated in gt 0.3.0:\n",
-      "* please use `columns = c(...)` instead",
-      call. = FALSE
-    )
+    cli::cli_warn(c(
+      "Since gt v0.3.0, `columns = vars(...)` has been deprecated.",
+      "*" = "Please use `columns = c(...)` instead."
+    ))
 
     rlang::quo_set_expr(
       quo = quo,
@@ -302,11 +329,10 @@ resolve_rows_l <- function(expr, data) {
 
   if (is.null(resolved)) {
 
-    warning(
-      "The use of `NULL` for rows has been deprecated in gt 0.3.0:\n",
-      "* please use `TRUE` instead",
-      call. = FALSE
-    )
+    cli::cli_warn(c(
+      "Since gt v0.3.0, the use of `NULL` for `rows` has been deprecated.",
+      "*" = "Please use `TRUE` instead."
+    ))
 
     # Modify the NULL value of `resolved` to `TRUE` (which is
     # fully supported for selecting all rows)
@@ -327,7 +353,11 @@ resolve_rows_i <- function(expr, data) {
   which(resolve_rows_l(expr = {{ expr }}, data = data))
 }
 
-resolve_vector_l <- function(expr, vector, item_label = "item") {
+resolve_vector_l <- function(
+    expr,
+    vector,
+    item_label = "item"
+  ) {
 
   quo <- rlang::enquo(expr)
 
@@ -366,11 +396,10 @@ normalize_resolved <- function(resolved,
     # TODO: this may not apply to all types of resolution so we may
     # want to either make this warning conditional (after investigating which
     # resolving contexts still allow `NULL`)
-    warning(
-      "The use of `NULL` for ", item_label , "s has been deprecated in gt 0.3.0:\n",
-      "* please use `everything()` instead",
-      call. = FALSE
-    )
+    cli::cli_warn(c(
+      "Since gt v0.3.0, the use of `NULL` for {item_label} has been deprecated.",
+      "*" = "Please use `everything()` instead."
+    ))
 
   } else if (is.logical(resolved)) {
 
@@ -407,36 +436,32 @@ normalize_resolved <- function(resolved,
 
 resolver_stop_on_logical <- function(item_label) {
 
-  stop(
-    "The number of logical values must either be 1 or the number of ",
-    item_label, "s",
-    call. = FALSE
+  cli::cli_abort(
+    "The number of logical values must either be `1` or the number
+    of {item_label}s."
   )
 }
 
 resolver_stop_on_numeric <- function(item_label, unknown_resolved) {
 
-  stop(
-    "The following ", item_label, " indices do not exist in the data: ",
-    paste0(unknown_resolved, collapse = ", "),
-    call. = FALSE
+  cli::cli_abort(
+    "The following {item_label} indices do not exist in the data:
+    {paste0(unknown_resolved, collapse = ', ')}."
   )
 }
 
 resolver_stop_on_character <- function(item_label, unknown_resolved) {
 
-  stop(
-    "The following ", item_label, "(s) do not exist in the data: ",
-    paste0(unknown_resolved, collapse = ", "),
-    call. = FALSE
+  cli::cli_abort(
+    "The following {item_label}(s) do not exist in the data:
+    {paste0(unknown_resolved, collapse = ', ')}."
   )
 }
 
 resolver_stop_unknown <- function(item_label, resolved) {
 
-  stop(
-    "Don't know how to select ", item_label, "s using an object of class ",
-    class(resolved)[1],
-    call. = FALSE
+  cli::cli_abort(
+    "Don't know how to select {item_label}s using an object of class
+    {class(resolved)[1]}."
   )
 }

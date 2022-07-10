@@ -46,5 +46,5 @@ gt(tbl, groupname_col = "group") %>%
     columns = value_2,
     fns = list(
       ~sum(., na.rm = TRUE))) %>%
-  fmt_missing(columns = c(value, value_2))
+  sub_missing(columns = c(value, value_2))
 ```
