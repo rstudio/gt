@@ -1386,7 +1386,7 @@ summary_row_tags_i <- function(data, group_id) {
 
                 sprintf(
                   "<%s %sclass=\"%s\"%s>%s</%s>",
-                  if ("gt_summary_row" %in% extra_class && "gt_stub" %in% extra_class) {
+                  if ("gt_stub" %in% extra_class) {
                     "th"
                   } else {
                     "td"
