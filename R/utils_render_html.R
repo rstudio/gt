@@ -976,7 +976,7 @@ create_body_component_h <- function(data) {
                     sprintf(
                       "<%s %sclass=\"%s\"%s>%s</%s>",
                       if ("gt_stub" %in% extra_class) {
-                        paste0("th scope=\"", ifelse(row_span > 1, "rowgroup", "row"), "\"")
+                        paste0("th scope=\"", ifelse(row_span > 1, htmltools::htmlEscape("rowgroup", attribute = TRUE), htmltools::htmlEscape("row", attribute = TRUE)), "\"")
                       } else {
                         "td"
                       },
