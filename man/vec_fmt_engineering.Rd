@@ -103,7 +103,7 @@ We can change the number of decimal places with the \code{decimals} option:
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "324.0 &times; 10<sup class='gt_super'>&minus;6</sup>"
-## [2] "8.7"                                                 
+## [2] "8.6"                                                 
 ## [3] "1.4 &times; 10<sup class='gt_super'>6</sup>"         
 ## [4] "&minus;59.0 &times; 10<sup class='gt_super'>3</sup>" 
 ## [5] "NA"

@@ -888,10 +888,11 @@ create_body_component_h <- function(data) {
           group_heading_row <-
             htmltools::tags$tr(
               class = "gt_group_heading_row",
-              htmltools::tags$td(
+              htmltools::tags$th(
                 colspan = n_cols_total,
                 class = group_class,
                 style = row_style,
+                scope = ifelse(n_cols_total > 1, "colgroup", "col"),
                 htmltools::HTML(group_label)
               )
             )
@@ -975,7 +976,7 @@ create_body_component_h <- function(data) {
                     sprintf(
                       "<%s %sclass=\"%s\"%s>%s</%s>",
                       if ("gt_stub" %in% extra_class) {
-                        "th scope=\"row\""
+                        paste0("th scope=\"", ifelse(row_span > 1, "rowgroup", "row"), "\"")
                       } else {
                         "td"
                       },
@@ -1444,7 +1445,12 @@ summary_row_tags_i <- function(data, group_id) {
                 }
 
                 sprintf(
-                  "<td %sclass=\"%s\"%s>%s</td>",
+                  "<%s %sclass=\"%s\"%s>%s</%s>",
+                  if ("gt_summary_row" %in% extra_class && "gt_stub" %in% extra_class) {
+                    "th"
+                  } else {
+                    "td"
+                  },
                   if (is.null(col_span)) {
                     ""
                   } else {
@@ -1469,7 +1475,12 @@ summary_row_tags_i <- function(data, group_id) {
                       "\""
                     )
                   },
-                  as.character(x)
+                  as.character(x),
+                                    if ("gt_summary_row" %in% extra_class && "gt_stub" %in% extra_class) {
+                    "th"
+                  } else {
+                    "td"
+                  }
                 )
               }
             ),
