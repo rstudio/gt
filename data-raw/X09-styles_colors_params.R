@@ -1,6 +1,7 @@
 library(tidyverse)
 
-# Colors for the `opt_stylize()` function
+# Colors for the `opt_stylize()` function; there are five levels of colors
+# increasing from very light (90-96% lightness) to darker (0-50% lightness)
 preset_colors <-
   list(
     gray =    c("#F4F4F4", "#D5D5D5", "#929292", "#5F5F5F", "#000000"),
