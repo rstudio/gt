@@ -12,8 +12,8 @@ opt_stylize(data, style = 1, color = "blue")
 \item{style}{Six numbered styles are available. Simply provide a number from
 \code{1} (the default) to \code{6} to choose a distinct look.}
 
-\item{color}{There are seven color variations: \code{"blue"} (the default),
-\code{"orange"}, \code{"cyan"}, \code{"pink"}, \code{"green"}, \code{"red"}, and \code{"gray"}.}
+\item{color}{There are six color variations: \code{"blue"} (the default),
+\code{"cyan"}, \code{"pink"}, \code{"green"}, \code{"red"}, and \code{"gray"}.}
 }
 \value{
 an object of class \code{gt_tbl}.
@@ -24,10 +24,10 @@ curated set of background colors, line colors, and line styles. There are six
 styles to choose from and they largely vary in the extent of coloring applied
 to different table locations. Some have table borders applied, some apply
 darker colors to the table stub and summary sections, and, some even have
-vertical lines. In addition to choosing a \code{style} preset, there are seven
+vertical lines. In addition to choosing a \code{style} preset, there are six
 \code{color} variations that each use a range of five color tints. Each of the
 color tints have been fine-tuned to maximize the contrast between text and
-its background. There are 42 combinations of \code{style} and \code{color} to choose
+its background. There are 36 combinations of \code{style} and \code{color} to choose
 from.
 }
 \section{Examples}{
