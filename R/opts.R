@@ -925,17 +925,17 @@ opt_table_font <- function(
 #' styles to choose from and they largely vary in the extent of coloring applied
 #' to different table locations. Some have table borders applied, some apply
 #' darker colors to the table stub and summary sections, and, some even have
-#' vertical lines. In addition to choosing a `style` preset, there are seven
+#' vertical lines. In addition to choosing a `style` preset, there are six
 #' `color` variations that each use a range of five color tints. Each of the
 #' color tints have been fine-tuned to maximize the contrast between text and
-#' its background. There are 42 combinations of `style` and `color` to choose
+#' its background. There are 36 combinations of `style` and `color` to choose
 #' from.
 #'
 #' @inheritParams fmt_number
 #' @param style Six numbered styles are available. Simply provide a number from
 #'   `1` (the default) to `6` to choose a distinct look.
-#' @param color There are seven color variations: `"blue"` (the default),
-#'   `"orange"`, `"cyan"`, `"pink"`, `"green"`, `"red"`, and `"gray"`.
+#' @param color There are six color variations: `"blue"` (the default),
+#'   `"cyan"`, `"pink"`, `"green"`, `"red"`, and `"gray"`.
 #'
 #' @return an object of class `gt_tbl`.
 #'
@@ -994,7 +994,7 @@ opt_stylize <- function(
   if (!(length(color) == 1 && color %in% unique(styles_colors_params$color))) {
     cli::cli_abort(c(
       "The `color` value must be one of seven specific colors:",
-      "*" = "\"blue\", \"orange\", \"cyan\", \"pink\", \"green\", \"red\", or \"gray\""
+      "*" = "\"blue\", \"cyan\", \"pink\", \"green\", \"red\", or \"gray\""
     ))
   }
 
