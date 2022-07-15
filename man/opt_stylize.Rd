@@ -13,28 +13,29 @@ opt_stylize(data, style = 1, color = "blue")
 \code{1} (the default) to \code{6} to choose a distinct look.}
 
 \item{color}{There are seven color variations: \code{"blue"} (the default),
-\code{"orange"}, \code{"aqua"}, \code{"pink"}, \code{"green"}, \code{"red"}, and \code{"gray"}.}
+\code{"orange"}, \code{"cyan"}, \code{"pink"}, \code{"green"}, \code{"red"}, and \code{"gray"}.}
 }
 \value{
 an object of class \code{gt_tbl}.
 }
 \description{
-This function applies a set of styles related to background colors,
-line colors, and line styles. There are six \code{style}s to choose from, they
-largely vary in the extent of coloring applied to different locations. Some
-have table borders applied, some apply darker colors to the table stub and
-summary sections, and, some even have vertical lines. In addition to \code{style},
-there are seven \code{color} variations that each use a range of five color tints.
-Each of the color tints have been fine-tuned to maximize the contrast between
-text and its background. In total, There are 42 combinations of \code{style} and
-\code{color}.
+With \code{opt_stylize()} you can quickly style your \strong{gt} table with a carefully
+curated set of background colors, line colors, and line styles. There are six
+styles to choose from and they largely vary in the extent of coloring applied
+to different table locations. Some have table borders applied, some apply
+darker colors to the table stub and summary sections, and, some even have
+vertical lines. In addition to choosing a \code{style} preset, there are seven
+\code{color} variations that each use a range of five color tints. Each of the
+color tints have been fine-tuned to maximize the contrast between text and
+its background. There are 42 combinations of \code{style} and \code{color} to choose
+from.
 }
 \section{Examples}{
 
 
 Use \code{exibble} to create a \strong{gt} table with a number of table parts added.
 Then, use the \code{opt_stylize()} function to give the table some additional
-style (using the \code{"aqua"} color variation and style number \code{6}).
+style (using the \code{"cyan"} color variation and style number \code{6}).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt(rowname_col = "row", groupname_col = "group") \%>\%
@@ -59,7 +60,7 @@ style (using the \code{"aqua"} color variation and style number \code{6}).
     title = "The title of the table",
     subtitle = "The table's subtitle"
   ) \%>\%
-  opt_stylize(style = 6, color = "aqua")
+  opt_stylize(style = 6, color = "cyan")
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
