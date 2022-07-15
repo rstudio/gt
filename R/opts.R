@@ -936,6 +936,8 @@ opt_table_font <- function(
 #'   `1` (the default) to `6` to choose a distinct look.
 #' @param color There are six color variations: `"blue"` (the default),
 #'   `"cyan"`, `"pink"`, `"green"`, `"red"`, and `"gray"`.
+#' @param add_row_striping An option to enable row striping in the table body
+#'   for the style chosen. By default, this is `TRUE`.
 #'
 #' @return an object of class `gt_tbl`.
 #'
@@ -984,7 +986,8 @@ opt_table_font <- function(
 opt_stylize <- function(
     data,
     style = 1,
-    color = "blue"
+    color = "blue",
+    add_row_striping = TRUE
 ) {
 
   if (!(length(style) == 1 && style %in% 1:6)) {
@@ -1041,6 +1044,10 @@ opt_stylize <- function(
         width = px(3),
         color = params$table_outline_color
       )
+  }
+
+  if (add_row_striping) {
+    tbl_colorized <- opt_row_striping(tbl_colorized)
   }
 
   tbl_colorized
