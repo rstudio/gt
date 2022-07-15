@@ -1,16 +1,20 @@
 library(tidyverse)
 
 # Colors for the `opt_stylize()` function; there are five levels of colors
-# increasing from very light (90-96% lightness) to darker (0-50% lightness)
+# increasing from very light (90-96% lightness) to darker (0-30% lightness)
+# All color combinations (computed text color with background color from the
+# below matrix) were checked against the WebAIM Contrast Checker tool (at
+# https://webaim.org/resources/contrastchecker, requiring a WCAG AA passing
+# grade) and the Chrome Dev Tools accessibility indicator for contrast
+# (requiring a passing checkmark)
 preset_colors <-
   list(
     gray =    c("#F4F4F4", "#D5D5D5", "#929292", "#5F5F5F", "#000000"),
     blue =    c("#EDF7FC", "#89D3FE", "#00A1FF", "#0076BA", "#004D80"),
-    orange =  c("#FFFFDB", "#FEFC66", "#FAE231", "#F8BA00", "#FF9400"),
-    cyan =    c("#EBFBF9", "#A5FEF2", "#14E6CF", "#01A99D", "#007C77"),
-    pink =    c("#FCF2F7", "#FF8CC6", "#EF5FA7", "#CB2A7B", "#99195F"),
-    green =   c("#EDF6E8", "#9AFD69", "#60D937", "#1EB100", "#027101"),
-    red =     c("#FEEDEC", "#FF968D", "#FF644E", "#ED220D", "#B51800")
+    cyan =    c("#EBFBF9", "#A5FEF2", "#7FE9DB", "#01837B", "#016763"),
+    pink =    c("#FCF2F7", "#FFC6E3", "#EF5FA7", "#CB2A7B", "#99195F"),
+    green =   c("#EDF6E8", "#CAFFAF", "#89FD61", "#038901", "#027101"),
+    red =     c("#FEEDEC", "#FFCCC7", "#FF644E", "#E4220C", "#A81600")
   )
 
 # Function for getting a vector of preset colors at a specified 'level'
