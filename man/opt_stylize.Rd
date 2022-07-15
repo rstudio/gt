@@ -4,7 +4,7 @@
 \alias{opt_stylize}
 \title{Stylize your table with a colorful look}
 \usage{
-opt_stylize(data, style = 1, color = "blue")
+opt_stylize(data, style = 1, color = "blue", add_row_striping = TRUE)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -14,6 +14,9 @@ opt_stylize(data, style = 1, color = "blue")
 
 \item{color}{There are six color variations: \code{"blue"} (the default),
 \code{"cyan"}, \code{"pink"}, \code{"green"}, \code{"red"}, and \code{"gray"}.}
+
+\item{add_row_striping}{An option to enable row striping in the table body
+for the style chosen. By default, this is \code{TRUE}.}
 }
 \value{
 an object of class \code{gt_tbl}.
