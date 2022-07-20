@@ -7,6 +7,16 @@ library(tidyverse)
 # https://webaim.org/resources/contrastchecker, requiring a WCAG AA passing
 # grade) and the Chrome Dev Tools accessibility indicator for contrast
 # (requiring a passing checkmark)
+
+# TODO: Develop a solution for auto-checking contrast in every cell (every
+# combination of text and background color); might involve using an API (where
+# the rendered document is posted).
+
+# TODO: Add color-vision-deficiency-aware color schemes; check current schemes.
+
+# TODO: Implement these color presets directly in the SCSS stylesheet (almost
+# all `opt_*()` should be more directly handled by SCSS).
+
 preset_colors <-
   list(
     gray =    c("#F4F4F4", "#D5D5D5", "#929292", "#5F5F5F", "#000000"),
