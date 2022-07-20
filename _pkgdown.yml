@@ -184,6 +184,7 @@ reference:
     - opt_table_lines
     - opt_table_outline
     - opt_table_font
+    - opt_stylize
     - opt_css
 
   - title: Information Functions

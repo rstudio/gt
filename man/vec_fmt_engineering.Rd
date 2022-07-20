@@ -88,64 +88,54 @@ values. The rendering context is HTML unless specified in the \code{output}
 argument.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_engineering(num_vals)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "324.00 &times; 10<sup class='gt_super'>&minus;6</sup>"
-## [2] "8.65"                                                 
-## [3] "1.36 &times; 10<sup class='gt_super'>6</sup>"         
-## [4] "&minus;59.03 &times; 10<sup class='gt_super'>3</sup>" 
-## [5] "NA"
+#> [1] "324.00 &times; 10<sup class='gt_super'>&minus;6</sup>"
+#> [2] "8.65"                                                 
+#> [3] "1.36 &times; 10<sup class='gt_super'>6</sup>"         
+#> [4] "&minus;59.03 &times; 10<sup class='gt_super'>3</sup>" 
+#> [5] "NA"
 }\if{html}{\out{</div>}}
 
 We can change the number of decimal places with the \code{decimals} option:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_engineering(num_vals, decimals = 1)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "324.0 &times; 10<sup class='gt_super'>&minus;6</sup>"
-## [2] "8.7"                                                 
-## [3] "1.4 &times; 10<sup class='gt_super'>6</sup>"         
-## [4] "&minus;59.0 &times; 10<sup class='gt_super'>3</sup>" 
-## [5] "NA"
+#> [1] "324.0 &times; 10<sup class='gt_super'>&minus;6</sup>"
+#> [2] "8.7"                                                 
+#> [3] "1.4 &times; 10<sup class='gt_super'>6</sup>"         
+#> [4] "&minus;59.0 &times; 10<sup class='gt_super'>3</sup>" 
+#> [5] "NA"
 }\if{html}{\out{</div>}}
 
 If we are formatting for a different locale, we could supply the locale ID
 and \strong{gt} will handle any locale-specific formatting options:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_engineering(num_vals, locale = "da")
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "324,00 &times; 10<sup class='gt_super'>&minus;6</sup>"
-## [2] "8,65"                                                 
-## [3] "1,36 &times; 10<sup class='gt_super'>6</sup>"         
-## [4] "&minus;59,03 &times; 10<sup class='gt_super'>3</sup>" 
-## [5] "NA"
+#> [1] "324,00 &times; 10<sup class='gt_super'>&minus;6</sup>"
+#> [2] "8,65"                                                 
+#> [3] "1,36 &times; 10<sup class='gt_super'>6</sup>"         
+#> [4] "&minus;59,03 &times; 10<sup class='gt_super'>3</sup>" 
+#> [5] "NA"
 }\if{html}{\out{</div>}}
 
 Should you need to have positive and negative signs on each of the output
 values, use \code{force_sign = TRUE}:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_engineering(num_vals, force_sign = TRUE)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "+324.00 &times; 10<sup class='gt_super'>&minus;6</sup>"
-## [2] "+8.65"                                                 
-## [3] "+1.36 &times; 10<sup class='gt_super'>6</sup>"         
-## [4] "&minus;59.03 &times; 10<sup class='gt_super'>3</sup>"  
-## [5] "NA"
+#> [1] "+324.00 &times; 10<sup class='gt_super'>&minus;6</sup>"
+#> [2] "+8.65"                                                 
+#> [3] "+1.36 &times; 10<sup class='gt_super'>6</sup>"         
+#> [4] "&minus;59.03 &times; 10<sup class='gt_super'>3</sup>"  
+#> [5] "NA"
 }\if{html}{\out{</div>}}
 
 As a last example, one can wrap the values in a pattern with the \code{pattern}
 argument. Note here that \code{NA} values won't have the pattern applied.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_engineering(num_vals, pattern = "/\{x\}/")
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "/324.00 &times; 10<sup class='gt_super'>&minus;6</sup>/"
-## [2] "/8.65/"                                                 
-## [3] "/1.36 &times; 10<sup class='gt_super'>6</sup>/"         
-## [4] "/&minus;59.03 &times; 10<sup class='gt_super'>3</sup>/" 
-## [5] "NA"
+#> [1] "/324.00 &times; 10<sup class='gt_super'>&minus;6</sup>/"
+#> [2] "/8.65/"                                                 
+#> [3] "/1.36 &times; 10<sup class='gt_super'>6</sup>/"         
+#> [4] "/&minus;59.03 &times; 10<sup class='gt_super'>3</sup>/" 
+#> [5] "NA"
 }\if{html}{\out{</div>}}
 }
 

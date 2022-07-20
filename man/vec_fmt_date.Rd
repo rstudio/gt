@@ -72,18 +72,14 @@ formatted dates. Any \code{NA} values remain as \code{NA} values. The rendering 
 is HTML unless specified in the \code{output} argument.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_date(str_vals)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "Monday, June 13, 2022"    "Friday, January 25, 2019"
-## [3] "Monday, March 23, 2015"   NA
+#> [1] "Monday, June 13, 2022"    "Friday, January 25, 2019"
+#> [3] "Monday, March 23, 2015"   NA
 }\if{html}{\out{</div>}}
 
 We can change the formatting style by choosing a number from \code{1} to \code{14}:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_date(str_vals, date_style = 6)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "Jun 13, 2022" "Jan 25, 2019" "Mar 23, 2015" NA
+#> [1] "Jun 13, 2022" "Jan 25, 2019" "Mar 23, 2015" NA
 }\if{html}{\out{</div>}}
 
 We can always use \code{\link[=info_date_style]{info_date_style()}} to call up an info table that serves as
@@ -94,10 +90,8 @@ As a last example, one can wrap the date values in a pattern with the
 applied.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_date(str_vals, pattern = "Date: \{x\}")
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "Date: Monday, June 13, 2022"    "Date: Friday, January 25, 2019"
-## [3] "Date: Monday, March 23, 2015"   NA
+#> [1] "Date: Monday, June 13, 2022"    "Date: Friday, January 25, 2019"
+#> [3] "Date: Monday, March 23, 2015"   NA
 }\if{html}{\out{</div>}}
 }
 
