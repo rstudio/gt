@@ -63,17 +63,13 @@ formatted dates. Any \code{NA} values remain as \code{NA} values. The rendering 
 is HTML unless specified in the \code{output} argument.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_time(str_vals)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "18:36" "01:08" NA
+#> [1] "18:36" "01:08" NA
 }\if{html}{\out{</div>}}
 
 We can change the formatting style by choosing a number from \code{1} to \code{5}:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_time(str_vals, time_style = 4)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "6:36 PM" "1:08 AM" NA
+#> [1] "6:36 PM" "1:08 AM" NA
 }\if{html}{\out{</div>}}
 
 We can always use \code{\link[=info_time_style]{info_time_style()}} to call up an info table that serves as
@@ -84,9 +80,7 @@ As a last example, one can wrap the time values in a pattern with the
 applied.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_time(str_vals, time_style = 4, pattern = "Time: \{x\}")
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "Time: 6:36 PM" "Time: 1:08 AM" NA
+#> [1] "Time: 6:36 PM" "Time: 1:08 AM" NA
 }\if{html}{\out{</div>}}
 }
 

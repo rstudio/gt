@@ -65,20 +65,18 @@ values that could potentially undergo some substitution.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- dplyr::tibble(num = c(0, NA, 10^(8:14)))
 
 tbl
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 9 x 1
-##     num
-##   <dbl>
-## 1  0   
-## 2 NA   
-## 3  1e 8
-## 4  1e 9
-## 5  1e10
-## 6  1e11
-## 7  1e12
-## 8  1e13
-## 9  1e14
+#> # A tibble: 9 x 1
+#>     num
+#>   <dbl>
+#> 1  0   
+#> 2 NA   
+#> 3  1e 8
+#> 4  1e 9
+#> 5  1e10
+#> 6  1e11
+#> 7  1e12
+#> 8  1e13
+#> 9  1e14
 }\if{html}{\out{</div>}}
 
 The \code{tbl} contains a variety of smaller numbers and some might be small

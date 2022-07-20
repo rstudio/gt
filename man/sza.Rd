@@ -50,14 +50,12 @@ noontime SZA to be 43.0 degrees.
 Here is a glimpse at the data available in \code{sza}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::glimpse(sza)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## Rows: 816
-## Columns: 4
-## $ latitude <dbl> 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 2~
-## $ month    <fct> jan, jan, jan, jan, jan, jan, jan, jan, jan, jan, jan, jan, j~
-## $ tst      <chr> "0400", "0430", "0500", "0530", "0600", "0630", "0700", "0730~
-## $ sza      <dbl> NA, NA, NA, NA, NA, NA, 84.9, 78.7, 72.7, 66.1, 61.5, 56.5, 5~
+#> Rows: 816
+#> Columns: 4
+#> $ latitude <dbl> 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 2~
+#> $ month    <fct> jan, jan, jan, jan, jan, jan, jan, jan, jan, jan, jan, jan, j~
+#> $ tst      <chr> "0400", "0430", "0500", "0530", "0600", "0630", "0700", "0730~
+#> $ sza      <dbl> NA, NA, NA, NA, NA, NA, 84.9, 78.7, 72.7, 66.1, 61.5, 56.5, 5~
 }\if{html}{\out{</div>}}
 }
 
