@@ -107,45 +107,35 @@ will render as \code{"NA"}. Also, the rendering context is HTML unless specified
 in the \code{output} argument.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_integer(num_vals)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "5"        "9"        "13,602"   "&minus;5" "NA"
+#> [1] "5"        "9"        "13,602"   "&minus;5" "NA"
 }\if{html}{\out{</div>}}
 
 We can change the digit separator mark to a period with the \code{sep_mark}
 option:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_integer(num_vals, sep_mark = ".")
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "5"        "9"        "13.602"   "&minus;5" "NA"
+#> [1] "5"        "9"        "13.602"   "&minus;5" "NA"
 }\if{html}{\out{</div>}}
 
 If we are formatting for a different locale, we could supply the locale ID
 and let \strong{gt} handle these locale-specific formatting options:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_integer(num_vals, locale = "de")
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "5"        "9"        "13.602"   "&minus;5" "NA"
+#> [1] "5"        "9"        "13.602"   "&minus;5" "NA"
 }\if{html}{\out{</div>}}
 
 Many options abound for formatting values. If you have a need for positive
 and negative signs in front of each and every value, use \code{force_sign = TRUE}:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_integer(num_vals, force_sign = TRUE)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "+5"       "+9"       "+13,602"  "&minus;5" "NA"
+#> [1] "+5"       "+9"       "+13,602"  "&minus;5" "NA"
 }\if{html}{\out{</div>}}
 
 As a last example, one can wrap the values in a pattern with the \code{pattern}
 argument. Note here that \code{NA} values won't have the pattern applied.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_integer(num_vals, pattern = "`\{x\}`")
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "`5`"        "`9`"        "`13,602`"   "`&minus;5`" "NA"
+#> [1] "`5`"        "`9`"        "`13,602`"   "`&minus;5`" "NA"
 }\if{html}{\out{</div>}}
 }
 

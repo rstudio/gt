@@ -50,20 +50,18 @@ values that could potentially undergo some substitution.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- dplyr::tibble(num = c(10^(-1:2), 0, 0, 10^(4:6)))
 
 tbl
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 9 × 1
-##         num
-##       <dbl>
-## 1       0.1
-## 2       1  
-## 3      10  
-## 4     100  
-## 5       0  
-## 6       0  
-## 7   10000  
-## 8  100000  
-## 9 1000000
+#> # A tibble: 9 x 1
+#>         num
+#>       <dbl>
+#> 1       0.1
+#> 2       1  
+#> 3      10  
+#> 4     100  
+#> 5       0  
+#> 6       0  
+#> 7   10000  
+#> 8  100000  
+#> 9 1000000
 }\if{html}{\out{</div>}}
 
 With this table, the zero values in will be given replacement text with a
