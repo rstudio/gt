@@ -65,12 +65,12 @@ Here is a glimpse at the data available in \code{sza}.
 }
 
 \seealso{
-Other Datasets: 
+Other datasets: 
 \code{\link{countrypops}},
 \code{\link{exibble}},
 \code{\link{gtcars}},
 \code{\link{pizzaplace}},
 \code{\link{sp500}}
 }
-\concept{Datasets}
+\concept{datasets}
 \keyword{datasets}

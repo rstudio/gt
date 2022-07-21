@@ -85,7 +85,7 @@ of increasingly darker palettes (with \code{\link[=data_color]{data_color()}}).
 }
 
 \seealso{
-Other Helper Functions: 
+Other helper functions: 
 \code{\link{cell_borders}()},
 \code{\link{cell_fill}()},
 \code{\link{cell_text}()},
@@ -113,4 +113,4 @@ Other Helper Functions:
 \code{\link{px}()},
 \code{\link{random_id}()}
 }
-\concept{Helper Functions}
+\concept{helper functions}

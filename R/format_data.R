@@ -154,7 +154,7 @@
 #' `r man_get_image_tag(file = "man_fmt_number_2.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-1
 #'
@@ -349,7 +349,7 @@ fmt_number <- function(
 #' `r man_get_image_tag(file = "man_fmt_integer_1.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-2
 #'
@@ -449,7 +449,7 @@ fmt_integer <- function(
 #' `r man_get_image_tag(file = "man_fmt_scientific_1.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-3
 #'
@@ -633,7 +633,7 @@ fmt_scientific <- function(
 #' `r man_get_image_tag(file = "man_fmt_engineering_1.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-4
 #'
@@ -992,7 +992,7 @@ fmt_symbol <- function(
 #' `r man_get_image_tag(file = "man_fmt_percent_1.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-5
 #'
@@ -1150,7 +1150,7 @@ fmt_percent <- function(
 #' `r man_get_image_tag(file = "man_fmt_partsper_1.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-6
 #'
@@ -1387,7 +1387,7 @@ fmt_partsper <- function(
 #' `r man_get_image_tag(file = "man_fmt_fraction_1.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-7
 #'
@@ -1823,7 +1823,7 @@ round_gt <- function(x, digits = 0) {
 #' `r man_get_image_tag(file = "man_fmt_currency_2.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-8
 #'
@@ -1985,7 +1985,7 @@ fmt_currency <- function(
 #' `r man_get_image_tag(file = "man_fmt_bytes_2.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-9
 #'
@@ -2182,7 +2182,7 @@ fmt_bytes <- function(
 #' `r man_get_image_tag(file = "man_fmt_date_2.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-10
 #'
@@ -2338,7 +2338,7 @@ fmt_date <- function(
 #' `r man_get_image_tag(file = "man_fmt_time_2.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-11
 #'
@@ -2559,7 +2559,7 @@ fmt_time <- function(
 #' `r man_get_image_tag(file = "man_fmt_datetime_1.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-12
 #'
@@ -2795,7 +2795,7 @@ fmt_datetime <- function(
 #' `r man_get_image_tag(file = "man_fmt_duration_1.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-13
 #'
@@ -3513,7 +3513,7 @@ extract_duration_pattern <- function(
 #' `r man_get_image_tag(file = "man_fmt_markdown_1.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-14
 #'
@@ -3607,7 +3607,7 @@ fmt_markdown <- function(
 #' `r man_get_image_tag(file = "man_fmt_passthrough_1.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-15
 #'
@@ -3763,7 +3763,7 @@ fmt_passthrough <- function(
 #' `r man_get_image_tag(file = "man_fmt_1.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-16
 #'

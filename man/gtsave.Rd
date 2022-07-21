@@ -118,11 +118,11 @@ With the \code{.docx} extension, we'll get a word/docx document.
 }
 
 \seealso{
-Other Export Functions: 
+Other table export functions: 
 \code{\link{as_latex}()},
 \code{\link{as_raw_html}()},
 \code{\link{as_rtf}()},
 \code{\link{as_word}()},
 \code{\link{extract_summary}()}
 }
-\concept{Export Functions}
+\concept{table export functions}

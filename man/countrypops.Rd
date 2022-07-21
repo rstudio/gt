@@ -50,12 +50,12 @@ Here is a glimpse at the data available in \code{countrypops}.
 }
 
 \seealso{
-Other Datasets: 
+Other datasets: 
 \code{\link{exibble}},
 \code{\link{gtcars}},
 \code{\link{pizzaplace}},
 \code{\link{sp500}},
 \code{\link{sza}}
 }
-\concept{Datasets}
+\concept{datasets}
 \keyword{datasets}

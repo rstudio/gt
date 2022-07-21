@@ -60,7 +60,7 @@ columns). You'll see the first five rows and the last row.
 }
 
 \seealso{
-Other Create Table: 
+Other table creation functions: 
 \code{\link{gt}()}
 }
-\concept{Create Table}
+\concept{table creation functions}

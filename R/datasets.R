@@ -27,7 +27,7 @@
 #' dplyr::glimpse(countrypops)
 #' ```
 #'
-#' @family Datasets
+#' @family datasets
 #' @section Function ID:
 #' 11-1
 #'
@@ -78,7 +78,7 @@
 #' dplyr::glimpse(sza)
 #' ```
 #'
-#' @family Datasets
+#' @family datasets
 #' @section Function ID:
 #' 11-2
 #'
@@ -133,7 +133,7 @@
 #' dplyr::glimpse(gtcars)
 #' ```
 #'
-#' @family Datasets
+#' @family datasets
 #' @section Function ID:
 #' 11-3
 #'
@@ -163,7 +163,7 @@
 #' dplyr::glimpse(sp500)
 #' ```
 #'
-#' @family Datasets
+#' @family datasets
 #' @section Function ID:
 #' 11-4
 #'
@@ -294,7 +294,7 @@
 #' dplyr::glimpse(pizzaplace)
 #' ```
 #'
-#' @family Datasets
+#' @family datasets
 #' @section Function ID:
 #' 11-5
 #'
@@ -338,7 +338,7 @@
 #' exibble
 #' ```
 #'
-#' @family Datasets
+#' @family datasets
 #' @section Function ID:
 #' 11-6
 #'

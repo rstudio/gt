@@ -68,7 +68,7 @@ data to the left.
 }
 
 \seealso{
-Other Modify Columns: 
+Other column modification functions: 
 \code{\link{cols_hide}()},
 \code{\link{cols_label}()},
 \code{\link{cols_merge_n_pct}()},
@@ -81,4 +81,4 @@ Other Modify Columns:
 \code{\link{cols_unhide}()},
 \code{\link{cols_width}()}
 }
-\concept{Modify Columns}
+\concept{column modification functions}

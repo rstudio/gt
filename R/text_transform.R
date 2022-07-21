@@ -41,7 +41,7 @@
 #' `r man_get_image_tag(file = "man_text_transform_1.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-20
 #'

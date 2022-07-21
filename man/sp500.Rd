@@ -46,12 +46,12 @@ Here is a glimpse at the data available in \code{sp500}.
 }
 
 \seealso{
-Other Datasets: 
+Other datasets: 
 \code{\link{countrypops}},
 \code{\link{exibble}},
 \code{\link{gtcars}},
 \code{\link{pizzaplace}},
 \code{\link{sza}}
 }
-\concept{Datasets}
+\concept{datasets}
 \keyword{datasets}
