@@ -1401,7 +1401,11 @@ summary_row_tags_i <- function(data, group_id) {
                   "<%s %sclass=\"%s\"%s>%s</%s>",
                   if ("gt_stub" %in% extra_class) {
                     # 1 opening tag
-                    paste0("th id=\"gt_id_row_", as.character(x), "_", group_id, "\"")
+                    paste0(
+                      "th ",
+                      "id=\"gt_id_row_", as.character(x), "_", group_id, "\" ",
+                      "scope=\"row\""
+                    )
                   } else {
                     "td" #  headers = "group_row_id row_header_id col_header_id"
                   },
