@@ -22,7 +22,7 @@
 #' `r man_get_image_tag(file = "man_info_date_style_1.png")`
 #' }}
 #'
-#' @family Information Functions
+#' @family information functions
 #' @section Function ID:
 #' 10-1
 #'
@@ -90,7 +90,7 @@ info_date_style <- function() {
 #' `r man_get_image_tag(file = "man_info_time_style_1.png")`
 #' }}
 #'
-#' @family Information Functions
+#' @family information functions
 #' @section Function ID:
 #' 10-2
 #'
@@ -175,7 +175,7 @@ info_time_style <- function() {
 #' `r man_get_image_tag(file = "man_info_currencies_2.png")`
 #' }}
 #'
-#' @family Information Functions
+#' @family information functions
 #' @section Function ID:
 #' 10-3
 #'
@@ -327,7 +327,7 @@ info_currencies <- function(
 #' `r man_get_image_tag(file = "man_info_locales_1.png")`
 #' }}
 #'
-#' @family Information Functions
+#' @family information functions
 #' @section Function ID:
 #' 10-4
 #'
@@ -471,7 +471,7 @@ info_locales <- function(begins_with = NULL) {
 #' `r man_get_image_tag(file = "man_info_paletteer_1.png")`
 #' }}
 #'
-#' @family Information Functions
+#' @family information functions
 #' @section Function ID:
 #' 10-5
 #'
@@ -578,7 +578,7 @@ info_paletteer <- function(color_pkgs = NULL) {
 #' `r man_get_image_tag(file = "man_info_google_fonts_1.png")`
 #' }}
 #'
-#' @family Information Functions
+#' @family information functions
 #' @section Function ID:
 #' 10-6
 #'

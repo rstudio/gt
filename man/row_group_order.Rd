@@ -52,4 +52,4 @@ new ordering in \code{groups}.
 5-1
 }
 
-\concept{Modify Rows}
+\concept{row modification functions}

@@ -92,9 +92,9 @@ function.
 }
 
 \seealso{
-Other Image Addition Functions: 
+Other image addition functions: 
 \code{\link{local_image}()},
 \code{\link{test_image}()},
 \code{\link{web_image}()}
 }
-\concept{Image Addition Functions}
+\concept{image addition functions}

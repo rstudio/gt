@@ -83,7 +83,7 @@ statements has no effect.
 \seealso{
 \code{\link[=cols_unhide]{cols_unhide()}} to perform the inverse operation.
 
-Other Modify Columns: 
+Other column modification functions: 
 \code{\link{cols_align}()},
 \code{\link{cols_label}()},
 \code{\link{cols_merge_n_pct}()},
@@ -96,4 +96,4 @@ Other Modify Columns:
 \code{\link{cols_unhide}()},
 \code{\link{cols_width}()}
 }
-\concept{Modify Columns}
+\concept{column modification functions}

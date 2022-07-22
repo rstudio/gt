@@ -95,7 +95,7 @@ summary rows \code{min}, \code{max}, and \code{avg} for the table with the
 }
 
 \seealso{
-Other Add Rows: 
+Other row addition functions: 
 \code{\link{summary_rows}()}
 }
-\concept{Add Rows}
+\concept{row addition functions}

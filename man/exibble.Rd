@@ -62,12 +62,12 @@ Here is the \code{exibble}.
 }
 
 \seealso{
-Other Datasets: 
+Other datasets: 
 \code{\link{countrypops}},
 \code{\link{gtcars}},
 \code{\link{pizzaplace}},
 \code{\link{sp500}},
 \code{\link{sza}}
 }
-\concept{Datasets}
+\concept{datasets}
 \keyword{datasets}

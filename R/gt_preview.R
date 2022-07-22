@@ -42,7 +42,7 @@
 #' `r man_get_image_tag(file = "man_gt_preview_1.png")`
 #' }}
 #'
-#' @family Create Table
+#' @family table creation functions
 #' @section Function ID:
 #' 1-2
 #'

@@ -28,7 +28,7 @@
 #' `r man_get_image_tag(file = "man_md_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
 #' 7-1
 #'
@@ -75,7 +75,7 @@ md <- function(text) {
 #' `r man_get_image_tag(file = "man_html_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
 #' 7-2
 #'
@@ -132,7 +132,7 @@ is_rtf <- function(x) {
 #' `r man_get_image_tag(file = "man_px_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
 #' 7-3
 #'
@@ -182,7 +182,7 @@ px <- function(x) {
 #' `r man_get_image_tag(file = "man_pct_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
 #' 7-4
 #'
@@ -272,7 +272,7 @@ pct <- function(x) {
 #' `r man_get_image_tag(file = "man_cells_title_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
 #' 7-5
 #'
@@ -378,7 +378,7 @@ cells_title <- function(groups = c("title", "subtitle")) {
 #' `r man_get_image_tag(file = "man_cells_stubhead_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
 #' 7-6
 #'
@@ -473,7 +473,7 @@ cells_stubhead <- function() {
 #' `r man_get_image_tag(file = "man_cells_column_spanners_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
 #' 7-7
 #'
@@ -577,7 +577,7 @@ cells_column_spanners <- function(spanners = everything()) {
 #' `r man_get_image_tag(file = "man_cells_column_labels_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
 #' 7-8
 #'
@@ -683,7 +683,7 @@ cells_column_labels <- function(columns = everything()) {
 #' `r man_get_image_tag(file = "man_cells_row_groups_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
 #' 7-9
 #'
@@ -801,7 +801,7 @@ cells_group <- function(groups = TRUE) {
 #' `r man_get_image_tag(file = "man_cells_stub_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
 #' 7-10
 #'
@@ -900,7 +900,7 @@ cells_stub <- function(rows = everything()) {
 #' `r man_get_image_tag(file = "man_cells_body_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
 #' 7-11
 #'
@@ -1035,7 +1035,7 @@ cells_body <- function(
 #' `r man_get_image_tag(file = "man_cells_summary_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
 #' 7-12
 #'
@@ -1158,7 +1158,7 @@ cells_summary <- function(
 #' `r man_get_image_tag(file = "man_cells_grand_summary_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
 #' 7-13
 #'
@@ -1286,7 +1286,7 @@ cells_grand_summary <- function(
 #' `r man_get_image_tag(file = "man_cells_stub_summary_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
 #' 7-14
 #'
@@ -1399,7 +1399,7 @@ cells_stub_summary <- function(
 #' `r man_get_image_tag(file = "man_cells_stub_grand_summary_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
 #' 7-15
 #'
@@ -1511,7 +1511,7 @@ cells_stub_grand_summary <- function(rows = everything()) {
 #' `r man_get_image_tag(file = "man_cells_footnotes_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
 #' 7-16
 #'
@@ -1605,7 +1605,7 @@ cells_footnotes <- function() {
 #' `r man_get_image_tag(file = "man_cells_source_notes_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
 #' 7-17
 #'
@@ -1673,7 +1673,7 @@ cells_source_notes <- function() {
 #' `r man_get_image_tag(file = "man_currency_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
 #' 7-18
 #'
@@ -1798,7 +1798,7 @@ currency <- function(
 #' `r man_get_image_tag(file = "man_cell_text_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
 #' 7-19
 #'
@@ -1973,7 +1973,7 @@ cell_style_to_html.cell_text <- function(style) {
 #' `r man_get_image_tag(file = "man_cell_fill_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
 #' 7-20
 #'
@@ -2097,7 +2097,7 @@ cell_style_to_html.cell_fill <- function(style) {
 #' `r man_get_image_tag(file = "man_cell_borders_2.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
 #' 7-21
 #'
@@ -2286,7 +2286,7 @@ cell_style_structure <- function(name, obj, subclass = name) {
 #' `r man_get_image_tag(file = "man_google_font_2.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
 #' 7-27
 #'
@@ -2352,7 +2352,7 @@ google_font <- function(name) {
 #' `r man_get_image_tag(file = "man_default_fonts_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #'
 #' @section Function ID:
 #' 7-26
@@ -2439,7 +2439,7 @@ default_fonts <- function() {
 #' `r man_get_image_tag(file = "man_adjust_luminance_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
 #' 7-22
 #'
@@ -2496,7 +2496,7 @@ adjust_luminance <- function(
 #'
 #' @return A character vector containing a single, random ID.
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
 #' 7-23
 #'
@@ -2531,7 +2531,7 @@ latex_special_chars <- c(
 #'
 #' @return A character vector.
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
 #' 7-24
 #'
@@ -2588,7 +2588,7 @@ escape_latex <- function(text) {
 #'
 #' @return An object of class `knit_asis`.
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
 #' 7-25
 #'

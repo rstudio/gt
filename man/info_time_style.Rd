@@ -36,11 +36,11 @@ by supplying a number code to the \code{\link[=fmt_time]{fmt_time()}} function).
 }
 
 \seealso{
-Other Information Functions: 
+Other information functions: 
 \code{\link{info_currencies}()},
 \code{\link{info_date_style}()},
 \code{\link{info_google_fonts}()},
 \code{\link{info_locales}()},
 \code{\link{info_paletteer}()}
 }
-\concept{Information Functions}
+\concept{information functions}

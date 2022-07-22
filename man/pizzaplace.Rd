@@ -147,12 +147,12 @@ Here is a glimpse at the pizza data available in \code{pizzaplace}.
 }
 
 \seealso{
-Other Datasets: 
+Other datasets: 
 \code{\link{countrypops}},
 \code{\link{exibble}},
 \code{\link{gtcars}},
 \code{\link{sp500}},
 \code{\link{sza}}
 }
-\concept{Datasets}
+\concept{datasets}
 \keyword{datasets}
