@@ -486,11 +486,14 @@ tab_spanner_delim <- function(
 
       if (!is.na(spanners_i_values[j])) {
 
-        # Obtain the ID for the spanner
+        # Construct the ID for the spanner from the spanner matrix
         spanner_id <-
-          paste(
-            spanner_matrix[seq(i, nrow(spanner_matrix)), spanners_i_col_i[j]],
-            collapse = delim
+          paste0(
+            "spanner-",
+            paste(
+              spanner_matrix[seq(i, nrow(spanner_matrix)), spanners_i_col_i[j]],
+              collapse = delim
+            )
           )
 
         spanner_columns <-
