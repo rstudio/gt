@@ -200,7 +200,8 @@ tab_spanner <- function(
     return(data)
   }
 
-  # Check new `id` against existing `id` values and stop if necessary
+  # Check new `id` against existing `id` values across column labels
+  # and spanner column labels and stop if necessary
   check_spanner_id_unique(data = data, spanner_id = id)
 
   # Resolve the `column_names` that new spanner will span over
