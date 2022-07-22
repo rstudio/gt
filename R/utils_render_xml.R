@@ -1758,7 +1758,7 @@ summary_rows_xml <- function(list_of_summaries,
             fill = cell_style[["cell_fill"]][["color"]],
             border = list(
                 "top" = cell_border(size = if (j == 1) 16 else 2, color = table_body_hlines_color),
-                "bottom" = cell_border(size = if (j == 1) 16 else 2, color = table_body_hlines_color),
+                "bottom" = cell_border(size = if (j == nrow(summary_df)) 16 else 2, color = table_body_hlines_color),
                 "left" = cell_border(color = table_body_vlines_color),
                 "right" = cell_border(color = table_body_vlines_color)
             ),
