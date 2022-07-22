@@ -25,7 +25,7 @@ BugReports: https://github.com/rstudio/gt/issues
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.1
 Depends:
     R (>= 3.2.0)
 Imports:
@@ -45,7 +45,9 @@ Imports:
     scales (>= 1.2.0),
     stringr (>= 1.4.0),
     tibble (>= 3.1.6),
-    tidyselect (>= 1.1.1)
+    tidyselect (>= 1.1.1),
+    grid, 
+    gtable
 Suggests:
     covr,
     digest (>= 0.6.29),
@@ -115,6 +117,7 @@ Collate:
     'utils_general_str_formatting.R'
     'utils_pipe.R'
     'utils_render_common.R'
+    'utils_render_grob.R'
     'utils_render_html.R'
     'utils_render_latex.R'
     'utils_render_rtf.R'
