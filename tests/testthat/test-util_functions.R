@@ -617,6 +617,10 @@ test_that("The `check_spanner_id_unique()` function works properly", {
     gt(exibble) %>%
     tab_spanner(label = "a", columns = num)
 
+  gt_tbl_3 <-
+    gt(exibble, rowname_col = "row", groupname_col = "group") %>%
+    tab_spanner(label = "a", columns = c(num, char))
+
   # Don't expect an error when checking for unique spanner IDs
   # in a gt table with no spanner column labels
   expect_error(
@@ -628,6 +632,24 @@ test_that("The `check_spanner_id_unique()` function works properly", {
   # is used as the `id` value)
   expect_error(
     check_spanner_id_unique(data = gt_tbl_2, spanner_id = "a")
+  )
+
+  # Expect an error if creating a spanner ID that is the same as
+  # a column name
+  expect_error(
+    check_spanner_id_unique(data = gt_tbl_1, spanner_id = "num")
+  )
+  expect_error(
+    check_spanner_id_unique(data = gt_tbl_2, spanner_id = "num")
+  )
+  expect_error(
+    check_spanner_id_unique(data = gt_tbl_2, spanner_id = "num")
+  )
+  expect_error(
+    check_spanner_id_unique(data = gt_tbl_3, spanner_id = "row")
+  )
+  expect_error(
+    check_spanner_id_unique(data = gt_tbl_3, spanner_id = "group")
   )
 })
 

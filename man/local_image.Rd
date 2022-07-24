@@ -73,9 +73,9 @@ various sizes.
 }
 
 \seealso{
-Other Image Addition Functions: 
+Other image addition functions: 
 \code{\link{ggplot_image}()},
 \code{\link{test_image}()},
 \code{\link{web_image}()}
 }
-\concept{Image Addition Functions}
+\concept{image addition functions}

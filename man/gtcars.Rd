@@ -79,12 +79,12 @@ Here is a glimpse at the data available in \code{gtcars}.
 }
 
 \seealso{
-Other Datasets: 
+Other datasets: 
 \code{\link{countrypops}},
 \code{\link{exibble}},
 \code{\link{pizzaplace}},
 \code{\link{sp500}},
 \code{\link{sza}}
 }
-\concept{Datasets}
+\concept{datasets}
 \keyword{datasets}

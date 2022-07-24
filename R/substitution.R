@@ -41,7 +41,7 @@
 #' `r man_get_image_tag(file = "man_sub_missing_1.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-16
 #'
@@ -176,7 +176,7 @@ fmt_missing <- function(
 #' `r man_get_image_tag(file = "man_sub_zero_1.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-17
 #'
@@ -308,7 +308,7 @@ sub_zero <- function(
 #' `r man_get_image_tag(file = "man_sub_small_vals_3.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-18
 #'
@@ -508,7 +508,7 @@ sub_small_vals <- function(
 #' `r man_get_image_tag(file = "man_sub_large_vals_3.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-19
 #'

@@ -524,7 +524,7 @@ Reduce the size of the title and the subtitle text.
 }
 
 \seealso{
-Other Create or Modify Parts: 
+Other part creation/modification functions: 
 \code{\link{tab_footnote}()},
 \code{\link{tab_header}()},
 \code{\link{tab_row_group}()},
@@ -534,4 +534,4 @@ Other Create or Modify Parts:
 \code{\link{tab_stubhead}()},
 \code{\link{tab_style}()}
 }
-\concept{Create or Modify Parts}
+\concept{part creation/modification functions}

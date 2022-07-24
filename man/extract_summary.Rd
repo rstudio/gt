@@ -103,11 +103,11 @@ Use the summary list to make a new \strong{gt} table. The key thing is to use
 }
 
 \seealso{
-Other Export Functions: 
+Other table export functions: 
 \code{\link{as_latex}()},
 \code{\link{as_raw_html}()},
 \code{\link{as_rtf}()},
 \code{\link{as_word}()},
 \code{\link{gtsave}()}
 }
-\concept{Export Functions}
+\concept{table export functions}

@@ -47,7 +47,7 @@
 #' `r man_get_image_tag(file = "man_cols_align_1.png")`
 #' }}
 #'
-#' @family Modify Columns
+#' @family column modification functions
 #' @section Function ID:
 #' 4-1
 #'
@@ -183,7 +183,7 @@ cols_align <- function(
 #' `r man_get_image_tag(file = "man_cols_width_1.png")`
 #' }}
 #'
-#' @family Modify Columns
+#' @family column modification functions
 #' @section Function ID:
 #' 4-2
 #'
@@ -357,7 +357,7 @@ cols_width <- function(
 #' `r man_get_image_tag(file = "man_cols_label_2.png")`
 #' }}
 #'
-#' @family Modify Columns
+#' @family column modification functions
 #' @section Function ID:
 #' 4-3
 #'
@@ -485,7 +485,7 @@ cols_label <- function(
 #' `r man_get_image_tag(file = "man_cols_move_to_start_2.png")`
 #' }}
 #'
-#' @family Modify Columns
+#' @family column modification functions
 #' @section Function ID:
 #' 4-4
 #'
@@ -589,7 +589,7 @@ cols_move_to_start <- function(
 #' `r man_get_image_tag(file = "man_cols_move_to_end_2.png")`
 #' }}
 #'
-#' @family Modify Columns
+#' @family column modification functions
 #' @section Function ID:
 #' 4-5
 #'
@@ -684,7 +684,7 @@ cols_move_to_end <- function(
 #' `r man_get_image_tag(file = "man_cols_move_1.png")`
 #' }}
 #'
-#' @family Modify Columns
+#' @family column modification functions
 #' @section Function ID:
 #' 4-6
 #'
@@ -823,7 +823,7 @@ cols_move <- function(
 #' `r man_get_image_tag(file = "man_cols_hide_2.png")`
 #' }}
 #'
-#' @family Modify Columns
+#' @family column modification functions
 #' @section Function ID:
 #' 4-7
 #'
@@ -920,7 +920,7 @@ cols_hide <- function(
 #' `r man_get_image_tag(file = "man_cols_unhide_2.png")`
 #' }}
 #'
-#' @family Modify Columns
+#' @family column modification functions
 #' @section Function ID:
 #' 4-8
 #'
@@ -1045,7 +1045,7 @@ cols_unhide <- function(
 #' `r man_get_image_tag(file = "man_cols_merge_uncert_1.png")`
 #' }}
 #'
-#' @family Modify Columns
+#' @family column modification functions
 #' @section Function ID:
 #' 4-9
 #'
@@ -1171,7 +1171,7 @@ cols_merge_uncert <- function(
 #' `r man_get_image_tag(file = "man_cols_merge_range_1.png")`
 #' }}
 #'
-#' @family Modify Columns
+#' @family column modification functions
 #' @section Function ID:
 #' 4-10
 #'
@@ -1345,7 +1345,7 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #' `r man_get_image_tag(file = "man_cols_merge_n_pct_1.png")`
 #' }}
 #'
-#' @family Modify Columns
+#' @family column modification functions
 #' @section Function ID:
 #' 4-11
 #'
@@ -1464,7 +1464,7 @@ cols_merge_n_pct <- function(
 #' `r man_get_image_tag(file = "man_cols_merge_1.png")`
 #' }}
 #'
-#' @family Modify Columns
+#' @family column modification functions
 #' @section Function ID:
 #' 4-12
 #'

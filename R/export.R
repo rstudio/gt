@@ -107,7 +107,7 @@
 #' tab_1 %>% gtsave("tab_1.docx")
 #' ```
 #'
-#' @family Export Functions
+#' @family table export functions
 #' @section Function ID:
 #' 13-1
 #'
@@ -378,7 +378,7 @@ gtsave_filename <- function(path, filename) {
 #' It has only the `<table>...</table>` part so it's not a complete HTML
 #' document but rather an HTML fragment.
 #'
-#' @family Export Functions
+#' @family table export functions
 #' @section Function ID:
 #' 13-2
 #'
@@ -443,7 +443,7 @@ as_raw_html <- function(
 #' Markdown documents that are knit to PDF. We can use `as.character()` to get
 #' just the LaTeX code as a single-element vector.
 #'
-#' @family Export Functions
+#' @family table export functions
 #' @section Function ID:
 #' 13-3
 #'
@@ -527,7 +527,7 @@ as_latex <- function(data) {
 #'   as_rtf()
 #' ```
 #'
-#' @family Export Functions
+#' @family table export functions
 #' @section Function ID:
 #' 13-4
 #'
@@ -631,7 +631,7 @@ as_rtf <- function(data) {
 #'   ) %>%
 #'   as_word()
 #'
-#' @family Export Functions
+#' @family table export functions
 #' @section Function ID:
 #' 13-5
 #'
@@ -832,7 +832,7 @@ as_word_tbl_body <- function(
 #' `r man_get_image_tag(file = "man_extract_summary_1.png")`
 #' }}
 #'
-#' @family Export Functions
+#' @family table export functions
 #' @section Function ID:
 #' 13-6
 #'

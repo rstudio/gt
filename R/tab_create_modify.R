@@ -37,7 +37,7 @@
 #' `r man_get_image_tag(file = "man_tab_header_1.png")`
 #' }}
 #'
-#' @family Create or Modify Parts
+#' @family part creation/modification functions
 #' @section Function ID:
 #' 2-1
 #'
@@ -123,7 +123,7 @@ tab_header <- function(
 #' `r man_get_image_tag(file = "man_tab_spanner_1.png")`
 #' }}
 #'
-#' @family Create or Modify Parts
+#' @family part creation/modification functions
 #' @section Function ID:
 #' 2-2
 #'
@@ -200,7 +200,8 @@ tab_spanner <- function(
     return(data)
   }
 
-  # Check new `id` against existing `id` values and stop if necessary
+  # Check new `id` against existing `id` values across column labels
+  # and spanner column labels and stop if necessary
   check_spanner_id_unique(data = data, spanner_id = id)
 
   # Resolve the `column_names` that new spanner will span over
@@ -364,7 +365,7 @@ resolve_spanned_column_names <- function(
 #' `r man_get_image_tag(file = "man_tab_spanner_delim_1.png")`
 #' }}
 #'
-#' @family Create or Modify Parts
+#' @family part creation/modification functions
 #' @section Function ID:
 #' 2-3
 #'
@@ -485,11 +486,14 @@ tab_spanner_delim <- function(
 
       if (!is.na(spanners_i_values[j])) {
 
-        # Obtain the ID for the spanner
+        # Construct the ID for the spanner from the spanner matrix
         spanner_id <-
-          paste(
-            spanner_matrix[seq(i, nrow(spanner_matrix)), spanners_i_col_i[j]],
-            collapse = delim
+          paste0(
+            "spanner-",
+            paste(
+              spanner_matrix[seq(i, nrow(spanner_matrix)), spanners_i_col_i[j]],
+              collapse = delim
+            )
           )
 
         spanner_columns <-
@@ -609,7 +613,7 @@ tab_spanner_delim <- function(
 #' `r man_get_image_tag(file = "man_tab_row_group_2.png")`
 #' }}
 #'
-#' @family Create or Modify Parts
+#' @family part creation/modification functions
 #' @section Function ID:
 #' 2-4
 #'
@@ -740,7 +744,7 @@ tab_row_group <- function(
 #' `r man_get_image_tag(file = "man_tab_stubhead_1.png")`
 #' }}
 #'
-#' @family Create or Modify Parts
+#' @family part creation/modification functions
 #' @section Function ID:
 #' 2-5
 #'
@@ -837,7 +841,7 @@ tab_stubhead <- function(
 #' `r man_get_image_tag(file = "man_tab_footnote_1.png")`
 #' }}
 #'
-#' @family Create or Modify Parts
+#' @family part creation/modification functions
 #' @section Function ID:
 #' 2-6
 #'
@@ -1160,7 +1164,7 @@ set_footnote.cells_footnotes <- function(loc, data, footnote, placement) {
 #' `r man_get_image_tag(file = "man_tab_source_note_1.png")`
 #' }}
 #'
-#' @family Create or Modify Parts
+#' @family part creation/modification functions
 #' @section Function ID:
 #' 2-7
 #'
@@ -1309,7 +1313,7 @@ tab_source_note <- function(
 #' `r man_get_image_tag(file = "man_tab_style_3.png")`
 #' }}
 #'
-#' @family Create or Modify Parts
+#' @family part creation/modification functions
 #' @section Function ID:
 #' 2-8
 #'
@@ -1996,7 +2000,7 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' `r man_get_image_tag(file = "man_tab_options_6.png")`
 #' }}
 #'
-#' @family Create or Modify Parts
+#' @family part creation/modification functions
 #' @section Function ID:
 #' 2-9
 #'
