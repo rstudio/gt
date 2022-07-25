@@ -409,16 +409,20 @@ xml_baseline_adj <- function(v_align = c("superscript", "subscript", "baseline")
 }
 
 # Literal text
+#' @importFrom htmltools htmlEscape
 xml_t <- function(...,
                   xml_space = c("default", "preserve"),
                   app = "word") {
 
   xml_space <- match.arg(xml_space)
 
+  # html escape literal text
+
+
   htmltools::tag(
     `_tag_name` = xml_tag_type("t", app),
     varArgs = list(
-      htmltools::HTML(paste0(...)),
+      htmltools::HTML(htmlEscape(paste0(...))),
       `xml:space` = xml_space
     )
   )
@@ -1939,7 +1943,7 @@ xml_table_cell <-
                 }
               ),
             if(is.character(text)){
-              xml_t(replace_carrots(text))
+              xml_t(text)
             }else if(inherits(text, "shiny.tag.list")){
               text
             }
@@ -1950,17 +1954,4 @@ xml_table_cell <-
         )
       )
 
-}
-
-
-chars_to_protect = list(
-  "<" = "&lt;",
-  ">" = "&gt;"
-)
-
-protect_chars <- function(x){
-  for(char in chars_to_protect){
-    x <- gsub(char, chars_to_protect[[char]], x, fixed = TRUE)
-  }
-  x
 }
