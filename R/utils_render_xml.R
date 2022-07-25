@@ -1939,7 +1939,7 @@ xml_table_cell <-
                 }
               ),
             if(is.character(text)){
-              xml_t(text)
+              xml_t(replace_carrots(text))
             }else if(inherits(text, "shiny.tag.list")){
               text
             }
@@ -1950,4 +1950,11 @@ xml_table_cell <-
         )
       )
 
+}
+
+
+replace_carrots <- function(x){
+  x <- gsub("<", "&lt;", x, fixed = TRUE)
+  x <- gsub(">", "&gt;", x, fixed = TRUE)
+  x
 }
