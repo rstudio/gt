@@ -1953,8 +1953,14 @@ xml_table_cell <-
 }
 
 
-replace_carrots <- function(x){
-  x <- gsub("<", "&lt;", x, fixed = TRUE)
-  x <- gsub(">", "&gt;", x, fixed = TRUE)
+chars_to_protect = list(
+  "<" = "&lt;",
+  ">" = "&gt;"
+)
+
+protect_chars <- function(x){
+  for(char in chars_to_protect){
+    x <- gsub(char, chars_to_protect[[char]], x, fixed = TRUE)
+  }
   x
 }
