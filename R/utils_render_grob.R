@@ -72,22 +72,17 @@ construct_gtable <- function(header, col_labels, body, footer){
 }
 
 #' @importFrom grid grid.newpage grid.draw
-print.gt_grob <- function(x, newpage = is.null(vp), vp = NULL, ...) {
-
-  if (newpage) grid.newpage()
+print.gt_grob <- function(x,  ...) {
+  grid.newpage()
 
   # Record dependency on 'ggplot2' on the display list
   # (AFTER grid.newpage())
-  grDevices::recordGraphics(
-    requireNamespace("gt", quietly = TRUE),
-    list(),
-    getNamespace("gt")
-  )
+  grDevices::recordGraphics(requireNamespace("gt", quietly = TRUE),
+                            list(),
+                            getNamespace("gt"))
 
   grid.draw(x)
 
-
-  invisible(x)
 }
 
 gg_add_table_row <- function(g, cells, row ,...){
@@ -135,9 +130,8 @@ get_cell_dims <- function(x, ncol = 1){
       cell_nchar <- attr(cell, ".text_cols")
 
       ## guestimation to what the height/width is
-      height <- font_size/9 * cell_rows * 1.5
+      height <- font_size/9 * cell_rows
       width <-  max(cell_nchar,1)
-      width <- width * (1 + (1/log(width + 3))) #modify width such that less wide
 
       if(width > widths[[column]]){
         widths[[column]] <- width
@@ -159,12 +153,16 @@ get_cell_dims <- function(x, ncol = 1){
 
 #' @importFrom grid unit
 cell_width_units <- function(x){
-  unit( x / 63, "strwidth", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 ")
+    unit(
+      (x * (1 + (1/(x + 3)))) / 63,
+      "strwidth",
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 "
+    )
 }
 
 #' @importFrom grid unit
 cell_height_units <- function(x){
-  unit(x, "char")
+  unit(x * 1.5, "char")
 }
 
 
