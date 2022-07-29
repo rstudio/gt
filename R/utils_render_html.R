@@ -748,6 +748,15 @@ create_body_component_h <- function(data) {
   # Get the number of columns for the body cells only
   n_data_cols <- get_number_of_visible_data_columns(data = data)
 
+  # Create ID components for every column that will be rendered
+  col_names_id <-
+    c(
+      if ((n_cols_total - n_data_cols) > 0) {
+        paste0("stub_", seq_len(n_cols_total - n_data_cols))
+      },
+      dt_boxhead_get_vars_default(data = data)
+    )
+
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
 
@@ -835,13 +844,12 @@ create_body_component_h <- function(data) {
         group_id <- group_info[["group_id"]]
         group_label <- group_info[["group_label"]]
 
+        group_heading_row_at_i <- !is.null(group_id) && !("group_label" %in% stub_layout)
+
         #
         # Create a group heading row
         #
-        if (
-          !is.null(group_id) &&
-            !("group_label" %in% stub_layout)
-        ) {
+        if (group_heading_row_at_i) {
           row_style <- dt_styles_pluck(styles_tbl, locname = "row_groups", grpname = group_id)$html_style
 
           group_class <-
@@ -883,6 +891,7 @@ create_body_component_h <- function(data) {
           )
 
         if ("group_label" %in% stub_layout) {
+
           if (i %in% groups_rows_df$row_start) {
             # Modify the `extra_classes` list to include a class for
             # the row group column
@@ -921,6 +930,14 @@ create_body_component_h <- function(data) {
           }
         }
 
+        row_df <- output_df_row_as_vec(i = i)
+
+        if (length(col_names_id) > length(row_df)) {
+          col_names_id_i <- col_names_id[-(length(col_names_id) - length(row_df))]
+        } else {
+          col_names_id_i <- col_names_id
+        }
+
         body_row <-
           htmltools::tags$tr(
             class = if (!is.null(group_info)) "gt_row_group_first",
@@ -929,26 +946,33 @@ create_body_component_h <- function(data) {
                 mapply(
                   SIMPLIFY = FALSE,
                   USE.NAMES = FALSE,
-                  output_df_row_as_vec(i = i),
+                  row_df,
+                  col_names_id_i,
                   row_span_vals,
                   alignment_classes,
                   extra_classes,
                   row_styles,
-                  FUN = function(x, row_span, alignment_class, extra_class, cell_style) {
+                  FUN = function(x, col_id, row_span, alignment_class, extra_class, cell_style) {
+
                     sprintf(
                       "<%s %sclass=\"%s\"%s>%s</%s>",
                       if ("gt_stub" %in% extra_class) {
                         paste0(
                           "th ",
                           "id=\"",
-                          as.character(x),
+                          paste0(col_id, ":", i),
                           "\" ",
                           "scope=\"",
                           ifelse(!is.null(row_span) && row_span > 1, "rowgroup", "row"),
                           "\""
                         )
                       } else {
-                        "td"
+                        paste0(
+                          "td ",
+                          "id=\"",
+                          paste0(col_id, ":", i),
+                          "\" "
+                        )
                       },
                       if (is.null(row_span)) {
                         ""
