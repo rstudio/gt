@@ -784,7 +784,7 @@ test_that("styles are correctly applied to HTML output with location functions",
     tidy_grepl(
       paste0(
         "<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">0.11</td>.*",
-        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row thick\">&mdash;</td>"
+        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row thick\">\U02014</td>"
       )
     ) %>%
     expect_true()
@@ -802,12 +802,12 @@ test_that("styles are correctly applied to HTML output with location functions",
       paste0(
         "<td class=\"gt_row gt_right gt_stub gt_summary_row gt_first_summary_row thick\">min</td>.*",
         "<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">0.11</td>.*",
-        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
-        "<td class=\"gt_row gt_center gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
-        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
-        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
-        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
-        "<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">&mdash;</td>"
+        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">\U02014</td>.*",
+        "<td class=\"gt_row gt_center gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">\U02014</td>.*",
+        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">\U02014</td>.*",
+        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">\U02014</td>.*",
+        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">\U02014</td>.*",
+        "<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">\U02014</td>"
       )
     ) %>%
     expect_true()
@@ -874,12 +874,12 @@ test_that("styles are correctly applied to HTML output with location functions",
     tidy_grepl(
       paste0(
           "<td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_last_summary_row\">max</td>.*",
-          "<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
-          "<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
-          "<td class=\"gt_row gt_center gt_grand_summary_row gt_last_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
-          "<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
-          "<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
-          "<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\" style=\"background-color: #FF0000;\">&mdash;</td>.*",
+          "<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\" style=\"background-color: #FF0000;\">\U02014</td>.*",
+          "<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\" style=\"background-color: #FF0000;\">\U02014</td>.*",
+          "<td class=\"gt_row gt_center gt_grand_summary_row gt_last_summary_row\" style=\"background-color: #FF0000;\">\U02014</td>.*",
+          "<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\" style=\"background-color: #FF0000;\">\U02014</td>.*",
+          "<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\" style=\"background-color: #FF0000;\">\U02014</td>.*",
+          "<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\" style=\"background-color: #FF0000;\">\U02014</td>.*",
           "<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\" style=\"background-color: #FF0000;\">65,100.00</td>"
       )
     ) %>%

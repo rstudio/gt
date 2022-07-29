@@ -232,7 +232,7 @@ test_that("the `sub_missing()` function works with conditional `rows`", {
          rows = num_1 <= 0
        ) %>%
        render_formats_test(context = "html"))[["num_2"]],
-    c("34", "74", "23", "NA", "35", rep("&mdash;", 2))
+    c("34", "74", "23", "NA", "35", rep("\U02014", 2))
   )
 })
 

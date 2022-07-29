@@ -1,12 +1,14 @@
 skip_on_cran()
 
-exibble_test <- function(row_group_column = FALSE,
-                         use_row_groups = FALSE,
-                         use_row_labels = FALSE,
-                         add_group_summaries = FALSE,
-                         add_grand_summary = FALSE,
-                         add_styles = FALSE,
-                         add_footnotes = FALSE) {
+exibble_test <- function(
+    row_group_column = FALSE,
+    use_row_groups = FALSE,
+    use_row_labels = FALSE,
+    add_group_summaries = FALSE,
+    add_grand_summary = FALSE,
+    add_styles = FALSE,
+    add_footnotes = FALSE
+) {
 
   if (add_group_summaries) use_row_groups <- TRUE
 
