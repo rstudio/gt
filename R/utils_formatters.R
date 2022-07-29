@@ -430,44 +430,28 @@ to_latex_math_mode <- function(x, context) {
 #' @noRd
 context_missing_text <- function(missing_text, context) {
 
+  is_asis <- inherits(missing_text, "AsIs")
+
   switch(
     context,
-    html =
+    html = ,
+    latex = ,
+    word =
       {
-        if (!inherits(missing_text, "AsIs") && missing_text == "---") {
-          "&mdash;"
-        } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
-          "&ndash;"
-        } else {
-          process_text(missing_text, context)
-        }
-      },
-    latex =
-      {
-        if (!inherits(missing_text, "AsIs") && missing_text == "---") {
-          "\u2014"
-        } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
-          "\u2013"
+        if (!is_asis && missing_text == "---") {
+          "\U02014"
+        } else if (!is_asis && missing_text == "--") {
+          "\U02013"
         } else {
           process_text(missing_text, context)
         }
       },
     rtf =
       {
-        if (!inherits(missing_text, "AsIs") && missing_text == "---") {
+        if (!is_asis && missing_text == "---") {
           "\\'97"
-        } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
+        } else if (!is_asis && missing_text == "--") {
           "\\'96"
-        } else {
-          process_text(missing_text, context)
-        }
-      },
-    word =
-      {
-        if (!inherits(missing_text, "AsIs") && missing_text == "---") {
-          "\u2014"
-        } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
-          "\u2013"
         } else {
           process_text(missing_text, context)
         }
