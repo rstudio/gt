@@ -411,7 +411,8 @@ set_footnote_marks_columns <- function(data,
       context,
       html = footnote_mark_to_html,
       latex = footnote_mark_to_latex,
-      rtf = footnote_mark_to_rtf
+      rtf = footnote_mark_to_rtf,
+      grob = footnote_mark_to_grob
     )
 
   # If there are any footnotes to apply to the columns,
@@ -471,7 +472,6 @@ set_footnote_marks_columns <- function(data,
         dplyr::ungroup() %>%
         dplyr::select(colname, fs_id_coalesced) %>%
         dplyr::distinct()
-
 
       for (i in seq(nrow(footnotes_columns_column_marks))) {
         text <-
@@ -716,5 +716,6 @@ footnotes_dispatch <- list(
   html = footnote_mark_to_html,
   rtf = footnote_mark_to_rtf,
   latex = footnote_mark_to_latex,
-  word = footnote_mark_to_xml
+  word = footnote_mark_to_xml,
+  grob = footnote_mark_to_grob
 )

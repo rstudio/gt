@@ -17,19 +17,24 @@ as_grob <- function(data){
   # Create the footer component
   footer_component <- create_footer_component_grob(data = data)
 
+  # Create the source notes component
+  source_notes_component <- create_source_notes_component_grob(data = data)
 
+
+  # Construct table as a grob with gtable
   construct_gtable(
     header = heading_component,
     col_labels = columns_component,
     body = body_component,
-    footer = footer_component
+    footer = footer_component,
+    source_notes = source_notes_component
   )
 }
 
 #' @importFrom gtable gtable
-construct_gtable <- function(header, col_labels, body, footer){
+construct_gtable <- function(header, col_labels, body, footer, source_notes){
 
-  main_table_components <- c(col_labels, body, footer)
+  main_table_components <- c(col_labels, body)
 
   grob_nrows <- length(main_table_components)
   grob_ncols <- max(lengths(body), 1)
@@ -43,6 +48,18 @@ construct_gtable <- function(header, col_labels, body, footer){
     cell_dims$heights <- c(header_dims$heights, cell_dims$heights)
   }
 
+  if(!is.null(footer)){
+    grob_nrows <- grob_nrows + length(footer)
+    footer_dims <- get_cell_dims(footer, length(footer))
+    cell_dims$heights <- c(cell_dims$heights, footer_dims$heights)
+  }
+
+  if(!is.null(source_notes)){
+    grob_nrows <- grob_nrows + length(source_notes)
+    source_notes_dims <- get_cell_dims(source_notes, length(source_notes))
+    cell_dims$heights <- c(cell_dims$heights, source_notes_dims$heights)
+  }
+
   col_widths <- cell_width_units(cell_dims$widths)
   row_heights <- cell_height_units(cell_dims$heights)
 
@@ -53,14 +70,32 @@ construct_gtable <- function(header, col_labels, body, footer){
       grob_table <- gg_add_table_row(grob_table, header[[i]], row = i , clip = "off")
     }
 
-    header_offset <- i
+    offset <- i
 
   }else{
-    header_offset <- 0
+    offset <- 0
   }
 
+
   for(i in seq_along(main_table_components)){
-    grob_table <- gg_add_table_row(grob_table, main_table_components[[i]], row = i + header_offset)
+    grob_table <- gg_add_table_row(grob_table, main_table_components[[i]], row = i + offset)
+  }
+
+  offset <- i + offset
+
+  if(!is.null(footer)){
+    for(i in seq_along(footer)){
+      grob_table <- gg_add_table_row(grob_table, footer[[i]], row = i + offset)
+    }
+  }
+
+  offset <- i + offset
+
+
+  if(!is.null(source_notes)){
+    for(k in seq_along(source_notes)){
+      grob_table <- gg_add_table_row(grob_table, source_notes[[k]], row = k + offset)
+    }
   }
 
 
@@ -873,9 +908,127 @@ summary_rows_grob <- function(list_of_summaries,
   summary_row_lines
 }
 
-
 create_footer_component_grob <- function(data){
-  NULL
+
+  footnotes_tbl <- dt_footnotes_get(data = data)
+
+  footnotes_border_bottom_color <- dt_options_get_value(data, option = "footnotes_border_bottom_color")
+
+
+  # If the `footnotes_resolved` object has no
+  # rows, then return an empty footnotes component
+  if (nrow(footnotes_tbl) == 0) {
+    return(NULL)
+  }
+
+  add_bottom_line  <- is.null(dt_source_notes_get(data = data))
+
+  stub_components <- dt_stub_components(data = data)
+
+  cell_style <- dt_styles_get(data = data) %>%
+    dplyr::filter(
+      locname == "footnotes"
+    ) %>%
+    dplyr::pull("styles") %>%
+    .[1] %>% .[[1]]
+
+  n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
+
+  # Determine whether the stub is available
+  stub_available <- dt_stub_components_has_rowname(stub_components = stub_components)
+
+  if (stub_available) {
+    n_cols <- n_data_cols + 1
+  } else {
+    n_cols <- n_data_cols
+  }
+
+  footnotes_tbl <-
+    footnotes_tbl %>%
+    dplyr::select(fs_id, footnotes) %>%
+    dplyr::distinct()
+
+  # Get the footnote separator option
+  separator <- dt_options_get_value(data = data, option = "footnotes_sep")
+
+  footnote_ids <- footnotes_tbl[["fs_id"]]
+  footnote_text <- footnotes_tbl[["footnotes"]]
+
+  seq_along(footnote_text) %>%
+    map(function(x) {
+           table_cell_grob(
+             text = paste(if (!is.na(footnote_ids[x])) {
+               paste0(footnote_ids[x], ".")
+               },
+               footnote_text[x]
+             ),
+             font = cell_style[["cell_text"]][["font"]],
+             size = cell_style[["cell_text"]][["size"]] %||% 11,
+             color = cell_style[["cell_text"]][["color"]],
+             align = cell_style[["cell_text"]][["align"]] %||% "left",
+             v_align = cell_style[["cell_text"]][["v_align"]],
+             col = 1,
+             col_span = n_cols,
+             fill = cell_style[["cell_fill"]][["color"]],
+             border = list(
+               bottom = if(add_bottom_line & x == length(footnote_text)) list(size = 2, color = footnotes_border_bottom_color)
+             ),
+             margins =
+           ) %>% list()
+      })
+
+}
+
+create_source_notes_component_grob <- function(data) {
+
+  source_note <- dt_source_notes_get(data = data)
+
+  sourcenotes_border_bottom_color <- dt_options_get_value(data, option = "source_notes_border_bottom_color")
+
+
+  if (is.null(source_note)) {
+    return(NULL)
+  }
+
+  stub_components <- dt_stub_components(data = data)
+
+  cell_style <- dt_styles_get(data = data) %>%
+    dplyr::filter(
+      locname == "source_notes"
+    ) %>%
+    dplyr::pull("styles") %>%
+    .[1] %>% .[[1]]
+
+  n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
+
+  # Determine whether the stub is available
+  stub_available <- dt_stub_components_has_rowname(stub_components = stub_components)
+
+  if (stub_available) {
+    n_cols <- n_data_cols + 1
+  } else {
+    n_cols <- n_data_cols
+  }
+
+  seq_along(source_note) %>%
+    map(function(x) {
+      table_cell_grob(
+        text = source_note[[x]],
+        font = cell_style[["cell_text"]][["font"]],
+        size = cell_style[["cell_text"]][["size"]] %||% 12,
+        color = cell_style[["cell_text"]][["color"]],
+        align = cell_style[["cell_text"]][["align"]] %||% "left",
+        v_align = cell_style[["cell_text"]][["v_align"]],
+        col = 1,
+        col_span = n_cols,
+        fill = cell_style[["cell_fill"]][["color"]],
+        border = list(
+          bottom = if(x == length(source_note))list(size = 3, color = sourcenotes_border_bottom_color)
+        )
+      ) %>% list()
+    }
+  )
+
 }
 
 #' @importFrom grid grobTree rectGrob gpar unit addGrob textGrob
@@ -891,7 +1044,8 @@ table_cell_grob <- function(text,
                       col_span = 1,
                       row_span = 1,
                       border = NULL,
-                      margins = NULL){
+                      margins = NULL
+                      ){
 
   align <- align %||% "center"
   v_align <- v_align %||% "middle"
@@ -1042,4 +1196,10 @@ convert_to_hjust <- function(x = c("left", "center", "right"), margins = list(le
 
 }
 
+footnote_mark_to_grob <- function(mark) {
 
+  if (is.na(mark)) return("")
+
+  paste0("^", mark)
+
+}
