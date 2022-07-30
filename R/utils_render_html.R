@@ -932,11 +932,26 @@ create_body_component_h <- function(data) {
 
         row_df <- output_df_row_as_vec(i = i)
 
+        # Situation where we have two columns in the stub and the row isn't the
+        # first (the `row_df` vector will have one less element)
         if (length(col_names_id) > length(row_df)) {
           col_names_id_i <- col_names_id[-(length(col_names_id) - length(row_df))]
         } else {
           col_names_id_i <- col_names_id
         }
+
+        stub_width <- length(stub_layout)
+
+        if (stub_width == 0) {
+          row_id_i <- rep(character(0), length(col_names_id_i))
+        } else if (stub_width == 1) {
+          row_id_i <- rep(col_names_id_i[1], length(col_names_id_i))
+        } else if (stub_width == 2) {
+          row_id_i <- rep(col_names_id_i[2], length(col_names_id_i))
+        }
+
+
+        #row_id_i <- col_names_id_i
 
         body_row <-
           htmltools::tags$tr(
@@ -948,11 +963,12 @@ create_body_component_h <- function(data) {
                   USE.NAMES = FALSE,
                   row_df,
                   col_names_id_i,
+                  row_id_i,
                   row_span_vals,
                   alignment_classes,
                   extra_classes,
                   row_styles,
-                  FUN = function(x, col_id, row_span, alignment_class, extra_class, cell_style) {
+                  FUN = function(x, col_id, row_id, row_span, alignment_class, extra_class, cell_style) {
 
                     sprintf(
                       "<%s %sclass=\"%s\"%s>%s</%s>",
@@ -960,7 +976,7 @@ create_body_component_h <- function(data) {
                         paste0(
                           "th ",
                           "id=\"",
-                          paste0(col_id, ":", i),
+                          row_id,
                           "\" ",
                           "scope=\"",
                           ifelse(!is.null(row_span) && row_span > 1, "rowgroup", "row"),
@@ -969,8 +985,8 @@ create_body_component_h <- function(data) {
                       } else {
                         paste0(
                           "td ",
-                          "id=\"",
-                          paste0(col_id, ":", i),
+                          "headers=\"",
+                          paste(row_id, group_id, col_id),
                           "\" "
                         )
                       },
