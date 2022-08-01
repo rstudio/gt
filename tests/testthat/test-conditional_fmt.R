@@ -38,7 +38,7 @@ test_that("the `fmt_number()` function works with conditional `rows`", {
          rows = num_1 < 1000) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c("1836.23", "2763.39", "937.2900", "643.0000",
-      "212.2320", "0.0000", "&minus;23.2400"))
+      "212.2320", "0.0000", paste0("\U02212", "23.2400")))
 
   expect_equal(
     (tab %>%
@@ -59,10 +59,12 @@ test_that("the `fmt_scientific()` function works with conditional `rows`", {
          decimals = 4,
          rows = num_1 < 1000) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("1836.23", "2763.39", "9.3729 &times; 10<sup class='gt_super'>2</sup>",
+    c(
+      "1836.23", "2763.39", "9.3729 &times; 10<sup class='gt_super'>2</sup>",
       "6.4300 &times; 10<sup class='gt_super'>2</sup>",
       "2.1223 &times; 10<sup class='gt_super'>2</sup>", "0.0000",
-      "&minus;2.3240 &times; 10<sup class='gt_super'>1</sup>")
+      paste0("\U02212", "2.3240 &times; 10<sup class='gt_super'>1</sup>")
+    )
   )
 
   expect_equal(
@@ -84,10 +86,13 @@ test_that("the `fmt_percent()` function works with conditional `rows`", {
        fmt_percent(
          columns = num_1,
          decimals = 2,
-         rows = num_1 < 1000) %>%
+         rows = num_1 < 1000
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("1836.23", "2763.39", "93,729.00%", "64,300.00%",
-      "21,223.20%", "0.00%", "&minus;2,324.00%")
+    c(
+      "1836.23", "2763.39", "93,729.00%", "64,300.00%",
+      "21,223.20%", "0.00%", paste0("\U02212", "2,324.00%")
+    )
   )
 
   expect_equal(
@@ -110,8 +115,10 @@ test_that("the `fmt_currency()` function works with conditional `rows`", {
          currency = "USD",
          rows = num_1 < 1000) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("1836.23", "2763.39", "$937.29", "$643.00", "$212.23",
-      "$0.00", "&minus;$23.24")
+    c(
+      "1836.23", "2763.39", "$937.29", "$643.00", "$212.23",
+      "$0.00", paste0("\U02212", "$23.24")
+    )
   )
 
   expect_equal(
@@ -134,8 +141,7 @@ test_that("the `fmt_date()` function works with conditional `rows`", {
          date_style = 2,
          rows = time == "16:45") %>%
        render_formats_test(context = "html"))[["date"]],
-    c("Sunday, October 15, 2017", "2013-02-22",
-      "2014-09-22", "2018-01-10")
+    c("Sunday, October 15, 2017", "2013-02-22", "2014-09-22", "2018-01-10")
   )
 
   expect_equal(
@@ -145,8 +151,7 @@ test_that("the `fmt_date()` function works with conditional `rows`", {
          date_style = 2,
          rows = date %in% c("2017-10-15", "2014-09-22") & grepl("^1", time)) %>%
        render_formats_test(context = "html"))[["date"]],
-    c("Sunday, October 15, 2017", "2013-02-22",
-      "2014-09-22", "2018-01-10")
+    c("Sunday, October 15, 2017", "2013-02-22", "2014-09-22", "2018-01-10")
   )
 })
 

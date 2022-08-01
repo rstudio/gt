@@ -60,7 +60,7 @@ test_that("the `fmt_scientific()` function works correctly", {
       "9.37 &times; 10<sup class='gt_super'>2</sup>",
       "6.43 &times; 10<sup class='gt_super'>2</sup>",
       "2.23", "0.00",
-      "&minus;2.32 &times; 10<sup class='gt_super'>1</sup>"
+      paste0("\U02212", "2.32 &times; 10<sup class='gt_super'>1</sup>")
     )
   )
 
@@ -77,7 +77,7 @@ test_that("the `fmt_scientific()` function works correctly", {
       "2.30 &times; 10<sup class='gt_super'>1</sup>",
       "9.30 &times; 10<sup class='gt_super'>1</sup>",
       "3.50 &times; 10<sup class='gt_super'>1</sup>",
-      "1.00 &times; 10<sup class='gt_super'>&minus;2</sup>",
+      paste0("1.00 &times; 10<sup class='gt_super'>", "\U02212", "2</sup>"),
       "NA"
     )
   )
@@ -108,7 +108,7 @@ test_that("the `fmt_scientific()` function works correctly", {
       "9.37290 &times; 10<sup class='gt_super'>2</sup>",
       "6.43000 &times; 10<sup class='gt_super'>2</sup>",
       "2.23200", "0.00000",
-      "&minus;2.32400 &times; 10<sup class='gt_super'>1</sup>"
+      paste0("\U02212", "2.32400 &times; 10<sup class='gt_super'>1</sup>")
     )
   )
 
@@ -144,7 +144,7 @@ test_that("the `fmt_scientific()` function works correctly", {
       "9,37 &times; 10<sup class='gt_super'>2</sup>",
       "6,43 &times; 10<sup class='gt_super'>2</sup>",
       "2,23", "0,00",
-      "&minus;2,32 &times; 10<sup class='gt_super'>1</sup>"
+      paste0("\U02212", "2,32 &times; 10<sup class='gt_super'>1</sup>")
     )
   )
 
@@ -172,11 +172,11 @@ test_that("the `fmt_scientific()` function works correctly", {
        render_formats_test("html"))[["num_1"]],
     c(
       "1.8362", "2.7634",
-      "9.3729 &times; 10<sup class='gt_super'>&minus;1</sup>",
-      "6.4300 &times; 10<sup class='gt_super'>&minus;1</sup>",
-      "2.2320 &times; 10<sup class='gt_super'>&minus;3</sup>",
+      paste0("9.3729 &times; 10<sup class='gt_super'>", "\U02212", "1</sup>"),
+      paste0("6.4300 &times; 10<sup class='gt_super'>", "\U02212", "1</sup>"),
+      paste0("2.2320 &times; 10<sup class='gt_super'>", "\U02212", "3</sup>"),
       "0.0000",
-      "&minus;2.3240 &times; 10<sup class='gt_super'>&minus;2</sup>"
+      paste0("\U02212", "2.3240 &times; 10<sup class='gt_super'>", "\U02212", "2</sup>")
     )
   )
 
@@ -207,7 +207,7 @@ test_that("the `fmt_scientific()` function works correctly", {
       "a 9.37 &times; 10<sup class='gt_super'>2</sup> b",
       "a 6.43 &times; 10<sup class='gt_super'>2</sup> b",
       "a 2.23 b", "a 0.00 b",
-      "a &minus;2.32 &times; 10<sup class='gt_super'>1</sup> b"
+      paste0("a ", "\U02212", "2.32 &times; 10<sup class='gt_super'>1</sup> b")
     )
   )
 
@@ -235,7 +235,8 @@ test_that("the `fmt_scientific()` function works correctly", {
       "+2.763 &times; 10<sup class='gt_super'>3</sup>",
       "+9.373 &times; 10<sup class='gt_super'>2</sup>",
       "+6.430 &times; 10<sup class='gt_super'>2</sup>",
-      "+2.232", "0.000", "&minus;2.324 &times; 10<sup class='gt_super'>1</sup>"
+      "+2.232", "0.000",
+      paste0("\U02212", "2.324 &times; 10<sup class='gt_super'>1</sup>")
     )
   )
 
@@ -252,7 +253,7 @@ test_that("the `fmt_scientific()` function works correctly", {
       "*+9.37 &times; 10<sup class='gt_super'>2</sup>*",
       "*+6.43 &times; 10<sup class='gt_super'>2</sup>*",
       "*+2.23*", "*0.00*",
-      "*&minus;2.32 &times; 10<sup class='gt_super'>1</sup>*"
+      paste0("*", "\U02212", "2.32 &times; 10<sup class='gt_super'>1</sup>*")
     )
   )
 
@@ -269,7 +270,7 @@ test_that("the `fmt_scientific()` function works correctly", {
       "9.37 &times; 10<sup class='gt_super'>2</sup>",
       "6.43 &times; 10<sup class='gt_super'>2</sup>",
       "2.23", "0.00",
-      "&minus;2.32 &times; 10<sup class='gt_super'>1</sup>"
+      paste0("\U02212", "2.32 &times; 10<sup class='gt_super'>1</sup>")
     )
   )
 
@@ -286,7 +287,7 @@ test_that("the `fmt_scientific()` function works correctly", {
       "9,37 &times; 10<sup class='gt_super'>2</sup>",
       "6,43 &times; 10<sup class='gt_super'>2</sup>",
       "2,23", "0,00",
-      "&minus;2,32 &times; 10<sup class='gt_super'>1</sup>"
+      paste0("\U02212", "2,32 &times; 10<sup class='gt_super'>1</sup>")
     )
   )
 
@@ -303,7 +304,7 @@ test_that("the `fmt_scientific()` function works correctly", {
       "9,37 &times; 10<sup class='gt_super'>2</sup>",
       "6,43 &times; 10<sup class='gt_super'>2</sup>",
       "2,23", "0,00",
-      "&minus;2,32 &times; 10<sup class='gt_super'>1</sup>"
+      paste0("\U02212", "2,32 &times; 10<sup class='gt_super'>1</sup>")
     )
   )
 
@@ -320,7 +321,7 @@ test_that("the `fmt_scientific()` function works correctly", {
       "9,37 &times; 10<sup class='gt_super'>2</sup>",
       "6,43 &times; 10<sup class='gt_super'>2</sup>",
       "2,23", "0,00",
-      "&minus;2,32 &times; 10<sup class='gt_super'>1</sup>"
+      paste0("\U02212", "2,32 &times; 10<sup class='gt_super'>1</sup>")
     )
   )
 
@@ -337,7 +338,7 @@ test_that("the `fmt_scientific()` function works correctly", {
       "9,37 &times; 10<sup class='gt_super'>2</sup>",
       "6,43 &times; 10<sup class='gt_super'>2</sup>",
       "2,23", "0,00",
-      "&minus;2,32 &times; 10<sup class='gt_super'>1</sup>"
+      paste0("\U02212", "2,32 &times; 10<sup class='gt_super'>1</sup>")
     )
   )
 })
@@ -384,13 +385,13 @@ test_that("`fmt_scientific()` can handle extremely large and small values", {
        fmt_scientific(columns = "num", decimals = 5) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;1.50000 &times; 10<sup class='gt_super'>200</sup>",
-      "&minus;1.50000 &times; 10<sup class='gt_super'>100</sup>",
-      "&minus;2.50000",
-      "&minus;3.50000 &times; 10<sup class='gt_super'>&minus;100</sup>",
-      "&minus;3.50000 &times; 10<sup class='gt_super'>&minus;200</sup>",
-      "1.50000 &times; 10<sup class='gt_super'>&minus;200</sup>",
-      "1.50000 &times; 10<sup class='gt_super'>&minus;100</sup>",
+      paste0("\U02212", "1.50000 &times; 10<sup class='gt_super'>200</sup>"),
+      paste0("\U02212", "1.50000 &times; 10<sup class='gt_super'>100</sup>"),
+      paste0("\U02212", "2.50000"),
+      paste0("\U02212", "3.50000 &times; 10<sup class='gt_super'>", "\U02212", "100</sup>"),
+      paste0("\U02212", "3.50000 &times; 10<sup class='gt_super'>", "\U02212", "200</sup>"),
+      paste0("1.50000 &times; 10<sup class='gt_super'>", "\U02212", "200</sup>"),
+      paste0("1.50000 &times; 10<sup class='gt_super'>", "\U02212", "100</sup>"),
       "2.50000",
       "3.50000 &times; 10<sup class='gt_super'>100</sup>",
       "3.50000 &times; 10<sup class='gt_super'>200</sup>"

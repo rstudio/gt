@@ -37,7 +37,7 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
     c(
       "183,623.00%", "276,339.00%", "93,729.00%",
       "64,300.00%", "21,223.20%", "0.00%",
-      "&minus;2,324.00%"
+      paste0("\U02212", "2,324.00%")
     )
   )
 
@@ -49,7 +49,7 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
     c(
       "183,623.00000%", "276,339.00000%", "93,729.00000%",
       "64,300.00000%", "21,223.20000%", "0.00000%",
-      "&minus;2,324.00000%"
+      paste0("\U02212", "2,324.00000%")
     )
   )
 
@@ -62,7 +62,7 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
        render_formats_test("html"))[["num_1"]],
     c(
       "183,623%", "276,339%", "93,729%", "64,300%",
-      "21,223.2%", "0%", "&minus;2,324%"
+      "21,223.2%", "0%", paste0("\U02212", "2,324%")
     )
   )
 
@@ -75,7 +75,7 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
     c(
       "183623.00%", "276339.00%", "93729.00%",
       "64300.00%", "21223.20%", "0.00%",
-      "&minus;2324.00%"
+      paste0("\U02212", "2324.00%")
     )
   )
 
@@ -88,7 +88,7 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
     c(
       "183 623.00%", "276 339.00%", "93 729.00%",
       "64 300.00%", "21 223.20%", "0.00%",
-      "&minus;2 324.00%"
+      paste0("\U02212", "2 324.00%")
     )
   )
 
@@ -103,7 +103,7 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
     c(
       "183.623,00%", "276.339,00%", "93.729,00%",
       "64.300,00%", "21.223,20%", "0,00%",
-      "&minus;2.324,00%"
+      paste0("\U02212", "2.324,00%")
     )
   )
 
@@ -117,7 +117,7 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
       "a 183,623.00%:n", "a 276,339.00%:n",
       "a 93,729.00%:n", "a 64,300.00%:n",
       "a 21,223.20%:n", "a 0.00%:n",
-      "a &minus;2,324.00%:n"
+      paste0("a \U02212", "2,324.00%:n")
     )
   )
 
@@ -131,7 +131,7 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
     c(
       "183,623 %", "276,339 %", "93,729 %",
       "64,300 %", "21,223 %", "0 %",
-      "&minus;2,324 %"
+      paste0("\U02212", "2,324 %")
     )
   )
 
@@ -145,7 +145,7 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
     c(
       "% 183,623", "% 276,339", "% 93,729",
       "% 64,300", "% 21,223", "% 0",
-      "&minus;% 2,324"
+      paste0("\U02212", "% 2,324")
     )
   )
 
@@ -211,7 +211,7 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
        render_formats_test("html"))[["num_1"]],
     c(
       "+1,836.23%", "+2,763.39%", "+937.29%",
-      "+643%", "+212.23%", "0%", "&minus;23.24%"
+      "+643%", "+212.23%", "0%", paste0("\U02212", "23.24%")
     )
   )
 
@@ -244,7 +244,7 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
     c(
       "*+183,623%*", "*+276,339%*", "*+93,729%*",
       "*+64,300%*", "*+21,223.2%*", "*0%*",
-      "*&minus;2,324%*"
+      paste0("*\U02212", "2,324%*")
     )
   )
 
@@ -257,7 +257,7 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
     c(
       "183,623.00%", "276,339.00%", "93,729.00%",
       "64,300.00%", "21,223.20%", "0.00%",
-      "&minus;2,324.00%"
+      paste0("\U02212", "2,324.00%")
     )
   )
 
@@ -270,7 +270,7 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
     c(
       "183.623,00%", "276.339,00%", "93.729,00%",
       "64.300,00%", "21.223,20%", "0,00%",
-      "&minus;2.324,00%"
+      paste0("\U02212", "2.324,00%")
     )
   )
 
@@ -283,7 +283,7 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
     c(
       "183 623,00%", "276 339,00%", "93 729,00%",
       "64 300,00%", "21 223,20%", "0,00%",
-      "&minus;2 324,00%"
+      paste0("\U02212", "2 324,00%")
     )
   )
 
@@ -296,7 +296,7 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
     c(
       "183 623,00%", "276 339,00%", "93 729,00%",
       "64 300,00%", "21 223,20%", "0,00%",
-      "&minus;2 324,00%"
+      paste0("\U02212", "2 324,00%")
     )
   )
 
@@ -309,7 +309,7 @@ test_that("the `fmt_percent()` function works correctly in the HTML context", {
     c(
       "183.623,00%", "276.339,00%", "93.729,00%",
       "64.300,00%", "21.223,20%", "0,00%",
-      "&minus;2.324,00%"
+      paste0("\U02212", "2.324,00%")
     )
   )
 
@@ -372,10 +372,18 @@ test_that("the `fmt_percent()` fn can render in the Indian numbering system", {
     c(
       "50,00,00,001.00%", "1,00,000.10%", "1,000.00%", "12,34,500.00%",
       "1,23,450.00%", "12,345.00%", "123.45%", "12.35%", "25,83,06,323.45%",
-      "1,53,56,74,22,333.00%", "6,42,56,48,25,73,36,22,784.00%", "&minus;50,00,00,00,000.00%",
-      "&minus;1,00,000.10%", "&minus;1,000.00%", "&minus;12,34,500.00%",
-      "&minus;1,23,450.00%", "&minus;12,345.00%", "&minus;123.45%",
-      "&minus;12.35%", "&minus;0.00%", "0.00%", "NA", "Inf%", "&minus;Inf%"
+      "1,53,56,74,22,333.00%", "6,42,56,48,25,73,36,22,784.00%",
+      paste0("\U02212", "50,00,00,00,000.00%"),
+      paste0("\U02212", "1,00,000.10%"),
+      paste0("\U02212", "1,000.00%"),
+      paste0("\U02212", "12,34,500.00%"),
+      paste0("\U02212", "1,23,450.00%"),
+      paste0("\U02212", "12,345.00%"),
+      paste0("\U02212", "123.45%"),
+      paste0("\U02212", "12.35%"),
+      paste0("\U02212", "0.00%"),
+      "0.00%", "NA", "Inf%",
+      paste0("\U02212", "Inf%")
     )
   )
 
@@ -389,10 +397,18 @@ test_that("the `fmt_percent()` fn can render in the Indian numbering system", {
       "+50,00,00,001.00%", "+1,00,000.10%", "+1,000.00%", "+12,34,500.00%",
       "+1,23,450.00%", "+12,345.00%", "+123.45%", "+12.35%", "+25,83,06,323.45%",
       "+1,53,56,74,22,333.00%", "+6,42,56,48,25,73,36,22,784.00%",
-      "&minus;50,00,00,00,000.00%", "&minus;1,00,000.10%", "&minus;1,000.00%",
-      "&minus;12,34,500.00%", "&minus;1,23,450.00%", "&minus;12,345.00%",
-      "&minus;123.45%", "&minus;12.35%", "&minus;0.00%", "0.00%", "NA",
-      "+Inf%", "&minus;Inf%"
+      paste0("\U02212", "50,00,00,00,000.00%"),
+      paste0("\U02212", "1,00,000.10%"),
+      paste0("\U02212", "1,000.00%"),
+      paste0("\U02212", "12,34,500.00%"),
+      paste0("\U02212", "1,23,450.00%"),
+      paste0("\U02212", "12,345.00%"),
+      paste0("\U02212", "123.45%"),
+      paste0("\U02212", "12.35%"),
+      paste0("\U02212", "0.00%"),
+      "0.00%", "NA",
+      "+Inf%",
+      paste0("\U02212", "Inf%")
     )
   )
 })
