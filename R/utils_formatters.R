@@ -575,7 +575,7 @@ context_minus_mark <- function(context) {
 
   switch(
     context,
-    html = "&minus;",
+    html = "\U02212",
     "-"
   )
 }
