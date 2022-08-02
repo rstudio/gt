@@ -91,30 +91,37 @@ Let's create a numeric vector for the next few examples:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{num_vals <- c(0.0052, 0.08, 0, -0.535, NA)
 }\if{html}{\out{</div>}}
 
-Using \code{vec_fmt_fraction()} with the default options will create a character vector
-of fractions in HTML. Any \code{NA} values will render as \code{"NA"}.
+Using \code{vec_fmt_fraction()} with the default options will create a character
+vector of fractions in HTML. Any \code{NA} values will render as \code{"NA"}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_fraction(num_vals)
-#> [1] "0"                                                                                                                                                
-#> [2] "<span class=\\"gt_fraction_numerator\\">1</span><span class=\\"gt_slash_mark\\">&frasl;</span><span class=\\"gt_fraction_denominator\\">9</span>"       
-#> [3] "0"                                                                                                                                                
-#> [4] "&minus;<span class=\\"gt_fraction_numerator\\">5</span><span class=\\"gt_slash_mark\\">&frasl;</span><span class=\\"gt_fraction_denominator\\">9</span>"
+#> [1] "0"                                                                                                                                          
+#> [2] "<span class=\\"gt_fraction_numerator\\">1</span><span class=\\"gt_slash_mark\\">&frasl;</span><span class=\\"gt_fraction_denominator\\">9</span>" 
+#> [3] "0"                                                                                                                                          
+#> [4] "−<span class=\\"gt_fraction_numerator\\">5</span><span class=\\"gt_slash_mark\\">&frasl;</span><span class=\\"gt_fraction_denominator\\">9</span>"
 #> [5] "NA"
 }\if{html}{\out{</div>}}
 
-We can change these fractions to appear with an \code{"inline"} layout (the
-default is \code{"diagonal"}):
+We can change these fractions to appear with a \code{"diagonal"} layout (the
+default is \code{"inline"}):
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_fraction(num_vals, layout = "inline")
-#> [1] "0"          "1/9"        "0"          "&minus;5/9" "NA"
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_fraction(num_vals, layout = "diagonal")
+#> [1] "0"                                                                                                                                          
+#> [2] "<span class=\\"gt_fraction_numerator\\">1</span><span class=\\"gt_slash_mark\\">&frasl;</span><span class=\\"gt_fraction_denominator\\">9</span>" 
+#> [3] "0"                                                                                                                                          
+#> [4] "−<span class=\\"gt_fraction_numerator\\">5</span><span class=\\"gt_slash_mark\\">&frasl;</span><span class=\\"gt_fraction_denominator\\">9</span>"
+#> [5] "NA"
 }\if{html}{\out{</div>}}
 
 There are many options for formatting as fractions. If you'd like a higher
 degree of accuracy in the computation of fractions we can supply the \code{"med"}
 or \code{"high"} keywords to the \code{accuracy} argument:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_fraction(num_vals, accuracy = "high", layout = "inline")
-#> [1] "1/200"          "2/25"           "0"              "&minus;107/200"
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_fraction(num_vals, accuracy = "high")
+#> [1] "<span class=\\"gt_fraction_numerator\\">1</span><span class=\\"gt_slash_mark\\">&frasl;</span><span class=\\"gt_fraction_denominator\\">200</span>"   
+#> [2] "<span class=\\"gt_fraction_numerator\\">2</span><span class=\\"gt_slash_mark\\">&frasl;</span><span class=\\"gt_fraction_denominator\\">25</span>"    
+#> [3] "0"                                                                                                                                              
+#> [4] "−<span class=\\"gt_fraction_numerator\\">107</span><span class=\\"gt_slash_mark\\">&frasl;</span><span class=\\"gt_fraction_denominator\\">200</span>"
 #> [5] "NA"
 }\if{html}{\out{</div>}}
 
@@ -127,8 +134,7 @@ argument. Note here that \code{NA} values won't have the pattern applied.
   layout = "inline",
   pattern = "[\{x\}]"
 )
-#> [1] "[1/200]"          "[2/25]"           "[0]"              "[&minus;107/200]"
-#> [5] "NA"
+#> [1] "[1/200]"    "[2/25]"     "[0]"        "[−107/200]" "NA"
 }\if{html}{\out{</div>}}
 }
 

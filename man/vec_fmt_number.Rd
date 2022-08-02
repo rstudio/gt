@@ -136,7 +136,7 @@ as \code{"NA"}. Also, the rendering context is HTML unless specified in the
 \code{output} argument.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_number(num_vals)
-#> [1] "5.20"        "8.65"        "0.00"        "&minus;5.30" "NA"
+#> [1] "5.20"  "8.65"  "0.00"  "−5.30" "NA"
 }\if{html}{\out{</div>}}
 
 We can change the decimal mark to a comma, and we have to be sure to change
@@ -144,36 +144,35 @@ the digit separator mark from the default comma to something else (a period
 works here):
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_number(num_vals, sep_mark = ".", dec_mark = ",")
-#> [1] "5,20"        "8,65"        "0,00"        "&minus;5,30" "NA"
+#> [1] "5,20"  "8,65"  "0,00"  "−5,30" "NA"
 }\if{html}{\out{</div>}}
 
 If we are formatting for a different locale, we could supply the locale ID
 and let \strong{gt} handle these locale-specific formatting options:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_number(num_vals, locale = "fr")
-#> [1] "5,20"        "8,65"        "0,00"        "&minus;5,30" "NA"
+#> [1] "5,20"  "8,65"  "0,00"  "−5,30" "NA"
 }\if{html}{\out{</div>}}
 
 There are many options for formatting values. Perhaps you need to have
 explicit positive and negative signs? Use \code{force_sign = TRUE} for that.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_number(num_vals, force_sign = TRUE)
-#> [1] "+5.20"       "+8.65"       "0.00"        "&minus;5.30" "NA"
+#> [1] "+5.20" "+8.65" "0.00"  "−5.30" "NA"
 }\if{html}{\out{</div>}}
 
 Those trailing zeros past the decimal mark can be stripped out by using the
 \code{drop_trailing_zeros} option.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_number(num_vals, drop_trailing_zeros = TRUE)
-#> [1] "5.2"        "8.65"       "0"          "&minus;5.3" "NA"
+#> [1] "5.2"  "8.65" "0"    "−5.3" "NA"
 }\if{html}{\out{</div>}}
 
 As a last example, one can wrap the values in a pattern with the \code{pattern}
 argument. Note here that \code{NA} values won't have the pattern applied.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_number(num_vals, pattern = "`\{x\}`")
-#> [1] "`5.20`"        "`8.65`"        "`0.00`"        "`&minus;5.30`"
-#> [5] "NA"
+#> [1] "`5.20`"  "`8.65`"  "`0.00`"  "`−5.30`" "NA"
 }\if{html}{\out{</div>}}
 }
 
