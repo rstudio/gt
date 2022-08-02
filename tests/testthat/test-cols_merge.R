@@ -264,15 +264,15 @@ test_that("the `cols_merge_uncert()` works nicely with different error bounds", 
   expect_equal(
     (tbl_gt %>% render_formats_test("html"))[["value"]],
     c(
-      paste0("34.5<span class=\"gt_two_val_uncert\">+1.8<br>", "\U02212", "2.1</span>"),
-      paste0("29.2<span class=\"gt_two_val_uncert\">+2.7<br>", "\U02212", "2.4</span>"),
-      "36.3 &plusmn; 2.6",
-      paste0("31.6<span class=\"gt_two_val_uncert\">+NA<br>", "\U02212", "1.8</span>"),
-      paste0("28.5<span class=\"gt_two_val_uncert\">+1.6<br>", "\U02212", "NA</span>"),
+      paste0("34.5<span style=\"display:inline-block;line-height:1em;text-align:right;font-size:60%;vertical-align:-0.25em;margin-left:0.1em;\">+1.8<br>", "\U02212", "2.1</span>"),
+      paste0("29.2<span style=\"display:inline-block;line-height:1em;text-align:right;font-size:60%;vertical-align:-0.25em;margin-left:0.1em;\">+2.7<br>", "\U02212", "2.4</span>"),
+      paste0("36.3 \U000B1 2.6"),
+      paste0("31.6<span style=\"display:inline-block;line-height:1em;text-align:right;font-size:60%;vertical-align:-0.25em;margin-left:0.1em;\">+NA<br>", "\U02212", "1.8</span>"),
+      paste0("28.5<span style=\"display:inline-block;line-height:1em;text-align:right;font-size:60%;vertical-align:-0.25em;margin-left:0.1em;\">+1.6<br>", "\U02212", "NA</span>"),
       "30.9", "NA", "NA", "Inf",
-      "30.0 &plusmn; 0.0",
-      paste0("32.0<span class=\"gt_two_val_uncert\">+0.0<br>", "\U02212", "0.1</span>"),
-      paste0("34.0<span class=\"gt_two_val_uncert\">+0.1<br>", "\U02212", "NaN</span>"),
+      paste0("30.0 \U000B1 0.0"),
+      paste0("32.0<span style=\"display:inline-block;line-height:1em;text-align:right;font-size:60%;vertical-align:-0.25em;margin-left:0.1em;\">+0.0<br>", "\U02212", "0.1</span>"),
+      paste0("34.0<span style=\"display:inline-block;line-height:1em;text-align:right;font-size:60%;vertical-align:-0.25em;margin-left:0.1em;\">+0.1<br>", "\U02212", "NaN</span>"),
       "NaN"
     )
   )
