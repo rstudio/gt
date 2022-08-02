@@ -95,9 +95,9 @@ Using \code{vec_fmt_fraction()} with the default options will create a character
 vector of fractions in HTML. Any \code{NA} values will render as \code{"NA"}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_fraction(num_vals)
-#> [1] "0"                                                                                                                                          
-#> [2] "<span class=\\"gt_fraction_numerator\\">1</span><span class=\\"gt_slash_mark\\">&frasl;</span><span class=\\"gt_fraction_denominator\\">9</span>" 
-#> [3] "0"                                                                                                                                          
+#> [1] "0"
+#> [2] "<span class=\\"gt_fraction_numerator\\">1</span><span class=\\"gt_slash_mark\\">&frasl;</span><span class=\\"gt_fraction_denominator\\">9</span>"
+#> [3] "0"
 #> [4] "−<span class=\\"gt_fraction_numerator\\">5</span><span class=\\"gt_slash_mark\\">&frasl;</span><span class=\\"gt_fraction_denominator\\">9</span>"
 #> [5] "NA"
 }\if{html}{\out{</div>}}
@@ -106,9 +106,9 @@ We can change these fractions to appear with a \code{"diagonal"} layout (the
 default is \code{"inline"}):
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_fraction(num_vals, layout = "diagonal")
-#> [1] "0"                                                                                                                                          
-#> [2] "<span class=\\"gt_fraction_numerator\\">1</span><span class=\\"gt_slash_mark\\">&frasl;</span><span class=\\"gt_fraction_denominator\\">9</span>" 
-#> [3] "0"                                                                                                                                          
+#> [1] "0"
+#> [2] "<span class=\\"gt_fraction_numerator\\">1</span><span class=\\"gt_slash_mark\\">&frasl;</span><span class=\\"gt_fraction_denominator\\">9</span>"
+#> [3] "0"
 #> [4] "−<span class=\\"gt_fraction_numerator\\">5</span><span class=\\"gt_slash_mark\\">&frasl;</span><span class=\\"gt_fraction_denominator\\">9</span>"
 #> [5] "NA"
 }\if{html}{\out{</div>}}
@@ -118,9 +118,9 @@ degree of accuracy in the computation of fractions we can supply the \code{"med"
 or \code{"high"} keywords to the \code{accuracy} argument:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_fraction(num_vals, accuracy = "high")
-#> [1] "<span class=\\"gt_fraction_numerator\\">1</span><span class=\\"gt_slash_mark\\">&frasl;</span><span class=\\"gt_fraction_denominator\\">200</span>"   
-#> [2] "<span class=\\"gt_fraction_numerator\\">2</span><span class=\\"gt_slash_mark\\">&frasl;</span><span class=\\"gt_fraction_denominator\\">25</span>"    
-#> [3] "0"                                                                                                                                              
+#> [1] "<span class=\\"gt_fraction_numerator\\">1</span><span class=\\"gt_slash_mark\\">&frasl;</span><span class=\\"gt_fraction_denominator\\">200</span>"
+#> [2] "<span class=\\"gt_fraction_numerator\\">2</span><span class=\\"gt_slash_mark\\">&frasl;</span><span class=\\"gt_fraction_denominator\\">25</span>"
+#> [3] "0"
 #> [4] "−<span class=\\"gt_fraction_numerator\\">107</span><span class=\\"gt_slash_mark\\">&frasl;</span><span class=\\"gt_fraction_denominator\\">200</span>"
 #> [5] "NA"
 }\if{html}{\out{</div>}}
@@ -144,7 +144,7 @@ argument. Note here that \code{NA} values won't have the pattern applied.
 }
 
 \seealso{
-Other vector formatting functions: 
+Other vector formatting functions:
 \code{\link{vec_fmt_bytes}()},
 \code{\link{vec_fmt_currency}()},
 \code{\link{vec_fmt_datetime}()},
