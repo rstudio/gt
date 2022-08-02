@@ -760,18 +760,18 @@ vec_fmt_percent <- function(
 #' num_vals <- c(0.0052, 0.08, 0, -0.535, NA)
 #' ```
 #'
-#' Using `vec_fmt_fraction()` with the default options will create a character vector
-#' of fractions in HTML. Any `NA` values will render as `"NA"`.
+#' Using `vec_fmt_fraction()` with the default options will create a character
+#' vector of fractions in HTML. Any `NA` values will render as `"NA"`.
 #'
 #' ```{r}
 #' vec_fmt_fraction(num_vals)
 #' ```
 #'
-#' We can change these fractions to appear with an `"inline"` layout (the
-#' default is `"diagonal"`):
+#' We can change these fractions to appear with a `"diagonal"` layout (the
+#' default is `"inline"`):
 #'
 #' ```{r}
-#' vec_fmt_fraction(num_vals, layout = "inline")
+#' vec_fmt_fraction(num_vals, layout = "diagonal")
 #' ```
 #'
 #' There are many options for formatting as fractions. If you'd like a higher
@@ -779,7 +779,7 @@ vec_fmt_percent <- function(
 #' or `"high"` keywords to the `accuracy` argument:
 #'
 #' ```{r}
-#' vec_fmt_fraction(num_vals, accuracy = "high", layout = "inline")
+#' vec_fmt_fraction(num_vals, accuracy = "high")
 #' ```
 #'
 #' As a last example, one can wrap the values in a pattern with the `pattern`
