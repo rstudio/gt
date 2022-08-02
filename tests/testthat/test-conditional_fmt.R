@@ -60,10 +60,12 @@ test_that("the `fmt_scientific()` function works with conditional `rows`", {
          rows = num_1 < 1000) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1836.23", "2763.39", "9.3729 &times; 10<sup class='gt_super'>2</sup>",
-      "6.4300 &times; 10<sup class='gt_super'>2</sup>",
-      "2.1223 &times; 10<sup class='gt_super'>2</sup>", "0.0000",
-      paste0("\U02212", "2.3240 &times; 10<sup class='gt_super'>1</sup>")
+      "1836.23", "2763.39",
+      paste0("9.3729 ", "\U000D7", " 10<sup style='font-size: 65%;'>2</sup>"),
+      paste0("6.4300 ", "\U000D7", " 10<sup style='font-size: 65%;'>2</sup>"),
+      paste0("2.1223 ", "\U000D7", " 10<sup style='font-size: 65%;'>2</sup>"),
+      "0.0000",
+      paste0("\U02212", "2.3240 ", "\U000D7", " 10<sup style='font-size: 65%;'>1</sup>")
     )
   )
 
@@ -74,8 +76,10 @@ test_that("the `fmt_scientific()` function works with conditional `rows`", {
          decimals = 4,
          rows = char_2 %in% c("june", "july") & grepl("sa.*", char_1)) %>%
        render_formats_test(context = "html"))[["num_2"]],
-    c("3.4000 &times; 10<sup class='gt_super'>1</sup>",
-      "74", "23", "NA", "35", "NA", "NA")
+    c(
+      paste0("3.4000 ", "\U000D7", " 10<sup style='font-size: 65%;'>1</sup>"),
+      "74", "23", "NA", "35", "NA", "NA"
+    )
   )
 })
 
