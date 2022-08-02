@@ -1314,10 +1314,10 @@ fmt_partsper <- function(
 #'   option to simplify the fraction (where possible) can be taken with `TRUE`
 #'   (the default). With `FALSE`, denominators in fractions will be fixed to the
 #'   value provided in `accuracy`.
-#' @param layout For HTML output, the `"diagonal"` layout is the default. This
-#'   will generate fractions that are typeset with raised/lowered numerals and a
-#'   virgule. The `"inline"` layout places the numerals of the fraction on the
-#'   baseline and uses a standard slash character.
+#' @param layout For HTML output, the `"inline"` layout is the default. This
+#'   layout places the numerals of the fraction on the baseline and uses a
+#'   standard slash character. The `"diagonal"` layout will generate fractions
+#'   that are typeset with raised/lowered numerals and a virgule.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -1399,14 +1399,13 @@ fmt_fraction <- function(
     rows = everything(),
     accuracy = NULL,
     simplify = TRUE,
-    layout = c("diagonal", "inline"),
+    layout = c("inline", "diagonal"),
     use_seps = TRUE,
     pattern = "{x}",
     sep_mark = ",",
     system = c("intl", "ind"),
     locale = NULL
 ) {
-
   system <- match.arg(system)
 
   # Perform input object validation
