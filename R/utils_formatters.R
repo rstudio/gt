@@ -467,37 +467,24 @@ context_dash_mark <- context_missing_text
 #' @noRd
 context_plusminus_mark <- function(plusminus_mark, context) {
 
+  is_asis <- inherits(plusminus_mark, "AsIs")
+
   switch(
     context,
-    html =
+    html = ,
+    latex = ,
+    word =
       {
-        if (!inherits(plusminus_mark, "AsIs") && plusminus_mark == " +/- ") {
-          " &plusmn; "
-        } else {
-          plusminus_mark
-        }
-      },
-    latex =
-      {
-        if (!inherits(plusminus_mark, "AsIs") && plusminus_mark == " +/- ") {
-          " \u00B1 "
+        if (!is_asis && plusminus_mark == " +/- ") {
+          " \U000B1 "
         } else {
           plusminus_mark
         }
       },
     rtf =
       {
-        if (!inherits(plusminus_mark, "AsIs") && plusminus_mark == " +/- ") {
+        if (!is_asis && plusminus_mark == " +/- ") {
           " \\'b1 "
-        } else {
-          plusminus_mark
-        }
-      },
-    word =
-      {
-        if (!inherits(plusminus_mark, "AsIs") &&
-            plusminus_mark == " +/- ") {
-          " +/- "
         } else {
           plusminus_mark
         }
