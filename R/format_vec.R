@@ -816,6 +816,8 @@ vec_fmt_fraction <- function(
   # Ensure that `x` is strictly a vector with `rlang::is_vector()`
   stop_if_not_vector(x)
 
+  layout <- match.arg(layout)
+
   # Stop function if class of `x` is incompatible with the formatting
   if (
     !vector_class_is_valid(
