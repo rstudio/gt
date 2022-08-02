@@ -87,20 +87,20 @@ values. The rendering context is HTML unless specified in the \code{output}
 argument.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_scientific(num_vals)
-#> [1] "3.24 &times; 10<sup class='gt_super'>&minus;4</sup>"
-#> [2] "8.65"                                               
-#> [3] "1.36 &times; 10<sup class='gt_super'>6</sup>"       
-#> [4] "&minus;5.90 &times; 10<sup class='gt_super'>4</sup>"
+#> [1] "3.24 × 10<sup style='font-size: 65\%;'>−4</sup>"
+#> [2] "8.65"                                          
+#> [3] "1.36 × 10<sup style='font-size: 65\%;'>6</sup>" 
+#> [4] "−5.90 × 10<sup style='font-size: 65\%;'>4</sup>"
 #> [5] "NA"
 }\if{html}{\out{</div>}}
 
 We can change the number of decimal places with the \code{decimals} option:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_scientific(num_vals, decimals = 1)
-#> [1] "3.2 &times; 10<sup class='gt_super'>&minus;4</sup>"
-#> [2] "8.7"                                               
-#> [3] "1.4 &times; 10<sup class='gt_super'>6</sup>"       
-#> [4] "&minus;5.9 &times; 10<sup class='gt_super'>4</sup>"
+#> [1] "3.2 × 10<sup style='font-size: 65\%;'>−4</sup>"
+#> [2] "8.7"                                          
+#> [3] "1.4 × 10<sup style='font-size: 65\%;'>6</sup>" 
+#> [4] "−5.9 × 10<sup style='font-size: 65\%;'>4</sup>"
 #> [5] "NA"
 }\if{html}{\out{</div>}}
 
@@ -108,10 +108,10 @@ If we are formatting for a different locale, we could supply the locale ID
 and \strong{gt} will handle any locale-specific formatting options:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_scientific(num_vals, locale = "es")
-#> [1] "3,24 &times; 10<sup class='gt_super'>&minus;4</sup>"
-#> [2] "8,65"                                               
-#> [3] "1,36 &times; 10<sup class='gt_super'>6</sup>"       
-#> [4] "&minus;5,90 &times; 10<sup class='gt_super'>4</sup>"
+#> [1] "3,24 × 10<sup style='font-size: 65\%;'>−4</sup>"
+#> [2] "8,65"                                          
+#> [3] "1,36 × 10<sup style='font-size: 65\%;'>6</sup>" 
+#> [4] "−5,90 × 10<sup style='font-size: 65\%;'>4</sup>"
 #> [5] "NA"
 }\if{html}{\out{</div>}}
 
@@ -119,10 +119,10 @@ Should you need to have positive and negative signs on each of the output
 values, use \code{force_sign = TRUE}:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_scientific(num_vals, force_sign = TRUE)
-#> [1] "+3.24 &times; 10<sup class='gt_super'>&minus;4</sup>"
-#> [2] "+8.65"                                               
-#> [3] "+1.36 &times; 10<sup class='gt_super'>6</sup>"       
-#> [4] "&minus;5.90 &times; 10<sup class='gt_super'>4</sup>" 
+#> [1] "+3.24 × 10<sup style='font-size: 65\%;'>−4</sup>"
+#> [2] "+8.65"                                          
+#> [3] "+1.36 × 10<sup style='font-size: 65\%;'>6</sup>" 
+#> [4] "−5.90 × 10<sup style='font-size: 65\%;'>4</sup>" 
 #> [5] "NA"
 }\if{html}{\out{</div>}}
 
@@ -130,10 +130,10 @@ As a last example, one can wrap the values in a pattern with the \code{pattern}
 argument. Note here that \code{NA} values won't have the pattern applied.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_scientific(num_vals, pattern = "[\{x\}]")
-#> [1] "[3.24 &times; 10<sup class='gt_super'>&minus;4</sup>]"
-#> [2] "[8.65]"                                               
-#> [3] "[1.36 &times; 10<sup class='gt_super'>6</sup>]"       
-#> [4] "[&minus;5.90 &times; 10<sup class='gt_super'>4</sup>]"
+#> [1] "[3.24 × 10<sup style='font-size: 65\%;'>−4</sup>]"
+#> [2] "[8.65]"                                          
+#> [3] "[1.36 × 10<sup style='font-size: 65\%;'>6</sup>]" 
+#> [4] "[−5.90 × 10<sup style='font-size: 65\%;'>4</sup>]"
 #> [5] "NA"
 }\if{html}{\out{</div>}}
 }
