@@ -1337,13 +1337,13 @@ test_that("The `vec_fmt_fraction()` function works", {
     expect_equal(
       c(
         "0", "0", "0",
-        paste0("<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">9</span>"),
-        paste0("<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">4</span>"),
-        paste0("<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">2</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">5</span>"),
-        paste0("<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">2</span>"),
-        paste0("<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">3</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">5</span>"),
-        paste0("<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">3</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">4</span>"),
-        paste0("<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">8</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">9</span>"),
+        paste0("<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">9</span>"),
+        paste0("<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">4</span>"),
+        paste0("<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">2</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">5</span>"),
+        paste0("<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">2</span>"),
+        paste0("<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">3</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">5</span>"),
+        paste0("<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">3</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">4</span>"),
+        paste0("<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">8</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">9</span>"),
         "1", "1", "1"
       )
     )
@@ -1370,13 +1370,13 @@ test_that("The `vec_fmt_fraction()` function works", {
     expect_equal(
       c(
         "0", "0", "0",
-        paste0("\U02212", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">9</span>"),
-        paste0("\U02212", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">4</span>"),
-        paste0("\U02212", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">2</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">5</span>"),
-        paste0("\U02212", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">2</span>"),
-        paste0("\U02212", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">3</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">5</span>"),
-        paste0("\U02212", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">3</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">4</span>"),
-        paste0("\U02212", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">8</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">9</span>"),
+        paste0("\U02212", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">9</span>"),
+        paste0("\U02212", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">4</span>"),
+        paste0("\U02212", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">2</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">5</span>"),
+        paste0("\U02212", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">2</span>"),
+        paste0("\U02212", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">3</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">5</span>"),
+        paste0("\U02212", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">3</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">4</span>"),
+        paste0("\U02212", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">8</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">9</span>"),
         paste0("\U02212", "1"),
         paste0("\U02212", "1"),
         paste0("\U02212", "1")
@@ -1407,13 +1407,13 @@ test_that("The `vec_fmt_fraction()` function works", {
     expect_equal(
       c(
         "1", "1", "1",
-        paste0("1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">9</span>"),
-        paste0("1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">4</span>"),
-        paste0("1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">2</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">5</span>"),
-        paste0("1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">2</span>"),
-        paste0("1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">3</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">5</span>"),
-        paste0("1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">3</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">4</span>"),
-        paste0("1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">8</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">9</span>"),
+        paste0("1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">9</span>"),
+        paste0("1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">4</span>"),
+        paste0("1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">2</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">5</span>"),
+        paste0("1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">2</span>"),
+        paste0("1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">3</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">5</span>"),
+        paste0("1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">3</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">4</span>"),
+        paste0("1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">8</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">9</span>"),
         "2", "2", "2"
       )
     )
@@ -1444,13 +1444,13 @@ test_that("The `vec_fmt_fraction()` function works", {
         paste0("\U02212", "1"),
         paste0("\U02212", "1"),
         paste0("\U02212", "1"),
-        paste0("\U02212", "1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">9</span>"),
-        paste0("\U02212", "1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">4</span>"),
-        paste0("\U02212", "1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">2</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">5</span>"),
-        paste0("\U02212", "1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">2</span>"),
-        paste0("\U02212", "1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">3</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">5</span>"),
-        paste0("\U02212", "1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">3</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">4</span>"),
-        paste0("\U02212", "1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">8</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">9</span>"),
+        paste0("\U02212", "1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">9</span>"),
+        paste0("\U02212", "1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">4</span>"),
+        paste0("\U02212", "1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">2</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">5</span>"),
+        paste0("\U02212", "1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">2</span>"),
+        paste0("\U02212", "1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">3</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">5</span>"),
+        paste0("\U02212", "1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">3</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">4</span>"),
+        paste0("\U02212", "1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">8</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">9</span>"),
         paste0("\U02212", "2"),
         paste0("\U02212", "2"),
         paste0("\U02212", "2")
@@ -1761,8 +1761,8 @@ test_that("The `vec_fmt_fraction()` function works", {
   vec_fmt_fraction(c(5000.3, 10000.8), layout = "diagonal", output = "html") %>%
     expect_equal(
       c(
-        paste0("5,000",  "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">2</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">7</span>"),
-        paste0("10,000", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">4</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">5</span>")
+        paste0("5,000",  "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">2</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">7</span>"),
+        paste0("10,000", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">4</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">5</span>")
       )
     )
 
@@ -1791,8 +1791,8 @@ test_that("The `vec_fmt_fraction()` function works", {
   vec_fmt_fraction(c(5000.3, 10000.8), layout = "diagonal", sep_mark = ".", output = "html") %>%
     expect_equal(
       c(
-        paste0("5.000",  "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">2</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">7</span>"),
-        paste0("10.000", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">4</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">5</span>")
+        paste0("5.000",  "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">2</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">7</span>"),
+        paste0("10.000", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">4</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">5</span>")
       )
     )
 
@@ -1805,8 +1805,8 @@ test_that("The `vec_fmt_fraction()` function works", {
   vec_fmt_fraction(c(0.5, 1.5), layout = "diagonal", pattern = "a{x}b", output = "html") %>%
     expect_equal(
       c(
-        paste0("a",             "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">2</span>b"),
-        paste0("a1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size: 0.7em;line-height: 0.7em;vertical-align: 0.15em;\">", "\U02044", "</span><span style=\"font-size: 0.6em;line-height: 0.6em;vertical-align: -0.05em;\">2</span>b")
+        paste0("a",             "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">2</span>b"),
+        paste0("a1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">2</span>b")
       )
     )
 
