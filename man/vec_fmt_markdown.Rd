@@ -64,7 +64,7 @@ or LaTeX
 
 \section{Function ID}{
 
-14-13
+14-14
 }
 
 \seealso{
@@ -73,6 +73,7 @@ Other vector formatting functions:
 \code{\link{vec_fmt_currency}()},
 \code{\link{vec_fmt_datetime}()},
 \code{\link{vec_fmt_date}()},
+\code{\link{vec_fmt_duration}()},
 \code{\link{vec_fmt_engineering}()},
 \code{\link{vec_fmt_fraction}()},
 \code{\link{vec_fmt_integer}()},
