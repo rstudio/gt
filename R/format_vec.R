@@ -80,8 +80,8 @@
 #'   We can use the [info_locales()] function as a useful reference for all of
 #'   the locales that are supported.
 #' @param output The output style of the resulting character vector. This can
-#'   either be `"auto"` (the default), `"plain"`, `"html"`, `"latex"`, or
-#'   `"rtf"`.
+#'   either be `"auto"` (the default), `"plain"`, `"html"`, `"latex"`, `"rtf"`,
+#'   or `"word"`.
 #'
 #' @return A character vector.
 #'
@@ -177,7 +177,7 @@ vec_fmt_number <- function(
     dec_mark = ".",
     force_sign = FALSE,
     locale = NULL,
-    output = c("auto", "plain", "html", "latex", "rtf")
+    output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
   output <- match.arg(output)
@@ -322,7 +322,7 @@ vec_fmt_integer <- function(
     sep_mark = ",",
     force_sign = FALSE,
     locale = NULL,
-    output = c("auto", "plain", "html", "latex", "rtf")
+    output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
   vec_fmt_number(
@@ -443,7 +443,7 @@ vec_fmt_scientific <- function(
     dec_mark = ".",
     force_sign = FALSE,
     locale = NULL,
-    output = c("auto", "plain", "html", "latex", "rtf")
+    output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
   output <- match.arg(output)
@@ -584,7 +584,7 @@ vec_fmt_engineering <- function(
     dec_mark = ".",
     force_sign = FALSE,
     locale = NULL,
-    output = c("auto", "plain", "html", "latex", "rtf")
+    output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
   output <- match.arg(output)
@@ -751,7 +751,7 @@ vec_fmt_percent <- function(
     incl_space = FALSE,
     placement = "right",
     locale = NULL,
-    output = c("auto", "plain", "html", "latex", "rtf")
+    output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
   output <- match.arg(output)
@@ -893,7 +893,7 @@ vec_fmt_fraction <- function(
     pattern = "{x}",
     sep_mark = ",",
     locale = NULL,
-    output = c("auto", "plain", "html", "latex", "rtf")
+    output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
   output <- match.arg(output)
@@ -1081,7 +1081,7 @@ vec_fmt_currency <- function(
     placement = "left",
     incl_space = FALSE,
     locale = NULL,
-    output = c("auto", "plain", "html", "latex", "rtf")
+    output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
   output <- match.arg(output)
@@ -1244,7 +1244,7 @@ vec_fmt_bytes <- function(
     force_sign = FALSE,
     incl_space = TRUE,
     locale = NULL,
-    output = c("auto", "plain", "html", "latex", "rtf")
+    output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
   output <- match.arg(output)
@@ -1382,7 +1382,7 @@ vec_fmt_date <- function(
     x,
     date_style = 2,
     pattern = "{x}",
-    output = c("auto", "plain", "html", "latex", "rtf")
+    output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
   output <- match.arg(output)
@@ -1499,7 +1499,7 @@ vec_fmt_time <- function(
     x,
     time_style = 2,
     pattern = "{x}",
-    output = c("auto", "plain", "html", "latex", "rtf")
+    output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
   output <- match.arg(output)
@@ -1735,7 +1735,7 @@ vec_fmt_datetime <- function(
     format = NULL,
     tz = NULL,
     pattern = "{x}",
-    output = c("auto", "plain", "html", "latex", "rtf")
+    output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
   output <- match.arg(output)
@@ -1824,7 +1824,7 @@ vec_fmt_datetime <- function(
 #' @export
 vec_fmt_markdown <- function(
     x,
-    output = c("auto", "plain", "html", "latex", "rtf")
+    output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
   output <- match.arg(output)
