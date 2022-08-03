@@ -635,8 +635,8 @@ context_exp_marks <- function(context) {
     html = c(" \U000D7 10<sup style='font-size: 65%;'>", "</sup>"),
     latex = c(" \\times 10^{", "}"),
     rtf = c(" \\'d7 10{\\super ", "}"),
-    word = c(" x 10^", ""),
-    c(" x 10(", ")")
+    word = c(" \U000D7 10^", ""),
+    c(" \U000D7 10^", "")
   )
 }
 
