@@ -1879,9 +1879,8 @@ determine_output_format <- function() {
   # only if it is not present
   if (!requireNamespace("knitr", quietly = TRUE)) {
 
-    cli::cli_abort(
     cli::cli_abort(c(
-      "Automatically detecting the output context with a `vec_*()` function
+      "Automatically detecting the output context with `output = \"auto\"`
       requires the knitr package.",
       "*" = "It can be installed with `install.packages(\"knitr\")`."
     ))
