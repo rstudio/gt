@@ -17,10 +17,11 @@ filter_table_to_value <- function(
   filtered_tbl <- dplyr::filter(table, !!!filter_args_enquos)
 
   if (nrow(filtered_tbl) != 1) {
+
     cli::cli_abort(c(
       "Internal error in `gt:::filter_table_to_row()`.",
       "*" = "The filtered table doesn't result in a table of exactly one row.",
-      "*" = "Found {nrow(filtered_tbl)) rows."
+      "*" = "Found {nrow(filtered_tbl)} rows."
     ))
   }
 
