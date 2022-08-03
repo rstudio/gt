@@ -832,6 +832,8 @@ create_body_component_h <- function(data) {
   # Create a default vector of row span values for group labels as a column
   row_span_vals <- rep_len(list(NULL), n_cols_total)
 
+  current_group_id <- integer(0)
+
   body_rows <-
     lapply(
       seq_len(n_rows),
@@ -847,6 +849,8 @@ create_body_component_h <- function(data) {
 
         group_id <- group_info[["group_id"]]
         group_label <- group_info[["group_label"]]
+
+        if (!is.null(group_id)) current_group_id <<- group_id
 
         group_heading_row_at_i <- !is.null(group_id) && !("group_label" %in% stub_layout)
 
@@ -980,17 +984,14 @@ create_body_component_h <- function(data) {
                           "\" ",
                           "scope=\"",
                           ifelse(!is.null(row_span) && row_span > 1, "rowgroup", "row"),
-                          "\" ",
-                          "headers=\"",
-                          group_id,
                           "\""
                         )
                       } else {
                         paste0(
                           "td ",
                           "headers=\"",
-                          gsub("(^[[:space:]]*)|([[:space:]]*$)", "", paste(row_id, group_id, col_id)),
-                          "\" "
+                          gsub("(^[[:space:]]*)|([[:space:]]*$)", "", paste(row_id, current_group_id, col_id)),
+                          "\""
                         )
                       },
                       if (is.null(row_span)) {
