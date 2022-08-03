@@ -832,7 +832,7 @@ create_body_component_h <- function(data) {
   # Create a default vector of row span values for group labels as a column
   row_span_vals <- rep_len(list(NULL), n_cols_total)
 
-  current_group_id <- integer(0)
+  current_group_id <- character(0)
 
   body_rows <-
     lapply(
