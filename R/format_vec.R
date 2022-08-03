@@ -783,6 +783,186 @@ vec_fmt_percent <- function(
   )
 }
 
+#' Format a vector as parts-per quantities
+#'
+#' @description
+#' With numeric values in a vector, we can format the values so that they
+#' are rendered as *per mille*, *ppm*, *ppb*, etc., quantities. The following
+#' list of keywords (with associated naming and scaling factors) is available to
+#' use within `vec_fmt_partsper()`:
+#'
+#' - `"per-mille"`: Per mille, (1 part in `1,000`)
+#' - `"per-myriad"`: Per myriad, (1 part in `10,000`)
+#' - `"pcm"`: Per cent mille (1 part in `100,000`)
+#' - `"ppm"`: Parts per million, (1 part in `1,000,000`)
+#' - `"ppb"`: Parts per billion, (1 part in `1,000,000,000`)
+#' - `"ppt"`: Parts per trillion, (1 part in `1,000,000,000,000`)
+#' - `"ppq"`: Parts per quadrillion, (1 part in `1,000,000,000,000,000`)
+#'
+#' The function provides a lot of formatting control and we can use the
+#' following options:
+#'
+#' - custom symbol/units: we can override the automatic symbol or units display
+#' with our own choice as the situation warrants
+#' - decimals: choice of the number of decimal places, option to drop
+#' trailing zeros, and a choice of the decimal symbol
+#' - digit grouping separators: options to enable/disable digit separators
+#' and provide a choice of separator symbol
+#' - value scaling toggle: choose to disable automatic value scaling in the
+#' situation that values are already scaled coming in (and just require the
+#' appropriate symbol or unit display)
+#' - pattern: option to use a text pattern for decoration of the formatted
+#' values
+#' - locale-based formatting: providing a locale ID will result in number
+#' formatting specific to the chosen locale
+#'
+#' @inheritParams vec_fmt_number
+#' @param to_units A keyword that signifies the desired output quantity. This
+#'   can be any from the following set: `"per-mille"`, `"per-myriad"`, `"pcm"`,
+#'   `"ppm"`, `"ppb"`, `"ppt"`, or `"ppq"`.
+#' @param symbol The symbol/units to use for the quantity. By default, this is
+#'   set to `"auto"` and **gt** will choose the appropriate symbol based on the
+#'   `to_units` keyword and the output context. However, this can be changed by
+#'   supplying a string (e.g, using `symbol = "ppbV"` when `to_units = "ppb"`).
+#' @param scale_values Should the values be scaled through multiplication
+#'   according to the keyword set in `to_units`? By default this is `TRUE` since
+#'   the expectation is that normally values are proportions. Setting to `FALSE`
+#'   signifies that the values are already scaled and require only the
+#'   appropriate symbol/units when formatted.
+#' @param incl_space An option for whether to include a space between the value
+#'   and the symbol/units. The default is `"auto"` which provides spacing
+#'   dependent on the mark itself. This can be directly controlled by using
+#'   either `TRUE` or `FALSE`.
+#'
+#' @return A character vector.
+#'
+#' @section Examples:
+#'
+#' Let's create a numeric vector for the next few examples:
+#'
+#' ```r
+#' num_vals <- c(10^(-3:-5), NA)
+#' ```
+#'
+#' Using `vec_fmt_partsper()` with the default options will create a character
+#' vector where the resultant per millle values have two decimal places and `NA`
+#' values will render as `"NA"`. The rendering context will be autodetected
+#' unless specified in the `output` argument (here, it is of the `"plain"`
+#' output type).
+#'
+#' ```r
+#' vec_fmt_partsper(num_vals)
+#' ```
+#' ```
+#' #> [1] "1.00‰" "0.10‰" "0.01‰" "NA"
+#' ```
+#'
+#' We can change the output units to a different measure. If ppm units are
+#' desired then `to_units = "ppm"` can be used.
+#'
+#' ```r
+#' vec_fmt_partsper(num_vals, to_units = "ppm")
+#' ```
+#' ```
+#' #> [1] "1,000.00 ppm" "100.00 ppm" "10.00 ppm" "NA"
+#' ```
+#'
+#' We can change the decimal mark to a comma, and we have to be sure to change
+#' the digit separator mark from the default comma to something else (a period
+#' works here):
+#'
+#' ```r
+#' vec_fmt_partsper(num_vals, to_units = "ppm", sep_mark = ".", dec_mark = ",")
+#' ```
+#' ```
+#' #> [1] "1.000,00 ppm" "100,00 ppm" "10,00 ppm" "NA"
+#' ```
+#'
+#' If we are formatting for a different locale, we could supply the locale ID
+#' and let **gt** handle these locale-specific formatting options:
+#'
+#' ```r
+#' vec_fmt_partsper(num_vals, to_units = "ppm", locale = "es")
+#' ```
+#' ```
+#' #> [1] "1.000,00 ppm" "100,00 ppm" "10,00 ppm" "NA"
+#' ```
+#'
+#' As a last example, one can wrap the values in a pattern with the `pattern`
+#' argument. Note here that `NA` values won't have the pattern applied.
+#'
+#' ```r
+#' vec_fmt_partsper(num_vals, to_units = "ppm", pattern = "{x}V")
+#' ```
+#' ```
+#' #> [1] "1,000.00 ppmV" "100.00 ppmV" "10.00 ppmV" "NA"
+#' ```
+#'
+#' @family vector formatting functions
+#' @section Function ID:
+#' 14-6
+#'
+#' @export
+vec_fmt_partsper <- function(
+    x,
+    to_units = c("per-mille", "per-myriad", "pcm", "ppm", "ppb", "ppt", "ppq"),
+    symbol = "auto",
+    decimals = 2,
+    drop_trailing_zeros = FALSE,
+    drop_trailing_dec_mark = TRUE,
+    scale_values = TRUE,
+    use_seps = TRUE,
+    pattern = "{x}",
+    sep_mark = ",",
+    dec_mark = ".",
+    force_sign = FALSE,
+    incl_space = "auto",
+    locale = NULL,
+    output = c("auto", "plain", "html", "latex", "rtf", "word")
+) {
+
+  # Ensure that `output` is matched correctly to one option
+  output <- match.arg(output)
+
+  if (output == "auto") {
+    output <- determine_output_format()
+  }
+
+  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
+  stop_if_not_vector(x)
+
+  # Ensure that `to_units` is matched correctly to one option
+  to_units <- match.arg(to_units)
+
+  # Stop function if class of `x` is incompatible with the formatting
+  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
+    cli::cli_abort(
+      "The `vec_fmt_partsper()` function can only be used with numeric vectors."
+    )
+  }
+
+  render_as_vector(
+    fmt_partsper(
+      gt(dplyr::tibble(x = x)),
+      columns = "x", rows = everything(),
+      to_units = to_units,
+      symbol = symbol,
+      decimals = decimals,
+      drop_trailing_zeros = drop_trailing_zeros,
+      drop_trailing_dec_mark = drop_trailing_dec_mark,
+      scale_values = scale_values,
+      use_seps = use_seps,
+      pattern = pattern,
+      sep_mark = sep_mark,
+      dec_mark = dec_mark,
+      force_sign = force_sign,
+      incl_space = incl_space,
+      locale = locale
+    ),
+    output = output
+  )
+}
+
 #' Format a vector as mixed fractions
 #'
 #' @description
