@@ -249,9 +249,8 @@ reference:
   - title: Vector Formatting Functions
     desc: >
       Why should columns have all the formatting fun? If you have vectors in
-      need of formatting, we have a set of `vec_fmt_*()` functions that have been
-      adapted from the corresponding `fmt_*()` functions. You can choose which
-      output format you'd like (either HTML, LaTeX, or RTF) with each of these.
+      need of formatting, we have a set of `vec_fmt_*()` functions that have
+      been adapted from the corresponding `fmt_*()` functions.
     contents:
     - vec_fmt_number
     - vec_fmt_integer
