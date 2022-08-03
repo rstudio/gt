@@ -107,9 +107,9 @@ or \code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the
 A character vector.
 }
 \description{
-With numeric values in a vector, we can perform number-based
-formatting so that the values are rendered to a character vector with some
-level of precision. The following major options are available:
+With numeric values in a vector, we can perform number-based formatting so
+that the values are rendered to a character vector with some level of
+precision. The following major options are available:
 \itemize{
 \item decimals: choice of the number of decimal places, option to drop
 trailing zeros, and a choice of the decimal symbol
