@@ -949,12 +949,10 @@ create_body_component_h <- function(data) {
         if (stub_width == 0) {
           row_id_i <- rep("", length(col_names_id_i))
         } else if (stub_width == 1) {
-          row_id_i <- rep(col_names_id_i[1], length(col_names_id_i))
+          row_id_i <- rep(paste0(col_names_id_i[1], "_", i), length(col_names_id_i))
         } else if (stub_width == 2) {
-          row_id_i <- rep(col_names_id_i[2], length(col_names_id_i))
+          row_id_i <- rep(paste0(col_names_id_i[2], "_", i), length(col_names_id_i))
         }
-
-        #row_id_i <- col_names_id_i
 
         body_row <-
           htmltools::tags$tr(
