@@ -980,9 +980,6 @@ create_body_component_h <- function(data) {
                           "\" ",
                           "scope=\"",
                           ifelse(!is.null(row_span) && row_span > 1, "rowgroup", "row"),
-                          "\" ",
-                          "headers=\"",
-                          group_id,
                           "\""
                         )
                       } else {
