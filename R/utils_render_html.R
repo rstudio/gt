@@ -990,7 +990,7 @@ create_body_component_h <- function(data) {
                         paste0(
                           "td ",
                           "headers=\"",
-                          gsub("(^[[:space:]]*)|([[:space:]]*$)", "", paste(row_id, current_group_id, col_id)),
+                          gsub("(^[[:space:]]*)|([[:space:]]*$)", "", paste(current_group_id, row_id, col_id)),
                           "\""
                         )
                       },
