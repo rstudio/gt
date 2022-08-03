@@ -257,6 +257,7 @@ reference:
     - vec_fmt_scientific
     - vec_fmt_engineering
     - vec_fmt_percent
+    - vec_fmt_partsper
     - vec_fmt_fraction
     - vec_fmt_currency
     - vec_fmt_bytes
