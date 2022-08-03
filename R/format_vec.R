@@ -1880,10 +1880,11 @@ determine_output_format <- function() {
   if (!requireNamespace("knitr", quietly = TRUE)) {
 
     cli::cli_abort(
+    cli::cli_abort(c(
       "Automatically detecting the output context with a `vec_*()` function
       requires the knitr package.",
       "*" = "It can be installed with `install.packages(\"knitr\")`."
-    )
+    ))
   }
 
   if (knitr_is_rtf_output()) {
