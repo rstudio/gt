@@ -90,8 +90,12 @@ test_that("the `fmt_scientific()` function works correctly", {
        fmt_scientific(columns = "num_1", decimals = 2) %>%
        render_formats_test("default"))[["num_1"]],
     c(
-      "1.84 x 10(3)", "2.76 x 10(3)", "9.37 x 10(2)",
-      "6.43 x 10(2)", "2.23", "0.00", "-2.32 x 10(1)"
+      "1.84 \U000D7 10^3",
+      "2.76 \U000D7 10^3",
+      "9.37 \U000D7 10^2",
+      "6.43 \U000D7 10^2",
+      "2.23", "0.00",
+      "-2.32 \U000D7 10^1"
     )
   )
 
@@ -120,12 +124,12 @@ test_that("the `fmt_scientific()` function works correctly", {
        fmt_scientific(columns = "num_1", decimals = 5) %>%
        render_formats_test("default"))[["num_1"]],
     c(
-      "1.83623 x 10(3)",
-      "2.76339 x 10(3)",
-      "9.37290 x 10(2)",
-      "6.43000 x 10(2)",
+      "1.83623 \U000D7 10^3",
+      "2.76339 \U000D7 10^3",
+      "9.37290 \U000D7 10^2",
+      "6.43000 \U000D7 10^2",
       "2.23200", "0.00000",
-      "-2.32400 x 10(1)"
+      "-2.32400 \U000D7 10^1"
     )
   )
 
@@ -158,8 +162,12 @@ test_that("the `fmt_scientific()` function works correctly", {
                       sep_mark = ".", dec_mark = ",") %>%
        render_formats_test("default"))[["num_1"]],
     c(
-      "1,84 x 10(3)", "2,76 x 10(3)", "9,37 x 10(2)",
-      "6,43 x 10(2)", "2,23", "0,00", "-2,32 x 10(1)"
+      "1,84 \U000D7 10^3",
+      "2,76 \U000D7 10^3",
+      "9,37 \U000D7 10^2",
+      "6,43 \U000D7 10^2",
+      "2,23", "0,00",
+      "-2,32 \U000D7 10^1"
     )
   )
 
@@ -188,9 +196,13 @@ test_that("the `fmt_scientific()` function works correctly", {
        fmt_scientific(columns = "num_1", decimals = 4, scale_by = 1/1000) %>%
        render_formats_test("default"))[["num_1"]],
     c(
-      "1.8362", "2.7634", "9.3729 x 10(-1)",
-      "6.4300 x 10(-1)", "2.2320 x 10(-3)",
-      "0.0000", "-2.3240 x 10(-2)"
+      "1.8362",
+      "2.7634",
+      "9.3729 \U000D7 10^-1",
+      "6.4300 \U000D7 10^-1",
+      "2.2320 \U000D7 10^-3",
+      "0.0000",
+      "-2.3240 \U000D7 10^-2"
     )
   )
 
@@ -219,8 +231,12 @@ test_that("the `fmt_scientific()` function works correctly", {
        fmt_scientific(columns = "num_1", decimals = 2, pattern = "a {x} b") %>%
        render_formats_test("default"))[["num_1"]],
     c(
-      "a 1.84 x 10(3) b", "a 2.76 x 10(3) b", "a 9.37 x 10(2) b",
-      "a 6.43 x 10(2) b", "a 2.23 b", "a 0.00 b", "a -2.32 x 10(1) b"
+      "a 1.84 \U000D7 10^3 b",
+      "a 2.76 \U000D7 10^3 b",
+      "a 9.37 \U000D7 10^2 b",
+      "a 6.43 \U000D7 10^2 b",
+      "a 2.23 b", "a 0.00 b",
+      "a -2.32 \U000D7 10^1 b"
     )
   )
 
@@ -368,12 +384,16 @@ test_that("`fmt_scientific()` can handle extremely large and small values", {
        fmt_scientific(columns = "num", decimals = 5) %>%
        render_formats_test("default"))[["num"]],
     c(
-      "-1.50000 x 10(200)", "-1.50000 x 10(100)",
+      "-1.50000 \U000D7 10^200",
+      "-1.50000 \U000D7 10^100",
       "-2.50000",
-      "-3.50000 x 10(-100)", "-3.50000 x 10(-200)",
-      "1.50000 x 10(-200)", "1.50000 x 10(-100)",
+      "-3.50000 \U000D7 10^-100",
+      "-3.50000 \U000D7 10^-200",
+      "1.50000 \U000D7 10^-200",
+      "1.50000 \U000D7 10^-100",
       "2.50000",
-      "3.50000 x 10(100)", "3.50000 x 10(200)"
+      "3.50000 \U000D7 10^100",
+      "3.50000 \U000D7 10^200"
     )
   )
 

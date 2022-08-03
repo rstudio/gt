@@ -472,14 +472,14 @@ test_that("the `fmt_fraction()` function produces reproducible results for HTML 
   fraction_tbl_diagonal <-
     input_data %>%
     gt(rowname_col = "x", groupname_col = "category") %>%
-    fmt_fraction(columns = low, accuracy = "low") %>%
-    fmt_fraction(columns = med, accuracy = "med") %>%
-    fmt_fraction(columns = high, accuracy = "high") %>%
-    fmt_fraction(columns = halves, accuracy = 2, simplify = FALSE) %>%
-    fmt_fraction(columns = quarters, accuracy = 4, simplify = FALSE) %>%
-    fmt_fraction(columns = eighths, accuracy = 8, simplify = FALSE) %>%
-    fmt_fraction(columns = sixteenths, accuracy = 16, simplify = FALSE) %>%
-    fmt_fraction(columns = hundredths, accuracy = 100, simplify = FALSE) %>%
+    fmt_fraction(columns = low, accuracy = "low", layout = "diagonal") %>%
+    fmt_fraction(columns = med, accuracy = "med", layout = "diagonal") %>%
+    fmt_fraction(columns = high, accuracy = "high", layout = "diagonal") %>%
+    fmt_fraction(columns = halves, accuracy = 2, simplify = FALSE, layout = "diagonal") %>%
+    fmt_fraction(columns = quarters, accuracy = 4, simplify = FALSE, layout = "diagonal") %>%
+    fmt_fraction(columns = eighths, accuracy = 8, simplify = FALSE, layout = "diagonal") %>%
+    fmt_fraction(columns = sixteenths, accuracy = 16, simplify = FALSE, layout = "diagonal") %>%
+    fmt_fraction(columns = hundredths, accuracy = 100, simplify = FALSE, layout = "diagonal") %>%
     cols_width(everything() ~ px(100)) %>%
     opt_all_caps()
 
@@ -571,7 +571,7 @@ test_that("`fmt_fraction()` can render values in the Indian numbering system", {
   # Format the `num` column as fractions using the Indian numbering system
   expect_equal(
     (tab %>%
-       fmt_fraction(columns = num, system = "ind") %>%
+       fmt_fraction(columns = num, layout = "diagonal", system = "ind") %>%
        render_formats_test(context = "latex"))[["num"]],
     c(
       "$50,00,000$", "$1,000$", "$10$", "$12,345$", "$1,234\\, {{}^{1}\\!/_{2}}$",

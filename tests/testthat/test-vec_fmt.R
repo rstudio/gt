@@ -336,9 +336,6 @@ test_that("The `vec_fmt_number()` function works", {
       )
     )
 
-  expect_equal(vec_fmt_number(numeric(0)), character(0))
-  expect_equal(vec_fmt_number(integer(0)), character(0))
-
   expect_error(vec_fmt_number(letters))
   expect_error(vec_fmt_number(TRUE))
   expect_error(vec_fmt_number(list(1, 2, 3)))
@@ -475,9 +472,6 @@ test_that("The `vec_fmt_integer()` function works", {
         "NA", "+Inf"
       )
     )
-
-  expect_equal(vec_fmt_integer(numeric(0)), character(0))
-  expect_equal(vec_fmt_integer(integer(0)), character(0))
 
   expect_error(vec_fmt_integer(letters))
   expect_error(vec_fmt_integer(TRUE))
@@ -700,9 +694,6 @@ test_that("The `vec_fmt_scientific()` function works", {
         "+2.00 \\'d7 10{\\super 6}", "+2.50 \\'d7 10{\\super 6}", "NA"
       )
     )
-
-  expect_equal(vec_fmt_scientific(numeric(0)), character(0))
-  expect_equal(vec_fmt_scientific(integer(0)), character(0))
 
   expect_error(vec_fmt_scientific(letters))
   expect_error(vec_fmt_scientific(TRUE))
@@ -986,9 +977,6 @@ test_that("The `vec_fmt_engineering()` function works", {
         "+2.50 \\'d7 10{\\super 6}", "NA", "+Inf."
       )
     )
-
-  expect_equal(vec_fmt_engineering(numeric(0)), character(0))
-  expect_equal(vec_fmt_engineering(integer(0)), character(0))
 
   expect_error(vec_fmt_engineering(letters))
   expect_error(vec_fmt_engineering(TRUE))
@@ -1337,9 +1325,6 @@ test_that("The `vec_fmt_percent()` function works", {
       )
     )
 
-  expect_equal(vec_fmt_percent(numeric(0)), character(0))
-  expect_equal(vec_fmt_percent(integer(0)), character(0))
-
   expect_error(vec_fmt_percent(letters))
   expect_error(vec_fmt_percent(TRUE))
   expect_error(vec_fmt_percent(list(1, 2, 3)))
@@ -1348,7 +1333,7 @@ test_that("The `vec_fmt_percent()` function works", {
 
 test_that("The `vec_fmt_fraction()` function works", {
 
-  vec_fmt_fraction(range_0_1, output = "html") %>%
+  vec_fmt_fraction(range_0_1, layout = "diagonal", output = "html") %>%
     expect_equal(
       c(
         "0", "0", "0", "<span class=\"gt_fraction_numerator\">1</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">9</span>",
@@ -1362,7 +1347,7 @@ test_that("The `vec_fmt_fraction()` function works", {
       )
     )
 
-  vec_fmt_fraction(range_0_1, output = "latex") %>%
+  vec_fmt_fraction(range_0_1, layout = "diagonal", output = "latex") %>%
     expect_equal(
       c(
         "$0$", "$0$", "$0$", "${{}^{1}\\!/_{9}}$", "${{}^{1}\\!/_{4}}$",
@@ -1371,7 +1356,7 @@ test_that("The `vec_fmt_fraction()` function works", {
       )
     )
 
-  vec_fmt_fraction(range_0_1, output = "rtf") %>%
+  vec_fmt_fraction(range_0_1, layout = "diagonal", output = "rtf") %>%
     expect_equal(
       c(
         "0", "0", "0", "{\\super 1}/{\\sub 9}", "{\\super 1}/{\\sub 4}",
@@ -1380,7 +1365,7 @@ test_that("The `vec_fmt_fraction()` function works", {
       )
     )
 
-  vec_fmt_fraction(range_0_1_minus, output = "html") %>%
+  vec_fmt_fraction(range_0_1_minus, layout = "diagonal", output = "html") %>%
     expect_equal(
       c(
         "0", "0", "0",
@@ -1397,7 +1382,7 @@ test_that("The `vec_fmt_fraction()` function works", {
       )
     )
 
-  vec_fmt_fraction(range_0_1_minus, output = "latex") %>%
+  vec_fmt_fraction(range_0_1_minus, layout = "diagonal", output = "latex") %>%
     expect_equal(
       c(
         "$0$", "$0$", "$0$", "$-{{}^{1}\\!/_{9}}$", "$-{{}^{1}\\!/_{4}}$",
@@ -1407,7 +1392,7 @@ test_that("The `vec_fmt_fraction()` function works", {
       )
     )
 
-  vec_fmt_fraction(range_0_1_minus, output = "rtf") %>%
+  vec_fmt_fraction(range_0_1_minus, layout = "diagonal", output = "rtf") %>%
     expect_equal(
       c(
         "0", "0", "0", "-{\\super 1}/{\\sub 9}", "-{\\super 1}/{\\sub 4}",
@@ -1417,7 +1402,7 @@ test_that("The `vec_fmt_fraction()` function works", {
       )
     )
 
-  vec_fmt_fraction(range_1_2, output = "html") %>%
+  vec_fmt_fraction(range_1_2, layout = "diagonal", output = "html") %>%
     expect_equal(
       c(
         "1", "1", "1",
@@ -1432,7 +1417,7 @@ test_that("The `vec_fmt_fraction()` function works", {
       )
     )
 
-  vec_fmt_fraction(range_1_2, output = "latex") %>%
+  vec_fmt_fraction(range_1_2, layout = "diagonal", output = "latex") %>%
     expect_equal(
       c(
         "$1$", "$1$", "$1$", "$1\\, {{}^{1}\\!/_{9}}$", "$1\\, {{}^{1}\\!/_{4}}$",
@@ -1442,7 +1427,7 @@ test_that("The `vec_fmt_fraction()` function works", {
       )
     )
 
-  vec_fmt_fraction(range_1_2, output = "rtf") %>%
+  vec_fmt_fraction(range_1_2, layout = "diagonal", output = "rtf") %>%
     expect_equal(
       c(
         "1", "1", "1", "1{\\super 1}/{\\sub 9}", "1{\\super 1}/{\\sub 4}",
@@ -1452,7 +1437,7 @@ test_that("The `vec_fmt_fraction()` function works", {
       )
     )
 
-  vec_fmt_fraction(range_1_2_minus, output = "html") %>%
+  vec_fmt_fraction(range_1_2_minus, layout = "diagonal", output = "html") %>%
     expect_equal(
       c(
         paste0("\U02212", "1"),
@@ -1471,7 +1456,7 @@ test_that("The `vec_fmt_fraction()` function works", {
       )
     )
 
-  vec_fmt_fraction(range_1_2_minus, output = "latex") %>%
+  vec_fmt_fraction(range_1_2_minus, layout = "diagonal", output = "latex") %>%
     expect_equal(
       c(
         "$-1$", "$-1$", "$-1$", "$-1\\, {{}^{1}\\!/_{9}}$", "$-1\\, {{}^{1}\\!/_{4}}$",
@@ -1481,7 +1466,7 @@ test_that("The `vec_fmt_fraction()` function works", {
       )
     )
 
-  vec_fmt_fraction(range_1_2_minus, output = "rtf") %>%
+  vec_fmt_fraction(range_1_2_minus, layout = "diagonal", output = "rtf") %>%
     expect_equal(
       c(
         "-1", "-1", "-1", "-1{\\super 1}/{\\sub 9}", "-1{\\super 1}/{\\sub 4}",
@@ -1772,7 +1757,7 @@ test_that("The `vec_fmt_fraction()` function works", {
       )
     )
 
-  vec_fmt_fraction(c(5000.3, 10000.8), output = "html") %>%
+  vec_fmt_fraction(c(5000.3, 10000.8), layout = "diagonal", output = "html") %>%
     expect_equal(
       c(
         "5,000&#8239;<span class=\"gt_fraction_numerator\">2</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">7</span>",
@@ -1780,10 +1765,10 @@ test_that("The `vec_fmt_fraction()` function works", {
       )
     )
 
-  vec_fmt_fraction(c(5000.3, 10000.8), output = "latex") %>%
+  vec_fmt_fraction(c(5000.3, 10000.8), layout = "diagonal", output = "latex") %>%
     expect_equal(c("$5,000\\, {{}^{2}\\!/_{7}}$", "$10,000\\, {{}^{4}\\!/_{5}}$"))
 
-  vec_fmt_fraction(c(5000.3, 10000.8), output = "rtf") %>%
+  vec_fmt_fraction(c(5000.3, 10000.8), layout = "diagonal", output = "rtf") %>%
     expect_equal(c("5,000{\\super 2}/{\\sub 7}", "10,000{\\super 4}/{\\sub 5}"))
 
   # TODO: With `use_seps = FALSE` we get the following warning that requires
@@ -1802,7 +1787,7 @@ test_that("The `vec_fmt_fraction()` function works", {
   # vec_fmt_fraction(c(5000.3, 10000.8), use_seps = FALSE, output = "rtf") %>%
   #   expect_equal(c())
 
-  vec_fmt_fraction(c(5000.3, 10000.8), sep_mark = ".", output = "html") %>%
+  vec_fmt_fraction(c(5000.3, 10000.8), layout = "diagonal", sep_mark = ".", output = "html") %>%
     expect_equal(
       c(
         "5.000&#8239;<span class=\"gt_fraction_numerator\">2</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">7</span>",
@@ -1810,13 +1795,13 @@ test_that("The `vec_fmt_fraction()` function works", {
       )
     )
 
-  vec_fmt_fraction(c(5000.3, 10000.8), sep_mark = ".", output = "latex") %>%
+  vec_fmt_fraction(c(5000.3, 10000.8), layout = "diagonal", sep_mark = ".", output = "latex") %>%
     expect_equal(c("$5.000\\, {{}^{2}\\!/_{7}}$", "$10.000\\, {{}^{4}\\!/_{5}}$"))
 
-  vec_fmt_fraction(c(5000.3, 10000.8), sep_mark = ".", output = "rtf") %>%
+  vec_fmt_fraction(c(5000.3, 10000.8), layout = "diagonal", sep_mark = ".", output = "rtf") %>%
     expect_equal(c("5.000{\\super 2}/{\\sub 7}", "10.000{\\super 4}/{\\sub 5}"))
 
-  vec_fmt_fraction(c(0.5, 1.5), pattern = "a{x}b", output = "html") %>%
+  vec_fmt_fraction(c(0.5, 1.5), layout = "diagonal", pattern = "a{x}b", output = "html") %>%
     expect_equal(
       c(
         "a<span class=\"gt_fraction_numerator\">1</span><span class=\"gt_slash_mark\">&frasl;</span><span class=\"gt_fraction_denominator\">2</span>b",
@@ -1824,28 +1809,28 @@ test_that("The `vec_fmt_fraction()` function works", {
       )
     )
 
-  vec_fmt_fraction(c(0.5, 1.5), pattern = "a{x}b", output = "latex") %>%
+  vec_fmt_fraction(c(0.5, 1.5), layout = "diagonal", pattern = "a{x}b", output = "latex") %>%
     expect_equal(c("a${{}^{1}\\!/_{2}}$b", "a$1\\, {{}^{1}\\!/_{2}}$b"))
 
-  vec_fmt_fraction(c(0.5, 1.5), pattern = "a{x}b", output = "rtf") %>%
+  vec_fmt_fraction(c(0.5, 1.5), layout = "diagonal", pattern = "a{x}b", output = "rtf") %>%
     expect_equal(c("a{\\super 1}/{\\sub 2}b", "a1{\\super 1}/{\\sub 2}b"))
 
-  vec_fmt_fraction(c(0.5, 1.5), pattern = "a{x}b", layout = "inline", output = "html") %>%
+  vec_fmt_fraction(c(0.5, 1.5), layout = "inline", pattern = "a{x}b", output = "html") %>%
     expect_equal(c("a1/2b", "a1 1/2b"))
 
-  vec_fmt_fraction(c(0.5, 1.5), pattern = "a{x}b", layout = "inline", output = "latex") %>%
+  vec_fmt_fraction(c(0.5, 1.5), layout = "inline", pattern = "a{x}b", output = "latex") %>%
     expect_equal(c("a$1/2$b", "a$1\\ 1/2$b"))
 
-  vec_fmt_fraction(c(0.5, 1.5), pattern = "a{x}b", layout = "inline", output = "rtf") %>%
+  vec_fmt_fraction(c(0.5, 1.5), layout = "inline", pattern = "a{x}b", output = "rtf") %>%
     expect_equal(c("a1/2b", "a1 1/2b"))
 
-  vec_fmt_fraction(exact_numbers, output = "html") %>%
+  vec_fmt_fraction(exact_numbers, layout = "diagonal", output = "html") %>%
     expect_equal(c(paste0("\U02212", "1"), "0", "1"))
 
-  vec_fmt_fraction(exact_numbers, output = "latex") %>%
+  vec_fmt_fraction(exact_numbers, layout = "diagonal", output = "latex") %>%
     expect_equal(c("$-1$", "$0$", "$1$"))
 
-  vec_fmt_fraction(exact_numbers, output = "rtf") %>%
+  vec_fmt_fraction(exact_numbers, layout = "diagonal", output = "rtf") %>%
     expect_equal(c("-1", "0", "1"))
 
   vec_fmt_fraction(exact_numbers, layout = "inline", output = "html") %>%
@@ -1857,13 +1842,13 @@ test_that("The `vec_fmt_fraction()` function works", {
   vec_fmt_fraction(exact_numbers, layout = "inline", output = "rtf") %>%
     expect_equal(c("-1", "0", "1"))
 
-  vec_fmt_fraction(not_numbers, output = "html") %>%
+  vec_fmt_fraction(not_numbers, layout = "diagonal", output = "html") %>%
     expect_equal(c("NA", "NaN", "Inf", "-Inf"))
 
-  vec_fmt_fraction(not_numbers, output = "latex") %>%
+  vec_fmt_fraction(not_numbers, layout = "diagonal", output = "latex") %>%
     expect_equal(c("NA", "NaN", "$Inf$", "$-Inf$"))
 
-  vec_fmt_fraction(not_numbers, output = "rtf") %>%
+  vec_fmt_fraction(not_numbers, layout = "diagonal", output = "rtf") %>%
     expect_equal(c("NA", "NaN", "Inf", "-Inf"))
 
   vec_fmt_fraction(not_numbers, layout = "inline", output = "html") %>%
@@ -1874,9 +1859,6 @@ test_that("The `vec_fmt_fraction()` function works", {
 
   vec_fmt_fraction(not_numbers, layout = "inline", output = "rtf") %>%
     expect_equal(c("NA", "NaN", "Inf", "-Inf"))
-
-  expect_equal(vec_fmt_fraction(numeric(0)), character(0))
-  expect_equal(vec_fmt_fraction(integer(0)), character(0))
 
   expect_error(vec_fmt_fraction(letters))
   expect_error(vec_fmt_fraction(c(1, 2, 3), accuracy = 0))
@@ -2367,9 +2349,6 @@ test_that("The `vec_fmt_currency()` function works", {
         "&#165;Inf"
       )
     )
-
-  expect_equal(vec_fmt_currency(numeric(0)), character(0))
-  expect_equal(vec_fmt_currency(integer(0)), character(0))
 
   expect_error(vec_fmt_currency(c(1, 2), currency = "NOTREAL"))
   expect_error(vec_fmt_currency(letters))
@@ -2958,9 +2937,6 @@ test_that("The `vec_fmt_bytes()` function works", {
         "2B", "NA", "InfYB"
       )
     )
-
-  expect_equal(vec_fmt_bytes(numeric(0)), character(0))
-  expect_equal(vec_fmt_bytes(integer(0)), character(0))
 
   expect_error(vec_fmt_bytes(c(1, 2), standard = "NONE"))
   expect_error(vec_fmt_bytes(letters))
