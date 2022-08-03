@@ -181,6 +181,7 @@ vec_fmt_number <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
+  # Ensure that `output` is matched correctly to one option
   output <- match.arg(output)
 
   if (output == "auto") {
@@ -447,6 +448,7 @@ vec_fmt_scientific <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
+  # Ensure that `output` is matched correctly to one option
   output <- match.arg(output)
 
   if (output == "auto") {
@@ -583,6 +585,7 @@ vec_fmt_engineering <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
+  # Ensure that `output` is matched correctly to one option
   output <- match.arg(output)
 
   if (output == "auto") {
@@ -745,6 +748,7 @@ vec_fmt_percent <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
+  # Ensure that `output` is matched correctly to one option
   output <- match.arg(output)
 
   if (output == "auto") {
@@ -1047,7 +1051,7 @@ vec_fmt_partsper <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-6
+#' 14-7
 #'
 #' @export
 vec_fmt_fraction <- function(
@@ -1062,6 +1066,7 @@ vec_fmt_fraction <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
+  # Ensure that `output` is matched correctly to one option
   output <- match.arg(output)
 
   if (output == "auto") {
@@ -1071,6 +1076,7 @@ vec_fmt_fraction <- function(
   # Ensure that `x` is strictly a vector with `rlang::is_vector()`
   stop_if_not_vector(x)
 
+  # Ensure that `layout` is matched correctly to one option
   layout <- match.arg(layout)
 
   # Stop function if class of `x` is incompatible with the formatting
@@ -1222,7 +1228,7 @@ vec_fmt_fraction <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-7
+#' 14-8
 #'
 #' @export
 vec_fmt_currency <- function(
@@ -1245,6 +1251,7 @@ vec_fmt_currency <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
+  # Ensure that `output` is matched correctly to one option
   output <- match.arg(output)
 
   if (output == "auto") {
@@ -1383,7 +1390,7 @@ vec_fmt_currency <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-8
+#' 14-9
 #'
 #' @export
 vec_fmt_bytes <- function(
@@ -1403,6 +1410,7 @@ vec_fmt_bytes <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
+  # Ensure that `output` is matched correctly to one option
   output <- match.arg(output)
 
   if (output == "auto") {
@@ -1526,7 +1534,7 @@ vec_fmt_bytes <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-9
+#' 14-10
 #'
 #' @export
 vec_fmt_date <- function(
@@ -1536,6 +1544,7 @@ vec_fmt_date <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
+  # Ensure that `output` is matched correctly to one option
   output <- match.arg(output)
 
   if (output == "auto") {
@@ -1638,7 +1647,7 @@ vec_fmt_date <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-10
+#' 14-11
 #'
 #' @export
 vec_fmt_time <- function(
@@ -1648,6 +1657,7 @@ vec_fmt_time <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
+  # Ensure that `output` is matched correctly to one option
   output <- match.arg(output)
 
   if (output == "auto") {
@@ -1865,7 +1875,7 @@ vec_fmt_time <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-11
+#' 14-12
 #'
 #' @export
 vec_fmt_datetime <- function(
@@ -1879,6 +1889,7 @@ vec_fmt_datetime <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
+  # Ensure that `output` is matched correctly to one option
   output <- match.arg(output)
 
   if (output == "auto") {
@@ -1955,7 +1966,7 @@ vec_fmt_datetime <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-12
+#' 14-13
 #'
 #' @export
 vec_fmt_markdown <- function(
@@ -1963,6 +1974,7 @@ vec_fmt_markdown <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
+  # Ensure that `output` is matched correctly to one option
   output <- match.arg(output)
 
   if (output == "auto") {
