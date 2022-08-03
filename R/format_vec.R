@@ -1420,6 +1420,9 @@ vec_fmt_bytes <- function(
   # Ensure that `x` is strictly a vector with `rlang::is_vector()`
   stop_if_not_vector(x)
 
+  # Ensure that `standard` is matched correctly to one option
+  standard <- match.arg(standard)
+
   # Stop function if class of `x` is incompatible with the formatting
   if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
     cli::cli_abort(
