@@ -984,7 +984,7 @@ create_body_component_h <- function(data) {
                           ifelse(!is.null(row_span) && row_span > 1, "rowgroup", "row"),
                           "\" ",
                           "headers=\"",
-                          gsub("(^[[:space:]]*)|([[:space:]]*$)", "", paste(group_id, col_id)),
+                          group_id,
                           "\""
                         )
                       } else {
