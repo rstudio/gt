@@ -1350,7 +1350,8 @@ fmt_partsper <- function(
 #'   fmt_fraction(
 #'     columns = starts_with("f_"),
 #'     accuracy = 10,
-#'     simplify = FALSE
+#'     simplify = FALSE,
+#'     layout = "diagonal"
 #'   ) %>%
 #'   sub_missing(missing_text = "") %>%
 #'   tab_spanner(
@@ -1601,21 +1602,45 @@ fmt_fraction <- function(
 
           if (context == "html") {
 
+            narrow_no_break_space_char <- "\U0202F"
+            slash_mark_char <- "\U02044"
+
             num_vec <-
-              paste0("<span class=\"gt_fraction_numerator\">", num_vec, "</span>")
+              paste0(
+                "<span style=\"",
+                "font-size:0.6em;",
+                "line-height:0.6em;",
+                "vertical-align:0.45em;",
+                "\">",
+                num_vec,
+                "</span>"
+              )
 
             denom_vec <-
-              paste0("<span class=\"gt_fraction_denominator\">", denom_vec, "</span>")
+              paste0(
+                "<span style=\"",
+                "font-size: 0.6em;",
+                "line-height: 0.6em;",
+                "vertical-align: -0.05em;",
+                "\">",
+                denom_vec,
+                "</span>"
+              )
 
             slash_mark <-
-              htmltools::tags$span(
-                class = "gt_slash_mark",
-                htmltools::HTML("&frasl;")
+              paste0(
+                "<span style=\"",
+                "font-size: 0.7em;",
+                "line-height: 0.7em;",
+                "vertical-align: 0.15em;",
+                "\">",
+                slash_mark_char,
+                "</span>"
               )
 
             x_str[has_a_fraction] <-
               paste0(
-                gsub(" ", "&#8239;", non_fraction_part),
+                gsub(" ", narrow_no_break_space_char, non_fraction_part),
                 num_vec, slash_mark, denom_vec
               )
 
