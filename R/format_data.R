@@ -1619,9 +1619,9 @@ fmt_fraction <- function(
             denom_vec <-
               paste0(
                 "<span style=\"",
-                "font-size: 0.6em;",
-                "line-height: 0.6em;",
-                "vertical-align: -0.05em;",
+                "font-size:0.6em;",
+                "line-height:0.6em;",
+                "vertical-align:-0.05em;",
                 "\">",
                 denom_vec,
                 "</span>"
@@ -1630,9 +1630,9 @@ fmt_fraction <- function(
             slash_mark <-
               paste0(
                 "<span style=\"",
-                "font-size: 0.7em;",
-                "line-height: 0.7em;",
-                "vertical-align: 0.15em;",
+                "font-size:0.7em;",
+                "line-height:0.7em;",
+                "vertical-align:0.15em;",
                 "\">",
                 slash_mark_char,
                 "</span>"
@@ -2866,7 +2866,7 @@ fmt_duration <- function(
     cli::cli_abort(c(
       "The value provided for `trim_zero_units` is invalid. Either use:",
       "*" = "`TRUE` or `FALSE`, or",
-      "*" = "A vector with any of the keywords `\"leading\"`, `\"trailing\"`, or `\"internal\"`."
+      "*" = "A vector with any of the keywords \"leading\", \"trailing\", or \"internal\"."
     ))
   }
 
@@ -2895,7 +2895,7 @@ fmt_duration <- function(
     )
   ) {
     cli::cli_abort(c(
-      "The `fmt_duration()` function can only be used on `columns` of certain types:",
+      "The `fmt_duration()` function can only be used on `columns` of certain types.",
       "*" = "Allowed types are `numeric` and `difftime`."
     ))
   }
@@ -2909,11 +2909,10 @@ fmt_duration <- function(
     ) &&
     is.null(input_units)
   ) {
-    stop(
-      "When there are numeric columns to format, `input_units` must not be `NULL`:\n",
-      "* Use one of `\"seconds\"`, `\"minutes\"`, `\"hours\"`, `\"days\"`, or `\"weeks\"`",
-      call. = FALSE
-    )
+    cli::cli_abort(c(
+      "When there are numeric columns to format, `input_units` must not be `NULL`.",
+      "*" = "Use one of \"seconds\", \"minutes\", \"hours\", \"days\", or \"weeks\"."
+    ))
   }
 
   # Initialize `colon_sep_params` list
@@ -3051,12 +3050,12 @@ fmt_duration <- function(
 validate_trim_zero_units <- function(trim_zero_units) {
 
   if (!all(trim_zero_units %in% c("leading", "trailing", "internal"))) {
-    stop(
-      "The character vector provided for `trim_zero_units` is invalid:\n",
-      "* It should only contain any of the keywords `\"leading\"`, `\"trailing\"`,
-      or ", "`\"internal\"`",
-      call. = FALSE
-    )
+
+    cli::cli_abort(c(
+      "The character vector provided for `trim_zero_units` is invalid.",
+      "*" = "It should only contain any of the keywords \"leading\", \"trailing\",
+      or ", "\"internal\"."
+    ))
   }
 }
 
@@ -3078,7 +3077,7 @@ validate_duration_input_units <- function(input_units) {
   if (!all(input_units %in% time_parts_vec) || length(input_units) != 1) {
 
     cli::cli_abort(c(
-      "The value of `input_units` for `fmt_duration()` is invalid:",
+      "The value of `input_units` for `fmt_duration()` is invalid.",
       "*" = "Only one of the \"weeks\", \"days\", \"hours\", \"minutes\", or
       \"seconds\" time parts should be present."
     ))
@@ -3115,9 +3114,9 @@ validate_duration_output_units <- function(output_units) {
   if (!all(output_units %in% time_parts_vec)) {
 
     cli::cli_abort(c(
-      "There are invalid components in the `output_units` input to `fmt_duration()`:",
+      "There are invalid components in the `output_units` input to `fmt_duration()`.",
       "*" = "Only the \"weeks\", \"days\", \"hours\", \"minutes\", and \"seconds\`
-      time parts should be present"
+      time parts should be present."
     ))
   }
 }
