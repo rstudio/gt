@@ -4,13 +4,14 @@
 \alias{vec_fmt_markdown}
 \title{Format a vector containing Markdown text}
 \usage{
-vec_fmt_markdown(x, output = c("html", "latex", "rtf"))
+vec_fmt_markdown(x, output = c("auto", "plain", "html", "latex", "rtf"))
 }
 \arguments{
 \item{x}{A numeric vector.}
 
 \item{output}{The output style of the resulting character vector. This can
-either be \code{"html"} (the default), \code{"latex"}, or \code{"rtf"}.}
+either be \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, or
+\code{"rtf"}.}
 }
 \value{
 A character vector.

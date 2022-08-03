@@ -8,12 +8,12 @@ vec_fmt_fraction(
   x,
   accuracy = NULL,
   simplify = TRUE,
-  layout = c("diagonal", "inline"),
+  layout = c("inline", "diagonal"),
   use_seps = TRUE,
   pattern = "{x}",
   sep_mark = ",",
   locale = NULL,
-  output = c("html", "latex", "rtf")
+  output = c("auto", "plain", "html", "latex", "rtf")
 )
 }
 \arguments{
@@ -32,10 +32,10 @@ option to simplify the fraction (where possible) can be taken with \code{TRUE}
 (the default). With \code{FALSE}, denominators in fractions will be fixed to the
 value provided in \code{accuracy}.}
 
-\item{layout}{For HTML output, the \code{"diagonal"} layout is the default. This
-will generate fractions that are typeset with raised/lowered numerals and a
-virgule. The \code{"inline"} layout places the numerals of the fraction on the
-baseline and uses a standard slash character.}
+\item{layout}{For HTML output, the \code{"inline"} layout is the default. This
+layout places the numerals of the fraction on the baseline and uses a
+standard slash character. The \code{"diagonal"} layout will generate fractions
+that are typeset with raised/lowered numerals and a virgule.}
 
 \item{use_seps}{An option to use digit group separators. The type of digit
 group separator is set by \code{sep_mark} and overridden if a locale ID is
@@ -57,7 +57,8 @@ We can use the \code{\link[=info_locales]{info_locales()}} function as a useful 
 the locales that are supported.}
 
 \item{output}{The output style of the resulting character vector. This can
-either be \code{"html"} (the default), \code{"latex"}, or \code{"rtf"}.}
+either be \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, or
+\code{"rtf"}.}
 }
 \value{
 A character vector.
@@ -91,26 +92,15 @@ Let's create a numeric vector for the next few examples:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{num_vals <- c(0.0052, 0.08, 0, -0.535, NA)
 }\if{html}{\out{</div>}}
 
-Using \code{vec_fmt_fraction()} with the default options will create a character
-vector of fractions in HTML. Any \code{NA} values will render as \code{"NA"}.
+Using \code{vec_fmt_fraction()} will create a character vector of fractions. Any
+\code{NA} values will render as \code{"NA"}. The rendering context will be autodetected
+unless specified in the \code{output} argument (here, it is of the \code{"plain"}
+output type).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_fraction(num_vals)
-#> [1] "0"                                                                                                                                          
-#> [2] "<span class=\\"gt_fraction_numerator\\">1</span><span class=\\"gt_slash_mark\\">&frasl;</span><span class=\\"gt_fraction_denominator\\">9</span>" 
-#> [3] "0"                                                                                                                                          
-#> [4] "−<span class=\\"gt_fraction_numerator\\">5</span><span class=\\"gt_slash_mark\\">&frasl;</span><span class=\\"gt_fraction_denominator\\">9</span>"
-#> [5] "NA"
 }\if{html}{\out{</div>}}
 
-We can change these fractions to appear with a \code{"diagonal"} layout (the
-default is \code{"inline"}):
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_fraction(num_vals, layout = "diagonal")
-#> [1] "0"                                                                                                                                          
-#> [2] "<span class=\\"gt_fraction_numerator\\">1</span><span class=\\"gt_slash_mark\\">&frasl;</span><span class=\\"gt_fraction_denominator\\">9</span>" 
-#> [3] "0"                                                                                                                                          
-#> [4] "−<span class=\\"gt_fraction_numerator\\">5</span><span class=\\"gt_slash_mark\\">&frasl;</span><span class=\\"gt_fraction_denominator\\">9</span>"
-#> [5] "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "0" "1/9" "0" "-5/9" "NA"
 }\if{html}{\out{</div>}}
 
 There are many options for formatting as fractions. If you'd like a higher
@@ -118,23 +108,18 @@ degree of accuracy in the computation of fractions we can supply the \code{"med"
 or \code{"high"} keywords to the \code{accuracy} argument:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_fraction(num_vals, accuracy = "high")
-#> [1] "<span class=\\"gt_fraction_numerator\\">1</span><span class=\\"gt_slash_mark\\">&frasl;</span><span class=\\"gt_fraction_denominator\\">200</span>"   
-#> [2] "<span class=\\"gt_fraction_numerator\\">2</span><span class=\\"gt_slash_mark\\">&frasl;</span><span class=\\"gt_fraction_denominator\\">25</span>"    
-#> [3] "0"                                                                                                                                              
-#> [4] "−<span class=\\"gt_fraction_numerator\\">107</span><span class=\\"gt_slash_mark\\">&frasl;</span><span class=\\"gt_fraction_denominator\\">200</span>"
-#> [5] "NA"
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "1/200" "2/25" "0" "-107/200" "NA"
 }\if{html}{\out{</div>}}
 
 As a last example, one can wrap the values in a pattern with the \code{pattern}
 argument. Note here that \code{NA} values won't have the pattern applied.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_fraction(
-  num_vals,
-  accuracy = "high",
-  layout = "inline",
-  pattern = "[\{x\}]"
-)
-#> [1] "[1/200]"    "[2/25]"     "[0]"        "[−107/200]" "NA"
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_fraction(num_vals, accuracy = 8, pattern = "[\{x\}]")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "[0]" "[1/8]" "[0]" "[-1/2]" "NA"
 }\if{html}{\out{</div>}}
 }
 
