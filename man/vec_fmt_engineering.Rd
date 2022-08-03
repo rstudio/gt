@@ -55,7 +55,8 @@ the locales that are supported.}
 
 \item{output}{The output style of the resulting character vector. This can
 either be \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"},
-or \code{"word"}.}
+or \code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the
+\code{"auto"} option will choose the correct \code{output} value}
 }
 \value{
 A character vector.

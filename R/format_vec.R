@@ -81,7 +81,8 @@
 #'   the locales that are supported.
 #' @param output The output style of the resulting character vector. This can
 #'   either be `"auto"` (the default), `"plain"`, `"html"`, `"latex"`, `"rtf"`,
-#'   or `"word"`.
+#'   or `"word"`. In **knitr** rendering (i.e., Quarto or R Markdown), the
+#'   `"auto"` option will choose the correct `output` value
 #'
 #' @return A character vector.
 #'
