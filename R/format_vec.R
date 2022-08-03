@@ -1924,6 +1924,158 @@ vec_fmt_datetime <- function(
   )
 }
 
+#' Format a vector of numeric or duration values as styled time duration strings
+#'
+#' @description
+#' Format input values to time duration values whether those input values are
+#' numbers or of the `difftime` class. We can specify which time units any
+#' numeric input values have (as weeks, days, hours, minutes, or seconds) and
+#' the output can be customized with a duration style (corresponding to narrow,
+#' wide, colon-separated, and ISO forms) and a choice of output units ranging
+#' from weeks to seconds.
+#'
+#' @section Output units for the colon-separated duration style:
+#'
+#' The colon-separated duration style (enabled when
+#' `duration_style = "colon-sep"`) is essentially a clock-based output format
+#' which uses the display logic of chronograph watch functionality. It will, by
+#' default, display duration values in the `(D/)HH:MM:SS` format. Any duration
+#' values greater than or equal to 24 hours will have the number of days
+#' prepended with an adjoining slash mark. While this output format is
+#' versatile, it can be changed somewhat with the `output_units` option. The
+#' following combinations of output units are permitted:
+#'
+#' - `c("minutes", "seconds")` -> `MM:SS`
+#' - `c("hours", "minutes")` -> `HH:MM`
+#' - `c("hours", "minutes", "seconds")` -> `HH:MM:SS`
+#' - `c("days", "hours", "minutes")` -> `(D/)HH:MM`
+#'
+#' Any other specialized combinations will result in the default set being used,
+#' which is `c("days", "hours", "minutes", "seconds")`
+#'
+#' @inheritParams vec_fmt_number
+#' @param input_units If one or more selected columns contains numeric values, a
+#'   keyword must be provided for `input_units` for **gt** to determine how
+#'   those values are to be interpreted in terms of duration. The accepted units
+#'   are: `"seconds"`, `"minutes"`, `"hours"`, `"days"`, and `"weeks"`.
+#' @param output_units Controls the output time units. The default, `NULL`,
+#'   means that **gt** will automatically choose time units based on the input
+#'   duration value. To control which time units are to be considered for output
+#'   (before trimming with `trim_zero_units`) we can specify a vector of one or
+#'   more of the following keywords: `"weeks"`, `"days"`, `"hours"`,
+#'   `"minutes"`, or `"seconds"`.
+#' @param duration_style A choice of four formatting styles for the output
+#'   duration values. With `"narrow"` (the default style), duration values will
+#'   be formatted with single letter time-part units (e.g., 1.35 days will be
+#'   styled as `"1d 8h 24m`). With `"wide"`, this example value will be expanded
+#'   to `"1 day 8 hours 24 minutes"` after formatting. The `"colon-sep"` style
+#'   will put days, hours, minutes, and seconds in the `"([D]/)[HH]:[MM]:[SS]"`
+#'   format. The `"iso"` style will produce a value that conforms to the ISO
+#'   8601 rules for duration values (e.g., 1.35 days will become `"P1DT8H24M"`).
+#' @param trim_zero_units Provides methods to remove output time units that have
+#'   zero values. By default this is `TRUE` and duration values that might
+#'   otherwise be formatted as `"0w 1d 0h 4m 19s"` with
+#'   `trim_zero_units = FALSE` are instead displayed as `"1d 4m 19s"`. Aside
+#'   from using `TRUE`/`FALSE` we could provide a vector of keywords for more
+#'   precise control. These keywords are: (1) `"leading"`, to omit all leading
+#'   zero-value time units (e.g., `"0w 1d"` -> `"1d"`), (2) `"trailing"`, to
+#'   omit all trailing zero-value time units (e.g., `"3d 5h 0s"` -> `"3d 5h"`),
+#'   and `"internal"`, which removes all internal zero-value time units (e.g.,
+#'   `"5d 0h 33m"` -> `"5d 33m"`).
+#' @param max_output_units If `output_units` is `NULL`, where the output time
+#'   units are unspecified and left to **gt** to handle, a numeric value
+#'   provided for `max_output_units` will be taken as the maximum number of time
+#'   units to display in all output time duration values. By default, this is
+#'   `NULL` and all possible time units will be displayed. This option has no
+#'   effect when `duration_style = "colon-sep"` (only `output_units` can be used
+#'   to customize that type of duration output).
+#' @param force_sign Should the positive sign be shown for positive values
+#'   (effectively showing a sign for all values except zero)? If so, use `TRUE`
+#'   for this option. The default is `FALSE`, where only negative value will
+#'   display a minus sign.
+#'
+#' @return A character vector.
+#'
+#' @section Examples:
+#'
+#' Create a `difftime`-based vector.
+#'
+#' ```r
+#' difftimes <-
+#'   difftime(
+#'     lubridate::ymd("2017-01-15"),
+#'     lubridate::ymd(c("2015-06-25", "2016-03-07", "2017-01-10"))
+#'   )
+#' ```
+#'
+#'
+#' ```r
+#' vec_fmt_duration(difftimes, output_units = "days")
+#' ```
+#' ```
+#' #> [1] "570d" "314d" "5d"
+#' ```
+#'
+#'
+#' @family vector formatting functions
+#' @section Function ID:
+#' 14-13
+#'
+#' @export
+vec_fmt_duration <- function(
+    x,
+    input_units = NULL,
+    output_units = NULL,
+    duration_style = c("narrow", "wide", "colon-sep", "iso"),
+    trim_zero_units = TRUE,
+    max_output_units = NULL,
+    pattern = "{x}",
+    use_seps = TRUE,
+    sep_mark = ",",
+    force_sign = FALSE,
+    locale = NULL,
+    output = c("auto", "plain", "html", "latex", "rtf", "word")
+) {
+
+  # Ensure that `output` is matched correctly to one option
+  output <- match.arg(output)
+
+  if (output == "auto") {
+    output <- determine_output_format()
+  }
+
+  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
+  stop_if_not_vector(x)
+
+  # Ensure that `duration_style` is matched correctly to one option
+  duration_style <- match.arg(duration_style)
+
+  # Stop function if class of `x` is incompatible with the formatting
+  if (!vector_class_is_valid(x, valid_classes = c("numeric", "difftime"))) {
+    cli::cli_abort(
+      "The `vec_fmt_bytes()` function can only be used with numeric vectors."
+    )
+  }
+
+  render_as_vector(
+    fmt_duration(
+      gt(dplyr::tibble(x = x)),
+      columns = "x", rows = everything(),
+      input_units = input_units,
+      output_units = output_units,
+      duration_style = duration_style,
+      trim_zero_units = trim_zero_units,
+      max_output_units = max_output_units,
+      pattern = pattern,
+      use_seps = use_seps,
+      sep_mark = sep_mark,
+      force_sign = force_sign,
+      locale = locale
+    ),
+    output = output
+  )
+}
+
 #' Format a vector containing Markdown text
 #'
 #' @description
@@ -1969,7 +2121,7 @@ vec_fmt_datetime <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-13
+#' 14-14
 #'
 #' @export
 vec_fmt_markdown <- function(
