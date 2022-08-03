@@ -1,9 +1,9 @@
 #' Format a vector as numeric values
 #'
 #' @description
-#' With numeric values in a vector, we can perform number-based
-#' formatting so that the values are rendered to a character vector with some
-#' level of precision. The following major options are available:
+#' With numeric values in a vector, we can perform number-based formatting so
+#' that the values are rendered to a character vector with some level of
+#' precision. The following major options are available:
 #'
 #' - decimals: choice of the number of decimal places, option to drop
 #' trailing zeros, and a choice of the decimal symbol
@@ -457,12 +457,7 @@ vec_fmt_scientific <- function(
   stop_if_not_vector(x)
 
   # Stop function if class of `x` is incompatible with the formatting
-  if (
-    !vector_class_is_valid(
-      x,
-      valid_classes = c("numeric", "integer")
-    )
-  ) {
+  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
     cli::cli_abort(
       "The `vec_fmt_scientific()` function can only be used with numeric vectors."
     )
@@ -598,12 +593,7 @@ vec_fmt_engineering <- function(
   stop_if_not_vector(x)
 
   # Stop function if class of `x` is incompatible with the formatting
-  if (
-    !vector_class_is_valid(
-      x,
-      valid_classes = c("numeric", "integer")
-    )
-  ) {
+  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
     cli::cli_abort(
       "The `vec_fmt_engineering()` function can only be used with numeric vectors."
     )
@@ -765,12 +755,7 @@ vec_fmt_percent <- function(
   stop_if_not_vector(x)
 
   # Stop function if class of `x` is incompatible with the formatting
-  if (
-    !vector_class_is_valid(
-      x,
-      valid_classes = c("numeric", "integer")
-    )
-  ) {
+  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
     cli::cli_abort(
       "The `vec_fmt_percent()` function can only be used with numeric vectors."
     )
@@ -909,12 +894,7 @@ vec_fmt_fraction <- function(
   layout <- match.arg(layout)
 
   # Stop function if class of `x` is incompatible with the formatting
-  if (
-    !vector_class_is_valid(
-      x,
-      valid_classes = c("numeric", "integer")
-    )
-  ) {
+  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
     cli::cli_abort(
       "The `vec_fmt_fraction()` function can only be used with numeric vectors."
     )
@@ -1095,12 +1075,7 @@ vec_fmt_currency <- function(
   stop_if_not_vector(x)
 
   # Stop function if class of `x` is incompatible with the formatting
-  if (
-    !vector_class_is_valid(
-      x,
-      valid_classes = c("numeric", "integer")
-    )
-  ) {
+  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
     cli::cli_abort(
       "The `vec_fmt_currency()` function can only be used with numeric vectors."
     )
@@ -1258,12 +1233,7 @@ vec_fmt_bytes <- function(
   stop_if_not_vector(x)
 
   # Stop function if class of `x` is incompatible with the formatting
-  if (
-    !vector_class_is_valid(
-      x,
-      valid_classes = c("numeric", "integer")
-    )
-  ) {
+  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
     cli::cli_abort(
       "The `vec_fmt_bytes()` function can only be used with numeric vectors."
     )
@@ -1396,12 +1366,7 @@ vec_fmt_date <- function(
   stop_if_not_vector(x)
 
   # Stop function if class of `x` is incompatible with the formatting
-  if (
-    !vector_class_is_valid(
-      x,
-      valid_classes = c("Date", "POSIXt", "character")
-    )
-  ) {
+  if (!vector_class_is_valid(x, valid_classes = c("Date", "POSIXt", "character"))) {
     cli::cli_abort(
       "The `vec_fmt_date()` function can only be used with numeric vectors."
     )
@@ -1513,12 +1478,7 @@ vec_fmt_time <- function(
   stop_if_not_vector(x)
 
   # Stop function if class of `x` is incompatible with the formatting
-  if (
-    !vector_class_is_valid(
-      x,
-      valid_classes = c("Date", "POSIXt", "character")
-    )
-  ) {
+  if (!vector_class_is_valid(x, valid_classes = c("Date", "POSIXt", "character"))) {
     cli::cli_abort(
       "The `vec_fmt_time()` function can only be used with numeric vectors."
     )
@@ -1749,12 +1709,7 @@ vec_fmt_datetime <- function(
   stop_if_not_vector(x)
 
   # Stop function if class of `x` is incompatible with the formatting
-  if (
-    !vector_class_is_valid(
-      x,
-      valid_classes = c("Date", "POSIXct", "character")
-    )
-  ) {
+  if (!vector_class_is_valid(x, valid_classes = c("Date", "POSIXct", "character"))) {
     cli::cli_abort(
       "The `vec_fmt_datetime()` function can only be used with numeric vectors."
     )
