@@ -264,6 +264,7 @@ reference:
     - vec_fmt_date
     - vec_fmt_time
     - vec_fmt_datetime
+    - vec_fmt_duration
     - vec_fmt_markdown
 
 navbar:
