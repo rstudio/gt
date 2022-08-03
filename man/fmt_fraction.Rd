@@ -141,7 +141,8 @@ Use \code{\link{pizzaplace}} to create a \strong{gt} table. Format the \code{f_s
   fmt_fraction(
     columns = starts_with("f_"),
     accuracy = 10,
-    simplify = FALSE
+    simplify = FALSE,
+    layout = "diagonal"
   ) \%>\%
   sub_missing(missing_text = "") \%>\%
   tab_spanner(

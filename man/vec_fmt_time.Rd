@@ -8,7 +8,7 @@ vec_fmt_time(
   x,
   time_style = 2,
   pattern = "{x}",
-  output = c("auto", "plain", "html", "latex", "rtf")
+  output = c("auto", "plain", "html", "latex", "rtf", "word")
 )
 }
 \arguments{
@@ -24,8 +24,8 @@ formatted value. The value itself is represented by \code{{x}} and all other
 characters are taken to be string literals.}
 
 \item{output}{The output style of the resulting character vector. This can
-either be \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, or
-\code{"rtf"}.}
+either be \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"},
+or \code{"word"}.}
 }
 \value{
 A character vector.
