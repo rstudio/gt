@@ -736,6 +736,7 @@ create_columns_component_h <- function(data) {
 #'
 #' @noRd
 create_body_component_h <- function(data) {
+
   summaries_present <- dt_summary_exists(data = data)
   list_of_summaries <- dt_summary_df_get(data = data)
   groups_rows_df <- dt_groups_rows_get(data = data)
@@ -835,12 +836,15 @@ create_body_component_h <- function(data) {
     lapply(
       seq_len(n_rows),
       function(i) {
+
         body_section <- list()
 
         group_info <- groups_rows_df[groups_rows_df$row_start == i, c("group_id", "group_label")]
+
         if (nrow(group_info) == 0) {
           group_info <- NULL
         }
+
         group_id <- group_info[["group_id"]]
         group_label <- group_info[["group_label"]]
 
@@ -943,13 +947,12 @@ create_body_component_h <- function(data) {
         stub_width <- length(stub_layout)
 
         if (stub_width == 0) {
-          row_id_i <- rep(character(0), length(col_names_id_i))
+          row_id_i <- rep("", length(col_names_id_i))
         } else if (stub_width == 1) {
           row_id_i <- rep(col_names_id_i[1], length(col_names_id_i))
         } else if (stub_width == 2) {
           row_id_i <- rep(col_names_id_i[2], length(col_names_id_i))
         }
-
 
         #row_id_i <- col_names_id_i
 
@@ -969,7 +972,6 @@ create_body_component_h <- function(data) {
                   extra_classes,
                   row_styles,
                   FUN = function(x, col_id, row_id, row_span, alignment_class, extra_class, cell_style) {
-
                     sprintf(
                       "<%s %sclass=\"%s\"%s>%s</%s>",
                       if ("gt_stub" %in% extra_class) {
@@ -980,13 +982,16 @@ create_body_component_h <- function(data) {
                           "\" ",
                           "scope=\"",
                           ifelse(!is.null(row_span) && row_span > 1, "rowgroup", "row"),
+                          "\" ",
+                          "headers=\"",
+                          gsub("(^[[:space:]]*)|([[:space:]]*$)", "", paste(group_id, col_id)),
                           "\""
                         )
                       } else {
                         paste0(
                           "td ",
                           "headers=\"",
-                          paste(row_id, group_id, col_id),
+                          gsub("(^[[:space:]]*)|([[:space:]]*$)", "", paste(row_id, group_id, col_id)),
                           "\" "
                         )
                       },
