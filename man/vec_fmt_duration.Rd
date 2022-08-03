@@ -15,7 +15,8 @@ vec_fmt_duration(
   use_seps = TRUE,
   sep_mark = ",",
   force_sign = FALSE,
-  locale = NULL
+  locale = NULL,
+  output = c("auto", "plain", "html", "latex", "rtf", "word")
 )
 }
 \arguments{
@@ -84,6 +85,11 @@ according the locale's rules. Examples include \code{"en_US"} for English
 locale ID will override any values provided in \code{sep_mark} and \code{dec_mark}.
 We can use the \code{\link[=info_locales]{info_locales()}} function as a useful reference for all of
 the locales that are supported.}
+
+\item{output}{The output style of the resulting character vector. This can
+either be \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"},
+or \code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the
+\code{"auto"} option will choose the correct \code{output} value}
 }
 \value{
 A character vector.
@@ -121,9 +127,20 @@ which is \code{c("days", "hours", "minutes", "seconds")}
 \section{Examples}{
 
 
-Use part of the \code{sp500} table to create a \strong{gt} table. Create a
-\code{difftime}-based column and format the duration values to be displayed as the
-number of days since March 30, 2020.
+Create a \code{difftime}-based vector.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{difftimes <-
+  difftime(
+    lubridate::ymd("2017-01-15"),
+    lubridate::ymd(c("2015-06-25", "2016-03-07", "2017-01-10"))
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_duration(difftimes, output_units = "days")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "570d" "314d" "5d"
+}\if{html}{\out{</div>}}
 }
 
 \section{Function ID}{
