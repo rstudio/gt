@@ -153,6 +153,67 @@ values.
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "570d" "314d" "5d"
 }\if{html}{\out{</div>}}
+
+We can also use numeric values in the input vector \code{vec_fmt_duration()}.
+Here's a numeric vector for use with examples:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{num_vals <- c(3.235, 0.23, 0.005, NA)
+}\if{html}{\out{</div>}}
+
+The necessary thing with numeric values as an input is defining what time
+unit those values have.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_duration(num_vals, input_units = "days")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3d 5h 38m 23s" "5h 31m 12s" "7m 12s" "NA"
+}\if{html}{\out{</div>}}
+
+We can define a set of output time units that we want to see.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_duration(
+  num_vals,
+  input_units = "days",
+  output_units = c("hours", "minutes")
+)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "77h 38m" "5h 31m" "7m" "NA"
+}\if{html}{\out{</div>}}
+
+There are many duration 'styles' to choose from. We could opt for the
+\code{"wide"} style.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_duration(
+  num_vals,
+  input_units = "days",
+  duration_style = "wide"
+)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3 days 5 hours 38 minutes 23 seconds"
+#> [2] "5 hours 31 minutes 12 seconds"
+#> [3] "7 minutes 12 seconds"
+#> [4] "NA"
+}\if{html}{\out{</div>}}
+
+We can always perform locale-specific formatting with \code{vec_fmt_duration()}.
+Let's attempt the same type of duration formatting as before with the \code{"nl"}
+locale.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_duration(
+  num_vals,
+  input_units = "days",
+  duration_style = "wide",
+  locale = "nl"
+)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3 dagen 5 uur 38 minuten 23 seconden"
+#> [2] "5 uur 31 minuten 12 seconden"
+#> [3] "7 minuten 12 seconden"
+#> [4] "NA"
+}\if{html}{\out{</div>}}
 }
 
 \section{Function ID}{
