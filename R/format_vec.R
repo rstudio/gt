@@ -2028,6 +2028,71 @@ vec_fmt_datetime <- function(
 #' #> [1] "570d" "314d" "5d"
 #' ```
 #'
+#' We can also use numeric values in the input vector `vec_fmt_duration()`.
+#' Here's a numeric vector for use with examples:
+#'
+#' ```r
+#' num_vals <- c(3.235, 0.23, 0.005, NA)
+#' ```
+#'
+#' The necessary thing with numeric values as an input is defining what time
+#' unit those values have.
+#'
+#' ```r
+#' vec_fmt_duration(num_vals, input_units = "days")
+#' ```
+#' ```
+#' #> [1] "3d 5h 38m 23s" "5h 31m 12s" "7m 12s" "NA"
+#' ```
+#'
+#' We can define a set of output time units that we want to see.
+#'
+#' ```r
+#' vec_fmt_duration(
+#'   num_vals,
+#'   input_units = "days",
+#'   output_units = c("hours", "minutes")
+#' )
+#' ```
+#' ```
+#' #> [1] "77h 38m" "5h 31m" "7m" "NA"
+#' ```
+#'
+#' There are many duration 'styles' to choose from. We could opt for the
+#' `"wide"` style.
+#'
+#' ```r
+#' vec_fmt_duration(
+#'   num_vals,
+#'   input_units = "days",
+#'   duration_style = "wide"
+#' )
+#' ```
+#' ```
+#' #> [1] "3 days 5 hours 38 minutes 23 seconds"
+#' #> [2] "5 hours 31 minutes 12 seconds"
+#' #> [3] "7 minutes 12 seconds"
+#' #> [4] "NA"
+#' ```
+#'
+#' We can always perform locale-specific formatting with `vec_fmt_duration()`.
+#' Let's attempt the same type of duration formatting as before with the `"nl"`
+#' locale.
+#'
+#' ```r
+#' vec_fmt_duration(
+#'   num_vals,
+#'   input_units = "days",
+#'   duration_style = "wide",
+#'   locale = "nl"
+#' )
+#' ```
+#' ```
+#' #> [1] "3 dagen 5 uur 38 minuten 23 seconden"
+#' #> [2] "5 uur 31 minuten 12 seconden"
+#' #> [3] "7 minuten 12 seconden"
+#' #> [4] "NA"
+#' ```
 #'
 #' @family vector formatting functions
 #' @section Function ID:
