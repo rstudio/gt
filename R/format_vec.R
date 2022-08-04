@@ -1998,7 +1998,7 @@ vec_fmt_datetime <- function(
 #'
 #' @section Examples:
 #'
-#' Create a `difftime`-based vector.
+#' Let's create a `difftime`-based vector for the next few examples:
 #'
 #' ```r
 #' difftimes <-
@@ -2008,6 +2008,18 @@ vec_fmt_datetime <- function(
 #'   )
 #' ```
 #'
+#' Using `vec_fmt_duration()` with its defaults provides us with a succinct
+#' vector of formatted durations.
+#'
+#' ```r
+#' vec_fmt_duration(difftimes)
+#' ```
+#' ```
+#' #> [1] "81w 3d" "44w 6d" "5d"
+#' ```
+#'
+#' We can elect to use just only the time units of days to describe the duration
+#' values.
 #'
 #' ```r
 #' vec_fmt_duration(difftimes, output_units = "days")
