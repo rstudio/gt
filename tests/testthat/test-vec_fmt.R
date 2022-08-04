@@ -1732,6 +1732,214 @@ test_that("The `vec_fmt_percent()` function works", {
   expect_error(vec_fmt_percent(dplyr::tibble(a = c(1, 2, 3))))
 })
 
+test_that("The `vec_fmt_partsper()` function works", {
+
+  vec_fmt_partsper(
+    vec_num_1, to_units = "ppm", decimals = 3, output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "-2,500,000.000 ppm", "-2,000,000.000 ppm", "-1,500,000.000 ppm",
+        "-1,000,000.000 ppm", "-500,000.000 ppm", "0.000 ppm",
+        "500,000.000 ppm", "1,000,000.000 ppm", "1,500,000.000 ppm",
+        "2,000,000.000 ppm", "2,500,000.000 ppm", "NA", " Inf ppm"
+      )
+    )
+
+  vec_fmt_partsper(
+    vec_num_1, to_units = "ppm", decimals = 3, output = "html"
+  ) %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2,500,000.000 ppm"),
+        paste0("\U02212", "2,000,000.000 ppm"),
+        paste0("\U02212", "1,500,000.000 ppm"),
+        paste0("\U02212", "1,000,000.000 ppm"),
+        paste0("\U02212", "500,000.000 ppm"),
+        "0.000 ppm", "500,000.000 ppm", "1,000,000.000 ppm",
+        "1,500,000.000 ppm", "2,000,000.000 ppm",
+        "2,500,000.000 ppm", "NA", " Inf ppm"
+      )
+    )
+
+  vec_fmt_partsper(
+    vec_num_1, to_units = "ppm", decimals = 3, output = "latex"
+  ) %>%
+    expect_equal(
+      c(
+        "$-2,500,000.000 \\text{ppm}$", "$-2,000,000.000 \\text{ppm}$",
+        "$-1,500,000.000 \\text{ppm}$", "$-1,000,000.000 \\text{ppm}$",
+        "$-500,000.000 \\text{ppm}$", "$0.000 \\text{ppm}$",
+        "$500,000.000 \\text{ppm}$", "$1,000,000.000 \\text{ppm}$",
+        "$1,500,000.000 \\text{ppm}$", "$2,000,000.000 \\text{ppm}$",
+        "$2,500,000.000 \\text{ppm}$", "NA", "$ Inf \\text{ppm}$"
+      )
+    )
+
+  vec_fmt_partsper(
+    vec_num_1, to_units = "ppm", decimals = 3, output = "rtf"
+  ) %>%
+    expect_equal(
+      c(
+        "-2,500,000.000 ppm", "-2,000,000.000 ppm", "-1,500,000.000 ppm",
+        "-1,000,000.000 ppm", "-500,000.000 ppm", "0.000 ppm",
+        "500,000.000 ppm", "1,000,000.000 ppm", "1,500,000.000 ppm",
+        "2,000,000.000 ppm", "2,500,000.000 ppm", "NA", " Inf ppm"
+      )
+    )
+
+  vec_fmt_partsper(
+    vec_num_1, to_units = "ppm", scale_values = FALSE, output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "-2.50 ppm", "-2.00 ppm", "-1.50 ppm", "-1.00 ppm", "-0.50 ppm",
+        "0.00 ppm", "0.50 ppm", "1.00 ppm", "1.50 ppm", "2.00 ppm", "2.50 ppm",
+        "NA", "Inf ppm"
+      )
+    )
+
+  vec_fmt_partsper(
+    vec_num_1, to_units = "ppm", scale_values = FALSE, output = "html"
+  ) %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.50 ppm"),
+        paste0("\U02212", "2.00 ppm"),
+        paste0("\U02212", "1.50 ppm"),
+        paste0("\U02212", "1.00 ppm"),
+        paste0("\U02212", "0.50 ppm"),
+        "0.00 ppm", "0.50 ppm", "1.00 ppm", "1.50 ppm",
+        "2.00 ppm", "2.50 ppm", "NA", "Inf ppm"
+      )
+    )
+
+  vec_fmt_partsper(
+    vec_num_1, to_units = "ppm", scale_values = FALSE, output = "latex"
+  ) %>%
+    expect_equal(
+      c(
+        "$-2.50 \\text{ppm}$", "$-2.00 \\text{ppm}$", "$-1.50 \\text{ppm}$",
+        "$-1.00 \\text{ppm}$", "$-0.50 \\text{ppm}$", "$0.00 \\text{ppm}$",
+        "$0.50 \\text{ppm}$", "$1.00 \\text{ppm}$", "$1.50 \\text{ppm}$",
+        "$2.00 \\text{ppm}$", "$2.50 \\text{ppm}$", "NA", "$Inf \\text{ppm}$"
+      )
+    )
+
+  vec_fmt_partsper(
+    vec_num_1, to_units = "ppm", scale_values = FALSE, output = "rtf"
+  ) %>%
+    expect_equal(
+      c(
+        "-2.50 ppm", "-2.00 ppm", "-1.50 ppm", "-1.00 ppm", "-0.50 ppm",
+        "0.00 ppm", "0.50 ppm", "1.00 ppm", "1.50 ppm", "2.00 ppm", "2.50 ppm",
+        "NA", "Inf ppm"
+      )
+    )
+
+  vec_fmt_partsper(
+    vec_num_1, to_units = "ppm", locale = "de", output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "-2.500.000,00 ppm", "-2.000.000,00 ppm", "-1.500.000,00 ppm",
+        "-1.000.000,00 ppm", "-500.000,00 ppm", "0,00 ppm", "500.000,00 ppm",
+        "1.000.000,00 ppm", "1.500.000,00 ppm", "2.000.000,00 ppm",
+        "2.500.000,00 ppm", "NA", "Inf ppm"
+      )
+    )
+
+  vec_fmt_partsper(
+    vec_num_1, to_units = "ppm", locale = "de", output = "html"
+  ) %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.500.000,00 ppm"),
+        paste0("\U02212", "2.000.000,00 ppm"),
+        paste0("\U02212", "1.500.000,00 ppm"),
+        paste0("\U02212", "1.000.000,00 ppm"),
+        paste0("\U02212", "500.000,00 ppm"),
+        "0,00 ppm", "500.000,00 ppm", "1.000.000,00 ppm", "1.500.000,00 ppm",
+        "2.000.000,00 ppm", "2.500.000,00 ppm", "NA", "Inf ppm"
+      )
+    )
+
+  vec_fmt_partsper(
+    vec_num_1, to_units = "ppm", locale = "de", output = "latex"
+  ) %>%
+    expect_equal(
+      c(
+        "$-2.500.000,00 \\text{ppm}$", "$-2.000.000,00 \\text{ppm}$",
+        "$-1.500.000,00 \\text{ppm}$", "$-1.000.000,00 \\text{ppm}$",
+        "$-500.000,00 \\text{ppm}$", "$0,00 \\text{ppm}$",
+        "$500.000,00 \\text{ppm}$", "$1.000.000,00 \\text{ppm}$",
+        "$1.500.000,00 \\text{ppm}$", "$2.000.000,00 \\text{ppm}$",
+        "$2.500.000,00 \\text{ppm}$", "NA", "$Inf \\text{ppm}$"
+      )
+    )
+
+  vec_fmt_partsper(
+    vec_num_1, to_units = "ppm", locale = "de", output = "rtf"
+  ) %>%
+    expect_equal(
+      c(
+        "-2.500.000,00 ppm", "-2.000.000,00 ppm", "-1.500.000,00 ppm",
+        "-1.000.000,00 ppm", "-500.000,00 ppm", "0,00 ppm", "500.000,00 ppm",
+        "1.000.000,00 ppm", "1.500.000,00 ppm", "2.000.000,00 ppm",
+        "2.500.000,00 ppm", "NA", "Inf ppm"
+      )
+    )
+
+  vec_fmt_partsper(vec_num_1, to_units = "ppm", incl_space = FALSE, output = "plain") %>%
+    expect_equal(
+      c(
+        "-2,500,000.00ppm", "-2,000,000.00ppm", "-1,500,000.00ppm",
+        "-1,000,000.00ppm", "-500,000.00ppm", "0.00ppm", "500,000.00ppm",
+        "1,000,000.00ppm", "1,500,000.00ppm", "2,000,000.00ppm", "2,500,000.00ppm",
+        "NA", "Infppm"
+      )
+    )
+
+  vec_fmt_partsper(vec_num_1, to_units = "ppm", incl_space = FALSE, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2,500,000.00ppm"),
+        paste0("\U02212", "2,000,000.00ppm"),
+        paste0("\U02212", "1,500,000.00ppm"),
+        paste0("\U02212", "1,000,000.00ppm"),
+        paste0("\U02212", "500,000.00ppm"),
+        "0.00ppm", "500,000.00ppm", "1,000,000.00ppm", "1,500,000.00ppm",
+        "2,000,000.00ppm", "2,500,000.00ppm", "NA", "Infppm"
+      )
+    )
+
+  vec_fmt_partsper(vec_num_1, to_units = "ppm", incl_space = FALSE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2,500,000.00\\text{ppm}$", "$-2,000,000.00\\text{ppm}$",
+        "$-1,500,000.00\\text{ppm}$", "$-1,000,000.00\\text{ppm}$", "$-500,000.00\\text{ppm}$",
+        "$0.00\\text{ppm}$", "$500,000.00\\text{ppm}$", "$1,000,000.00\\text{ppm}$",
+        "$1,500,000.00\\text{ppm}$", "$2,000,000.00\\text{ppm}$", "$2,500,000.00\\text{ppm}$",
+        "NA", "$Inf\\text{ppm}$"
+      )
+    )
+
+  vec_fmt_partsper(vec_num_1, to_units = "ppm", incl_space = FALSE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2,500,000.00ppm", "-2,000,000.00ppm", "-1,500,000.00ppm",
+        "-1,000,000.00ppm", "-500,000.00ppm", "0.00ppm", "500,000.00ppm",
+        "1,000,000.00ppm", "1,500,000.00ppm", "2,000,000.00ppm", "2,500,000.00ppm",
+        "NA", "Infppm"
+      )
+    )
+
+  expect_error(vec_fmt_partsper(letters))
+  expect_error(vec_fmt_partsper(TRUE))
+  expect_error(vec_fmt_partsper(list(1, 2, 3)))
+  expect_error(vec_fmt_partsper(dplyr::tibble(a = c(1, 2, 3))))
+})
+
 test_that("The `vec_fmt_fraction()` function works", {
 
   vec_fmt_fraction(range_0_1, layout = "diagonal", output = "plain") %>%
