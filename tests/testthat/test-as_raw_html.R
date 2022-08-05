@@ -113,5 +113,5 @@ test_that("`as_raw_html()` produces the same table every time", {
     as_raw_html(inline_css = TRUE)
 
   gt_html_2_sha1 <- digest::sha1(gt_html_2)
-  expect_equal(gt_html_2_sha1, "b300b93826ffd2de48f2514aecfeab9f43a3695b")
+  expect_equal(gt_html_2_sha1, "f1db0a5aea82cc5e5daf338b685e04c02e69a109")
 })

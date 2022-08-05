@@ -41,7 +41,7 @@ test_that("the `sub_missing()` function works correctly", {
     (tab %>%
        sub_missing(columns = "num_1") %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("&mdash;", "74", "&mdash;", "93", "&mdash;", "76", "&mdash;")
+    c("\U02014", "74", "\U02014", "93", "\U02014", "76", "\U02014")
   )
 
   expect_equal(
@@ -69,14 +69,14 @@ test_that("the `sub_missing()` function works correctly", {
     (tab %>%
        sub_missing(columns = "num_1", missing_text = "--") %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("&ndash;", "74", "&ndash;", "93", "&ndash;", "76", "&ndash;")
+    c("\U02013", "74", "\U02013", "93", "\U02013", "76", "\U02013")
   )
 
   expect_equal(
     (tab %>%
        sub_missing(columns = "num_1", missing_text = "--") %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c("–", "74", "–", "93", "–", "76", "–")
+    c("\U02013", "74", "\U02013", "93", "\U02013", "76", "\U02013")
   )
 
   expect_equal(
@@ -196,7 +196,7 @@ test_that("the `sub_missing()` function works correctly", {
     (tab %>%
        sub_missing(columns = "num_1", rows = num_2 < 50) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("&mdash;", "74", "&mdash;", "93", "&mdash;", "76", "NA")
+    c("\U02014", "74", "\U02014", "93", "\U02014", "76", "NA")
   )
 
   # Format columns with `fmt_number()` then use
@@ -210,7 +210,7 @@ test_that("the `sub_missing()` function works correctly", {
        ) %>%
        sub_missing(columns = everything()) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("&mdash;", "74.000", "&mdash;", "93.000", "&mdash;", "76.000", "&mdash;")
+    c("\U02014", "74.000", "\U02014", "93.000", "\U02014", "76.000", "\U02014")
   )
 
   expect_equal(
@@ -245,7 +245,7 @@ test_that("the `sub_missing()` function works correctly", {
          decimals = 3
        ) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("&mdash;", "74.000", "&mdash;", "93.000", "&mdash;", "76.000", "&mdash;")
+    c("\U02014", "74.000", "\U02014", "93.000", "\U02014", "76.000", "\U02014")
   )
 
   expect_equal(

@@ -19,7 +19,7 @@ vec_fmt_number(
   dec_mark = ".",
   force_sign = FALSE,
   locale = NULL,
-  output = c("html", "latex", "rtf")
+  output = c("auto", "plain", "html", "latex", "rtf", "word")
 )
 }
 \arguments{
@@ -99,15 +99,17 @@ We can use the \code{\link[=info_locales]{info_locales()}} function as a useful 
 the locales that are supported.}
 
 \item{output}{The output style of the resulting character vector. This can
-either be \code{"html"} (the default), \code{"latex"}, or \code{"rtf"}.}
+either be \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"},
+or \code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the
+\code{"auto"} option will choose the correct \code{output} value}
 }
 \value{
 A character vector.
 }
 \description{
-With numeric values in a vector, we can perform number-based
-formatting so that the values are rendered to a character vector with some
-level of precision. The following major options are available:
+With numeric values in a vector, we can perform number-based formatting so
+that the values are rendered to a character vector with some level of
+precision. The following major options are available:
 \itemize{
 \item decimals: choice of the number of decimal places, option to drop
 trailing zeros, and a choice of the decimal symbol
@@ -130,13 +132,16 @@ Let's create a numeric vector for the next few examples:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{num_vals <- c(5.2, 8.65, 0, -5.3, NA)
 }\if{html}{\out{</div>}}
 
-Using \code{vec_fmt_number()} with the default options will create a character vector
-where the numeric values have two decimal places and \code{NA} values will render
-as \code{"NA"}. Also, the rendering context is HTML unless specified in the
-\code{output} argument.
+Using \code{vec_fmt_number()} with the default options will create a character
+vector where the numeric values have two decimal places and \code{NA} values will
+render as \code{"NA"}. Also, the rendering context will be autodetected unless
+specified in the \code{output} argument (here, it is of the \code{"plain"} output
+type).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_number(num_vals)
-#> [1] "5.20"        "8.65"        "0.00"        "&minus;5.30" "NA"
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "5.20" "8.65" "0.00" "-5.30" "NA"
 }\if{html}{\out{</div>}}
 
 We can change the decimal mark to a comma, and we have to be sure to change
@@ -144,36 +149,45 @@ the digit separator mark from the default comma to something else (a period
 works here):
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_number(num_vals, sep_mark = ".", dec_mark = ",")
-#> [1] "5,20"        "8,65"        "0,00"        "&minus;5,30" "NA"
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "5,20" "8,65" "0,00" "-5,30" "NA"
 }\if{html}{\out{</div>}}
 
 If we are formatting for a different locale, we could supply the locale ID
 and let \strong{gt} handle these locale-specific formatting options:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_number(num_vals, locale = "fr")
-#> [1] "5,20"        "8,65"        "0,00"        "&minus;5,30" "NA"
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "5,20" "8,65" "0,00" "-5,30" "NA"
 }\if{html}{\out{</div>}}
 
 There are many options for formatting values. Perhaps you need to have
 explicit positive and negative signs? Use \code{force_sign = TRUE} for that.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_number(num_vals, force_sign = TRUE)
-#> [1] "+5.20"       "+8.65"       "0.00"        "&minus;5.30" "NA"
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "+5.20" "+8.65" "0.00" "-5.30" "NA"
 }\if{html}{\out{</div>}}
 
 Those trailing zeros past the decimal mark can be stripped out by using the
 \code{drop_trailing_zeros} option.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_number(num_vals, drop_trailing_zeros = TRUE)
-#> [1] "5.2"        "8.65"       "0"          "&minus;5.3" "NA"
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "5.2" "8.65" "0" "-5.3" "NA"
 }\if{html}{\out{</div>}}
 
 As a last example, one can wrap the values in a pattern with the \code{pattern}
 argument. Note here that \code{NA} values won't have the pattern applied.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_number(num_vals, pattern = "`\{x\}`")
-#> [1] "`5.20`"        "`8.65`"        "`0.00`"        "`&minus;5.30`"
-#> [5] "NA"
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "`5.20`" "`8.65`" "`0.00`" "`-5.30`" "NA"
 }\if{html}{\out{</div>}}
 }
 
@@ -188,10 +202,12 @@ Other vector formatting functions:
 \code{\link{vec_fmt_currency}()},
 \code{\link{vec_fmt_datetime}()},
 \code{\link{vec_fmt_date}()},
+\code{\link{vec_fmt_duration}()},
 \code{\link{vec_fmt_engineering}()},
 \code{\link{vec_fmt_fraction}()},
 \code{\link{vec_fmt_integer}()},
 \code{\link{vec_fmt_markdown}()},
+\code{\link{vec_fmt_partsper}()},
 \code{\link{vec_fmt_percent}()},
 \code{\link{vec_fmt_scientific}()},
 \code{\link{vec_fmt_time}()}

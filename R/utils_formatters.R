@@ -17,10 +17,11 @@ filter_table_to_value <- function(
   filtered_tbl <- dplyr::filter(table, !!!filter_args_enquos)
 
   if (nrow(filtered_tbl) != 1) {
+
     cli::cli_abort(c(
       "Internal error in `gt:::filter_table_to_row()`.",
       "*" = "The filtered table doesn't result in a table of exactly one row.",
-      "*" = "Found {nrow(filtered_tbl)) rows."
+      "*" = "Found {nrow(filtered_tbl)} rows."
     ))
   }
 
@@ -430,44 +431,28 @@ to_latex_math_mode <- function(x, context) {
 #' @noRd
 context_missing_text <- function(missing_text, context) {
 
+  is_asis <- inherits(missing_text, "AsIs")
+
   switch(
     context,
-    html =
+    html = ,
+    latex = ,
+    word =
       {
-        if (!inherits(missing_text, "AsIs") && missing_text == "---") {
-          "&mdash;"
-        } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
-          "&ndash;"
-        } else {
-          process_text(missing_text, context)
-        }
-      },
-    latex =
-      {
-        if (!inherits(missing_text, "AsIs") && missing_text == "---") {
-          "\u2014"
-        } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
-          "\u2013"
+        if (!is_asis && missing_text == "---") {
+          "\U02014"
+        } else if (!is_asis && missing_text == "--") {
+          "\U02013"
         } else {
           process_text(missing_text, context)
         }
       },
     rtf =
       {
-        if (!inherits(missing_text, "AsIs") && missing_text == "---") {
+        if (!is_asis && missing_text == "---") {
           "\\'97"
-        } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
+        } else if (!is_asis && missing_text == "--") {
           "\\'96"
-        } else {
-          process_text(missing_text, context)
-        }
-      },
-    word =
-      {
-        if (!inherits(missing_text, "AsIs") && missing_text == "---") {
-          "\u2014"
-        } else if (!inherits(missing_text, "AsIs") && missing_text == "--") {
-          "\u2013"
         } else {
           process_text(missing_text, context)
         }
@@ -483,37 +468,24 @@ context_dash_mark <- context_missing_text
 #' @noRd
 context_plusminus_mark <- function(plusminus_mark, context) {
 
+  is_asis <- inherits(plusminus_mark, "AsIs")
+
   switch(
     context,
-    html =
+    html = ,
+    latex = ,
+    word =
       {
-        if (!inherits(plusminus_mark, "AsIs") && plusminus_mark == " +/- ") {
-          " &plusmn; "
-        } else {
-          plusminus_mark
-        }
-      },
-    latex =
-      {
-        if (!inherits(plusminus_mark, "AsIs") && plusminus_mark == " +/- ") {
-          " \u00B1 "
+        if (!is_asis && plusminus_mark == " +/- ") {
+          " \U000B1 "
         } else {
           plusminus_mark
         }
       },
     rtf =
       {
-        if (!inherits(plusminus_mark, "AsIs") && plusminus_mark == " +/- ") {
+        if (!is_asis && plusminus_mark == " +/- ") {
           " \\'b1 "
-        } else {
-          plusminus_mark
-        }
-      },
-    word =
-      {
-        if (!inherits(plusminus_mark, "AsIs") &&
-            plusminus_mark == " +/- ") {
-          " +/- "
         } else {
           plusminus_mark
         }
@@ -591,7 +563,7 @@ context_minus_mark <- function(context) {
 
   switch(
     context,
-    html = "&minus;",
+    html = "\U02212",
     "-"
   )
 }
@@ -618,10 +590,9 @@ context_permille_mark <- function(context) {
 
   switch(
     context,
-    html = "\U02030",
     latex = "\\textperthousand",
     rtf = "\\'89",
-    "per mille"
+    "\U02030"
   )
 }
 
@@ -633,10 +604,9 @@ context_permyriad_mark <- function(context) {
 
   switch(
     context,
-    html = "\U02031",
     latex = "\\textpertenthousand",
     rtf = "\\uc0\\u8241",
-    "per myriad"
+    "\U02031"
   )
 }
 
@@ -661,11 +631,11 @@ context_exp_marks <- function(context) {
 
   switch(
     context,
-    html = c(" &times; 10<sup class='gt_super'>", "</sup>"),
+    html = c(" \U000D7 10<sup style='font-size: 65%;'>", "</sup>"),
     latex = c(" \\times 10^{", "}"),
     rtf = c(" \\'d7 10{\\super ", "}"),
-    word = c(" x 10^", ""),
-    c(" x 10(", ")")
+    word = c(" \U000D7 10^", ""),
+    c(" \U000D7 10^", "")
   )
 }
 

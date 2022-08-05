@@ -822,23 +822,23 @@ test_that("Default locale settings are honored by formatting functions", {
 
   # `fmt_scientific()`
   (exibble_1 %>% gt() %>% fmt_scientific(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
-    expect_equal("7.77 x 10(5)")
+    expect_equal("7.77 \U000D7 10^5")
   (exibble_1 %>% gt(locale = "fr") %>% fmt_scientific(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
-    expect_equal("7,77 x 10(5)")
+    expect_equal("7,77 \U000D7 10^5")
   (exibble_1 %>% gt(locale = "en") %>% fmt_scientific(num, locale = "fr") %>% render_formats_test(context = "plain"))[["num"]] %>%
-    expect_equal("7,77 x 10(5)")
+    expect_equal("7,77 \U000D7 10^5")
   (exibble_1 %>% gt(locale = "fr") %>% fmt_scientific(num, locale = "de") %>% render_formats_test(context = "plain"))[["num"]] %>%
-    expect_equal("7,77 x 10(5)")
+    expect_equal("7,77 \U000D7 10^5")
 
   # `fmt_engineering()`
   (exibble_1 %>% gt() %>% fmt_engineering(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
-    expect_equal("777.00 x 10(3)")
+    expect_equal("777.00 \U000D7 10^3")
   (exibble_1 %>% gt(locale = "fr") %>% fmt_engineering(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
-    expect_equal("777,00 x 10(3)")
+    expect_equal("777,00 \U000D7 10^3")
   (exibble_1 %>% gt(locale = "en") %>% fmt_engineering(num, locale = "fr") %>% render_formats_test(context = "plain"))[["num"]] %>%
-    expect_equal("777,00 x 10(3)")
+    expect_equal("777,00 \U000D7 10^3")
   (exibble_1 %>% gt(locale = "fr") %>% fmt_engineering(num, locale = "de") %>% render_formats_test(context = "plain"))[["num"]] %>%
-    expect_equal("777,00 x 10(3)")
+    expect_equal("777,00 \U000D7 10^3")
 
   # `fmt_percent()`
   (exibble_1 %>% gt() %>% fmt_percent(num, scale_values = FALSE) %>% render_formats_test(context = "plain"))[["num"]] %>%
