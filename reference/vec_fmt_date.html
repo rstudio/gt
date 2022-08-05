@@ -136,7 +136,7 @@ the possible inputs to <code>date_style</code>.</p>
 <span>  <span class="va">x</span>,</span>
 <span>  date_style <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  pattern <span class="op">=</span> <span class="st">"{x}"</span>,</span>
-<span>  output <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"html"</span>, <span class="st">"latex"</span>, <span class="st">"rtf"</span><span class="op">)</span></span>
+<span>  output <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"auto"</span>, <span class="st">"plain"</span>, <span class="st">"html"</span>, <span class="st">"latex"</span>, <span class="st">"rtf"</span>, <span class="st">"word"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -161,7 +161,9 @@ characters are taken to be string literals.</p></dd>
 
 <dt>output</dt>
 <dd><p>The output style of the resulting character vector. This can
-either be <code>"html"</code> (the default), <code>"latex"</code>, or <code>"rtf"</code>.</p></dd>
+either be <code>"auto"</code> (the default), <code>"plain"</code>, <code>"html"</code>, <code>"latex"</code>, <code>"rtf"</code>,
+or <code>"word"</code>. In <strong>knitr</strong> rendering (i.e., Quarto or R Markdown), the
+<code>"auto"</code> option will choose the correct <code>output</code> value</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -178,29 +180,30 @@ either be <code>"html"</code> (the default), <code>"latex"</code>, or <code>"rtf
 <p>Let's create a character vector of dates in the ISO-8601 format for the next
 few examples:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">str_vals</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2022-06-13"</span>, <span class="st">"2019-01-25"</span>, <span class="st">"2015-03-23"</span>, <span class="cn">NA</span><span class="op">)</span></span></code></pre><p></p></div>
-<p>Using <code>vec_fmt_date()</code> with the default options will create a character vector of
-formatted dates. Any <code>NA</code> values remain as <code>NA</code> values. The rendering context
-is HTML unless specified in the <code>output</code> argument.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/vec_fmt_date.html">vec_fmt_date</a></span><span class="op">(</span><span class="va">str_vals</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Monday, June 13, 2022"    "Friday, January 25, 2019"</span></span>
-<span><span class="co">#&gt; [3] "Monday, March 23, 2015"   NA</span></span></code></pre><p></p></div>
+<p>Using <code>vec_fmt_date()</code> with the default options will create a character
+vector of formatted dates. Any <code>NA</code> values remain as <code>NA</code> values. The
+rendering context will be autodetected unless specified in the <code>output</code>
+argument (here, it is of the <code>"plain"</code> output type).</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/vec_fmt_date.html">vec_fmt_date</a></span><span class="op">(</span><span class="va">str_vals</span><span class="op">)</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1"></a><span class="co">#&gt; [1] "Monday, June 13, 2022" "Friday, January 25, 2019"</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="co">#&gt; [3] "Monday, March 23, 2015" NA</span></span></code></pre><p></p></div>
 <p>We can change the formatting style by choosing a number from <code>1</code> to <code>14</code>:</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/vec_fmt_date.html">vec_fmt_date</a></span><span class="op">(</span><span class="va">str_vals</span>, date_style <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Jun 13, 2022" "Jan 25, 2019" "Mar 23, 2015" NA</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/vec_fmt_date.html">vec_fmt_date</a></span><span class="op">(</span><span class="va">str_vals</span>, date_style <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1"></a><span class="co">#&gt; [1] "Jun 13, 2022" "Jan 25, 2019" "Mar 23, 2015" NA</span></span></code></pre><p></p></div>
 <p>We can always use <code><a href="info_date_style.html">info_date_style()</a></code> to call up an info table that serves as
 a handy reference to all of the date styles.</p>
 <p>As a last example, one can wrap the date values in a pattern with the
 <code>pattern</code> argument. Note here that <code>NA</code> values won't have the pattern
 applied.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/vec_fmt_date.html">vec_fmt_date</a></span><span class="op">(</span><span class="va">str_vals</span>, pattern <span class="op">=</span> <span class="st">"Date: {x}"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Date: Monday, June 13, 2022"    "Date: Friday, January 25, 2019"</span></span>
-<span><span class="co">#&gt; [3] "Date: Monday, March 23, 2015"   NA</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/vec_fmt_date.html">vec_fmt_date</a></span><span class="op">(</span><span class="va">str_vals</span>, pattern <span class="op">=</span> <span class="st">"Date: {x}"</span><span class="op">)</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1"></a><span class="co">#&gt; [1] "Date: Monday, June 13, 2022" "Date: Friday, January 25, 2019"</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="co">#&gt; [3] "Date: Monday, March 23, 2015" NA</span></span></code></pre><p></p></div>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
     
 
-<p>14-9</p>
+<p>14-10</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -208,11 +211,13 @@ applied.</p>
 <code><a href="vec_fmt_bytes.html">vec_fmt_bytes</a>()</code>,
 <code><a href="vec_fmt_currency.html">vec_fmt_currency</a>()</code>,
 <code><a href="vec_fmt_datetime.html">vec_fmt_datetime</a>()</code>,
+<code><a href="vec_fmt_duration.html">vec_fmt_duration</a>()</code>,
 <code><a href="vec_fmt_engineering.html">vec_fmt_engineering</a>()</code>,
 <code><a href="vec_fmt_fraction.html">vec_fmt_fraction</a>()</code>,
 <code><a href="vec_fmt_integer.html">vec_fmt_integer</a>()</code>,
 <code><a href="vec_fmt_markdown.html">vec_fmt_markdown</a>()</code>,
 <code><a href="vec_fmt_number.html">vec_fmt_number</a>()</code>,
+<code><a href="vec_fmt_partsper.html">vec_fmt_partsper</a>()</code>,
 <code><a href="vec_fmt_percent.html">vec_fmt_percent</a>()</code>,
 <code><a href="vec_fmt_scientific.html">vec_fmt_scientific</a>()</code>,
 <code><a href="vec_fmt_time.html">vec_fmt_time</a>()</code></p></div>
