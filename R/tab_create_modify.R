@@ -2242,20 +2242,14 @@ preprocess_tab_option <- function(option, var_name, type) {
       option
     )
 
-  # Perform checkmate assertions by `type`
+  # Perform `stopifnot()` checks by `type`
   switch(
     type,
-    logical = checkmate::assert_logical(
-      option, len = 1, any.missing = FALSE, .var.name = var_name
-    ),
-    overflow =,
-    px =,
-    value = checkmate::assert_character(
-      option, len = 1, any.missing = FALSE, .var.name = var_name
-    ),
-    values = checkmate::assert_character(
-      option, min.len = 1, any.missing = FALSE, .var.name = var_name
-    )
+    logical = stopifnot(rlang::is_scalar_logical(option), !any(is.na(option))),
+    overflow = ,
+    px = ,
+    value = stopifnot(rlang::is_scalar_character(option), !any(is.na(option))),
+    values = stopifnot(rlang::is_character(option), length(option) >= 1, !any(is.na(option)))
   )
 
   option

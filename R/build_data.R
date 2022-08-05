@@ -3,7 +3,8 @@
 #' @noRd
 build_data <- function(data, context) {
 
-  checkmate::assert_class(data, "gt_tbl")
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   # Create `body` with rendered values; move
   # input data cells to `body` that didn't have
