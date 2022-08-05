@@ -90,9 +90,10 @@ cols_align <- function(
       unname(
         sapply(
           col_classes, switch,
+          "character-numeric" = "right",
           "character" = "left",
-          "Date" = "left",
-          "POSIXct" = "left",
+          "Date" = "right",
+          "POSIXct" = "right",
           "logical" = "center",
           "factor" = "center",
           "list" = "center",
