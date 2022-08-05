@@ -78,6 +78,8 @@ cols_align <- function(
 
     # Obtain a vector of column classes for each of the column
     # names
+    col_classes <- unlist(lapply(lapply(data_tbl[column_names], class), `[[`, 1))
+
     col_classes <-
       unlist(
         lapply(
