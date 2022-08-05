@@ -80,11 +80,12 @@ cols_align <- function(
     # names
     col_classes <- unlist(lapply(lapply(data_tbl[column_names], class), `[[`, 1))
 
+    # Check whether all values in 'character' columns are
+    # predominantly 'number-like' and modify `col_classes` accordingly
     col_classes <-
-      unlist(
-        lapply(
-          data_tbl[column_names], class) %>%
-          lapply(`[[`, 1)
+      determine_which_character_number(
+        data_tbl = data_tbl,
+        col_classes = col_classes
       )
 
     # Get a vector of `align` values based on the column classes
