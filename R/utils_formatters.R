@@ -226,12 +226,6 @@ get_currency_decimals <- function(
 #' @noRd
 scale_x_values <- function(x, scale_by) {
 
-  checkmate::assert_numeric(
-    scale_by,
-    finite = TRUE,
-    any.missing = FALSE
-  )
-
   len <- length(scale_by)
 
   # Stop function if the length of `scale_by`
