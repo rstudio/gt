@@ -119,6 +119,27 @@ cols_align <- function(
   data
 }
 
+determine_which_character_number <- function(
+  data_tbl = data_tbl,
+  col_classes = col_classes
+) {
+
+  cols_character <- names(col_classes[col_classes == "character"])
+
+  for (col in cols_character) {
+
+    col_vals <- data_tbl[[col]]
+
+    res <- grepl("^[0-9 -/:\\.]*$", col_vals[!is.na(col_vals)])
+
+    if (length(res) > 0 && all(res)) {
+      col_classes[names(col_classes) == col] <- "character-numeric"
+    }
+  }
+
+  col_classes
+}
+
 #' Set the widths of columns
 #'
 #' @description
