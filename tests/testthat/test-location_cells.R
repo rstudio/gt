@@ -804,9 +804,9 @@ test_that("styles are correctly applied to HTML output with location functions",
         "<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">0.11</td>.*",
         "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">\U02014</td>.*",
         "<td class=\"gt_row gt_center gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">\U02014</td>.*",
-        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">\U02014</td>.*",
-        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">\U02014</td>.*",
-        "<td class=\"gt_row gt_left gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">\U02014</td>.*",
+        "<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">\U02014</td>.*",
+        "<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">\U02014</td>.*",
+        "<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">\U02014</td>.*",
         "<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\" style=\"background-color: #FF0000;\">\U02014</td>"
       )
     ) %>%
@@ -877,9 +877,9 @@ test_that("styles are correctly applied to HTML output with location functions",
           "<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\" style=\"background-color: #FF0000;\">\U02014</td>.*",
           "<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\" style=\"background-color: #FF0000;\">\U02014</td>.*",
           "<td class=\"gt_row gt_center gt_grand_summary_row gt_last_summary_row\" style=\"background-color: #FF0000;\">\U02014</td>.*",
-          "<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\" style=\"background-color: #FF0000;\">\U02014</td>.*",
-          "<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\" style=\"background-color: #FF0000;\">\U02014</td>.*",
-          "<td class=\"gt_row gt_left gt_grand_summary_row gt_last_summary_row\" style=\"background-color: #FF0000;\">\U02014</td>.*",
+          "<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\" style=\"background-color: #FF0000;\">\U02014</td>.*",
+          "<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\" style=\"background-color: #FF0000;\">\U02014</td>.*",
+          "<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\" style=\"background-color: #FF0000;\">\U02014</td>.*",
           "<td class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\" style=\"background-color: #FF0000;\">65,100.00</td>"
       )
     ) %>%
