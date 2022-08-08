@@ -13,7 +13,8 @@ tbl <-
     "2018-02-11",  "7",       349.7,  307.1,  566.7,  542.9,
     "2018-02-11",  "8",        63.7,  504.3,  152.0,  724.5,
     "2018-02-11",  "9",       105.4,  729.8,  962.4,  336.4,
-    "2018-02-11",  "10",      924.2,  424.6,  740.8,  104.2)
+    "2018-02-11",  "10",      924.2,  424.6,  740.8,  104.2
+  )
 
 # Create a table from `tbl` that has all the different components
 data <-
@@ -1525,7 +1526,7 @@ test_that("the row striping options work correctly", {
       render_as_html() %>%
       xml2::read_html() %>%
       selection_text("[class='gt_row gt_right gt_striped']"),
-    20)
+    25)
 
   # Expect that the options `row.striping.include_table_body = TRUE`
   # and `row.striping.include_stub = TRUE` will result in cells that
@@ -1551,7 +1552,7 @@ test_that("the row striping options work correctly", {
         xml2::read_html() %>%
         selection_text("[class='gt_row gt_right gt_striped']")
     ),
-    25
+    30
   )
 
   # Expect that the options `row.striping.include_table_body = FALSE`

@@ -120,7 +120,7 @@ test_that("the `cols_align()` function works correctly", {
   # Expect that the `Date` column is left-formatted because
   # the column is of the `character` class
   tbl_html %>%
-    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_left']") %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_right']") %>%
     rvest::html_text() %>%
-    expect_equal("Date")
+    expect_equal(c("Date", "Open", "High", "Low", "Close", "Volume"))
 })

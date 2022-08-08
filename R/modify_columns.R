@@ -78,11 +78,14 @@ cols_align <- function(
 
     # Obtain a vector of column classes for each of the column
     # names
+    col_classes <- unlist(lapply(lapply(data_tbl[column_names], class), `[[`, 1))
+
+    # Check whether all values in 'character' columns are
+    # predominantly 'number-like' and modify `col_classes` accordingly
     col_classes <-
-      unlist(
-        lapply(
-          data_tbl[column_names], class) %>%
-          lapply(`[[`, 1)
+      determine_which_character_number(
+        data_tbl = data_tbl,
+        col_classes = col_classes
       )
 
     # Get a vector of `align` values based on the column classes
@@ -90,9 +93,10 @@ cols_align <- function(
       unname(
         sapply(
           col_classes, switch,
+          "character-numeric" = "right",
           "character" = "left",
-          "Date" = "left",
-          "POSIXct" = "left",
+          "Date" = "right",
+          "POSIXct" = "right",
           "logical" = "center",
           "factor" = "center",
           "list" = "center",
@@ -117,6 +121,27 @@ cols_align <- function(
   }
 
   data
+}
+
+determine_which_character_number <- function(
+  data_tbl = data_tbl,
+  col_classes = col_classes
+) {
+
+  cols_character <- names(col_classes[col_classes == "character"])
+
+  for (col in cols_character) {
+
+    col_vals <- data_tbl[[col]]
+
+    res <- grepl("^[0-9 -/:\\.]*$", col_vals[!is.na(col_vals)])
+
+    if (length(res) > 0 && all(res)) {
+      col_classes[names(col_classes) == col] <- "character-numeric"
+    }
+  }
+
+  col_classes
 }
 
 #' Set the widths of columns
