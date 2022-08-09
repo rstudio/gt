@@ -61,9 +61,6 @@ cols_align <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Get the internal data table
-  data_tbl <- dt_data_get(data = data)
-
   # Get the `align` value, this stops the function if there is no match
   align <- match.arg(align)
 
@@ -75,6 +72,9 @@ cols_align <- function(
     )
 
   if (align == "auto") {
+
+    # Get the internal data table
+    data_tbl <- dt_data_get(data = data)
 
     # Obtain a vector of column classes for each of the column
     # names
