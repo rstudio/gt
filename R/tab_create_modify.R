@@ -760,6 +760,99 @@ tab_stubhead <- function(
   dt_stubhead_label(data = data, label = label)
 }
 
+#' Control indentation of row labels in the stub
+#'
+#' @description
+#' Indentation of row labels is an effective way for establishing structure in a
+#' table stub. The `tab_stub_indent()` function allows for fine control over
+#' row label indentation through either explicit definition of an indentation
+#' level, or, by way of an indentation directive using keywords.
+#'
+#' @inheritParams fmt_number
+#' @param indent An indentation directive either as a keyword describing the
+#'   indentation change or as an explicit integer value for directly setting the
+#'   indentation level. The keyword `"increase"` (the default) will increase the
+#'   indentation level by one; `"decrease"` will do the same in the reverse
+#'   direction. The starting indentation level of `0` means no indentation and
+#'   it serves as a lower bound.
+#' @param rows The rows to consider for the indentation change. Can either be a
+#'   vector of row captions provided in `c()`, a vector of row indices, or a
+#'   helper function focused on selections. The select helper functions are:
+#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()], and
+#'   [everything()].
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @family part creation/modification functions
+#' @section Function ID:
+#' 2-6
+#'
+#' @export
+tab_stub_indent <- function(
+    data,
+    indent = "increase",
+    rows
+) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  # Capture the `rows` expression
+  row_expr <- rlang::enquo(rows)
+
+  # Get the `stub_df` data frame from `data`
+  stub_df <- dt_stub_df_get(data = data)
+
+  # Resolve the row numbers using the `resolve_vars` function
+  resolved_rows_idx <-
+    resolve_rows_i(
+      expr = !!row_expr,
+      data = data
+    )
+
+  # Set indent levels appropriately
+  # TODO: ensure that targeting occurs via the `row_id` (once that feature is operational)
+  indent_vals <- stub_df[stub_df$rownum_i %in% resolved_rows_idx, ][["indent"]]
+
+  for (i in seq_along(indent_vals)) {
+
+    if (is.na(indent_vals[i])) {
+      indent_val_i <- 0L
+    } else {
+      indent_val_i <- indent_vals[i]
+    }
+
+    if (is.character(indent)) {
+      if (indent == "increase") {
+        indent_val_i <- indent_val_i + 1L
+      } else if (indent == "decrease") {
+        indent_val_i <- indent_val_i + 1L
+      }
+    }
+
+    if (
+      is.numeric(indent) &&
+      !is.na(indent) &&
+      !is.infinite(ident)
+    ) {
+
+      if (ident < 0) {
+        cli::cli_abort(
+          "If given as a numeric value, `indent` should not be negative."
+        )
+      }
+
+      indent_val_i <- as.integer(indent)
+    }
+
+    indent_vals[i] <- as.character(indent_val_i)
+  }
+
+  stub_df[stub_df$rownum_i %in% resolved_rows_idx, ][["indent"]] <- indent_vals
+
+  dt_stub_df_set(data = data, stub_df = stub_df)
+}
+
 #' Add a table footnote
 #'
 #' @description
