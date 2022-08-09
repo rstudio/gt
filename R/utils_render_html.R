@@ -788,11 +788,10 @@ create_body_component_h <- function(data) {
 
   # Get the number of rows in the body
   n_rows <- nrow(cell_matrix)
-
   # Get the column alignments and also the alignment class names
   col_alignment <-
     c(
-      rep("right", length(stub_layout)),
+      dt_boxhead_get_alignments_in_stub(data = data),
       dt_boxhead_get_vars_align_default(data = data)
     )
 
@@ -1394,6 +1393,7 @@ summary_row_tags_i <- function(data, group_id) {
   # alignments corresponding to the summary row cells (from the body rows)
   col_alignment <- c("left", dt_boxhead_get_vars_align_default(data = data))
 
+  # Construct the alignment class names
   alignment_classes <- paste0("gt_", col_alignment)
 
   for (j in seq_len(nrow(summary_df))) {
@@ -1402,15 +1402,35 @@ summary_row_tags_i <- function(data, group_id) {
 
     if (summary_row_type == "grand") {
 
-      styles_resolved_row <- dt_styles_pluck(styles_tbl, locname = "grand_summary_cells", grpname = group_id, rownum = j)
+      styles_resolved_row <-
+        dt_styles_pluck(
+          styles_tbl = styles_tbl,
+          locname = "grand_summary_cells",
+          grpname = group_id,
+          rownum = j
+        )
+
       summary_row_class <- "gt_grand_summary_row"
       first_row_class <- "gt_first_grand_summary_row"
 
     } else {
 
-      styles_resolved_row <- dt_styles_pluck(styles_tbl, locname = "summary_cells", grpname = group_id, grprow = j)
+      styles_resolved_row <-
+        dt_styles_pluck(
+          styles_tbl = styles_tbl,
+          locname = "summary_cells",
+          grpname = group_id,
+          grprow = j
+        )
+
       summary_row_class <- "gt_summary_row"
-      first_row_class <- if ("rowname" %in% stub_layout) "gt_first_summary_row thick" else "gt_first_summary_row"
+
+      first_row_class <-
+        if ("rowname" %in% stub_layout) {
+          "gt_first_summary_row thick"
+        } else {
+          "gt_first_summary_row"
+        }
     }
 
     row_styles <-
