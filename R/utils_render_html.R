@@ -1390,9 +1390,10 @@ summary_row_tags_i <- function(data, group_id) {
     col_span_vals[[1]] <- 2L
   }
 
-  # Get the column alignments and also the alignment class names
-  col_alignment <-
-    c("right", dt_boxhead_get_vars_align_default(data = data))
+  # Default to a left alignment for the summary row labels and obtain the
+  # alignments corresponding to the summary row cells (from the body rows)
+  col_alignment <- c("left", dt_boxhead_get_vars_align_default(data = data))
+
   alignment_classes <- paste0("gt_", col_alignment)
 
   for (j in seq_len(nrow(summary_df))) {
