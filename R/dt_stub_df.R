@@ -23,6 +23,7 @@ dt_stub_df_init <- function(
       rownum_i = seq_len(nrow(data_tbl)),
       group_id = rep(NA_character_, nrow(data_tbl)),
       rowname = rep(NA_character_, nrow(data_tbl)),
+      row_id = rep(NA_character_, nrow(data_tbl)),
       group_label = rep(list(NULL), nrow(data_tbl)),
       indent = rep(NA_character_, nrow(data_tbl)),
       built = rep(NA_character_, nrow(data_tbl))
