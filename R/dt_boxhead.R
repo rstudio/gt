@@ -187,6 +187,26 @@ dt_boxhead_get_vars_groups <- function(data) {
   }
 }
 
+dt_boxhead_get_alignments_in_stub <- function(data) {
+
+  stub_layout <- get_stub_layout(data = data)
+
+  c(
+    if ("group_label" %in% stub_layout) {
+      dt_boxhead_get_alignment_by_var(
+        data = data,
+        dt_boxhead_get_vars_groups(data = data)
+      )
+    },
+    if ("rowname" %in% stub_layout) {
+      dt_boxhead_get_alignment_by_var(
+        data = data,
+        dt_boxhead_get_var_stub(data = data)
+      )
+    }
+  )
+}
+
 dt_boxhead_get_var_by_type <- function(data, type) {
   boxhead <- dt_boxhead_get(data = data)
   boxhead$var[boxhead$type == type]
