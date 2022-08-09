@@ -552,6 +552,7 @@ test_that("The `gt()` `rowname_col` arg will be overridden by `rownames_to_stub 
         group_id = NA_character_,
         rowname = rownames(mtcars)[1:10],
         group_label = list(NULL),
+        indent = NA_character_,
         built = ""
       ),
       ignore_attr = TRUE
@@ -623,6 +624,7 @@ test_that("The `rowname` column will be safely included when `rownames_to_stub =
         group_id = NA_character_,
         rowname = as.character(1:8),
         group_label = list(NULL),
+        indent = NA_character_,
         built = ""
       ),
       ignore_attr = TRUE
