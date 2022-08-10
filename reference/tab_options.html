@@ -169,6 +169,7 @@ components, the subcomponents, and the element that can adjusted.</p>
 <span>  stub.border.style <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  stub.border.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  stub.border.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stub.indent_length <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  stub_row_group.font.size <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  stub_row_group.font.weight <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  stub_row_group.text_transform <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -452,6 +453,11 @@ the <code>table_body</code> location.</p></dd>
 stub.</p></dd>
 
 
+<dt>stub.indent_length</dt>
+<dd><p>The width of each indentation level. By default
+this is <code>"5px"</code>.</p></dd>
+
+
 <dt>stub_row_group.font.size, stub_row_group.font.weight, stub_row_group.text_transform, stub_row_group.border.style, stub_row_group.border.width, stub_row_group.border.color</dt>
 <dd><p>Options for the row group column in the stub (made possible when using
 <code>row_group.as_column = TRUE</code>). The defaults for these options mirror that
@@ -655,7 +661,7 @@ the footer by spaces instead of newlines.</p>
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
     
 
-<p>2-9</p>
+<p>2-10</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -666,6 +672,7 @@ the footer by spaces instead of newlines.</p>
 <code><a href="tab_source_note.html">tab_source_note</a>()</code>,
 <code><a href="tab_spanner_delim.html">tab_spanner_delim</a>()</code>,
 <code><a href="tab_spanner.html">tab_spanner</a>()</code>,
+<code><a href="tab_stub_indent.html">tab_stub_indent</a>()</code>,
 <code><a href="tab_stubhead.html">tab_stubhead</a>()</code>,
 <code><a href="tab_style.html">tab_style</a>()</code></p></div>
     </div>
