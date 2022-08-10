@@ -107,6 +107,7 @@ tab_options(
   stub.border.style = NULL,
   stub.border.width = NULL,
   stub.border.color = NULL,
+  stub.indent_length = NULL,
   stub_row_group.font.size = NULL,
   stub_row_group.font.weight = NULL,
   stub_row_group.text_transform = NULL,
@@ -323,6 +324,9 @@ the \code{table_body} location.}
 
 \item{stub.border.style, stub.border.width, stub.border.color}{The style, width, and color properties for the vertical border of the table
 stub.}
+
+\item{stub.indent_length}{The width of each indentation level. By default
+this is \code{"5px"}.}
 
 \item{stub_row_group.font.size, stub_row_group.font.weight, stub_row_group.text_transform, stub_row_group.border.style, stub_row_group.border.width, stub_row_group.border.color}{Options for the row group column in the stub (made possible when using
 \code{row_group.as_column = TRUE}). The defaults for these options mirror that
