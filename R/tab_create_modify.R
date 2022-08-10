@@ -774,8 +774,8 @@ tab_stubhead <- function(
 #'   indentation level. The keyword `"increase"` (the default) will increase the
 #'   indentation level by one; `"decrease"` will do the same in the reverse
 #'   direction. The starting indentation level of `0` means no indentation and
-#'   it serves as a lower bound. The upper bound for indentation is at level
-#'   `5`.
+#'   this values serves as a lower bound. The upper bound for indentation is at
+#'   level `5`.
 #' @param rows The rows to consider for the indentation change. Can either be a
 #'   vector of row captions provided in `c()`, a vector of row indices, or a
 #'   helper function focused on selections. The select helper functions are:
@@ -819,33 +819,47 @@ tab_stub_indent <- function(
 
     if (is.na(indent_vals[i])) {
       indent_val_i <- 0L
+    } else if (grepl("^[0-9]$", indent_vals[i])) {
+      indent_val_i <- as.integer(indent_vals[i])
     } else {
       indent_val_i <- indent_vals[i]
     }
 
+    # Modify `indent_val_i` based on keyword directives
     if (is.character(indent)) {
+
+      # Move `indent_val_i` up or down by one
       if (indent == "increase") {
         indent_val_i <- indent_val_i + 1L
       } else if (indent == "decrease") {
-        indent_val_i <- indent_val_i + 1L
+        indent_val_i <- indent_val_i - 1L
       }
+
+      # Set hard boundaries on the indentation value (LB is `0`, UB is `5`)
+      if (indent_val_i > 5) indent_val_i <- 5L
+      if (indent_val_i < 0) indent_val_i <- 0L
     }
 
+    # Modify `indent_val_i` using a fixed value
     if (
       is.numeric(indent) &&
       !is.na(indent) &&
       !is.infinite(indent)
     ) {
 
-      if (indent < 0) {
-        cli::cli_abort(
-          "If given as a numeric value, `indent` should not be negative."
-        )
+      # Stop function if `indent` value doesn't fall into the acceptable range
+      if (indent < 0 | indent > 5) {
+        cli::cli_abort(c(
+          "If given as a numeric value, `indent` should be one of the following:",
+          "*" = "0, 1, 2, 3, 4, or 5"
+        ))
       }
 
+      # Coerce `indent` to an integer value
       indent_val_i <- as.integer(indent)
     }
 
+    # Ensure that `indent_val_i` is assigned to indent_vals as a character value
     indent_vals[i] <- as.character(indent_val_i)
   }
 
@@ -937,7 +951,7 @@ tab_stub_indent <- function(
 #'
 #' @family part creation/modification functions
 #' @section Function ID:
-#' 2-6
+#' 2-7
 #'
 #' @export
 tab_footnote <- function(
@@ -1260,7 +1274,7 @@ set_footnote.cells_footnotes <- function(loc, data, footnote, placement) {
 #'
 #' @family part creation/modification functions
 #' @section Function ID:
-#' 2-7
+#' 2-89
 #'
 #' @export
 tab_source_note <- function(
@@ -1409,7 +1423,7 @@ tab_source_note <- function(
 #'
 #' @family part creation/modification functions
 #' @section Function ID:
-#' 2-8
+#' 2-9
 #'
 #' @seealso [cell_text()], [cell_fill()], and [cell_borders()] as helpers for
 #'   defining custom styles and [cells_body()] as one of many useful helper
@@ -2098,7 +2112,7 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'
 #' @family part creation/modification functions
 #' @section Function ID:
-#' 2-9
+#' 2-10
 #'
 #' @export
 tab_options <- function(
