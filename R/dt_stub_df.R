@@ -178,3 +178,14 @@ dt_stub_rowname_at_position <- function(data, i) {
 
   dt_stub_df_get(data = data)$rowname[[i]]
 }
+
+dt_stub_indentation_at_position <- function(data, i) {
+
+  indent_i <- dt_stub_df_get(data = data)$indent[[i]]
+
+  if (is.na(indent_i)) {
+    return(NULL)
+  }
+
+  as.integer(indent_i)
+}
