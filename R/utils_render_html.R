@@ -788,6 +788,7 @@ create_body_component_h <- function(data) {
 
   # Get the number of rows in the body
   n_rows <- nrow(cell_matrix)
+
   # Get the column alignments and also the alignment class names
   col_alignment <-
     c(
@@ -843,6 +844,7 @@ create_body_component_h <- function(data) {
   if (length(stub_layout) > 0) {
 
     if ("rowname" %in% stub_layout) {
+
       row_label_col <- which(stub_layout == "rowname")
 
       extra_classes_1[[row_label_col]] <- "gt_stub"
@@ -861,10 +863,13 @@ create_body_component_h <- function(data) {
 
         body_section <- list()
 
-        group_info <- groups_rows_df[groups_rows_df$row_start == i, c("group_id", "group_label")]
+        group_info <-
+          groups_rows_df[groups_rows_df$row_start == i, c("group_id", "group_label")]
+
         if (nrow(group_info) == 0) {
           group_info <- NULL
         }
+
         group_id <- group_info[["group_id"]]
         group_label <- group_info[["group_label"]]
 
@@ -875,7 +880,13 @@ create_body_component_h <- function(data) {
           !is.null(group_id) &&
           !("group_label" %in% stub_layout)
         ) {
-          row_style <- dt_styles_pluck(styles_tbl, locname = "row_groups", grpname = group_id)$html_style
+
+          row_style <-
+            dt_styles_pluck(
+              styles_tbl = styles_tbl,
+              locname = "row_groups",
+              grpname = group_id
+            )$html_style
 
           group_class <-
             if (group_label == "") {
@@ -902,9 +913,29 @@ create_body_component_h <- function(data) {
         # Create a body row
         #
 
+        indentation_stub <-
+          dt_stub_indentation_at_position(
+            data = data,
+            i = i
+          )
+
         extra_classes <- if (i %% 2 == 0) extra_classes_2 else extra_classes_1
 
-        styles_row <- dt_styles_pluck(styles_tbl, locname = c("data", "stub"), rownum = i)
+        if (!is.null(indentation_stub)) {
+
+          extra_classes[[row_label_col]] <-
+            paste(
+              extra_classes[[row_label_col]],
+              paste0("gt_indent_", indentation_stub)
+            )
+        }
+
+        styles_row <-
+          dt_styles_pluck(
+            styles_tbl = styles_tbl,
+            locname = c("data", "stub"),
+            rownum = i
+          )
 
         row_styles <-
           build_row_styles(
@@ -943,7 +974,13 @@ create_body_component_h <- function(data) {
 
             # Process row group styles if there is an indication that some
             # are present
-            row_group_style <- dt_styles_pluck(styles_tbl, locname = "row_groups", grpname = group_id)$html_style
+            row_group_style <-
+              dt_styles_pluck(
+                styles_tbl = styles_tbl,
+                locname = "row_groups",
+                grpname = group_id
+              )$html_style
+
             # Add style of row group cell to vector
             row_styles <- c(list(row_group_style), row_styles)
 
