@@ -921,7 +921,7 @@ create_body_component_h <- function(data) {
 
         extra_classes <- if (i %% 2 == 0) extra_classes_2 else extra_classes_1
 
-        if (!is.null(indentation_stub)) {
+        if (!is.null(indentation_stub) && indentation_stub != 0) {
 
           extra_classes[[row_label_col]] <-
             paste(
