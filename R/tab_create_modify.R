@@ -760,6 +760,114 @@ tab_stubhead <- function(
   dt_stubhead_label(data = data, label = label)
 }
 
+#' Control indentation of row labels in the stub
+#'
+#' @description
+#' Indentation of row labels is an effective way for establishing structure in a
+#' table stub. The `tab_stub_indent()` function allows for fine control over
+#' row label indentation through either explicit definition of an indentation
+#' level, or, by way of an indentation directive using keywords.
+#'
+#' @inheritParams fmt_number
+#' @param indent An indentation directive either as a keyword describing the
+#'   indentation change or as an explicit integer value for directly setting the
+#'   indentation level. The keyword `"increase"` (the default) will increase the
+#'   indentation level by one; `"decrease"` will do the same in the reverse
+#'   direction. The starting indentation level of `0` means no indentation and
+#'   this values serves as a lower bound. The upper bound for indentation is at
+#'   level `5`.
+#' @param rows The rows to consider for the indentation change. Can either be a
+#'   vector of row captions provided in `c()`, a vector of row indices, or a
+#'   helper function focused on selections. The select helper functions are:
+#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()], and
+#'   [everything()].
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @family part creation/modification functions
+#' @section Function ID:
+#' 2-6
+#'
+#' @export
+tab_stub_indent <- function(
+    data,
+    indent = "increase",
+    rows
+) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  # Capture the `rows` expression
+  row_expr <- rlang::enquo(rows)
+
+  # Get the `stub_df` data frame from `data`
+  stub_df <- dt_stub_df_get(data = data)
+
+  # Resolve the row numbers using the `resolve_vars` function
+  resolved_rows_idx <-
+    resolve_rows_i(
+      expr = !!row_expr,
+      data = data
+    )
+
+  # Set indent levels appropriately
+  # TODO: ensure that targeting occurs via the `row_id` (once that feature is operational)
+  indent_vals <- stub_df[stub_df$rownum_i %in% resolved_rows_idx, ][["indent"]]
+
+  for (i in seq_along(indent_vals)) {
+
+    if (is.na(indent_vals[i])) {
+      indent_val_i <- 0L
+    } else if (grepl("^[0-9]$", indent_vals[i])) {
+      indent_val_i <- as.integer(indent_vals[i])
+    } else {
+      indent_val_i <- indent_vals[i]
+    }
+
+    # Modify `indent_val_i` based on keyword directives
+    if (is.character(indent)) {
+
+      # Move `indent_val_i` up or down by one
+      if (indent == "increase") {
+        indent_val_i <- indent_val_i + 1L
+      } else if (indent == "decrease") {
+        indent_val_i <- indent_val_i - 1L
+      }
+
+      # Set hard boundaries on the indentation value (LB is `0`, UB is `5`)
+      if (indent_val_i > 5) indent_val_i <- 5L
+      if (indent_val_i < 0) indent_val_i <- 0L
+    }
+
+    # Modify `indent_val_i` using a fixed value
+    if (
+      is.numeric(indent) &&
+      !is.na(indent) &&
+      !is.infinite(indent)
+    ) {
+
+      # Stop function if `indent` value doesn't fall into the acceptable range
+      if (indent < 0 | indent > 5) {
+        cli::cli_abort(c(
+          "If given as a numeric value, `indent` should be one of the following:",
+          "*" = "0, 1, 2, 3, 4, or 5"
+        ))
+      }
+
+      # Coerce `indent` to an integer value
+      indent_val_i <- as.integer(indent)
+    }
+
+    # Ensure that `indent_val_i` is assigned to indent_vals as a character value
+    indent_vals[i] <- as.character(indent_val_i)
+  }
+
+  stub_df[stub_df$rownum_i %in% resolved_rows_idx, ][["indent"]] <- indent_vals
+
+  dt_stub_df_set(data = data, stub_df = stub_df)
+}
+
 #' Add a table footnote
 #'
 #' @description
@@ -843,7 +951,7 @@ tab_stubhead <- function(
 #'
 #' @family part creation/modification functions
 #' @section Function ID:
-#' 2-6
+#' 2-7
 #'
 #' @export
 tab_footnote <- function(
@@ -1166,7 +1274,7 @@ set_footnote.cells_footnotes <- function(loc, data, footnote, placement) {
 #'
 #' @family part creation/modification functions
 #' @section Function ID:
-#' 2-7
+#' 2-89
 #'
 #' @export
 tab_source_note <- function(
@@ -1315,7 +1423,7 @@ tab_source_note <- function(
 #'
 #' @family part creation/modification functions
 #' @section Function ID:
-#' 2-8
+#' 2-9
 #'
 #' @seealso [cell_text()], [cell_fill()], and [cell_borders()] as helpers for
 #'   defining custom styles and [cells_body()] as one of many useful helper
@@ -1824,6 +1932,8 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   they are separate rows that lie above the each of the groups. Setting this
 #'   to `TRUE` will structure row group labels are columns to the far left of
 #'   the table.
+#' @param stub.indent_length The width of each indentation level. By default
+#'   this is `"5px"`.
 #' @param summary_row.border.style,summary_row.border.width,summary_row.border.color
 #'   The style, width, and color properties for all horizontal borders of the
 #'   `summary_row` location.
@@ -2002,7 +2112,7 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'
 #' @family part creation/modification functions
 #' @section Function ID:
-#' 2-9
+#' 2-10
 #'
 #' @export
 tab_options <- function(
@@ -2108,6 +2218,7 @@ tab_options <- function(
     stub.border.style = NULL,
     stub.border.width = NULL,
     stub.border.color = NULL,
+    stub.indent_length = NULL,
     stub_row_group.font.size = NULL,
     stub_row_group.font.weight = NULL,
     stub_row_group.text_transform = NULL,

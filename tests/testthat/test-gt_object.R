@@ -551,7 +551,9 @@ test_that("The `gt()` `rowname_col` arg will be overridden by `rownames_to_stub 
         rownum_i = 1:10,
         group_id = NA_character_,
         rowname = rownames(mtcars)[1:10],
+        row_id = rownames(mtcars)[1:10],
         group_label = list(NULL),
+        indent = NA_character_,
         built = ""
       ),
       ignore_attr = TRUE
@@ -622,7 +624,9 @@ test_that("The `rowname` column will be safely included when `rownames_to_stub =
         rownum_i = 1:8,
         group_id = NA_character_,
         rowname = as.character(1:8),
+        row_id = as.character(1:8),
         group_label = list(NULL),
+        indent = NA_character_,
         built = ""
       ),
       ignore_attr = TRUE
@@ -707,7 +711,7 @@ test_that("Escapable characters in rownames are handled correctly in each output
   expect_match( # stub from data frame's row names
     gt(tbl, rownames_to_stub = TRUE) %>%
       render_as_html(),
-    "<tr><th scope=\"row\" class=\"gt_row gt_right gt_stub\">&lt;em&gt;row_html&lt;/em&gt;</th>",
+    "<tr><th scope=\"row\" class=\"gt_row gt_left gt_stub\">&lt;em&gt;row_html&lt;/em&gt;</th>",
     fixed = TRUE
   )
   expect_match( # `column_1`
@@ -727,7 +731,7 @@ test_that("Escapable characters in rownames are handled correctly in each output
   expect_match( # stub from `column_1`
     gt(dplyr::as_tibble(tbl), rowname_col = "column_1") %>%
       render_as_html(),
-    "<tr><th scope=\"row\" class=\"gt_row gt_right gt_stub\">&lt;em&gt;html&lt;/em&gt;</th>",
+    "<tr><th scope=\"row\" class=\"gt_row gt_left gt_stub\">&lt;em&gt;html&lt;/em&gt;</th>",
     fixed = TRUE
   )
   expect_match( # `column_2`

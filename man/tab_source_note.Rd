@@ -43,7 +43,7 @@ source note to the table footer that cites the data source.
 
 \section{Function ID}{
 
-2-7
+2-89
 }
 
 \seealso{
@@ -54,6 +54,7 @@ Other part creation/modification functions:
 \code{\link{tab_row_group}()},
 \code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
+\code{\link{tab_stub_indent}()},
 \code{\link{tab_stubhead}()},
 \code{\link{tab_style}()}
 }

@@ -100,7 +100,7 @@ Use \code{\link{sza}} to create a \strong{gt} table. Color the \code{sza} column
 
 \section{Function ID}{
 
-2-6
+2-7
 }
 
 \seealso{
@@ -111,6 +111,7 @@ Other part creation/modification functions:
 \code{\link{tab_source_note}()},
 \code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
+\code{\link{tab_stub_indent}()},
 \code{\link{tab_stubhead}()},
 \code{\link{tab_style}()}
 }

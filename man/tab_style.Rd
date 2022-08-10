@@ -140,7 +140,7 @@ Use \code{\link{exibble}} to create a \strong{gt} table. Replace missing values 
 
 \section{Function ID}{
 
-2-8
+2-9
 }
 
 \seealso{
@@ -156,6 +156,7 @@ Other part creation/modification functions:
 \code{\link{tab_source_note}()},
 \code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
+\code{\link{tab_stub_indent}()},
 \code{\link{tab_stubhead}()}
 }
 \concept{part creation/modification functions}
