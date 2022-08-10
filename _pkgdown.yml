@@ -37,6 +37,7 @@ reference:
     - tab_spanner_delim
     - tab_row_group
     - tab_stubhead
+    - tab_stub_indent
     - tab_footnote
     - tab_source_note
     - tab_style
