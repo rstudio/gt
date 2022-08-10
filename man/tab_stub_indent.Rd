@@ -14,8 +14,8 @@ indentation change or as an explicit integer value for directly setting the
 indentation level. The keyword \code{"increase"} (the default) will increase the
 indentation level by one; \code{"decrease"} will do the same in the reverse
 direction. The starting indentation level of \code{0} means no indentation and
-it serves as a lower bound. The upper bound for indentation is at level
-\code{5}.}
+this values serves as a lower bound. The upper bound for indentation is at
+level \code{5}.}
 
 \item{rows}{The rows to consider for the indentation change. Can either be a
 vector of row captions provided in \code{c()}, a vector of row indices, or a

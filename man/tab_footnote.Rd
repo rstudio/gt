@@ -100,7 +100,7 @@ Use \code{\link{sza}} to create a \strong{gt} table. Color the \code{sza} column
 
 \section{Function ID}{
 
-2-6
+2-7
 }
 
 \seealso{
