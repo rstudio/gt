@@ -774,7 +774,8 @@ tab_stubhead <- function(
 #'   indentation level. The keyword `"increase"` (the default) will increase the
 #'   indentation level by one; `"decrease"` will do the same in the reverse
 #'   direction. The starting indentation level of `0` means no indentation and
-#'   it serves as a lower bound.
+#'   it serves as a lower bound. The upper bound for indentation is at level
+#'   `5`.
 #' @param rows The rows to consider for the indentation change. Can either be a
 #'   vector of row captions provided in `c()`, a vector of row indices, or a
 #'   helper function focused on selections. The select helper functions are:
@@ -833,10 +834,10 @@ tab_stub_indent <- function(
     if (
       is.numeric(indent) &&
       !is.na(indent) &&
-      !is.infinite(ident)
+      !is.infinite(indent)
     ) {
 
-      if (ident < 0) {
+      if (indent < 0) {
         cli::cli_abort(
           "If given as a numeric value, `indent` should not be negative."
         )
@@ -1917,6 +1918,8 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   they are separate rows that lie above the each of the groups. Setting this
 #'   to `TRUE` will structure row group labels are columns to the far left of
 #'   the table.
+#' @param stub.indent_length The width of each indentation level. By default
+#'   this is `"5px"`.
 #' @param summary_row.border.style,summary_row.border.width,summary_row.border.color
 #'   The style, width, and color properties for all horizontal borders of the
 #'   `summary_row` location.
@@ -2201,6 +2204,7 @@ tab_options <- function(
     stub.border.style = NULL,
     stub.border.width = NULL,
     stub.border.color = NULL,
+    stub.indent_length = NULL,
     stub_row_group.font.size = NULL,
     stub_row_group.font.weight = NULL,
     stub_row_group.text_transform = NULL,
