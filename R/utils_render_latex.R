@@ -301,6 +301,37 @@ create_body_component_l <- function(data) {
   # character vectors by row, and create a vector of LaTeX body rows
   cell_matrix <- get_body_component_cell_matrix(data = data)
   row_splits_body <- split_row_content(cell_matrix)
+
+  # Insert indentation where necessary
+  if (has_stub_column && any(!is.na(stub_df$indent))) {
+
+    stub_indent_length <-
+      dt_options_get_value(
+        data = data,
+        option = "stub_indent_length"
+      )
+
+    indent_length_px <- as.integer(gsub("px", "", stub_indent_length))
+
+    row_label_col <- which(stub_layout == "rowname")
+
+    lapply(
+      seq_len(n_rows),
+      FUN = function(x) {
+
+        indent <- as.integer(stub_df[x, ][["indent"]])
+
+        if (!is.na(indent)) {
+          row_splits_body[[x]][row_label_col] <<-
+            paste0(
+              "\\hspace*{", indent_length_px * indent, "px} ",
+              row_splits_body[[x]][row_label_col]
+            )
+        }
+      }
+    )
+  }
+
   body_rows <- create_body_rows_l(row_splits_body = row_splits_body)
 
   # Replace an NA group with an empty string
