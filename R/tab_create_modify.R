@@ -784,6 +784,69 @@ tab_stubhead <- function(
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @section Examples:
+#'
+#' Use [`pizzaplace`] to create a **gt** table. With `tab_stub_indent()` we can
+#' add indentation to targeted row labels in the stub. Here we target the
+#' different pizza sizes and avoid selecting the repeating `"All Sizes"` row
+#' label.
+#'
+#' ```r
+#' dplyr::bind_rows(
+#'   pizzaplace %>%
+#'     dplyr::group_by(type, size) %>%
+#'     dplyr::summarize(
+#'       sold = n(),
+#'       income = sum(price),
+#'       .groups = "drop_last"
+#'     ) %>%
+#'     dplyr::summarize(
+#'       sold = sum(sold),
+#'       income = sum(income),
+#'       size = "All Sizes",
+#'       .groups = "drop"
+#'     ),
+#'   pizzaplace %>%
+#'     dplyr::group_by(type, size) %>%
+#'     dplyr::summarize(
+#'       sold = n(),
+#'       income = sum(price),
+#'       .groups = "drop"
+#'     )
+#' ) %>%
+#'   gt(rowname_col = "size", groupname_col = "type") %>%
+#'   tab_header(title = "Pizzas Sold in 2015") %>%
+#'   fmt_number(
+#'     columns = sold,
+#'     decimals = 0,
+#'     use_seps = TRUE
+#'   ) %>%
+#'   fmt_currency(
+#'     columns = income,
+#'     currency = "USD"
+#'   ) %>%
+#'   tab_options(
+#'     summary_row.background.color = "#ACEACE",
+#'     row_group.background.color = "#FFEFDB",
+#'     row_group.as_column = TRUE
+#'   ) %>%
+#'   tab_stub_indent(
+#'     indent = 2,
+#'     rows = matches("^L|^M|^S|^XL|^XXL")
+#'   ) %>%
+#'   tab_style(
+#'     style = cell_fill(color = "gray95"),
+#'     locations = list(
+#'       cells_body(rows = matches("^All")),
+#'       cells_stub(rows = matches("^All"))
+#'     )
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_stub_indent_1.png")`
+#' }}
+#'
 #' @family part creation/modification functions
 #' @section Function ID:
 #' 2-6
@@ -812,7 +875,6 @@ tab_stub_indent <- function(
     )
 
   # Set indent levels appropriately
-  # TODO: ensure that targeting occurs via the `row_id` (once that feature is operational)
   indent_vals <- stub_df[stub_df$rownum_i %in% resolved_rows_idx, ][["indent"]]
 
   for (i in seq_along(indent_vals)) {
