@@ -77,7 +77,6 @@ create_table_start_l <- function(data) {
   # Generate setup statements for table including default right
   # alignments and vertical lines for any stub columns
   paste0(
-    "\\captionsetup[table]{labelformat=empty,skip=1pt}\n",
     longtable_post_length,
     "\\begin{longtable}{",
     if (length(stub_layout) > 0) {
