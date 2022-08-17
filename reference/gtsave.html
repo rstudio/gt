@@ -81,8 +81,8 @@ filename, producing either an HTML, PDF, PNG, LaTeX, or RTF file.</p>
 <dt>filename</dt>
 <dd><p>The file name to create on disk. Ensure that an extension
 compatible with the output types is provided (<code>.html</code>, <code>.tex</code>, <code>.ltx</code>,
-<code>.rtf</code>, <code>.docx</code>). If a custom save function is provided then the file extension is
-disregarded.</p></dd>
+<code>.rtf</code>, <code>.docx</code>). If a custom save function is provided then the file
+extension is disregarded.</p></dd>
 
 
 <dt>path</dt>
@@ -95,6 +95,12 @@ filename).</p></dd>
 function.</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    
+
+<p>Invisibly returns <code>TRUE</code> if the export process is successful.</p>
+    </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Output filenames with either the <code>.html</code> or <code>.htm</code> extensions will produce an
@@ -124,9 +130,10 @@ image, and has a default value of <code>5</code>), and <code>selector</code> (th
 LaTeX document is produced. An output filename of <code>.rtf</code> will generate an RTF
 document. The LaTeX and RTF saving functions don't have any options to pass
 to <code>...</code>.</p>
-<p>If the output filename extension is ".docx", a docx (word) file is produced. This process is
-facilitated by the <strong>rmarkdown</strong> package, so this package needs to be installed beofre attempting
-to save any table as a docx.</p>
+<p>If the output filename extension is <code>.docx</code>, a Word document file is
+produced. This process is facilitated by the <strong>rmarkdown</strong> package, so this
+package needs to be installed before attempting to save any table as a
+<code>.docx</code> document.</p>
     </div>
     <div class="section level2">
     <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
