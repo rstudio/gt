@@ -386,3 +386,17 @@
       
       }
 
+# Footnotes are correctly placed with text produced by `fmt_markdown()`
+
+    Code
+      .
+    Output
+      [1] "<table class=\"gt_table\">\n  \n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\">char</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td class=\"gt_row gt_left\"><div class='gt_from_md'><p>apricot<sup class=\"gt_footnote_marks\">1</sup></p></div></td></tr>\n  </tbody>\n  \n  <tfoot class=\"gt_footnotes\">\n    <tr>\n      <td class=\"gt_footnote\" colspan=\"1\"><sup class=\"gt_footnote_marks\">1</sup> note</td>\n    </tr>\n  </tfoot>\n</table>"
+
+---
+
+    Code
+      .
+    Output
+      [1] "<table class=\"gt_table\">\n  \n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\">char</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td class=\"gt_row gt_left\"><div class='gt_from_md'><p><sup class=\"gt_footnote_marks\">1</sup> apricot</p>\n</div></td></tr>\n  </tbody>\n  \n  <tfoot class=\"gt_footnotes\">\n    <tr>\n      <td class=\"gt_footnote\" colspan=\"1\"><sup class=\"gt_footnote_marks\">1</sup> note</td>\n    </tr>\n  </tfoot>\n</table>"
+
