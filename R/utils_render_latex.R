@@ -152,9 +152,32 @@ create_heading_component_l <- function(data) {
     subtitle_row <- ""
   }
 
+  # Get the heading alignment option value
+  heading_align <-
+    dt_options_get_value(
+      data = data,
+      option = "heading_align"
+    )
+
+  # Translate the heading alignment option value to a LaTeX
+  # 'justification' option
+  latex_justification <-
+    switch(
+      heading_align,
+      center = "centering",
+      left = "raggedright",
+      right = "raggedleft",
+      "centering"
+    )
+
   paste_between(
     paste0(title_row, subtitle_row),
-    x_2 = c("\\captionsetup{justification=centering}\\caption*{\n", "\n} \\\\ \n")
+    x_2 = c(
+      paste0(
+        "\\captionsetup{justification=",
+        latex_justification,
+        "}\\caption*{\n"), "\n} \\\\ \n"
+    )
   )
 }
 
