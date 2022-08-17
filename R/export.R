@@ -165,6 +165,8 @@ gtsave <- function(
       ))
     }
   )
+
+  invisible(TRUE)
 }
 
 #' Saving function for an HTML file
