@@ -400,3 +400,155 @@
     Output
       [1] "<table class=\"gt_table\">\n  \n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\">char</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td class=\"gt_row gt_left\"><div class='gt_from_md'><p><sup class=\"gt_footnote_marks\">1</sup> apricot</p>\n</div></td></tr>\n  </tbody>\n  \n  <tfoot class=\"gt_footnotes\">\n    <tr>\n      <td class=\"gt_footnote\" colspan=\"1\"><sup class=\"gt_footnote_marks\">1</sup> note</td>\n    </tr>\n  </tfoot>\n</table>"
 
+# Footnotes work with group labels in 2-column stub arrangements
+
+    Code
+      .
+    Output
+      [1] "<table class=\"gt_table\">\n  \n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"2\" scope=\"colgroup\"></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">Pizzas Sold</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr class=\"gt_row_group_first\"><td rowspan=\"4\" class=\"gt_row gt_left gt_stub_row_group\">peppr_salami<sup class=\"gt_footnote_marks\">1</sup></td>\n<th scope=\"row\" class=\"gt_row gt_left gt_stub\">L</th>\n<td class=\"gt_row gt_right\">696</td></tr>\n    <tr><th scope=\"row\" class=\"gt_row gt_left gt_stub\">M</th>\n<td class=\"gt_row gt_right\">428</td></tr>\n    <tr><th scope=\"row\" class=\"gt_row gt_left gt_stub\">S</th>\n<td class=\"gt_row gt_right\">322</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick gt_last_summary_row\">TOTAL</td>\n<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row\">1,446</td></tr>\n    <tr class=\"gt_row_group_first\"><td rowspan=\"4\" class=\"gt_row gt_left gt_stub_row_group\">soppressata</td>\n<th scope=\"row\" class=\"gt_row gt_left gt_stub\">L</th>\n<td class=\"gt_row gt_right\">405</td></tr>\n    <tr><th scope=\"row\" class=\"gt_row gt_left gt_stub\">M</th>\n<td class=\"gt_row gt_right\">268</td></tr>\n    <tr><th scope=\"row\" class=\"gt_row gt_left gt_stub\">S</th>\n<td class=\"gt_row gt_right\">288</td></tr>\n    <tr><td class=\"gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick gt_last_summary_row\">TOTAL</td>\n<td class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row\">961</td></tr>\n  </tbody>\n  \n  <tfoot class=\"gt_footnotes\">\n    <tr>\n      <td class=\"gt_footnote\" colspan=\"3\"><sup class=\"gt_footnote_marks\">1</sup> The Pepper-Salami.</td>\n    </tr>\n  </tfoot>\n</table>"
+
+---
+
+    Code
+      .
+    Output
+      [1] "\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|l|r}\n\\toprule\n\\multicolumn{2}{l}{} & Pizzas Sold \\\\ \n\\midrule\npeppr\\_salami\\textsuperscript{1} & L & 696 \\\\ \n & M & 428 \\\\ \n & S & 322 \\\\ \n\\cmidrule(l{-0.05em}r){2-3}\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{TOTAL} & $1,446$ \\\\ \n\\midrule\nsoppressata & L & 405 \\\\ \n & M & 268 \\\\ \n & S & 288 \\\\ \n\\cmidrule(l{-0.05em}r){2-3}\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{TOTAL} & $961$ \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\textsuperscript{1}The Pepper-Salami.\\\\\n\\end{minipage}\n"
+
+---
+
+    Code
+      .
+    Output
+      {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red211\green211\blue211;}
+      
+      \paperw12240\paperh15840\widowctrl\ftnbj\fet0\sectd\linex0
+      \lndscpsxn
+      \margl1440\margr1440\margt1440\margb1440
+      \headery720\footery720\fs20
+      
+      \trowd\trrh0\trhdr
+      
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1\clmgf \cellx3120
+      \intbl {\f0 {\f0\fs20 }}\cell
+      
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1\clmrg \cellx6240
+      \intbl {\f0 {\f0\fs20 }}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx9360
+      \intbl {\f0 {\f0\fs20 Pizzas Sold}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
+      \intbl {\f0 {\f0\fs20 peppr_salami{\super \i 1}}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6240
+      \intbl {\f0 {\f0\fs20 L}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 696}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
+      \intbl {\f0 {\f0\fs20 }}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6240
+      \intbl {\f0 {\f0\fs20 M}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 428}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
+      \intbl {\f0 {\f0\fs20 }}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6240
+      \intbl {\f0 {\f0\fs20 S}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 322}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
+      \intbl {\f0 {\f0\fs20 }}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6240
+      \intbl {\f0 {\f0\fs20 TOTAL}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 1,446}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
+      \intbl {\f0 {\f0\fs20 soppressata}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6240
+      \intbl {\f0 {\f0\fs20 L}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 405}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
+      \intbl {\f0 {\f0\fs20 }}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6240
+      \intbl {\f0 {\f0\fs20 M}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 268}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
+      \intbl {\f0 {\f0\fs20 }}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6240
+      \intbl {\f0 {\f0\fs20 S}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 288}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
+      \intbl {\f0 {\f0\fs20 }}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6240
+      \intbl {\f0 {\f0\fs20 TOTAL}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 961}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 {\super \i 1}The Pepper-Salami.}}\cell
+      
+      \row
+      
+      }
+
