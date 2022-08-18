@@ -2,31 +2,30 @@
 #'
 #' @inheritParams cols_align
 #' @param locations The cell or set of cells to be associated with the text
-#'   transformation. Only the [cells_body()], [cells_stub()], and
-#'   [cells_column_labels()] helper functions can be used here. We can enclose
-#'   several of these calls within a `list()` if we wish to make the
-#'   transformation happen at different locations.
+#'   transformation. Only the [cells_body()], [cells_stub()],
+#'   [cells_column_labels()], and [cells_row_groups()] helper functions can be
+#'   used here. We can enclose several of these calls within a `list()` if we
+#'   wish to make the transformation happen at different locations.
 #' @param fn The function to use for text transformation.
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `exibble` to create a gt table;
-#' # transform the formatted text in the
-#' # `num` and `currency` columns using
-#' # a function within `text_transform()`,
-#' # where `x` is a formatted vector of
-#' # column values
-#' tab_1 <-
-#'   exibble %>%
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table. transform the formatted text in the
+#' `num` column using a function supplied to `text_transform()` (via the `fn`
+#' argument). Note that the `x` in the `fn = function (x)` part is a formatted
+#' vector of column values from the `num` column.
+#'
+#' ```r
+#' exibble %>%
 #'   dplyr::select(num, char, currency) %>%
 #'   dplyr::slice(1:4) %>%
 #'   gt() %>%
-#'   fmt_number(columns = vars(num)) %>%
-#'   fmt_currency(columns = vars(currency)) %>%
+#'   fmt_number(columns = num) %>%
+#'   fmt_currency(columns = currency) %>%
 #'   text_transform(
-#'     locations = cells_body(
-#'       columns = vars(num)),
+#'     locations = cells_body(columns = num),
 #'     fn = function(x) {
 #'       paste0(
 #'         x, " (",
@@ -36,18 +35,22 @@
 #'         ")")
 #'     }
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_text_transform_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_text_transform_1.png")`
+#' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
-#' 3-12
+#' 3-20
 #'
 #' @export
-text_transform <- function(data,
-                           locations,
-                           fn) {
+text_transform <- function(
+    data,
+    locations,
+    fn
+) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
@@ -73,63 +76,68 @@ text_transform_at_location <- function(loc, data, fn = identity) {
   UseMethod("text_transform_at_location")
 }
 
-text_transform_at_location.cells_body <- function(loc,
-                                                  data,
-                                                  fn = identity) {
+text_transform_at_location.cells_body <- function(
+    loc,
+    data,
+    fn = identity
+) {
 
   body <- dt_body_get(data = data)
 
   loc <- to_output_location(loc = loc, data = data)
 
+  stub_df <- dt_stub_df_get(data = data)
+
   # Do one vectorized operation per column
   for (col in loc$colnames) {
 
     if (col %in% colnames(body)) {
-      body[[col]][loc$rows] <- fn(body[[col]][loc$rows])
+
+      body[[col]][stub_df$rownum_i %in% loc$rows] <-
+        fn(body[[col]][stub_df$rownum_i %in% loc$rows])
     }
   }
 
-  data <- dt_body_set(data = data, body = body)
-
-  data
+  dt_body_set(data = data, body = body)
 }
 
-text_transform_at_location.cells_stub <- function(loc,
-                                                  data,
-                                                  fn = identity) {
+text_transform_at_location.cells_stub <- function(
+    loc,
+    data,
+    fn = identity
+) {
 
-  stub_df <- dt_stub_df_get(data = data)
+  body <- dt_body_get(data = data)
 
   loc <- to_output_location(loc = loc, data = data)
 
-  for (row in loc$rows) {
+  stub_df <- dt_stub_df_get(data = data)
 
-    if (row %in% stub_df$rowname) {
-      stub_df[row, "rowname"] <- fn(stub_df[row, "rowname"])
-    }
-  }
+  stub_var <- dt_boxhead_get_var_stub(data = data)
 
-  dt_stub_df_set(data = data, stub_df = stub_df)
+  # FIXME: Check for zero-length stub_var before continuing.
+  body[[stub_var]][stub_df$rownum_i %in% loc$rows] <-
+    fn(body[[stub_var]][stub_df$rownum_i %in% loc$rows])
+
+  dt_body_set(data = data, body = body)
 }
 
-text_transform_at_location.cells_column_labels <- function(loc,
-                                                           data,
-                                                           fn = identity) {
+text_transform_at_location.cells_column_labels <- function(
+    loc,
+    data,
+    fn = identity
+) {
 
   boxh <- dt_boxhead_get(data = data)
 
   loc <- to_output_location(loc = loc, data = data)
 
-  for (col in loc$columns) {
+  for (col in loc$colnames) {
 
     if (col %in% boxh$var) {
 
       column_label_edited <-
-        boxh %>%
-        dplyr::filter(var == !!col) %>%
-        dplyr::pull(column_label) %>%
-        .[[1]] %>%
-        fn()
+        fn(dplyr::filter(boxh, var == .env$col)[1, "column_label", drop = TRUE])
 
       data <-
         dt_boxhead_edit(
@@ -137,6 +145,34 @@ text_transform_at_location.cells_column_labels <- function(loc,
           var = col,
           column_label = list(column_label_edited)
         )
+    }
+  }
+
+  data
+}
+
+text_transform_at_location.cells_row_groups <- function(
+    loc,
+    data,
+    fn = identity
+) {
+
+  row_group_vec <- dt_row_groups_get(data = data)
+
+  loc <- to_output_location(loc = loc, data = data)
+
+  for (group in loc$groups) {
+
+    stub_df <- dt_stub_df_get(data = data)
+
+    if (group %in% row_group_vec) {
+
+      if (is.na(group)) next
+
+      stub_df[!is.na(stub_df$group_id) & stub_df$group_id == group, ][["group_label"]] <-
+        as.list(fn(stub_df[!is.na(stub_df$group_id) & stub_df$group_id == group, ][["group_label"]]))
+
+      data <- dt_stub_df_set(data = data, stub_df = stub_df)
     }
   }
 

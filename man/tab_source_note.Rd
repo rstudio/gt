@@ -23,39 +23,39 @@ footer, simply use multiple calls of \code{tab_source_note()} and they will be
 inserted in the order provided. We can use Markdown formatting for the note,
 or, if the table is intended for HTML output, we can include HTML formatting.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_tab_source_note_1.png}{options: width=100\%}}
+
+Use \code{\link{gtcars}} to create a \strong{gt} table. Use \code{tab_source_note()} to add a
+source note to the table footer that cites the data source.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
+  dplyr::select(mfr, model, msrp) \%>\%
+  dplyr::slice(1:5) \%>\%
+  gt() \%>\%
+  tab_source_note(source_note = "From edmunds.com")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_source_note_1.png" style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
 
-2-7
+2-89
 }
 
-\examples{
-# Use `gtcars` to create a gt table;
-# add a source note to the table
-# footer that cites the data source
-tab_1 <-
-  gtcars \%>\%
-  dplyr::select(mfr, model, msrp) \%>\%
-  dplyr::slice(1:5) \%>\%
-  gt() \%>\%
-  tab_source_note(
-    source_note = "From edmunds.com"
-  )
-
-}
 \seealso{
-Other Create or Modify Parts: 
+Other part creation/modification functions: 
 \code{\link{tab_footnote}()},
 \code{\link{tab_header}()},
 \code{\link{tab_options}()},
 \code{\link{tab_row_group}()},
 \code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
+\code{\link{tab_stub_indent}()},
 \code{\link{tab_stubhead}()},
 \code{\link{tab_style}()}
 }
-\concept{Create or Modify Parts}
+\concept{part creation/modification functions}

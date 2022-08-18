@@ -6,9 +6,8 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-
 library(gt)
-library(dplyr)
+library(tidyverse)
 ```
 
 Create a table that has a stubhead label.
@@ -27,12 +26,14 @@ tbl <-
     "B",        "3",      252.3,    732.5,
     "B",        "4",      344.7,    281.2,
     "C",        "1",      197.2,    818.0,
-    "C",        "2",      284.6,    394.4)
+    "C",        "2",      284.6,    394.4
+  )
 ```
 
 
 ```{r}
 # Create a display table
-gt(data = tbl) %>%
+tbl %>%
+  gt(groupname_col = "groups") %>%
   tab_stubhead(label = "groups")
 ```

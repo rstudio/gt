@@ -38,7 +38,6 @@ the output table.
 This function could be somewhat replicated using \code{\link[=cols_merge]{cols_merge()}}, however,
 \code{cols_merge_range()} employs the following specialized operations for \code{NA}
 handling:
-
 \enumerate{
 \item \code{NA}s in \code{col_begin} (but not \code{col_end}) result in a display of only
 \item \code{NA}s in \code{col_end} (but not \code{col_begin}) result in a display of only
@@ -49,57 +48,57 @@ the merged column
 }
 
 Any resulting \code{NA} values in the \code{col_begin} column following the merge
-operation can be easily formatted using the \code{\link[=fmt_missing]{fmt_missing()}} function.
-Separate calls of \code{\link[=fmt_missing]{fmt_missing()}} can be used for the \code{col_begin} and
+operation can be easily formatted using the \code{\link[=sub_missing]{sub_missing()}} function.
+Separate calls of \code{\link[=sub_missing]{sub_missing()}} can be used for the \code{col_begin} and
 \code{col_end} columns for finer control of the replacement values.
 
-This function is part of a set of three column-merging functions. The other
+This function is part of a set of four column-merging functions. The other
 two are the general \code{\link[=cols_merge]{cols_merge()}} function and the specialized
-\code{\link[=cols_merge_uncert]{cols_merge_uncert()}} function. These functions operate similarly, where the
-non-target columns can be optionally hidden from the output table through the
-\code{hide_columns} or \code{autohide} options.
+\code{\link[=cols_merge_uncert]{cols_merge_uncert()}} and \code{\link[=cols_merge_n_pct]{cols_merge_n_pct()}} functions. These functions
+operate similarly, where the non-target columns can be optionally hidden from
+the output table through the \code{hide_columns} or \code{autohide} options.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cols_merge_range_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
+Use \code{\link{gtcars}} to create a \strong{gt} table, keeping only the \code{model}, \code{mpg_c},
+and \code{mpg_h} columns. Merge the \code{"mpg*"} columns together as a single range
+column (which is labeled as MPG, in italics) using the \code{cols_merge_range()}
+function.
 
-4-9
-}
-
-\examples{
-# Use `gtcars` to create a gt table,
-# keeping only the `model`, `mpg_c`,
-# and `mpg_h` columns; merge the mpg
-# columns together as a single range
-# column (which is labeled as MPG,
-# in italics)
-tab_1 <-
-  gtcars \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
   dplyr::select(model, starts_with("mpg")) \%>\%
   dplyr::slice(1:8) \%>\%
   gt() \%>\%
   cols_merge_range(
-    col_begin = vars(mpg_c),
-    col_end = vars(mpg_h)
+    col_begin = mpg_c,
+    col_end = mpg_h
   ) \%>\%
-  cols_label(
-    mpg_c = md("*MPG*")
-  )
+  cols_label(mpg_c = md("*MPG*"))
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_merge_range_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+4-10
+}
+
 \seealso{
-Other Modify Columns: 
+Other column modification functions: 
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
 \code{\link{cols_label}()},
+\code{\link{cols_merge_n_pct}()},
 \code{\link{cols_merge_uncert}()},
 \code{\link{cols_merge}()},
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
+\code{\link{cols_unhide}()},
 \code{\link{cols_width}()}
 }
-\concept{Modify Columns}
+\concept{column modification functions}

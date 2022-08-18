@@ -1,5 +1,3 @@
-context("Ensuring that the md() and html() functions work for HTML tables")
-
 tab <-
   exibble %>%
   gt(rowname_col = "row", groupname_col = "group")
@@ -46,7 +44,7 @@ test_that("the `tab_spanner()` function works with `md()`/`html()`", {
   tab %>%
     tab_spanner(
       label = "date/time",
-      columns = vars(date, time, datetime)
+      columns = c(date, time, datetime)
     ) %>%
     render_as_html() %>%
     tidy_grepl(pattern = c(">date/time<")) %>%
@@ -57,7 +55,7 @@ test_that("the `tab_spanner()` function works with `md()`/`html()`", {
   tab %>%
     tab_spanner(
       label = md("*date*/*time*"),
-      columns = vars(date, time, datetime)
+      columns = c(date, time, datetime)
     ) %>%
     render_as_html() %>%
     tidy_grepl(pattern = c("><em>date</em>/<em>time</em><")) %>%
@@ -68,7 +66,7 @@ test_that("the `tab_spanner()` function works with `md()`/`html()`", {
   tab %>%
     tab_spanner(
       label = html("<em>date</em>/<em>time</em>"),
-      columns = vars(date, time, datetime)
+      columns = c(date, time, datetime)
     ) %>%
     render_as_html() %>%
     tidy_grepl(pattern = c("><em>date</em>/<em>time</em><")) %>%
@@ -82,7 +80,7 @@ test_that("the `cols_label()` function works with `md()`/`html()`", {
   tab %>%
     tab_spanner(
       label = "date/time",
-      columns = vars(date, time, datetime)
+      columns = c(date, time, datetime)
     ) %>%
     cols_label(
       num  = "Number",
@@ -111,7 +109,7 @@ test_that("the `cols_label()` function works with `md()`/`html()`", {
   tab %>%
     tab_spanner(
       label = "date/time",
-      columns = vars(date, time, datetime)
+      columns = c(date, time, datetime)
     ) %>%
     cols_label(
       num  = md("**Number**"),
@@ -140,7 +138,7 @@ test_that("the `cols_label()` function works with `md()`/`html()`", {
   tab %>%
     tab_spanner(
       label = "date/time",
-      columns = vars(date, time, datetime)
+      columns = c(date, time, datetime)
     ) %>%
     cols_label(
       num  = html("<strong>Number</strong>"),

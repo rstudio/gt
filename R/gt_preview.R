@@ -1,5 +1,6 @@
 #' Preview a **gt** table object
 #'
+#' @description
 #' Sometimes you may want to see just a small portion of your input data. We can
 #' use `gt_preview()` in place of [gt()] to get the first x rows of data and the
 #' last y rows of data (which can be set by the `top_n` and `bottom_n`
@@ -7,6 +8,7 @@
 #' modify the output of `gt_preview()`. Furthermore, you cannot pass a **gt**
 #' object to `gt_preview()`.
 #'
+#' @details
 #' Any grouped data or magic columns such as `rowname` and `groupname` will be
 #' ignored by `gt_preview()` and, as such, one cannot add a stub or group rows
 #' in the output table. By default, the output table will include row numbers in
@@ -25,28 +27,32 @@
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @examples
-#' # Use `gtcars` to create a gt table
-#' # preview (with only a few of its
-#' # columns); you'll see the first five
-#' # rows and the last row
-#' tab_1 <-
-#'   gtcars %>%
+#' @section Examples:
+#'
+#' Use [`gtcars`] to create a **gt** table preview (with only a few of its
+#' columns). You'll see the first five rows and the last row.
+#'
+#' ```r
+#' gtcars %>%
 #'   dplyr::select(mfr, model, year) %>%
 #'   gt_preview()
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_gt_preview_1.png}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_gt_preview_1.png")`
+#' }}
 #'
-#' @family Create Table
+#' @family table creation functions
 #' @section Function ID:
 #' 1-2
 #'
 #' @export
-gt_preview <- function(data,
-                       top_n = 5,
-                       bottom_n = 1,
-                       incl_rownums = TRUE) {
+gt_preview <- function(
+    data,
+    top_n = 5,
+    bottom_n = 1,
+    incl_rownums = TRUE
+) {
 
   if (is_gt(data)) {
     data <- dt_data_get(data = data)
@@ -109,7 +115,12 @@ gt_preview <- function(data,
   if (isTRUE(incl_rownums)) {
     data <-
       cbind(
-        data.frame(rowname = rownames(data), stringsAsFactors = FALSE), data)
+        data.frame(
+          rowname = rownames(data),
+          stringsAsFactors = FALSE
+        ),
+        data
+      )
   }
 
   # Render as a gt table
@@ -139,7 +150,7 @@ gt_preview <- function(data,
         locations = cells_body(columns = visible_vars, rows = ellipsis_row)
       ) %>%
       text_transform(
-        locations = cells_body(columns = TRUE, rows = ellipsis_row),
+        locations = cells_body(columns = everything(), rows = ellipsis_row),
         fn = function(x) ""
       )
 

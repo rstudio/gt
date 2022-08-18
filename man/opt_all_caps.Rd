@@ -29,38 +29,27 @@ Sometimes an all-capitalized look is suitable for a table. With the
 \code{opt_all_caps()} function, we can transform characters in the column labels,
 the stub, and in all row groups in this way (and there's control over which
 of these locations are transformed).
-}
-\details{
+
 This function serves as a convenient shortcut for \verb{<gt_tbl> \%>\% tab_options(<location>.text_transform = "uppercase", <location>.font.size = pct(80), <location>.font.weight = "bolder")} (for all \code{locations} selected).
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_opt_all_caps_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
+Use \code{\link{exibble}} to create a \strong{gt} table with a number of table parts added.
+All text in the column labels, the stub, and in all row groups is to be
+transformed to all caps using \code{opt_all_caps()}.
 
-9-4
-}
-
-\examples{
-# Use `exibble` to create a gt table with
-# a number of table parts added; all text
-# in the column labels, the stub, and in
-# all row groups is to be transformed to
-# all caps using `opt_all_caps()`
-tab_1 <-
-  exibble \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt(rowname_col = "row", groupname_col = "group") \%>\%
   summary_rows(
     groups = "grp_a",
-    columns = vars(num, currency),
+    columns = c(num, currency),
     fns = list(
       min = ~min(., na.rm = TRUE),
       max = ~max(., na.rm = TRUE)
     )) \%>\%
   grand_summary_rows(
-    columns = vars(currency),
+    columns = currency,
     fns = list(
       total = ~sum(., na.rm = TRUE)
     )) \%>\%
@@ -74,16 +63,29 @@ tab_1 <-
     subtitle = "The table's subtitle"
   ) \%>\%
   opt_all_caps()
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_all_caps_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+9-6
+}
+
 \seealso{
-Other Table Option Functions: 
+Other table option functions: 
 \code{\link{opt_align_table_header}()},
 \code{\link{opt_css}()},
 \code{\link{opt_footnote_marks}()},
+\code{\link{opt_horizontal_padding}()},
 \code{\link{opt_row_striping}()},
+\code{\link{opt_stylize}()},
 \code{\link{opt_table_font}()},
 \code{\link{opt_table_lines}()},
-\code{\link{opt_table_outline}()}
+\code{\link{opt_table_outline}()},
+\code{\link{opt_vertical_padding}()}
 }
-\concept{Table Option Functions}
+\concept{table option functions}

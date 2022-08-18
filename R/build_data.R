@@ -3,45 +3,40 @@
 #' @noRd
 build_data <- function(data, context) {
 
-  checkmate::assert_class(data, "gt_tbl")
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   # Create `body` with rendered values; move
   # input data cells to `body` that didn't have
   # any rendering applied during `render_formats()`;
   # Reassemble the rows and columns of `body` in
   # the correct order
-  data <-
-    data %>%
-    dt_body_build() %>%
-    render_formats(context = context) %>%
-    migrate_unformatted_to_output(context = context) %>%
-    perform_col_merge(context = context) %>%
-    perform_text_transforms()
+  data <- dt_body_build(data = data)
+  data <- render_formats(data = data, context = context)
+  data <- migrate_unformatted_to_output(data = data, context = context)
+  data <- perform_col_merge(data = data, context = context)
 
-  data <-
-    data %>%
-    dt_body_reassemble() %>%
-    reorder_stub_df() %>%
-    reorder_footnotes() %>%
-    reorder_styles()
+  data <- dt_body_reassemble(data = data)
+  data <- reorder_stub_df(data = data)
+  data <- reorder_footnotes(data = data)
+  data <- reorder_styles(data = data)
+  data <- perform_text_transforms(data = data)
 
   # Use `dt_*_build()` methods
-  data <-
-    data %>%
-    dt_boxhead_build(context = context) %>%
-    dt_spanners_build(context = context) %>%
-    dt_heading_build(context = context) %>%
-    dt_stubhead_build(context = context) %>%
-    dt_source_notes_build(context = context) %>%
-    dt_summary_build(context = context) %>%
-    dt_groups_rows_build(context = context)
+  data <- dt_boxhead_build(data = data, context = context)
+  data <- dt_spanners_build(data = data, context = context)
+  data <- dt_heading_build(data = data, context = context)
+  data <- dt_stubhead_build(data = data, context = context)
+  data <- dt_stub_df_build(data = data, context = context)
+  data <- dt_source_notes_build(data = data, context = context)
+  data <- dt_summary_build(data = data, context = context)
+  data <- dt_groups_rows_build(data = data, context = context)
 
   # Resolution of footnotes and styles --------------------------------------
 
   # Resolve footnotes and styles
-  data <-
-    data %>%
-    resolve_footnotes_styles(tbl_type = "footnotes") %>%
-    resolve_footnotes_styles(tbl_type = "styles")
+  data <- resolve_footnotes_styles(data = data, tbl_type = "footnotes")
+  data <- resolve_footnotes_styles(data = data, tbl_type = "styles")
 
   # Add footnote marks to elements of the table columns
   data <- set_footnote_marks_columns(data = data, context = context)
@@ -56,9 +51,9 @@ build_data <- function(data, context) {
   data <- set_footnote_marks_row_groups(data = data, context = context)
 
   # Add footnote marks to the `summary` cells
-  # TODO: `context` is missing in `apply_footnotes_to_summary()`
   data <- apply_footnotes_to_summary(data = data, context = context)
 
+  # Set the `_has_built` flag to `TRUE`
   data <- dt_has_built_set(data = data, value = TRUE)
 
   data

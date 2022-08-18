@@ -24,35 +24,24 @@ as the \code{width} is larger that of the existing lines. The default value of
 \code{style} (\code{"solid"}) will draw a solid outline, whereas a value of \code{"none"}
 will remove any present outline.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_opt_table_outline_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_opt_table_outline_2.png}{options: width=100\%}}
-}
+Use \code{\link{exibble}} to create a \strong{gt} table with a number of table parts added.
+Have an outline wrap around the entire table by using \code{opt_table_outline()}.
 
-\section{Function ID}{
-
-9-6
-}
-
-\examples{
-# Use `exibble` to create a gt table with
-# a number of table parts added; have an
-# outline wrap around the entire table by
-# using `opt_table_outline()`
-tab_1 <-
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
   exibble \%>\%
   gt(rowname_col = "row", groupname_col = "group") \%>\%
   summary_rows(
     groups = "grp_a",
-    columns = vars(num, currency),
+    columns = c(num, currency),
     fns = list(
       min = ~min(., na.rm = TRUE),
       max = ~max(., na.rm = TRUE)
     )) \%>\%
   grand_summary_rows(
-    columns = vars(currency),
+    columns = currency,
     fns = list(
       total = ~sum(., na.rm = TRUE)
     )) \%>\%
@@ -67,21 +56,39 @@ tab_1 <-
   ) \%>\%
   opt_table_outline()
 
-# Remove the table outline with the
-# `style = "none"` option
-tab_2 <-
-  tab_1 \%>\%
-  opt_table_outline(style = "none")
+tab_1
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_table_outline_1.png" style="width:100\%;">
+}}
+
+Remove the table outline with the \code{style = "none"} option.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% opt_table_outline(style = "none")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_table_outline_2.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+9-8
+}
+
 \seealso{
-Other Table Option Functions: 
+Other table option functions: 
 \code{\link{opt_align_table_header}()},
 \code{\link{opt_all_caps}()},
 \code{\link{opt_css}()},
 \code{\link{opt_footnote_marks}()},
+\code{\link{opt_horizontal_padding}()},
 \code{\link{opt_row_striping}()},
+\code{\link{opt_stylize}()},
 \code{\link{opt_table_font}()},
-\code{\link{opt_table_lines}()}
+\code{\link{opt_table_lines}()},
+\code{\link{opt_vertical_padding}()}
 }
-\concept{Table Option Functions}
+\concept{table option functions}

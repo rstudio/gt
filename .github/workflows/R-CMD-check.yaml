@@ -1,99 +1,21 @@
+# Workflow derived from https://github.com/rstudio/shiny-workflows
+#
+# NOTE: This Shiny team GHA workflow is overkill for most R packages.
+# For most R packages it is better to use https://github.com/r-lib/actions
 on:
   push:
-    branches:
-      - master
+    branches: [main, master, rc-**]
   pull_request:
-    branches:
-      - master
+    branches: [main, master]
+  schedule:
+    - cron: '0 2 * * 1' # every monday
 
-name: R-CMD-check
+name: Package checks
 
 jobs:
+  website:
+    uses: rstudio/shiny-workflows/.github/workflows/website.yaml@v1
+  routine:
+    uses: rstudio/shiny-workflows/.github/workflows/routine.yaml@v1
   R-CMD-check:
-    runs-on: ${{ matrix.config.os }}
-
-    name: ${{ matrix.config.os }} (${{ matrix.r }})
-
-    strategy:
-      fail-fast: false
-      matrix:
-        r: 
-          - '3.5'
-          - '3.6'
-          - '4.0'
-        config:
-          - {os: windows-latest}
-          - {os: macOS-latest}
-          - {os: ubuntu-16.04, rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest"}
-
-    env:
-      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
-      _R_CHECK_FORCE_SUGGESTS_: false
-      RSPM: ${{ matrix.config.rspm }}
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - uses: r-lib/actions/setup-r@master
-        with:
-          r-version: ${{ matrix.r }}
-
-      - uses: r-lib/actions/setup-pandoc@master
-
-      - name: Query dependencies
-        run: |
-          install.packages('remotes')
-          saveRDS(remotes::dev_package_deps(dependencies = TRUE), "depends.Rds", version = 2)
-        shell: Rscript {0}
-
-      - name: Cache R packages
-        if: runner.os != 'Windows'
-        uses: actions/cache@v1
-        with:
-          path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-r-${{ matrix.r }}-2-${{ hashFiles('depends.Rds') }}
-          restore-keys: ${{ runner.os }}-r-${{ matrix.r }}-2-
-      
-      - name: Problematic Pkgs
-        shell: Rscript {0}
-        run: |
-          remotes::install_cran("ellipsis")
-          remotes::install_cran("pillar")
-          remotes::install_cran("ps")
-          remotes::install_cran("processx")
-
-      - name: Install system dependencies
-        if: runner.os == 'Linux'
-        env:
-          RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
-        run: |
-          Rscript -e "remotes::install_github('r-hub/sysreqs')"
-          sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
-          sudo -s eval "$sysreqs"
-
-      - name: Install dependencies
-        shell: Rscript {0}
-        run: |
-          remotes::install_deps(dependencies = TRUE)
-
-      - name: Install rcmdcheck
-        shell: Rscript {0}
-        run: |
-          remotes::install_cran("rcmdcheck")
-
-      - name: Check
-        shell: Rscript {0}
-        run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "warning", check_dir = "check")
-
-      - name: Upload check results
-        if: failure()
-        uses: actions/upload-artifact@master
-        with:
-          name: ${{ runner.os }}-r${{ matrix.r }}-results
-          path: check
-
-      - name: Test coverage
-        if: matrix.config.os == 'macOS-latest' && matrix.r == '3.6'
-        shell: Rscript {0}
-        run: covr::codecov()
+    uses: rstudio/shiny-workflows/.github/workflows/R-CMD-check.yaml@v1

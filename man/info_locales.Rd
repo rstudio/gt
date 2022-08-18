@@ -30,24 +30,31 @@ letter corresponding to the base locale ID to \code{begins_with}. This will filt
 locales in the info table to just the set that begins with the supplied
 letter.
 }
+\section{Examples}{
+
+
+Get a table of info on all of the locales where the base locale ID begins
+with a \code{"v"}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{info_locales(begins_with = "v")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_info_locales_1.png" style="width:100\%;">
+}}
+}
+
 \section{Function ID}{
 
 10-4
 }
 
-\examples{
-# Get a table of info on all of
-# the locales where the base
-# locale ID begins with a "v"
-tab_1 <- info_locales(begins_with = "v")
-
-}
 \seealso{
-Other Information Functions: 
+Other information functions: 
 \code{\link{info_currencies}()},
 \code{\link{info_date_style}()},
 \code{\link{info_google_fonts}()},
 \code{\link{info_paletteer}()},
 \code{\link{info_time_style}()}
 }
-\concept{Information Functions}
+\concept{information functions}

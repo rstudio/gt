@@ -1,5 +1,3 @@
-context("Ensuring that the incoming `data` object is of class `gt_tbl`")
-
 test_that("all exported functions validate the incoming `data` object", {
 
   regexp_stop <- "The object to `data` is not a `gt_tbl` object"
@@ -32,8 +30,11 @@ test_that("all exported functions validate the incoming `data` object", {
   expect_error(exibble %>% fmt_datetime(), regexp = regexp_stop)
   expect_error(exibble %>% fmt_markdown(), regexp = regexp_stop)
   expect_error(exibble %>% fmt_passthrough(), regexp = regexp_stop)
-  expect_error(exibble %>% fmt_missing(), regexp = regexp_stop)
   expect_error(exibble %>% text_transform(), regexp = regexp_stop)
+  expect_error(exibble %>% sub_missing(), regexp = regexp_stop)
+  expect_error(exibble %>% sub_zero(), regexp = regexp_stop)
+  expect_error(exibble %>% sub_small_vals(), regexp = regexp_stop)
+  expect_error(exibble %>% sub_large_vals(), regexp = regexp_stop)
   expect_error(exibble %>% data_color(), regexp = regexp_stop)
   expect_error(exibble %>% cols_align(), regexp = regexp_stop)
   expect_error(exibble %>% cols_width(), regexp = regexp_stop)
@@ -60,45 +61,45 @@ test_that("certain `fmt_*()` functions stop if given incompatible column data", 
   gt_tbl <- exibble %>% gt()
 
   # Tests with `fmt_number()`
-  gt_tbl %>% fmt_number(columns = vars(num)) %>% expect_is("gt_tbl")
-  gt_tbl %>% fmt_number(columns = vars()) %>% expect_is("gt_tbl")
-  gt_tbl %>% fmt_number(columns = vars(currency)) %>% expect_is("gt_tbl")
-  expect_error(gt_tbl %>% fmt_number(columns = vars(num, fctr)))
-  expect_error(gt_tbl %>% fmt_number(columns = vars(char)))
+  gt_tbl %>% fmt_number(columns = num) %>% expect_s3_class("gt_tbl")
+  gt_tbl %>% fmt_number(columns = c()) %>% expect_s3_class("gt_tbl")
+  gt_tbl %>% fmt_number(columns = currency) %>% expect_s3_class("gt_tbl")
+  expect_error(gt_tbl %>% fmt_number(columns = c(num, fctr)))
+  expect_error(gt_tbl %>% fmt_number(columns = char))
 
   # Tests with `fmt_scientific()`
-  gt_tbl %>% fmt_scientific(columns = vars(num)) %>% expect_is("gt_tbl")
-  gt_tbl %>% fmt_scientific(columns = vars()) %>% expect_is("gt_tbl")
-  expect_error(gt_tbl %>% fmt_scientific(columns = vars(num, fctr)))
-  expect_error(gt_tbl %>% fmt_scientific(columns = vars(char)))
+  gt_tbl %>% fmt_scientific(columns = num) %>% expect_s3_class("gt_tbl")
+  gt_tbl %>% fmt_scientific(columns = c()) %>% expect_s3_class("gt_tbl")
+  expect_error(gt_tbl %>% fmt_scientific(columns = c(num, fctr)))
+  expect_error(gt_tbl %>% fmt_scientific(columns = char))
 
   # Tests with `fmt_percent()`
-  gt_tbl %>% fmt_percent(columns = vars(num)) %>% expect_is("gt_tbl")
-  gt_tbl %>% fmt_percent(columns = vars()) %>% expect_is("gt_tbl")
-  expect_error(gt_tbl %>% fmt_percent(columns = vars(num, fctr)))
-  expect_error(gt_tbl %>% fmt_percent(columns = vars(char)))
+  gt_tbl %>% fmt_percent(columns = num) %>% expect_s3_class("gt_tbl")
+  gt_tbl %>% fmt_percent(columns = c()) %>% expect_s3_class("gt_tbl")
+  expect_error(gt_tbl %>% fmt_percent(columns = c(num, fctr)))
+  expect_error(gt_tbl %>% fmt_percent(columns = char))
 
   # Tests with `fmt_currency()`
-  gt_tbl %>% fmt_currency(columns = vars(num)) %>% expect_is("gt_tbl")
-  gt_tbl %>% fmt_currency(columns = vars()) %>% expect_is("gt_tbl")
-  expect_error(gt_tbl %>% fmt_currency(columns = vars(num, fctr)))
-  expect_error(gt_tbl %>% fmt_currency(columns = vars(char)))
+  gt_tbl %>% fmt_currency(columns = num) %>% expect_s3_class("gt_tbl")
+  gt_tbl %>% fmt_currency(columns = c()) %>% expect_s3_class("gt_tbl")
+  expect_error(gt_tbl %>% fmt_currency(columns = c(num, fctr)))
+  expect_error(gt_tbl %>% fmt_currency(columns = char))
 
   # Tests with `fmt_date()`
-  gt_tbl %>% fmt_date(columns = vars(date)) %>% expect_is("gt_tbl")
-  gt_tbl %>% fmt_date(columns = vars()) %>% expect_is("gt_tbl")
-  expect_error(gt_tbl %>% fmt_date(columns = vars(date, num)))
-  expect_error(gt_tbl %>% fmt_date(columns = vars(fctr)))
+  gt_tbl %>% fmt_date(columns = date) %>% expect_s3_class("gt_tbl")
+  gt_tbl %>% fmt_date(columns = c()) %>% expect_s3_class("gt_tbl")
+  expect_error(gt_tbl %>% fmt_date(columns = c(date, num)))
+  expect_error(gt_tbl %>% fmt_date(columns = fctr))
 
   # Tests with `fmt_time()`
-  gt_tbl %>% fmt_time(columns = vars(time)) %>% expect_is("gt_tbl")
-  gt_tbl %>% fmt_time(columns = vars()) %>% expect_is("gt_tbl")
-  expect_error(gt_tbl %>% fmt_time(columns = vars(time, num)))
-  expect_error(gt_tbl %>% fmt_time(columns = vars(fctr)))
+  gt_tbl %>% fmt_time(columns = time) %>% expect_s3_class("gt_tbl")
+  gt_tbl %>% fmt_time(columns = c()) %>% expect_s3_class("gt_tbl")
+  expect_error(gt_tbl %>% fmt_time(columns = c(time, num)))
+  expect_error(gt_tbl %>% fmt_time(columns = fctr))
 
   # Tests with `fmt_datetime()`
-  gt_tbl %>% fmt_datetime(columns = vars(datetime)) %>% expect_is("gt_tbl")
-  gt_tbl %>% fmt_datetime(columns = vars()) %>% expect_is("gt_tbl")
-  expect_error(gt_tbl %>% fmt_datetime(columns = vars(datetime, num)))
-  expect_error(gt_tbl %>% fmt_datetime(columns = vars(fctr)))
+  gt_tbl %>% fmt_datetime(columns = datetime) %>% expect_s3_class("gt_tbl")
+  gt_tbl %>% fmt_datetime(columns = c()) %>% expect_s3_class("gt_tbl")
+  expect_error(gt_tbl %>% fmt_datetime(columns = c(datetime, num)))
+  expect_error(gt_tbl %>% fmt_datetime(columns = fctr))
 })

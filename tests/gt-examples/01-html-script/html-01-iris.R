@@ -2,11 +2,11 @@ library(gt)
 
 # Create a display table based on `iris`
 iris_tbl <-
-  gt(data = iris) %>%
+  gt(iris) %>%
   tab_spanner_delim(delim = ".") %>%
-  cols_move_to_start(columns = vars(Species)) %>%
+  cols_move_to_start(columns = Species) %>%
   fmt_number(
-    columns = vars(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width),
+    columns = c(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width),
     decimals = 1
   ) %>%
   tab_header(

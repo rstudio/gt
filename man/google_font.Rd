@@ -2,12 +2,12 @@
 % Please edit documentation in R/helpers.R
 \name{google_font}
 \alias{google_font}
-\title{Helper function for specifying a font from the Google Fonts service}
+\title{Helper function for specifying a font from the \emph{Google Fonts} service}
 \usage{
 google_font(name)
 }
 \arguments{
-\item{name}{The complete name of a font available in Google Fonts.}
+\item{name}{The complete name of a font available in \emph{Google Fonts}.}
 }
 \value{
 An object of class \code{font_css}.
@@ -19,33 +19,18 @@ be specified. There are two instances where this helper can be used: the
 of \code{\link[=cell_text]{cell_text()}} (used with \code{\link[=tab_style]{tab_style()}}). To get a helpful listing of fonts
 that work well in tables, use the \code{\link[=info_google_fonts]{info_google_fonts()}} function.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_google_font_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_google_font_2.png}{options: width=100\%}}
-}
+Use \code{\link{exibble}} to create a \strong{gt} table of eight rows, replace missing values
+with em dashes. For text in the \code{time} column, we use the Google font
+\code{"IBM Plex Mono"} and set up the \code{\link[=default_fonts]{default_fonts()}} as fallbacks (just in case
+the webfont is not accessible).
 
-\section{Function ID}{
-
-7-18
-}
-
-\examples{
-if (interactive()) {
-
-# Use `exibble` to create a gt table of
-# eight rows, replace missing values with
-# em dashes; for text in the `time` column,
-# we use the Google font 'IBM Plex Mono'
-# and set up the `default_fonts()` as
-# fallbacks (just in case the webfont is
-# not accessible)
-tab_1 <-
-  exibble \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(char, time) \%>\%
   gt() \%>\%
-  fmt_missing(columns = everything()) \%>\%
+  sub_missing() \%>\%
   tab_style(
     style = cell_text(
       font = c(
@@ -53,19 +38,21 @@ tab_1 <-
         default_fonts()
       )
     ),
-    locations = cells_body(columns = vars(time))
+    locations = cells_body(columns = time)
   )
+}\if{html}{\out{</div>}}
 
-# Use `sp500` to create a small gt table,
-# using `fmt_currency()` to provide a
-# dollar sign for the first row of monetary
-# values; then, set a larger font size for
-# the table and use the 'Merriweather' font
-# using the `google_font()` function (with
-# two font fallbacks: 'Cochin' and the
-# catchall 'Serif' group)
-tab_2 <-
-  sp500 \%>\%
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_google_font_1.png" style="width:100\%;">
+}}
+
+Use \code{\link{sp500}} to create a small \strong{gt} table, using \code{\link[=fmt_currency]{fmt_currency()}} to
+provide a dollar sign for the first row of monetary values. Then, set a
+larger font size for the table and use the \code{"Merriweather"} font using the
+\code{google_font()} function (with two font fallbacks: \code{"Cochin"} and the
+catchall \code{"Serif"} group).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
   dplyr::slice(1:10) \%>\%
   dplyr::select(-volume, -adj_close) \%>\%
   gt() \%>\%
@@ -82,11 +69,20 @@ tab_2 <-
       "Cochin", "Serif"
     )
   )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_google_font_2.png" style="width:100\%;">
+}}
 }
 
+\section{Function ID}{
+
+7-27
 }
+
 \seealso{
-Other Helper Functions: 
+Other helper functions: 
 \code{\link{adjust_luminance}()},
 \code{\link{cell_borders}()},
 \code{\link{cell_fill}()},
@@ -94,8 +90,12 @@ Other Helper Functions:
 \code{\link{cells_body}()},
 \code{\link{cells_column_labels}()},
 \code{\link{cells_column_spanners}()},
+\code{\link{cells_footnotes}()},
 \code{\link{cells_grand_summary}()},
 \code{\link{cells_row_groups}()},
+\code{\link{cells_source_notes}()},
+\code{\link{cells_stub_grand_summary}()},
+\code{\link{cells_stub_summary}()},
 \code{\link{cells_stubhead}()},
 \code{\link{cells_stub}()},
 \code{\link{cells_summary}()},
@@ -110,4 +110,4 @@ Other Helper Functions:
 \code{\link{px}()},
 \code{\link{random_id}()}
 }
-\concept{Helper Functions}
+\concept{helper functions}

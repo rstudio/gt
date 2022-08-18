@@ -21,7 +21,8 @@ mutation) and the other columns will serve to provide input.}
 \item{hide_columns}{Any column names provided here will have their state
 changed to \code{hidden} (via internal use of \code{\link[=cols_hide]{cols_hide()}} if they aren't
 already hidden. This is convenient if the shared purpose of these specified
-columns is only to provide string input to the target column.}
+columns is only to provide string input to the target column. To suppress
+any hiding of columns, \code{FALSE} can be used here.}
 
 \item{pattern}{A formatting pattern that specifies the arrangement of the
 \code{column} values and any string literals. We need to use column numbers
@@ -43,59 +44,59 @@ There is the option to hide the non-target columns (i.e., second and
 subsequent columns given in \code{columns}).
 }
 \details{
-There are two other column-merging functions that offer specialized behavior
-that is optimized for common table tasks: \code{\link[=cols_merge_range]{cols_merge_range()}} and
-\code{\link[=cols_merge_uncert]{cols_merge_uncert()}}. These functions operate similarly, where the
-non-target columns can be optionally hidden from the output table through the
-\code{autohide} option.
+There are three other column-merging functions that offer specialized
+behavior that is optimized for common table tasks: \code{\link[=cols_merge_range]{cols_merge_range()}},
+\code{\link[=cols_merge_uncert]{cols_merge_uncert()}}, and \code{\link[=cols_merge_n_pct]{cols_merge_n_pct()}}. These functions operate
+similarly, where the non-target columns can be optionally hidden from the
+output table through the \code{autohide} option.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cols_merge_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
+Use \code{\link{sp500}} to create a \strong{gt} table. Use the \code{cols_merge()} function to
+merge the \code{open} & \code{close} columns together, and, the \code{low} & \code{high} columns
+(putting an em dash between both). Relabel the columns with \code{\link[=cols_label]{cols_label()}}.
 
-4-10
-}
-
-\examples{
-# Use `sp500` to create a gt table;
-# merge the `open` & `close` columns
-# together, and, the `low` & `high`
-# columns (putting an em dash between
-# both); rename the columns
-tab_1 <-
-  sp500 \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
   dplyr::slice(50:55) \%>\%
   dplyr::select(-volume, -adj_close) \%>\%
   gt() \%>\%
   cols_merge(
-    columns = vars(open, close),
-    hide_columns = vars(close),
-    pattern = "{1}&mdash;{2}"
+    columns = c(open, close),
+    pattern = "\{1\}&mdash;\{2\}"
   ) \%>\%
   cols_merge(
-    columns = vars(low, high),
-    hide_columns = vars(high),
-    pattern = "{1}&mdash;{2}"
+    columns = c(low, high),
+    pattern = "\{1\}&mdash;\{2\}"
   ) \%>\%
   cols_label(
     open = "open/close",
     low = "low/high"
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_merge_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+4-12
+}
+
 \seealso{
-Other Modify Columns: 
+Other column modification functions: 
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
 \code{\link{cols_label}()},
+\code{\link{cols_merge_n_pct}()},
 \code{\link{cols_merge_range}()},
 \code{\link{cols_merge_uncert}()},
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
+\code{\link{cols_unhide}()},
 \code{\link{cols_width}()}
 }
-\concept{Modify Columns}
+\concept{column modification functions}

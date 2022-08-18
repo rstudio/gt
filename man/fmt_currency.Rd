@@ -7,20 +7,22 @@
 fmt_currency(
   data,
   columns,
-  rows = NULL,
+  rows = everything(),
   currency = "USD",
   use_subunits = TRUE,
-  accounting = FALSE,
   decimals = NULL,
   drop_trailing_dec_mark = TRUE,
   use_seps = TRUE,
+  accounting = FALSE,
   scale_by = 1,
   suffixing = FALSE,
   pattern = "{x}",
   sep_mark = ",",
   dec_mark = ".",
+  force_sign = FALSE,
   placement = "left",
   incl_space = FALSE,
+  system = c("intl", "ind"),
   locale = NULL
 )
 }
@@ -28,16 +30,18 @@ fmt_currency(
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{The columns to format. Can either be a series of column names
-provided in \code{\link[=vars]{vars()}}, a vector of column indices, or a helper function
+provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
 focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.}
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
+\code{\link[=everything]{everything()}}.}
 
-\item{rows}{Optional rows to format. Not providing any value results in all
-rows in \code{columns} being formatted. Can either be a vector of row captions
-provided \code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on
-selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.
-We can also use expressions to filter down to the rows we need (e.g.,
+\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
+default) results in all rows in \code{columns} being formatted. Alternatively,
+we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
+indices, or a helper function focused on selections. The select helper
+functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
+to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{currency}{The currency to use for the numeric value. This input can be
@@ -63,10 +67,6 @@ used.}
 \item{use_subunits}{An option for whether the subunits portion of a currency
 value should be displayed. By default, this is \code{TRUE}.}
 
-\item{accounting}{An option to use accounting style for currency values. With
-\code{FALSE} (the default), negative values will be shown with a minus sign.
-Using \code{accounting = TRUE} will put negative values in parentheses.}
-
 \item{decimals}{An option to specify the exact number of decimal places to
 use. The default number of decimal places is \code{2}.}
 
@@ -78,6 +78,10 @@ which means that trailing decimal marks are not shown.}
 \item{use_seps}{An option to use digit group separators. The type of digit
 group separator is set by \code{sep_mark} and overridden if a locale ID is
 provided to \code{locale}. This setting is \code{TRUE} by default.}
+
+\item{accounting}{An option to use accounting style for values. With \code{FALSE}
+(the default), negative values will be shown with a minus sign. Using
+\code{accounting = TRUE} will put negative values in parentheses.}
 
 \item{scale_by}{A value to scale the input. The default is \code{1.0}. All numeric
 values will be multiplied by this value first before undergoing formatting.
@@ -99,7 +103,11 @@ inherit a previous suffix (e.g., with \code{c("K", "M", NA, "T")}, all numbers
 in the range of millions and billions will be in terms of millions).
 
 Any use of \code{suffixing} (where it is not set expressly as \code{FALSE}) means
-that any value provided to \code{scale_by} will be ignored.}
+that any value provided to \code{scale_by} will be ignored.
+
+If using \code{system = "ind"} then the default suffix set provided by
+\code{suffixing = TRUE} will be \code{c(NA, "L", "Cr")}. This doesn't apply suffixes
+to the thousands range, but does express values in lakhs and crores.}
 
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other
@@ -111,18 +119,32 @@ of \verb{1,000}).}
 
 \item{dec_mark}{The character to use as a decimal mark (e.g., using \code{dec_mark = ","} with \code{0.152} would result in a formatted value of \verb{0,152}).}
 
+\item{force_sign}{Should the positive sign be shown for positive values
+(effectively showing a sign for all values except zero)? If so, use \code{TRUE}
+for this option. The default is \code{FALSE}, where only negative numbers will
+display a minus sign. This option is disregarded when using accounting
+notation with \code{accounting = TRUE}.}
+
 \item{placement}{The placement of the currency symbol. This can be either be
 \code{left} (the default) or \code{right}.}
 
 \item{incl_space}{An option for whether to include a space between the value
 and the currency symbol. The default is to not introduce a space character.}
 
+\item{system}{The numbering system to use. By default, this is the
+international numbering system (\code{"intl"}) whereby grouping separators
+(i.e., \code{sep_mark}) are separated by three digits. The alternative system,
+the Indian numbering system (\code{"ind"}) uses grouping separators that
+correspond to thousand, lakh, crore, and higher quantities.}
+
 \item{locale}{An optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include \code{"en_US"} for English
 (United States) and \code{"fr_FR"} for French (France). The use of a valid
 locale ID will override any values provided in \code{sep_mark} and \code{dec_mark}.
 We can use the \code{\link[=info_locales]{info_locales()}} function as a useful reference for all of
-the locales that are supported.}
+the locales that are supported. Any \code{locale} value provided here will
+override any global locale setting performed in \code{\link[=gt]{gt()}}'s own \code{locale}
+argument.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -156,71 +178,82 @@ currency values
 \item locale-based formatting: providing a locale ID will result in
 currency formatting specific to the chosen locale
 }
+
 We can use the \code{\link[=info_currencies]{info_currencies()}} function for a useful reference on all of
 the possible inputs to the \code{currency} argument.
 }
 \details{
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
-nothing is provided for \code{rows} then entire columns are selected). A number of
-helper functions exist to make targeting more effective. Conditional
+nothing is provided for \code{rows} then entire columns are selected). Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the Arguments section for more information on this.
+argument. See the \emph{Arguments} section for more information on this.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_fmt_currency_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_fmt_currency_2.png}{options: width=100\%}}
+Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{currency} column to
+have currency values in euros (\code{"EUR"}).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+  gt() \%>\%
+  fmt_currency(
+    columns = currency,
+    currency = "EUR"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_currency_1.png" style="width:100\%;">
+}}
+
+Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{num} and \code{currency},
+columns, then, format those columns using the \code{"CNY"} and \code{"GBP"} currencies.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+  dplyr::select(num, currency) \%>\%
+  gt() \%>\%
+  fmt_currency(
+    columns = num,
+    currency = "CNY"
+  ) \%>\%
+  fmt_currency(
+    columns = currency,
+    currency = "GBP"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_currency_2.png" style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
 
-3-4
+3-8
 }
 
-\examples{
-# Use `exibble` to create a gt table;
-# format the `currency` column to have
-# currency values in euros (EUR)
-tab_1 <-
-  exibble \%>\%
-  gt() \%>\%
-  fmt_currency(
-    columns = vars(currency),
-    currency = "EUR"
-  )
-
-# Use `exibble` to create a gt table;
-# Keep only the `num` and `currency`,
-# columns, then, format those columns
-# using the "CNY" and "GBP" currencies
-tab_2 <-
-  exibble \%>\%
-  dplyr::select(num, currency) \%>\%
-  gt() \%>\%
-  fmt_currency(
-    columns = vars(num),
-    currency = "CNY"
-  ) \%>\%
-  fmt_currency(
-    columns = vars(currency),
-    currency = "GBP"
-  )
-
-}
 \seealso{
-Other Format Data: 
+Other data formatting functions: 
 \code{\link{data_color}()},
+\code{\link{fmt_bytes}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_duration}()},
+\code{\link{fmt_engineering}()},
+\code{\link{fmt_fraction}()},
+\code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
-\code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
+\code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt}()},
+\code{\link{sub_large_vals}()},
+\code{\link{sub_missing}()},
+\code{\link{sub_small_vals}()},
+\code{\link{sub_zero}()},
 \code{\link{text_transform}()}
 }
-\concept{Format Data}
+\concept{data formatting functions}

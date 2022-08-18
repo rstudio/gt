@@ -26,7 +26,7 @@ summary_tbl <-
   gt(groupname_col = "groups") %>%
   summary_rows(
     groups = c("A", "C"),
-    columns = vars(value),
+    columns = "value",
     fns = list(
       ~mean(., na.rm = TRUE),
       ~sum(., na.rm = TRUE),
@@ -36,14 +36,20 @@ summary_tbl <-
   tab_footnote(
     footnote = "Note for Summary A.",
     locations = cells_summary(
-      groups = "A", columns = 1, rows = 1)
+      groups = "A",
+      columns = value,
+      rows = 1
+    )
   ) %>%
   tab_footnote(
     footnote = "Note for Summary C.",
     locations = cells_summary(
-      groups = "C", columns = 1, rows = 1)
+      groups = "C",
+      columns = value,
+      rows = 1
+    )
   ) %>%
-  fmt_missing(columns = vars(value, value_2)) %>%
+  sub_missing(columns = c(value, value_2)) %>%
   tab_options(
     summary_row.background.color = "#FFFEEE",
     row_group.background.color = "lightblue"

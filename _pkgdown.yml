@@ -1,7 +1,12 @@
-url: https://gt.rstudio.com
+destination: docs
 
 home:
   strip_header: true
+
+url: https://gt.rstudio.com
+
+template:
+  bootstrap: 5
 
 reference:
   - title: Create Table
@@ -32,6 +37,7 @@ reference:
     - tab_spanner_delim
     - tab_row_group
     - tab_stubhead
+    - tab_stub_indent
     - tab_footnote
     - tab_source_note
     - tab_style
@@ -49,16 +55,25 @@ reference:
       transformation.
     contents:
     - fmt_number
+    - fmt_integer
     - fmt_scientific
+    - fmt_engineering
     - fmt_percent
+    - fmt_partsper
+    - fmt_fraction
     - fmt_currency
+    - fmt_bytes
     - fmt_date
     - fmt_time
     - fmt_datetime
+    - fmt_duration
     - fmt_markdown
     - fmt_passthrough
-    - fmt_missing
     - fmt
+    - sub_missing
+    - sub_zero
+    - sub_small_vals
+    - sub_large_vals
     - text_transform
     - data_color
 
@@ -68,7 +83,7 @@ reference:
       columns. This includes alignment of the data in columns
       (`cols_align()`), hiding columns from view (`cols_hide()`),
       re-labeling the column labels (`cols_label()`), merging two columns
-      together (`cols_merge*()`), moving columns around (`cols_move*()`)
+      together (`cols_merge*()`), moving columns around (`cols_move*()`).
     contents:
     - cols_align
     - cols_width
@@ -77,8 +92,10 @@ reference:
     - cols_move_to_end
     - cols_move
     - cols_hide
-    - cols_merge_range
+    - cols_unhide
     - cols_merge_uncert
+    - cols_merge_range
+    - cols_merge_n_pct
     - cols_merge
 
   - title: Modify Rows
@@ -101,16 +118,15 @@ reference:
 
   - title: Helper Functions
     desc: >
-      A small assortment of helper functions is available in the **gt**
-      package. The various `cells_*()` functions are used for targeting
-      cells with the `locations` argument in the `tab_footnote()`,
-      `tab_style()`, and `text_transform()` functions. The `cells_styles()`
-      function is used exclusively with `tab_style()`'s `style` argument
-      (and the `px()` & `pct()` functions may be useful there for specifying
-      units in pixels or percentages). The `md()` and `html()` helpers can
-      used be during label creation with the `tab_header()`,
-      `tab_footnote()`, `tab_spanner()`, `tab_stubhead_label()`, and
-      `tab_source_note()` functions.
+      An assortment of helper functions is available in the **gt** package.
+      The various `cells_*()` functions are used for targeting cells with the
+      `locations` argument in the `tab_footnote()`, `tab_style()`, and
+      `text_transform()` functions. The `cells_styles()` function is used
+      exclusively with `tab_style()`'s `style` argument (and the `px()` &
+      `pct()` functions may be useful there for specifying units in pixels or
+      percentages). The `md()` and `html()` helpers can used be during label
+      creation with the `tab_header()`, `tab_footnote()`, `tab_spanner()`,
+      `tab_stubhead_label()`, and `tab_source_note()` functions.
     contents:
     - md
     - html
@@ -125,6 +141,10 @@ reference:
     - cells_body
     - cells_summary
     - cells_grand_summary
+    - cells_stub_summary
+    - cells_stub_grand_summary
+    - cells_footnotes
+    - cells_source_notes
     - currency
     - cell_text
     - cell_fill
@@ -159,9 +179,14 @@ reference:
     - opt_footnote_marks
     - opt_row_striping
     - opt_align_table_header
+    - opt_vertical_padding
+    - opt_horizontal_padding
     - opt_all_caps
     - opt_table_lines
     - opt_table_outline
+    - opt_table_font
+    - opt_stylize
+    - opt_css
 
   - title: Information Functions
     desc: >
@@ -219,30 +244,37 @@ reference:
     - as_raw_html
     - as_latex
     - as_rtf
+    - as_word
     - extract_summary
 
+  - title: Vector Formatting Functions
+    desc: >
+      Why should columns have all the formatting fun? If you have vectors in
+      need of formatting, we have a set of `vec_fmt_*()` functions that have
+      been adapted from the corresponding `fmt_*()` functions.
+    contents:
+    - vec_fmt_number
+    - vec_fmt_integer
+    - vec_fmt_scientific
+    - vec_fmt_engineering
+    - vec_fmt_percent
+    - vec_fmt_partsper
+    - vec_fmt_fraction
+    - vec_fmt_currency
+    - vec_fmt_bytes
+    - vec_fmt_date
+    - vec_fmt_time
+    - vec_fmt_datetime
+    - vec_fmt_duration
+    - vec_fmt_markdown
+
 navbar:
-  type: default
-  left:
-  - text: Intro
-    href: articles/intro-creating-gt-tables.html
-  - text: Reference
-    href: reference/index.html
-  - text: Articles
-    menu:
-    - text: How to Use
-    - text: gt Datasets
-      href: articles/gt-datasets.html
-    - text: Summary Lines
-      href: articles/creating-summary-lines.html
-    - text: Case Studies
-    - text: 'Case Study: gtcars'
-      href: articles/case-study-gtcars.html
-  - text: News
-    href: news/index.html
-  right:
-  - icon: fa-github fa-lg
-    href: https://github.com/rstudio/gt
+  structure:
+    left: [intro, articles, reference, news]
+  components:
+    intro:
+      text: Intro
+      href: articles/intro-creating-gt-tables.html
 
 development:
-  mode: release
+  version_tooltip: "Development version"

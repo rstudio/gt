@@ -21,9 +21,23 @@ setting of font sizes (e.g., in \code{\link[=cell_text]{cell_text()}}) and thick
 for an absolute definition of size as opposed to the analogous helper
 function \code{\link[=pct]{pct()}}.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_px_1.png}{options: width=100\%}}
+
+Use \code{\link{exibble}} to create a \strong{gt} table. Use the \code{px()} helper to define the
+font size for the column labels.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+  gt() \%>\%
+  tab_style(
+    style = cell_text(size = px(20)),
+    locations = cells_column_labels()
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_px_1.png" style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
@@ -31,21 +45,8 @@ function \code{\link[=pct]{pct()}}.
 7-3
 }
 
-\examples{
-# Use `exibble` to create a gt table;
-# use the `px()` helper to define the
-# font size for the column labels
-tab_1 <-
-  exibble \%>\%
-  gt() \%>\%
-  tab_style(
-    style = cell_text(size = px(20)),
-    locations = cells_column_labels(columns = TRUE)
-  )
-
-}
 \seealso{
-Other Helper Functions: 
+Other helper functions: 
 \code{\link{adjust_luminance}()},
 \code{\link{cell_borders}()},
 \code{\link{cell_fill}()},
@@ -53,8 +54,12 @@ Other Helper Functions:
 \code{\link{cells_body}()},
 \code{\link{cells_column_labels}()},
 \code{\link{cells_column_spanners}()},
+\code{\link{cells_footnotes}()},
 \code{\link{cells_grand_summary}()},
 \code{\link{cells_row_groups}()},
+\code{\link{cells_source_notes}()},
+\code{\link{cells_stub_grand_summary}()},
+\code{\link{cells_stub_summary}()},
 \code{\link{cells_stubhead}()},
 \code{\link{cells_stub}()},
 \code{\link{cells_summary}()},
@@ -69,4 +74,4 @@ Other Helper Functions:
 \code{\link{pct}()},
 \code{\link{random_id}()}
 }
-\concept{Helper Functions}
+\concept{helper functions}

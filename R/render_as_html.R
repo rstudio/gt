@@ -9,15 +9,17 @@
 #' @noRd
 render_as_html <- function(data) {
 
-  data <- data %>% build_data(context = "html")
+  data <- build_data(data = data, context = "html")
 
   # Composition of HTML -----------------------------------------------------
 
   # Upgrade `_styles` to gain a `html_style` column with CSS style rules
   data <- add_css_styles(data = data)
 
+  caption_component <- create_caption_component_h(data = data)
+
   # Create the heading component
-  heading_component <- create_heading_component(data = data, context = "html")
+  heading_component <- create_heading_component_h(data = data)
 
   # Create the columns component
   columns_component <- create_columns_component_h(data = data)
@@ -35,16 +37,17 @@ render_as_html <- function(data) {
   table_defs <- get_table_defs(data = data)
 
   # Compose the HTML table
-  htmltools::tags$table(
-    class = "gt_table",
-    style = table_defs$table_style,
-    table_defs$table_colgroups,
-    heading_component,
-    columns_component,
-    body_component,
-    source_notes_component,
-    footnotes_component
-  ) %>%
-    as.character()
-
+  as.character(
+    htmltools::tags$table(
+      class = "gt_table",
+      style = table_defs$table_style,
+      caption_component,
+      table_defs$table_colgroups,
+      heading_component,
+      columns_component,
+      body_component,
+      source_notes_component,
+      footnotes_component
+    )
+  )
 }

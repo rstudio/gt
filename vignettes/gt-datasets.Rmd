@@ -10,7 +10,8 @@ vignette: >
 ```{r options, message=FALSE, warning=FALSE, include=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>")
+  comment = "#>"
+)
 
 library(gt)
 library(dplyr)
@@ -50,7 +51,8 @@ countrypops_ddtab <-
     style = cell_text(font = "Courier"),
     locations = list(
       cells_body(columns = "Column"),
-      cells_body(columns = "Type"))
+      cells_body(columns = "Type")
+    )
   ) %>%
   tab_options(
     table.width = pct(80),
@@ -83,19 +85,19 @@ Polynesia <- c("PF", "WS", "TO", "TV")
 
 # Create a gt table based on a preprocessed `countrypops`
 countrypops %>%
-  dplyr::filter(country_code_2 %in% c(
+  filter(country_code_2 %in% c(
     Australasia, Melanesia, Micronesia, Polynesia)
   ) %>%
-  dplyr::filter(year %in% c(1995, 2005, 2015)) %>%
-  dplyr::mutate(region = case_when(
+  filter(year %in% c(1995, 2005, 2015)) %>%
+  mutate(region = case_when(
     country_code_2 %in% Australasia ~ "Australasia",
     country_code_2 %in% Melanesia ~ "Melanesia",
     country_code_2 %in% Micronesia ~ "Micronesia",
     country_code_2 %in% Polynesia ~ "Polynesia",
   )) %>%
-  tidyr::spread(key = year, value = population) %>%
-  dplyr::arrange(region, desc(`2015`)) %>%
-  dplyr::select(-starts_with("country_code")) %>%
+  pivot_wider(names_from = year, values_from = population) %>%
+  arrange(region, desc(`2015`)) %>%
+  select(-starts_with("country_code")) %>%
   gt(
     rowname_col = "country_name",
     groupname_col = "region"
@@ -103,10 +105,10 @@ countrypops %>%
   tab_header(title = "Populations of Oceania's Countries in 1995, 2005, and 2015") %>%
   tab_spanner(
     label = "Total Population",
-    columns = vars(`1995`, `2005`, `2015`)
+    columns = c(`1995`, `2005`, `2015`)
   ) %>%
   fmt_number(
-    columns = vars(`1995`, `2005`, `2015`),
+    columns = c(`1995`, `2005`, `2015`),
     decimals = 0,
     use_seps = TRUE
   )
@@ -134,7 +136,8 @@ sza_ddtab <-
     style = cell_text(font = "Courier"),
     locations = list(
       cells_body(columns = "Column"),
-      cells_body(columns = "Type"))
+      cells_body(columns = "Type")
+    )
   ) %>%
   tab_options(
     table.width = pct(80),
@@ -163,15 +166,12 @@ The table that we'll create from `sza` will meet these requirements:
 ```{r sza}
 # Create a gt table based on a preprocessed `sza`
 sza %>%
-  dplyr::filter(latitude == 20) %>%
-  dplyr::select(-latitude) %>%
-  dplyr::filter(!is.na(sza)) %>%
-  tidyr::spread(key = "tst", value = sza) %>%
+  filter(latitude == 20) %>%
+  select(-latitude) %>%
+  filter(!is.na(sza)) %>%
+  pivot_wider(names_from = "tst", values_from = sza) %>%
   gt(rowname_col = "month") %>%
-  fmt_missing(
-    columns = TRUE,
-    missing_text = ""
-  ) %>%
+  sub_missing(missing_text = "") %>%
   tab_stubhead(label = html("month<br>(20&deg;N)")) %>%
   tab_header(title = html("&#x2600; Solar Zenith Angles &#x2600;")) %>%
   tab_options(
@@ -208,7 +208,8 @@ gtcars_ddtab <-
     style = cell_text(font = "Courier"),
     locations = list(
       cells_body(columns = "Column"),
-      cells_body(columns = "Type"))
+      cells_body(columns = "Type")
+    )
   ) %>%
   tab_options(
     table.width = pct(80),
@@ -238,23 +239,22 @@ The table that we'll create from `gtcars` will meet these requirements:
 ```{r gtcars}
 # Create a gt table based on a preprocessed `gtcars`
 gtcars %>%
-  dplyr::filter(ctry_origin == "Germany") %>%
-  dplyr::group_by(mfr) %>%
-  dplyr::top_n(2, msrp) %>%
-  dplyr::ungroup() %>%
-  dplyr::select(mfr, model, drivetrain, msrp) %>%
+  filter(ctry_origin == "Germany") %>%
+  group_by(mfr) %>%
+  top_n(n = 2, msrp) %>%
+  ungroup() %>%
+  select(mfr, model, drivetrain, msrp) %>%
   gt() %>%
   tab_header(title = "Select German Automobiles") %>%
   cols_merge(
-    columns = vars(mfr, model),
-    hide_columns = vars(model)
+    columns = c(mfr, model)
   ) %>%
   text_transform(
-    locations = cells_body(columns = vars(drivetrain)),
+    locations = cells_body(columns = drivetrain),
     fn = function(x) toupper(x)
   ) %>%
   fmt_currency(
-    columns = vars(msrp),
+    columns = msrp,
     currency = "USD",
     decimals = 0
   ) %>%
@@ -265,11 +265,11 @@ gtcars %>%
   ) %>%
   tab_footnote(
     footnote = "Prices in USD.",
-    locations = cells_column_labels(columns = vars(msrp))
+    locations = cells_column_labels(columns = msrp)
   ) %>%
   tab_footnote(
     footnote = "AWD = All Wheel Drive, RWD = Rear Wheel Drive.",
-    locations = cells_column_labels(columns = vars(drivetrain))
+    locations = cells_column_labels(columns = drivetrain)
   ) %>%
   opt_footnote_marks(marks = "letters")
 ```
@@ -294,7 +294,8 @@ sp500_ddtab <-
     style = cell_text(font = "Courier"),
     locations = list(
       cells_body(columns = "Column"),
-      cells_body(columns = "Type"))
+      cells_body(columns = "Type")
+    )
   ) %>%
   tab_options(
     table.width = pct(80),
@@ -333,35 +334,35 @@ down_arrow <- "<span style=\"color:red\">&#9660;</span>"
 
 # Create a gt table based on a preprocessed `sp500`
 sp500 %>%
-  dplyr::filter(date >= start_date & date <= end_date) %>%
-  dplyr::select(-adj_close) %>%
+  filter(date >= start_date & date <= end_date) %>%
+  select(-adj_close) %>%
   gt() %>%
   tab_header(
     title = "S&P 500",
     subtitle = glue::glue("{start_date} to {end_date}")
   ) %>%
   fmt_date(
-    columns = vars(date),
+    columns = date,
     date_style = 7
   ) %>%
   fmt_currency(
-    columns = vars(open, high, low, close),
+    columns = c(open, high, low, close),
     currency = "USD"
   ) %>%
   fmt_number(
-    columns = vars(volume),
+    columns = volume,
     scale_by = 1 / 1E9,
     pattern = "{x}B"
   ) %>%
   text_transform(
     locations = cells_body(
-      columns = "close",
+      columns = close,
       rows = close > open),
     fn = function(x) paste(x, up_arrow)
   ) %>%
   text_transform(
     locations = cells_body(
-      columns = "close",
+      columns = close,
       rows = close < open),
     fn = function(x) paste(x, down_arrow)
   ) %>%
@@ -396,7 +397,8 @@ pizzaplace_ddtab <-
     style = cell_text(font = "Courier"),
     locations = list(
       cells_body(columns = "Column"),
-      cells_body(columns = "Type"))
+      cells_body(columns = "Type")
+    )
   ) %>%
   tab_options(
     table.width = pct(80),
@@ -427,22 +429,23 @@ pizzaplace %>%
   dplyr::group_by(type, size) %>%
   dplyr::summarize(
     sold = n(),
-    income = sum(price)
+    income = sum(price),
+    .groups = "drop_last"
   ) %>%
   gt(rowname_col = "size") %>%
   tab_header(title = "Pizzas Sold in 2015") %>%
   fmt_number(
-    columns = vars(sold),
+    columns = sold,
     decimals = 0,
     use_seps = TRUE
   ) %>%
   fmt_currency(
-    columns = vars(income),
+    columns = income,
     currency = "USD"
   ) %>%
   summary_rows(
     groups = TRUE,
-    columns = vars(sold),
+    columns = sold,
     fns = list(TOTAL = "sum"),
     formatter = fmt_number,
     decimals = 0,
@@ -450,7 +453,7 @@ pizzaplace %>%
   ) %>%
   summary_rows(
     groups = TRUE,
-    columns = "income",
+    columns = income,
     fns = list(TOTAL = "sum"),
     formatter = fmt_currency,
     currency = "USD"
@@ -482,7 +485,8 @@ exibble_ddtab <-
     style = cell_text(font = "Courier"),
     locations = list(
       cells_body(columns = "Column"),
-      cells_body(columns = "Type"))
+      cells_body(columns = "Type")
+    )
   ) %>%
   tab_options(
     table.width = pct(80),
@@ -507,23 +511,24 @@ exibble %>%
     groupname_col = "group"
   ) %>%
   fmt_number(
-    columns = vars(num),
-    decimals = 2) %>%
+    columns = num,
+    decimals = 2
+  ) %>%
   fmt_date(
-    columns = vars(date),
+    columns = date,
     date_style = 6
   ) %>%
   fmt_time(
-    columns = vars(time),
+    columns = time,
     time_style = 4
   ) %>%
   fmt_datetime(
-    columns = vars(datetime),
+    columns = datetime,
     date_style = 6,
     time_style = 4
   ) %>%
   fmt_currency(
-    columns = vars(currency),
+    columns = currency,
     currency = "EUR"
   ) %>%
   tab_options(

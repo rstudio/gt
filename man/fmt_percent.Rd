@@ -7,17 +7,20 @@
 fmt_percent(
   data,
   columns,
-  rows = NULL,
+  rows = everything(),
   decimals = 2,
   drop_trailing_zeros = FALSE,
   drop_trailing_dec_mark = TRUE,
   scale_values = TRUE,
   use_seps = TRUE,
+  accounting = FALSE,
   pattern = "{x}",
   sep_mark = ",",
   dec_mark = ".",
+  force_sign = FALSE,
   incl_space = FALSE,
   placement = "right",
+  system = c("intl", "ind"),
   locale = NULL
 )
 }
@@ -25,16 +28,18 @@ fmt_percent(
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{The columns to format. Can either be a series of column names
-provided in \code{\link[=vars]{vars()}}, a vector of column indices, or a helper function
+provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
 focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.}
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
+\code{\link[=everything]{everything()}}.}
 
-\item{rows}{Optional rows to format. Not providing any value results in all
-rows in \code{columns} being formatted. Can either be a vector of row captions
-provided \code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on
-selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.
-We can also use expressions to filter down to the rows we need (e.g.,
+\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
+default) results in all rows in \code{columns} being formatted. Alternatively,
+we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
+indices, or a helper function focused on selections. The select helper
+functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
+to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{decimals}{An option to specify the exact number of decimal places to
@@ -57,6 +62,10 @@ already scaled and require only the percent sign when formatted.}
 group separator is set by \code{sep_mark} and overridden if a locale ID is
 provided to \code{locale}. This setting is \code{TRUE} by default.}
 
+\item{accounting}{An option to use accounting style for values. With \code{FALSE}
+(the default), negative values will be shown with a minus sign. Using
+\code{accounting = TRUE} will put negative values in parentheses.}
+
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other
 characters are taken to be string literals.}
@@ -67,18 +76,32 @@ of \verb{1,000}).}
 
 \item{dec_mark}{The character to use as a decimal mark (e.g., using \code{dec_mark = ","} with \code{0.152} would result in a formatted value of \verb{0,152}).}
 
+\item{force_sign}{Should the positive sign be shown for positive values
+(effectively showing a sign for all values except zero)? If so, use \code{TRUE}
+for this option. The default is \code{FALSE}, where only negative numbers will
+display a minus sign. This option is disregarded when using accounting
+notation with \code{accounting = TRUE}.}
+
 \item{incl_space}{An option for whether to include a space between the value
 and the percent sign. The default is to not introduce a space character.}
 
 \item{placement}{The placement of the percent sign. This can be either be
 \code{right} (the default) or \code{left}.}
 
+\item{system}{The numbering system to use. By default, this is the
+international numbering system (\code{"intl"}) whereby grouping separators
+(i.e., \code{sep_mark}) are separated by three digits. The alternative system,
+the Indian numbering system (\code{"ind"}) uses grouping separators that
+correspond to thousand, lakh, crore, and higher quantities.}
+
 \item{locale}{An optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include \code{"en_US"} for English
 (United States) and \code{"fr_FR"} for French (France). The use of a valid
 locale ID will override any values provided in \code{sep_mark} and \code{dec_mark}.
 We can use the \code{\link[=info_locales]{info_locales()}} function as a useful reference for all of
-the locales that are supported.}
+the locales that are supported. Any \code{locale} value provided here will
+override any global locale setting performed in \code{\link[=gt]{gt()}}'s own \code{locale}
+argument.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -88,7 +111,7 @@ With numeric values in a \strong{gt} table, we can perform percentage-based
 formatting. It is assumed the input numeric values are proportional values
 and, in this case, the values will be automatically multiplied by \code{100}
 before decorating with a percent sign (the other case is accommodated though
-setting the \code{scale_values} to \code{FALSE}) For more control over percentage
+setting the \code{scale_values} to \code{FALSE}). For more control over percentage
 formatting, we can use the following options:
 \itemize{
 \item percent sign placement: the percent sign can be placed after or
@@ -98,6 +121,9 @@ value.
 trailing zeros, and a choice of the decimal symbol
 \item digit grouping separators: options to enable/disable digit separators
 and provide a choice of separator symbol
+\item value scaling toggle: choose to disable automatic value scaling in the
+situation that values are already scaled coming in (and just require the
+percent symbol)
 \item pattern: option to use a text pattern for decoration of the formatted
 values
 \item locale-based formatting: providing a locale ID will result in number
@@ -106,27 +132,17 @@ formatting specific to the chosen locale
 }
 \details{
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
-nothing is provided for \code{rows} then entire columns are selected). A number of
-helper functions exist to make targeting more effective. Conditional
+nothing is provided for \code{rows} then entire columns are selected). Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the Arguments section for more information on this.
+argument. See the \emph{Arguments} section for more information on this.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_fmt_percent_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
+Use \code{\link{pizzaplace}} to create a \strong{gt} table. Format the \code{frac_of_quota}
+column to display values as percentages.
 
-3-3
-}
-
-\examples{
-# Use `pizzaplace` to create a gt table;
-# format the `frac_of_quota` column to
-# display values as percentages
-tab_1 <-
-  pizzaplace \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
   dplyr::mutate(month = as.numeric(substr(date, 6, 7))) \%>\%
   dplyr::group_by(month) \%>\%
   dplyr::summarize(pizzas_sold = dplyr::n()) \%>\%
@@ -134,24 +150,43 @@ tab_1 <-
   dplyr::mutate(frac_of_quota = pizzas_sold / 4000) \%>\%
   gt(rowname_col = "month") \%>\%
   fmt_percent(
-    columns = vars(frac_of_quota),
+    columns = frac_of_quota,
     decimals = 1
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_percent_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+3-5
+}
+
 \seealso{
-Other Format Data: 
+Other data formatting functions: 
 \code{\link{data_color}()},
+\code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_duration}()},
+\code{\link{fmt_engineering}()},
+\code{\link{fmt_fraction}()},
+\code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
-\code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
+\code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt}()},
+\code{\link{sub_large_vals}()},
+\code{\link{sub_missing}()},
+\code{\link{sub_small_vals}()},
+\code{\link{sub_zero}()},
 \code{\link{text_transform}()}
 }
-\concept{Format Data}
+\concept{data formatting functions}

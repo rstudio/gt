@@ -16,16 +16,13 @@ dependencies (i.e., the LaTeX packages required for the table). Using
 \code{as.character()} on the created object will result in a single-element vector
 containing the LaTeX code.
 }
-\section{Function ID}{
+\section{Examples}{
 
-13-3
-}
 
-\examples{
-# Use `gtcars` to create a gt table;
-# add a header and then export as
-# an object with LaTeX code
-tab_latex <-
+Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header and then export as an
+object with LaTeX code.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_latex <-
   gtcars \%>\%
   dplyr::select(mfr, model, msrp) \%>\%
   dplyr::slice(1:5) \%>\%
@@ -35,23 +32,24 @@ tab_latex <-
     subtitle = md("`gtcars` is an R dataset")
   ) \%>\%
   as_latex()
+}\if{html}{\out{</div>}}
 
-# `tab_latex` is a `knit_asis` object,
-# which makes it easy to include in
-# R Markdown documents that are knit to
-# PDF; we can use `as.character()` to
-# get just the LaTeX code as a single-
-# element vector
-tab_latex \%>\%
-  as.character() \%>\%
-  cat()
-
+What's returned is a \code{knit_asis} object, which makes it easy to include in R
+Markdown documents that are knit to PDF. We can use \code{as.character()} to get
+just the LaTeX code as a single-element vector.
 }
+
+\section{Function ID}{
+
+13-3
+}
+
 \seealso{
-Other Export Functions: 
+Other table export functions: 
 \code{\link{as_raw_html}()},
 \code{\link{as_rtf}()},
+\code{\link{as_word}()},
 \code{\link{extract_summary}()},
 \code{\link{gtsave}()}
 }
-\concept{Export Functions}
+\concept{table export functions}

@@ -1,0 +1,4383 @@
+skip_on_cran()
+
+# Define numeric vectors for testing
+vec_num_1 <- c(-2.5, -2, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2, 2.5, NA, Inf)
+vec_num_2 <- c(-2.5, -2, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2, 2.5, NA, Inf) * 10
+vec_num_3 <- c(-2.5, -2, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2, 2.5, NA, Inf) * 100
+vec_num_4 <- c(-2.5, -2, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2, 2.5, NA, Inf) * 1e6
+vec_num_5 <- c(-2.5, -2, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2, 2.5, NA, Inf) * 1e12
+vec_num_6 <- seq(0, 2, 0.1)
+
+range_0_1 <- c(0.0001, 0.001, 0.01, 0.1, 0.25, 0.4, 0.5, 0.6, 0.75, 0.9, 0.99, 0.999, 0.9999)
+range_0_1_minus <- range_0_1 * -1
+range_1_2 <- range_0_1 + 1
+range_1_2_minus <- range_0_1_minus - 1
+exact_numbers <- c(-1, 0, 1)
+not_numbers <- c(NA_real_, NaN, Inf, -Inf)
+
+# Define vectors with dates and times
+years <- 2020:2024
+months <- 1:5
+days <- 5:9
+hours <- 15:19
+minutes <- 35:39
+seconds <- 0:4
+
+datetimes <-
+  ISOdatetime(
+    year = years,
+    month = months,
+    day = days,
+    hour = hours,
+    min = minutes,
+    sec = seconds,
+    tz = "GMT"
+  )
+
+dates <- as.Date(datetimes)
+times <- paste0(hours, ":", minutes)
+
+test_that("The `vec_fmt_number()` function works", {
+
+  vec_fmt_number(vec_num_1, output = "plain") %>%
+    expect_equal(
+      c(
+        "-2.50", "-2.00", "-1.50", "-1.00", "-0.50",
+        "0.00", "0.50", "1.00", "1.50", "2.00", "2.50",
+        "NA", "Inf"
+      )
+    )
+
+  vec_fmt_number(vec_num_1, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.50"),
+        paste0("\U02212", "2.00"),
+        paste0("\U02212", "1.50"),
+        paste0("\U02212", "1.00"),
+        paste0("\U02212", "0.50"),
+        "0.00", "0.50", "1.00", "1.50", "2.00", "2.50", "NA", "Inf"
+      )
+    )
+
+  vec_fmt_number(vec_num_1, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.50$", "$-2.00$", "$-1.50$", "$-1.00$", "$-0.50$", "$0.00$",
+        "$0.50$", "$1.00$", "$1.50$", "$2.00$", "$2.50$", "NA", "$Inf$"
+      )
+    )
+
+  vec_fmt_number(vec_num_1, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.50", "-2.00", "-1.50", "-1.00", "-0.50", "0.00", "0.50",
+        "1.00", "1.50", "2.00", "2.50", "NA", "Inf"
+      )
+    )
+
+  vec_fmt_number(vec_num_6, decimals = 4, output = "plain") %>%
+    expect_equal(
+      c(
+        "0.0000", "0.1000", "0.2000", "0.3000", "0.4000", "0.5000", "0.6000",
+        "0.7000", "0.8000", "0.9000", "1.0000", "1.1000", "1.2000", "1.3000",
+        "1.4000", "1.5000", "1.6000", "1.7000", "1.8000", "1.9000", "2.0000"
+      )
+    )
+
+  vec_fmt_number(vec_num_6, decimals = 4, output = "html") %>%
+    expect_equal(
+      c(
+        "0.0000", "0.1000", "0.2000", "0.3000", "0.4000", "0.5000", "0.6000",
+        "0.7000", "0.8000", "0.9000", "1.0000", "1.1000", "1.2000", "1.3000",
+        "1.4000", "1.5000", "1.6000", "1.7000", "1.8000", "1.9000", "2.0000"
+      )
+    )
+
+  vec_fmt_number(vec_num_6, decimals = 4, output = "latex") %>%
+    expect_equal(
+      c(
+        "$0.0000$", "$0.1000$", "$0.2000$", "$0.3000$", "$0.4000$", "$0.5000$",
+        "$0.6000$", "$0.7000$", "$0.8000$", "$0.9000$", "$1.0000$", "$1.1000$",
+        "$1.2000$", "$1.3000$", "$1.4000$", "$1.5000$", "$1.6000$", "$1.7000$",
+        "$1.8000$", "$1.9000$", "$2.0000$"
+      )
+    )
+
+  vec_fmt_number(vec_num_6, decimals = 4, output = "rtf") %>%
+    expect_equal(
+      c(
+        "0.0000", "0.1000", "0.2000", "0.3000", "0.4000", "0.5000", "0.6000",
+        "0.7000", "0.8000", "0.9000", "1.0000", "1.1000", "1.2000", "1.3000",
+        "1.4000", "1.5000", "1.6000", "1.7000", "1.8000", "1.9000", "2.0000"
+      )
+    )
+
+  vec_fmt_number(vec_num_1, drop_trailing_zeros = TRUE, output = "plain") %>%
+    expect_equal(
+      c(
+        "-2.5", "-2", "-1.5", "-1", "-0.5",
+        "0", "0.5", "1", "1.5", "2", "2.5", "NA", "Inf"
+      )
+    )
+
+  vec_fmt_number(vec_num_1, drop_trailing_zeros = TRUE, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.5"), paste0("\U02212", "2"),
+        paste0("\U02212", "1.5"), paste0("\U02212", "1"),
+        paste0("\U02212", "0.5"),
+        "0", "0.5", "1", "1.5", "2", "2.5", "NA", "Inf"
+      )
+    )
+
+  vec_fmt_number(vec_num_1, drop_trailing_zeros = TRUE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.5$", "$-2$", "$-1.5$", "$-1$", "$-0.5$", "$0$", "$0.5$",
+        "$1$", "$1.5$", "$2$", "$2.5$", "NA", "$Inf$"
+      )
+    )
+
+  vec_fmt_number(vec_num_1, drop_trailing_zeros = TRUE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.5", "-2", "-1.5", "-1", "-0.5", "0", "0.5", "1", "1.5",
+        "2", "2.5", "NA", "Inf"
+      )
+    )
+
+  vec_fmt_number(vec_num_1, n_sigfig = 3, output = "plain") %>%
+    expect_equal(
+      c(
+        "-2.50", "-2.00", "-1.50", "-1.00",
+        "-0.500", "0", "0.500", "1.00", "1.50",
+        "2.00", "2.50", "NA", " Inf"
+      )
+    )
+
+  vec_fmt_number(vec_num_1, n_sigfig = 3, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.50"), paste0("\U02212", "2.00"),
+        paste0("\U02212", "1.50"), paste0("\U02212", "1.00"),
+        paste0("\U02212", "0.500"), "0", "0.500", "1.00", "1.50",
+        "2.00", "2.50", "NA", " Inf"
+      )
+    )
+
+  vec_fmt_number(vec_num_1, n_sigfig = 3, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.50$", "$-2.00$", "$-1.50$", "$-1.00$", "$-0.500$", "$0$",
+        "$0.500$", "$1.00$", "$1.50$", "$2.00$", "$2.50$", "NA", "$ Inf$"
+      )
+    )
+
+  vec_fmt_number(vec_num_1, n_sigfig = 3, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.50", "-2.00", "-1.50", "-1.00", "-0.500", "0", "0.500",
+        "1.00", "1.50", "2.00", "2.50", "NA", " Inf"
+      )
+    )
+
+  vec_fmt_number(vec_num_4, use_seps = FALSE, output = "plain") %>%
+    expect_equal(
+      c(
+        "-2500000.00", "-2000000.00", "-1500000.00", "-1000000.00",
+        "-500000.00", "0.00", "500000.00", "1000000.00", "1500000.00",
+        "2000000.00", "2500000.00", "NA", "Inf"
+      )
+    )
+
+  vec_fmt_number(vec_num_4, use_seps = FALSE, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2500000.00"), paste0("\U02212", "2000000.00"),
+        paste0("\U02212", "1500000.00"), paste0("\U02212", "1000000.00"),
+        paste0("\U02212", "500000.00"), "0.00", "500000.00",
+        "1000000.00", "1500000.00", "2000000.00", "2500000.00", "NA", "Inf"
+      )
+    )
+
+  vec_fmt_number(vec_num_4, use_seps = FALSE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2500000.00$", "$-2000000.00$", "$-1500000.00$", "$-1000000.00$",
+        "$-500000.00$", "$0.00$", "$500000.00$", "$1000000.00$", "$1500000.00$",
+        "$2000000.00$", "$2500000.00$", "NA", "$Inf$"
+      )
+    )
+
+  vec_fmt_number(vec_num_4, use_seps = FALSE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2500000.00", "-2000000.00", "-1500000.00", "-1000000.00",
+        "-500000.00", "0.00", "500000.00", "1000000.00", "1500000.00",
+        "2000000.00", "2500000.00", "NA", "Inf"
+      )
+    )
+
+  vec_fmt_number(vec_num_4, accounting = TRUE, output = "plain") %>%
+    expect_equal(
+      c(
+        "(2,500,000.00)", "(2,000,000.00)", "(1,500,000.00)", "(1,000,000.00)",
+        "(500,000.00)", "0.00", "500,000.00", "1,000,000.00", "1,500,000.00",
+        "2,000,000.00", "2,500,000.00", "NA", "Inf"
+      )
+    )
+
+  vec_fmt_number(vec_num_1, accounting = TRUE, output = "html") %>%
+    expect_equal(
+      c(
+        "(2.50)", "(2.00)", "(1.50)", "(1.00)", "(0.50)", "0.00", "0.50",
+        "1.00", "1.50", "2.00", "2.50", "NA", "Inf"
+      )
+    )
+
+  vec_fmt_number(vec_num_1, accounting = TRUE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$(2.50)$", "$(2.00)$", "$(1.50)$", "$(1.00)$", "$(0.50)$",
+        "$0.00$", "$0.50$", "$1.00$", "$1.50$", "$2.00$", "$2.50$", "NA",
+        "$Inf$"
+      )
+    )
+
+  vec_fmt_number(vec_num_4, accounting = TRUE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "(2,500,000.00)", "(2,000,000.00)", "(1,500,000.00)", "(1,000,000.00)",
+        "(500,000.00)", "0.00", "500,000.00", "1,000,000.00", "1,500,000.00",
+        "2,000,000.00", "2,500,000.00", "NA", "Inf"
+      )
+    )
+
+  vec_fmt_number(vec_num_1, scale_by = 2.5, output = "plain") %>%
+    expect_equal(
+      c(
+        "-6.25", "-5.00", "-3.75", "-2.50", "-1.25", "0.00", "1.25",
+        "2.50", "3.75", "5.00", "6.25", "NA", "Inf"
+      )
+    )
+
+  vec_fmt_number(vec_num_1, scale_by = 2.5, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "6.25"), paste0("\U02212", "5.00"),
+        paste0("\U02212", "3.75"), paste0("\U02212", "2.50"),
+        paste0("\U02212", "1.25"), "0.00", "1.25", "2.50", "3.75",
+        "5.00", "6.25", "NA", "Inf"
+      )
+    )
+
+  vec_fmt_number(vec_num_1, scale_by = 2.5, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-6.25$", "$-5.00$", "$-3.75$", "$-2.50$", "$-1.25$", "$0.00$",
+        "$1.25$", "$2.50$", "$3.75$", "$5.00$", "$6.25$", "NA", "$Inf$"
+      )
+    )
+
+  vec_fmt_number(vec_num_1, scale_by = 2.5, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-6.25", "-5.00", "-3.75", "-2.50", "-1.25", "0.00", "1.25",
+        "2.50", "3.75", "5.00", "6.25", "NA", "Inf"
+      )
+    )
+
+  vec_fmt_number(vec_num_4, locale = "de", output = "plain") %>%
+    expect_equal(
+      c(
+        "-2.500.000,00", "-2.000.000,00", "-1.500.000,00", "-1.000.000,00",
+        "-500.000,00", "0,00", "500.000,00", "1.000.000,00", "1.500.000,00",
+        "2.000.000,00", "2.500.000,00", "NA", "Inf"
+      )
+    )
+
+  vec_fmt_number(vec_num_4, locale = "de", output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.500.000,00"), paste0("\U02212", "2.000.000,00"),
+        paste0("\U02212", "1.500.000,00"), paste0("\U02212", "1.000.000,00"),
+        paste0("\U02212", "500.000,00"),
+        "0,00", "500.000,00", "1.000.000,00", "1.500.000,00", "2.000.000,00",
+        "2.500.000,00", "NA", "Inf"
+      )
+    )
+
+  vec_fmt_number(vec_num_4, locale = "de", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.500.000,00$", "$-2.000.000,00$", "$-1.500.000,00$", "$-1.000.000,00$",
+        "$-500.000,00$", "$0,00$", "$500.000,00$", "$1.000.000,00$",
+        "$1.500.000,00$", "$2.000.000,00$", "$2.500.000,00$", "NA", "$Inf$"
+      )
+    )
+
+  vec_fmt_number(vec_num_4, locale = "de", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.500.000,00", "-2.000.000,00", "-1.500.000,00", "-1.000.000,00",
+        "-500.000,00", "0,00", "500.000,00", "1.000.000,00", "1.500.000,00",
+        "2.000.000,00", "2.500.000,00", "NA", "Inf"
+      )
+    )
+
+  vec_fmt_number(vec_num_4, suffixing = TRUE, output = "plain") %>%
+    expect_equal(
+      c(
+        "-2.50M", "-2.00M", "-1.50M", "-1.00M", "-500.00K", "0.00",
+        "500.00K", "1.00M", "1.50M", "2.00M", "2.50M", "NA", "InfT"
+      )
+    )
+
+  vec_fmt_number(vec_num_4, suffixing = TRUE, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.50M"), paste0("\U02212", "2.00M"),
+        paste0("\U02212", "1.50M"), paste0("\U02212", "1.00M"),
+        paste0("\U02212", "500.00K"), "0.00", "500.00K", "1.00M",
+        "1.50M", "2.00M", "2.50M", "NA", "InfT"
+      )
+    )
+
+  vec_fmt_number(vec_num_4, suffixing = TRUE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.50M$", "$-2.00M$", "$-1.50M$", "$-1.00M$", "$-500.00K$",
+        "$0.00$", "$500.00K$", "$1.00M$", "$1.50M$", "$2.00M$", "$2.50M$",
+        "NA", "$InfT$"
+      )
+    )
+
+  vec_fmt_number(vec_num_4, suffixing = TRUE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.50M", "-2.00M", "-1.50M", "-1.00M", "-500.00K", "0.00",
+        "500.00K", "1.00M", "1.50M", "2.00M", "2.50M", "NA", "InfT"
+      )
+    )
+
+  vec_fmt_number(vec_num_1, pattern = "a{x}b", output = "plain") %>%
+    expect_equal(
+      c(
+        "a-2.50b", "a-2.00b", "a-1.50b", "a-1.00b", "a-0.50b", "a0.00b",
+        "a0.50b", "a1.00b", "a1.50b", "a2.00b", "a2.50b", "NA", "aInfb"
+      )
+    )
+
+  vec_fmt_number(vec_num_1, pattern = "a{x}b", output = "html") %>%
+    expect_equal(
+      c(
+        paste0("a\U02212", "2.50b"), paste0("a\U02212", "2.00b"),
+        paste0("a\U02212", "1.50b"), paste0("a\U02212", "1.00b"),
+        paste0("a\U02212", "0.50b"), "a0.00b", "a0.50b", "a1.00b",
+        "a1.50b", "a2.00b", "a2.50b", "NA", "aInfb"
+      )
+    )
+
+  vec_fmt_number(vec_num_1, pattern = "a{x}b", output = "latex") %>%
+    expect_equal(
+      c(
+        "a$-2.50$b", "a$-2.00$b", "a$-1.50$b", "a$-1.00$b", "a$-0.50$b",
+        "a$0.00$b", "a$0.50$b", "a$1.00$b", "a$1.50$b", "a$2.00$b", "a$2.50$b",
+        "NA", "a$Inf$b"
+      )
+    )
+
+  vec_fmt_number(vec_num_1, pattern = "a{x}b", output = "rtf") %>%
+    expect_equal(
+      c(
+        "a-2.50b", "a-2.00b", "a-1.50b", "a-1.00b", "a-0.50b", "a0.00b",
+        "a0.50b", "a1.00b", "a1.50b", "a2.00b", "a2.50b", "NA", "aInfb"
+      )
+    )
+
+  vec_fmt_number(vec_num_1, force_sign = TRUE, output = "plain") %>%
+    expect_equal(
+      c(
+        "-2.50", "-2.00", "-1.50", "-1.00", "-0.50", "0.00", "+0.50",
+        "+1.00", "+1.50", "+2.00", "+2.50", "NA", "+Inf"
+      )
+    )
+
+  vec_fmt_number(vec_num_1, force_sign = TRUE, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.50"), paste0("\U02212", "2.00"),
+        paste0("\U02212", "1.50"), paste0("\U02212", "1.00"),
+        paste0("\U02212", "0.50"), "0.00", "+0.50", "+1.00",
+        "+1.50", "+2.00", "+2.50", "NA", "+Inf"
+      )
+    )
+
+  vec_fmt_number(vec_num_1, force_sign = TRUE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.50$", "$-2.00$", "$-1.50$", "$-1.00$", "$-0.50$", "$0.00$",
+        "$+0.50$", "$+1.00$", "$+1.50$", "$+2.00$", "$+2.50$", "NA", "$+Inf$"
+      )
+    )
+
+  vec_fmt_number(vec_num_1, force_sign = TRUE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.50", "-2.00", "-1.50", "-1.00", "-0.50", "0.00", "+0.50",
+        "+1.00", "+1.50", "+2.00", "+2.50", "NA", "+Inf"
+      )
+    )
+
+  expect_error(vec_fmt_number(letters))
+  expect_error(vec_fmt_number(TRUE))
+  expect_error(vec_fmt_number(list(1, 2, 3)))
+  expect_error(vec_fmt_number(dplyr::tibble(a = c(1, 2, 3))))
+})
+
+test_that("The `vec_fmt_integer()` function works", {
+
+  vec_fmt_integer(vec_num_1, output = "plain") %>%
+    expect_equal(
+      c(
+        "-2", "-2", "-2", "-1", "0", "0", "0", "1", "2", "2", "2",
+        "NA", "Inf"
+      )
+    )
+
+  vec_fmt_integer(vec_num_1, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2"), paste0("\U02212", "2"),
+        paste0("\U02212", "2"), paste0("\U02212", "1"),
+        "0", "0", "0", "1", "2", "2", "2", "NA", "Inf"
+      )
+    )
+
+  vec_fmt_integer(vec_num_1, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2$", "$-2$", "$-2$", "$-1$", "$0$", "$0$", "$0$", "$1$",
+        "$2$", "$2$", "$2$", "NA", "$Inf$"
+      )
+    )
+
+  vec_fmt_integer(vec_num_1, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2", "-2", "-2", "-1", "0", "0", "0", "1", "2", "2", "2",
+        "NA", "Inf"
+      )
+    )
+
+  vec_fmt_integer(vec_num_4, locale = "de", output = "plain") %>%
+    expect_equal(
+      c(
+        "-2.500.000", "-2.000.000", "-1.500.000", "-1.000.000", "-500.000",
+        "0", "500.000", "1.000.000", "1.500.000", "2.000.000", "2.500.000",
+        "NA", "Inf"
+      )
+    )
+
+  vec_fmt_integer(vec_num_4, locale = "de", output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.500.000"), paste0("\U02212", "2.000.000"),
+        paste0("\U02212", "1.500.000"), paste0("\U02212", "1.000.000"),
+        paste0("\U02212", "500.000"), "0", "500.000", "1.000.000",
+        "1.500.000", "2.000.000", "2.500.000", "NA", "Inf"
+      )
+    )
+
+  vec_fmt_integer(vec_num_4, locale = "de", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.500.000$", "$-2.000.000$", "$-1.500.000$", "$-1.000.000$",
+        "$-500.000$", "$0$", "$500.000$", "$1.000.000$", "$1.500.000$",
+        "$2.000.000$", "$2.500.000$", "NA", "$Inf$"
+      )
+    )
+
+  vec_fmt_integer(vec_num_4, locale = "de", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.500.000", "-2.000.000", "-1.500.000", "-1.000.000", "-500.000",
+        "0", "500.000", "1.000.000", "1.500.000", "2.000.000", "2.500.000",
+        "NA", "Inf"
+      )
+    )
+
+  vec_fmt_integer(vec_num_4, suffixing = TRUE, output = "plain") %>%
+    expect_equal(
+      c(
+        "-2M", "-2M", "-2M", "-1M", "-500K", "0", "500K", "1M", "2M",
+        "2M", "2M", "NA", "InfT"
+      )
+    )
+
+  vec_fmt_integer(vec_num_4, suffixing = TRUE, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2M"), paste0("\U02212", "2M"),
+        paste0("\U02212", "2M"), paste0("\U02212", "1M"),
+        paste0("\U02212", "500K"), "0", "500K", "1M", "2M",
+        "2M", "2M", "NA", "InfT"
+      )
+    )
+
+  vec_fmt_integer(vec_num_4, suffixing = TRUE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2M$", "$-2M$", "$-2M$", "$-1M$", "$-500K$", "$0$", "$500K$",
+        "$1M$", "$2M$", "$2M$", "$2M$", "NA", "$InfT$"
+      )
+    )
+
+  vec_fmt_integer(vec_num_4, suffixing = TRUE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2M", "-2M", "-2M", "-1M", "-500K", "0", "500K", "1M", "2M",
+        "2M", "2M", "NA", "InfT"
+      )
+    )
+
+  vec_fmt_integer(vec_num_1, pattern = "a{x}b", output = "plain") %>%
+    expect_equal(
+      c(
+        "a-2b", "a-2b", "a-2b", "a-1b", "a0b", "a0b", "a0b", "a1b",
+        "a2b", "a2b", "a2b", "NA", "aInfb"
+      )
+    )
+
+  vec_fmt_integer(vec_num_1, pattern = "a{x}b", output = "html") %>%
+    expect_equal(
+      c(
+        paste0("a\U02212", "2b"), paste0("a\U02212", "2b"),
+        paste0("a\U02212", "2b"), paste0("a\U02212", "1b"),
+        "a0b", "a0b", "a0b", "a1b", "a2b", "a2b", "a2b", "NA", "aInfb"
+      )
+    )
+
+  vec_fmt_integer(vec_num_1, pattern = "a{x}b", output = "latex") %>%
+    expect_equal(
+      c(
+        "a$-2$b", "a$-2$b", "a$-2$b", "a$-1$b", "a$0$b", "a$0$b", "a$0$b",
+        "a$1$b", "a$2$b", "a$2$b", "a$2$b", "NA", "a$Inf$b"
+      )
+    )
+
+  vec_fmt_integer(vec_num_1, pattern = "a{x}b", output = "rtf") %>%
+    expect_equal(
+      c(
+        "a-2b", "a-2b", "a-2b", "a-1b", "a0b", "a0b", "a0b", "a1b",
+        "a2b", "a2b", "a2b", "NA", "aInfb"
+      )
+    )
+
+  vec_fmt_integer(vec_num_1, force_sign = TRUE, output = "plain") %>%
+    expect_equal(
+      c(
+        "-2", "-2", "-2", "-1", "0", "0", "+0", "+1", "+2", "+2", "+2",
+        "NA", "+Inf"
+      )
+    )
+
+  vec_fmt_integer(vec_num_1, force_sign = TRUE, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2"), paste0("\U02212", "2"), paste0("\U02212", "2"),
+        paste0("\U02212", "1"), "0", "0", "+0", "+1", "+2", "+2", "+2",
+        "NA", "+Inf"
+      )
+    )
+
+  vec_fmt_integer(vec_num_1, force_sign = TRUE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2$", "$-2$", "$-2$", "$-1$", "$0$", "$0$", "$+0$", "$+1$",
+        "$+2$", "$+2$", "$+2$", "NA", "$+Inf$"
+      )
+    )
+
+  vec_fmt_integer(vec_num_1, force_sign = TRUE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2", "-2", "-2", "-1", "0", "0", "+0", "+1", "+2", "+2", "+2",
+        "NA", "+Inf"
+      )
+    )
+
+  expect_error(vec_fmt_integer(letters))
+  expect_error(vec_fmt_integer(TRUE))
+  expect_error(vec_fmt_integer(list(1, 2, 3)))
+  expect_error(vec_fmt_integer(dplyr::tibble(a = c(1, 2, 3))))
+})
+
+test_that("The `vec_fmt_scientific()` function works", {
+
+  # TODO: `vec_fmt_scientifc()` and `fmt_scientific()` are incompatible with
+  # Inf values so we will omit them from the test vectors until a fix is
+  # available
+
+  vec_num_1_m <- vec_num_1[-13]
+  vec_num_4_m <- vec_num_4[-13]
+
+  vec_fmt_scientific(vec_num_1_m, output = "plain") %>%
+    expect_equal(
+      c(
+        "-2.50", "-2.00", "-1.50", "-1.00",
+        "-5.00 \U000D7 10^-1", "0.00", "5.00 \U000D7 10^-1",
+        "1.00", "1.50", "2.00", "2.50", "NA"
+      )
+    )
+
+  vec_fmt_scientific(vec_num_1_m, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.50"), paste0("\U02212", "2.00"),
+        paste0("\U02212", "1.50"), paste0("\U02212", "1.00"),
+        paste0("\U02212", "5.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>", "\U02212", "1</sup>"),
+        "0.00",
+        paste0("5.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>", "\U02212", "1</sup>"),
+        "1.00", "1.50", "2.00", "2.50", "NA"
+      )
+    )
+
+  vec_fmt_scientific(vec_num_1_m, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.50$", "$-2.00$", "$-1.50$", "$-1.00$", "$-5.00 \\times 10^{-1}$",
+        "$0.00$", "$5.00 \\times 10^{-1}$", "$1.00$", "$1.50$", "$2.00$",
+        "$2.50$", "NA"
+      )
+    )
+
+  vec_fmt_scientific(vec_num_1_m, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.50", "-2.00", "-1.50", "-1.00", "-5.00 \\'d7 10{\\super -1}",
+        "0.00", "5.00 \\'d7 10{\\super -1}", "1.00", "1.50", "2.00",
+        "2.50", "NA"
+      )
+    )
+
+  vec_fmt_scientific(vec_num_4_m, output = "plain") %>%
+    expect_equal(
+      c(
+        "-2.50 \U000D7 10^6", "-2.00 \U000D7 10^6",
+        "-1.50 \U000D7 10^6", "-1.00 \U000D7 10^6",
+        "-5.00 \U000D7 10^5", "0.00", "5.00 \U000D7 10^5",
+        "1.00 \U000D7 10^6", "1.50 \U000D7 10^6",
+        "2.00 \U000D7 10^6", "2.50 \U000D7 10^6", "NA"
+      )
+    )
+
+  vec_fmt_scientific(vec_num_4_m, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "5.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>"),
+        "0.00",
+        paste0("5.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>"),
+        paste0("1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        "NA"
+      )
+    )
+
+  vec_fmt_scientific(vec_num_4_m, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.50 \\times 10^{6}$", "$-2.00 \\times 10^{6}$", "$-1.50 \\times 10^{6}$",
+        "$-1.00 \\times 10^{6}$", "$-5.00 \\times 10^{5}$", "$0.00$",
+        "$5.00 \\times 10^{5}$", "$1.00 \\times 10^{6}$", "$1.50 \\times 10^{6}$",
+        "$2.00 \\times 10^{6}$", "$2.50 \\times 10^{6}$", "NA"
+      )
+    )
+
+  vec_fmt_scientific(vec_num_4_m, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.50 \\'d7 10{\\super 6}", "-2.00 \\'d7 10{\\super 6}", "-1.50 \\'d7 10{\\super 6}",
+        "-1.00 \\'d7 10{\\super 6}", "-5.00 \\'d7 10{\\super 5}", "0.00",
+        "5.00 \\'d7 10{\\super 5}", "1.00 \\'d7 10{\\super 6}", "1.50 \\'d7 10{\\super 6}",
+        "2.00 \\'d7 10{\\super 6}", "2.50 \\'d7 10{\\super 6}", "NA"
+      )
+    )
+
+  # TODO: `vec_fmt_scientific()` and `fmt_scientific()` both error when
+  # `drop_trailing_zeros = TRUE`; omit these test until a fix is available
+  # vec_fmt_scientific(vec_num_4_m, drop_trailing_zeros = TRUE, output = "html") %>%
+  #   expect_equal(
+  #     c(
+  #     )
+  #   )
+  #
+  # vec_fmt_scientific(vec_num_1, drop_trailing_zeros = TRUE, output = "latex") %>%
+  #   expect_equal(
+  #     c(
+  #     )
+  #   )
+  #
+  # vec_fmt_scientific(vec_num_1, drop_trailing_zeros = TRUE, output = "rtf") %>%
+  #   expect_equal(
+  #     c(
+  #     )
+  #   )
+
+  vec_fmt_scientific(vec_num_4_m, locale = "de", output = "plain") %>%
+    expect_equal(
+      c(
+        "-2,50 \U000D7 10^6", "-2,00 \U000D7 10^6",
+        "-1,50 \U000D7 10^6", "-1,00 \U000D7 10^6",
+        "-5,00 \U000D7 10^5", "0,00",
+        "5,00 \U000D7 10^5", "1,00 \U000D7 10^6",
+        "1,50 \U000D7 10^6", "2,00 \U000D7 10^6",
+        "2,50 \U000D7 10^6", "NA"
+      )
+    )
+
+  vec_fmt_scientific(vec_num_4_m, locale = "de", output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2,50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "2,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1,50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "5,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>"),
+        "0,00",
+        paste0("5,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>"),
+        paste0("1,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("1,50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2,50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        "NA"
+      )
+    )
+
+  vec_fmt_scientific(vec_num_4_m, locale = "de", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2,50 \\times 10^{6}$", "$-2,00 \\times 10^{6}$", "$-1,50 \\times 10^{6}$",
+        "$-1,00 \\times 10^{6}$", "$-5,00 \\times 10^{5}$", "$0,00$",
+        "$5,00 \\times 10^{5}$", "$1,00 \\times 10^{6}$", "$1,50 \\times 10^{6}$",
+        "$2,00 \\times 10^{6}$", "$2,50 \\times 10^{6}$", "NA"
+      )
+    )
+
+  vec_fmt_scientific(vec_num_4_m, locale = "de", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2,50 \\'d7 10{\\super 6}", "-2,00 \\'d7 10{\\super 6}", "-1,50 \\'d7 10{\\super 6}",
+        "-1,00 \\'d7 10{\\super 6}", "-5,00 \\'d7 10{\\super 5}", "0,00",
+        "5,00 \\'d7 10{\\super 5}", "1,00 \\'d7 10{\\super 6}", "1,50 \\'d7 10{\\super 6}",
+        "2,00 \\'d7 10{\\super 6}", "2,50 \\'d7 10{\\super 6}", "NA"
+      )
+    )
+
+  vec_fmt_scientific(vec_num_4_m, pattern = "a{x}b", output = "plain") %>%
+    expect_equal(
+      c(
+        "a-2.50 \U000D7 10^6b", "a-2.00 \U000D7 10^6b",
+        "a-1.50 \U000D7 10^6b", "a-1.00 \U000D7 10^6b",
+        "a-5.00 \U000D7 10^5b", "a0.00b", "a5.00 \U000D7 10^5b",
+        "a1.00 \U000D7 10^6b", "a1.50 \U000D7 10^6b",
+        "a2.00 \U000D7 10^6b",
+        "a2.50 \U000D7 10^6b", "NA"
+      )
+    )
+
+  vec_fmt_scientific(vec_num_4_m, pattern = "a{x}b", output = "html") %>%
+    expect_equal(
+      c(
+        paste0("a\U02212", "2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a\U02212", "2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a\U02212", "1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a\U02212", "1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a\U02212", "5.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>b"),
+        "a0.00b",
+        paste0("a5.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>b"),
+        paste0("a1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
+        "NA"
+      )
+    )
+
+  vec_fmt_scientific(vec_num_4_m, pattern = "a{x}b", output = "latex") %>%
+    expect_equal(
+      c(
+        "a$-2.50 \\times 10^{6}$b", "a$-2.00 \\times 10^{6}$b",
+        "a$-1.50 \\times 10^{6}$b", "a$-1.00 \\times 10^{6}$b",
+        "a$-5.00 \\times 10^{5}$b", "a$0.00$b",
+        "a$5.00 \\times 10^{5}$b", "a$1.00 \\times 10^{6}$b",
+        "a$1.50 \\times 10^{6}$b", "a$2.00 \\times 10^{6}$b",
+        "a$2.50 \\times 10^{6}$b", "NA"
+      )
+    )
+
+  vec_fmt_scientific(vec_num_4_m, pattern = "a{x}b", output = "rtf") %>%
+    expect_equal(
+      c(
+        "a-2.50 \\'d7 10{\\super 6}b", "a-2.00 \\'d7 10{\\super 6}b",
+        "a-1.50 \\'d7 10{\\super 6}b", "a-1.00 \\'d7 10{\\super 6}b",
+        "a-5.00 \\'d7 10{\\super 5}b", "a0.00b", "a5.00 \\'d7 10{\\super 5}b",
+        "a1.00 \\'d7 10{\\super 6}b", "a1.50 \\'d7 10{\\super 6}b",
+        "a2.00 \\'d7 10{\\super 6}b",
+        "a2.50 \\'d7 10{\\super 6}b", "NA"
+      )
+    )
+
+  vec_fmt_scientific(vec_num_4_m, force_sign = TRUE, output = "plain") %>%
+    expect_equal(
+      c(
+        "-2.50 \U000D7 10^6", "-2.00 \U000D7 10^6",
+        "-1.50 \U000D7 10^6", "-1.00 \U000D7 10^6",
+        "-5.00 \U000D7 10^5", "0.00",
+        "+5.00 \U000D7 10^5", "+1.00 \U000D7 10^6",
+        "+1.50 \U000D7 10^6", "+2.00 \U000D7 10^6",
+        "+2.50 \U000D7 10^6", "NA"
+      )
+    )
+
+  vec_fmt_scientific(vec_num_4_m, force_sign = TRUE, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "5.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>"),
+        "0.00",
+        paste0("+5.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>"),
+        paste0("+1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("+1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("+2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("+2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        "NA"
+      )
+    )
+
+  vec_fmt_scientific(vec_num_4_m, force_sign = TRUE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.50 \\times 10^{6}$", "$-2.00 \\times 10^{6}$", "$-1.50 \\times 10^{6}$",
+        "$-1.00 \\times 10^{6}$", "$-5.00 \\times 10^{5}$", "$0.00$",
+        "$+5.00 \\times 10^{5}$", "$+1.00 \\times 10^{6}$", "$+1.50 \\times 10^{6}$",
+        "$+2.00 \\times 10^{6}$", "$+2.50 \\times 10^{6}$", "NA"
+      )
+    )
+
+  vec_fmt_scientific(vec_num_4_m, force_sign = TRUE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.50 \\'d7 10{\\super 6}", "-2.00 \\'d7 10{\\super 6}", "-1.50 \\'d7 10{\\super 6}",
+        "-1.00 \\'d7 10{\\super 6}", "-5.00 \\'d7 10{\\super 5}", "0.00",
+        "+5.00 \\'d7 10{\\super 5}", "+1.00 \\'d7 10{\\super 6}", "+1.50 \\'d7 10{\\super 6}",
+        "+2.00 \\'d7 10{\\super 6}", "+2.50 \\'d7 10{\\super 6}", "NA"
+      )
+    )
+
+  expect_error(vec_fmt_scientific(letters))
+  expect_error(vec_fmt_scientific(TRUE))
+  expect_error(vec_fmt_scientific(list(1, 2, 3)))
+  expect_error(vec_fmt_scientific(dplyr::tibble(a = c(1, 2, 3))))
+})
+
+test_that("The `vec_fmt_engineering()` function works", {
+
+  vec_fmt_engineering(vec_num_1, output = "plain") %>%
+    expect_equal(
+      c(
+        "-2.50", "-2.00", "-1.50", "-1.00", "-500.00 \U000D7 10^-3",
+        "0.00", "500.00 \U000D7 10^-3", "1.00", "1.50", "2.00",
+        "2.50", "NA", "Inf."
+      )
+    )
+
+  vec_fmt_engineering(vec_num_1, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.50"), paste0("\U02212", "2.00"),
+        paste0("\U02212", "1.50"), paste0("\U02212", "1.00"),
+        paste0("\U02212", "500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
+        "0.00",
+        paste0("500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
+        "1.00", "1.50", "2.00", "2.50", "NA", "Inf."
+      )
+    )
+
+  vec_fmt_engineering(vec_num_1, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.50$", "$-2.00$", "$-1.50$", "$-1.00$", "$-500.00 \\times 10^{-3}$",
+        "$0.00$", "$500.00 \\times 10^{-3}$", "$1.00$", "$1.50$", "$2.00$",
+        "$2.50$", "NA", "$Inf.$"
+      )
+    )
+
+  vec_fmt_engineering(vec_num_1, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.50", "-2.00", "-1.50", "-1.00", "-500.00 \\'d7 10{\\super -3}",
+        "0.00", "500.00 \\'d7 10{\\super -3}", "1.00", "1.50", "2.00",
+        "2.50", "NA", "Inf."
+      )
+    )
+
+  vec_fmt_engineering(vec_num_4, output = "plain") %>%
+    expect_equal(
+      c(
+        "-2.50 \U000D7 10^6", "-2.00 \U000D7 10^6",
+        "-1.50 \U000D7 10^6", "-1.00 \U000D7 10^6",
+        "-500.00 \U000D7 10^3", "0.00",
+        "500.00 \U000D7 10^3", "1.00 \U000D7 10^6",
+        "1.50 \U000D7 10^6", "2.00 \U000D7 10^6",
+        "2.50 \U000D7 10^6", "NA", "Inf."
+      )
+    )
+
+  vec_fmt_engineering(vec_num_4, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
+        "0.00",
+        paste0("500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
+        paste0("1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        "NA", "Inf."
+      )
+    )
+
+  vec_fmt_engineering(vec_num_4, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.50 \\times 10^{6}$", "$-2.00 \\times 10^{6}$", "$-1.50 \\times 10^{6}$",
+        "$-1.00 \\times 10^{6}$", "$-500.00 \\times 10^{3}$", "$0.00$",
+        "$500.00 \\times 10^{3}$", "$1.00 \\times 10^{6}$", "$1.50 \\times 10^{6}$",
+        "$2.00 \\times 10^{6}$", "$2.50 \\times 10^{6}$", "NA", "$Inf.$"
+      )
+    )
+
+  vec_fmt_engineering(vec_num_4, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.50 \\'d7 10{\\super 6}", "-2.00 \\'d7 10{\\super 6}", "-1.50 \\'d7 10{\\super 6}",
+        "-1.00 \\'d7 10{\\super 6}", "-500.00 \\'d7 10{\\super 3}", "0.00",
+        "500.00 \\'d7 10{\\super 3}", "1.00 \\'d7 10{\\super 6}", "1.50 \\'d7 10{\\super 6}",
+        "2.00 \\'d7 10{\\super 6}", "2.50 \\'d7 10{\\super 6}", "NA",
+        "Inf."
+      )
+    )
+
+  vec_fmt_engineering(vec_num_5, output = "plain") %>%
+    expect_equal(
+      c(
+        "-2.50 \U000D7 10^12", "-2.00 \U000D7 10^12",
+        "-1.50 \U000D7 10^12", "-1.00 \U000D7 10^12",
+        "-500.00 \U000D7 10^9", "0.00", "500.00 \U000D7 10^9",
+        "1.00 \U000D7 10^12", "1.50 \U000D7 10^12",
+        "2.00 \U000D7 10^12", "2.50 \U000D7 10^12",
+        "NA", "Inf."
+      )
+    )
+
+  vec_fmt_engineering(vec_num_5, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>12</sup>"),
+        paste0("\U02212", "2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>12</sup>"),
+        paste0("\U02212", "1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>12</sup>"),
+        paste0("\U02212", "1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>12</sup>"),
+        paste0("\U02212", "500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>9</sup>"),
+        "0.00",
+        paste0("500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>9</sup>"),
+        paste0("1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>12</sup>"),
+        paste0("1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>12</sup>"),
+        paste0("2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>12</sup>"),
+        paste0("2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>12</sup>"),
+        "NA", "Inf."
+      )
+    )
+
+  vec_fmt_engineering(vec_num_5, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.50 \\times 10^{12}$", "$-2.00 \\times 10^{12}$",
+        "$-1.50 \\times 10^{12}$", "$-1.00 \\times 10^{12}$",
+        "$-500.00 \\times 10^{9}$", "$0.00$",
+        "$500.00 \\times 10^{9}$", "$1.00 \\times 10^{12}$",
+        "$1.50 \\times 10^{12}$", "$2.00 \\times 10^{12}$",
+        "$2.50 \\times 10^{12}$", "NA", "$Inf.$"
+      )
+    )
+
+  vec_fmt_engineering(vec_num_5, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.50 \\'d7 10{\\super 12}", "-2.00 \\'d7 10{\\super 12}",
+        "-1.50 \\'d7 10{\\super 12}", "-1.00 \\'d7 10{\\super 12}",
+        "-500.00 \\'d7 10{\\super 9}", "0.00", "500.00 \\'d7 10{\\super 9}",
+        "1.00 \\'d7 10{\\super 12}", "1.50 \\'d7 10{\\super 12}",
+        "2.00 \\'d7 10{\\super 12}", "2.50 \\'d7 10{\\super 12}",
+        "NA", "Inf."
+      )
+    )
+
+  vec_fmt_engineering(vec_num_4, drop_trailing_zeros = TRUE, output = "plain") %>%
+    expect_equal(
+      c(
+        "-2.5 \U000D7 10^6", "-2. \U000D7 10^6",
+        "-1.5 \U000D7 10^6", "-1. \U000D7 10^6",
+        "-500. \U000D7 10^3", "0.", "500. \U000D7 10^3",
+        "1. \U000D7 10^6", "1.5 \U000D7 10^6",
+        "2. \U000D7 10^6", "2.5 \U000D7 10^6", "NA", "Inf."
+      )
+    )
+
+  vec_fmt_engineering(vec_num_4, drop_trailing_zeros = TRUE, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "2. ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1. ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "500. ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
+        "0.",
+        paste0("500. ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
+        paste0("1. ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("1.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2. ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        "NA", "Inf."
+      )
+    )
+
+  vec_fmt_engineering(vec_num_4, drop_trailing_zeros = TRUE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.5 \\times 10^{6}$", "$-2. \\times 10^{6}$", "$-1.5 \\times 10^{6}$",
+        "$-1. \\times 10^{6}$", "$-500. \\times 10^{3}$", "$0.$", "$500. \\times 10^{3}$",
+        "$1. \\times 10^{6}$", "$1.5 \\times 10^{6}$", "$2. \\times 10^{6}$",
+        "$2.5 \\times 10^{6}$", "NA", "$Inf.$"
+      )
+    )
+
+  vec_fmt_engineering(vec_num_4, drop_trailing_zeros = TRUE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.5 \\'d7 10{\\super 6}", "-2. \\'d7 10{\\super 6}", "-1.5 \\'d7 10{\\super 6}",
+        "-1. \\'d7 10{\\super 6}", "-500. \\'d7 10{\\super 3}", "0.",
+        "500. \\'d7 10{\\super 3}", "1. \\'d7 10{\\super 6}", "1.5 \\'d7 10{\\super 6}",
+        "2. \\'d7 10{\\super 6}", "2.5 \\'d7 10{\\super 6}", "NA", "Inf."
+      )
+    )
+
+  vec_fmt_engineering(vec_num_4, locale = "de", output = "plain") %>%
+    expect_equal(
+      c(
+        "-2,50 \U000D7 10^6", "-2,00 \U000D7 10^6",
+        "-1,50 \U000D7 10^6", "-1,00 \U000D7 10^6",
+        "-500,00 \U000D7 10^3", "0,00",
+        "500,00 \U000D7 10^3", "1,00 \U000D7 10^6",
+        "1,50 \U000D7 10^6", "2,00 \U000D7 10^6",
+        "2,50 \U000D7 10^6", "NA", "Inf,"
+      )
+    )
+
+  vec_fmt_engineering(vec_num_4, locale = "de", output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2,50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "2,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1,50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "500,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
+        "0,00",
+        paste0("500,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
+        paste0("1,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("1,50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2,50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        "NA", "Inf,"
+      )
+    )
+
+  vec_fmt_engineering(vec_num_4, locale = "de", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2,50 \\times 10^{6}$", "$-2,00 \\times 10^{6}$",
+        "$-1,50 \\times 10^{6}$", "$-1,00 \\times 10^{6}$",
+        "$-500,00 \\times 10^{3}$", "$0,00$", "$500,00 \\times 10^{3}$",
+        "$1,00 \\times 10^{6}$", "$1,50 \\times 10^{6}$",
+        "$2,00 \\times 10^{6}$", "$2,50 \\times 10^{6}$",
+        "NA", "$Inf,$"
+      )
+    )
+
+  vec_fmt_engineering(vec_num_4, locale = "de", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2,50 \\'d7 10{\\super 6}", "-2,00 \\'d7 10{\\super 6}",
+        "-1,50 \\'d7 10{\\super 6}", "-1,00 \\'d7 10{\\super 6}",
+        "-500,00 \\'d7 10{\\super 3}", "0,00", "500,00 \\'d7 10{\\super 3}",
+        "1,00 \\'d7 10{\\super 6}", "1,50 \\'d7 10{\\super 6}",
+        "2,00 \\'d7 10{\\super 6}", "2,50 \\'d7 10{\\super 6}",
+        "NA", "Inf,"
+      )
+    )
+
+  vec_fmt_engineering(vec_num_4, pattern = "a{x}b", output = "plain") %>%
+    expect_equal(
+      c(
+        "a-2.50 \U000D7 10^6b", "a-2.00 \U000D7 10^6b",
+        "a-1.50 \U000D7 10^6b", "a-1.00 \U000D7 10^6b",
+        "a-500.00 \U000D7 10^3b", "a0.00b", "a500.00 \U000D7 10^3b",
+        "a1.00 \U000D7 10^6b", "a1.50 \U000D7 10^6b",
+        "a2.00 \U000D7 10^6b", "a2.50 \U000D7 10^6b",
+        "NA", "aInf.b"
+      )
+    )
+
+  vec_fmt_engineering(vec_num_4, pattern = "a{x}b", output = "html") %>%
+    expect_equal(
+      c(
+        paste0("a\U02212", "2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a\U02212", "2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a\U02212", "1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a\U02212", "1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a\U02212", "500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>b"),
+        "a0.00b",
+        paste0("a500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>b"),
+        paste0("a1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
+        "NA", "aInf.b"
+      )
+    )
+
+  vec_fmt_engineering(vec_num_4, pattern = "a{x}b", output = "latex") %>%
+    expect_equal(
+      c(
+        "a$-2.50 \\times 10^{6}$b", "a$-2.00 \\times 10^{6}$b",
+        "a$-1.50 \\times 10^{6}$b", "a$-1.00 \\times 10^{6}$b",
+        "a$-500.00 \\times 10^{3}$b", "a$0.00$b",
+        "a$500.00 \\times 10^{3}$b", "a$1.00 \\times 10^{6}$b",
+        "a$1.50 \\times 10^{6}$b", "a$2.00 \\times 10^{6}$b",
+        "a$2.50 \\times 10^{6}$b", "NA", "a$Inf.$b"
+      )
+    )
+
+  vec_fmt_engineering(vec_num_4, pattern = "a{x}b", output = "rtf") %>%
+    expect_equal(
+      c(
+        "a-2.50 \\'d7 10{\\super 6}b", "a-2.00 \\'d7 10{\\super 6}b",
+        "a-1.50 \\'d7 10{\\super 6}b", "a-1.00 \\'d7 10{\\super 6}b",
+        "a-500.00 \\'d7 10{\\super 3}b", "a0.00b", "a500.00 \\'d7 10{\\super 3}b",
+        "a1.00 \\'d7 10{\\super 6}b", "a1.50 \\'d7 10{\\super 6}b",
+        "a2.00 \\'d7 10{\\super 6}b", "a2.50 \\'d7 10{\\super 6}b",
+        "NA", "aInf.b"
+      )
+    )
+
+  vec_fmt_engineering(vec_num_4, force_sign = TRUE, output = "plain") %>%
+    expect_equal(
+      c(
+        "-2.50 \U000D7 10^6", "-2.00 \U000D7 10^6",
+        "-1.50 \U000D7 10^6", "-1.00 \U000D7 10^6",
+        "-500.00 \U000D7 10^3", "0.00",
+        "+500.00 \U000D7 10^3", "+1.00 \U000D7 10^6",
+        "+1.50 \U000D7 10^6", "+2.00 \U000D7 10^6",
+        "+2.50 \U000D7 10^6", "NA", "+Inf."
+      )
+    )
+
+  vec_fmt_engineering(vec_num_4, force_sign = TRUE, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
+        "0.00",
+        paste0("+500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
+        paste0("+1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("+1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("+2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("+2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        "NA", "+Inf."
+      )
+    )
+
+  vec_fmt_engineering(vec_num_4, force_sign = TRUE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.50 \\times 10^{6}$", "$-2.00 \\times 10^{6}$",
+        "$-1.50 \\times 10^{6}$", "$-1.00 \\times 10^{6}$",
+        "$-500.00 \\times 10^{3}$", "$0.00$", "$+500.00 \\times 10^{3}$",
+        "$+1.00 \\times 10^{6}$", "$+1.50 \\times 10^{6}$",
+        "$+2.00 \\times 10^{6}$", "$+2.50 \\times 10^{6}$", "NA", "$+Inf.$"
+      )
+    )
+
+  vec_fmt_engineering(vec_num_4, force_sign = TRUE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.50 \\'d7 10{\\super 6}", "-2.00 \\'d7 10{\\super 6}",
+        "-1.50 \\'d7 10{\\super 6}", "-1.00 \\'d7 10{\\super 6}",
+        "-500.00 \\'d7 10{\\super 3}", "0.00",
+        "+500.00 \\'d7 10{\\super 3}", "+1.00 \\'d7 10{\\super 6}",
+        "+1.50 \\'d7 10{\\super 6}", "+2.00 \\'d7 10{\\super 6}",
+        "+2.50 \\'d7 10{\\super 6}", "NA", "+Inf."
+      )
+    )
+
+  expect_error(vec_fmt_engineering(letters))
+  expect_error(vec_fmt_engineering(TRUE))
+  expect_error(vec_fmt_engineering(list(1, 2, 3)))
+  expect_error(vec_fmt_engineering(dplyr::tibble(a = c(1, 2, 3))))
+})
+
+test_that("The `vec_fmt_percent()` function works", {
+
+  vec_fmt_percent(vec_num_1, output = "plain") %>%
+    expect_equal(
+      c(
+        "-250.00%", "-200.00%", "-150.00%", "-100.00%", "-50.00%",
+        "0.00%", "50.00%", "100.00%", "150.00%", "200.00%", "250.00%",
+        "NA", "Inf%"
+      )
+    )
+
+  vec_fmt_percent(vec_num_1, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "250.00%"), paste0("\U02212", "200.00%"),
+        paste0("\U02212", "150.00%"), paste0("\U02212", "100.00%"),
+        paste0("\U02212", "50.00%"), "0.00%", "50.00%", "100.00%",
+        "150.00%", "200.00%", "250.00%", "NA", "Inf%"
+      )
+    )
+
+  vec_fmt_percent(vec_num_1, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-250.00\\%$", "$-200.00\\%$", "$-150.00\\%$", "$-100.00\\%$",
+        "$-50.00\\%$", "$0.00\\%$", "$50.00\\%$", "$100.00\\%$", "$150.00\\%$",
+        "$200.00\\%$", "$250.00\\%$", "NA", "$Inf\\%$"
+      )
+    )
+
+  vec_fmt_percent(vec_num_1, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-250.00%", "-200.00%", "-150.00%", "-100.00%", "-50.00%",
+        "0.00%", "50.00%", "100.00%", "150.00%", "200.00%", "250.00%",
+        "NA", "Inf%"
+      )
+    )
+
+  vec_fmt_percent(vec_num_1, decimals = 4, output = "plain") %>%
+    expect_equal(
+      c(
+        "-250.0000%", "-200.0000%", "-150.0000%", "-100.0000%", "-50.0000%",
+        "0.0000%", "50.0000%", "100.0000%", "150.0000%", "200.0000%",
+        "250.0000%", "NA", "  Inf%"
+      )
+    )
+
+  vec_fmt_percent(vec_num_1, decimals = 4, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "250.0000%"), paste0("\U02212", "200.0000%"),
+        paste0("\U02212", "150.0000%"), paste0("\U02212", "100.0000%"),
+        paste0("\U02212", "50.0000%"), "0.0000%", "50.0000%",
+        "100.0000%", "150.0000%", "200.0000%", "250.0000%", "NA", "  Inf%"
+      )
+    )
+
+  vec_fmt_percent(vec_num_1, decimals = 4, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-250.0000\\%$", "$-200.0000\\%$", "$-150.0000\\%$", "$-100.0000\\%$",
+        "$-50.0000\\%$", "$0.0000\\%$", "$50.0000\\%$", "$100.0000\\%$",
+        "$150.0000\\%$", "$200.0000\\%$", "$250.0000\\%$", "NA", "$  Inf\\%$"
+      )
+    )
+
+  vec_fmt_percent(vec_num_1, decimals = 4, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-250.0000%", "-200.0000%", "-150.0000%", "-100.0000%", "-50.0000%",
+        "0.0000%", "50.0000%", "100.0000%", "150.0000%", "200.0000%",
+        "250.0000%", "NA", "  Inf%"
+      )
+    )
+
+  vec_fmt_percent(vec_num_1, scale_values = FALSE, output = "plain") %>%
+    expect_equal(
+      c(
+        "-2.50%", "-2.00%", "-1.50%", "-1.00%", "-0.50%", "0.00%",
+        "0.50%", "1.00%", "1.50%", "2.00%", "2.50%", "NA", "Inf%"
+      )
+    )
+
+  vec_fmt_percent(vec_num_1, scale_values = FALSE, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.50%"), paste0("\U02212", "2.00%"),
+        paste0("\U02212", "1.50%"), paste0("\U02212", "1.00%"),
+        paste0("\U02212", "0.50%"), "0.00%", "0.50%", "1.00%",
+        "1.50%", "2.00%", "2.50%", "NA", "Inf%"
+      )
+    )
+
+  vec_fmt_percent(vec_num_1, scale_values = FALSE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.50\\%$", "$-2.00\\%$", "$-1.50\\%$", "$-1.00\\%$", "$-0.50\\%$",
+        "$0.00\\%$", "$0.50\\%$", "$1.00\\%$", "$1.50\\%$", "$2.00\\%$",
+        "$2.50\\%$", "NA", "$Inf\\%$"
+      )
+    )
+
+  vec_fmt_percent(vec_num_1, scale_values = FALSE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.50%", "-2.00%", "-1.50%", "-1.00%", "-0.50%", "0.00%",
+        "0.50%", "1.00%", "1.50%", "2.00%", "2.50%", "NA", "Inf%"
+      )
+    )
+
+  vec_fmt_percent(
+    vec_num_1, scale_values = FALSE,
+    drop_trailing_zeros = TRUE, output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "-2.5%", "-2%", "-1.5%", "-1%", "-0.5%", "0%", "0.5%", "1%",
+        "1.5%", "2%", "2.5%", "NA", "Inf%"
+      )
+    )
+
+  vec_fmt_percent(
+    vec_num_1, scale_values = FALSE,
+    drop_trailing_zeros = TRUE, output = "html"
+  ) %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.5%"), paste0("\U02212", "2%"),
+        paste0("\U02212", "1.5%"), paste0("\U02212", "1%"),
+        paste0("\U02212", "0.5%"),
+        "0%", "0.5%", "1%", "1.5%", "2%", "2.5%", "NA", "Inf%"
+      )
+    )
+
+  vec_fmt_percent(
+    vec_num_1, scale_values = FALSE,
+    drop_trailing_zeros = TRUE, output = "latex"
+  ) %>%
+    expect_equal(
+      c(
+        "$-2.5\\%$", "$-2\\%$", "$-1.5\\%$", "$-1\\%$", "$-0.5\\%$",
+        "$0\\%$", "$0.5\\%$", "$1\\%$", "$1.5\\%$", "$2\\%$", "$2.5\\%$",
+        "NA", "$Inf\\%$"
+      )
+    )
+
+  vec_fmt_percent(
+    vec_num_1, scale_values = FALSE,
+    drop_trailing_zeros = TRUE, output = "rtf"
+  ) %>%
+    expect_equal(
+      c(
+        "-2.5%", "-2%", "-1.5%", "-1%", "-0.5%", "0%", "0.5%", "1%",
+        "1.5%", "2%", "2.5%", "NA", "Inf%"
+      )
+    )
+
+  vec_fmt_percent(vec_num_4, use_seps = FALSE, output = "plain") %>%
+    expect_equal(
+      c(
+        "-250000000.00%", "-200000000.00%", "-150000000.00%", "-100000000.00%",
+        "-50000000.00%", "0.00%", "50000000.00%", "100000000.00%", "150000000.00%",
+        "200000000.00%", "250000000.00%", "NA", "Inf%"
+      )
+    )
+
+  vec_fmt_percent(vec_num_4, use_seps = FALSE, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "250000000.00%"), paste0("\U02212", "200000000.00%"),
+        paste0("\U02212", "150000000.00%"), paste0("\U02212", "100000000.00%"),
+        paste0("\U02212", "50000000.00%"), "0.00%", "50000000.00%",
+        "100000000.00%", "150000000.00%", "200000000.00%", "250000000.00%",
+        "NA", "Inf%"
+      )
+    )
+
+  vec_fmt_percent(vec_num_4, use_seps = FALSE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-250000000.00\\%$", "$-200000000.00\\%$", "$-150000000.00\\%$",
+        "$-100000000.00\\%$", "$-50000000.00\\%$", "$0.00\\%$", "$50000000.00\\%$",
+        "$100000000.00\\%$", "$150000000.00\\%$", "$200000000.00\\%$",
+        "$250000000.00\\%$", "NA", "$Inf\\%$"
+      )
+    )
+
+  vec_fmt_percent(vec_num_4, use_seps = FALSE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-250000000.00%", "-200000000.00%", "-150000000.00%", "-100000000.00%",
+        "-50000000.00%", "0.00%", "50000000.00%", "100000000.00%", "150000000.00%",
+        "200000000.00%", "250000000.00%", "NA", "Inf%"
+      )
+    )
+
+  vec_fmt_percent(vec_num_4, accounting = TRUE, output = "plain") %>%
+    expect_equal(
+      c(
+        "(250,000,000.00%)", "(200,000,000.00%)", "(150,000,000.00%)",
+        "(100,000,000.00%)", "(50,000,000.00%)", "0.00%", "50,000,000.00%",
+        "100,000,000.00%", "150,000,000.00%", "200,000,000.00%", "250,000,000.00%",
+        "NA", "Inf%"
+      )
+    )
+
+  vec_fmt_percent(vec_num_1, accounting = TRUE, output = "html") %>%
+    expect_equal(
+      c(
+        "(250.00%)", "(200.00%)", "(150.00%)", "(100.00%)", "(50.00%)",
+        "0.00%", "50.00%", "100.00%", "150.00%", "200.00%", "250.00%",
+        "NA", "Inf%"
+      )
+    )
+
+  vec_fmt_percent(vec_num_1, accounting = TRUE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$(250.00\\%)$", "$(200.00\\%)$", "$(150.00\\%)$", "$(100.00\\%)$",
+        "$(50.00\\%)$", "$0.00\\%$", "$50.00\\%$", "$100.00\\%$", "$150.00\\%$",
+        "$200.00\\%$", "$250.00\\%$", "NA", "$Inf\\%$"
+      )
+    )
+
+  vec_fmt_percent(vec_num_4, accounting = TRUE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "(250,000,000.00%)", "(200,000,000.00%)", "(150,000,000.00%)",
+        "(100,000,000.00%)", "(50,000,000.00%)", "0.00%", "50,000,000.00%",
+        "100,000,000.00%", "150,000,000.00%", "200,000,000.00%", "250,000,000.00%",
+        "NA", "Inf%"
+      )
+    )
+
+  vec_fmt_percent(vec_num_4, locale = "de", output = "plain") %>%
+    expect_equal(
+      c(
+        "-250.000.000,00%", "-200.000.000,00%", "-150.000.000,00%",
+        "-100.000.000,00%", "-50.000.000,00%", "0,00%", "50.000.000,00%",
+        "100.000.000,00%", "150.000.000,00%", "200.000.000,00%",
+        "250.000.000,00%", "NA", "Inf%"
+      )
+    )
+
+  vec_fmt_percent(vec_num_4, locale = "de", output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "250.000.000,00%"), paste0("\U02212", "200.000.000,00%"),
+        paste0("\U02212", "150.000.000,00%"), paste0("\U02212", "100.000.000,00%"),
+        paste0("\U02212", "50.000.000,00%"), "0,00%", "50.000.000,00%",
+        "100.000.000,00%", "150.000.000,00%", "200.000.000,00%", "250.000.000,00%",
+        "NA", "Inf%"
+      )
+    )
+
+  vec_fmt_percent(vec_num_4, locale = "de", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-250.000.000,00\\%$", "$-200.000.000,00\\%$", "$-150.000.000,00\\%$",
+        "$-100.000.000,00\\%$", "$-50.000.000,00\\%$", "$0,00\\%$", "$50.000.000,00\\%$",
+        "$100.000.000,00\\%$", "$150.000.000,00\\%$", "$200.000.000,00\\%$",
+        "$250.000.000,00\\%$", "NA", "$Inf\\%$"
+      )
+    )
+
+  vec_fmt_percent(vec_num_4, locale = "de", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-250.000.000,00%", "-200.000.000,00%", "-150.000.000,00%",
+        "-100.000.000,00%", "-50.000.000,00%", "0,00%", "50.000.000,00%",
+        "100.000.000,00%", "150.000.000,00%", "200.000.000,00%",
+        "250.000.000,00%", "NA", "Inf%"
+      )
+    )
+
+  vec_fmt_percent(vec_num_1, pattern = "a{x}b", output = "plain") %>%
+    expect_equal(
+      c(
+        "a-250.00%b", "a-200.00%b", "a-150.00%b", "a-100.00%b", "a-50.00%b",
+        "a0.00%b", "a50.00%b", "a100.00%b", "a150.00%b", "a200.00%b",
+        "a250.00%b", "NA", "aInf%b"
+      )
+    )
+
+  vec_fmt_percent(vec_num_1, pattern = "a{x}b", output = "html") %>%
+    expect_equal(
+      c(
+        paste0("a\U02212", "250.00%b"), paste0("a\U02212", "200.00%b"),
+        paste0("a\U02212", "150.00%b"), paste0("a\U02212", "100.00%b"),
+        paste0("a\U02212", "50.00%b"), "a0.00%b", "a50.00%b",
+        "a100.00%b", "a150.00%b", "a200.00%b", "a250.00%b", "NA", "aInf%b"
+      )
+    )
+
+  vec_fmt_percent(vec_num_1, pattern = "a{x}b", output = "latex") %>%
+    expect_equal(
+      c(
+        "a$-250.00\\%$b", "a$-200.00\\%$b", "a$-150.00\\%$b", "a$-100.00\\%$b",
+        "a$-50.00\\%$b", "a$0.00\\%$b", "a$50.00\\%$b", "a$100.00\\%$b",
+        "a$150.00\\%$b", "a$200.00\\%$b", "a$250.00\\%$b", "NA", "a$Inf\\%$b"
+      )
+    )
+
+  vec_fmt_percent(vec_num_1, pattern = "a{x}b", output = "rtf") %>%
+    expect_equal(
+      c(
+        "a-250.00%b", "a-200.00%b", "a-150.00%b", "a-100.00%b", "a-50.00%b",
+        "a0.00%b", "a50.00%b", "a100.00%b", "a150.00%b", "a200.00%b",
+        "a250.00%b", "NA", "aInf%b"
+      )
+    )
+
+  vec_fmt_percent(vec_num_1, force_sign = TRUE, output = "plain") %>%
+    expect_equal(
+      c(
+        "-250.00%", "-200.00%", "-150.00%", "-100.00%", "-50.00%",
+        "0.00%", "+50.00%", "+100.00%", "+150.00%", "+200.00%", "+250.00%",
+        "NA", "+Inf%"
+      )
+    )
+
+  vec_fmt_percent(vec_num_1, force_sign = TRUE, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "250.00%"), paste0("\U02212", "200.00%"),
+        paste0("\U02212", "150.00%"), paste0("\U02212", "100.00%"),
+        paste0("\U02212", "50.00%"), "0.00%", "+50.00%", "+100.00%",
+        "+150.00%", "+200.00%", "+250.00%", "NA", "+Inf%"
+      )
+    )
+
+  vec_fmt_percent(vec_num_1, force_sign = TRUE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-250.00\\%$", "$-200.00\\%$", "$-150.00\\%$", "$-100.00\\%$",
+        "$-50.00\\%$", "$0.00\\%$", "$+50.00\\%$", "$+100.00\\%$", "$+150.00\\%$",
+        "$+200.00\\%$", "$+250.00\\%$", "NA", "$+Inf\\%$"
+      )
+    )
+
+  vec_fmt_percent(vec_num_1, force_sign = TRUE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-250.00%", "-200.00%", "-150.00%", "-100.00%", "-50.00%",
+        "0.00%", "+50.00%", "+100.00%", "+150.00%", "+200.00%", "+250.00%",
+        "NA", "+Inf%"
+      )
+    )
+
+  vec_fmt_percent(vec_num_1, placement = "left", output = "plain") %>%
+    expect_equal(
+      c(
+        "-%250.00", "-%200.00", "-%150.00", "-%100.00", "-%50.00",
+        "%0.00", "%50.00", "%100.00", "%150.00", "%200.00", "%250.00",
+        "NA", "%Inf"
+      )
+    )
+
+  vec_fmt_percent(vec_num_1, placement = "left", output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "%250.00"), paste0("\U02212", "%200.00"),
+        paste0("\U02212", "%150.00"), paste0("\U02212", "%100.00"),
+        paste0("\U02212", "%50.00"), "%0.00", "%50.00", "%100.00", "%150.00", "%200.00",
+        "%250.00", "NA", "%Inf"
+      )
+    )
+
+  vec_fmt_percent(vec_num_1, placement = "left", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-\\%250.00$", "$-\\%200.00$", "$-\\%150.00$", "$-\\%100.00$",
+        "$-\\%50.00$", "$\\%0.00$", "$\\%50.00$", "$\\%100.00$", "$\\%150.00$",
+        "$\\%200.00$", "$\\%250.00$", "NA", "$\\%Inf$"
+      )
+    )
+
+  vec_fmt_percent(vec_num_1, placement = "left", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-%250.00", "-%200.00", "-%150.00", "-%100.00", "-%50.00",
+        "%0.00", "%50.00", "%100.00", "%150.00", "%200.00", "%250.00",
+        "NA", "%Inf"
+      )
+    )
+
+  vec_fmt_percent(vec_num_1, incl_space = TRUE, output = "plain") %>%
+    expect_equal(
+      c(
+        "-250.00 %", "-200.00 %", "-150.00 %", "-100.00 %", "-50.00 %",
+        "0.00 %", "50.00 %", "100.00 %", "150.00 %", "200.00 %", "250.00 %",
+        "NA", "Inf %"
+      )
+    )
+
+  vec_fmt_percent(vec_num_1, incl_space = TRUE, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "250.00 %"), paste0("\U02212", "200.00 %"),
+        paste0("\U02212", "150.00 %"), paste0("\U02212", "100.00 %"),
+        paste0("\U02212", "50.00 %"), "0.00 %", "50.00 %",
+        "100.00 %", "150.00 %", "200.00 %", "250.00 %", "NA", "Inf %"
+      )
+    )
+
+  vec_fmt_percent(vec_num_1, incl_space = TRUE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-250.00 \\%$", "$-200.00 \\%$", "$-150.00 \\%$", "$-100.00 \\%$",
+        "$-50.00 \\%$", "$0.00 \\%$", "$50.00 \\%$", "$100.00 \\%$",
+        "$150.00 \\%$", "$200.00 \\%$", "$250.00 \\%$", "NA", "$Inf \\%$"
+      )
+    )
+
+  vec_fmt_percent(vec_num_1, incl_space = TRUE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-250.00 %", "-200.00 %", "-150.00 %", "-100.00 %", "-50.00 %",
+        "0.00 %", "50.00 %", "100.00 %", "150.00 %", "200.00 %", "250.00 %",
+        "NA", "Inf %"
+      )
+    )
+
+  vec_fmt_percent(
+    vec_num_1, placement = "left", incl_space = TRUE,
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "-% 250.00", "-% 200.00", "-% 150.00", "-% 100.00", "-% 50.00",
+        "% 0.00", "% 50.00", "% 100.00", "% 150.00", "% 200.00", "% 250.00",
+        "NA", "% Inf"
+      )
+    )
+
+  vec_fmt_percent(
+    vec_num_1, placement = "left", incl_space = TRUE,
+    output = "html"
+  ) %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "% 250.00"), paste0("\U02212", "% 200.00"),
+        paste0("\U02212", "% 150.00"), paste0("\U02212", "% 100.00"),
+        paste0("\U02212", "% 50.00"), "% 0.00", "% 50.00", "% 100.00",
+        "% 150.00", "% 200.00", "% 250.00", "NA", "% Inf"
+      )
+    )
+
+  vec_fmt_percent(
+    vec_num_1, placement = "left", incl_space = TRUE,
+    output = "latex"
+  ) %>%
+    expect_equal(
+      c(
+        "$-\\% 250.00$", "$-\\% 200.00$", "$-\\% 150.00$", "$-\\% 100.00$",
+        "$-\\% 50.00$", "$\\% 0.00$", "$\\% 50.00$", "$\\% 100.00$",
+        "$\\% 150.00$", "$\\% 200.00$", "$\\% 250.00$", "NA", "$\\% Inf$"
+      )
+    )
+
+  vec_fmt_percent(
+    vec_num_1, placement = "left", incl_space = TRUE,
+    output = "rtf"
+  ) %>%
+    expect_equal(
+      c(
+        "-% 250.00", "-% 200.00", "-% 150.00", "-% 100.00", "-% 50.00",
+        "% 0.00", "% 50.00", "% 100.00", "% 150.00", "% 200.00", "% 250.00",
+        "NA", "% Inf"
+      )
+    )
+
+  expect_error(vec_fmt_percent(letters))
+  expect_error(vec_fmt_percent(TRUE))
+  expect_error(vec_fmt_percent(list(1, 2, 3)))
+  expect_error(vec_fmt_percent(dplyr::tibble(a = c(1, 2, 3))))
+})
+
+test_that("The `vec_fmt_partsper()` function works", {
+
+  vec_fmt_partsper(
+    vec_num_1, to_units = "ppm", decimals = 3, output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "-2,500,000.000 ppm", "-2,000,000.000 ppm", "-1,500,000.000 ppm",
+        "-1,000,000.000 ppm", "-500,000.000 ppm", "0.000 ppm",
+        "500,000.000 ppm", "1,000,000.000 ppm", "1,500,000.000 ppm",
+        "2,000,000.000 ppm", "2,500,000.000 ppm", "NA", " Inf ppm"
+      )
+    )
+
+  vec_fmt_partsper(
+    vec_num_1, to_units = "ppm", decimals = 3, output = "html"
+  ) %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2,500,000.000 ppm"),
+        paste0("\U02212", "2,000,000.000 ppm"),
+        paste0("\U02212", "1,500,000.000 ppm"),
+        paste0("\U02212", "1,000,000.000 ppm"),
+        paste0("\U02212", "500,000.000 ppm"),
+        "0.000 ppm", "500,000.000 ppm", "1,000,000.000 ppm",
+        "1,500,000.000 ppm", "2,000,000.000 ppm",
+        "2,500,000.000 ppm", "NA", " Inf ppm"
+      )
+    )
+
+  vec_fmt_partsper(
+    vec_num_1, to_units = "ppm", decimals = 3, output = "latex"
+  ) %>%
+    expect_equal(
+      c(
+        "$-2,500,000.000 \\text{ppm}$", "$-2,000,000.000 \\text{ppm}$",
+        "$-1,500,000.000 \\text{ppm}$", "$-1,000,000.000 \\text{ppm}$",
+        "$-500,000.000 \\text{ppm}$", "$0.000 \\text{ppm}$",
+        "$500,000.000 \\text{ppm}$", "$1,000,000.000 \\text{ppm}$",
+        "$1,500,000.000 \\text{ppm}$", "$2,000,000.000 \\text{ppm}$",
+        "$2,500,000.000 \\text{ppm}$", "NA", "$ Inf \\text{ppm}$"
+      )
+    )
+
+  vec_fmt_partsper(
+    vec_num_1, to_units = "ppm", decimals = 3, output = "rtf"
+  ) %>%
+    expect_equal(
+      c(
+        "-2,500,000.000 ppm", "-2,000,000.000 ppm", "-1,500,000.000 ppm",
+        "-1,000,000.000 ppm", "-500,000.000 ppm", "0.000 ppm",
+        "500,000.000 ppm", "1,000,000.000 ppm", "1,500,000.000 ppm",
+        "2,000,000.000 ppm", "2,500,000.000 ppm", "NA", " Inf ppm"
+      )
+    )
+
+  vec_fmt_partsper(
+    vec_num_1, to_units = "ppm", scale_values = FALSE, output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "-2.50 ppm", "-2.00 ppm", "-1.50 ppm", "-1.00 ppm", "-0.50 ppm",
+        "0.00 ppm", "0.50 ppm", "1.00 ppm", "1.50 ppm", "2.00 ppm", "2.50 ppm",
+        "NA", "Inf ppm"
+      )
+    )
+
+  vec_fmt_partsper(
+    vec_num_1, to_units = "ppm", scale_values = FALSE, output = "html"
+  ) %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.50 ppm"),
+        paste0("\U02212", "2.00 ppm"),
+        paste0("\U02212", "1.50 ppm"),
+        paste0("\U02212", "1.00 ppm"),
+        paste0("\U02212", "0.50 ppm"),
+        "0.00 ppm", "0.50 ppm", "1.00 ppm", "1.50 ppm",
+        "2.00 ppm", "2.50 ppm", "NA", "Inf ppm"
+      )
+    )
+
+  vec_fmt_partsper(
+    vec_num_1, to_units = "ppm", scale_values = FALSE, output = "latex"
+  ) %>%
+    expect_equal(
+      c(
+        "$-2.50 \\text{ppm}$", "$-2.00 \\text{ppm}$", "$-1.50 \\text{ppm}$",
+        "$-1.00 \\text{ppm}$", "$-0.50 \\text{ppm}$", "$0.00 \\text{ppm}$",
+        "$0.50 \\text{ppm}$", "$1.00 \\text{ppm}$", "$1.50 \\text{ppm}$",
+        "$2.00 \\text{ppm}$", "$2.50 \\text{ppm}$", "NA", "$Inf \\text{ppm}$"
+      )
+    )
+
+  vec_fmt_partsper(
+    vec_num_1, to_units = "ppm", scale_values = FALSE, output = "rtf"
+  ) %>%
+    expect_equal(
+      c(
+        "-2.50 ppm", "-2.00 ppm", "-1.50 ppm", "-1.00 ppm", "-0.50 ppm",
+        "0.00 ppm", "0.50 ppm", "1.00 ppm", "1.50 ppm", "2.00 ppm", "2.50 ppm",
+        "NA", "Inf ppm"
+      )
+    )
+
+  vec_fmt_partsper(
+    vec_num_1, to_units = "ppm", locale = "de", output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "-2.500.000,00 ppm", "-2.000.000,00 ppm", "-1.500.000,00 ppm",
+        "-1.000.000,00 ppm", "-500.000,00 ppm", "0,00 ppm", "500.000,00 ppm",
+        "1.000.000,00 ppm", "1.500.000,00 ppm", "2.000.000,00 ppm",
+        "2.500.000,00 ppm", "NA", "Inf ppm"
+      )
+    )
+
+  vec_fmt_partsper(
+    vec_num_1, to_units = "ppm", locale = "de", output = "html"
+  ) %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.500.000,00 ppm"),
+        paste0("\U02212", "2.000.000,00 ppm"),
+        paste0("\U02212", "1.500.000,00 ppm"),
+        paste0("\U02212", "1.000.000,00 ppm"),
+        paste0("\U02212", "500.000,00 ppm"),
+        "0,00 ppm", "500.000,00 ppm", "1.000.000,00 ppm", "1.500.000,00 ppm",
+        "2.000.000,00 ppm", "2.500.000,00 ppm", "NA", "Inf ppm"
+      )
+    )
+
+  vec_fmt_partsper(
+    vec_num_1, to_units = "ppm", locale = "de", output = "latex"
+  ) %>%
+    expect_equal(
+      c(
+        "$-2.500.000,00 \\text{ppm}$", "$-2.000.000,00 \\text{ppm}$",
+        "$-1.500.000,00 \\text{ppm}$", "$-1.000.000,00 \\text{ppm}$",
+        "$-500.000,00 \\text{ppm}$", "$0,00 \\text{ppm}$",
+        "$500.000,00 \\text{ppm}$", "$1.000.000,00 \\text{ppm}$",
+        "$1.500.000,00 \\text{ppm}$", "$2.000.000,00 \\text{ppm}$",
+        "$2.500.000,00 \\text{ppm}$", "NA", "$Inf \\text{ppm}$"
+      )
+    )
+
+  vec_fmt_partsper(
+    vec_num_1, to_units = "ppm", locale = "de", output = "rtf"
+  ) %>%
+    expect_equal(
+      c(
+        "-2.500.000,00 ppm", "-2.000.000,00 ppm", "-1.500.000,00 ppm",
+        "-1.000.000,00 ppm", "-500.000,00 ppm", "0,00 ppm", "500.000,00 ppm",
+        "1.000.000,00 ppm", "1.500.000,00 ppm", "2.000.000,00 ppm",
+        "2.500.000,00 ppm", "NA", "Inf ppm"
+      )
+    )
+
+  vec_fmt_partsper(vec_num_1, to_units = "ppm", incl_space = FALSE, output = "plain") %>%
+    expect_equal(
+      c(
+        "-2,500,000.00ppm", "-2,000,000.00ppm", "-1,500,000.00ppm",
+        "-1,000,000.00ppm", "-500,000.00ppm", "0.00ppm", "500,000.00ppm",
+        "1,000,000.00ppm", "1,500,000.00ppm", "2,000,000.00ppm", "2,500,000.00ppm",
+        "NA", "Infppm"
+      )
+    )
+
+  vec_fmt_partsper(vec_num_1, to_units = "ppm", incl_space = FALSE, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2,500,000.00ppm"),
+        paste0("\U02212", "2,000,000.00ppm"),
+        paste0("\U02212", "1,500,000.00ppm"),
+        paste0("\U02212", "1,000,000.00ppm"),
+        paste0("\U02212", "500,000.00ppm"),
+        "0.00ppm", "500,000.00ppm", "1,000,000.00ppm", "1,500,000.00ppm",
+        "2,000,000.00ppm", "2,500,000.00ppm", "NA", "Infppm"
+      )
+    )
+
+  vec_fmt_partsper(vec_num_1, to_units = "ppm", incl_space = FALSE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2,500,000.00\\text{ppm}$", "$-2,000,000.00\\text{ppm}$",
+        "$-1,500,000.00\\text{ppm}$", "$-1,000,000.00\\text{ppm}$", "$-500,000.00\\text{ppm}$",
+        "$0.00\\text{ppm}$", "$500,000.00\\text{ppm}$", "$1,000,000.00\\text{ppm}$",
+        "$1,500,000.00\\text{ppm}$", "$2,000,000.00\\text{ppm}$", "$2,500,000.00\\text{ppm}$",
+        "NA", "$Inf\\text{ppm}$"
+      )
+    )
+
+  vec_fmt_partsper(vec_num_1, to_units = "ppm", incl_space = FALSE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2,500,000.00ppm", "-2,000,000.00ppm", "-1,500,000.00ppm",
+        "-1,000,000.00ppm", "-500,000.00ppm", "0.00ppm", "500,000.00ppm",
+        "1,000,000.00ppm", "1,500,000.00ppm", "2,000,000.00ppm", "2,500,000.00ppm",
+        "NA", "Infppm"
+      )
+    )
+
+  expect_error(vec_fmt_partsper(letters))
+  expect_error(vec_fmt_partsper(TRUE))
+  expect_error(vec_fmt_partsper(list(1, 2, 3)))
+  expect_error(vec_fmt_partsper(dplyr::tibble(a = c(1, 2, 3))))
+})
+
+test_that("The `vec_fmt_fraction()` function works", {
+
+  vec_fmt_fraction(range_0_1, layout = "diagonal", output = "plain") %>%
+    expect_equal(
+      c(
+        "0", "0", "0", "1/9", "1/4", "2/5", "1/2",
+        "3/5", "3/4", "8/9", "1", "1", "1"
+      )
+    )
+
+  vec_fmt_fraction(range_0_1, layout = "diagonal", output = "html") %>%
+    expect_equal(
+      c(
+        "0", "0", "0",
+        paste0("<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">9</span>"),
+        paste0("<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">4</span>"),
+        paste0("<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">2</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">5</span>"),
+        paste0("<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">2</span>"),
+        paste0("<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">3</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">5</span>"),
+        paste0("<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">3</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">4</span>"),
+        paste0("<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">8</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">9</span>"),
+        "1", "1", "1"
+      )
+    )
+
+  vec_fmt_fraction(range_0_1, layout = "diagonal", output = "latex") %>%
+    expect_equal(
+      c(
+        "$0$", "$0$", "$0$", "${{}^{1}\\!/_{9}}$", "${{}^{1}\\!/_{4}}$",
+        "${{}^{2}\\!/_{5}}$", "${{}^{1}\\!/_{2}}$", "${{}^{3}\\!/_{5}}$",
+        "${{}^{3}\\!/_{4}}$", "${{}^{8}\\!/_{9}}$", "$1$", "$1$", "$1$"
+      )
+    )
+
+  vec_fmt_fraction(range_0_1, layout = "diagonal", output = "rtf") %>%
+    expect_equal(
+      c(
+        "0", "0", "0", "{\\super 1}/{\\sub 9}", "{\\super 1}/{\\sub 4}",
+        "{\\super 2}/{\\sub 5}", "{\\super 1}/{\\sub 2}", "{\\super 3}/{\\sub 5}",
+        "{\\super 3}/{\\sub 4}", "{\\super 8}/{\\sub 9}", "1", "1", "1"
+      )
+    )
+
+  vec_fmt_fraction(range_0_1_minus, layout = "diagonal", output = "plain") %>%
+    expect_equal(
+      c(
+        "0", "0", "0", "-1/9", "-1/4", "-2/5",
+        "-1/2", "-3/5", "-3/4", "-8/9", "-1", "-1", "-1"
+      )
+    )
+
+  vec_fmt_fraction(range_0_1_minus, layout = "diagonal", output = "html") %>%
+    expect_equal(
+      c(
+        "0", "0", "0",
+        paste0("\U02212", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">9</span>"),
+        paste0("\U02212", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">4</span>"),
+        paste0("\U02212", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">2</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">5</span>"),
+        paste0("\U02212", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">2</span>"),
+        paste0("\U02212", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">3</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">5</span>"),
+        paste0("\U02212", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">3</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">4</span>"),
+        paste0("\U02212", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">8</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">9</span>"),
+        paste0("\U02212", "1"),
+        paste0("\U02212", "1"),
+        paste0("\U02212", "1")
+      )
+    )
+
+  vec_fmt_fraction(range_0_1_minus, layout = "diagonal", output = "latex") %>%
+    expect_equal(
+      c(
+        "$0$", "$0$", "$0$", "$-{{}^{1}\\!/_{9}}$", "$-{{}^{1}\\!/_{4}}$",
+        "$-{{}^{2}\\!/_{5}}$", "$-{{}^{1}\\!/_{2}}$", "$-{{}^{3}\\!/_{5}}$",
+        "$-{{}^{3}\\!/_{4}}$", "$-{{}^{8}\\!/_{9}}$", "$-1$", "$-1$",
+        "$-1$"
+      )
+    )
+
+  vec_fmt_fraction(range_0_1_minus, layout = "diagonal", output = "rtf") %>%
+    expect_equal(
+      c(
+        "0", "0", "0", "-{\\super 1}/{\\sub 9}", "-{\\super 1}/{\\sub 4}",
+        "-{\\super 2}/{\\sub 5}", "-{\\super 1}/{\\sub 2}", "-{\\super 3}/{\\sub 5}",
+        "-{\\super 3}/{\\sub 4}", "-{\\super 8}/{\\sub 9}", "-1", "-1",
+        "-1"
+      )
+    )
+
+  vec_fmt_fraction(range_1_2, layout = "diagonal", output = "plain") %>%
+    expect_equal(
+      c(
+        "1", "1", "1", "1 1/9", "1 1/4", "1 2/5",
+        "1 1/2", "1 3/5", "1 3/4", "1 8/9", "2", "2", "2"
+      )
+    )
+
+  vec_fmt_fraction(range_1_2, layout = "diagonal", output = "html") %>%
+    expect_equal(
+      c(
+        "1", "1", "1",
+        paste0("1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">9</span>"),
+        paste0("1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">4</span>"),
+        paste0("1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">2</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">5</span>"),
+        paste0("1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">2</span>"),
+        paste0("1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">3</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">5</span>"),
+        paste0("1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">3</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">4</span>"),
+        paste0("1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">8</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">9</span>"),
+        "2", "2", "2"
+      )
+    )
+
+  vec_fmt_fraction(range_1_2, layout = "diagonal", output = "latex") %>%
+    expect_equal(
+      c(
+        "$1$", "$1$", "$1$", "$1\\, {{}^{1}\\!/_{9}}$", "$1\\, {{}^{1}\\!/_{4}}$",
+        "$1\\, {{}^{2}\\!/_{5}}$", "$1\\, {{}^{1}\\!/_{2}}$", "$1\\, {{}^{3}\\!/_{5}}$",
+        "$1\\, {{}^{3}\\!/_{4}}$", "$1\\, {{}^{8}\\!/_{9}}$", "$2$",
+        "$2$", "$2$"
+      )
+    )
+
+  vec_fmt_fraction(range_1_2, layout = "diagonal", output = "rtf") %>%
+    expect_equal(
+      c(
+        "1", "1", "1", "1{\\super 1}/{\\sub 9}", "1{\\super 1}/{\\sub 4}",
+        "1{\\super 2}/{\\sub 5}", "1{\\super 1}/{\\sub 2}", "1{\\super 3}/{\\sub 5}",
+        "1{\\super 3}/{\\sub 4}", "1{\\super 8}/{\\sub 9}", "2", "2",
+        "2"
+      )
+    )
+
+  vec_fmt_fraction(range_1_2_minus, layout = "diagonal", output = "plain") %>%
+    expect_equal(
+      c(
+        "-1", "-1", "-1", "-1 1/9", "-1 1/4", "-1 2/5",
+        "-1 1/2", "-1 3/5", "-1 3/4", "-1 8/9", "-2", "-2", "-2"
+      )
+    )
+
+  vec_fmt_fraction(range_1_2_minus, layout = "diagonal", output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "1"),
+        paste0("\U02212", "1"),
+        paste0("\U02212", "1"),
+        paste0("\U02212", "1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">9</span>"),
+        paste0("\U02212", "1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">4</span>"),
+        paste0("\U02212", "1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">2</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">5</span>"),
+        paste0("\U02212", "1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">2</span>"),
+        paste0("\U02212", "1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">3</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">5</span>"),
+        paste0("\U02212", "1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">3</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">4</span>"),
+        paste0("\U02212", "1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">8</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">9</span>"),
+        paste0("\U02212", "2"),
+        paste0("\U02212", "2"),
+        paste0("\U02212", "2")
+      )
+    )
+
+  vec_fmt_fraction(range_1_2_minus, layout = "diagonal", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-1$", "$-1$", "$-1$", "$-1\\, {{}^{1}\\!/_{9}}$", "$-1\\, {{}^{1}\\!/_{4}}$",
+        "$-1\\, {{}^{2}\\!/_{5}}$", "$-1\\, {{}^{1}\\!/_{2}}$", "$-1\\, {{}^{3}\\!/_{5}}$",
+        "$-1\\, {{}^{3}\\!/_{4}}$", "$-1\\, {{}^{8}\\!/_{9}}$", "$-2$",
+        "$-2$", "$-2$"
+      )
+    )
+
+  vec_fmt_fraction(range_1_2_minus, layout = "diagonal", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-1", "-1", "-1", "-1{\\super 1}/{\\sub 9}", "-1{\\super 1}/{\\sub 4}",
+        "-1{\\super 2}/{\\sub 5}", "-1{\\super 1}/{\\sub 2}", "-1{\\super 3}/{\\sub 5}",
+        "-1{\\super 3}/{\\sub 4}", "-1{\\super 8}/{\\sub 9}", "-2", "-2",
+        "-2"
+      )
+    )
+
+  vec_fmt_fraction(range_0_1, layout = "inline", output = "plain") %>%
+    expect_equal(
+      c(
+        "0", "0", "0", "1/9", "1/4", "2/5", "1/2", "3/5", "3/4", "8/9",
+        "1", "1", "1"
+      )
+    )
+
+  vec_fmt_fraction(range_0_1, layout = "inline", output = "html") %>%
+    expect_equal(
+      c(
+        "0", "0", "0", "1/9", "1/4", "2/5", "1/2", "3/5", "3/4", "8/9",
+        "1", "1", "1"
+      )
+    )
+
+  vec_fmt_fraction(range_0_1, layout = "inline", output = "latex") %>%
+    expect_equal(
+      c(
+        "$0$", "$0$", "$0$", "$1/9$", "$1/4$", "$2/5$", "$1/2$", "$3/5$",
+        "$3/4$", "$8/9$", "$1$", "$1$", "$1$"
+      )
+    )
+
+  vec_fmt_fraction(range_0_1, layout = "inline", output = "rtf") %>%
+    expect_equal(
+      c(
+        "0", "0", "0", "1/9", "1/4", "2/5", "1/2", "3/5", "3/4", "8/9",
+        "1", "1", "1"
+      )
+    )
+
+  vec_fmt_fraction(range_0_1_minus, layout = "inline", output = "plain") %>%
+    expect_equal(
+      c(
+        "0", "0", "0", "-1/9", "-1/4", "-2/5", "-1/2", "-3/5", "-3/4",
+        "-8/9", "-1", "-1", "-1"
+      )
+    )
+
+  vec_fmt_fraction(range_0_1_minus, layout = "inline", output = "html") %>%
+    expect_equal(
+      c(
+        "0", "0", "0",
+        paste0("\U02212", "1/9"), paste0("\U02212", "1/4"),
+        paste0("\U02212", "2/5"), paste0("\U02212", "1/2"),
+        paste0("\U02212", "3/5"), paste0("\U02212", "3/4"),
+        paste0("\U02212", "8/9"), paste0("\U02212", "1"),
+        paste0("\U02212", "1"), paste0("\U02212", "1")
+      )
+    )
+
+  vec_fmt_fraction(range_0_1_minus, layout = "inline", output = "latex") %>%
+    expect_equal(
+      c(
+        "$0$", "$0$", "$0$", "$-1/9$", "$-1/4$", "$-2/5$", "$-1/2$",
+        "$-3/5$", "$-3/4$", "$-8/9$", "$-1$", "$-1$", "$-1$"
+      )
+    )
+
+  vec_fmt_fraction(range_0_1_minus, layout = "inline", output = "rtf") %>%
+    expect_equal(
+      c(
+        "0", "0", "0", "-1/9", "-1/4", "-2/5", "-1/2", "-3/5", "-3/4",
+        "-8/9", "-1", "-1", "-1"
+      )
+    )
+
+  vec_fmt_fraction(range_1_2, layout = "inline", output = "plain") %>%
+    expect_equal(
+      c(
+        "1", "1", "1", "1 1/9", "1 1/4", "1 2/5", "1 1/2", "1 3/5",
+        "1 3/4", "1 8/9", "2", "2", "2"
+      )
+    )
+
+  vec_fmt_fraction(range_1_2, layout = "inline", output = "html") %>%
+    expect_equal(
+      c(
+        "1", "1", "1", "1 1/9", "1 1/4", "1 2/5", "1 1/2", "1 3/5",
+        "1 3/4", "1 8/9", "2", "2", "2"
+      )
+    )
+
+  vec_fmt_fraction(range_1_2, layout = "inline", output = "latex") %>%
+    expect_equal(
+      c(
+        "$1$", "$1$", "$1$", "$1\\ 1/9$", "$1\\ 1/4$", "$1\\ 2/5$",
+        "$1\\ 1/2$", "$1\\ 3/5$", "$1\\ 3/4$", "$1\\ 8/9$", "$2$", "$2$",
+        "$2$"
+      )
+    )
+
+  vec_fmt_fraction(range_1_2, layout = "inline", output = "rtf") %>%
+    expect_equal(
+      c(
+        "1", "1", "1", "1 1/9", "1 1/4", "1 2/5", "1 1/2", "1 3/5",
+        "1 3/4", "1 8/9", "2", "2", "2"
+      )
+    )
+
+  vec_fmt_fraction(range_1_2_minus, layout = "inline", output = "plain") %>%
+    expect_equal(
+      c(
+        "-1", "-1", "-1", "-1 1/9", "-1 1/4", "-1 2/5", "-1 1/2", "-1 3/5",
+        "-1 3/4", "-1 8/9", "-2", "-2", "-2"
+      )
+    )
+
+  vec_fmt_fraction(range_1_2_minus, layout = "inline", output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "1"), paste0("\U02212", "1"), paste0("\U02212", "1"),
+        paste0("\U02212", "1 1/9"), paste0("\U02212", "1 1/4"),
+        paste0("\U02212", "1 2/5"), paste0("\U02212", "1 1/2"),
+        paste0("\U02212", "1 3/5"), paste0("\U02212", "1 3/4"),
+        paste0("\U02212", "1 8/9"), paste0("\U02212", "2"),
+        paste0("\U02212", "2"), paste0("\U02212", "2")
+      )
+    )
+
+  vec_fmt_fraction(range_1_2_minus, layout = "inline", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-1$", "$-1$", "$-1$", "$-1\\ 1/9$", "$-1\\ 1/4$", "$-1\\ 2/5$",
+        "$-1\\ 1/2$", "$-1\\ 3/5$", "$-1\\ 3/4$", "$-1\\ 8/9$", "$-2$",
+        "$-2$", "$-2$"
+      )
+    )
+
+  vec_fmt_fraction(range_1_2_minus, layout = "inline", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-1", "-1", "-1", "-1 1/9", "-1 1/4", "-1 2/5", "-1 1/2", "-1 3/5",
+        "-1 3/4", "-1 8/9", "-2", "-2", "-2"
+      )
+    )
+
+  w_range <- sort(c(range_1_2_minus, range_0_1_minus, range_0_1, range_1_2))
+
+  vec_fmt_fraction(
+    w_range, layout = "inline", accuracy = "med", output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "-2", "-2", "-1 98/99", "-1 9/10", "-1 3/4", "-1 3/5", "-1 1/2",
+        "-1 2/5", "-1 1/4", "-1 1/10", "-1 1/99", "-1", "-1", "-1", "-1",
+        "-98/99", "-9/10", "-3/4", "-3/5", "-1/2", "-2/5", "-1/4", "-1/10",
+        "-1/99", "0", "0", "0", "0", "1/99", "1/10", "1/4", "2/5", "1/2",
+        "3/5", "3/4", "9/10", "98/99", "1", "1", "1", "1", "1 1/99",
+        "1 1/10", "1 1/4", "1 2/5", "1 1/2", "1 3/5", "1 3/4", "1 9/10",
+        "1 98/99", "2", "2"
+      )
+    )
+
+  vec_fmt_fraction(
+    w_range, layout = "inline", accuracy = "med", output = "rtf"
+  ) %>%
+    expect_equal(
+      c(
+        "-2", "-2", "-1 98/99", "-1 9/10", "-1 3/4", "-1 3/5", "-1 1/2",
+        "-1 2/5", "-1 1/4", "-1 1/10", "-1 1/99", "-1", "-1", "-1", "-1",
+        "-98/99", "-9/10", "-3/4", "-3/5", "-1/2", "-2/5", "-1/4", "-1/10",
+        "-1/99", "0", "0", "0", "0", "1/99", "1/10", "1/4", "2/5", "1/2",
+        "3/5", "3/4", "9/10", "98/99", "1", "1", "1", "1", "1 1/99",
+        "1 1/10", "1 1/4", "1 2/5", "1 1/2", "1 3/5", "1 3/4", "1 9/10",
+        "1 98/99", "2", "2"
+      )
+    )
+
+  vec_fmt_fraction(
+    w_range, layout = "inline", accuracy = "high", output = "rtf"
+  ) %>%
+    expect_equal(
+      c(
+        "-2", "-1 998/999", "-1 99/100", "-1 9/10", "-1 3/4", "-1 3/5",
+        "-1 1/2", "-1 2/5", "-1 1/4", "-1 1/10", "-1 1/100", "-1 1/999",
+        "-1", "-1", "-998/999", "-99/100", "-9/10", "-3/4", "-3/5", "-1/2",
+        "-2/5", "-1/4", "-1/10", "-1/100", "-1/999", "0", "0", "1/999",
+        "1/100", "1/10", "1/4", "2/5", "1/2", "3/5", "3/4", "9/10", "99/100",
+        "998/999", "1", "1", "1 1/999", "1 1/100", "1 1/10", "1 1/4",
+        "1 2/5", "1 1/2", "1 3/5", "1 3/4", "1 9/10", "1 99/100", "1 998/999",
+        "2"
+      )
+    )
+
+  vec_fmt_fraction(
+    w_range, accuracy = 1, layout = "inline", output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "-2", "-2", "-2", "-2", "-2", "-2", "-2", "-1", "-1", "-1",
+        "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "0",
+        "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "1", "1",
+        "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "2",
+        "2", "2", "2", "2", "2"
+      )
+    )
+
+  vec_fmt_fraction(
+    w_range, layout = "inline", accuracy = 1,
+    simplify = FALSE, output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "-2", "-2", "-2", "-2", "-2", "-2", "-2", "-1", "-1", "-1",
+        "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "0",
+        "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "1", "1",
+        "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "2",
+        "2", "2", "2", "2", "2"
+      )
+    )
+
+  vec_fmt_fraction(
+    w_range, layout = "inline", accuracy = 2, output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "-2", "-2", "-2", "-2", "-2", "-1 1/2", "-1 1/2", "-1 1/2",
+        "-1 1/2", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1",
+        "-1/2", "-1/2", "-1/2", "-1/2", "0", "0", "0", "0", "0", "0",
+        "0", "0", "1/2", "1/2", "1/2", "1/2", "1", "1", "1", "1", "1",
+        "1", "1", "1", "1", "1 1/2", "1 1/2", "1 1/2", "1 1/2", "2",
+        "2", "2", "2", "2"
+      )
+    )
+
+  vec_fmt_fraction(
+    w_range, layout = "inline", accuracy = 2,
+    simplify = FALSE, output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "-2", "-2", "-2", "-2", "-2", "-1 1/2", "-1 1/2", "-1 1/2",
+        "-1 1/2", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1",
+        "-1/2", "-1/2", "-1/2", "-1/2", "0", "0", "0", "0", "0", "0",
+        "0", "0", "1/2", "1/2", "1/2", "1/2", "1", "1", "1", "1", "1",
+        "1", "1", "1", "1", "1 1/2", "1 1/2", "1 1/2", "1 1/2", "2",
+        "2", "2", "2", "2"
+      )
+    )
+
+  vec_fmt_fraction(
+    w_range, layout = "inline", accuracy = 3, output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "-2", "-2", "-2", "-2", "-1 2/3", "-1 2/3", "-1 2/3", "-1 1/3",
+        "-1 1/3", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-2/3",
+        "-2/3", "-2/3", "-1/3", "-1/3", "0", "0", "0", "0", "0", "0",
+        "0", "0", "1/3", "1/3", "2/3", "2/3", "2/3", "1", "1", "1", "1",
+        "1", "1", "1", "1", "1 1/3", "1 1/3", "1 2/3", "1 2/3", "1 2/3",
+        "2", "2", "2", "2"
+      )
+    )
+
+  vec_fmt_fraction(
+    w_range, layout = "inline", accuracy = 3,
+    simplify = FALSE, output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "-2", "-2", "-2", "-2", "-1 2/3", "-1 2/3", "-1 2/3", "-1 1/3",
+        "-1 1/3", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-2/3",
+        "-2/3", "-2/3", "-1/3", "-1/3", "0", "0", "0", "0", "0", "0",
+        "0", "0", "1/3", "1/3", "2/3", "2/3", "2/3", "1", "1", "1", "1",
+        "1", "1", "1", "1", "1 1/3", "1 1/3", "1 2/3", "1 2/3", "1 2/3",
+        "2", "2", "2", "2"
+      )
+    )
+
+  vec_fmt_fraction(
+    w_range, layout = "inline", accuracy = 4, output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "-2", "-2", "-2", "-2", "-1 3/4", "-1 1/2", "-1 1/2", "-1 1/2",
+        "-1 1/4", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-3/4",
+        "-1/2", "-1/2", "-1/2", "-1/4", "0", "0", "0", "0", "0", "0",
+        "0", "0", "1/4", "1/2", "1/2", "1/2", "3/4", "1", "1", "1", "1",
+        "1", "1", "1", "1", "1 1/4", "1 1/2", "1 1/2", "1 1/2", "1 3/4",
+        "2", "2", "2", "2"
+      )
+    )
+
+  vec_fmt_fraction(
+    w_range, layout = "inline", accuracy = 4,
+    simplify = FALSE, output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "-2", "-2", "-2", "-2", "-1 3/4", "-1 2/4", "-1 2/4", "-1 2/4",
+        "-1 1/4", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-3/4",
+        "-2/4", "-2/4", "-2/4", "-1/4", "0", "0", "0", "0", "0", "0",
+        "0", "0", "1/4", "2/4", "2/4", "2/4", "3/4", "1", "1", "1", "1",
+        "1", "1", "1", "1", "1 1/4", "1 2/4", "1 2/4", "1 2/4", "1 3/4",
+        "2", "2", "2", "2"
+      )
+    )
+
+  vec_fmt_fraction(
+    w_range, layout = "inline", accuracy = 10, output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "-2", "-2", "-2", "-1 9/10", "-1 4/5", "-1 3/5", "-1 1/2",
+        "-1 2/5", "-1 3/10", "-1 1/10", "-1", "-1", "-1", "-1", "-1",
+        "-1", "-9/10", "-4/5", "-3/5", "-1/2", "-2/5", "-3/10", "-1/10",
+        "0", "0", "0", "0", "0", "0", "1/10", "3/10", "2/5", "1/2", "3/5",
+        "4/5", "9/10", "1", "1", "1", "1", "1", "1", "1 1/10", "1 3/10",
+        "1 2/5", "1 1/2", "1 3/5", "1 4/5", "1 9/10", "2", "2", "2"
+      )
+    )
+
+  vec_fmt_fraction(
+    w_range, layout = "inline", accuracy = 10,
+    simplify = FALSE, output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "-2", "-2", "-2", "-1 9/10", "-1 8/10", "-1 6/10", "-1 5/10",
+        "-1 4/10", "-1 3/10", "-1 1/10", "-1", "-1", "-1", "-1", "-1",
+        "-1", "-9/10", "-8/10", "-6/10", "-5/10", "-4/10", "-3/10", "-1/10",
+        "0", "0", "0", "0", "0", "0", "1/10", "3/10", "4/10", "5/10",
+        "6/10", "8/10", "9/10", "1", "1", "1", "1", "1", "1", "1 1/10",
+        "1 3/10", "1 4/10", "1 5/10", "1 6/10", "1 8/10", "1 9/10", "2",
+        "2", "2"
+      )
+    )
+
+  vec_fmt_fraction(
+    w_range, layout = "inline", accuracy = 100, output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "-2", "-2", "-1 99/100", "-1 9/10", "-1 3/4", "-1 3/5", "-1 1/2",
+        "-1 2/5", "-1 1/4", "-1 1/10", "-1 1/100", "-1", "-1", "-1",
+        "-1", "-99/100", "-9/10", "-3/4", "-3/5", "-1/2", "-2/5", "-1/4",
+        "-1/10", "-1/100", "0", "0", "0", "0", "1/100", "1/10", "1/4",
+        "2/5", "1/2", "3/5", "3/4", "9/10", "99/100", "1", "1", "1",
+        "1", "1 1/100", "1 1/10", "1 1/4", "1 2/5", "1 1/2", "1 3/5",
+        "1 3/4", "1 9/10", "1 99/100", "2", "2"
+      )
+    )
+
+  vec_fmt_fraction(
+    w_range, layout = "inline", accuracy = 100,
+    simplify = FALSE, output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "-2", "-2", "-1 99/100", "-1 90/100", "-1 75/100", "-1 60/100",
+        "-1 50/100", "-1 40/100", "-1 25/100", "-1 10/100", "-1 1/100",
+        "-1", "-1", "-1", "-1", "-99/100", "-90/100", "-75/100", "-60/100",
+        "-50/100", "-40/100", "-25/100", "-10/100", "-1/100", "0", "0",
+        "0", "0", "1/100", "10/100", "25/100", "40/100", "50/100", "60/100",
+        "75/100", "90/100", "99/100", "1", "1", "1", "1", "1 1/100",
+        "1 10/100", "1 25/100", "1 40/100", "1 50/100", "1 60/100", "1 75/100",
+        "1 90/100", "1 99/100", "2", "2"
+      )
+    )
+
+  vec_fmt_fraction(c(5000.3, 10000.8), layout = "diagonal", output = "plain") %>%
+    expect_equal(c("5,000 2/7", "10,000 4/5"))
+
+  vec_fmt_fraction(c(5000.3, 10000.8), layout = "diagonal", output = "html") %>%
+    expect_equal(
+      c(
+        paste0("5,000",  "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">2</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">7</span>"),
+        paste0("10,000", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">4</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">5</span>")
+      )
+    )
+
+  vec_fmt_fraction(c(5000.3, 10000.8), layout = "diagonal", output = "latex") %>%
+    expect_equal(c("$5,000\\, {{}^{2}\\!/_{7}}$", "$10,000\\, {{}^{4}\\!/_{5}}$"))
+
+  vec_fmt_fraction(c(5000.3, 10000.8), layout = "diagonal", output = "rtf") %>%
+    expect_equal(c("5,000{\\super 2}/{\\sub 7}", "10,000{\\super 4}/{\\sub 5}"))
+
+  # TODO: With `use_seps = FALSE` we get the following warning that requires
+  # a fix in `fmt_fraction()`:
+  # In prettyNum(r, big.mark = big.mark, big.interval = big.interval,  :
+  #                'big.mark' and 'decimal.mark' are both '', which could be confusing
+  # vec_fmt_fraction(c(5000.3, 10000.8), use_seps = FALSE) %>%
+  #   expect_equal(
+  #     c(
+  #     )
+  #   )
+  #
+  # vec_fmt_fraction(c(5000.3, 10000.8), use_seps = FALSE, output = "latex") %>%
+  #   expect_equal(c())
+  #
+  # vec_fmt_fraction(c(5000.3, 10000.8), use_seps = FALSE, output = "rtf") %>%
+  #   expect_equal(c())
+
+  vec_fmt_fraction(
+    c(5000.3, 10000.8), layout = "diagonal",
+    sep_mark = ".", output = "plain"
+  ) %>%
+    expect_equal(c("5.000 2/7", "10.000 4/5"))
+
+  vec_fmt_fraction(
+    c(5000.3, 10000.8), layout = "diagonal",
+    sep_mark = ".", output = "html"
+  ) %>%
+    expect_equal(
+      c(
+        paste0("5.000",  "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">2</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">7</span>"),
+        paste0("10.000", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">4</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">5</span>")
+      )
+    )
+
+  vec_fmt_fraction(
+    c(5000.3, 10000.8), layout = "diagonal",
+    sep_mark = ".", output = "latex"
+  ) %>%
+    expect_equal(c("$5.000\\, {{}^{2}\\!/_{7}}$", "$10.000\\, {{}^{4}\\!/_{5}}$"))
+
+  vec_fmt_fraction(
+    c(5000.3, 10000.8), layout = "diagonal",
+    sep_mark = ".", output = "rtf"
+  ) %>%
+    expect_equal(c("5.000{\\super 2}/{\\sub 7}", "10.000{\\super 4}/{\\sub 5}"))
+
+  vec_fmt_fraction(
+    c(0.5, 1.5), layout = "diagonal",
+    pattern = "a{x}b", output = "plain"
+  ) %>%
+    expect_equal(c("a1/2b", "a1 1/2b"))
+
+  vec_fmt_fraction(
+    c(0.5, 1.5), layout = "diagonal",
+    pattern = "a{x}b", output = "html"
+  ) %>%
+    expect_equal(
+      c(
+        paste0("a",             "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">2</span>b"),
+        paste0("a1", "\U0202F", "<span style=\"font-size:0.6em;line-height:0.6em;vertical-align:0.45em;\">1</span><span style=\"font-size:0.7em;line-height:0.7em;vertical-align:0.15em;\">", "\U02044", "</span><span style=\"font-size:0.6em;line-height:0.6em;vertical-align:-0.05em;\">2</span>b")
+      )
+    )
+
+  vec_fmt_fraction(
+    c(0.5, 1.5), layout = "diagonal",
+    pattern = "a{x}b", output = "latex"
+  ) %>%
+    expect_equal(c("a${{}^{1}\\!/_{2}}$b", "a$1\\, {{}^{1}\\!/_{2}}$b"))
+
+  vec_fmt_fraction(
+    c(0.5, 1.5), layout = "diagonal",
+    pattern = "a{x}b", output = "rtf"
+  ) %>%
+    expect_equal(c("a{\\super 1}/{\\sub 2}b", "a1{\\super 1}/{\\sub 2}b"))
+
+  vec_fmt_fraction(
+    c(0.5, 1.5), layout = "inline",
+    pattern = "a{x}b", output = "plain"
+  ) %>%
+    expect_equal(c("a1/2b", "a1 1/2b"))
+
+  vec_fmt_fraction(
+    c(0.5, 1.5), layout = "inline",
+    pattern = "a{x}b", output = "html"
+  ) %>%
+    expect_equal(c("a1/2b", "a1 1/2b"))
+
+  vec_fmt_fraction(
+    c(0.5, 1.5), layout = "inline",
+    pattern = "a{x}b", output = "latex"
+  ) %>%
+    expect_equal(c("a$1/2$b", "a$1\\ 1/2$b"))
+
+  vec_fmt_fraction(
+    c(0.5, 1.5), layout = "inline",
+    pattern = "a{x}b", output = "rtf"
+  ) %>%
+    expect_equal(c("a1/2b", "a1 1/2b"))
+
+  vec_fmt_fraction(exact_numbers, layout = "diagonal", output = "plain") %>%
+    expect_equal(c("-1", "0", "1"))
+
+  vec_fmt_fraction(exact_numbers, layout = "diagonal", output = "html") %>%
+    expect_equal(c(paste0("\U02212", "1"), "0", "1"))
+
+  vec_fmt_fraction(exact_numbers, layout = "diagonal", output = "latex") %>%
+    expect_equal(c("$-1$", "$0$", "$1$"))
+
+  vec_fmt_fraction(exact_numbers, layout = "diagonal", output = "rtf") %>%
+    expect_equal(c("-1", "0", "1"))
+
+  vec_fmt_fraction(exact_numbers, layout = "inline", output = "plain") %>%
+    expect_equal(c("-1", "0", "1"))
+
+  vec_fmt_fraction(exact_numbers, layout = "inline", output = "html") %>%
+    expect_equal(c(paste0("\U02212", "1"), "0", "1"))
+
+  vec_fmt_fraction(exact_numbers, layout = "inline", output = "latex") %>%
+    expect_equal(c("$-1$", "$0$", "$1$"))
+
+  vec_fmt_fraction(exact_numbers, layout = "inline", output = "rtf") %>%
+    expect_equal(c("-1", "0", "1"))
+
+  vec_fmt_fraction(not_numbers, layout = "diagonal", output = "plain") %>%
+    expect_equal(c("NA", "NaN", "Inf", "-Inf"))
+
+  vec_fmt_fraction(not_numbers, layout = "diagonal", output = "html") %>%
+    expect_equal(c("NA", "NaN", "Inf", "-Inf"))
+
+  vec_fmt_fraction(not_numbers, layout = "diagonal", output = "latex") %>%
+    expect_equal(c("NA", "NaN", "$Inf$", "$-Inf$"))
+
+  vec_fmt_fraction(not_numbers, layout = "diagonal", output = "rtf") %>%
+    expect_equal(c("NA", "NaN", "Inf", "-Inf"))
+
+  vec_fmt_fraction(not_numbers, layout = "inline", output = "plain") %>%
+    expect_equal(c("NA", "NaN", "Inf", "-Inf"))
+
+  vec_fmt_fraction(not_numbers, layout = "inline", output = "html") %>%
+    expect_equal(c("NA", "NaN", "Inf", "-Inf"))
+
+  vec_fmt_fraction(not_numbers, layout = "inline", output = "latex") %>%
+    expect_equal(c("NA", "NaN", "$Inf$", "$-Inf$"))
+
+  vec_fmt_fraction(not_numbers, layout = "inline", output = "rtf") %>%
+    expect_equal(c("NA", "NaN", "Inf", "-Inf"))
+
+  expect_error(vec_fmt_fraction(letters))
+  expect_error(vec_fmt_fraction(c(1, 2, 3), accuracy = 0))
+  expect_error(vec_fmt_fraction(c(1, 2, 3), accuracy = -1))
+  expect_error(vec_fmt_fraction(TRUE))
+  expect_error(vec_fmt_fraction(list(1, 2, 3)))
+  expect_error(vec_fmt_fraction(dplyr::tibble(a = c(1, 2, 3))))
+})
+
+test_that("The `vec_fmt_currency()` function works", {
+
+  vec_fmt_currency(vec_num_1, output = "plain") %>%
+    expect_equal(
+      c(
+        "-$2.50", "-$2.00", "-$1.50", "-$1.00", "-$0.50", "$0.00",
+        "$0.50", "$1.00", "$1.50", "$2.00", "$2.50", "NA", "$Inf"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "$2.50"), paste0("\U02212", "$2.00"),
+        paste0("\U02212", "$1.50"), paste0("\U02212", "$1.00"),
+        paste0("\U02212", "$0.50"), "$0.00", "$0.50", "$1.00",
+        "$1.50", "$2.00", "$2.50", "NA", "$Inf"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-\\text{\\$}2.50$", "$-\\text{\\$}2.00$", "$-\\text{\\$}1.50$",
+        "$-\\text{\\$}1.00$", "$-\\text{\\$}0.50$", "$\\text{\\$}0.00$",
+        "$\\text{\\$}0.50$", "$\\text{\\$}1.00$", "$\\text{\\$}1.50$",
+        "$\\text{\\$}2.00$", "$\\text{\\$}2.50$", "NA", "$\\text{\\$}Inf$"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-$2.50", "-$2.00", "-$1.50", "-$1.00", "-$0.50", "$0.00",
+        "$0.50", "$1.00", "$1.50", "$2.00", "$2.50", "NA", "$Inf"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, use_subunits = FALSE, output = "plain") %>%
+    expect_equal(
+      c(
+        "-$2", "-$2", "-$2", "-$1", "-$0", "$0", "$0", "$1", "$2",
+        "$2", "$2", "NA", "$Inf"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, use_subunits = FALSE, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "$2"), paste0("\U02212", "$2"),
+        paste0("\U02212", "$2"), paste0("\U02212", "$1"),
+        paste0("\U02212", "$0"),
+        "$0", "$0", "$1", "$2", "$2", "$2", "NA", "$Inf"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, use_subunits = FALSE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-\\text{\\$}2$", "$-\\text{\\$}2$", "$-\\text{\\$}2$", "$-\\text{\\$}1$",
+        "$-\\text{\\$}0$", "$\\text{\\$}0$", "$\\text{\\$}0$", "$\\text{\\$}1$",
+        "$\\text{\\$}2$", "$\\text{\\$}2$", "$\\text{\\$}2$", "NA", "$\\text{\\$}Inf$"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, use_subunits = FALSE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-$2", "-$2", "-$2", "-$1", "-$0", "$0", "$0", "$1", "$2",
+        "$2", "$2", "NA", "$Inf"
+      )
+    )
+
+  vec_fmt_currency(vec_num_6, decimals = 4, output = "plain") %>%
+    expect_equal(
+      c(
+        "$0.0000", "$0.1000", "$0.2000", "$0.3000", "$0.4000", "$0.5000",
+        "$0.6000", "$0.7000", "$0.8000", "$0.9000", "$1.0000", "$1.1000",
+        "$1.2000", "$1.3000", "$1.4000", "$1.5000", "$1.6000", "$1.7000",
+        "$1.8000", "$1.9000", "$2.0000"
+      )
+    )
+
+  vec_fmt_currency(vec_num_6, decimals = 4, output = "html") %>%
+    expect_equal(
+      c(
+        "$0.0000", "$0.1000", "$0.2000", "$0.3000", "$0.4000", "$0.5000",
+        "$0.6000", "$0.7000", "$0.8000", "$0.9000", "$1.0000", "$1.1000",
+        "$1.2000", "$1.3000", "$1.4000", "$1.5000", "$1.6000", "$1.7000",
+        "$1.8000", "$1.9000", "$2.0000"
+      )
+    )
+
+  vec_fmt_currency(vec_num_6, decimals = 4, output = "latex") %>%
+    expect_equal(
+      c(
+        "$\\text{\\$}0.0000$", "$\\text{\\$}0.1000$", "$\\text{\\$}0.2000$",
+        "$\\text{\\$}0.3000$", "$\\text{\\$}0.4000$", "$\\text{\\$}0.5000$",
+        "$\\text{\\$}0.6000$", "$\\text{\\$}0.7000$", "$\\text{\\$}0.8000$",
+        "$\\text{\\$}0.9000$", "$\\text{\\$}1.0000$", "$\\text{\\$}1.1000$",
+        "$\\text{\\$}1.2000$", "$\\text{\\$}1.3000$", "$\\text{\\$}1.4000$",
+        "$\\text{\\$}1.5000$", "$\\text{\\$}1.6000$", "$\\text{\\$}1.7000$",
+        "$\\text{\\$}1.8000$", "$\\text{\\$}1.9000$", "$\\text{\\$}2.0000$"
+      )
+    )
+
+  vec_fmt_currency(vec_num_6, decimals = 4, output = "rtf") %>%
+    expect_equal(
+      c(
+        "$0.0000", "$0.1000", "$0.2000", "$0.3000", "$0.4000", "$0.5000",
+        "$0.6000", "$0.7000", "$0.8000", "$0.9000", "$1.0000", "$1.1000",
+        "$1.2000", "$1.3000", "$1.4000", "$1.5000", "$1.6000", "$1.7000",
+        "$1.8000", "$1.9000", "$2.0000"
+      )
+    )
+
+  # Expect that using `decimals = 0` is equivalent to `use_subunits = FALSE`
+  expect_equal(
+    vec_fmt_currency(seq(-5, 5, 0.1), decimals = 0, output = "html"),
+    vec_fmt_currency(seq(-5, 5, 0.1), use_subunits = FALSE, output = "html")
+  )
+
+  vec_fmt_currency(
+    vec_num_6, decimals = 0, drop_trailing_dec_mark = FALSE, output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "$0.", "$0.", "$0.", "$0.", "$0.", "$0.", "$1.", "$1.", "$1.",
+        "$1.", "$1.", "$1.", "$1.", "$1.", "$1.", "$2.", "$2.", "$2.",
+        "$2.", "$2.", "$2."
+      )
+    )
+
+  vec_fmt_currency(
+    vec_num_6, decimals = 0, drop_trailing_dec_mark = FALSE, output = "html"
+  ) %>%
+    expect_equal(
+      c(
+        "$0.", "$0.", "$0.", "$0.", "$0.", "$0.", "$1.", "$1.", "$1.",
+        "$1.", "$1.", "$1.", "$1.", "$1.", "$1.", "$2.", "$2.", "$2.",
+        "$2.", "$2.", "$2."
+      )
+    )
+
+  vec_fmt_currency(
+    vec_num_6, decimals = 0, drop_trailing_dec_mark = FALSE, output = "latex"
+  ) %>%
+    expect_equal(
+      c(
+        "$\\text{\\$}0.$", "$\\text{\\$}0.$", "$\\text{\\$}0.$", "$\\text{\\$}0.$",
+        "$\\text{\\$}0.$", "$\\text{\\$}0.$", "$\\text{\\$}1.$", "$\\text{\\$}1.$",
+        "$\\text{\\$}1.$", "$\\text{\\$}1.$", "$\\text{\\$}1.$", "$\\text{\\$}1.$",
+        "$\\text{\\$}1.$", "$\\text{\\$}1.$", "$\\text{\\$}1.$", "$\\text{\\$}2.$",
+        "$\\text{\\$}2.$", "$\\text{\\$}2.$", "$\\text{\\$}2.$", "$\\text{\\$}2.$",
+        "$\\text{\\$}2.$"
+      )
+    )
+
+  vec_fmt_currency(
+    vec_num_6, decimals = 0, drop_trailing_dec_mark = FALSE, output = "rtf"
+  ) %>%
+    expect_equal(
+      c(
+        "$0.", "$0.", "$0.", "$0.", "$0.", "$0.", "$1.", "$1.", "$1.",
+        "$1.", "$1.", "$1.", "$1.", "$1.", "$1.", "$2.", "$2.", "$2.",
+        "$2.", "$2.", "$2."
+      )
+    )
+
+  vec_fmt_currency(vec_num_4, use_seps = FALSE, output = "plain") %>%
+    expect_equal(
+      c(
+        "-$2500000.00", "-$2000000.00", "-$1500000.00", "-$1000000.00",
+        "-$500000.00", "$0.00", "$500000.00", "$1000000.00", "$1500000.00",
+        "$2000000.00", "$2500000.00", "NA", "$Inf"
+      )
+    )
+
+  vec_fmt_currency(vec_num_4, use_seps = FALSE, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "$2500000.00"), paste0("\U02212", "$2000000.00"),
+        paste0("\U02212", "$1500000.00"), paste0("\U02212", "$1000000.00"),
+        paste0("\U02212", "$500000.00"), "$0.00", "$500000.00",
+        "$1000000.00", "$1500000.00", "$2000000.00", "$2500000.00", "NA", "$Inf"
+      )
+    )
+
+  vec_fmt_currency(vec_num_4, use_seps = FALSE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-\\text{\\$}2500000.00$", "$-\\text{\\$}2000000.00$", "$-\\text{\\$}1500000.00$",
+        "$-\\text{\\$}1000000.00$", "$-\\text{\\$}500000.00$", "$\\text{\\$}0.00$",
+        "$\\text{\\$}500000.00$", "$\\text{\\$}1000000.00$", "$\\text{\\$}1500000.00$",
+        "$\\text{\\$}2000000.00$", "$\\text{\\$}2500000.00$", "NA", "$\\text{\\$}Inf$"
+      )
+    )
+
+  vec_fmt_currency(vec_num_4, use_seps = FALSE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-$2500000.00", "-$2000000.00", "-$1500000.00", "-$1000000.00",
+        "-$500000.00", "$0.00", "$500000.00", "$1000000.00", "$1500000.00",
+        "$2000000.00", "$2500000.00", "NA", "$Inf"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, accounting = TRUE, output = "plain") %>%
+    expect_equal(
+      c(
+        "($2.50)", "($2.00)", "($1.50)", "($1.00)", "($0.50)", "$0.00",
+        "$0.50", "$1.00", "$1.50", "$2.00", "$2.50", "NA", "$Inf"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, accounting = TRUE, output = "html") %>%
+    expect_equal(
+      c(
+        "($2.50)", "($2.00)", "($1.50)", "($1.00)", "($0.50)", "$0.00",
+        "$0.50", "$1.00", "$1.50", "$2.00", "$2.50", "NA", "$Inf"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, accounting = TRUE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$(\\text{\\$}2.50)$", "$(\\text{\\$}2.00)$", "$(\\text{\\$}1.50)$",
+        "$(\\text{\\$}1.00)$", "$(\\text{\\$}0.50)$", "$\\text{\\$}0.00$",
+        "$\\text{\\$}0.50$", "$\\text{\\$}1.00$", "$\\text{\\$}1.50$",
+        "$\\text{\\$}2.00$", "$\\text{\\$}2.50$", "NA", "$\\text{\\$}Inf$"
+      )
+    )
+
+  vec_fmt_currency(vec_num_4, accounting = TRUE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "($2,500,000.00)", "($2,000,000.00)", "($1,500,000.00)", "($1,000,000.00)",
+        "($500,000.00)", "$0.00", "$500,000.00", "$1,000,000.00", "$1,500,000.00",
+        "$2,000,000.00", "$2,500,000.00", "NA", "$Inf"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, scale_by = 2.5, output = "plain") %>%
+    expect_equal(
+      c(
+        "-$6.25", "-$5.00", "-$3.75", "-$2.50", "-$1.25", "$0.00",
+        "$1.25", "$2.50", "$3.75", "$5.00", "$6.25", "NA", "$Inf"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, scale_by = 2.5, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "$6.25"), paste0("\U02212", "$5.00"),
+        paste0("\U02212", "$3.75"), paste0("\U02212", "$2.50"),
+        paste0("\U02212", "$1.25"), "$0.00", "$1.25", "$2.50",
+        "$3.75", "$5.00", "$6.25", "NA", "$Inf"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, scale_by = 2.5, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-\\text{\\$}6.25$", "$-\\text{\\$}5.00$", "$-\\text{\\$}3.75$",
+        "$-\\text{\\$}2.50$", "$-\\text{\\$}1.25$", "$\\text{\\$}0.00$",
+        "$\\text{\\$}1.25$", "$\\text{\\$}2.50$", "$\\text{\\$}3.75$",
+        "$\\text{\\$}5.00$", "$\\text{\\$}6.25$", "NA", "$\\text{\\$}Inf$"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, scale_by = 2.5, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-$6.25", "-$5.00", "-$3.75", "-$2.50", "-$1.25", "$0.00",
+        "$1.25", "$2.50", "$3.75", "$5.00", "$6.25", "NA", "$Inf"
+      )
+    )
+
+  vec_fmt_currency(vec_num_4, locale = "de", output = "plain") %>%
+    expect_equal(
+      c(
+        "-$2.500.000,00", "-$2.000.000,00", "-$1.500.000,00", "-$1.000.000,00",
+        "-$500.000,00", "$0,00", "$500.000,00", "$1.000.000,00", "$1.500.000,00",
+        "$2.000.000,00", "$2.500.000,00", "NA", "$Inf"
+      )
+    )
+
+  vec_fmt_currency(vec_num_4, locale = "de", output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "$2.500.000,00"), paste0("\U02212", "$2.000.000,00"),
+        paste0("\U02212", "$1.500.000,00"), paste0("\U02212", "$1.000.000,00"),
+        paste0("\U02212", "$500.000,00"), "$0,00", "$500.000,00",
+        "$1.000.000,00", "$1.500.000,00", "$2.000.000,00", "$2.500.000,00",
+        "NA", "$Inf"
+      )
+    )
+
+  vec_fmt_currency(vec_num_4, locale = "de", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-\\text{\\$}2.500.000,00$", "$-\\text{\\$}2.000.000,00$",
+        "$-\\text{\\$}1.500.000,00$", "$-\\text{\\$}1.000.000,00$", "$-\\text{\\$}500.000,00$",
+        "$\\text{\\$}0,00$", "$\\text{\\$}500.000,00$", "$\\text{\\$}1.000.000,00$",
+        "$\\text{\\$}1.500.000,00$", "$\\text{\\$}2.000.000,00$", "$\\text{\\$}2.500.000,00$",
+        "NA", "$\\text{\\$}Inf$"
+      )
+    )
+
+  vec_fmt_currency(vec_num_4, locale = "de", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-$2.500.000,00", "-$2.000.000,00", "-$1.500.000,00", "-$1.000.000,00",
+        "-$500.000,00", "$0,00", "$500.000,00", "$1.000.000,00", "$1.500.000,00",
+        "$2.000.000,00", "$2.500.000,00", "NA", "$Inf"
+      )
+    )
+
+  vec_fmt_currency(vec_num_4, suffixing = TRUE, output = "plain") %>%
+    expect_equal(
+      c(
+        "-$2.50M", "-$2.00M", "-$1.50M", "-$1.00M", "-$500.00K", "$0.00",
+        "$500.00K", "$1.00M", "$1.50M", "$2.00M", "$2.50M", "NA", "$InfT"
+      )
+    )
+
+  vec_fmt_currency(vec_num_4, suffixing = TRUE, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "$2.50M"), paste0("\U02212", "$2.00M"),
+        paste0("\U02212", "$1.50M"), paste0("\U02212", "$1.00M"),
+        paste0("\U02212", "$500.00K"), "$0.00", "$500.00K", "$1.00M",
+        "$1.50M", "$2.00M", "$2.50M", "NA", "$InfT"
+      )
+    )
+
+  vec_fmt_currency(vec_num_4, suffixing = TRUE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-\\text{\\$}2.50M$", "$-\\text{\\$}2.00M$", "$-\\text{\\$}1.50M$",
+        "$-\\text{\\$}1.00M$", "$-\\text{\\$}500.00K$", "$\\text{\\$}0.00$",
+        "$\\text{\\$}500.00K$", "$\\text{\\$}1.00M$", "$\\text{\\$}1.50M$",
+        "$\\text{\\$}2.00M$", "$\\text{\\$}2.50M$", "NA", "$\\text{\\$}InfT$"
+      )
+    )
+
+  vec_fmt_currency(vec_num_4, suffixing = TRUE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-$2.50M", "-$2.00M", "-$1.50M", "-$1.00M", "-$500.00K", "$0.00",
+        "$500.00K", "$1.00M", "$1.50M", "$2.00M", "$2.50M", "NA", "$InfT"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, pattern = "a{x}b", output = "plain") %>%
+    expect_equal(
+      c(
+        "a-$2.50b", "a-$2.00b", "a-$1.50b", "a-$1.00b", "a-$0.50b",
+        "a$0.00b", "a$0.50b", "a$1.00b", "a$1.50b", "a$2.00b", "a$2.50b",
+        "NA", "a$Infb"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, pattern = "a{x}b", output = "html") %>%
+    expect_equal(
+      c(
+        paste0("a\U02212", "$2.50b"), paste0("a\U02212", "$2.00b"),
+        paste0("a\U02212", "$1.50b"), paste0("a\U02212", "$1.00b"),
+        paste0("a\U02212", "$0.50b"), "a$0.00b", "a$0.50b", "a$1.00b",
+        "a$1.50b", "a$2.00b", "a$2.50b", "NA", "a$Infb"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, pattern = "a{x}b", output = "latex") %>%
+    expect_equal(
+      c(
+        "a$-\\text{\\$}2.50$b", "a$-\\text{\\$}2.00$b", "a$-\\text{\\$}1.50$b",
+        "a$-\\text{\\$}1.00$b", "a$-\\text{\\$}0.50$b", "a$\\text{\\$}0.00$b",
+        "a$\\text{\\$}0.50$b", "a$\\text{\\$}1.00$b", "a$\\text{\\$}1.50$b",
+        "a$\\text{\\$}2.00$b", "a$\\text{\\$}2.50$b", "NA", "a$\\text{\\$}Inf$b"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, pattern = "a{x}b", output = "rtf") %>%
+    expect_equal(
+      c(
+        "a-$2.50b", "a-$2.00b", "a-$1.50b", "a-$1.00b", "a-$0.50b",
+        "a$0.00b", "a$0.50b", "a$1.00b", "a$1.50b", "a$2.00b", "a$2.50b",
+        "NA", "a$Infb"
+      )
+    )
+
+  vec_fmt_currency(vec_num_4, sep_mark = " ", dec_mark = ",", output = "plain") %>%
+    expect_equal(
+      c(
+        "-$2 500 000,00", "-$2 000 000,00", "-$1 500 000,00", "-$1 000 000,00",
+        "-$500 000,00", "$0,00", "$500 000,00", "$1 000 000,00", "$1 500 000,00",
+        "$2 000 000,00", "$2 500 000,00", "NA", "$Inf"
+      )
+    )
+
+  vec_fmt_currency(vec_num_4, sep_mark = " ", dec_mark = ",", output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "$2 500 000,00"), paste0("\U02212", "$2 000 000,00"),
+        paste0("\U02212", "$1 500 000,00"), paste0("\U02212", "$1 000 000,00"),
+        paste0("\U02212", "$500 000,00"), "$0,00", "$500 000,00",
+        "$1 000 000,00", "$1 500 000,00", "$2 000 000,00", "$2 500 000,00",
+        "NA", "$Inf"
+      )
+    )
+
+  vec_fmt_currency(vec_num_4, sep_mark = " ", dec_mark = ",", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-\\text{\\$}2 500 000,00$", "$-\\text{\\$}2 000 000,00$",
+        "$-\\text{\\$}1 500 000,00$", "$-\\text{\\$}1 000 000,00$", "$-\\text{\\$}500 000,00$",
+        "$\\text{\\$}0,00$", "$\\text{\\$}500 000,00$", "$\\text{\\$}1 000 000,00$",
+        "$\\text{\\$}1 500 000,00$", "$\\text{\\$}2 000 000,00$", "$\\text{\\$}2 500 000,00$",
+        "NA", "$\\text{\\$}Inf$"
+      )
+    )
+
+  vec_fmt_currency(vec_num_4, sep_mark = " ", dec_mark = ",", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-$2 500 000,00", "-$2 000 000,00", "-$1 500 000,00", "-$1 000 000,00",
+        "-$500 000,00", "$0,00", "$500 000,00", "$1 000 000,00", "$1 500 000,00",
+        "$2 000 000,00", "$2 500 000,00", "NA", "$Inf"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, force_sign = TRUE, output = "plain") %>%
+    expect_equal(
+      c(
+        "-$2.50", "-$2.00", "-$1.50", "-$1.00", "-$0.50", "$0.00",
+        "+$0.50", "+$1.00", "+$1.50", "+$2.00", "+$2.50", "NA", "+$Inf"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, force_sign = TRUE, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "$2.50"), paste0("\U02212", "$2.00"),
+        paste0("\U02212", "$1.50"), paste0("\U02212", "$1.00"),
+        paste0("\U02212", "$0.50"), "$0.00", "+$0.50", "+$1.00",
+        "+$1.50", "+$2.00", "+$2.50", "NA", "+$Inf"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, force_sign = TRUE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-\\text{\\$}2.50$", "$-\\text{\\$}2.00$", "$-\\text{\\$}1.50$",
+        "$-\\text{\\$}1.00$", "$-\\text{\\$}0.50$", "$\\text{\\$}0.00$",
+        "$+\\text{\\$}0.50$", "$+\\text{\\$}1.00$", "$+\\text{\\$}1.50$",
+        "$+\\text{\\$}2.00$", "$+\\text{\\$}2.50$", "NA", "$+\\text{\\$}Inf$"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, force_sign = TRUE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-$2.50", "-$2.00", "-$1.50", "-$1.00", "-$0.50", "$0.00",
+        "+$0.50", "+$1.00", "+$1.50", "+$2.00", "+$2.50", "NA", "+$Inf"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, incl_space = TRUE, output = "plain") %>%
+    expect_equal(
+      c(
+        "-$ 2.50", "-$ 2.00", "-$ 1.50", "-$ 1.00", "-$ 0.50", "$ 0.00",
+        "$ 0.50", "$ 1.00", "$ 1.50", "$ 2.00", "$ 2.50", "NA", "$ Inf"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, incl_space = TRUE, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "$ 2.50"), paste0("\U02212", "$ 2.00"),
+        paste0("\U02212", "$ 1.50"), paste0("\U02212", "$ 1.00"),
+        paste0("\U02212", "$ 0.50"), "$ 0.00", "$ 0.50", "$ 1.00",
+        "$ 1.50", "$ 2.00", "$ 2.50", "NA", "$ Inf"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, incl_space = TRUE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-\\text{\\$} 2.50$", "$-\\text{\\$} 2.00$", "$-\\text{\\$} 1.50$",
+        "$-\\text{\\$} 1.00$", "$-\\text{\\$} 0.50$", "$\\text{\\$} 0.00$",
+        "$\\text{\\$} 0.50$", "$\\text{\\$} 1.00$", "$\\text{\\$} 1.50$",
+        "$\\text{\\$} 2.00$", "$\\text{\\$} 2.50$", "NA", "$\\text{\\$} Inf$"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, incl_space = TRUE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-$ 2.50", "-$ 2.00", "-$ 1.50", "-$ 1.00", "-$ 0.50", "$ 0.00",
+        "$ 0.50", "$ 1.00", "$ 1.50", "$ 2.00", "$ 2.50", "NA", "$ Inf"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, placement = "right", output = "plain") %>%
+    expect_equal(
+      c(
+        "-2.50$", "-2.00$", "-1.50$", "-1.00$", "-0.50$", "0.00$",
+        "0.50$", "1.00$", "1.50$", "2.00$", "2.50$", "NA", "Inf$"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, placement = "right", output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.50$"), paste0("\U02212", "2.00$"),
+        paste0("\U02212", "1.50$"), paste0("\U02212", "1.00$"),
+        paste0("\U02212", "0.50$"), "0.00$", "0.50$", "1.00$",
+        "1.50$", "2.00$", "2.50$", "NA", "Inf$"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, placement = "right", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.50\\text{\\$}$", "$-2.00\\text{\\$}$", "$-1.50\\text{\\$}$",
+        "$-1.00\\text{\\$}$", "$-0.50\\text{\\$}$", "$0.00\\text{\\$}$",
+        "$0.50\\text{\\$}$", "$1.00\\text{\\$}$", "$1.50\\text{\\$}$",
+        "$2.00\\text{\\$}$", "$2.50\\text{\\$}$", "NA", "$Inf\\text{\\$}$"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, placement = "right", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.50$", "-2.00$", "-1.50$", "-1.00$", "-0.50$", "0.00$",
+        "0.50$", "1.00$", "1.50$", "2.00$", "2.50$", "NA", "Inf$"
+      )
+    )
+
+  vec_fmt_currency(
+    vec_num_1, incl_space = TRUE, placement = "right", output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "-2.50 $", "-2.00 $", "-1.50 $", "-1.00 $", "-0.50 $", "0.00 $",
+        "0.50 $", "1.00 $", "1.50 $", "2.00 $", "2.50 $", "NA", "Inf $"
+      )
+    )
+
+  vec_fmt_currency(
+    vec_num_1, incl_space = TRUE, placement = "right", output = "html"
+  ) %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.50 $"), paste0("\U02212", "2.00 $"),
+        paste0("\U02212", "1.50 $"), paste0("\U02212", "1.00 $"),
+        paste0("\U02212", "0.50 $"), "0.00 $", "0.50 $", "1.00 $",
+        "1.50 $", "2.00 $", "2.50 $", "NA", "Inf $"
+      )
+    )
+
+  vec_fmt_currency(
+    vec_num_1, incl_space = TRUE, placement = "right", output = "latex"
+  ) %>%
+    expect_equal(
+      c(
+        "$-2.50 \\text{\\$}$", "$-2.00 \\text{\\$}$", "$-1.50 \\text{\\$}$",
+        "$-1.00 \\text{\\$}$", "$-0.50 \\text{\\$}$", "$0.00 \\text{\\$}$",
+        "$0.50 \\text{\\$}$", "$1.00 \\text{\\$}$", "$1.50 \\text{\\$}$",
+        "$2.00 \\text{\\$}$", "$2.50 \\text{\\$}$", "NA", "$Inf \\text{\\$}$"
+      )
+    )
+
+  vec_fmt_currency(
+    vec_num_1, incl_space = TRUE, placement = "right", output = "rtf"
+  ) %>%
+    expect_equal(
+      c(
+        "-2.50 $", "-2.00 $", "-1.50 $", "-1.00 $", "-0.50 $", "0.00 $",
+        "0.50 $", "1.00 $", "1.50 $", "2.00 $", "2.50 $", "NA", "Inf $"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, currency = "EUR", output = "plain") %>%
+    expect_equal(
+      c(
+        "-EUR2.50", "-EUR2.00", "-EUR1.50", "-EUR1.00", "-EUR0.50",
+        "EUR0.00", "EUR0.50", "EUR1.00", "EUR1.50", "EUR2.00", "EUR2.50",
+        "NA", "EURInf"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, currency = "EUR", output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "&#8364;2.50"), paste0("\U02212", "&#8364;2.00"),
+        paste0("\U02212", "&#8364;1.50"), paste0("\U02212", "&#8364;1.00"),
+        paste0("\U02212", "&#8364;0.50"), "&#8364;0.00", "&#8364;0.50",
+        "&#8364;1.00", "&#8364;1.50", "&#8364;2.00", "&#8364;2.50", "NA",
+        "&#8364;Inf"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, currency = "EUR", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-\\text{EUR}2.50$", "$-\\text{EUR}2.00$", "$-\\text{EUR}1.50$",
+        "$-\\text{EUR}1.00$", "$-\\text{EUR}0.50$", "$\\text{EUR}0.00$",
+        "$\\text{EUR}0.50$", "$\\text{EUR}1.00$", "$\\text{EUR}1.50$",
+        "$\\text{EUR}2.00$", "$\\text{EUR}2.50$", "NA", "$\\text{EUR}Inf$"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, currency = "EUR", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-EUR2.50", "-EUR2.00", "-EUR1.50", "-EUR1.00", "-EUR0.50",
+        "EUR0.00", "EUR0.50", "EUR1.00", "EUR1.50", "EUR2.00", "EUR2.50",
+        "NA", "EURInf"
+      )
+    )
+
+  vec_fmt_currency(vec_num_1, currency = "yen", output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "&#165;2.50"), paste0("\U02212", "&#165;2.00"),
+        paste0("\U02212", "&#165;1.50"), paste0("\U02212", "&#165;1.00"),
+        paste0("\U02212", "&#165;0.50"), "&#165;0.00", "&#165;0.50",
+        "&#165;1.00", "&#165;1.50", "&#165;2.00", "&#165;2.50", "NA",
+        "&#165;Inf"
+      )
+    )
+
+  expect_error(vec_fmt_currency(c(1, 2), currency = "NOTREAL"))
+  expect_error(vec_fmt_currency(letters))
+  expect_error(vec_fmt_currency(TRUE))
+  expect_error(vec_fmt_currency(list(1, 2, 3)))
+  expect_error(vec_fmt_currency(dplyr::tibble(a = c(1, 2, 3))))
+})
+
+test_that("The `vec_fmt_bytes()` function works", {
+
+  vec_fmt_bytes(vec_num_1, standard = "decimal", output = "plain") %>%
+    expect_equal(
+      c(
+        "-2 B", "-2 B", "-1 B", "-1 B", "0 B", "0 B", "0 B", "1 B",
+        "1 B", "2 B", "2 B", "NA", "Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_1, standard = "decimal", output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2 B"), paste0("\U02212", "2 B"),
+        paste0("\U02212", "1 B"), paste0("\U02212", "1 B"), "0 B",
+        "0 B", "0 B", "1 B", "1 B", "2 B", "2 B", "NA", "Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_1, standard = "decimal", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2 B$", "$-2 B$", "$-1 B$", "$-1 B$", "$0 B$", "$0 B$", "$0 B$",
+        "$1 B$", "$1 B$", "$2 B$", "$2 B$", "NA", "$Inf YB$"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_1, standard = "decimal", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2 B", "-2 B", "-1 B", "-1 B", "0 B", "0 B", "0 B", "1 B",
+        "1 B", "2 B", "2 B", "NA", "Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_2, standard = "decimal", output = "plain") %>%
+    expect_equal(
+      c(
+        "-25 B", "-20 B", "-15 B", "-10 B", "-5 B", "0 B", "5 B", "10 B",
+        "15 B", "20 B", "25 B", "NA", "Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_2, standard = "decimal", output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "25 B"), paste0("\U02212", "20 B"),
+        paste0("\U02212", "15 B"), paste0("\U02212", "10 B"),
+        paste0("\U02212", "5 B"), "0 B", "5 B", "10 B", "15 B",
+        "20 B", "25 B", "NA", "Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_2, standard = "decimal", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-25 B$", "$-20 B$", "$-15 B$", "$-10 B$", "$-5 B$", "$0 B$",
+        "$5 B$", "$10 B$", "$15 B$", "$20 B$", "$25 B$", "NA", "$Inf YB$"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_2, standard = "decimal", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-25 B", "-20 B", "-15 B", "-10 B", "-5 B", "0 B", "5 B", "10 B",
+        "15 B", "20 B", "25 B", "NA", "Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_3, standard = "decimal", output = "plain") %>%
+    expect_equal(
+      c(
+        "-250 B", "-200 B", "-150 B", "-100 B", "-50 B", "0 B", "50 B",
+        "100 B", "150 B", "200 B", "250 B", "NA", "Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_3, standard = "decimal", output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "250 B"), paste0("\U02212", "200 B"),
+        paste0("\U02212", "150 B"), paste0("\U02212", "100 B"),
+        paste0("\U02212", "50 B"), "0 B", "50 B", "100 B", "150 B",
+        "200 B", "250 B", "NA", "Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_3, standard = "decimal", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-250 B$", "$-200 B$", "$-150 B$", "$-100 B$", "$-50 B$",
+        "$0 B$", "$50 B$", "$100 B$", "$150 B$", "$200 B$", "$250 B$",
+        "NA", "$Inf YB$"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_3, standard = "decimal", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-250 B", "-200 B", "-150 B", "-100 B", "-50 B", "0 B", "50 B",
+        "100 B", "150 B", "200 B", "250 B", "NA", "Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_4, standard = "decimal", output = "plain") %>%
+    expect_equal(
+      c(
+        "-2.5 MB", "-2 MB", "-1.5 MB", "-1 MB", "-500 kB", "0 B", "500 kB",
+        "1 MB", "1.5 MB", "2 MB", "2.5 MB", "NA", "Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_4, standard = "decimal", output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.5 MB"), paste0("\U02212", "2 MB"),
+        paste0("\U02212", "1.5 MB"), paste0("\U02212", "1 MB"),
+        paste0("\U02212", "500 kB"), "0 B", "500 kB", "1 MB",
+        "1.5 MB", "2 MB", "2.5 MB", "NA", "Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_4, standard = "decimal", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.5 MB$", "$-2 MB$", "$-1.5 MB$", "$-1 MB$", "$-500 kB$",
+        "$0 B$", "$500 kB$", "$1 MB$", "$1.5 MB$", "$2 MB$", "$2.5 MB$",
+        "NA", "$Inf YB$"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_4, standard = "decimal", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.5 MB", "-2 MB", "-1.5 MB", "-1 MB", "-500 kB", "0 B", "500 kB",
+        "1 MB", "1.5 MB", "2 MB", "2.5 MB", "NA", "Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_5, standard = "decimal", output = "plain") %>%
+    expect_equal(
+      c(
+        "-2.5 TB", "-2 TB", "-1.5 TB", "-1 TB", "-500 GB", "0 B", "500 GB",
+        "1 TB", "1.5 TB", "2 TB", "2.5 TB", "NA", "Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_5, standard = "decimal", output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.5 TB"), paste0("\U02212", "2 TB"),
+        paste0("\U02212", "1.5 TB"), paste0("\U02212", "1 TB"),
+        paste0("\U02212", "500 GB"), "0 B", "500 GB", "1 TB",
+        "1.5 TB", "2 TB", "2.5 TB", "NA", "Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_5, standard = "decimal", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.5 TB$", "$-2 TB$", "$-1.5 TB$", "$-1 TB$", "$-500 GB$",
+        "$0 B$", "$500 GB$", "$1 TB$", "$1.5 TB$", "$2 TB$", "$2.5 TB$",
+        "NA", "$Inf YB$"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_5, standard = "decimal", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.5 TB", "-2 TB", "-1.5 TB", "-1 TB", "-500 GB", "0 B", "500 GB",
+        "1 TB", "1.5 TB", "2 TB", "2.5 TB", "NA", "Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_6, standard = "decimal", output = "plain") %>%
+    expect_equal(
+      c(
+        "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B",
+        "0 B", "1 B", "1 B", "1 B", "1 B", "1 B", "1 B", "1 B", "1 B",
+        "1 B", "1 B", "2 B"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_6, standard = "decimal", output = "html") %>%
+    expect_equal(
+      c(
+        "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B",
+        "0 B", "1 B", "1 B", "1 B", "1 B", "1 B", "1 B", "1 B", "1 B",
+        "1 B", "1 B", "2 B"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_6, standard = "decimal", output = "latex") %>%
+    expect_equal(
+      c(
+        "$0 B$", "$0 B$", "$0 B$", "$0 B$", "$0 B$", "$0 B$", "$0 B$",
+        "$0 B$", "$0 B$", "$0 B$", "$1 B$", "$1 B$", "$1 B$", "$1 B$",
+        "$1 B$", "$1 B$", "$1 B$", "$1 B$", "$1 B$", "$1 B$", "$2 B$"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_6, standard = "decimal", output = "rtf") %>%
+    expect_equal(
+      c(
+        "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B",
+        "0 B", "1 B", "1 B", "1 B", "1 B", "1 B", "1 B", "1 B", "1 B",
+        "1 B", "1 B", "2 B"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_1, standard = "binary", output = "plain") %>%
+    expect_equal(
+      c(
+        "-2 B", "-2 B", "-1 B", "-1 B", "0 B", "0 B", "0 B", "1 B",
+        "1 B", "2 B", "2 B", "NA", "Inf YiB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_1, standard = "binary", output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2 B"), paste0("\U02212", "2 B"),
+        paste0("\U02212", "1 B"), paste0("\U02212", "1 B"),
+        "0 B", "0 B", "0 B", "1 B", "1 B", "2 B", "2 B", "NA", "Inf YiB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_1, standard = "binary", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2 B$", "$-2 B$", "$-1 B$", "$-1 B$", "$0 B$", "$0 B$", "$0 B$",
+        "$1 B$", "$1 B$", "$2 B$", "$2 B$", "NA", "$Inf YiB$"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_1, standard = "binary", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2 B", "-2 B", "-1 B", "-1 B", "0 B", "0 B", "0 B", "1 B",
+        "1 B", "2 B", "2 B", "NA", "Inf YiB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_2, standard = "binary", output = "plain") %>%
+    expect_equal(
+      c(
+        "-25 B", "-20 B", "-15 B", "-10 B", "-5 B", "0 B", "5 B", "10 B",
+        "15 B", "20 B", "25 B", "NA", "Inf YiB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_2, standard = "binary", output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "25 B"), paste0("\U02212", "20 B"),
+        paste0("\U02212", "15 B"), paste0("\U02212", "10 B"),
+        paste0("\U02212", "5 B"), "0 B", "5 B", "10 B", "15 B",
+        "20 B", "25 B", "NA", "Inf YiB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_2, standard = "binary", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-25 B$", "$-20 B$", "$-15 B$", "$-10 B$", "$-5 B$", "$0 B$",
+        "$5 B$", "$10 B$", "$15 B$", "$20 B$", "$25 B$", "NA", "$Inf YiB$"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_2, standard = "binary", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-25 B", "-20 B", "-15 B", "-10 B", "-5 B", "0 B", "5 B", "10 B",
+        "15 B", "20 B", "25 B", "NA", "Inf YiB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_3, standard = "binary", output = "plain") %>%
+    expect_equal(
+      c(
+        "-250 B", "-200 B", "-150 B", "-100 B", "-50 B", "0 B", "50 B",
+        "100 B", "150 B", "200 B", "250 B", "NA", "Inf YiB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_3, standard = "binary", output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "250 B"), paste0("\U02212", "200 B"),
+        paste0("\U02212", "150 B"), paste0("\U02212", "100 B"),
+        paste0("\U02212", "50 B"), "0 B", "50 B", "100 B", "150 B",
+        "200 B", "250 B", "NA", "Inf YiB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_3, standard = "binary", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-250 B$", "$-200 B$", "$-150 B$", "$-100 B$", "$-50 B$",
+        "$0 B$", "$50 B$", "$100 B$", "$150 B$", "$200 B$", "$250 B$",
+        "NA", "$Inf YiB$"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_3, standard = "binary", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-250 B", "-200 B", "-150 B", "-100 B", "-50 B", "0 B", "50 B",
+        "100 B", "150 B", "200 B", "250 B", "NA", "Inf YiB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_4, standard = "binary", output = "plain") %>%
+    expect_equal(
+      c(
+        "-2.4 MiB", "-1.9 MiB", "-1.4 MiB", "-976.6 KiB", "-488.3 KiB",
+        "0 B", "488.3 KiB", "976.6 KiB", "1.4 MiB", "1.9 MiB", "2.4 MiB",
+        "NA", "Inf YiB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_4, standard = "binary", output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.4 MiB"), paste0("\U02212", "1.9 MiB"),
+        paste0("\U02212", "1.4 MiB"), paste0("\U02212", "976.6 KiB"),
+        paste0("\U02212", "488.3 KiB"), "0 B", "488.3 KiB", "976.6 KiB",
+        "1.4 MiB", "1.9 MiB", "2.4 MiB", "NA", "Inf YiB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_4, standard = "binary", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.4 MiB$", "$-1.9 MiB$", "$-1.4 MiB$", "$-976.6 KiB$", "$-488.3 KiB$",
+        "$0 B$", "$488.3 KiB$", "$976.6 KiB$", "$1.4 MiB$", "$1.9 MiB$",
+        "$2.4 MiB$", "NA", "$Inf YiB$"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_4, standard = "binary", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.4 MiB", "-1.9 MiB", "-1.4 MiB", "-976.6 KiB", "-488.3 KiB",
+        "0 B", "488.3 KiB", "976.6 KiB", "1.4 MiB", "1.9 MiB", "2.4 MiB",
+        "NA", "Inf YiB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_5, standard = "binary", output = "plain") %>%
+    expect_equal(
+      c(
+        "-2.3 TiB", "-1.8 TiB", "-1.4 TiB", "-931.3 GiB", "-465.7 GiB",
+        "0 B", "465.7 GiB", "931.3 GiB", "1.4 TiB", "1.8 TiB", "2.3 TiB",
+        "NA", "Inf YiB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_5, standard = "binary", output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.3 TiB"), paste0("\U02212", "1.8 TiB"),
+        paste0("\U02212", "1.4 TiB"), paste0("\U02212", "931.3 GiB"),
+        paste0("\U02212", "465.7 GiB"), "0 B", "465.7 GiB", "931.3 GiB",
+        "1.4 TiB", "1.8 TiB", "2.3 TiB", "NA", "Inf YiB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_5, standard = "binary", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.3 TiB$", "$-1.8 TiB$", "$-1.4 TiB$", "$-931.3 GiB$", "$-465.7 GiB$",
+        "$0 B$", "$465.7 GiB$", "$931.3 GiB$", "$1.4 TiB$", "$1.8 TiB$",
+        "$2.3 TiB$", "NA", "$Inf YiB$"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_5, standard = "binary", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.3 TiB", "-1.8 TiB", "-1.4 TiB", "-931.3 GiB", "-465.7 GiB",
+        "0 B", "465.7 GiB", "931.3 GiB", "1.4 TiB", "1.8 TiB", "2.3 TiB",
+        "NA", "Inf YiB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_6, standard = "binary", output = "plain") %>%
+    expect_equal(
+      c(
+        "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B",
+        "0 B", "1 B", "1 B", "1 B", "1 B", "1 B", "1 B", "1 B", "1 B",
+        "1 B", "1 B", "2 B"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_6, standard = "binary", output = "html") %>%
+    expect_equal(
+      c(
+        "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B",
+        "0 B", "1 B", "1 B", "1 B", "1 B", "1 B", "1 B", "1 B", "1 B",
+        "1 B", "1 B", "2 B"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_6, standard = "binary", output = "latex") %>%
+    expect_equal(
+      c(
+        "$0 B$", "$0 B$", "$0 B$", "$0 B$", "$0 B$", "$0 B$", "$0 B$",
+        "$0 B$", "$0 B$", "$0 B$", "$1 B$", "$1 B$", "$1 B$", "$1 B$",
+        "$1 B$", "$1 B$", "$1 B$", "$1 B$", "$1 B$", "$1 B$", "$2 B$"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_6, standard = "binary", output = "rtf") %>%
+    expect_equal(
+      c(
+        "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B",
+        "0 B", "1 B", "1 B", "1 B", "1 B", "1 B", "1 B", "1 B", "1 B",
+        "1 B", "1 B", "2 B"
+      )
+    )
+
+  vec_fmt_bytes(
+    vec_num_5, decimals = 4, drop_trailing_zeros = TRUE, output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "-2.5 TB", "-2 TB", "-1.5 TB", "-1 TB", "-500 GB", "0 B", "500 GB",
+        "1 TB", "1.5 TB", "2 TB", "2.5 TB", "NA", "  Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(
+    vec_num_5, decimals = 4, drop_trailing_zeros = TRUE, output = "html"
+  ) %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.5 TB"), paste0("\U02212", "2 TB"),
+        paste0("\U02212", "1.5 TB"), paste0("\U02212", "1 TB"),
+        paste0("\U02212", "500 GB"), "0 B", "500 GB", "1 TB",
+        "1.5 TB", "2 TB", "2.5 TB", "NA", "  Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(
+    vec_num_5, decimals = 4, drop_trailing_zeros = TRUE, output = "latex"
+  ) %>%
+    expect_equal(
+      c(
+        "$-2.5 TB$", "$-2 TB$", "$-1.5 TB$", "$-1 TB$", "$-500 GB$",
+        "$0 B$", "$500 GB$", "$1 TB$", "$1.5 TB$", "$2 TB$", "$2.5 TB$",
+        "NA", "$  Inf YB$"
+      )
+    )
+
+  vec_fmt_bytes(
+    vec_num_5, decimals = 4, drop_trailing_zeros = TRUE, output = "rtf"
+  ) %>%
+    expect_equal(
+      c(
+        "-2.5 TB", "-2 TB", "-1.5 TB", "-1 TB", "-500 GB", "0 B", "500 GB",
+        "1 TB", "1.5 TB", "2 TB", "2.5 TB", "NA", "  Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(
+    vec_num_5, decimals = 4, drop_trailing_zeros = FALSE, output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "-2.5000 TB", "-2.0000 TB", "-1.5000 TB", "-1.0000 TB", "-500.0000 GB",
+        "0.0000 B", "500.0000 GB", "1.0000 TB", "1.5000 TB", "2.0000 TB",
+        "2.5000 TB", "NA", "  Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(
+    vec_num_5, decimals = 4, drop_trailing_zeros = FALSE, output = "html"
+  ) %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.5000 TB"), paste0("\U02212", "2.0000 TB"),
+        paste0("\U02212", "1.5000 TB"), paste0("\U02212", "1.0000 TB"),
+        paste0("\U02212", "500.0000 GB"), "0.0000 B", "500.0000 GB",
+        "1.0000 TB", "1.5000 TB", "2.0000 TB", "2.5000 TB", "NA", "  Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(
+    vec_num_5, decimals = 4, drop_trailing_zeros = FALSE, output = "latex"
+  ) %>%
+    expect_equal(
+      c(
+        "$-2.5000 TB$", "$-2.0000 TB$", "$-1.5000 TB$", "$-1.0000 TB$",
+        "$-500.0000 GB$", "$0.0000 B$", "$500.0000 GB$", "$1.0000 TB$",
+        "$1.5000 TB$", "$2.0000 TB$", "$2.5000 TB$", "NA", "$  Inf YB$"
+      )
+    )
+
+  vec_fmt_bytes(
+    vec_num_5, decimals = 4, drop_trailing_zeros = FALSE, output = "rtf"
+  ) %>%
+    expect_equal(
+      c(
+        "-2.5000 TB", "-2.0000 TB", "-1.5000 TB", "-1.0000 TB", "-500.0000 GB",
+        "0.0000 B", "500.0000 GB", "1.0000 TB", "1.5000 TB", "2.0000 TB",
+        "2.5000 TB", "NA", "  Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(
+    vec_num_5, decimals = 0, drop_trailing_dec_mark = FALSE, output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "-2. TB", "-2. TB", "-2. TB", "-1. TB", "-500. GB", "0. B",
+        "500. GB", "1. TB", "2. TB", "2. TB", "2. TB", "NA", "Inf. YB"
+      )
+    )
+
+  vec_fmt_bytes(
+    vec_num_5, decimals = 0, drop_trailing_dec_mark = FALSE, output = "html"
+  ) %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2. TB"), paste0("\U02212", "2. TB"),
+        paste0("\U02212", "2. TB"), paste0("\U02212", "1. TB"),
+        paste0("\U02212", "500. GB"), "0. B", "500. GB", "1. TB", "2. TB",
+        "2. TB", "2. TB", "NA", "Inf. YB"
+      )
+    )
+
+  vec_fmt_bytes(
+    vec_num_5, decimals = 0, drop_trailing_dec_mark = FALSE, output = "latex"
+  ) %>%
+    expect_equal(
+      c(
+        "$-2. TB$", "$-2. TB$", "$-2. TB$", "$-1. TB$", "$-500. GB$",
+        "$0. B$", "$500. GB$", "$1. TB$", "$2. TB$", "$2. TB$", "$2. TB$",
+        "NA", "$Inf. YB$"
+      )
+    )
+
+  vec_fmt_bytes(
+    vec_num_5, decimals = 0, drop_trailing_dec_mark = FALSE, output = "rtf"
+  ) %>%
+    expect_equal(
+      c(
+        "-2. TB", "-2. TB", "-2. TB", "-1. TB", "-500. GB", "0. B",
+        "500. GB", "1. TB", "2. TB", "2. TB", "2. TB", "NA", "Inf. YB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_1, n_sigfig = 3, output = "plain") %>%
+    expect_equal(
+      c(
+        "-2.00 B", "-2.00 B", "-1.00 B", "-1.00 B", "0 B", "0 B", "0 B",
+        "1.00 B", "1.00 B", "2.00 B", "2.00 B", "NA", " Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_4, n_sigfig = 3, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.50 MB"), paste0("\U02212", "2.00 MB"),
+        paste0("\U02212", "1.50 MB"), paste0("\U02212", "1.00 MB"),
+        paste0("\U02212", "500 kB"), "0 B", "500 kB", "1.00 MB",
+        "1.50 MB", "2.00 MB", "2.50 MB", "NA", " Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_1, n_sigfig = 3, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.00 B$", "$-2.00 B$", "$-1.00 B$", "$-1.00 B$", "$0 B$",
+        "$0 B$", "$0 B$", "$1.00 B$", "$1.00 B$", "$2.00 B$", "$2.00 B$",
+        "NA", "$ Inf YB$"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_1, n_sigfig = 3, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.00 B", "-2.00 B", "-1.00 B", "-1.00 B", "0 B", "0 B", "0 B",
+        "1.00 B", "1.00 B", "2.00 B", "2.00 B", "NA", " Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(
+    c(1e6, 1e9, 1e12, 1e15, 1e18, 1e21, 1e24, 1e27),
+    use_seps = FALSE, output = "plain"
+  ) %>%
+    expect_equal(c("1 MB", "1 GB", "1 TB", "1 PB", "1 EB", "1 ZB", "1 YB", "1000 YB"))
+
+  vec_fmt_bytes(
+    c(1e6, 1e9, 1e12, 1e15, 1e18, 1e21, 1e24, 1e27),
+    use_seps = FALSE, output = "html"
+  ) %>%
+    expect_equal(c("1 MB", "1 GB", "1 TB", "1 PB", "1 EB", "1 ZB", "1 YB", "1000 YB"))
+
+  vec_fmt_bytes(
+    c(1e6, 1e9, 1e12, 1e15, 1e18, 1e21, 1e24, 1e27),
+    use_seps = FALSE, output = "latex"
+  ) %>%
+    expect_equal(c("$1 MB$", "$1 GB$", "$1 TB$", "$1 PB$", "$1 EB$", "$1 ZB$", "$1 YB$", "$1000 YB$"))
+
+  vec_fmt_bytes(
+    c(1e6, 1e9, 1e12, 1e15, 1e18, 1e21, 1e24, 1e27),
+    use_seps = FALSE, output = "rtf"
+  ) %>%
+    expect_equal(c("1 MB", "1 GB", "1 TB", "1 PB", "1 EB", "1 ZB", "1 YB", "1000 YB"))
+
+  vec_fmt_bytes(vec_num_1, pattern = "a{x}b", output = "plain") %>%
+    expect_equal(
+      c(
+        "a-2 Bb", "a-2 Bb", "a-1 Bb", "a-1 Bb", "a0 Bb", "a0 Bb", "a0 Bb",
+        "a1 Bb", "a1 Bb", "a2 Bb", "a2 Bb", "NA", "aInf YBb"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_1, pattern = "a{x}b", output = "html") %>%
+    expect_equal(
+      c(
+        paste0("a\U02212", "2 Bb"), paste0("a\U02212", "2 Bb"),
+        paste0("a\U02212", "1 Bb"), paste0("a\U02212", "1 Bb"),
+        "a0 Bb", "a0 Bb", "a0 Bb", "a1 Bb", "a1 Bb", "a2 Bb", "a2 Bb",
+        "NA", "aInf YBb"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_1, pattern = "a{x}b", output = "latex") %>%
+    expect_equal(
+      c(
+        "a$-2 B$b", "a$-2 B$b", "a$-1 B$b", "a$-1 B$b", "a$0 B$b",
+        "a$0 B$b", "a$0 B$b", "a$1 B$b", "a$1 B$b", "a$2 B$b", "a$2 B$b",
+        "NA", "a$Inf YB$b"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_1, pattern = "a{x}b", output = "rtf") %>%
+    expect_equal(
+      c(
+        "a-2 Bb", "a-2 Bb", "a-1 Bb", "a-1 Bb", "a0 Bb", "a0 Bb", "a0 Bb",
+        "a1 Bb", "a1 Bb", "a2 Bb", "a2 Bb", "NA", "aInf YBb"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_5, locale = "de", output = "plain") %>%
+    expect_equal(
+      c(
+        "-2,5 TB", "-2 TB", "-1,5 TB", "-1 TB", "-500 GB", "0 B", "500 GB",
+        "1 TB", "1,5 TB", "2 TB", "2,5 TB", "NA", "Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_5, locale = "de", output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2,5 TB"), paste0("\U02212", "2 TB"),
+        paste0("\U02212", "1,5 TB"), paste0("\U02212", "1 TB"),
+        paste0("\U02212", "500 GB"), "0 B", "500 GB", "1 TB",
+        "1,5 TB", "2 TB", "2,5 TB", "NA", "Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_5, locale = "de", output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2,5 TB$", "$-2 TB$", "$-1,5 TB$", "$-1 TB$", "$-500 GB$",
+        "$0 B$", "$500 GB$", "$1 TB$", "$1,5 TB$", "$2 TB$", "$2,5 TB$",
+        "NA", "$Inf YB$"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_5, locale = "de", output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2,5 TB", "-2 TB", "-1,5 TB", "-1 TB", "-500 GB", "0 B", "500 GB",
+        "1 TB", "1,5 TB", "2 TB", "2,5 TB", "NA", "Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(
+    vec_num_5 * 1e15, decimals = 1, drop_trailing_zeros = FALSE,
+    sep_mark = " ", dec_mark = ",", output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "-2 500,0 YB", "-2 000,0 YB", "-1 500,0 YB", "-1 000,0 YB",
+        "-500,0 YB", "0,0 B", "500,0 YB", "1 000,0 YB", "1 500,0 YB",
+        "2 000,0 YB", "2 500,0 YB", "NA", "Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(
+    vec_num_5 * 1e15, decimals = 1, drop_trailing_zeros = FALSE,
+    sep_mark = " ", dec_mark = ",", output = "html"
+  ) %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2 500,0 YB"), paste0("\U02212", "2 000,0 YB"),
+        paste0("\U02212", "1 500,0 YB"), paste0("\U02212", "1 000,0 YB"),
+        paste0("\U02212", "500,0 YB"), "0,0 B", "500,0 YB", "1 000,0 YB",
+        "1 500,0 YB", "2 000,0 YB", "2 500,0 YB", "NA", "Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(
+    vec_num_5 * 1e15, decimals = 1, drop_trailing_zeros = FALSE,
+    sep_mark = " ", dec_mark = ",", output = "latex"
+  ) %>%
+    expect_equal(
+      c(
+        "$-2 500,0 YB$", "$-2 000,0 YB$", "$-1 500,0 YB$", "$-1 000,0 YB$",
+        "$-500,0 YB$", "$0,0 B$", "$500,0 YB$", "$1 000,0 YB$", "$1 500,0 YB$",
+        "$2 000,0 YB$", "$2 500,0 YB$", "NA", "$Inf YB$"
+      )
+    )
+
+  vec_fmt_bytes(
+    vec_num_5 * 1e15, decimals = 1, drop_trailing_zeros = FALSE,
+    sep_mark = " ", dec_mark = ",", output = "rtf"
+  ) %>%
+    expect_equal(
+      c(
+        "-2 500,0 YB", "-2 000,0 YB", "-1 500,0 YB", "-1 000,0 YB",
+        "-500,0 YB", "0,0 B", "500,0 YB", "1 000,0 YB", "1 500,0 YB",
+        "2 000,0 YB", "2 500,0 YB", "NA", "Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_1, force_sign = TRUE, output = "plain") %>%
+    expect_equal(
+      c(
+        "-2 B", "-2 B", "-1 B", "-1 B", "0 B", "0 B", "0 B", "+1 B",
+        "+1 B", "+2 B", "+2 B", "NA", "+Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_1, force_sign = TRUE, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2 B"), paste0("\U02212", "2 B"),
+        paste0("\U02212", "1 B"), paste0("\U02212", "1 B"), "0 B",
+        "0 B", "0 B", "+1 B", "+1 B", "+2 B", "+2 B", "NA", "+Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_1, force_sign = TRUE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2 B$", "$-2 B$", "$-1 B$", "$-1 B$", "$0 B$", "$0 B$", "$0 B$",
+        "$+1 B$", "$+1 B$", "$+2 B$", "$+2 B$", "NA", "$+Inf YB$"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_1, force_sign = TRUE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2 B", "-2 B", "-1 B", "-1 B", "0 B", "0 B", "0 B", "+1 B",
+        "+1 B", "+2 B", "+2 B", "NA", "+Inf YB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_1, incl_space = FALSE, output = "plain") %>%
+    expect_equal(
+      c(
+        "-2B", "-2B", "-1B", "-1B", "0B", "0B", "0B", "1B", "1B", "2B",
+        "2B", "NA", "InfYB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_1, incl_space = FALSE, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2B"), paste0("\U02212", "2B"),
+        paste0("\U02212", "1B"), paste0("\U02212", "1B"),
+        "0B", "0B", "0B", "1B", "1B", "2B", "2B", "NA", "InfYB"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_1, incl_space = FALSE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2B$", "$-2B$", "$-1B$", "$-1B$", "$0B$", "$0B$", "$0B$",
+        "$1B$", "$1B$", "$2B$", "$2B$", "NA", "$InfYB$"
+      )
+    )
+
+  vec_fmt_bytes(vec_num_1, incl_space = FALSE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2B", "-2B", "-1B", "-1B", "0B", "0B", "0B", "1B", "1B", "2B",
+        "2B", "NA", "InfYB"
+      )
+    )
+
+  expect_error(vec_fmt_bytes(c(1, 2), standard = "NONE"))
+  expect_error(vec_fmt_bytes(letters))
+  expect_error(vec_fmt_bytes(TRUE))
+  expect_error(vec_fmt_bytes(list(1, 2, 3)))
+  expect_error(vec_fmt_bytes(dplyr::tibble(a = c(1, 2, 3))))
+})
+
+test_that("The `vec_fmt_date()` function works", {
+
+  vec_fmt_date(dates, date_style = 2, output = "html") %>%
+    expect_equal(
+      c(
+        "Sunday, January 5, 2020", "Saturday, February 6, 2021",
+        "Monday, March 7, 2022", "Saturday, April 8, 2023",
+        "Thursday, May 9, 2024"
+      )
+    )
+  expect_equal(
+    vec_fmt_date(dates, date_style = 2, output = "html"),
+    vec_fmt_date(dates, date_style = 2, output = "latex")
+  )
+  expect_equal(
+    vec_fmt_date(dates, date_style = 2, output = "html"),
+    vec_fmt_date(dates, date_style = 2, output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_date(dates, date_style = 2, output = "html"),
+    vec_fmt_date(dates, date_style = 2, output = "plain")
+  )
+
+  expect_equal(
+    vec_fmt_date(dates, date_style = 1, output = "html"),
+    as.character(dates)
+  )
+  expect_equal(
+    vec_fmt_date(dates, date_style = 1, output = "html"),
+    vec_fmt_date(dates, date_style = 1, output = "latex")
+  )
+  expect_equal(
+    vec_fmt_date(dates, date_style = 1, output = "html"),
+    vec_fmt_date(dates, date_style = 1, output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_date(dates, date_style = 1, output = "html"),
+    vec_fmt_date(dates, date_style = 1, output = "plain")
+  )
+
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 1, output = "html"),
+    as.character(dates)
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 1, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 1, output = "latex")
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 1, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 1, output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 1, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 1, output = "plain")
+  )
+
+  vec_fmt_date(dates, date_style = 3, output = "html") %>%
+    expect_equal(
+      c(
+        "Sun, Jan 5, 2020", "Sat, Feb 6, 2021", "Mon, Mar 7, 2022",
+        "Sat, Apr 8, 2023", "Thu, May 9, 2024"
+      )
+    )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 3, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 3, output = "latex")
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 3, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 3, output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 3, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 3, output = "plain")
+  )
+
+  vec_fmt_date(dates, date_style = 4, output = "html") %>%
+    expect_equal(
+      c(
+        "Sunday 5 January 2020", "Saturday 6 February 2021",
+        "Monday 7 March 2022", "Saturday 8 April 2023", "Thursday 9 May 2024"
+      )
+    )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 4, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 4, output = "latex")
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 4, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 4, output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 4, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 4, output = "plain")
+  )
+
+  vec_fmt_date(dates, date_style = 5, output = "html") %>%
+    expect_equal(
+      c(
+        "January 5, 2020", "February 6, 2021", "March 7, 2022",
+        "April 8, 2023", "May 9, 2024"
+      )
+    )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 5, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 5, output = "latex")
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 5, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 5, output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 5, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 5, output = "plain")
+  )
+
+  vec_fmt_date(dates, date_style = 6, output = "html") %>%
+    expect_equal(
+      c(
+        "Jan 5, 2020", "Feb 6, 2021", "Mar 7, 2022",
+        "Apr 8, 2023", "May 9, 2024"
+      )
+    )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 6, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 6, output = "latex")
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 6, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 6, output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 6, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 6, output = "plain")
+  )
+
+  vec_fmt_date(dates, date_style = 7, output = "html") %>%
+    expect_equal(
+      c(
+        "5 Jan 2020", "6 Feb 2021", "7 Mar 2022", "8 Apr 2023", "9 May 2024"
+      )
+    )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 7, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 7, output = "latex")
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 7, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 7, output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 7, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 7, output = "plain")
+  )
+
+  vec_fmt_date(dates, date_style = 8, output = "html") %>%
+    expect_equal(
+      c(
+        "5 January 2020", "6 February 2021", "7 March 2022",
+        "8 April 2023", "9 May 2024"
+      )
+    )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 8, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 8, output = "latex")
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 8, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 8, output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 8, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 8, output = "plain")
+  )
+
+  vec_fmt_date(dates, date_style = 9, output = "html") %>%
+    expect_equal(
+      c("5 January", "6 February", "7 March", "8 April", "9 May")
+    )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 9, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 9, output = "latex")
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 9, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 9, output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 9, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 9, output = "plain")
+  )
+
+  vec_fmt_date(dates, date_style = 10, output = "html") %>%
+    expect_equal(c("2020", "2021", "2022", "2023", "2024"))
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 10, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 10, output = "latex")
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 10, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 10, output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 10, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 10, output = "plain")
+  )
+
+  vec_fmt_date(dates, date_style = 11, output = "html") %>%
+    expect_equal(c("January", "February", "March", "April", "May"))
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 11, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 11, output = "latex")
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 11, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 11, output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 11, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 11, output = "plain")
+  )
+
+  vec_fmt_date(dates, date_style = 12, output = "html") %>%
+    expect_equal(c("05", "06", "07", "08", "09"))
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 12, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 12, output = "latex")
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 12, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 12, output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 12, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 12, output = "plain")
+  )
+
+  vec_fmt_date(dates, date_style = 13, output = "html") %>%
+    expect_equal(
+      c(
+        "2020/01/05", "2021/02/06", "2022/03/07", "2023/04/08", "2024/05/09"
+      )
+    )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 13, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 13, output = "latex")
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 13, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 13, output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 13, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 13, output = "plain")
+  )
+
+  vec_fmt_date(dates, date_style = 14, output = "html") %>%
+    expect_equal(
+      c(
+        "20/01/05", "21/02/06", "22/03/07", "23/04/08", "24/05/09"
+      )
+    )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 14, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 14, output = "latex")
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 14, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 14, output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 14, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 14, output = "plain")
+  )
+
+  vec_fmt_date(dates, date_style = 2, pattern = "d{x}d", output = "html") %>%
+    expect_equal(
+      c(
+        "dSunday, January 5, 2020d", "dSaturday, February 6, 2021d",
+        "dMonday, March 7, 2022d", "dSaturday, April 8, 2023d",
+        "dThursday, May 9, 2024d"
+      )
+    )
+})

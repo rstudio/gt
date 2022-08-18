@@ -12,7 +12,7 @@ gt:::markdown_to_rtf(markdown_text) %>% cat()
 md_tbl <-
   dplyr::tibble(markdown = markdown_text) %>%
   gt() %>%
-  fmt_markdown(vars(markdown)) %>%
+  fmt_markdown(markdown) %>%
   tab_options(
     table.width = pct(100)
   )
@@ -26,7 +26,7 @@ readr::read_file(out_path) %>% cat()
 unicode_tbl <-
   dplyr::tibble(a = "a\u2014b", b = "**bold** \u2014") %>%
   gt() %>%
-  fmt_markdown(columns = vars(b)) %>%
+  fmt_markdown(columns = b) %>%
   tab_header(title = "title a\u2014b", subtitle = "subtitle a\u2014b") %>%
   tab_source_note("source note a\u2014b") %>%
   tab_footnote("footnote a\u2014b", locations = cells_body(1, 1))
@@ -35,11 +35,11 @@ unicode_tbl %>% gtsave("tests/gt-examples/rtf_output/unicode.rtf")
 
 # Create a display table based on `iris`
 iris_tbl <-
-  gt(data = iris) %>%
+  gt(iris) %>%
   tab_spanner_delim(delim = ".") %>%
-  cols_move_to_start(columns = vars(Species)) %>%
+  cols_move_to_start(columns = Species) %>%
   fmt_number(
-    columns = vars(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width),
+    columns = c(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width),
     decimals = 1
   ) %>%
   tab_header(
@@ -58,33 +58,33 @@ exibble_tbl <-
   exibble %>%
   dplyr::mutate(char = paste(">", char)) %>%
   gt() %>%
-  fmt_markdown(vars(char))
+  fmt_markdown(char)
 
 exibble_tbl %>%  gtsave("tests/gt-examples/rtf_output/exibble.rtf")
 
 passthrough_tbl <-
   exibble %>%
   gt() %>%
-  fmt_passthrough(columns = vars(char), pattern = "1 {x} 2")
+  fmt_passthrough(columns = char, pattern = "1 {x} 2")
 
 passthrough_tbl %>%  gtsave("tests/gt-examples/rtf_output/passthrough.rtf")
 
 # Create a display table based on `morley`
 morley_tbl <-
-  gt(data = morley) %>%
+  gt(morley) %>%
   fmt_number(
-    columns = vars(Speed),
+    columns = Speed,
     decimals = 0,
     sep_mark = ",") %>%
-  cols_align(align = "left", columns = vars(Run, Speed))
+  cols_align(align = "left", columns = c(Run, Speed))
 
 morley_tbl %>% gtsave("tests/gt-examples/rtf_output/morley.rtf")
 
 # Create a display table based on `pressure`
 pressure_tbl <-
-  gt(data = pressure) %>%
+  gt(pressure) %>%
   fmt_scientific(
-    columns = vars(pressure),
+    columns = pressure,
     decimals = 2
   )
 
@@ -92,8 +92,8 @@ pressure_tbl %>% gtsave("tests/gt-examples/rtf_output/pressure.rtf")
 
 # Create a display table based on `sleep`
 sleep_tbl <-
-  gt(data = sleep) %>%
-  fmt_scientific(columns = vars(extra)) %>%
+  gt(sleep) %>%
+  fmt_scientific(columns = extra) %>%
   tab_footnote(
     footnote = "This is a footnote",
     locations = cells_body(columns = 1, rows = c(2, 3, 4))
@@ -103,20 +103,20 @@ sleep_tbl %>% gtsave("tests/gt-examples/rtf_output/sleep.rtf")
 
 # Create a display table based on `airquality`
 airquality_tbl <-
-  gt(data = airquality) %>%
-  cols_move_to_start(columns = vars(Month, Day)) %>%
+  gt(airquality) %>%
+  cols_move_to_start(columns = c(Month, Day)) %>%
   cols_label(Solar.R = md("Solar  \nRadiation")) %>%
   fmt_number(
-    columns = vars(Wind),
+    columns = Wind,
     decimals = 2
   ) %>%
   cols_label(Month = md("**Month**")) %>%
   tab_spanner(
     label = "Measurement Period",
-    columns = vars(Month, Day)
+    columns = c(Month, Day)
   ) %>%
-  fmt_missing(columns = vars(Solar.R, Wind, Temp)) %>%
-  fmt_missing(columns = vars(Ozone), missing_text = I("---"))
+  sub_missing(columns = c(Solar.R, Wind, Temp)) %>%
+  sub_missing(columns = Ozone, missing_text = I("---"))
 
 airquality_tbl %>% gtsave("tests/gt-examples/rtf_output/airquality.rtf")
 
@@ -127,17 +127,17 @@ sp500_tbl <-
   ) %>%
   gt() %>%
   fmt_date(
-    columns = vars(Date),
+    columns = Date,
     date_style = 6
   ) %>%
   fmt_currency(
-    columns = vars(High, Open, Low, Close),
+    columns = c(High, Open, Low, Close),
     currency = "USD",
     scale_by = 1/1000,
     pattern = "{x}K"
   ) %>%
   fmt_number(
-    columns = vars(Volume),
+    columns = Volume,
     decimals = 3,
     scale_by = 1E-9,
     pattern = "{x}B"
@@ -167,7 +167,7 @@ summary_tbl <-
   gt(groupname_col = "groups") %>%
   summary_rows(
     groups = c("A", "C"),
-    columns = vars(value),
+    columns = value,
     fns = list(
       ~mean(., na.rm = TRUE),
       ~sum(., na.rm = TRUE),
@@ -175,7 +175,7 @@ summary_tbl <-
     )
   ) %>%
   grand_summary_rows(
-    columns = vars(value_2),
+    columns = value_2,
     fns = list(
       ~mean(., na.rm = TRUE),
       ~sum(., na.rm = TRUE),
@@ -192,7 +192,7 @@ summary_tbl <-
     locations = cells_summary(
       groups = "C", columns = 1, rows = 1)
   ) %>%
-  fmt_missing(columns = vars(value, value_2)) %>%
+  sub_missing(columns = c(value, value_2)) %>%
   tab_options(
     summary_row.background.color = "#FFFEEE",
     row_group.background.color = "lightblue"
@@ -212,20 +212,20 @@ tbl <-
 
 # Create a display table with uncertainties
 uncert_tbl <-
-  gt(data = tbl) %>%
+  gt(tbl) %>%
   cols_merge_uncert(
-    col_val = vars(value_1),
-    col_uncert = vars(uncertainty)
+    col_val = value_1,
+    col_uncert = uncertainty
   ) %>%
   cols_merge_uncert(
-    col_val = vars(value_2),
-    col_uncert = vars(uncertainty_2)
+    col_val = value_2,
+    col_uncert = uncertainty_2
   ) %>%
   fmt_number(
-    columns = vars(value_1, value_2),
+    columns = c(value_1, value_2),
     decimals = 2
   ) %>%
-  fmt_missing(columns = vars(value_1, value_2))
+  sub_missing(columns = c(value_1, value_2))
 
 uncert_tbl %>% gtsave("tests/gt-examples/rtf_output/uncert.rtf")
 
@@ -237,19 +237,19 @@ conditional_tbl <-
   ) %>%
   gt() %>%
   fmt_number(
-    columns = vars(Open),
+    columns = Open,
     rows = Open > 1900,
     decimals = 3,
     scale_by = 1/1000,
     pattern = "{x}K"
   ) %>%
   fmt_number(
-    columns = vars(Close),
+    columns = Close,
     rows = High < 1940 & Low > 1915,
     decimals = 3
   ) %>%
   fmt_currency(
-    columns = vars(High, Low, Close),
+    columns = c(High, Low, Close),
     rows = Date > "2016-02-20",
     currency = "USD"
   )
@@ -299,7 +299,7 @@ tbl <-
 
 # Create a display table
 footnotes_tbl <-
-  gt(data = tbl, groupname_col = "date") %>%
+  gt(tbl, groupname_col = "date") %>%
   tab_header(title = md("The Table `Title`"), subtitle = "The subtitle.") %>%
   tab_spanner(
     label = "values",
@@ -307,11 +307,11 @@ footnotes_tbl <-
   ) %>%
   tab_footnote(
     footnote = "This is an even smaller number.",
-    locations = cells_body(columns = vars(value_1), rows = 9)
+    locations = cells_body(columns = value_1, rows = 9)
   ) %>%
   tab_footnote(
     footnote = "This is a small number.",
-    locations = cells_body(columns = vars(value_1), rows = 4)
+    locations = cells_body(columns = value_1, rows = 4)
   ) %>%
   tab_footnote(
     footnote = "First data cell.",
@@ -331,7 +331,7 @@ footnotes_tbl <-
   ) %>%
   tab_footnote(
     footnote = md("`value_1` is the first column of values."),
-    locations = cells_column_labels(columns = vars(value_1))
+    locations = cells_column_labels(columns = value_1)
   ) %>%
   tab_footnote(
     footnote = md("The `title` can get a footnote."),
@@ -355,7 +355,7 @@ tbl <-
 
 # Create a display table
 spanner_tbl <-
-  gt(data = tbl) %>%
+  gt(tbl) %>%
   tab_spanner(
     label = "v_1_2",
     columns =  c("v_1", "v_2")
@@ -396,7 +396,7 @@ cell_styles_tbl <-
       cell_text(color = "white")
     ),
     locations = cells_body(
-      columns = vars(value, value_2),
+      columns = c(value, value_2),
       rows = 1
     )
   )
@@ -431,34 +431,34 @@ many_options_tbl <-
   tab_stubhead(label = "Stubhead Label") %>%
   tab_spanner(
     label = "Group 1",
-    columns = vars(col_1, col_2)
+    columns = c(col_1, col_2)
   ) %>%
   tab_spanner(
     label = "Group 2",
-    columns = vars(col_3, col_4)
+    columns = c(col_3, col_4)
   ) %>%
   tab_footnote(
     footnote = "Footnote #1",
     locations = cells_body(
-      columns = vars(col_1), rows = 1
+      columns = col_1, rows = 1
     )
   ) %>%
   tab_footnote(
     footnote = "Footnote #2",
     locations = cells_body(
-      columns = vars(col_2), rows = 2
+      columns = col_2, rows = 2
     )
   ) %>%
   tab_footnote(
     footnote = "Footnote #3",
     locations = cells_body(
-      columns = vars(col_3), rows = 3
+      columns = col_3, rows = 3
     )
   ) %>%
   tab_footnote(
     footnote = "Footnote #4",
     locations = cells_body(
-      columns = vars(col_4), rows = 4
+      columns = col_4, rows = 4
     )
   ) %>%
   tab_source_note("A source note for the table.") %>%
@@ -505,4 +505,75 @@ many_options_tbl <-
 
 many_options_tbl %>% gtsave("tests/gt-examples/rtf_output/many_options.rtf")
 
+# Tests with summaries
 
+tbl_1 <-
+  dplyr::tribble(
+    ~col_1, ~col_2, ~col_3, ~col_4,    ~row,       ~group,
+    767.6,  928.1,  382.0,  674.5,   "one", "first_five",
+    403.3,  461.5,   15.1,  242.8,   "two", "first_five",
+    686.4,   54.1,  282.7,   56.3, "three", "first_five",
+    662.6,  148.8,  984.6,  928.1,  "four", "first_five",
+    198.5,   65.1,  127.4,  219.3,  "five", "first_five",
+    132.1,  118.1,   91.2,  874.3,   "six", "2nd_five",
+    349.7,  307.1,  566.7,  542.9, "seven", "2nd_five",
+    63.7,  504.3,  152.0,  724.5, "eight", "2nd_five",
+    105.4,  729.8,  962.4,  336.4,  "nine", "2nd_five",
+    924.2,  424.6,  740.8,  104.2,   "ten", "2nd_five"
+  )
+
+summary_tbl_1 <-
+  gt(tbl_1) %>%
+  grand_summary_rows(
+    columns = col_1,
+    fns = list(average = ~ mean(., na.rm = TRUE))
+  )
+
+summary_tbl_1 %>% gtsave("tests/gt-examples/rtf_output/summary_tbl_1.rtf")
+
+summary_tbl_2 <-
+  gt(tbl_1, rowname_col = "row") %>%
+  grand_summary_rows(
+    columns = col_1,
+    fns = list(average = ~ mean(., na.rm = TRUE))
+  )
+
+summary_tbl_2 %>% gtsave("tests/gt-examples/rtf_output/summary_tbl_2.rtf")
+
+summary_tbl_3 <-
+  gt(tbl_1, groupname_col = "group") %>%
+  grand_summary_rows(
+    columns = col_1,
+    fns = list(average = ~ mean(., na.rm = TRUE))
+  )
+
+summary_tbl_3 %>% gtsave("tests/gt-examples/rtf_output/summary_tbl_3.rtf")
+
+summary_tbl_4 <-
+  gt(tbl_1, rowname_col = "row", groupname_col = "group") %>%
+  grand_summary_rows(
+    columns = col_1,
+    fns = list(average = ~ mean(., na.rm = TRUE))
+  )
+
+summary_tbl_4 %>% gtsave("tests/gt-examples/rtf_output/summary_tbl_4.rtf")
+
+summary_tbl_5 <-
+  gt(tbl_1, groupname_col = "group") %>%
+  summary_rows(
+    groups = "first_five",
+    columns = col_1,
+    fns = list(average = ~ mean(., na.rm = TRUE))
+  )
+
+summary_tbl_5 %>% gtsave("tests/gt-examples/rtf_output/summary_tbl_5.rtf")
+
+summary_tbl_6 <-
+  gt(tbl_1, rowname_col = "row", groupname_col = "group") %>%
+  summary_rows(
+    groups = "first_five",
+    columns = col_1,
+    fns = list(average = ~ mean(., na.rm = TRUE))
+  )
+
+summary_tbl_6 %>% gtsave("tests/gt-examples/rtf_output/summary_tbl_6.rtf")

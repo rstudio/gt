@@ -21,9 +21,21 @@ be much more than just text. The \code{html()} function will guard the input HTM
 against escaping, so, your HTML tags will come through as HTML when
 rendered... to HTML.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_html_1.png}{options: width=100\%}}
+
+Use \code{\link{exibble}} to create a \strong{gt} table. When adding a title, use the
+\code{html()} helper to use HTML formatting.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+  dplyr::select(currency, char) \%>\%
+  gt() \%>\%
+  tab_header(title = html("<em>HTML</em>"))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_html_1.png" style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
@@ -31,20 +43,8 @@ rendered... to HTML.
 7-2
 }
 
-\examples{
-# Use `exibble` to create a gt table;
-# when adding a title, use the `html()`
-# helper to use html formatting
-tab_1 <-
-  exibble \%>\%
-  dplyr::select(currency, char) \%>\%
-  gt() \%>\%
-  tab_header(
-    title = html("<em>HTML</em>"))
-
-}
 \seealso{
-Other Helper Functions: 
+Other helper functions: 
 \code{\link{adjust_luminance}()},
 \code{\link{cell_borders}()},
 \code{\link{cell_fill}()},
@@ -52,8 +52,12 @@ Other Helper Functions:
 \code{\link{cells_body}()},
 \code{\link{cells_column_labels}()},
 \code{\link{cells_column_spanners}()},
+\code{\link{cells_footnotes}()},
 \code{\link{cells_grand_summary}()},
 \code{\link{cells_row_groups}()},
+\code{\link{cells_source_notes}()},
+\code{\link{cells_stub_grand_summary}()},
+\code{\link{cells_stub_summary}()},
 \code{\link{cells_stubhead}()},
 \code{\link{cells_stub}()},
 \code{\link{cells_summary}()},
@@ -68,4 +72,4 @@ Other Helper Functions:
 \code{\link{px}()},
 \code{\link{random_id}()}
 }
-\concept{Helper Functions}
+\concept{helper functions}

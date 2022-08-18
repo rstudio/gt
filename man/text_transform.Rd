@@ -10,10 +10,10 @@ text_transform(data, locations, fn)
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{locations}{The cell or set of cells to be associated with the text
-transformation. Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_stub]{cells_stub()}}, and
-\code{\link[=cells_column_labels]{cells_column_labels()}} helper functions can be used here. We can enclose
-several of these calls within a \code{list()} if we wish to make the
-transformation happen at different locations.}
+transformation. Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_stub]{cells_stub()}},
+\code{\link[=cells_column_labels]{cells_column_labels()}}, and \code{\link[=cells_row_groups]{cells_row_groups()}} helper functions can be
+used here. We can enclose several of these calls within a \code{list()} if we
+wish to make the transformation happen at different locations.}
 
 \item{fn}{The function to use for text transformation.}
 }
@@ -23,57 +23,65 @@ An object of class \code{gt_tbl}.
 \description{
 Perform targeted text transformation with a function
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_text_transform_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
+Use \code{\link{exibble}} to create a \strong{gt} table. transform the formatted text in the
+\code{num} column using a function supplied to \code{text_transform()} (via the \code{fn}
+argument). Note that the \code{x} in the \verb{fn = function (x)} part is a formatted
+vector of column values from the \code{num} column.
 
-3-12
-}
-
-\examples{
-# Use `exibble` to create a gt table;
-# transform the formatted text in the
-# `num` and `currency` columns using
-# a function within `text_transform()`,
-# where `x` is a formatted vector of
-# column values
-tab_1 <-
-  exibble \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(num, char, currency) \%>\%
   dplyr::slice(1:4) \%>\%
   gt() \%>\%
-  fmt_number(columns = vars(num)) \%>\%
-  fmt_currency(columns = vars(currency)) \%>\%
+  fmt_number(columns = num) \%>\%
+  fmt_currency(columns = currency) \%>\%
   text_transform(
-    locations = cells_body(
-      columns = vars(num)),
-    fn = function(x) {
+    locations = cells_body(columns = num),
+    fn = function(x) \{
       paste0(
         x, " (",
         dplyr::case_when(
           x > 20   ~ "large",
           x <= 20  ~ "small"),
         ")")
-    }
+    \}
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_text_transform_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+3-20
+}
+
 \seealso{
-Other Format Data: 
+Other data formatting functions: 
 \code{\link{data_color}()},
+\code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_duration}()},
+\code{\link{fmt_engineering}()},
+\code{\link{fmt_fraction}()},
+\code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
-\code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
+\code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
-\code{\link{fmt}()}
+\code{\link{fmt}()},
+\code{\link{sub_large_vals}()},
+\code{\link{sub_missing}()},
+\code{\link{sub_small_vals}()},
+\code{\link{sub_zero}()}
 }
-\concept{Format Data}
+\concept{data formatting functions}

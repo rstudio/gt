@@ -6,7 +6,7 @@
 \usage{
 grand_summary_rows(
   data,
-  columns = TRUE,
+  columns = everything(),
   fns,
   missing_text = "---",
   formatter = fmt_number,
@@ -57,38 +57,24 @@ Should we need to obtain the summary data for external purposes, the
 \code{\link[=extract_summary]{extract_summary()}} function can be used with a \code{gt_tbl} object where grand
 summary rows were added via \code{grand_summary_rows()}.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_grand_summary_rows_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
+Use \code{\link{sp500}} to create a \strong{gt} table with row groups. Create the grand
+summary rows \code{min}, \code{max}, and \code{avg} for the table with the
+\code{grand_summary_rows()} function.
 
-6-2
-}
-
-\examples{
-# Use `sp500` to create a gt table with
-# row groups; create grand summary rows
-# (`min`, `max`, `avg`) for the table
-tab_1 <-
-  sp500 \%>\%
-  dplyr::filter(
-    date >= "2015-01-05" &
-      date <="2015-01-16"
-  ) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
+  dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") \%>\%
   dplyr::arrange(date) \%>\%
-  dplyr::mutate(
-    week = paste0(
-      "W", strftime(date, format = "\%V"))
-  ) \%>\%
+  dplyr::mutate(week = paste0("W", strftime(date, format = "\%V"))) \%>\%
   dplyr::select(-adj_close, -volume) \%>\%
   gt(
     rowname_col = "date",
     groupname_col = "week"
   ) \%>\%
   grand_summary_rows(
-    columns = vars(open, high, low, close),
+    columns = c(open, high, low, close),
     fns = list(
       min = ~min(.),
       max = ~max(.),
@@ -96,10 +82,20 @@ tab_1 <-
     formatter = fmt_number,
     use_seps = FALSE
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_grand_summary_rows_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+6-2
+}
+
 \seealso{
-Other Add Rows: 
+Other row addition functions: 
 \code{\link{summary_rows}()}
 }
-\concept{Add Rows}
+\concept{row addition functions}

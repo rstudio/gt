@@ -1,38 +1,27 @@
 .dt_options_key <- "_options"
 
 dt_options_get <- function(data) {
-
   dt__get(data, .dt_options_key)
 }
 
 dt_options_set <- function(data, options) {
-
   dt__set(data, .dt_options_key, options)
 }
 
 dt_options_init <- function(data) {
-
-  dt_options_tbl %>% dt_options_set(options = ., data = data)
+  dt_options_set(data = data, options = dt_options_tbl)
 }
 
 dt_options_set_value <- function(data, option, value) {
 
-  dt_options <-
-    data %>%
-    dt_options_get()
-
+  dt_options <- dt_options_get(data = data)
   dt_options$value[[which(dt_options$parameter == option)]] <- value
 
-  dt_options %>%
-    dt_options_set(options = ., data = data)
+  dt_options_set(data = data, options = dt_options)
 }
 
 dt_options_get_value <- function(data, option) {
-
-  dt_options <-
-    data %>%
-    dt_options_get()
-
+  dt_options <- dt_options_get(data = data)
   dt_options$value[[which(dt_options$parameter == option)]]
 }
 
@@ -52,6 +41,7 @@ dt_options_tbl <-
     "container_overflow_x",              FALSE,  "container",        "overflow","auto",
     "container_overflow_y",              FALSE,  "container",        "overflow","auto",
     "table_id",                          FALSE,  "table",            "value",   NA_character_,
+    "table_caption",                     FALSE,  "table",            "value",   NULL,
     "table_width",                        TRUE,  "table",            "px",      "auto",
     "table_layout",                       TRUE,  "table",            "value",   "fixed",
     "table_margin_left",                  TRUE,  "table",            "px",      "auto",
@@ -61,7 +51,7 @@ dt_options_tbl <-
     "table_font_names",                  FALSE,  "table",            "values",  default_fonts_vec,
     "table_font_size",                    TRUE,  "table",            "px",      "16px",
     "table_font_weight",                  TRUE,  "table",            "value",   "normal",
-    "table_font_style",                   TRUE,   "table",           "value",   "normal",
+    "table_font_style",                   TRUE,  "table",            "value",   "normal",
     "table_font_color",                   TRUE,  "table",            "value",   "#333333",
     "table_font_color_light",             TRUE,  "table",            "value",   "#FFFFFF",
     "table_border_top_include",          FALSE,  "table",            "logical", TRUE,
@@ -84,6 +74,8 @@ dt_options_tbl <-
     "heading_title_font_weight",          TRUE,  "heading",          "value",   "initial",
     "heading_subtitle_font_size",         TRUE,  "heading",          "px",      "85%",
     "heading_subtitle_font_weight",       TRUE,  "heading",          "value",   "initial",
+    "heading_padding",                    TRUE,  "heading",          "px",      "4px",
+    "heading_padding_horizontal",         TRUE,  "heading",          "px",      "5px",
     "heading_border_bottom_style",        TRUE,  "heading",          "value",   "solid",
     "heading_border_bottom_width",        TRUE,  "heading",          "px",      "2px",
     "heading_border_bottom_color",        TRUE,  "heading",          "value",   "#D3D3D3",
@@ -94,6 +86,8 @@ dt_options_tbl <-
     "column_labels_font_size",            TRUE,  "column_labels",    "px",      "100%",
     "column_labels_font_weight",          TRUE,  "column_labels",    "value",   "normal",
     "column_labels_text_transform",       TRUE,  "column_labels",    "value",   "inherit",
+    "column_labels_padding",              TRUE,  "column_labels",    "px",      "5px",
+    "column_labels_padding_horizontal",   TRUE,  "column_labels",    "px",      "5px",
     "column_labels_vlines_style",         TRUE,  "table_body",       "value",   "none",
     "column_labels_vlines_width",         TRUE,  "table_body",       "px",      "1px",
     "column_labels_vlines_color",         TRUE,  "table_body",       "value",   "#D3D3D3",
@@ -112,6 +106,7 @@ dt_options_tbl <-
     "row_group_font_weight",              TRUE,  "row_group",        "value",   "initial",
     "row_group_text_transform",           TRUE,  "row_group",        "value",   "inherit",
     "row_group_padding",                  TRUE,  "row_group",        "px",      "8px",
+    "row_group_padding_horizontal",       TRUE,  "row_group",        "px",      "5px",
     "row_group_border_top_style",         TRUE,  "row_group",        "value",   "solid",
     "row_group_border_top_width",         TRUE,  "row_group",        "px",      "2px",
     "row_group_border_top_color",         TRUE,  "row_group",        "value",   "#D3D3D3",
@@ -124,6 +119,8 @@ dt_options_tbl <-
     "row_group_border_left_style",        TRUE,  "row_group",        "value",   "none",
     "row_group_border_left_width",        TRUE,  "row_group",        "px",      "1px",
     "row_group_border_left_color",        TRUE,  "row_group",        "value",   "#D3D3D3",
+    "row_group_default_label",           FALSE,  "row_group",        "value",   NA_character_,
+    "row_group_as_column",               FALSE,  "row_group",        "logical", FALSE,
     "table_body_hlines_style",            TRUE,  "table_body",       "value",   "solid",
     "table_body_hlines_width",            TRUE,  "table_body",       "px",      "1px",
     "table_body_hlines_color",            TRUE,  "table_body",       "value",   "#D3D3D3",
@@ -137,6 +134,7 @@ dt_options_tbl <-
     "table_body_border_bottom_width",     TRUE,  "table_body",       "px",      "2px",
     "table_body_border_bottom_color",     TRUE,  "table_body",       "value",   "#D3D3D3",
     "data_row_padding",                   TRUE,  "data_row",         "px",      "8px",
+    "data_row_padding_horizontal",        TRUE,  "data_row",         "px",      "5px",
     "stub_background_color",              TRUE,  "stub",             "value",   NA_character_,
     "stub_font_size",                     TRUE,  "stub",             "px",      "100%",
     "stub_font_weight",                   TRUE,  "stub",             "value",   "initial",
@@ -144,13 +142,23 @@ dt_options_tbl <-
     "stub_border_style",                  TRUE,  "stub",             "value",   "solid",
     "stub_border_width",                  TRUE,  "stub",             "px",      "2px",
     "stub_border_color",                  TRUE,  "stub",             "value",   "#D3D3D3",
+    "stub_indent_length",                 TRUE,  "stub",             "px",      "5px",
+    "stub_row_group_background_color",    TRUE,  "stub",             "value",   NA_character_,
+    "stub_row_group_font_size",           TRUE,  "stub",             "px",      "100%",
+    "stub_row_group_font_weight",         TRUE,  "stub",             "value",   "initial",
+    "stub_row_group_text_transform",      TRUE,  "stub",             "value",   "inherit",
+    "stub_row_group_border_style",        TRUE,  "stub",             "value",   "solid",
+    "stub_row_group_border_width",        TRUE,  "stub",             "px",      "2px",
+    "stub_row_group_border_color",        TRUE,  "stub",             "value",   "#D3D3D3",
     "summary_row_padding",                TRUE,  "summary_row",      "px",      "8px",
+    "summary_row_padding_horizontal",     TRUE,  "summary_row",      "px",      "5px",
     "summary_row_background_color",       TRUE,  "summary_row",      "value",   NA_character_,
     "summary_row_text_transform",         TRUE,  "summary_row",      "value",   "inherit",
     "summary_row_border_style",           TRUE,  "summary_row",      "value",   "solid",
     "summary_row_border_width",           TRUE,  "summary_row",      "px",      "2px",
     "summary_row_border_color",           TRUE,  "summary_row",      "value",   "#D3D3D3",
     "grand_summary_row_padding",          TRUE,  "grand_summary_row", "px",     "8px",
+    "grand_summary_row_padding_horizontal",TRUE, "grand_summary_row", "px",     "5px",
     "grand_summary_row_background_color", TRUE,  "grand_summary_row", "value",  NA_character_,
     "grand_summary_row_text_transform",   TRUE,  "grand_summary_row", "value",  "inherit",
     "grand_summary_row_border_style",     TRUE,  "grand_summary_row", "value",  "double",
@@ -158,6 +166,7 @@ dt_options_tbl <-
     "grand_summary_row_border_color",     TRUE,  "grand_summary_row", "value",  "#D3D3D3",
     "footnotes_font_size",                TRUE,  "footnotes",        "px",      "90%",
     "footnotes_padding",                  TRUE,  "footnotes",        "px",      "4px",
+    "footnotes_padding_horizontal",       TRUE,  "footnotes",        "px",      "5px",
     "footnotes_background_color",         TRUE,  "footnotes",        "value",   NA_character_,
     "footnotes_margin",                   TRUE,  "footnotes",        "px",      "0px",
     "footnotes_border_bottom_style",      TRUE,  "footnotes",        "value",   "none",
@@ -166,9 +175,11 @@ dt_options_tbl <-
     "footnotes_border_lr_style",          TRUE,  "footnotes",        "value",   "none",
     "footnotes_border_lr_width",          TRUE,  "footnotes",        "px",      "2px",
     "footnotes_border_lr_color",          TRUE,  "footnotes",        "value",   "#D3D3D3",
-    "footnotes_sep",                     FALSE,  "footnotes",        "value",   "<br />",
     "footnotes_marks" ,                  FALSE,  "footnotes",        "values",  "numbers",
+    "footnotes_multiline",               FALSE,  "footnotes",        "logical", TRUE,
+    "footnotes_sep",                     FALSE,  "footnotes",        "value",   " ",
     "source_notes_padding",               TRUE,  "source_notes",     "px",      "4px",
+    "source_notes_padding_horizontal",    TRUE,  "source_notes",     "px",      "5px",
     "source_notes_background_color",      TRUE,  "source_notes",     "value",   NA_character_,
     "source_notes_font_size",             TRUE,  "source_notes",     "px",      "90%",
     "source_notes_border_bottom_style",   TRUE,  "source_notes",     "value",   "none",
@@ -177,7 +188,21 @@ dt_options_tbl <-
     "source_notes_border_lr_style",       TRUE,  "source_notes",     "value",   "none",
     "source_notes_border_lr_width",       TRUE,  "source_notes",     "px",      "2px",
     "source_notes_border_lr_color",       TRUE,  "source_notes",     "value",   "#D3D3D3",
+    "source_notes_multiline",            FALSE,  "source_notes",     "logical", TRUE,
+    "source_notes_sep",                  FALSE,  "source_notes",     "value",   " ",
     "row_striping_background_color",      TRUE,  "row",              "value",   "rgba(128,128,128,0.05)",
     "row_striping_include_stub",         FALSE,  "row",              "logical", FALSE,
     "row_striping_include_table_body",   FALSE,  "row",              "logical", FALSE,
+    "page_orientation",                  FALSE,  "page",             "value",   "portrait",
+    "page_numbering",                    FALSE,  "page",             "logical", FALSE,
+    "page_header_use_tbl_headings",      FALSE,  "page",             "logical", FALSE,
+    "page_footer_use_tbl_notes",         FALSE,  "page",             "logical", FALSE,
+    "page_width",                        FALSE,  "page",             "value",   "8.5in",
+    "page_height",                       FALSE,  "page",             "value",   "11.0in",
+    "page_margin_left",                  FALSE,  "page",             "value",   "1.0in",
+    "page_margin_right",                 FALSE,  "page",             "value",   "1.0in",
+    "page_margin_top",                   FALSE,  "page",             "value",   "1.0in",
+    "page_margin_bottom",                FALSE,  "page",             "value",   "1.0in",
+    "page_header_height",                FALSE,  "page",             "value",   "0.5in",
+    "page_footer_height",                FALSE,  "page",             "value",   "0.5in",
   )[-1, ]

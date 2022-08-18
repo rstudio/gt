@@ -11,8 +11,11 @@
 
 \strong{gt} uses the following \code{\link[=options]{options()}} to configure behavior:
 \itemize{
-\item \code{gt.row_group.sep}: a separator between groups for the row group
+\item \code{gt.html_tag_check}: A logical scalar indicating whether or not to print a
+warning when HTML tags are found in a table that is being rendered to LaTeX.
+\item \code{gt.row_group.sep}: A separator between groups for the row group
 label.
 }
 }
 
+\keyword{internal}

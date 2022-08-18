@@ -31,56 +31,59 @@ CSS will be added after the compiled CSS that \strong{gt} generates automaticall
 when the object is transformed to an HTML output table. You can supply \code{css}
 as a vector of lines or as a single string.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_opt_css_1.png}{options: width=100\%}}
+
+Use \code{\link{exibble}} to create a \strong{gt} table and format the data in both columns.
+With \code{opt_css()}, insert CSS rulesets as as string and be sure to set the
+table ID explicitly (here as \code{"one"}).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+  dplyr::select(num, currency) \%>\%
+  gt(id = "one") \%>\%
+  fmt_currency(
+    columns = currency,
+    currency = "HKD"
+  ) \%>\%
+  fmt_scientific(
+    columns = num
+  ) \%>\%
+  opt_css(
+    css = "
+    #one .gt_table \{
+      background-color: skyblue;
+    \}
+    #one .gt_row \{
+      padding: 20px 30px;
+    \}
+    #one .gt_col_heading \{
+      text-align: center !important;
+    \}
+    "
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_css_1.png" style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
 
-9-8
+9-11
 }
 
-\examples{
-# Use `exibble` to create a gt table and
-# format the data in both columns; with
-# `opt_css()` insert CSS rulesets as
-# as string and be sure to set the table
-# ID explicitly (here as "one")
-tab_1 <-
-  exibble \%>\%
-  dplyr::select(num, currency) \%>\%
-  gt(id = "one") \%>\%
-  fmt_currency(
-    columns = vars(currency),
-    currency = "HKD"
-  ) \%>\%
-  fmt_scientific(
-    columns = vars(num)
-  ) \%>\%
-  opt_css(
-    css = "
-    #one .gt_table {
-      background-color: skyblue;
-    }
-    #one .gt_row {
-      padding: 20px 30px;
-    }
-    #one .gt_col_heading {
-      text-align: center !important;
-    }
-    "
-  )
-
-}
 \seealso{
-Other Table Option Functions: 
+Other table option functions: 
 \code{\link{opt_align_table_header}()},
 \code{\link{opt_all_caps}()},
 \code{\link{opt_footnote_marks}()},
+\code{\link{opt_horizontal_padding}()},
 \code{\link{opt_row_striping}()},
+\code{\link{opt_stylize}()},
 \code{\link{opt_table_font}()},
 \code{\link{opt_table_lines}()},
-\code{\link{opt_table_outline}()}
+\code{\link{opt_table_outline}()},
+\code{\link{opt_vertical_padding}()}
 }
-\concept{Table Option Functions}
+\concept{table option functions}

@@ -6,16 +6,15 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-
 library(gt)
 ```
 
-Create a display table based on `pressure` (Vapor Pressure of Mercury as a Function of Temperature).
+Create a display table based on `pressure`.
 
 ```{r}
-gt(data = pressure) %>%
+gt(pressure) %>%
   fmt_scientific(
-    columns = vars(pressure),
+    columns = pressure,
     decimals = 2
   )
 ```

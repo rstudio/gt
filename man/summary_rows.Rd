@@ -7,7 +7,7 @@
 summary_rows(
   data,
   groups = NULL,
-  columns = TRUE,
+  columns = everything(),
   fns,
   missing_text = "---",
   formatter = fmt_number,
@@ -64,32 +64,17 @@ Should we need to obtain the summary data for external purposes, the
 \code{\link[=extract_summary]{extract_summary()}} function can be used with a \code{gt_tbl} object where summary
 rows were added via \code{summary_rows()}.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_summary_rows_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
+Use \code{\link{sp500}} to create a \strong{gt} table with row groups. Create the summary
+rows labeled \code{min}, \code{max}, and \code{avg} by row group (where each each row group
+is a week number) with the \code{summary_rows()} function.
 
-6-1
-}
-
-\examples{
-# Use `sp500` to create a gt table with
-# row groups; create summary rows (`min`,
-# `max`, `avg`) by row group, where each
-# each row group is a week number
-tab_1 <-
-  sp500 \%>\%
-  dplyr::filter(
-    date >= "2015-01-05" &
-      date <="2015-01-16"
-  ) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
+  dplyr::filter(date >= "2015-01-05" & date <="2015-01-16") \%>\%
   dplyr::arrange(date) \%>\%
-  dplyr::mutate(
-    week = paste0(
-      "W", strftime(date, format = "\%V"))
-  ) \%>\%
+  dplyr::mutate(week = paste0( "W", strftime(date, format = "\%V"))) \%>\%
   dplyr::select(-adj_close, -volume) \%>\%
   gt(
     rowname_col = "date",
@@ -97,7 +82,7 @@ tab_1 <-
   ) \%>\%
   summary_rows(
     groups = TRUE,
-    columns = vars(open, high, low, close),
+    columns = c(open, high, low, close),
     fns = list(
       min = ~min(.),
       max = ~max(.),
@@ -105,10 +90,20 @@ tab_1 <-
     formatter = fmt_number,
     use_seps = FALSE
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_summary_rows_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+6-1
+}
+
 \seealso{
-Other Add Rows: 
+Other row addition functions: 
 \code{\link{grand_summary_rows}()}
 }
-\concept{Add Rows}
+\concept{row addition functions}

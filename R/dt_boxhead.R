@@ -1,12 +1,10 @@
 .dt_boxhead_key <- "_boxhead"
 
 dt_boxhead_get <- function(data) {
-
   dt__get(data, .dt_boxhead_key)
 }
 
 dt_boxhead_set <- function(data, boxh) {
-
   dt__set(data, .dt_boxhead_key, boxh)
 }
 
@@ -49,19 +47,19 @@ dt_boxhead_init <- function(data) {
       hidden_px = empty_list
     )
 
-  boxh_df %>% dt_boxhead_set(boxh = ., data = data)
+  dt_boxhead_set(boxh = boxh_df, data = data)
 }
 
 dt_boxhead_edit <- function(data, var, ...) {
 
-  dt_boxhead <- data %>% dt_boxhead_get()
+  dt_boxhead <- dt_boxhead_get(data = data)
 
   var_name <- var
 
   val_list <- list(...)
 
   if (length(val_list) != 1) {
-    stop("`dt_boxhead_edit()` expects a single value at ...")
+    cli::cli_abort("`dt_boxhead_edit()` expects a single value at `...`.")
   }
 
   check_names_dt_boxhead_expr(val_list)
@@ -74,19 +72,21 @@ dt_boxhead_edit <- function(data, var, ...) {
     dt_boxhead[[which(dt_boxhead$var == var_name), names(val_list)]] <- unlist(val_list)
   }
 
-  dt_boxhead %>% dt_boxhead_set(data = data)
+  dt_boxhead_set(data = data, boxh = dt_boxhead)
 }
 
-dt_boxhead_add_var <- function(data,
-                               var,
-                               type,
-                               column_label = list(var),
-                               column_align = "left",
-                               column_width = list(NULL),
-                               hidden_px = list(NULL),
-                               add_where = "top") {
+dt_boxhead_add_var <- function(
+    data,
+    var,
+    type,
+    column_label = list(var),
+    column_align = "left",
+    column_width = list(NULL),
+    hidden_px = list(NULL),
+    add_where = "top"
+) {
 
-  dt_boxhead <- data %>% dt_boxhead_get()
+  dt_boxhead <- dt_boxhead_get(data = data)
 
   dt_boxhead_row <-
     dplyr::tibble(
@@ -103,10 +103,10 @@ dt_boxhead_add_var <- function(data,
   } else if (add_where == "bottom") {
     dt_boxhead <- dplyr::bind_rows(dt_boxhead, dt_boxhead_row)
   } else {
-    stop("The `add_where` value must be either `top` or `bottom`.")
+    cli::cli_abort("The `add_where` value must be either `top` or `bottom`.")
   }
 
-  dt_boxhead %>% dt_boxhead_set(data = data)
+  dt_boxhead_set(data = data, boxh = dt_boxhead)
 }
 
 dt_boxhead_set_hidden <- function(data, vars) {
@@ -114,7 +114,17 @@ dt_boxhead_set_hidden <- function(data, vars) {
   dt_boxhead <- dt_boxhead_get(data = data)
 
   dt_boxhead[which(dt_boxhead$var %in% vars), "type"] <- "hidden"
-  dt_boxhead %>% dt_boxhead_set(data = data)
+
+  dt_boxhead_set(data = data, boxh = dt_boxhead)
+}
+
+dt_boxhead_set_not_hidden <- function(data, vars) {
+
+  dt_boxhead <- dt_boxhead_get(data = data)
+
+  dt_boxhead[which(dt_boxhead$var %in% vars), "type"] <- "default"
+
+  dt_boxhead_set(data = data, boxh = dt_boxhead)
 }
 
 dt_boxhead_set_stub <- function(data, var) {
@@ -123,7 +133,8 @@ dt_boxhead_set_stub <- function(data, var) {
 
   dt_boxhead[which(dt_boxhead$var == var), "type"] <- "stub"
   dt_boxhead[which(dt_boxhead$var == var), "column_align"] <- "left"
-  dt_boxhead %>% dt_boxhead_set(data = data)
+
+  dt_boxhead_set(data = data, boxh = dt_boxhead)
 }
 
 dt_boxhead_set_row_group <- function(data, vars) {
@@ -132,64 +143,88 @@ dt_boxhead_set_row_group <- function(data, vars) {
 
   dt_boxhead[which(dt_boxhead$var %in% vars), "type"] <- "row_group"
   dt_boxhead[which(dt_boxhead$var %in% vars), "column_align"] <- "left"
-  dt_boxhead %>% dt_boxhead_set(data = data)
+
+  dt_boxhead_set(data = data, boxh = dt_boxhead)
 }
 
 dt_boxhead_edit_column_label <- function(data, var, column_label) {
 
-  dt_boxhead_edit(data, var, column_label = column_label)
+  dt_boxhead_edit(
+    data = data,
+    var = var,
+    column_label = column_label
+  )
 }
 
 dt_boxhead_get_vars <- function(data) {
-
-  data %>%
-    dt_boxhead_get() %>%
-    magrittr::extract2("var")
+  dt_boxhead_get(data = data)$var
 }
 
 dt_boxhead_get_vars_default <- function(data) {
-
-  data %>%
-    dt_boxhead_get() %>%
-    dplyr::filter(type == "default") %>%
-    magrittr::extract2("var")
+  df <- dt_boxhead_get(data = data)
+  df$var[df$type == "default"]
 }
 
 dt_boxhead_get_var_stub <- function(data) {
-  res <- dt_boxhead_get_var_by_type(data, "stub")
-  if (length(res) == 0)
+
+  res <- dt_boxhead_get_var_by_type(data = data, type = "stub")
+  # FIXME: don't return NA_character_ here, just return res or NULL
+  if (length(res) == 0) {
     NA_character_
-  else
+  } else {
     res
+  }
 }
 
 dt_boxhead_get_vars_groups <- function(data) {
-  dt_boxhead_get_var_by_type(data, "row_group")
+
+  res <- dt_boxhead_get_var_by_type(data = data, type = "row_group")
+  # FIXME: don't return NA_character_ here, just return res or NULL
+  if (length(res) == 0) {
+    NA_character_
+  } else {
+    res
+  }
+}
+
+dt_boxhead_get_alignments_in_stub <- function(data) {
+
+  stub_layout <- get_stub_layout(data = data)
+
+  c(
+    if ("group_label" %in% stub_layout) {
+      dt_boxhead_get_alignment_by_var(
+        data = data,
+        dt_boxhead_get_vars_groups(data = data)
+      )
+    },
+    if ("rowname" %in% stub_layout) {
+      dt_boxhead_get_alignment_by_var(
+        data = data,
+        dt_boxhead_get_var_stub(data = data)
+      )
+    }
+  )
 }
 
 dt_boxhead_get_var_by_type <- function(data, type) {
-
-  data %>%
-    dt_boxhead_get() %>%
-    dplyr::filter(type == !!type) %>%
-    magrittr::extract2("var")
+  boxhead <- dt_boxhead_get(data = data)
+  boxhead$var[boxhead$type == type]
 }
 
 dt_boxhead_get_vars_labels_default <- function(data) {
+  boxhead <- dt_boxhead_get(data = data)
+  unlist(boxhead$column_label[boxhead$type == "default"])
+}
 
-  data %>%
-    dt_boxhead_get() %>%
-    dplyr::filter(type == "default") %>%
-    magrittr::extract2("column_label") %>%
-    unlist()
+dt_boxhead_get_vars_align_default <- function(data) {
+  boxhead <- dt_boxhead_get(data = data)
+  boxhead$column_align[boxhead$type == "default"]
 }
 
 dt_boxhead_get_alignment_by_var <- function(data, var) {
-
-  data %>%
-    dt_boxhead_get() %>%
-    dplyr::filter(var == !!var) %>%
-    magrittr::extract2("column_align")
+  boxhead <- dt_boxhead_get(data = data)
+  boxhead$column_align[boxhead$var == var]
 }
 
 check_names_dt_boxhead_expr <- function(expr) {
@@ -197,47 +232,42 @@ check_names_dt_boxhead_expr <- function(expr) {
   if (!all(names(expr) %in% c(
     "type", "column_label", "column_align", "column_width", "hidden_px"
   ))) {
-    stop("Expressions must use names available in `dt_boxhead`.",
-         call. = FALSE)
+    cli::cli_abort("Expressions must use names available in `dt_boxhead`.")
   }
 }
 
 check_vars_dt_boxhead <- function(var, dt_boxhead) {
 
   if (!(var %in% dt_boxhead$var)) {
-    stop("The `var` value must be value in `dt_boxhead$var`.",
-         call. = FALSE)
+    cli::cli_abort("The `var` value must be value in `dt_boxhead$var`.")
   }
 }
 
 dt_boxhead_build <- function(data, context) {
 
-  boxh <- dt_boxhead_get(data)
+  boxh <- dt_boxhead_get(data = data)
 
   boxh$column_label <-
     lapply(boxh$column_label, function(label) process_text(label, context))
 
-  data <- dt_boxhead_set(data = data, boxh = boxh)
-
-  data
+  dt_boxhead_set(data = data, boxh = boxh)
 }
 
 dt_boxhead_set_var_order <- function(data, vars) {
 
-  boxh <- dt_boxhead_get(data)
+  boxh <- dt_boxhead_get(data = data)
 
-  if (length(vars) != nrow(boxh) ||
-      length(unique(vars)) != nrow(boxh) ||
-      !all(vars %in% boxh$var)
-      ) {
-    stop("The length of `vars` must be the same the number of rows in `_boxh.")
+  if (
+    length(vars) != nrow(boxh) ||
+    length(unique(vars)) != nrow(boxh) ||
+    !all(vars %in% boxh$var)
+  ) {
+    cli::cli_abort("The length of `vars` must equal the row count of `_boxh`.")
   }
 
   order_vars <- vapply(vars, function(x) {which(boxh$var == x)}, numeric(1))
 
   boxh <- boxh[order_vars, ]
 
-  data <- dt_boxhead_set(data = data, boxh = boxh)
-
-  data
+  dt_boxhead_set(data = data, boxh = boxh)
 }

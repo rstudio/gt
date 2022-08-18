@@ -1,5 +1,6 @@
 #' Yearly populations of countries from 1960 to 2017
 #'
+#' @description
 #' A dataset that presents yearly, total populations of countries. Total
 #' population is based on counts of all residents regardless of legal status or
 #' citizenship. Country identifiers include the English-language country names,
@@ -18,12 +19,15 @@
 #'
 #' @source <https://data.worldbank.org/indicator/SP.POP.TOTL>
 #'
-#' @examples
-#' # Here is a glimpse at the data
-#' # available in `countrypops`
-#' dplyr::glimpse(countrypops)
+#' @section Examples:
 #'
-#' @family Datasets
+#' Here is a glimpse at the data available in `countrypops`.
+#'
+#' ```{r}
+#' dplyr::glimpse(countrypops)
+#' ```
+#'
+#' @family datasets
 #' @section Function ID:
 #' 11-1
 #'
@@ -31,12 +35,14 @@
 
 #' Twice hourly solar zenith angles by month & latitude
 #'
+#' @description
 #' This dataset contains solar zenith angles (in degrees, with the range of
 #' 0-90) every half hour from 04:00 to 12:00, true solar time. This set of
 #' values is calculated on the first of every month for 4 different northern
 #' hemisphere latitudes. For determination of afternoon values, the presented
 #' tabulated values are symmetric about noon.
 #'
+#' @details
 #' The solar zenith angle (SZA) is one measure that helps to describe the sun's
 #' path across the sky. It's defined as the angle of the sun relative to a line
 #' perpendicular to the earth's surface. It is useful to calculate the SZA in
@@ -64,12 +70,15 @@
 #' Photochemistry Applications (Peterson, 1976), available at:
 #' <https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=9100JA26.txt>.
 #'
-#' @examples
-#' # Here is a glimpse at the data
-#' # available in `sza`
-#' dplyr::glimpse(sza)
+#' @section Examples:
 #'
-#' @family Datasets
+#' Here is a glimpse at the data available in `sza`.
+#'
+#' ```{r}
+#' dplyr::glimpse(sza)
+#' ```
+#'
+#' @family datasets
 #' @section Function ID:
 #' 11-2
 #'
@@ -77,12 +86,14 @@
 
 #' Deluxe automobiles from the 2014-2017 period
 #'
+#' @description
 #' Expensive and fast cars. Not your father's `mtcars`. Each row describes a car
 #' of a certain make, model, year, and trim. Basic specifications such as
 #' horsepower, torque, EPA MPG ratings, type of drivetrain, and transmission
 #' characteristics are provided. The country of origin for the car manufacturer
 #' is also given.
 #'
+#' @details
 #' All of the `gtcars` have something else in common (aside from the high asking
 #' prices): they are all grand tourer vehicles. These are proper GT cars that
 #' blend pure driving thrills with a level of comfort that is more expected from
@@ -111,14 +122,18 @@
 #'   both types (`am`), or, direct drive (`dd`)}
 #'   \item{ctry_origin}{The country name for where the vehicle manufacturer
 #'   is headquartered}
+#'   \item{msrp}{Manufacturer's suggested retail price in U.S. dollars (USD)}
 #' }
 #'
-#' @examples
-#' # Here is a glimpse at the data
-#' # available in `gtcars`
-#' dplyr::glimpse(gtcars)
+#' @section Examples:
 #'
-#' @family Datasets
+#' Here is a glimpse at the data available in `gtcars`.
+#'
+#' ```{r}
+#' dplyr::glimpse(gtcars)
+#' ```
+#'
+#' @family datasets
 #' @section Function ID:
 #' 11-3
 #'
@@ -126,6 +141,7 @@
 
 #' Daily S&P 500 Index data from 1950 to 2015
 #'
+#' @description
 #' This dataset provides daily price indicators for the S&P 500 index from the
 #' beginning of 1950 to the end of 2015. The index includes 500 leading
 #' companies and captures about 80\% coverage of available market capitalization.
@@ -139,12 +155,15 @@
 #' \item{adj_close}{The close price adjusted for both dividends and splits}
 #' }
 #'
-#' @examples
-#' # Here is a glimpse at the data
-#' # available in `sp500`
-#' dplyr::glimpse(sp500)
+#' @section Examples:
 #'
-#' @family Datasets
+#' Here is a glimpse at the data available in `sp500`.
+#'
+#' ```{r}
+#' dplyr::glimpse(sp500)
+#' ```
+#'
+#' @family datasets
 #' @section Function ID:
 #' 11-4
 #'
@@ -152,6 +171,7 @@
 
 #' A year of pizza sales from a pizza place
 #'
+#' @description
 #' A synthetic dataset that describes pizza sales for a pizza place somewhere in
 #' the US. While the contents are artificial, the ingredients used to make the
 #' pizzas are far from it. There are 32 different pizzas that fall into 4
@@ -163,6 +183,7 @@
 #' whatsoever: 'My Five Cheese pizza has so many cheeses, I can only offer it in
 #' Large Size!').
 #'
+#' @details
 #' Each pizza in the dataset is identified by a short `name`. The following
 #' listings provide the full names of each pizza and their main ingredients.
 #'
@@ -265,12 +286,15 @@
 #'   (in USD)}
 #' }
 #'
-#' @examples
-#' # Here is a glimpse at the data
-#' # available in `pizzaplace`
-#' dplyr::glimpse(pizzaplace)
+#' @section Examples:
 #'
-#' @family Datasets
+#' Here is a glimpse at the pizza data available in `pizzaplace`.
+#'
+#' ```{r}
+#' dplyr::glimpse(pizzaplace)
+#' ```
+#'
+#' @family datasets
 #' @section Function ID:
 #' 11-5
 #'
@@ -278,6 +302,7 @@
 
 #' A toy example tibble for testing with gt: exibble
 #'
+#' @description
 #' This tibble contains data of a few different classes, which makes it
 #' well-suited for quick experimentation with the functions in this package. It
 #' contains only eight rows with numeric, character, and factor columns. The
@@ -305,12 +330,15 @@
 #'   row groups}
 #' }
 #'
-#' @examples
-#' # Here is a glimpse at the data
-#' # available in `exibble`
-#' dplyr::glimpse(exibble)
+#' @section Examples:
 #'
-#' @family Datasets
+#' Here is the `exibble`.
+#'
+#' ```{r}
+#' exibble
+#' ```
+#'
+#' @family datasets
 #' @section Function ID:
 #' 11-6
 #'

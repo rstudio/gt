@@ -87,82 +87,94 @@ only then need to specify the \code{package} and \code{palette} when calling the
 \code{\link[paletteer:paletteer_d]{paletteer::paletteer_d()}} function, and, we get the palette as a vector of
 hexadecimal colors.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_data_color_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_data_color_2.png}{options: width=100\%}}
-}
+Use \code{\link{countrypops}} to create a \strong{gt} table. Apply a color scale to the
+\code{population} column with \code{scales::col_numeric}, four supplied colors, and a
+domain.
 
-\section{Function ID}{
-
-3-13
-}
-
-\examples{
-# library(paletteer)
-
-# Use `countrypops` to create a gt table;
-# Apply a color scale to the `population`
-# column with `scales::col_numeric`,
-# four supplied colors, and a domain
-tab_1 <-
-  countrypops \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   dplyr::select(-contains("code")) \%>\%
   tail(10) \%>\%
   gt() \%>\%
   data_color(
-    columns = vars(population),
+    columns = population,
     colors = scales::col_numeric(
-      palette = c(
-        "red", "orange", "green", "blue"),
-      domain = c(0.2E7, 0.4E7))
+      palette = c("red", "orange", "green", "blue"),
+      domain = c(0.2E7, 0.4E7)
+    )
   )
+}\if{html}{\out{</div>}}
 
-# Use `pizzaplace` to create a gt table;
-# Apply colors from the `red_material`
-# palette (in the `ggsci` pkg but
-# more easily gotten from the `paletteer`
-# package, info at `info_paletteer()`) to
-# to `sold` and `income` columns; setting
-# the `domain` of `scales::col_numeric()`
-# to `NULL` will use the bounds of the
-# available data as the domain
-tab_2 <-
-  pizzaplace \%>\%
-  dplyr::filter(
-    type \%in\% c("chicken", "supreme")) \%>\%
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_data_color_1.png" style="width:100\%;">
+}}
+
+Use \code{\link{pizzaplace}} to create a \strong{gt} table. Apply colors from the
+\code{"ggsci::red_material"} palette (it's in the \strong{ggsci} R package but more
+easily gotten from the \strong{paletteer} package, info at \code{\link[=info_paletteer]{info_paletteer()}}) to
+to \code{sold} and \code{income} columns. Setting the \code{domain} of
+\code{scales::col_numeric()} to \code{NULL} will use the bounds of the available data
+as the domain.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
+  dplyr::filter(type \%in\% c("chicken", "supreme")) \%>\%
   dplyr::group_by(type, size) \%>\%
   dplyr::summarize(
     sold = dplyr::n(),
-    income = sum(price)
+    income = sum(price),
+    .groups = "drop"
   ) \%>\%
-  gt(rowname_col = "size") \%>\%
+  gt(
+    rowname_col = "size",
+    groupname_col = "type"
+  ) \%>\%
   data_color(
-    columns = vars(sold, income),
+    columns = c(sold, income),
     colors = scales::col_numeric(
       palette = paletteer::paletteer_d(
         palette = "ggsci::red_material"
-        ) \%>\% as.character(),
+      ) \%>\%
+        as.character(),
       domain = NULL
-      )
+    )
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_data_color_2.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+3-21
+}
+
 \seealso{
-Other Format Data: 
+Other data formatting functions: 
+\code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_duration}()},
+\code{\link{fmt_engineering}()},
+\code{\link{fmt_fraction}()},
+\code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
-\code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
+\code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt}()},
+\code{\link{sub_large_vals}()},
+\code{\link{sub_missing}()},
+\code{\link{sub_small_vals}()},
+\code{\link{sub_zero}()},
 \code{\link{text_transform}()}
 }
-\concept{Format Data}
+\concept{data formatting functions}

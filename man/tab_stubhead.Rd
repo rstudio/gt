@@ -24,9 +24,23 @@ when using this function in that case). We have the flexibility to use
 Markdown formatting for the stubhead label. Furthermore, if the table is
 intended for HTML output, we can use HTML for the stubhead label.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_tab_stubhead_1.png}{options: width=100\%}}
+
+Use \code{\link{gtcars}} to create a \strong{gt} table. With \code{tab_stubhead()} we can add a
+stubhead label. This appears in the top-left and can be used to describe what
+is in the stub.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
+  dplyr::select(model, year, hp, trq) \%>\%
+  dplyr::slice(1:5) \%>\%
+  gt(rowname_col = "model") \%>\%
+  tab_stubhead(label = "car")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_stubhead_1.png" style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
@@ -34,20 +48,8 @@ intended for HTML output, we can use HTML for the stubhead label.
 2-5
 }
 
-\examples{
-# Use `gtcars` to create a gt table; add
-# a stubhead label to describe what is
-# in the stub
-tab_1 <-
-  gtcars \%>\%
-  dplyr::select(model, year, hp, trq) \%>\%
-  dplyr::slice(1:5) \%>\%
-  gt(rowname_col = "model") \%>\%
-  tab_stubhead(label = "car")
-
-}
 \seealso{
-Other Create or Modify Parts: 
+Other part creation/modification functions: 
 \code{\link{tab_footnote}()},
 \code{\link{tab_header}()},
 \code{\link{tab_options}()},
@@ -55,6 +57,7 @@ Other Create or Modify Parts:
 \code{\link{tab_source_note}()},
 \code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
+\code{\link{tab_stub_indent}()},
 \code{\link{tab_style}()}
 }
-\concept{Create or Modify Parts}
+\concept{part creation/modification functions}

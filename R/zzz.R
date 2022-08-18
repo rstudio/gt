@@ -23,13 +23,14 @@ register_s3_method <- function(pkg, generic, class, fun = NULL) {
   )
 }
 
-globalVariables(
+utils::globalVariables(
   c(
     ".",
     "are_groups_present",
     "arrange_dfs",
     "b",
     "blue",
+    "built",
     "boxhead",
     "category",
     "colname",
@@ -38,7 +39,9 @@ globalVariables(
     "colnum_final",
     "column_align",
     "column_label",
+    "column_width",
     "colors",
+    "conv",
     "copyright",
     "curr_code",
     "curr_name",
@@ -48,16 +51,19 @@ globalVariables(
     "display_name",
     "footnotes",
     "footnotes_to_list",
+    "formatted",
     "fs_id",
     "fs_id_coalesced",
     "get_groups_rows",
     "g",
     "green",
+    "group_id",
     "group_label",
     "groups",
     "grpname",
     "grprow",
     "integrate_summary_lines",
+    "label",
     "locname",
     "locnum",
     "missing_text",
@@ -70,12 +76,16 @@ globalVariables(
     "palette",
     "red",
     "row_end",
+    "row_start",
     "rownum",
     "rownum_i",
+    "spanner_id",
+    "spanner_level",
     "styles",
     "styles_appended",
     "symbol",
     "text",
+    "time_part",
     "Var1",
     "base_locale_id",
     "dec_sep",
@@ -94,6 +104,7 @@ globalVariables(
     "text_col",
     "time",
     "type",
+    "unit",
     "value",
     "var",
     "weight",
@@ -108,10 +119,13 @@ globalVariables(
 #' @section Package options:
 #'
 #' **gt** uses the following [options()] to configure behavior:
-#' \itemize{
-#'   \item `gt.row_group.sep`: a separator between groups for the row group
+#'
+#' - `gt.html_tag_check`: A logical scalar indicating whether or not to print a
+#'   warning when HTML tags are found in a table that is being rendered to LaTeX.
+#' - `gt.row_group.sep`: A separator between groups for the row group
 #'   label.
-#' }
+#'
+#' @keywords internal
 #' @name gt-options
 NULL
 

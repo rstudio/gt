@@ -30,11 +30,39 @@ place one or columns at the start of the column series, the
 the \code{\link[=cols_move]{cols_move()}} function, where columns could be placed after a specific
 column.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cols_move_to_end_1.png}{options: width=100\%}}
 
-\if{html}{\figure{man_cols_move_to_end_2.png}{options: width=100\%}}
+Use \code{\link{countrypops}} to create a \strong{gt} table. With the remaining columns,
+move the \code{year} column to the end of the column series with the
+\code{cols_move_to_end()} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
+  dplyr::select(-contains("code")) \%>\%
+  dplyr::filter(country_name == "Mongolia") \%>\%
+  tail(5) \%>\%
+  gt() \%>\%
+  cols_move_to_end(columns = year)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_move_to_end_1.png" style="width:100\%;">
+}}
+
+Use \code{\link{countrypops}} to create a \strong{gt} table. With the remaining columns,
+move \code{year} and \code{country_name} to the end of the column series.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
+  dplyr::select(-contains("code")) \%>\%
+  dplyr::filter(country_name == "Mongolia") \%>\%
+  tail(5) \%>\%
+  gt() \%>\%
+  cols_move_to_end(columns = c(year, country_name))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_move_to_end_2.png" style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
@@ -42,44 +70,18 @@ column.
 4-5
 }
 
-\examples{
-# Use `countrypops` to create a gt table;
-# With the remaining columns, move the
-# `year` column to the end
-tab_1 <-
-  countrypops \%>\%
-  dplyr::select(-contains("code")) \%>\%
-  dplyr::filter(country_name == "Mongolia") \%>\%
-  tail(5) \%>\%
-  gt() \%>\%
-  cols_move_to_end(
-    columns = vars(year)
-  )
-
-# Use `countrypops` to create a gt table;
-# With the remaining columns, move `year`
-# and `country_name` to the end
-tab_2 <-
-  countrypops \%>\%
-  dplyr::select(-contains("code")) \%>\%
-  dplyr::filter(country_name == "Mongolia") \%>\%
-  tail(5) \%>\%
-  gt() \%>\%
-  cols_move_to_end(
-    columns = vars(year, country_name)
-  )
-
-}
 \seealso{
-Other Modify Columns: 
+Other column modification functions: 
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
 \code{\link{cols_label}()},
+\code{\link{cols_merge_n_pct}()},
 \code{\link{cols_merge_range}()},
 \code{\link{cols_merge_uncert}()},
 \code{\link{cols_merge}()},
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
+\code{\link{cols_unhide}()},
 \code{\link{cols_width}()}
 }
-\concept{Modify Columns}
+\concept{column modification functions}

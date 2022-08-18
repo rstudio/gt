@@ -1,45 +1,43 @@
-context("Ensuring that the common utility functions work as expected")
-
 test_that("the `date_formats()` function works correctly", {
 
   # Expect that the `info_date_style()` function produces an
   # information table with certain classes
-  expect_is(
-    date_formats(),
-    c("tbl_df", "tbl", "data.frame"))
+  expect_s3_class(date_formats(), c("tbl_df", "tbl", "data.frame"))
 
   # Expect the tibble to be of specific dimensions
   expect_equal(
     date_formats() %>%
       dim(),
-    c(14, 3))
+    c(14, 3)
+  )
 
   # Expect the tibble to have specific column names
   expect_equal(
     date_formats() %>%
       colnames(),
-    c("format_number", "format_name", "format_code"))
+    c("format_number", "format_name", "format_code")
+  )
 })
 
 test_that("the `time_formats()` util fcn works as expected", {
 
   # Expect that the `info_date_style()` function produces an
   # information table with certain classes
-  expect_is(
-    time_formats(),
-    c("tbl_df", "tbl", "data.frame"))
+  expect_s3_class(time_formats(), c("tbl_df", "tbl", "data.frame"))
 
   # Expect the tibble to be of specific dimensions
   expect_equal(
     time_formats() %>%
       dim(),
-    c(5, 3))
+    c(5, 3)
+  )
 
   # Expect the tibble to have specific column names
   expect_equal(
     time_formats() %>%
       colnames(),
-    c("format_number", "format_name", "format_code"))
+    c("format_number", "format_name", "format_code")
+  )
 })
 
 test_that("the `get_date_format()` function works correctly", {
@@ -270,7 +268,7 @@ test_that("the `process_text()` function works correctly", {
   process_text(text = simple_text) %>%
     expect_equal(simple_text)
 
-  simple_text %>% expect_is("character")
+  simple_text %>% expect_type("character")
 
   # Expect that text with the class `from_markdown` will
   # be returned from `process_text` as character-based
@@ -278,8 +276,8 @@ test_that("the `process_text()` function works correctly", {
   process_text(text = md_text) %>%
     expect_equal("this is <em>text</em> interpreted as <strong>markdown</strong>")
 
-  md_text %>% expect_is("from_markdown")
-  process_text(text = md_text) %>% expect_is("character")
+  md_text %>% expect_s3_class("from_markdown")
+  process_text(text = md_text) %>% expect_type("character")
 
   # Expect that text with the class `html` will
   # be returned from `process_text` as character-based
@@ -287,8 +285,9 @@ test_that("the `process_text()` function works correctly", {
   process_text(text = html_text) %>%
     expect_equal(as.character(html_text))
 
-  html_text %>% expect_is(c("html", "character"))
-  process_text(text = html_text) %>% expect_is(c("html", "character"))
+  html_text %>% expect_s3_class("html")
+  html_text %>% expect_type("character")
+  process_text(text = html_text) %>% expect_type("character")
 })
 
 test_that("the `apply_pattern_fmt_x()` function works correctly", {
@@ -334,7 +333,7 @@ test_that("the `remove_html()` function works correctly", {
 
   # Expect that the `character` text object retains the
   # `character` class after transformation
-  remove_html(html_text_1) %>% expect_is("character")
+  remove_html(html_text_1) %>% expect_type("character")
 
   # Call the `remove_html()` function on HTML text that's
   # classed as `html` and `character`
@@ -342,7 +341,8 @@ test_that("the `remove_html()` function works correctly", {
 
   # Expect that the new object retains the html` and
   # `character` classes
-  html_text_2_removed %>% expect_is(c("html", "character"))
+  html_text_2_removed %>% expect_s3_class("html")
+  html_text_2_removed %>% expect_type("character")
 
   # Expect that the HTML tags have been removed from the
   # `html_text_2` string
@@ -358,9 +358,9 @@ test_that("the `get_css_tbl()` function works correctly", {
     gt(mtcars, rownames_to_stub = TRUE) %>%
     get_css_tbl()
 
-  css_tbl %>% expect_is(c("tbl_df", "tbl", "data.frame"))
+  css_tbl %>% expect_s3_class(c("tbl_df", "tbl", "data.frame"))
 
-  css_tbl %>% dim() %>% expect_equal(c(228, 4))
+  ncol(css_tbl) %>% expect_equal(4)
 
   css_tbl %>%
     colnames() %>%
@@ -422,7 +422,7 @@ test_that("the `inline_html_styles()` function works correctly", {
     data %>%
     tab_style(
       style = cell_text(size = px(10)),
-      locations = cells_body(columns = TRUE)
+      locations = cells_body(columns = everything())
     )
 
   # Get the CSS tibble and the raw HTML
@@ -477,7 +477,7 @@ test_that("the `inline_html_styles()` function works correctly", {
   # Expect that the `colspan` attr is preserved in both <th> elements
   # and that the `text-align:left` rule is present
   expect_true(
-    grepl("th colspan=\"11\" style=.*?text-align: left;", inlined_html)
+    grepl("td colspan=\"11\" style=.*?text-align: left;", inlined_html)
   )
 })
 
@@ -486,14 +486,15 @@ test_that("the `as_locations()` function works correctly", {
   # Define `locations` as a `cells_body` object
   locations <-
     cells_body(
-      columns = vars(hp),
-      rows = c("Datsun 710", "Valiant"))
+      columns = hp,
+      rows = c("Datsun 710", "Valiant")
+    )
 
   # Expect certain structural features for a `locations` object
   locations %>% length() %>% expect_equal(2)
   locations[[1]] %>% length() %>% expect_equal(2)
-  locations[[1]] %>% expect_is(c("quosure", "formula"))
-  locations[[2]] %>% expect_is(c("quosure", "formula"))
+  locations[[1]] %>% expect_s3_class(c("quosure", "formula"))
+  locations[[2]] %>% expect_s3_class(c("quosure", "formula"))
 
   # Upgrade `locations` to a list of locations
   locations_list <- as_locations(locations)
@@ -501,7 +502,7 @@ test_that("the `as_locations()` function works correctly", {
   # Expect certain structural features for this `locations_list` object
   locations_list %>% length() %>% expect_equal(1)
   locations_list[[1]] %>% length() %>% expect_equal(2)
-  locations_list[[1]] %>% expect_is(c("cells_body", "location_cells"))
+  locations_list[[1]] %>% expect_s3_class(c("cells_body", "location_cells"))
 
   # Define locations as a named vector
   locations <-
@@ -608,3 +609,58 @@ test_that("the `glue_gt()` function works in a safe manner", {
   expect_identical(glue_gt(list(), "a", "b") %>% as.character(), "ab")
 })
 
+test_that("The `check_spanner_id_unique()` function works properly", {
+
+  gt_tbl_1 <- gt(exibble)
+
+  gt_tbl_2 <-
+    gt(exibble) %>%
+    tab_spanner(label = "a", columns = num)
+
+  gt_tbl_3 <-
+    gt(exibble, rowname_col = "row", groupname_col = "group") %>%
+    tab_spanner(label = "a", columns = c(num, char))
+
+  # Don't expect an error when checking for unique spanner IDs
+  # in a gt table with no spanner column labels
+  expect_error(
+    regexp = NA,
+    check_spanner_id_unique(data = gt_tbl_1, spanner_id = "a")
+  )
+
+  # Expect an error when reusing a spanner ID value (the `label` value
+  # is used as the `id` value)
+  expect_error(
+    check_spanner_id_unique(data = gt_tbl_2, spanner_id = "a")
+  )
+
+  # Expect an error if creating a spanner ID that is the same as
+  # a column name
+  expect_error(
+    check_spanner_id_unique(data = gt_tbl_1, spanner_id = "num")
+  )
+  expect_error(
+    check_spanner_id_unique(data = gt_tbl_2, spanner_id = "num")
+  )
+  expect_error(
+    check_spanner_id_unique(data = gt_tbl_2, spanner_id = "num")
+  )
+  expect_error(
+    check_spanner_id_unique(data = gt_tbl_3, spanner_id = "row")
+  )
+  expect_error(
+    check_spanner_id_unique(data = gt_tbl_3, spanner_id = "group")
+  )
+})
+
+test_that("the `get_file_ext()` function works correctly", {
+
+  # Expect that filenames with various extensions are
+  # work with `get_file_ext()` to return the file extension
+  get_file_ext(file = "file.svg") %>% expect_equal("svg")
+  get_file_ext(file = "file.001.svg") %>% expect_equal("svg")
+  get_file_ext(file = "file.001..svg") %>% expect_equal("svg")
+  get_file_ext(file = "_file.jpg") %>% expect_equal("jpg")
+  get_file_ext(file = "file.png") %>% expect_equal("png")
+  get_file_ext(file = "file.gif") %>% expect_equal("gif")
+})

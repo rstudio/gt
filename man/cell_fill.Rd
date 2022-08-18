@@ -24,53 +24,59 @@ function, which itself allows for the setting of custom styles to one or more
 cells. Specifically, the call to \code{cell_fill()} should be bound to the
 \code{styles} argument of \code{\link[=tab_style]{tab_style()}}.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cell_fill_1.png}{options: width=100\%}}
-}
 
-\section{Function ID}{
+Use \code{\link{exibble}} to create a \strong{gt} table. Add styles with \code{\link[=tab_style]{tab_style()}} and
+the \code{cell_fill()} helper function.
 
-7-16
-}
-
-\examples{
-# Use `exibble` to create a gt table;
-# add styles with `tab_style()` and
-# the `cell_fill()` helper function
-tab_1 <-
-  exibble \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(num, currency) \%>\%
   gt() \%>\%
   fmt_number(
-    columns = vars(num, currency),
+    columns = c(num, currency),
     decimals = 1
   ) \%>\%
   tab_style(
     style = cell_fill(color = "lightblue"),
     locations = cells_body(
-      columns = vars(num),
-      rows = num >= 5000)
+      columns = num,
+      rows = num >= 5000
+    )
   ) \%>\%
   tab_style(
     style = cell_fill(color = "gray85"),
     locations = cells_body(
-      columns = vars(currency),
+      columns = currency,
       rows = currency < 100
     )
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cell_fill_1.png" style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+7-20
+}
+
 \seealso{
-Other Helper Functions: 
+Other helper functions: 
 \code{\link{adjust_luminance}()},
 \code{\link{cell_borders}()},
 \code{\link{cell_text}()},
 \code{\link{cells_body}()},
 \code{\link{cells_column_labels}()},
 \code{\link{cells_column_spanners}()},
+\code{\link{cells_footnotes}()},
 \code{\link{cells_grand_summary}()},
 \code{\link{cells_row_groups}()},
+\code{\link{cells_source_notes}()},
+\code{\link{cells_stub_grand_summary}()},
+\code{\link{cells_stub_summary}()},
 \code{\link{cells_stubhead}()},
 \code{\link{cells_stub}()},
 \code{\link{cells_summary}()},
@@ -86,4 +92,4 @@ Other Helper Functions:
 \code{\link{px}()},
 \code{\link{random_id}()}
 }
-\concept{Helper Functions}
+\concept{helper functions}

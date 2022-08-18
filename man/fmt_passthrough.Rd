@@ -4,22 +4,30 @@
 \alias{fmt_passthrough}
 \title{Format by simply passing data through}
 \usage{
-fmt_passthrough(data, columns, rows = NULL, escape = TRUE, pattern = "{x}")
+fmt_passthrough(
+  data,
+  columns,
+  rows = everything(),
+  escape = TRUE,
+  pattern = "{x}"
+)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{The columns to format. Can either be a series of column names
-provided in \code{\link[=vars]{vars()}}, a vector of column indices, or a helper function
+provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
 focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.}
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
+\code{\link[=everything]{everything()}}.}
 
-\item{rows}{Optional rows to format. Not providing any value results in all
-rows in \code{columns} being formatted. Can either be a vector of row captions
-provided \code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on
-selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.
-We can also use expressions to filter down to the rows we need (e.g.,
+\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
+default) results in all rows in \code{columns} being formatted. Alternatively,
+we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
+indices, or a helper function focused on selections. The select helper
+functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
+to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{escape}{An option to escape text according to the final output format
@@ -46,51 +54,59 @@ be text or useful as is.
 }
 \details{
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
-nothing is provided for \code{rows} then entire columns are selected). A number of
-helper functions exist to make targeting more effective. Conditional
+nothing is provided for \code{rows} then entire columns are selected). Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the Arguments section for more information on this.
+argument. See the \emph{Arguments} section for more information on this.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_fmt_passthrough_1.png}{options: width=100\%}}
+
+Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{char} column. Pass
+the data in that column through but apply a simple pattern that adds an \code{"s"}
+to the non-\code{NA} values.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+  dplyr::select(char) \%>\%
+  gt() \%>\%
+  fmt_passthrough(
+    columns = char,
+    rows = !is.na(char),
+    pattern = "\{x\}s"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_passthrough_1.png" style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
 
-3-9
+3-15
 }
 
-\examples{
-# Use `exibble` to create a gt table;
-# keep only the `char` column;
-# pass the data in that column through
-# but apply a simple pattern that adds
-# an 's' to the non-NA values
-tab_1 <-
-  exibble \%>\%
-  dplyr::select(char) \%>\%
-  gt() \%>\%
-  fmt_passthrough(
-    columns = vars(char),
-    rows = !is.na(char),
-    pattern = "{x}s"
-  )
-
-}
 \seealso{
-Other Format Data: 
+Other data formatting functions: 
 \code{\link{data_color}()},
+\code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_duration}()},
+\code{\link{fmt_engineering}()},
+\code{\link{fmt_fraction}()},
+\code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
-\code{\link{fmt_missing}()},
 \code{\link{fmt_number}()},
+\code{\link{fmt_partsper}()},
 \code{\link{fmt_percent}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt}()},
+\code{\link{sub_large_vals}()},
+\code{\link{sub_missing}()},
+\code{\link{sub_small_vals}()},
+\code{\link{sub_zero}()},
 \code{\link{text_transform}()}
 }
-\concept{Format Data}
+\concept{data formatting functions}
