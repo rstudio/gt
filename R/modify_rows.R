@@ -37,7 +37,7 @@
 #' `r man_get_image_tag(file = "man_row_group_order_1.png")`
 #' }}
 #'
-#' @family Modify Rows
+#' @family row modification functions
 #' @section Function ID:
 #' 5-1
 #'

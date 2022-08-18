@@ -75,7 +75,7 @@
 #' `r man_get_image_tag(file = "man_summary_rows_1.png")`
 #' }}
 #'
-#' @family Add Rows
+#' @family row addition functions
 #' @section Function ID:
 #' 6-1
 #'
@@ -233,7 +233,7 @@ summary_rows <- function(
 #' `r man_get_image_tag(file = "man_grand_summary_rows_1.png")`
 #' }}
 #'
-#' @family Add Rows
+#' @family row addition functions
 #' @section Function ID:
 #' 6-2
 #'

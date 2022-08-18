@@ -22,7 +22,7 @@ value argument of variable length (the default is 10 letters).
 }
 
 \seealso{
-Other Helper Functions: 
+Other helper functions: 
 \code{\link{adjust_luminance}()},
 \code{\link{cell_borders}()},
 \code{\link{cell_fill}()},
@@ -50,4 +50,4 @@ Other Helper Functions:
 \code{\link{pct}()},
 \code{\link{px}()}
 }
-\concept{Helper Functions}
+\concept{helper functions}

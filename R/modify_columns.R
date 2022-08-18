@@ -47,7 +47,7 @@
 #' `r man_get_image_tag(file = "man_cols_align_1.png")`
 #' }}
 #'
-#' @family Modify Columns
+#' @family column modification functions
 #' @section Function ID:
 #' 4-1
 #'
@@ -61,9 +61,6 @@ cols_align <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Get the internal data table
-  data_tbl <- dt_data_get(data = data)
-
   # Get the `align` value, this stops the function if there is no match
   align <- match.arg(align)
 
@@ -76,13 +73,19 @@ cols_align <- function(
 
   if (align == "auto") {
 
+    # Get the internal data table
+    data_tbl <- dt_data_get(data = data)
+
     # Obtain a vector of column classes for each of the column
     # names
+    col_classes <- unlist(lapply(lapply(data_tbl[column_names], class), `[[`, 1))
+
+    # Check whether all values in 'character' columns are
+    # predominantly 'number-like' and modify `col_classes` accordingly
     col_classes <-
-      unlist(
-        lapply(
-          data_tbl[column_names], class) %>%
-          lapply(`[[`, 1)
+      determine_which_character_number(
+        data_tbl = data_tbl,
+        col_classes = col_classes
       )
 
     # Get a vector of `align` values based on the column classes
@@ -90,9 +93,10 @@ cols_align <- function(
       unname(
         sapply(
           col_classes, switch,
+          "character-numeric" = "right",
           "character" = "left",
-          "Date" = "left",
-          "POSIXct" = "left",
+          "Date" = "right",
+          "POSIXct" = "right",
           "logical" = "center",
           "factor" = "center",
           "list" = "center",
@@ -117,6 +121,27 @@ cols_align <- function(
   }
 
   data
+}
+
+determine_which_character_number <- function(
+  data_tbl = data_tbl,
+  col_classes = col_classes
+) {
+
+  cols_character <- names(col_classes[col_classes == "character"])
+
+  for (col in cols_character) {
+
+    col_vals <- data_tbl[[col]]
+
+    res <- grepl("^[0-9 -/:\\.]*$", col_vals[!is.na(col_vals)])
+
+    if (length(res) > 0 && all(res)) {
+      col_classes[names(col_classes) == col] <- "character-numeric"
+    }
+  }
+
+  col_classes
 }
 
 #' Set the widths of columns
@@ -183,7 +208,7 @@ cols_align <- function(
 #' `r man_get_image_tag(file = "man_cols_width_1.png")`
 #' }}
 #'
-#' @family Modify Columns
+#' @family column modification functions
 #' @section Function ID:
 #' 4-2
 #'
@@ -357,7 +382,7 @@ cols_width <- function(
 #' `r man_get_image_tag(file = "man_cols_label_2.png")`
 #' }}
 #'
-#' @family Modify Columns
+#' @family column modification functions
 #' @section Function ID:
 #' 4-3
 #'
@@ -485,7 +510,7 @@ cols_label <- function(
 #' `r man_get_image_tag(file = "man_cols_move_to_start_2.png")`
 #' }}
 #'
-#' @family Modify Columns
+#' @family column modification functions
 #' @section Function ID:
 #' 4-4
 #'
@@ -589,7 +614,7 @@ cols_move_to_start <- function(
 #' `r man_get_image_tag(file = "man_cols_move_to_end_2.png")`
 #' }}
 #'
-#' @family Modify Columns
+#' @family column modification functions
 #' @section Function ID:
 #' 4-5
 #'
@@ -684,7 +709,7 @@ cols_move_to_end <- function(
 #' `r man_get_image_tag(file = "man_cols_move_1.png")`
 #' }}
 #'
-#' @family Modify Columns
+#' @family column modification functions
 #' @section Function ID:
 #' 4-6
 #'
@@ -823,7 +848,7 @@ cols_move <- function(
 #' `r man_get_image_tag(file = "man_cols_hide_2.png")`
 #' }}
 #'
-#' @family Modify Columns
+#' @family column modification functions
 #' @section Function ID:
 #' 4-7
 #'
@@ -920,7 +945,7 @@ cols_hide <- function(
 #' `r man_get_image_tag(file = "man_cols_unhide_2.png")`
 #' }}
 #'
-#' @family Modify Columns
+#' @family column modification functions
 #' @section Function ID:
 #' 4-8
 #'
@@ -1045,7 +1070,7 @@ cols_unhide <- function(
 #' `r man_get_image_tag(file = "man_cols_merge_uncert_1.png")`
 #' }}
 #'
-#' @family Modify Columns
+#' @family column modification functions
 #' @section Function ID:
 #' 4-9
 #'
@@ -1171,7 +1196,7 @@ cols_merge_uncert <- function(
 #' `r man_get_image_tag(file = "man_cols_merge_range_1.png")`
 #' }}
 #'
-#' @family Modify Columns
+#' @family column modification functions
 #' @section Function ID:
 #' 4-10
 #'
@@ -1345,7 +1370,7 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #' `r man_get_image_tag(file = "man_cols_merge_n_pct_1.png")`
 #' }}
 #'
-#' @family Modify Columns
+#' @family column modification functions
 #' @section Function ID:
 #' 4-11
 #'
@@ -1464,7 +1489,7 @@ cols_merge_n_pct <- function(
 #' `r man_get_image_tag(file = "man_cols_merge_1.png")`
 #' }}
 #'
-#' @family Modify Columns
+#' @family column modification functions
 #' @section Function ID:
 #' 4-12
 #'

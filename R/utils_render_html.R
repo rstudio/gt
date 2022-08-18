@@ -792,7 +792,7 @@ create_body_component_h <- function(data) {
   # Get the column alignments and also the alignment class names
   col_alignment <-
     c(
-      rep("right", length(stub_layout)),
+      dt_boxhead_get_alignments_in_stub(data = data),
       dt_boxhead_get_vars_align_default(data = data)
     )
 
@@ -804,11 +804,14 @@ create_body_component_h <- function(data) {
 
     cell_matrix <- cell_matrix[i, ]
 
-    if (
-      "group_label" %in% stub_layout &&
-      !(i %in% groups_rows_df$row_start)
-      ) {
+    if ("group_label" %in% stub_layout) {
+
+      if (!(i %in% groups_rows_df$row_start)) {
         cell_matrix <- cell_matrix[-1]
+      }
+      if (i %in% groups_rows_df$row_start) {
+        cell_matrix[1] <- groups_rows_df$group_label[groups_rows_df$row_start == i]
+      }
     }
 
     cell_matrix
@@ -844,6 +847,7 @@ create_body_component_h <- function(data) {
   if (length(stub_layout) > 0) {
 
     if ("rowname" %in% stub_layout) {
+
       row_label_col <- which(stub_layout == "rowname")
 
       extra_classes_1[[row_label_col]] <- "gt_stub"
@@ -862,10 +866,13 @@ create_body_component_h <- function(data) {
 
         body_section <- list()
 
-        group_info <- groups_rows_df[groups_rows_df$row_start == i, c("group_id", "group_label")]
+        group_info <-
+          groups_rows_df[groups_rows_df$row_start == i, c("group_id", "group_label")]
+
         if (nrow(group_info) == 0) {
           group_info <- NULL
         }
+
         group_id <- group_info[["group_id"]]
         group_label <- group_info[["group_label"]]
 
@@ -876,7 +883,13 @@ create_body_component_h <- function(data) {
           !is.null(group_id) &&
           !("group_label" %in% stub_layout)
         ) {
-          row_style <- dt_styles_pluck(styles_tbl, locname = "row_groups", grpname = group_id)$html_style
+
+          row_style <-
+            dt_styles_pluck(
+              styles_tbl = styles_tbl,
+              locname = "row_groups",
+              grpname = group_id
+            )$html_style
 
           group_class <-
             if (group_label == "") {
@@ -903,9 +916,29 @@ create_body_component_h <- function(data) {
         # Create a body row
         #
 
+        indentation_stub <-
+          dt_stub_indentation_at_position(
+            data = data,
+            i = i
+          )
+
         extra_classes <- if (i %% 2 == 0) extra_classes_2 else extra_classes_1
 
-        styles_row <- dt_styles_pluck(styles_tbl, locname = c("data", "stub"), rownum = i)
+        if (!is.null(indentation_stub) && indentation_stub != 0) {
+
+          extra_classes[[row_label_col]] <-
+            paste(
+              extra_classes[[row_label_col]],
+              paste0("gt_indent_", indentation_stub)
+            )
+        }
+
+        styles_row <-
+          dt_styles_pluck(
+            styles_tbl = styles_tbl,
+            locname = c("data", "stub"),
+            rownum = i
+          )
 
         row_styles <-
           build_row_styles(
@@ -944,7 +977,13 @@ create_body_component_h <- function(data) {
 
             # Process row group styles if there is an indication that some
             # are present
-            row_group_style <- dt_styles_pluck(styles_tbl, locname = "row_groups", grpname = group_id)$html_style
+            row_group_style <-
+              dt_styles_pluck(
+                styles_tbl = styles_tbl,
+                locname = "row_groups",
+                grpname = group_id
+              )$html_style
+
             # Add style of row group cell to vector
             row_styles <- c(list(row_group_style), row_styles)
 
@@ -1390,9 +1429,11 @@ summary_row_tags_i <- function(data, group_id) {
     col_span_vals[[1]] <- 2L
   }
 
-  # Get the column alignments and also the alignment class names
-  col_alignment <-
-    c("right", dt_boxhead_get_vars_align_default(data = data))
+  # Default to a left alignment for the summary row labels and obtain the
+  # alignments corresponding to the summary row cells (from the body rows)
+  col_alignment <- c("left", dt_boxhead_get_vars_align_default(data = data))
+
+  # Construct the alignment class names
   alignment_classes <- paste0("gt_", col_alignment)
 
   for (j in seq_len(nrow(summary_df))) {
@@ -1401,15 +1442,35 @@ summary_row_tags_i <- function(data, group_id) {
 
     if (summary_row_type == "grand") {
 
-      styles_resolved_row <- dt_styles_pluck(styles_tbl, locname = "grand_summary_cells", grpname = group_id, rownum = j)
+      styles_resolved_row <-
+        dt_styles_pluck(
+          styles_tbl = styles_tbl,
+          locname = "grand_summary_cells",
+          grpname = group_id,
+          rownum = j
+        )
+
       summary_row_class <- "gt_grand_summary_row"
       first_row_class <- "gt_first_grand_summary_row"
 
     } else {
 
-      styles_resolved_row <- dt_styles_pluck(styles_tbl, locname = "summary_cells", grpname = group_id, grprow = j)
+      styles_resolved_row <-
+        dt_styles_pluck(
+          styles_tbl = styles_tbl,
+          locname = "summary_cells",
+          grpname = group_id,
+          grprow = j
+        )
+
       summary_row_class <- "gt_summary_row"
-      first_row_class <- if ("rowname" %in% stub_layout) "gt_first_summary_row thick" else "gt_first_summary_row"
+
+      first_row_class <-
+        if ("rowname" %in% stub_layout) {
+          "gt_first_summary_row thick"
+        } else {
+          "gt_first_summary_row"
+        }
     }
 
     row_styles <-

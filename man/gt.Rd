@@ -125,7 +125,7 @@ available in the package.
 }
 
 \seealso{
-Other Create Table: 
+Other table creation functions: 
 \code{\link{gt_preview}()}
 }
-\concept{Create Table}
+\concept{table creation functions}

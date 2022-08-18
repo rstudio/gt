@@ -311,7 +311,7 @@ translate_legacy_resolver_expr <- function(quo, null_means) {
 resolve_rows_l <- function(expr, data) {
 
   if (is_gt(data)) {
-    row_names <- dt_stub_df_get(data)$rowname
+    row_names <- dt_stub_df_get(data)$row_id
     data <- dt_data_get(data = data)
   } else {
     row_names <- row.names(data)
@@ -381,9 +381,11 @@ resolve_vector_i <- function(expr, vector, item_label = "item") {
   which(resolve_vector_l(expr = {{ expr }}, vector = vector, item_label = item_label))
 }
 
-normalize_resolved <- function(resolved,
-                               item_names,
-                               item_label) {
+normalize_resolved <- function(
+    resolved,
+    item_names,
+    item_label
+) {
 
   item_count <- length(item_names)
   item_sequence <- seq_along(item_names)

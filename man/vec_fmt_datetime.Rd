@@ -12,7 +12,7 @@ vec_fmt_datetime(
   format = NULL,
   tz = NULL,
   pattern = "{x}",
-  output = c("html", "latex", "rtf")
+  output = c("auto", "plain", "html", "latex", "rtf", "word")
 )
 }
 \arguments{
@@ -48,7 +48,9 @@ formatted value. The value itself is represented by \code{{x}} and all other
 characters are taken to be string literals.}
 
 \item{output}{The output style of the resulting character vector. This can
-either be \code{"html"} (the default), \code{"latex"}, or \code{"rtf"}.}
+either be \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"},
+or \code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the
+\code{"auto"} option will choose the correct \code{output} value}
 }
 \value{
 A character vector.
@@ -162,21 +164,23 @@ for the next few examples:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{str_vals <- c("2022-06-13 18:36", "2019-01-25 01:08", NA)
 }\if{html}{\out{</div>}}
 
-Using \code{vec_fmt_datetime()} with the default options will create a character vector
-of formatted datetime values. Any \code{NA} values remain as \code{NA} values. The
-rendering context is HTML unless specified in the \code{output} argument.
+Using \code{vec_fmt_datetime()} with the default options will create a character
+vector of formatted datetime values. Any \code{NA} values remain as \code{NA} values.
+The rendering context will be autodetected unless specified in the \code{output}
+argument (here, it is of the \code{"plain"} output type).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_datetime(str_vals)
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "Monday, June 13, 2022 18:36"    "Friday, January 25, 2019 01:08"
-## [3] NA
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "Monday, June 13, 2022 18:36"
+#> [2] "Friday, January 25, 2019 01:08"
+#> [3] NA
 }\if{html}{\out{</div>}}
 
 We can change the formatting style of the date and time portions separately
 with the \code{date_style} (values \code{1}-\code{14}) and \code{time_style} (values \code{1}-\code{5})
-arguments. The \code{sep} option allows for a customized string between the date
-and time.
+arguments. The \code{sep} option allows for a customized separator string between
+the date and time.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_datetime(
   str_vals,
@@ -186,8 +190,9 @@ and time.
 )
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "Monday, June 13, 2022 at 6:36 PM"    "Friday, January 25, 2019 at 1:08 AM"
-## [3] NA
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "Monday, June 13, 2022 at 6:36 PM"
+#> [2] "Friday, January 25, 2019 at 1:08 AM"
+#> [3] NA
 }\if{html}{\out{</div>}}
 
 We can always use \code{\link[=info_date_style]{info_date_style()}} or \code{\link[=info_time_style]{info_time_style()}} to call up info
@@ -199,9 +204,9 @@ control over the final formatting (even including string literals as please):
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_datetime(str_vals, format = "\%A, \%B \%e, \%Y at \%I:\%M \%p")
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "Monday, June 13, 2022 at 06:36 PM"   
-## [2] "Friday, January 25, 2019 at 01:08 AM"
-## [3] NA
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "Monday, June 13, 2022 at 06:36 PM"
+#> [2] "Friday, January 25, 2019 at 01:08 AM"
+#> [3] NA
 }\if{html}{\out{</div>}}
 
 As a last example, one can wrap the datetime values in a pattern with the
@@ -217,15 +222,15 @@ applied.
 )
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "Date and Time: Jun 13, 2022 at 6:36 PM"
-## [2] "Date and Time: Jan 25, 2019 at 1:08 AM"
-## [3] NA
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "Date and Time: Jun 13, 2022 at 6:36 PM"
+#> [2] "Date and Time: Jan 25, 2019 at 1:08 AM"
+#> [3] NA
 }\if{html}{\out{</div>}}
 }
 
 \section{Function ID}{
 
-14-11
+14-12
 }
 
 \seealso{
@@ -233,11 +238,13 @@ Other vector formatting functions:
 \code{\link{vec_fmt_bytes}()},
 \code{\link{vec_fmt_currency}()},
 \code{\link{vec_fmt_date}()},
+\code{\link{vec_fmt_duration}()},
 \code{\link{vec_fmt_engineering}()},
 \code{\link{vec_fmt_fraction}()},
 \code{\link{vec_fmt_integer}()},
 \code{\link{vec_fmt_markdown}()},
 \code{\link{vec_fmt_number}()},
+\code{\link{vec_fmt_partsper}()},
 \code{\link{vec_fmt_percent}()},
 \code{\link{vec_fmt_scientific}()},
 \code{\link{vec_fmt_time}()}

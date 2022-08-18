@@ -140,7 +140,7 @@ Use \code{\link{exibble}} to create a \strong{gt} table. Replace missing values 
 
 \section{Function ID}{
 
-2-8
+2-9
 }
 
 \seealso{
@@ -148,7 +148,7 @@ Use \code{\link{exibble}} to create a \strong{gt} table. Replace missing values 
 defining custom styles and \code{\link[=cells_body]{cells_body()}} as one of many useful helper
 functions for targeting the locations to be styled.
 
-Other Create or Modify Parts: 
+Other part creation/modification functions: 
 \code{\link{tab_footnote}()},
 \code{\link{tab_header}()},
 \code{\link{tab_options}()},
@@ -156,6 +156,7 @@ Other Create or Modify Parts:
 \code{\link{tab_source_note}()},
 \code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
+\code{\link{tab_stub_indent}()},
 \code{\link{tab_stubhead}()}
 }
-\concept{Create or Modify Parts}
+\concept{part creation/modification functions}

@@ -10,7 +10,7 @@ fmt_fraction(
   rows = everything(),
   accuracy = NULL,
   simplify = TRUE,
-  layout = c("diagonal", "inline"),
+  layout = c("inline", "diagonal"),
   use_seps = TRUE,
   pattern = "{x}",
   sep_mark = ",",
@@ -49,10 +49,10 @@ option to simplify the fraction (where possible) can be taken with \code{TRUE}
 (the default). With \code{FALSE}, denominators in fractions will be fixed to the
 value provided in \code{accuracy}.}
 
-\item{layout}{For HTML output, the \code{"diagonal"} layout is the default. This
-will generate fractions that are typeset with raised/lowered numerals and a
-virgule. The \code{"inline"} layout places the numerals of the fraction on the
-baseline and uses a standard slash character.}
+\item{layout}{For HTML output, the \code{"inline"} layout is the default. This
+layout places the numerals of the fraction on the baseline and uses a
+standard slash character. The \code{"diagonal"} layout will generate fractions
+that are typeset with raised/lowered numerals and a virgule.}
 
 \item{use_seps}{An option to use digit group separators. The type of digit
 group separator is set by \code{sep_mark} and overridden if a locale ID is
@@ -141,7 +141,8 @@ Use \code{\link{pizzaplace}} to create a \strong{gt} table. Format the \code{f_s
   fmt_fraction(
     columns = starts_with("f_"),
     accuracy = 10,
-    simplify = FALSE
+    simplify = FALSE,
+    layout = "diagonal"
   ) \%>\%
   sub_missing(missing_text = "") \%>\%
   tab_spanner(
@@ -185,7 +186,7 @@ Use \code{\link{pizzaplace}} to create a \strong{gt} table. Format the \code{f_s
 }
 
 \seealso{
-Other Format Data: 
+Other data formatting functions: 
 \code{\link{data_color}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
@@ -208,4 +209,4 @@ Other Format Data:
 \code{\link{sub_zero}()},
 \code{\link{text_transform}()}
 }
-\concept{Format Data}
+\concept{data formatting functions}

@@ -49,7 +49,7 @@ is in the stub.
 }
 
 \seealso{
-Other Create or Modify Parts: 
+Other part creation/modification functions: 
 \code{\link{tab_footnote}()},
 \code{\link{tab_header}()},
 \code{\link{tab_options}()},
@@ -57,6 +57,7 @@ Other Create or Modify Parts:
 \code{\link{tab_source_note}()},
 \code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
+\code{\link{tab_stub_indent}()},
 \code{\link{tab_style}()}
 }
-\concept{Create or Modify Parts}
+\concept{part creation/modification functions}

@@ -154,7 +154,7 @@ as the domain.
 }
 
 \seealso{
-Other Format Data: 
+Other data formatting functions: 
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
@@ -177,4 +177,4 @@ Other Format Data:
 \code{\link{sub_zero}()},
 \code{\link{text_transform}()}
 }
-\concept{Format Data}
+\concept{data formatting functions}

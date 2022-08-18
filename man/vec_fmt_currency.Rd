@@ -21,7 +21,7 @@ vec_fmt_currency(
   placement = "left",
   incl_space = FALSE,
   locale = NULL,
-  output = c("html", "latex", "rtf")
+  output = c("auto", "plain", "html", "latex", "rtf", "word")
 )
 }
 \arguments{
@@ -120,7 +120,9 @@ We can use the \code{\link[=info_locales]{info_locales()}} function as a useful 
 the locales that are supported.}
 
 \item{output}{The output style of the resulting character vector. This can
-either be \code{"html"} (the default), \code{"latex"}, or \code{"rtf"}.}
+either be \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"},
+or \code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the
+\code{"auto"} option will choose the correct \code{output} value}
 }
 \value{
 A character vector.
@@ -166,15 +168,16 @@ Let's create a numeric vector for the next few examples:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{num_vals <- c(5.2, 8.65, 0, -5.3, NA)
 }\if{html}{\out{</div>}}
 
-Using \code{vec_fmt_currency()} with the default options will create a character vector
-where the numeric values have been transformed to U.S. Dollars (\code{"USD"}).
-Furthermore, the rendering context is HTML unless specified otherwise in the
-\code{output} argument.
+Using \code{vec_fmt_currency()} with the default options will create a character
+vector where the numeric values have been transformed to U.S. Dollars
+(\code{"USD"}). Furthermore, the rendering context will be autodetected unless
+specified in the \code{output} argument (here, it is of the \code{"plain"} output
+type).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_currency(num_vals)
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "$5.20"        "$8.65"        "$0.00"        "&minus;$5.30" "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "$5.20" "$8.65" "$0.00" "-$5.30" "NA"
 }\if{html}{\out{</div>}}
 
 We can supply a currency code to the \code{currency} argument. Let's use British
@@ -183,8 +186,7 @@ Pounds by using \code{currency = "GBP"}:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_currency(num_vals, currency = "GBP")
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "&#163;5.20"        "&#163;8.65"        "&#163;0.00"       
-## [4] "&minus;&#163;5.30" "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "GBP5.20" "GBP8.65" "GBP0.00" "-GBP5.30" "NA"
 }\if{html}{\out{</div>}}
 
 If we are formatting for a different locale, we could supply the locale ID
@@ -193,8 +195,7 @@ and let \strong{gt} handle qll locale-specific formatting options:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_currency(num_vals, currency = "EUR", locale = "fr")
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "&#8364;5,20"        "&#8364;8,65"        "&#8364;0,00"       
-## [4] "&minus;&#8364;5,30" "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "EUR5,20" "EUR8,65" "EUR0,00" "-EUR5,30" "NA"
 }\if{html}{\out{</div>}}
 
 There are many options for formatting values. Perhaps you need to have
@@ -203,7 +204,7 @@ explicit positive and negative signs? Use \code{force_sign = TRUE} for that.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_currency(num_vals, force_sign = TRUE)
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "+$5.20"       "+$8.65"       "$0.00"        "&minus;$5.30" "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "+$5.20" "+$8.65" "$0.00" "-$5.30" "NA"
 }\if{html}{\out{</div>}}
 
 As a last example, one can wrap the values in a pattern with the \code{pattern}
@@ -212,14 +213,13 @@ argument. Note here that \code{NA} values won't have the pattern applied.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_currency(num_vals, pattern = "`\{x\}`")
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "`$5.20`"        "`$8.65`"        "`$0.00`"        "`&minus;$5.30`"
-## [5] "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "`$5.20`" "`$8.65`" "`$0.00`" "`-$5.30`" "NA"
 }\if{html}{\out{</div>}}
 }
 
 \section{Function ID}{
 
-14-7
+14-8
 }
 
 \seealso{
@@ -227,11 +227,13 @@ Other vector formatting functions:
 \code{\link{vec_fmt_bytes}()},
 \code{\link{vec_fmt_datetime}()},
 \code{\link{vec_fmt_date}()},
+\code{\link{vec_fmt_duration}()},
 \code{\link{vec_fmt_engineering}()},
 \code{\link{vec_fmt_fraction}()},
 \code{\link{vec_fmt_integer}()},
 \code{\link{vec_fmt_markdown}()},
 \code{\link{vec_fmt_number}()},
+\code{\link{vec_fmt_partsper}()},
 \code{\link{vec_fmt_percent}()},
 \code{\link{vec_fmt_scientific}()},
 \code{\link{vec_fmt_time}()}

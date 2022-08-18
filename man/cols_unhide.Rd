@@ -70,7 +70,7 @@ the \code{cols_unhide()} function becomes useful.
 \seealso{
 \code{\link[=cols_hide]{cols_hide()}} to perform the inverse operation.
 
-Other Modify Columns: 
+Other column modification functions: 
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
 \code{\link{cols_label}()},
@@ -83,4 +83,4 @@ Other Modify Columns:
 \code{\link{cols_move}()},
 \code{\link{cols_width}()}
 }
-\concept{Modify Columns}
+\concept{column modification functions}

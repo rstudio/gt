@@ -66,11 +66,11 @@ used with \code{\link[=fmt_currency]{fmt_currency()}}.
 }
 
 \seealso{
-Other Information Functions: 
+Other information functions: 
 \code{\link{info_date_style}()},
 \code{\link{info_google_fonts}()},
 \code{\link{info_locales}()},
 \code{\link{info_paletteer}()},
 \code{\link{info_time_style}()}
 }
-\concept{Information Functions}
+\concept{information functions}

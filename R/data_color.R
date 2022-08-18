@@ -126,7 +126,7 @@
 #' `r man_get_image_tag(file = "man_data_color_2.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-21
 #'

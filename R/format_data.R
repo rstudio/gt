@@ -154,7 +154,7 @@
 #' `r man_get_image_tag(file = "man_fmt_number_2.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-1
 #'
@@ -349,7 +349,7 @@ fmt_number <- function(
 #' `r man_get_image_tag(file = "man_fmt_integer_1.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-2
 #'
@@ -449,7 +449,7 @@ fmt_integer <- function(
 #' `r man_get_image_tag(file = "man_fmt_scientific_1.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-3
 #'
@@ -633,7 +633,7 @@ fmt_scientific <- function(
 #' `r man_get_image_tag(file = "man_fmt_engineering_1.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-4
 #'
@@ -992,7 +992,7 @@ fmt_symbol <- function(
 #' `r man_get_image_tag(file = "man_fmt_percent_1.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-5
 #'
@@ -1150,7 +1150,7 @@ fmt_percent <- function(
 #' `r man_get_image_tag(file = "man_fmt_partsper_1.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-6
 #'
@@ -1314,10 +1314,10 @@ fmt_partsper <- function(
 #'   option to simplify the fraction (where possible) can be taken with `TRUE`
 #'   (the default). With `FALSE`, denominators in fractions will be fixed to the
 #'   value provided in `accuracy`.
-#' @param layout For HTML output, the `"diagonal"` layout is the default. This
-#'   will generate fractions that are typeset with raised/lowered numerals and a
-#'   virgule. The `"inline"` layout places the numerals of the fraction on the
-#'   baseline and uses a standard slash character.
+#' @param layout For HTML output, the `"inline"` layout is the default. This
+#'   layout places the numerals of the fraction on the baseline and uses a
+#'   standard slash character. The `"diagonal"` layout will generate fractions
+#'   that are typeset with raised/lowered numerals and a virgule.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -1350,7 +1350,8 @@ fmt_partsper <- function(
 #'   fmt_fraction(
 #'     columns = starts_with("f_"),
 #'     accuracy = 10,
-#'     simplify = FALSE
+#'     simplify = FALSE,
+#'     layout = "diagonal"
 #'   ) %>%
 #'   sub_missing(missing_text = "") %>%
 #'   tab_spanner(
@@ -1387,7 +1388,7 @@ fmt_partsper <- function(
 #' `r man_get_image_tag(file = "man_fmt_fraction_1.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-7
 #'
@@ -1399,14 +1400,13 @@ fmt_fraction <- function(
     rows = everything(),
     accuracy = NULL,
     simplify = TRUE,
-    layout = c("diagonal", "inline"),
+    layout = c("inline", "diagonal"),
     use_seps = TRUE,
     pattern = "{x}",
     sep_mark = ",",
     system = c("intl", "ind"),
     locale = NULL
 ) {
-
   system <- match.arg(system)
 
   # Perform input object validation
@@ -1602,21 +1602,45 @@ fmt_fraction <- function(
 
           if (context == "html") {
 
+            narrow_no_break_space_char <- "\U0202F"
+            slash_mark_char <- "\U02044"
+
             num_vec <-
-              paste0("<span class=\"gt_fraction_numerator\">", num_vec, "</span>")
+              paste0(
+                "<span style=\"",
+                "font-size:0.6em;",
+                "line-height:0.6em;",
+                "vertical-align:0.45em;",
+                "\">",
+                num_vec,
+                "</span>"
+              )
 
             denom_vec <-
-              paste0("<span class=\"gt_fraction_denominator\">", denom_vec, "</span>")
+              paste0(
+                "<span style=\"",
+                "font-size:0.6em;",
+                "line-height:0.6em;",
+                "vertical-align:-0.05em;",
+                "\">",
+                denom_vec,
+                "</span>"
+              )
 
             slash_mark <-
-              htmltools::tags$span(
-                class = "gt_slash_mark",
-                htmltools::HTML("&frasl;")
+              paste0(
+                "<span style=\"",
+                "font-size:0.7em;",
+                "line-height:0.7em;",
+                "vertical-align:0.15em;",
+                "\">",
+                slash_mark_char,
+                "</span>"
               )
 
             x_str[has_a_fraction] <-
               paste0(
-                gsub(" ", "&#8239;", non_fraction_part),
+                gsub(" ", narrow_no_break_space_char, non_fraction_part),
                 num_vec, slash_mark, denom_vec
               )
 
@@ -1823,7 +1847,7 @@ round_gt <- function(x, digits = 0) {
 #' `r man_get_image_tag(file = "man_fmt_currency_2.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-8
 #'
@@ -1985,7 +2009,7 @@ fmt_currency <- function(
 #' `r man_get_image_tag(file = "man_fmt_bytes_2.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-9
 #'
@@ -2182,7 +2206,7 @@ fmt_bytes <- function(
 #' `r man_get_image_tag(file = "man_fmt_date_2.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-10
 #'
@@ -2338,7 +2362,7 @@ fmt_date <- function(
 #' `r man_get_image_tag(file = "man_fmt_time_2.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-11
 #'
@@ -2559,7 +2583,7 @@ fmt_time <- function(
 #' `r man_get_image_tag(file = "man_fmt_datetime_1.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-12
 #'
@@ -2795,7 +2819,7 @@ fmt_datetime <- function(
 #' `r man_get_image_tag(file = "man_fmt_duration_1.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-13
 #'
@@ -2842,7 +2866,7 @@ fmt_duration <- function(
     cli::cli_abort(c(
       "The value provided for `trim_zero_units` is invalid. Either use:",
       "*" = "`TRUE` or `FALSE`, or",
-      "*" = "A vector with any of the keywords `\"leading\"`, `\"trailing\"`, or `\"internal\"`."
+      "*" = "A vector with any of the keywords \"leading\", \"trailing\", or \"internal\"."
     ))
   }
 
@@ -2871,7 +2895,7 @@ fmt_duration <- function(
     )
   ) {
     cli::cli_abort(c(
-      "The `fmt_duration()` function can only be used on `columns` of certain types:",
+      "The `fmt_duration()` function can only be used on `columns` of certain types.",
       "*" = "Allowed types are `numeric` and `difftime`."
     ))
   }
@@ -2885,11 +2909,10 @@ fmt_duration <- function(
     ) &&
     is.null(input_units)
   ) {
-    stop(
-      "When there are numeric columns to format, `input_units` must not be `NULL`:\n",
-      "* Use one of `\"seconds\"`, `\"minutes\"`, `\"hours\"`, `\"days\"`, or `\"weeks\"`",
-      call. = FALSE
-    )
+    cli::cli_abort(c(
+      "When there are numeric columns to format, `input_units` must not be `NULL`.",
+      "*" = "Use one of \"seconds\", \"minutes\", \"hours\", \"days\", or \"weeks\"."
+    ))
   }
 
   # Initialize `colon_sep_params` list
@@ -3027,12 +3050,12 @@ fmt_duration <- function(
 validate_trim_zero_units <- function(trim_zero_units) {
 
   if (!all(trim_zero_units %in% c("leading", "trailing", "internal"))) {
-    stop(
-      "The character vector provided for `trim_zero_units` is invalid:\n",
-      "* It should only contain any of the keywords `\"leading\"`, `\"trailing\"`,
-      or ", "`\"internal\"`",
-      call. = FALSE
-    )
+
+    cli::cli_abort(c(
+      "The character vector provided for `trim_zero_units` is invalid.",
+      "*" = "It should only contain any of the keywords \"leading\", \"trailing\",
+      or ", "\"internal\"."
+    ))
   }
 }
 
@@ -3054,7 +3077,7 @@ validate_duration_input_units <- function(input_units) {
   if (!all(input_units %in% time_parts_vec) || length(input_units) != 1) {
 
     cli::cli_abort(c(
-      "The value of `input_units` for `fmt_duration()` is invalid:",
+      "The value of `input_units` for `fmt_duration()` is invalid.",
       "*" = "Only one of the \"weeks\", \"days\", \"hours\", \"minutes\", or
       \"seconds\" time parts should be present."
     ))
@@ -3091,9 +3114,9 @@ validate_duration_output_units <- function(output_units) {
   if (!all(output_units %in% time_parts_vec)) {
 
     cli::cli_abort(c(
-      "There are invalid components in the `output_units` input to `fmt_duration()`:",
+      "There are invalid components in the `output_units` input to `fmt_duration()`.",
       "*" = "Only the \"weeks\", \"days\", \"hours\", \"minutes\", and \"seconds\`
-      time parts should be present"
+      time parts should be present."
     ))
   }
 }
@@ -3513,7 +3536,7 @@ extract_duration_pattern <- function(
 #' `r man_get_image_tag(file = "man_fmt_markdown_1.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-14
 #'
@@ -3607,7 +3630,7 @@ fmt_markdown <- function(
 #' `r man_get_image_tag(file = "man_fmt_passthrough_1.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-15
 #'
@@ -3763,7 +3786,7 @@ fmt_passthrough <- function(
 #' `r man_get_image_tag(file = "man_fmt_1.png")`
 #' }}
 #'
-#' @family Format Data
+#' @family data formatting functions
 #' @section Function ID:
 #' 3-16
 #'
