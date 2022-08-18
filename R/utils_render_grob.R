@@ -29,6 +29,7 @@ as_grob <- function(data){
     footer = footer_component,
     source_notes = source_notes_component
   )
+
 }
 
 #' @importFrom gtable gtable
@@ -98,7 +99,6 @@ construct_gtable <- function(header, col_labels, body, footer, source_notes){
     }
   }
 
-
   structure(
     grob_table,
     class = c("gt_grob", class(grob_table))
@@ -107,6 +107,7 @@ construct_gtable <- function(header, col_labels, body, footer, source_notes){
 }
 
 #' @importFrom grid grid.newpage grid.draw
+#' @export
 print.gt_grob <- function(x,  ...) {
   grid.newpage()
 
@@ -186,18 +187,20 @@ get_cell_dims <- function(x, ncol = 1){
 
 }
 
-#' @importFrom grid unit
+#' @importFrom grid unit convertX
 cell_width_units <- function(x){
-    unit(
-      (x * (1 + (1/(x + 3)))) / 63,
-      "strwidth",
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 "
+    convertX(
+      unit(
+        (x * (1 + (1/(x + 3)))) / 63,
+        "strwidth",
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 "
+      ),"npc"
     )
 }
 
-#' @importFrom grid unit
+#' @importFrom grid unit convertY
 cell_height_units <- function(x){
-  unit(x * 1.5, "char")
+  convertY(unit(x * 1.5, "char"),"npc")
 }
 
 
