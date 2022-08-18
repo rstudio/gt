@@ -2,6 +2,7 @@
 
 * word table output via `as_word()`. `docx` files can now be made through gtsave. (#929)
 * don't change caption setup of latex tables (https://github.com/quarto-dev/quarto-cli/issues/1826).
+* grob table output via `as_grob()`. Now various graphics devices can be used directly to save the table, and gt plays nicely with patchwork and cowplot for combining tables with plots. (#961)
 
 # gt 0.6.0
 
