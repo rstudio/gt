@@ -1384,9 +1384,11 @@ create_body_component_rtf <- function(data) {
   for (i in seq_len(n_rows)) {
 
     group_info <- groups_rows_df[groups_rows_df$row_start == i, c("group_id", "group_label")]
+
     if (nrow(group_info) == 0) {
       group_info <- NULL
     }
+
     group_id <- group_info[["group_id"]]
     group_label <- group_info[["group_label"]]
 
@@ -1437,9 +1439,11 @@ create_body_component_rtf <- function(data) {
               rtf_border("top", color = table_body_hlines_color, width = 10),
               rtf_border("bottom", color = table_body_hlines_color, width = 10)
             )
+
           if ("group_label" %in% stub_layout && x == 1) {
 
             if (i %in% groups_rows_df$row_start) {
+              cell_matrix[[i, x]] <- group_label
               top_bottom_borders[[2]] <- NULL
             } else if (i %in% groups_rows_df$row_end) {
               top_bottom_borders[[1]] <- NULL
@@ -1495,6 +1499,7 @@ create_body_component_rtf <- function(data) {
           widths = col_widths,
           height = 0
         )
+
     } else {
 
       body_row <-

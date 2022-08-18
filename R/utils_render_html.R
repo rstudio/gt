@@ -804,11 +804,14 @@ create_body_component_h <- function(data) {
 
     cell_matrix <- cell_matrix[i, ]
 
-    if (
-      "group_label" %in% stub_layout &&
-      !(i %in% groups_rows_df$row_start)
-      ) {
+    if ("group_label" %in% stub_layout) {
+
+      if (!(i %in% groups_rows_df$row_start)) {
         cell_matrix <- cell_matrix[-1]
+      }
+      if (i %in% groups_rows_df$row_start) {
+        cell_matrix[1] <- groups_rows_df$group_label[groups_rows_df$row_start == i]
+      }
     }
 
     cell_matrix

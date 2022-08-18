@@ -653,10 +653,11 @@ set_footnote_marks_row_groups <- function(data,
       row_index <-
         which(groups_rows_df[, "group_id"] == footnotes_row_groups_marks$grpname[i])
 
-      groups_rows_df[row_index, "group_label"] <- paste0(
-        groups_rows_df[row_index, "group_label"],
-        fn(footnotes_row_groups_marks$fs_id_coalesced[i])
-      )
+      groups_rows_df[row_index, "group_label"] <-
+        paste0(
+          groups_rows_df[row_index, "group_label"],
+          fn(footnotes_row_groups_marks$fs_id_coalesced[i])
+        )
     }
   }
 
