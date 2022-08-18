@@ -14,11 +14,11 @@ selected cells, we can use the \code{"all"} option.}
 \item{color, style, weight}{The border color, style, and weight. The \code{color}
 can be defined with a color name or with a hexadecimal color code. The
 default \code{color} value is \code{"#000000"} (black). The \code{style} can be one of
-either \code{"solid"} (the default), \code{"dashed"}, or \code{"dotted"}. The \code{weight} of
-the border lines is to be given in pixel values (the \code{\link[=px]{px()}} helper function
-is useful for this. The default value for \code{weight} is \code{"1px"}. Borders for
-any defined \code{sides} can be removed by supplying \code{NULL} to any of \code{color},
-\code{style}, or \code{weight}.}
+either \code{"solid"} (the default), \code{"dashed"}, \code{"dotted"}, or \code{"hidden"}.
+The \code{weight} of the border lines is to be given in pixel values (the
+\code{\link[=px]{px()}} helper function is useful for this. The default value for \code{weight}
+is \code{"1px"}. Borders for any defined \code{sides} can be removed by supplying
+\code{NULL} to any of \code{color}, \code{style}, or \code{weight}.}
 }
 \value{
 A list object of class \code{cell_styles}.
