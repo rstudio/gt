@@ -534,8 +534,7 @@ set_footnote_marks_stubhead <- function(data,
 #' Apply footnotes to the data rows
 #'
 #' @noRd
-apply_footnotes_to_output <- function(data,
-                                      context = "html") {
+apply_footnotes_to_output <- function(data, context = "html") {
 
   body <- dt_body_get(data = data)
   footnotes_tbl <- dt_footnotes_get(data = data)
@@ -585,9 +584,38 @@ apply_footnotes_to_output <- function(data,
       mark <- footnotes_dispatch[[context]](footnotes_data_marks$fs_id_coalesced[i])
 
       if (footnote_placement == "right") {
-        text <- paste0(text, mark)
+
+        # Footnote placement on the right of the cell text
+
+        if (context == "html" && grepl("</p>\n</div>$", text)) {
+
+          text <-
+            paste0(
+              gsub("</p>\n</div>", "", text, fixed = TRUE),
+              mark,
+              "</p></div>"
+            )
+
+        } else {
+          text <- paste0(text, mark)
+        }
+
       } else {
-        text <- paste0(mark, " ", text)
+
+        # Footnote placement on the left of the cell text
+
+        if (context == "html" && grepl("^<div class='gt_from_md'><p>", text)) {
+
+          text <-
+            paste0(
+              "<div class='gt_from_md'><p>",
+              mark, " ",
+              gsub("<div class='gt_from_md'><p>", "", text, fixed = TRUE)
+            )
+
+        } else {
+          text <- paste0(mark, " ", text)
+        }
       }
 
       body[footnotes_data_marks$rownum[i], footnotes_data_marks$colname[i]] <- text
