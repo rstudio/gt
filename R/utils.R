@@ -257,7 +257,7 @@ get_alignment_at_body_cell <- function(
   styles_filtered_tbl <-
     dplyr::filter(
       styles_tbl,
-      locname == "data" && colname == .env$colname && rownum == .env$rownum
+      locname == "data" & colname == .env$colname & rownum == .env$rownum
     )
 
   if (nrow(styles_tbl) < 1) {
