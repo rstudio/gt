@@ -40,7 +40,6 @@ construct_gtable <- function(header, col_labels, body, footer, source_notes){
   grob_nrows <- length(main_table_components)
   grob_ncols <- max(lengths(body), 1)
 
-
   cell_dims <- get_cell_dims(main_table_components, grob_ncols)
 
   if(!is.null(header)){
@@ -110,15 +109,7 @@ construct_gtable <- function(header, col_labels, body, footer, source_notes){
 #' @export
 print.gt_grob <- function(x,  ...) {
   grid.newpage()
-
-  # Record dependency on 'ggplot2' on the display list
-  # (AFTER grid.newpage())
-  grDevices::recordGraphics(requireNamespace("gt", quietly = TRUE),
-                            list(),
-                            getNamespace("gt"))
-
   grid.draw(x)
-
 }
 
 gg_add_table_row <- function(g, cells, row ,...){
@@ -161,13 +152,15 @@ get_cell_dims <- function(x, ncol = 1){
     for(cell in x[[r]]){
 
       column <- attr(cell, ".col")
+      column_span <- attr(cell, ".cell_col_span")
+
       font_size <- attr(cell, ".text_size")
       cell_rows <- attr(cell, ".text_rows")
       cell_nchar <- attr(cell, ".text_cols")
 
       ## guestimation to what the height/width is
       height <- font_size/9 * cell_rows
-      width <-  max(cell_nchar,1)
+      width <-  max(cell_nchar,1)/column_span
 
       if(width > widths[[column]]){
         widths[[column]] <- width
@@ -200,7 +193,7 @@ cell_width_units <- function(x){
 
 #' @importFrom grid unit convertY
 cell_height_units <- function(x){
-  convertY(unit(x * 1.5, "char"),"npc")
+  convertY(unit(x * 1.2, "char"),"npc")
 }
 
 
@@ -617,13 +610,12 @@ create_body_component_grob <- function(data) {
 
   all_default_vals <- unname(as.matrix(body[, default_vars]))
 
-  alignment_classes <- paste0("gt_", col_alignment)
 
   if (stub_available) {
 
     n_cols <- n_data_cols + 1
 
-    alignment_classes <- c("gt_left", alignment_classes)
+    col_alignment <- c("right", col_alignment)
 
     stub_var <- dt_boxhead_get_var_stub(data = data)
     all_stub_vals <- as.matrix(body[, stub_var])
@@ -745,13 +737,19 @@ create_body_component_grob <- function(data) {
             dplyr::pull("styles") %>%
             .[1] %>% .[[1]]
 
+          if(!is.null(cell_style[["cell_text"]][["align"]])){
+            alignment <- cell_style[["cell_text"]][["align"]]
+          }else{
+            alignment <- col_alignment[[col]]
+          }
+
           row_cells[[length(row_cells) + 1]] <-
             table_cell_grob(
               text = output_df_row_as_vec(i)[y],
               font = cell_style[["cell_text"]][["font"]],
               size = cell_style[["cell_text"]][["size"]],
               color = cell_style[["cell_text"]][["color"]],
-              align = cell_style[["cell_text"]][["align"]],
+              align = alignment,
               v_align = cell_style[["cell_text"]][["v_align"]],
               col = col,
               border = list(
