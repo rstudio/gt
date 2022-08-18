@@ -1113,3 +1113,31 @@ test_that("Footnotes are correctly placed with text produced by `fmt_markdown()`
     render_as_html() %>%
     expect_snapshot()
 })
+
+test_that("Footnotes work with group labels in 2-column stub arrangements", {
+
+  gt_tbl <-
+    pizzaplace %>%
+    dplyr::filter(name %in% c("soppressata", "peppr_salami")) %>%
+    dplyr::group_by(name, size) %>%
+    dplyr::summarize(`Pizzas Sold` = dplyr::n(), .groups = "drop") %>%
+    gt(rowname_col = "size", groupname_col = "name") %>%
+    summary_rows(
+      groups = TRUE,
+      columns = `Pizzas Sold`,
+      fns = list(TOTAL = "sum"),
+      formatter = fmt_number,
+      decimals = 0,
+      use_seps = TRUE
+    ) %>%
+    tab_options(row_group.as_column = TRUE) %>%
+    tab_footnote(
+      footnote = "The Pepper-Salami.",
+      locations = cells_row_groups(groups = "peppr_salami")
+    )
+
+  # Take snapshots of `gt_tbl`
+  gt_tbl %>% render_as_html() %>% expect_snapshot()
+  gt_tbl %>% as_latex() %>% as.character() %>% expect_snapshot()
+  gt_tbl %>% as_rtf() %>% expect_snapshot()
+})

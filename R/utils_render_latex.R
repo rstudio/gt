@@ -306,6 +306,14 @@ create_body_component_l <- function(data) {
   cell_matrix <- get_body_component_cell_matrix(data = data)
   row_splits_body <- split_row_content(cell_matrix)
 
+  if ("group_label" %in% stub_layout) {
+
+    for (i in seq_len(nrow(groups_rows_df))) {
+      row_splits_body[[groups_rows_df$row_start[i]]][1] <-
+        groups_rows_df$group_label[i]
+    }
+  }
+
   # Insert indentation where necessary
   if (has_stub_column && any(!is.na(stub_df$indent))) {
 
