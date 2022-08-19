@@ -61,7 +61,7 @@ vector of column values from the \code{num} column.
 }
 
 \seealso{
-Other Format Data: 
+Other data formatting functions: 
 \code{\link{data_color}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
@@ -84,4 +84,4 @@ Other Format Data:
 \code{\link{sub_small_vals}()},
 \code{\link{sub_zero}()}
 }
-\concept{Format Data}
+\concept{data formatting functions}

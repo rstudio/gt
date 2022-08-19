@@ -14,11 +14,11 @@ selected cells, we can use the \code{"all"} option.}
 \item{color, style, weight}{The border color, style, and weight. The \code{color}
 can be defined with a color name or with a hexadecimal color code. The
 default \code{color} value is \code{"#000000"} (black). The \code{style} can be one of
-either \code{"solid"} (the default), \code{"dashed"}, or \code{"dotted"}. The \code{weight} of
-the border lines is to be given in pixel values (the \code{\link[=px]{px()}} helper function
-is useful for this. The default value for \code{weight} is \code{"1px"}. Borders for
-any defined \code{sides} can be removed by supplying \code{NULL} to any of \code{color},
-\code{style}, or \code{weight}.}
+either \code{"solid"} (the default), \code{"dashed"}, \code{"dotted"}, or \code{"hidden"}.
+The \code{weight} of the border lines is to be given in pixel values (the
+\code{\link[=px]{px()}} helper function is useful for this. The default value for \code{weight}
+is \code{"1px"}. Borders for any defined \code{sides} can be removed by supplying
+\code{NULL} to any of \code{color}, \code{style}, or \code{weight}.}
 }
 \value{
 A list object of class \code{cell_styles}.
@@ -102,7 +102,7 @@ This uses multiple \code{cell_borders()} and \code{\link[=cells_body]{cells_body
 }
 
 \seealso{
-Other Helper Functions: 
+Other helper functions: 
 \code{\link{adjust_luminance}()},
 \code{\link{cell_fill}()},
 \code{\link{cell_text}()},
@@ -130,4 +130,4 @@ Other Helper Functions:
 \code{\link{px}()},
 \code{\link{random_id}()}
 }
-\concept{Helper Functions}
+\concept{helper functions}

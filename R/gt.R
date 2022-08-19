@@ -93,7 +93,7 @@
 #' `r man_get_image_tag(file = "man_gt_2.png")`
 #' }}
 #'
-#' @family Create Table
+#' @family table creation functions
 #' @section Function ID:
 #' 1-1
 #'
@@ -172,6 +172,7 @@ gt <- function(
   # Add any user-defined table ID to the `table_id` parameter
   # (if NULL, the default setting will generate a random ID)
   if (!is.null(id)) {
+
     data <-
       dt_options_set_value(
         data = data,
@@ -186,6 +187,7 @@ gt <- function(
   # require some more thought still because a `caption` arg might also be
   # sensible in `tab_header`
   if (!is.null(caption)) {
+
     data <-
       dt_options_set_value(
         data = data,
@@ -201,7 +203,33 @@ gt <- function(
   # If automatic alignment of values is to be done, call
   # the `cols_align()` function on data
   if (auto_align) {
+
     data <- cols_align(data = data, align = "auto")
+
+    # Determine if there is a stub column
+    stub_var <- dt_boxhead_get_var_stub(data = data)
+
+    # If there is a stub, tweak the alignment by checking whether the values
+    # are predominantly number-like; this will generally get the correct
+    # appearance for either a row-label-type stub or an numeric-index-type stub
+    if (!is.na(stub_var)) {
+
+      data_tbl <- dt_data_get(data = data)
+
+      col_vals <- data_tbl[[stub_var]]
+
+      res <- grepl("^[0-9 -/:\\.]*$", col_vals[!is.na(col_vals)])
+
+      if (length(res) > 0 && all(res)) {
+
+        data <-
+          dt_boxhead_edit(
+            data = data,
+            var = stub_var,
+            column_align = "right"
+          )
+      }
+    }
   }
 
   data

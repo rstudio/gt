@@ -103,7 +103,7 @@ is a week number) with the \code{summary_rows()} function.
 }
 
 \seealso{
-Other Add Rows: 
+Other row addition functions: 
 \code{\link{grand_summary_rows}()}
 }
-\concept{Add Rows}
+\concept{row addition functions}

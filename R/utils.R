@@ -257,7 +257,7 @@ get_alignment_at_body_cell <- function(
   styles_filtered_tbl <-
     dplyr::filter(
       styles_tbl,
-      locname == "data" && colname == .env$colname && rownum == .env$rownum
+      locname == "data" & colname == .env$colname & rownum == .env$rownum
     )
 
   if (nrow(styles_tbl) < 1) {
@@ -1767,13 +1767,16 @@ validate_style_in <- function(
 
 check_spanner_id_unique <- function(data, spanner_id) {
 
-  existing_ids <- dt_spanners_get_ids(data = data)
+  existing_column_ids <- dt_boxhead_get_vars(data = data)
+  existing_spanner_ids <- dt_spanners_get_ids(data = data)
 
-  if (spanner_id %in% existing_ids) {
+  all_existing_ids <- c(existing_column_ids, existing_spanner_ids)
+
+  if (spanner_id %in% all_existing_ids) {
 
     cli::cli_abort(c(
       "The spanner `id` provided (\"{spanner_id}\") is not unique.",
-      "*" = "The `id` must be unique across existing spanners.",
+      "*" = "The `id` must be unique across existing spanner and column IDs.",
       "*" = "Provide a unique ID value for this spanner."
     ))
   }

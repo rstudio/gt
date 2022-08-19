@@ -53,7 +53,7 @@ test_that("the `fmt_number()` function works correctly in the HTML context", {
     (tab %>%
        fmt_number(columns = num_1, decimals = 2) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("1,836.23", "2,763.39", "937.29", "643.00", "212.23", "0.00", "&minus;23.24")
+    c("1,836.23", "2,763.39", "937.29", "643.00", "212.23", "0.00", paste0("\U02212", "23.24"))
   )
 
   # Format the `num_1` column to 5 decimal places, use all other defaults
@@ -63,7 +63,7 @@ test_that("the `fmt_number()` function works correctly in the HTML context", {
        render_formats_test("html"))[["num_1"]],
     c(
       "1,836.23000", "2,763.39000", "937.29000", "643.00000",
-      "212.23200", "0.00000", "&minus;23.24000"
+      "212.23200", "0.00000", paste0("\U02212", "23.24000")
     )
   )
 
@@ -74,7 +74,7 @@ test_that("the `fmt_number()` function works correctly in the HTML context", {
        fmt_number(columns = num_1, decimals = 2,
                   drop_trailing_zeros = TRUE) %>%
        render_formats_test("html"))[["num_1"]],
-    c("1,836.23", "2,763.39", "937.29", "643", "212.23", "0", "&minus;23.24")
+    c("1,836.23", "2,763.39", "937.29", "643", "212.23", "0", paste0("\U02212", "23.24"))
   )
 
   # Format the `num_1` column to 2 decimal places, don't use digit
@@ -83,7 +83,7 @@ test_that("the `fmt_number()` function works correctly in the HTML context", {
     (tab %>%
        fmt_number(columns = num_1, decimals = 2, use_seps = FALSE) %>%
        render_formats_test("html"))[["num_1"]],
-    c("1836.23", "2763.39", "937.29", "643.00", "212.23", "0.00", "&minus;23.24")
+    c("1836.23", "2763.39", "937.29", "643.00", "212.23", "0.00", paste0("\U02212", "23.24"))
   )
 
   # Format the `num_1` column to 2 decimal places, use a single space
@@ -92,7 +92,7 @@ test_that("the `fmt_number()` function works correctly in the HTML context", {
     (tab %>%
        fmt_number(columns = num_1, decimals = 2, sep_mark = " ") %>%
        render_formats_test("html"))[["num_1"]],
-    c("1 836.23", "2 763.39", "937.29", "643.00", "212.23", "0.00", "&minus;23.24")
+    c("1 836.23", "2 763.39", "937.29", "643.00", "212.23", "0.00", paste0("\U02212", "23.24"))
   )
 
   # Format the `num_1` column to 2 decimal places, use a period for the
@@ -103,7 +103,7 @@ test_that("the `fmt_number()` function works correctly in the HTML context", {
        fmt_number(columns = num_1, decimals = 2,
                   sep_mark = ".", dec_mark = ",") %>%
        render_formats_test("html"))[["num_1"]],
-    c("1.836,23", "2.763,39", "937,29", "643,00", "212,23", "0,00", "&minus;23,24")
+    c("1.836,23", "2.763,39", "937,29", "643,00", "212,23", "0,00", paste0("\U02212", "23,24"))
   )
 
   # Format the `num_1` column to 4 decimal places, scale all values by
@@ -112,7 +112,7 @@ test_that("the `fmt_number()` function works correctly in the HTML context", {
     (tab %>%
        fmt_number(columns = num_1, decimals = 4, scale_by = 1/1000) %>%
        render_formats_test("html"))[["num_1"]],
-    c("1.8362", "2.7634", "0.9373", "0.6430", "0.2122", "0.0000", "&minus;0.0232")
+    c("1.8362", "2.7634", "0.9373", "0.6430", "0.2122", "0.0000", paste0("\U02212", "0.0232"))
   )
 
   # Format the `num_1` column to 2 decimal places, prepend and append
@@ -123,7 +123,7 @@ test_that("the `fmt_number()` function works correctly in the HTML context", {
        render_formats_test("html"))[["num_1"]],
     c(
       "a 1,836.23 b", "a 2,763.39 b", "a 937.29 b", "a 643.00 b",
-      "a 212.23 b", "a 0.00 b", "a &minus;23.24 b"
+      "a 212.23 b", "a 0.00 b", paste0("a \U02212", "23.24 b")
     )
   )
 
@@ -137,7 +137,7 @@ test_that("the `fmt_number()` function works correctly in the HTML context", {
        render_formats_test("html"))[["num_1"]],
     c(
       "1.8362K", "2.7634K", "0.9373K", "0.6430K",
-      "0.2122K", "0.0000K", "&minus;0.0232K"
+      "0.2122K", "0.0000K", paste0("\U02212", "0.0232K")
     )
   )
 
@@ -191,7 +191,7 @@ test_that("the `fmt_number()` function works correctly in the HTML context", {
        fmt_number(
          columns = num_1, decimals = 3, force_sign = TRUE) %>%
        render_formats_test("html"))[["num_1"]],
-    c("+1,836.230", "+2,763.390", "+937.290", "+643.000", "+212.232", "0.000", "&minus;23.240")
+    c("+1,836.230", "+2,763.390", "+937.290", "+643.000", "+212.232", "0.000", paste0("\U02212", "23.240"))
   )
 
   # Expect that using `force_sign = TRUE` with `accounting = TRUE`
@@ -216,7 +216,7 @@ test_that("the `fmt_number()` function works correctly in the HTML context", {
        render_formats_test("html"))[["num_1"]],
     c(
       "*+1,836.23*", "*+2,763.39*", "*+937.29*", "*+643.00*", "*+212.23*",
-      "*0.00*", "*&minus;23.24*"
+      "*0.00*", paste0("*\U02212", "23.24*")
     )
   )
 
@@ -226,7 +226,7 @@ test_that("the `fmt_number()` function works correctly in the HTML context", {
     (tab %>%
        fmt_number(columns = num_1, decimals = 2, locale = "en_US") %>%
        render_formats_test("html"))[["num_1"]],
-    c("1,836.23", "2,763.39", "937.29", "643.00", "212.23", "0.00", "&minus;23.24")
+    c("1,836.23", "2,763.39", "937.29", "643.00", "212.23", "0.00", paste0("\U02212", "23.24"))
   )
 
   # Format the `num_1` column to 2 decimal places, apply the `da_DK`
@@ -235,7 +235,7 @@ test_that("the `fmt_number()` function works correctly in the HTML context", {
     (tab %>%
        fmt_number(columns = num_1, decimals = 2, locale = "da_DK") %>%
        render_formats_test("html"))[["num_1"]],
-    c("1.836,23", "2.763,39", "937,29", "643,00", "212,23", "0,00", "&minus;23,24")
+    c("1.836,23", "2.763,39", "937,29", "643,00", "212,23", "0,00", paste0("\U02212", "23,24"))
   )
 
   # Format the `num_1` column to 2 decimal places, apply the `de_AT`
@@ -244,7 +244,7 @@ test_that("the `fmt_number()` function works correctly in the HTML context", {
     (tab %>%
        fmt_number(columns = num_1, decimals = 2, locale = "de_AT") %>%
        render_formats_test("html"))[["num_1"]],
-    c("1 836,23", "2 763,39", "937,29", "643,00", "212,23", "0,00", "&minus;23,24")
+    c("1 836,23", "2 763,39", "937,29", "643,00", "212,23", "0,00", paste0("\U02212", "23,24"))
   )
 
   # Format the `num_1` column to 2 decimal places, apply the `et_EE`
@@ -253,7 +253,7 @@ test_that("the `fmt_number()` function works correctly in the HTML context", {
     (tab %>%
        fmt_number(columns = num_1, decimals = 2, locale = "et_EE") %>%
        render_formats_test("html"))[["num_1"]],
-    c("1 836,23", "2 763,39", "937,29", "643,00", "212,23", "0,00", "&minus;23,24")
+    c("1 836,23", "2 763,39", "937,29", "643,00", "212,23", "0,00", paste0("\U02212", "23,24"))
   )
 
   # Format the `num_1` column to 2 decimal places, apply the `gl_ES`
@@ -262,7 +262,7 @@ test_that("the `fmt_number()` function works correctly in the HTML context", {
     (tab %>%
        fmt_number(columns = num_1, decimals = 2, locale = "gl_ES") %>%
        render_formats_test("html"))[["num_1"]],
-    c("1.836,23", "2.763,39", "937,29", "643,00", "212,23", "0,00", "&minus;23,24")
+    c("1.836,23", "2.763,39", "937,29", "643,00", "212,23", "0,00", paste0("\U02212", "23,24"))
   )
 
   # Expect that a column with NAs will work fine with `fmt_number()`,
@@ -333,11 +333,16 @@ test_that("the `fmt_number()` function can scale/suffix larger numbers", {
        fmt_number(columns = num, decimals = 2, suffixing = TRUE) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "&minus;1,800.00T", "&minus;17.00T", "&minus;16.00B",
-      "&minus;150.00M", "&minus;1.40M", "&minus;13.00K",
-      "&minus;1.20K", "&minus;11.00", "0.00", "11.00",
-      "1.20K", "13.00K", "1.40M", "150.00M", "16.00B",
-      "17.00T", "1,800.00T"
+      paste0("\U02212", "1,800.00T"),
+      paste0("\U02212", "17.00T"),
+      paste0("\U02212", "16.00B"),
+      paste0("\U02212", "150.00M"),
+      paste0("\U02212", "1.40M"),
+      paste0("\U02212", "13.00K"),
+      paste0("\U02212", "1.20K"),
+      paste0("\U02212", "11.00"),
+      "0.00", "11.00", "1.20K", "13.00K", "1.40M",
+      "150.00M", "16.00B", "17.00T", "1,800.00T"
     )
   )
 
@@ -348,9 +353,16 @@ test_that("the `fmt_number()` function can scale/suffix larger numbers", {
        fmt_number(columns = num, decimals = 0, suffixing = TRUE) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "&minus;1,800T", "&minus;17T", "&minus;16B", "&minus;150M",
-      "&minus;1M", "&minus;13K", "&minus;1K", "&minus;11", "0", "11",
-      "1K", "13K", "1M", "150M", "16B", "17T", "1,800T"
+      paste0("\U02212", "1,800T"),
+      paste0("\U02212", "17T"),
+      paste0("\U02212", "16B"),
+      paste0("\U02212", "150M"),
+      paste0("\U02212", "1M"),
+      paste0("\U02212", "13K"),
+      paste0("\U02212", "1K"),
+      paste0("\U02212", "11"),
+      "0", "11", "1K", "13K", "1M",
+      "150M", "16B", "17T", "1,800T"
     )
   )
 
@@ -363,10 +375,16 @@ test_that("the `fmt_number()` function can scale/suffix larger numbers", {
          suffixing = c("k", "Mn", "Bn", "Tr")) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "&minus;1,800.00Tr", "&minus;17.00Tr", "&minus;16.00Bn",
-      "&minus;150.00Mn", "&minus;1.40Mn", "&minus;13.00k",
-      "&minus;1.20k", "&minus;11.00", "0.00", "11.00", "1.20k",
-      "13.00k", "1.40Mn", "150.00Mn", "16.00Bn", "17.00Tr", "1,800.00Tr"
+      paste0("\U02212", "1,800.00Tr"),
+      paste0("\U02212", "17.00Tr"),
+      paste0("\U02212", "16.00Bn"),
+      paste0("\U02212", "150.00Mn"),
+      paste0("\U02212", "1.40Mn"),
+      paste0("\U02212", "13.00k"),
+      paste0("\U02212", "1.20k"),
+      paste0("\U02212", "11.00"),
+      "0.00", "11.00", "1.20k", "13.00k", "1.40Mn",
+      "150.00Mn", "16.00Bn", "17.00Tr", "1,800.00Tr"
     )
   )
 
@@ -379,11 +397,16 @@ test_that("the `fmt_number()` function can scale/suffix larger numbers", {
          suffixing = c(NA, "Mio.", "Mia.", NA)) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "&minus;1,800,000.00Mia.", "&minus;17,000.00Mia.",
-      "&minus;16.00Mia.", "&minus;150.00Mio.", "&minus;1.40Mio.",
-      "&minus;13,000.00", "&minus;1,200.00", "&minus;11.00", "0.00", "11.00",
-      "1,200.00", "13,000.00", "1.40Mio.", "150.00Mio.", "16.00Mia.",
-      "17,000.00Mia.", "1,800,000.00Mia."
+      paste0("\U02212", "1,800,000.00Mia."),
+      paste0("\U02212", "17,000.00Mia."),
+      paste0("\U02212", "16.00Mia."),
+      paste0("\U02212", "150.00Mio."),
+      paste0("\U02212", "1.40Mio."),
+      paste0("\U02212", "13,000.00"),
+      paste0("\U02212", "1,200.00"),
+      paste0("\U02212", "11.00"),
+      "0.00", "11.00", "1,200.00", "13,000.00", "1.40Mio.",
+      "150.00Mio.", "16.00Mia.", "17,000.00Mia.", "1,800,000.00Mia."
     )
   )
 
@@ -396,10 +419,16 @@ test_that("the `fmt_number()` function can scale/suffix larger numbers", {
          suffixing = c("K", NA, "Bn", NA, "Qa", NA, NA)) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "&minus;1.80Qa", "&minus;17,000.00Bn", "&minus;16.00Bn",
-      "&minus;150,000.00K", "&minus;1,400.00K", "&minus;13.00K",
-      "&minus;1.20K", "&minus;11.00", "0.00", "11.00", "1.20K", "13.00K",
-      "1,400.00K", "150,000.00K", "16.00Bn", "17,000.00Bn", "1.80Qa"
+      paste0("\U02212", "1.80Qa"),
+      paste0("\U02212", "17,000.00Bn"),
+      paste0("\U02212", "16.00Bn"),
+      paste0("\U02212", "150,000.00K"),
+      paste0("\U02212", "1,400.00K"),
+      paste0("\U02212", "13.00K"),
+      paste0("\U02212", "1.20K"),
+      paste0("\U02212", "11.00"),
+      "0.00", "11.00", "1.20K", "13.00K", "1,400.00K",
+      "150,000.00K", "16.00Bn", "17,000.00Bn", "1.80Qa"
     )
   )
 
@@ -412,10 +441,15 @@ test_that("the `fmt_number()` function can scale/suffix larger numbers", {
          suffixing = FALSE) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "&minus;1,800,000,000,000,000.00", "&minus;17,000,000,000,000.00",
-      "&minus;16,000,000,000.00", "&minus;150,000,000.00",
-      "&minus;1,400,000.00", "&minus;13,000.00", "&minus;1,200.00",
-      "&minus;11.00", "0.00", "11.00", "1,200.00", "13,000.00",
+      paste0("\U02212", "1,800,000,000,000,000.00"),
+      paste0("\U02212", "17,000,000,000,000.00"),
+      paste0("\U02212", "16,000,000,000.00"),
+      paste0("\U02212", "150,000,000.00"),
+      paste0("\U02212", "1,400,000.00"),
+      paste0("\U02212", "13,000.00"),
+      paste0("\U02212", "1,200.00"),
+      paste0("\U02212", "11.00"),
+      "0.00", "11.00", "1,200.00", "13,000.00",
       "1,400,000.00", "150,000,000.00", "16,000,000,000.00",
       "17,000,000,000,000.00", "1,800,000,000,000,000.00"
     )
@@ -535,10 +569,17 @@ test_that("the `fmt_number()` function format to specified significant figures",
        fmt_number(columns = num, n_sigfig = 5) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "50,000", "1,000.0", "10.000", "12,345", "1,234.5", "123.45",
-      "1.2345", "0.12345", "0.000012346", "&minus;50,000", "&minus;1,000.0",
-      "&minus;10.000", "&minus;12,345", "&minus;1,234.5", "&minus;123.45",
-      "&minus;1.2345", "&minus;0.12345", "&minus;0.000012346"
+      "50,000", "1,000.0", "10.000", "12,345", "1,234.5",
+      "123.45", "1.2345", "0.12345", "0.000012346",
+      paste0("\U02212", "50,000"),
+      paste0("\U02212", "1,000.0"),
+      paste0("\U02212", "10.000"),
+      paste0("\U02212", "12,345"),
+      paste0("\U02212", "1,234.5"),
+      paste0("\U02212", "123.45"),
+      paste0("\U02212", "1.2345"),
+      paste0("\U02212", "0.12345"),
+      paste0("\U02212", "0.000012346")
     )
   )
 
@@ -548,10 +589,17 @@ test_that("the `fmt_number()` function format to specified significant figures",
        fmt_number(columns = num, n_sigfig = 4) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "50,000", "1,000", "10.00", "12,340", "1,234", "123.4", "1.234",
-      "0.1234", "0.00001235", "&minus;50,000", "&minus;1,000", "&minus;10.00",
-      "&minus;12,340", "&minus;1,234", "&minus;123.4", "&minus;1.234",
-      "&minus;0.1234", "&minus;0.00001235"
+      "50,000", "1,000", "10.00", "12,340", "1,234",
+      "123.4", "1.234", "0.1234", "0.00001235",
+      paste0("\U02212", "50,000"),
+      paste0("\U02212", "1,000"),
+      paste0("\U02212", "10.00"),
+      paste0("\U02212", "12,340"),
+      paste0("\U02212", "1,234"),
+      paste0("\U02212", "123.4"),
+      paste0("\U02212", "1.234"),
+      paste0("\U02212", "0.1234"),
+      paste0("\U02212", "0.00001235")
     )
   )
 
@@ -561,10 +609,17 @@ test_that("the `fmt_number()` function format to specified significant figures",
        fmt_number(columns = num, n_sigfig = 3) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "50,000", "1,000", "10.0", "12,300", "1,230", "123", "1.23",
-      "0.123", "0.0000123", "&minus;50,000", "&minus;1,000", "&minus;10.0",
-      "&minus;12,300", "&minus;1,230", "&minus;123", "&minus;1.23",
-      "&minus;0.123", "&minus;0.0000123"
+      "50,000", "1,000", "10.0", "12,300", "1,230",
+      "123", "1.23", "0.123", "0.0000123",
+      paste0("\U02212", "50,000"),
+      paste0("\U02212", "1,000"),
+      paste0("\U02212", "10.0"),
+      paste0("\U02212", "12,300"),
+      paste0("\U02212", "1,230"),
+      paste0("\U02212", "123"),
+      paste0("\U02212", "1.23"),
+      paste0("\U02212", "0.123"),
+      paste0("\U02212", "0.0000123")
     )
   )
 
@@ -574,9 +629,17 @@ test_that("the `fmt_number()` function format to specified significant figures",
        fmt_number(columns = num, n_sigfig = 2) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "50,000", "1,000", "10", "12,000", "1,200", "120", "1.2", "0.12",
-      "0.000012", "&minus;50,000", "&minus;1,000", "&minus;10", "&minus;12,000",
-      "&minus;1,200", "&minus;120", "&minus;1.2", "&minus;0.12", "&minus;0.000012"
+      "50,000", "1,000", "10", "12,000", "1,200",
+      "120", "1.2", "0.12", "0.000012",
+      paste0("\U02212", "50,000"),
+      paste0("\U02212", "1,000"),
+      paste0("\U02212", "10"),
+      paste0("\U02212", "12,000"),
+      paste0("\U02212", "1,200"),
+      paste0("\U02212", "120"),
+      paste0("\U02212", "1.2"),
+      paste0("\U02212", "0.12"),
+      paste0("\U02212", "0.000012")
     )
   )
 
@@ -586,14 +649,22 @@ test_that("the `fmt_number()` function format to specified significant figures",
        fmt_number(columns = num, n_sigfig = 1) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "50,000", "1,000", "10", "10,000", "1,000", "100", "1", "0.1",
-      "0.00001", "&minus;50,000", "&minus;1,000", "&minus;10", "&minus;10,000",
-      "&minus;1,000", "&minus;100", "&minus;1", "&minus;0.1", "&minus;0.00001"
+      "50,000", "1,000", "10", "10,000",
+      "1,000", "100", "1", "0.1", "0.00001",
+      paste0("\U02212", "50,000"),
+      paste0("\U02212", "1,000"),
+      paste0("\U02212", "10"),
+      paste0("\U02212", "10,000"),
+      paste0("\U02212", "1,000"),
+      paste0("\U02212", "100"),
+      paste0("\U02212", "1"),
+      paste0("\U02212", "0.1"),
+      paste0("\U02212", "0.00001")
     )
   )
 
   # Expect an error if the length of `n_sigfig` is not 1
-  expect_error(fmt_number(columns = num, n_sigfig = c(1, 2)))
+  expect_error(fmt_number(tab, columns = num, n_sigfig = c(1, 2)))
 
   # Expect an error if `n_sigfig` is NA
   expect_error(tab %>% fmt_number(columns = num, n_sigfig = NA))
@@ -634,7 +705,9 @@ test_that("the `drop_trailing_dec_mark` option works in select `fmt_*()` functio
        render_formats_test(context = "html"))[["num"]],
     c(
       "0.00", "0.01", "0.10", "0.00", "1.00", "1.10", "1.12", "50,000.00",
-      "&minus;1.50", "&minus;5.00", "&minus;500.10"
+      paste0("\U02212", "1.50"),
+      paste0("\U02212", "5.00"),
+      paste0("\U02212", "500.10")
     )
   )
 
@@ -644,8 +717,10 @@ test_that("the `drop_trailing_dec_mark` option works in select `fmt_*()` functio
        fmt_number(columns = num, decimals = 0) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "0", "0", "0", "0", "1", "1", "1", "50,000", "&minus;2", "&minus;5",
-      "&minus;500"
+      "0", "0", "0", "0", "1", "1", "1", "50,000",
+      paste0("\U02212", "2"),
+      paste0("\U02212", "5"),
+      paste0("\U02212", "500")
     )
   )
 
@@ -656,8 +731,10 @@ test_that("the `drop_trailing_dec_mark` option works in select `fmt_*()` functio
        fmt_number(columns = num, decimals = 0, drop_trailing_dec_mark = FALSE) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "0.", "0.", "0.", "0.", "1.", "1.", "1.", "50,000.", "&minus;2.",
-      "&minus;5.", "&minus;500."
+      "0.", "0.", "0.", "0.", "1.", "1.", "1.", "50,000.",
+      paste0("\U02212", "2."),
+      paste0("\U02212", "5."),
+      paste0("\U02212", "500.")
     )
   )
 
@@ -669,7 +746,9 @@ test_that("the `drop_trailing_dec_mark` option works in select `fmt_*()` functio
     c(
       "0.10%", "1.00%", "10.00%", "0.00%",
       "100.00%", "110.00%", "112.00%", "5,000,000.00%",
-      "&minus;150.00%", "&minus;500.00%", "&minus;50,010.00%"
+      paste0("\U02212", "150.00%"),
+      paste0("\U02212", "500.00%"),
+      paste0("\U02212", "50,010.00%")
     )
   )
 
@@ -680,8 +759,10 @@ test_that("the `drop_trailing_dec_mark` option works in select `fmt_*()` functio
        render_formats_test(context = "html"))[["num"]],
     c(
       "0%", "1%", "10%", "0%", "100%",
-      "110%", "112%", "5,000,000%", "&minus;150%",
-      "&minus;500%", "&minus;50,010%"
+      "110%", "112%", "5,000,000%",
+      paste0("\U02212", "150%"),
+      paste0("\U02212", "500%"),
+      paste0("\U02212", "50,010%")
     )
   )
 
@@ -693,8 +774,10 @@ test_that("the `drop_trailing_dec_mark` option works in select `fmt_*()` functio
        render_formats_test(context = "html"))[["num"]],
     c(
       "0.%", "1.%", "10.%", "0.%", "100.%",
-      "110.%", "112.%", "5,000,000.%", "&minus;150.%",
-      "&minus;500.%", "&minus;50,010.%"
+      "110.%", "112.%", "5,000,000.%",
+      paste0("\U02212", "150.%"),
+      paste0("\U02212", "500.%"),
+      paste0("\U02212", "50,010.%")
     )
   )
 
@@ -704,8 +787,11 @@ test_that("the `drop_trailing_dec_mark` option works in select `fmt_*()` functio
        fmt_currency(columns = num, drop_trailing_dec_mark = TRUE) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "$0.00", "$0.01", "$0.10", "$0.00", "$1.00", "$1.10", "$1.12",
-      "$50,000.00", "&minus;$1.50", "&minus;$5.00", "&minus;$500.10"
+      "$0.00", "$0.01", "$0.10", "$0.00", "$1.00",
+      "$1.10", "$1.12", "$50,000.00",
+      paste0("\U02212", "$1.50"),
+      paste0("\U02212", "$5.00"),
+      paste0("\U02212", "$500.10")
     )
   )
 
@@ -715,8 +801,10 @@ test_that("the `drop_trailing_dec_mark` option works in select `fmt_*()` functio
        fmt_currency(columns = num, decimals = 0) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "$0", "$0", "$0", "$0", "$1", "$1", "$1", "$50,000", "&minus;$2",
-      "&minus;$5", "&minus;$500"
+      "$0", "$0", "$0", "$0", "$1", "$1", "$1", "$50,000",
+      paste0("\U02212", "$2"),
+      paste0("\U02212", "$5"),
+      paste0("\U02212", "$500")
     )
   )
 
@@ -728,7 +816,9 @@ test_that("the `drop_trailing_dec_mark` option works in select `fmt_*()` functio
        render_formats_test(context = "html"))[["num"]],
     c(
       "$0.", "$0.", "$0.", "$0.", "$1.", "$1.", "$1.", "$50,000.",
-      "&minus;$2.", "&minus;$5.", "&minus;$500."
+      paste0("\U02212", "$2."),
+      paste0("\U02212", "$5."),
+      paste0("\U02212", "$500.")
     )
   )
 
@@ -744,8 +834,10 @@ test_that("the `drop_trailing_dec_mark` option works in select `fmt_*()` functio
        render_formats_test(context = "html"))[["num"]],
     c(
       "0.&#8364;", "0.&#8364;", "0.&#8364;", "0.&#8364;", "1.&#8364;",
-      "1.&#8364;", "1.&#8364;", "50,000.&#8364;", "&minus;2.&#8364;",
-      "&minus;5.&#8364;", "&minus;500.&#8364;"
+      "1.&#8364;", "1.&#8364;", "50,000.&#8364;",
+      paste0("\U02212", "2.&#8364;"),
+      paste0("\U02212", "5.&#8364;"),
+      paste0("\U02212", "500.&#8364;")
     )
   )
 })
@@ -773,9 +865,13 @@ test_that("`fmt_number()` with `suffixing = TRUE` works with small numbers", {
        fmt_number(columns = num, decimals = 2, suffixing = TRUE) %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "&minus;0.50", "&minus;0.05", "&minus;0.04", "&minus;0.03",
-      "&minus;0.02", "&minus;0.01", "0.00", "0.01", "0.02", "0.03",
-      "0.04", "0.05", "0.50"
+      paste0("\U02212", "0.50"),
+      paste0("\U02212", "0.05"),
+      paste0("\U02212", "0.04"),
+      paste0("\U02212", "0.03"),
+      paste0("\U02212", "0.02"),
+      paste0("\U02212", "0.01"),
+      "0.00", "0.01", "0.02", "0.03", "0.04", "0.05", "0.50"
     )
   )
 })
@@ -852,9 +948,17 @@ test_that("`fmt_number()` can render values in the Indian numbering system", {
     c(
       "50,00,000.01", "1,000.00", "10.00", "12,345.00", "1,234.50",
       "123.45", "1.23", "0.12", "25,83,063.23", "1,53,56,74,223.33",
-      "6,42,56,48,25,73,36,228.00", "&minus;50,00,00,000.00", "&minus;1,000.00",
-      "&minus;10.00", "&minus;12,345.00", "&minus;1,234.50", "&minus;123.45",
-      "&minus;1.23", "&minus;0.12", "0.00", "0.00", "NA", " Inf", "&minus;Inf"
+      "6,42,56,48,25,73,36,228.00",
+      paste0("\U02212", "50,00,00,000.00"),
+      paste0("\U02212", "1,000.00"),
+      paste0("\U02212", "10.00"),
+      paste0("\U02212", "12,345.00"),
+      paste0("\U02212", "1,234.50"),
+      paste0("\U02212", "123.45"),
+      paste0("\U02212", "1.23"),
+      paste0("\U02212", "0.12"),
+      "0.00", "0.00", "NA", " Inf",
+      paste0("\U02212", "Inf")
     )
   )
 
@@ -865,11 +969,19 @@ test_that("`fmt_number()` can render values in the Indian numbering system", {
        fmt_number(columns = num, n_sigfig = 4, system = "ind") %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "50,00,000", "1,000", "10.00", "12,340", "1,234", "123.4",
-      "1.234", "0.1234", "25,83,000", "1,53,60,00,000", "6,42,60,00,00,00,00,000",
-      "&minus;50,00,00,000", "&minus;1,000", "&minus;10.00", "&minus;12,340",
-      "&minus;1,234", "&minus;123.4", "&minus;1.234", "&minus;0.1234",
-      "&minus;0.00001235", "0", "NA", "  Inf", " &minus;Inf"
+      "50,00,000", "1,000", "10.00", "12,340", "1,234", "123.4", "1.234",
+      "0.1234", "25,83,000", "1,53,60,00,000", "6,42,60,00,00,00,00,000",
+      paste0("\U02212", "50,00,00,000"),
+      paste0("\U02212", "1,000"),
+      paste0("\U02212", "10.00"),
+      paste0("\U02212", "12,340"),
+      paste0("\U02212", "1,234"),
+      paste0("\U02212", "123.4"),
+      paste0("\U02212", "1.234"),
+      paste0("\U02212", "0.1234"),
+      paste0("\U02212", "0.00001235"),
+      "0", "NA", "  Inf",
+      paste0(" \U02212", "Inf")
     )
   )
 
@@ -882,10 +994,17 @@ test_that("`fmt_number()` can render values in the Indian numbering system", {
     c(
       "+50,00,000.01", "+1,000.00", "+10.00", "+12,345.00", "+1,234.50",
       "+123.45", "+1.23", "+0.12", "+25,83,063.23", "+1,53,56,74,223.33",
-      "+6,42,56,48,25,73,36,228.00", "&minus;50,00,00,000.00", "&minus;1,000.00",
-      "&minus;10.00", "&minus;12,345.00", "&minus;1,234.50", "&minus;123.45",
-      "&minus;1.23", "&minus;0.12", "0.00", "0.00", "NA", "+ Inf",
-      "&minus;Inf"
+      "+6,42,56,48,25,73,36,228.00",
+      paste0("\U02212", "50,00,00,000.00"),
+      paste0("\U02212", "1,000.00"),
+      paste0("\U02212", "10.00"),
+      paste0("\U02212", "12,345.00"),
+      paste0("\U02212", "1,234.50"),
+      paste0("\U02212", "123.45"),
+      paste0("\U02212", "1.23"),
+      paste0("\U02212", "0.12"),
+      "0.00", "0.00", "NA", "+ Inf",
+      paste0("\U02212", "Inf")
     )
   )
 
@@ -897,9 +1016,16 @@ test_that("`fmt_number()` can render values in the Indian numbering system", {
     c(
       "50.00 Lac", "1,000.00", "10.00", "12,345.00", "1,234.50",
       "123.45", "1.23", "0.12", "25.83 Lac", "153.57 Cr", "64,25,64,825.73 Cr",
-      "&minus;50.00 Cr", "&minus;1,000.00", "&minus;10.00", "&minus;12,345.00",
-      "&minus;1,234.50", "&minus;123.45", "&minus;1.23", "&minus;0.12",
-      "0.00", "0.00", "NA", " Inf Cr", "&minus;Inf Cr"
+      paste0("\U02212", "50.00 Cr"),
+      paste0("\U02212", "1,000.00"),
+      paste0("\U02212", "10.00"),
+      paste0("\U02212", "12,345.00"),
+      paste0("\U02212", "1,234.50"),
+      paste0("\U02212", "123.45"),
+      paste0("\U02212", "1.23"),
+      paste0("\U02212", "0.12"),
+      "0.00", "0.00", "NA", " Inf Cr",
+      paste0("\U02212", "Inf Cr")
     )
   )
   expect_equal(
@@ -909,9 +1035,16 @@ test_that("`fmt_number()` can render values in the Indian numbering system", {
     c(
       "50.00 Lacs", "1.00 K", "10.00", "12.35 K", "1.23 K", "123.45",
       "1.23", "0.12", "25.83 Lacs", "153.57 Crores", "64,25,64,825.73 Crores",
-      "&minus;50.00 Crores", "&minus;1.00 K", "&minus;10.00", "&minus;12.35 K",
-      "&minus;1.23 K", "&minus;123.45", "&minus;1.23", "&minus;0.12",
-      "0.00", "0.00", "NA", " Inf Crores", "&minus;Inf Crores"
+      paste0("\U02212", "50.00 Crores"),
+      paste0("\U02212", "1.00 K"),
+      paste0("\U02212", "10.00"),
+      paste0("\U02212", "12.35 K"),
+      paste0("\U02212", "1.23 K"),
+      paste0("\U02212", "123.45"),
+      paste0("\U02212", "1.23"),
+      paste0("\U02212", "0.12"),
+      "0.00", "0.00", "NA", " Inf Crores",
+      paste0("\U02212", "Inf Crores")
     )
   )
   expect_equal(
@@ -920,10 +1053,18 @@ test_that("`fmt_number()` can render values in the Indian numbering system", {
        render_formats_test(context = "html"))[["num"]],
     c(
       "50.00 Lacs", "1,000.00", "10.00", "12,345.00", "1,234.50",
-      "123.45", "1.23", "0.12", "25.83 Lacs", "15,356.74 Lacs", "64,25,64,82,573.36 Lacs",
-      "&minus;5,000.00 Lacs", "&minus;1,000.00", "&minus;10.00", "&minus;12,345.00",
-      "&minus;1,234.50", "&minus;123.45", "&minus;1.23", "&minus;0.12",
-      "0.00", "0.00", "NA", " Inf Lacs", "&minus;Inf Lacs"
+      "123.45", "1.23", "0.12", "25.83 Lacs", "15,356.74 Lacs",
+      "64,25,64,82,573.36 Lacs",
+      paste0("\U02212", "5,000.00 Lacs"),
+      paste0("\U02212", "1,000.00"),
+      paste0("\U02212", "10.00"),
+      paste0("\U02212", "12,345.00"),
+      paste0("\U02212", "1,234.50"),
+      paste0("\U02212", "123.45"),
+      paste0("\U02212", "1.23"),
+      paste0("\U02212", "0.12"),
+      "0.00", "0.00", "NA", " Inf Lacs",
+      paste0("\U02212", "Inf Lacs")
     )
   )
   expect_equal(

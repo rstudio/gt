@@ -23,19 +23,44 @@ dt_stub_df_init <- function(
       rownum_i = seq_len(nrow(data_tbl)),
       group_id = rep(NA_character_, nrow(data_tbl)),
       rowname = rep(NA_character_, nrow(data_tbl)),
+      row_id = rep(NA_character_, nrow(data_tbl)),
       group_label = rep(list(NULL), nrow(data_tbl)),
+      indent = rep(NA_character_, nrow(data_tbl)),
       built = rep(NA_character_, nrow(data_tbl))
     )
 
-  # If `rowname` is a column available in `data`,
-  # place that column's data into `stub_df` and
-  # remove it from `data`
+  # Put the `rowname_cols`'s data into `stub_df`
   if (!is.null(rowname_col) && rowname_col %in% colnames(data_tbl)) {
 
     data <- dt_boxhead_set_stub(data = data, var = rowname_col)
 
+    rownames <- data_tbl[[rowname_col]]
+
     # Place the `rowname` values into `stub_df$rowname`
-    stub_df[["rowname"]] <- as.character(data_tbl[[rowname_col]])
+    stub_df[["rowname"]] <- as.character(rownames)
+
+    #
+    # Develop unique ID values for the `row_id` values
+    #
+
+    row_id <- rep(NA_character_, length(rownames))
+
+    for (i in seq_along(rownames)) {
+
+      if (is.na(rownames[i])) {
+        row_id[i] <- as.character(i)
+      }
+
+      if (!is.na(rownames[i])) {
+        row_id[i] <- rownames[i]
+
+        if (i > 1 && row_id[i] %in% row_id[1:(i - 1)]) {
+          row_id[i] <- paste0(row_id[i], "__", i)
+        }
+      }
+    }
+
+    stub_df[["row_id"]] <- row_id
   }
 
   # If `data` is a `grouped_df` then create groups from the
@@ -175,4 +200,15 @@ dt_stub_rowname_at_position <- function(data, i) {
   }
 
   dt_stub_df_get(data = data)$rowname[[i]]
+}
+
+dt_stub_indentation_at_position <- function(data, i) {
+
+  indent_i <- dt_stub_df_get(data = data)$indent[[i]]
+
+  if (is.na(indent_i)) {
+    return(NULL)
+  }
+
+  as.integer(indent_i)
 }

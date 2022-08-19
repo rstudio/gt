@@ -11,14 +11,17 @@ gtsave(data, filename, path = NULL, ...)
 
 \item{filename}{The file name to create on disk. Ensure that an extension
 compatible with the output types is provided (\code{.html}, \code{.tex}, \code{.ltx},
-\code{.rtf}, \code{.docx}). If a custom save function is provided then the file extension is
-disregarded.}
+\code{.rtf}, \code{.docx}). If a custom save function is provided then the file
+extension is disregarded.}
 
 \item{path}{An optional path to which the file should be saved (combined with
 filename).}
 
 \item{...}{All other options passed to the appropriate internal saving
 function.}
+}
+\value{
+Invisibly returns \code{TRUE} if the export process is successful.
 }
 \description{
 The \code{gtsave()} function makes it easy to save a \strong{gt} table to a file. The
@@ -57,9 +60,10 @@ LaTeX document is produced. An output filename of \code{.rtf} will generate an R
 document. The LaTeX and RTF saving functions don't have any options to pass
 to \code{...}.
 
-If the output filename extension is ".docx", a docx (word) file is produced. This process is
-facilitated by the \strong{rmarkdown} package, so this package needs to be installed beofre attempting
-to save any table as a docx.
+If the output filename extension is \code{.docx}, a Word document file is
+produced. This process is facilitated by the \strong{rmarkdown} package, so this
+package needs to be installed before attempting to save any table as a
+\code{.docx} document.
 }
 \section{Examples}{
 
@@ -118,11 +122,11 @@ With the \code{.docx} extension, we'll get a word/docx document.
 }
 
 \seealso{
-Other Export Functions: 
+Other table export functions: 
 \code{\link{as_latex}()},
 \code{\link{as_raw_html}()},
 \code{\link{as_rtf}()},
 \code{\link{as_word}()},
 \code{\link{extract_summary}()}
 }
-\concept{Export Functions}
+\concept{table export functions}

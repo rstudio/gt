@@ -65,20 +65,18 @@ values that could potentially undergo some substitution.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- dplyr::tibble(num = c(10^(-4:2), 0, NA))
 
 tbl
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 9 × 1
-##        num
-##      <dbl>
-## 1   0.0001
-## 2   0.001 
-## 3   0.01  
-## 4   0.1   
-## 5   1     
-## 6  10     
-## 7 100     
-## 8   0     
-## 9  NA
+#> # A tibble: 9 x 1
+#>        num
+#>      <dbl>
+#> 1   0.0001
+#> 2   0.001 
+#> 3   0.01  
+#> 4   0.1   
+#> 5   1     
+#> 6  10     
+#> 7 100     
+#> 8   0     
+#> 9  NA
 }\if{html}{\out{</div>}}
 
 The \code{tbl} contains a variety of smaller numbers and some might be small
@@ -135,7 +133,7 @@ omitted.
 }
 
 \seealso{
-Other Format Data: 
+Other data formatting functions: 
 \code{\link{data_color}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
@@ -158,4 +156,4 @@ Other Format Data:
 \code{\link{sub_zero}()},
 \code{\link{text_transform}()}
 }
-\concept{Format Data}
+\concept{data formatting functions}

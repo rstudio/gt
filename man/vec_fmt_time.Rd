@@ -8,7 +8,7 @@ vec_fmt_time(
   x,
   time_style = 2,
   pattern = "{x}",
-  output = c("html", "latex", "rtf")
+  output = c("auto", "plain", "html", "latex", "rtf", "word")
 )
 }
 \arguments{
@@ -24,7 +24,9 @@ formatted value. The value itself is represented by \code{{x}} and all other
 characters are taken to be string literals.}
 
 \item{output}{The output style of the resulting character vector. This can
-either be \code{"html"} (the default), \code{"latex"}, or \code{"rtf"}.}
+either be \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"},
+or \code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the
+\code{"auto"} option will choose the correct \code{output} value}
 }
 \value{
 A character vector.
@@ -58,14 +60,15 @@ for the next few examples:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{str_vals <- c("2022-06-13 18:36", "2019-01-25 01:08", NA)
 }\if{html}{\out{</div>}}
 
-Using \code{vec_fmt_date()} with the default options will create a character vector of
-formatted dates. Any \code{NA} values remain as \code{NA} values. The rendering context
-is HTML unless specified in the \code{output} argument.
+Using \code{vec_fmt_time()} with the default options will create a character
+vector of formatted times. Any \code{NA} values remain as \code{NA} values. The
+rendering context will be autodetected unless specified in the \code{output}
+argument (here, it is of the \code{"plain"} output type).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_time(str_vals)
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "18:36" "01:08" NA
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "18:36" "01:08" NA
 }\if{html}{\out{</div>}}
 
 We can change the formatting style by choosing a number from \code{1} to \code{5}:
@@ -73,7 +76,7 @@ We can change the formatting style by choosing a number from \code{1} to \code{5
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_time(str_vals, time_style = 4)
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "6:36 PM" "1:08 AM" NA
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "6:36 PM" "1:08 AM" NA
 }\if{html}{\out{</div>}}
 
 We can always use \code{\link[=info_time_style]{info_time_style()}} to call up an info table that serves as
@@ -86,13 +89,13 @@ applied.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_time(str_vals, time_style = 4, pattern = "Time: \{x\}")
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "Time: 6:36 PM" "Time: 1:08 AM" NA
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "Time: 6:36 PM" "Time: 1:08 AM" NA
 }\if{html}{\out{</div>}}
 }
 
 \section{Function ID}{
 
-14-10
+14-11
 }
 
 \seealso{
@@ -101,11 +104,13 @@ Other vector formatting functions:
 \code{\link{vec_fmt_currency}()},
 \code{\link{vec_fmt_datetime}()},
 \code{\link{vec_fmt_date}()},
+\code{\link{vec_fmt_duration}()},
 \code{\link{vec_fmt_engineering}()},
 \code{\link{vec_fmt_fraction}()},
 \code{\link{vec_fmt_integer}()},
 \code{\link{vec_fmt_markdown}()},
 \code{\link{vec_fmt_number}()},
+\code{\link{vec_fmt_partsper}()},
 \code{\link{vec_fmt_percent}()},
 \code{\link{vec_fmt_scientific}()}
 }
