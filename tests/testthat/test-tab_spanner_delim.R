@@ -662,4 +662,43 @@ test_that("`tab_spanner_delim()` works with complex splits", {
         split = "last"
       )
   )
+
+  #
+  # Ensure that the generated IDs correctly increments their index
+  # values where appropriate
+  #
+
+  first_delim <-
+    gt_tbl %>%
+    tab_spanner_delim(
+      delim = ".",
+      split = "first"
+    )
+
+  expect_equal(
+    first_delim$`_spanners`$spanner_id,
+    c(
+      "spanner-i.a", "spanner-j.a", "spanner:1-i.a", "spanner:1-j.a",
+      "spanner:2-i.a", "spanner:2-j.a", "spanner-x.i.a", "spanner-y.i.a",
+      "spanner-z.i.a"
+    )
+  )
+
+  last_delim <-
+    gt_tbl %>%
+    tab_spanner_delim(
+      delim = ".",
+      split = "last"
+    )
+
+  expect_equal(
+    last_delim$`_spanners`$spanner_id,
+    c(
+      "spanner-i.x", "spanner-j.x", "spanner-i.y", "spanner-j.y",
+      "spanner-i.z", "spanner-j.z", "spanner-a.i.x", "spanner-b.i.x",
+      "spanner-a.j.x", "spanner-b.j.x", "spanner-a.i.y", "spanner-b.i.y",
+      "spanner-a.j.y", "spanner-b.j.y", "spanner-a.i.z", "spanner-b.i.z",
+      "spanner-a.j.z", "spanner-b.j.z"
+    )
+  )
 })
