@@ -623,3 +623,43 @@ test_that("`tab_spanner_delim()` works on higher-order spanning", {
   # Take snapshots of `gt_tbl_6_yzzz`
   gt_tbl_6_yzzz %>% render_as_html() %>% expect_snapshot()
 })
+
+test_that("`tab_spanner_delim()` works with complex splits", {
+
+  # Create a gt table with two levels of spanners that repeat
+  gt_tbl <-
+    dplyr::tibble(
+      a.i.x = "",
+      b.i.x = "",
+      a.j.x = "",
+      b.j.x = "",
+      a.i.y = "",
+      b.i.y = "",
+      a.j.y = "",
+      b.j.y = "",
+      a.i.z = "",
+      b.i.z = "",
+      a.j.z = "",
+      b.j.z = ""
+    ) %>%
+    gt()
+
+  # Ensure that `tab_spanner_delim()` doesn't fail with
+  # either of the `split` options
+  expect_error(
+    regexp = NA,
+    gt_tbl %>%
+      tab_spanner_delim(
+      delim = ".",
+      split = "first"
+    )
+  )
+  expect_error(
+    regexp = NA,
+    gt_tbl %>%
+      tab_spanner_delim(
+        delim = ".",
+        split = "last"
+      )
+  )
+})
