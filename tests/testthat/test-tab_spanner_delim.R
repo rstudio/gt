@@ -650,9 +650,9 @@ test_that("`tab_spanner_delim()` works with complex splits", {
     regexp = NA,
     gt_tbl %>%
       tab_spanner_delim(
-      delim = ".",
-      split = "first"
-    )
+        delim = ".",
+        split = "first"
+      )
   )
   expect_error(
     regexp = NA,
