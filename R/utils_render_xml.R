@@ -422,7 +422,7 @@ xml_t <- function(...,
   htmltools::tag(
     `_tag_name` = xml_tag_type("t", app),
     varArgs = list(
-      htmltools::HTML(htmlEscape(paste0(...))),
+      htmltools::HTML(htmltools::htmlEscape(paste0(...))),
       `xml:space` = xml_space
     )
   )
