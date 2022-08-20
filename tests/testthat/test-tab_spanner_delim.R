@@ -623,3 +623,82 @@ test_that("`tab_spanner_delim()` works on higher-order spanning", {
   # Take snapshots of `gt_tbl_6_yzzz`
   gt_tbl_6_yzzz %>% render_as_html() %>% expect_snapshot()
 })
+
+test_that("`tab_spanner_delim()` works with complex splits", {
+
+  # Create a gt table with two levels of spanners that repeat
+  gt_tbl <-
+    dplyr::tibble(
+      a.i.x = "",
+      b.i.x = "",
+      a.j.x = "",
+      b.j.x = "",
+      a.i.y = "",
+      b.i.y = "",
+      a.j.y = "",
+      b.j.y = "",
+      a.i.z = "",
+      b.i.z = "",
+      a.j.z = "",
+      b.j.z = ""
+    ) %>%
+    gt()
+
+  # Ensure that `tab_spanner_delim()` doesn't fail with
+  # either of the `split` options
+  expect_error(
+    regexp = NA,
+    gt_tbl %>%
+      tab_spanner_delim(
+        delim = ".",
+        split = "first"
+      )
+  )
+  expect_error(
+    regexp = NA,
+    gt_tbl %>%
+      tab_spanner_delim(
+        delim = ".",
+        split = "last"
+      )
+  )
+
+  #
+  # Ensure that the generated IDs correctly increments their index
+  # values where appropriate
+  #
+
+  first_delim <-
+    gt_tbl %>%
+    tab_spanner_delim(
+      delim = ".",
+      split = "first"
+    )
+
+  expect_equal(
+    first_delim$`_spanners`$spanner_id,
+    c(
+      "spanner-i.a", "spanner-j.a", "spanner:1-i.a", "spanner:1-j.a",
+      "spanner:2-i.a", "spanner:2-j.a", "spanner-x.i.a", "spanner-y.i.a",
+      "spanner-z.i.a"
+    )
+  )
+
+  last_delim <-
+    gt_tbl %>%
+    tab_spanner_delim(
+      delim = ".",
+      split = "last"
+    )
+
+  expect_equal(
+    last_delim$`_spanners`$spanner_id,
+    c(
+      "spanner-i.x", "spanner-j.x", "spanner-i.y", "spanner-j.y",
+      "spanner-i.z", "spanner-j.z", "spanner-a.i.x", "spanner-b.i.x",
+      "spanner-a.j.x", "spanner-b.j.x", "spanner-a.i.y", "spanner-b.i.y",
+      "spanner-a.j.y", "spanner-b.j.y", "spanner-a.i.z", "spanner-b.i.z",
+      "spanner-a.j.z", "spanner-b.j.z"
+    )
+  )
+})
