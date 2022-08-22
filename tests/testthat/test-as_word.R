@@ -699,7 +699,8 @@ test_that("tables with footnotes can be added to a word doc", {
   check_suggests_xml()
 
   ## simple table
-  gt_exibble_min <- exibble[1:2,] %>%
+  gt_exibble_min <-
+    exibble[1:2,] %>%
     gt() %>%
     tab_footnote(
       footnote = md("this is a footer example"),
@@ -711,7 +712,8 @@ test_that("tables with footnotes can be added to a word doc", {
     )
 
   ## Add table to empty word document
-  word_doc <- officer::read_docx() %>%
+  word_doc <-
+    officer::read_docx() %>%
     body_add_gt(
       gt_exibble_min,
       align = "center"
@@ -719,7 +721,7 @@ test_that("tables with footnotes can be added to a word doc", {
 
   ## save word doc to temporary file
   temp_word_file <- tempfile(fileext = ".docx")
-  print(word_doc,target = temp_word_file)
+  print(word_doc, target = temp_word_file)
 
   ## Manual Review
   if (!testthat::is_testing() & interactive()) {
@@ -730,18 +732,20 @@ test_that("tables with footnotes can be added to a word doc", {
   docx <- officer::read_docx(temp_word_file)
 
   ## get docx table contents
-  docx_contents <- docx$doc_obj$get() %>%
+  docx_contents <-
+    docx$doc_obj$get() %>%
     xml2::xml_children() %>%
     xml2::xml_children()
 
   ## extract table contents
-  docx_table_body_header <- docx_contents[1] %>%
+  docx_table_body_header <-
+    docx_contents[1] %>%
     xml2::xml_find_all(".//w:tblHeader/ancestor::w:tr")
 
-  docx_table_body_contents <- docx_contents[1] %>%
+  docx_table_body_contents <-
+    docx_contents[1] %>%
     xml2::xml_find_all(".//w:tr") %>%
     setdiff(docx_table_body_header)
-
 
   ## superscripts will display as "true#false" due to
   ## xml being:
@@ -751,9 +755,10 @@ test_that("tables with footnotes can be added to a word doc", {
     docx_table_body_header %>%
       xml2::xml_find_all(".//w:p") %>%
       xml2::xml_text(),
-    c("numtrue1false", "chartrue2false", "fctr",
-      "date", "time","datetime",
-      "currency",  "row", "group")
+    c(
+      "numtrue1false", "chartrue2false", "fctr", "date", "time",
+      "datetime", "currency", "row", "group"
+    )
   )
 
   ## superscripts will display as "true##" due to
