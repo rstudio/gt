@@ -1,4 +1,5 @@
 skip_on_cran()
+skip_on_ci()
 
 #' @title Add gt table into a Word document
 #' @description Add a gt into a Word document.
@@ -226,7 +227,6 @@ test_that("word ooxml can be generated from gt object", {
 
 test_that("tables can be added to a word doc", {
 
-  skip_on_ci()
   check_suggests_xml()
 
   ## simple table
@@ -321,7 +321,6 @@ test_that("tables can be added to a word doc", {
 
 test_that("tables with embedded titles can be added to a word doc", {
 
-  skip_on_ci()
   check_suggests_xml()
 
   ## simple table
@@ -409,7 +408,6 @@ test_that("tables with embedded titles can be added to a word doc", {
 
 test_that("tables with spans can be added to a word doc", {
 
-  skip_on_ci()
   check_suggests_xml()
 
   ## simple table
@@ -506,7 +504,6 @@ test_that("tables with spans can be added to a word doc", {
 
 test_that("tables with multi-level spans can be added to a word doc", {
 
-  skip_on_ci()
   check_suggests_xml()
 
   ## simple table
@@ -612,7 +609,6 @@ test_that("tables with multi-level spans can be added to a word doc", {
 
 test_that("tables with summaries can be added to a word doc", {
 
-  skip_on_ci()
   check_suggests_xml()
 
   ## simple table
@@ -695,7 +691,6 @@ test_that("tables with summaries can be added to a word doc", {
 
 test_that("tables with footnotes can be added to a word doc", {
 
-  skip_on_ci()
   check_suggests_xml()
 
   ## simple table
@@ -799,7 +794,6 @@ test_that("tables with footnotes can be added to a word doc", {
 
 test_that("tables with source notes can be added to a word doc", {
 
-  skip_on_ci()
   check_suggests_xml()
 
   ## simple table
@@ -887,7 +881,6 @@ test_that("tables with source notes can be added to a word doc", {
 
 test_that("long tables can be added to a word doc", {
 
-  skip_on_ci()
   check_suggests_xml()
 
   ## simple table
@@ -957,7 +950,6 @@ test_that("long tables can be added to a word doc", {
 
 test_that("long tables with spans can be added to a word doc", {
 
-  skip_on_ci()
   check_suggests_xml()
 
   ## simple table
@@ -1031,7 +1023,6 @@ test_that("long tables with spans can be added to a word doc", {
 
 test_that("tables with cell & text coloring can be added to a word doc - no spanner", {
 
-  skip_on_ci()
   check_suggests_xml()
 
   ## simple table
@@ -1216,7 +1207,6 @@ test_that("tables with cell & text coloring can be added to a word doc - no span
 
 test_that("tables with cell & text coloring can be added to a word doc - with spanners", {
 
-  skip_on_ci()
   check_suggests_xml()
 
   ## simple table
@@ -1312,7 +1302,6 @@ test_that("tables with cell & text coloring can be added to a word doc - with sp
 
 test_that("tables with cell & text coloring can be added to a word doc - with source_notes and footnotes", {
 
-  skip_on_ci()
   check_suggests_xml()
 
   ## simple table
@@ -1392,7 +1381,6 @@ test_that("tables with cell & text coloring can be added to a word doc - with so
 
 test_that("tables with cell & text coloring can be added to a word doc - with summaries (grand/group)", {
 
-  skip_on_ci()
   check_suggests_xml()
 
   ## simple table
