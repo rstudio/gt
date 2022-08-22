@@ -391,6 +391,7 @@ tab_spanner_delim <- function(
       expr = {{ columns }},
       data = data
     )
+
   if (!is.null(columns)) {
     colnames_spanners <- base::intersect(all_cols, columns)
   } else {
@@ -482,6 +483,8 @@ tab_spanner_delim <- function(
     spanners_i_values <- rle_spanners_i$values
     spanners_i_col_i <- utils::head(cumsum(c(1, spanners_i_lengths)), -1)
 
+    spanner_id_vals <- c()
+
     for (j in seq_along(spanners_i_lengths)) {
 
       if (!is.na(spanners_i_values[j])) {
@@ -495,6 +498,26 @@ tab_spanner_delim <- function(
               collapse = delim
             )
           )
+
+        # Modify `spanner_id` to not collide with any other values
+        if (spanner_id %in% spanner_id_vals) {
+
+          if (grepl("^spanner-", spanner_id)) {
+
+            # Add number to spanner ID values on first duplication
+            spanner_id <- gsub("^spanner-", "spanner:1-", spanner_id)
+          }
+
+          while (spanner_id %in% spanner_id_vals) {
+
+            # Increment number to spanner ID values on subsequent duplications
+            idx_str <- gsub("^spanner:([0-9]+)-.*", "\\1", spanner_id)
+            idx_int <- as.integer(idx_str)
+            spanner_id <- gsub("^(spanner:)[0-9]+(-.*)", paste0("\\1", idx_int + 1, "\\2"), spanner_id)
+          }
+        }
+
+        spanner_id_vals <- unique(c(spanner_id_vals, spanner_id))
 
         spanner_columns <-
           seq(
