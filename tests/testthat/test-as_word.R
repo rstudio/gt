@@ -224,6 +224,20 @@ test_that("word ooxml can be generated from gt object", {
   expect_equal(gt_exibble_min_sha1, "a5101394f72dfc041b2b0fc5faf57a1a7dfb8dd6")
 })
 
+test_that("word ooxml escapes special characters in gt object", {
+
+  # Create a one-row table for these tests
+  exibble_min <- exibble[1, ] %>%
+    dplyr::mutate(special_characters = "><&\n\r\"'")
+
+  ## basic table
+  exibble_min %>%
+    gt() %>%
+    as_word() %>%
+    expect_snapshot()
+
+})
+
 test_that("tables can be added to a word doc", {
 
   skip_on_ci()
@@ -314,6 +328,93 @@ test_that("tables can be added to a word doc", {
         "17.95",
         "row_2",
         "grp_a"
+      )
+    )
+  )
+})
+
+test_that("tables with special characters can be added to a word doc", {
+
+  skip_on_ci()
+  check_suggests_xml()
+
+  ## simple table
+  gt_exibble_min <-
+    exibble[1,] %>%
+    dplyr::mutate(special_characters = "><&\"'") %>%
+    gt() %>%
+    tab_header(
+      title = "table title",
+      subtitle = "table subtitle"
+    )
+
+  ## Add table to empty word document
+  word_doc <-
+    officer::read_docx() %>%
+    body_add_gt(
+      gt_exibble_min,
+      align = "center"
+    )
+
+  ## save word doc to temporary file
+  temp_word_file <- tempfile(fileext = ".docx")
+  print(word_doc,target = temp_word_file)
+
+  ## Manual Review
+  if (!testthat::is_testing() & interactive()) {
+    shell.exec(temp_word_file)
+  }
+
+  ## Programmatic Review
+  docx <- officer::read_docx(temp_word_file)
+
+  ## get docx table contents
+  docx_contents <- xml2::xml_children(xml2::xml_children(docx$doc_obj$get()))
+
+  ## extract table caption
+  docx_table_caption_text <- xml2::xml_text(docx_contents[1:2])
+
+  ## extract table contents
+  docx_table_body_header <-
+    docx_contents[3] %>%
+    xml2::xml_find_all(".//w:tblHeader/ancestor::w:tr")
+
+  docx_table_body_contents <-
+    docx_contents[3] %>%
+    xml2::xml_find_all(".//w:tr") %>%
+    setdiff(docx_table_body_header)
+
+  expect_equal(
+    docx_table_caption_text,
+    c("Table  SEQ Table \\* ARABIC 1: table title", "table subtitle")
+  )
+
+  expect_equal(
+    xml2::xml_text(xml2::xml_find_all(docx_table_body_header, ".//w:p")),
+    c(
+      "num", "char", "fctr", "date", "time",
+      "datetime", "currency", "row", "group",
+      "special_characters"
+    )
+  )
+
+  expect_equal(
+    lapply(
+      docx_table_body_contents,
+      FUN = function(x) xml2::xml_text(xml2::xml_find_all(x, ".//w:p"))
+    ),
+    list(
+      c(
+        "0.1111",
+        "apricot",
+        "one",
+        "2015-01-15",
+        "13:35",
+        "2018-01-01 02:22",
+        "49.95",
+        "row_1",
+        "grp_a",
+        "><&\"'"
       )
     )
   )

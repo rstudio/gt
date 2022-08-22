@@ -500,3 +500,35 @@ test_that("`gtsave()` create docx as expected",{
     expect_snapshot()
 
 })
+
+test_that("`gtsave()` create docx as expected - table has special characters",{
+
+  # addresses issue raised in gh issue #121
+
+  skip_on_cran()
+
+  gt_exibble <- data.frame(
+    a = c("<", "b"),
+    b = 1:2,
+    stringsAsFactors = FALSE) %>%
+    gt()
+
+  temp_docx <- file.path(tempdir(),"test.docx")
+  on.exit(unlink(temp_docx))
+  expect_false(file.exists(temp_docx))
+
+  gtsave(gt_exibble, filename = "test.docx", path = tempdir())
+
+  # Check for existence
+  expect_true(file.exists(temp_docx))
+
+  temp_docx_xml <- xml2::read_xml(unz(temp_docx,"word/document.xml"))
+
+  temp_docx_xml %>%
+    xml2::xml_find_first(".//w:tbl") %>%
+    as.character() %>%
+    expect_snapshot()
+
+
+
+})
