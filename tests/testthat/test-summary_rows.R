@@ -1615,3 +1615,30 @@ test_that("summary rows can be styled comprehensively", {
   # Take a snapshot of `gt_tbl`
   gt_tbl %>% render_as_html() %>% expect_snapshot()
 })
+
+test_that("summary rows can use other columns' data", {
+
+  gt_tbl <-
+    sp500 %>%
+    dplyr::slice_head(n = 22) %>%
+    dplyr::select(date, close, volume) %>%
+    gt() %>%
+    summary_rows(
+      columns = 'close',
+      groups = NULL,
+      fns = list('Average close' = ~ mean(.))
+    ) %>%
+    summary_rows(
+      columns = 'close',
+      groups = NULL,
+      fns = list('Average volume weighted close' = ~ sum(. * volume) / sum(volume))
+    ) %>%
+    summary_rows(
+      columns = 'close',
+      groups = NULL,
+      fns = list('Sum of `volume` in `close`' = ~ sum(volume))
+    )
+
+  # Take a snapshot of `gt_tbl`
+  gt_tbl %>% render_as_html() %>% expect_snapshot()
+})
