@@ -474,8 +474,6 @@ test_that("the `gtsave()` function stops in some cases", {
 
 test_that("`gtsave()` create docx as expected",{
 
-  skip_on_cran()
-
   gt_exibble <- exibble %>% gt()
 
   temp_docx <- file.path(tempdir(),"test.docx")
@@ -499,8 +497,6 @@ test_that("`gtsave()` create docx as expected - table has special characters",{
 
   # addresses issue raised in gh issue #121
 
-  skip_on_cran()
-
   gt_exibble <- data.frame(
     a = c("<", "b"),
     b = 1:2,
@@ -522,7 +518,4 @@ test_that("`gtsave()` create docx as expected - table has special characters",{
     xml2::xml_find_first(".//w:tbl") %>%
     as.character() %>%
     expect_snapshot()
-
-
-
 })
