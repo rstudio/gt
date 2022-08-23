@@ -1,3 +1,7 @@
+skip_on_cran()
+skip_on_ci()
+skip_on_covr()
+
 test_that("the `gtsave()` function creates an HTML file based on the extension", {
 
   # Create a filename with path, having the
@@ -124,10 +128,6 @@ test_that("the `gtsave()` function creates an HTML file based on the extension",
 })
 
 test_that("HTML saving with `gtsave()` is succesful with different path defs", {
-
-  skip_on_cran()
-  skip_on_ci()
-  skip_on_covr()
 
   #
   # [#1] Relative filename, default path
@@ -268,10 +268,6 @@ test_that("HTML saving with `gtsave()` is succesful with different path defs", {
 })
 
 test_that("HTML saving with `gt_save_html()` with different path defs works", {
-
-  skip_on_cran()
-  skip_on_ci()
-  skip_on_covr()
 
   #
   # [#1] Relative filename, default path
@@ -466,7 +462,6 @@ test_that("HTML saving with `gt_save_html()` with different path defs works", {
   #     fixed = TRUE)
 # })
 
-
 test_that("the `gtsave()` function stops in some cases", {
 
   # Expect an error if the file extension doesn't
@@ -478,8 +473,6 @@ test_that("the `gtsave()` function stops in some cases", {
 })
 
 test_that("`gtsave()` create docx as expected",{
-
-  skip_on_cran()
 
   gt_exibble <- exibble %>% gt()
 
@@ -498,5 +491,31 @@ test_that("`gtsave()` create docx as expected",{
     xml2::xml_find_first(".//w:tbl") %>%
     as.character() %>%
     expect_snapshot()
+})
 
+test_that("`gtsave()` create docx as expected - table has special characters",{
+
+  # addresses issue raised in gh issue #121
+
+  gt_exibble <- data.frame(
+    a = c("<", "b"),
+    b = 1:2,
+    stringsAsFactors = FALSE) %>%
+    gt()
+
+  temp_docx <- file.path(tempdir(),"test.docx")
+  on.exit(unlink(temp_docx))
+  expect_false(file.exists(temp_docx))
+
+  gtsave(gt_exibble, filename = "test.docx", path = tempdir())
+
+  # Check for existence
+  expect_true(file.exists(temp_docx))
+
+  temp_docx_xml <- xml2::read_xml(unz(temp_docx,"word/document.xml"))
+
+  temp_docx_xml %>%
+    xml2::xml_find_first(".//w:tbl") %>%
+    as.character() %>%
+    expect_snapshot()
 })

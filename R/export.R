@@ -164,7 +164,8 @@ gtsave <- function(
         "*" = "`.png`          (PNG file)",
         "*" = "`.pdf`          (PDF file)",
         "*" = "`.tex`, `.rnw`  (LaTeX file)",
-        "*" = "`.rtf`          (RTF file)"
+        "*" = "`.rtf`          (RTF file)",
+        "*" = "`.docx`         (Word file)"
       ))
     }
   )
