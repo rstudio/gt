@@ -433,13 +433,12 @@ process_text <- function(text, context = "html") {
     # Text processing for Word output
 
     if (inherits(text, "from_markdown")) {
-
-      return(markdown_to_xml(text))
-
-    } else {
-
-      return(as.character(text))
+      text <- markdown_to_xml(text)
+    }else{
+      text <- as.character(text)
     }
+
+    return(htmltools::htmlEscape(text))
 
   } else {
 
