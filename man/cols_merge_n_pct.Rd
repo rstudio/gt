@@ -102,7 +102,7 @@ percentages of the top 3 pizzas sold by pizza category in 2015. The
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_merge_n_pct_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_merge_n_pct_1.png" alt="This image of a table was generated from the first code example in the `cols_merge_n_pct()` help file." style="width:100\%;">
 }}
 }
 

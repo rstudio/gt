@@ -89,7 +89,7 @@ columns. Format the \code{date} column to have dates formatted as \code{month_da
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_date_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_date_1.png" alt="This image of a table was generated from the first code example in the `fmt_date()` help file." style="width:100\%;">
 }}
 
 Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{date} and \code{time}
@@ -113,7 +113,7 @@ in the \code{rows} argument).
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_date_2.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_date_2.png" alt="This image of a table was generated from the second code example in the `fmt_date()` help file." style="width:100\%;">
 }}
 }
 

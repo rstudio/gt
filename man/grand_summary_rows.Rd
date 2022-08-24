@@ -85,7 +85,7 @@ summary rows \code{min}, \code{max}, and \code{avg} for the table with the
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_grand_summary_rows_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_grand_summary_rows_1.png" alt="This image of a table was generated from the first code example in the `grand_summary_rows()` help file." style="width:100\%;">
 }}
 }
 

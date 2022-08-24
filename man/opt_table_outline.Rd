@@ -60,7 +60,7 @@ tab_1
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_table_outline_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_table_outline_1.png" alt="This image of a table was generated from the first code example in the `opt_table_outline()` help file." style="width:100\%;">
 }}
 
 Remove the table outline with the \code{style = "none"} option.
@@ -69,7 +69,7 @@ Remove the table outline with the \code{style = "none"} option.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_table_outline_2.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_table_outline_2.png" alt="This image of a table was generated from the second code example in the `opt_table_outline()` help file." style="width:100\%;">
 }}
 }
 

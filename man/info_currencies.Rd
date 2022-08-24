@@ -46,7 +46,7 @@ begins with an \code{"h"}.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_info_currencies_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_info_currencies_1.png" alt="This image of a table was generated from the first code example in the `info_currencies()` help file." style="width:100\%;">
 }}
 
 Get a table of info on all of the common currency name/symbols that can be
@@ -56,7 +56,7 @@ used with \code{\link[=fmt_currency]{fmt_currency()}}.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_info_currencies_2.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_info_currencies_2.png" alt="This image of a table was generated from the second code example in the `info_currencies()` help file." style="width:100\%;">
 }}
 }
 
