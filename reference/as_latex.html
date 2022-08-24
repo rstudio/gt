@@ -85,6 +85,25 @@ containing the LaTeX code.</p>
 
 </dl></div>
     <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>LaTeX packages required to generate tables are:
+amsmath, booktabs, caption, longtable.</p>
+<p>In the event packages are not automatically added during the render phase
+of the document, please create and include a style file to load them.</p>
+<p>Inside the document's YAML metadata, please include:</p>
+<div class="sourceCode"><pre><code><span></span>
+<span><span class="va">output</span><span class="op">:</span></span>
+<span>  <span class="va">pdf_document</span><span class="op">:</span> <span class="co"># Change to appropriate LaTeX template</span></span>
+<span>    <span class="va">includes</span><span class="op">:</span></span>
+<span>      <span class="va">in_header</span><span class="op">:</span> <span class="st">'gt_packages.sty'</span></span></code></pre></div>
+
+<p>The <code>gt_packages.sty</code> file would then contain the listed dependencies above:</p>
+<div class="sourceCode"><pre><code>
+  \usepackage{amsmath, booktabs, caption, longtable}
+</code></pre></div>
+
+    </div>
+    <div class="section level2">
     <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     
 
