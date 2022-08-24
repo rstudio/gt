@@ -792,6 +792,11 @@ tab_stubhead <- function(
 #' level, or, by way of an indentation directive using keywords.
 #'
 #' @inheritParams fmt_number
+#' @param rows The rows to consider for the indentation change. Can either be a
+#'   vector of row captions provided in `c()`, a vector of row indices, or a
+#'   helper function focused on selections. The select helper functions are:
+#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()], and
+#'   [everything()].
 #' @param indent An indentation directive either as a keyword describing the
 #'   indentation change or as an explicit integer value for directly setting the
 #'   indentation level. The keyword `"increase"` (the default) will increase the
@@ -799,11 +804,6 @@ tab_stubhead <- function(
 #'   direction. The starting indentation level of `0` means no indentation and
 #'   this values serves as a lower bound. The upper bound for indentation is at
 #'   level `5`.
-#' @param rows The rows to consider for the indentation change. Can either be a
-#'   vector of row captions provided in `c()`, a vector of row indices, or a
-#'   helper function focused on selections. The select helper functions are:
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()], and
-#'   [everything()].
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -854,8 +854,8 @@ tab_stubhead <- function(
 #'     row_group.as_column = TRUE
 #'   ) %>%
 #'   tab_stub_indent(
-#'     indent = 2,
-#'     rows = matches("^L|^M|^S|^XL|^XXL")
+#'     rows = matches("^L|^M|^S|^XL|^XXL"),
+#'     indent = 2
 #'   ) %>%
 #'   tab_style(
 #'     style = cell_fill(color = "gray95"),
@@ -877,8 +877,8 @@ tab_stubhead <- function(
 #' @export
 tab_stub_indent <- function(
     data,
-    indent = "increase",
-    rows
+    rows,
+    indent = "increase"
 ) {
 
   # Perform input object validation
