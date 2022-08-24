@@ -1,4 +1,4 @@
-# gt (development version)
+# gt 0.7.0
 
 * word table output via `as_word()`. `docx` files can now be made through gtsave. (#929)
 * don't change caption setup of latex tables (https://github.com/quarto-dev/quarto-cli/issues/1826).
