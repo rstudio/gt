@@ -20,13 +20,13 @@
 
 ## Minor improvements and bug fixes
 
-* We can now supply data from adjacent columns to user-supplied aggregation functions in `summary_rows()` and `grand_summary_rows()` (#952). (#1018)
+* We can now supply data from adjacent columns to user-supplied aggregation functions in `summary_rows()` and `grand_summary_rows()` (#383, #690, #952). (#1018)
 
-* Default alignments in the table stub are now more intelligently set by examining the content. If values are predominantly number-like then a right alignment will be chosen, otherwise the stub will be left aligned. (#999)
+* Initial alignments in the table stub are now more intelligently determined in `gt()` by examining the content of the column (the `"rowname_col"`) that will comprise the stub. If values are predominantly number-like then a right alignment will be chosen, otherwise row labels will be left aligned. (#999)
 
 * Enhanced automatic column alignment (set to `"auto"` by default in the `gt()` function) by probing the contents of the columns. This ensures that string-based dates/times/datetimes receive a better appearance before formatting. (#997)
 
-* **gt** tables no longer break table numbering in R Markdown and Quarto documents (#1003, thanks @cscheid!)
+* **gt** tables no longer break table numbering in R Markdown and Quarto documents. (#1003, thanks @cscheid!)
 
 * The `as_latex()` documentation was updated to provide guidance on necessary LaTeX dependencies. (#1022, thanks @coatless!)
 
