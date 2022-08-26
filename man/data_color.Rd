@@ -109,7 +109,7 @@ domain.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_data_color_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_data_color_1.png" alt="This image of a table was generated from the first code example in the `data_color()` help file." style="width:100\%;">
 }}
 
 Use \code{\link{pizzaplace}} to create a \strong{gt} table. Apply colors from the
@@ -144,7 +144,7 @@ as the domain.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_data_color_2.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_data_color_2.png" alt="This image of a table was generated from the second code example in the `data_color()` help file." style="width:100\%;">
 }}
 }
 

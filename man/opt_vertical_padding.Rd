@@ -65,7 +65,7 @@ Contract the vertical padding across the entire table with
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_vertical_padding_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_vertical_padding_1.png" alt="This image of a table was generated from the first code example in the `opt_vertical_padding()` help file." style="width:100\%;">
 }}
 }
 

@@ -40,7 +40,7 @@ with a \code{"v"}.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_info_locales_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_info_locales_1.png" alt="This image of a table was generated from the first code example in the `info_locales()` help file." style="width:100\%;">
 }}
 }
 

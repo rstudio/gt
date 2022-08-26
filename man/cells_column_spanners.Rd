@@ -85,7 +85,7 @@ three column labels with \code{\link[=tab_spanner]{tab_spanner()}} and then use 
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_column_spanners_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_column_spanners_1.png" alt="This image of a table was generated from the first code example in the `cells_column_spanners()` help file." style="width:100\%;">
 }}
 }
 

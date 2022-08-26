@@ -68,7 +68,7 @@ the catchall \code{"Serif"} group).
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_table_font_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_table_font_1.png" alt="This image of a table was generated from the first code example in the `opt_table_font()` help file." style="width:100\%;">
 }}
 
 Use \code{\link{sza}} to create an eleven-row table. Within \code{opt_table_font()}, set up
@@ -93,7 +93,7 @@ a preferred list of sans-serif fonts that are commonly available in macOS
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_table_font_2.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_table_font_2.png" alt="This image of a table was generated from the second code example in the `opt_table_font()` help file." style="width:100\%;">
 }}
 }
 
