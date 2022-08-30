@@ -1327,6 +1327,7 @@ create_footnotes_component_h <- function(data) {
 
 # Get a matrix of all body cells
 get_body_component_cell_matrix <- function(data) {
+
   body <- dt_body_get(data = data)
   stub_layout <- get_stub_layout(data = data)
   default_vars <- dt_boxhead_get_vars_default(data = data)
@@ -1369,6 +1370,7 @@ get_body_component_cell_matrix <- function(data) {
 }
 
 summary_row_tags_i <- function(data, group_id) {
+
   # Check that `group_id` isn't NULL and that length is exactly 1
   if (is.null(group_id) || length(group_id) != 1) {
     cli::cli_abort("`group_id` cannot be `NULL` and must be of length 1.")
@@ -1456,7 +1458,7 @@ summary_row_tags_i <- function(data, group_id) {
 
       summary_row_class <- "gt_grand_summary_row"
       first_row_class <- "gt_first_grand_summary_row"
-      
+
     } else {
 
       styles_resolved_row <-
@@ -1466,7 +1468,6 @@ summary_row_tags_i <- function(data, group_id) {
           grpname = group_id,
           grprow = j
         )
-
 
       summary_row_class <- "gt_summary_row"
 
@@ -1497,7 +1498,8 @@ summary_row_tags_i <- function(data, group_id) {
               alignment_classes,
               extra_classes,
               row_styles,
-              FUN = function(x, col_span, alignment_class, extra_class, cell_style) {
+              names(summary_df),
+              FUN = function(x, col_span, alignment_class, extra_class, cell_style, col_name) {
                 extra_class <- c(extra_class, summary_row_class)
 
                 if (j == 1) {
@@ -1514,11 +1516,31 @@ summary_row_tags_i <- function(data, group_id) {
                     # 1 opening tag
                     paste0(
                       "th ",
-                      "id=\"gt_id_row_", as.character(x), "_", group_id, "\" ",
+                      "id=\"",
+                      if (summary_row_type == "grand") {
+                        paste0("grand_summary_stub_", j, "\" ")
+                      } else {
+                        paste0("summary_stub_", group_id, "_", j, "\" ")
+                      },
                       "scope=\"row\""
                     )
                   } else {
-                    "td" #  headers = "group_row_id row_header_id col_header_id"
+                    # headers = "group_row_id row_header_id col_header_id"
+                    paste0(
+                      "td ",
+                      "headers=\"",
+                      if (summary_row_type == "grand") {
+                        paste0(
+                          "grand_summary grand_summary_stub_",
+                          j, " ", col_name, "\""
+                        )
+                      } else {
+                        paste0(
+                          group_id, " summary_stub_",
+                          group_id, "_", j, " ", col_name, "\""
+                        )
+                      }
+                    )
                   },
                   if (is.null(col_span)) {
                     # 2 colspan
@@ -1566,9 +1588,12 @@ summary_row_tags_i <- function(data, group_id) {
   summary_row_lines
 }
 
-build_row_styles <- function(styles_resolved_row,
-                             include_stub,
-                             n_cols) {
+build_row_styles <- function(
+    styles_resolved_row,
+    include_stub,
+    n_cols
+) {
+
   # The styles_resolved_row data frame should contain the columns `colnum` and
   # `html_style`. Each colnum should match the number of a data column in the
   # output table; the first data column is number 1. No colnum should appear
