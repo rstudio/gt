@@ -93,7 +93,7 @@ is a week number) with the \code{summary_rows()} function.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_summary_rows_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_summary_rows_1.png" alt="This image of a table was generated from the first code example in the `summary_rows()` help file." style="width:100\%;">
 }}
 }
 

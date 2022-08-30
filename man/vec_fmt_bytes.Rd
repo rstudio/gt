@@ -18,7 +18,7 @@ vec_fmt_bytes(
   force_sign = FALSE,
   incl_space = TRUE,
   locale = NULL,
-  output = c("html", "latex", "rtf")
+  output = c("auto", "plain", "html", "latex", "rtf", "word")
 )
 }
 \arguments{
@@ -76,17 +76,19 @@ We can use the \code{\link[=info_locales]{info_locales()}} function as a useful 
 the locales that are supported.}
 
 \item{output}{The output style of the resulting character vector. This can
-either be \code{"html"} (the default), \code{"latex"}, or \code{"rtf"}.}
+either be \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"},
+or \code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the
+\code{"auto"} option will choose the correct \code{output} value}
 }
 \value{
 A character vector.
 }
 \description{
 With numeric values in a vector, we can transform each into byte values with
-human readable units. The \code{vec_fmt_bytes()} function allows for the formatting of
-byte sizes to either of two common representations: (1) with decimal units
-(powers of 1000, examples being \code{"kB"} and \code{"MB"}), and (2) with binary units
-(powers of 1024, examples being \code{"KiB"} and \code{"MiB"}).
+human readable units. The \code{vec_fmt_bytes()} function allows for the
+formatting of byte sizes to either of two common representations: (1) with
+decimal units (powers of 1000, examples being \code{"kB"} and \code{"MB"}), and (2)
+with binary units (powers of 1024, examples being \code{"KiB"} and \code{"MiB"}).
 
 It is assumed the input numeric values represent the number of bytes and
 automatic truncation of values will occur. The numeric values will be scaled
@@ -114,46 +116,54 @@ Let's create a numeric vector for the next few examples:
 
 Using \code{vec_fmt_bytes()} with the default options will create a character
 vector with values in bytes. Any \code{NA} values remain as \code{NA} values. The
-rendering context is HTML unless specified in the \code{output}
-argument.
+rendering context will be autodetected unless specified in the \code{output}
+argument (here, it is of the \code{"plain"} output type).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_bytes(num_vals)
-#> [1] "324.3 TB"     "8 B"          "1.4 MB"       "&minus;59 kB" "NA"
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "324.3 TB" "8 B" "1.4 MB" "-59 kB" "NA"
 }\if{html}{\out{</div>}}
 
 We can change the number of decimal places with the \code{decimals} option:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_bytes(num_vals, decimals = 2)
-#> [1] "324.29 TB"       "8 B"             "1.36 MB"         "&minus;59.03 kB"
-#> [5] "NA"
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "324.29 TB" "8 B" "1.36 MB" "-59.03 kB" "NA"
 }\if{html}{\out{</div>}}
 
 If we are formatting for a different locale, we could supply the locale ID
 and \strong{gt} will handle any locale-specific formatting options:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_bytes(num_vals, locale = "fi")
-#> [1] "324,3 TB"     "8 B"          "1,4 MB"       "&minus;59 kB" "NA"
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "324,3 TB" "8 B" "1,4 MB" "-59 kB" "NA"
 }\if{html}{\out{</div>}}
 
 Should you need to have positive and negative signs on each of the output
 values, use \code{force_sign = TRUE}:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_bytes(num_vals, force_sign = TRUE)
-#> [1] "+324.3 TB"    "+8 B"         "+1.4 MB"      "&minus;59 kB" "NA"
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "+324.3 TB" "+8 B" "+1.4 MB" "-59 kB" "NA"
 }\if{html}{\out{</div>}}
 
 As a last example, one can wrap the values in a pattern with the \code{pattern}
 argument. Note here that \code{NA} values won't have the pattern applied.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_bytes(num_vals, pattern = "[\{x\}]")
-#> [1] "[324.3 TB]"     "[8 B]"          "[1.4 MB]"       "[&minus;59 kB]"
-#> [5] "NA"
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "[324.3 TB]" "[8 B]" "[1.4 MB]" "[-59 kB]" "NA"
 }\if{html}{\out{</div>}}
 }
 
 \section{Function ID}{
 
-14-8
+14-9
 }
 
 \seealso{
@@ -161,11 +171,13 @@ Other vector formatting functions:
 \code{\link{vec_fmt_currency}()},
 \code{\link{vec_fmt_datetime}()},
 \code{\link{vec_fmt_date}()},
+\code{\link{vec_fmt_duration}()},
 \code{\link{vec_fmt_engineering}()},
 \code{\link{vec_fmt_fraction}()},
 \code{\link{vec_fmt_integer}()},
 \code{\link{vec_fmt_markdown}()},
 \code{\link{vec_fmt_number}()},
+\code{\link{vec_fmt_partsper}()},
 \code{\link{vec_fmt_percent}()},
 \code{\link{vec_fmt_scientific}()},
 \code{\link{vec_fmt_time}()}

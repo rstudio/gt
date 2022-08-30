@@ -19,7 +19,7 @@ vec_fmt_percent(
   incl_space = FALSE,
   placement = "right",
   locale = NULL,
-  output = c("html", "latex", "rtf")
+  output = c("auto", "plain", "html", "latex", "rtf", "word")
 )
 }
 \arguments{
@@ -81,7 +81,9 @@ We can use the \code{\link[=info_locales]{info_locales()}} function as a useful 
 the locales that are supported.}
 
 \item{output}{The output style of the resulting character vector. This can
-either be \code{"html"} (the default), \code{"latex"}, or \code{"rtf"}.}
+either be \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"},
+or \code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the
+\code{"auto"} option will choose the correct \code{output} value}
 }
 \value{
 A character vector.
@@ -115,14 +117,16 @@ Let's create a numeric vector for the next few examples:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{num_vals <- c(0.0052, 0.08, 0, -0.535, NA)
 }\if{html}{\out{</div>}}
 
-Using \code{vec_fmt_percent()} with the default options will create a character vector
-where the resultant percentage values have two decimal places and \code{NA} values
-will render as \code{"NA"}. Also, the rendering context is HTML unless specified
-in the \code{output} argument.
+Using \code{vec_fmt_percent()} with the default options will create a character
+vector where the resultant percentage values have two decimal places and \code{NA}
+values will render as \code{"NA"}. The rendering context will be autodetected
+unless specified in the \code{output} argument (here, it is of the \code{"plain"}
+output type).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_percent(num_vals)
-#> [1] "0.52\%"         "8.00\%"         "0.00\%"         "&minus;53.50\%"
-#> [5] "NA"
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "0.52\%" "8.00\%" "0.00\%" "-53.50\%" "NA"
 }\if{html}{\out{</div>}}
 
 We can change the decimal mark to a comma, and we have to be sure to change
@@ -130,39 +134,45 @@ the digit separator mark from the default comma to something else (a period
 works here):
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_percent(num_vals, sep_mark = ".", dec_mark = ",")
-#> [1] "0,52\%"         "8,00\%"         "0,00\%"         "&minus;53,50\%"
-#> [5] "NA"
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "0,52\%" "8,00\%" "0,00\%" "-53,50\%" "NA"
 }\if{html}{\out{</div>}}
 
 If we are formatting for a different locale, we could supply the locale ID
 and let \strong{gt} handle these locale-specific formatting options:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_percent(num_vals, locale = "pt")
-#> [1] "0,52\%"         "8,00\%"         "0,00\%"         "&minus;53,50\%"
-#> [5] "NA"
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "0,52\%" "8,00\%" "0,00\%" "-53,50\%" "NA"
 }\if{html}{\out{</div>}}
 
 There are many options for formatting values. Perhaps you need to have
 explicit positive and negative signs? Use \code{force_sign = TRUE} for that.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_percent(num_vals, force_sign = TRUE)
-#> [1] "+0.52\%"        "+8.00\%"        "0.00\%"         "&minus;53.50\%"
-#> [5] "NA"
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "+0.52\%" "+8.00\%" "0.00\%" "-53.50\%" "NA"
 }\if{html}{\out{</div>}}
 
 Those trailing zeros past the decimal mark can be stripped out by using the
 \code{drop_trailing_zeros} option.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_percent(num_vals, drop_trailing_zeros = TRUE)
-#> [1] "0.52\%"        "8\%"           "0\%"           "&minus;53.5\%" "NA"
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "0.52\%" "8\%" "0\%" "-53.5\%" "NA"
 }\if{html}{\out{</div>}}
 
 As a last example, one can wrap the values in a pattern with the \code{pattern}
 argument. Note here that \code{NA} values won't have the pattern applied.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_percent(num_vals, pattern = "\{x\}wt")
-#> [1] "0.52\%wt"         "8.00\%wt"         "0.00\%wt"         "&minus;53.50\%wt"
-#> [5] "NA"
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "0.52\%wt" "8.00\%wt" "0.00\%wt" "-53.50\%wt" "NA"
 }\if{html}{\out{</div>}}
 }
 
@@ -177,11 +187,13 @@ Other vector formatting functions:
 \code{\link{vec_fmt_currency}()},
 \code{\link{vec_fmt_datetime}()},
 \code{\link{vec_fmt_date}()},
+\code{\link{vec_fmt_duration}()},
 \code{\link{vec_fmt_engineering}()},
 \code{\link{vec_fmt_fraction}()},
 \code{\link{vec_fmt_integer}()},
 \code{\link{vec_fmt_markdown}()},
 \code{\link{vec_fmt_number}()},
+\code{\link{vec_fmt_partsper}()},
 \code{\link{vec_fmt_scientific}()},
 \code{\link{vec_fmt_time}()}
 }

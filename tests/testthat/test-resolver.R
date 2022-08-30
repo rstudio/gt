@@ -96,7 +96,7 @@ test_that("`resolve_rows_l()` and `resolve_rows_i()` both work", {
   expect_error(resolve_rows_l(dplyr::tibble(a = 2), exibble_gt_1))
 
   expect_identical(resolve_rows_l(1, exibble_gt_2), c(TRUE, rep_len(FALSE, length(row_names_2) - 1)))
-  expect_identical(resolve_rows_l("apricot", exibble_gt_2), rep(c(TRUE, rep_len(FALSE, 7)), 2))
+  expect_identical(resolve_rows_l("apricot", exibble_gt_2), c(TRUE, rep(FALSE, length(row_names_2) - 1)))
   expect_warning(expect_identical(resolve_rows_l(NULL, exibble_gt_2), rep_len(TRUE, length(row_names_2))))
   expect_identical(resolve_rows_l(everything(), exibble_gt_2), rep_len(TRUE, length(row_names_2)))
 
@@ -151,7 +151,7 @@ test_that("`resolve_rows_l()` and `resolve_rows_i()` both work", {
   expect_error(resolve_rows_i(dplyr::tibble(a = 2), exibble_gt_1))
 
   expect_identical(resolve_rows_i(1, exibble_gt_2), 1L)
-  expect_identical(resolve_rows_i("apricot", exibble_gt_2), c(1L, 9L))
+  expect_identical(resolve_rows_i("apricot", exibble_gt_2), 1L)
   expect_warning(expect_identical(resolve_rows_i(NULL, exibble_gt_2), 1:16))
   expect_identical(resolve_rows_i(everything(), exibble_gt_2), 1:16)
 

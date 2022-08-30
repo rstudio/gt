@@ -977,19 +977,19 @@ test_that("summary rows can be created when there is no stub", {
   expect_match(
     gt_tbl %>%
       as_raw_html(inline_css = FALSE),
-    "<td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_first_grand_summary_row\">average</td>"
+    "<td class=\"gt_row gt_left gt_stub gt_grand_summary_row gt_first_grand_summary_row\">average</td>"
   )
 
   expect_match(
     gt_tbl %>%
       as_raw_html(inline_css = FALSE),
-    "<td class=\"gt_row gt_right gt_stub gt_grand_summary_row\">total</td>"
+    "<td class=\"gt_row gt_left gt_stub gt_grand_summary_row\">total</td>"
   )
 
   expect_match(
     gt_tbl %>%
       as_raw_html(inline_css = FALSE),
-    "<td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_last_summary_row\">std dev</td>"
+    "<td class=\"gt_row gt_left gt_stub gt_grand_summary_row gt_last_summary_row\">std dev</td>"
   )
 })
 
@@ -1093,10 +1093,10 @@ test_that("summary row labels are added in narrow and wide tables", {
     narrow_gt_tbl %>%
       as_raw_html(inline_css = FALSE),
     paste0(
-      "<td class=\"gt_row gt_right gt_stub gt_summary_row gt_first_summary_row thick\">the_sum</td>.*?",
-      "<td class=\"gt_row gt_right gt_stub gt_summary_row gt_last_summary_row\">mean</td>.*?",
-      "<td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_first_grand_summary_row\">the_sum</td>.*?",
-      "<td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_last_summary_row\">mean</td>.*?"
+      "<td class=\"gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick\">the_sum</td>.*?",
+      "<td class=\"gt_row gt_left gt_stub gt_summary_row gt_last_summary_row\">mean</td>.*?",
+      "<td class=\"gt_row gt_left gt_stub gt_grand_summary_row gt_first_grand_summary_row\">the_sum</td>.*?",
+      "<td class=\"gt_row gt_left gt_stub gt_grand_summary_row gt_last_summary_row\">mean</td>.*?"
     )
   )
 
@@ -1104,10 +1104,10 @@ test_that("summary row labels are added in narrow and wide tables", {
     wide_gt_tbl %>%
       as_raw_html(inline_css = FALSE),
     paste0(
-      "<td class=\"gt_row gt_right gt_stub gt_summary_row gt_first_summary_row thick\">the_sum</td>.*?",
-      "<td class=\"gt_row gt_right gt_stub gt_summary_row gt_last_summary_row\">mean</td>.*?",
-      "<td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_first_grand_summary_row\">the_sum</td>.*?",
-      "<td class=\"gt_row gt_right gt_stub gt_grand_summary_row gt_last_summary_row\">mean</td>.*?"
+      "<td class=\"gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick\">the_sum</td>.*?",
+      "<td class=\"gt_row gt_left gt_stub gt_summary_row gt_last_summary_row\">mean</td>.*?",
+      "<td class=\"gt_row gt_left gt_stub gt_grand_summary_row gt_first_grand_summary_row\">the_sum</td>.*?",
+      "<td class=\"gt_row gt_left gt_stub gt_grand_summary_row gt_last_summary_row\">mean</td>.*?"
     )
   )
 })
@@ -1400,7 +1400,6 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
   summary_tbl_1 %>% as_latex() %>% as.character() %>% expect_snapshot()
   summary_tbl_1 %>% as_rtf() %>% expect_snapshot()
 
-
   # Here the default value of `rowname_col` is set to NULL set that the
   # `"rowname"` col won't be used as the stub; it exists as a visible column
   # and the stub is empty except for the grand summary labels
@@ -1611,6 +1610,33 @@ test_that("summary rows can be styled comprehensively", {
         cells_summary(), cells_stub_summary(),
         cells_grand_summary(), cells_stub_grand_summary()
       )
+    )
+
+  # Take a snapshot of `gt_tbl`
+  gt_tbl %>% render_as_html() %>% expect_snapshot()
+})
+
+test_that("summary rows can use other columns' data", {
+
+  gt_tbl <-
+    sp500 %>%
+    dplyr::slice_head(n = 22) %>%
+    dplyr::select(date, close, volume) %>%
+    gt() %>%
+    summary_rows(
+      columns = 'close',
+      groups = NULL,
+      fns = list('Average close' = ~ mean(.))
+    ) %>%
+    summary_rows(
+      columns = 'close',
+      groups = NULL,
+      fns = list('Average volume weighted close' = ~ sum(. * volume) / sum(volume))
+    ) %>%
+    summary_rows(
+      columns = 'close',
+      groups = NULL,
+      fns = list('Sum of `volume` in `close`' = ~ sum(volume))
     )
 
   # Take a snapshot of `gt_tbl`

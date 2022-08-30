@@ -8,7 +8,7 @@ vec_fmt_date(
   x,
   date_style = 2,
   pattern = "{x}",
-  output = c("html", "latex", "rtf")
+  output = c("auto", "plain", "html", "latex", "rtf", "word")
 )
 }
 \arguments{
@@ -24,7 +24,9 @@ formatted value. The value itself is represented by \code{{x}} and all other
 characters are taken to be string literals.}
 
 \item{output}{The output style of the resulting character vector. This can
-either be \code{"html"} (the default), \code{"latex"}, or \code{"rtf"}.}
+either be \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"},
+or \code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the
+\code{"auto"} option will choose the correct \code{output} value}
 }
 \value{
 A character vector.
@@ -67,19 +69,24 @@ few examples:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{str_vals <- c("2022-06-13", "2019-01-25", "2015-03-23", NA)
 }\if{html}{\out{</div>}}
 
-Using \code{vec_fmt_date()} with the default options will create a character vector of
-formatted dates. Any \code{NA} values remain as \code{NA} values. The rendering context
-is HTML unless specified in the \code{output} argument.
+Using \code{vec_fmt_date()} with the default options will create a character
+vector of formatted dates. Any \code{NA} values remain as \code{NA} values. The
+rendering context will be autodetected unless specified in the \code{output}
+argument (here, it is of the \code{"plain"} output type).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_date(str_vals)
-#> [1] "Monday, June 13, 2022"    "Friday, January 25, 2019"
-#> [3] "Monday, March 23, 2015"   NA
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "Monday, June 13, 2022" "Friday, January 25, 2019"
+#> [3] "Monday, March 23, 2015" NA
 }\if{html}{\out{</div>}}
 
 We can change the formatting style by choosing a number from \code{1} to \code{14}:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_date(str_vals, date_style = 6)
-#> [1] "Jun 13, 2022" "Jan 25, 2019" "Mar 23, 2015" NA
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "Jun 13, 2022" "Jan 25, 2019" "Mar 23, 2015" NA
 }\if{html}{\out{</div>}}
 
 We can always use \code{\link[=info_date_style]{info_date_style()}} to call up an info table that serves as
@@ -90,14 +97,16 @@ As a last example, one can wrap the date values in a pattern with the
 applied.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_date(str_vals, pattern = "Date: \{x\}")
-#> [1] "Date: Monday, June 13, 2022"    "Date: Friday, January 25, 2019"
-#> [3] "Date: Monday, March 23, 2015"   NA
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "Date: Monday, June 13, 2022" "Date: Friday, January 25, 2019"
+#> [3] "Date: Monday, March 23, 2015" NA
 }\if{html}{\out{</div>}}
 }
 
 \section{Function ID}{
 
-14-9
+14-10
 }
 
 \seealso{
@@ -105,11 +114,13 @@ Other vector formatting functions:
 \code{\link{vec_fmt_bytes}()},
 \code{\link{vec_fmt_currency}()},
 \code{\link{vec_fmt_datetime}()},
+\code{\link{vec_fmt_duration}()},
 \code{\link{vec_fmt_engineering}()},
 \code{\link{vec_fmt_fraction}()},
 \code{\link{vec_fmt_integer}()},
 \code{\link{vec_fmt_markdown}()},
 \code{\link{vec_fmt_number}()},
+\code{\link{vec_fmt_partsper}()},
 \code{\link{vec_fmt_percent}()},
 \code{\link{vec_fmt_scientific}()},
 \code{\link{vec_fmt_time}()}

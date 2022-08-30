@@ -14,7 +14,7 @@ vec_fmt_integer(
   sep_mark = ",",
   force_sign = FALSE,
   locale = NULL,
-  output = c("html", "latex", "rtf")
+  output = c("auto", "plain", "html", "latex", "rtf", "word")
 )
 }
 \arguments{
@@ -72,7 +72,9 @@ We can use the \code{\link[=info_locales]{info_locales()}} function as a useful 
 the locales that are supported.}
 
 \item{output}{The output style of the resulting character vector. This can
-either be \code{"html"} (the default), \code{"latex"}, or \code{"rtf"}.}
+either be \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"},
+or \code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the
+\code{"auto"} option will choose the correct \code{output} value}
 }
 \value{
 A character vector.
@@ -101,41 +103,43 @@ Let's create a numeric vector for the next few examples:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{num_vals <- c(5.2, 8.65, 13602, -5.3, NA)
 }\if{html}{\out{</div>}}
 
-Using \code{vec_fmt_integer()} with the default options will create a character vector
-where the input values undergo rounding to become integers and \code{NA} values
-will render as \code{"NA"}. Also, the rendering context is HTML unless specified
-in the \code{output} argument.
+Using \code{vec_fmt_integer()} with the default options will create a character
+vector where the input values undergo rounding to become integers and \code{NA}
+values will render as \code{"NA"}. Also, the rendering context will be
+autodetected unless specified in the \code{output} argument (here, it is of the
+\code{"plain"} output type).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_integer(num_vals)
-#> [1] "5"        "9"        "13,602"   "&minus;5" "NA"
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "5" "9" "13,602" "-5" "NA"
 }\if{html}{\out{</div>}}
 
 We can change the digit separator mark to a period with the \code{sep_mark}
 option:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_integer(num_vals, sep_mark = ".")
-#> [1] "5"        "9"        "13.602"   "&minus;5" "NA"
 }\if{html}{\out{</div>}}
 
-If we are formatting for a different locale, we could supply the locale ID
-and let \strong{gt} handle these locale-specific formatting options:
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_integer(num_vals, locale = "de")
-#> [1] "5"        "9"        "13.602"   "&minus;5" "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "5" "9" "13.602" "-5" "NA"
 }\if{html}{\out{</div>}}
 
 Many options abound for formatting values. If you have a need for positive
 and negative signs in front of each and every value, use \code{force_sign = TRUE}:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_integer(num_vals, force_sign = TRUE)
-#> [1] "+5"       "+9"       "+13,602"  "&minus;5" "NA"
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "+5" "+9" "+13,602" "-5" "NA"
 }\if{html}{\out{</div>}}
 
 As a last example, one can wrap the values in a pattern with the \code{pattern}
 argument. Note here that \code{NA} values won't have the pattern applied.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_integer(num_vals, pattern = "`\{x\}`")
-#> [1] "`5`"        "`9`"        "`13,602`"   "`&minus;5`" "NA"
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "`5`" "`9`" "`13,602`" "`-5`" "NA"
 }\if{html}{\out{</div>}}
 }
 
@@ -150,10 +154,12 @@ Other vector formatting functions:
 \code{\link{vec_fmt_currency}()},
 \code{\link{vec_fmt_datetime}()},
 \code{\link{vec_fmt_date}()},
+\code{\link{vec_fmt_duration}()},
 \code{\link{vec_fmt_engineering}()},
 \code{\link{vec_fmt_fraction}()},
 \code{\link{vec_fmt_markdown}()},
 \code{\link{vec_fmt_number}()},
+\code{\link{vec_fmt_partsper}()},
 \code{\link{vec_fmt_percent}()},
 \code{\link{vec_fmt_scientific}()},
 \code{\link{vec_fmt_time}()}

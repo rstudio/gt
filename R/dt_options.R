@@ -142,6 +142,7 @@ dt_options_tbl <-
     "stub_border_style",                  TRUE,  "stub",             "value",   "solid",
     "stub_border_width",                  TRUE,  "stub",             "px",      "2px",
     "stub_border_color",                  TRUE,  "stub",             "value",   "#D3D3D3",
+    "stub_indent_length",                 TRUE,  "stub",             "px",      "5px",
     "stub_row_group_background_color",    TRUE,  "stub",             "value",   NA_character_,
     "stub_row_group_font_size",           TRUE,  "stub",             "px",      "100%",
     "stub_row_group_font_weight",         TRUE,  "stub",             "value",   "initial",

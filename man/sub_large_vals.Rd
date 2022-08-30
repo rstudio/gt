@@ -90,7 +90,7 @@ do just that:
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_large_vals_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_large_vals_1.png" alt="This image of a table was generated from the first code example in the `sub_large_vals()` help file." style="width:100\%;">
 }}
 
 Large negative values can also be handled but they are handled specially
@@ -106,7 +106,7 @@ value of \code{">={x}"} the \code{">="} is automatically changed to \code{"<="}.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_large_vals_2.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_large_vals_2.png" alt="This image of a table was generated from the second code example in the `sub_large_vals()` help file." style="width:100\%;">
 }}
 
 You don't have to settle with the default \code{threshold} value or the default
@@ -124,7 +124,7 @@ omitted.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_large_vals_3.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_large_vals_3.png" alt="This image of a table was generated from the third code example in the `sub_large_vals()` help file." style="width:100\%;">
 }}
 }
 

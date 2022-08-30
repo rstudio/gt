@@ -1314,10 +1314,10 @@ fmt_partsper <- function(
 #'   option to simplify the fraction (where possible) can be taken with `TRUE`
 #'   (the default). With `FALSE`, denominators in fractions will be fixed to the
 #'   value provided in `accuracy`.
-#' @param layout For HTML output, the `"diagonal"` layout is the default. This
-#'   will generate fractions that are typeset with raised/lowered numerals and a
-#'   virgule. The `"inline"` layout places the numerals of the fraction on the
-#'   baseline and uses a standard slash character.
+#' @param layout For HTML output, the `"inline"` layout is the default. This
+#'   layout places the numerals of the fraction on the baseline and uses a
+#'   standard slash character. The `"diagonal"` layout will generate fractions
+#'   that are typeset with raised/lowered numerals and a virgule.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -1350,7 +1350,8 @@ fmt_partsper <- function(
 #'   fmt_fraction(
 #'     columns = starts_with("f_"),
 #'     accuracy = 10,
-#'     simplify = FALSE
+#'     simplify = FALSE,
+#'     layout = "diagonal"
 #'   ) %>%
 #'   sub_missing(missing_text = "") %>%
 #'   tab_spanner(
@@ -1399,14 +1400,13 @@ fmt_fraction <- function(
     rows = everything(),
     accuracy = NULL,
     simplify = TRUE,
-    layout = c("diagonal", "inline"),
+    layout = c("inline", "diagonal"),
     use_seps = TRUE,
     pattern = "{x}",
     sep_mark = ",",
     system = c("intl", "ind"),
     locale = NULL
 ) {
-
   system <- match.arg(system)
 
   # Perform input object validation
@@ -1602,21 +1602,45 @@ fmt_fraction <- function(
 
           if (context == "html") {
 
+            narrow_no_break_space_char <- "\U0202F"
+            slash_mark_char <- "\U02044"
+
             num_vec <-
-              paste0("<span class=\"gt_fraction_numerator\">", num_vec, "</span>")
+              paste0(
+                "<span style=\"",
+                "font-size:0.6em;",
+                "line-height:0.6em;",
+                "vertical-align:0.45em;",
+                "\">",
+                num_vec,
+                "</span>"
+              )
 
             denom_vec <-
-              paste0("<span class=\"gt_fraction_denominator\">", denom_vec, "</span>")
+              paste0(
+                "<span style=\"",
+                "font-size:0.6em;",
+                "line-height:0.6em;",
+                "vertical-align:-0.05em;",
+                "\">",
+                denom_vec,
+                "</span>"
+              )
 
             slash_mark <-
-              htmltools::tags$span(
-                class = "gt_slash_mark",
-                htmltools::HTML("&frasl;")
+              paste0(
+                "<span style=\"",
+                "font-size:0.7em;",
+                "line-height:0.7em;",
+                "vertical-align:0.15em;",
+                "\">",
+                slash_mark_char,
+                "</span>"
               )
 
             x_str[has_a_fraction] <-
               paste0(
-                gsub(" ", "&#8239;", non_fraction_part),
+                gsub(" ", narrow_no_break_space_char, non_fraction_part),
                 num_vec, slash_mark, denom_vec
               )
 
@@ -2842,7 +2866,7 @@ fmt_duration <- function(
     cli::cli_abort(c(
       "The value provided for `trim_zero_units` is invalid. Either use:",
       "*" = "`TRUE` or `FALSE`, or",
-      "*" = "A vector with any of the keywords `\"leading\"`, `\"trailing\"`, or `\"internal\"`."
+      "*" = "A vector with any of the keywords \"leading\", \"trailing\", or \"internal\"."
     ))
   }
 
@@ -2871,7 +2895,7 @@ fmt_duration <- function(
     )
   ) {
     cli::cli_abort(c(
-      "The `fmt_duration()` function can only be used on `columns` of certain types:",
+      "The `fmt_duration()` function can only be used on `columns` of certain types.",
       "*" = "Allowed types are `numeric` and `difftime`."
     ))
   }
@@ -2885,11 +2909,10 @@ fmt_duration <- function(
     ) &&
     is.null(input_units)
   ) {
-    stop(
-      "When there are numeric columns to format, `input_units` must not be `NULL`:\n",
-      "* Use one of `\"seconds\"`, `\"minutes\"`, `\"hours\"`, `\"days\"`, or `\"weeks\"`",
-      call. = FALSE
-    )
+    cli::cli_abort(c(
+      "When there are numeric columns to format, `input_units` must not be `NULL`.",
+      "*" = "Use one of \"seconds\", \"minutes\", \"hours\", \"days\", or \"weeks\"."
+    ))
   }
 
   # Initialize `colon_sep_params` list
@@ -3027,12 +3050,12 @@ fmt_duration <- function(
 validate_trim_zero_units <- function(trim_zero_units) {
 
   if (!all(trim_zero_units %in% c("leading", "trailing", "internal"))) {
-    stop(
-      "The character vector provided for `trim_zero_units` is invalid:\n",
-      "* It should only contain any of the keywords `\"leading\"`, `\"trailing\"`,
-      or ", "`\"internal\"`",
-      call. = FALSE
-    )
+
+    cli::cli_abort(c(
+      "The character vector provided for `trim_zero_units` is invalid.",
+      "*" = "It should only contain any of the keywords \"leading\", \"trailing\",
+      or ", "\"internal\"."
+    ))
   }
 }
 
@@ -3054,7 +3077,7 @@ validate_duration_input_units <- function(input_units) {
   if (!all(input_units %in% time_parts_vec) || length(input_units) != 1) {
 
     cli::cli_abort(c(
-      "The value of `input_units` for `fmt_duration()` is invalid:",
+      "The value of `input_units` for `fmt_duration()` is invalid.",
       "*" = "Only one of the \"weeks\", \"days\", \"hours\", \"minutes\", or
       \"seconds\" time parts should be present."
     ))
@@ -3091,9 +3114,9 @@ validate_duration_output_units <- function(output_units) {
   if (!all(output_units %in% time_parts_vec)) {
 
     cli::cli_abort(c(
-      "There are invalid components in the `output_units` input to `fmt_duration()`:",
+      "There are invalid components in the `output_units` input to `fmt_duration()`.",
       "*" = "Only the \"weeks\", \"days\", \"hours\", \"minutes\", and \"seconds\`
-      time parts should be present"
+      time parts should be present."
     ))
   }
 }

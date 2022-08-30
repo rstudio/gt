@@ -1,6 +1,6 @@
 Type: Package
 Package: gt
-Version: 0.6.0.9000
+Version: 0.7.0.9000
 Title: Easily Create Presentation-Ready Display Tables
 Description: Build display tables from tabular data with an easy-to-use set of
     functions. With its progressive approach, we can construct display tables
@@ -31,7 +31,6 @@ Depends:
 Imports:
     base64enc (>= 0.1-3),
     bitops (>= 1.0-7),
-    checkmate (>= 2.0.0),
     cli (>= 3.3.0),
     commonmark (>= 1.8),
     dplyr (>= 1.0.8),

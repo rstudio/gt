@@ -107,6 +107,7 @@ tab_options(
   stub.border.style = NULL,
   stub.border.width = NULL,
   stub.border.color = NULL,
+  stub.indent_length = NULL,
   stub_row_group.font.size = NULL,
   stub_row_group.font.weight = NULL,
   stub_row_group.text_transform = NULL,
@@ -324,6 +325,9 @@ the \code{table_body} location.}
 \item{stub.border.style, stub.border.width, stub.border.color}{The style, width, and color properties for the vertical border of the table
 stub.}
 
+\item{stub.indent_length}{The width of each indentation level. By default
+this is \code{"5px"}.}
+
 \item{stub_row_group.font.size, stub_row_group.font.weight, stub_row_group.text_transform, stub_row_group.border.style, stub_row_group.border.width, stub_row_group.border.color}{Options for the row group column in the stub (made possible when using
 \code{row_group.as_column = TRUE}). The defaults for these options mirror that
 of the \verb{stub.*} variants (except for \code{stub_row_group.border.width}, which
@@ -456,7 +460,7 @@ tab_1
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_1.png" alt="This image of a table was generated from the first code example in the `tab_options()` help file." style="width:100\%;">
 }}
 
 Modify the table width to be 100\% (which spans the entire content width
@@ -466,7 +470,7 @@ area).
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_2.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_2.png" alt="This image of a table was generated from the second code example in the `tab_options()` help file." style="width:100\%;">
 }}
 
 Modify the table's background color to be \code{"lightcyan"}.
@@ -475,7 +479,7 @@ Modify the table's background color to be \code{"lightcyan"}.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_3.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_3.png" alt="This image of a table was generated from the third code example in the `tab_options()` help file." style="width:100\%;">
 }}
 
 Use letters as the marks for footnote references. Also, separate footnotes in
@@ -489,7 +493,7 @@ the footer by spaces instead of newlines.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_4.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_4.png" alt="This image of a table was generated from the fourth code example in the `tab_options()` help file." style="width:100\%;">
 }}
 
 Change the padding of data rows to 5 px.
@@ -501,7 +505,7 @@ Change the padding of data rows to 5 px.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_5.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_5.png" alt="This image of a table was generated from the fifth code example in the `tab_options()` help file." style="width:100\%;">
 }}
 
 Reduce the size of the title and the subtitle text.
@@ -514,13 +518,13 @@ Reduce the size of the title and the subtitle text.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_6.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_6.png" alt="This image of a table was generated from the sixth code example in the `tab_options()` help file." style="width:100\%;">
 }}
 }
 
 \section{Function ID}{
 
-2-9
+2-10
 }
 
 \seealso{
@@ -531,6 +535,7 @@ Other part creation/modification functions:
 \code{\link{tab_source_note}()},
 \code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
+\code{\link{tab_stub_indent}()},
 \code{\link{tab_stubhead}()},
 \code{\link{tab_style}()}
 }

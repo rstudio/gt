@@ -61,6 +61,6 @@ test_that("the `cols_align()` function works correctly", {
     as_latex() %>% as.character()
 
   # Expect a characteristic pattern
-  grepl(".*begin\\{longtable\\}\\{lrrrrr\\}.*", tbl_latex) %>%
+  grepl(".*begin\\{longtable\\}\\{rrrrrr\\}.*", tbl_latex) %>%
     expect_true()
 })

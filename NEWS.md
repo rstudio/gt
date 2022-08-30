@@ -1,6 +1,44 @@
 # gt (development version)
 
-* word table output via `as_word()`. `docx` files can now be made through gtsave. (#929)
+# gt 0.7.0
+
+## New features
+
+* We can now export **gt** tables as Word documents. This is thanks to @thebioengineer (Ellis Hughes!) who not only made this type of output work through `gtsave()` (writes the .docx file) but also through `as_word()` (gives you an OOXML string) (#121, #929). (#962, #986, #1016)
+
+* A whole new family of vector formatting functions (of the form `vec_fmt_*()`) has entered the package! After all, why should columns have all the formatting fun? If you have vectors in need of formatting, we have 14 of these functions, adapted from their corresponding `fmt_*()` functions. You can control the output style of the resulting character vector with the `output` argument. This can either be `"auto"` (the default), `"plain"`, `"html"`, `"latex"`, `"rtf"`, or `"word"`. In **knitr** rendering (i.e., Quarto or R Markdown), the `"auto"` option will choose the correct output value; this is great for incorporating formatted values in inline text. (#899, #995)
+
+* It's now incredibly easy to have colorful and stylish tables thanks to the new `opt_stylize()` function. We provide you with a carefully curated set of background colors, line colors, and line styles. There are six styles and six color variations, giving you 36 combinations of style and color to choose from (#238). (#987)
+
+* The `tab_stub_indent()` function was added to allow for fine control over row label indentation. (#999, #1002)
+
+* The `fmt_duration()` function is now available for formatting values to time durations whether those input values are numbers or of the `difftime` class. It provides a wide array of options so you can get the formatting of time duration values just right (#403). (#916)
+
+* Generating PNG files from **gt** tables using `gtsave()` is now way better due to the move away from **webshot** to its sequel package **webshot2** (#621, #885). (#985)
+
+* A number of accessibility enhancements for HTML table outputs were undertaken to make **gt** one of the most accessible table packages around (#678, #679, #680). (#977, #978, #979, #981; thank you, @jooyoungseo, for all of this)
+
+* Errors and warnings, though we don't often like to receive them, look much better now since we've integrated the **cli** package into **gt**! (#963)
+
+## Minor improvements and bug fixes
+
+* We can now supply data from adjacent columns to user-supplied aggregation functions in `summary_rows()` and `grand_summary_rows()` (#383, #690, #952). (#1018)
+
+* Initial alignments in the table stub are now more intelligently determined in `gt()` by examining the content of the column (the `"rowname_col"`) that will comprise the stub. If values are predominantly number-like then a right alignment will be chosen, otherwise row labels will be left aligned. (#999)
+
+* Enhanced automatic column alignment (set to `"auto"` by default in the `gt()` function) by probing the contents of the columns. This ensures that string-based dates/times/datetimes receive a better appearance before formatting. (#997)
+
+* **gt** tables no longer break table numbering in R Markdown and Quarto documents. (#1003, thanks @cscheid!)
+
+* The `as_latex()` documentation was updated to provide guidance on necessary LaTeX dependencies. (#1022, thanks @coatless!)
+
+* Fixed a bug where footnote marks would not be rendered in the stub column representing row groups (#1001). (#1014)
+
+* Using `gtsave()` in a Quarto or R Markdown code chunk will no longer generate any output, which is good since we don't want any (#974). (#1011)
+
+* Fixed an issue where footnote marks would not be set directly to cell text generated from `fmt_markdown()` (#893, #993). (#1013)
+
+* All **testthat** tests have been migrated to the 3rd Edition of **testthat**. Also, the tests run much faster now. (#959)
 
 # gt 0.6.0
 

@@ -1078,3 +1078,66 @@ test_that("The final placement of footnotes is correct with the 'auto' mode", {
     selection_text("[class='gt_row gt_center']") %>%
     expect_equal("0.11mark_1")
 })
+
+test_that("Footnotes are correctly placed with text produced by `fmt_markdown()`", {
+
+  exibble[1, 2] %>%
+    gt() %>%
+    fmt_markdown(columns = char) %>%
+    tab_footnote(footnote = "note", locations = cells_body(char, 1)) %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_text("[class='gt_row gt_left']") %>%
+    expect_equal("apricot1")
+
+  exibble[1, 2] %>%
+    gt() %>%
+    fmt_markdown(columns = char) %>%
+    tab_footnote(footnote = "note", locations = cells_body(char, 1)) %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  exibble[1, 2] %>%
+    gt() %>%
+    fmt_markdown(columns = char) %>%
+    tab_footnote(footnote = "note", locations = cells_body(char, 1), placement = "left") %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_text("[class='gt_row gt_left']") %>%
+    expect_equal("1 apricot\n")
+
+  exibble[1, 2] %>%
+    gt() %>%
+    fmt_markdown(columns = char) %>%
+    tab_footnote(footnote = "note", locations = cells_body(char, 1), placement = "left") %>%
+    render_as_html() %>%
+    expect_snapshot()
+})
+
+test_that("Footnotes work with group labels in 2-column stub arrangements", {
+
+  gt_tbl <-
+    pizzaplace %>%
+    dplyr::filter(name %in% c("soppressata", "peppr_salami")) %>%
+    dplyr::group_by(name, size) %>%
+    dplyr::summarize(`Pizzas Sold` = dplyr::n(), .groups = "drop") %>%
+    gt(rowname_col = "size", groupname_col = "name") %>%
+    summary_rows(
+      groups = TRUE,
+      columns = `Pizzas Sold`,
+      fns = list(TOTAL = "sum"),
+      formatter = fmt_number,
+      decimals = 0,
+      use_seps = TRUE
+    ) %>%
+    tab_options(row_group.as_column = TRUE) %>%
+    tab_footnote(
+      footnote = "The Pepper-Salami.",
+      locations = cells_row_groups(groups = "peppr_salami")
+    )
+
+  # Take snapshots of `gt_tbl`
+  gt_tbl %>% render_as_html() %>% expect_snapshot()
+  gt_tbl %>% as_latex() %>% as.character() %>% expect_snapshot()
+  gt_tbl %>% as_rtf() %>% expect_snapshot()
+})

@@ -14,11 +14,11 @@ selected cells, we can use the \code{"all"} option.}
 \item{color, style, weight}{The border color, style, and weight. The \code{color}
 can be defined with a color name or with a hexadecimal color code. The
 default \code{color} value is \code{"#000000"} (black). The \code{style} can be one of
-either \code{"solid"} (the default), \code{"dashed"}, or \code{"dotted"}. The \code{weight} of
-the border lines is to be given in pixel values (the \code{\link[=px]{px()}} helper function
-is useful for this. The default value for \code{weight} is \code{"1px"}. Borders for
-any defined \code{sides} can be removed by supplying \code{NULL} to any of \code{color},
-\code{style}, or \code{weight}.}
+either \code{"solid"} (the default), \code{"dashed"}, \code{"dotted"}, or \code{"hidden"}.
+The \code{weight} of the border lines is to be given in pixel values (the
+\code{\link[=px]{px()}} helper function is useful for this. The default value for \code{weight}
+is \code{"1px"}. Borders for any defined \code{sides} can be removed by supplying
+\code{NULL} to any of \code{color}, \code{style}, or \code{weight}.}
 }
 \value{
 A list object of class \code{cell_styles}.
@@ -56,7 +56,7 @@ Add horizontal border lines for all table body rows in \code{\link{exibble}} usi
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cell_borders_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cell_borders_1.png" alt="This image of a table was generated from the first code example in the `cell_borders()` help file." style="width:100\%;">
 }}
 
 Incorporate different horizontal and vertical borders at several locations.
@@ -92,7 +92,7 @@ This uses multiple \code{cell_borders()} and \code{\link[=cells_body]{cells_body
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cell_borders_2.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cell_borders_2.png" alt="This image of a table was generated from the second code example in the `cell_borders()` help file." style="width:100\%;">
 }}
 }
 

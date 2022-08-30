@@ -56,7 +56,7 @@ the left with the \code{opt_align_table_header()} function.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_align_table_header_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_align_table_header_1.png" alt="This image of a table was generated from the first code example in the `opt_align_table_header()` help file." style="width:100\%;">
 }}
 }
 

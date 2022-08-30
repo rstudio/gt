@@ -391,6 +391,7 @@ tab_spanner_delim <- function(
       expr = {{ columns }},
       data = data
     )
+
   if (!is.null(columns)) {
     colnames_spanners <- base::intersect(all_cols, columns)
   } else {
@@ -482,6 +483,8 @@ tab_spanner_delim <- function(
     spanners_i_values <- rle_spanners_i$values
     spanners_i_col_i <- utils::head(cumsum(c(1, spanners_i_lengths)), -1)
 
+    spanner_id_vals <- c()
+
     for (j in seq_along(spanners_i_lengths)) {
 
       if (!is.na(spanners_i_values[j])) {
@@ -495,6 +498,26 @@ tab_spanner_delim <- function(
               collapse = delim
             )
           )
+
+        # Modify `spanner_id` to not collide with any other values
+        if (spanner_id %in% spanner_id_vals) {
+
+          if (grepl("^spanner-", spanner_id)) {
+
+            # Add number to spanner ID values on first duplication
+            spanner_id <- gsub("^spanner-", "spanner:1-", spanner_id)
+          }
+
+          while (spanner_id %in% spanner_id_vals) {
+
+            # Increment number to spanner ID values on subsequent duplications
+            idx_str <- gsub("^spanner:([0-9]+)-.*", "\\1", spanner_id)
+            idx_int <- as.integer(idx_str)
+            spanner_id <- gsub("^(spanner:)[0-9]+(-.*)", paste0("\\1", idx_int + 1, "\\2"), spanner_id)
+          }
+        }
+
+        spanner_id_vals <- unique(c(spanner_id_vals, spanner_id))
 
         spanner_columns <-
           seq(
@@ -760,6 +783,176 @@ tab_stubhead <- function(
   dt_stubhead_label(data = data, label = label)
 }
 
+#' Control indentation of row labels in the stub
+#'
+#' @description
+#' Indentation of row labels is an effective way for establishing structure in a
+#' table stub. The `tab_stub_indent()` function allows for fine control over
+#' row label indentation through either explicit definition of an indentation
+#' level, or, by way of an indentation directive using keywords.
+#'
+#' @inheritParams fmt_number
+#' @param rows The rows to consider for the indentation change. Can either be a
+#'   vector of row captions provided in `c()`, a vector of row indices, or a
+#'   helper function focused on selections. The select helper functions are:
+#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()], and
+#'   [everything()].
+#' @param indent An indentation directive either as a keyword describing the
+#'   indentation change or as an explicit integer value for directly setting the
+#'   indentation level. The keyword `"increase"` (the default) will increase the
+#'   indentation level by one; `"decrease"` will do the same in the reverse
+#'   direction. The starting indentation level of `0` means no indentation and
+#'   this values serves as a lower bound. The upper bound for indentation is at
+#'   level `5`.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Use [`pizzaplace`] to create a **gt** table. With `tab_stub_indent()` we can
+#' add indentation to targeted row labels in the stub. Here we target the
+#' different pizza sizes and avoid selecting the repeating `"All Sizes"` row
+#' label.
+#'
+#' ```r
+#' dplyr::bind_rows(
+#'   pizzaplace %>%
+#'     dplyr::group_by(type, size) %>%
+#'     dplyr::summarize(
+#'       sold = n(),
+#'       income = sum(price),
+#'       .groups = "drop_last"
+#'     ) %>%
+#'     dplyr::summarize(
+#'       sold = sum(sold),
+#'       income = sum(income),
+#'       size = "All Sizes",
+#'       .groups = "drop"
+#'     ),
+#'   pizzaplace %>%
+#'     dplyr::group_by(type, size) %>%
+#'     dplyr::summarize(
+#'       sold = n(),
+#'       income = sum(price),
+#'       .groups = "drop"
+#'     )
+#' ) %>%
+#'   gt(rowname_col = "size", groupname_col = "type") %>%
+#'   tab_header(title = "Pizzas Sold in 2015") %>%
+#'   fmt_number(
+#'     columns = sold,
+#'     decimals = 0,
+#'     use_seps = TRUE
+#'   ) %>%
+#'   fmt_currency(
+#'     columns = income,
+#'     currency = "USD"
+#'   ) %>%
+#'   tab_options(
+#'     summary_row.background.color = "#ACEACE",
+#'     row_group.background.color = "#FFEFDB",
+#'     row_group.as_column = TRUE
+#'   ) %>%
+#'   tab_stub_indent(
+#'     rows = matches("^L|^M|^S|^XL|^XXL"),
+#'     indent = 2
+#'   ) %>%
+#'   tab_style(
+#'     style = cell_fill(color = "gray95"),
+#'     locations = list(
+#'       cells_body(rows = matches("^All")),
+#'       cells_stub(rows = matches("^All"))
+#'     )
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_stub_indent_1.png")`
+#' }}
+#'
+#' @family part creation/modification functions
+#' @section Function ID:
+#' 2-6
+#'
+#' @export
+tab_stub_indent <- function(
+    data,
+    rows,
+    indent = "increase"
+) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  # Capture the `rows` expression
+  row_expr <- rlang::enquo(rows)
+
+  # Get the `stub_df` data frame from `data`
+  stub_df <- dt_stub_df_get(data = data)
+
+  # Resolve the row numbers using the `resolve_vars` function
+  resolved_rows_idx <-
+    resolve_rows_i(
+      expr = !!row_expr,
+      data = data
+    )
+
+  # Set indent levels appropriately
+  indent_vals <- stub_df[stub_df$rownum_i %in% resolved_rows_idx, ][["indent"]]
+
+  for (i in seq_along(indent_vals)) {
+
+    if (is.na(indent_vals[i])) {
+      indent_val_i <- 0L
+    } else if (grepl("^[0-9]$", indent_vals[i])) {
+      indent_val_i <- as.integer(indent_vals[i])
+    } else {
+      indent_val_i <- indent_vals[i]
+    }
+
+    # Modify `indent_val_i` based on keyword directives
+    if (is.character(indent)) {
+
+      # Move `indent_val_i` up or down by one
+      if (indent == "increase") {
+        indent_val_i <- indent_val_i + 1L
+      } else if (indent == "decrease") {
+        indent_val_i <- indent_val_i - 1L
+      }
+
+      # Set hard boundaries on the indentation value (LB is `0`, UB is `5`)
+      if (indent_val_i > 5) indent_val_i <- 5L
+      if (indent_val_i < 0) indent_val_i <- 0L
+    }
+
+    # Modify `indent_val_i` using a fixed value
+    if (
+      is.numeric(indent) &&
+      !is.na(indent) &&
+      !is.infinite(indent)
+    ) {
+
+      # Stop function if `indent` value doesn't fall into the acceptable range
+      if (indent < 0 | indent > 5) {
+        cli::cli_abort(c(
+          "If given as a numeric value, `indent` should be one of the following:",
+          "*" = "0, 1, 2, 3, 4, or 5"
+        ))
+      }
+
+      # Coerce `indent` to an integer value
+      indent_val_i <- as.integer(indent)
+    }
+
+    # Ensure that `indent_val_i` is assigned to indent_vals as a character value
+    indent_vals[i] <- as.character(indent_val_i)
+  }
+
+  stub_df[stub_df$rownum_i %in% resolved_rows_idx, ][["indent"]] <- indent_vals
+
+  dt_stub_df_set(data = data, stub_df = stub_df)
+}
+
 #' Add a table footnote
 #'
 #' @description
@@ -843,7 +1036,7 @@ tab_stubhead <- function(
 #'
 #' @family part creation/modification functions
 #' @section Function ID:
-#' 2-6
+#' 2-7
 #'
 #' @export
 tab_footnote <- function(
@@ -1166,7 +1359,7 @@ set_footnote.cells_footnotes <- function(loc, data, footnote, placement) {
 #'
 #' @family part creation/modification functions
 #' @section Function ID:
-#' 2-7
+#' 2-89
 #'
 #' @export
 tab_source_note <- function(
@@ -1315,7 +1508,7 @@ tab_source_note <- function(
 #'
 #' @family part creation/modification functions
 #' @section Function ID:
-#' 2-8
+#' 2-9
 #'
 #' @seealso [cell_text()], [cell_fill()], and [cell_borders()] as helpers for
 #'   defining custom styles and [cells_body()] as one of many useful helper
@@ -1824,6 +2017,8 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   they are separate rows that lie above the each of the groups. Setting this
 #'   to `TRUE` will structure row group labels are columns to the far left of
 #'   the table.
+#' @param stub.indent_length The width of each indentation level. By default
+#'   this is `"5px"`.
 #' @param summary_row.border.style,summary_row.border.width,summary_row.border.color
 #'   The style, width, and color properties for all horizontal borders of the
 #'   `summary_row` location.
@@ -2002,7 +2197,7 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'
 #' @family part creation/modification functions
 #' @section Function ID:
-#' 2-9
+#' 2-10
 #'
 #' @export
 tab_options <- function(
@@ -2108,6 +2303,7 @@ tab_options <- function(
     stub.border.style = NULL,
     stub.border.width = NULL,
     stub.border.color = NULL,
+    stub.indent_length = NULL,
     stub_row_group.font.size = NULL,
     stub_row_group.font.weight = NULL,
     stub_row_group.text_transform = NULL,
@@ -2242,20 +2438,14 @@ preprocess_tab_option <- function(option, var_name, type) {
       option
     )
 
-  # Perform checkmate assertions by `type`
+  # Perform `stopifnot()` checks by `type`
   switch(
     type,
-    logical = checkmate::assert_logical(
-      option, len = 1, any.missing = FALSE, .var.name = var_name
-    ),
-    overflow =,
-    px =,
-    value = checkmate::assert_character(
-      option, len = 1, any.missing = FALSE, .var.name = var_name
-    ),
-    values = checkmate::assert_character(
-      option, min.len = 1, any.missing = FALSE, .var.name = var_name
-    )
+    logical = stopifnot(rlang::is_scalar_logical(option), !any(is.na(option))),
+    overflow = ,
+    px = ,
+    value = stopifnot(rlang::is_scalar_character(option), !any(is.na(option))),
+    values = stopifnot(rlang::is_character(option), length(option) >= 1, !any(is.na(option)))
   )
 
   option
