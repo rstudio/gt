@@ -2123,7 +2123,7 @@ fmt_roman <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-9
+#' 3-10
 #'
 #' @import rlang
 #' @export
@@ -2320,7 +2320,7 @@ fmt_bytes <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-10
+#' 3-11
 #'
 #' @import rlang
 #' @export
@@ -2476,7 +2476,7 @@ fmt_date <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-11
+#' 3-12
 #'
 #' @import rlang
 #' @export
@@ -2697,7 +2697,7 @@ fmt_time <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-12
+#' 3-13
 #'
 #' @import rlang
 #' @export
@@ -2933,7 +2933,7 @@ fmt_datetime <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-13
+#' 3-14
 #'
 #' @import rlang
 #' @export
@@ -3650,7 +3650,7 @@ extract_duration_pattern <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-14
+#' 3-15
 #'
 #' @import rlang
 #' @export
@@ -3744,7 +3744,7 @@ fmt_markdown <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-15
+#' 3-16
 #'
 #' @import rlang
 #' @export
@@ -3900,7 +3900,7 @@ fmt_passthrough <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-16
+#' 3-17
 #'
 #' @import rlang
 #' @export

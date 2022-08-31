@@ -43,7 +43,7 @@
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-16
+#' 3-17
 #'
 #' @import rlang
 #' @export
@@ -178,7 +178,7 @@ fmt_missing <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-17
+#' 3-18
 #'
 #' @import rlang
 #' @export
@@ -310,7 +310,7 @@ sub_zero <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-18
+#' 3-19
 #'
 #' @import rlang
 #' @export
@@ -510,7 +510,7 @@ sub_small_vals <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-19
+#' 3-20
 #'
 #' @import rlang
 #' @export
