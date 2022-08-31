@@ -80,7 +80,7 @@ single call of \code{sub_zero()}.
 
 \section{Function ID}{
 
-3-17
+3-18
 }
 
 \seealso{
@@ -99,6 +99,7 @@ Other data formatting functions:
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
+\code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt}()},
