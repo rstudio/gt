@@ -47,12 +47,12 @@ resolve_footnotes_styles <- function(data, tbl_type) {
 
   # Filter by `title`
   if (!dt_heading_has_title(data = data)) {
-    cond <- cond & tbl$locname != "title"
+    tbl <- tbl[tbl$locname != "title",]
   }
 
   # Filter by `subtitle`
   if (!dt_heading_has_subtitle(data = data)) {
-    cond <- cond & tbl$locname != "subtitle"
+     tbl <- tbl[tbl$locname != "subtitle",]
   }
 
   # Filter by `grpname` in columns groups
