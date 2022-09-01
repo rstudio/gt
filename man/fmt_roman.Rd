@@ -54,7 +54,7 @@ argument. See the \emph{Arguments} section for more information on this.
 
 
 Create a tibble of small numeric values and generate a \strong{gt} table. Format
-the \code{a} column to appear as Roman numerals with \code{fmt_roman()}.
+the \code{roman} column to appear as Roman numerals with \code{fmt_roman()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(arabic = c(1, 8, 24, 85), roman = arabic) \%>\%
   gt(rowname_col = "arabic") \%>\%
