@@ -214,6 +214,9 @@
     <loc>https://gt.rstudio.com/reference/fmt_percent.html</loc>
   </url>
   <url>
+    <loc>https://gt.rstudio.com/reference/fmt_roman.html</loc>
+  </url>
+  <url>
     <loc>https://gt.rstudio.com/reference/fmt_scientific.html</loc>
   </url>
   <url>
@@ -437,6 +440,9 @@
   </url>
   <url>
     <loc>https://gt.rstudio.com/reference/vec_fmt_percent.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/reference/vec_fmt_roman.html</loc>
   </url>
   <url>
     <loc>https://gt.rstudio.com/reference/vec_fmt_scientific.html</loc>
