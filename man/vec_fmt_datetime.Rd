@@ -230,7 +230,7 @@ applied.
 
 \section{Function ID}{
 
-14-12
+14-13
 }
 
 \seealso{
@@ -246,6 +246,7 @@ Other vector formatting functions:
 \code{\link{vec_fmt_number}()},
 \code{\link{vec_fmt_partsper}()},
 \code{\link{vec_fmt_percent}()},
+\code{\link{vec_fmt_roman}()},
 \code{\link{vec_fmt_scientific}()},
 \code{\link{vec_fmt_time}()}
 }
