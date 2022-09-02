@@ -2008,6 +2008,7 @@ fmt_roman <- function(
     rows = {{ rows }},
     fns = num_fmt_factory_multi(
       pattern = pattern,
+      use_latex_math_mode = FALSE,
       format_fn = function(x, context) {
 
         # Generate an vector of empty strings that will eventually contain
