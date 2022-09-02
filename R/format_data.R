@@ -1933,6 +1933,119 @@ fmt_currency <- function(
   )
 }
 
+#' Format values as Roman numerals
+#'
+#' @description
+#' With numeric values in a **gt** table we can transform those to Roman
+#' numerals, rounding values as necessary.
+#'
+#' @details
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the *Arguments* section for more information on this.
+#'
+#' @inheritParams fmt_number
+#' @param case Should Roman numerals should be rendered as uppercase (`"upper"`)
+#'   or lowercase (`"lower"`) letters? By default, this is set to `"upper"`.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Create a tibble of small numeric values and generate a **gt** table. Format
+#' the `roman` column to appear as Roman numerals with `fmt_roman()`.
+#'
+#' ```r
+#' dplyr::tibble(arabic = c(1, 8, 24, 85), roman = arabic) %>%
+#'   gt(rowname_col = "arabic") %>%
+#'   fmt_roman(columns = roman)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_roman_1.png")`
+#' }}
+#'
+#' @family data formatting functions
+#' @section Function ID:
+#' 3-9
+#'
+#' @import rlang
+#' @export
+fmt_roman <- function(
+    data,
+    columns,
+    rows = everything(),
+    case = c("upper", "lower"),
+    pattern = "{x}"
+) {
+
+  case <- match.arg(case)
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  # Stop function if any columns have data that is incompatible
+  # with this formatter
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = c("numeric", "integer")
+    )
+  ) {
+    cli::cli_abort(
+      "The `fmt_roman()` function can only be used on `columns`
+      with numeric data."
+    )
+  }
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    fns = num_fmt_factory_multi(
+      pattern = pattern,
+      use_latex_math_mode = FALSE,
+      format_fn = function(x, context) {
+
+        # Generate an vector of empty strings that will eventually contain
+        # all of the roman numerals
+        x_str <- character(length(x))
+
+        # Round all values of x to 3 digits with the R-H-U method of
+        # rounding (for reproducibility purposes)
+        x <- round_gt(x, 0)
+
+        # Determine which of `x` are finite values
+        x_is_a_number <- is.finite(x)
+        x[x_is_a_number] <- abs(x[x_is_a_number])
+
+        x_is_in_range <- x > 0 & x < 3900
+
+        x_str[x_is_a_number & x_is_in_range] <-
+          as.character(as.roman(x[x_is_a_number & x_is_in_range]))
+
+        x_str[x_is_a_number & x == 0] <- if (case == "lower") "n" else "N"
+
+        if (case == "lower") {
+          x_str[x_is_in_range] <- tolower(x_str[x_is_in_range])
+        }
+
+        # In rare cases that Inf or -Inf appear, ensure that these
+        # special values are printed correctly
+        x_str[is.infinite(x)] <- x[is.infinite(x)]
+
+        x_str[x_is_a_number & x != 0 & !x_is_in_range] <- "ex terminis"
+
+        x_str
+      }
+    )
+  )
+}
+
 #' Format values as bytes
 #'
 #' @description
@@ -2011,7 +2124,7 @@ fmt_currency <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-9
+#' 3-10
 #'
 #' @import rlang
 #' @export
@@ -2208,7 +2321,7 @@ fmt_bytes <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-10
+#' 3-11
 #'
 #' @import rlang
 #' @export
@@ -2364,7 +2477,7 @@ fmt_date <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-11
+#' 3-12
 #'
 #' @import rlang
 #' @export
@@ -2585,7 +2698,7 @@ fmt_time <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-12
+#' 3-13
 #'
 #' @import rlang
 #' @export
@@ -2821,7 +2934,7 @@ fmt_datetime <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-13
+#' 3-14
 #'
 #' @import rlang
 #' @export
@@ -3538,7 +3651,7 @@ extract_duration_pattern <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-14
+#' 3-15
 #'
 #' @import rlang
 #' @export
@@ -3632,7 +3745,7 @@ fmt_markdown <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-15
+#' 3-16
 #'
 #' @import rlang
 #' @export
@@ -3788,7 +3901,7 @@ fmt_passthrough <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-16
+#' 3-17
 #'
 #' @import rlang
 #' @export

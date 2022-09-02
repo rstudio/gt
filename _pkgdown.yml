@@ -62,6 +62,7 @@ reference:
     - fmt_partsper
     - fmt_fraction
     - fmt_currency
+    - fmt_roman
     - fmt_bytes
     - fmt_date
     - fmt_time
@@ -261,6 +262,7 @@ reference:
     - vec_fmt_partsper
     - vec_fmt_fraction
     - vec_fmt_currency
+    - vec_fmt_roman
     - vec_fmt_bytes
     - vec_fmt_date
     - vec_fmt_time

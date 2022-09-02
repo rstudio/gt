@@ -129,7 +129,7 @@ omitted.
 
 \section{Function ID}{
 
-3-18
+3-19
 }
 
 \seealso{
@@ -148,6 +148,7 @@ Other data formatting functions:
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
+\code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt}()},
