@@ -119,7 +119,7 @@ in the \code{rows} argument).
 
 \section{Function ID}{
 
-3-10
+3-11
 }
 
 \seealso{
@@ -137,6 +137,7 @@ Other data formatting functions:
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
+\code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt}()},

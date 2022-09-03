@@ -3292,6 +3292,67 @@ test_that("The `vec_fmt_currency()` function works", {
   expect_error(vec_fmt_currency(dplyr::tibble(a = c(1, 2, 3))))
 })
 
+test_that("The `vec_fmt_roman()` function works", {
+
+  vec_roman <- c(1, 4, 5, 8, 12, 20, 0, -5, 1.3, NA, 3799, 3800, 1e6)
+
+  vec_fmt_roman(vec_num_1, output = "plain") %>%
+    expect_equal(
+      c(
+        "III", "II", "II", "I", "I", "N", "I", "I", "II", "II", "III",
+        "NA", "Inf"
+      )
+    )
+
+  expect_equal(
+    vec_fmt_roman(vec_num_1, output = "plain"),
+    vec_fmt_roman(vec_num_1, output = "html")
+  )
+  expect_equal(
+    vec_fmt_roman(vec_num_1, output = "plain"),
+    vec_fmt_roman(vec_num_1, output = "latex")
+  )
+  expect_equal(
+    vec_fmt_roman(vec_num_1, output = "plain"),
+    vec_fmt_roman(vec_num_1, output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_roman(vec_num_1, output = "plain"),
+    vec_fmt_roman(vec_num_1, output = "word")
+  )
+
+  vec_fmt_roman(vec_num_1, case = "lower", output = "plain") %>%
+    expect_equal(
+      c(
+        "iii", "ii", "ii", "i", "i", "n", "i", "i", "ii", "ii", "iii",
+        "NA", "Inf"
+      )
+    )
+
+  expect_equal(
+    vec_fmt_roman(vec_num_1, case = "lower", output = "plain"),
+    vec_fmt_roman(vec_num_1, case = "lower", output = "html")
+  )
+  expect_equal(
+    vec_fmt_roman(vec_num_1, case = "lower", output = "plain"),
+    vec_fmt_roman(vec_num_1, case = "lower", output = "latex")
+  )
+  expect_equal(
+    vec_fmt_roman(vec_num_1, case = "lower", output = "plain"),
+    vec_fmt_roman(vec_num_1, case = "lower", output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_roman(vec_num_1, case = "lower", output = "plain"),
+    vec_fmt_roman(vec_num_1, case = "lower", output = "word")
+  )
+
+  expect_error(vec_fmt_roman(c(1, 2), case = "middle"))
+  expect_error(vec_fmt_roman(letters))
+  expect_error(vec_fmt_roman(TRUE))
+  expect_error(vec_fmt_roman(list(1, 2, 3)))
+  expect_error(vec_fmt_roman(dplyr::tibble(a = c(1, 2, 3))))
+})
+
 test_that("The `vec_fmt_bytes()` function works", {
 
   vec_fmt_bytes(vec_num_1, standard = "decimal", output = "plain") %>%

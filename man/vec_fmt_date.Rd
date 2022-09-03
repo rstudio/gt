@@ -106,7 +106,7 @@ applied.
 
 \section{Function ID}{
 
-14-10
+14-11
 }
 
 \seealso{
@@ -122,6 +122,7 @@ Other vector formatting functions:
 \code{\link{vec_fmt_number}()},
 \code{\link{vec_fmt_partsper}()},
 \code{\link{vec_fmt_percent}()},
+\code{\link{vec_fmt_roman}()},
 \code{\link{vec_fmt_scientific}()},
 \code{\link{vec_fmt_time}()}
 }
