@@ -177,11 +177,13 @@ resolve_cells_row_groups <- function(data, object) {
 #' @param data A gt object or data frame or tibble
 #' @return Character vector
 #' @noRd
-resolve_cols_c <- function(expr,
-                           data,
-                           strict = TRUE,
-                           excl_stub = TRUE,
-                           null_means = c("everything", "nothing")) {
+resolve_cols_c <- function(
+    expr,
+    data,
+    strict = TRUE,
+    excl_stub = TRUE,
+    null_means = c("everything", "nothing")
+) {
 
   null_means <- match.arg(null_means)
 
@@ -205,11 +207,13 @@ resolve_cols_c <- function(expr,
 #'   excluded from the selection of column names.
 #' @return Named integer vector
 #' @noRd
-resolve_cols_i <- function(expr,
-                           data,
-                           strict = TRUE,
-                           excl_stub = TRUE,
-                           null_means = c("everything", "nothing")) {
+resolve_cols_i <- function(
+    expr,
+    data,
+    strict = TRUE,
+    excl_stub = TRUE,
+    null_means = c("everything", "nothing")
+) {
 
   quo <- rlang::enquo(expr)
   cols_excl <- c()
