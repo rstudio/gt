@@ -3923,7 +3923,8 @@ fmt <- function(
   resolved_columns <-
     resolve_cols_c(
       expr = {{ columns }},
-      data = data
+      data = data,
+      excl_stub = FALSE
     )
 
   resolved_rows_idx <-
