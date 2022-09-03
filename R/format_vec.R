@@ -1292,6 +1292,107 @@ vec_fmt_currency <- function(
   )
 }
 
+#' Format a vector as Roman numerals
+#'
+#' @description
+#' With numeric values in a vector, we can transform those to Roman numerals,
+#' rounding values as necessary.
+#'
+#' @inheritParams vec_fmt_number
+#' @param case Should Roman numerals should be rendered as uppercase (`"upper"`)
+#'   or lowercase (`"lower"`) letters? By default, this is set to `"upper"`.
+#'
+#' @return A character vector.
+#'
+#' @section Examples:
+#'
+#' Let's create a numeric vector for the next few examples:
+#'
+#' ```r
+#' num_vals <- c(1, 4, 5, 8, 12, 20, 0, -5, 1.3, NA)
+#' ```
+#'
+#' Using `vec_fmt_roman()` with the default options will create a character
+#' vector with values rendered as Roman numerals. Zero values will be rendered
+#' as `"N"`, any `NA` values remain as `NA` values, negative values will be
+#' automatically made positive, and values greater than or equal to 3900 will be
+#' rendered as `"ex terminis"`. The rendering context will be autodetected
+#' unless specified in the `output` argument (here, it is of the `"plain"`
+#' output type).
+#'
+#' ```r
+#' vec_fmt_roman(num_vals)
+#' ```
+#'
+#' ```
+#' #> [1] "I" "IV" "V" "VIII" "XII" "XX" "N" "V" "I" "NA"
+#' ```
+#'
+#' We can also use `vec_fmt_roman()` with the `case = "lower"` option to create
+#' a character vector with values rendered as lowercase Roman numerals.
+#'
+#' ```r
+#' vec_fmt_roman(num_vals, case = "lower")
+#' ```
+#'
+#' ```
+#' #> [1] "i" "iv" "v" "viii" "xii" "xx" "n" "v" "i" "NA"
+#' ```
+#'
+#' As a last example, one can wrap the values in a pattern with the `pattern`
+#' argument. Note here that `NA` values won't have the pattern applied.
+#'
+#' ```r
+#' vec_fmt_roman(num_vals, case = "lower", pattern = "{x}.")
+#' ```
+#' ```
+#' #> [1] "i." "iv." "v." "viii." "xii." "xx." "n." "v." "i." "NA"
+#' ```
+#'
+#' @family vector formatting functions
+#' @section Function ID:
+#' 14-9
+#'
+#' @import rlang
+#' @export
+vec_fmt_roman <- function(
+    x,
+    case = c("upper", "lower"),
+    pattern = "{x}",
+    output = c("auto", "plain", "html", "latex", "rtf", "word")
+) {
+
+  # Ensure that `output` is matched correctly to one option
+  output <- match.arg(output)
+
+  if (output == "auto") {
+    output <- determine_output_format()
+  }
+
+  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
+  stop_if_not_vector(x)
+
+  # Ensure that `case` is matched correctly to one option
+  case <- match.arg(case)
+
+  # Stop function if class of `x` is incompatible with the formatting
+  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
+    cli::cli_abort(
+      "The `vec_fmt_roman()` function can only be used with numeric vectors."
+    )
+  }
+
+  render_as_vector(
+    fmt_roman(
+      gt(dplyr::tibble(x = x)),
+      columns = "x", rows = everything(),
+      case = case,
+      pattern = pattern
+    ),
+    output = output
+  )
+}
+
 #' Format a vector as values in terms of bytes
 #'
 #' @description
@@ -1390,7 +1491,7 @@ vec_fmt_currency <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-9
+#' 14-10
 #'
 #' @export
 vec_fmt_bytes <- function(
@@ -1537,7 +1638,7 @@ vec_fmt_bytes <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-10
+#' 14-11
 #'
 #' @export
 vec_fmt_date <- function(
@@ -1650,7 +1751,7 @@ vec_fmt_date <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-11
+#' 14-12
 #'
 #' @export
 vec_fmt_time <- function(
@@ -1878,7 +1979,7 @@ vec_fmt_time <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-12
+#' 14-13
 #'
 #' @export
 vec_fmt_datetime <- function(
@@ -2096,7 +2197,7 @@ vec_fmt_datetime <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-13
+#' 14-14
 #'
 #' @export
 vec_fmt_duration <- function(
@@ -2198,7 +2299,7 @@ vec_fmt_duration <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-14
+#' 14-15
 #'
 #' @export
 vec_fmt_markdown <- function(
