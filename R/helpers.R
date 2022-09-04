@@ -196,6 +196,56 @@ pct <- function(x) {
   paste0(x, "%")
 }
 
+#' Select helper for targeting the stub column
+#'
+#' @description
+#' Should you need to target only the stub column for formatting or other
+#' operations, the `stub()` select helper can be used. This obviates the need
+#' to use the name of the column that was selected as the stub column.
+#'
+#' @return A character vector of class `"stub_column"`.
+#'
+#' @section Examples:
+#'
+#' Create a tibble that has a `row` column (values from `1` to `6`), a `group`
+#' column, and a `vals` column (containing the same values as in `row`).
+#'
+#' ```r
+#' tbl <-
+#'   dplyr::tibble(
+#'     row = 1:6,
+#'     group = c(rep("Group A", 3), rep("Group B", 3)),
+#'     vals = 1:6
+#'   )
+#' ```
+#'
+#' Create a **gt** table with a two-column stub (incorporating the `row` and
+#' `group` columns in that). Format the row labels of the stub with
+#' [fmt_roman()] to obtain Roman numerals in the stub; we're selecting the stub
+#' column here with the `stub()` select helper.
+#'
+#' ```r
+#' tbl %>%
+#'   gt(rowname_col = "row", groupname_col = "group") %>%
+#'   fmt_roman(columns = stub()) %>%
+#'   tab_options(row_group.as_column = TRUE)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_stub_1.png")`
+#' }}
+#'
+#' @family helper functions
+#' @section Function ID:
+#' 7-5
+#'
+#' @export
+stub <- function() {
+  x <- "::stub::"
+  class(x) <- "stub_column"
+  x
+}
+
 #' Location helper for targeting the table title and subtitle
 #'
 #' @description
@@ -274,7 +324,7 @@ pct <- function(x) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-5
+#' 7-6
 #'
 #' @import rlang
 #' @export
@@ -380,7 +430,7 @@ cells_title <- function(groups = c("title", "subtitle")) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-6
+#' 7-7
 #'
 #' @export
 cells_stubhead <- function() {
@@ -475,7 +525,7 @@ cells_stubhead <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-7
+#' 7-8
 #'
 #' @import rlang
 #' @export
@@ -579,7 +629,7 @@ cells_column_spanners <- function(spanners = everything()) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-8
+#' 7-9
 #'
 #' @import rlang
 #' @export
@@ -685,7 +735,7 @@ cells_column_labels <- function(columns = everything()) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-9
+#' 7-10
 #'
 #' @import rlang
 #' @export
@@ -803,7 +853,7 @@ cells_group <- function(groups = TRUE) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-10
+#' 7-11
 #'
 #' @import rlang
 #' @export
@@ -902,7 +952,7 @@ cells_stub <- function(rows = everything()) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-11
+#' 7-12
 #'
 #' @import rlang
 #' @export
@@ -1037,7 +1087,7 @@ cells_body <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-12
+#' 7-13
 #'
 #' @import rlang
 #' @export
@@ -1160,7 +1210,7 @@ cells_summary <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-13
+#' 7-14
 #'
 #' @import rlang
 #' @export
@@ -1288,7 +1338,7 @@ cells_grand_summary <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-14
+#' 7-15
 #'
 #' @import rlang
 #' @export
@@ -1401,7 +1451,7 @@ cells_stub_summary <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-15
+#' 7-16
 #'
 #' @import rlang
 #' @export
@@ -1513,7 +1563,7 @@ cells_stub_grand_summary <- function(rows = everything()) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-16
+#' 7-17
 #'
 #' @import rlang
 #' @export
@@ -1607,7 +1657,7 @@ cells_footnotes <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-17
+#' 7-18
 #'
 #' @import rlang
 #' @export
@@ -1675,7 +1725,7 @@ cells_source_notes <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-18
+#' 7-19
 #'
 #' @export
 currency <- function(
@@ -1800,7 +1850,7 @@ currency <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-19
+#' 7-20
 #'
 #' @export
 cell_text <- function(
@@ -1975,7 +2025,7 @@ cell_style_to_html.cell_text <- function(style) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-20
+#' 7-21
 #'
 #' @export
 cell_fill <- function(
@@ -2099,7 +2149,7 @@ cell_style_to_html.cell_fill <- function(style) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-21
+#' 7-22
 #'
 #' @export
 cell_borders <- function(
@@ -2214,6 +2264,254 @@ cell_style_structure <- function(name, obj, subclass = name) {
   class(style_obj) <- "cell_styles"
 
   style_obj
+}
+
+#' Adjust the luminance for a palette of colors
+#'
+#' @description
+#' This function can brighten or darken a palette of colors by an arbitrary
+#' number of steps, which is defined by a real number between -2.0 and 2.0. The
+#' transformation of a palette by a fixed step in this function will tend to
+#' apply greater darkening or lightening for those colors in the midrange
+#' compared to any very dark or very light colors in the input palette.
+#'
+#' @details
+#' This function can be useful when combined with the [data_color()] function's
+#' `palette` argument, which can use a vector of colors or any of the `col_*`
+#' functions from the **scales** package (all of which have a `palette`
+#' argument).
+#'
+#' @param colors A vector of colors that will undergo an adjustment in
+#'   luminance. Each color value provided must either be a color name (in the
+#'   set of colors provided by `grDevices::colors()`) or a hexadecimal string in
+#'   the form of "#RRGGBB" or "#RRGGBBAA".
+#' @param steps A positive or negative factor by which the luminance will be
+#'   adjusted. Must be a number between `-2.0` and `2.0`.
+#'
+#' @return A vector of color values.
+#'
+#' @section Examples:
+#'
+#' Get a palette of 8 pastel colors from the **RColorBrewer** package.
+#'
+#' ```r
+#' pal <- RColorBrewer::brewer.pal(8, "Pastel2")
+#' ```
+#'
+#' Create lighter and darker variants of the base palette (one step lower, one
+#' step higher).
+#'
+#' ```r
+#' pal_darker  <- pal %>% adjust_luminance(-1.0)
+#' pal_lighter <- pal %>% adjust_luminance(+1.0)
+#' ```
+#'
+#' Create a tibble and make a **gt** table from it. Color each column in order
+#' of increasingly darker palettes (with [data_color()]).
+#'
+#' ```r
+#' dplyr::tibble(a = 1:8, b = 1:8, c = 1:8) %>%
+#'   gt() %>%
+#'   data_color(
+#'     columns = a,
+#'     colors = scales::col_numeric(
+#'       palette = pal_lighter,
+#'       domain = c(1, 8)
+#'     )
+#'   ) %>%
+#'   data_color(
+#'     columns = b,
+#'     colors = scales::col_numeric(
+#'       palette = pal,
+#'       domain = c(1, 8)
+#'     )
+#'   ) %>%
+#'   data_color(
+#'     columns = c,
+#'     colors = scales::col_numeric(
+#'       palette = pal_darker,
+#'       domain = c(1, 8)
+#'     )
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_adjust_luminance_1.png")`
+#' }}
+#'
+#' @family helper functions
+#' @section Function ID:
+#' 7-23
+#'
+#' @export
+adjust_luminance <- function(
+    colors,
+    steps
+) {
+
+  # Stop if steps is beyond an acceptable range
+  if (steps > 2.0 | steps < -2.0) {
+    cli::cli_abort(
+      "The value provided for `steps` (`{steps}`) must be between `-2.0` and `+2.0`."
+    )
+  }
+
+  # Get a matrix of values in the RGB color space
+  rgb_matrix <- t(grDevices::col2rgb(colors, alpha = TRUE)) / 255
+
+  # Obtain the alpha values
+  alpha <- rgb_matrix[, "alpha"]
+
+  # Get a matrix of values in the Luv color space
+  luv_matrix <- grDevices::convertColor(rgb_matrix[, 1:3], "sRGB", "Luv")
+
+  # Apply calculations to obtain values in the HCL color space
+  h <- atan2(luv_matrix[, "v"], luv_matrix[, "u"]) * 180 / pi
+  c <- sqrt(luv_matrix[, "u"]^2 + luv_matrix[, "v"]^2)
+  l <- luv_matrix[, "L"]
+
+  # Scale luminance to occupy [0, 1]
+  y <- l / 100.
+
+  # Obtain `x` positions of luminance values along a sigmoid function
+  x <- log(-(y / (y - 1)))
+
+  # Calculate new luminance values based on a fixed step-change in `x`
+  y_2 <- 1 / (1 + exp(-(x + steps)))
+
+  # Rescale the new luminance values to [0, 100]
+  l <- y_2 * 100.
+
+  # Obtain hexadecimal colors from the modified HCL color values
+  grDevices::hcl(h, c, l, alpha = alpha)
+}
+
+#' Helper for creating a random `id` for a **gt** table
+#'
+#' @description
+#' This helper function can be used to create a random, character-based ID
+#' value argument of variable length (the default is 10 letters).
+#'
+#' @param n The number of lowercase letters to use for the random ID.
+#'
+#' @return A character vector containing a single, random ID.
+#'
+#' @family helper functions
+#' @section Function ID:
+#' 7-24
+#'
+#' @export
+random_id <- function(n = 10) {
+
+  paste(sample(letters, n, replace = TRUE), collapse = "")
+}
+
+latex_special_chars <- c(
+  "\\" = "\\textbackslash{}",
+  "~" = "\\textasciitilde{}",
+  "^" = "\\textasciicircum{}",
+  "&" = "\\&",
+  "%" = "\\%",
+  "$" = "\\$",
+  "#" = "\\#",
+  "_" = "\\_",
+  "{" = "\\{",
+  "}" = "\\}"
+)
+
+#' Perform LaTeX escaping
+#'
+#' @description
+#' Text may contain several characters with special meanings in LaTeX. This
+#' function will transform a character vector so that it is safe to use within
+#' LaTeX tables.
+#'
+#' @param text A character vector containing the text that is to be
+#'   LaTeX-escaped.
+#'
+#' @return A character vector.
+#'
+#' @family helper functions
+#' @section Function ID:
+#' 7-25
+#'
+#' @export
+escape_latex <- function(text) {
+
+  m <- gregexpr("[\\\\&%$#_{}~^]", text, perl = TRUE)
+
+  special_chars <- regmatches(text, m)
+  escaped_chars <- lapply(special_chars, function(x) {
+    latex_special_chars[x]
+  })
+  regmatches(text, m) <- escaped_chars
+  text
+}
+
+#' Get the LaTeX dependencies required for a **gt** table
+#'
+#' @description
+#' When working with Rnw (Sweave) files or otherwise writing LaTeX code,
+#' including a **gt** table can be problematic if we don't have knowledge
+#' of the LaTeX dependencies. For the most part, these dependencies are the
+#' LaTeX packages that are required for rendering a **gt** table. The
+#' `gt_latex_dependencies()` function provides an object that can be
+#' used to provide the LaTeX in an Rnw file, allowing **gt** tables to work
+#' and not yield errors due to missing packages.
+#'
+#' @details
+#' Here is an example Rnw document that shows how the
+#' `gt_latex_dependencies()` can be used in conjunction with a **gt**
+#' table:
+#'
+#' \preformatted{
+#' \%!sweave=knitr
+#'
+#' \documentclass{article}
+#'
+#' <<echo=FALSE>>=
+#' library(gt)
+#'  @
+#'
+#' <<results='asis', echo=FALSE>>=
+#' gt_latex_dependencies()
+#'  @
+#'
+#' \begin{document}
+#'
+#' <<results='asis', echo=FALSE>>=
+#' exibble %>% gt()
+#'  @
+#'
+#' \end{document}
+#' }
+#'
+#' @return An object of class `knit_asis`.
+#'
+#' @family helper functions
+#' @section Function ID:
+#' 7-26
+#'
+#' @export
+gt_latex_dependencies <- function() {
+
+  if (requireNamespace("knitr", quietly = TRUE)) {
+
+    knitr::asis_output(
+      paste(
+        "",
+        "% gt packages",
+        paste0("\\usepackage{", latex_packages(), "}", collapse = "\n"),
+        "",
+        sep = "\n"
+      )
+    )
+
+  } else {
+    cli::cli_abort(
+      "The `knitr` package is required for getting the LaTeX dependency headers."
+    )
+  }
 }
 
 #' Helper function for specifying a font from the *Google Fonts* service
@@ -2355,7 +2653,7 @@ google_font <- function(name) {
 #' @family helper functions
 #'
 #' @section Function ID:
-#' 7-26
+#' 7-28
 #'
 #' @export
 default_fonts <- function() {
@@ -2364,252 +2662,4 @@ default_fonts <- function() {
     "Oxygen", "Ubuntu", "Cantarell", "Helvetica Neue", "Fira Sans",
     "Droid Sans", "Arial", "sans-serif"
   )
-}
-
-#' Adjust the luminance for a palette of colors
-#'
-#' @description
-#' This function can brighten or darken a palette of colors by an arbitrary
-#' number of steps, which is defined by a real number between -2.0 and 2.0. The
-#' transformation of a palette by a fixed step in this function will tend to
-#' apply greater darkening or lightening for those colors in the midrange
-#' compared to any very dark or very light colors in the input palette.
-#'
-#' @details
-#' This function can be useful when combined with the [data_color()] function's
-#' `palette` argument, which can use a vector of colors or any of the `col_*`
-#' functions from the **scales** package (all of which have a `palette`
-#' argument).
-#'
-#' @param colors A vector of colors that will undergo an adjustment in
-#'   luminance. Each color value provided must either be a color name (in the
-#'   set of colors provided by `grDevices::colors()`) or a hexadecimal string in
-#'   the form of "#RRGGBB" or "#RRGGBBAA".
-#' @param steps A positive or negative factor by which the luminance will be
-#'   adjusted. Must be a number between `-2.0` and `2.0`.
-#'
-#' @return A vector of color values.
-#'
-#' @section Examples:
-#'
-#' Get a palette of 8 pastel colors from the **RColorBrewer** package.
-#'
-#' ```r
-#' pal <- RColorBrewer::brewer.pal(8, "Pastel2")
-#' ```
-#'
-#' Create lighter and darker variants of the base palette (one step lower, one
-#' step higher).
-#'
-#' ```r
-#' pal_darker  <- pal %>% adjust_luminance(-1.0)
-#' pal_lighter <- pal %>% adjust_luminance(+1.0)
-#' ```
-#'
-#' Create a tibble and make a **gt** table from it. Color each column in order
-#' of increasingly darker palettes (with [data_color()]).
-#'
-#' ```r
-#' dplyr::tibble(a = 1:8, b = 1:8, c = 1:8) %>%
-#'   gt() %>%
-#'   data_color(
-#'     columns = a,
-#'     colors = scales::col_numeric(
-#'       palette = pal_lighter,
-#'       domain = c(1, 8)
-#'     )
-#'   ) %>%
-#'   data_color(
-#'     columns = b,
-#'     colors = scales::col_numeric(
-#'       palette = pal,
-#'       domain = c(1, 8)
-#'     )
-#'   ) %>%
-#'   data_color(
-#'     columns = c,
-#'     colors = scales::col_numeric(
-#'       palette = pal_darker,
-#'       domain = c(1, 8)
-#'     )
-#'   )
-#' ```
-#'
-#' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_adjust_luminance_1.png")`
-#' }}
-#'
-#' @family helper functions
-#' @section Function ID:
-#' 7-22
-#'
-#' @export
-adjust_luminance <- function(
-    colors,
-    steps
-) {
-
-  # Stop if steps is beyond an acceptable range
-  if (steps > 2.0 | steps < -2.0) {
-    cli::cli_abort(
-      "The value provided for `steps` (`{steps}`) must be between `-2.0` and `+2.0`."
-    )
-  }
-
-  # Get a matrix of values in the RGB color space
-  rgb_matrix <- t(grDevices::col2rgb(colors, alpha = TRUE)) / 255
-
-  # Obtain the alpha values
-  alpha <- rgb_matrix[, "alpha"]
-
-  # Get a matrix of values in the Luv color space
-  luv_matrix <- grDevices::convertColor(rgb_matrix[, 1:3], "sRGB", "Luv")
-
-  # Apply calculations to obtain values in the HCL color space
-  h <- atan2(luv_matrix[, "v"], luv_matrix[, "u"]) * 180 / pi
-  c <- sqrt(luv_matrix[, "u"]^2 + luv_matrix[, "v"]^2)
-  l <- luv_matrix[, "L"]
-
-  # Scale luminance to occupy [0, 1]
-  y <- l / 100.
-
-  # Obtain `x` positions of luminance values along a sigmoid function
-  x <- log(-(y / (y - 1)))
-
-  # Calculate new luminance values based on a fixed step-change in `x`
-  y_2 <- 1 / (1 + exp(-(x + steps)))
-
-  # Rescale the new luminance values to [0, 100]
-  l <- y_2 * 100.
-
-  # Obtain hexadecimal colors from the modified HCL color values
-  grDevices::hcl(h, c, l, alpha = alpha)
-}
-
-#' Helper for creating a random `id` for a **gt** table
-#'
-#' @description
-#' This helper function can be used to create a random, character-based ID
-#' value argument of variable length (the default is 10 letters).
-#'
-#' @param n The number of lowercase letters to use for the random ID.
-#'
-#' @return A character vector containing a single, random ID.
-#'
-#' @family helper functions
-#' @section Function ID:
-#' 7-23
-#'
-#' @export
-random_id <- function(n = 10) {
-
-  paste(sample(letters, n, replace = TRUE), collapse = "")
-}
-
-latex_special_chars <- c(
-  "\\" = "\\textbackslash{}",
-  "~" = "\\textasciitilde{}",
-  "^" = "\\textasciicircum{}",
-  "&" = "\\&",
-  "%" = "\\%",
-  "$" = "\\$",
-  "#" = "\\#",
-  "_" = "\\_",
-  "{" = "\\{",
-  "}" = "\\}"
-)
-
-#' Perform LaTeX escaping
-#'
-#' @description
-#' Text may contain several characters with special meanings in LaTeX. This
-#' function will transform a character vector so that it is safe to use within
-#' LaTeX tables.
-#'
-#' @param text A character vector containing the text that is to be
-#'   LaTeX-escaped.
-#'
-#' @return A character vector.
-#'
-#' @family helper functions
-#' @section Function ID:
-#' 7-24
-#'
-#' @export
-escape_latex <- function(text) {
-
-  m <- gregexpr("[\\\\&%$#_{}~^]", text, perl = TRUE)
-
-  special_chars <- regmatches(text, m)
-  escaped_chars <- lapply(special_chars, function(x) {
-    latex_special_chars[x]
-  })
-  regmatches(text, m) <- escaped_chars
-  text
-}
-
-#' Get the LaTeX dependencies required for a **gt** table
-#'
-#' @description
-#' When working with Rnw (Sweave) files or otherwise writing LaTeX code,
-#' including a **gt** table can be problematic if we don't have knowledge
-#' of the LaTeX dependencies. For the most part, these dependencies are the
-#' LaTeX packages that are required for rendering a **gt** table. The
-#' `gt_latex_dependencies()` function provides an object that can be
-#' used to provide the LaTeX in an Rnw file, allowing **gt** tables to work
-#' and not yield errors due to missing packages.
-#'
-#' @details
-#' Here is an example Rnw document that shows how the
-#' `gt_latex_dependencies()` can be used in conjunction with a **gt**
-#' table:
-#'
-#' \preformatted{
-#' \%!sweave=knitr
-#'
-#' \documentclass{article}
-#'
-#' <<echo=FALSE>>=
-#' library(gt)
-#'  @
-#'
-#' <<results='asis', echo=FALSE>>=
-#' gt_latex_dependencies()
-#'  @
-#'
-#' \begin{document}
-#'
-#' <<results='asis', echo=FALSE>>=
-#' exibble %>% gt()
-#'  @
-#'
-#' \end{document}
-#' }
-#'
-#' @return An object of class `knit_asis`.
-#'
-#' @family helper functions
-#' @section Function ID:
-#' 7-25
-#'
-#' @export
-gt_latex_dependencies <- function() {
-
-  if (requireNamespace("knitr", quietly = TRUE)) {
-
-    knitr::asis_output(
-      paste(
-        "",
-        "% gt packages",
-        paste0("\\usepackage{", latex_packages(), "}", collapse = "\n"),
-        "",
-        sep = "\n"
-      )
-    )
-
-  } else {
-    cli::cli_abort(
-      "The `knitr` package is required for getting the LaTeX dependency headers."
-    )
-  }
 }
