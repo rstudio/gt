@@ -385,4 +385,39 @@ test_that("The stub can be formatted with `fmt_*()` functions and `stub()", {
   tbl_html_6 %>%
     selection_text(selection = "[class='gt_footnote']") %>%
     expect_equal(c("1 footnote `III`", "2 footnote `IV`"))
+
+  # Create a gt table with a stub that has row labels, row groups that
+  # run long, and two footnotes
+  gt_tbl_7 <-
+    gt(tbl_3, rowname_col = "row", groupname_col = "group") %>%
+    fmt_number(columns = stub(), decimals = 3) %>%
+    tab_footnote(footnote = "footnote `3`", locations = cells_stub(rows = "3")) %>%
+    tab_footnote(footnote = "footnote `4`", locations = cells_stub(rows = "4")) %>%
+    tab_options(row_group.as_column = TRUE)
+
+  # Create a `tbl_html` object from the `gt_tbl_7` object
+  tbl_html_7 <-
+    gt_tbl_7 %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect the row group (as column) to be present with text in the correct order
+  tbl_html_7 %>%
+    selection_text(selection = "[class='gt_row gt_left gt_stub_row_group']") %>%
+    expect_equal(c("Group A", "Group B"))
+
+  # Expect certain stub text elements and the footnote glyphs to be present
+  tbl_html_7 %>%
+    selection_text(selection = "[class='gt_row gt_right gt_stub']") %>%
+    expect_equal(c("1.000", "2.000", "1 3.000", "2 4.000", "5.000", "6.000"))
+
+  # Expect values in the `vals` column to be in the correct order
+  tbl_html_7 %>%
+    selection_text(selection = "[class='gt_row gt_right']") %>%
+    expect_equal(as.character(1:6))
+
+  # Expect the footnote text to be present (two footnotes)
+  tbl_html_7 %>%
+    selection_text(selection = "[class='gt_footnote']") %>%
+    expect_equal(c("1 footnote `3`", "2 footnote `4`"))
 })
