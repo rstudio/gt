@@ -18,7 +18,7 @@ value argument of variable length (the default is 10 letters).
 }
 \section{Function ID}{
 
-7-23
+7-24
 }
 
 \seealso{
@@ -48,6 +48,7 @@ Other helper functions:
 \code{\link{html}()},
 \code{\link{md}()},
 \code{\link{pct}()},
-\code{\link{px}()}
+\code{\link{px}()},
+\code{\link{stub}()}
 }
 \concept{helper functions}
