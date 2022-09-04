@@ -214,12 +214,27 @@ resolve_cols_i <- function(
     excl_stub = TRUE,
     null_means = c("everything", "nothing")
 ) {
-
   quo <- rlang::enquo(expr)
   cols_excl <- c()
   null_means <- match.arg(null_means)
 
   if (is_gt(data)) {
+
+    # If we use the gt-specific select helper `stub()` then we
+    # will retrieve the stub var name and return the output in the
+    # same format as the return value for `tidyselect::eval_select()`
+    if (rlang::as_label(quo) == "stub()") {
+
+      stub_var <- dt_boxhead_get_var_stub(data = data)
+
+      if (!is.null(stub_var)) {
+        stub_col <- 1
+        names(stub_col) <- stub_var
+        return(stub_col)
+      } else {
+        return(NULL)
+      }
+    }
 
     # In most cases we would want to exclude the column that
     # represents the stub but that isn't always the case (e.g.,
@@ -229,14 +244,14 @@ resolve_cols_i <- function(
     # stub, if present, from `cols_excl`)
     stub_var <-
       if (excl_stub) {
-        dt_boxhead_get_var_stub(data)
+        dt_boxhead_get_var_stub(data = data)
       } else {
         NULL
       }
 
     # The columns that represent the group rows are always
     # excluded (i.e., included in the `col_excl` vector)
-    group_rows_vars <- dt_boxhead_get_vars_groups(data)
+    group_rows_vars <- dt_boxhead_get_vars_groups(data = data)
 
     cols_excl <- c(stub_var, group_rows_vars)
 
