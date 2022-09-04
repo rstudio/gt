@@ -133,6 +133,7 @@ reference:
     - html
     - px
     - pct
+    - stub
     - cells_title
     - cells_stubhead
     - cells_column_spanners
