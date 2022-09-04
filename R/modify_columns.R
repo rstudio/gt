@@ -68,7 +68,8 @@ cols_align <- function(
   column_names <-
     resolve_cols_c(
       expr = {{ columns }},
-      data = data
+      data = data,
+      excl_stub = FALSE
     )
 
   if (align == "auto") {
