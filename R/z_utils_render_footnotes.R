@@ -27,10 +27,11 @@ resolve_footnotes_styles <- function(data, tbl_type) {
   # column names for the table
   default_vars <- dt_boxhead_get_vars_default(data = data)
 
-  cond <- (tbl$locname != "data" & tbl$locname != "columns_columns") |
+  cond <-
+    (tbl$locname != "data" & tbl$locname != "columns_columns") |
     (tbl$colname %in% default_vars)
 
-  tbl <- tbl[cond,]
+  tbl <- tbl[cond, ]
 
   # Return `data` unchanged if there are no rows in `tbl`
   if (nrow(tbl) == 0) {
@@ -47,20 +48,18 @@ resolve_footnotes_styles <- function(data, tbl_type) {
 
   # Filter by `title`
   if (!dt_heading_has_title(data = data)) {
-    cond <- cond & tbl$locname != "title"
+    tbl <- tbl[tbl$locname != "title", ]
   }
 
   # Filter by `subtitle`
   if (!dt_heading_has_subtitle(data = data)) {
-    cond <- cond & tbl$locname != "subtitle"
+     tbl <- tbl[tbl$locname != "subtitle", ]
   }
 
   # Filter by `grpname` in columns groups
   if ("columns_groups" %in% tbl[["locname"]]) { # remove conditional
 
     spanner_ids <- unique(unlist(spanners$spanner_id))
-
-    # cond <- cond & (tbl$locname != "columns_groups" | tbl$grpname %in% spanner_ids)
 
     tbl <-
       dplyr::filter(
@@ -71,12 +70,6 @@ resolve_footnotes_styles <- function(data, tbl_type) {
 
   # Filter by `grpname` in row groups
   if ("row_groups" %in% tbl[["locname"]]) {
-
-    # cond <- cond & (tbl$locname != "row_groups" | tbl$grpname %in% groups_rows_df$group_id)
-    #
-    # # Filter `tbl` by the remaining columns in `body`
-    # cond <- cond & (tbl$colname %in% c(NA_character_, dt_boxhead_get_vars_default(data = data)))
-    # tbl <- tbl[cond,]
 
     tbl <-
       dplyr::bind_rows(
@@ -93,7 +86,6 @@ resolve_footnotes_styles <- function(data, tbl_type) {
       tbl,
       colname %in% c(NA_character_, dt_boxhead_get_vars_default(data = data))
     )
-
 
   # Return `data` unchanged if there are no rows in `tbl`
   if (nrow(tbl) == 0) {
@@ -150,9 +142,7 @@ resolve_footnotes_styles <- function(data, tbl_type) {
     tbl_row_groups$row_end <- NULL
     tbl_row_groups$group_label <- NULL
 
-
-    # Re-combine `tbl_not_row_groups`
-    # with `tbl_row_groups`
+    # Re-combine `tbl_not_row_groups` with `tbl_row_groups`
     tbl <- dplyr::bind_rows(tbl_not_row_groups, tbl_row_groups)
   }
 
