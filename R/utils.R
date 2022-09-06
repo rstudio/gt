@@ -433,13 +433,12 @@ process_text <- function(text, context = "html") {
     # Text processing for Word output
 
     if (inherits(text, "from_markdown")) {
-
-      return(markdown_to_xml(text))
-
-    } else {
-
-      return(as.character(text))
+      text <- markdown_to_xml(text)
+    }else{
+      text <- as.character(text)
     }
+
+    return(htmltools::htmlEscape(text))
 
   } else {
 
@@ -1911,7 +1910,36 @@ man_get_image_tag <- function(file, dir = "images") {
 
   repo_url <- "https://raw.githubusercontent.com/rstudio/gt/master"
 
+  function_name <- paste0(gsub("man_(.*)_[1-9].png", "\\1", file), "()")
+  example_code_idx <- gsub("man_.*?([1-9]).png", "\\1", file)
+
+  ordinal_idx <-
+    switch(
+      example_code_idx,
+      `1` = "first",
+      `2` = "second",
+      `3` = "third",
+      `4` = "fourth",
+      `5` = "fifth",
+      `6` = "sixth",
+      `7` = "seventh",
+      `8` = "eighth",
+      `9` = "ninth",
+      "above"
+    )
+
+  alt_text <-
+    paste0(
+      "This image of a table was generated from the ", ordinal_idx,
+      " code example in the `", function_name, "` help file."
+    )
+
   image_url <- file.path(repo_url, dir, file)
 
-  paste0("<img src=\"", image_url, "\" style=\"width:100\\%;\">")
+  paste0(
+    "<img ",
+    "src=\"", image_url, "\" ",
+    "alt=\"", alt_text, "\" ",
+    "style=\"width:100\\%;\">"
+  )
 }

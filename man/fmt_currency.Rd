@@ -203,7 +203,7 @@ have currency values in euros (\code{"EUR"}).
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_currency_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_currency_1.png" alt="This image of a table was generated from the first code example in the `fmt_currency()` help file." style="width:100\%;">
 }}
 
 Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{num} and \code{currency},
@@ -223,7 +223,7 @@ columns, then, format those columns using the \code{"CNY"} and \code{"GBP"} curr
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_currency_2.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_currency_2.png" alt="This image of a table was generated from the second code example in the `fmt_currency()` help file." style="width:100\%;">
 }}
 }
 
@@ -247,6 +247,7 @@ Other data formatting functions:
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
+\code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt}()},

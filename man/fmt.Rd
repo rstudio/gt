@@ -78,13 +78,13 @@ Use \code{\link{exibble}} to create a \strong{gt} table. Format the numeric valu
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_1.png" alt="This image of a table was generated from the first code example in the `fmt()` help file." style="width:100\%;">
 }}
 }
 
 \section{Function ID}{
 
-3-16
+3-17
 }
 
 \seealso{
@@ -103,6 +103,7 @@ Other data formatting functions:
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
+\code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
 \code{\link{sub_large_vals}()},

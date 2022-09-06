@@ -86,7 +86,7 @@ to data cells that satisfy a condition (using \code{tab_style()}).
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_1.png" alt="This image of a table was generated from the first code example in the `tab_style()` help file." style="width:100\%;">
 }}
 
 Use \code{\link{sp500}} to create a \strong{gt} table. Color entire rows of cells based on
@@ -113,7 +113,7 @@ values in a particular column.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_2.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_2.png" alt="This image of a table was generated from the second code example in the `tab_style()` help file." style="width:100\%;">
 }}
 
 Use \code{\link{exibble}} to create a \strong{gt} table. Replace missing values with the
@@ -134,7 +134,7 @@ Use \code{\link{exibble}} to create a \strong{gt} table. Replace missing values 
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_3.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_3.png" alt="This image of a table was generated from the third code example in the `tab_style()` help file." style="width:100\%;">
 }}
 }
 

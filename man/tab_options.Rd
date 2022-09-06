@@ -460,7 +460,7 @@ tab_1
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_1.png" alt="This image of a table was generated from the first code example in the `tab_options()` help file." style="width:100\%;">
 }}
 
 Modify the table width to be 100\% (which spans the entire content width
@@ -470,7 +470,7 @@ area).
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_2.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_2.png" alt="This image of a table was generated from the second code example in the `tab_options()` help file." style="width:100\%;">
 }}
 
 Modify the table's background color to be \code{"lightcyan"}.
@@ -479,7 +479,7 @@ Modify the table's background color to be \code{"lightcyan"}.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_3.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_3.png" alt="This image of a table was generated from the third code example in the `tab_options()` help file." style="width:100\%;">
 }}
 
 Use letters as the marks for footnote references. Also, separate footnotes in
@@ -493,7 +493,7 @@ the footer by spaces instead of newlines.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_4.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_4.png" alt="This image of a table was generated from the fourth code example in the `tab_options()` help file." style="width:100\%;">
 }}
 
 Change the padding of data rows to 5 px.
@@ -505,7 +505,7 @@ Change the padding of data rows to 5 px.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_5.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_5.png" alt="This image of a table was generated from the fifth code example in the `tab_options()` help file." style="width:100\%;">
 }}
 
 Reduce the size of the title and the subtitle text.
@@ -518,7 +518,7 @@ Reduce the size of the title and the subtitle text.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_6.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_6.png" alt="This image of a table was generated from the sixth code example in the `tab_options()` help file." style="width:100\%;">
 }}
 }
 

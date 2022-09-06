@@ -189,13 +189,13 @@ Format the column to have dates formatted as \code{month_day_year} and times to 
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_datetime_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_datetime_1.png" alt="This image of a table was generated from the first code example in the `fmt_datetime()` help file." style="width:100\%;">
 }}
 }
 
 \section{Function ID}{
 
-3-12
+3-13
 }
 
 \seealso{
@@ -213,6 +213,7 @@ Other data formatting functions:
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
+\code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt}()},

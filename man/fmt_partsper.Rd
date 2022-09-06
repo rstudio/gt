@@ -167,7 +167,7 @@ format the \code{b} column as \emph{per mille} values with \code{fmt_partsper()}
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_partsper_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_partsper_1.png" alt="This image of a table was generated from the first code example in the `fmt_partsper()` help file." style="width:100\%;">
 }}
 }
 
@@ -191,6 +191,7 @@ Other data formatting functions:
 \code{\link{fmt_number}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
+\code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt}()},

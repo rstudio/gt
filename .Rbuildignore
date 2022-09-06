@@ -23,8 +23,10 @@ tests/testthat/test-data_color.R
 tests/testthat/test-fmt_duration.R
 tests/testthat/test-fmt_fraction.R
 tests/testthat/test-fmt_ratio.R
+tests/testthat/test-fmt_roman.R
 tests/testthat/test-footer.R
 tests/testthat/test-group_column_label.R
+tests/testthat/test-gtsave.R
 tests/testthat/test-image.R
 tests/testthat/test-l_table_parts.R
 tests/testthat/test-location_cells.R

@@ -7,7 +7,7 @@ test_that("a gt table can contain indentation in the stub", {
   tbl_1 <-
     exibble %>%
     gt(rowname_col = "row") %>%
-    tab_stub_indent(indent = "increase", rows = c(1, 2, 3))
+    tab_stub_indent(rows = c(1, 2, 3), indent = "increase")
 
   # Take snapshots of `tbl_1`
   tbl_1 %>% render_as_html() %>% expect_snapshot()
@@ -18,15 +18,15 @@ test_that("a gt table can contain indentation in the stub", {
   tbl_2 <-
     exibble %>%
     gt(rowname_col = "row") %>%
-    tab_stub_indent(indent = "increase", rows = c(1, 2, 3)) %>%
-    tab_stub_indent(indent = "increase", rows = c(1, 2, 3))
+    tab_stub_indent(rows = c(1, 2, 3), indent = "increase") %>%
+    tab_stub_indent(rows = c(1, 2, 3), indent = "increase")
 
   # Perform the equivalent operation a previously, this time using
   # an explicit setting of the level (2)
   tbl_3 <-
     exibble %>%
     gt(rowname_col = "row") %>%
-    tab_stub_indent(indent = 2, rows = c(1, 2, 3))
+    tab_stub_indent(rows = c(1, 2, 3), indent = 2)
 
   # Expect that `tbl_2` and `tbl_3` are the same
   expect_equal(
@@ -43,8 +43,8 @@ test_that("a gt table can contain indentation in the stub", {
   tbl_4 <-
     exibble %>%
     gt(rowname_col = "row") %>%
-    tab_stub_indent(indent = "increase", rows = c(1, 2, 3)) %>%
-    tab_stub_indent(indent = "decrease", rows = c(1, 2, 3))
+    tab_stub_indent(rows = c(1, 2, 3), indent = "increase") %>%
+    tab_stub_indent(rows = c(1, 2, 3), indent = "decrease")
 
   expect_equal(
     tbl_4 %>% render_as_html(),
@@ -56,7 +56,7 @@ test_that("a gt table can contain indentation in the stub", {
   tbl_5 <-
     exibble %>%
     gt(rowname_col = "row") %>%
-    tab_stub_indent(indent = 2, rows = matches("3|4|5"))
+    tab_stub_indent(rows = matches("3|4|5"), indent = 2)
 
   # Take snapshots of `tbl_5`
   tbl_5 %>% render_as_html() %>% expect_snapshot()

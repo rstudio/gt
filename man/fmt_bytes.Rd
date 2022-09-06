@@ -136,7 +136,7 @@ byte sizes in the decimal standard.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_bytes_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_bytes_1.png" alt="This image of a table was generated from the first code example in the `fmt_bytes()` help file." style="width:100\%;">
 }}
 
 Create a similar table with the \code{fmt_bytes()} function, this time showing
@@ -152,13 +152,13 @@ byte sizes as binary values.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_bytes_2.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_bytes_2.png" alt="This image of a table was generated from the second code example in the `fmt_bytes()` help file." style="width:100\%;">
 }}
 }
 
 \section{Function ID}{
 
-3-9
+3-10
 }
 
 \seealso{
@@ -176,6 +176,7 @@ Other data formatting functions:
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
+\code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt}()},

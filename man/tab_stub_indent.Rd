@@ -4,10 +4,16 @@
 \alias{tab_stub_indent}
 \title{Control indentation of row labels in the stub}
 \usage{
-tab_stub_indent(data, indent = "increase", rows)
+tab_stub_indent(data, rows, indent = "increase")
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+
+\item{rows}{The rows to consider for the indentation change. Can either be a
+vector of row captions provided in \code{c()}, a vector of row indices, or a
+helper function focused on selections. The select helper functions are:
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and
+\code{\link[=everything]{everything()}}.}
 
 \item{indent}{An indentation directive either as a keyword describing the
 indentation change or as an explicit integer value for directly setting the
@@ -16,12 +22,6 @@ indentation level by one; \code{"decrease"} will do the same in the reverse
 direction. The starting indentation level of \code{0} means no indentation and
 this values serves as a lower bound. The upper bound for indentation is at
 level \code{5}.}
-
-\item{rows}{The rows to consider for the indentation change. Can either be a
-vector of row captions provided in \code{c()}, a vector of row indices, or a
-helper function focused on selections. The select helper functions are:
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and
-\code{\link[=everything]{everything()}}.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -79,8 +79,8 @@ label.
     row_group.as_column = TRUE
   ) \%>\%
   tab_stub_indent(
-    indent = 2,
-    rows = matches("^L|^M|^S|^XL|^XXL")
+    rows = matches("^L|^M|^S|^XL|^XXL"),
+    indent = 2
   ) \%>\%
   tab_style(
     style = cell_fill(color = "gray95"),
@@ -92,7 +92,7 @@ label.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_stub_indent_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_stub_indent_1.png" alt="This image of a table was generated from the first code example in the `tab_stub_indent()` help file." style="width:100\%;">
 }}
 }
 

@@ -391,6 +391,7 @@ tab_spanner_delim <- function(
       expr = {{ columns }},
       data = data
     )
+
   if (!is.null(columns)) {
     colnames_spanners <- base::intersect(all_cols, columns)
   } else {
@@ -482,6 +483,8 @@ tab_spanner_delim <- function(
     spanners_i_values <- rle_spanners_i$values
     spanners_i_col_i <- utils::head(cumsum(c(1, spanners_i_lengths)), -1)
 
+    spanner_id_vals <- c()
+
     for (j in seq_along(spanners_i_lengths)) {
 
       if (!is.na(spanners_i_values[j])) {
@@ -495,6 +498,26 @@ tab_spanner_delim <- function(
               collapse = delim
             )
           )
+
+        # Modify `spanner_id` to not collide with any other values
+        if (spanner_id %in% spanner_id_vals) {
+
+          if (grepl("^spanner-", spanner_id)) {
+
+            # Add number to spanner ID values on first duplication
+            spanner_id <- gsub("^spanner-", "spanner:1-", spanner_id)
+          }
+
+          while (spanner_id %in% spanner_id_vals) {
+
+            # Increment number to spanner ID values on subsequent duplications
+            idx_str <- gsub("^spanner:([0-9]+)-.*", "\\1", spanner_id)
+            idx_int <- as.integer(idx_str)
+            spanner_id <- gsub("^(spanner:)[0-9]+(-.*)", paste0("\\1", idx_int + 1, "\\2"), spanner_id)
+          }
+        }
+
+        spanner_id_vals <- unique(c(spanner_id_vals, spanner_id))
 
         spanner_columns <-
           seq(
@@ -769,6 +792,11 @@ tab_stubhead <- function(
 #' level, or, by way of an indentation directive using keywords.
 #'
 #' @inheritParams fmt_number
+#' @param rows The rows to consider for the indentation change. Can either be a
+#'   vector of row captions provided in `c()`, a vector of row indices, or a
+#'   helper function focused on selections. The select helper functions are:
+#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()], and
+#'   [everything()].
 #' @param indent An indentation directive either as a keyword describing the
 #'   indentation change or as an explicit integer value for directly setting the
 #'   indentation level. The keyword `"increase"` (the default) will increase the
@@ -776,11 +804,6 @@ tab_stubhead <- function(
 #'   direction. The starting indentation level of `0` means no indentation and
 #'   this values serves as a lower bound. The upper bound for indentation is at
 #'   level `5`.
-#' @param rows The rows to consider for the indentation change. Can either be a
-#'   vector of row captions provided in `c()`, a vector of row indices, or a
-#'   helper function focused on selections. The select helper functions are:
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()], and
-#'   [everything()].
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -831,8 +854,8 @@ tab_stubhead <- function(
 #'     row_group.as_column = TRUE
 #'   ) %>%
 #'   tab_stub_indent(
-#'     indent = 2,
-#'     rows = matches("^L|^M|^S|^XL|^XXL")
+#'     rows = matches("^L|^M|^S|^XL|^XXL"),
+#'     indent = 2
 #'   ) %>%
 #'   tab_style(
 #'     style = cell_fill(color = "gray95"),
@@ -854,8 +877,8 @@ tab_stubhead <- function(
 #' @export
 tab_stub_indent <- function(
     data,
-    indent = "increase",
-    rows
+    rows,
+    indent = "increase"
 ) {
 
   # Perform input object validation

@@ -43,7 +43,7 @@ new ordering in \code{groups}.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_row_group_order_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_row_group_order_1.png" alt="This image of a table was generated from the first code example in the `row_group_order()` help file." style="width:100\%;">
 }}
 }
 

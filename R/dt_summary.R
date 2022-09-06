@@ -164,16 +164,15 @@ dt_summary_build <- function(data, context) {
     if (identical(groups, grand_summary_col)) {
 
       select_data_tbl <-
-        dplyr::select(data_tbl, .env$columns) %>%
-        dplyr::mutate(!!group_id_col_private := .env$grand_summary_col) %>%
-        dplyr::select(.env$group_id_col_private, .env$columns)
+        dplyr::mutate(data_tbl, !!group_id_col_private := .env$grand_summary_col) %>%
+        dplyr::relocate(.env$group_id_col_private, .before = 1) #
 
     } else {
 
       select_data_tbl <-
         dplyr::bind_cols(
           dplyr::select(stub_df, !!group_id_col_private := .data$group_id),
-          data_tbl[stub_df$rownum_i, columns]
+          data_tbl[stub_df$rownum_i, ]
         )
     }
 
@@ -201,7 +200,7 @@ dt_summary_build <- function(data, context) {
     summary_dfs_data <-
       dplyr::bind_rows(
         lapply(
-          seq_along(agg_funs),
+          seq_along(fns),
           FUN = function(j) {
 
             group_label <- labels[j]
@@ -209,7 +208,7 @@ dt_summary_build <- function(data, context) {
             select_data_tbl %>%
               dplyr::filter(.data[[group_id_col_private]] %in% .env$groups) %>%
               dplyr::group_by(.data[[group_id_col_private]]) %>%
-              dplyr::summarize_all(.funs = agg_funs[[j]]) %>%
+              dplyr::summarize_at(vars(.env$columns), .funs = fns[[j]]) %>%
               dplyr::ungroup() %>%
               dplyr::mutate(!!rowname_col_private := .env$group_label) %>%
               dplyr::select(
