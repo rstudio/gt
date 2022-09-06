@@ -4351,7 +4351,7 @@ test_that("The `vec_fmt_date()` function works", {
   )
 
   vec_fmt_date(dates, date_style = 10, output = "html") %>%
-    expect_equal(c("2020", "2021", "2022", "2023", "2024"))
+    expect_equal(c("5 Jan", "6 Feb", "7 Mar", "8 Apr", "9 May"))
   expect_equal(
     vec_fmt_date(as.character(dates), date_style = 10, output = "html"),
     vec_fmt_date(as.character(dates), date_style = 10, output = "latex")
@@ -4366,7 +4366,7 @@ test_that("The `vec_fmt_date()` function works", {
   )
 
   vec_fmt_date(dates, date_style = 11, output = "html") %>%
-    expect_equal(c("January", "February", "March", "April", "May"))
+    expect_equal(c("2020", "2021", "2022", "2023", "2024"))
   expect_equal(
     vec_fmt_date(as.character(dates), date_style = 11, output = "html"),
     vec_fmt_date(as.character(dates), date_style = 11, output = "latex")
@@ -4381,7 +4381,7 @@ test_that("The `vec_fmt_date()` function works", {
   )
 
   vec_fmt_date(dates, date_style = 12, output = "html") %>%
-    expect_equal(c("05", "06", "07", "08", "09"))
+    expect_equal(c("January", "February", "March", "April", "May"))
   expect_equal(
     vec_fmt_date(as.character(dates), date_style = 12, output = "html"),
     vec_fmt_date(as.character(dates), date_style = 12, output = "latex")
@@ -4396,11 +4396,7 @@ test_that("The `vec_fmt_date()` function works", {
   )
 
   vec_fmt_date(dates, date_style = 13, output = "html") %>%
-    expect_equal(
-      c(
-        "2020/01/05", "2021/02/06", "2022/03/07", "2023/04/08", "2024/05/09"
-      )
-    )
+    expect_equal(c("05", "06", "07", "08", "09"))
   expect_equal(
     vec_fmt_date(as.character(dates), date_style = 13, output = "html"),
     vec_fmt_date(as.character(dates), date_style = 13, output = "latex")
@@ -4417,7 +4413,7 @@ test_that("The `vec_fmt_date()` function works", {
   vec_fmt_date(dates, date_style = 14, output = "html") %>%
     expect_equal(
       c(
-        "20/01/05", "21/02/06", "22/03/07", "23/04/08", "24/05/09"
+        "2020/01/05", "2021/02/06", "2022/03/07", "2023/04/08", "2024/05/09"
       )
     )
   expect_equal(
@@ -4431,6 +4427,25 @@ test_that("The `vec_fmt_date()` function works", {
   expect_equal(
     vec_fmt_date(as.character(dates), date_style = 14, output = "html"),
     vec_fmt_date(as.character(dates), date_style = 14, output = "plain")
+  )
+
+  vec_fmt_date(dates, date_style = 15, output = "html") %>%
+    expect_equal(
+      c(
+        "20/01/05", "21/02/06", "22/03/07", "23/04/08", "24/05/09"
+      )
+    )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 15, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 15, output = "latex")
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 15, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 15, output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = 15, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = 15, output = "plain")
   )
 
   vec_fmt_date(dates, date_style = 2, pattern = "d{x}d", output = "html") %>%
