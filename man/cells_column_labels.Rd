@@ -96,7 +96,7 @@ Use \code{\link{sza}} to create a \strong{gt} table. Add footnotes to the column
 
 \section{Function ID}{
 
-7-8
+7-9
 }
 
 \seealso{
@@ -126,6 +126,7 @@ Other helper functions:
 \code{\link{md}()},
 \code{\link{pct}()},
 \code{\link{px}()},
-\code{\link{random_id}()}
+\code{\link{random_id}()},
+\code{\link{stub}()}
 }
 \concept{helper functions}

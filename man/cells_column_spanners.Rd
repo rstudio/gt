@@ -91,7 +91,7 @@ three column labels with \code{\link[=tab_spanner]{tab_spanner()}} and then use 
 
 \section{Function ID}{
 
-7-7
+7-8
 }
 
 \seealso{
@@ -121,6 +121,7 @@ Other helper functions:
 \code{\link{md}()},
 \code{\link{pct}()},
 \code{\link{px}()},
-\code{\link{random_id}()}
+\code{\link{random_id}()},
+\code{\link{stub}()}
 }
 \concept{helper functions}

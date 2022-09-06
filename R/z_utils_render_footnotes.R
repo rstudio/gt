@@ -602,19 +602,21 @@ apply_footnotes_to_output <- function(data, context = "html") {
 
       } else {
 
-        # Footnote placement on the left of the cell text
+        # Footnote placement on the left of the cell text; ensure that a
+        # non-breaking space (added here as Unicode's 'NO-BREAK SPACE',
+        # "U+00A0") separates the marks from the text content
 
         if (context == "html" && grepl("^<div class='gt_from_md'><p>", text)) {
 
           text <-
             paste0(
               "<div class='gt_from_md'><p>",
-              mark, " ",
+              mark, "\U000A0",
               gsub("<div class='gt_from_md'><p>", "", text, fixed = TRUE)
             )
 
         } else {
-          text <- paste0(mark, " ", text)
+          text <- paste0(mark, if (context == "html") "\U000A0" else " ", text)
         }
       }
 
