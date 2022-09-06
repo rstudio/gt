@@ -923,7 +923,7 @@ test_that("The final placement of footnotes is correct with the 'auto' mode", {
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("[class='gt_row gt_right']") %>%
-    expect_equal("mark_1 0.1111")
+    expect_equal(paste0("mark_1", "\U000A0", "0.1111"))
 
   # Expect a footnote mark to the right of the center-aligned number
   # (this turns off the auto-alignment option in the `gt()` function)
@@ -990,7 +990,7 @@ test_that("The final placement of footnotes is correct with the 'auto' mode", {
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("[class='gt_row gt_right']") %>%
-    expect_equal("mark_1 0.11")
+    expect_equal(paste0("mark_1", "\U000A0", "0.11"))
 
   # Expect a footnote mark to the right of the left-aligned number value
   # (the first `tab_style()` statement with literal CSS style rules is more
@@ -1047,7 +1047,7 @@ test_that("The final placement of footnotes is correct with the 'auto' mode", {
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("[class='gt_row gt_right']") %>%
-    expect_equal("mark_1 0.11")
+    expect_equal(paste0("mark_1", "\U000A0", "0.11"))
 
   # Expect a footnote mark to the right of the left-aligned number value
   # (the final !important 'text-align' rule in `tab_style()` determines the alignment)
@@ -1104,7 +1104,7 @@ test_that("Footnotes are correctly placed with text produced by `fmt_markdown()`
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("[class='gt_row gt_left']") %>%
-    expect_equal("1 apricot\n")
+    expect_equal(paste0("1", "\U000A0", "apricot\n"))
 
   exibble[1, 2] %>%
     gt() %>%
