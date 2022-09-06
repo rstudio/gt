@@ -189,7 +189,14 @@ test_that("The stub can be formatted with `fmt_*()` functions", {
   # Expect certain stub text elements and the footnote glyphs to be present
   tbl_html_6 %>%
     selection_text(selection = "[class='gt_row gt_right gt_stub']") %>%
-    expect_equal(c("I", "II", "1 III", "2 IV", "V", "VI"))
+    expect_equal(
+      c(
+        "I", "II",
+        paste0("1", "\U000A0", "III"),
+        paste0("2", "\U000A0", "IV"),
+        "V", "VI"
+      )
+    )
 
   # Expect values in the `vals` column to be in the correct order
   tbl_html_6 %>%
@@ -374,7 +381,14 @@ test_that("The stub can be formatted with `fmt_*()` functions and `stub()", {
   # Expect certain stub text elements and the footnote glyphs to be present
   tbl_html_6 %>%
     selection_text(selection = "[class='gt_row gt_right gt_stub']") %>%
-    expect_equal(c("I", "II", "1 III", "2 IV", "V", "VI"))
+    expect_equal(
+      c(
+        "I", "II",
+        paste0("1", "\U000A0", "III"),
+        paste0("2", "\U000A0", "IV"),
+        "V", "VI"
+      )
+    )
 
   # Expect values in the `vals` column to be in the correct order
   tbl_html_6 %>%
@@ -409,7 +423,14 @@ test_that("The stub can be formatted with `fmt_*()` functions and `stub()", {
   # Expect certain stub text elements and the footnote glyphs to be present
   tbl_html_7 %>%
     selection_text(selection = "[class='gt_row gt_right gt_stub']") %>%
-    expect_equal(c("1.000", "2.000", "1 3.000", "2 4.000", "5.000", "6.000"))
+    expect_equal(
+      c(
+        "1.000", "2.000",
+        paste0("1", "\U000A0", "3.000"),
+        paste0("2", "\U000A0", "4.000"),
+        "5.000", "6.000"
+      )
+    )
 
   # Expect values in the `vals` column to be in the correct order
   tbl_html_7 %>%
