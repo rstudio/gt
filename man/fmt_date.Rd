@@ -4,7 +4,7 @@
 \alias{fmt_date}
 \title{Format values as dates}
 \usage{
-fmt_date(data, columns, rows = everything(), date_style = 2, pattern = "{x}")
+fmt_date(data, columns, rows = everything(), date_style = 1, pattern = "{x}")
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -24,7 +24,7 @@ functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with
 to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{date_style}{The date style to use. Supply a number (from \code{1} to \code{14})
+\item{date_style}{The date style to use. Supply a number (from \code{1} to \code{15})
 that corresponds to the preferred date style, or, provide a named date
 style (\code{"wday_month_day_year"}, \code{"m_day_year"}, \code{"year.mn.day"}, etc.). Use
 \code{\link[=info_date_style]{info_date_style()}} to see the different numbered and named date presets.}
@@ -56,6 +56,7 @@ following date styles are available for use (all using the input date of
 \item \code{"day_m_year"}: \verb{29 Feb 2000}
 \item \code{"day_month_year"}: \verb{29 February 2000}
 \item \code{"day_month"}: \verb{29 February}
+\item \code{"day_m"}: \verb{29 Feb}
 \item \code{"year"}: \code{2000}
 \item \code{"month"}: \code{February}
 \item \code{"day"}: \code{29}

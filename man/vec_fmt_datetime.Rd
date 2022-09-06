@@ -6,8 +6,8 @@
 \usage{
 vec_fmt_datetime(
   x,
-  date_style = 2,
-  time_style = 2,
+  date_style = 1,
+  time_style = 1,
   sep = " ",
   format = NULL,
   tz = NULL,
@@ -18,7 +18,7 @@ vec_fmt_datetime(
 \arguments{
 \item{x}{A numeric vector.}
 
-\item{date_style}{The date style to use. Supply a number (from \code{1} to \code{14})
+\item{date_style}{The date style to use. Supply a number (from \code{1} to \code{15})
 that corresponds to the preferred date style, or, provide a named date
 style (\code{"wday_month_day_year"}, \code{"m_day_year"}, \code{"year.mn.day"}, etc.). Use
 \code{\link[=info_date_style]{info_date_style()}} to see the different numbered and named date presets.}
@@ -77,6 +77,7 @@ output dates):
 \item \code{"day_m_year"}: \verb{29 Feb 2000}
 \item \code{"day_month_year"}: \verb{29 February 2000}
 \item \code{"day_month"}: \verb{29 February}
+\item \code{"day_m"}: \verb{29 Feb}
 \item \code{"year"}: \code{2000}
 \item \code{"month"}: \code{February}
 \item \code{"day"}: \code{29}
@@ -178,7 +179,7 @@ argument (here, it is of the \code{"plain"} output type).
 }\if{html}{\out{</div>}}
 
 We can change the formatting style of the date and time portions separately
-with the \code{date_style} (values \code{1}-\code{14}) and \code{time_style} (values \code{1}-\code{5})
+with the \code{date_style} (values \code{1}-\code{15}) and \code{time_style} (values \code{1}-\code{5})
 arguments. The \code{sep} option allows for a customized separator string between
 the date and time.
 
