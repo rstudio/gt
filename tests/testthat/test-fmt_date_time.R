@@ -70,60 +70,74 @@ test_that("the `fmt_date()` function works correctly", {
       (tab %>%
          fmt_date(columns = "date", date_style = 2) %>%
          render_formats_test(context = "html"))[["date"]],
-      c("Sunday, October 15, 2017", "Friday, February 22, 2013",
+      c(
+        "Sunday, October 15, 2017", "Friday, February 22, 2013",
         "Monday, September 22, 2014", "Wednesday, January 10, 2018",
-        "Saturday, January 1, 2000")
+        "Saturday, January 1, 2000"
+      )
     )
 
     expect_equal(
       (tab %>%
          fmt_date(columns = "date", date_style = 3) %>%
          render_formats_test(context = "html"))[["date"]],
-      c("Sun, Oct 15, 2017", "Fri, Feb 22, 2013",
+      c(
+        "Sun, Oct 15, 2017", "Fri, Feb 22, 2013",
         "Mon, Sep 22, 2014", "Wed, Jan 10, 2018",
-        "Sat, Jan 1, 2000")
+        "Sat, Jan 1, 2000"
+      )
     )
 
     expect_equal(
       (tab %>%
          fmt_date(columns = "date", date_style = 4) %>%
          render_formats_test(context = "html"))[["date"]],
-      c("Sunday 15 October 2017", "Friday 22 February 2013",
+      c(
+        "Sunday 15 October 2017", "Friday 22 February 2013",
         "Monday 22 September 2014", "Wednesday 10 January 2018",
-        "Saturday 1 January 2000")
+        "Saturday 1 January 2000"
+      )
     )
 
     expect_equal(
       (tab %>%
          fmt_date(columns = "date", date_style = 5) %>%
          render_formats_test(context = "html"))[["date"]],
-      c("October 15, 2017", "February 22, 2013",
+      c(
+        "October 15, 2017", "February 22, 2013",
         "September 22, 2014", "January 10, 2018",
-        "January 1, 2000")
+        "January 1, 2000"
+      )
     )
 
     expect_equal(
       (tab %>%
          fmt_date(columns = "date", date_style = 6) %>%
          render_formats_test(context = "html"))[["date"]],
-      c("Oct 15, 2017", "Feb 22, 2013", "Sep 22, 2014",
-        "Jan 10, 2018", "Jan 1, 2000")
+      c(
+        "Oct 15, 2017", "Feb 22, 2013", "Sep 22, 2014",
+        "Jan 10, 2018", "Jan 1, 2000"
+      )
     )
 
     expect_equal(
       (tab %>%
          fmt_date(columns = "date", date_style = 7) %>%
          render_formats_test(context = "html"))[["date"]],
-      c("15 Oct 2017", "22 Feb 2013", "22 Sep 2014",
-        "10 Jan 2018", "1 Jan 2000")
+      c(
+        "15 Oct 2017", "22 Feb 2013", "22 Sep 2014",
+        "10 Jan 2018", "1 Jan 2000"
+      )
     )
 
     expect_equal(
       (tab %>%
          fmt_date(columns = "date", date_style = 8) %>%
          render_formats_test(context = "html"))[["date"]],
-      c("15 October 2017", "22 February 2013", "22 September 2014",
-        "10 January 2018", "1 January 2000")
+      c(
+        "15 October 2017", "22 February 2013", "22 September 2014",
+        "10 January 2018", "1 January 2000"
+      )
     )
 
     expect_equal(
@@ -137,33 +151,40 @@ test_that("the `fmt_date()` function works correctly", {
       (tab %>%
          fmt_date(columns = "date", date_style = 10) %>%
          render_formats_test(context = "html"))[["date"]],
-      c("2017", "2013", "2014", "2018", "2000")
+      c("15 Oct", "22 Feb", "22 Sep", "10 Jan", "1 Jan")
     )
 
     expect_equal(
       (tab %>%
          fmt_date(columns = "date", date_style = 11) %>%
          render_formats_test(context = "html"))[["date"]],
-      c("October", "February", "September", "January", "January")
+      c("2017", "2013", "2014", "2018", "2000")
     )
 
     expect_equal(
       (tab %>%
          fmt_date(columns = "date", date_style = 12) %>%
          render_formats_test(context = "html"))[["date"]],
-      c("15", "22", "22", "10", "01")
+      c("October", "February", "September", "January", "January")
     )
 
     expect_equal(
       (tab %>%
          fmt_date(columns = "date", date_style = 13) %>%
          render_formats_test(context = "html"))[["date"]],
-      c("2017/10/15", "2013/02/22", "2014/09/22", "2018/01/10", "2000/01/01")
+      c("15", "22", "22", "10", "01")
     )
 
     expect_equal(
       (tab %>%
          fmt_date(columns = "date", date_style = 14) %>%
+         render_formats_test(context = "html"))[["date"]],
+      c("2017/10/15", "2013/02/22", "2014/09/22", "2018/01/10", "2000/01/01")
+    )
+
+    expect_equal(
+      (tab %>%
+         fmt_date(columns = "date", date_style = 15) %>%
          render_formats_test(context = "html"))[["date"]],
       c("17/10/15", "13/02/22", "14/09/22", "18/01/10", "00/01/01")
     )
@@ -398,14 +419,14 @@ test_that("the `fmt_time()` function works correctly", {
       gt() %>%
       fmt_time(columns = "date") %>%
       render_formats_test(context = "default"))[["date"]],
-    rep("00:00", 2)
+    rep("00:00:00", 2)
   )
   expect_equal(
     (dplyr::tibble(date = c("2013-12-30", "2017-03-15 12:30")) %>%
        gt() %>%
        fmt_time(columns = "date") %>%
        render_formats_test(context = "default"))[["date"]],
-    rep("00:00", 2)
+    rep("00:00:00", 2)
   )
 
   # Don't expect an error if any string-based date-times have invalid

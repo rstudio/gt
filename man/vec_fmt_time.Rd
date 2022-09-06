@@ -6,7 +6,7 @@
 \usage{
 vec_fmt_time(
   x,
-  time_style = 2,
+  time_style = 1,
   pattern = "{x}",
   output = c("auto", "plain", "html", "latex", "rtf", "word")
 )

@@ -1573,17 +1573,18 @@ vec_fmt_bytes <- function(
 #' 7. `"day_m_year"`: `29 Feb 2000`
 #' 8. `"day_month_year"`: `29 February 2000`
 #' 9. `"day_month"`: `29 February`
-#' 10. `"year"`: `2000`
-#' 11. `"month"`: `February`
-#' 12. `"day"`: `29`
-#' 13. `"year.mn.day"`: `2000/02/29`
-#' 14. `"y.mn.day"`: `00/02/29`
+#' 10. `"day_m"`: `29 Feb`
+#' 11. `"year"`: `2000`
+#' 12. `"month"`: `February`
+#' 13. `"day"`: `29`
+#' 14. `"year.mn.day"`: `2000/02/29`
+#' 15. `"y.mn.day"`: `00/02/29`
 #'
 #' We can use the [info_date_style()] function for a useful reference on all of
 #' the possible inputs to `date_style`.
 #'
 #' @inheritParams vec_fmt_number
-#' @param date_style The date style to use. Supply a number (from `1` to `14`)
+#' @param date_style The date style to use. Supply a number (from `1` to `15`)
 #'   that corresponds to the preferred date style, or, provide a named date
 #'   style (`"wday_month_day_year"`, `"m_day_year"`, `"year.mn.day"`, etc.). Use
 #'   [info_date_style()] to see the different numbered and named date presets.
@@ -1612,7 +1613,7 @@ vec_fmt_bytes <- function(
 #' #> [3] "Monday, March 23, 2015" NA
 #' ```
 #'
-#' We can change the formatting style by choosing a number from `1` to `14`:
+#' We can change the formatting style by choosing a number from `1` to `15`:
 #'
 #' ```r
 #' vec_fmt_date(str_vals, date_style = 6)
@@ -1643,7 +1644,7 @@ vec_fmt_bytes <- function(
 #' @export
 vec_fmt_date <- function(
     x,
-    date_style = 2,
+    date_style = 1,
     pattern = "{x}",
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
@@ -1756,7 +1757,7 @@ vec_fmt_date <- function(
 #' @export
 vec_fmt_time <- function(
     x,
-    time_style = 2,
+    time_style = 1,
     pattern = "{x}",
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
@@ -1813,11 +1814,12 @@ vec_fmt_time <- function(
 #' 7. `"day_m_year"`: `29 Feb 2000`
 #' 8. `"day_month_year"`: `29 February 2000`
 #' 9. `"day_month"`: `29 February`
-#' 10. `"year"`: `2000`
-#' 11. `"month"`: `February`
-#' 12. `"day"`: `29`
-#' 13. `"year.mn.day"`: `2000/02/29`
-#' 14. `"y.mn.day"`: `00/02/29`
+#' 10. `"day_m"`: `29 Feb`
+#' 11. `"year"`: `2000`
+#' 12. `"month"`: `February`
+#' 13. `"day"`: `29`
+#' 14. `"year.mn.day"`: `2000/02/29`
+#' 15. `"y.mn.day"`: `00/02/29`
 #'
 #' The following time styles are available for formatting of the time portion
 #' (all using the input time of `14:35:00` in the example output times):
@@ -1925,7 +1927,7 @@ vec_fmt_time <- function(
 #' ```
 #'
 #' We can change the formatting style of the date and time portions separately
-#' with the `date_style` (values `1`-`14`) and `time_style` (values `1`-`5`)
+#' with the `date_style` (values `1`-`15`) and `time_style` (values `1`-`5`)
 #' arguments. The `sep` option allows for a customized separator string between
 #' the date and time.
 #'
@@ -1984,8 +1986,8 @@ vec_fmt_time <- function(
 #' @export
 vec_fmt_datetime <- function(
     x,
-    date_style = 2,
-    time_style = 2,
+    date_style = 1,
+    time_style = 1,
     sep = " ",
     format = NULL,
     tz = NULL,

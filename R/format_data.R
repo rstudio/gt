@@ -2251,11 +2251,12 @@ fmt_bytes <- function(
 #' 7. `"day_m_year"`: `29 Feb 2000`
 #' 8. `"day_month_year"`: `29 February 2000`
 #' 9. `"day_month"`: `29 February`
-#' 10. `"year"`: `2000`
-#' 11. `"month"`: `February`
-#' 12. `"day"`: `29`
-#' 13. `"year.mn.day"`: `2000/02/29`
-#' 14. `"y.mn.day"`: `00/02/29`
+#' 10. `"day_m"`: `29 Feb`
+#' 11. `"year"`: `2000`
+#' 12. `"month"`: `February`
+#' 13. `"day"`: `29`
+#' 14. `"year.mn.day"`: `2000/02/29`
+#' 15. `"y.mn.day"`: `00/02/29`
 #'
 #' We can use the [info_date_style()] function for a useful reference on all of
 #' the possible inputs to `date_style`.
@@ -2267,7 +2268,7 @@ fmt_bytes <- function(
 #' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
-#' @param date_style The date style to use. Supply a number (from `1` to `14`)
+#' @param date_style The date style to use. Supply a number (from `1` to `15`)
 #'   that corresponds to the preferred date style, or, provide a named date
 #'   style (`"wday_month_day_year"`, `"m_day_year"`, `"year.mn.day"`, etc.). Use
 #'   [info_date_style()] to see the different numbered and named date presets.
@@ -2329,7 +2330,7 @@ fmt_date <- function(
     data,
     columns,
     rows = everything(),
-    date_style = 2,
+    date_style = 1,
     pattern = "{x}"
 ) {
 
@@ -2485,7 +2486,7 @@ fmt_time <- function(
     data,
     columns,
     rows = everything(),
-    time_style = 2,
+    time_style = 1,
     pattern = "{x}"
 ) {
 
@@ -2581,11 +2582,12 @@ fmt_time <- function(
 #' 7. `"day_m_year"`: `29 Feb 2000`
 #' 8. `"day_month_year"`: `29 February 2000`
 #' 9. `"day_month"`: `29 February`
-#' 10. `"year"`: `2000`
-#' 11. `"month"`: `February`
-#' 12. `"day"`: `29`
-#' 13. `"year.mn.day"`: `2000/02/29`
-#' 14. `"y.mn.day"`: `00/02/29`
+#' 10. `"day_m"`: `29 Feb`
+#' 11. `"year"`: `2000`
+#' 12. `"month"`: `February`
+#' 13. `"day"`: `29`
+#' 14. `"year.mn.day"`: `2000/02/29`
+#' 15. `"y.mn.day"`: `00/02/29`
 #'
 #' The following time styles are available for formatting of the time portion
 #' (all using the input time of `14:35:00` in the example output times):
@@ -2706,8 +2708,8 @@ fmt_datetime <- function(
     data,
     columns,
     rows = everything(),
-    date_style = 2,
-    time_style = 2,
+    date_style = 1,
+    time_style = 1,
     sep = " ",
     format = NULL,
     tz = NULL,
