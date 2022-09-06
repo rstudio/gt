@@ -94,7 +94,7 @@ table stub with \code{\link[=tab_style]{tab_style()}}, using \code{cells_stub()}
 
 \section{Function ID}{
 
-7-10
+7-11
 }
 
 \seealso{
@@ -124,6 +124,7 @@ Other helper functions:
 \code{\link{md}()},
 \code{\link{pct}()},
 \code{\link{px}()},
-\code{\link{random_id}()}
+\code{\link{random_id}()},
+\code{\link{stub}()}
 }
 \concept{helper functions}

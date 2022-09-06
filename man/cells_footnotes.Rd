@@ -103,7 +103,7 @@ Use \code{\link{sza}} to create a \strong{gt} table. Color the \code{sza} column
 
 \section{Function ID}{
 
-7-16
+7-17
 }
 
 \seealso{
@@ -133,6 +133,7 @@ Other helper functions:
 \code{\link{md}()},
 \code{\link{pct}()},
 \code{\link{px}()},
-\code{\link{random_id}()}
+\code{\link{random_id}()},
+\code{\link{stub}()}
 }
 \concept{helper functions}

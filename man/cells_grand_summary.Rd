@@ -104,7 +104,7 @@ summary cell with with \code{\link[=tab_style]{tab_style()}} and \code{cells_gra
 
 \section{Function ID}{
 
-7-13
+7-14
 }
 
 \seealso{
@@ -134,6 +134,7 @@ Other helper functions:
 \code{\link{md}()},
 \code{\link{pct}()},
 \code{\link{px}()},
-\code{\link{random_id}()}
+\code{\link{random_id}()},
+\code{\link{stub}()}
 }
 \concept{helper functions}

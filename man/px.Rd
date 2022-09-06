@@ -72,6 +72,7 @@ Other helper functions:
 \code{\link{html}()},
 \code{\link{md}()},
 \code{\link{pct}()},
-\code{\link{random_id}()}
+\code{\link{random_id}()},
+\code{\link{stub}()}
 }
 \concept{helper functions}

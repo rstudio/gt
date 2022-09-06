@@ -97,7 +97,7 @@ summary stub cell with with the \code{\link[=tab_style]{tab_style()}} and
 
 \section{Function ID}{
 
-7-15
+7-16
 }
 
 \seealso{
@@ -127,6 +127,7 @@ Other helper functions:
 \code{\link{md}()},
 \code{\link{pct}()},
 \code{\link{px}()},
-\code{\link{random_id}()}
+\code{\link{random_id}()},
+\code{\link{stub}()}
 }
 \concept{helper functions}

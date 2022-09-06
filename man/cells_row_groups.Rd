@@ -98,7 +98,7 @@ with the \code{\link[=summary_rows]{summary_rows()}} function and then add a foo
 
 \section{Function ID}{
 
-7-9
+7-10
 }
 
 \seealso{
@@ -128,6 +128,7 @@ Other helper functions:
 \code{\link{md}()},
 \code{\link{pct}()},
 \code{\link{px}()},
-\code{\link{random_id}()}
+\code{\link{random_id}()},
+\code{\link{stub}()}
 }
 \concept{helper functions}

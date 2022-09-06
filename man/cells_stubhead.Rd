@@ -84,7 +84,7 @@ Use \code{\link{pizzaplace}} to create a \strong{gt} table. Add a stubhead label
 
 \section{Function ID}{
 
-7-6
+7-7
 }
 
 \seealso{
@@ -114,6 +114,7 @@ Other helper functions:
 \code{\link{md}()},
 \code{\link{pct}()},
 \code{\link{px}()},
-\code{\link{random_id}()}
+\code{\link{random_id}()},
+\code{\link{stub}()}
 }
 \concept{helper functions}
