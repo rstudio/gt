@@ -5,16 +5,11 @@ test_that("the `date_formats()` function works correctly", {
   expect_s3_class(date_formats(), c("tbl_df", "tbl", "data.frame"))
 
   # Expect the tibble to be of specific dimensions
-  expect_equal(
-    date_formats() %>%
-      dim(),
-    c(14, 3)
-  )
+  expect_equal(dim(date_formats()), c(15, 3))
 
   # Expect the tibble to have specific column names
   expect_equal(
-    date_formats() %>%
-      colnames(),
+    colnames(date_formats()),
     c("format_number", "format_name", "format_code")
   )
 })
@@ -26,16 +21,11 @@ test_that("the `time_formats()` util fcn works as expected", {
   expect_s3_class(time_formats(), c("tbl_df", "tbl", "data.frame"))
 
   # Expect the tibble to be of specific dimensions
-  expect_equal(
-    time_formats() %>%
-      dim(),
-    c(5, 3)
-  )
+  expect_equal(dim(time_formats()), c(5, 3))
 
   # Expect the tibble to have specific column names
   expect_equal(
-    time_formats() %>%
-      colnames(),
+    colnames(time_formats()),
     c("format_number", "format_name", "format_code")
   )
 })
@@ -44,21 +34,27 @@ test_that("the `get_date_format()` function works correctly", {
 
   # Expect specific `format_code` values for each
   # numeric `date_style` value passed in
-  lapply(1:14, get_date_format) %>%
+  lapply(1:15, get_date_format) %>%
     unlist() %>%
     expect_equal(
-      c("%F", "%A, %B %d, %Y", "%a, %b %d, %Y", "%A %d %B %Y",
-        "%B %d, %Y", "%b %d, %Y", "%d %b %Y", "%d %B %Y", "%d %B",
-        "%Y", "%B", "%d", "%Y/%m/%d", "%y/%m/%d"))
+      c(
+        "%F", "%A, %B %d, %Y", "%a, %b %d, %Y", "%A %d %B %Y",
+        "%B %d, %Y", "%b %d, %Y", "%d %b %Y", "%d %B %Y", "%d %B", "%d %b",
+        "%Y", "%B", "%d", "%Y/%m/%d", "%y/%m/%d"
+      )
+    )
 
   # Expect specific `format_code` values for each
   # text-based `date_style` value passed in
   lapply(date_formats()$format_name, get_date_format) %>%
     unlist() %>%
     expect_equal(
-      c("%F", "%A, %B %d, %Y", "%a, %b %d, %Y", "%A %d %B %Y",
-        "%B %d, %Y", "%b %d, %Y", "%d %b %Y", "%d %B %Y", "%d %B",
-        "%Y", "%B", "%d", "%Y/%m/%d", "%y/%m/%d"))
+      c(
+        "%F", "%A, %B %d, %Y", "%a, %b %d, %Y", "%A %d %B %Y",
+        "%B %d, %Y", "%b %d, %Y", "%d %b %Y", "%d %B %Y", "%d %B", "%d %b",
+        "%Y", "%B", "%d", "%Y/%m/%d", "%y/%m/%d"
+      )
+    )
 })
 
 test_that("the `get_time_format()` function works correctly", {
@@ -68,14 +64,16 @@ test_that("the `get_time_format()` function works correctly", {
   lapply(1:5, get_time_format) %>%
     unlist() %>%
     expect_equal(
-      c("%H:%M:%S", "%H:%M", "%I:%M:%S %P", "%I:%M %P", "%I %P"))
+      c("%H:%M:%S", "%H:%M", "%I:%M:%S %P", "%I:%M %P", "%I %P")
+    )
 
   # Expect specific `format_code` values for each
   # text-based `date_style` value passed in
   lapply(time_formats()$format_name, get_time_format) %>%
     unlist() %>%
     expect_equal(
-      c("%H:%M:%S", "%H:%M", "%I:%M:%S %P", "%I:%M %P", "%I %P"))
+      c("%H:%M:%S", "%H:%M", "%I:%M:%S %P", "%I:%M %P", "%I %P")
+    )
 })
 
 test_that("the `validate_currency()` function works correctly", {
@@ -163,7 +161,6 @@ test_that("the `get_currency_str()` function works correctly", {
 
   get_currency_str(currency = "hryvnia") %>%
     expect_equal("&#8372;")
-
 
   # Expect that various currency codes (3-letter) can
   # return a currency code when an HTML entity would

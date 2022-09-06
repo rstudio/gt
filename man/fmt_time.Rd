@@ -4,7 +4,7 @@
 \alias{fmt_time}
 \title{Format values as times}
 \usage{
-fmt_time(data, columns, rows = everything(), time_style = 2, pattern = "{x}")
+fmt_time(data, columns, rows = everything(), time_style = 1, pattern = "{x}")
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}

@@ -6,7 +6,7 @@
 \usage{
 vec_fmt_date(
   x,
-  date_style = 2,
+  date_style = 1,
   pattern = "{x}",
   output = c("auto", "plain", "html", "latex", "rtf", "word")
 )
@@ -14,7 +14,7 @@ vec_fmt_date(
 \arguments{
 \item{x}{A numeric vector.}
 
-\item{date_style}{The date style to use. Supply a number (from \code{1} to \code{14})
+\item{date_style}{The date style to use. Supply a number (from \code{1} to \code{15})
 that corresponds to the preferred date style, or, provide a named date
 style (\code{"wday_month_day_year"}, \code{"m_day_year"}, \code{"year.mn.day"}, etc.). Use
 \code{\link[=info_date_style]{info_date_style()}} to see the different numbered and named date presets.}
@@ -50,6 +50,7 @@ in the example output dates):
 \item \code{"day_m_year"}: \verb{29 Feb 2000}
 \item \code{"day_month_year"}: \verb{29 February 2000}
 \item \code{"day_month"}: \verb{29 February}
+\item \code{"day_m"}: \verb{29 Feb}
 \item \code{"year"}: \code{2000}
 \item \code{"month"}: \code{February}
 \item \code{"day"}: \code{29}
@@ -81,7 +82,7 @@ argument (here, it is of the \code{"plain"} output type).
 #> [3] "Monday, March 23, 2015" NA
 }\if{html}{\out{</div>}}
 
-We can change the formatting style by choosing a number from \code{1} to \code{14}:
+We can change the formatting style by choosing a number from \code{1} to \code{15}:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_date(str_vals, date_style = 6)
 }\if{html}{\out{</div>}}

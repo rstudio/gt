@@ -1,8 +1,7 @@
-#' Create a tibble containing date formats
+#' Get a tibble containing date formats
 #'
 #' @noRd
 date_formats <- function() {
-
   dplyr::tribble(
     ~format_number, ~format_name,           ~format_code,
     "1",	          "iso",                  "%F",
@@ -14,25 +13,27 @@ date_formats <- function() {
     "7",	          "day_m_year",           "%d %b %Y",
     "8",	          "day_month_year",       "%d %B %Y",
     "9",	          "day_month",            "%d %B",
-    "10",	          "year",                 "%Y",
-    "11",	          "month",                "%B",
-    "12",	          "day",                  "%d",
-    "13",	          "year.mn.day",          "%Y/%m/%d",
-    "14",	          "y.mn.day",             "%y/%m/%d")
+    "10",	          "day_m",                "%d %b",
+    "11",	          "year",                 "%Y",
+    "12",	          "month",                "%B",
+    "13",	          "day",                  "%d",
+    "14",	          "year.mn.day",          "%Y/%m/%d",
+    "15",	          "y.mn.day",             "%y/%m/%d"
+  )
 }
 
-#' Create a tibble containing time formats
+#' Get a tibble containing time formats
 #'
 #' @noRd
 time_formats <- function() {
-
   dplyr::tribble(
     ~format_number, ~format_name, ~format_code,
     "1",	          "hms",        "%H:%M:%S",
     "2",	          "hm",         "%H:%M",
     "3",	          "hms_p",      "%I:%M:%S %P",
     "4",	          "hm_p",       "%I:%M %P",
-    "5",	          "h_p",        "%I %P")
+    "5",	          "h_p",        "%I %P"
+  )
 }
 
 #' Transform a `date_style` to a `date_format`

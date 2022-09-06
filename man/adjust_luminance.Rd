@@ -81,7 +81,7 @@ of increasingly darker palettes (with \code{\link[=data_color]{data_color()}}).
 
 \section{Function ID}{
 
-7-22
+7-23
 }
 
 \seealso{
@@ -111,6 +111,7 @@ Other helper functions:
 \code{\link{md}()},
 \code{\link{pct}()},
 \code{\link{px}()},
-\code{\link{random_id}()}
+\code{\link{random_id}()},
+\code{\link{stub}()}
 }
 \concept{helper functions}

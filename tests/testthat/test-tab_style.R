@@ -571,3 +571,36 @@ test_that("setting white-space options in `cell_text()` works", {
       "<td style=\"padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; text-align: left; white-space: pre;\">   space   </td>"
     )
 })
+
+test_that("hiding columns that have styles does not result in errors/warnings", {
+
+  expect_error(
+    regexp = NA,
+    exibble %>%
+      gt() %>%
+      tab_style(style = cell_fill(), locations = cells_body(columns = everything())) %>%
+      cols_hide(columns = date)
+  )
+  expect_warning(
+    regexp = NA,
+    exibble %>%
+      gt() %>%
+      tab_style(style = cell_fill(), locations = cells_body(columns = everything())) %>%
+      cols_hide(columns = date)
+  )
+
+  expect_error(
+    regexp = NA,
+    exibble %>%
+      gt() %>%
+      tab_style(style = cell_fill(), locations = cells_body(columns = date)) %>%
+      cols_hide(columns = datetime)
+  )
+  expect_warning(
+    regexp = NA,
+    exibble %>%
+      gt() %>%
+      tab_style(style = cell_fill(), locations = cells_body(columns = date)) %>%
+      cols_hide(columns = datetime)
+  )
+})

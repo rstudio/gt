@@ -125,7 +125,7 @@ data cells with with \code{\link[=tab_style]{tab_style()}}, using \code{cells_su
 
 \section{Function ID}{
 
-7-12
+7-13
 }
 
 \seealso{
@@ -155,6 +155,7 @@ Other helper functions:
 \code{\link{md}()},
 \code{\link{pct}()},
 \code{\link{px}()},
-\code{\link{random_id}()}
+\code{\link{random_id}()},
+\code{\link{stub}()}
 }
 \concept{helper functions}

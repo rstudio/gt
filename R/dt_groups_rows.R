@@ -23,6 +23,14 @@ dt_groups_rows_build <- function(data, context) {
   others_group <-
     dt_options_get_value(data = data, option = "row_group_default_label")
 
+  # Move formatted row values `stub_df`
+  if (dt_stub_df_exists(data = data)) {
+
+    stub_var <- dt_boxhead_get_var_stub(data = data)
+    table_body <- dt_body_get(data = data)
+    stub_df[["rowname"]] <- table_body[[stub_var]]
+  }
+
   groups_rows <-
     data.frame(
       group_id = rep(NA_character_, length(ordering)),
