@@ -17,6 +17,7 @@ output dates):
 "day_m_year": 29 Feb 2000
 "day_month_year": 29 February 2000
 "day_month": 29 February
+"day_m": 29 Feb
 "year": 2000
 "month": February
 "day": 29
@@ -53,6 +54,7 @@ output dates):
 "day_m_year": 29 Feb 2000
 "day_month_year": 29 February 2000
 "day_month": 29 February
+"day_m": 29 Feb
 "year": 2000
 "month": February
 "day": 29
@@ -147,6 +149,7 @@ output dates):</p><ol><li><p><code>"iso"</code>: <code>2000-02-29</code></p></li
 <li><p><code>"day_m_year"</code>: <code>29 Feb 2000</code></p></li>
 <li><p><code>"day_month_year"</code>: <code>29 February 2000</code></p></li>
 <li><p><code>"day_month"</code>: <code>29 February</code></p></li>
+<li><p><code>"day_m"</code>: <code>29 Feb</code></p></li>
 <li><p><code>"year"</code>: <code>2000</code></p></li>
 <li><p><code>"month"</code>: <code>February</code></p></li>
 <li><p><code>"day"</code>: <code>29</code></p></li>
@@ -169,8 +172,8 @@ useful references for all of the possible inputs to <code>date_style</code> and
 <span>  <span class="va">data</span>,</span>
 <span>  <span class="va">columns</span>,</span>
 <span>  rows <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  date_style <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  time_style <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  date_style <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  time_style <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  sep <span class="op">=</span> <span class="st">" "</span>,</span>
 <span>  format <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  tz <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -204,7 +207,7 @@ to filter down to the rows we need (e.g.,
 
 
 <dt>date_style</dt>
-<dd><p>The date style to use. Supply a number (from <code>1</code> to <code>14</code>)
+<dd><p>The date style to use. Supply a number (from <code>1</code> to <code>15</code>)
 that corresponds to the preferred date style, or, provide a named date
 style (<code>"wday_month_day_year"</code>, <code>"m_day_year"</code>, <code>"year.mn.day"</code>, etc.). Use
 <code><a href="info_date_style.html">info_date_style()</a></code> to see the different numbered and named date presets.</p></dd>
