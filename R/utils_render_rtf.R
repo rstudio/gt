@@ -214,11 +214,10 @@ rtf_file <- function(
   # Generate the header based on the RTF `document` content
   # (and also modify the document)
   #
-
   # Scan for hexadecimal colors in the document; generate
   # a <colortbl> object
   matched_colors <-
-    unique(unlist(stringr::str_extract_all(document, "<<COLOR:#[0-9a-fA-F]{6}>>")))
+    unique(unlist(str_complete_extract(document, "<<COLOR:#[0-9a-fA-F]{6}>>")))
 
   if (length(matched_colors) > 0) {
 
@@ -232,8 +231,9 @@ rtf_file <- function(
     colortbl <- rtf_colortbl(.hexadecimal_colors = "#FFFFFF")
   }
 
-  # Scan for hexadecimal colors in the document; generate a <fonttbl> object
-  matched_fonts <- unique(unlist(stringr::str_extract_all(document, "<<FONT:.*?>>")))
+  # Scan for font declarations in the document; generate a <fonttbl> object
+  matched_fonts <-
+    unique(unlist(str_complete_extract(document, "<<FONT:.*?>>")))
 
   if (length(matched_fonts) > 0) {
 
