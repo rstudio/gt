@@ -58,12 +58,11 @@ sub_missing <- function(
   stop_if_not_gt(data = data)
 
   # Pass `data`, `columns`, `rows`, and the formatting
-  # functions (as a function list) to `fmt()`
-  fmt(
+  # functions (as a function list) to `subst()`
+  subst(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    prepend = TRUE,
     fns = list(
       # Any values of `x` that are `NA` get `missing_text` as output; any values
       # that are not missing get `NA` as their output (meaning, the existing
@@ -193,12 +192,11 @@ sub_zero <- function(
   stop_if_not_gt(data = data)
 
   # Pass `data`, `columns`, `rows`, and the formatting
-  # functions (as a function list) to `fmt()`
-  fmt(
+  # functions (as a function list) to `subst()`
+  subst(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    prepend = TRUE,
     fns = list(
       # Any values of `x` that are exactly 0 get `zero_text` as output;
       # any values that aren't 0 won't be affected
@@ -369,12 +367,11 @@ sub_small_vals <- function(
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
-  # functions (as a function list) to `fmt()`
-  fmt(
+  # functions (as a function list) to `subst()`
+  subst(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    prepend = TRUE,
     fns = list(
       # Any values of `x` that are below the threshold will be processed
       # according to the `small_pattern`, the `threshold` value (interacts with
@@ -567,12 +564,11 @@ sub_large_vals <- function(
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
-  # functions (as a function list) to `fmt()`
-  fmt(
+  # functions (as a function list) to `subst()`
+  subst(
     data = data,
     columns = {{ columns }},
     rows = {{ rows }},
-    prepend = TRUE,
     fns = list(
       # Any values of `x` that are above the threshold will be processed
       # according to the `large_pattern`, the `threshold` value (interacts with
@@ -630,4 +626,49 @@ check_sub_fn_sign <- function(sign) {
       "*" = "Using \"-\" means that the focus is on negative values."
     ))
   }
+}
+
+subst <- function(
+    data,
+    columns = everything(),
+    rows = everything(),
+    fns
+) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  #
+  # Resolution of columns and rows as character vectors
+  #
+
+  resolved_columns <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data,
+      excl_stub = FALSE
+    )
+
+  resolved_rows_idx <-
+    resolve_rows_i(
+      expr = {{ rows }},
+      data = data
+    )
+
+  # If a single function is supplied to `fns` then
+  # repackage that into a list as the `default` function
+  if (is.function(fns)) {
+    fns <- list(default = fns)
+  }
+
+  # Create the `subst_list`, which is a bundle of
+  # substitution functions for specific columns and rows
+  subst_list <-
+    list(
+      func = fns,
+      cols = resolved_columns,
+      rows = resolved_rows_idx
+    )
+
+  dt_substitutions_add(data = data, substitutions = subst_list)
 }

@@ -903,3 +903,79 @@ extract_summary <- function(data) {
 
   as.list(summary_tbl)
 }
+
+
+#' Extract a summary list from a **gt** object
+#'
+#' @description
+#' Get a vector of cell data from a `gt_tbl` object. The output vector will have
+#' cell data formatted in the same way as the table.
+#'
+#' @param data A table object that is created using the [gt()] function.
+#' @param columns The columns containing the cells to extract. Can either be a
+#'   series of column names provided in [c()], a vector of column indices, or a
+#'   helper function focused on selections. The select helper functions are:
+#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
+#'   [num_range()], and [everything()].
+#' @param rows Optional rows to limit the extraction of cells. Providing
+#'   [everything()] (the default) results in all rows in `columns` being
+#'   formatted. Alternatively, we can supply a vector of row captions within
+#'   [c()], a vector of row indices, or a helper function focused on selections.
+#'   The select helper functions are: [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
+#'   We can also use expressions to filter down to the rows we need (e.g.,
+#'   `[colname_1] > 100 & [colname_2] < 50`).
+#' @param output The output style of the resulting character vector. This can
+#'   either be `"auto"` (the default), `"plain"`, `"html"`, `"latex"`, `"rtf"`,
+#'   or `"word"`. In **knitr** rendering (i.e., Quarto or R Markdown), the
+#'   `"auto"` option will choose the correct `output` value
+#'
+#' @return A vector of cell data extracted from a **gt** table.
+#'
+#' @family table export functions
+#' @section Function ID:
+#' 13-7
+#'
+#' @export
+extract_cells <- function(
+    data,
+    columns,
+    rows = everything(),
+    output = c("auto", "plain", "html", "latex", "rtf", "word")
+) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  # Ensure that `output` is matched correctly to one option
+  output <- match.arg(output)
+
+  if (output == "auto") {
+    output <- determine_output_format()
+  }
+
+  resolved_columns <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data,
+      excl_stub = FALSE
+    )
+
+  resolved_rows_idx <-
+    resolve_rows_i(
+      expr = {{ rows }},
+      data = data
+    )
+
+  built_data <- build_data(data = data, context = output)
+  data_body <- built_data[["_body"]]
+
+  out_vec <- c()
+
+  for (column in resolved_columns) {
+    out_vec_col <- data_body[resolved_rows_idx, ][[column]]
+    out_vec <- c(out_vec, out_vec_col)
+  }
+
+  out_vec
+}

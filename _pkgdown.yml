@@ -248,6 +248,7 @@ reference:
     - as_rtf
     - as_word
     - extract_summary
+    - extract_cells
 
   - title: Vector Formatting Functions
     desc: >
