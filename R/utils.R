@@ -765,7 +765,9 @@ cmark_rules_xml <- list(
 )
 
 cmark_rules_rtf <- list(
+
   heading = function(x, process) {
+
     heading_sizes <- c(36, 32, 28, 24, 20, 16)
     fs <- heading_sizes[as.numeric(xml2::xml_attr(x, attr = "level"))]
 
@@ -831,7 +833,7 @@ cmark_rules_rtf <- list(
 
     tag <- xml2::xml_text(x)
 
-    match <- stringr::str_match(tag, pattern = "^<(/?)([a-zA-Z0-9\\-]+)")
+    match <- str_get_match(tag, pattern = "^<(/?)([a-zA-Z0-9\\-]+)")
 
     if (!is.na(match[1, 1])) {
 
@@ -1501,7 +1503,7 @@ inline_html_styles <- function(html, css_tbl) {
 
     class_names <- extract_strings(matching_css_style, cls_names_pattern)
 
-    existing_style <- stringr::str_match(matching_css_style, sty_exist_pattern)[, 2]
+    existing_style <- str_get_match(matching_css_style, sty_exist_pattern)[, 2]
 
     inline_styles <-
       create_inline_styles(
