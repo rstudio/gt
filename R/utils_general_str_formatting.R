@@ -410,16 +410,12 @@ recycler <- function(x, to, arg = deparse(substitute(x))) {
 }
 
 str_complete_locate <- function(string, pattern) {
-
   out <- gregexpr(pattern, string)
-
   lapply(out, location, all = TRUE)
 }
 
 str_single_locate <- function(string, pattern) {
-
   out <- regexpr(pattern, string)
-
   location(out)
 }
 
@@ -449,6 +445,18 @@ str_complete_extract <- function(string, pattern) {
 
 str_single_extract <- function(string, pattern) {
   str_substitute(string, str_locate(string, pattern))
+}
+
+str_get_match <- function(string, pattern) {
+
+  loc <- regexec(pattern, string)
+  loc <- lapply(loc, location)
+
+  out <- lapply(seq_along(string), function(i) {
+    loc <- loc[[i]]
+    str_substitute(rep(string[[i]], nrow(loc)), loc)
+  })
+  do.call("rbind", out)
 }
 
 glue_gt <- function(.x, ...) {
