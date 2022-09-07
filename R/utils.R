@@ -611,7 +611,7 @@ markdown_to_xml <- function(text) {
   text
 }
 
-# TODO: Make XML versions of these
+
 cmark_rules_xml <- list(
 
   heading = function(x, process) {
@@ -671,8 +671,6 @@ cmark_rules_xml <- list(
     )
   },
   html_inline = function(x, process) {
-
-    # TODO: make this work for XML
 
     tag <- xml2::xml_text(x)
 
