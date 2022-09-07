@@ -379,6 +379,67 @@ str_catalog <- function(
   }
 }
 
+str_substitute <- function(string, start = 1L, end = -1L) {
+
+  if (is.matrix(start)) {
+    end <- start[, 2]
+    start <- start[, 1]
+  }
+
+  start <- recycler(start, string)
+  end <- recycler(end, string)
+
+  n <- nchar(string)
+  start <- ifelse(start < 0, start + n + 1, start)
+  end <- ifelse(end < 0, end + n + 1, end)
+
+  substr(string, start, end)
+}
+
+recycler <- function(x, to, arg = deparse(substitute(x))) {
+
+  if (length(x) == length(to)) {
+    return(x)
+  }
+
+  if (length(x) != 1) {
+    stop("Can't recycle `", arg, "` to length ", length(to), call. = FALSE)
+  }
+
+  rep(x, length(to))
+}
+
+str_complete_locate <- function(string, pattern) {
+
+  out <- gregexpr(pattern, string)
+
+  location <- function(x, all = FALSE) {
+
+    start <- as.vector(x)
+    if (all && identical(start, -1L)) {
+      return(cbind(start = integer(), end = integer()))
+    }
+    end <- as.vector(x) + attr(x, "match.length") - 1
+
+    no_match <- start == -1L
+    start[no_match] <- NA
+    end[no_match] <- NA
+
+    cbind(start = start, end = end)
+  }
+
+  lapply(out, location, all = TRUE)
+}
+
+str_complete_extract <- function(string, pattern) {
+
+  loc <- str_complete_locate(string, pattern)
+  lapply(seq_along(string), function(i) {
+    loc <- loc[[i]]
+    str_substitute(rep(string[[i]], nrow(loc)), loc)
+  })
+}
+
 glue_gt <- function(.x, ...) {
   glue::glue_data(.x, ..., .transformer = get, .envir = emptyenv())
 }
