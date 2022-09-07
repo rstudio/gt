@@ -19,7 +19,7 @@ dt_formats_add <- function(data, formats, prepend) {
   if (prepend) {
     formats <- prepend_vec(list(formats), values = formats_list)
   } else {
-    formats <- append(list(formats), values = formats_list)
+    formats <- append(formats_list, values = list(formats))
   }
 
   dt_formats_set(data = data, formats = formats)
