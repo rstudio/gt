@@ -3686,13 +3686,15 @@ fmt_markdown <- function(
         markdown_to_xml(x)
       },
       default = function(x) {
-        vapply(
-          x,
-          FUN.VALUE = character(1),
-          USE.NAMES = FALSE,
-          commonmark::markdown_text
-        ) %>%
-          stringr::str_replace("\n$", "")
+        sub(
+          "\n$", "",
+          vapply(
+            x,
+            FUN.VALUE = character(1),
+            USE.NAMES = FALSE,
+            commonmark::markdown_text
+          )
+        )
       }
     )
   )
