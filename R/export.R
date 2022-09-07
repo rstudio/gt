@@ -917,15 +917,18 @@ extract_summary <- function(data) {
 #'   helper function focused on selections. The select helper functions are:
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()].
-#' @param rows Optional rows to limit the extraction of cells.
-#' Providing [everything()] (the
-#'   default) results in all rows in `columns` being formatted. Alternatively,
-#'   we can supply a vector of row captions within [c()], a vector of row
-#'   indices, or a helper function focused on selections. The select helper
-#'   functions are: [starts_with()], [ends_with()], [contains()], [matches()],
-#'   [one_of()], [num_range()], and [everything()]. We can also use expressions
-#'   to filter down to the rows we need (e.g.,
+#' @param rows Optional rows to limit the extraction of cells. Providing
+#'   [everything()] (the default) results in all rows in `columns` being
+#'   formatted. Alternatively, we can supply a vector of row captions within
+#'   [c()], a vector of row indices, or a helper function focused on selections.
+#'   The select helper functions are: [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
+#'   We can also use expressions to filter down to the rows we need (e.g.,
 #'   `[colname_1] > 100 & [colname_2] < 50`).
+#' @param output The output style of the resulting character vector. This can
+#'   either be `"auto"` (the default), `"plain"`, `"html"`, `"latex"`, `"rtf"`,
+#'   or `"word"`. In **knitr** rendering (i.e., Quarto or R Markdown), the
+#'   `"auto"` option will choose the correct `output` value
 #'
 #' @return A vector of cell data extracted from a **gt** table.
 #'
