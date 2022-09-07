@@ -628,6 +628,22 @@ info_google_fonts <- function() {
       "Work Sans"
     )
 
+  to_title_case <- function(x) {
+
+    title_case_i <- function(y) {
+
+      s <- strsplit(y, " ")[[1]]
+
+      paste(
+        toupper(substring(s, 1,1)),
+        substring(s, 2),
+        sep = "", collapse = " "
+      )
+    }
+
+    vapply(x, FUN.VALUE = character(1), USE.NAMES = FALSE, FUN = title_case_i)
+  }
+
   styles_summary <-
     google_styles_tbl %>%
     dplyr::mutate(weight = as.integer(weight)) %>%
@@ -662,7 +678,7 @@ info_google_fonts <- function() {
     dplyr::filter(name %in% recommended) %>%
     dplyr::left_join(styles_summary, by = "name") %>%
     dplyr::mutate(
-      category = stringr::str_to_title(category) %>%
+      category = to_title_case(tolower(category)) %>%
         tidy_gsub("_", " ") %>%
         tidy_gsub("serif", "Serif")
     ) %>%
