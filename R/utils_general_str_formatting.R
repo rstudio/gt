@@ -413,22 +413,29 @@ str_complete_locate <- function(string, pattern) {
 
   out <- gregexpr(pattern, string)
 
-  location <- function(x, all = FALSE) {
-
-    start <- as.vector(x)
-    if (all && identical(start, -1L)) {
-      return(cbind(start = integer(), end = integer()))
-    }
-    end <- as.vector(x) + attr(x, "match.length") - 1
-
-    no_match <- start == -1L
-    start[no_match] <- NA
-    end[no_match] <- NA
-
-    cbind(start = start, end = end)
-  }
-
   lapply(out, location, all = TRUE)
+}
+
+str_single_locate <- function(string, pattern) {
+
+  out <- regexpr(pattern, string)
+
+  location(out)
+}
+
+location <- function(x, all = FALSE) {
+
+  start <- as.vector(x)
+  if (all && identical(start, -1L)) {
+    return(cbind(start = integer(), end = integer()))
+  }
+  end <- as.vector(x) + attr(x, "match.length") - 1
+
+  no_match <- start == -1L
+  start[no_match] <- NA
+  end[no_match] <- NA
+
+  cbind(start = start, end = end)
 }
 
 str_complete_extract <- function(string, pattern) {
@@ -438,6 +445,10 @@ str_complete_extract <- function(string, pattern) {
     loc <- loc[[i]]
     str_substitute(rep(string[[i]], nrow(loc)), loc)
   })
+}
+
+str_single_extract <- function(string, pattern) {
+  str_substitute(string, str_locate(string, pattern))
 }
 
 glue_gt <- function(.x, ...) {
