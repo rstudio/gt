@@ -674,7 +674,7 @@ cmark_rules_xml <- list(
 
     tag <- xml2::xml_text(x)
 
-    match <- stringr::str_match(tag, pattern = "^<(/?)([a-zA-Z0-9\\-]+)")
+    match <- str_get_match(tag, pattern = "^<(/?)([a-zA-Z0-9\\-]+)")
 
     if (!is.na(match[1, 1])) {
 
