@@ -63,6 +63,7 @@ render_formats <- function(data, context) {
 
   # Render input data to output data where formatting
   # is specified
+
   for (fmt in formats)  {
 
     # Determine if the formatter has a function relevant
@@ -91,6 +92,52 @@ render_formats <- function(data, context) {
   }
 
   dt_body_set(data = data, body = body)
+}
+
+#' Render any formatting directives available in the `substitutions` list
+#'
+#' @noRd
+render_substitutions <- function(
+    data,
+    context
+) {
+
+  body <- dt_body_get(data = data)
+  data_tbl <- dt_data_get(data = data)
+  substitutions <- dt_substitutions_get(data = data)
+
+  # Render input data to output data where formatting
+  # is specified
+  for (subst in substitutions)  {
+
+    # Determine if the formatter has a function relevant
+    # to the context; if not, use the `default` function
+    # (which should always be present)
+    if (context %in% names(subst$func)) {
+      eval_func <- context
+    } else {
+      eval_func <- "default"
+    }
+
+    for (col in subst[["cols"]]) {
+
+      # Perform rendering but only do so if the column is present
+      if (col %in% colnames(data_tbl)) {
+
+        result <- subst$func[[eval_func]](data_tbl[[col]][subst$rows])
+
+        # If any of the resulting output is `NA`, that
+        # means we want to NOT make changes to those
+        # particular cells' output (i.e. inherit the
+        # results of the previous substitution).
+        body[[col]][subst$rows][!is.na(result)] <- stats::na.omit(result)
+      }
+    }
+  }
+
+  data <- dt_body_set(data = data, body = body)
+
+  data
 }
 
 # Move input data cells to `body` that didn't have any rendering applied

@@ -13,6 +13,7 @@ build_data <- function(data, context) {
   # the correct order
   data <- dt_body_build(data = data)
   data <- render_formats(data = data, context = context)
+  data <- render_substitutions(data = data, context = context)
   data <- migrate_unformatted_to_output(data = data, context = context)
   data <- perform_col_merge(data = data, context = context)
 

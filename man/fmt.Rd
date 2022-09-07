@@ -4,7 +4,7 @@
 \alias{fmt}
 \title{Set a column format with a formatter function}
 \usage{
-fmt(data, columns = everything(), rows = everything(), fns, prepend = FALSE)
+fmt(data, columns = everything(), rows = everything(), fns)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -25,10 +25,6 @@ to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{fns}{Either a single formatting function or a named list of functions.}
-
-\item{prepend}{Should the formatting function(s) be brought to the beginning
-of the formatting queue (\code{TRUE}) or placed at the end (\code{FALSE}). By default,
-this is \code{FALSE} and this leads to 'last-one-wins' semantics.}
 }
 \value{
 An object of class \code{gt_tbl}.

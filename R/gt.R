@@ -162,6 +162,7 @@ gt <- function(
   data <- dt_footnotes_init(data = data)
   data <- dt_source_notes_init(data = data)
   data <- dt_formats_init(data = data)
+  data <- dt_substitutions_init(data = data)
   data <- dt_styles_init(data = data)
   data <- dt_summary_init(data = data)
   data <- dt_options_init(data = data)

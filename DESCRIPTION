@@ -83,6 +83,7 @@ Collate:
     'dt_stub_df.R'
     'dt_stubhead.R'
     'dt_styles.R'
+    'dt_substitutions.R'
     'dt_summary.R'
     'dt_transforms.R'
     'export.R'

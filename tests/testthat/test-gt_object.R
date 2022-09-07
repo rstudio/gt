@@ -901,3 +901,47 @@ test_that("Default locale settings are honored when generating summary rows", {
     selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row']") %>%
     expect_equal(c("120,02", "3.220.850,00"))
 })
+
+test_that("Formatting functions operate with a 'last-one-wins' approach", {
+
+  # Make a gt table from the first column of the exibble table and apply
+  # two `fmt_*()` functions to the same column
+  tbl_gt <-
+    exibble[, 1] %>%
+    gt() %>%
+    fmt_number(columns = num, decimals = 5) %>%
+    fmt_number(columns = num, rows = 2, decimals = 4, pattern = "a{x}b")
+
+  # Expect that the second invocation of `fmt_number()` will affect the
+  # second row of the column
+  tbl_gt %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_text("[class='gt_row gt_right']") %>%
+    expect_equal(
+      c(
+        "0.11110", "a2.2220b", "33.33000", "444.40000", "5,550.00000",
+        "NA", "777,000.00000", "8,880,000.00000"
+      )
+    )
+
+  # Make a similar gt table but reverse the order of the `fmt_number()` calls
+  tbl_gt <-
+    exibble[, 1] %>%
+    gt() %>%
+    fmt_number(columns = num, rows = 2, decimals = 4, pattern = "a{x}b") %>%
+    fmt_number(columns = num, decimals = 5)
+
+  # Expect that the first invocation of `fmt_number()` is completely ignored
+  # in favor of the second one (i.e., no special formatting to row 2 results)
+  tbl_gt %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_text("[class='gt_row gt_right']") %>%
+    expect_equal(
+      c(
+        "0.11110", "2.22200", "33.33000", "444.40000", "5,550.00000",
+        "NA", "777,000.00000", "8,880,000.00000"
+      )
+    )
+})
