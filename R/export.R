@@ -970,8 +970,7 @@ extract_cells <- function(
   out_vec <- c()
 
   for (column in resolved_columns) {
-
-    out_vec_col <- data_body[[resolved_rows_idx, column]]
+    out_vec_col <- data_body[resolved_rows_idx, ][[column]]
     out_vec <- c(out_vec, out_vec_col)
   }
 
