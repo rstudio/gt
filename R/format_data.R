@@ -3876,9 +3876,6 @@ fmt_passthrough <- function(
 #'
 #' @inheritParams fmt_number
 #' @param fns Either a single formatting function or a named list of functions.
-#' @param prepend Should the formatting function(s) be brought to the beginning
-#' of the formatting queue (`TRUE`) or placed at the end (`FALSE`). By default,
-#' this is `FALSE` and this leads to 'last-one-wins' semantics.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -3913,8 +3910,7 @@ fmt <- function(
     data,
     columns = everything(),
     rows = everything(),
-    fns,
-    prepend = FALSE
+    fns
 ) {
 
   # Perform input object validation
@@ -3954,8 +3950,7 @@ fmt <- function(
 
   dt_formats_add(
     data = data,
-    formats = formatter_list,
-    prepend = prepend
+    formats = formatter_list
   )
 }
 
