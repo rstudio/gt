@@ -2026,7 +2026,7 @@ fmt_roman <- function(
         x_is_in_range <- x > 0 & x < 3900
 
         x_str[x_is_a_number & x_is_in_range] <-
-          as.character(as.roman(x[x_is_a_number & x_is_in_range]))
+          as.character(utils::as.roman(x[x_is_a_number & x_is_in_range]))
 
         x_str[x_is_a_number & x == 0] <- if (case == "lower") "n" else "N"
 
