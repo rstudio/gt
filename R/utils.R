@@ -611,7 +611,7 @@ markdown_to_xml <- function(text) {
   text
 }
 
-# TODO: Make XML versions of these
+
 cmark_rules_xml <- list(
 
   heading = function(x, process) {
@@ -672,11 +672,9 @@ cmark_rules_xml <- list(
   },
   html_inline = function(x, process) {
 
-    # TODO: make this work for XML
-
     tag <- xml2::xml_text(x)
 
-    match <- stringr::str_match(tag, pattern = "^<(/?)([a-zA-Z0-9\\-]+)")
+    match <- str_get_match(tag, pattern = "^<(/?)([a-zA-Z0-9\\-]+)")
 
     if (!is.na(match[1, 1])) {
 
@@ -767,7 +765,9 @@ cmark_rules_xml <- list(
 )
 
 cmark_rules_rtf <- list(
+
   heading = function(x, process) {
+
     heading_sizes <- c(36, 32, 28, 24, 20, 16)
     fs <- heading_sizes[as.numeric(xml2::xml_attr(x, attr = "level"))]
 
@@ -833,7 +833,7 @@ cmark_rules_rtf <- list(
 
     tag <- xml2::xml_text(x)
 
-    match <- stringr::str_match(tag, pattern = "^<(/?)([a-zA-Z0-9\\-]+)")
+    match <- str_get_match(tag, pattern = "^<(/?)([a-zA-Z0-9\\-]+)")
 
     if (!is.na(match[1, 1])) {
 
@@ -1419,16 +1419,16 @@ get_css_tbl <- function(data) {
         css_tbl,
         dplyr::tibble(
           selector = rep(
-            stringr::str_remove(raw_css_vec[ruleset_start[i]], "\\s*\\{\\s*$"),
+            str_single_replace(raw_css_vec[ruleset_start[i]], "\\s*\\{\\s*$", ""),
             (ruleset_end[i] - ruleset_start[i] - 1)),
           property = raw_css_vec[(ruleset_start[i] + 1):(ruleset_end[i] - 1)] %>%
-            stringr::str_extract("[a-zA-z-]*?(?=:)") %>%
-            stringr::str_trim(),
+            str_single_extract("[a-zA-z-]*?(?=:)") %>%
+            str_trim_sides(),
           value = raw_css_vec[(ruleset_start[i] + 1):(ruleset_end[i] - 1)] %>%
-            stringr::str_extract("(?<=:).*") %>%
-            stringr::str_remove(pattern = ";\\s*") %>%
-            stringr::str_remove(pattern = "\\/\\*.*") %>%
-            stringr::str_trim()
+            str_single_extract("(?<=:).*") %>%
+            str_single_replace(pattern = ";\\s*", "") %>%
+            str_single_replace(pattern = "\\/\\*.*", "") %>%
+            str_trim_sides()
         ) %>%
           dplyr::filter(!is.na(property))
       )
@@ -1441,8 +1441,8 @@ get_css_tbl <- function(data) {
     dplyr::mutate(
       css_tbl,
       type = dplyr::case_when(
-        stringr::str_detect(selector, "^\\.") ~ "class",
-        !stringr::str_detect(selector, "^\\.") ~ NA_character_
+        str_has_match(selector, "^\\.") ~ "class",
+        !str_has_match(selector, "^\\.") ~ NA_character_
       )
     )
   css_tbl <- dplyr::select(css_tbl, selector, type, property, value)
@@ -1465,7 +1465,7 @@ create_inline_styles <- function(
     extra_style = ""
 ) {
 
-  class_names <- unlist(stringr::str_split(class_names, "\\s+"))
+  class_names <- unlist(strsplit(class_names, "\\s+"))
 
   paste0(
     "style=\"",
@@ -1503,7 +1503,7 @@ inline_html_styles <- function(html, css_tbl) {
 
     class_names <- extract_strings(matching_css_style, cls_names_pattern)
 
-    existing_style <- stringr::str_match(matching_css_style, sty_exist_pattern)[, 2]
+    existing_style <- str_get_match(matching_css_style, sty_exist_pattern)[, 2]
 
     inline_styles <-
       create_inline_styles(
@@ -1513,7 +1513,7 @@ inline_html_styles <- function(html, css_tbl) {
       )
 
     html <-
-      stringr::str_replace(
+      str_single_replace(
         html,
         pattern = cls_sty_pattern,
         replacement = inline_styles
@@ -1522,8 +1522,8 @@ inline_html_styles <- function(html, css_tbl) {
 
   repeat {
 
-    class_names <- stringr::str_extract(html, pattern = cls_pattern)
-    class_names <- stringr::str_extract(class_names, pattern = cls_names_pattern)
+    class_names <- str_single_extract(html, pattern = cls_pattern)
+    class_names <- str_single_extract(class_names, pattern = cls_names_pattern)
 
     if (is.na(class_names)) break
 
@@ -1534,7 +1534,7 @@ inline_html_styles <- function(html, css_tbl) {
       )
 
     html <-
-      stringr::str_replace(
+      str_single_replace(
         html,
         pattern = cls_pattern,
         replacement = inline_styles

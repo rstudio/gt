@@ -42,7 +42,6 @@ Imports:
     rlang (>= 1.0.2),
     sass (>= 0.4.1),
     scales (>= 1.2.0),
-    stringr (>= 1.4.0),
     tibble (>= 3.1.6),
     tidyselect (>= 1.1.1)
 Suggests:
