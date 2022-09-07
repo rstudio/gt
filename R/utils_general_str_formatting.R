@@ -410,21 +410,21 @@ recycler <- function(x, to, arg = deparse(substitute(x))) {
 }
 
 str_complete_locate <- function(string, pattern) {
-  out <- gregexpr(pattern, string)
+  out <- gregexpr(pattern, string, perl = TRUE)
   lapply(out, location, all = TRUE)
 }
 
 str_single_locate <- function(string, pattern) {
-  out <- regexpr(pattern, string)
+  out <- regexpr(pattern, string, perl = TRUE)
   location(out)
 }
 
 str_complete_replace <- function(string, pattern, replacement) {
-  gsub(pattern, replacement, string)
+  gsub(pattern, replacement, string, perl = TRUE)
 }
 
 str_single_replace <- function(string, pattern, replacement) {
-  sub(pattern, replacement, string)
+  sub(pattern, replacement, string, perl = TRUE)
 }
 
 location <- function(x, all = FALSE) {
@@ -452,12 +452,12 @@ str_complete_extract <- function(string, pattern) {
 }
 
 str_single_extract <- function(string, pattern) {
-  str_substitute(string, str_locate(string, pattern))
+  str_substitute(string, str_single_locate(string, pattern))
 }
 
 str_get_match <- function(string, pattern) {
 
-  loc <- regexec(pattern, string)
+  loc <- regexec(pattern, string, perl = TRUE)
   loc <- lapply(loc, location)
 
   out <- lapply(seq_along(string), function(i) {
@@ -465,6 +465,22 @@ str_get_match <- function(string, pattern) {
     str_substitute(rep(string[[i]], nrow(loc)), loc)
   })
   do.call("rbind", out)
+}
+
+str_has_match <- function(string, pattern, negate = FALSE) {
+
+  out <- grepl(pattern, string, perl = TRUE)
+  out[is.na(string)] <- NA
+
+  if (negate) {
+    !out
+  } else {
+    out
+  }
+}
+
+str_trim_sides <- function(string) {
+  sub("\\s+$", "", sub("^\\s+", "", string))
 }
 
 glue_gt <- function(.x, ...) {
