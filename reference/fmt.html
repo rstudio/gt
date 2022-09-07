@@ -105,7 +105,7 @@ fallback if all contexts aren't provided.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fmt</span><span class="op">(</span><span class="va">data</span>, columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>, rows <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">fns</span>, prepend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fmt</span><span class="op">(</span><span class="va">data</span>, columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>, rows <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">fns</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -135,12 +135,6 @@ to filter down to the rows we need (e.g.,
 
 <dt>fns</dt>
 <dd><p>Either a single formatting function or a named list of functions.</p></dd>
-
-
-<dt>prepend</dt>
-<dd><p>Should the formatting function(s) be brought to the beginning
-of the formatting queue (<code>TRUE</code>) or placed at the end (<code>FALSE</code>). By default,
-this is <code>FALSE</code> and this leads to 'last-one-wins' semantics.</p></dd>
 
 </dl></div>
     <div class="section level2">
