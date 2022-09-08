@@ -188,16 +188,14 @@ gt_save_html <- function(
 
   if (inline_css) {
 
-    data %>%
-      as_raw_html(inline_css = inline_css) %>%
-      htmltools::HTML() %>%
-      htmltools::save_html(filename, ...)
+     html <- as_raw_html(data, inline_css = inline_css)
+     html <- htmltools::HTML(html)
+     htmltools::save_html(html, filename, ...)
 
   } else {
 
-    data %>%
-      htmltools::as.tags() %>%
-      htmltools::save_html(filename, ...)
+    html <- htmltools::as.tags(data)
+    htmltools::save_html(html, filename, ...)
   }
 }
 
@@ -284,9 +282,15 @@ gt_save_rtf <- function(
 #' Saving function for a Word (docx) file
 #'
 #' @noRd
-gt_save_docx <- function(data, filename, path = NULL, ..., open = rlang::is_interactive()) {
+gt_save_docx <- function(
+    data,
+    filename,
+    path = NULL,
+    ...,
+    open = rlang::is_interactive()
+) {
 
-  if(!rlang::is_installed("rmarkdown")){
+  if (!rlang::is_installed("rmarkdown")) {
     stop("{rmarkdown} package is necessary to save gt tables as word documents.")
   }
 
@@ -311,16 +315,12 @@ gt_save_docx <- function(data, filename, path = NULL, ..., open = rlang::is_inte
     input = word_md_file,
     output = filename
   )
-
 }
-
-
 
 #' Get the lowercase extension from a filename
 #'
 #' @noRd
 gtsave_file_ext <- function(filename) {
-
   tolower(tools::file_ext(filename))
 }
 
@@ -343,8 +343,6 @@ gtsave_filename <- function(path, filename) {
     )
   )
 }
-
-
 
 #' Get the HTML content of a **gt** table
 #'
