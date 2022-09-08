@@ -284,7 +284,7 @@ test_that("row groups can be successfully generated with `tab_row_group()", {
   )
   expect_match(
     tbl_html,
-    regexp = "<td colspan=\"9\" class=\"gt_group_heading\">void</td>",
+    regexp = "<th colspan=\"9\" class=\"gt_group_heading\" scope=\"colgroup\" id=\"void\">void</th>",
     fixed = TRUE
   )
 
