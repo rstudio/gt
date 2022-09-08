@@ -338,21 +338,13 @@ resolve_footnotes_styles <- function(data, tbl_type) {
 
     if (nrow(tbl) > 0) {
 
-      cond <- tbl$locname == "none"
       # Retain the row that only contain `locname == "none"`
-      #tbl_no_loc <- tbl[cond, ]
       tbl_no_loc <- dplyr::filter(tbl, locname == "none")
 
       # Modify `fs_id` to contain the footnote marks we need
-      #tbl <- tbl[!cond, ]
       tbl <- dplyr::filter(tbl, locname != "none")
 
       if (nrow(tbl) > 0) {
-
-        # tbl$fs_id <- process_footnote_marks(
-        #   x = as.integer(fs_id),
-        #   marks = footnote_marks
-        # )
 
         tbl <-
           dplyr::mutate(
