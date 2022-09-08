@@ -2,7 +2,7 @@
 % Please edit documentation in R/export.R
 \name{extract_cells}
 \alias{extract_cells}
-\title{Extract a summary list from a \strong{gt} object}
+\title{Extract a vector of formatted cells from a \strong{gt} object}
 \usage{
 extract_cells(
   data,
@@ -41,6 +41,45 @@ A vector of cell data extracted from a \strong{gt} table.
 Get a vector of cell data from a \code{gt_tbl} object. The output vector will have
 cell data formatted in the same way as the table.
 }
+\section{Examples}{
+
+
+Let's create a \strong{gt} table with the \code{\link{exibble}} dataset to use in the next
+few examples:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <- gt(exibble, rowname_col = "row", groupname_col = "group")
+}\if{html}{\out{</div>}}
+
+We can extract a cell from the table with the \code{extract_cells()} function.
+This is done by providing a column and a row intersection:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{extract_cells(gt_tbl, columns = num, row = 1)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "1.111e-01"
+}\if{html}{\out{</div>}}
+
+Multiple cells can be extracted. Let's get the first four cells from the
+\code{char} column.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{extract_cells(gt_tbl, columns = char, rows = 1:4)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "apricot" "banana" "coconut" "durian"
+}\if{html}{\out{</div>}}
+
+We can format cells and expect that the formatting is fully retained after
+extraction.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl \%>\%
+  fmt_number(columns = num, decimals = 2) \%>\%
+  extract_cells(columns = num, rows = 1)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "0.11"
+}\if{html}{\out{</div>}}
+}
+
 \section{Function ID}{
 
 13-7
