@@ -169,10 +169,10 @@ migrate_unformatted_to_output <- function(data, context) {
                 )
             }
 
-            x %>%
-              tidy_gsub("\\s+$", "") %>%
-              process_text(context = context) %>%
-              paste(collapse = ", ")
+            x <- tidy_gsub(x, "\\s+$", "")
+            x <- process_text(x, context = context)
+            x <- paste(x, collapse = ", ")
+            x
           }
         )
 
@@ -182,6 +182,7 @@ migrate_unformatted_to_output <- function(data, context) {
       vals <- data_tbl[[colname]][row_index]
 
       if (is.numeric(vals)) {
+
         vals <-
           format(
             vals,
@@ -238,11 +239,10 @@ get_row_reorder_df <- function(groups, stub_df) {
     )
   }
 
-  indices <-
-    lapply(stub_df$group_id, `%in%`, x = groups) %>%
-    lapply(which) %>%
-    unlist() %>%
-    order()
+  indices <- lapply(stub_df$group_id, `%in%`, x = groups)
+  indices <- lapply(indices, which)
+  indices <- unlist(indices)
+  indices <- order(indices)
 
   dplyr::tibble(
     rownum_start = seq_along(indices),
@@ -256,12 +256,14 @@ reorder_footnotes <- function(data) {
   stub_df <- dt_stub_df_get(data = data)
   footnotes_tbl <- dt_footnotes_get(data = data)
 
-  rownum_final <- stub_df$rownum_i %>% as.numeric()
+  rownum_final <- as.numeric(stub_df$rownum_i)
 
   for (i in seq_len(nrow(footnotes_tbl))) {
 
-    if (!is.na(footnotes_tbl[i, ][["rownum"]]) &&
-        footnotes_tbl[i, ][["locname"]] %in% c("data", "stub")) {
+    if (
+      !is.na(footnotes_tbl[i, ][["rownum"]]) &&
+      footnotes_tbl[i, ][["locname"]] %in% c("data", "stub")
+    ) {
 
       footnotes_tbl[i, ][["rownum"]] <-
         which(rownum_final == footnotes_tbl[i, ][["rownum"]])
@@ -284,6 +286,7 @@ reorder_styles <- function(data) {
   tmp_mask <- vector("logical", sz)
 
   for (i in seq_len(sz)) {
+
     if (
       !is.na(styles_tbl$rownum[i]) &&
       !grepl("summary_cells", styles_tbl$locname[i])
@@ -589,6 +592,7 @@ get_stub_layout <- function(data) {
 
   # Resolve the layout of the stub (i.e., the roles of columns if present)
   if (n_stub_cols == 0) {
+
     # If summary rows are present, we will use the `rowname` column
     # for the summary row labels
     if (dt_summary_exists(data = data)) {

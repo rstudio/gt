@@ -17,6 +17,8 @@ Authors@R: c(
            comment = c(ORCID = "0000-0001-9986-114X")),
     person("Ellis", "Hughes", , "ellis.h.hughes@gsk.com", "aut",
            comment = c(ORCID = "0000-0003-0637-4436")),       
+    person("JooYoung", "Seo", , "jseo1005@illinois.edu", "aut",
+           comment = c(ORCID = "0000-0002-4064-6012")),
     person("RStudio", role = c("cph", "fnd"))
     )
 License: MIT + file LICENSE

@@ -812,9 +812,10 @@ format_as_accounting <- function(
 
   # Selectively remove minus sign and paste between parentheses
   x_str[x_lt0] <-
-    x_str[x_lt0] %>%
-    tidy_gsub(minus_mark, "", fixed = TRUE) %>%
-    paste_between(x_2 = parens_marks)
+    paste_between(
+      tidy_gsub(x_str[x_lt0], minus_mark, "", fixed = TRUE),
+      x_2 = parens_marks
+    )
 
   x_str
 }
@@ -961,7 +962,7 @@ num_fmt_factory <- function(
         # Handle formatting of pattern
         apply_pattern_fmt_x(pattern = pattern)
 
-      # place the `x_str_vals` into `str` (at the non-NA indices)
+      # Place the `x_str_vals` into `str` (at the non-NA indices)
       x_str[non_na_x] <- x_str_vals
     }
 

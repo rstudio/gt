@@ -977,19 +977,19 @@ test_that("summary rows can be created when there is no stub", {
   expect_match(
     gt_tbl %>%
       as_raw_html(inline_css = FALSE),
-    "<td class=\"gt_row gt_left gt_stub gt_grand_summary_row gt_first_grand_summary_row\">average</td>"
+    "<th id=\"grand_summary_stub_1\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_grand_summary_row gt_first_grand_summary_row\">average</th>"
   )
 
   expect_match(
     gt_tbl %>%
       as_raw_html(inline_css = FALSE),
-    "<td class=\"gt_row gt_left gt_stub gt_grand_summary_row\">total</td>"
+    "<th id=\"grand_summary_stub_2\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_grand_summary_row\">total</th>"
   )
 
   expect_match(
     gt_tbl %>%
       as_raw_html(inline_css = FALSE),
-    "<td class=\"gt_row gt_left gt_stub gt_grand_summary_row gt_last_summary_row\">std dev</td>"
+    "<th id=\"grand_summary_stub_3\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_grand_summary_row gt_last_summary_row\">std dev</th>"
   )
 })
 
@@ -1093,10 +1093,10 @@ test_that("summary row labels are added in narrow and wide tables", {
     narrow_gt_tbl %>%
       as_raw_html(inline_css = FALSE),
     paste0(
-      "<td class=\"gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick\">the_sum</td>.*?",
-      "<td class=\"gt_row gt_left gt_stub gt_summary_row gt_last_summary_row\">mean</td>.*?",
-      "<td class=\"gt_row gt_left gt_stub gt_grand_summary_row gt_first_grand_summary_row\">the_sum</td>.*?",
-      "<td class=\"gt_row gt_left gt_stub gt_grand_summary_row gt_last_summary_row\">mean</td>.*?"
+      "<th id=\"summary_stub_one_1\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick\">the_sum</th>.*?",
+      "<th id=\"summary_stub_one_2\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row gt_last_summary_row\">mean</th>.*?",
+      "<th id=\"grand_summary_stub_1\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_grand_summary_row gt_first_grand_summary_row\">the_sum</th>.*?",
+      "<th id=\"grand_summary_stub_2\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_grand_summary_row gt_last_summary_row\">mean</th>.*?"
     )
   )
 
@@ -1104,10 +1104,10 @@ test_that("summary row labels are added in narrow and wide tables", {
     wide_gt_tbl %>%
       as_raw_html(inline_css = FALSE),
     paste0(
-      "<td class=\"gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick\">the_sum</td>.*?",
-      "<td class=\"gt_row gt_left gt_stub gt_summary_row gt_last_summary_row\">mean</td>.*?",
-      "<td class=\"gt_row gt_left gt_stub gt_grand_summary_row gt_first_grand_summary_row\">the_sum</td>.*?",
-      "<td class=\"gt_row gt_left gt_stub gt_grand_summary_row gt_last_summary_row\">mean</td>.*?"
+      "<th id=\"summary_stub_one_1\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick\">the_sum</th>.*?",
+      "<th id=\"summary_stub_one_2\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row gt_last_summary_row\">mean</th>.*?",
+      "<th id=\"grand_summary_stub_1\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_grand_summary_row gt_first_grand_summary_row\">the_sum</th>.*?",
+      "<th id=\"grand_summary_stub_2\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_grand_summary_row gt_last_summary_row\">mean</th>.*?"
     )
   )
 })

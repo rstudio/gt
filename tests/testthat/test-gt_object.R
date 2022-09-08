@@ -711,19 +711,19 @@ test_that("Escapable characters in rownames are handled correctly in each output
   expect_match( # stub from data frame's row names
     gt(tbl, rownames_to_stub = TRUE) %>%
       render_as_html(),
-    "<tr><th scope=\"row\" class=\"gt_row gt_left gt_stub\">&lt;em&gt;row_html&lt;/em&gt;</th>",
+    "<tr><th id=\"stub_1_1\" scope=\"row\" class=\"gt_row gt_left gt_stub\">&lt;em&gt;row_html&lt;/em&gt;</th>",
     fixed = TRUE
   )
   expect_match( # `column_1`
     gt(tbl, rownames_to_stub = TRUE) %>%
       render_as_html(),
-    "<td class=\"gt_row gt_left\">&lt;em&gt;html&lt;/em&gt;</td>",
+    "<td headers=\"stub_1_1 column_1\" class=\"gt_row gt_left\">&lt;em&gt;html&lt;/em&gt;</td>",
     fixed = TRUE
   )
   expect_match( # `column_2`
     gt(tbl, rownames_to_stub = TRUE) %>%
       render_as_html(),
-    "<td class=\"gt_row gt_left\">html</td>",
+    "<td headers=\"stub_1_1 column_2\" class=\"gt_row gt_left\">html</td>",
     fixed = TRUE
   )
 
@@ -731,13 +731,13 @@ test_that("Escapable characters in rownames are handled correctly in each output
   expect_match( # stub from `column_1`
     gt(dplyr::as_tibble(tbl), rowname_col = "column_1") %>%
       render_as_html(),
-    "<tr><th scope=\"row\" class=\"gt_row gt_left gt_stub\">&lt;em&gt;html&lt;/em&gt;</th>",
+    "<tr><th id=\"stub_1_1\" scope=\"row\" class=\"gt_row gt_left gt_stub\">&lt;em&gt;html&lt;/em&gt;</th>",
     fixed = TRUE
   )
   expect_match( # `column_2`
     gt(dplyr::as_tibble(tbl), rowname_col = "column_1") %>%
       render_as_html(),
-    "<td class=\"gt_row gt_left\">html</td>",
+    "<td headers=\"stub_1_1 column_2\" class=\"gt_row gt_left\">html</td>",
     fixed = TRUE
   )
 

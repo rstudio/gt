@@ -188,16 +188,14 @@ gt_save_html <- function(
 
   if (inline_css) {
 
-    data %>%
-      as_raw_html(inline_css = inline_css) %>%
-      htmltools::HTML() %>%
-      htmltools::save_html(filename, ...)
+     html <- as_raw_html(data, inline_css = inline_css)
+     html <- htmltools::HTML(html)
+     htmltools::save_html(html, filename, ...)
 
   } else {
 
-    data %>%
-      htmltools::as.tags() %>%
-      htmltools::save_html(filename, ...)
+    html <- htmltools::as.tags(data)
+    htmltools::save_html(html, filename, ...)
   }
 }
 
@@ -284,9 +282,15 @@ gt_save_rtf <- function(
 #' Saving function for a Word (docx) file
 #'
 #' @noRd
-gt_save_docx <- function(data, filename, path = NULL, ..., open = rlang::is_interactive()) {
+gt_save_docx <- function(
+    data,
+    filename,
+    path = NULL,
+    ...,
+    open = rlang::is_interactive()
+) {
 
-  if(!rlang::is_installed("rmarkdown")){
+  if (!rlang::is_installed("rmarkdown")) {
     stop("{rmarkdown} package is necessary to save gt tables as word documents.")
   }
 
@@ -311,16 +315,12 @@ gt_save_docx <- function(data, filename, path = NULL, ..., open = rlang::is_inte
     input = word_md_file,
     output = filename
   )
-
 }
-
-
 
 #' Get the lowercase extension from a filename
 #'
 #' @noRd
 gtsave_file_ext <- function(filename) {
-
   tolower(tools::file_ext(filename))
 }
 
@@ -343,8 +343,6 @@ gtsave_filename <- function(path, filename) {
     )
   )
 }
-
-
 
 #' Get the HTML content of a **gt** table
 #'
@@ -994,6 +992,10 @@ extract_cells <- function(
     output <- determine_output_format()
   }
 
+  #
+  # Resolution of columns and rows as character vectors
+  #
+
   resolved_columns <-
     resolve_cols_c(
       expr = {{ columns }},
@@ -1007,6 +1009,12 @@ extract_cells <- function(
       data = data
     )
 
+  #
+  # Partially build the gt table using the resolved `output` as the
+  # rendering context; this formats the body cells and applies merging
+  # routines and text transforms (but doesn't attach footnote marks)
+  #
+
   data <- dt_body_build(data = data)
   data <- render_formats(data = data, context = output)
   data <- render_substitutions(data = data, context = output)
@@ -1019,7 +1027,12 @@ extract_cells <- function(
   data <- perform_text_transforms(data = data)
   built_data <- data
 
+  # Extract the `_body` component of the built data
   data_body <- built_data[["_body"]]
+
+  #
+  # Collect a vector of body cells in a specific order
+  #
 
   out_vec <- c()
 

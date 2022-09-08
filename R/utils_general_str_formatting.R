@@ -1,7 +1,3 @@
-######
-# General String Formatters
-######
-
 #' Flexibly split a string into two pieces
 #'
 #' @param x The string to split into a character vector of length 2.
@@ -98,7 +94,7 @@ split_string_2 <- function(
 
     # Define the start and stop positions as
     # the single `input` value
-    split_start <- split_stop <- input %>% as.numeric()
+    split_start <- split_stop <- as.numeric(input)
   }
 
   # Perform the split either before the matched characters
@@ -252,8 +248,8 @@ swap_adjacent_text_groups <- function(
       }
 
       # Get the start and stop positions for the text groups
-      group_1 <- x %>% get_start_stop_positions(pattern = pattern_1)
-      group_2 <- x %>% get_start_stop_positions(pattern = pattern_2)
+      group_1 <- get_start_stop_positions(x, pattern = pattern_1)
+      group_2 <- get_start_stop_positions(x, pattern = pattern_2)
 
       # Return `x` as is if the patterns don't encompass text ranges
       # that aren't adjacent
@@ -304,7 +300,7 @@ get_start_stop_positions <- function(x, pattern) {
   regexpr_out <- regexpr(pattern, x)
 
   # Define the start position for the matched characters
-  start_pos <- regexpr_out %>% as.numeric()
+  start_pos <- as.numeric(regexpr_out)
 
   # Define the stop position for the matched characters
   stop_pos <- attr(regexpr_out, "match.length", exact = TRUE) + start_pos - 1
@@ -345,8 +341,8 @@ str_catalog <- function(
 
   item_count <- length(item_vector)
 
-  surround_str_1 <- rev(surround) %>% paste(collapse = "")
-  surround_str_2 <- surround %>% paste(collapse = "")
+  surround_str_1 <- paste(rev(surround), collapse = "")
+  surround_str_2 <- paste(surround, collapse = "")
 
   cat_str <- paste0(surround_str_1, item_vector, surround_str_2)
 
@@ -367,9 +363,7 @@ str_catalog <- function(
     }
 
     separators[length(separators)] <-
-      separators[length(separators)] %>%
-      paste_right(conj) %>%
-      paste_right(" ")
+      paste_right(paste_right(separators[length(separators)], conj), " ")
 
     separators[length(separators) + 1] <- ""
 
