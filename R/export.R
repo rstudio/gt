@@ -994,6 +994,10 @@ extract_cells <- function(
     output <- determine_output_format()
   }
 
+  #
+  # Resolution of columns and rows as character vectors
+  #
+
   resolved_columns <-
     resolve_cols_c(
       expr = {{ columns }},
@@ -1007,6 +1011,12 @@ extract_cells <- function(
       data = data
     )
 
+  #
+  # Partially build the gt table using the resolved `output` as the
+  # rendering context; this formats the body cells and applies merging
+  # routines and text transforms (but doesn't attach footnote marks)
+  #
+
   data <- dt_body_build(data = data)
   data <- render_formats(data = data, context = output)
   data <- render_substitutions(data = data, context = output)
@@ -1019,7 +1029,12 @@ extract_cells <- function(
   data <- perform_text_transforms(data = data)
   built_data <- data
 
+  # Extract the `_body` component of the built data
   data_body <- built_data[["_body"]]
+
+  #
+  # Collect a vector of body cells in a specific order
+  #
 
   out_vec <- c()
 
