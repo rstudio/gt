@@ -905,7 +905,7 @@ extract_summary <- function(data) {
 }
 
 
-#' Extract a summary list from a **gt** object
+#' Extract a vector of formatted cells from a **gt** object
 #'
 #' @description
 #' Get a vector of cell data from a `gt_tbl` object. The output vector will have
