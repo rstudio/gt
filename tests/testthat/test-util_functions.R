@@ -434,7 +434,7 @@ test_that("the `inline_html_styles()` function works correctly", {
   expect_true(
     grepl(
       paste0(
-        "<td style=\"padding-top: 8px; padding-bottom: 8px; ",
+        "<td headers=\"mpg\" style=\"padding-top: 8px; padding-bottom: 8px; ",
         "padding-left: 5px; padding-right: 5px; margin: 10px; ",
         "border-top-style: solid; border-top-width: 1px; ",
         "border-top-color: #D3D3D3; border-left-style: none; ",
