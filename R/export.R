@@ -967,7 +967,18 @@ extract_cells <- function(
       data = data
     )
 
-  built_data <- build_data(data = data, context = output)
+  data <- dt_body_build(data = data)
+  data <- render_formats(data = data, context = output)
+  data <- render_substitutions(data = data, context = output)
+  data <- migrate_unformatted_to_output(data = data, context = output)
+  data <- perform_col_merge(data = data, context = output)
+  data <- dt_body_reassemble(data = data)
+  data <- reorder_stub_df(data = data)
+  data <- reorder_footnotes(data = data)
+  data <- reorder_styles(data = data)
+  data <- perform_text_transforms(data = data)
+  built_data <- data
+
   data_body <- built_data[["_body"]]
 
   out_vec <- c()
