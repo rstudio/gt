@@ -860,6 +860,7 @@ create_body_component_h <- function(data) {
     rep_len(list(if (table_body_striped) "gt_striped" else NULL), n_cols_total)
 
   if (length(stub_layout) > 0) {
+
     if ("rowname" %in% stub_layout) {
 
       row_label_col <- which(stub_layout == "rowname")
@@ -973,6 +974,7 @@ create_body_component_h <- function(data) {
         if ("group_label" %in% stub_layout) {
 
           if (i %in% groups_rows_df$row_start) {
+
             # Modify the `extra_classes` list to include a class for
             # the row group column
             extra_classes[[1]] <- "gt_stub_row_group"
@@ -995,7 +997,8 @@ create_body_component_h <- function(data) {
 
             # Modify the `row_span_vals` list such that the first
             # element (the row group column) contains the number of rows to span
-            row_span_vals[[1]] <- row_limits$row_end - row_limits$row_start + 1 + summary_row_count
+            row_span_vals[[1]] <-
+              row_limits$row_end - row_limits$row_start + 1 + summary_row_count
 
             # Process row group styles if there is an indication that some
             # are present
@@ -1008,7 +1011,9 @@ create_body_component_h <- function(data) {
 
             # Add style of row group cell to vector
             row_styles <- c(list(row_group_style), row_styles)
+
           } else {
+
             # Remove first element of `alignment_classes` vector
             alignment_classes <- alignment_classes[-1]
             row_span_vals[[1]] <- NULL
@@ -1068,7 +1073,8 @@ create_body_component_h <- function(data) {
                         paste0(
                           "td ",
                           "headers=\"",
-                          gsub("(^[[:space:]]*)|([[:space:]]*$)", "", paste(current_group_id, row_id, col_id)),
+                          gsub("(^[[:space:]]*)|([[:space:]]*$)", "",
+                               paste(current_group_id, row_id, col_id)),
                           "\""
                         )
                       },
@@ -1146,8 +1152,11 @@ create_body_component_h <- function(data) {
   # Add grand summary rows
   #
 
-  if (summaries_present &&
-    grand_summary_col %in% names(list_of_summaries$summary_df_display_list)) {
+  if (
+    summaries_present &&
+    grand_summary_col %in% names(list_of_summaries$summary_df_display_list)
+  ) {
+
     grand_summary_section <-
       summary_row_tags_i(
         data = data,
@@ -1167,6 +1176,7 @@ create_body_component_h <- function(data) {
 #'
 #' @noRd
 create_source_notes_component_h <- function(data) {
+
   source_notes <- dt_source_notes_get(data = data)
 
   if (is.null(source_notes)) {
@@ -1180,6 +1190,7 @@ create_source_notes_component_h <- function(data) {
 
   # Get the style attrs for the source notes
   if ("source_notes" %in% styles_tbl$locname) {
+
     source_notes_style <- dplyr::filter(styles_tbl, locname == "source_notes")
 
     source_notes_styles <-
@@ -1188,6 +1199,7 @@ create_source_notes_component_h <- function(data) {
       } else {
         NULL
       }
+
   } else {
     source_notes_styles <- NULL
   }
@@ -1248,6 +1260,7 @@ create_source_notes_component_h <- function(data) {
 #'
 #' @noRd
 create_footnotes_component_h <- function(data) {
+
   footnotes_tbl <- dt_footnotes_get(data = data)
 
   # If the `footnotes_resolved` object has no
@@ -1268,6 +1281,7 @@ create_footnotes_component_h <- function(data) {
 
   # Get the style attrs for the footnotes
   if ("footnotes" %in% styles_tbl$locname) {
+
     footnotes_style <- dplyr::filter(styles_tbl, locname == "footnotes")
 
     footnotes_styles <-
@@ -1276,6 +1290,7 @@ create_footnotes_component_h <- function(data) {
       } else {
         NULL
       }
+
   } else {
     footnotes_styles <- NULL
   }
@@ -1318,6 +1333,7 @@ create_footnotes_component_h <- function(data) {
 
   # Handle the multiline footnotes case (each footnote takes up one line)
   if (multiline) {
+
     # Create the footnotes component as a series of `<tr><td>` (one per
     # footnote) inside of a `<tfoot>`
     return(
@@ -1376,6 +1392,7 @@ get_body_component_cell_matrix <- function(data) {
   }
 
   if ("rowname" %in% stub_layout) {
+
     body_matrix <-
       cbind(
         unname(as.matrix(body[, dt_boxhead_get_var_stub(data = data)])),
@@ -1384,6 +1401,7 @@ get_body_component_cell_matrix <- function(data) {
   }
 
   if ("group_label" %in% stub_layout) {
+
     groups_rows_df <-
       dt_groups_rows_get(data = data) %>%
       dplyr::select(group_id, group_label, row_start)
@@ -1481,6 +1499,7 @@ summary_row_tags_i <- function(data, group_id) {
   alignment_classes <- paste0("gt_", col_alignment)
 
   for (j in seq_len(nrow(summary_df))) {
+
     last_row_class <- "gt_last_summary_row"
 
     if (summary_row_type == "grand") {
@@ -1642,8 +1661,10 @@ build_row_styles <- function(
 
   # This function's implementation can't tolerate colnum of NA, or illegal
   # colnum values. Check and throw early.
-  if (!isTRUE(all(styles_resolved_row$colnum %in% c(0, seq_len(n_cols)))) ||
-    any(duplicated(styles_resolved_row$colnum))) {
+  if (
+    !isTRUE(all(styles_resolved_row$colnum %in% c(0, seq_len(n_cols)))) ||
+    any(duplicated(styles_resolved_row$colnum))
+  ) {
     cli::cli_abort(
       "`build_row_styles()` was called with invalid `colnum` values."
     )
@@ -1666,6 +1687,7 @@ build_row_styles <- function(
 }
 
 as_css_font_family_attr <- function(font_vec, value_only = FALSE) {
+
   fonts_spaces <- grepl(" ", font_vec)
 
   font_vec[fonts_spaces] <-
