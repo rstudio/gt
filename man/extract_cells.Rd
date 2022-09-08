@@ -2,7 +2,7 @@
 % Please edit documentation in R/export.R
 \name{extract_cells}
 \alias{extract_cells}
-\title{Extract a summary list from a \strong{gt} object}
+\title{Extract a vector of formatted cells from a \strong{gt} object}
 \usage{
 extract_cells(
   data,
