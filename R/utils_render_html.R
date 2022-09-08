@@ -18,27 +18,28 @@ footnote_mark_to_html <- function(mark) {
 }
 
 styles_to_html <- function(styles) {
-  vapply(
-    styles,
-    FUN.VALUE = character(1), USE.NAMES = FALSE,
-    FUN = function(x) {
-      if (any(is.null(names(x)))) {
-        style <- gsub(":", ": ", x, fixed = TRUE)
-      } else if (all(names(x) != "")) {
-        x <- cell_style_to_html(x)
 
-        style <-
-          paste0(names(x), ": ", x, ";", collapse = " ") %>%
-          tidy_gsub(";;", ";")
-      } else {
-        style <- as.character(x)
+  styles_out <-
+    vapply(
+      styles,
+      FUN.VALUE = character(1), USE.NAMES = FALSE,
+      FUN = function(x) {
+        if (any(is.null(names(x)))) {
+          style <- gsub(":", ": ", x, fixed = TRUE)
+        } else if (all(names(x) != "")) {
+          x <- cell_style_to_html(x)
+          style <- tidy_gsub(paste0(names(x), ": ", x, ";", collapse = " "), ";;", ";")
+        } else {
+          style <- as.character(x)
+        }
+        style
       }
+    )
 
-      style
-    }
-  ) %>%
-    paste(collapse = " ") %>%
-    tidy_gsub("\n", " ")
+  styles_out <- paste(styles_out, collapse = " ")
+  styles_out <- tidy_gsub(styles_out, "\n", " ")
+
+  styles_out
 }
 
 cell_style_to_html <- function(style) {
