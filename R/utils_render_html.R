@@ -1513,7 +1513,7 @@ summary_row_tags_i <- function(data, group_id) {
                 sprintf(
                   "<%s %sclass=\"%s\"%s>%s</%s>",
                   if ("gt_stub" %in% extra_class) {
-                    # 1 opening tag
+                    # 1. opening tag
                     paste0(
                       "th ",
                       "id=\"",
@@ -1543,7 +1543,7 @@ summary_row_tags_i <- function(data, group_id) {
                     )
                   },
                   if (is.null(col_span)) {
-                    # 2 colspan
+                    # 2. colspan
                     ""
                   } else {
                     paste0(
@@ -1552,7 +1552,7 @@ summary_row_tags_i <- function(data, group_id) {
                       "\" "
                     )
                   },
-                  htmltools::htmlEscape( # 3 tag classes
+                  htmltools::htmlEscape( # 3. tag classes
                     paste(
                       c("gt_row", alignment_class, extra_class),
                       collapse = " "
@@ -1560,7 +1560,7 @@ summary_row_tags_i <- function(data, group_id) {
                     attribute = TRUE
                   ),
                   if (!any(nzchar(cell_style))) {
-                    # 4 tag styles
+                    # 4. tag styles
                     ""
                   } else {
                     paste0(
@@ -1569,9 +1569,9 @@ summary_row_tags_i <- function(data, group_id) {
                       "\""
                     )
                   },
-                  as.character(x), # 5 HTML content
+                  as.character(x), # 5. HTML content
                   if ("gt_stub" %in% extra_class) {
-                    # 6 closing tag
+                    # 6. closing tag
                     "th"
                   } else {
                     "td"
