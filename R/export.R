@@ -904,7 +904,6 @@ extract_summary <- function(data) {
   as.list(summary_tbl)
 }
 
-
 #' Extract a vector of formatted cells from a **gt** object
 #'
 #' @description
@@ -931,6 +930,47 @@ extract_summary <- function(data) {
 #'   `"auto"` option will choose the correct `output` value
 #'
 #' @return A vector of cell data extracted from a **gt** table.
+#'
+#' @section Examples:
+#'
+#' Let's create a **gt** table with the [`exibble`] dataset to use in the next
+#' few examples:
+#'
+#' ```r
+#' gt_tbl <- gt(exibble, rowname_col = "row", groupname_col = "group")
+#' ```
+#'
+#' We can extract a cell from the table with the `extract_cells()` function.
+#' This is done by providing a column and a row intersection:
+#'
+#' ```r
+#' extract_cells(gt_tbl, columns = num, row = 1)
+#' ```
+#' ```
+#' #> [1] "1.111e-01"
+#' ```
+#'
+#' Multiple cells can be extracted. Let's get the first four cells from the
+#' `char` column.
+#'
+#' ```r
+#' extract_cells(gt_tbl, columns = char, rows = 1:4)
+#' ```
+#' ```
+#' #> [1] "apricot" "banana" "coconut" "durian"
+#' ```
+#'
+#' We can format cells and expect that the formatting is fully retained after
+#' extraction.
+#'
+#' ```r
+#' gt_tbl %>%
+#'   fmt_number(columns = num, decimals = 2) %>%
+#'   extract_cells(columns = num, rows = 1)
+#' ```
+#' ```
+#' #> [1] "0.11"
+#' ```
 #'
 #' @family table export functions
 #' @section Function ID:
