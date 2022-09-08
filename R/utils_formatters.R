@@ -962,7 +962,7 @@ num_fmt_factory <- function(
         # Handle formatting of pattern
         apply_pattern_fmt_x(pattern = pattern)
 
-      # place the `x_str_vals` into `str` (at the non-NA indices)
+      # Place the `x_str_vals` into `str` (at the non-NA indices)
       x_str[non_na_x] <- x_str_vals
     }
 
