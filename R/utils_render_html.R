@@ -1531,7 +1531,7 @@ summary_row_tags_i <- function(data, group_id) {
                       "headers=\"",
                       if (summary_row_type == "grand") {
                         paste0(
-                          "grand_summary grand_summary_stub_",
+                          "grand_summary_stub_",
                           j, " ", col_name, "\""
                         )
                       } else {
