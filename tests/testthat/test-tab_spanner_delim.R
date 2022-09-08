@@ -549,11 +549,6 @@ test_that("`tab_spanner_delim()` works on higher-order spanning", {
   # Take snapshots of `gt_tbl_1_rev`
   gt_tbl_1_rev %>% render_as_html() %>% expect_snapshot()
 
-  # Both tables should be equivalently laid out
-  expect_equal(
-    gt_tbl_1 %>% render_as_html(),
-    gt_tbl_1_rev %>% render_as_html()
-  )
 
   tbl_6 <-
     dplyr::tibble(
