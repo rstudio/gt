@@ -67,11 +67,13 @@ add_css_styles <- function(data) {
 #' @param locname The location name for the footnotes.
 #' @param delimiter The delimiter to use for the coalesced footnote marks.
 #' @noRd
-coalesce_marks <- function(fn_tbl,
-                           locname,
-                           delimiter = ",") {
-  dplyr::filter(fn_tbl, locname == !!locname) %>%
-    dplyr::summarize(fs_id_c = paste(fs_id, collapse = delimiter))
+coalesce_marks <- function(
+    fn_tbl,
+    locname,
+    delimiter = ","
+) {
+  filtered_tbl <- dplyr::filter(fn_tbl, locname == !!locname)
+  dplyr::summarize(filtered_tbl, fs_id_c = paste(fs_id, collapse = delimiter))
 }
 
 # Get the attributes for the table tag
@@ -146,15 +148,21 @@ get_table_defs <- function(data) {
 }
 
 create_caption_component_h <- function(data) {
+
   # Create the table caption if available
   table_caption <- dt_options_get_value(data = data, option = "table_caption")
 
   if (!is.null(table_caption)) {
+
     table_caption <- process_text(table_caption, context = "html")
+
     if (isTRUE(getOption("knitr.in.progress"))) {
+
       table_caption <- kable_caption(label = NULL, table_caption, "html")
     }
+
     if (!getOption("htmltools.preserve.raw", FALSE)) {
+
       # <!--/html_preserve--> ... <!--html_preserve--> is because bookdown scans
       # the .md file, looking for references in the form of:
       # <caption>(#tab:mytable)
@@ -168,12 +176,15 @@ create_caption_component_h <- function(data) {
       # actually happens in htmlwidgets). So the extra markup here is used to
       # temporarily suspend that protection, emit the caption (including the HTML
       # <caption> tag, which bookdown searches for), and then resume protection.
+
       htmltools::HTML(paste0(
         "<!--/html_preserve--><caption>",
         table_caption,
         "</caption><!--html_preserve-->"
       ))
+
     } else {
+
       htmltools::HTML(paste0("<caption>", table_caption, "</caption>"))
     }
   } else {
@@ -189,6 +200,7 @@ create_caption_component_h <- function(data) {
 #'
 #' @noRd
 create_heading_component_h <- function(data) {
+
   # If there is no title or heading component, then return an empty string
   if (!dt_heading_has_title(data = data)) {
     return("")
@@ -204,20 +216,22 @@ create_heading_component_h <- function(data) {
 
   # Get the footnote marks for the title
   if ("title" %in% footnotes_tbl$locname) {
+
     footnote_title_marks <-
       coalesce_marks(
         fn_tbl = footnotes_tbl,
         locname = "title"
       )
 
-    footnote_title_marks <-
-      footnote_mark_to_html(mark = footnote_title_marks$fs_id_c)
+    footnote_title_marks <- footnote_mark_to_html(mark = footnote_title_marks$fs_id_c)
+
   } else {
     footnote_title_marks <- ""
   }
 
   # Get the style attrs for the title
   if ("title" %in% styles_tbl$locname) {
+
     title_style_rows <- dplyr::filter(styles_tbl, locname == "title")
 
     if (nrow(title_style_rows) > 0) {
@@ -225,12 +239,14 @@ create_heading_component_h <- function(data) {
     } else {
       title_styles <- NULL
     }
+
   } else {
     title_styles <- NA_character_
   }
 
   # Get the footnote marks for the subtitle
   if (subtitle_defined && "subtitle" %in% footnotes_tbl$locname) {
+
     footnote_subtitle_marks <-
       coalesce_marks(
         fn_tbl = footnotes_tbl,
@@ -239,6 +255,7 @@ create_heading_component_h <- function(data) {
 
     footnote_subtitle_marks <-
       footnote_mark_to_html(mark = footnote_subtitle_marks$fs_id_c)
+
   } else {
     footnote_subtitle_marks <- ""
   }
@@ -252,6 +269,7 @@ create_heading_component_h <- function(data) {
     } else {
       subtitle_styles <- NULL
     }
+
   } else {
     subtitle_styles <- NA_character_
   }
@@ -279,6 +297,7 @@ create_heading_component_h <- function(data) {
     )
 
   if (subtitle_defined) {
+
     subtitle_row <-
       htmltools::tags$tr(
         htmltools::tags$td(
@@ -290,6 +309,7 @@ create_heading_component_h <- function(data) {
           )
         )
       )
+
   } else {
     subtitle_row <- ""
   }
@@ -305,6 +325,7 @@ create_heading_component_h <- function(data) {
 #'
 #' @noRd
 create_columns_component_h <- function(data) {
+
   # Should the column labels be hidden?
   column_labels_hidden <-
     dt_options_get_value(
@@ -360,8 +381,10 @@ create_columns_component_h <- function(data) {
   table_col_headings <- list()
 
   if (spanner_row_count < 1) {
+
     # Create the cell for the stubhead label
     if (length(stub_layout) > 0) {
+
       stubhead_style <-
         if (nrow(stubhead_style_attrs) > 0) {
           stubhead_style_attrs$html_style
@@ -391,6 +414,7 @@ create_columns_component_h <- function(data) {
     }
 
     for (i in seq_along(headings_vars)) {
+
       styles_column <- subset(column_style_attrs, colnum == i)
 
       column_style <-
@@ -497,6 +521,7 @@ create_columns_component_h <- function(data) {
       )
 
     for (i in seq_along(headings_vars)) {
+
       if (is.na(spanner_ids[level_1_index, ][i])) {
         styles_heading <-
           dplyr::filter(
@@ -532,7 +557,9 @@ create_columns_component_h <- function(data) {
             id = headings_labels[i],
             htmltools::HTML(headings_labels[i])
           )
+
       } else if (!is.na(spanner_ids[level_1_index, ][i])) {
+
         # If colspans[i] == 0, it means that a previous cell's
         # `colspan` will cover us
         if (colspans[i] > 0) {
@@ -586,6 +613,7 @@ create_columns_component_h <- function(data) {
     col_alignment <- col_alignment[-1][!(headings_vars %in% solo_headings)]
 
     if (length(remaining_headings) > 0) {
+
       spanned_column_labels <- c()
 
       for (j in seq(remaining_headings)) {
@@ -629,18 +657,22 @@ create_columns_component_h <- function(data) {
           htmltools::tags$tr(level_1_spanners),
           htmltools::tags$tr(spanned_column_labels)
         )
+
     } else {
+
       # Create the `table_col_headings` HTML component
       table_col_headings <- htmltools::tags$tr(level_1_spanners)
     }
   }
 
   if (dt_spanners_matrix_height(data = data) > 2) {
+
     higher_spanner_rows_idx <- seq_len(nrow(spanner_ids) - 2)
 
     higher_spanner_rows <- htmltools::tagList()
 
     for (i in higher_spanner_rows_idx) {
+
       spanner_ids_row <- spanner_ids[i, ]
       spanners_row <- spanners[i, ]
       spanners_vars <- unique(spanner_ids_row[!is.na(spanner_ids_row)])
@@ -649,7 +681,9 @@ create_columns_component_h <- function(data) {
       spanner_ids_row[is.na(spanner_ids_row)] <- ""
 
       spanners_rle <- rle(spanner_ids_row)
+
       sig_cells <- c(1, utils::head(cumsum(spanners_rle$lengths) + 1, -1))
+
       colspans <-
         ifelse(
           seq_along(spanner_ids_row) %in% sig_cells,
@@ -661,6 +695,7 @@ create_columns_component_h <- function(data) {
       level_i_spanners <- list()
 
       for (j in seq_along(colspans)) {
+
         if (colspans[j] > 0) {
           styles_spanners <-
             dplyr::filter(
@@ -702,6 +737,7 @@ create_columns_component_h <- function(data) {
       }
 
       if (length(stub_layout) > 0 && i == 1) {
+
         level_i_spanners <-
           htmltools::tagList(
             htmltools::tags$th(
