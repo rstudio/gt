@@ -4,7 +4,14 @@
 \alias{fmt_date}
 \title{Format values as dates}
 \usage{
-fmt_date(data, columns, rows = everything(), date_style = 1, pattern = "{x}")
+fmt_date(
+  data,
+  columns,
+  rows = everything(),
+  date_style = 1,
+  pattern = "{x}",
+  locale = NULL
+)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -32,6 +39,15 @@ style (\code{"wday_month_day_year"}, \code{"m_day_year"}, \code{"year.mn.day"}, 
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other
 characters are taken to be string literals.}
+
+\item{locale}{An optional locale ID that can be used for formatting the value
+according the locale's rules. Examples include \code{"en_US"} for English
+(United States) and \code{"fr_FR"} for French (France). The use of a valid
+locale ID will override any values provided in \code{sep_mark} and \code{dec_mark}.
+We can use the \code{\link[=info_locales]{info_locales()}} function as a useful reference for all of
+the locales that are supported. Any \code{locale} value provided here will
+override any global locale setting performed in \code{\link[=gt]{gt()}}'s own \code{locale}
+argument.}
 }
 \value{
 An object of class \code{gt_tbl}.

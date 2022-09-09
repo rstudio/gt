@@ -97,11 +97,9 @@ values. The rendering context will be autodetected unless specified in the
 We can change the number of decimal places with the \code{decimals} option:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_scientific(num_vals, decimals = 1)
-
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3.2 × 10^-4" "8.7" "1.4 × 10^6" "-5.9 × 10^4" "NA"
-
 }\if{html}{\out{</div>}}
 
 If we are formatting for a different locale, we could supply the locale ID

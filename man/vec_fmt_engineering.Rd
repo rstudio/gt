@@ -98,11 +98,9 @@ the \code{output} argument (here, it is of the \code{"plain"} output type).
 We can change the number of decimal places with the \code{decimals} option:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_engineering(num_vals, decimals = 1)
-
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "324.0 × 10^-6" "8.7" "1.4 × 10^6" "-59.0 × 10^3" "NA"
-
 }\if{html}{\out{</div>}}
 
 If we are formatting for a different locale, we could supply the locale ID
