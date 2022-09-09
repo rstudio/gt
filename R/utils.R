@@ -4,21 +4,21 @@
 date_formats <- function() {
   dplyr::tribble(
     ~format_number, ~format_name,           ~format_code,
-    "1",	          "iso",                  "%F",
-    "2",	          "wday_month_day_year",  "%A, %B %d, %Y",
-    "3",	          "wd_m_day_year",        "%a, %b %d, %Y",
-    "4",	          "wday_day_month_year",  "%A %d %B %Y",
-    "5",	          "month_day_year",       "%B %d, %Y",
-    "6",	          "m_day_year",           "%b %d, %Y",
-    "7",	          "day_m_year",           "%d %b %Y",
-    "8",	          "day_month_year",       "%d %B %Y",
-    "9",	          "day_month",            "%d %B",
-    "10",	          "day_m",                "%d %b",
-    "11",	          "year",                 "%Y",
-    "12",	          "month",                "%B",
-    "13",	          "day",                  "%d",
-    "14",	          "year.mn.day",          "%Y/%m/%d",
-    "15",	          "y.mn.day",             "%y/%m/%d"
+    "1",	          "iso",                  "y-MM-dd", #"%F"
+    "2",	          "wday_month_day_year",  "EEEE, MMMM d, y", #"%A, %B %d, %Y"
+    "3",	          "wd_m_day_year",        "EEE, MMM d, y", #"%a, %b %d, %Y"
+    "4",	          "wday_day_month_year",  "EEEE d MMMM y", #"%A %d %B %Y"
+    "5",	          "month_day_year",       "MMMM d, y", #"%B %d, %Y"
+    "6",	          "m_day_year",           "MMM d, y", #"%b %d, %Y"
+    "7",	          "day_m_year",           "d MMM y", #"%d %b %Y"
+    "8",	          "day_month_year",       "d MMMM y", #"%d %B %Y"
+    "9",	          "day_month",            "d MMMM", #"%d %B"
+    "10",	          "day_m",                "d MMM", #"%d %b"
+    "11",	          "year",                 "y", #"%Y"
+    "12",	          "month",                "MMMM", #"%B"
+    "13",	          "day",                  "dd", #"%d"
+    "14",	          "year.mn.day",          "y/MM/dd", #"%Y/%m/%d"
+    "15",	          "y.mn.day",             "yy/MM/dd", #"%y/%m/%d"
   )
 }
 
@@ -28,11 +28,11 @@ date_formats <- function() {
 time_formats <- function() {
   dplyr::tribble(
     ~format_number, ~format_name, ~format_code,
-    "1",	          "hms",        "%H:%M:%S",
-    "2",	          "hm",         "%H:%M",
-    "3",	          "hms_p",      "%I:%M:%S %P",
-    "4",	          "hm_p",       "%I:%M %P",
-    "5",	          "h_p",        "%I %P"
+    "1",	          "hms",        "HH:mm:ss", #"%H:%M:%S"
+    "2",	          "hm",         "HH:mm", #"%H:%M",
+    "3",	          "hms_p",      "h:mm:ss a", #"%I:%M:%S %P"
+    "4",	          "hm_p",       "h:mm a", #"%I:%M %P"
+    "5",	          "h_p",        "h a" #"%I %P"
   )
 }
 

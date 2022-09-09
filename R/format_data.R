@@ -2331,11 +2331,15 @@ fmt_date <- function(
     columns,
     rows = everything(),
     date_style = 1,
-    pattern = "{x}"
+    pattern = "{x}",
+    locale = NULL
 ) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  # Resolve the `locale` value here with the global locale value
+  locale <- resolve_locale(data = data, locale = locale)
 
   # Transform `date_style` to `date_format_str`
   date_format_str <- get_date_format(date_style = date_style)
@@ -2371,7 +2375,7 @@ fmt_date <- function(
         # if the values cannot be parsed by `as.POSIXlt()`
         date <-
           tryCatch(
-            as.POSIXlt(x),
+            as.POSIXlt(x, tz = "GMT"),
             error = function(cond) {
               cli::cli_abort(
                 "One or more of the provided date/datetime values are invalid."
@@ -2379,17 +2383,12 @@ fmt_date <- function(
             }
           )
 
-        # Format the date string using `strftime()`
-        date <- strftime(date, format = date_format_str)
-
-        # Perform several cosmetic changes to the formatted date
-        if (date_format_str != "%F") {
-
-          date <- gsub(" 0([0-9])", " \\1", date)
-          date <- gsub("^0([0-9])[^/]", "\\1 ", date)
-        }
-
-        date
+        # Format the date string using `fdt()`
+        bigD::fdt(
+          input = as.character(date),
+          format = date_format_str,
+          locale = locale
+        )
       }
     )
   )
@@ -2487,7 +2486,8 @@ fmt_time <- function(
     columns,
     rows = everything(),
     time_style = 1,
-    pattern = "{x}"
+    pattern = "{x}",
+    locale = NULL
 ) {
 
   # Perform input object validation
@@ -2533,7 +2533,7 @@ fmt_time <- function(
         # if the values cannot be parsed by `as.POSIXlt()`
         time <-
           tryCatch(
-            as.POSIXlt(x),
+            as.POSIXlt(x, tz = "GMT"),
             error = function(cond) {
               cli::cli_abort(
                 "One or more of the provided date/time/datetime values are invalid."
@@ -2541,19 +2541,12 @@ fmt_time <- function(
             }
           )
 
-        # Format the date string using `strftime()`
-        time <- strftime(time, format = time_format_str)
-
-        # Perform several cosmetic changes to the formatted time
-        if (grepl("%P$", time_format_str)) {
-
-          time <- gsub("^0", "", time)
-          time <- gsub(" 0([0-9])", " \\1", time)
-          time <- gsub("\\bpm\\b$", "PM", time)
-          time <- gsub("\\bam\\b$", "AM", time)
-        }
-
-        time
+        # Format the time string using `fdt()`
+        bigD::fdt(
+          input = as.character(time),
+          format = time_format_str,
+          locale = locale
+        )
       }
     )
   )
@@ -2713,7 +2706,8 @@ fmt_datetime <- function(
     sep = " ",
     format = NULL,
     tz = NULL,
-    pattern = "{x}"
+    pattern = "{x}",
+    locale = NULL
 ) {
 
   # Perform input object validation
@@ -2795,35 +2789,15 @@ fmt_datetime <- function(
             }
           )
 
-        # Format `datetime` into a date string using `strftime()` with
-        # the resolved formatting string
-        date <- strftime(datetime, format = date_format_str, tz = tz)
+        date_time_format_str <-
+          paste0(date_format_str, "'", sep, "'", time_format_str)
 
-        # Perform several cosmetic changes to the formatted date
-        if (date_format_str != "%F") {
-
-          date <- gsub(" 0([0-9])", " \\1", date)
-          date <- gsub("^0([0-9])[^/]", "\\1 ", date)
-        }
-
-        #
-        # Format the time portion of the datetime string
-        #
-
-        # Format `datetime` into a time string using `strftime()` with
-        # the resolved formatting string
-        time <- strftime(datetime, format = time_format_str, tz = tz)
-
-        # Perform several cosmetic changes to the formatted time
-        if (grepl("%P$", time_format_str)) {
-
-          time <- gsub("^0", "", time)
-          time <- gsub(" 0([0-9])", " \\1", time)
-          time <- gsub("\\bpm\\b$", "PM", time)
-          time <- gsub("\\bam\\b$", "AM", time)
-        }
-
-        paste(date, time, sep = sep)
+        # Format the datetime string using `fdt()`
+        bigD::fdt(
+          input = as.character(datetime),
+          format = date_time_format_str,
+          locale = locale
+        )
       }
     )
   )
