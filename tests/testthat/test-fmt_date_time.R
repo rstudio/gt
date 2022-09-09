@@ -569,7 +569,9 @@ test_that("the `fmt_datetime()` function works correctly", {
     expect_equal(
       (tab %>%
          fmt_datetime(
-           columns = "datetime", format = "%F", tz = NULL
+           columns = "datetime",
+           format = "%F",
+           tz = NULL
          ) %>%
          render_formats_test(context = "default"))[["datetime"]],
       c("2017-06-10", "2017-07-12", "2017-08-05", "2017-10-23", "2000-01-01")
@@ -578,21 +580,9 @@ test_that("the `fmt_datetime()` function works correctly", {
     expect_equal(
       (tab %>%
          fmt_datetime(
-           columns = "datetime", format = "%B %d, %Y %H:%M:%S", tz = NULL
-         ) %>%
-         render_formats_test(context = "default"))[["datetime"]],
-      c(
-        "June 10, 2017 12:35:23", "July 12, 2017 15:01:34",
-        "August 05, 2017 09:45:23", "October 23, 2017 01:32:00",
-        "January 01, 2000 00:00:00"
-      )
-    )
-
-    expect_equal(
-      (tab %>%
-         fmt_datetime(
-           columns = "datetime", date_style = 2, time_style = 2,
-           format = "%B %d, %Y %H:%M:%S", tz = NULL
+           columns = "datetime",
+           format = "%B %d, %Y %H:%M:%S",
+           tz = NULL
          ) %>%
          render_formats_test(context = "default"))[["datetime"]],
       c(
@@ -606,7 +596,25 @@ test_that("the `fmt_datetime()` function works correctly", {
       (tab %>%
          fmt_datetime(
            columns = "datetime",
-           format = "%B %d, %Y %H:%M:%S (%z)", tz = NULL
+           date_style = 1,
+           time_style = 1,
+           format = "%B %d, %Y %H:%M:%S",
+           tz = NULL
+         ) %>%
+         render_formats_test(context = "default"))[["datetime"]],
+      c(
+        "June 10, 2017 12:35:23", "July 12, 2017 15:01:34",
+        "August 05, 2017 09:45:23", "October 23, 2017 01:32:00",
+        "January 01, 2000 00:00:00"
+      )
+    )
+
+    expect_equal(
+      (tab %>%
+         fmt_datetime(
+           columns = "datetime",
+           format = "%B %d, %Y %H:%M:%S (%z)",
+           tz = NULL
          ) %>%
          render_formats_test(context = "default"))[["datetime"]],
       c(
@@ -618,18 +626,97 @@ test_that("the `fmt_datetime()` function works correctly", {
   }
 
   # Using a string to represent a date or date-time doesn't allow the
-  # output time to be altered by `tz`
+  # output time to be altered by `tz` but it should change the tz
+  # that is displayed
   expect_equal(
-    gt_tables[[1]] %>% # table where `datetime` column was `character`
-      fmt_datetime(
-        columns = "datetime",
-        format = "%B %d, %Y %H:%M:%S (%z)", tz = "GMT"
-      ) %>% render_formats_test(context = "default"),
-    gt_tables[[1]] %>%
-      fmt_datetime(
-        columns = "datetime",
-        format = "%B %d, %Y %H:%M:%S (%z)", tz = "America/Toronto"
-      ) %>% render_formats_test(context = "default")
+    (gt_tables[[1]] %>% # table where `datetime` column was `character`
+       fmt_datetime(
+         columns = "datetime",
+         format = "%B %d, %Y %H:%M:%S (%z)",
+         tz = "GMT"
+       ) %>%
+       render_formats_test(context = "default"))[["datetime"]],
+    c(
+      "June 10, 2017 12:35:23 (+0000)", "July 12, 2017 15:01:34 (+0000)",
+      "August 05, 2017 09:45:23 (+0000)", "October 23, 2017 01:32:00 (+0000)",
+      "January 01, 2000 00:00:00 (+0000)"
+    )
+  )
+
+  expect_equal(
+    (gt_tables[[1]] %>% # table where `datetime` column was `character`
+       fmt_datetime(
+         columns = "datetime",
+         format = "%B %d, %Y %H:%M:%S (%z)",
+         tz = "America/Toronto"
+       ) %>%
+       render_formats_test(context = "default"))[["datetime"]],
+    c(
+      "June 10, 2017 12:35:23 (-0400)", "July 12, 2017 15:01:34 (-0400)",
+      "August 05, 2017 09:45:23 (-0400)", "October 23, 2017 01:32:00 (-0400)",
+      "January 01, 2000 00:00:00 (-0500)"
+    )
+  )
+
+  expect_equal(
+    (gt_tables[[1]] %>% # table where `datetime` column was `character`
+       fmt_datetime(
+         columns = "datetime",
+         format = "%B %d, %Y %H:%M:%S (%z)",
+         tz = "America/Vancouver"
+       ) %>%
+       render_formats_test(context = "default"))[["datetime"]],
+    c(
+      "June 10, 2017 12:35:23 (-0700)", "July 12, 2017 15:01:34 (-0700)",
+      "August 05, 2017 09:45:23 (-0700)", "October 23, 2017 01:32:00 (-0700)",
+      "January 01, 2000 00:00:00 (-0800)"
+    )
+  )
+
+
+  expect_equal(
+    (gt_tables[[1]] %>% # table where `datetime` column was `character`
+       fmt_datetime(
+         columns = "datetime",
+         format = "MMMM d, y HH:mm:ss (Z)",
+         tz = "GMT"
+       ) %>%
+       render_formats_test(context = "default"))[["datetime"]],
+    c(
+      "June 10, 2017 12:35:23 (+0000)", "July 12, 2017 15:01:34 (+0000)",
+      "August 5, 2017 09:45:23 (+0000)", "October 23, 2017 01:32:00 (+0000)",
+      "January 1, 2000 00:00:00 (+0000)"
+    )
+  )
+
+  expect_equal(
+    (gt_tables[[1]] %>% # table where `datetime` column was `character`
+       fmt_datetime(
+         columns = "datetime",
+         format = "MMMM d, y HH:mm:ss (Z)",
+         tz = "America/Toronto"
+       ) %>%
+       render_formats_test(context = "default"))[["datetime"]],
+    c(
+      "June 10, 2017 12:35:23 (-0400)", "July 12, 2017 15:01:34 (-0400)",
+      "August 5, 2017 09:45:23 (-0400)", "October 23, 2017 01:32:00 (-0400)",
+      "January 1, 2000 00:00:00 (-0500)"
+    )
+  )
+
+  expect_equal(
+    (gt_tables[[1]] %>% # table where `datetime` column was `character`
+       fmt_datetime(
+         columns = "datetime",
+         format = "MMMM d, y HH:mm:ss (Z)",
+         tz = "America/Vancouver"
+       ) %>%
+       render_formats_test(context = "default"))[["datetime"]],
+    c(
+      "June 10, 2017 12:35:23 (-0700)", "July 12, 2017 15:01:34 (-0700)",
+      "August 5, 2017 09:45:23 (-0700)", "October 23, 2017 01:32:00 (-0700)",
+      "January 1, 2000 00:00:00 (-0800)"
+    )
   )
 
   # Using a POSIXct-formatted date-time *does* allow
@@ -638,7 +725,8 @@ test_that("the `fmt_datetime()` function works correctly", {
     (gt_tables[[2]] %>%
        fmt_datetime(
          columns = "datetime",
-         format = "%B %d, %Y %H:%M:%S (%z)", tz = "America/Toronto"
+         format = "%B %d, %Y %H:%M:%S (%z)",
+         tz = "America/Toronto"
        ) %>%
        render_formats_test(context = "default"))[["datetime"]],
     c(
@@ -647,17 +735,49 @@ test_that("the `fmt_datetime()` function works correctly", {
       "December 31, 1999 19:00:00 (-0500)"
     )
   )
+
   expect_equal(
     (gt_tables[[2]] %>%
        fmt_datetime(
          columns = "datetime",
-         format = "%B %d, %Y %H:%M:%S (%z)", tz = "Asia/Tokyo"
+         format = "MMMM d, y HH:mm:ss (Z)",
+         tz = "America/Toronto"
+       ) %>%
+       render_formats_test(context = "default"))[["datetime"]],
+    c(
+      "June 10, 2017 08:35:23 (-0400)", "July 12, 2017 11:01:34 (-0400)",
+      "August 5, 2017 05:45:23 (-0400)", "October 22, 2017 21:32:00 (-0400)",
+      "December 31, 1999 19:00:00 (-0500)"
+    )
+  )
+
+  expect_equal(
+    (gt_tables[[2]] %>%
+       fmt_datetime(
+         columns = "datetime",
+         format = "%B %d, %Y %H:%M:%S (%z)",
+         tz = "Asia/Tokyo"
        ) %>%
        render_formats_test(context = "default"))[["datetime"]],
     c(
       "June 10, 2017 21:35:23 (+0900)", "July 13, 2017 00:01:34 (+0900)",
       "August 05, 2017 18:45:23 (+0900)", "October 23, 2017 10:32:00 (+0900)",
       "January 01, 2000 09:00:00 (+0900)"
+    )
+  )
+
+  expect_equal(
+    (gt_tables[[2]] %>%
+       fmt_datetime(
+         columns = "datetime",
+         format = "MMMM d, y HH:mm:ss (Z)",
+         tz = "Asia/Tokyo"
+       ) %>%
+       render_formats_test(context = "default"))[["datetime"]],
+    c(
+      "June 10, 2017 21:35:23 (+0900)", "July 13, 2017 00:01:34 (+0900)",
+      "August 5, 2017 18:45:23 (+0900)", "October 23, 2017 10:32:00 (+0900)",
+      "January 1, 2000 09:00:00 (+0900)"
     )
   )
 
@@ -688,7 +808,22 @@ test_that("the `fmt_datetime()` function works correctly", {
        gt() %>%
        fmt_datetime(
          columns = "datetime",
-         format = "%B %d, %Y %H:%M:%S (%z)", tz = "Asia/Tokyo"
+         format = "%B %d, %Y %H:%M:%S (%z)", # strftime pattern
+         tz = "Asia/Tokyo"
+       ) %>%
+       render_formats_test(context = "default"))[["datetime"]],
+    c(
+      "October 15, 2017 12:35:23 (+0900)", "February 22, 2013 15:01:34 (+0900)",
+      "September 22, 2014 09:45:23 (+0900)", "January 10, 2018 01:32:00 (+0900)"
+    )
+  )
+  expect_equal(
+    (datetime_jst_tbl %>%
+       gt() %>%
+       fmt_datetime(
+         columns = "datetime",
+         format = "MMMM d, y HH:mm:ss (Z)", # fdt pattern
+         tz = "Asia/Tokyo"
        ) %>%
        render_formats_test(context = "default"))[["datetime"]],
     c(
@@ -704,12 +839,27 @@ test_that("the `fmt_datetime()` function works correctly", {
        gt() %>%
        fmt_datetime(
          columns = "datetime",
-         format = "%B %d, %Y %H:%M:%S (%z)", tz = "America/Toronto"
+         format = "%B %d, %Y %H:%M:%S (%z)",
+         tz = "America/Toronto"
        ) %>%
        render_formats_test(context = "default"))[["datetime"]],
     c(
       "October 14, 2017 23:35:23 (-0400)", "February 22, 2013 01:01:34 (-0500)",
       "September 21, 2014 20:45:23 (-0400)", "January 09, 2018 11:32:00 (-0500)"
+    )
+  )
+  expect_equal(
+    (datetime_jst_tbl %>%
+       gt() %>%
+       fmt_datetime(
+         columns = "datetime",
+         format = "MMMM d, y HH:mm:ss (Z)",
+         tz = "America/Toronto"
+       ) %>%
+       render_formats_test(context = "default"))[["datetime"]],
+    c(
+      "October 14, 2017 23:35:23 (-0400)", "February 22, 2013 01:01:34 (-0500)",
+      "September 21, 2014 20:45:23 (-0400)", "January 9, 2018 11:32:00 (-0500)"
     )
   )
 
@@ -726,8 +876,43 @@ test_that("the `fmt_datetime()` function works correctly", {
 
   expect_equal(
     (tab_3 %>%
-       fmt_datetime(columns = "time", format = "%I:%M:%S %P") %>%
+       fmt_datetime(
+         columns = "time",
+         format = "%I:%M:%S %P"
+       ) %>%
        render_formats_test(context = "default"))[["time"]],
     c("12:35:23 pm", "03:01:34 pm", "09:45:23 am", "01:32:00 am", "12:00:00 am")
+  )
+
+  expect_equal(
+    (tab_3 %>%
+       fmt_datetime(
+         columns = "time",
+         format = "%I:%M:%S %P",
+         tz = "America/Vancouver"
+       ) %>%
+       render_formats_test(context = "default"))[["time"]],
+    c("12:35:23 pm", "03:01:34 pm", "09:45:23 am", "01:32:00 am", "12:00:00 am")
+  )
+
+  expect_equal(
+    (tab_3 %>%
+       fmt_datetime(
+         columns = "time",
+         format = "h:mm:ss a"
+       ) %>%
+       render_formats_test(context = "default"))[["time"]],
+    c("12:35:23 PM", "3:01:34 PM", "9:45:23 AM", "1:32:00 AM", "12:00:00 AM")
+  )
+
+  expect_equal(
+    (tab_3 %>%
+       fmt_datetime(
+         columns = "time",
+         format = "h:mm:ss a",
+         tz = "America/Vancouver"
+       ) %>%
+       render_formats_test(context = "default"))[["time"]],
+    c("12:35:23 PM", "3:01:34 PM", "9:45:23 AM", "1:32:00 AM", "12:00:00 AM")
   )
 })
