@@ -30,11 +30,11 @@
 info_date_style <- function() {
 
   dplyr::tibble(
-    Number = 1:14,
+    Number = 1:15,
     Name = c(
       "iso", "wday_month_day_year", "wd_m_day_year", "wday_day_month_year",
       "month_day_year", "m_day_year", "day_m_year", "day_month_year",
-      "day_month", "year", "month", "day", "year.mn.day", "y.mn.day"),
+      "day_month", "day_m", "year", "month", "day", "year.mn.day", "y.mn.day"),
     date = "2000-02-29") %>%
     gt() %>%
     fmt_date(columns = "date", rows = 1, date_style = 1) %>%
@@ -51,6 +51,7 @@ info_date_style <- function() {
     fmt_date(columns = "date", rows = 12, date_style = 12) %>%
     fmt_date(columns = "date", rows = 13, date_style = 13) %>%
     fmt_date(columns = "date", rows = 14, date_style = 14) %>%
+    fmt_date(columns = "date", rows = 15, date_style = 15) %>%
     tab_spanner(label = "Date Formats", columns = c("Number", "Name")) %>%
     cols_label(date = "Formatted Date") %>%
     tab_header(
