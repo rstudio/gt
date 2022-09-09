@@ -10,7 +10,7 @@ test_that("the `info_date_style()` function works correctly", {
     info_date_style() %>%
       dt_data_get() %>%
       dim(),
-    c(14, 3)
+    c(15, 3)
   )
 })
 
