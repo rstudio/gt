@@ -38,9 +38,9 @@ test_that("the `get_date_format()` function works correctly", {
     unlist() %>%
     expect_equal(
       c(
-        "%F", "%A, %B %d, %Y", "%a, %b %d, %Y", "%A %d %B %Y",
-        "%B %d, %Y", "%b %d, %Y", "%d %b %Y", "%d %B %Y", "%d %B", "%d %b",
-        "%Y", "%B", "%d", "%Y/%m/%d", "%y/%m/%d"
+        "y-MM-dd", "EEEE, MMMM d, y", "EEE, MMM d, y", "EEEE d MMMM y",
+        "MMMM d, y", "MMM d, y", "d MMM y", "d MMMM y", "d MMMM", "d MMM",
+        "y", "MMMM", "dd", "y/MM/dd", "yy/MM/dd"
       )
     )
 
@@ -50,9 +50,9 @@ test_that("the `get_date_format()` function works correctly", {
     unlist() %>%
     expect_equal(
       c(
-        "%F", "%A, %B %d, %Y", "%a, %b %d, %Y", "%A %d %B %Y",
-        "%B %d, %Y", "%b %d, %Y", "%d %b %Y", "%d %B %Y", "%d %B", "%d %b",
-        "%Y", "%B", "%d", "%Y/%m/%d", "%y/%m/%d"
+        "y-MM-dd", "EEEE, MMMM d, y", "EEE, MMM d, y", "EEEE d MMMM y",
+        "MMMM d, y", "MMM d, y", "d MMM y", "d MMMM y", "d MMMM", "d MMM",
+        "y", "MMMM", "dd", "y/MM/dd", "yy/MM/dd"
       )
     )
 })
@@ -64,7 +64,7 @@ test_that("the `get_time_format()` function works correctly", {
   lapply(1:5, get_time_format) %>%
     unlist() %>%
     expect_equal(
-      c("%H:%M:%S", "%H:%M", "%I:%M:%S %P", "%I:%M %P", "%I %P")
+      c("HH:mm:ss", "HH:mm", "h:mm:ss a", "h:mm a", "h a")
     )
 
   # Expect specific `format_code` values for each
@@ -72,7 +72,7 @@ test_that("the `get_time_format()` function works correctly", {
   lapply(time_formats()$format_name, get_time_format) %>%
     unlist() %>%
     expect_equal(
-      c("%H:%M:%S", "%H:%M", "%I:%M:%S %P", "%I:%M %P", "%I %P")
+      c("HH:mm:ss", "HH:mm", "h:mm:ss a", "h:mm a", "h a")
     )
 })
 
