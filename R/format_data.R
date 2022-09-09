@@ -2765,12 +2765,57 @@ fmt_datetime <- function(
             x <- paste("1970-01-01", x)
           }
 
-          if (is.character(x) && is.null(tz)) {
-            tz <- ""
-          }
+          if (grepl("%", format)) {
 
-          # Format the date-time values using `strftime()`
-          return(strftime(x, format = format, tz = tz))
+            if (is.character(x)) {
+
+              if (is.null(tz)) {
+                tz <- "GMT"
+              }
+
+              datetime <-
+                tryCatch(
+                  as.POSIXlt(x),
+                  error = function(cond) {
+                    cli::cli_abort(
+                      "One or more of the provided date/datetime values are invalid."
+                    )
+                  }
+                )
+
+              attr(datetime, which = "tzone") <- tz
+
+              datetime <- as.POSIXct(datetime)
+
+              return(strftime(datetime, format = format, tz = tz))
+            }
+
+            # Format the date-time values using `strftime()`
+            return(strftime(x, format = format, tz = tz))
+
+          } else {
+
+            if (is.null(tz)) {
+              tz <- "UTC"
+            }
+
+            dt_str <- strftime(x, format = "%Y-%m-%dT%H:%M:%S%z", tz = tz)
+
+            if ("tzone" %in% names(attributes(x))) {
+              tzone <- attr(x, which = "tzone", exact = TRUE)
+              dt_str <- paste0(dt_str, "(", tzone, ")")
+            }
+
+            # Format the date-time values using `fdt()`
+            return(
+              bigD::fdt(
+                input = dt_str,
+                format = format,
+                locale = locale,
+                use_tz = tz
+              )
+            )
+          }
         }
 
         #
