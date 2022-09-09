@@ -150,7 +150,7 @@ get_table_defs <- function(data) {
 create_caption_component_h <- function(data) {
 
   # Create the table caption if available
-  table_caption <- dt_options_get_value(data = data, option = "table_caption")
+  table_caption <- tab_caption(data = data)
 
   if (!is.null(table_caption)) {
 

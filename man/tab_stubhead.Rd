@@ -50,6 +50,7 @@ is in the stub.
 
 \seealso{
 Other part creation/modification functions: 
+\code{\link{tab_caption}()},
 \code{\link{tab_footnote}()},
 \code{\link{tab_header}()},
 \code{\link{tab_options}()},

@@ -953,6 +953,38 @@ tab_stub_indent <- function(
   dt_stub_df_set(data = data, stub_df = stub_df)
 }
 
+#' Add or remove a table caption
+#'
+#' @details
+#' If `caption` is `NULL`, the caption is removed.  If `caption` is missing, the
+#' current caption is returned.  Otherwise, caption of the current gt is created
+#' or modified.
+#'
+#' @inheritParams fmt_number
+#' @param caption An optional table caption to use for cross-referencing
+#'   in R Markdown documents and **bookdown** book projects.
+#' @return For `NULL` or character `caption` arguments, an object of class
+#'   `gt_tbl`.  For a missing `caption` argument, the current caption.
+#' @family part creation/modification functions
+#' @export
+tab_caption <- function(data, caption) {
+  if (missing(caption)) {
+    ret <-
+      dt_options_get_value(
+        data = data,
+        option = "table_caption"
+      )
+  } else {
+    ret <-
+      dt_options_set_value(
+        data = data,
+        option = "table_caption",
+        value = caption
+      )
+  }
+  ret
+}
+
 #' Add a table footnote
 #'
 #' @description
