@@ -25,7 +25,7 @@ selection_text <- function(html, selection) {
 }
 
 test_that("the correct color values are obtained when defining a palette", {
-
+  skip_if_not_installed("paletteer")
   # Obtain a palette of 12 colors in #RRGGBB format
   pal_12 <-
     paletteer::paletteer_d(palette = "rcartocolor::Vivid") %>% as.character() %>%
