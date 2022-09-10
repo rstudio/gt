@@ -1,5 +1,3 @@
-skip_on_cran()
-
 # Create a shorter version of `mtcars`
 mtcars_short <- mtcars[1:5, ]
 

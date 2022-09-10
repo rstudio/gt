@@ -1,5 +1,3 @@
-skip_on_cran()
-
 # Create a table based on `sp500`, with group names, rownames,
 # and four columns of values
 tbl <-

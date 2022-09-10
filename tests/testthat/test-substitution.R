@@ -1,5 +1,3 @@
-skip_on_cran()
-
 test_that("the `sub_missing()` function works correctly", {
 
   # Create an input table with two columns, both numeric
