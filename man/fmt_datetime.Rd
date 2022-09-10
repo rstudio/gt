@@ -49,10 +49,10 @@ the different numbered and named time presets.}
 By default, this is a single space character (\code{" "}). Only used when not
 specifying a \code{format} code.}
 
-\item{format}{An optional format code used for generating custom dates/times.
-If used then the arguments governing preset styles (\code{date_style} and
-\code{time_style}) will be ignored in favor of formatting via the \code{format}
-string.}
+\item{format}{An optional formatting string used for generating custom
+dates/times. If used then the arguments governing preset styles
+(\code{date_style} and \code{time_style}) will be ignored in favor of formatting via
+the \code{format} string.}
 
 \item{tz}{The time zone for printing dates/times (i.e., the output). The
 default of \code{NULL} will preserve the time zone of the input data in the
@@ -125,16 +125,43 @@ nothing is provided for \code{rows} then entire columns are selected). Condition
 formatting is possible by providing a conditional expression to the \code{rows}
 argument. See the \emph{Arguments} section for more information on this.
 }
-\section{Date and Time Formats}{
+\section{Formatting with a \emph{CLDR} datetime pattern}{
 
-Using \code{format} to create custom time formats isn't so hard once we know about
-all of the different format codes. The formats are all indicated with a
-leading \verb{\%} and literal characters are any of those without the leading \verb{\%}.
-We'll use the date and time \code{"2015-06-08 23:05:37.48"} for all of the
-examples here.
+
+We can use a \emph{CLDR} datetime pattern with the \code{format} argument to create
+a highly customized and locale-aware output. This is a character string that
+consists of two types of elements:
+\itemize{
+\item Pattern fields, which repeat a specific pattern character one or more
+times. These fields are replaced with date and time data when formatting.
+The character set \link{A-Za-z} is reserved for use as pattern characters.
+\item Literal text, which is output verbatim when formatting. This can include:
+\itemize{
+\item Any characters outside the \link{A-Za-z} character set, including spaces and
+punctuation.
+\item Any text between single vertical quotes (e.g., \code{'text'}).
+\item Two adjacent single vertical quotes (''), which represent a literal
+single quote, either inside or outside quoted text.
+}
+}
+
+The pattern characters currently defined, and the meaning of different
+fields' lengths for then, are listed in the Date Field Symbol Table below.
+}
+
+\section{Formatting with a \code{strptime} format code}{
+
+
+Using \code{format} to perform custom date/time formatting isn't so hard once we
+know about how to assemble a \code{strptime} format code. This type of format code
+works by constructing a string of individual format codes representing
+formatted date and time elements. These are all indicated with a leading \verb{\%},
+literal characters are interpreted as any characters not starting with a \verb{\%}
+character. We'll use the date and time \code{"2015-06-08 23:05:37.48"} for all of
+the examples here.
 
 First off, let's look at a few format code combinations that work well
-together as format codes. This will give us an intuition on how these
+together as a \code{strptime} format. This will give us an intuition on how these
 generally work.
 \itemize{
 \item \code{"\%m/\%d/\%Y"} -> \code{"06/08/2015"}
@@ -174,7 +201,8 @@ Here are some extra formats that you may find useful:
 \itemize{
 \item \code{"\%j"} -> \code{"159"} (day of the year, always zero-padded)
 \item \code{"\%W"} -> \code{"23"} (week number for the year, always zero-padded)
-\item \code{"\%V"} -> \code{"24"} (week number for the year, following ISO 8601 standard)
+\item \code{"\%V"} -> \code{"24"} (week number for the year, following the ISO 8601
+standard)
 \item \code{"\%C"} -> \code{"20"} (the century number)
 \item \code{"\%z"} -> \code{"+0000"} (signed time zone offset, here using UTC)
 \item \code{"\%F"} -> \code{"2015-06-08"} (the date in the ISO 8601 date format)
