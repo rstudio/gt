@@ -1376,8 +1376,6 @@ test_that("creating summary rows works for hidden columns", {
 
 test_that("Situtations where `rowname` is a column name don't interfere with internals", {
 
-  skip_on_cran()
-
   # The most basic table where rowname exists as a column; by default
   # a `"rowname"` column is used as the stub
   summary_tbl_1 <-
