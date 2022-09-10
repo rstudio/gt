@@ -2601,16 +2601,50 @@ fmt_time <- function(
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the *Arguments* section for more information on this.
 #'
-#' @section Date and Time Formats:
-#' Using `format` to create custom time formats isn't so hard once we know about
-#' all of the different format codes. The formats are all indicated with a
-#' leading `%` and literal characters are any of those without the leading `%`.
-#' We'll use the date and time `"2015-06-08 23:05:37.48"` for all of the
-#' examples here.
+#' @section Formatting with a *CLDR* datetime pattern:
+#'
+#' We can use a *CLDR* datetime pattern with the `format` argument to create
+#' a highly customized and locale-aware output. This is a character string that
+#' consists of two types of elements:
+#'
+#' - Pattern fields, which repeat a specific pattern character one or more
+#'   times. These fields are replaced with date and time data when formatting.
+#'   The character set [A-Za-z] is reserved for use as pattern characters.
+#' - Literal text, which is output verbatim when formatting. This can include:
+#'     - Any characters outside the [A-Za-z] character set, including spaces and
+#'     punctuation.
+#'     - Any text between single vertical quotes (e.g., `'text'`).
+#'     - Two adjacent single vertical quotes (''), which represent a literal
+#'     single quote, either inside or outside quoted text.
+#'
+#' The number of pattern fields is quite sizable so let's first look at how some
+#' *CLDR* datetime patterns work. We'll use the datetime string
+#' `"2018-07-04T22:05:09.2358(America/Vancouver)"` for all of the examples that
+#' follow.
+#'
+#' - `"mm/dd/y"` -> `"05/04/2018"`
+#' - `"EEEE, MMMM d, y"` -> `"Wednesday, July 4, 2018"`
+#' - `"MMM d E"` -> `"Jul 4 Wed"`
+#' - `"HH:mm"` -> `"22:05"`
+#' - `"h:mm a"` -> `"10:05 PM"`
+#' - `"EEEE, MMMM d, y 'at' h:mm a"` -> `"Wednesday, July 4, 2018 at 10:05 PM"`
+#'
+#' Here are the individual format codes for date components:
+#'
+#' - `"%a"` -> `"Mon"`
+#'
+#' @section Formatting with a `strptime` format code:
+#'
+#' Performing custom date/time formatting with the `format` argument can also
+#' occur with a `strptime` format code. This works by constructing a string of
+#' individual format codes representing formatted date and time elements. These
+#' are all indicated with a leading `%`, literal characters are interpreted as
+#' any characters not starting with a `%` character.
 #'
 #' First off, let's look at a few format code combinations that work well
-#' together as format codes. This will give us an intuition on how these
-#' generally work.
+#' together as a `strptime` format. This will give us an intuition on how these
+#' generally work. We'll use the datetime `"2015-06-08 23:05:37.48"` for all of
+#' the examples that follow.
 #'
 #' - `"%m/%d/%Y"` -> `"06/08/2015"`
 #' - `"%A, %B %e, %Y"` -> `"Monday, June 8, 2015"`
@@ -2619,7 +2653,7 @@ fmt_time <- function(
 #' - `"%I:%M %p"` -> `"11:05 pm"`
 #' - `"%A, %B %e, %Y at %I:%M %p"` -> `"Monday, June 8, 2015 at 11:05 pm"`
 #'
-#' Here are the individual format codes for date components:
+#' Here are the individual format codes for the date components:
 #'
 #' - `"%a"` -> `"Mon"` (abbreviated day of week name)
 #' - `"%A"` -> `"Monday"` (full day of week name)
@@ -2632,22 +2666,23 @@ fmt_time <- function(
 #' - `"%m"` -> `"06"` (month number)
 #' - `"%d"` -> `"08"` (day number, zero-padded)
 #' - `"%e"` -> `"8"` (day number without zero padding)
+#' - `"%j"` -> `"159"` (day of the year, always zero-padded)
+#' - `"%W"` -> `"23"` (week number for the year, always zero-padded)
+#' - `"%V"` -> `"24"` (week number for the year, following the ISO 8601
+#' standard)
+#' - `"%C"` -> `"20"` (the century number)
 #'
-#' Here are the individual format codes for time components:
+#' Here are the individual format codes for the time components:
 #'
 #' - `"%H"` -> `"23"` (24h hour)
 #' - `"%I"` -> `"11"` (12h hour)
 #' - `"%M"` -> `"05"` (minute)
 #' - `"%S"` -> `"37"` (second)
 #' - `"%OS3"` -> `"37.480"` (seconds with decimals; `3` decimal places here)
-#' - `%p` -> `"pm"` (AM or PM indicator, may not appear in certain locales)
+#' - `%p` -> `"pm"` (AM or PM indicator)
 #'
 #' Here are some extra formats that you may find useful:
 #'
-#' - `"%j"` -> `"159"` (day of the year, always zero-padded)
-#' - `"%W"` -> `"23"` (week number for the year, always zero-padded)
-#' - `"%V"` -> `"24"` (week number for the year, following ISO 8601 standard)
-#' - `"%C"` -> `"20"` (the century number)
 #' - `"%z"` -> `"+0000"` (signed time zone offset, here using UTC)
 #' - `"%F"` -> `"2015-06-08"` (the date in the ISO 8601 date format)
 #' - `"%%"` -> `"%"` (the literal "`%`" character, in case you need it)
@@ -2658,10 +2693,10 @@ fmt_time <- function(
 #' @param sep The separator string to use between the date and time components.
 #'   By default, this is a single space character (`" "`). Only used when not
 #'   specifying a `format` code.
-#' @param format An optional format code used for generating custom dates/times.
-#'   If used then the arguments governing preset styles (`date_style` and
-#'   `time_style`) will be ignored in favor of formatting via the `format`
-#'   string.
+#' @param format An optional formatting string used for generating custom
+#'   dates/times. If used then the arguments governing preset styles
+#'   (`date_style` and `time_style`) will be ignored in favor of formatting via
+#'   the `format` string.
 #' @param tz The time zone for printing dates/times (i.e., the output). The
 #'   default of `NULL` will preserve the time zone of the input data in the
 #'   output. If providing a time zone, it must be one that is recognized by the
@@ -2715,8 +2750,8 @@ fmt_datetime <- function(
 
   if (!is.null(format)) {
 
-    # Ensure that the format string meets some basic validation requirements
-    check_format_string(format = format)
+    # Ensure that the format code meets some basic validation requirements
+    check_format_code(format = format)
 
   } else {
 
