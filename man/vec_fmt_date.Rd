@@ -8,6 +8,7 @@ vec_fmt_date(
   x,
   date_style = 1,
   pattern = "{x}",
+  locale = NULL,
   output = c("auto", "plain", "html", "latex", "rtf", "word")
 )
 }
@@ -22,6 +23,13 @@ style (\code{"wday_month_day_year"}, \code{"m_day_year"}, \code{"year.mn.day"}, 
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other
 characters are taken to be string literals.}
+
+\item{locale}{An optional locale ID that can be used for formatting the value
+according the locale's rules. Examples include \code{"en"} for English (United
+States) and \code{"fr"} for French (France). The use of a valid locale ID will
+override any values provided in \code{sep_mark} and \code{dec_mark}. We can use the
+\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
+are supported.}
 
 \item{output}{The output style of the resulting character vector. This can
 either be \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"},
