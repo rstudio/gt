@@ -143,7 +143,7 @@ is_string_time <- function(x) {
   is.character(x) & grepl("^\\d{1,2}:\\d{2}(:\\d{2}(\\.\\d+)?)?$", x)
 }
 
-check_format_string <- function(format) {
+check_format_code <- function(format) {
 
   if (!is.character(format) || length(format) != 1) {
     cli::cli_abort(
