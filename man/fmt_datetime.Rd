@@ -134,35 +134,50 @@ consists of two types of elements:
 \itemize{
 \item Pattern fields, which repeat a specific pattern character one or more
 times. These fields are replaced with date and time data when formatting.
-The character set \link{A-Za-z} is reserved for use as pattern characters.
+The character sets of \code{A}-\code{Z} and \code{a}-\code{z} are reserved for use as pattern
+characters.
 \item Literal text, which is output verbatim when formatting. This can include:
 \itemize{
-\item Any characters outside the \link{A-Za-z} character set, including spaces and
-punctuation.
+\item Any characters outside the reserved character sets, including
+spaces and punctuation.
 \item Any text between single vertical quotes (e.g., \code{'text'}).
 \item Two adjacent single vertical quotes (''), which represent a literal
 single quote, either inside or outside quoted text.
 }
 }
 
-The pattern characters currently defined, and the meaning of different
-fields' lengths for then, are listed in the Date Field Symbol Table below.
+The number of pattern fields is quite sizable so let's first look at how some
+\emph{CLDR} datetime patterns work. We'll use the datetime string
+\code{"2018-07-04T22:05:09.2358(America/Vancouver)"} for all of the examples that
+follow.
+\itemize{
+\item \code{"mm/dd/y"} -> \code{"05/04/2018"}
+\item \code{"EEEE, MMMM d, y"} -> \code{"Wednesday, July 4, 2018"}
+\item \code{"MMM d E"} -> \code{"Jul 4 Wed"}
+\item \code{"HH:mm"} -> \code{"22:05"}
+\item \code{"h:mm a"} -> \code{"10:05 PM"}
+\item \code{"EEEE, MMMM d, y 'at' h:mm a"} -> \code{"Wednesday, July 4, 2018 at 10:05 PM"}
+}
+
+Here are the individual format codes for date components:
+\itemize{
+\item \code{"\%a"} -> \code{"Mon"}
+}
 }
 
 \section{Formatting with a \code{strptime} format code}{
 
 
-Using \code{format} to perform custom date/time formatting isn't so hard once we
-know about how to assemble a \code{strptime} format code. This type of format code
-works by constructing a string of individual format codes representing
-formatted date and time elements. These are all indicated with a leading \verb{\%},
-literal characters are interpreted as any characters not starting with a \verb{\%}
-character. We'll use the date and time \code{"2015-06-08 23:05:37.48"} for all of
-the examples here.
+Performing custom date/time formatting with the \code{format} argument can also
+occur with a \code{strptime} format code. This works by constructing a string of
+individual format codes representing formatted date and time elements. These
+are all indicated with a leading \verb{\%}, literal characters are interpreted as
+any characters not starting with a \verb{\%} character.
 
 First off, let's look at a few format code combinations that work well
 together as a \code{strptime} format. This will give us an intuition on how these
-generally work.
+generally work. We'll use the datetime \code{"2015-06-08 23:05:37.48"} for all of
+the examples that follow.
 \itemize{
 \item \code{"\%m/\%d/\%Y"} -> \code{"06/08/2015"}
 \item \code{"\%A, \%B \%e, \%Y"} -> \code{"Monday, June 8, 2015"}
@@ -172,7 +187,7 @@ generally work.
 \item \code{"\%A, \%B \%e, \%Y at \%I:\%M \%p"} -> \code{"Monday, June 8, 2015 at 11:05 pm"}
 }
 
-Here are the individual format codes for date components:
+Here are the individual format codes for the date components:
 \itemize{
 \item \code{"\%a"} -> \code{"Mon"} (abbreviated day of week name)
 \item \code{"\%A"} -> \code{"Monday"} (full day of week name)
@@ -185,25 +200,25 @@ Here are the individual format codes for date components:
 \item \code{"\%m"} -> \code{"06"} (month number)
 \item \code{"\%d"} -> \code{"08"} (day number, zero-padded)
 \item \code{"\%e"} -> \code{"8"} (day number without zero padding)
+\item \code{"\%j"} -> \code{"159"} (day of the year, always zero-padded)
+\item \code{"\%W"} -> \code{"23"} (week number for the year, always zero-padded)
+\item \code{"\%V"} -> \code{"24"} (week number for the year, following the ISO 8601
+standard)
+\item \code{"\%C"} -> \code{"20"} (the century number)
 }
 
-Here are the individual format codes for time components:
+Here are the individual format codes for the time components:
 \itemize{
 \item \code{"\%H"} -> \code{"23"} (24h hour)
 \item \code{"\%I"} -> \code{"11"} (12h hour)
 \item \code{"\%M"} -> \code{"05"} (minute)
 \item \code{"\%S"} -> \code{"37"} (second)
 \item \code{"\%OS3"} -> \code{"37.480"} (seconds with decimals; \code{3} decimal places here)
-\item \verb{\%p} -> \code{"pm"} (AM or PM indicator, may not appear in certain locales)
+\item \verb{\%p} -> \code{"pm"} (AM or PM indicator)
 }
 
 Here are some extra formats that you may find useful:
 \itemize{
-\item \code{"\%j"} -> \code{"159"} (day of the year, always zero-padded)
-\item \code{"\%W"} -> \code{"23"} (week number for the year, always zero-padded)
-\item \code{"\%V"} -> \code{"24"} (week number for the year, following the ISO 8601
-standard)
-\item \code{"\%C"} -> \code{"20"} (the century number)
 \item \code{"\%z"} -> \code{"+0000"} (signed time zone offset, here using UTC)
 \item \code{"\%F"} -> \code{"2015-06-08"} (the date in the ISO 8601 date format)
 \item \code{"\%\%"} -> \code{"\%"} (the literal "\verb{\%}" character, in case you need it)
