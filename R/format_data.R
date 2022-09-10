@@ -2609,10 +2609,11 @@ fmt_time <- function(
 #'
 #' - Pattern fields, which repeat a specific pattern character one or more
 #'   times. These fields are replaced with date and time data when formatting.
-#'   The character set [A-Za-z] is reserved for use as pattern characters.
+#'   The character sets of `A`-`Z` and `a`-`z` are reserved for use as pattern
+#'   characters.
 #' - Literal text, which is output verbatim when formatting. This can include:
-#'     - Any characters outside the [A-Za-z] character set, including spaces and
-#'     punctuation.
+#'     - Any characters outside the reserved character sets, including
+#'       spaces and punctuation.
 #'     - Any text between single vertical quotes (e.g., `'text'`).
 #'     - Two adjacent single vertical quotes (''), which represent a literal
 #'     single quote, either inside or outside quoted text.
