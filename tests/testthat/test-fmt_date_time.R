@@ -1,3 +1,5 @@
+skip_on_os("linux")
+
 library(lubridate)
 
 test_that("the `fmt_date()` function works correctly", {
