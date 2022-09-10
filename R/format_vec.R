@@ -74,11 +74,11 @@
 #'   display a minus sign. This option is disregarded when using accounting
 #'   notation with `accounting = TRUE`.
 #' @param locale An optional locale ID that can be used for formatting the value
-#'   according the locale's rules. Examples include `"en_US"` for English
-#'   (United States) and `"fr_FR"` for French (France). The use of a valid
-#'   locale ID will override any values provided in `sep_mark` and `dec_mark`.
-#'   We can use the [info_locales()] function as a useful reference for all of
-#'   the locales that are supported.
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). The use of a valid locale ID will
+#'   override any values provided in `sep_mark` and `dec_mark`. We can use the
+#'   [info_locales()] function as a useful reference for all of the locales that
+#'   are supported.
 #' @param output The output style of the resulting character vector. This can
 #'   either be `"auto"` (the default), `"plain"`, `"html"`, `"latex"`, `"rtf"`,
 #'   or `"word"`. In **knitr** rendering (i.e., Quarto or R Markdown), the
@@ -1646,6 +1646,7 @@ vec_fmt_date <- function(
     x,
     date_style = 1,
     pattern = "{x}",
+    locale = NULL,
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
@@ -1671,7 +1672,8 @@ vec_fmt_date <- function(
       gt(dplyr::tibble(x = x)),
       columns = "x", rows = everything(),
       date_style = date_style,
-      pattern = pattern
+      pattern = pattern,
+      locale = locale
     ),
     output = output
   )
@@ -1759,6 +1761,7 @@ vec_fmt_time <- function(
     x,
     time_style = 1,
     pattern = "{x}",
+    locale = NULL,
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
@@ -1784,7 +1787,8 @@ vec_fmt_time <- function(
       gt(dplyr::tibble(x = x)),
       columns = "x", rows = everything(),
       time_style = time_style,
-      pattern = pattern
+      pattern = pattern,
+      locale = locale
     ),
     output = output
   )
@@ -1992,6 +1996,7 @@ vec_fmt_datetime <- function(
     format = NULL,
     tz = NULL,
     pattern = "{x}",
+    locale = NULL,
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
@@ -2021,7 +2026,8 @@ vec_fmt_datetime <- function(
       sep = sep,
       format = format,
       tz = tz,
-      pattern = pattern
+      pattern = pattern,
+      locale = locale
     ),
     output = output
   )
