@@ -1644,7 +1644,7 @@ vec_fmt_bytes <- function(
 #' @export
 vec_fmt_date <- function(
     x,
-    date_style = 1,
+    date_style = "iso",
     pattern = "{x}",
     locale = NULL,
     output = c("auto", "plain", "html", "latex", "rtf", "word")
@@ -1691,10 +1691,10 @@ vec_fmt_date <- function(
 #' time styles are available for use (all using the input time of `14:35:00` in
 #' the example output times):
 #'
-#' 1. `"hms"`: `14:35:00`
-#' 2. `"hm"`: `14:35`
-#' 3. `"hms_p"`: `2:35:00 PM`
-#' 4. `"hm_p"`: `2:35 PM`
+#' 1. `"h_m_s"`: `14:35:00`
+#' 2. `"h_m"`: `14:35`
+#' 3. `"h_m_s_p"`: `2:35:00 PM`
+#' 4. `"h_m_p"`: `2:35 PM`
 #' 5. `"h_p"`: `2 PM`
 #'
 #' We can use the [info_time_style()] function for a useful reference on all of
@@ -1759,7 +1759,7 @@ vec_fmt_date <- function(
 #' @export
 vec_fmt_time <- function(
     x,
-    time_style = 1,
+    time_style = "h_m_s",
     pattern = "{x}",
     locale = NULL,
     output = c("auto", "plain", "html", "latex", "rtf", "word")
@@ -1828,10 +1828,10 @@ vec_fmt_time <- function(
 #' The following time styles are available for formatting of the time portion
 #' (all using the input time of `14:35:00` in the example output times):
 #'
-#' 1. `"hms"`: `14:35:00`
-#' 2. `"hm"`: `14:35`
-#' 3. `"hms_p"`: `2:35:00 PM`
-#' 4. `"hm_p"`: `2:35 PM`
+#' 1. `"h_m_s"`: `14:35:00`
+#' 2. `"h_m"`: `14:35`
+#' 3. `"h_m_s_p"`: `2:35:00 PM`
+#' 4. `"h_m_p"`: `2:35 PM`
 #' 5. `"h_p"`: `2 PM`
 #'
 #' We can use the [info_date_style()] and [info_time_style()] functions as
@@ -1990,8 +1990,8 @@ vec_fmt_time <- function(
 #' @export
 vec_fmt_datetime <- function(
     x,
-    date_style = 1,
-    time_style = 1,
+    date_style = "iso",
+    time_style = "h_m_s",
     sep = " ",
     format = NULL,
     tz = NULL,
