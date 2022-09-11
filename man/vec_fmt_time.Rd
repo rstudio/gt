@@ -6,7 +6,7 @@
 \usage{
 vec_fmt_time(
   x,
-  time_style = 1,
+  time_style = "h_m_s",
   pattern = "{x}",
   locale = NULL,
   output = c("auto", "plain", "html", "latex", "rtf", "word")
@@ -49,10 +49,10 @@ We can simply apply a preset time style to format the times. The following
 time styles are available for use (all using the input time of \code{14:35:00} in
 the example output times):
 \enumerate{
-\item \code{"hms"}: \code{14:35:00}
-\item \code{"hm"}: \code{14:35}
-\item \code{"hms_p"}: \verb{2:35:00 PM}
-\item \code{"hm_p"}: \verb{2:35 PM}
+\item \code{"h_m_s"}: \code{14:35:00}
+\item \code{"h_m"}: \code{14:35}
+\item \code{"h_m_s_p"}: \verb{2:35:00 PM}
+\item \code{"h_m_p"}: \verb{2:35 PM}
 \item \code{"h_p"}: \verb{2 PM}
 }
 

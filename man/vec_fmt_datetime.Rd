@@ -6,8 +6,8 @@
 \usage{
 vec_fmt_datetime(
   x,
-  date_style = 1,
-  time_style = 1,
+  date_style = "iso",
+  time_style = "h_m_s",
   sep = " ",
   format = NULL,
   tz = NULL,
@@ -96,10 +96,10 @@ output dates):
 The following time styles are available for formatting of the time portion
 (all using the input time of \code{14:35:00} in the example output times):
 \enumerate{
-\item \code{"hms"}: \code{14:35:00}
-\item \code{"hm"}: \code{14:35}
-\item \code{"hms_p"}: \verb{2:35:00 PM}
-\item \code{"hm_p"}: \verb{2:35 PM}
+\item \code{"h_m_s"}: \code{14:35:00}
+\item \code{"h_m"}: \code{14:35}
+\item \code{"h_m_s_p"}: \verb{2:35:00 PM}
+\item \code{"h_m_p"}: \verb{2:35 PM}
 \item \code{"h_p"}: \verb{2 PM}
 }
 

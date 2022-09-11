@@ -6,7 +6,7 @@
 \usage{
 vec_fmt_date(
   x,
-  date_style = 1,
+  date_style = "iso",
   pattern = "{x}",
   locale = NULL,
   output = c("auto", "plain", "html", "latex", "rtf", "word")

@@ -8,7 +8,7 @@ fmt_date(
   data,
   columns,
   rows = everything(),
-  date_style = 1,
+  date_style = "iso",
   pattern = "{x}",
   locale = NULL
 )
@@ -31,10 +31,9 @@ functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with
 to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{date_style}{The date style to use. Supply a number (from \code{1} to \code{15})
-that corresponds to the preferred date style, or, provide a named date
-style (\code{"wday_month_day_year"}, \code{"m_day_year"}, \code{"year.mn.day"}, etc.). Use
-\code{\link[=info_date_style]{info_date_style()}} to see the different numbered and named date presets.}
+\item{date_style}{The date style to use. By default this is \code{"iso"} which
+corresponds to ISO 8601 date formatting. The other date styles can be
+viewed using \code{\link[=info_date_style]{info_date_style()}}.}
 
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other

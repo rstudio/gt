@@ -8,7 +8,7 @@ fmt_time(
   data,
   columns,
   rows = everything(),
-  time_style = 1,
+  time_style = "h_m_s",
   pattern = "{x}",
   locale = NULL
 )
@@ -31,10 +31,9 @@ functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with
 to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{time_style}{The time style to use. Supply a number (from \code{1} to \code{5})
-that corresponds to the preferred time style, or, provide a named time
-style (\code{"hms"}, \code{"hms_p"}, \code{"h_p"}, etc.). Use \code{\link[=info_time_style]{info_time_style()}} to see
-the different numbered and named time presets.}
+\item{time_style}{The time style to use. By default this is \code{"h_m_s"} which
+corresponds to how times are formatted within ISO 8601 datetime values. The
+other time styles can be viewed using \code{\link[=info_time_style]{info_time_style()}}.}
 
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other
@@ -62,10 +61,10 @@ Once the appropriate data cells are targeted with \code{columns} (and, optionall
 following time styles are available for use (all using the input time of
 \code{14:35:00} in the example output times):
 \enumerate{
-\item \code{"hms"}: \code{14:35:00}
-\item \code{"hm"}: \code{14:35}
-\item \code{"hms_p"}: \verb{2:35:00 PM}
-\item \code{"hm_p"}: \verb{2:35 PM}
+\item \code{"h_m_s"}: \code{14:35:00}
+\item \code{"h_m"}: \code{14:35}
+\item \code{"h_m_s_p"}: \verb{2:35:00 PM}
+\item \code{"h_m_p"}: \verb{2:35 PM}
 \item \code{"h_p"}: \verb{2 PM}
 }
 
