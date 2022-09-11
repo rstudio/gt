@@ -5,12 +5,12 @@ test_that("the `date_formats()` function works correctly", {
   expect_s3_class(date_formats(), c("tbl_df", "tbl", "data.frame"))
 
   # Expect the tibble to be of specific dimensions
-  expect_equal(dim(date_formats()), c(15, 3))
+  expect_equal(dim(date_formats()), c(41, 4))
 
   # Expect the tibble to have specific column names
   expect_equal(
     colnames(date_formats()),
-    c("format_number", "format_name", "format_code")
+    c("format_number", "format_name", "format_code", "flexible")
   )
 })
 
@@ -21,12 +21,12 @@ test_that("the `time_formats()` util fcn works as expected", {
   expect_s3_class(time_formats(), c("tbl_df", "tbl", "data.frame"))
 
   # Expect the tibble to be of specific dimensions
-  expect_equal(dim(time_formats()), c(5, 3))
+  expect_equal(dim(time_formats()), c(25, 5))
 
   # Expect the tibble to have specific column names
   expect_equal(
     colnames(time_formats()),
-    c("format_number", "format_name", "format_code")
+    c("format_number", "format_name", "format_code", "time_type", "flexible")
   )
 })
 
@@ -52,7 +52,10 @@ test_that("the `get_date_format()` function works correctly", {
       c(
         "y-MM-dd", "EEEE, MMMM d, y", "EEE, MMM d, y", "EEEE d MMMM y",
         "MMMM d, y", "MMM d, y", "d MMM y", "d MMMM y", "d MMMM", "d MMM",
-        "y", "MMMM", "dd", "y/MM/dd", "yy/MM/dd"
+        "y", "MMMM", "dd", "y/MM/dd", "yy/MM/dd", "yMd", "yMEd", "yMMM",
+        "yMMMM", "yMMMd", "yMMMEd", "GyMd", "GyMMMd", "GyMMMEd", "yM",
+        "Md", "MEd", "MMMd", "MMMEd", "MMMMd", "GyMMM", "yQQQ", "yQQQQ",
+        "Gy", "y", "M", "MMM", "d", "Ed", "MMMMW", "yw"
       )
     )
 })
@@ -72,7 +75,11 @@ test_that("the `get_time_format()` function works correctly", {
   lapply(time_formats()$format_name, get_time_format) %>%
     unlist() %>%
     expect_equal(
-      c("HH:mm:ss", "HH:mm", "h:mm:ss a", "h:mm a", "h a")
+      c(
+        "HH:mm:ss", "HH:mm", "h:mm:ss a", "h:mm a", "h a", "hms", "hm",
+        "h", "Ehm", "Ehms", "EBhms", "Bhms", "EBhm", "Bhm", "Bh", "hmsv",
+        "hmv", "Hms", "Hm", "H", "EHm", "EHms", "Hmsv", "Hmv", "ms"
+      )
     )
 })
 
