@@ -2267,10 +2267,9 @@ fmt_bytes <- function(
 #' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
-#' @param date_style The date style to use. Supply a number (from `1` to `15`)
-#'   that corresponds to the preferred date style, or, provide a named date
-#'   style (`"wday_month_day_year"`, `"m_day_year"`, `"year.mn.day"`, etc.). Use
-#'   [info_date_style()] to see the different numbered and named date presets.
+#' @param date_style The date style to use. By default this is `"iso"` which
+#'   corresponds to ISO 8601 date formatting. The other date styles can be
+#'   viewed using [info_date_style()].
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -2329,7 +2328,7 @@ fmt_date <- function(
     data,
     columns,
     rows = everything(),
-    date_style = 1,
+    date_style = "iso",
     pattern = "{x}",
     locale = NULL
 ) {
@@ -2406,10 +2405,10 @@ fmt_date <- function(
 #' following time styles are available for use (all using the input time of
 #' `14:35:00` in the example output times):
 #'
-#' 1. `"hms"`: `14:35:00`
-#' 2. `"hm"`: `14:35`
-#' 3. `"hms_p"`: `2:35:00 PM`
-#' 4. `"hm_p"`: `2:35 PM`
+#' 1. `"h_m_s"`: `14:35:00`
+#' 2. `"h_m"`: `14:35`
+#' 3. `"h_m_s_p"`: `2:35:00 PM`
+#' 4. `"h_m_p"`: `2:35 PM`
 #' 5. `"h_p"`: `2 PM`
 #'
 #' We can use the [info_time_style()] function for a useful reference on all of
@@ -2422,10 +2421,9 @@ fmt_date <- function(
 #' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
-#' @param time_style The time style to use. Supply a number (from `1` to `5`)
-#'   that corresponds to the preferred time style, or, provide a named time
-#'   style (`"hms"`, `"hms_p"`, `"h_p"`, etc.). Use [info_time_style()] to see
-#'   the different numbered and named time presets.
+#' @param time_style The time style to use. By default this is `"h_m_s"` which
+#'   corresponds to how times are formatted within ISO 8601 datetime values. The
+#'   other time styles can be viewed using [info_time_style()].
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -2484,7 +2482,7 @@ fmt_time <- function(
     data,
     columns,
     rows = everything(),
-    time_style = 1,
+    time_style = "h_m_s",
     pattern = "{x}",
     locale = NULL
 ) {
@@ -2629,9 +2627,315 @@ fmt_time <- function(
 #' - `"h:mm a"` -> `"10:05 PM"`
 #' - `"EEEE, MMMM d, y 'at' h:mm a"` -> `"Wednesday, July 4, 2018 at 10:05 PM"`
 #'
-#' Here are the individual format codes for date components:
+#' Here are the individual pattern fields:
 #'
-#' - `"%a"` -> `"Mon"`
+#' ## Year
+#'
+#' ### Calendar Year
+#'
+#' This yields the calendar year, which is always numeric. In most cases the
+#' length of the `"y"` field specifies the minimum number of digits to display,
+#' zero-padded as necessary. More digits will be displayed if needed to show the
+#' full year. There is an exception: `"yy"` gives use just the two low-order
+#' digits of the year, zero-padded as necessary. For most use cases, `"y"` or
+#' `"yy"` should be good enough.
+#'
+#' | Field Patterns                 | Output                                 |
+#' |------------------------------- |----------------------------------------|
+#' | `"y"`                          | `"2018"`                               |
+#' | `"yy"`                         | `"18"`                                 |
+#' | `"yyy"` to `"yyyyyyyyy"`       | `"2018"` to `"000002018"`              |
+#'
+#' ### Year in the Week in Year Calendar
+#'
+#' This is the year in 'Week of Year' based calendars in which the year
+#' transition occurs on a week boundary. This may differ from calendar year
+#' `"y"` near a year transition. This numeric year designation is used in
+#' conjunction with pattern character `"w"` in the ISO year-week calendar as
+#' defined by ISO 8601.
+#'
+#' | Field Patterns                 | Output                                 |
+#' |--------------------------------|----------------------------------------|
+#' | `"Y"`                          | `"2018"`                               |
+#' | `"YY"`                         | `"18"`                                 |
+#' | `"YYY"` to `"YYYYYYYYY"`       | `"2018"` to `"000002018"`              |
+#'
+#' ## Quarter
+#'
+#' ### Quarter of the Year: formatting ver.
+#'
+#' | Field Patterns    | Output          | Notes                             |
+#' |-------------------|-----------------|-----------------------------------|
+#' | `"Q"`             | `"3"`           | Numeric, one digit                |
+#' | `"QQ"`            | `"03"`          | Numeric, two digits (zero padded) |
+#' | `"QQQ"`           | `"Q3"`          | Abbreviated                       |
+#' | `"QQQQ"`          | `"3rd quarter"` | Wide                              |
+#' | `"QQQQQ"`         | `"3"`           | Narrow                            |
+#'
+#' ### Quarter of the Year: standalone ver.
+#'
+#' | Field Patterns    | Output          | Notes                             |
+#' |-------------------|-----------------|-----------------------------------|
+#' | `"q"`             | `"3"`           | Numeric, one digit                |
+#' | `"qq"`            | `"03"`          | Numeric, two digits (zero padded) |
+#' | `"qqq"`           | `"Q3"`          | Abbreviated                       |
+#' | `"qqqq"`          | `"3rd quarter"` | Wide                              |
+#' | `"qqqqq"`         | `"3"`           | Narrow                            |
+#'
+#' ## Month
+#'
+#' ### Month: formatting ver.
+#'
+#' | Field Patterns    | Output          | Notes                             |
+#' |-------------------|-----------------|-----------------------------------|
+#' | `"M"`             | `"7"`           | Numeric, minimum digits           |
+#' | `"MM"`            | `"07"`          | Numeric, two digits (zero padded) |
+#' | `"MMM"`           | `"Jul"`         | Abbreviated                       |
+#' | `"MMMM"`          | `"July"`        | Wide                              |
+#' | `"MMMMM"`         | `"J"`           | Narrow                            |
+#'
+#' ### Month: standalone ver.
+#'
+#' | Field Patterns    | Output          | Notes                             |
+#' |-------------------|-----------------|-----------------------------------|
+#' | `"M"`             | `"7"`           | Numeric, minimum digits           |
+#' | `"MM"`            | `"07"`          | Numeric, two digits (zero padded) |
+#' | `"MMM"`           | `"Jul"`         | Abbreviated                       |
+#' | `"MMMM"`          | `"July"`        | Wide                              |
+#' | `"MMMMM"`         | `"J"`           | Narrow                            |
+#'
+#' ## Week
+#'
+#' ### Week of Year
+#'
+#' | Field Patterns   | Output    | Notes                                    |
+#' |------------------|-----------|------------------------------------------|
+#' | `"w"`            | `"27"`    | Minimum digits                           |
+#' | `"ww"`           | `"27"`    | Two digits (zero padded)                 |
+#'
+#' ### Week of Month
+#'
+#' | Field Pattern    | Output                                               |
+#' |------------------|------------------------------------------------------|
+#' | `"W"`            | `"1"`                                                |
+#'
+#' ## Day
+#'
+#' ### Day of Month
+#'
+#' | Field Patterns | Output    | Notes                                      |
+#' |----------------|-----------|--------------------------------------------|
+#' | `"d"`          | `"4"`     | Minimum digits                             |
+#' | `"dd"`         | `"04"`    | Two digits, zero padded                    |
+#'
+#' ### Day of Year
+#'
+#' | Field Patterns  | Output   | Notes                                      |
+#' |-----------------|----------|--------------------------------------------|
+#' | `"D"`           | `"185"`  |                                            |
+#' | `"DD"`          | `"185"`  | Zero padded to minimum width of 2          |
+#' | `"DDD"`         | `"185"`  | Zero padded to minimum width of 3          |
+#'
+#' ### Day of Week in Month
+#'
+#' | Field Pattern                  | Output                                 |
+#' |--------------------------------|----------------------------------------|
+#' | `"F"`                          | `"1"`                                  |
+#'
+#' ### Modified Julian Day
+#'
+#' | Field Patterns                 | Output                                 |
+#' |--------------------------------|----------------------------------------|
+#' | `"g"` to `"ggggggggg"`         | `"58303"` -> `"000058303"`             |
+#'
+#' ## Weekday
+#'
+#' ### Day of Week Name
+#'
+#' | Field Patterns             | Output         | Notes                     |
+#' |----------------------------|----------------|---------------------------|
+#' | `"E"`, `"EE"`, or `"EEE"`  | `"Wed"`        | Abbreviated               |
+#' | `"EEEE"`                   | `"Wednesday"`  | Wide                      |
+#' | `"EEEEE"`                  | `"W"`          | Narrow                    |
+#' | `"EEEEEE"`                 | `"We"`         | Short                     |
+#'
+#' ## Periods
+#'
+#' ### AM/PM Period of Day
+#'
+#' | Field Patterns                 | Output   | Notes                       |
+#' |--------------------------------|----------|-----------------------------|
+#' | `"a"`, `"aa"`, or `"aaa"`      | `"PM"`   | Abbreviated                 |
+#' | `"aaaa"`                       | `"PM"`   | Wide                        |
+#' | `"aaaaa"`                      | `"p"`    | Narrow                      |
+#'
+#' ### AM/PM Period of Day Plus Noon and Midnight
+#'
+#' (a) `input_midnight`: `"2020-05-05T00:00:00"`
+#'
+#' (b) `input_noon`: `"2020-05-05T12:00:00"`
+#'
+#' | Field Patterns                 | Output             | Notes             |
+#' |--------------------------------|--------------------|-------------------|
+#' | `"b"`, `"bb"`, or `"bbb"`      | (a) `"midnight"`   | Abbreviated       |
+#' |                                | (b) `"noon"`       |                   |
+#' | `"bbbb"`                       | (a) `"midnight"`   | Wide              |
+#' |                                | (b) `"noon"`       |                   |
+#' | `"bbbbb"`                      | (a) `"mi"`         | Narrow            |
+#' |                                | (b) `"n"`          |                   |
+#'
+#' ### Flexible Day Periods
+#'
+#' (a) `input_morning`: `"2020-05-05T00:08:30"`
+#'
+#' (b) `input_afternoon`: `"2020-05-05T14:00:00"`
+#'
+#' | Field Patterns             | Output                   | Notes           |
+#' |----------------------------|--------------------------|-----------------|
+#' | `"B"`, `"BB"`, or `"BBB"`  | (a) `"in the morning"`   | Abbreviated     |
+#' |                            | (b) `"in the afternoon"` |                 |
+#' | `"BBBB"`                   | (a) `"in the morning"`   | Wide            |
+#' |                            | (b) `"in the afternoon"` |                 |
+#' | `"BBBBB"`                  | (a) `"in the morning"`   | Narrow          |
+#' |                            | (b) `"in the afternoon"` |                 |
+#'
+#' ## Hours, Minutes, and Seconds
+#'
+#' ### Hour 1-12
+#'
+#' Using: `"2015-08-01T08:35:09"`
+#'
+#' | Field Patterns         | Output  | Notes                                |
+#' |------------------------|---------|--------------------------------------|
+#' | `"h"`                  | `"8"`   | Numeric, minimum digits              |
+#' | `"hh"`                 | `"08"`  | Numeric, 2 digits (zero padded)      |
+#'
+#' ### Hour 0-23
+#'
+#' Using: `"2015-08-01T08:35:09"`
+#'
+#' | Field Patterns         | Output  | Notes                                |
+#' |------------------------|---------|--------------------------------------|
+#' | `"H"`                  | `"8"`   | Numeric, minimum digits              |
+#' | `"HH"`                 | `"08"`  | Numeric, 2 digits (zero padded)      |
+#'
+#' ### Hour 0-11
+#'
+#' Using: `"2015-08-01T08:35:09"`
+#'
+#' | Field Patterns         | Output  | Notes                                |
+#' |------------------------|---------|--------------------------------------|
+#' | `"K"`                  | `"7"`   | Numeric, minimum digits              |
+#' | `"KK"`                 | `"07"`  | Numeric, 2 digits (zero padded)      |
+#'
+#' ### Hour 1-24
+#'
+#' Using: `"2015-08-01T08:35:09"`
+#'
+#' | Field Patterns         | Output  | Notes                                |
+#' |------------------------|---------|--------------------------------------|
+#' | `"k"`                  | `"9"`   | Numeric, minimum digits              |
+#' | `"kk"`                 | `"09"`  | Numeric, 2 digits (zero padded)      |
+#'
+#' ### Minute
+#'
+#' | Field Patterns         | Output  | Notes                                |
+#' |------------------------|---------|--------------------------------------|
+#' | `"m"`                  | `"5"`   | Numeric, minimum digits              |
+#' | `"mm"`                 | `"06"`  | Numeric, 2 digits (zero padded)      |
+#'
+#' ### Seconds
+#'
+#' | Field Patterns         | Output  | Notes                                |
+#' |------------------------|---------|--------------------------------------|
+#' | `"s"`                  | `"9"`   | Numeric, minimum digits              |
+#' | `"ss"`                 | `"09"`  | Numeric, 2 digits (zero padded)      |
+#'
+#' ### Fractional Second
+#'
+#' | Field Patterns                 | Output                                 |
+#' |--------------------------------|----------------------------------------|
+#' | `"S"` to `"SSSSSSSSS"`         | `"2"` -> `"235000000"`                 |
+#'
+#' ### Milliseconds Elapsed in Day
+#'
+#' Using: `"2011-07-27T00:07:19.7223"`
+#'
+#' | Field Patterns                 | Output                                 |
+#' |--------------------------------|----------------------------------------|
+#' | `"A"` to `"AAAAAAAAA"`         | `"439722"` -> `"000439722"`            |
+#'
+#' ## Era
+#'
+#' ### The Era Designator
+#'
+#' This provides the era name for the given date.
+#'
+#' | Field Patterns                 | Output          | Notes                |
+#' |--------------------------------|-----------------|----------------------|
+#' | `"G"`, `"GG"`, or `"GGG"`      | `"AD"`          | Abbreviated          |
+#' | `"GGGG"`                       | `"Anno Domini"` | Wide                 |
+#' | `"GGGGG"`                      | `"A"`           | Narrow               |
+#'
+#' ## Time Zones
+#'
+#' ### TZ // Short and Long Specific non-Location Format
+#'
+#' | Field Patterns             | Output                    | Notes          |
+#' |----------------------------|---------------------------|----------------|
+#' | `"z"`, `"zz"`, or `"zzz"`  | `"PDT"`                   | Short Specific |
+#' | `"zzzz"`                   | `"Pacific Daylight Time"` | Long Specific  |
+#'
+#' ### TZ // Short and Long Specific non-Location Formats
+#'
+#' | Field Patterns             | Output       | Notes                       |
+#' |----------------------------|--------------|-----------------------------|
+#' | `"Z"`, `"ZZ"`, or `"ZZZ"`  | `"-0700"`    | ISO 8601 basic format       |
+#' | `"ZZZZ"`                   | `"GMT-7:00"` | Long localized GMT format   |
+#' | `"ZZZZZ"`                  | `"-07:00"`   | ISO 8601 extended format    |
+#'
+#' ### TZ // Short and Long Localized GMT Formats
+#'
+#' | Field Patterns          | Output        | Notes                         |
+#' |-------------------------|---------------|-------------------------------|
+#' | `"O"`                   | `"GMT-7"`     | Short localized GMT format    |
+#' | `"OOOO"`                | `"GMT-07:00"` | Long localized GMT format     |
+#'
+#' ### TZ // Short and Long Localized GMT Formats
+#'
+#' | Field Patterns  | Output           | Notes                              |
+#' |-----------------|------------------|------------------------------------|
+#' | `"v"`           | `"PT"`           | Short generic non-location format  |
+#' | `"vvvv"`        | `"Pacific Time"` | Long generic non-location format   |
+#'
+#' ### TZ // Short Time Zone IDs and Exemplar City Formats (big V)
+#'
+#' | Field Patterns     | Output                | Notes                      |
+#' |--------------------|-----------------------|----------------------------|
+#' | `"V"`              | `"cavan"`             | Short time zone ID         |
+#' | `"VV"`             | `"America/Vancouver"` | Long time zone ID          |
+#' | `"VVV"`            | `"Vancouver"`         | The tz exemplar city       |
+#' | `"VVVV"`           | `"Vancouver Time"`    | Generic location format    |
+#'
+#' ### TZ // ISO 8601 Formats with Z for +0000
+#'
+#' | Field Patterns | Output     | Notes                                     |
+#' |----------------|------------|-------------------------------------------|
+#' | `"X"`          | `"-07"`    | ISO 8601 basic format (h, optional m)     |
+#' | `"XX"`         | `"-0700"`  | ISO 8601 basic format (h & m)             |
+#' | `"XXX"`        | `"-07:00"` | ISO 8601 extended format (h & m)          |
+#' | `"XXXX"`       | `"-0700"`  | ISO 8601 basic format (h & m, optional s) |
+#' | `"XXXXX"`      | `"-07:00"` | ISO 8601 extended format (h & m, optional s) |
+#'
+#' ### TZ // ISO 8601 Formats (no use of Z for +0000)
+#'
+#' | Field Patterns | Output     | Notes                                     |
+#' |----------------|------------|-------------------------------------------|
+#' | `"x"`          | `"-07"`    | ISO 8601 basic format (h, optional m)     |
+#' | `"xx"`         | `"-0700"`  | ISO 8601 basic format (h & m)             |
+#' | `"xxx"`        | `"-07:00"` | ISO 8601 extended format (h & m)          |
+#' | `"xxxx"`       | `"-0700"`  | ISO 8601 basic format (h & m, optional s) |
+#' | `"xxxxx"`      | `"-07:00"` | ISO 8601 extended format (h & m, optional s) |
 #'
 #' @section Formatting with a `strptime` format code:
 #'
@@ -2736,8 +3040,8 @@ fmt_datetime <- function(
     data,
     columns,
     rows = everything(),
-    date_style = 1,
-    time_style = 1,
+    date_style = "iso",
+    time_style = "h_m_s",
     sep = " ",
     format = NULL,
     tz = NULL,
@@ -2854,7 +3158,7 @@ fmt_datetime <- function(
         }
 
         #
-        # Format the date portion of the datetime string
+        # Format the date and time portions of the datetime value
         #
 
         # Convert incoming values to POSIXlt but provide a friendly error
@@ -2869,15 +3173,25 @@ fmt_datetime <- function(
             }
           )
 
-        date_time_format_str <-
-          paste0(date_format_str, "'", sep, "'", time_format_str)
+        #
+        # Separately format the date and time portions using `fdt()`
+        #
 
-        # Format the datetime string using `fdt()`
-        bigD::fdt(
-          input = as.character(datetime),
-          format = date_time_format_str,
-          locale = locale
-        )
+        date_str <-
+          bigD::fdt(
+            input = as.character(datetime),
+            format = date_format_str,
+            locale = locale
+          )
+
+        time_str <-
+          bigD::fdt(
+            input = as.character(datetime),
+            format = time_format_str,
+            locale = locale
+          )
+
+        paste0(date_str, sep, time_str)
       }
     )
   )
