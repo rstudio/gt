@@ -4165,30 +4165,38 @@ test_that("The `vec_fmt_date()` function works", {
         "Thursday, May 9, 2024"
       )
     )
+  vec_fmt_date(dates, date_style = "wday_month_day_year", output = "html") %>%
+    expect_equal(
+      c(
+        "Sunday, January 5, 2020", "Saturday, February 6, 2021",
+        "Monday, March 7, 2022", "Saturday, April 8, 2023",
+        "Thursday, May 9, 2024"
+      )
+    )
   expect_equal(
-    vec_fmt_date(dates, date_style = 2, output = "html"),
-    vec_fmt_date(dates, date_style = 2, output = "latex")
+    vec_fmt_date(dates, date_style = "wday_month_day_year", output = "html"),
+    vec_fmt_date(dates, date_style = "wday_month_day_year", output = "latex")
   )
   expect_equal(
-    vec_fmt_date(dates, date_style = 2, output = "html"),
-    vec_fmt_date(dates, date_style = 2, output = "rtf")
+    vec_fmt_date(dates, date_style = "wday_month_day_year", output = "html"),
+    vec_fmt_date(dates, date_style = "wday_month_day_year", output = "rtf")
   )
   expect_equal(
-    vec_fmt_date(dates, date_style = 2, output = "html"),
-    vec_fmt_date(dates, date_style = 2, output = "plain")
+    vec_fmt_date(dates, date_style = "wday_month_day_year", output = "html"),
+    vec_fmt_date(dates, date_style = "wday_month_day_year", output = "plain")
   )
 
   expect_equal(
-    vec_fmt_date(dates, date_style = 1, output = "html"),
+    vec_fmt_date(dates, date_style = "iso", output = "html"),
     as.character(dates)
   )
   expect_equal(
-    vec_fmt_date(dates, date_style = 1, output = "html"),
-    vec_fmt_date(dates, date_style = 1, output = "latex")
+    vec_fmt_date(dates, date_style = "iso", output = "html"),
+    vec_fmt_date(dates, date_style = "iso", output = "latex")
   )
   expect_equal(
-    vec_fmt_date(dates, date_style = 1, output = "html"),
-    vec_fmt_date(dates, date_style = 1, output = "rtf")
+    vec_fmt_date(dates, date_style = "iso", output = "html"),
+    vec_fmt_date(dates, date_style = "iso", output = "rtf")
   )
   expect_equal(
     vec_fmt_date(dates, date_style = 1, output = "html"),
@@ -4196,23 +4204,23 @@ test_that("The `vec_fmt_date()` function works", {
   )
 
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 1, output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "iso", output = "html"),
     as.character(dates)
   )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 1, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 1, output = "latex")
+    vec_fmt_date(as.character(dates), date_style = "iso", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "iso", output = "latex")
   )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 1, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 1, output = "rtf")
+    vec_fmt_date(as.character(dates), date_style = "iso", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "iso", output = "rtf")
   )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 1, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 1, output = "plain")
+    vec_fmt_date(as.character(dates), date_style = "iso", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "iso", output = "plain")
   )
 
-  vec_fmt_date(dates, date_style = 3, output = "html") %>%
+  vec_fmt_date(dates, date_style = "wd_m_day_year", output = "html") %>%
     expect_equal(
       c(
         "Sun, Jan 5, 2020", "Sat, Feb 6, 2021", "Mon, Mar 7, 2022",
@@ -4220,19 +4228,19 @@ test_that("The `vec_fmt_date()` function works", {
       )
     )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 3, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 3, output = "latex")
+    vec_fmt_date(as.character(dates), date_style = "wd_m_day_year", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "wd_m_day_year", output = "latex")
   )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 3, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 3, output = "rtf")
+    vec_fmt_date(as.character(dates), date_style = "wd_m_day_year", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "wd_m_day_year", output = "rtf")
   )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 3, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 3, output = "plain")
+    vec_fmt_date(as.character(dates), date_style = "wd_m_day_year", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "wd_m_day_year", output = "plain")
   )
 
-  vec_fmt_date(dates, date_style = 4, output = "html") %>%
+  vec_fmt_date(dates, date_style = "wday_day_month_year", output = "html") %>%
     expect_equal(
       c(
         "Sunday 5 January 2020", "Saturday 6 February 2021",
@@ -4240,19 +4248,19 @@ test_that("The `vec_fmt_date()` function works", {
       )
     )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 4, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 4, output = "latex")
+    vec_fmt_date(as.character(dates), date_style = "wday_day_month_year", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "wday_day_month_year", output = "latex")
   )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 4, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 4, output = "rtf")
+    vec_fmt_date(as.character(dates), date_style = "wday_day_month_year", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "wday_day_month_year", output = "rtf")
   )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 4, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 4, output = "plain")
+    vec_fmt_date(as.character(dates), date_style = "wday_day_month_year", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "wday_day_month_year", output = "plain")
   )
 
-  vec_fmt_date(dates, date_style = 5, output = "html") %>%
+  vec_fmt_date(dates, date_style = "month_day_year", output = "html") %>%
     expect_equal(
       c(
         "January 5, 2020", "February 6, 2021", "March 7, 2022",
@@ -4260,19 +4268,19 @@ test_that("The `vec_fmt_date()` function works", {
       )
     )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 5, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 5, output = "latex")
+    vec_fmt_date(as.character(dates), date_style = "month_day_year", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "month_day_year", output = "latex")
   )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 5, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 5, output = "rtf")
+    vec_fmt_date(as.character(dates), date_style = "month_day_year", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "month_day_year", output = "rtf")
   )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 5, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 5, output = "plain")
+    vec_fmt_date(as.character(dates), date_style = "month_day_year", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "month_day_year", output = "plain")
   )
 
-  vec_fmt_date(dates, date_style = 6, output = "html") %>%
+  vec_fmt_date(dates, date_style = "m_day_year", output = "html") %>%
     expect_equal(
       c(
         "Jan 5, 2020", "Feb 6, 2021", "Mar 7, 2022",
@@ -4280,38 +4288,38 @@ test_that("The `vec_fmt_date()` function works", {
       )
     )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 6, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 6, output = "latex")
+    vec_fmt_date(as.character(dates), date_style = "m_day_year", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "m_day_year", output = "latex")
   )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 6, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 6, output = "rtf")
+    vec_fmt_date(as.character(dates), date_style = "m_day_year", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "m_day_year", output = "rtf")
   )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 6, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 6, output = "plain")
+    vec_fmt_date(as.character(dates), date_style = "m_day_year", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "m_day_year", output = "plain")
   )
 
-  vec_fmt_date(dates, date_style = 7, output = "html") %>%
+  vec_fmt_date(dates, date_style = "day_m_year", output = "html") %>%
     expect_equal(
       c(
         "5 Jan 2020", "6 Feb 2021", "7 Mar 2022", "8 Apr 2023", "9 May 2024"
       )
     )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 7, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 7, output = "latex")
+    vec_fmt_date(as.character(dates), date_style = "day_m_year", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "day_m_year", output = "latex")
   )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 7, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 7, output = "rtf")
+    vec_fmt_date(as.character(dates), date_style = "day_m_year", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "day_m_year", output = "rtf")
   )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 7, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 7, output = "plain")
+    vec_fmt_date(as.character(dates), date_style = "day_m_year", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "day_m_year", output = "plain")
   )
 
-  vec_fmt_date(dates, date_style = 8, output = "html") %>%
+  vec_fmt_date(dates, date_style = "day_month_year", output = "html") %>%
     expect_equal(
       c(
         "5 January 2020", "6 February 2021", "7 March 2022",
@@ -4319,134 +4327,139 @@ test_that("The `vec_fmt_date()` function works", {
       )
     )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 8, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 8, output = "latex")
+    vec_fmt_date(as.character(dates), date_style = "day_month_year", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "day_month_year", output = "latex")
   )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 8, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 8, output = "rtf")
+    vec_fmt_date(as.character(dates), date_style = "day_month_year", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "day_month_year", output = "rtf")
   )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 8, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 8, output = "plain")
+    vec_fmt_date(as.character(dates), date_style = "day_month_year", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "day_month_year", output = "plain")
   )
 
-  vec_fmt_date(dates, date_style = 9, output = "html") %>%
+  vec_fmt_date(dates, date_style = "day_month", output = "html") %>%
     expect_equal(
       c("5 January", "6 February", "7 March", "8 April", "9 May")
     )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 9, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 9, output = "latex")
+    vec_fmt_date(as.character(dates), date_style = "day_month", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "day_month", output = "latex")
   )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 9, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 9, output = "rtf")
+    vec_fmt_date(as.character(dates), date_style = "day_month", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "day_month", output = "rtf")
   )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 9, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 9, output = "plain")
+    vec_fmt_date(as.character(dates), date_style = "day_month", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "day_month", output = "plain")
   )
 
-  vec_fmt_date(dates, date_style = 10, output = "html") %>%
+  vec_fmt_date(dates, date_style = "day_m", output = "html") %>%
     expect_equal(c("5 Jan", "6 Feb", "7 Mar", "8 Apr", "9 May"))
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 10, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 10, output = "latex")
+    vec_fmt_date(as.character(dates), date_style = "day_m", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "day_m", output = "latex")
   )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 10, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 10, output = "rtf")
+    vec_fmt_date(as.character(dates), date_style = "day_m", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "day_m", output = "rtf")
   )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 10, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 10, output = "plain")
+    vec_fmt_date(as.character(dates), date_style = "day_m", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "day_m", output = "plain")
   )
 
-  vec_fmt_date(dates, date_style = 11, output = "html") %>%
+  vec_fmt_date(dates, date_style = "year", output = "html") %>%
     expect_equal(c("2020", "2021", "2022", "2023", "2024"))
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 11, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 11, output = "latex")
+    vec_fmt_date(as.character(dates), date_style = "year", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "year", output = "latex")
   )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 11, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 11, output = "rtf")
+    vec_fmt_date(as.character(dates), date_style = "year", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "year", output = "rtf")
   )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 11, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 11, output = "plain")
+    vec_fmt_date(as.character(dates), date_style = "year", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "year", output = "plain")
   )
 
-  vec_fmt_date(dates, date_style = 12, output = "html") %>%
+  vec_fmt_date(dates, date_style = "month", output = "html") %>%
     expect_equal(c("January", "February", "March", "April", "May"))
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 12, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 12, output = "latex")
+    vec_fmt_date(as.character(dates), date_style = "month", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "month", output = "latex")
   )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 12, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 12, output = "rtf")
+    vec_fmt_date(as.character(dates), date_style = "month", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "month", output = "rtf")
   )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 12, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 12, output = "plain")
+    vec_fmt_date(as.character(dates), date_style = "month", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "month", output = "plain")
   )
 
-  vec_fmt_date(dates, date_style = 13, output = "html") %>%
+  vec_fmt_date(dates, date_style = "day", output = "html") %>%
     expect_equal(c("05", "06", "07", "08", "09"))
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 13, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 13, output = "latex")
+    vec_fmt_date(as.character(dates), date_style = "day", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "day", output = "latex")
   )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 13, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 13, output = "rtf")
+    vec_fmt_date(as.character(dates), date_style = "day", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "day", output = "rtf")
   )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 13, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 13, output = "plain")
+    vec_fmt_date(as.character(dates), date_style = "day", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "day", output = "plain")
   )
 
-  vec_fmt_date(dates, date_style = 14, output = "html") %>%
+  vec_fmt_date(dates, date_style = "year.mn.day", output = "html") %>%
     expect_equal(
       c(
         "2020/01/05", "2021/02/06", "2022/03/07", "2023/04/08", "2024/05/09"
       )
     )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 14, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 14, output = "latex")
+    vec_fmt_date(as.character(dates), date_style = "year.mn.day", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "year.mn.day", output = "latex")
   )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 14, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 14, output = "rtf")
+    vec_fmt_date(as.character(dates), date_style = "year.mn.day", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "year.mn.day", output = "rtf")
   )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 14, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 14, output = "plain")
+    vec_fmt_date(as.character(dates), date_style = "year.mn.day", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "year.mn.day", output = "plain")
   )
 
-  vec_fmt_date(dates, date_style = 15, output = "html") %>%
+  vec_fmt_date(dates, date_style = "y.mn.day", output = "html") %>%
     expect_equal(
       c(
         "20/01/05", "21/02/06", "22/03/07", "23/04/08", "24/05/09"
       )
     )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 15, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 15, output = "latex")
+    vec_fmt_date(as.character(dates), date_style = "y.mn.day", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "y.mn.day", output = "latex")
   )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 15, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 15, output = "rtf")
+    vec_fmt_date(as.character(dates), date_style = "y.mn.day", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "y.mn.day", output = "rtf")
   )
   expect_equal(
-    vec_fmt_date(as.character(dates), date_style = 15, output = "html"),
-    vec_fmt_date(as.character(dates), date_style = 15, output = "plain")
+    vec_fmt_date(as.character(dates), date_style = "y.mn.day", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "y.mn.day", output = "plain")
   )
 
-  vec_fmt_date(dates, date_style = 2, pattern = "d{x}d", output = "html") %>%
+  vec_fmt_date(
+    dates,
+    date_style = "wday_month_day_year",
+    pattern = "d{x}d",
+    output = "html"
+  ) %>%
     expect_equal(
       c(
         "dSunday, January 5, 2020d", "dSaturday, February 6, 2021d",
