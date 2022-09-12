@@ -8,7 +8,7 @@ fmt_time(
   data,
   columns,
   rows = everything(),
-  time_style = "h_m_s",
+  time_style = "iso",
   pattern = "{x}",
   locale = NULL
 )
@@ -31,7 +31,7 @@ functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with
 to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{time_style}{The time style to use. By default this is \code{"h_m_s"} which
+\item{time_style}{The time style to use. By default this is \code{"iso"} which
 corresponds to how times are formatted within ISO 8601 datetime values. The
 other time styles can be viewed using \code{\link[=info_time_style]{info_time_style()}}.}
 
@@ -52,21 +52,42 @@ An object of class \code{gt_tbl}.
 }
 \description{
 Format input values to time values using one of five presets. Input can be in
-the form of \code{POSIXt} (i.e., date-times), \code{character} (must be in the ISO
-8601 forms of \code{HH:MM:SS} or \verb{YYYY-MM-DD HH:MM:SS}), or \code{Date} (which always
+the form of \code{POSIXt} (i.e., datetimes), \code{character} (must be in the ISO 8601
+forms of \code{HH:MM:SS} or \verb{YYYY-MM-DD HH:MM:SS}), or \code{Date} (which always
 results in the formatting of \code{00:00:00}).
 
 Once the appropriate data cells are targeted with \code{columns} (and, optionally,
 \code{rows}), we can simply apply a preset time style to format the times. The
-following time styles are available for use (all using the input time of
-\code{14:35:00} in the example output times):
-\enumerate{
-\item \code{"h_m_s"}: \code{14:35:00}
-\item \code{"h_m"}: \code{14:35}
-\item \code{"h_m_s_p"}: \verb{2:35:00 PM}
-\item \code{"h_m_p"}: \verb{2:35 PM}
-\item \code{"h_p"}: \verb{2 PM}
+following time styles are available for formatting of the time portion (all
+using the input time of \code{14:35:00} in the example output times):\tabular{llll}{
+    \tab Time Style \tab Output \tab Notes \cr
+   1 \tab \code{"iso"} \tab \code{"14:35:00"} \tab ISO 8601, 24h \cr
+   2 \tab \code{"iso-short"} \tab \code{"14:35"} \tab ISO 8601, 24h \cr
+   3 \tab \code{"h_m_s_p"} \tab \code{"2:35:00 PM"} \tab 12h \cr
+   4 \tab \code{"h_m_p"} \tab \code{"2:35 PM"} \tab 12h \cr
+   5 \tab \code{"h_p"} \tab \code{"2 PM"} \tab 12h \cr
+   6 \tab \code{"Hms"} \tab \code{"14:35:00"} \tab flexible, 24h \cr
+   7 \tab \code{"Hm"} \tab \code{"14:35"} \tab flexible, 24h \cr
+   8 \tab \code{"H"} \tab \code{"14"} \tab flexible, 24h \cr
+   9 \tab \code{"EHm"} \tab \code{"Thu 14:35"} \tab flexible, 24h \cr
+   10 \tab \code{"EHms"} \tab \code{"Thu 14:35:00"} \tab flexible, 24h \cr
+   11 \tab \code{"Hmsv"} \tab \code{"14:35:00 GMT+00:00"} \tab flexible, 24h \cr
+   12 \tab \code{"Hmv"} \tab \code{"14:35 GMT+00:00"} \tab flexible, 24h \cr
+   13 \tab \code{"hms"} \tab \code{"2:35:00 PM"} \tab flexible, 12h \cr
+   14 \tab \code{"hm"} \tab \code{"2:35 PM"} \tab flexible, 12h \cr
+   15 \tab \code{"h"} \tab \code{"2 PM"} \tab flexible, 12h \cr
+   16 \tab \code{"Ehm"} \tab \code{"Thu 2:35 PM"} \tab flexible, 12h \cr
+   17 \tab \code{"Ehms"} \tab \code{"Thu 2:35:00 PM"} \tab flexible, 12h \cr
+   18 \tab \code{"EBhms"} \tab \code{"Thu 2:35:00 in the afternoon"} \tab flexible, 12h \cr
+   19 \tab \code{"Bhms"} \tab \code{"2:35:00 in the afternoon"} \tab flexible, 12h \cr
+   20 \tab \code{"EBhm"} \tab \code{"Thu 2:35 in the afternoon"} \tab flexible, 12h \cr
+   21 \tab \code{"Bhm"} \tab \code{"2:35 in the afternoon"} \tab flexible, 12h \cr
+   22 \tab \code{"Bh"} \tab \code{"2 in the afternoon"} \tab flexible, 12h \cr
+   23 \tab \code{"hmsv"} \tab \code{"2:35:00 PM GMT+00:00"} \tab flexible, 12h \cr
+   24 \tab \code{"hmv"} \tab \code{"2:35 PM GMT+00:00"} \tab flexible, 12h \cr
+   25 \tab \code{"ms"} \tab \code{"35:00"} \tab flexible \cr
 }
+
 
 We can use the \code{\link[=info_time_style]{info_time_style()}} function for a useful reference on all of
 the possible inputs to \code{time_style}.
@@ -89,7 +110,7 @@ style \code{3}).
   gt() \%>\%
   fmt_time(
     columns = time,
-    time_style = 3
+    time_style = "h_m_s_p"
   )
 }\if{html}{\out{</div>}}
 
@@ -108,12 +129,12 @@ in the \code{rows} argument).
   fmt_time(
     columns = time,
     rows = time > "16:00",
-    time_style = 3
+    time_style = "h_m_s_p"
   ) \%>\%
   fmt_time(
     columns = time,
     rows = time <= "16:00",
-    time_style = 4
+    time_style = "h_m_p"
   )
 }\if{html}{\out{</div>}}
 

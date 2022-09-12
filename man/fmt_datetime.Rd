@@ -2,14 +2,14 @@
 % Please edit documentation in R/format_data.R
 \name{fmt_datetime}
 \alias{fmt_datetime}
-\title{Format values as date-times}
+\title{Format values as datetimes}
 \usage{
 fmt_datetime(
   data,
   columns,
   rows = everything(),
   date_style = "iso",
-  time_style = "h_m_s",
+  time_style = "iso",
   sep = " ",
   format = NULL,
   tz = NULL,
@@ -39,7 +39,7 @@ to filter down to the rows we need (e.g.,
 corresponds to ISO 8601 date formatting. The other date styles can be
 viewed using \code{\link[=info_date_style]{info_date_style()}}.}
 
-\item{time_style}{The time style to use. By default this is \code{"h_m_s"} which
+\item{time_style}{The time style to use. By default this is \code{"iso"} which
 corresponds to how times are formatted within ISO 8601 datetime values. The
 other time styles can be viewed using \code{\link[=info_time_style]{info_time_style()}}.}
 
@@ -74,43 +74,91 @@ locale setting performed in \code{\link[=gt]{gt()}}'s own \code{locale} argument
 An object of class \code{gt_tbl}.
 }
 \description{
-Format input values to date-time values using one of fourteen presets for the
+Format input values to datetime values using one of fourteen presets for the
 date component and one of five presets for the time component. Input can be
-in the form of \code{POSIXct} (i.e., date-times), the \code{Date} type, or \code{character}
+in the form of \code{POSIXt} (i.e., datetimes), the \code{Date} type, or \code{character}
 (must be in the ISO 8601 form of \verb{YYYY-MM-DD HH:MM:SS} or \code{YYYY-MM-DD}).
 
 Once the appropriate data cells are targeted with \code{columns} (and, optionally,
 \code{rows}), we can simply apply preset date and time styles to format the
-date-time values. The following date styles are available for formatting of
+datetime values. The following date styles are available for formatting of
 the date portion (all using the input date of \code{2000-02-29} in the example
-output dates):
-\enumerate{
-\item \code{"iso"}: \code{2000-02-29}
-\item \code{"wday_month_day_year"}: \verb{Tuesday, February 29, 2000}
-\item \code{"wd_m_day_year"}: \verb{Tue, Feb 29, 2000}
-\item \code{"wday_day_month_year"}: \verb{Tuesday 29 February 2000}
-\item \code{"month_day_year"}: \verb{February 29, 2000}
-\item \code{"m_day_year"}: \verb{Feb 29, 2000}
-\item \code{"day_m_year"}: \verb{29 Feb 2000}
-\item \code{"day_month_year"}: \verb{29 February 2000}
-\item \code{"day_month"}: \verb{29 February}
-\item \code{"day_m"}: \verb{29 Feb}
-\item \code{"year"}: \code{2000}
-\item \code{"month"}: \code{February}
-\item \code{"day"}: \code{29}
-\item \code{"year.mn.day"}: \code{2000/02/29}
-\item \code{"y.mn.day"}: \code{00/02/29}
+output dates):\tabular{llll}{
+    \tab Date Style \tab Output \tab Notes \cr
+   1 \tab \code{"iso"} \tab \code{"2000-02-29"} \tab ISO 8601 \cr
+   2 \tab \code{"wday_month_day_year"} \tab \code{"Tuesday, February 29, 2000"} \tab  \cr
+   3 \tab \code{"wd_m_day_year"} \tab \code{"Tue, Feb 29, 2000"} \tab  \cr
+   4 \tab \code{"wday_day_month_year"} \tab \code{"Tuesday 29 February 2000"} \tab  \cr
+   5 \tab \code{"month_day_year"} \tab \code{"February 29, 2000"} \tab  \cr
+   6 \tab \code{"m_day_year"} \tab \code{"Feb 29, 2000"} \tab  \cr
+   7 \tab \code{"day_m_year"} \tab \code{"29 Feb 2000"} \tab  \cr
+   8 \tab \code{"day_month_year"} \tab \code{"29 February 2000"} \tab  \cr
+   9 \tab \code{"day_month"} \tab \code{"29 February"} \tab  \cr
+   10 \tab \code{"day_m"} \tab \code{"29 Feb"} \tab  \cr
+   11 \tab \code{"year"} \tab \code{"2000"} \tab  \cr
+   12 \tab \code{"month"} \tab \code{"February"} \tab  \cr
+   13 \tab \code{"day"} \tab \code{"29"} \tab  \cr
+   14 \tab \code{"year.mn.day"} \tab \code{"2000/02/29"} \tab  \cr
+   15 \tab \code{"y.mn.day"} \tab \code{"00/02/29"} \tab  \cr
+   16 \tab \code{"yMd"} \tab \code{"2/29/2000"} \tab flexible \cr
+   17 \tab \code{"yMEd"} \tab \code{"Tue, 2/29/2000"} \tab flexible \cr
+   18 \tab \code{"yMMM"} \tab \code{"Feb 2000"} \tab flexible \cr
+   19 \tab \code{"yMMMM"} \tab \code{"February 2000"} \tab flexible \cr
+   20 \tab \code{"yMMMd"} \tab \code{"Feb 29, 2000"} \tab flexible \cr
+   21 \tab \code{"yMMMEd"} \tab \code{"Tue, Feb 29, 2000"} \tab flexible \cr
+   22 \tab \code{"GyMd"} \tab \code{"2/29/2000 A"} \tab flexible \cr
+   23 \tab \code{"GyMMMd"} \tab \code{"Feb 29, 2000 AD"} \tab flexible \cr
+   24 \tab \code{"GyMMMEd"} \tab \code{"Tue, Feb 29, 2000 AD"} \tab flexible \cr
+   25 \tab \code{"yM"} \tab \code{"2/2000"} \tab flexible \cr
+   26 \tab \code{"Md"} \tab \code{"2/29"} \tab flexible \cr
+   27 \tab \code{"MEd"} \tab \code{"Tue, 2/29"} \tab flexible \cr
+   28 \tab \code{"MMMd"} \tab \code{"Feb 29"} \tab flexible \cr
+   29 \tab \code{"MMMEd"} \tab \code{"Tue, Feb 29"} \tab flexible \cr
+   30 \tab \code{"MMMMd"} \tab \code{"February 29"} \tab flexible \cr
+   31 \tab \code{"GyMMM"} \tab \code{"Feb 2000 AD"} \tab flexible \cr
+   32 \tab \code{"yQQQ"} \tab \code{"Q1 2000"} \tab flexible \cr
+   33 \tab \code{"yQQQQ"} \tab \code{"1st quarter 2000"} \tab flexible \cr
+   34 \tab \code{"Gy"} \tab \code{"2000 AD"} \tab flexible \cr
+   35 \tab \code{"y"} \tab \code{"2000"} \tab flexible \cr
+   36 \tab \code{"M"} \tab \code{"2"} \tab flexible \cr
+   37 \tab \code{"MMM"} \tab \code{"Feb"} \tab flexible \cr
+   38 \tab \code{"d"} \tab \code{"29"} \tab flexible \cr
+   39 \tab \code{"Ed"} \tab \code{"29 Tue"} \tab flexible \cr
+   40 \tab \code{"MMMMW"} \tab \code{"week 5 of February"} \tab flexible \cr
+   41 \tab \code{"yw"} \tab \code{"week 9 of 2000"} \tab flexible \cr
 }
 
+
 The following time styles are available for formatting of the time portion
-(all using the input time of \code{14:35:00} in the example output times):
-\enumerate{
-\item \code{"hms"}: \code{14:35:00}
-\item \code{"hm"}: \code{14:35}
-\item \code{"hms_p"}: \verb{2:35:00 PM}
-\item \code{"hm_p"}: \verb{2:35 PM}
-\item \code{"h_p"}: \verb{2 PM}
+(all using the input time of \code{14:35:00} in the example output times):\tabular{llll}{
+    \tab Time Style \tab Output \tab Notes \cr
+   1 \tab \code{"iso"} \tab \code{"14:35:00"} \tab ISO 8601, 24h \cr
+   2 \tab \code{"iso-short"} \tab \code{"14:35"} \tab ISO 8601, 24h \cr
+   3 \tab \code{"h_m_s_p"} \tab \code{"2:35:00 PM"} \tab 12h \cr
+   4 \tab \code{"h_m_p"} \tab \code{"2:35 PM"} \tab 12h \cr
+   5 \tab \code{"h_p"} \tab \code{"2 PM"} \tab 12h \cr
+   6 \tab \code{"Hms"} \tab \code{"14:35:00"} \tab flexible, 24h \cr
+   7 \tab \code{"Hm"} \tab \code{"14:35"} \tab flexible, 24h \cr
+   8 \tab \code{"H"} \tab \code{"14"} \tab flexible, 24h \cr
+   9 \tab \code{"EHm"} \tab \code{"Thu 14:35"} \tab flexible, 24h \cr
+   10 \tab \code{"EHms"} \tab \code{"Thu 14:35:00"} \tab flexible, 24h \cr
+   11 \tab \code{"Hmsv"} \tab \code{"14:35:00 GMT+00:00"} \tab flexible, 24h \cr
+   12 \tab \code{"Hmv"} \tab \code{"14:35 GMT+00:00"} \tab flexible, 24h \cr
+   13 \tab \code{"hms"} \tab \code{"2:35:00 PM"} \tab flexible, 12h \cr
+   14 \tab \code{"hm"} \tab \code{"2:35 PM"} \tab flexible, 12h \cr
+   15 \tab \code{"h"} \tab \code{"2 PM"} \tab flexible, 12h \cr
+   16 \tab \code{"Ehm"} \tab \code{"Thu 2:35 PM"} \tab flexible, 12h \cr
+   17 \tab \code{"Ehms"} \tab \code{"Thu 2:35:00 PM"} \tab flexible, 12h \cr
+   18 \tab \code{"EBhms"} \tab \code{"Thu 2:35:00 in the afternoon"} \tab flexible, 12h \cr
+   19 \tab \code{"Bhms"} \tab \code{"2:35:00 in the afternoon"} \tab flexible, 12h \cr
+   20 \tab \code{"EBhm"} \tab \code{"Thu 2:35 in the afternoon"} \tab flexible, 12h \cr
+   21 \tab \code{"Bhm"} \tab \code{"2:35 in the afternoon"} \tab flexible, 12h \cr
+   22 \tab \code{"Bh"} \tab \code{"2 in the afternoon"} \tab flexible, 12h \cr
+   23 \tab \code{"hmsv"} \tab \code{"2:35:00 PM GMT+00:00"} \tab flexible, 12h \cr
+   24 \tab \code{"hmv"} \tab \code{"2:35 PM GMT+00:00"} \tab flexible, 12h \cr
+   25 \tab \code{"ms"} \tab \code{"35:00"} \tab flexible \cr
 }
+
 
 We can use the \code{\link[=info_date_style]{info_date_style()}} and \code{\link[=info_time_style]{info_time_style()}} functions as
 useful references for all of the possible inputs to \code{date_style} and
@@ -572,16 +620,16 @@ Here are some extra formats that you may find useful:
 
 
 Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{datetime} column.
-Format the column to have dates formatted as \code{month_day_year} and times to be
-\code{hms_p}.
+Format the column to have dates formatted with the \code{"month_day_year"} style
+and times with the \code{"h_m_s_p"} 12-hour time style.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(datetime) \%>\%
   gt() \%>\%
   fmt_datetime(
     columns = datetime,
-    date_style = 5,
-    time_style = 3
+    date_style = "month_day_year",
+    time_style = "h_m_s_p"
   )
 }\if{html}{\out{</div>}}
 
