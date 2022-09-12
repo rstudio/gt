@@ -10,7 +10,7 @@ test_that("the `info_date_style()` function works correctly", {
     info_date_style() %>%
       dt_data_get() %>%
       dim(),
-    c(15, 3)
+    c(41, 5)
   )
 })
 
@@ -26,7 +26,7 @@ test_that("the `info_time_style()` function works correctly", {
     info_time_style() %>%
       dt_data_get() %>%
       dim(),
-    c(5, 3)
+    c(25, 6)
   )
 })
 
