@@ -182,6 +182,7 @@ fmt_number <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
+  # Ensure that arguments are matched
   system <- match.arg(system)
 
   # Resolve the `locale` value here with the global locale value
@@ -805,6 +806,7 @@ fmt_symbol <- function(
     locale = NULL
 ) {
 
+  # Ensure that arguments are matched
   system <- match.arg(system)
 
   # Use locale-based marks if a locale ID is provided
@@ -1017,10 +1019,11 @@ fmt_percent <- function(
     locale = NULL
 ) {
 
-  system <- match.arg(system)
-
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  # Ensure that arguments are matched
+  system <- match.arg(system)
 
   # Resolve the `locale` value here with the global locale value
   locale <- resolve_locale(data = data, locale = locale)
@@ -1175,11 +1178,12 @@ fmt_partsper <- function(
     locale = NULL
 ) {
 
-  to_units <- match.arg(to_units)
-  system <- match.arg(system)
-
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  # Ensure that arguments are matched
+  to_units <- match.arg(to_units)
+  system <- match.arg(system)
 
   # Resolve the `locale` value here with the global locale value
   locale <- resolve_locale(data = data, locale = locale)
@@ -1406,14 +1410,16 @@ fmt_fraction <- function(
     system = c("intl", "ind"),
     locale = NULL
 ) {
-  system <- match.arg(system)
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
+  # Ensure that arguments are matched
+  system <- match.arg(system)
   layout <- match.arg(layout)
 
   if (is.null(accuracy)) {
+
     accuracy <- "low"
 
   } else {
@@ -1874,10 +1880,11 @@ fmt_currency <- function(
     locale = NULL
 ) {
 
-  system <- match.arg(system)
-
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  # Ensure that arguments are matched
+  system <- match.arg(system)
 
   # Resolve the `locale` value here with the global locale value
   locale <- resolve_locale(data = data, locale = locale)
@@ -1979,10 +1986,11 @@ fmt_roman <- function(
     pattern = "{x}"
 ) {
 
-  case <- match.arg(case)
-
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  # Ensure that arguments are matched
+  case <- match.arg(case)
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
@@ -2148,7 +2156,23 @@ fmt_bytes <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
+  # Ensure that arguments are matched
   standard <- match.arg(standard)
+
+  # Stop function if any columns have data that is incompatible
+  # with this formatter
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = c("numeric", "integer")
+    )
+  ) {
+    cli::cli_abort(
+      "The `fmt_bytes()` function can only be used on `columns`
+      with numeric data."
+    )
+  }
 
   # Resolve the `locale` value here with the global locale value
   locale <- resolve_locale(data = data, locale = locale)
@@ -2232,30 +2256,57 @@ fmt_bytes <- function(
 #'
 #' @description
 #' Format input values to time values using one of fourteen presets. Input can
-#' be in the form of `POSIXt` (i.e., date-times), the `Date` type, or
-#' `character` (must be in the ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or
-#' `YYYY-MM-DD`).
+#' be in the form of `POSIXt` (i.e., datetimes), the `Date` type, or `character`
+#' (must be in the ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or `YYYY-MM-DD`).
 #'
 #' Once the appropriate data cells are targeted with `columns` (and, optionally,
 #' `rows`), we can simply apply a preset date style to format the dates. The
 #' following date styles are available for use (all using the input date of
 #' `2000-02-29` in the example output dates):
 #'
-#' 1. `"iso"`: `2000-02-29`
-#' 2. `"wday_month_day_year"`: `Tuesday, February 29, 2000`
-#' 3. `"wd_m_day_year"`: `Tue, Feb 29, 2000`
-#' 4. `"wday_day_month_year"`: `Tuesday 29 February 2000`
-#' 5. `"month_day_year"`: `February 29, 2000`
-#' 6. `"m_day_year"`: `Feb 29, 2000`
-#' 7. `"day_m_year"`: `29 Feb 2000`
-#' 8. `"day_month_year"`: `29 February 2000`
-#' 9. `"day_month"`: `29 February`
-#' 10. `"day_m"`: `29 Feb`
-#' 11. `"year"`: `2000`
-#' 12. `"month"`: `February`
-#' 13. `"day"`: `29`
-#' 14. `"year.mn.day"`: `2000/02/29`
-#' 15. `"y.mn.day"`: `00/02/29`
+#' |    | Date Style            | Output                  | Notes         |
+#' |----|-----------------------|-------------------------|---------------|
+#' | 1  | `"iso"`               | `"2000-02-29"`          | ISO 8601      |
+#' | 2  | `"wday_month_day_year"`| `"Tuesday, February 29, 2000"`  |      |
+#' | 3  | `"wd_m_day_year"`     | `"Tue, Feb 29, 2000"`   |               |
+#' | 4  | `"wday_day_month_year"`| `"Tuesday 29 February 2000"`    |      |
+#' | 5  | `"month_day_year"`    | `"February 29, 2000"`   |               |
+#' | 6  | `"m_day_year"`        | `"Feb 29, 2000"`        |               |
+#' | 7  | `"day_m_year"`        | `"29 Feb 2000"`         |               |
+#' | 8  | `"day_month_year"`    | `"29 February 2000"`    |               |
+#' | 9  | `"day_month"`         | `"29 February"`         |               |
+#' | 10 | `"day_m"`             | `"29 Feb"`              |               |
+#' | 11 | `"year"`              | `"2000"`                |               |
+#' | 12 | `"month"`             | `"February"`            |               |
+#' | 13 | `"day"`               | `"29"`                  |               |
+#' | 14 | `"year.mn.day"`       | `"2000/02/29"`          |               |
+#' | 15 | `"y.mn.day"`          | `"00/02/29"`            |               |
+#' | 16 | `"yMd"`               | `"2/29/2000"`           | flexible      |
+#' | 17 | `"yMEd"`              | `"Tue, 2/29/2000"`      | flexible      |
+#' | 18 | `"yMMM"`              | `"Feb 2000"`            | flexible      |
+#' | 19 | `"yMMMM"`             | `"February 2000"`       | flexible      |
+#' | 20 | `"yMMMd"`             | `"Feb 29, 2000"`        | flexible      |
+#' | 21 | `"yMMMEd"`            | `"Tue, Feb 29, 2000"`   | flexible      |
+#' | 22 | `"GyMd"`              | `"2/29/2000 A"`         | flexible      |
+#' | 23 | `"GyMMMd"`            | `"Feb 29, 2000 AD"`     | flexible      |
+#' | 24 | `"GyMMMEd"`           | `"Tue, Feb 29, 2000 AD"`| flexible      |
+#' | 25 | `"yM"`                | `"2/2000"`              | flexible      |
+#' | 26 | `"Md"`                | `"2/29"`                | flexible      |
+#' | 27 | `"MEd"`               | `"Tue, 2/29"`           | flexible      |
+#' | 28 | `"MMMd"`              | `"Feb 29"`              | flexible      |
+#' | 29 | `"MMMEd"`             | `"Tue, Feb 29"`         | flexible      |
+#' | 30 | `"MMMMd"`             | `"February 29"`         | flexible      |
+#' | 31 | `"GyMMM"`             | `"Feb 2000 AD"`         | flexible      |
+#' | 32 | `"yQQQ"`              | `"Q1 2000"`             | flexible      |
+#' | 33 | `"yQQQQ"`             | `"1st quarter 2000"`    | flexible      |
+#' | 34 | `"Gy"`                | `"2000 AD"`             | flexible      |
+#' | 35 | `"y"`                 | `"2000"`                | flexible      |
+#' | 36 | `"M"`                 | `"2"`                   | flexible      |
+#' | 37 | `"MMM"`               | `"Feb"`                 | flexible      |
+#' | 38 | `"d"`                 | `"29"`                  | flexible      |
+#' | 39 | `"Ed"`                | `"29 Tue"`              | flexible      |
+#' | 40 | `"MMMMW"`             | `"week 5 of February"`  | flexible      |
+#' | 41 | `"yw"`                | `"week 9 of 2000"`      | flexible      |
 #'
 #' We can use the [info_date_style()] function for a useful reference on all of
 #' the possible inputs to `date_style`.
@@ -2396,20 +2447,42 @@ fmt_date <- function(
 #'
 #' @description
 #' Format input values to time values using one of five presets. Input can be in
-#' the form of `POSIXt` (i.e., date-times), `character` (must be in the ISO
-#' 8601 forms of `HH:MM:SS` or `YYYY-MM-DD HH:MM:SS`), or `Date` (which always
+#' the form of `POSIXt` (i.e., datetimes), `character` (must be in the ISO 8601
+#' forms of `HH:MM:SS` or `YYYY-MM-DD HH:MM:SS`), or `Date` (which always
 #' results in the formatting of `00:00:00`).
 #'
 #' Once the appropriate data cells are targeted with `columns` (and, optionally,
 #' `rows`), we can simply apply a preset time style to format the times. The
-#' following time styles are available for use (all using the input time of
-#' `14:35:00` in the example output times):
+#' following time styles are available for formatting of the time portion (all
+#' using the input time of `14:35:00` in the example output times):
 #'
-#' 1. `"h_m_s"`: `14:35:00`
-#' 2. `"h_m"`: `14:35`
-#' 3. `"h_m_s_p"`: `2:35:00 PM`
-#' 4. `"h_m_p"`: `2:35 PM`
-#' 5. `"h_p"`: `2 PM`
+#' |    | Time Style    | Output                          | Notes         |
+#' |----|---------------|---------------------------------|---------------|
+#' | 1  | `"iso"`       | `"14:35:00"`                    | ISO 8601, 24h |
+#' | 2  | `"iso-short"` | `"14:35"`                       | ISO 8601, 24h |
+#' | 3  | `"h_m_s_p"`   | `"2:35:00 PM"`                  | 12h           |
+#' | 4  | `"h_m_p"`     | `"2:35 PM"`                     | 12h           |
+#' | 5  | `"h_p"`       | `"2 PM"`                        | 12h           |
+#' | 6  | `"Hms"`       | `"14:35:00"`                    | flexible, 24h |
+#' | 7  | `"Hm"`        | `"14:35"`                       | flexible, 24h |
+#' | 8  | `"H"`         | `"14"`                          | flexible, 24h |
+#' | 9  | `"EHm"`       | `"Thu 14:35"`                   | flexible, 24h |
+#' | 10 | `"EHms"`      | `"Thu 14:35:00"`                | flexible, 24h |
+#' | 11 | `"Hmsv"`      | `"14:35:00 GMT+00:00"`          | flexible, 24h |
+#' | 12 | `"Hmv"`       | `"14:35 GMT+00:00"`             | flexible, 24h |
+#' | 13 | `"hms"`       | `"2:35:00 PM"`                  | flexible, 12h |
+#' | 14 | `"hm"`        | `"2:35 PM"`                     | flexible, 12h |
+#' | 15 | `"h"`         | `"2 PM"`                        | flexible, 12h |
+#' | 16 | `"Ehm"`       | `"Thu 2:35 PM"`                 | flexible, 12h |
+#' | 17 | `"Ehms"`      | `"Thu 2:35:00 PM"`              | flexible, 12h |
+#' | 18 | `"EBhms"`   | `"Thu 2:35:00 in the afternoon"`  | flexible, 12h |
+#' | 19 | `"Bhms"`      | `"2:35:00 in the afternoon"`    | flexible, 12h |
+#' | 20 | `"EBhm"`      | `"Thu 2:35 in the afternoon"`   | flexible, 12h |
+#' | 21 | `"Bhm"`       | `"2:35 in the afternoon"`       | flexible, 12h |
+#' | 22 | `"Bh"`        | `"2 in the afternoon"`          | flexible, 12h |
+#' | 23 | `"hmsv"`      | `"2:35:00 PM GMT+00:00"`        | flexible, 12h |
+#' | 24 | `"hmv"`       | `"2:35 PM GMT+00:00"`           | flexible, 12h |
+#' | 25 | `"ms"`        | `"35:00"`                       | flexible      |
 #'
 #' We can use the [info_time_style()] function for a useful reference on all of
 #' the possible inputs to `time_style`.
@@ -2421,7 +2494,7 @@ fmt_date <- function(
 #' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
-#' @param time_style The time style to use. By default this is `"h_m_s"` which
+#' @param time_style The time style to use. By default this is `"iso"` which
 #'   corresponds to how times are formatted within ISO 8601 datetime values. The
 #'   other time styles can be viewed using [info_time_style()].
 #'
@@ -2439,7 +2512,7 @@ fmt_date <- function(
 #'   gt() %>%
 #'   fmt_time(
 #'     columns = time,
-#'     time_style = 3
+#'     time_style = "h_m_s_p"
 #'   )
 #' ```
 #'
@@ -2459,12 +2532,12 @@ fmt_date <- function(
 #'   fmt_time(
 #'     columns = time,
 #'     rows = time > "16:00",
-#'     time_style = 3
+#'     time_style = "h_m_s_p"
 #'   ) %>%
 #'   fmt_time(
 #'     columns = time,
 #'     rows = time <= "16:00",
-#'     time_style = 4
+#'     time_style = "h_m_p"
 #'   )
 #' ```
 #'
@@ -2482,7 +2555,7 @@ fmt_time <- function(
     data,
     columns,
     rows = everything(),
-    time_style = "h_m_s",
+    time_style = "iso",
     pattern = "{x}",
     locale = NULL
 ) {
@@ -2549,44 +2622,94 @@ fmt_time <- function(
   )
 }
 
-#' Format values as date-times
+#' Format values as datetimes
 #'
 #' @description
-#' Format input values to date-time values using one of fourteen presets for the
+#' Format input values to datetime values using one of fourteen presets for the
 #' date component and one of five presets for the time component. Input can be
-#' in the form of `POSIXct` (i.e., date-times), the `Date` type, or `character`
+#' in the form of `POSIXt` (i.e., datetimes), the `Date` type, or `character`
 #' (must be in the ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or `YYYY-MM-DD`).
 #'
 #' Once the appropriate data cells are targeted with `columns` (and, optionally,
 #' `rows`), we can simply apply preset date and time styles to format the
-#' date-time values. The following date styles are available for formatting of
+#' datetime values. The following date styles are available for formatting of
 #' the date portion (all using the input date of `2000-02-29` in the example
 #' output dates):
 #'
-#' 1. `"iso"`: `2000-02-29`
-#' 2. `"wday_month_day_year"`: `Tuesday, February 29, 2000`
-#' 3. `"wd_m_day_year"`: `Tue, Feb 29, 2000`
-#' 4. `"wday_day_month_year"`: `Tuesday 29 February 2000`
-#' 5. `"month_day_year"`: `February 29, 2000`
-#' 6. `"m_day_year"`: `Feb 29, 2000`
-#' 7. `"day_m_year"`: `29 Feb 2000`
-#' 8. `"day_month_year"`: `29 February 2000`
-#' 9. `"day_month"`: `29 February`
-#' 10. `"day_m"`: `29 Feb`
-#' 11. `"year"`: `2000`
-#' 12. `"month"`: `February`
-#' 13. `"day"`: `29`
-#' 14. `"year.mn.day"`: `2000/02/29`
-#' 15. `"y.mn.day"`: `00/02/29`
+#' |    | Date Style            | Output                  | Notes         |
+#' |----|-----------------------|-------------------------|---------------|
+#' | 1  | `"iso"`               | `"2000-02-29"`          | ISO 8601      |
+#' | 2  | `"wday_month_day_year"`| `"Tuesday, February 29, 2000"`  |      |
+#' | 3  | `"wd_m_day_year"`     | `"Tue, Feb 29, 2000"`   |               |
+#' | 4  | `"wday_day_month_year"`| `"Tuesday 29 February 2000"`    |      |
+#' | 5  | `"month_day_year"`    | `"February 29, 2000"`   |               |
+#' | 6  | `"m_day_year"`        | `"Feb 29, 2000"`        |               |
+#' | 7  | `"day_m_year"`        | `"29 Feb 2000"`         |               |
+#' | 8  | `"day_month_year"`    | `"29 February 2000"`    |               |
+#' | 9  | `"day_month"`         | `"29 February"`         |               |
+#' | 10 | `"day_m"`             | `"29 Feb"`              |               |
+#' | 11 | `"year"`              | `"2000"`                |               |
+#' | 12 | `"month"`             | `"February"`            |               |
+#' | 13 | `"day"`               | `"29"`                  |               |
+#' | 14 | `"year.mn.day"`       | `"2000/02/29"`          |               |
+#' | 15 | `"y.mn.day"`          | `"00/02/29"`            |               |
+#' | 16 | `"yMd"`               | `"2/29/2000"`           | flexible      |
+#' | 17 | `"yMEd"`              | `"Tue, 2/29/2000"`      | flexible      |
+#' | 18 | `"yMMM"`              | `"Feb 2000"`            | flexible      |
+#' | 19 | `"yMMMM"`             | `"February 2000"`       | flexible      |
+#' | 20 | `"yMMMd"`             | `"Feb 29, 2000"`        | flexible      |
+#' | 21 | `"yMMMEd"`            | `"Tue, Feb 29, 2000"`   | flexible      |
+#' | 22 | `"GyMd"`              | `"2/29/2000 A"`         | flexible      |
+#' | 23 | `"GyMMMd"`            | `"Feb 29, 2000 AD"`     | flexible      |
+#' | 24 | `"GyMMMEd"`           | `"Tue, Feb 29, 2000 AD"`| flexible      |
+#' | 25 | `"yM"`                | `"2/2000"`              | flexible      |
+#' | 26 | `"Md"`                | `"2/29"`                | flexible      |
+#' | 27 | `"MEd"`               | `"Tue, 2/29"`           | flexible      |
+#' | 28 | `"MMMd"`              | `"Feb 29"`              | flexible      |
+#' | 29 | `"MMMEd"`             | `"Tue, Feb 29"`         | flexible      |
+#' | 30 | `"MMMMd"`             | `"February 29"`         | flexible      |
+#' | 31 | `"GyMMM"`             | `"Feb 2000 AD"`         | flexible      |
+#' | 32 | `"yQQQ"`              | `"Q1 2000"`             | flexible      |
+#' | 33 | `"yQQQQ"`             | `"1st quarter 2000"`    | flexible      |
+#' | 34 | `"Gy"`                | `"2000 AD"`             | flexible      |
+#' | 35 | `"y"`                 | `"2000"`                | flexible      |
+#' | 36 | `"M"`                 | `"2"`                   | flexible      |
+#' | 37 | `"MMM"`               | `"Feb"`                 | flexible      |
+#' | 38 | `"d"`                 | `"29"`                  | flexible      |
+#' | 39 | `"Ed"`                | `"29 Tue"`              | flexible      |
+#' | 40 | `"MMMMW"`             | `"week 5 of February"`  | flexible      |
+#' | 41 | `"yw"`                | `"week 9 of 2000"`      | flexible      |
 #'
 #' The following time styles are available for formatting of the time portion
 #' (all using the input time of `14:35:00` in the example output times):
 #'
-#' 1. `"hms"`: `14:35:00`
-#' 2. `"hm"`: `14:35`
-#' 3. `"hms_p"`: `2:35:00 PM`
-#' 4. `"hm_p"`: `2:35 PM`
-#' 5. `"h_p"`: `2 PM`
+#' |    | Time Style    | Output                          | Notes         |
+#' |----|---------------|---------------------------------|---------------|
+#' | 1  | `"iso"`       | `"14:35:00"`                    | ISO 8601, 24h |
+#' | 2  | `"iso-short"` | `"14:35"`                       | ISO 8601, 24h |
+#' | 3  | `"h_m_s_p"`   | `"2:35:00 PM"`                  | 12h           |
+#' | 4  | `"h_m_p"`     | `"2:35 PM"`                     | 12h           |
+#' | 5  | `"h_p"`       | `"2 PM"`                        | 12h           |
+#' | 6  | `"Hms"`       | `"14:35:00"`                    | flexible, 24h |
+#' | 7  | `"Hm"`        | `"14:35"`                       | flexible, 24h |
+#' | 8  | `"H"`         | `"14"`                          | flexible, 24h |
+#' | 9  | `"EHm"`       | `"Thu 14:35"`                   | flexible, 24h |
+#' | 10 | `"EHms"`      | `"Thu 14:35:00"`                | flexible, 24h |
+#' | 11 | `"Hmsv"`      | `"14:35:00 GMT+00:00"`          | flexible, 24h |
+#' | 12 | `"Hmv"`       | `"14:35 GMT+00:00"`             | flexible, 24h |
+#' | 13 | `"hms"`       | `"2:35:00 PM"`                  | flexible, 12h |
+#' | 14 | `"hm"`        | `"2:35 PM"`                     | flexible, 12h |
+#' | 15 | `"h"`         | `"2 PM"`                        | flexible, 12h |
+#' | 16 | `"Ehm"`       | `"Thu 2:35 PM"`                 | flexible, 12h |
+#' | 17 | `"Ehms"`      | `"Thu 2:35:00 PM"`              | flexible, 12h |
+#' | 18 | `"EBhms"`   | `"Thu 2:35:00 in the afternoon"`  | flexible, 12h |
+#' | 19 | `"Bhms"`      | `"2:35:00 in the afternoon"`    | flexible, 12h |
+#' | 20 | `"EBhm"`      | `"Thu 2:35 in the afternoon"`   | flexible, 12h |
+#' | 21 | `"Bhm"`       | `"2:35 in the afternoon"`       | flexible, 12h |
+#' | 22 | `"Bh"`        | `"2 in the afternoon"`          | flexible, 12h |
+#' | 23 | `"hmsv"`      | `"2:35:00 PM GMT+00:00"`        | flexible, 12h |
+#' | 24 | `"hmv"`       | `"2:35 PM GMT+00:00"`           | flexible, 12h |
+#' | 25 | `"ms"`        | `"35:00"`                       | flexible      |
 #'
 #' We can use the [info_date_style()] and [info_time_style()] functions as
 #' useful references for all of the possible inputs to `date_style` and
@@ -3012,8 +3135,8 @@ fmt_time <- function(
 #' @section Examples:
 #'
 #' Use [`exibble`] to create a **gt** table. Keep only the `datetime` column.
-#' Format the column to have dates formatted as `month_day_year` and times to be
-#' `hms_p`.
+#' Format the column to have dates formatted with the `"month_day_year"` style
+#' and times with the `"h_m_s_p"` 12-hour time style.
 #'
 #' ```r
 #' exibble %>%
@@ -3021,8 +3144,8 @@ fmt_time <- function(
 #'   gt() %>%
 #'   fmt_datetime(
 #'     columns = datetime,
-#'     date_style = 5,
-#'     time_style = 3
+#'     date_style = "month_day_year",
+#'     time_style = "h_m_s_p"
 #'   )
 #' ```
 #'
@@ -3041,7 +3164,7 @@ fmt_datetime <- function(
     columns,
     rows = everything(),
     date_style = "iso",
-    time_style = "h_m_s",
+    time_style = "iso",
     sep = " ",
     format = NULL,
     tz = NULL,
@@ -3129,7 +3252,7 @@ fmt_datetime <- function(
               return(strftime(datetime, format = format, tz = tz))
             }
 
-            # Format the date-time values using `strftime()`
+            # Format the datetime values using `strftime()`
             return(strftime(x, format = format, tz = tz))
 
           } else {
@@ -3145,7 +3268,7 @@ fmt_datetime <- function(
               dt_str <- paste0(dt_str, "(", tzone, ")")
             }
 
-            # Format the date-time values using `fdt()`
+            # Format the datetime values using `fdt()`
             return(
               bigD::fdt(
                 input = dt_str,
@@ -3325,12 +3448,15 @@ fmt_duration <- function(
     locale = NULL
 ) {
 
-  duration_style <- match.arg(duration_style)
-  system <- match.arg(system)
-  dec_mark <- "unused"
-
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  # Ensure that arguments are matched
+  duration_style <- match.arg(duration_style)
+  system <- match.arg(system)
+
+  # Duration values will never have decimal marks
+  dec_mark <- "unused"
 
   # Resolve the `locale` value here with the global locale value
   locale <- resolve_locale(data = data, locale = locale)
