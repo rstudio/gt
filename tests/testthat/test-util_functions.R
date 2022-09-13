@@ -40,10 +40,10 @@ test_that("the `get_date_format()` function works correctly", {
       c(
         "y-MM-dd", "EEEE, MMMM d, y", "EEE, MMM d, y", "EEEE d MMMM y",
         "MMMM d, y", "MMM d, y", "d MMM y", "d MMMM y", "d MMMM", "d MMM",
-        "y", "MMMM", "dd", "y/MM/dd", "yy/MM/dd", "yMd", "yMEd", "yMMM",
-        "yMMMM", "yMMMd", "yMMMEd", "GyMd", "GyMMMd", "GyMMMEd", "yM",
-        "Md", "MEd", "MMMd", "MMMEd", "MMMMd", "GyMMM", "yQQQ", "yQQQQ",
-        "Gy", "y", "M", "MMM", "d", "Ed", "MMMMW", "yw"
+        "y", "MMMM", "dd", "y/MM/dd", "yy/MM/dd", "y-'W'ww", "y-'Q'Q",
+        "yMd", "yMEd", "yMMM", "yMMMM", "yMMMd", "yMMMEd", "GyMd", "GyMMMd",
+        "GyMMMEd", "yM", "Md", "MEd", "MMMd", "MMMEd", "MMMMd", "GyMMM",
+        "yQQQ", "yQQQQ", "Gy", "y", "M", "MMM", "d", "Ed"
       )
     )
 
@@ -55,10 +55,10 @@ test_that("the `get_date_format()` function works correctly", {
       c(
         "y-MM-dd", "EEEE, MMMM d, y", "EEE, MMM d, y", "EEEE d MMMM y",
         "MMMM d, y", "MMM d, y", "d MMM y", "d MMMM y", "d MMMM", "d MMM",
-        "y", "MMMM", "dd", "y/MM/dd", "yy/MM/dd", "yMd", "yMEd", "yMMM",
-        "yMMMM", "yMMMd", "yMMMEd", "GyMd", "GyMMMd", "GyMMMEd", "yM",
-        "Md", "MEd", "MMMd", "MMMEd", "MMMMd", "GyMMM", "yQQQ", "yQQQQ",
-        "Gy", "y", "M", "MMM", "d", "Ed", "MMMMW", "yw"
+        "y", "MMMM", "dd", "y/MM/dd", "yy/MM/dd", "y-'W'ww", "y-'Q'Q",
+        "yMd", "yMEd", "yMMM", "yMMMM", "yMMMd", "yMMMEd", "GyMd", "GyMMMd",
+        "GyMMMEd", "yM", "Md", "MEd", "MMMd", "MMMEd", "MMMMd", "GyMMM",
+        "yQQQ", "yQQQQ", "Gy", "y", "M", "MMM", "d", "Ed"
       )
     )
 })
