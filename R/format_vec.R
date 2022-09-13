@@ -1580,32 +1580,32 @@ vec_fmt_bytes <- function(
 #' | 13 | `"day"`               | `"29"`                  |               |
 #' | 14 | `"year.mn.day"`       | `"2000/02/29"`          |               |
 #' | 15 | `"y.mn.day"`          | `"00/02/29"`            |               |
-#' | 16 | `"yMd"`               | `"2/29/2000"`           | flexible      |
-#' | 17 | `"yMEd"`              | `"Tue, 2/29/2000"`      | flexible      |
-#' | 18 | `"yMMM"`              | `"Feb 2000"`            | flexible      |
-#' | 19 | `"yMMMM"`             | `"February 2000"`       | flexible      |
-#' | 20 | `"yMMMd"`             | `"Feb 29, 2000"`        | flexible      |
-#' | 21 | `"yMMMEd"`            | `"Tue, Feb 29, 2000"`   | flexible      |
-#' | 22 | `"GyMd"`              | `"2/29/2000 A"`         | flexible      |
-#' | 23 | `"GyMMMd"`            | `"Feb 29, 2000 AD"`     | flexible      |
-#' | 24 | `"GyMMMEd"`           | `"Tue, Feb 29, 2000 AD"`| flexible      |
-#' | 25 | `"yM"`                | `"2/2000"`              | flexible      |
-#' | 26 | `"Md"`                | `"2/29"`                | flexible      |
-#' | 27 | `"MEd"`               | `"Tue, 2/29"`           | flexible      |
-#' | 28 | `"MMMd"`              | `"Feb 29"`              | flexible      |
-#' | 29 | `"MMMEd"`             | `"Tue, Feb 29"`         | flexible      |
-#' | 30 | `"MMMMd"`             | `"February 29"`         | flexible      |
-#' | 31 | `"GyMMM"`             | `"Feb 2000 AD"`         | flexible      |
-#' | 32 | `"yQQQ"`              | `"Q1 2000"`             | flexible      |
-#' | 33 | `"yQQQQ"`             | `"1st quarter 2000"`    | flexible      |
-#' | 34 | `"Gy"`                | `"2000 AD"`             | flexible      |
-#' | 35 | `"y"`                 | `"2000"`                | flexible      |
-#' | 36 | `"M"`                 | `"2"`                   | flexible      |
-#' | 37 | `"MMM"`               | `"Feb"`                 | flexible      |
-#' | 38 | `"d"`                 | `"29"`                  | flexible      |
-#' | 39 | `"Ed"`                | `"29 Tue"`              | flexible      |
-#' | 40 | `"MMMMW"`             | `"week 5 of February"`  | flexible      |
-#' | 41 | `"yw"`                | `"week 9 of 2000"`      | flexible      |
+#' | 16 | `"year_week"`         | `"2000-W09"`            |               |
+#' | 17 | `"year_quarter"`      | `"2000-Q1"`             |               |
+#' | 18 | `"yMd"`               | `"2/29/2000"`           | flexible      |
+#' | 19 | `"yMEd"`              | `"Tue, 2/29/2000"`      | flexible      |
+#' | 20 | `"yMMM"`              | `"Feb 2000"`            | flexible      |
+#' | 21 | `"yMMMM"`             | `"February 2000"`       | flexible      |
+#' | 22 | `"yMMMd"`             | `"Feb 29, 2000"`        | flexible      |
+#' | 23 | `"yMMMEd"`            | `"Tue, Feb 29, 2000"`   | flexible      |
+#' | 24 | `"GyMd"`              | `"2/29/2000 A"`         | flexible      |
+#' | 25 | `"GyMMMd"`            | `"Feb 29, 2000 AD"`     | flexible      |
+#' | 26 | `"GyMMMEd"`           | `"Tue, Feb 29, 2000 AD"`| flexible      |
+#' | 27 | `"yM"`                | `"2/2000"`              | flexible      |
+#' | 28 | `"Md"`                | `"2/29"`                | flexible      |
+#' | 29 | `"MEd"`               | `"Tue, 2/29"`           | flexible      |
+#' | 30 | `"MMMd"`              | `"Feb 29"`              | flexible      |
+#' | 31 | `"MMMEd"`             | `"Tue, Feb 29"`         | flexible      |
+#' | 32 | `"MMMMd"`             | `"February 29"`         | flexible      |
+#' | 33 | `"GyMMM"`             | `"Feb 2000 AD"`         | flexible      |
+#' | 34 | `"yQQQ"`              | `"Q1 2000"`             | flexible      |
+#' | 35 | `"yQQQQ"`             | `"1st quarter 2000"`    | flexible      |
+#' | 36 | `"Gy"`                | `"2000 AD"`             | flexible      |
+#' | 37 | `"y"`                 | `"2000"`                | flexible      |
+#' | 38 | `"M"`                 | `"2"`                   | flexible      |
+#' | 39 | `"MMM"`               | `"Feb"`                 | flexible      |
+#' | 40 | `"d"`                 | `"29"`                  | flexible      |
+#' | 41 | `"Ed"`                | `"29 Tue"`              | flexible      |
 #'
 #' We can use the [info_date_style()] function for a useful reference on all of
 #' the possible inputs to `date_style`.
@@ -1900,32 +1900,32 @@ vec_fmt_time <- function(
 #' | 13 | `"day"`               | `"29"`                  |               |
 #' | 14 | `"year.mn.day"`       | `"2000/02/29"`          |               |
 #' | 15 | `"y.mn.day"`          | `"00/02/29"`            |               |
-#' | 16 | `"yMd"`               | `"2/29/2000"`           | flexible      |
-#' | 17 | `"yMEd"`              | `"Tue, 2/29/2000"`      | flexible      |
-#' | 18 | `"yMMM"`              | `"Feb 2000"`            | flexible      |
-#' | 19 | `"yMMMM"`             | `"February 2000"`       | flexible      |
-#' | 20 | `"yMMMd"`             | `"Feb 29, 2000"`        | flexible      |
-#' | 21 | `"yMMMEd"`            | `"Tue, Feb 29, 2000"`   | flexible      |
-#' | 22 | `"GyMd"`              | `"2/29/2000 A"`         | flexible      |
-#' | 23 | `"GyMMMd"`            | `"Feb 29, 2000 AD"`     | flexible      |
-#' | 24 | `"GyMMMEd"`           | `"Tue, Feb 29, 2000 AD"`| flexible      |
-#' | 25 | `"yM"`                | `"2/2000"`              | flexible      |
-#' | 26 | `"Md"`                | `"2/29"`                | flexible      |
-#' | 27 | `"MEd"`               | `"Tue, 2/29"`           | flexible      |
-#' | 28 | `"MMMd"`              | `"Feb 29"`              | flexible      |
-#' | 29 | `"MMMEd"`             | `"Tue, Feb 29"`         | flexible      |
-#' | 30 | `"MMMMd"`             | `"February 29"`         | flexible      |
-#' | 31 | `"GyMMM"`             | `"Feb 2000 AD"`         | flexible      |
-#' | 32 | `"yQQQ"`              | `"Q1 2000"`             | flexible      |
-#' | 33 | `"yQQQQ"`             | `"1st quarter 2000"`    | flexible      |
-#' | 34 | `"Gy"`                | `"2000 AD"`             | flexible      |
-#' | 35 | `"y"`                 | `"2000"`                | flexible      |
-#' | 36 | `"M"`                 | `"2"`                   | flexible      |
-#' | 37 | `"MMM"`               | `"Feb"`                 | flexible      |
-#' | 38 | `"d"`                 | `"29"`                  | flexible      |
-#' | 39 | `"Ed"`                | `"29 Tue"`              | flexible      |
-#' | 40 | `"MMMMW"`             | `"week 5 of February"`  | flexible      |
-#' | 41 | `"yw"`                | `"week 9 of 2000"`      | flexible      |
+#' | 16 | `"year_week"`         | `"2000-W09"`            |               |
+#' | 17 | `"year_quarter"`      | `"2000-Q1"`             |               |
+#' | 18 | `"yMd"`               | `"2/29/2000"`           | flexible      |
+#' | 19 | `"yMEd"`              | `"Tue, 2/29/2000"`      | flexible      |
+#' | 20 | `"yMMM"`              | `"Feb 2000"`            | flexible      |
+#' | 21 | `"yMMMM"`             | `"February 2000"`       | flexible      |
+#' | 22 | `"yMMMd"`             | `"Feb 29, 2000"`        | flexible      |
+#' | 23 | `"yMMMEd"`            | `"Tue, Feb 29, 2000"`   | flexible      |
+#' | 24 | `"GyMd"`              | `"2/29/2000 A"`         | flexible      |
+#' | 25 | `"GyMMMd"`            | `"Feb 29, 2000 AD"`     | flexible      |
+#' | 26 | `"GyMMMEd"`           | `"Tue, Feb 29, 2000 AD"`| flexible      |
+#' | 27 | `"yM"`                | `"2/2000"`              | flexible      |
+#' | 28 | `"Md"`                | `"2/29"`                | flexible      |
+#' | 29 | `"MEd"`               | `"Tue, 2/29"`           | flexible      |
+#' | 30 | `"MMMd"`              | `"Feb 29"`              | flexible      |
+#' | 31 | `"MMMEd"`             | `"Tue, Feb 29"`         | flexible      |
+#' | 32 | `"MMMMd"`             | `"February 29"`         | flexible      |
+#' | 33 | `"GyMMM"`             | `"Feb 2000 AD"`         | flexible      |
+#' | 34 | `"yQQQ"`              | `"Q1 2000"`             | flexible      |
+#' | 35 | `"yQQQQ"`             | `"1st quarter 2000"`    | flexible      |
+#' | 36 | `"Gy"`                | `"2000 AD"`             | flexible      |
+#' | 37 | `"y"`                 | `"2000"`                | flexible      |
+#' | 38 | `"M"`                 | `"2"`                   | flexible      |
+#' | 39 | `"MMM"`               | `"Feb"`                 | flexible      |
+#' | 40 | `"d"`                 | `"29"`                  | flexible      |
+#' | 41 | `"Ed"`                | `"29 Tue"`              | flexible      |
 #'
 #' The following time styles are available for formatting of the time portion
 #' (all using the input time of `14:35:00` in the example output times):
