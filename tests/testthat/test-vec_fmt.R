@@ -4157,6 +4157,7 @@ test_that("The `vec_fmt_bytes()` function works", {
 
 test_that("The `vec_fmt_date()` function works", {
 
+
   vec_fmt_date(dates, date_style = 2, output = "html") %>%
     expect_equal(
       c(
@@ -4452,6 +4453,44 @@ test_that("The `vec_fmt_date()` function works", {
   expect_equal(
     vec_fmt_date(as.character(dates), date_style = "y.mn.day", output = "html"),
     vec_fmt_date(as.character(dates), date_style = "y.mn.day", output = "plain")
+  )
+
+  vec_fmt_date(dates, date_style = "year_week", output = "html") %>%
+    expect_equal(
+      c(
+        "2020-W01", "2021-W05", "2022-W10", "2023-W14", "2024-W19"
+      )
+    )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = "year_week", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "year_week", output = "latex")
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = "year_week", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "year_week", output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = "year_week", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "year_week", output = "plain")
+  )
+
+  vec_fmt_date(dates, date_style = "year_quarter", output = "html") %>%
+    expect_equal(
+      c(
+        "2020-Q1", "2021-Q1", "2022-Q1", "2023-Q2", "2024-Q2"
+      )
+    )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = "year_quarter", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "year_quarter", output = "latex")
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = "year_quarter", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "year_quarter", output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_date(as.character(dates), date_style = "year_quarter", output = "html"),
+    vec_fmt_date(as.character(dates), date_style = "year_quarter", output = "plain")
   )
 
   vec_fmt_date(dates, date_style = "yMd", output = "html") %>%
