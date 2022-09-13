@@ -62,32 +62,32 @@ in the example output dates):\tabular{llll}{
    13 \tab \code{"day"} \tab \code{"29"} \tab  \cr
    14 \tab \code{"year.mn.day"} \tab \code{"2000/02/29"} \tab  \cr
    15 \tab \code{"y.mn.day"} \tab \code{"00/02/29"} \tab  \cr
-   16 \tab \code{"yMd"} \tab \code{"2/29/2000"} \tab flexible \cr
-   17 \tab \code{"yMEd"} \tab \code{"Tue, 2/29/2000"} \tab flexible \cr
-   18 \tab \code{"yMMM"} \tab \code{"Feb 2000"} \tab flexible \cr
-   19 \tab \code{"yMMMM"} \tab \code{"February 2000"} \tab flexible \cr
-   20 \tab \code{"yMMMd"} \tab \code{"Feb 29, 2000"} \tab flexible \cr
-   21 \tab \code{"yMMMEd"} \tab \code{"Tue, Feb 29, 2000"} \tab flexible \cr
-   22 \tab \code{"GyMd"} \tab \code{"2/29/2000 A"} \tab flexible \cr
-   23 \tab \code{"GyMMMd"} \tab \code{"Feb 29, 2000 AD"} \tab flexible \cr
-   24 \tab \code{"GyMMMEd"} \tab \code{"Tue, Feb 29, 2000 AD"} \tab flexible \cr
-   25 \tab \code{"yM"} \tab \code{"2/2000"} \tab flexible \cr
-   26 \tab \code{"Md"} \tab \code{"2/29"} \tab flexible \cr
-   27 \tab \code{"MEd"} \tab \code{"Tue, 2/29"} \tab flexible \cr
-   28 \tab \code{"MMMd"} \tab \code{"Feb 29"} \tab flexible \cr
-   29 \tab \code{"MMMEd"} \tab \code{"Tue, Feb 29"} \tab flexible \cr
-   30 \tab \code{"MMMMd"} \tab \code{"February 29"} \tab flexible \cr
-   31 \tab \code{"GyMMM"} \tab \code{"Feb 2000 AD"} \tab flexible \cr
-   32 \tab \code{"yQQQ"} \tab \code{"Q1 2000"} \tab flexible \cr
-   33 \tab \code{"yQQQQ"} \tab \code{"1st quarter 2000"} \tab flexible \cr
-   34 \tab \code{"Gy"} \tab \code{"2000 AD"} \tab flexible \cr
-   35 \tab \code{"y"} \tab \code{"2000"} \tab flexible \cr
-   36 \tab \code{"M"} \tab \code{"2"} \tab flexible \cr
-   37 \tab \code{"MMM"} \tab \code{"Feb"} \tab flexible \cr
-   38 \tab \code{"d"} \tab \code{"29"} \tab flexible \cr
-   39 \tab \code{"Ed"} \tab \code{"29 Tue"} \tab flexible \cr
-   40 \tab \code{"MMMMW"} \tab \code{"week 5 of February"} \tab flexible \cr
-   41 \tab \code{"yw"} \tab \code{"week 9 of 2000"} \tab flexible \cr
+   16 \tab \code{"year_week"} \tab \code{"2000-W09"} \tab  \cr
+   17 \tab \code{"year_quarter"} \tab \code{"2000-Q1"} \tab  \cr
+   18 \tab \code{"yMd"} \tab \code{"2/29/2000"} \tab flexible \cr
+   19 \tab \code{"yMEd"} \tab \code{"Tue, 2/29/2000"} \tab flexible \cr
+   20 \tab \code{"yMMM"} \tab \code{"Feb 2000"} \tab flexible \cr
+   21 \tab \code{"yMMMM"} \tab \code{"February 2000"} \tab flexible \cr
+   22 \tab \code{"yMMMd"} \tab \code{"Feb 29, 2000"} \tab flexible \cr
+   23 \tab \code{"yMMMEd"} \tab \code{"Tue, Feb 29, 2000"} \tab flexible \cr
+   24 \tab \code{"GyMd"} \tab \code{"2/29/2000 A"} \tab flexible \cr
+   25 \tab \code{"GyMMMd"} \tab \code{"Feb 29, 2000 AD"} \tab flexible \cr
+   26 \tab \code{"GyMMMEd"} \tab \code{"Tue, Feb 29, 2000 AD"} \tab flexible \cr
+   27 \tab \code{"yM"} \tab \code{"2/2000"} \tab flexible \cr
+   28 \tab \code{"Md"} \tab \code{"2/29"} \tab flexible \cr
+   29 \tab \code{"MEd"} \tab \code{"Tue, 2/29"} \tab flexible \cr
+   30 \tab \code{"MMMd"} \tab \code{"Feb 29"} \tab flexible \cr
+   31 \tab \code{"MMMEd"} \tab \code{"Tue, Feb 29"} \tab flexible \cr
+   32 \tab \code{"MMMMd"} \tab \code{"February 29"} \tab flexible \cr
+   33 \tab \code{"GyMMM"} \tab \code{"Feb 2000 AD"} \tab flexible \cr
+   34 \tab \code{"yQQQ"} \tab \code{"Q1 2000"} \tab flexible \cr
+   35 \tab \code{"yQQQQ"} \tab \code{"1st quarter 2000"} \tab flexible \cr
+   36 \tab \code{"Gy"} \tab \code{"2000 AD"} \tab flexible \cr
+   37 \tab \code{"y"} \tab \code{"2000"} \tab flexible \cr
+   38 \tab \code{"M"} \tab \code{"2"} \tab flexible \cr
+   39 \tab \code{"MMM"} \tab \code{"Feb"} \tab flexible \cr
+   40 \tab \code{"d"} \tab \code{"29"} \tab flexible \cr
+   41 \tab \code{"Ed"} \tab \code{"29 Tue"} \tab flexible \cr
 }
 
 
