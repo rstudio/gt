@@ -4,7 +4,14 @@
 \alias{fmt_date}
 \title{Format values as dates}
 \usage{
-fmt_date(data, columns, rows = everything(), date_style = 1, pattern = "{x}")
+fmt_date(
+  data,
+  columns,
+  rows = everything(),
+  date_style = "iso",
+  pattern = "{x}",
+  locale = NULL
+)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -24,45 +31,78 @@ functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with
 to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{date_style}{The date style to use. Supply a number (from \code{1} to \code{15})
-that corresponds to the preferred date style, or, provide a named date
-style (\code{"wday_month_day_year"}, \code{"m_day_year"}, \code{"year.mn.day"}, etc.). Use
-\code{\link[=info_date_style]{info_date_style()}} to see the different numbered and named date presets.}
+\item{date_style}{The date style to use. By default this is \code{"iso"} which
+corresponds to ISO 8601 date formatting. The other date styles can be
+viewed using \code{\link[=info_date_style]{info_date_style()}}.}
 
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other
 characters are taken to be string literals.}
+
+\item{locale}{An optional locale ID that can be used for formatting the value
+according the locale's rules. Examples include \code{"en"} for English (United
+States) and \code{"fr"} for French (France). The use of a valid locale ID will
+override any values provided in \code{sep_mark} and \code{dec_mark}. We can use the
+\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
+are supported. Any \code{locale} value provided here will override any global
+locale setting performed in \code{\link[=gt]{gt()}}'s own \code{locale} argument.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
 Format input values to time values using one of fourteen presets. Input can
-be in the form of \code{POSIXt} (i.e., date-times), the \code{Date} type, or
-\code{character} (must be in the ISO 8601 form of \verb{YYYY-MM-DD HH:MM:SS} or
-\code{YYYY-MM-DD}).
+be in the form of \code{POSIXt} (i.e., datetimes), the \code{Date} type, or \code{character}
+(must be in the ISO 8601 form of \verb{YYYY-MM-DD HH:MM:SS} or \code{YYYY-MM-DD}).
 
 Once the appropriate data cells are targeted with \code{columns} (and, optionally,
 \code{rows}), we can simply apply a preset date style to format the dates. The
 following date styles are available for use (all using the input date of
-\code{2000-02-29} in the example output dates):
-\enumerate{
-\item \code{"iso"}: \code{2000-02-29}
-\item \code{"wday_month_day_year"}: \verb{Tuesday, February 29, 2000}
-\item \code{"wd_m_day_year"}: \verb{Tue, Feb 29, 2000}
-\item \code{"wday_day_month_year"}: \verb{Tuesday 29 February 2000}
-\item \code{"month_day_year"}: \verb{February 29, 2000}
-\item \code{"m_day_year"}: \verb{Feb 29, 2000}
-\item \code{"day_m_year"}: \verb{29 Feb 2000}
-\item \code{"day_month_year"}: \verb{29 February 2000}
-\item \code{"day_month"}: \verb{29 February}
-\item \code{"day_m"}: \verb{29 Feb}
-\item \code{"year"}: \code{2000}
-\item \code{"month"}: \code{February}
-\item \code{"day"}: \code{29}
-\item \code{"year.mn.day"}: \code{2000/02/29}
-\item \code{"y.mn.day"}: \code{00/02/29}
+\code{2000-02-29} in the example output dates):\tabular{llll}{
+    \tab Date Style \tab Output \tab Notes \cr
+   1 \tab \code{"iso"} \tab \code{"2000-02-29"} \tab ISO 8601 \cr
+   2 \tab \code{"wday_month_day_year"} \tab \code{"Tuesday, February 29, 2000"} \tab  \cr
+   3 \tab \code{"wd_m_day_year"} \tab \code{"Tue, Feb 29, 2000"} \tab  \cr
+   4 \tab \code{"wday_day_month_year"} \tab \code{"Tuesday 29 February 2000"} \tab  \cr
+   5 \tab \code{"month_day_year"} \tab \code{"February 29, 2000"} \tab  \cr
+   6 \tab \code{"m_day_year"} \tab \code{"Feb 29, 2000"} \tab  \cr
+   7 \tab \code{"day_m_year"} \tab \code{"29 Feb 2000"} \tab  \cr
+   8 \tab \code{"day_month_year"} \tab \code{"29 February 2000"} \tab  \cr
+   9 \tab \code{"day_month"} \tab \code{"29 February"} \tab  \cr
+   10 \tab \code{"day_m"} \tab \code{"29 Feb"} \tab  \cr
+   11 \tab \code{"year"} \tab \code{"2000"} \tab  \cr
+   12 \tab \code{"month"} \tab \code{"February"} \tab  \cr
+   13 \tab \code{"day"} \tab \code{"29"} \tab  \cr
+   14 \tab \code{"year.mn.day"} \tab \code{"2000/02/29"} \tab  \cr
+   15 \tab \code{"y.mn.day"} \tab \code{"00/02/29"} \tab  \cr
+   16 \tab \code{"year_week"} \tab \code{"2000-W09"} \tab  \cr
+   17 \tab \code{"year_quarter"} \tab \code{"2000-Q1"} \tab  \cr
+   18 \tab \code{"yMd"} \tab \code{"2/29/2000"} \tab flexible \cr
+   19 \tab \code{"yMEd"} \tab \code{"Tue, 2/29/2000"} \tab flexible \cr
+   20 \tab \code{"yMMM"} \tab \code{"Feb 2000"} \tab flexible \cr
+   21 \tab \code{"yMMMM"} \tab \code{"February 2000"} \tab flexible \cr
+   22 \tab \code{"yMMMd"} \tab \code{"Feb 29, 2000"} \tab flexible \cr
+   23 \tab \code{"yMMMEd"} \tab \code{"Tue, Feb 29, 2000"} \tab flexible \cr
+   24 \tab \code{"GyMd"} \tab \code{"2/29/2000 A"} \tab flexible \cr
+   25 \tab \code{"GyMMMd"} \tab \code{"Feb 29, 2000 AD"} \tab flexible \cr
+   26 \tab \code{"GyMMMEd"} \tab \code{"Tue, Feb 29, 2000 AD"} \tab flexible \cr
+   27 \tab \code{"yM"} \tab \code{"2/2000"} \tab flexible \cr
+   28 \tab \code{"Md"} \tab \code{"2/29"} \tab flexible \cr
+   29 \tab \code{"MEd"} \tab \code{"Tue, 2/29"} \tab flexible \cr
+   30 \tab \code{"MMMd"} \tab \code{"Feb 29"} \tab flexible \cr
+   31 \tab \code{"MMMEd"} \tab \code{"Tue, Feb 29"} \tab flexible \cr
+   32 \tab \code{"MMMMd"} \tab \code{"February 29"} \tab flexible \cr
+   33 \tab \code{"GyMMM"} \tab \code{"Feb 2000 AD"} \tab flexible \cr
+   34 \tab \code{"yQQQ"} \tab \code{"Q1 2000"} \tab flexible \cr
+   35 \tab \code{"yQQQQ"} \tab \code{"1st quarter 2000"} \tab flexible \cr
+   36 \tab \code{"Gy"} \tab \code{"2000 AD"} \tab flexible \cr
+   37 \tab \code{"y"} \tab \code{"2000"} \tab flexible \cr
+   38 \tab \code{"M"} \tab \code{"2"} \tab flexible \cr
+   39 \tab \code{"MMM"} \tab \code{"Feb"} \tab flexible \cr
+   40 \tab \code{"d"} \tab \code{"29"} \tab flexible \cr
+   41 \tab \code{"Ed"} \tab \code{"29 Tue"} \tab flexible \cr
 }
+
 
 We can use the \code{\link[=info_date_style]{info_date_style()}} function for a useful reference on all of
 the possible inputs to \code{date_style}.

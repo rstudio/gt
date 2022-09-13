@@ -1,5 +1,3 @@
-skip_on_cran()
-
 test_that("`as_raw_html()` produces the same table every time", {
 
   gt_html_1 <-

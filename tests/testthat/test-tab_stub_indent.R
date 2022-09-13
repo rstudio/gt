@@ -1,5 +1,3 @@
-skip_on_cran()
-
 test_that("a gt table can contain indentation in the stub", {
 
   # Create a table with a stub that has rownames; indent the first

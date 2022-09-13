@@ -103,13 +103,12 @@
 #'   the Indian numbering system (`"ind"`) uses grouping separators that
 #'   correspond to thousand, lakh, crore, and higher quantities.
 #' @param locale An optional locale ID that can be used for formatting the value
-#'   according the locale's rules. Examples include `"en_US"` for English
-#'   (United States) and `"fr_FR"` for French (France). The use of a valid
-#'   locale ID will override any values provided in `sep_mark` and `dec_mark`.
-#'   We can use the [info_locales()] function as a useful reference for all of
-#'   the locales that are supported. Any `locale` value provided here will
-#'   override any global locale setting performed in [gt()]'s own `locale`
-#'   argument.
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). The use of a valid locale ID will
+#'   override any values provided in `sep_mark` and `dec_mark`. We can use the
+#'   [info_locales()] function as a useful reference for all of the locales that
+#'   are supported. Any `locale` value provided here will override any global
+#'   locale setting performed in [gt()]'s own `locale` argument.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -183,6 +182,7 @@ fmt_number <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
+  # Ensure that arguments are matched
   system <- match.arg(system)
 
   # Resolve the `locale` value here with the global locale value
@@ -806,6 +806,7 @@ fmt_symbol <- function(
     locale = NULL
 ) {
 
+  # Ensure that arguments are matched
   system <- match.arg(system)
 
   # Use locale-based marks if a locale ID is provided
@@ -1018,10 +1019,11 @@ fmt_percent <- function(
     locale = NULL
 ) {
 
-  system <- match.arg(system)
-
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  # Ensure that arguments are matched
+  system <- match.arg(system)
 
   # Resolve the `locale` value here with the global locale value
   locale <- resolve_locale(data = data, locale = locale)
@@ -1176,11 +1178,12 @@ fmt_partsper <- function(
     locale = NULL
 ) {
 
-  to_units <- match.arg(to_units)
-  system <- match.arg(system)
-
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  # Ensure that arguments are matched
+  to_units <- match.arg(to_units)
+  system <- match.arg(system)
 
   # Resolve the `locale` value here with the global locale value
   locale <- resolve_locale(data = data, locale = locale)
@@ -1407,14 +1410,16 @@ fmt_fraction <- function(
     system = c("intl", "ind"),
     locale = NULL
 ) {
-  system <- match.arg(system)
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
+  # Ensure that arguments are matched
+  system <- match.arg(system)
   layout <- match.arg(layout)
 
   if (is.null(accuracy)) {
+
     accuracy <- "low"
 
   } else {
@@ -1875,10 +1880,11 @@ fmt_currency <- function(
     locale = NULL
 ) {
 
-  system <- match.arg(system)
-
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  # Ensure that arguments are matched
+  system <- match.arg(system)
 
   # Resolve the `locale` value here with the global locale value
   locale <- resolve_locale(data = data, locale = locale)
@@ -1980,10 +1986,11 @@ fmt_roman <- function(
     pattern = "{x}"
 ) {
 
-  case <- match.arg(case)
-
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  # Ensure that arguments are matched
+  case <- match.arg(case)
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
@@ -2149,7 +2156,23 @@ fmt_bytes <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
+  # Ensure that arguments are matched
   standard <- match.arg(standard)
+
+  # Stop function if any columns have data that is incompatible
+  # with this formatter
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = c("numeric", "integer")
+    )
+  ) {
+    cli::cli_abort(
+      "The `fmt_bytes()` function can only be used on `columns`
+      with numeric data."
+    )
+  }
 
   # Resolve the `locale` value here with the global locale value
   locale <- resolve_locale(data = data, locale = locale)
@@ -2233,30 +2256,57 @@ fmt_bytes <- function(
 #'
 #' @description
 #' Format input values to time values using one of fourteen presets. Input can
-#' be in the form of `POSIXt` (i.e., date-times), the `Date` type, or
-#' `character` (must be in the ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or
-#' `YYYY-MM-DD`).
+#' be in the form of `POSIXt` (i.e., datetimes), the `Date` type, or `character`
+#' (must be in the ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or `YYYY-MM-DD`).
 #'
 #' Once the appropriate data cells are targeted with `columns` (and, optionally,
 #' `rows`), we can simply apply a preset date style to format the dates. The
 #' following date styles are available for use (all using the input date of
 #' `2000-02-29` in the example output dates):
 #'
-#' 1. `"iso"`: `2000-02-29`
-#' 2. `"wday_month_day_year"`: `Tuesday, February 29, 2000`
-#' 3. `"wd_m_day_year"`: `Tue, Feb 29, 2000`
-#' 4. `"wday_day_month_year"`: `Tuesday 29 February 2000`
-#' 5. `"month_day_year"`: `February 29, 2000`
-#' 6. `"m_day_year"`: `Feb 29, 2000`
-#' 7. `"day_m_year"`: `29 Feb 2000`
-#' 8. `"day_month_year"`: `29 February 2000`
-#' 9. `"day_month"`: `29 February`
-#' 10. `"day_m"`: `29 Feb`
-#' 11. `"year"`: `2000`
-#' 12. `"month"`: `February`
-#' 13. `"day"`: `29`
-#' 14. `"year.mn.day"`: `2000/02/29`
-#' 15. `"y.mn.day"`: `00/02/29`
+#' |    | Date Style            | Output                  | Notes         |
+#' |----|-----------------------|-------------------------|---------------|
+#' | 1  | `"iso"`               | `"2000-02-29"`          | ISO 8601      |
+#' | 2  | `"wday_month_day_year"`| `"Tuesday, February 29, 2000"`  |      |
+#' | 3  | `"wd_m_day_year"`     | `"Tue, Feb 29, 2000"`   |               |
+#' | 4  | `"wday_day_month_year"`| `"Tuesday 29 February 2000"`    |      |
+#' | 5  | `"month_day_year"`    | `"February 29, 2000"`   |               |
+#' | 6  | `"m_day_year"`        | `"Feb 29, 2000"`        |               |
+#' | 7  | `"day_m_year"`        | `"29 Feb 2000"`         |               |
+#' | 8  | `"day_month_year"`    | `"29 February 2000"`    |               |
+#' | 9  | `"day_month"`         | `"29 February"`         |               |
+#' | 10 | `"day_m"`             | `"29 Feb"`              |               |
+#' | 11 | `"year"`              | `"2000"`                |               |
+#' | 12 | `"month"`             | `"February"`            |               |
+#' | 13 | `"day"`               | `"29"`                  |               |
+#' | 14 | `"year.mn.day"`       | `"2000/02/29"`          |               |
+#' | 15 | `"y.mn.day"`          | `"00/02/29"`            |               |
+#' | 16 | `"year_week"`         | `"2000-W09"`            |               |
+#' | 17 | `"year_quarter"`      | `"2000-Q1"`             |               |
+#' | 18 | `"yMd"`               | `"2/29/2000"`           | flexible      |
+#' | 19 | `"yMEd"`              | `"Tue, 2/29/2000"`      | flexible      |
+#' | 20 | `"yMMM"`              | `"Feb 2000"`            | flexible      |
+#' | 21 | `"yMMMM"`             | `"February 2000"`       | flexible      |
+#' | 22 | `"yMMMd"`             | `"Feb 29, 2000"`        | flexible      |
+#' | 23 | `"yMMMEd"`            | `"Tue, Feb 29, 2000"`   | flexible      |
+#' | 24 | `"GyMd"`              | `"2/29/2000 A"`         | flexible      |
+#' | 25 | `"GyMMMd"`            | `"Feb 29, 2000 AD"`     | flexible      |
+#' | 26 | `"GyMMMEd"`           | `"Tue, Feb 29, 2000 AD"`| flexible      |
+#' | 27 | `"yM"`                | `"2/2000"`              | flexible      |
+#' | 28 | `"Md"`                | `"2/29"`                | flexible      |
+#' | 29 | `"MEd"`               | `"Tue, 2/29"`           | flexible      |
+#' | 30 | `"MMMd"`              | `"Feb 29"`              | flexible      |
+#' | 31 | `"MMMEd"`             | `"Tue, Feb 29"`         | flexible      |
+#' | 32 | `"MMMMd"`             | `"February 29"`         | flexible      |
+#' | 33 | `"GyMMM"`             | `"Feb 2000 AD"`         | flexible      |
+#' | 34 | `"yQQQ"`              | `"Q1 2000"`             | flexible      |
+#' | 35 | `"yQQQQ"`             | `"1st quarter 2000"`    | flexible      |
+#' | 36 | `"Gy"`                | `"2000 AD"`             | flexible      |
+#' | 37 | `"y"`                 | `"2000"`                | flexible      |
+#' | 38 | `"M"`                 | `"2"`                   | flexible      |
+#' | 39 | `"MMM"`               | `"Feb"`                 | flexible      |
+#' | 40 | `"d"`                 | `"29"`                  | flexible      |
+#' | 41 | `"Ed"`                | `"29 Tue"`              | flexible      |
 #'
 #' We can use the [info_date_style()] function for a useful reference on all of
 #' the possible inputs to `date_style`.
@@ -2268,10 +2318,9 @@ fmt_bytes <- function(
 #' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
-#' @param date_style The date style to use. Supply a number (from `1` to `15`)
-#'   that corresponds to the preferred date style, or, provide a named date
-#'   style (`"wday_month_day_year"`, `"m_day_year"`, `"year.mn.day"`, etc.). Use
-#'   [info_date_style()] to see the different numbered and named date presets.
+#' @param date_style The date style to use. By default this is `"iso"` which
+#'   corresponds to ISO 8601 date formatting. The other date styles can be
+#'   viewed using [info_date_style()].
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -2330,12 +2379,16 @@ fmt_date <- function(
     data,
     columns,
     rows = everything(),
-    date_style = 1,
-    pattern = "{x}"
+    date_style = "iso",
+    pattern = "{x}",
+    locale = NULL
 ) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  # Resolve the `locale` value here with the global locale value
+  locale <- resolve_locale(data = data, locale = locale)
 
   # Transform `date_style` to `date_format_str`
   date_format_str <- get_date_format(date_style = date_style)
@@ -2371,7 +2424,7 @@ fmt_date <- function(
         # if the values cannot be parsed by `as.POSIXlt()`
         date <-
           tryCatch(
-            as.POSIXlt(x),
+            as.POSIXlt(x, tz = "GMT"),
             error = function(cond) {
               cli::cli_abort(
                 "One or more of the provided date/datetime values are invalid."
@@ -2379,17 +2432,12 @@ fmt_date <- function(
             }
           )
 
-        # Format the date string using `strftime()`
-        date <- strftime(date, format = date_format_str)
-
-        # Perform several cosmetic changes to the formatted date
-        if (date_format_str != "%F") {
-
-          date <- gsub(" 0([0-9])", " \\1", date)
-          date <- gsub("^0([0-9])[^/]", "\\1 ", date)
-        }
-
-        date
+        # Format the date string using `fdt()`
+        bigD::fdt(
+          input = as.character(date),
+          format = date_format_str,
+          locale = locale
+        )
       }
     )
   )
@@ -2399,20 +2447,42 @@ fmt_date <- function(
 #'
 #' @description
 #' Format input values to time values using one of five presets. Input can be in
-#' the form of `POSIXt` (i.e., date-times), `character` (must be in the ISO
-#' 8601 forms of `HH:MM:SS` or `YYYY-MM-DD HH:MM:SS`), or `Date` (which always
+#' the form of `POSIXt` (i.e., datetimes), `character` (must be in the ISO 8601
+#' forms of `HH:MM:SS` or `YYYY-MM-DD HH:MM:SS`), or `Date` (which always
 #' results in the formatting of `00:00:00`).
 #'
 #' Once the appropriate data cells are targeted with `columns` (and, optionally,
 #' `rows`), we can simply apply a preset time style to format the times. The
-#' following time styles are available for use (all using the input time of
-#' `14:35:00` in the example output times):
+#' following time styles are available for formatting of the time portion (all
+#' using the input time of `14:35:00` in the example output times):
 #'
-#' 1. `"hms"`: `14:35:00`
-#' 2. `"hm"`: `14:35`
-#' 3. `"hms_p"`: `2:35:00 PM`
-#' 4. `"hm_p"`: `2:35 PM`
-#' 5. `"h_p"`: `2 PM`
+#' |    | Time Style    | Output                          | Notes         |
+#' |----|---------------|---------------------------------|---------------|
+#' | 1  | `"iso"`       | `"14:35:00"`                    | ISO 8601, 24h |
+#' | 2  | `"iso-short"` | `"14:35"`                       | ISO 8601, 24h |
+#' | 3  | `"h_m_s_p"`   | `"2:35:00 PM"`                  | 12h           |
+#' | 4  | `"h_m_p"`     | `"2:35 PM"`                     | 12h           |
+#' | 5  | `"h_p"`       | `"2 PM"`                        | 12h           |
+#' | 6  | `"Hms"`       | `"14:35:00"`                    | flexible, 24h |
+#' | 7  | `"Hm"`        | `"14:35"`                       | flexible, 24h |
+#' | 8  | `"H"`         | `"14"`                          | flexible, 24h |
+#' | 9  | `"EHm"`       | `"Thu 14:35"`                   | flexible, 24h |
+#' | 10 | `"EHms"`      | `"Thu 14:35:00"`                | flexible, 24h |
+#' | 11 | `"Hmsv"`      | `"14:35:00 GMT+00:00"`          | flexible, 24h |
+#' | 12 | `"Hmv"`       | `"14:35 GMT+00:00"`             | flexible, 24h |
+#' | 13 | `"hms"`       | `"2:35:00 PM"`                  | flexible, 12h |
+#' | 14 | `"hm"`        | `"2:35 PM"`                     | flexible, 12h |
+#' | 15 | `"h"`         | `"2 PM"`                        | flexible, 12h |
+#' | 16 | `"Ehm"`       | `"Thu 2:35 PM"`                 | flexible, 12h |
+#' | 17 | `"Ehms"`      | `"Thu 2:35:00 PM"`              | flexible, 12h |
+#' | 18 | `"EBhms"`   | `"Thu 2:35:00 in the afternoon"`  | flexible, 12h |
+#' | 19 | `"Bhms"`      | `"2:35:00 in the afternoon"`    | flexible, 12h |
+#' | 20 | `"EBhm"`      | `"Thu 2:35 in the afternoon"`   | flexible, 12h |
+#' | 21 | `"Bhm"`       | `"2:35 in the afternoon"`       | flexible, 12h |
+#' | 22 | `"Bh"`        | `"2 in the afternoon"`          | flexible, 12h |
+#' | 23 | `"hmsv"`      | `"2:35:00 PM GMT+00:00"`        | flexible, 12h |
+#' | 24 | `"hmv"`       | `"2:35 PM GMT+00:00"`           | flexible, 12h |
+#' | 25 | `"ms"`        | `"35:00"`                       | flexible      |
 #'
 #' We can use the [info_time_style()] function for a useful reference on all of
 #' the possible inputs to `time_style`.
@@ -2424,10 +2494,9 @@ fmt_date <- function(
 #' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
-#' @param time_style The time style to use. Supply a number (from `1` to `5`)
-#'   that corresponds to the preferred time style, or, provide a named time
-#'   style (`"hms"`, `"hms_p"`, `"h_p"`, etc.). Use [info_time_style()] to see
-#'   the different numbered and named time presets.
+#' @param time_style The time style to use. By default this is `"iso"` which
+#'   corresponds to how times are formatted within ISO 8601 datetime values. The
+#'   other time styles can be viewed using [info_time_style()].
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -2443,7 +2512,7 @@ fmt_date <- function(
 #'   gt() %>%
 #'   fmt_time(
 #'     columns = time,
-#'     time_style = 3
+#'     time_style = "h_m_s_p"
 #'   )
 #' ```
 #'
@@ -2463,12 +2532,12 @@ fmt_date <- function(
 #'   fmt_time(
 #'     columns = time,
 #'     rows = time > "16:00",
-#'     time_style = 3
+#'     time_style = "h_m_s_p"
 #'   ) %>%
 #'   fmt_time(
 #'     columns = time,
 #'     rows = time <= "16:00",
-#'     time_style = 4
+#'     time_style = "h_m_p"
 #'   )
 #' ```
 #'
@@ -2486,8 +2555,9 @@ fmt_time <- function(
     data,
     columns,
     rows = everything(),
-    time_style = 1,
-    pattern = "{x}"
+    time_style = "iso",
+    pattern = "{x}",
+    locale = NULL
 ) {
 
   # Perform input object validation
@@ -2533,7 +2603,7 @@ fmt_time <- function(
         # if the values cannot be parsed by `as.POSIXlt()`
         time <-
           tryCatch(
-            as.POSIXlt(x),
+            as.POSIXlt(x, tz = "GMT"),
             error = function(cond) {
               cli::cli_abort(
                 "One or more of the provided date/time/datetime values are invalid."
@@ -2541,62 +2611,105 @@ fmt_time <- function(
             }
           )
 
-        # Format the date string using `strftime()`
-        time <- strftime(time, format = time_format_str)
-
-        # Perform several cosmetic changes to the formatted time
-        if (grepl("%P$", time_format_str)) {
-
-          time <- gsub("^0", "", time)
-          time <- gsub(" 0([0-9])", " \\1", time)
-          time <- gsub("\\bpm\\b$", "PM", time)
-          time <- gsub("\\bam\\b$", "AM", time)
-        }
-
-        time
+        # Format the time string using `fdt()`
+        bigD::fdt(
+          input = as.character(time),
+          format = time_format_str,
+          locale = locale
+        )
       }
     )
   )
 }
 
-#' Format values as date-times
+#' Format values as datetimes
 #'
 #' @description
-#' Format input values to date-time values using one of fourteen presets for the
+#' Format input values to datetime values using one of fourteen presets for the
 #' date component and one of five presets for the time component. Input can be
-#' in the form of `POSIXct` (i.e., date-times), the `Date` type, or `character`
+#' in the form of `POSIXt` (i.e., datetimes), the `Date` type, or `character`
 #' (must be in the ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or `YYYY-MM-DD`).
 #'
 #' Once the appropriate data cells are targeted with `columns` (and, optionally,
 #' `rows`), we can simply apply preset date and time styles to format the
-#' date-time values. The following date styles are available for formatting of
+#' datetime values. The following date styles are available for formatting of
 #' the date portion (all using the input date of `2000-02-29` in the example
 #' output dates):
 #'
-#' 1. `"iso"`: `2000-02-29`
-#' 2. `"wday_month_day_year"`: `Tuesday, February 29, 2000`
-#' 3. `"wd_m_day_year"`: `Tue, Feb 29, 2000`
-#' 4. `"wday_day_month_year"`: `Tuesday 29 February 2000`
-#' 5. `"month_day_year"`: `February 29, 2000`
-#' 6. `"m_day_year"`: `Feb 29, 2000`
-#' 7. `"day_m_year"`: `29 Feb 2000`
-#' 8. `"day_month_year"`: `29 February 2000`
-#' 9. `"day_month"`: `29 February`
-#' 10. `"day_m"`: `29 Feb`
-#' 11. `"year"`: `2000`
-#' 12. `"month"`: `February`
-#' 13. `"day"`: `29`
-#' 14. `"year.mn.day"`: `2000/02/29`
-#' 15. `"y.mn.day"`: `00/02/29`
+#' |    | Date Style            | Output                  | Notes         |
+#' |----|-----------------------|-------------------------|---------------|
+#' | 1  | `"iso"`               | `"2000-02-29"`          | ISO 8601      |
+#' | 2  | `"wday_month_day_year"`| `"Tuesday, February 29, 2000"`  |      |
+#' | 3  | `"wd_m_day_year"`     | `"Tue, Feb 29, 2000"`   |               |
+#' | 4  | `"wday_day_month_year"`| `"Tuesday 29 February 2000"`    |      |
+#' | 5  | `"month_day_year"`    | `"February 29, 2000"`   |               |
+#' | 6  | `"m_day_year"`        | `"Feb 29, 2000"`        |               |
+#' | 7  | `"day_m_year"`        | `"29 Feb 2000"`         |               |
+#' | 8  | `"day_month_year"`    | `"29 February 2000"`    |               |
+#' | 9  | `"day_month"`         | `"29 February"`         |               |
+#' | 10 | `"day_m"`             | `"29 Feb"`              |               |
+#' | 11 | `"year"`              | `"2000"`                |               |
+#' | 12 | `"month"`             | `"February"`            |               |
+#' | 13 | `"day"`               | `"29"`                  |               |
+#' | 14 | `"year.mn.day"`       | `"2000/02/29"`          |               |
+#' | 15 | `"y.mn.day"`          | `"00/02/29"`            |               |
+#' | 16 | `"year_week"`         | `"2000-W09"`            |               |
+#' | 17 | `"year_quarter"`      | `"2000-Q1"`             |               |
+#' | 18 | `"yMd"`               | `"2/29/2000"`           | flexible      |
+#' | 19 | `"yMEd"`              | `"Tue, 2/29/2000"`      | flexible      |
+#' | 20 | `"yMMM"`              | `"Feb 2000"`            | flexible      |
+#' | 21 | `"yMMMM"`             | `"February 2000"`       | flexible      |
+#' | 22 | `"yMMMd"`             | `"Feb 29, 2000"`        | flexible      |
+#' | 23 | `"yMMMEd"`            | `"Tue, Feb 29, 2000"`   | flexible      |
+#' | 24 | `"GyMd"`              | `"2/29/2000 A"`         | flexible      |
+#' | 25 | `"GyMMMd"`            | `"Feb 29, 2000 AD"`     | flexible      |
+#' | 26 | `"GyMMMEd"`           | `"Tue, Feb 29, 2000 AD"`| flexible      |
+#' | 27 | `"yM"`                | `"2/2000"`              | flexible      |
+#' | 28 | `"Md"`                | `"2/29"`                | flexible      |
+#' | 29 | `"MEd"`               | `"Tue, 2/29"`           | flexible      |
+#' | 30 | `"MMMd"`              | `"Feb 29"`              | flexible      |
+#' | 31 | `"MMMEd"`             | `"Tue, Feb 29"`         | flexible      |
+#' | 32 | `"MMMMd"`             | `"February 29"`         | flexible      |
+#' | 33 | `"GyMMM"`             | `"Feb 2000 AD"`         | flexible      |
+#' | 34 | `"yQQQ"`              | `"Q1 2000"`             | flexible      |
+#' | 35 | `"yQQQQ"`             | `"1st quarter 2000"`    | flexible      |
+#' | 36 | `"Gy"`                | `"2000 AD"`             | flexible      |
+#' | 37 | `"y"`                 | `"2000"`                | flexible      |
+#' | 38 | `"M"`                 | `"2"`                   | flexible      |
+#' | 39 | `"MMM"`               | `"Feb"`                 | flexible      |
+#' | 40 | `"d"`                 | `"29"`                  | flexible      |
+#' | 41 | `"Ed"`                | `"29 Tue"`              | flexible      |
 #'
 #' The following time styles are available for formatting of the time portion
 #' (all using the input time of `14:35:00` in the example output times):
 #'
-#' 1. `"hms"`: `14:35:00`
-#' 2. `"hm"`: `14:35`
-#' 3. `"hms_p"`: `2:35:00 PM`
-#' 4. `"hm_p"`: `2:35 PM`
-#' 5. `"h_p"`: `2 PM`
+#' |    | Time Style    | Output                          | Notes         |
+#' |----|---------------|---------------------------------|---------------|
+#' | 1  | `"iso"`       | `"14:35:00"`                    | ISO 8601, 24h |
+#' | 2  | `"iso-short"` | `"14:35"`                       | ISO 8601, 24h |
+#' | 3  | `"h_m_s_p"`   | `"2:35:00 PM"`                  | 12h           |
+#' | 4  | `"h_m_p"`     | `"2:35 PM"`                     | 12h           |
+#' | 5  | `"h_p"`       | `"2 PM"`                        | 12h           |
+#' | 6  | `"Hms"`       | `"14:35:00"`                    | flexible, 24h |
+#' | 7  | `"Hm"`        | `"14:35"`                       | flexible, 24h |
+#' | 8  | `"H"`         | `"14"`                          | flexible, 24h |
+#' | 9  | `"EHm"`       | `"Thu 14:35"`                   | flexible, 24h |
+#' | 10 | `"EHms"`      | `"Thu 14:35:00"`                | flexible, 24h |
+#' | 11 | `"Hmsv"`      | `"14:35:00 GMT+00:00"`          | flexible, 24h |
+#' | 12 | `"Hmv"`       | `"14:35 GMT+00:00"`             | flexible, 24h |
+#' | 13 | `"hms"`       | `"2:35:00 PM"`                  | flexible, 12h |
+#' | 14 | `"hm"`        | `"2:35 PM"`                     | flexible, 12h |
+#' | 15 | `"h"`         | `"2 PM"`                        | flexible, 12h |
+#' | 16 | `"Ehm"`       | `"Thu 2:35 PM"`                 | flexible, 12h |
+#' | 17 | `"Ehms"`      | `"Thu 2:35:00 PM"`              | flexible, 12h |
+#' | 18 | `"EBhms"`   | `"Thu 2:35:00 in the afternoon"`  | flexible, 12h |
+#' | 19 | `"Bhms"`      | `"2:35:00 in the afternoon"`    | flexible, 12h |
+#' | 20 | `"EBhm"`      | `"Thu 2:35 in the afternoon"`   | flexible, 12h |
+#' | 21 | `"Bhm"`       | `"2:35 in the afternoon"`       | flexible, 12h |
+#' | 22 | `"Bh"`        | `"2 in the afternoon"`          | flexible, 12h |
+#' | 23 | `"hmsv"`      | `"2:35:00 PM GMT+00:00"`        | flexible, 12h |
+#' | 24 | `"hmv"`       | `"2:35 PM GMT+00:00"`           | flexible, 12h |
+#' | 25 | `"ms"`        | `"35:00"`                       | flexible      |
 #'
 #' We can use the [info_date_style()] and [info_time_style()] functions as
 #' useful references for all of the possible inputs to `date_style` and
@@ -2608,16 +2721,357 @@ fmt_time <- function(
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the *Arguments* section for more information on this.
 #'
-#' @section Date and Time Formats:
-#' Using `format` to create custom time formats isn't so hard once we know about
-#' all of the different format codes. The formats are all indicated with a
-#' leading `%` and literal characters are any of those without the leading `%`.
-#' We'll use the date and time `"2015-06-08 23:05:37.48"` for all of the
-#' examples here.
+#' @section Formatting with a *CLDR* datetime pattern:
+#'
+#' We can use a *CLDR* datetime pattern with the `format` argument to create
+#' a highly customized and locale-aware output. This is a character string that
+#' consists of two types of elements:
+#'
+#' - Pattern fields, which repeat a specific pattern character one or more
+#'   times. These fields are replaced with date and time data when formatting.
+#'   The character sets of `A`-`Z` and `a`-`z` are reserved for use as pattern
+#'   characters.
+#' - Literal text, which is output verbatim when formatting. This can include:
+#'     - Any characters outside the reserved character sets, including
+#'       spaces and punctuation.
+#'     - Any text between single vertical quotes (e.g., `'text'`).
+#'     - Two adjacent single vertical quotes (''), which represent a literal
+#'     single quote, either inside or outside quoted text.
+#'
+#' The number of pattern fields is quite sizable so let's first look at how some
+#' *CLDR* datetime patterns work. We'll use the datetime string
+#' `"2018-07-04T22:05:09.2358(America/Vancouver)"` for all of the examples that
+#' follow.
+#'
+#' - `"mm/dd/y"` -> `"05/04/2018"`
+#' - `"EEEE, MMMM d, y"` -> `"Wednesday, July 4, 2018"`
+#' - `"MMM d E"` -> `"Jul 4 Wed"`
+#' - `"HH:mm"` -> `"22:05"`
+#' - `"h:mm a"` -> `"10:05 PM"`
+#' - `"EEEE, MMMM d, y 'at' h:mm a"` -> `"Wednesday, July 4, 2018 at 10:05 PM"`
+#'
+#' Here are the individual pattern fields:
+#'
+#' ## Year
+#'
+#' ### Calendar Year
+#'
+#' This yields the calendar year, which is always numeric. In most cases the
+#' length of the `"y"` field specifies the minimum number of digits to display,
+#' zero-padded as necessary. More digits will be displayed if needed to show the
+#' full year. There is an exception: `"yy"` gives use just the two low-order
+#' digits of the year, zero-padded as necessary. For most use cases, `"y"` or
+#' `"yy"` should be good enough.
+#'
+#' | Field Patterns                 | Output                                 |
+#' |------------------------------- |----------------------------------------|
+#' | `"y"`                          | `"2018"`                               |
+#' | `"yy"`                         | `"18"`                                 |
+#' | `"yyy"` to `"yyyyyyyyy"`       | `"2018"` to `"000002018"`              |
+#'
+#' ### Year in the Week in Year Calendar
+#'
+#' This is the year in 'Week of Year' based calendars in which the year
+#' transition occurs on a week boundary. This may differ from calendar year
+#' `"y"` near a year transition. This numeric year designation is used in
+#' conjunction with pattern character `"w"` in the ISO year-week calendar as
+#' defined by ISO 8601.
+#'
+#' | Field Patterns                 | Output                                 |
+#' |--------------------------------|----------------------------------------|
+#' | `"Y"`                          | `"2018"`                               |
+#' | `"YY"`                         | `"18"`                                 |
+#' | `"YYY"` to `"YYYYYYYYY"`       | `"2018"` to `"000002018"`              |
+#'
+#' ## Quarter
+#'
+#' ### Quarter of the Year: formatting ver.
+#'
+#' | Field Patterns    | Output          | Notes                             |
+#' |-------------------|-----------------|-----------------------------------|
+#' | `"Q"`             | `"3"`           | Numeric, one digit                |
+#' | `"QQ"`            | `"03"`          | Numeric, two digits (zero padded) |
+#' | `"QQQ"`           | `"Q3"`          | Abbreviated                       |
+#' | `"QQQQ"`          | `"3rd quarter"` | Wide                              |
+#' | `"QQQQQ"`         | `"3"`           | Narrow                            |
+#'
+#' ### Quarter of the Year: standalone ver.
+#'
+#' | Field Patterns    | Output          | Notes                             |
+#' |-------------------|-----------------|-----------------------------------|
+#' | `"q"`             | `"3"`           | Numeric, one digit                |
+#' | `"qq"`            | `"03"`          | Numeric, two digits (zero padded) |
+#' | `"qqq"`           | `"Q3"`          | Abbreviated                       |
+#' | `"qqqq"`          | `"3rd quarter"` | Wide                              |
+#' | `"qqqqq"`         | `"3"`           | Narrow                            |
+#'
+#' ## Month
+#'
+#' ### Month: formatting ver.
+#'
+#' | Field Patterns    | Output          | Notes                             |
+#' |-------------------|-----------------|-----------------------------------|
+#' | `"M"`             | `"7"`           | Numeric, minimum digits           |
+#' | `"MM"`            | `"07"`          | Numeric, two digits (zero padded) |
+#' | `"MMM"`           | `"Jul"`         | Abbreviated                       |
+#' | `"MMMM"`          | `"July"`        | Wide                              |
+#' | `"MMMMM"`         | `"J"`           | Narrow                            |
+#'
+#' ### Month: standalone ver.
+#'
+#' | Field Patterns    | Output          | Notes                             |
+#' |-------------------|-----------------|-----------------------------------|
+#' | `"M"`             | `"7"`           | Numeric, minimum digits           |
+#' | `"MM"`            | `"07"`          | Numeric, two digits (zero padded) |
+#' | `"MMM"`           | `"Jul"`         | Abbreviated                       |
+#' | `"MMMM"`          | `"July"`        | Wide                              |
+#' | `"MMMMM"`         | `"J"`           | Narrow                            |
+#'
+#' ## Week
+#'
+#' ### Week of Year
+#'
+#' | Field Patterns   | Output    | Notes                                    |
+#' |------------------|-----------|------------------------------------------|
+#' | `"w"`            | `"27"`    | Minimum digits                           |
+#' | `"ww"`           | `"27"`    | Two digits (zero padded)                 |
+#'
+#' ### Week of Month
+#'
+#' | Field Pattern    | Output                                               |
+#' |------------------|------------------------------------------------------|
+#' | `"W"`            | `"1"`                                                |
+#'
+#' ## Day
+#'
+#' ### Day of Month
+#'
+#' | Field Patterns | Output    | Notes                                      |
+#' |----------------|-----------|--------------------------------------------|
+#' | `"d"`          | `"4"`     | Minimum digits                             |
+#' | `"dd"`         | `"04"`    | Two digits, zero padded                    |
+#'
+#' ### Day of Year
+#'
+#' | Field Patterns  | Output   | Notes                                      |
+#' |-----------------|----------|--------------------------------------------|
+#' | `"D"`           | `"185"`  |                                            |
+#' | `"DD"`          | `"185"`  | Zero padded to minimum width of 2          |
+#' | `"DDD"`         | `"185"`  | Zero padded to minimum width of 3          |
+#'
+#' ### Day of Week in Month
+#'
+#' | Field Pattern                  | Output                                 |
+#' |--------------------------------|----------------------------------------|
+#' | `"F"`                          | `"1"`                                  |
+#'
+#' ### Modified Julian Day
+#'
+#' | Field Patterns                 | Output                                 |
+#' |--------------------------------|----------------------------------------|
+#' | `"g"` to `"ggggggggg"`         | `"58303"` -> `"000058303"`             |
+#'
+#' ## Weekday
+#'
+#' ### Day of Week Name
+#'
+#' | Field Patterns             | Output         | Notes                     |
+#' |----------------------------|----------------|---------------------------|
+#' | `"E"`, `"EE"`, or `"EEE"`  | `"Wed"`        | Abbreviated               |
+#' | `"EEEE"`                   | `"Wednesday"`  | Wide                      |
+#' | `"EEEEE"`                  | `"W"`          | Narrow                    |
+#' | `"EEEEEE"`                 | `"We"`         | Short                     |
+#'
+#' ## Periods
+#'
+#' ### AM/PM Period of Day
+#'
+#' | Field Patterns                 | Output   | Notes                       |
+#' |--------------------------------|----------|-----------------------------|
+#' | `"a"`, `"aa"`, or `"aaa"`      | `"PM"`   | Abbreviated                 |
+#' | `"aaaa"`                       | `"PM"`   | Wide                        |
+#' | `"aaaaa"`                      | `"p"`    | Narrow                      |
+#'
+#' ### AM/PM Period of Day Plus Noon and Midnight
+#'
+#' (a) `input_midnight`: `"2020-05-05T00:00:00"`
+#'
+#' (b) `input_noon`: `"2020-05-05T12:00:00"`
+#'
+#' | Field Patterns                 | Output             | Notes             |
+#' |--------------------------------|--------------------|-------------------|
+#' | `"b"`, `"bb"`, or `"bbb"`      | (a) `"midnight"`   | Abbreviated       |
+#' |                                | (b) `"noon"`       |                   |
+#' | `"bbbb"`                       | (a) `"midnight"`   | Wide              |
+#' |                                | (b) `"noon"`       |                   |
+#' | `"bbbbb"`                      | (a) `"mi"`         | Narrow            |
+#' |                                | (b) `"n"`          |                   |
+#'
+#' ### Flexible Day Periods
+#'
+#' (a) `input_morning`: `"2020-05-05T00:08:30"`
+#'
+#' (b) `input_afternoon`: `"2020-05-05T14:00:00"`
+#'
+#' | Field Patterns             | Output                   | Notes           |
+#' |----------------------------|--------------------------|-----------------|
+#' | `"B"`, `"BB"`, or `"BBB"`  | (a) `"in the morning"`   | Abbreviated     |
+#' |                            | (b) `"in the afternoon"` |                 |
+#' | `"BBBB"`                   | (a) `"in the morning"`   | Wide            |
+#' |                            | (b) `"in the afternoon"` |                 |
+#' | `"BBBBB"`                  | (a) `"in the morning"`   | Narrow          |
+#' |                            | (b) `"in the afternoon"` |                 |
+#'
+#' ## Hours, Minutes, and Seconds
+#'
+#' ### Hour 1-12
+#'
+#' Using: `"2015-08-01T08:35:09"`
+#'
+#' | Field Patterns         | Output  | Notes                                |
+#' |------------------------|---------|--------------------------------------|
+#' | `"h"`                  | `"8"`   | Numeric, minimum digits              |
+#' | `"hh"`                 | `"08"`  | Numeric, 2 digits (zero padded)      |
+#'
+#' ### Hour 0-23
+#'
+#' Using: `"2015-08-01T08:35:09"`
+#'
+#' | Field Patterns         | Output  | Notes                                |
+#' |------------------------|---------|--------------------------------------|
+#' | `"H"`                  | `"8"`   | Numeric, minimum digits              |
+#' | `"HH"`                 | `"08"`  | Numeric, 2 digits (zero padded)      |
+#'
+#' ### Hour 0-11
+#'
+#' Using: `"2015-08-01T08:35:09"`
+#'
+#' | Field Patterns         | Output  | Notes                                |
+#' |------------------------|---------|--------------------------------------|
+#' | `"K"`                  | `"7"`   | Numeric, minimum digits              |
+#' | `"KK"`                 | `"07"`  | Numeric, 2 digits (zero padded)      |
+#'
+#' ### Hour 1-24
+#'
+#' Using: `"2015-08-01T08:35:09"`
+#'
+#' | Field Patterns         | Output  | Notes                                |
+#' |------------------------|---------|--------------------------------------|
+#' | `"k"`                  | `"9"`   | Numeric, minimum digits              |
+#' | `"kk"`                 | `"09"`  | Numeric, 2 digits (zero padded)      |
+#'
+#' ### Minute
+#'
+#' | Field Patterns         | Output  | Notes                                |
+#' |------------------------|---------|--------------------------------------|
+#' | `"m"`                  | `"5"`   | Numeric, minimum digits              |
+#' | `"mm"`                 | `"06"`  | Numeric, 2 digits (zero padded)      |
+#'
+#' ### Seconds
+#'
+#' | Field Patterns         | Output  | Notes                                |
+#' |------------------------|---------|--------------------------------------|
+#' | `"s"`                  | `"9"`   | Numeric, minimum digits              |
+#' | `"ss"`                 | `"09"`  | Numeric, 2 digits (zero padded)      |
+#'
+#' ### Fractional Second
+#'
+#' | Field Patterns                 | Output                                 |
+#' |--------------------------------|----------------------------------------|
+#' | `"S"` to `"SSSSSSSSS"`         | `"2"` -> `"235000000"`                 |
+#'
+#' ### Milliseconds Elapsed in Day
+#'
+#' Using: `"2011-07-27T00:07:19.7223"`
+#'
+#' | Field Patterns                 | Output                                 |
+#' |--------------------------------|----------------------------------------|
+#' | `"A"` to `"AAAAAAAAA"`         | `"439722"` -> `"000439722"`            |
+#'
+#' ## Era
+#'
+#' ### The Era Designator
+#'
+#' This provides the era name for the given date.
+#'
+#' | Field Patterns                 | Output          | Notes                |
+#' |--------------------------------|-----------------|----------------------|
+#' | `"G"`, `"GG"`, or `"GGG"`      | `"AD"`          | Abbreviated          |
+#' | `"GGGG"`                       | `"Anno Domini"` | Wide                 |
+#' | `"GGGGG"`                      | `"A"`           | Narrow               |
+#'
+#' ## Time Zones
+#'
+#' ### TZ // Short and Long Specific non-Location Format
+#'
+#' | Field Patterns             | Output                    | Notes          |
+#' |----------------------------|---------------------------|----------------|
+#' | `"z"`, `"zz"`, or `"zzz"`  | `"PDT"`                   | Short Specific |
+#' | `"zzzz"`                   | `"Pacific Daylight Time"` | Long Specific  |
+#'
+#' ### TZ // Short and Long Specific non-Location Formats
+#'
+#' | Field Patterns             | Output       | Notes                       |
+#' |----------------------------|--------------|-----------------------------|
+#' | `"Z"`, `"ZZ"`, or `"ZZZ"`  | `"-0700"`    | ISO 8601 basic format       |
+#' | `"ZZZZ"`                   | `"GMT-7:00"` | Long localized GMT format   |
+#' | `"ZZZZZ"`                  | `"-07:00"`   | ISO 8601 extended format    |
+#'
+#' ### TZ // Short and Long Localized GMT Formats
+#'
+#' | Field Patterns          | Output        | Notes                         |
+#' |-------------------------|---------------|-------------------------------|
+#' | `"O"`                   | `"GMT-7"`     | Short localized GMT format    |
+#' | `"OOOO"`                | `"GMT-07:00"` | Long localized GMT format     |
+#'
+#' ### TZ // Short and Long Localized GMT Formats
+#'
+#' | Field Patterns  | Output           | Notes                              |
+#' |-----------------|------------------|------------------------------------|
+#' | `"v"`           | `"PT"`           | Short generic non-location format  |
+#' | `"vvvv"`        | `"Pacific Time"` | Long generic non-location format   |
+#'
+#' ### TZ // Short Time Zone IDs and Exemplar City Formats (big V)
+#'
+#' | Field Patterns     | Output                | Notes                      |
+#' |--------------------|-----------------------|----------------------------|
+#' | `"V"`              | `"cavan"`             | Short time zone ID         |
+#' | `"VV"`             | `"America/Vancouver"` | Long time zone ID          |
+#' | `"VVV"`            | `"Vancouver"`         | The tz exemplar city       |
+#' | `"VVVV"`           | `"Vancouver Time"`    | Generic location format    |
+#'
+#' ### TZ // ISO 8601 Formats with Z for +0000
+#'
+#' | Field Patterns | Output     | Notes                                     |
+#' |----------------|------------|-------------------------------------------|
+#' | `"X"`          | `"-07"`    | ISO 8601 basic format (h, optional m)     |
+#' | `"XX"`         | `"-0700"`  | ISO 8601 basic format (h & m)             |
+#' | `"XXX"`        | `"-07:00"` | ISO 8601 extended format (h & m)          |
+#' | `"XXXX"`       | `"-0700"`  | ISO 8601 basic format (h & m, optional s) |
+#' | `"XXXXX"`      | `"-07:00"` | ISO 8601 extended format (h & m, optional s) |
+#'
+#' ### TZ // ISO 8601 Formats (no use of Z for +0000)
+#'
+#' | Field Patterns | Output     | Notes                                     |
+#' |----------------|------------|-------------------------------------------|
+#' | `"x"`          | `"-07"`    | ISO 8601 basic format (h, optional m)     |
+#' | `"xx"`         | `"-0700"`  | ISO 8601 basic format (h & m)             |
+#' | `"xxx"`        | `"-07:00"` | ISO 8601 extended format (h & m)          |
+#' | `"xxxx"`       | `"-0700"`  | ISO 8601 basic format (h & m, optional s) |
+#' | `"xxxxx"`      | `"-07:00"` | ISO 8601 extended format (h & m, optional s) |
+#'
+#' @section Formatting with a `strptime` format code:
+#'
+#' Performing custom date/time formatting with the `format` argument can also
+#' occur with a `strptime` format code. This works by constructing a string of
+#' individual format codes representing formatted date and time elements. These
+#' are all indicated with a leading `%`, literal characters are interpreted as
+#' any characters not starting with a `%` character.
 #'
 #' First off, let's look at a few format code combinations that work well
-#' together as format codes. This will give us an intuition on how these
-#' generally work.
+#' together as a `strptime` format. This will give us an intuition on how these
+#' generally work. We'll use the datetime `"2015-06-08 23:05:37.48"` for all of
+#' the examples that follow.
 #'
 #' - `"%m/%d/%Y"` -> `"06/08/2015"`
 #' - `"%A, %B %e, %Y"` -> `"Monday, June 8, 2015"`
@@ -2626,7 +3080,7 @@ fmt_time <- function(
 #' - `"%I:%M %p"` -> `"11:05 pm"`
 #' - `"%A, %B %e, %Y at %I:%M %p"` -> `"Monday, June 8, 2015 at 11:05 pm"`
 #'
-#' Here are the individual format codes for date components:
+#' Here are the individual format codes for the date components:
 #'
 #' - `"%a"` -> `"Mon"` (abbreviated day of week name)
 #' - `"%A"` -> `"Monday"` (full day of week name)
@@ -2639,22 +3093,23 @@ fmt_time <- function(
 #' - `"%m"` -> `"06"` (month number)
 #' - `"%d"` -> `"08"` (day number, zero-padded)
 #' - `"%e"` -> `"8"` (day number without zero padding)
+#' - `"%j"` -> `"159"` (day of the year, always zero-padded)
+#' - `"%W"` -> `"23"` (week number for the year, always zero-padded)
+#' - `"%V"` -> `"24"` (week number for the year, following the ISO 8601
+#' standard)
+#' - `"%C"` -> `"20"` (the century number)
 #'
-#' Here are the individual format codes for time components:
+#' Here are the individual format codes for the time components:
 #'
 #' - `"%H"` -> `"23"` (24h hour)
 #' - `"%I"` -> `"11"` (12h hour)
 #' - `"%M"` -> `"05"` (minute)
 #' - `"%S"` -> `"37"` (second)
 #' - `"%OS3"` -> `"37.480"` (seconds with decimals; `3` decimal places here)
-#' - `%p` -> `"pm"` (AM or PM indicator, may not appear in certain locales)
+#' - `%p` -> `"pm"` (AM or PM indicator)
 #'
 #' Here are some extra formats that you may find useful:
 #'
-#' - `"%j"` -> `"159"` (day of the year, always zero-padded)
-#' - `"%W"` -> `"23"` (week number for the year, always zero-padded)
-#' - `"%V"` -> `"24"` (week number for the year, following ISO 8601 standard)
-#' - `"%C"` -> `"20"` (the century number)
 #' - `"%z"` -> `"+0000"` (signed time zone offset, here using UTC)
 #' - `"%F"` -> `"2015-06-08"` (the date in the ISO 8601 date format)
 #' - `"%%"` -> `"%"` (the literal "`%`" character, in case you need it)
@@ -2665,10 +3120,10 @@ fmt_time <- function(
 #' @param sep The separator string to use between the date and time components.
 #'   By default, this is a single space character (`" "`). Only used when not
 #'   specifying a `format` code.
-#' @param format An optional format code used for generating custom dates/times.
-#'   If used then the arguments governing preset styles (`date_style` and
-#'   `time_style`) will be ignored in favor of formatting via the `format`
-#'   string.
+#' @param format An optional formatting string used for generating custom
+#'   dates/times. If used then the arguments governing preset styles
+#'   (`date_style` and `time_style`) will be ignored in favor of formatting via
+#'   the `format` string.
 #' @param tz The time zone for printing dates/times (i.e., the output). The
 #'   default of `NULL` will preserve the time zone of the input data in the
 #'   output. If providing a time zone, it must be one that is recognized by the
@@ -2680,8 +3135,8 @@ fmt_time <- function(
 #' @section Examples:
 #'
 #' Use [`exibble`] to create a **gt** table. Keep only the `datetime` column.
-#' Format the column to have dates formatted as `month_day_year` and times to be
-#' `hms_p`.
+#' Format the column to have dates formatted with the `"month_day_year"` style
+#' and times with the `"h_m_s_p"` 12-hour time style.
 #'
 #' ```r
 #' exibble %>%
@@ -2689,8 +3144,8 @@ fmt_time <- function(
 #'   gt() %>%
 #'   fmt_datetime(
 #'     columns = datetime,
-#'     date_style = 5,
-#'     time_style = 3
+#'     date_style = "month_day_year",
+#'     time_style = "h_m_s_p"
 #'   )
 #' ```
 #'
@@ -2708,12 +3163,13 @@ fmt_datetime <- function(
     data,
     columns,
     rows = everything(),
-    date_style = 1,
-    time_style = 1,
+    date_style = "iso",
+    time_style = "iso",
     sep = " ",
     format = NULL,
     tz = NULL,
-    pattern = "{x}"
+    pattern = "{x}",
+    locale = NULL
 ) {
 
   # Perform input object validation
@@ -2721,8 +3177,8 @@ fmt_datetime <- function(
 
   if (!is.null(format)) {
 
-    # Ensure that the format string meets some basic validation requirements
-    check_format_string(format = format)
+    # Ensure that the format code meets some basic validation requirements
+    check_format_code(format = format)
 
   } else {
 
@@ -2771,16 +3227,61 @@ fmt_datetime <- function(
             x <- paste("1970-01-01", x)
           }
 
-          if (is.character(x) && is.null(tz)) {
-            tz <- ""
-          }
+          if (grepl("%", format)) {
 
-          # Format the date-time values using `strftime()`
-          return(strftime(x, format = format, tz = tz))
+            if (is.character(x)) {
+
+              if (is.null(tz)) {
+                tz <- "GMT"
+              }
+
+              datetime <-
+                tryCatch(
+                  as.POSIXlt(x),
+                  error = function(cond) {
+                    cli::cli_abort(
+                      "One or more of the provided date/datetime values are invalid."
+                    )
+                  }
+                )
+
+              attr(datetime, which = "tzone") <- tz
+
+              datetime <- as.POSIXct(datetime)
+
+              return(strftime(datetime, format = format, tz = tz))
+            }
+
+            # Format the datetime values using `strftime()`
+            return(strftime(x, format = format, tz = tz))
+
+          } else {
+
+            if (is.null(tz)) {
+              tz <- "UTC"
+            }
+
+            dt_str <- strftime(x, format = "%Y-%m-%dT%H:%M:%S%z", tz = tz)
+
+            if ("tzone" %in% names(attributes(x))) {
+              tzone <- attr(x, which = "tzone", exact = TRUE)
+              dt_str <- paste0(dt_str, "(", tzone, ")")
+            }
+
+            # Format the datetime values using `fdt()`
+            return(
+              bigD::fdt(
+                input = dt_str,
+                format = format,
+                locale = locale,
+                use_tz = tz
+              )
+            )
+          }
         }
 
         #
-        # Format the date portion of the datetime string
+        # Format the date and time portions of the datetime value
         #
 
         # Convert incoming values to POSIXlt but provide a friendly error
@@ -2795,35 +3296,25 @@ fmt_datetime <- function(
             }
           )
 
-        # Format `datetime` into a date string using `strftime()` with
-        # the resolved formatting string
-        date <- strftime(datetime, format = date_format_str, tz = tz)
-
-        # Perform several cosmetic changes to the formatted date
-        if (date_format_str != "%F") {
-
-          date <- gsub(" 0([0-9])", " \\1", date)
-          date <- gsub("^0([0-9])[^/]", "\\1 ", date)
-        }
-
         #
-        # Format the time portion of the datetime string
+        # Separately format the date and time portions using `fdt()`
         #
 
-        # Format `datetime` into a time string using `strftime()` with
-        # the resolved formatting string
-        time <- strftime(datetime, format = time_format_str, tz = tz)
+        date_str <-
+          bigD::fdt(
+            input = as.character(datetime),
+            format = date_format_str,
+            locale = locale
+          )
 
-        # Perform several cosmetic changes to the formatted time
-        if (grepl("%P$", time_format_str)) {
+        time_str <-
+          bigD::fdt(
+            input = as.character(datetime),
+            format = time_format_str,
+            locale = locale
+          )
 
-          time <- gsub("^0", "", time)
-          time <- gsub(" 0([0-9])", " \\1", time)
-          time <- gsub("\\bpm\\b$", "PM", time)
-          time <- gsub("\\bam\\b$", "AM", time)
-        }
-
-        paste(date, time, sep = sep)
+        paste0(date_str, sep, time_str)
       }
     )
   )
@@ -2957,12 +3448,15 @@ fmt_duration <- function(
     locale = NULL
 ) {
 
-  duration_style <- match.arg(duration_style)
-  system <- match.arg(system)
-  dec_mark <- "unused"
-
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  # Ensure that arguments are matched
+  duration_style <- match.arg(duration_style)
+  system <- match.arg(system)
+
+  # Duration values will never have decimal marks
+  dec_mark <- "unused"
 
   # Resolve the `locale` value here with the global locale value
   locale <- resolve_locale(data = data, locale = locale)

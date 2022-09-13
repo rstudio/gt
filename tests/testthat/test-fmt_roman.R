@@ -1,5 +1,3 @@
-skip_on_cran()
-
 test_that("the `fmt_roman()` function works correctly", {
 
   # Create an input data frame two columns: one

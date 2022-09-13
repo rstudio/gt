@@ -1,5 +1,3 @@
-skip_on_cran()
-
 library(ggplot2)
 
 test_that("the `test_image()` function works correctly", {

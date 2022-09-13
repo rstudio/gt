@@ -47,11 +47,11 @@ for this option. The default is \code{FALSE}, where only negative numbers will
 display a minus sign.}
 
 \item{locale}{An optional locale ID that can be used for formatting the value
-according the locale's rules. Examples include \code{"en_US"} for English
-(United States) and \code{"fr_FR"} for French (France). The use of a valid
-locale ID will override any values provided in \code{sep_mark} and \code{dec_mark}.
-We can use the \code{\link[=info_locales]{info_locales()}} function as a useful reference for all of
-the locales that are supported.}
+according the locale's rules. Examples include \code{"en"} for English (United
+States) and \code{"fr"} for French (France). The use of a valid locale ID will
+override any values provided in \code{sep_mark} and \code{dec_mark}. We can use the
+\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
+are supported.}
 
 \item{output}{The output style of the resulting character vector. This can
 either be \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"},
@@ -97,11 +97,9 @@ values. The rendering context will be autodetected unless specified in the
 We can change the number of decimal places with the \code{decimals} option:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_scientific(num_vals, decimals = 1)
-
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3.2 × 10^-4" "8.7" "1.4 × 10^6" "-5.9 × 10^4" "NA"
-
 }\if{html}{\out{</div>}}
 
 If we are formatting for a different locale, we could supply the locale ID
