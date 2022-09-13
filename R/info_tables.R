@@ -98,6 +98,10 @@ info_date_style <- function() {
       format_name = "Format Name",
       flexible = "",
       date = "Formatted Date"
+    ) %>%
+    tab_style(
+      style = cell_text(font = "monospace"),
+      locations = cells_body(columns = date)
     )
 }
 
@@ -192,7 +196,12 @@ info_time_style <- function() {
       style = cell_text(size = "smaller"),
       locations = cells_body(columns = time_type)
     ) %>%
-    sub_missing(columns = time_type)
+    tab_style(
+      style = cell_text(font = "monospace"),
+      locations = cells_body(columns = time)
+    ) %>%
+    sub_missing(columns = time_type) %>%
+    cols_align(align = "center", columns = time_type)
 }
 
 #' View a table with info on supported currencies
