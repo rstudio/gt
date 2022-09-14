@@ -45,10 +45,11 @@ can be used to consider only negative values.}
 An object of class \code{gt_tbl}.
 }
 \description{
-Wherever there is numerical data that are very large in value, replacement
+Wherever there are numerical data that are very large in value, replacement
 text may be better for explanatory purposes. The \code{sub_large_vals()} function
 allows for this replacement through specification of a \code{threshold}, a
-\code{large_pattern}, and the sign of the values to be considered.
+\code{large_pattern}, and the sign (positive or negative) of the values to be
+considered.
 }
 \details{
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
@@ -79,9 +80,9 @@ tbl
 #> 9  1e14
 }\if{html}{\out{</div>}}
 
-The \code{tbl} contains a variety of smaller numbers and some might be small
-enough to reformat with a threshold value. With \code{sub_small_vals()} we can
-do just that:
+The \code{tbl} object contains a variety of larger numbers and some might be
+larger enough to reformat with a threshold value. With \code{sub_large_vals()} we
+can do just that:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   gt() \%>\%
