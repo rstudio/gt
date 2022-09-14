@@ -1110,13 +1110,12 @@ vec_fmt_fraction <- function(
 #' Format a vector as currency values
 #'
 #' @description
-#' With numeric values in a vector, we can perform currency-based
-#' formatting. This function supports both automatic formatting with a
-#' three-letter or numeric currency code. We can also specify a custom currency
-#' that is formatted according to the output context with the [currency()]
-#' helper function. Numeric formatting facilitated through the use of a locale
-#' ID. We have fine control over the conversion from numeric values to currency
-#' values, where we could take advantage of the following options:
+#' With numeric values in a vector, we can perform currency-based formatting.
+#' This function supports both automatic formatting with a three-letter or
+#' numeric currency code. We can also specify a custom currency that is
+#' formatted according to the output context with the [currency()] helper
+#' function. We have fine control over the conversion from numeric values to
+#' currency values, where we could take advantage of the following options:
 #'
 #' - the currency: providing a currency code or common currency name will
 #' procure the correct currency symbol and number of currency subunits; we could
@@ -1192,7 +1191,7 @@ vec_fmt_fraction <- function(
 #' ```
 #'
 #' We can supply a currency code to the `currency` argument. Let's use British
-#' Pounds by using `currency = "GBP"`:
+#' Pounds through `currency = "GBP"`:
 #'
 #' ```r
 #' vec_fmt_currency(num_vals, currency = "GBP")
@@ -1202,7 +1201,7 @@ vec_fmt_fraction <- function(
 #' ```
 #'
 #' If we are formatting for a different locale, we could supply the locale ID
-#' and let **gt** handle qll locale-specific formatting options:
+#' and let **gt** handle all locale-specific formatting options:
 #'
 #' ```r
 #' vec_fmt_currency(num_vals, currency = "EUR", locale = "fr")
