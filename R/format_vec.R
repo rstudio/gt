@@ -1555,9 +1555,10 @@ vec_fmt_bytes <- function(
 #' Format a vector as date values
 #'
 #' @description
-#' Format vector values to date values using one of fourteen presets. Input can
-#' be in the form of `POSIXt` (i.e., datetimes), the `Date` type, or `character`
-#' (must be in the ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or `YYYY-MM-DD`).
+#' Format vector values to date values using one of 41 preset date styles. Input
+#' can be in the form of `POSIXt` (i.e., datetimes), the `Date` type, or
+#' `character` (must be in the ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or
+#' `YYYY-MM-DD`).
 #'
 #' We can simply apply a preset date style to format the dates. The following
 #' date styles are available for use (all using the input date of `2000-02-29`
@@ -1719,10 +1720,10 @@ vec_fmt_date <- function(
 #' Format a vector as time values
 #'
 #' @description
-#' Format vector values to time values using one of five presets. Input can be
-#' in the form of `POSIXt` (i.e., datetimes), `character` (must be in the ISO
-#' 8601 forms of `HH:MM:SS` or `YYYY-MM-DD HH:MM:SS`), or `Date` (which always
-#' results in the formatting of `00:00:00`).
+#' Format vector values to time values using one of 25 preset time styles. Input
+#' can be in the form of `POSIXt` (i.e., datetimes), `character` (must be in the
+#' ISO 8601 forms of `HH:MM:SS` or `YYYY-MM-DD HH:MM:SS`), or `Date` (which
+#' always results in the formatting of `00:00:00`).
 #'
 #' We can simply apply a preset time style to format the times. The following
 #' time styles are available for use (all using the input time of `14:35:00` in
@@ -1872,10 +1873,11 @@ vec_fmt_time <- function(
 #' Format a vector as datetime values
 #'
 #' @description
-#' Format vector values to datetime values using one of fourteen presets for the
-#' date component and one of five presets for the time component. Input can be
-#' in the form of `POSIXt` (i.e., datetimes), the `Date` type, or `character`
-#' (must be in the ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or `YYYY-MM-DD`).
+#' Format values in a vector to datetime values using either presets for the
+#' date and time components or a formatting directive (this can either use a
+#' *CLDR* datetime pattern or `strptime` formatting). Input can be in the form
+#' of `POSIXt` (i.e., datetimes), the `Date` type, or `character` (must be in
+#' the ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or `YYYY-MM-DD`).
 #'
 #' Once the appropriate data cells are targeted with `columns` (and, optionally,
 #' `rows`), we can simply apply preset date and time styles to format the

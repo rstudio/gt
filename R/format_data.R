@@ -2255,9 +2255,10 @@ fmt_bytes <- function(
 #' Format values as dates
 #'
 #' @description
-#' Format input values to time values using one of fourteen presets. Input can
-#' be in the form of `POSIXt` (i.e., datetimes), the `Date` type, or `character`
-#' (must be in the ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or `YYYY-MM-DD`).
+#' Format input values to time values using one of 41 preset date styles. Input
+#' can be in the form of `POSIXt` (i.e., datetimes), the `Date` type, or
+#' `character` (must be in the ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or
+#' `YYYY-MM-DD`).
 #'
 #' Once the appropriate data cells are targeted with `columns` (and, optionally,
 #' `rows`), we can simply apply a preset date style to format the dates. The
@@ -2446,10 +2447,10 @@ fmt_date <- function(
 #' Format values as times
 #'
 #' @description
-#' Format input values to time values using one of five presets. Input can be in
-#' the form of `POSIXt` (i.e., datetimes), `character` (must be in the ISO 8601
-#' forms of `HH:MM:SS` or `YYYY-MM-DD HH:MM:SS`), or `Date` (which always
-#' results in the formatting of `00:00:00`).
+#' Format input values to time values using one of 25 preset time styles. Input
+#' can be in the form of `POSIXt` (i.e., datetimes), `character` (must be in the
+#' ISO 8601 forms of `HH:MM:SS` or `YYYY-MM-DD HH:MM:SS`), or `Date` (which
+#' always results in the formatting of `00:00:00`).
 #'
 #' Once the appropriate data cells are targeted with `columns` (and, optionally,
 #' `rows`), we can simply apply a preset time style to format the times. The
@@ -2625,13 +2626,14 @@ fmt_time <- function(
 #' Format values as datetimes
 #'
 #' @description
-#' Format input values to datetime values using one of fourteen presets for the
-#' date component and one of five presets for the time component. Input can be
-#' in the form of `POSIXt` (i.e., datetimes), the `Date` type, or `character`
-#' (must be in the ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or `YYYY-MM-DD`).
+#' Format input values to datetime values using either presets for the date and
+#' time components or a formatting directive (this can either use a *CLDR*
+#' datetime pattern or `strptime` formatting). Input can be in the form of
+#' `POSIXt` (i.e., datetimes), the `Date` type, or `character` (must be in the
+#' ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or `YYYY-MM-DD`).
 #'
 #' Once the appropriate data cells are targeted with `columns` (and, optionally,
-#' `rows`), we can simply apply preset date and time styles to format the
+#' `rows`), we can choose to apply preset date and time styles to format the
 #' datetime values. The following date styles are available for formatting of
 #' the date portion (all using the input date of `2000-02-29` in the example
 #' output dates):
@@ -2711,8 +2713,8 @@ fmt_time <- function(
 #' | 24 | `"hmv"`       | `"2:35 PM GMT+00:00"`           | flexible, 12h |
 #' | 25 | `"ms"`        | `"35:00"`                       | flexible      |
 #'
-#' We can use the [info_date_style()] and [info_time_style()] functions as
-#' useful references for all of the possible inputs to `date_style` and
+#' We can use the [info_date_style()] and [info_time_style()] functions to
+#' display useful references for all of the possible inputs to `date_style` and
 #' `time_style`.
 #'
 #' @details
