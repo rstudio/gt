@@ -2591,6 +2591,26 @@ fmt_date <- function(
 #' `r man_get_image_tag(file = "man_fmt_time_2.png")`
 #' }}
 #'
+#' Use [`exibble`] to create another **gt** table, this time only with the
+#' `time` column. Format the `time` column to use the `"EBhms"` time style
+#' (which is one of the 'flexible' styles). Also, set the locale to `"sv"` to
+#' get the dates in Swedish.
+#'
+#' ```r
+#' exibble %>%
+#'   dplyr::select(time) %>%
+#'   gt() %>%
+#'   fmt_time(
+#'     columns = time,
+#'     time_style = "EBhms",
+#'     locale = "sv"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_time_3.png")`
+#' }}
+#'
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-12
