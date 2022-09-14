@@ -51,15 +51,33 @@ locale setting performed in \code{\link[=gt]{gt()}}'s own \code{locale} argument
 An object of class \code{gt_tbl}.
 }
 \description{
-Format input values to time values using one of five presets. Input can be in
-the form of \code{POSIXt} (i.e., datetimes), \code{character} (must be in the ISO 8601
-forms of \code{HH:MM:SS} or \verb{YYYY-MM-DD HH:MM:SS}), or \code{Date} (which always
-results in the formatting of \code{00:00:00}).
+Format input values to time values using one of 25 preset time styles. Input
+can be in the form of \code{POSIXt} (i.e., datetimes), \code{character} (must be in the
+ISO 8601 forms of \code{HH:MM:SS} or \verb{YYYY-MM-DD HH:MM:SS}), or \code{Date} (which
+always results in the formatting of \code{00:00:00}).
+}
+\section{Targeting the values to be formatted}{
 
-Once the appropriate data cells are targeted with \code{columns} (and, optionally,
-\code{rows}), we can simply apply a preset time style to format the times. The
-following time styles are available for formatting of the time portion (all
-using the input time of \code{14:35:00} in the example output times):\tabular{llll}{
+
+Targeting of values is done through \code{columns} and additionally by \code{rows} (if
+nothing is provided for \code{rows} then entire columns are selected). Conditional
+formatting is possible by providing a conditional expression to the \code{rows}
+argument. See the \emph{Arguments} section for more information on this.
+}
+
+\section{Formatting with the \code{time_style} argument}{
+
+
+We need to supply a preset time style to the \code{time_style} argument. There are
+many time styles and all of them can handle localization to any supported
+locale. Many of the time styles are termed flexible time formats and this
+means that their output will adapt to any \code{locale} provided. That feature
+makes the flexible time formats a better option for locales other than \code{"en"}
+(the default locale).
+
+The following table provides a listing of all time styles and their output
+values (corresponding to an input time of \code{14:35:00}). It is noted which of
+these represent 12- or 24-hour time.\tabular{llll}{
     \tab Time Style \tab Output \tab Notes \cr
    1 \tab \code{"iso"} \tab \code{"14:35:00"} \tab ISO 8601, 24h \cr
    2 \tab \code{"iso-short"} \tab \code{"14:35"} \tab ISO 8601, 24h \cr
@@ -89,15 +107,10 @@ using the input time of \code{14:35:00} in the example output times):\tabular{ll
 }
 
 
-We can use the \code{\link[=info_time_style]{info_time_style()}} function for a useful reference on all of
-the possible inputs to \code{time_style}.
+We can use the \code{\link[=info_time_style]{info_time_style()}} within the console to view a similar table
+of time styles with example output.
 }
-\details{
-Targeting of values is done through \code{columns} and additionally by \code{rows} (if
-nothing is provided for \code{rows} then entire columns are selected). Conditional
-formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the \emph{Arguments} section for more information on this.
-}
+
 \section{Examples}{
 
 
@@ -140,6 +153,25 @@ in the \code{rows} argument).
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_time_2.png" alt="This image of a table was generated from the second code example in the `fmt_time()` help file." style="width:100\%;">
+}}
+
+Use \code{\link{exibble}} to create another \strong{gt} table, this time only with the
+\code{time} column. Format the \code{time} column to use the \code{"EBhms"} time style
+(which is one of the 'flexible' styles). Also, set the locale to \code{"sv"} to
+get the dates in Swedish.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+  dplyr::select(time) \%>\%
+  gt() \%>\%
+  fmt_time(
+    columns = time,
+    time_style = "EBhms",
+    locale = "sv"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_time_3.png" alt="This image of a table was generated from the third code example in the `fmt_time()` help file." style="width:100\%;">
 }}
 }
 

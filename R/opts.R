@@ -71,7 +71,7 @@
 #'   tab_footnote(
 #'     footnote = "Solar zenith angle.",
 #'     locations = cells_column_spanners(
-#'       spanners = "SZA.Max"
+#'       spanners = "spanner-SZA.Max"
 #'     )
 #'   ) %>%
 #'   tab_footnote(

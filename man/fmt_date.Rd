@@ -51,14 +51,32 @@ locale setting performed in \code{\link[=gt]{gt()}}'s own \code{locale} argument
 An object of class \code{gt_tbl}.
 }
 \description{
-Format input values to time values using one of fourteen presets. Input can
-be in the form of \code{POSIXt} (i.e., datetimes), the \code{Date} type, or \code{character}
-(must be in the ISO 8601 form of \verb{YYYY-MM-DD HH:MM:SS} or \code{YYYY-MM-DD}).
+Format input values to time values using one of 41 preset date styles. Input
+can be in the form of \code{POSIXt} (i.e., datetimes), the \code{Date} type, or
+\code{character} (must be in the ISO 8601 form of \verb{YYYY-MM-DD HH:MM:SS} or
+\code{YYYY-MM-DD}).
+}
+\section{Targeting the values to be formatted}{
 
-Once the appropriate data cells are targeted with \code{columns} (and, optionally,
-\code{rows}), we can simply apply a preset date style to format the dates. The
-following date styles are available for use (all using the input date of
-\code{2000-02-29} in the example output dates):\tabular{llll}{
+
+Targeting of values is done through \code{columns} and additionally by \code{rows} (if
+nothing is provided for \code{rows} then entire columns are selected). Conditional
+formatting is possible by providing a conditional expression to the \code{rows}
+argument. See the \emph{Arguments} section for more information on this.
+}
+
+\section{Formatting with the \code{date_style} argument}{
+
+
+We need to supply a preset date style to the \code{date_style} argument. The date
+styles are numerous and can handle localization to any supported locale. A
+large segment of date styles are termed flexible date formats and this means
+that their output will adapt to any \code{locale} provided. That feature makes the
+flexible date formats a better option for locales other than \code{"en"} (the
+default locale).
+
+The following table provides a listing of all date styles and their output
+values (corresponding to an input date of \code{2000-02-29}).\tabular{llll}{
     \tab Date Style \tab Output \tab Notes \cr
    1 \tab \code{"iso"} \tab \code{"2000-02-29"} \tab ISO 8601 \cr
    2 \tab \code{"wday_month_day_year"} \tab \code{"Tuesday, February 29, 2000"} \tab  \cr
@@ -104,28 +122,23 @@ following date styles are available for use (all using the input date of
 }
 
 
-We can use the \code{\link[=info_date_style]{info_date_style()}} function for a useful reference on all of
-the possible inputs to \code{date_style}.
+We can use the \code{\link[=info_date_style]{info_date_style()}} within the console to view a similar table
+of date styles with example output.
 }
-\details{
-Targeting of values is done through \code{columns} and additionally by \code{rows} (if
-nothing is provided for \code{rows} then entire columns are selected). Conditional
-formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the \emph{Arguments} section for more information on this.
-}
+
 \section{Examples}{
 
 
 Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{date} and \code{time}
-columns. Format the \code{date} column to have dates formatted as \code{month_day_year}
-(date style \code{5}).
+columns. Format the \code{date} column to have dates formatted with the
+\code{"month_day_year"} date style.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(date, time) \%>\%
   gt() \%>\%
   fmt_date(
     columns = date,
-    date_style = 5
+    date_style = "month_day_year"
   )
 }\if{html}{\out{</div>}}
 
@@ -155,6 +168,25 @@ in the \code{rows} argument).
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_date_2.png" alt="This image of a table was generated from the second code example in the `fmt_date()` help file." style="width:100\%;">
+}}
+
+Use \code{\link{exibble}} to create another \strong{gt} table, this time only with the
+\code{date} column. Format the \code{date} column to use the \code{"yMMMEd"} date style
+(which is one of the 'flexible' styles). Also, set the locale to \code{"nl"} to
+get the dates in Dutch.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+  dplyr::select(date) \%>\%
+  gt() \%>\%
+  fmt_date(
+    columns = date,
+    date_style = "yMMMEd",
+    locale = "nl"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_date_3.png" alt="This image of a table was generated from the third code example in the `fmt_date()` help file." style="width:100\%;">
 }}
 }
 

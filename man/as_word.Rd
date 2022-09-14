@@ -16,20 +16,21 @@ as_word(
 \arguments{
 \item{data}{A table object that is created using the \code{gt()} function.}
 
-\item{align}{left, center (default) or right.}
+\item{align}{An option for table alignment. Can either be \code{"center"} (the
+default), \code{"left"}, or \code{"right"}.}
 
-\item{caption_location}{top (default), bottom, or embed Indicating if the
-title and subtitle should be listed above, below, or be embedded in the
-table}
+\item{caption_location}{Determines where the caption should be positioned.
+This can either be \code{"top"} (the default), \code{"bottom"}, or \code{"embed"}.}
 
-\item{caption_align}{left (default), center, or right. Alignment of caption
-(title and subtitle). Used when \code{caption_location} is not "embed".}
+\item{caption_align}{Determines the alignment of the caption. This is
+either \code{"left"} (the default), \code{"center"}, or \code{"right"}. This option is
+only used when \code{caption_location} is not set as \code{"embed"}.}
 
-\item{split}{TRUE or FALSE (default) indicating whether activate Word option
-'Allow row to break across pages'.}
+\item{split}{A \code{TRUE} or \code{FALSE} (the default) value that indicates whether
+to activate the Word option \verb{Allow row to break across pages}.}
 
-\item{keep_with_next}{TRUE (default) or FALSE indicating whether a table
-should use Word option 'keep rows together' is activated when TRUEd}
+\item{keep_with_next}{A \code{TRUE} (the default) or \code{FALSE} value that indicates
+whether a table should use Word option \verb{keep rows together}.}
 }
 \description{
 Get the Open Office XML table tag content from a \code{gt_tbl} object as as a

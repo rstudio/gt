@@ -81,7 +81,7 @@ Use \code{\link{sza}} to create a \strong{gt} table, adding three footnotes. Cal
   tab_footnote(
     footnote = "Solar zenith angle.",
     locations = cells_column_spanners(
-      spanners = "SZA.Max"
+      spanners = "spanner-SZA.Max"
     )
   ) \%>\%
   tab_footnote(
