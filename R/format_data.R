@@ -18,7 +18,8 @@
 #' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
 #'
-#' @details
+#' @section Targeting the values to be formatted:
+#'
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
@@ -303,7 +304,8 @@ fmt_number <- function(
 #' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
 #'
-#' @details
+#' @section Targeting the values to be formatted:
+#'
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
@@ -406,7 +408,8 @@ fmt_integer <- function(
 #' - locale-based formatting: providing a locale ID will result in
 #' formatting specific to the chosen locale
 #'
-#' @details
+#' @section Targeting the values to be formatted:
+#'
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
@@ -601,10 +604,10 @@ fmt_scientific <- function(
 #' - locale-based formatting: providing a locale ID will result in
 #' formatting specific to the chosen locale
 #'
-#' @details
+#' @section Targeting the values to be formatted:
+#'
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the *Arguments* section for more information on this.
 #'
@@ -952,7 +955,8 @@ fmt_symbol <- function(
 #' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
 #'
-#' @details
+#' @section Targeting the values to be formatted:
+#'
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
@@ -1106,7 +1110,8 @@ fmt_percent <- function(
 #' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
 #'
-#' @details
+#' @section Targeting the values to be formatted:
+#'
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
@@ -1298,10 +1303,10 @@ fmt_partsper <- function(
 #' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
 #'
-#' @details
+#' @section Targeting the values to be formatted:
+#'
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). A number of
-#' helper functions exist to make targeting more effective. Conditional
+#' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
 #' argument. See the *Arguments* section for more information on this.
 #'
@@ -1778,7 +1783,8 @@ round_gt <- function(x, digits = 0) {
 #' We can use the [info_currencies()] function for a useful reference on all of
 #' the possible inputs to the `currency` argument.
 #'
-#' @details
+#' @section Targeting the values to be formatted:
+#'
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
@@ -1945,7 +1951,8 @@ fmt_currency <- function(
 #' With numeric values in a **gt** table we can transform those to Roman
 #' numerals, rounding values as necessary.
 #'
-#' @details
+#' @section Targeting the values to be formatted:
+#'
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
@@ -2077,7 +2084,8 @@ fmt_roman <- function(
 #' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
 #'
-#' @details
+#' @section Targeting the values to be formatted:
+#'
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
@@ -2260,10 +2268,24 @@ fmt_bytes <- function(
 #' `character` (must be in the ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or
 #' `YYYY-MM-DD`).
 #'
-#' Once the appropriate data cells are targeted with `columns` (and, optionally,
-#' `rows`), we can simply apply a preset date style to format the dates. The
-#' following date styles are available for use (all using the input date of
-#' `2000-02-29` in the example output dates):
+#' @section Targeting the values to be formatted:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the *Arguments* section for more information on this.
+#'
+#' @section Formatting with the `date_style` argument:
+#'
+#' We need to supply a preset date style to the `date_style` argument. The date
+#' styles are numerous and can handle localization to any supported locale. A
+#' large segment of date styles are termed flexible date formats and this means
+#' that their output will adapt to any `locale` provided. That feature makes the
+#' flexible date formats a better option for locales other than `"en"` (the
+#' default locale).
+#'
+#' The following table provides a listing of all date styles and their output
+#' values (corresponding to an input date of `2000-02-29`).
 #'
 #' |    | Date Style            | Output                  | Notes         |
 #' |----|-----------------------|-------------------------|---------------|
@@ -2309,14 +2331,8 @@ fmt_bytes <- function(
 #' | 40 | `"d"`                 | `"29"`                  | flexible      |
 #' | 41 | `"Ed"`                | `"29 Tue"`              | flexible      |
 #'
-#' We can use the [info_date_style()] function for a useful reference on all of
-#' the possible inputs to `date_style`.
-#'
-#' @details
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). Conditional
-#' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the *Arguments* section for more information on this.
+#' We can use the [info_date_style()] within the console to view a similar table
+#' of date styles with example output.
 #'
 #' @inheritParams fmt_number
 #' @param date_style The date style to use. By default this is `"iso"` which
@@ -2452,10 +2468,25 @@ fmt_date <- function(
 #' ISO 8601 forms of `HH:MM:SS` or `YYYY-MM-DD HH:MM:SS`), or `Date` (which
 #' always results in the formatting of `00:00:00`).
 #'
-#' Once the appropriate data cells are targeted with `columns` (and, optionally,
-#' `rows`), we can simply apply a preset time style to format the times. The
-#' following time styles are available for formatting of the time portion (all
-#' using the input time of `14:35:00` in the example output times):
+#' @section Targeting the values to be formatted:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the *Arguments* section for more information on this.
+#'
+#' @section Formatting with the `time_style` argument:
+#'
+#' We need to supply a preset time style to the `time_style` argument. There are
+#' many time styles and all of them can handle localization to any supported
+#' locale. Many of the time styles are termed flexible time formats and this
+#' means that their output will adapt to any `locale` provided. That feature
+#' makes the flexible time formats a better option for locales other than `"en"`
+#' (the default locale).
+#'
+#' The following table provides a listing of all time styles and their output
+#' values (corresponding to an input time of `14:35:00`). It is noted which of
+#' these represent 12- or 24-hour time.
 #'
 #' |    | Time Style    | Output                          | Notes         |
 #' |----|---------------|---------------------------------|---------------|
@@ -2485,14 +2516,8 @@ fmt_date <- function(
 #' | 24 | `"hmv"`       | `"2:35 PM GMT+00:00"`           | flexible, 12h |
 #' | 25 | `"ms"`        | `"35:00"`                       | flexible      |
 #'
-#' We can use the [info_time_style()] function for a useful reference on all of
-#' the possible inputs to `time_style`.
-#'
-#' @details
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). Conditional
-#' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the *Arguments* section for more information on this.
+#' We can use the [info_time_style()] within the console to view a similar table
+#' of time styles with example output.
 #'
 #' @inheritParams fmt_number
 #' @param time_style The time style to use. By default this is `"iso"` which
@@ -2632,11 +2657,24 @@ fmt_time <- function(
 #' `POSIXt` (i.e., datetimes), the `Date` type, or `character` (must be in the
 #' ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or `YYYY-MM-DD`).
 #'
-#' Once the appropriate data cells are targeted with `columns` (and, optionally,
-#' `rows`), we can choose to apply preset date and time styles to format the
-#' datetime values. The following date styles are available for formatting of
-#' the date portion (all using the input date of `2000-02-29` in the example
-#' output dates):
+#' @section Targeting the values to be formatted:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the *Arguments* section for more information on this.
+#'
+#' @section Formatting with the `date_style` argument:
+#'
+#' We can supply a preset date style to the `date_style` argument to separately
+#' handle the date portion of the output. The date styles are numerous and can
+#' handle localization to any supported locale. A large segment of date styles
+#' are termed flexible date formats and this means that their output will adapt
+#' to any `locale` provided. That feature makes the flexible date formats a
+#' better option for locales other than `"en"` (the default locale).
+#'
+#' The following table provides a listing of all date styles and their output
+#' values (corresponding to an input date of `2000-02-29`).
 #'
 #' |    | Date Style            | Output                  | Notes         |
 #' |----|-----------------------|-------------------------|---------------|
@@ -2682,8 +2720,24 @@ fmt_time <- function(
 #' | 40 | `"d"`                 | `"29"`                  | flexible      |
 #' | 41 | `"Ed"`                | `"29 Tue"`              | flexible      |
 #'
-#' The following time styles are available for formatting of the time portion
-#' (all using the input time of `14:35:00` in the example output times):
+#' We can use the [info_date_style()] within the console to view a similar table
+#' of date styles with example output.
+#'
+#' @section Formatting with the `time_style` argument:
+#'
+#' We can supply a preset time style to the `time_style` argument to separately
+#' handle the time portion of the output. There are many time styles and all of
+#' them can handle localization to any supported locale. Many of the time styles
+#' are termed flexible time formats and this means that their output will adapt
+#' to any `locale` provided. That feature makes the flexible time formats a
+#' better option for locales other than `"en"` (the default locale).
+#'
+#' The following table provides a listing of all time styles and their output
+#' values (corresponding to an input time of `14:35:00`). It is noted which of
+#' these represent 12- or 24-hour time. Some of the flexible formats (those
+#' that begin with `"E"`) include the the day of the week. Keep this in mind
+#' when pairing such `time_style` values with a `date_style` so as to avoid
+#' redundant or repeating information.
 #'
 #' |    | Time Style    | Output                          | Notes         |
 #' |----|---------------|---------------------------------|---------------|
@@ -2713,15 +2767,8 @@ fmt_time <- function(
 #' | 24 | `"hmv"`       | `"2:35 PM GMT+00:00"`           | flexible, 12h |
 #' | 25 | `"ms"`        | `"35:00"`                       | flexible      |
 #'
-#' We can use the [info_date_style()] and [info_time_style()] functions to
-#' display useful references for all of the possible inputs to `date_style` and
-#' `time_style`.
-#'
-#' @details
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). Conditional
-#' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the *Arguments* section for more information on this.
+#' We can use the [info_time_style()] within the console to view a similar table
+#' of time styles with example output.
 #'
 #' @section Formatting with a *CLDR* datetime pattern:
 #'
@@ -3332,7 +3379,8 @@ fmt_datetime <- function(
 #' wide, colon-separated, and ISO forms) and a choice of output units ranging
 #' from weeks to seconds.
 #'
-#' @details
+#' @section Targeting the values to be formatted:
+#'
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
@@ -4083,7 +4131,8 @@ extract_duration_pattern <- function(
 #' Any Markdown-formatted text in the incoming cells will be transformed to the
 #' appropriate output type during render when using `fmt_markdown()`.
 #'
-#' @details
+#' @section Targeting the values to be formatted:
+#'
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
@@ -4207,7 +4256,8 @@ fmt_markdown <- function(
 #' `formatter` function in the [summary_rows()] function, where the output may
 #' be text or useful as is.
 #'
-#' @details
+#' @section Targeting the values to be formatted:
+#'
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
@@ -4363,12 +4413,12 @@ fmt_passthrough <- function(
 #' multiple-function case, we recommended including the `default` function as a
 #' fallback if all contexts aren't provided.
 #'
-#' @details
-#' As with all of the `fmt_*()` functions, targeting of values is done through
-#' `columns` and additionally by `rows` (if nothing is provided for `rows` then
-#' entire columns are selected). Conditional formatting is possible by providing
-#' a conditional expression to the `rows` argument. See the *Arguments* section
-#' for more information on this.
+#' @section Targeting the values to be formatted:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param fns Either a single formatting function or a named list of functions.
