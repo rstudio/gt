@@ -39,10 +39,10 @@ or \code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the
 A character vector.
 }
 \description{
-Format vector values to time values using one of five presets. Input can be
-in the form of \code{POSIXt} (i.e., datetimes), \code{character} (must be in the ISO
-8601 forms of \code{HH:MM:SS} or \verb{YYYY-MM-DD HH:MM:SS}), or \code{Date} (which always
-results in the formatting of \code{00:00:00}).
+Format vector values to time values using one of 25 preset time styles. Input
+can be in the form of \code{POSIXt} (i.e., datetimes), \code{character} (must be in the
+ISO 8601 forms of \code{HH:MM:SS} or \verb{YYYY-MM-DD HH:MM:SS}), or \code{Date} (which
+always results in the formatting of \code{00:00:00}).
 
 We can simply apply a preset time style to format the times. The following
 time styles are available for use (all using the input time of \code{14:35:00} in

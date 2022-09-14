@@ -51,9 +51,10 @@ locale setting performed in \code{\link[=gt]{gt()}}'s own \code{locale} argument
 An object of class \code{gt_tbl}.
 }
 \description{
-Format input values to time values using one of fourteen presets. Input can
-be in the form of \code{POSIXt} (i.e., datetimes), the \code{Date} type, or \code{character}
-(must be in the ISO 8601 form of \verb{YYYY-MM-DD HH:MM:SS} or \code{YYYY-MM-DD}).
+Format input values to time values using one of 41 preset date styles. Input
+can be in the form of \code{POSIXt} (i.e., datetimes), the \code{Date} type, or
+\code{character} (must be in the ISO 8601 form of \verb{YYYY-MM-DD HH:MM:SS} or
+\code{YYYY-MM-DD}).
 
 Once the appropriate data cells are targeted with \code{columns} (and, optionally,
 \code{rows}), we can simply apply a preset date style to format the dates. The

@@ -74,13 +74,14 @@ locale setting performed in \code{\link[=gt]{gt()}}'s own \code{locale} argument
 An object of class \code{gt_tbl}.
 }
 \description{
-Format input values to datetime values using one of fourteen presets for the
-date component and one of five presets for the time component. Input can be
-in the form of \code{POSIXt} (i.e., datetimes), the \code{Date} type, or \code{character}
-(must be in the ISO 8601 form of \verb{YYYY-MM-DD HH:MM:SS} or \code{YYYY-MM-DD}).
+Format input values to datetime values using either presets for the date and
+time components or a formatting directive (this can either use a \emph{CLDR}
+datetime pattern or \code{strptime} formatting). Input can be in the form of
+\code{POSIXt} (i.e., datetimes), the \code{Date} type, or \code{character} (must be in the
+ISO 8601 form of \verb{YYYY-MM-DD HH:MM:SS} or \code{YYYY-MM-DD}).
 
 Once the appropriate data cells are targeted with \code{columns} (and, optionally,
-\code{rows}), we can simply apply preset date and time styles to format the
+\code{rows}), we can choose to apply preset date and time styles to format the
 datetime values. The following date styles are available for formatting of
 the date portion (all using the input date of \code{2000-02-29} in the example
 output dates):\tabular{llll}{
@@ -160,8 +161,8 @@ The following time styles are available for formatting of the time portion
 }
 
 
-We can use the \code{\link[=info_date_style]{info_date_style()}} and \code{\link[=info_time_style]{info_time_style()}} functions as
-useful references for all of the possible inputs to \code{date_style} and
+We can use the \code{\link[=info_date_style]{info_date_style()}} and \code{\link[=info_time_style]{info_time_style()}} functions to
+display useful references for all of the possible inputs to \code{date_style} and
 \code{time_style}.
 }
 \details{

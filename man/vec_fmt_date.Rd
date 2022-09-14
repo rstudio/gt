@@ -39,9 +39,10 @@ or \code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the
 A character vector.
 }
 \description{
-Format vector values to date values using one of fourteen presets. Input can
-be in the form of \code{POSIXt} (i.e., datetimes), the \code{Date} type, or \code{character}
-(must be in the ISO 8601 form of \verb{YYYY-MM-DD HH:MM:SS} or \code{YYYY-MM-DD}).
+Format vector values to date values using one of 41 preset date styles. Input
+can be in the form of \code{POSIXt} (i.e., datetimes), the \code{Date} type, or
+\code{character} (must be in the ISO 8601 form of \verb{YYYY-MM-DD HH:MM:SS} or
+\code{YYYY-MM-DD}).
 
 We can simply apply a preset date style to format the dates. The following
 date styles are available for use (all using the input date of \code{2000-02-29}

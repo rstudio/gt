@@ -62,10 +62,11 @@ or \code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the
 A character vector.
 }
 \description{
-Format vector values to datetime values using one of fourteen presets for the
-date component and one of five presets for the time component. Input can be
-in the form of \code{POSIXt} (i.e., datetimes), the \code{Date} type, or \code{character}
-(must be in the ISO 8601 form of \verb{YYYY-MM-DD HH:MM:SS} or \code{YYYY-MM-DD}).
+Format values in a vector to datetime values using either presets for the
+date and time components or a formatting directive (this can either use a
+\emph{CLDR} datetime pattern or \code{strptime} formatting). Input can be in the form
+of \code{POSIXt} (i.e., datetimes), the \code{Date} type, or \code{character} (must be in
+the ISO 8601 form of \verb{YYYY-MM-DD HH:MM:SS} or \code{YYYY-MM-DD}).
 
 Once the appropriate data cells are targeted with \code{columns} (and, optionally,
 \code{rows}), we can simply apply preset date and time styles to format the
