@@ -154,6 +154,25 @@ in the \code{rows} argument).
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_time_2.png" alt="This image of a table was generated from the second code example in the `fmt_time()` help file." style="width:100\%;">
 }}
+
+Use \code{\link{exibble}} to create another \strong{gt} table, this time only with the
+\code{time} column. Format the \code{time} column to use the \code{"EBhms"} time style
+(which is one of the 'flexible' styles). Also, set the locale to \code{"sv"} to
+get the dates in Swedish.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+  dplyr::select(time) \%>\%
+  gt() \%>\%
+  fmt_time(
+    columns = time,
+    time_style = "EBhms",
+    locale = "sv"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_time_3.png" alt="This image of a table was generated from the third code example in the `fmt_time()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
