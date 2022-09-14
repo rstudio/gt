@@ -3242,6 +3242,54 @@ fmt_time <- function(
 #' `r man_get_image_tag(file = "man_fmt_datetime_1.png")`
 #' }}
 #'
+#' Using the same input table, we can use flexible date and time styles. Two
+#' that work well together are `"MMMEd"` and `"Hms"`. These will mutate
+#' depending on the locale. Let's use the default locale for the first 3 rows
+#' and the Danish locale (`"da"`) for the remaining rows.
+#'
+#' ```r
+#' exibble %>%
+#'   dplyr::select(datetime) %>%
+#'   gt() %>%
+#'   fmt_datetime(
+#'     columns = datetime,
+#'     date_style = "MMMEd",
+#'     time_style = "Hms",
+#'     locale = "da"
+#'   ) %>%
+#'   fmt_datetime(
+#'     columns = datetime,
+#'     rows = 1:3,
+#'     date_style = "MMMEd",
+#'     time_style = "Hms"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_datetime_2.png")`
+#' }}
+#'
+#' It's possible to use the `format` argument and write our own formatting
+#' specification. Using the CLDR datetime pattern
+#' `"EEEE, MMMM d, y 'at' h:mm a (zzzz)"` gives us datetime outputs with time
+#' zone formatting. Let's provide a time zone ID (`"America/Vancouver"`) to the
+#' `tz` argument.
+#'
+#' ```r
+#' exibble %>%
+#'   dplyr::select(datetime) %>%
+#'   gt() %>%
+#'   fmt_datetime(
+#'     columns = datetime,
+#'     format = "EEEE, MMMM d, y 'at' h:mm a (zzzz)",
+#'     tz = "America/Vancouver"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_datetime_3.png")`
+#' }}
+#'
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-13
