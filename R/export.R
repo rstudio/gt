@@ -631,16 +631,17 @@ as_rtf <- function(data) {
 #' single-element character vector.
 #'
 #' @param data A table object that is created using the `gt()` function.
-#' @param align left, center (default) or right.
-#' @param caption_location top (default), bottom, or embed Indicating if the
-#'   title and subtitle should be listed above, below, or be embedded in the
-#'   table
-#' @param caption_align left (default), center, or right. Alignment of caption
-#'   (title and subtitle). Used when `caption_location` is not "embed".
-#' @param split TRUE or FALSE (default) indicating whether activate Word option
-#'   'Allow row to break across pages'.
-#' @param keep_with_next  TRUE (default) or FALSE indicating whether a table
-#'   should use Word option 'keep rows together' is activated when TRUEd
+#' @param align An option for table alignment. Can either be `"center"` (the
+#'   default), `"left"`, or `"right"`.
+#' @param caption_location Determines where the caption should be positioned.
+#'   This can either be `"top"` (the default), `"bottom"`, or `"embed"`.
+#' @param caption_align Determines the alignment of the caption. This is
+#'   either `"left"` (the default), `"center"`, or `"right"`. This option is
+#'   only used when `caption_location` is not set as `"embed"`.
+#' @param split A `TRUE` or `FALSE` (the default) value that indicates whether
+#'   to activate the Word option `Allow row to break across pages`.
+#' @param keep_with_next A `TRUE` (the default) or `FALSE` value that indicates
+#'   whether a table should use Word option `keep rows together`.
 #'
 #' @examples
 #' # Use `gtcars` to create a gt table;
@@ -665,7 +666,7 @@ as_rtf <- function(data) {
 as_word <- function(
     data,
     align = "center",
-    caption_location = c("top","bottom","embed"),
+    caption_location = c("top", "bottom", "embed"),
     caption_align = "left",
     split = FALSE,
     keep_with_next = TRUE
@@ -673,6 +674,7 @@ as_word <- function(
 
   # Perform input object validation
   stop_if_not_gt(data = data)
+
   caption_location <- match.arg(caption_location)
 
   # Build all table data objects through a common pipeline
@@ -680,26 +682,52 @@ as_word <- function(
 
   gt_xml <- c()
 
-  # Composition of Word table OOXML -----------------------------------------------
-  if (caption_location %in% c("top")) {
-    header_xml <- as_word_tbl_header_caption(data = value, align = caption_align, split = split, keep_with_next = keep_with_next)
+  #
+  # Composition of Word table OOXML
+  #
+
+  if (caption_location == "top") {
+
+    header_xml <-
+      as_word_tbl_header_caption(
+        data = value,
+        align = caption_align,
+        split = split,
+        keep_with_next = keep_with_next
+      )
+
     gt_xml <- c(gt_xml, header_xml)
   }
 
-  tbl_xml <- as_word_tbl_body(data = value, align = align, split = split, keep_with_next = keep_with_next, embedded_heading = identical(caption_location, "embed"))
+  tbl_xml <-
+    as_word_tbl_body(
+      data = value,
+      align = align,
+      split = split,
+      keep_with_next = keep_with_next,
+      embedded_heading = identical(caption_location, "embed")
+    )
+
   gt_xml <- c(gt_xml, tbl_xml)
 
+  if (caption_location == "bottom") {
 
-  if (caption_location %in% c("bottom")) {
-    ## set keep_with_next to false here to prevent it trying to keep with non-table content
-    header_xml <- as_word_tbl_header_caption(data = value, align = caption_align, split = split, keep_with_next = FALSE)
+    # Set `keep_with_next` to FALSE here to prevent it trying to keep
+    # with non-table content
+    header_xml <-
+      as_word_tbl_header_caption(
+        data = value,
+        align = caption_align,
+        split = split,
+        keep_with_next = FALSE
+      )
+
     gt_xml <- c(gt_xml, header_xml)
   }
 
   gt_xml <- paste0(gt_xml, collapse = "")
 
   gt_xml
-
 }
 
 #' Generate ooxml for the table caption
