@@ -31,12 +31,15 @@ An object of class \code{gt_tbl}.
 Any Markdown-formatted text in the incoming cells will be transformed to the
 appropriate output type during render when using \code{fmt_markdown()}.
 }
-\details{
+\section{Targeting the values to be formatted}{
+
+
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
 nothing is provided for \code{rows} then entire columns are selected). Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
 argument. See the \emph{Arguments} section for more information on this.
 }
+
 \section{Examples}{
 
 

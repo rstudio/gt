@@ -44,12 +44,15 @@ An object of class \code{gt_tbl}.
 With numeric values in a \strong{gt} table we can transform those to Roman
 numerals, rounding values as necessary.
 }
-\details{
+\section{Targeting the values to be formatted}{
+
+
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
 nothing is provided for \code{rows} then entire columns are selected). Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
 argument. See the \emph{Arguments} section for more information on this.
 }
+
 \section{Examples}{
 
 
