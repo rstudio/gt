@@ -2344,8 +2344,8 @@ fmt_bytes <- function(
 #' @section Examples:
 #'
 #' Use [`exibble`] to create a **gt** table. Keep only the `date` and `time`
-#' columns. Format the `date` column to have dates formatted as `month_day_year`
-#' (date style `5`).
+#' columns. Format the `date` column to have dates formatted with the
+#' `"month_day_year"` date style.
 #'
 #' ```r
 #' exibble %>%
@@ -2353,7 +2353,7 @@ fmt_bytes <- function(
 #'   gt() %>%
 #'   fmt_date(
 #'     columns = date,
-#'     date_style = 5
+#'     date_style = "month_day_year"
 #'   )
 #' ```
 #'
@@ -2384,6 +2384,26 @@ fmt_bytes <- function(
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_fmt_date_2.png")`
+#' }}
+#'
+#' Use [`exibble`] to create another **gt** table, this time only with the
+#' `date` column. Format the `date` column to use the `"yMMMEd"` date style
+#' (which is one of the 'flexible' styles). Also, set the locale to `"nl"` to
+#' get the dates in Dutch.
+#'
+#' ```r
+#' exibble %>%
+#'   dplyr::select(date) %>%
+#'   gt() %>%
+#'   fmt_date(
+#'     columns = date,
+#'     date_style = "yMMMEd",
+#'     locale = "nl"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_date_3.png")`
 #' }}
 #'
 #' @family data formatting functions
