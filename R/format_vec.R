@@ -849,7 +849,7 @@ vec_fmt_percent <- function(
 #' ```
 #'
 #' Using `vec_fmt_partsper()` with the default options will create a character
-#' vector where the resultant per millle values have two decimal places and `NA`
+#' vector where the resultant per mille values have two decimal places and `NA`
 #' values will render as `"NA"`. The rendering context will be autodetected
 #' unless specified in the `output` argument (here, it is of the `"plain"`
 #' output type).
@@ -876,7 +876,12 @@ vec_fmt_percent <- function(
 #' works here):
 #'
 #' ```r
-#' vec_fmt_partsper(num_vals, to_units = "ppm", sep_mark = ".", dec_mark = ",")
+#' vec_fmt_partsper(
+#'   num_vals,
+#'   to_units = "ppm",
+#'   sep_mark = ".",
+#'   dec_mark = ","
+#' )
 #' ```
 #' ```
 #' #> [1] "1.000,00 ppm" "100,00 ppm" "10,00 ppm" "NA"
