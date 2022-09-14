@@ -1564,9 +1564,17 @@ vec_fmt_bytes <- function(
 #' `character` (must be in the ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or
 #' `YYYY-MM-DD`).
 #'
-#' We can simply apply a preset date style to format the dates. The following
-#' date styles are available for use (all using the input date of `2000-02-29`
-#' in the example output dates):
+#' @section Formatting with the `date_style` argument:
+#'
+#' We need to supply a preset date style to the `date_style` argument. The date
+#' styles are numerous and can handle localization to any supported locale. A
+#' large segment of date styles are termed flexible date formats and this means
+#' that their output will adapt to any `locale` provided. That feature makes the
+#' flexible date formats a better option for locales other than `"en"` (the
+#' default locale).
+#'
+#' The following table provides a listing of all date styles and their output
+#' values (corresponding to an input date of `2000-02-29`).
 #'
 #' |    | Date Style            | Output                  | Notes         |
 #' |----|-----------------------|-------------------------|---------------|
@@ -1612,8 +1620,8 @@ vec_fmt_bytes <- function(
 #' | 40 | `"d"`                 | `"29"`                  | flexible      |
 #' | 41 | `"Ed"`                | `"29 Tue"`              | flexible      |
 #'
-#' We can use the [info_date_style()] function for a useful reference on all of
-#' the possible inputs to `date_style`.
+#' We can use the [info_date_style()] within the console to view a similar table
+#' of date styles with example output.
 #'
 #' @inheritParams vec_fmt_number
 #' @param date_style The date style to use. By default this is `"iso"` which
@@ -1729,9 +1737,18 @@ vec_fmt_date <- function(
 #' ISO 8601 forms of `HH:MM:SS` or `YYYY-MM-DD HH:MM:SS`), or `Date` (which
 #' always results in the formatting of `00:00:00`).
 #'
-#' We can simply apply a preset time style to format the times. The following
-#' time styles are available for use (all using the input time of `14:35:00` in
-#' the example output times):
+#' @section Formatting with the `time_style` argument:
+#'
+#' We need to supply a preset time style to the `time_style` argument. There are
+#' many time styles and all of them can handle localization to any supported
+#' locale. Many of the time styles are termed flexible time formats and this
+#' means that their output will adapt to any `locale` provided. That feature
+#' makes the flexible time formats a better option for locales other than `"en"`
+#' (the default locale).
+#'
+#' The following table provides a listing of all time styles and their output
+#' values (corresponding to an input time of `14:35:00`). It is noted which of
+#' these represent 12- or 24-hour time.
 #'
 #' |    | Time Style    | Output                          | Notes         |
 #' |----|---------------|---------------------------------|---------------|
@@ -1761,8 +1778,8 @@ vec_fmt_date <- function(
 #' | 24 | `"hmv"`       | `"2:35 PM GMT+00:00"`           | flexible, 12h |
 #' | 25 | `"ms"`        | `"35:00"`                       | flexible      |
 #'
-#' We can use the [info_time_style()] function for a useful reference on all of
-#' the possible inputs to `time_style`.
+#' We can use the [info_time_style()] within the console to view a similar table
+#' of time styles with example output.
 #'
 #' @inheritParams vec_fmt_number
 #' @param time_style The time style to use. By default this is `"iso"` which
@@ -1883,11 +1900,17 @@ vec_fmt_time <- function(
 #' of `POSIXt` (i.e., datetimes), the `Date` type, or `character` (must be in
 #' the ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or `YYYY-MM-DD`).
 #'
-#' Once the appropriate data cells are targeted with `columns` (and, optionally,
-#' `rows`), we can simply apply preset date and time styles to format the
-#' datetime values. The following date styles are available for formatting of
-#' the date portion (all using the input date of `2000-02-29` in the example
-#' output dates):
+#' @section Formatting with the `date_style` argument:
+#'
+#' We can supply a preset date style to the `date_style` argument to separately
+#' handle the date portion of the output. The date styles are numerous and can
+#' handle localization to any supported locale. A large segment of date styles
+#' are termed flexible date formats and this means that their output will adapt
+#' to any `locale` provided. That feature makes the flexible date formats a
+#' better option for locales other than `"en"` (the default locale).
+#'
+#' The following table provides a listing of all date styles and their output
+#' values (corresponding to an input date of `2000-02-29`).
 #'
 #' |    | Date Style            | Output                  | Notes         |
 #' |----|-----------------------|-------------------------|---------------|
@@ -1933,8 +1956,24 @@ vec_fmt_time <- function(
 #' | 40 | `"d"`                 | `"29"`                  | flexible      |
 #' | 41 | `"Ed"`                | `"29 Tue"`              | flexible      |
 #'
-#' The following time styles are available for formatting of the time portion
-#' (all using the input time of `14:35:00` in the example output times):
+#' We can use the [info_date_style()] within the console to view a similar table
+#' of date styles with example output.
+#'
+#' @section Formatting with the `time_style` argument:
+#'
+#' We can supply a preset time style to the `time_style` argument to separately
+#' handle the time portion of the output. There are many time styles and all of
+#' them can handle localization to any supported locale. Many of the time styles
+#' are termed flexible time formats and this means that their output will adapt
+#' to any `locale` provided. That feature makes the flexible time formats a
+#' better option for locales other than `"en"` (the default locale).
+#'
+#' The following table provides a listing of all time styles and their output
+#' values (corresponding to an input time of `14:35:00`). It is noted which of
+#' these represent 12- or 24-hour time. Some of the flexible formats (those
+#' that begin with `"E"`) include the the day of the week. Keep this in mind
+#' when pairing such `time_style` values with a `date_style` so as to avoid
+#' redundant or repeating information.
 #'
 #' |    | Time Style    | Output                          | Notes         |
 #' |----|---------------|---------------------------------|---------------|
@@ -1964,9 +2003,8 @@ vec_fmt_time <- function(
 #' | 24 | `"hmv"`       | `"2:35 PM GMT+00:00"`           | flexible, 12h |
 #' | 25 | `"ms"`        | `"35:00"`                       | flexible      |
 #'
-#' We can use the [info_date_style()] and [info_time_style()] functions as
-#' useful references for all of the possible inputs to `date_style` and
-#' `time_style`.
+#' We can use the [info_time_style()] within the console to view a similar table
+#' of time styles with example output.
 #'
 #' @section Formatting with a *CLDR* datetime pattern:
 #'
