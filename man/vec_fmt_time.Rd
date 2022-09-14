@@ -43,10 +43,20 @@ Format vector values to time values using one of 25 preset time styles. Input
 can be in the form of \code{POSIXt} (i.e., datetimes), \code{character} (must be in the
 ISO 8601 forms of \code{HH:MM:SS} or \verb{YYYY-MM-DD HH:MM:SS}), or \code{Date} (which
 always results in the formatting of \code{00:00:00}).
+}
+\section{Formatting with the \code{time_style} argument}{
 
-We can simply apply a preset time style to format the times. The following
-time styles are available for use (all using the input time of \code{14:35:00} in
-the example output times):\tabular{llll}{
+
+We need to supply a preset time style to the \code{time_style} argument. There are
+many time styles and all of them can handle localization to any supported
+locale. Many of the time styles are termed flexible time formats and this
+means that their output will adapt to any \code{locale} provided. That feature
+makes the flexible time formats a better option for locales other than \code{"en"}
+(the default locale).
+
+The following table provides a listing of all time styles and their output
+values (corresponding to an input time of \code{14:35:00}). It is noted which of
+these represent 12- or 24-hour time.\tabular{llll}{
     \tab Time Style \tab Output \tab Notes \cr
    1 \tab \code{"iso"} \tab \code{"14:35:00"} \tab ISO 8601, 24h \cr
    2 \tab \code{"iso-short"} \tab \code{"14:35"} \tab ISO 8601, 24h \cr
@@ -76,9 +86,10 @@ the example output times):\tabular{llll}{
 }
 
 
-We can use the \code{\link[=info_time_style]{info_time_style()}} function for a useful reference on all of
-the possible inputs to \code{time_style}.
+We can use the \code{\link[=info_time_style]{info_time_style()}} within the console to view a similar table
+of time styles with example output.
 }
+
 \section{Examples}{
 
 
