@@ -130,15 +130,15 @@ of date styles with example output.
 
 
 Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{date} and \code{time}
-columns. Format the \code{date} column to have dates formatted as \code{month_day_year}
-(date style \code{5}).
+columns. Format the \code{date} column to have dates formatted with the
+\code{"month_day_year"} date style.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(date, time) \%>\%
   gt() \%>\%
   fmt_date(
     columns = date,
-    date_style = 5
+    date_style = "month_day_year"
   )
 }\if{html}{\out{</div>}}
 
@@ -168,6 +168,25 @@ in the \code{rows} argument).
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_date_2.png" alt="This image of a table was generated from the second code example in the `fmt_date()` help file." style="width:100\%;">
+}}
+
+Use \code{\link{exibble}} to create another \strong{gt} table, this time only with the
+\code{date} column. Format the \code{date} column to use the \code{"yMMMEd"} date style
+(which is one of the 'flexible' styles). Also, set the locale to \code{"nl"} to
+get the dates in Dutch.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+  dplyr::select(date) \%>\%
+  gt() \%>\%
+  fmt_date(
+    columns = date,
+    date_style = "yMMMEd",
+    locale = "nl"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_date_3.png" alt="This image of a table was generated from the third code example in the `fmt_date()` help file." style="width:100\%;">
 }}
 }
 
