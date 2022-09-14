@@ -665,6 +665,52 @@ and times with the \code{"h_m_s_p"} 12-hour time style.
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_datetime_1.png" alt="This image of a table was generated from the first code example in the `fmt_datetime()` help file." style="width:100\%;">
 }}
+
+Using the same input table, we can use flexible date and time styles. Two
+that work well together are \code{"MMMEd"} and \code{"Hms"}. These will mutate
+depending on the locale. Let's use the default locale for the first 3 rows
+and the Danish locale (\code{"da"}) for the remaining rows.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+  dplyr::select(datetime) \%>\%
+  gt() \%>\%
+  fmt_datetime(
+    columns = datetime,
+    date_style = "MMMEd",
+    time_style = "Hms",
+    locale = "da"
+  ) \%>\%
+  fmt_datetime(
+    columns = datetime,
+    rows = 1:3,
+    date_style = "MMMEd",
+    time_style = "Hms"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_datetime_2.png" alt="This image of a table was generated from the second code example in the `fmt_datetime()` help file." style="width:100\%;">
+}}
+
+It's possible to use the \code{format} argument and write our own formatting
+specification. Using the CLDR datetime pattern
+\code{"EEEE, MMMM d, y 'at' h:mm a (zzzz)"} gives us datetime outputs with time
+zone formatting. Let's provide a time zone ID (\code{"America/Vancouver"}) to the
+\code{tz} argument.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+  dplyr::select(datetime) \%>\%
+  gt() \%>\%
+  fmt_datetime(
+    columns = datetime,
+    format = "EEEE, MMMM d, y 'at' h:mm a (zzzz)",
+    tz = "America/Vancouver"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_datetime_3.png" alt="This image of a table was generated from the third code example in the `fmt_datetime()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
