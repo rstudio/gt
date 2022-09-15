@@ -82,11 +82,12 @@ merge the \code{open} & \code{close} columns together, and, the \code{low} & \co
 
 \section{Function ID}{
 
-4-12
+4-13
 }
 
 \seealso{
 Other column modification functions: 
+\code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
 \code{\link{cols_label}()},

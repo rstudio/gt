@@ -108,11 +108,12 @@ percentages of the top 3 pizzas sold by pizza category in 2015. The
 
 \section{Function ID}{
 
-4-11
+4-12
 }
 
 \seealso{
 Other column modification functions: 
+\code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
 \code{\link{cols_label}()},

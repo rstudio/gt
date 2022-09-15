@@ -60,11 +60,12 @@ position \code{population} after \code{country_name} with the \code{cols_move()}
 
 \section{Function ID}{
 
-4-6
+4-7
 }
 
 \seealso{
 Other column modification functions: 
+\code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
 \code{\link{cols_label}()},
