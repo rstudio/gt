@@ -158,6 +158,17 @@ determine_which_character_number <- function(
 #' @param columns The columns for which the alignment should be applied. By
 #'   default this is set to `everything()` which means that the chosen alignment
 #'   affects all columns.
+#' @param dec_mark The character used as a decimal mark in the numeric values to
+#'   be aligned. If a locale value was used when formatting the numeric values
+#'   then `locale` is better to use and it will override any value here in
+#'   `dec_mark`.
+#' @param locale An optional locale ID that can be used to obtain the type of
+#'   decimal mark used in the numeric values to be aligned. Examples include
+#'   `"en"` for English (United States) and `"fr"` for French (France). The use
+#'   of a valid locale ID will override any value provided in `dec_mark`. We can
+#'   use the [info_locales()] function as a useful reference for all of the
+#'   locales that are supported. Any `locale` value provided here will override
+#'   any global locale setting performed in [gt()]'s own `locale` argument.
 #'
 #' @family column modification functions
 #' @section Function ID:
