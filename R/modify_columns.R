@@ -170,6 +170,37 @@ determine_which_character_number <- function(
 #'   locales that are supported. Any `locale` value provided here will override
 #'   any global locale setting performed in [gt()]'s own `locale` argument.
 #'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Let's put together a two-column table to create a **gt** table. The first
+#' column `char` just contains letters whereas the second column, `num`, has a
+#' collection of numbers and `NA` values. We could format the numbers with
+#' [fmt_number()] and elect to drop the trailing zeros past the decimal mark
+#' with `drop_trailing_zeros = TRUE`. This can leave formatted numbers that are
+#' hard to scan through because the decimal mark isn't fixed horizontally. We
+#' could remedy this and align the numbers by the decimal mark with
+#' `cols_align_decimal()`.
+#'
+#' ```r
+#' dplyr::tibble(
+#'   char = LETTERS[1:9],
+#'   num = c(1.2, -33.52, 9023.2, -283.527, NA, 0.401, -123.1, NA, 41)
+#' ) %>%
+#'   gt() %>%
+#'   fmt_number(
+#'     columns = num,
+#'     decimals = 3,
+#'     drop_trailing_zeros = TRUE
+#'   ) %>%
+#'   cols_align_decimal()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_align_decimal_1.png")`
+#' }}
+#'
 #' @family column modification functions
 #' @section Function ID:
 #' 4-2
