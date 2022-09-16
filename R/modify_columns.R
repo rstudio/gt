@@ -167,11 +167,19 @@ determine_which_character_number <- function(
 #' @export
 cols_align_decimal <- function(
     data,
-    columns = everything()
+    columns = everything(),
+    dec_mark = ".",
+    locale = NULL
 ) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  # Resolve the `locale` value here with the global locale value
+  locale <- resolve_locale(data = data, locale = locale)
+
+  # Obtain the decimal mark if a locale ID is provided
+  dec_mark <- get_locale_dec_mark(locale, dec_mark)
 
   # Get the columns supplied in `columns` as a character vector
   resolved <-
@@ -217,11 +225,7 @@ cols_align_decimal <- function(
       rows = everything()
     ),
     fn = function(x) {
-
-      # TODO: determine what the decimal mark is through examination
-      # possible_decimal_marks <- c(",", ".", "٫")
-
-      align_to_char(x, align_at = ".")
+      align_to_char(x, align_at = dec_mark)
     }
   )
 }
