@@ -266,6 +266,27 @@ align_to_char <- function(x, align_at = ".") {
       strrep("\U02007", max(nchar(x_rhs)) - nchar(x_rhs))
     )
 
+  for (i in seq_along(x_piece_lhs)) {
+
+    if (grepl("[^0-9]$", x_piece_lhs[i])) {
+
+      extracted <- str_single_extract(x_piece_lhs[i], "[^0-9]+$")
+
+      n_char_extracted <- nchar(extracted)
+
+      x_piece_lhs[i] <- gsub(extracted, "", x_piece_lhs[i], fixed = TRUE)
+
+      x_piece_rhs[i] <- paste0(extracted, x_piece_rhs[i])
+
+      x_piece_rhs[i] <-
+        gsub(
+          paste0(paste(rep("\U02007", n_char_extracted), collapse = ""), "$"),
+          "",
+          x_piece_rhs[i]
+      )
+    }
+  }
+
   x_align <- paste(x_piece_lhs, x_piece_rhs, sep = align_at)
 
   x_align[!nchar(x_rhs) > 0 & !grepl(align_at, x[!x_no_align], fixed = TRUE)] <-
