@@ -97,9 +97,9 @@ alignments are applied).</p></dd>
 
 
 <dt>columns</dt>
-<dd><p>An optional vector of column names for which the alignment
-should be applied. If nothing is supplied, or if <code>columns</code> is <code>TRUE</code>, then
-the chosen alignment affects all columns.</p></dd>
+<dd><p>The columns for which the alignment should be applied. By
+default this is set to <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code> which means that the chosen alignment
+affects all columns.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -143,6 +143,7 @@ data to the left.</p>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other column modification functions: 
+<code><a href="cols_align_decimal.html">cols_align_decimal</a>()</code>,
 <code><a href="cols_hide.html">cols_hide</a>()</code>,
 <code><a href="cols_label.html">cols_label</a>()</code>,
 <code><a href="cols_merge_n_pct.html">cols_merge_n_pct</a>()</code>,
