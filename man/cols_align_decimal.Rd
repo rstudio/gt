@@ -26,6 +26,9 @@ use the \code{\link[=info_locales]{info_locales()}} function as a useful referen
 locales that are supported. Any \code{locale} value provided here will override
 any global locale setting performed in \code{\link[=gt]{gt()}}'s own \code{locale} argument.}
 }
+\value{
+An object of class \code{gt_tbl}.
+}
 \description{
 For numeric columns that contain values with decimal portions, it is
 sometimes useful to have them lined up along the decimal mark for easier
@@ -33,6 +36,36 @@ readability. We can do this with \code{cols_align_decimal()} and provide any
 number of columns (the function will skip over columns that don't require
 this type of alignment).
 }
+\section{Examples}{
+
+
+Let's put together a two-column table to create a \strong{gt} table. The first
+column \code{char} just contains letters whereas the second column, \code{num}, has a
+collection of numbers and \code{NA} values. We could format the numbers with
+\code{\link[=fmt_number]{fmt_number()}} and elect to drop the trailing zeros past the decimal mark
+with \code{drop_trailing_zeros = TRUE}. This can leave formatted numbers that are
+hard to scan through because the decimal mark isn't fixed horizontally. We
+could remedy this and align the numbers by the decimal mark with
+\code{cols_align_decimal()}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
+  char = LETTERS[1:9],
+  num = c(1.2, -33.52, 9023.2, -283.527, NA, 0.401, -123.1, NA, 41)
+) \%>\%
+  gt() \%>\%
+  fmt_number(
+    columns = num,
+    decimals = 3,
+    drop_trailing_zeros = TRUE
+  ) \%>\%
+  cols_align_decimal()
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_align_decimal_1.png" alt="This image of a table was generated from the first code example in the `cols_align_decimal()` help file." style="width:100\%;">
+}}
+}
+
 \section{Function ID}{
 
 4-2
