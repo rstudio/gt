@@ -254,9 +254,17 @@ align_to_char <- function(x, align_at = ".") {
       )
     )
 
-  x_piece_lhs <- paste0(strrep("\U02007", max(nchar(x_lhs)) - nchar(x_lhs)), x_lhs)
+  x_piece_lhs <-
+    paste0(
+      strrep("\U02007", max(nchar(x_lhs)) - nchar(x_lhs)),
+      x_lhs
+    )
 
-  x_piece_rhs <- paste0(x_rhs, strrep("\U02007", max(nchar(x_rhs)) - nchar(x_rhs)))
+  x_piece_rhs <-
+    paste0(
+      x_rhs,
+      strrep("\U02007", max(nchar(x_rhs)) - nchar(x_rhs))
+    )
 
   x_align <- paste(x_piece_lhs, x_piece_rhs, sep = align_at)
 
