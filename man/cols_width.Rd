@@ -75,11 +75,12 @@ end will capture all remaining columns).
 
 \section{Function ID}{
 
-4-2
+4-3
 }
 
 \seealso{
 Other column modification functions: 
+\code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
 \code{\link{cols_label}()},

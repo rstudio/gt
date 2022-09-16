@@ -84,11 +84,12 @@ function.
 
 \section{Function ID}{
 
-4-10
+4-11
 }
 
 \seealso{
 Other column modification functions: 
+\code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
 \code{\link{cols_label}()},

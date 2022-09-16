@@ -19,9 +19,9 @@ cols_align(
 according to the data type (see the Details section for specifics on which
 alignments are applied).}
 
-\item{columns}{An optional vector of column names for which the alignment
-should be applied. If nothing is supplied, or if \code{columns} is \code{TRUE}, then
-the chosen alignment affects all columns.}
+\item{columns}{The columns for which the alignment should be applied. By
+default this is set to \code{everything()} which means that the chosen alignment
+affects all columns.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -69,6 +69,7 @@ data to the left.
 
 \seealso{
 Other column modification functions: 
+\code{\link{cols_align_decimal}()},
 \code{\link{cols_hide}()},
 \code{\link{cols_label}()},
 \code{\link{cols_merge_n_pct}()},

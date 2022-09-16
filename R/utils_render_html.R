@@ -2,6 +2,7 @@
 #'
 #' @noRd
 footnote_mark_to_html <- function(mark) {
+
   if (is.na(mark)) {
     return("")
   }

@@ -68,11 +68,12 @@ move \code{year} and \code{population} to the start.
 
 \section{Function ID}{
 
-4-4
+4-5
 }
 
 \seealso{
 Other column modification functions: 
+\code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
 \code{\link{cols_label}()},
