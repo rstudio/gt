@@ -113,6 +113,7 @@ Collate:
     'summary_rows.R'
     'text_transform.R'
     'utils.R'
+    'utils_color_contrast.R'
     'utils_formatters.R'
     'utils_general_str_formatting.R'
     'utils_pipe.R'
