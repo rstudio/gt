@@ -374,11 +374,11 @@ ideal_fgnd_color <- function(
   # Normalize color to a #RRGGBB (stripping the alpha channel)
   bgnd_color <- html_color(colors = bgnd_color, alpha = 1)
 
-  # Determine the ideal color for the chosen background color
-  yiq_contrasted_threshold <- 128
-  colors <- grDevices::col2rgb(bgnd_color)
-  score <- colSums(colors * c(299, 587, 144)) / 1000
-  ifelse(score >= yiq_contrasted_threshold, dark, light)
+  # Determine the ideal color for the chosen background color with APCA
+  contrast_dark <- get_contrast_ratio(color_1 = dark, color_2 = bgnd_color)[, 1]
+  contrast_light <- get_contrast_ratio(color_1 = light, color_2 = bgnd_color)[, 1]
+
+  ifelse(abs(contrast_dark) >= abs(contrast_light), dark, light)
 }
 
 #' Convert colors in mixed formats (incl. rgba() strings) format to hexadecimal
