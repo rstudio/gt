@@ -1,3 +1,7 @@
+# Functionality to parse color values and determine Lc contrast taken from
+# the SAPC APCA (Accessible Perceptual Contrast Algorithm)
+# Coefficient values current as of Beta 0.0.98G-4g (Oct 1, 2021)
+
 apca_coeffs <-
   list(
     mainTRC = 2.4,
