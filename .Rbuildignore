@@ -18,12 +18,13 @@ tests/gt-examples
 tests/testthat/_snaps
 tests/testthat/test-as_raw_html.R
 tests/testthat/test-as_word.R
+tests/testthat/test-cols_align_decimal.R
 tests/testthat/test-cols_width_rtf.R
 tests/testthat/test-data_color.R
 tests/testthat/test-extract_cells.R
 tests/testthat/test-fmt_duration.R
 tests/testthat/test-fmt_fraction.R
-tests/testthat/test-fmt_ratio.R
+tests/testthat/test-fmt_partsper.R
 tests/testthat/test-fmt_roman.R
 tests/testthat/test-footer.R
 tests/testthat/test-group_column_label.R
@@ -31,7 +32,7 @@ tests/testthat/test-gtsave.R
 tests/testthat/test-image.R
 tests/testthat/test-l_table_parts.R
 tests/testthat/test-location_cells.R
-tests/testthat/test-rtf_page_numbering.R
+tests/testthat/test-rtf_page_options.R
 tests/testthat/test-stub.R
 tests/testthat/test-substitution.R
 tests/testthat/test-summary_rows.R

@@ -79,11 +79,11 @@ dependent on the mark itself. This can be directly controlled by using
 either \code{TRUE} or \code{FALSE}.}
 
 \item{locale}{An optional locale ID that can be used for formatting the value
-according the locale's rules. Examples include \code{"en_US"} for English
-(United States) and \code{"fr_FR"} for French (France). The use of a valid
-locale ID will override any values provided in \code{sep_mark} and \code{dec_mark}.
-We can use the \code{\link[=info_locales]{info_locales()}} function as a useful reference for all of
-the locales that are supported.}
+according the locale's rules. Examples include \code{"en"} for English (United
+States) and \code{"fr"} for French (France). The use of a valid locale ID will
+override any values provided in \code{sep_mark} and \code{dec_mark}. We can use the
+\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
+are supported.}
 
 \item{output}{The output style of the resulting character vector. This can
 either be \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"},
@@ -135,7 +135,7 @@ Let's create a numeric vector for the next few examples:
 }\if{html}{\out{</div>}}
 
 Using \code{vec_fmt_partsper()} with the default options will create a character
-vector where the resultant per millle values have two decimal places and \code{NA}
+vector where the resultant per mille values have two decimal places and \code{NA}
 values will render as \code{"NA"}. The rendering context will be autodetected
 unless specified in the \code{output} argument (here, it is of the \code{"plain"}
 output type).
@@ -159,7 +159,12 @@ We can change the decimal mark to a comma, and we have to be sure to change
 the digit separator mark from the default comma to something else (a period
 works here):
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_partsper(num_vals, to_units = "ppm", sep_mark = ".", dec_mark = ",")
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_partsper(
+  num_vals,
+  to_units = "ppm",
+  sep_mark = ".",
+  dec_mark = ","
+)
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "1.000,00 ppm" "100,00 ppm" "10,00 ppm" "NA"

@@ -67,11 +67,12 @@ move \code{year} and \code{country_name} to the end of the column series.
 
 \section{Function ID}{
 
-4-5
+4-6
 }
 
 \seealso{
 Other column modification functions: 
+\code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
 \code{\link{cols_label}()},

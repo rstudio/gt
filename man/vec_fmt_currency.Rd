@@ -113,11 +113,11 @@ notation with \code{accounting = TRUE}.}
 and the currency symbol. The default is to not introduce a space character.}
 
 \item{locale}{An optional locale ID that can be used for formatting the value
-according the locale's rules. Examples include \code{"en_US"} for English
-(United States) and \code{"fr_FR"} for French (France). The use of a valid
-locale ID will override any values provided in \code{sep_mark} and \code{dec_mark}.
-We can use the \code{\link[=info_locales]{info_locales()}} function as a useful reference for all of
-the locales that are supported.}
+according the locale's rules. Examples include \code{"en"} for English (United
+States) and \code{"fr"} for French (France). The use of a valid locale ID will
+override any values provided in \code{sep_mark} and \code{dec_mark}. We can use the
+\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
+are supported.}
 
 \item{output}{The output style of the resulting character vector. This can
 either be \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"},
@@ -128,13 +128,12 @@ or \code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the
 A character vector.
 }
 \description{
-With numeric values in a vector, we can perform currency-based
-formatting. This function supports both automatic formatting with a
-three-letter or numeric currency code. We can also specify a custom currency
-that is formatted according to the output context with the \code{\link[=currency]{currency()}}
-helper function. Numeric formatting facilitated through the use of a locale
-ID. We have fine control over the conversion from numeric values to currency
-values, where we could take advantage of the following options:
+With numeric values in a vector, we can perform currency-based formatting.
+This function supports both automatic formatting with a three-letter or
+numeric currency code. We can also specify a custom currency that is
+formatted according to the output context with the \code{\link[=currency]{currency()}} helper
+function. We have fine control over the conversion from numeric values to
+currency values, where we could take advantage of the following options:
 \itemize{
 \item the currency: providing a currency code or common currency name will
 procure the correct currency symbol and number of currency subunits; we could
@@ -181,7 +180,7 @@ type).
 }\if{html}{\out{</div>}}
 
 We can supply a currency code to the \code{currency} argument. Let's use British
-Pounds by using \code{currency = "GBP"}:
+Pounds through \code{currency = "GBP"}:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_currency(num_vals, currency = "GBP")
 }\if{html}{\out{</div>}}
@@ -190,7 +189,7 @@ Pounds by using \code{currency = "GBP"}:
 }\if{html}{\out{</div>}}
 
 If we are formatting for a different locale, we could supply the locale ID
-and let \strong{gt} handle qll locale-specific formatting options:
+and let \strong{gt} handle all locale-specific formatting options:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_currency(num_vals, currency = "EUR", locale = "fr")
 }\if{html}{\out{</div>}}

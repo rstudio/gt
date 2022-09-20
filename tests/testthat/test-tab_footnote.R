@@ -1,5 +1,3 @@
-skip_on_cran()
-
 # Create a table from `mtcars` that has all the different components
 data <-
   mtcars %>%

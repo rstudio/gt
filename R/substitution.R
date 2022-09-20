@@ -423,10 +423,11 @@ sub_small_vals <- function(
 #' Substitute large values in the table body
 #'
 #' @description
-#' Wherever there is numerical data that are very large in value, replacement
+#' Wherever there are numerical data that are very large in value, replacement
 #' text may be better for explanatory purposes. The `sub_large_vals()` function
 #' allows for this replacement through specification of a `threshold`, a
-#' `large_pattern`, and the sign of the values to be considered.
+#' `large_pattern`, and the sign (positive or negative) of the values to be
+#' considered.
 #'
 #' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
@@ -454,9 +455,9 @@ sub_small_vals <- function(
 #' tbl
 #' ```
 #'
-#' The `tbl` contains a variety of smaller numbers and some might be small
-#' enough to reformat with a threshold value. With `sub_small_vals()` we can
-#' do just that:
+#' The `tbl` object contains a variety of larger numbers and some might be
+#' larger enough to reformat with a threshold value. With `sub_large_vals()` we
+#' can do just that:
 #'
 #' ```r
 #' tbl %>%

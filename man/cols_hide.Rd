@@ -77,13 +77,14 @@ statements has no effect.
 
 \section{Function ID}{
 
-4-7
+4-8
 }
 
 \seealso{
 \code{\link[=cols_unhide]{cols_unhide()}} to perform the inverse operation.
 
 Other column modification functions: 
+\code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_label}()},
 \code{\link{cols_merge_n_pct}()},

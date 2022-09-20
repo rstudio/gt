@@ -85,11 +85,12 @@ formatting.
 
 \section{Function ID}{
 
-4-3
+4-4
 }
 
 \seealso{
 Other column modification functions: 
+\code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
 \code{\link{cols_merge_n_pct}()},

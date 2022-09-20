@@ -127,6 +127,7 @@ tab_header <- function(
 #' @section Function ID:
 #' 2-2
 #'
+#' @import rlang
 #' @export
 tab_spanner <- function(
     data,
@@ -369,6 +370,7 @@ resolve_spanned_column_names <- function(
 #' @section Function ID:
 #' 2-3
 #'
+#' @import rlang
 #' @export
 tab_spanner_delim <- function(
     data,
@@ -874,6 +876,7 @@ tab_stubhead <- function(
 #' @section Function ID:
 #' 2-6
 #'
+#' @import rlang
 #' @export
 tab_stub_indent <- function(
     data,
@@ -1391,7 +1394,7 @@ set_footnote.cells_footnotes <- function(loc, data, footnote, placement) {
 #'
 #' @family part creation/modification functions
 #' @section Function ID:
-#' 2-89
+#' 2-8
 #'
 #' @export
 tab_source_note <- function(

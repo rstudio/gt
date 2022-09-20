@@ -3,22 +3,48 @@
 #' @noRd
 date_formats <- function() {
   dplyr::tribble(
-    ~format_number, ~format_name,           ~format_code,
-    "1",	          "iso",                  "%F",
-    "2",	          "wday_month_day_year",  "%A, %B %d, %Y",
-    "3",	          "wd_m_day_year",        "%a, %b %d, %Y",
-    "4",	          "wday_day_month_year",  "%A %d %B %Y",
-    "5",	          "month_day_year",       "%B %d, %Y",
-    "6",	          "m_day_year",           "%b %d, %Y",
-    "7",	          "day_m_year",           "%d %b %Y",
-    "8",	          "day_month_year",       "%d %B %Y",
-    "9",	          "day_month",            "%d %B",
-    "10",	          "day_m",                "%d %b",
-    "11",	          "year",                 "%Y",
-    "12",	          "month",                "%B",
-    "13",	          "day",                  "%d",
-    "14",	          "year.mn.day",          "%Y/%m/%d",
-    "15",	          "y.mn.day",             "%y/%m/%d"
+    ~format_number, ~format_name,           ~format_code,       ~flexible,
+    "1",	          "iso",                  "y-MM-dd",          FALSE,
+    "2",	          "wday_month_day_year",  "EEEE, MMMM d, y",  FALSE,
+    "3",	          "wd_m_day_year",        "EEE, MMM d, y",    FALSE,
+    "4",	          "wday_day_month_year",  "EEEE d MMMM y",    FALSE,
+    "5",	          "month_day_year",       "MMMM d, y",        FALSE,
+    "6",	          "m_day_year",           "MMM d, y",         FALSE,
+    "7",	          "day_m_year",           "d MMM y",          FALSE,
+    "8",	          "day_month_year",       "d MMMM y",         FALSE,
+    "9",	          "day_month",            "d MMMM",           FALSE,
+    "10",	          "day_m",                "d MMM",            FALSE,
+    "11",	          "year",                 "y",                FALSE,
+    "12",	          "month",                "MMMM",             FALSE,
+    "13",	          "day",                  "dd",               FALSE,
+    "14",	          "year.mn.day",          "y/MM/dd",          FALSE,
+    "15",	          "y.mn.day",             "yy/MM/dd",         FALSE,
+    "16",           "year_week",            "y-'W'ww",          FALSE,
+    "17",           "year_quarter",         "y-'Q'Q",           FALSE,
+    "18",           "yMd",                  NA_character_,      TRUE,
+    "19",           "yMEd",                 NA_character_,      TRUE,
+    "20",           "yMMM",                 NA_character_,      TRUE,
+    "21",           "yMMMM",                NA_character_,      TRUE,
+    "22",           "yMMMd",                NA_character_,      TRUE,
+    "23",           "yMMMEd",               NA_character_,      TRUE,
+    "24",           "GyMd",                 NA_character_,      TRUE,
+    "25",           "GyMMMd",               NA_character_,      TRUE,
+    "26",           "GyMMMEd",              NA_character_,      TRUE,
+    "27",           "yM",                   NA_character_,      TRUE,
+    "28",           "Md",                   NA_character_,      TRUE,
+    "29",           "MEd",                  NA_character_,      TRUE,
+    "30",           "MMMd",                 NA_character_,      TRUE,
+    "31",           "MMMEd",                NA_character_,      TRUE,
+    "32",           "MMMMd",                NA_character_,      TRUE,
+    "33",           "GyMMM",                NA_character_,      TRUE,
+    "34",           "yQQQ",                 NA_character_,      TRUE,
+    "35",           "yQQQQ",                NA_character_,      TRUE,
+    "36",           "Gy",                   NA_character_,      TRUE,
+    "37",           "y",                    NA_character_,      TRUE,
+    "38",           "M",                    NA_character_,      TRUE,
+    "39",           "MMM",                  NA_character_,      TRUE,
+    "40",           "d",                    NA_character_,      TRUE,
+    "41",           "Ed",                   NA_character_,      TRUE
   )
 }
 
@@ -27,12 +53,32 @@ date_formats <- function() {
 #' @noRd
 time_formats <- function() {
   dplyr::tribble(
-    ~format_number, ~format_name, ~format_code,
-    "1",	          "hms",        "%H:%M:%S",
-    "2",	          "hm",         "%H:%M",
-    "3",	          "hms_p",      "%I:%M:%S %P",
-    "4",	          "hm_p",       "%I:%M %P",
-    "5",	          "h_p",        "%I %P"
+    ~format_number,  ~format_name,  ~format_code,    ~time_type,    ~flexible,
+    "1",	           "iso",         "HH:mm:ss",      "24h",         FALSE,
+    "2",	           "iso-short",   "HH:mm",         "24h",         FALSE,
+    "3",	           "h_m_s_p",     "h:mm:ss a",     "12h",         FALSE,
+    "4",	           "h_m_p",       "h:mm a",        "12h",         FALSE,
+    "5",	           "h_p",         "h a",           "12h",         FALSE,
+    "6",             "Hms",         NA_character_,   "24h",         TRUE,
+    "7",             "Hm",          NA_character_,   "24h",         TRUE,
+    "8",             "H",           NA_character_,   "24h",         TRUE,
+    "9",             "EHm",         NA_character_,   "24h",         TRUE,
+    "10",            "EHms",        NA_character_,   "24h",         TRUE,
+    "11",            "Hmsv",        NA_character_,   "24h",         TRUE,
+    "12",            "Hmv",         NA_character_,   "24h",         TRUE,
+    "13",            "hms",         NA_character_,   "12h",         TRUE,
+    "14",            "hm",          NA_character_,   "12h",         TRUE,
+    "15",            "h",           NA_character_,   "12h",         TRUE,
+    "16",            "Ehm",         NA_character_,   "12h",         TRUE,
+    "17",            "Ehms",        NA_character_,   "12h",         TRUE,
+    "18",            "EBhms",       NA_character_,   "12h",         TRUE,
+    "19",            "Bhms",        NA_character_,   "12h",         TRUE,
+    "20",            "EBhm",        NA_character_,   "12h",         TRUE,
+    "21",            "Bhm",         NA_character_,   "12h",         TRUE,
+    "22",            "Bh",          NA_character_,   "12h",         TRUE,
+    "23",            "hmsv",        NA_character_,   "12h",         TRUE,
+    "24",            "hmv",         NA_character_,   "12h",         TRUE,
+    "25",            "ms",          NA_character_,   NA_character_, TRUE
   )
 }
 
@@ -80,8 +126,14 @@ get_date_format <- function(date_style) {
     date_style <- which(date_format_tbl$format_name == date_style)
   }
 
-  # Obtain the correct date format code for use with `strptime()`
-  date_format_tbl[["format_code"]][date_style]
+  # Obtain the correct date format directive
+  date_format_tbl_i <- date_format_tbl[date_style, ]
+
+  if (date_format_tbl_i[["flexible"]]) {
+    return(bigD::flex_d_lst[[date_format_tbl_i[["format_name"]]]])
+  } else {
+    return(date_format_tbl_i[["format_code"]])
+  }
 }
 
 #' Transform a `time_style` to a `time_format`
@@ -127,8 +179,23 @@ get_time_format <- function(time_style) {
     time_style <- which(time_format_tbl$format_name == time_style)
   }
 
-  # Obtain the correct time format code for use with `strptime()`
-  time_format_tbl[["format_code"]][time_style]
+  # Obtain the correct time format directive
+  time_format_tbl_i <- time_format_tbl[time_style, ]
+
+  if (time_format_tbl_i[["flexible"]]) {
+
+    if (
+      !is.na(time_format_tbl_i[["time_type"]]) &&
+      time_format_tbl_i[["time_type"]] == "12h"
+    ) {
+      return(bigD::flex_t12_lst[[time_format_tbl_i[["format_name"]]]])
+    } else {
+      return(bigD::flex_t24_lst[[time_format_tbl_i[["format_name"]]]])
+    }
+
+  } else {
+    return(time_format_tbl_i[["format_code"]])
+  }
 }
 
 #' Are string values 24 hour times?
@@ -143,7 +210,7 @@ is_string_time <- function(x) {
   is.character(x) & grepl("^\\d{1,2}:\\d{2}(:\\d{2}(\\.\\d+)?)?$", x)
 }
 
-check_format_string <- function(format) {
+check_format_code <- function(format) {
 
   if (!is.character(format) || length(format) != 1) {
     cli::cli_abort(

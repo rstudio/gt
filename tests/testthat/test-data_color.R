@@ -1,5 +1,3 @@
-skip_on_cran()
-
 # Create a table that can be used for testing
 test_tbl <-
   sza %>%
@@ -25,7 +23,7 @@ selection_text <- function(html, selection) {
 }
 
 test_that("the correct color values are obtained when defining a palette", {
-
+  skip_if_not_installed("paletteer")
   # Obtain a palette of 12 colors in #RRGGBB format
   pal_12 <-
     paletteer::paletteer_d(palette = "rcartocolor::Vivid") %>% as.character() %>%

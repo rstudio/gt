@@ -64,13 +64,14 @@ the \code{cols_unhide()} function becomes useful.
 
 \section{Function ID}{
 
-4-8
+4-9
 }
 
 \seealso{
 \code{\link[=cols_hide]{cols_hide()}} to perform the inverse operation.
 
 Other column modification functions: 
+\code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
 \code{\link{cols_label}()},

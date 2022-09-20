@@ -1,5 +1,3 @@
-skip_on_cran()
-
 exibble_test <- function(
     row_group_column = FALSE,
     use_row_groups = FALSE,

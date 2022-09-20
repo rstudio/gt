@@ -2,18 +2,19 @@
 % Please edit documentation in R/format_data.R
 \name{fmt_datetime}
 \alias{fmt_datetime}
-\title{Format values as date-times}
+\title{Format values as datetimes}
 \usage{
 fmt_datetime(
   data,
   columns,
   rows = everything(),
-  date_style = 1,
-  time_style = 1,
+  date_style = "iso",
+  time_style = "iso",
   sep = " ",
   format = NULL,
   tz = NULL,
-  pattern = "{x}"
+  pattern = "{x}",
+  locale = NULL
 )
 }
 \arguments{
@@ -34,24 +35,22 @@ functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with
 to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{date_style}{The date style to use. Supply a number (from \code{1} to \code{15})
-that corresponds to the preferred date style, or, provide a named date
-style (\code{"wday_month_day_year"}, \code{"m_day_year"}, \code{"year.mn.day"}, etc.). Use
-\code{\link[=info_date_style]{info_date_style()}} to see the different numbered and named date presets.}
+\item{date_style}{The date style to use. By default this is \code{"iso"} which
+corresponds to ISO 8601 date formatting. The other date styles can be
+viewed using \code{\link[=info_date_style]{info_date_style()}}.}
 
-\item{time_style}{The time style to use. Supply a number (from \code{1} to \code{5})
-that corresponds to the preferred time style, or, provide a named time
-style (\code{"hms"}, \code{"hms_p"}, \code{"h_p"}, etc.). Use \code{\link[=info_time_style]{info_time_style()}} to see
-the different numbered and named time presets.}
+\item{time_style}{The time style to use. By default this is \code{"iso"} which
+corresponds to how times are formatted within ISO 8601 datetime values. The
+other time styles can be viewed using \code{\link[=info_time_style]{info_time_style()}}.}
 
 \item{sep}{The separator string to use between the date and time components.
 By default, this is a single space character (\code{" "}). Only used when not
 specifying a \code{format} code.}
 
-\item{format}{An optional format code used for generating custom dates/times.
-If used then the arguments governing preset styles (\code{date_style} and
-\code{time_style}) will be ignored in favor of formatting via the \code{format}
-string.}
+\item{format}{An optional formatting string used for generating custom
+dates/times. If used then the arguments governing preset styles
+(\code{date_style} and \code{time_style}) will be ignored in favor of formatting via
+the \code{format} string.}
 
 \item{tz}{The time zone for printing dates/times (i.e., the output). The
 default of \code{NULL} will preserve the time zone of the input data in the
@@ -62,70 +61,543 @@ with \code{\link[=OlsonNames]{OlsonNames()}}).}
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other
 characters are taken to be string literals.}
+
+\item{locale}{An optional locale ID that can be used for formatting the value
+according the locale's rules. Examples include \code{"en"} for English (United
+States) and \code{"fr"} for French (France). The use of a valid locale ID will
+override any values provided in \code{sep_mark} and \code{dec_mark}. We can use the
+\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
+are supported. Any \code{locale} value provided here will override any global
+locale setting performed in \code{\link[=gt]{gt()}}'s own \code{locale} argument.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
-Format input values to date-time values using one of fourteen presets for the
-date component and one of five presets for the time component. Input can be
-in the form of \code{POSIXct} (i.e., date-times), the \code{Date} type, or \code{character}
-(must be in the ISO 8601 form of \verb{YYYY-MM-DD HH:MM:SS} or \code{YYYY-MM-DD}).
-
-Once the appropriate data cells are targeted with \code{columns} (and, optionally,
-\code{rows}), we can simply apply preset date and time styles to format the
-date-time values. The following date styles are available for formatting of
-the date portion (all using the input date of \code{2000-02-29} in the example
-output dates):
-\enumerate{
-\item \code{"iso"}: \code{2000-02-29}
-\item \code{"wday_month_day_year"}: \verb{Tuesday, February 29, 2000}
-\item \code{"wd_m_day_year"}: \verb{Tue, Feb 29, 2000}
-\item \code{"wday_day_month_year"}: \verb{Tuesday 29 February 2000}
-\item \code{"month_day_year"}: \verb{February 29, 2000}
-\item \code{"m_day_year"}: \verb{Feb 29, 2000}
-\item \code{"day_m_year"}: \verb{29 Feb 2000}
-\item \code{"day_month_year"}: \verb{29 February 2000}
-\item \code{"day_month"}: \verb{29 February}
-\item \code{"day_m"}: \verb{29 Feb}
-\item \code{"year"}: \code{2000}
-\item \code{"month"}: \code{February}
-\item \code{"day"}: \code{29}
-\item \code{"year.mn.day"}: \code{2000/02/29}
-\item \code{"y.mn.day"}: \code{00/02/29}
+Format input values to datetime values using either presets for the date and
+time components or a formatting directive (this can either use a \emph{CLDR}
+datetime pattern or \code{strptime} formatting). Input can be in the form of
+\code{POSIXt} (i.e., datetimes), the \code{Date} type, or \code{character} (must be in the
+ISO 8601 form of \verb{YYYY-MM-DD HH:MM:SS} or \code{YYYY-MM-DD}).
 }
+\section{Targeting the values to be formatted}{
 
-The following time styles are available for formatting of the time portion
-(all using the input time of \code{14:35:00} in the example output times):
-\enumerate{
-\item \code{"hms"}: \code{14:35:00}
-\item \code{"hm"}: \code{14:35}
-\item \code{"hms_p"}: \verb{2:35:00 PM}
-\item \code{"hm_p"}: \verb{2:35 PM}
-\item \code{"h_p"}: \verb{2 PM}
-}
 
-We can use the \code{\link[=info_date_style]{info_date_style()}} and \code{\link[=info_time_style]{info_time_style()}} functions as
-useful references for all of the possible inputs to \code{date_style} and
-\code{time_style}.
-}
-\details{
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
 nothing is provided for \code{rows} then entire columns are selected). Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
 argument. See the \emph{Arguments} section for more information on this.
 }
-\section{Date and Time Formats}{
 
-Using \code{format} to create custom time formats isn't so hard once we know about
-all of the different format codes. The formats are all indicated with a
-leading \verb{\%} and literal characters are any of those without the leading \verb{\%}.
-We'll use the date and time \code{"2015-06-08 23:05:37.48"} for all of the
-examples here.
+\section{Formatting with the \code{date_style} argument}{
+
+
+We can supply a preset date style to the \code{date_style} argument to separately
+handle the date portion of the output. The date styles are numerous and can
+handle localization to any supported locale. A large segment of date styles
+are termed flexible date formats and this means that their output will adapt
+to any \code{locale} provided. That feature makes the flexible date formats a
+better option for locales other than \code{"en"} (the default locale).
+
+The following table provides a listing of all date styles and their output
+values (corresponding to an input date of \code{2000-02-29}).\tabular{llll}{
+    \tab Date Style \tab Output \tab Notes \cr
+   1 \tab \code{"iso"} \tab \code{"2000-02-29"} \tab ISO 8601 \cr
+   2 \tab \code{"wday_month_day_year"} \tab \code{"Tuesday, February 29, 2000"} \tab  \cr
+   3 \tab \code{"wd_m_day_year"} \tab \code{"Tue, Feb 29, 2000"} \tab  \cr
+   4 \tab \code{"wday_day_month_year"} \tab \code{"Tuesday 29 February 2000"} \tab  \cr
+   5 \tab \code{"month_day_year"} \tab \code{"February 29, 2000"} \tab  \cr
+   6 \tab \code{"m_day_year"} \tab \code{"Feb 29, 2000"} \tab  \cr
+   7 \tab \code{"day_m_year"} \tab \code{"29 Feb 2000"} \tab  \cr
+   8 \tab \code{"day_month_year"} \tab \code{"29 February 2000"} \tab  \cr
+   9 \tab \code{"day_month"} \tab \code{"29 February"} \tab  \cr
+   10 \tab \code{"day_m"} \tab \code{"29 Feb"} \tab  \cr
+   11 \tab \code{"year"} \tab \code{"2000"} \tab  \cr
+   12 \tab \code{"month"} \tab \code{"February"} \tab  \cr
+   13 \tab \code{"day"} \tab \code{"29"} \tab  \cr
+   14 \tab \code{"year.mn.day"} \tab \code{"2000/02/29"} \tab  \cr
+   15 \tab \code{"y.mn.day"} \tab \code{"00/02/29"} \tab  \cr
+   16 \tab \code{"year_week"} \tab \code{"2000-W09"} \tab  \cr
+   17 \tab \code{"year_quarter"} \tab \code{"2000-Q1"} \tab  \cr
+   18 \tab \code{"yMd"} \tab \code{"2/29/2000"} \tab flexible \cr
+   19 \tab \code{"yMEd"} \tab \code{"Tue, 2/29/2000"} \tab flexible \cr
+   20 \tab \code{"yMMM"} \tab \code{"Feb 2000"} \tab flexible \cr
+   21 \tab \code{"yMMMM"} \tab \code{"February 2000"} \tab flexible \cr
+   22 \tab \code{"yMMMd"} \tab \code{"Feb 29, 2000"} \tab flexible \cr
+   23 \tab \code{"yMMMEd"} \tab \code{"Tue, Feb 29, 2000"} \tab flexible \cr
+   24 \tab \code{"GyMd"} \tab \code{"2/29/2000 A"} \tab flexible \cr
+   25 \tab \code{"GyMMMd"} \tab \code{"Feb 29, 2000 AD"} \tab flexible \cr
+   26 \tab \code{"GyMMMEd"} \tab \code{"Tue, Feb 29, 2000 AD"} \tab flexible \cr
+   27 \tab \code{"yM"} \tab \code{"2/2000"} \tab flexible \cr
+   28 \tab \code{"Md"} \tab \code{"2/29"} \tab flexible \cr
+   29 \tab \code{"MEd"} \tab \code{"Tue, 2/29"} \tab flexible \cr
+   30 \tab \code{"MMMd"} \tab \code{"Feb 29"} \tab flexible \cr
+   31 \tab \code{"MMMEd"} \tab \code{"Tue, Feb 29"} \tab flexible \cr
+   32 \tab \code{"MMMMd"} \tab \code{"February 29"} \tab flexible \cr
+   33 \tab \code{"GyMMM"} \tab \code{"Feb 2000 AD"} \tab flexible \cr
+   34 \tab \code{"yQQQ"} \tab \code{"Q1 2000"} \tab flexible \cr
+   35 \tab \code{"yQQQQ"} \tab \code{"1st quarter 2000"} \tab flexible \cr
+   36 \tab \code{"Gy"} \tab \code{"2000 AD"} \tab flexible \cr
+   37 \tab \code{"y"} \tab \code{"2000"} \tab flexible \cr
+   38 \tab \code{"M"} \tab \code{"2"} \tab flexible \cr
+   39 \tab \code{"MMM"} \tab \code{"Feb"} \tab flexible \cr
+   40 \tab \code{"d"} \tab \code{"29"} \tab flexible \cr
+   41 \tab \code{"Ed"} \tab \code{"29 Tue"} \tab flexible \cr
+}
+
+
+We can use the \code{\link[=info_date_style]{info_date_style()}} within the console to view a similar table
+of date styles with example output.
+}
+
+\section{Formatting with the \code{time_style} argument}{
+
+
+We can supply a preset time style to the \code{time_style} argument to separately
+handle the time portion of the output. There are many time styles and all of
+them can handle localization to any supported locale. Many of the time styles
+are termed flexible time formats and this means that their output will adapt
+to any \code{locale} provided. That feature makes the flexible time formats a
+better option for locales other than \code{"en"} (the default locale).
+
+The following table provides a listing of all time styles and their output
+values (corresponding to an input time of \code{14:35:00}). It is noted which of
+these represent 12- or 24-hour time. Some of the flexible formats (those
+that begin with \code{"E"}) include the the day of the week. Keep this in mind
+when pairing such \code{time_style} values with a \code{date_style} so as to avoid
+redundant or repeating information.\tabular{llll}{
+    \tab Time Style \tab Output \tab Notes \cr
+   1 \tab \code{"iso"} \tab \code{"14:35:00"} \tab ISO 8601, 24h \cr
+   2 \tab \code{"iso-short"} \tab \code{"14:35"} \tab ISO 8601, 24h \cr
+   3 \tab \code{"h_m_s_p"} \tab \code{"2:35:00 PM"} \tab 12h \cr
+   4 \tab \code{"h_m_p"} \tab \code{"2:35 PM"} \tab 12h \cr
+   5 \tab \code{"h_p"} \tab \code{"2 PM"} \tab 12h \cr
+   6 \tab \code{"Hms"} \tab \code{"14:35:00"} \tab flexible, 24h \cr
+   7 \tab \code{"Hm"} \tab \code{"14:35"} \tab flexible, 24h \cr
+   8 \tab \code{"H"} \tab \code{"14"} \tab flexible, 24h \cr
+   9 \tab \code{"EHm"} \tab \code{"Thu 14:35"} \tab flexible, 24h \cr
+   10 \tab \code{"EHms"} \tab \code{"Thu 14:35:00"} \tab flexible, 24h \cr
+   11 \tab \code{"Hmsv"} \tab \code{"14:35:00 GMT+00:00"} \tab flexible, 24h \cr
+   12 \tab \code{"Hmv"} \tab \code{"14:35 GMT+00:00"} \tab flexible, 24h \cr
+   13 \tab \code{"hms"} \tab \code{"2:35:00 PM"} \tab flexible, 12h \cr
+   14 \tab \code{"hm"} \tab \code{"2:35 PM"} \tab flexible, 12h \cr
+   15 \tab \code{"h"} \tab \code{"2 PM"} \tab flexible, 12h \cr
+   16 \tab \code{"Ehm"} \tab \code{"Thu 2:35 PM"} \tab flexible, 12h \cr
+   17 \tab \code{"Ehms"} \tab \code{"Thu 2:35:00 PM"} \tab flexible, 12h \cr
+   18 \tab \code{"EBhms"} \tab \code{"Thu 2:35:00 in the afternoon"} \tab flexible, 12h \cr
+   19 \tab \code{"Bhms"} \tab \code{"2:35:00 in the afternoon"} \tab flexible, 12h \cr
+   20 \tab \code{"EBhm"} \tab \code{"Thu 2:35 in the afternoon"} \tab flexible, 12h \cr
+   21 \tab \code{"Bhm"} \tab \code{"2:35 in the afternoon"} \tab flexible, 12h \cr
+   22 \tab \code{"Bh"} \tab \code{"2 in the afternoon"} \tab flexible, 12h \cr
+   23 \tab \code{"hmsv"} \tab \code{"2:35:00 PM GMT+00:00"} \tab flexible, 12h \cr
+   24 \tab \code{"hmv"} \tab \code{"2:35 PM GMT+00:00"} \tab flexible, 12h \cr
+   25 \tab \code{"ms"} \tab \code{"35:00"} \tab flexible \cr
+}
+
+
+We can use the \code{\link[=info_time_style]{info_time_style()}} within the console to view a similar table
+of time styles with example output.
+}
+
+\section{Formatting with a \emph{CLDR} datetime pattern}{
+
+
+We can use a \emph{CLDR} datetime pattern with the \code{format} argument to create
+a highly customized and locale-aware output. This is a character string that
+consists of two types of elements:
+\itemize{
+\item Pattern fields, which repeat a specific pattern character one or more
+times. These fields are replaced with date and time data when formatting.
+The character sets of \code{A}-\code{Z} and \code{a}-\code{z} are reserved for use as pattern
+characters.
+\item Literal text, which is output verbatim when formatting. This can include:
+\itemize{
+\item Any characters outside the reserved character sets, including
+spaces and punctuation.
+\item Any text between single vertical quotes (e.g., \code{'text'}).
+\item Two adjacent single vertical quotes (''), which represent a literal
+single quote, either inside or outside quoted text.
+}
+}
+
+The number of pattern fields is quite sizable so let's first look at how some
+\emph{CLDR} datetime patterns work. We'll use the datetime string
+\code{"2018-07-04T22:05:09.2358(America/Vancouver)"} for all of the examples that
+follow.
+\itemize{
+\item \code{"mm/dd/y"} -> \code{"05/04/2018"}
+\item \code{"EEEE, MMMM d, y"} -> \code{"Wednesday, July 4, 2018"}
+\item \code{"MMM d E"} -> \code{"Jul 4 Wed"}
+\item \code{"HH:mm"} -> \code{"22:05"}
+\item \code{"h:mm a"} -> \code{"10:05 PM"}
+\item \code{"EEEE, MMMM d, y 'at' h:mm a"} -> \code{"Wednesday, July 4, 2018 at 10:05 PM"}
+}
+
+Here are the individual pattern fields:
+\subsection{Year}{
+\subsection{Calendar Year}{
+
+This yields the calendar year, which is always numeric. In most cases the
+length of the \code{"y"} field specifies the minimum number of digits to display,
+zero-padded as necessary. More digits will be displayed if needed to show the
+full year. There is an exception: \code{"yy"} gives use just the two low-order
+digits of the year, zero-padded as necessary. For most use cases, \code{"y"} or
+\code{"yy"} should be good enough.\tabular{ll}{
+   Field Patterns \tab Output \cr
+   \code{"y"} \tab \code{"2018"} \cr
+   \code{"yy"} \tab \code{"18"} \cr
+   \code{"yyy"} to \code{"yyyyyyyyy"} \tab \code{"2018"} to \code{"000002018"} \cr
+}
+
+}
+
+\subsection{Year in the Week in Year Calendar}{
+
+This is the year in 'Week of Year' based calendars in which the year
+transition occurs on a week boundary. This may differ from calendar year
+\code{"y"} near a year transition. This numeric year designation is used in
+conjunction with pattern character \code{"w"} in the ISO year-week calendar as
+defined by ISO 8601.\tabular{ll}{
+   Field Patterns \tab Output \cr
+   \code{"Y"} \tab \code{"2018"} \cr
+   \code{"YY"} \tab \code{"18"} \cr
+   \code{"YYY"} to \code{"YYYYYYYYY"} \tab \code{"2018"} to \code{"000002018"} \cr
+}
+
+}
+
+}
+
+\subsection{Quarter}{
+\subsection{Quarter of the Year: formatting ver.}{\tabular{lll}{
+   Field Patterns \tab Output \tab Notes \cr
+   \code{"Q"} \tab \code{"3"} \tab Numeric, one digit \cr
+   \code{"QQ"} \tab \code{"03"} \tab Numeric, two digits (zero padded) \cr
+   \code{"QQQ"} \tab \code{"Q3"} \tab Abbreviated \cr
+   \code{"QQQQ"} \tab \code{"3rd quarter"} \tab Wide \cr
+   \code{"QQQQQ"} \tab \code{"3"} \tab Narrow \cr
+}
+
+}
+
+\subsection{Quarter of the Year: standalone ver.}{\tabular{lll}{
+   Field Patterns \tab Output \tab Notes \cr
+   \code{"q"} \tab \code{"3"} \tab Numeric, one digit \cr
+   \code{"qq"} \tab \code{"03"} \tab Numeric, two digits (zero padded) \cr
+   \code{"qqq"} \tab \code{"Q3"} \tab Abbreviated \cr
+   \code{"qqqq"} \tab \code{"3rd quarter"} \tab Wide \cr
+   \code{"qqqqq"} \tab \code{"3"} \tab Narrow \cr
+}
+
+}
+
+}
+
+\subsection{Month}{
+\subsection{Month: formatting ver.}{\tabular{lll}{
+   Field Patterns \tab Output \tab Notes \cr
+   \code{"M"} \tab \code{"7"} \tab Numeric, minimum digits \cr
+   \code{"MM"} \tab \code{"07"} \tab Numeric, two digits (zero padded) \cr
+   \code{"MMM"} \tab \code{"Jul"} \tab Abbreviated \cr
+   \code{"MMMM"} \tab \code{"July"} \tab Wide \cr
+   \code{"MMMMM"} \tab \code{"J"} \tab Narrow \cr
+}
+
+}
+
+\subsection{Month: standalone ver.}{\tabular{lll}{
+   Field Patterns \tab Output \tab Notes \cr
+   \code{"M"} \tab \code{"7"} \tab Numeric, minimum digits \cr
+   \code{"MM"} \tab \code{"07"} \tab Numeric, two digits (zero padded) \cr
+   \code{"MMM"} \tab \code{"Jul"} \tab Abbreviated \cr
+   \code{"MMMM"} \tab \code{"July"} \tab Wide \cr
+   \code{"MMMMM"} \tab \code{"J"} \tab Narrow \cr
+}
+
+}
+
+}
+
+\subsection{Week}{
+\subsection{Week of Year}{\tabular{lll}{
+   Field Patterns \tab Output \tab Notes \cr
+   \code{"w"} \tab \code{"27"} \tab Minimum digits \cr
+   \code{"ww"} \tab \code{"27"} \tab Two digits (zero padded) \cr
+}
+
+}
+
+\subsection{Week of Month}{\tabular{ll}{
+   Field Pattern \tab Output \cr
+   \code{"W"} \tab \code{"1"} \cr
+}
+
+}
+
+}
+
+\subsection{Day}{
+\subsection{Day of Month}{\tabular{lll}{
+   Field Patterns \tab Output \tab Notes \cr
+   \code{"d"} \tab \code{"4"} \tab Minimum digits \cr
+   \code{"dd"} \tab \code{"04"} \tab Two digits, zero padded \cr
+}
+
+}
+
+\subsection{Day of Year}{\tabular{lll}{
+   Field Patterns \tab Output \tab Notes \cr
+   \code{"D"} \tab \code{"185"} \tab  \cr
+   \code{"DD"} \tab \code{"185"} \tab Zero padded to minimum width of 2 \cr
+   \code{"DDD"} \tab \code{"185"} \tab Zero padded to minimum width of 3 \cr
+}
+
+}
+
+\subsection{Day of Week in Month}{\tabular{ll}{
+   Field Pattern \tab Output \cr
+   \code{"F"} \tab \code{"1"} \cr
+}
+
+}
+
+\subsection{Modified Julian Day}{\tabular{ll}{
+   Field Patterns \tab Output \cr
+   \code{"g"} to \code{"ggggggggg"} \tab \code{"58303"} -> \code{"000058303"} \cr
+}
+
+}
+
+}
+
+\subsection{Weekday}{
+\subsection{Day of Week Name}{\tabular{lll}{
+   Field Patterns \tab Output \tab Notes \cr
+   \code{"E"}, \code{"EE"}, or \code{"EEE"} \tab \code{"Wed"} \tab Abbreviated \cr
+   \code{"EEEE"} \tab \code{"Wednesday"} \tab Wide \cr
+   \code{"EEEEE"} \tab \code{"W"} \tab Narrow \cr
+   \code{"EEEEEE"} \tab \code{"We"} \tab Short \cr
+}
+
+}
+
+}
+
+\subsection{Periods}{
+\subsection{AM/PM Period of Day}{\tabular{lll}{
+   Field Patterns \tab Output \tab Notes \cr
+   \code{"a"}, \code{"aa"}, or \code{"aaa"} \tab \code{"PM"} \tab Abbreviated \cr
+   \code{"aaaa"} \tab \code{"PM"} \tab Wide \cr
+   \code{"aaaaa"} \tab \code{"p"} \tab Narrow \cr
+}
+
+}
+
+\subsection{AM/PM Period of Day Plus Noon and Midnight}{
+
+(a) \code{input_midnight}: \code{"2020-05-05T00:00:00"}
+
+(b) \code{input_noon}: \code{"2020-05-05T12:00:00"}\tabular{lll}{
+   Field Patterns \tab Output \tab Notes \cr
+   \code{"b"}, \code{"bb"}, or \code{"bbb"} \tab (a) \code{"midnight"} \tab Abbreviated \cr
+    \tab (b) \code{"noon"} \tab  \cr
+   \code{"bbbb"} \tab (a) \code{"midnight"} \tab Wide \cr
+    \tab (b) \code{"noon"} \tab  \cr
+   \code{"bbbbb"} \tab (a) \code{"mi"} \tab Narrow \cr
+    \tab (b) \code{"n"} \tab  \cr
+}
+
+}
+
+\subsection{Flexible Day Periods}{
+
+(a) \code{input_morning}: \code{"2020-05-05T00:08:30"}
+
+(b) \code{input_afternoon}: \code{"2020-05-05T14:00:00"}\tabular{lll}{
+   Field Patterns \tab Output \tab Notes \cr
+   \code{"B"}, \code{"BB"}, or \code{"BBB"} \tab (a) \code{"in the morning"} \tab Abbreviated \cr
+    \tab (b) \code{"in the afternoon"} \tab  \cr
+   \code{"BBBB"} \tab (a) \code{"in the morning"} \tab Wide \cr
+    \tab (b) \code{"in the afternoon"} \tab  \cr
+   \code{"BBBBB"} \tab (a) \code{"in the morning"} \tab Narrow \cr
+    \tab (b) \code{"in the afternoon"} \tab  \cr
+}
+
+}
+
+}
+
+\subsection{Hours, Minutes, and Seconds}{
+\subsection{Hour 1-12}{
+
+Using: \code{"2015-08-01T08:35:09"}\tabular{lll}{
+   Field Patterns \tab Output \tab Notes \cr
+   \code{"h"} \tab \code{"8"} \tab Numeric, minimum digits \cr
+   \code{"hh"} \tab \code{"08"} \tab Numeric, 2 digits (zero padded) \cr
+}
+
+}
+
+\subsection{Hour 0-23}{
+
+Using: \code{"2015-08-01T08:35:09"}\tabular{lll}{
+   Field Patterns \tab Output \tab Notes \cr
+   \code{"H"} \tab \code{"8"} \tab Numeric, minimum digits \cr
+   \code{"HH"} \tab \code{"08"} \tab Numeric, 2 digits (zero padded) \cr
+}
+
+}
+
+\subsection{Hour 0-11}{
+
+Using: \code{"2015-08-01T08:35:09"}\tabular{lll}{
+   Field Patterns \tab Output \tab Notes \cr
+   \code{"K"} \tab \code{"7"} \tab Numeric, minimum digits \cr
+   \code{"KK"} \tab \code{"07"} \tab Numeric, 2 digits (zero padded) \cr
+}
+
+}
+
+\subsection{Hour 1-24}{
+
+Using: \code{"2015-08-01T08:35:09"}\tabular{lll}{
+   Field Patterns \tab Output \tab Notes \cr
+   \code{"k"} \tab \code{"9"} \tab Numeric, minimum digits \cr
+   \code{"kk"} \tab \code{"09"} \tab Numeric, 2 digits (zero padded) \cr
+}
+
+}
+
+\subsection{Minute}{\tabular{lll}{
+   Field Patterns \tab Output \tab Notes \cr
+   \code{"m"} \tab \code{"5"} \tab Numeric, minimum digits \cr
+   \code{"mm"} \tab \code{"06"} \tab Numeric, 2 digits (zero padded) \cr
+}
+
+}
+
+\subsection{Seconds}{\tabular{lll}{
+   Field Patterns \tab Output \tab Notes \cr
+   \code{"s"} \tab \code{"9"} \tab Numeric, minimum digits \cr
+   \code{"ss"} \tab \code{"09"} \tab Numeric, 2 digits (zero padded) \cr
+}
+
+}
+
+\subsection{Fractional Second}{\tabular{ll}{
+   Field Patterns \tab Output \cr
+   \code{"S"} to \code{"SSSSSSSSS"} \tab \code{"2"} -> \code{"235000000"} \cr
+}
+
+}
+
+\subsection{Milliseconds Elapsed in Day}{
+
+Using: \code{"2011-07-27T00:07:19.7223"}\tabular{ll}{
+   Field Patterns \tab Output \cr
+   \code{"A"} to \code{"AAAAAAAAA"} \tab \code{"439722"} -> \code{"000439722"} \cr
+}
+
+}
+
+}
+
+\subsection{Era}{
+\subsection{The Era Designator}{
+
+This provides the era name for the given date.\tabular{lll}{
+   Field Patterns \tab Output \tab Notes \cr
+   \code{"G"}, \code{"GG"}, or \code{"GGG"} \tab \code{"AD"} \tab Abbreviated \cr
+   \code{"GGGG"} \tab \code{"Anno Domini"} \tab Wide \cr
+   \code{"GGGGG"} \tab \code{"A"} \tab Narrow \cr
+}
+
+}
+
+}
+
+\subsection{Time Zones}{
+\subsection{TZ // Short and Long Specific non-Location Format}{\tabular{lll}{
+   Field Patterns \tab Output \tab Notes \cr
+   \code{"z"}, \code{"zz"}, or \code{"zzz"} \tab \code{"PDT"} \tab Short Specific \cr
+   \code{"zzzz"} \tab \code{"Pacific Daylight Time"} \tab Long Specific \cr
+}
+
+}
+
+\subsection{TZ // Short and Long Specific non-Location Formats}{\tabular{lll}{
+   Field Patterns \tab Output \tab Notes \cr
+   \code{"Z"}, \code{"ZZ"}, or \code{"ZZZ"} \tab \code{"-0700"} \tab ISO 8601 basic format \cr
+   \code{"ZZZZ"} \tab \code{"GMT-7:00"} \tab Long localized GMT format \cr
+   \code{"ZZZZZ"} \tab \code{"-07:00"} \tab ISO 8601 extended format \cr
+}
+
+}
+
+\subsection{TZ // Short and Long Localized GMT Formats}{\tabular{lll}{
+   Field Patterns \tab Output \tab Notes \cr
+   \code{"O"} \tab \code{"GMT-7"} \tab Short localized GMT format \cr
+   \code{"OOOO"} \tab \code{"GMT-07:00"} \tab Long localized GMT format \cr
+}
+
+}
+
+\subsection{TZ // Short and Long Localized GMT Formats}{\tabular{lll}{
+   Field Patterns \tab Output \tab Notes \cr
+   \code{"v"} \tab \code{"PT"} \tab Short generic non-location format \cr
+   \code{"vvvv"} \tab \code{"Pacific Time"} \tab Long generic non-location format \cr
+}
+
+}
+
+\subsection{TZ // Short Time Zone IDs and Exemplar City Formats (big V)}{\tabular{lll}{
+   Field Patterns \tab Output \tab Notes \cr
+   \code{"V"} \tab \code{"cavan"} \tab Short time zone ID \cr
+   \code{"VV"} \tab \code{"America/Vancouver"} \tab Long time zone ID \cr
+   \code{"VVV"} \tab \code{"Vancouver"} \tab The tz exemplar city \cr
+   \code{"VVVV"} \tab \code{"Vancouver Time"} \tab Generic location format \cr
+}
+
+}
+
+\subsection{TZ // ISO 8601 Formats with Z for +0000}{\tabular{lll}{
+   Field Patterns \tab Output \tab Notes \cr
+   \code{"X"} \tab \code{"-07"} \tab ISO 8601 basic format (h, optional m) \cr
+   \code{"XX"} \tab \code{"-0700"} \tab ISO 8601 basic format (h & m) \cr
+   \code{"XXX"} \tab \code{"-07:00"} \tab ISO 8601 extended format (h & m) \cr
+   \code{"XXXX"} \tab \code{"-0700"} \tab ISO 8601 basic format (h & m, optional s) \cr
+   \code{"XXXXX"} \tab \code{"-07:00"} \tab ISO 8601 extended format (h & m, optional s) \cr
+}
+
+}
+
+\subsection{TZ // ISO 8601 Formats (no use of Z for +0000)}{\tabular{lll}{
+   Field Patterns \tab Output \tab Notes \cr
+   \code{"x"} \tab \code{"-07"} \tab ISO 8601 basic format (h, optional m) \cr
+   \code{"xx"} \tab \code{"-0700"} \tab ISO 8601 basic format (h & m) \cr
+   \code{"xxx"} \tab \code{"-07:00"} \tab ISO 8601 extended format (h & m) \cr
+   \code{"xxxx"} \tab \code{"-0700"} \tab ISO 8601 basic format (h & m, optional s) \cr
+   \code{"xxxxx"} \tab \code{"-07:00"} \tab ISO 8601 extended format (h & m, optional s) \cr
+}
+
+}
+
+}
+}
+
+\section{Formatting with a \code{strptime} format code}{
+
+
+Performing custom date/time formatting with the \code{format} argument can also
+occur with a \code{strptime} format code. This works by constructing a string of
+individual format codes representing formatted date and time elements. These
+are all indicated with a leading \verb{\%}, literal characters are interpreted as
+any characters not starting with a \verb{\%} character.
 
 First off, let's look at a few format code combinations that work well
-together as format codes. This will give us an intuition on how these
-generally work.
+together as a \code{strptime} format. This will give us an intuition on how these
+generally work. We'll use the datetime \code{"2015-06-08 23:05:37.48"} for all of
+the examples that follow.
 \itemize{
 \item \code{"\%m/\%d/\%Y"} -> \code{"06/08/2015"}
 \item \code{"\%A, \%B \%e, \%Y"} -> \code{"Monday, June 8, 2015"}
@@ -135,7 +607,7 @@ generally work.
 \item \code{"\%A, \%B \%e, \%Y at \%I:\%M \%p"} -> \code{"Monday, June 8, 2015 at 11:05 pm"}
 }
 
-Here are the individual format codes for date components:
+Here are the individual format codes for the date components:
 \itemize{
 \item \code{"\%a"} -> \code{"Mon"} (abbreviated day of week name)
 \item \code{"\%A"} -> \code{"Monday"} (full day of week name)
@@ -148,24 +620,25 @@ Here are the individual format codes for date components:
 \item \code{"\%m"} -> \code{"06"} (month number)
 \item \code{"\%d"} -> \code{"08"} (day number, zero-padded)
 \item \code{"\%e"} -> \code{"8"} (day number without zero padding)
+\item \code{"\%j"} -> \code{"159"} (day of the year, always zero-padded)
+\item \code{"\%W"} -> \code{"23"} (week number for the year, always zero-padded)
+\item \code{"\%V"} -> \code{"24"} (week number for the year, following the ISO 8601
+standard)
+\item \code{"\%C"} -> \code{"20"} (the century number)
 }
 
-Here are the individual format codes for time components:
+Here are the individual format codes for the time components:
 \itemize{
 \item \code{"\%H"} -> \code{"23"} (24h hour)
 \item \code{"\%I"} -> \code{"11"} (12h hour)
 \item \code{"\%M"} -> \code{"05"} (minute)
 \item \code{"\%S"} -> \code{"37"} (second)
 \item \code{"\%OS3"} -> \code{"37.480"} (seconds with decimals; \code{3} decimal places here)
-\item \verb{\%p} -> \code{"pm"} (AM or PM indicator, may not appear in certain locales)
+\item \verb{\%p} -> \code{"pm"} (AM or PM indicator)
 }
 
 Here are some extra formats that you may find useful:
 \itemize{
-\item \code{"\%j"} -> \code{"159"} (day of the year, always zero-padded)
-\item \code{"\%W"} -> \code{"23"} (week number for the year, always zero-padded)
-\item \code{"\%V"} -> \code{"24"} (week number for the year, following ISO 8601 standard)
-\item \code{"\%C"} -> \code{"20"} (the century number)
 \item \code{"\%z"} -> \code{"+0000"} (signed time zone offset, here using UTC)
 \item \code{"\%F"} -> \code{"2015-06-08"} (the date in the ISO 8601 date format)
 \item \code{"\%\%"} -> \code{"\%"} (the literal "\verb{\%}" character, in case you need it)
@@ -176,21 +649,67 @@ Here are some extra formats that you may find useful:
 
 
 Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{datetime} column.
-Format the column to have dates formatted as \code{month_day_year} and times to be
-\code{hms_p}.
+Format the column to have dates formatted with the \code{"month_day_year"} style
+and times with the \code{"h_m_s_p"} 12-hour time style.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(datetime) \%>\%
   gt() \%>\%
   fmt_datetime(
     columns = datetime,
-    date_style = 5,
-    time_style = 3
+    date_style = "month_day_year",
+    time_style = "h_m_s_p"
   )
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_datetime_1.png" alt="This image of a table was generated from the first code example in the `fmt_datetime()` help file." style="width:100\%;">
+}}
+
+Using the same input table, we can use flexible date and time styles. Two
+that work well together are \code{"MMMEd"} and \code{"Hms"}. These will mutate
+depending on the locale. Let's use the default locale for the first 3 rows
+and the Danish locale (\code{"da"}) for the remaining rows.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+  dplyr::select(datetime) \%>\%
+  gt() \%>\%
+  fmt_datetime(
+    columns = datetime,
+    date_style = "MMMEd",
+    time_style = "Hms",
+    locale = "da"
+  ) \%>\%
+  fmt_datetime(
+    columns = datetime,
+    rows = 1:3,
+    date_style = "MMMEd",
+    time_style = "Hms"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_datetime_2.png" alt="This image of a table was generated from the second code example in the `fmt_datetime()` help file." style="width:100\%;">
+}}
+
+It's possible to use the \code{format} argument and write our own formatting
+specification. Using the CLDR datetime pattern
+\code{"EEEE, MMMM d, y 'at' h:mm a (zzzz)"} gives us datetime outputs with time
+zone formatting. Let's provide a time zone ID (\code{"America/Vancouver"}) to the
+\code{tz} argument.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+  dplyr::select(datetime) \%>\%
+  gt() \%>\%
+  fmt_datetime(
+    columns = datetime,
+    format = "EEEE, MMMM d, y 'at' h:mm a (zzzz)",
+    tz = "America/Vancouver"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_datetime_3.png" alt="This image of a table was generated from the third code example in the `fmt_datetime()` help file." style="width:100\%;">
 }}
 }
 
