@@ -281,10 +281,9 @@ test_that("the various color utility functions work correctly", {
   expect_equal(
     ideal_fgnd_color(bgnd_color = c(c_name, c_hex, c_hex_a, c_rgba)),
     c(
-      "#FFFFFF", "#000000", "#000000", "#000000", "#000000", "#FFFFFF",
-      "#000000",
-      "#000000", "#000000", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF",
-      "#000000", "#000000", "#000000", "#000000", "#000000"
+      "#FFFFFF", "#FFFFFF", "#FFFFFF", "#000000", "#000000", "#FFFFFF",
+      "#000000", "#000000", "#000000", "#FFFFFF", "#FFFFFF", "#FFFFFF",
+      "#FFFFFF", "#000000", "#000000", "#000000", "#000000", "#000000"
     )
   )
 
