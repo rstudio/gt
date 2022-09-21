@@ -1229,7 +1229,10 @@ test_that("the various color utility functions work correctly", {
 
   # Expect an error if 'rgba()'-format colors are passed to `normalize_colors()`
   expect_error(
-    normalize_colors(colors = c(c_name, c_hex, c_hex_a, "rgba(210,215,33,0.5)"))
+    normalize_colors(
+      colors = c(c_name, c_hex, c_hex_a, "rgba(210,215,33,0.5)"),
+      alpha = 1.0
+    )
   )
 
   # Expect that the `ideal_fgnd_color()` function returns a vector containing
@@ -1239,7 +1242,7 @@ test_that("the various color utility functions work correctly", {
   expect_equal(
     ideal_fgnd_color(bgnd_color = c(c_name, c_hex, c_hex_a, c_rgba)),
     c(
-      "#FFFFFF", "#000000", "#000000", "#000000", "#000000", "#FFFFFF",
+      "#FFFFFF", "#FFFFFF", "#FFFFFF", "#000000", "#000000", "#FFFFFF",
       "#000000", "#000000", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF",
       "#000000", "#000000", "#000000", "#000000", "#000000"
     )

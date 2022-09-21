@@ -10,7 +10,8 @@ data_color(
   colors,
   alpha = NULL,
   apply_to = c("fill", "text"),
-  autocolor_text = TRUE
+  autocolor_text = TRUE,
+  contrast_algo = c("apca", "wcag")
 )
 }
 \arguments{
@@ -36,9 +37,13 @@ include the cell background (the default, given as \code{"fill"}) or the cell
 text (\code{"text"}).}
 
 \item{autocolor_text}{An option to let \strong{gt} modify the coloring of text
-within cells undergoing background coloring. This will in some cases yield
-more optimal text-to-background color contrast. By default, this is set to
-\code{TRUE}.}
+within cells undergoing background coloring. This will result in better
+text-to-background color contrast. By default, this is set to \code{TRUE}.}
+
+\item{contrast_algo}{The color contrast algorithm to use when
+\code{autocolor_text = TRUE}. By default this is \code{"apca"} (Accessible Perceptual
+Contrast Algorithm) and the alternative to this is \code{"wcag"} (Web Content
+Accessibility Guidelines).}
 }
 \value{
 An object of class \code{gt_tbl}.
