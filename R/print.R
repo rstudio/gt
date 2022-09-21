@@ -24,7 +24,7 @@ knitr_is_rtf_output <- function() {
 
 knitr_is_word_output <- function() {
 
-  "word_document" %in% rmarkdown::all_output_formats(knitr::current_input()) |
+  "word_document" %in% rmarkdown::all_output_formats(knitr::current_input(dir = TRUE)) |
   "docx" %in% knitr::opts_knit$get("rmarkdown.pandoc.to")
 }
 
