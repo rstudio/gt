@@ -25,8 +25,12 @@ apca_coeffs <-
 
 get_contrast_ratio <- function(
     color_1 = "black",
-    color_2 = "white"
+    color_2 = "white",
+    algo = c("apca", "wcag")
 ) {
+
+  # Get the correct `algo` value
+  algo <- match.arg(algo)
 
   if (length(color_1) < 1L || length(color_2) < 1L) {
     cli::cli_abort(
@@ -41,17 +45,34 @@ get_contrast_ratio <- function(
     color_2 <- rep_len(color_2, n)
   }
 
+  #
   # Obtain relative luminance for `color_1` and `color_2`
-  lum_1 <- get_relative_luminance(color_1)
-  lum_2 <- get_relative_luminance(color_2)
+  #
 
-  cbind(
-    "normal"  = get_apca_ratio(txt = lum_1, bgrnd = lum_2),
-    "reverse" = get_apca_ratio(txt = lum_2, bgrnd = lum_1)
-  )
+  if (algo == "apca") {
+
+    lum_1 <- get_relative_luminance_apca(col = color_1)
+    lum_2 <- get_relative_luminance_apca(col = color_2)
+
+    ratio <-
+      cbind(
+        "normal"  = get_ratio_apca(txt = lum_1, bgrnd = lum_2),
+        "reverse" = get_ratio_apca(txt = lum_2, bgrnd = lum_1)
+      )
+
+  } else {
+
+    lum_1 <- get_relative_luminance_wcag(col = color_1)
+    lum_2 <- get_relative_luminance_wcag(col = color_2)
+
+    ratio <- (lum_1 + 0.05) / (lum_2 + 0.05)
+    ratio[ratio < 1] <- 1 / ratio[ratio < 1]
+  }
+
+  ratio
 }
 
-get_apca_ratio <- function(txt, bgrnd) {
+get_ratio_apca <- function(txt, bgrnd) {
 
   # Determine ratio for normal polarity
   ratio <- (bgrnd^apca_coeffs$normBG - txt^apca_coeffs$normTXT) * apca_coeffs$scaleBoW
@@ -69,7 +90,7 @@ get_apca_ratio <- function(txt, bgrnd) {
   ratio * 100
 }
 
-get_relative_luminance <- function(col) {
+get_relative_luminance_apca <- function(col) {
 
   rgb <- t(grDevices::col2rgb(col)) / 255
 
@@ -82,4 +103,15 @@ get_relative_luminance <- function(col) {
     (apca_coeffs$blkThrs - r_lum[clamp])^apca_coeffs$blkClmp + r_lum[clamp]
 
   r_lum
+}
+
+get_relative_luminance_wcag <- function(col) {
+
+  rgb <- t(grDevices::col2rgb(col)) / 255
+
+  coef <- round(c(apca_coeffs$sRco, apca_coeffs$sGco, apca_coeffs$sBco), 4)
+
+  rgb[] <- ifelse(rgb <= 0.03928, rgb / 12.92, ((rgb + 0.055) / 1.055)^2.4)
+
+  as.numeric(rgb %*% coef)
 }
