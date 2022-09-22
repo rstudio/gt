@@ -246,12 +246,17 @@ defined by ISO 8601.</p><table class="table table"><tr><td>Field Patterns</td><t
 <h3 id="quarter">Quarter<a class="anchor" aria-label="anchor" href="#quarter"></a></h3>
 
 <div class="section">
-<h4 id="quarter-of-the-year-formatting-ver-">Quarter of the Year: formatting ver.<a class="anchor" aria-label="anchor" href="#quarter-of-the-year-formatting-ver-"></a></h4>
-<table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"Q"</code></td><td><code>"3"</code></td><td>Numeric, one digit</td></tr><tr><td><code>"QQ"</code></td><td><code>"03"</code></td><td>Numeric, two digits (zero padded)</td></tr><tr><td><code>"QQQ"</code></td><td><code>"Q3"</code></td><td>Abbreviated</td></tr><tr><td><code>"QQQQ"</code></td><td><code>"3rd quarter"</code></td><td>Wide</td></tr><tr><td><code>"QQQQQ"</code></td><td><code>"3"</code></td><td>Narrow</td></tr></table></div>
+<h4 id="quarter-of-the-year-formatting-and-standalone-versions">Quarter of the Year: formatting and standalone versions<a class="anchor" aria-label="anchor" href="#quarter-of-the-year-formatting-and-standalone-versions"></a></h4>
 
-<div class="section">
-<h4 id="quarter-of-the-year-standalone-ver-">Quarter of the Year: standalone ver.<a class="anchor" aria-label="anchor" href="#quarter-of-the-year-standalone-ver-"></a></h4>
-<table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"q"</code></td><td><code>"3"</code></td><td>Numeric, one digit</td></tr><tr><td><code>"qq"</code></td><td><code>"03"</code></td><td>Numeric, two digits (zero padded)</td></tr><tr><td><code>"qqq"</code></td><td><code>"Q3"</code></td><td>Abbreviated</td></tr><tr><td><code>"qqqq"</code></td><td><code>"3rd quarter"</code></td><td>Wide</td></tr><tr><td><code>"qqqqq"</code></td><td><code>"3"</code></td><td>Narrow</td></tr></table></div>
+
+<p>The quarter names are identified numerically, starting at <code>1</code> and ending at
+<code>4</code>. Quarter names may vary along two axes: the width and the context. The
+context is either 'formatting' (taken as a default), which the form used
+within a complete date format string, or, 'standalone', the form for date
+elements used independently (such as in calendar headers). The standalone
+form may be used in any other date format that shares the same form of the
+name. Here, the formatting form for quarters of the year consists of some run
+of <code>"Q"</code> values whereas the standalone form uses <code>"q"</code>.</p><table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"Q"</code>/<code>"q"</code></td><td><code>"3"</code></td><td>Numeric, one digit</td></tr><tr><td><code>"QQ"</code>/<code>"qq"</code></td><td><code>"03"</code></td><td>Numeric, two digits (zero padded)</td></tr><tr><td><code>"QQQ"</code>/<code>"qqq"</code></td><td><code>"Q3"</code></td><td>Abbreviated</td></tr><tr><td><code>"QQQQ"</code>/<code>"qqqq"</code></td><td><code>"3rd quarter"</code></td><td>Wide</td></tr><tr><td><code>"QQQQQ"</code>/<code>"qqqqq"</code></td><td><code>"3"</code></td><td>Narrow</td></tr></table></div>
 
 
 </div>
@@ -260,12 +265,17 @@ defined by ISO 8601.</p><table class="table table"><tr><td>Field Patterns</td><t
 <h3 id="month">Month<a class="anchor" aria-label="anchor" href="#month"></a></h3>
 
 <div class="section">
-<h4 id="month-formatting-ver-">Month: formatting ver.<a class="anchor" aria-label="anchor" href="#month-formatting-ver-"></a></h4>
-<table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"M"</code></td><td><code>"7"</code></td><td>Numeric, minimum digits</td></tr><tr><td><code>"MM"</code></td><td><code>"07"</code></td><td>Numeric, two digits (zero padded)</td></tr><tr><td><code>"MMM"</code></td><td><code>"Jul"</code></td><td>Abbreviated</td></tr><tr><td><code>"MMMM"</code></td><td><code>"July"</code></td><td>Wide</td></tr><tr><td><code>"MMMMM"</code></td><td><code>"J"</code></td><td>Narrow</td></tr></table></div>
+<h4 id="month-formatting-and-standalone-versions">Month: formatting and standalone versions<a class="anchor" aria-label="anchor" href="#month-formatting-and-standalone-versions"></a></h4>
 
-<div class="section">
-<h4 id="month-standalone-ver-">Month: standalone ver.<a class="anchor" aria-label="anchor" href="#month-standalone-ver-"></a></h4>
-<table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"M"</code></td><td><code>"7"</code></td><td>Numeric, minimum digits</td></tr><tr><td><code>"MM"</code></td><td><code>"07"</code></td><td>Numeric, two digits (zero padded)</td></tr><tr><td><code>"MMM"</code></td><td><code>"Jul"</code></td><td>Abbreviated</td></tr><tr><td><code>"MMMM"</code></td><td><code>"July"</code></td><td>Wide</td></tr><tr><td><code>"MMMMM"</code></td><td><code>"J"</code></td><td>Narrow</td></tr></table></div>
+
+<p>The month names are identified numerically, starting at <code>1</code> and ending at
+<code>12</code>. Month names may vary along two axes: the width and the context. The
+context is either 'formatting' (taken as a default), which the form used
+within a complete date format string, or, 'standalone', the form for date
+elements used independently (such as in calendar headers). The standalone
+form may be used in any other date format that shares the same form of the
+name. Here, the formatting form for months consists of some run of <code>"M"</code>
+values whereas the standalone form uses <code>"L"</code>.</p><table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"M"</code>/<code>"L"</code></td><td><code>"7"</code></td><td>Numeric, minimum digits</td></tr><tr><td><code>"MM"</code>/<code>"LL"</code></td><td><code>"07"</code></td><td>Numeric, two digits (zero padded)</td></tr><tr><td><code>"MMM"</code>/<code>"LLL"</code></td><td><code>"Jul"</code></td><td>Abbreviated</td></tr><tr><td><code>"MMMM"</code>/<code>"LLLL"</code></td><td><code>"July"</code></td><td>Wide</td></tr><tr><td><code>"MMMMM"</code>/<code>"LLLLL"</code></td><td><code>"J"</code></td><td>Narrow</td></tr></table></div>
 
 
 </div>
@@ -275,11 +285,24 @@ defined by ISO 8601.</p><table class="table table"><tr><td>Field Patterns</td><t
 
 <div class="section">
 <h4 id="week-of-year">Week of Year<a class="anchor" aria-label="anchor" href="#week-of-year"></a></h4>
-<table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"w"</code></td><td><code>"27"</code></td><td>Minimum digits</td></tr><tr><td><code>"ww"</code></td><td><code>"27"</code></td><td>Two digits (zero padded)</td></tr></table></div>
+
+
+<p>Values calculated for the week of year range from <code>1</code> to <code>53</code>. Week <code>1</code> for a
+year is the first week that contains at least the specified minimum number of
+days from that year. Weeks between week <code>1</code> of one year and week <code>1</code> of the
+following year are numbered sequentially from <code>2</code> to <code>52</code> or <code>53</code> (if
+needed).</p>
+<p>There are two available field lengths. Both will display the week of year
+value but the <code>"ww"</code> width will always show two digits (where weeks <code>1</code> to
+<code>9</code> are zero padded).</p><table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"w"</code></td><td><code>"27"</code></td><td>Minimum digits</td></tr><tr><td><code>"ww"</code></td><td><code>"27"</code></td><td>Two digits (zero padded)</td></tr></table></div>
 
 <div class="section">
 <h4 id="week-of-month">Week of Month<a class="anchor" aria-label="anchor" href="#week-of-month"></a></h4>
-<table class="table table"><tr><td>Field Pattern</td><td>Output</td></tr><tr><td><code>"W"</code></td><td><code>"1"</code></td></tr></table></div>
+
+
+<p>The week of a month can range from <code>1</code> to <code>5</code>. The first day of every month
+always begins at week <code>1</code> and with every transition into the beginning of a
+week, the week of month value is incremented by <code>1</code>.</p><table class="table table"><tr><td>Field Pattern</td><td>Output</td></tr><tr><td><code>"W"</code></td><td><code>"1"</code></td></tr></table></div>
 
 
 </div>
@@ -289,19 +312,45 @@ defined by ISO 8601.</p><table class="table table"><tr><td>Field Patterns</td><t
 
 <div class="section">
 <h4 id="day-of-month">Day of Month<a class="anchor" aria-label="anchor" href="#day-of-month"></a></h4>
-<table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"d"</code></td><td><code>"4"</code></td><td>Minimum digits</td></tr><tr><td><code>"dd"</code></td><td><code>"04"</code></td><td>Two digits, zero padded</td></tr></table></div>
+
+
+<p>The day of month value is always numeric and there are two available field
+length choices in its formatting. Both will display the day of month value
+but the <code>"dd"</code> formatting will always show two digits (where days <code>1</code> to <code>9</code>
+are zero padded).</p><table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"d"</code></td><td><code>"4"</code></td><td>Minimum digits</td></tr><tr><td><code>"dd"</code></td><td><code>"04"</code></td><td>Two digits, zero padded</td></tr></table></div>
 
 <div class="section">
 <h4 id="day-of-year">Day of Year<a class="anchor" aria-label="anchor" href="#day-of-year"></a></h4>
-<table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"D"</code></td><td><code>"185"</code></td><td></td></tr><tr><td><code>"DD"</code></td><td><code>"185"</code></td><td>Zero padded to minimum width of 2</td></tr><tr><td><code>"DDD"</code></td><td><code>"185"</code></td><td>Zero padded to minimum width of 3</td></tr></table></div>
+
+
+<p>The day of year value ranges from <code>1</code> (January 1) to either <code>365</code> or <code>366</code>
+(December 31), where the higher value of the range indicates that the year is
+a leap year (29 days in February, instead of 28). The field length specifies
+the minimum number of digits, with zero-padding as necessary.</p><table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"D"</code></td><td><code>"185"</code></td><td></td></tr><tr><td><code>"DD"</code></td><td><code>"185"</code></td><td>Zero padded to minimum width of 2</td></tr><tr><td><code>"DDD"</code></td><td><code>"185"</code></td><td>Zero padded to minimum width of 3</td></tr></table></div>
 
 <div class="section">
 <h4 id="day-of-week-in-month">Day of Week in Month<a class="anchor" aria-label="anchor" href="#day-of-week-in-month"></a></h4>
-<table class="table table"><tr><td>Field Pattern</td><td>Output</td></tr><tr><td><code>"F"</code></td><td><code>"1"</code></td></tr></table></div>
+
+
+<p>The day of week in month returns a numerical value indicating the number of
+times a given weekday had occurred in the month (e.g., '2nd Monday in
+March'). This conveniently resolves to predicable case structure where ranges
+of day of the month values return predictable day of week in month values:</p><ul><li><p>days <code>1</code> - <code>7</code> -&gt; <code>1</code></p></li>
+<li><p>days <code>8</code> - <code>14</code> -&gt; <code>2</code></p></li>
+<li><p>days <code>15</code> - <code>21</code> -&gt; <code>3</code></p></li>
+<li><p>days <code>22</code> - <code>28</code> -&gt; <code>4</code></p></li>
+<li><p>days <code>29</code> - <code>31</code> -&gt; <code>5</code></p></li>
+</ul><table class="table table"><tr><td>Field Pattern</td><td>Output</td></tr><tr><td><code>"F"</code></td><td><code>"1"</code></td></tr></table></div>
 
 <div class="section">
-<h4 id="modified-julian-day">Modified Julian Day<a class="anchor" aria-label="anchor" href="#modified-julian-day"></a></h4>
-<table class="table table"><tr><td>Field Patterns</td><td>Output</td></tr><tr><td><code>"g"</code> to <code>"ggggggggg"</code></td><td><code>"58303"</code> -&gt; <code>"000058303"</code></td></tr></table></div>
+<h4 id="modified-julian-date">Modified Julian Date<a class="anchor" aria-label="anchor" href="#modified-julian-date"></a></h4>
+
+
+<p>The modified version of the Julian date is obtained by subtracting
+2,400,000.5 days from the Julian date (the number of days since January 1,
+4713 BC). This essentially results in the number of days since midnight
+November 17, 1858. There is a half day offset (unlike the Julian date, the
+modified Julian date is referenced to midnight instead of noon).</p><table class="table table"><tr><td>Field Patterns</td><td>Output</td></tr><tr><td><code>"g"</code> to <code>"ggggggggg"</code></td><td><code>"58303"</code> -&gt; <code>"000058303"</code></td></tr></table></div>
 
 
 </div>
@@ -311,7 +360,9 @@ defined by ISO 8601.</p><table class="table table"><tr><td>Field Patterns</td><t
 
 <div class="section">
 <h4 id="day-of-week-name">Day of Week Name<a class="anchor" aria-label="anchor" href="#day-of-week-name"></a></h4>
-<table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"E"</code>, <code>"EE"</code>, or <code>"EEE"</code></td><td><code>"Wed"</code></td><td>Abbreviated</td></tr><tr><td><code>"EEEE"</code></td><td><code>"Wednesday"</code></td><td>Wide</td></tr><tr><td><code>"EEEEE"</code></td><td><code>"W"</code></td><td>Narrow</td></tr><tr><td><code>"EEEEEE"</code></td><td><code>"We"</code></td><td>Short</td></tr></table></div>
+
+
+<p>The name of the day of week is offered in four different widths.</p><table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"E"</code>, <code>"EE"</code>, or <code>"EEE"</code></td><td><code>"Wed"</code></td><td>Abbreviated</td></tr><tr><td><code>"EEEE"</code></td><td><code>"Wednesday"</code></td><td>Wide</td></tr><tr><td><code>"EEEEE"</code></td><td><code>"W"</code></td><td>Narrow</td></tr><tr><td><code>"EEEEEE"</code></td><td><code>"We"</code></td><td>Short</td></tr></table></div>
 
 
 </div>
@@ -321,21 +372,36 @@ defined by ISO 8601.</p><table class="table table"><tr><td>Field Patterns</td><t
 
 <div class="section">
 <h4 id="am-pm-period-of-day">AM/PM Period of Day<a class="anchor" aria-label="anchor" href="#am-pm-period-of-day"></a></h4>
-<table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"a"</code>, <code>"aa"</code>, or <code>"aaa"</code></td><td><code>"PM"</code></td><td>Abbreviated</td></tr><tr><td><code>"aaaa"</code></td><td><code>"PM"</code></td><td>Wide</td></tr><tr><td><code>"aaaaa"</code></td><td><code>"p"</code></td><td>Narrow</td></tr></table></div>
+
+
+<p>This denotes before noon and after noon time periods. May be upper or
+lowercase depending on the locale and other options. The wide form may be
+the same as the short form if the 'real' long form (e.g. 'ante meridiem') is
+not customarily used. The narrow form must be unique, unlike some other
+fields.</p><table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"a"</code>, <code>"aa"</code>, or <code>"aaa"</code></td><td><code>"PM"</code></td><td>Abbreviated</td></tr><tr><td><code>"aaaa"</code></td><td><code>"PM"</code></td><td>Wide</td></tr><tr><td><code>"aaaaa"</code></td><td><code>"p"</code></td><td>Narrow</td></tr></table></div>
 
 <div class="section">
 <h4 id="am-pm-period-of-day-plus-noon-and-midnight">AM/PM Period of Day Plus Noon and Midnight<a class="anchor" aria-label="anchor" href="#am-pm-period-of-day-plus-noon-and-midnight"></a></h4>
 
 
-<p>(a) <code>input_midnight</code>: <code>"2020-05-05T00:00:00"</code></p>
-<p>(b) <code>input_noon</code>: <code>"2020-05-05T12:00:00"</code></p><table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"b"</code>, <code>"bb"</code>, or <code>"bbb"</code></td><td>(a) <code>"midnight"</code></td><td>Abbreviated</td></tr><tr><td></td><td>(b) <code>"noon"</code></td><td></td></tr><tr><td><code>"bbbb"</code></td><td>(a) <code>"midnight"</code></td><td>Wide</td></tr><tr><td></td><td>(b) <code>"noon"</code></td><td></td></tr><tr><td><code>"bbbbb"</code></td><td>(a) <code>"mi"</code></td><td>Narrow</td></tr><tr><td></td><td>(b) <code>"n"</code></td><td></td></tr></table></div>
+<p>Provide AM and PM as well as phrases for exactly noon and midnight. May be
+upper or lowercase depending on the locale and other options. If the locale
+doesn't have the notion of a unique 'noon' (i.e., 12:00), then the PM form
+may be substituted. A similar behavior can occur for 'midnight' (00:00) and
+the AM form. The narrow form must be unique, unlike some other fields.</p>
+<p>(a) <code>input_midnight</code>: <code>"2020-05-05T00:00:00"</code>
+(b) <code>input_noon</code>: <code>"2020-05-05T12:00:00"</code></p><table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"b"</code>, <code>"bb"</code>, or <code>"bbb"</code></td><td>(a) <code>"midnight"</code></td><td>Abbreviated</td></tr><tr><td></td><td>(b) <code>"noon"</code></td><td></td></tr><tr><td><code>"bbbb"</code></td><td>(a) <code>"midnight"</code></td><td>Wide</td></tr><tr><td></td><td>(b) <code>"noon"</code></td><td></td></tr><tr><td><code>"bbbbb"</code></td><td>(a) <code>"mi"</code></td><td>Narrow</td></tr><tr><td></td><td>(b) <code>"n"</code></td><td></td></tr></table></div>
 
 <div class="section">
 <h4 id="flexible-day-periods">Flexible Day Periods<a class="anchor" aria-label="anchor" href="#flexible-day-periods"></a></h4>
 
 
-<p>(a) <code>input_morning</code>: <code>"2020-05-05T00:08:30"</code></p>
-<p>(b) <code>input_afternoon</code>: <code>"2020-05-05T14:00:00"</code></p><table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"B"</code>, <code>"BB"</code>, or <code>"BBB"</code></td><td>(a) <code>"in the morning"</code></td><td>Abbreviated</td></tr><tr><td></td><td>(b) <code>"in the afternoon"</code></td><td></td></tr><tr><td><code>"BBBB"</code></td><td>(a) <code>"in the morning"</code></td><td>Wide</td></tr><tr><td></td><td>(b) <code>"in the afternoon"</code></td><td></td></tr><tr><td><code>"BBBBB"</code></td><td>(a) <code>"in the morning"</code></td><td>Narrow</td></tr><tr><td></td><td>(b) <code>"in the afternoon"</code></td><td></td></tr></table></div>
+<p>Flexible day periods denotes things like 'in the afternoon', 'in the
+evening', etc., and the flexibility comes from a locale's language and
+script. Each locale has an associated rule set that specifies when the day
+periods start and end for that locale.</p>
+<p>(a) <code>input_morning</code>: <code>"2020-05-05T00:08:30"</code>
+(b) <code>input_afternoon</code>: <code>"2020-05-05T14:00:00"</code></p><table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"B"</code>, <code>"BB"</code>, or <code>"BBB"</code></td><td>(a) <code>"in the morning"</code></td><td>Abbreviated</td></tr><tr><td></td><td>(b) <code>"in the afternoon"</code></td><td></td></tr><tr><td><code>"BBBB"</code></td><td>(a) <code>"in the morning"</code></td><td>Wide</td></tr><tr><td></td><td>(b) <code>"in the afternoon"</code></td><td></td></tr><tr><td><code>"BBBBB"</code></td><td>(a) <code>"in the morning"</code></td><td>Narrow</td></tr><tr><td></td><td>(b) <code>"in the afternoon"</code></td><td></td></tr></table></div>
 
 
 </div>
@@ -344,46 +410,74 @@ defined by ISO 8601.</p><table class="table table"><tr><td>Field Patterns</td><t
 <h3 id="hours-minutes-and-seconds">Hours, Minutes, and Seconds<a class="anchor" aria-label="anchor" href="#hours-minutes-and-seconds"></a></h3>
 
 <div class="section">
-<h4 id="hour-">Hour 1-12<a class="anchor" aria-label="anchor" href="#hour-"></a></h4>
+<h4 id="hour-">Hour 0-23<a class="anchor" aria-label="anchor" href="#hour-"></a></h4>
 
 
-<p>Using: <code>"2015-08-01T08:35:09"</code></p><table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"h"</code></td><td><code>"8"</code></td><td>Numeric, minimum digits</td></tr><tr><td><code>"hh"</code></td><td><code>"08"</code></td><td>Numeric, 2 digits (zero padded)</td></tr></table></div>
-
-<div class="section">
-<h4 id="hour--1">Hour 0-23<a class="anchor" aria-label="anchor" href="#hour--1"></a></h4>
-
-
-<p>Using: <code>"2015-08-01T08:35:09"</code></p><table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"H"</code></td><td><code>"8"</code></td><td>Numeric, minimum digits</td></tr><tr><td><code>"HH"</code></td><td><code>"08"</code></td><td>Numeric, 2 digits (zero padded)</td></tr></table></div>
+<p>Hours from <code>0</code> to <code>23</code> are for a standard 24-hour clock cycle (midnight plus
+1 minute is <code>00:01</code>) when using <code>"HH"</code> (which is the more common width that
+indicates zero-padding to 2 digits).</p>
+<p>Using <code>"2015-08-01T08:35:09"</code>:</p><table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"H"</code></td><td><code>"8"</code></td><td>Numeric, minimum digits</td></tr><tr><td><code>"HH"</code></td><td><code>"08"</code></td><td>Numeric, 2 digits (zero padded)</td></tr></table></div>
 
 <div class="section">
-<h4 id="hour--2">Hour 0-11<a class="anchor" aria-label="anchor" href="#hour--2"></a></h4>
+<h4 id="hour--1">Hour 1-12<a class="anchor" aria-label="anchor" href="#hour--1"></a></h4>
 
 
-<p>Using: <code>"2015-08-01T08:35:09"</code></p><table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"K"</code></td><td><code>"7"</code></td><td>Numeric, minimum digits</td></tr><tr><td><code>"KK"</code></td><td><code>"07"</code></td><td>Numeric, 2 digits (zero padded)</td></tr></table></div>
+<p>Hours from <code>1</code> to <code>12</code> are for a standard 12-hour clock cycle (midnight plus
+1 minute is <code>12:01</code>) when using <code>"hh"</code> (which is the more common width that
+indicates zero-padding to 2 digits).</p>
+<p>Using <code>"2015-08-01T08:35:09"</code>:</p><table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"h"</code></td><td><code>"8"</code></td><td>Numeric, minimum digits</td></tr><tr><td><code>"hh"</code></td><td><code>"08"</code></td><td>Numeric, 2 digits (zero padded)</td></tr></table></div>
 
 <div class="section">
-<h4 id="hour--3">Hour 1-24<a class="anchor" aria-label="anchor" href="#hour--3"></a></h4>
+<h4 id="hour--2">Hour 1-24<a class="anchor" aria-label="anchor" href="#hour--2"></a></h4>
 
 
-<p>Using: <code>"2015-08-01T08:35:09"</code></p><table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"k"</code></td><td><code>"9"</code></td><td>Numeric, minimum digits</td></tr><tr><td><code>"kk"</code></td><td><code>"09"</code></td><td>Numeric, 2 digits (zero padded)</td></tr></table></div>
+<p>Using hours from <code>1</code> to <code>24</code> is a less common way to express a 24-hour clock
+cycle (midnight plus 1 minute is <code>24:01</code>) when using <code>"kk"</code> (which is the
+more common width that indicates zero-padding to 2 digits).</p>
+<p>Using <code>"2015-08-01T08:35:09"</code>:</p><table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"k"</code></td><td><code>"9"</code></td><td>Numeric, minimum digits</td></tr><tr><td><code>"kk"</code></td><td><code>"09"</code></td><td>Numeric, 2 digits (zero padded)</td></tr></table></div>
+
+<div class="section">
+<h4 id="hour--3">Hour 0-11<a class="anchor" aria-label="anchor" href="#hour--3"></a></h4>
+
+
+<p>Using hours from <code>0</code> to <code>11</code> is a less common way to express a 12-hour clock
+cycle (midnight plus 1 minute is <code>00:01</code>) when using <code>"KK"</code> (which is the
+more common width that indicates zero-padding to 2 digits).</p>
+<p>Using <code>"2015-08-01T08:35:09"</code>:</p><table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"K"</code></td><td><code>"7"</code></td><td>Numeric, minimum digits</td></tr><tr><td><code>"KK"</code></td><td><code>"07"</code></td><td>Numeric, 2 digits (zero padded)</td></tr></table></div>
 
 <div class="section">
 <h4 id="minute">Minute<a class="anchor" aria-label="anchor" href="#minute"></a></h4>
-<table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"m"</code></td><td><code>"5"</code></td><td>Numeric, minimum digits</td></tr><tr><td><code>"mm"</code></td><td><code>"06"</code></td><td>Numeric, 2 digits (zero padded)</td></tr></table></div>
+
+
+<p>The minute of the hour which can be any number from <code>0</code> to <code>59</code>. Use <code>"m"</code> to
+show the minimum number of digits, or <code>"mm"</code> to always show two digits
+(zero-padding, if necessary).</p><table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"m"</code></td><td><code>"5"</code></td><td>Numeric, minimum digits</td></tr><tr><td><code>"mm"</code></td><td><code>"06"</code></td><td>Numeric, 2 digits (zero padded)</td></tr></table></div>
 
 <div class="section">
 <h4 id="seconds">Seconds<a class="anchor" aria-label="anchor" href="#seconds"></a></h4>
-<table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"s"</code></td><td><code>"9"</code></td><td>Numeric, minimum digits</td></tr><tr><td><code>"ss"</code></td><td><code>"09"</code></td><td>Numeric, 2 digits (zero padded)</td></tr></table></div>
+
+
+<p>The second of the minute which can be any number from <code>0</code> to <code>59</code>. Use <code>"s"</code>
+to show the minimum number of digits, or <code>"ss"</code> to always show two digits
+(zero-padding, if necessary).</p><table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"s"</code></td><td><code>"9"</code></td><td>Numeric, minimum digits</td></tr><tr><td><code>"ss"</code></td><td><code>"09"</code></td><td>Numeric, 2 digits (zero padded)</td></tr></table></div>
 
 <div class="section">
 <h4 id="fractional-second">Fractional Second<a class="anchor" aria-label="anchor" href="#fractional-second"></a></h4>
-<table class="table table"><tr><td>Field Patterns</td><td>Output</td></tr><tr><td><code>"S"</code> to <code>"SSSSSSSSS"</code></td><td><code>"2"</code> -&gt; <code>"235000000"</code></td></tr></table></div>
+
+
+<p>The fractional second truncates (like other time fields) to the width
+requested (i.e., count of letters). So using pattern <code>"SSSS"</code> will display
+four digits past the decimal (which, incidentally, needs to be added manually
+to the pattern).</p><table class="table table"><tr><td>Field Patterns</td><td>Output</td></tr><tr><td><code>"S"</code> to <code>"SSSSSSSSS"</code></td><td><code>"2"</code> -&gt; <code>"235000000"</code></td></tr></table></div>
 
 <div class="section">
 <h4 id="milliseconds-elapsed-in-day">Milliseconds Elapsed in Day<a class="anchor" aria-label="anchor" href="#milliseconds-elapsed-in-day"></a></h4>
 
 
-<p>Using: <code>"2011-07-27T00:07:19.7223"</code></p><table class="table table"><tr><td>Field Patterns</td><td>Output</td></tr><tr><td><code>"A"</code> to <code>"AAAAAAAAA"</code></td><td><code>"439722"</code> -&gt; <code>"000439722"</code></td></tr></table></div>
+<p>There are 86,400,000 milliseconds in a day and the <code>"A"</code> pattern will provide
+the whole number. The width can go up to nine digits with <code>"AAAAAAAAA"</code> and
+these higher field widths will result in zero padding if necessary.</p>
+<p>Using <code>"2011-07-27T00:07:19.7223"</code>:</p><table class="table table"><tr><td>Field Patterns</td><td>Output</td></tr><tr><td><code>"A"</code> to <code>"AAAAAAAAA"</code></td><td><code>"439722"</code> -&gt; <code>"000439722"</code></td></tr></table></div>
 
 
 </div>
@@ -395,7 +489,9 @@ defined by ISO 8601.</p><table class="table table"><tr><td>Field Patterns</td><t
 <h4 id="the-era-designator">The Era Designator<a class="anchor" aria-label="anchor" href="#the-era-designator"></a></h4>
 
 
-<p>This provides the era name for the given date.</p><table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"G"</code>, <code>"GG"</code>, or <code>"GGG"</code></td><td><code>"AD"</code></td><td>Abbreviated</td></tr><tr><td><code>"GGGG"</code></td><td><code>"Anno Domini"</code></td><td>Wide</td></tr><tr><td><code>"GGGGG"</code></td><td><code>"A"</code></td><td>Narrow</td></tr></table></div>
+<p>This provides the era name for the given date. The Gregorian calendar has two
+eras: AD and BC. In the AD year numbering system, AD 1 is immediately
+preceded by 1 BC, with nothing in between them (there was no year zero).</p><table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"G"</code>, <code>"GG"</code>, or <code>"GGG"</code></td><td><code>"AD"</code></td><td>Abbreviated</td></tr><tr><td><code>"GGGG"</code></td><td><code>"Anno Domini"</code></td><td>Wide</td></tr><tr><td><code>"GGGGG"</code></td><td><code>"A"</code></td><td>Narrow</td></tr></table></div>
 
 
 </div>
@@ -405,31 +501,72 @@ defined by ISO 8601.</p><table class="table table"><tr><td>Field Patterns</td><t
 
 <div class="section">
 <h4 id="tz-short-and-long-specific-non-location-format">TZ // Short and Long Specific non-Location Format<a class="anchor" aria-label="anchor" href="#tz-short-and-long-specific-non-location-format"></a></h4>
-<table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"z"</code>, <code>"zz"</code>, or <code>"zzz"</code></td><td><code>"PDT"</code></td><td>Short Specific</td></tr><tr><td><code>"zzzz"</code></td><td><code>"Pacific Daylight Time"</code></td><td>Long Specific</td></tr></table></div>
+
+
+<p>The short and long specific non-location formats for time zones are suggested
+for displaying a time with a user friendly time zone name. Where the short
+specific format is unavailable, it will fall back to the short localized GMT
+format (<code>"O"</code>). Where the long specific format is unavailable, it will fall
+back to the long localized GMT format (<code>"OOOO"</code>).</p><table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"z"</code>, <code>"zz"</code>, or <code>"zzz"</code></td><td><code>"PDT"</code></td><td>Short Specific</td></tr><tr><td><code>"zzzz"</code></td><td><code>"Pacific Daylight Time"</code></td><td>Long Specific</td></tr></table></div>
 
 <div class="section">
-<h4 id="tz-short-and-long-specific-non-location-formats">TZ // Short and Long Specific non-Location Formats<a class="anchor" aria-label="anchor" href="#tz-short-and-long-specific-non-location-formats"></a></h4>
-<table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"Z"</code>, <code>"ZZ"</code>, or <code>"ZZZ"</code></td><td><code>"-0700"</code></td><td>ISO 8601 basic format</td></tr><tr><td><code>"ZZZZ"</code></td><td><code>"GMT-7:00"</code></td><td>Long localized GMT format</td></tr><tr><td><code>"ZZZZZ"</code></td><td><code>"-07:00"</code></td><td>ISO 8601 extended format</td></tr></table></div>
+<h4 id="tz-common-utc-offset-formats">TZ // Common UTC Offset Formats<a class="anchor" aria-label="anchor" href="#tz-common-utc-offset-formats"></a></h4>
+
+
+<p>The ISO8601 basic format with hours, minutes and optional seconds fields is
+represented by <code>"Z"</code>, <code>"ZZ"</code>, or <code>"ZZZ"</code>. The format is equivalent to RFC 822
+zone format (when the optional seconds field is absent). This is equivalent
+to the <code>"xxxx"</code> specifier. The field pattern <code>"ZZZZ"</code> represents the long
+localized GMT format. This is equivalent to the <code>"OOOO"</code> specifier. Finally,
+<code>"ZZZZZ"</code> pattern yields the ISO8601 extended format with hours, minutes and
+optional seconds fields. The ISO8601 UTC indicator <code>Z</code> is used when local
+time offset is <code>0</code>. This is equivalent to the <code>"XXXXX"</code> specifier.</p><table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"Z"</code>, <code>"ZZ"</code>, or <code>"ZZZ"</code></td><td><code>"-0700"</code></td><td>ISO 8601 basic format</td></tr><tr><td><code>"ZZZZ"</code></td><td><code>"GMT-7:00"</code></td><td>Long localized GMT format</td></tr><tr><td><code>"ZZZZZ"</code></td><td><code>"-07:00"</code></td><td>ISO 8601 extended format</td></tr></table></div>
 
 <div class="section">
 <h4 id="tz-short-and-long-localized-gmt-formats">TZ // Short and Long Localized GMT Formats<a class="anchor" aria-label="anchor" href="#tz-short-and-long-localized-gmt-formats"></a></h4>
-<table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"O"</code></td><td><code>"GMT-7"</code></td><td>Short localized GMT format</td></tr><tr><td><code>"OOOO"</code></td><td><code>"GMT-07:00"</code></td><td>Long localized GMT format</td></tr></table></div>
+
+
+<p>The localized GMT formats come in two widths <code>"O"</code> (which removes the minutes
+field if it's <code>0</code>) and <code>"OOOO"</code> (which always contains the minutes field).
+The use of the <code>GMT</code> indicator changes according to the locale.</p><table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"O"</code></td><td><code>"GMT-7"</code></td><td>Short localized GMT format</td></tr><tr><td><code>"OOOO"</code></td><td><code>"GMT-07:00"</code></td><td>Long localized GMT format</td></tr></table></div>
 
 <div class="section">
-<h4 id="tz-short-and-long-localized-gmt-formats-1">TZ // Short and Long Localized GMT Formats<a class="anchor" aria-label="anchor" href="#tz-short-and-long-localized-gmt-formats-1"></a></h4>
-<table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"v"</code></td><td><code>"PT"</code></td><td>Short generic non-location format</td></tr><tr><td><code>"vvvv"</code></td><td><code>"Pacific Time"</code></td><td>Long generic non-location format</td></tr></table></div>
+<h4 id="tz-short-and-long-generic-non-location-formats">TZ // Short and Long Generic non-Location Formats<a class="anchor" aria-label="anchor" href="#tz-short-and-long-generic-non-location-formats"></a></h4>
+
+
+<p>The generic non-location formats are useful for displaying a recurring wall
+time (e.g., events, meetings) or anywhere people do not want to be overly
+specific. Where either of these is unavailable, there is a fallback to the
+generic location format (<code>"VVVV"</code>), then the short localized GMT format as
+the final fallback.</p><table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"v"</code></td><td><code>"PT"</code></td><td>Short generic non-location format</td></tr><tr><td><code>"vvvv"</code></td><td><code>"Pacific Time"</code></td><td>Long generic non-location format</td></tr></table></div>
 
 <div class="section">
-<h4 id="tz-short-time-zone-ids-and-exemplar-city-formats-big-v-">TZ // Short Time Zone IDs and Exemplar City Formats (big V)<a class="anchor" aria-label="anchor" href="#tz-short-time-zone-ids-and-exemplar-city-formats-big-v-"></a></h4>
-<table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"V"</code></td><td><code>"cavan"</code></td><td>Short time zone ID</td></tr><tr><td><code>"VV"</code></td><td><code>"America/Vancouver"</code></td><td>Long time zone ID</td></tr><tr><td><code>"VVV"</code></td><td><code>"Vancouver"</code></td><td>The tz exemplar city</td></tr><tr><td><code>"VVVV"</code></td><td><code>"Vancouver Time"</code></td><td>Generic location format</td></tr></table></div>
+<h4 id="tz-short-time-zone-ids-and-exemplar-city-formats">TZ // Short Time Zone IDs and Exemplar City Formats<a class="anchor" aria-label="anchor" href="#tz-short-time-zone-ids-and-exemplar-city-formats"></a></h4>
+
+
+<p>These formats provide variations of the time zone ID and often include the
+exemplar city. The widest of these formats, <code>"VVVV"</code>, is useful for
+populating a choice list for time zones, because it supports 1-to-1 name/zone
+ID mapping and is more uniform than other text formats.</p><table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"V"</code></td><td><code>"cavan"</code></td><td>Short time zone ID</td></tr><tr><td><code>"VV"</code></td><td><code>"America/Vancouver"</code></td><td>Long time zone ID</td></tr><tr><td><code>"VVV"</code></td><td><code>"Vancouver"</code></td><td>The tz exemplar city</td></tr><tr><td><code>"VVVV"</code></td><td><code>"Vancouver Time"</code></td><td>Generic location format</td></tr></table></div>
 
 <div class="section">
 <h4 id="tz-iso-formats-with-z-for-">TZ // ISO 8601 Formats with Z for +0000<a class="anchor" aria-label="anchor" href="#tz-iso-formats-with-z-for-"></a></h4>
-<table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"X"</code></td><td><code>"-07"</code></td><td>ISO 8601 basic format (h, optional m)</td></tr><tr><td><code>"XX"</code></td><td><code>"-0700"</code></td><td>ISO 8601 basic format (h &amp; m)</td></tr><tr><td><code>"XXX"</code></td><td><code>"-07:00"</code></td><td>ISO 8601 extended format (h &amp; m)</td></tr><tr><td><code>"XXXX"</code></td><td><code>"-0700"</code></td><td>ISO 8601 basic format (h &amp; m, optional s)</td></tr><tr><td><code>"XXXXX"</code></td><td><code>"-07:00"</code></td><td>ISO 8601 extended format (h &amp; m, optional s)</td></tr></table></div>
+
+
+<p>The <code>"X"</code>-<code>"XXX"</code> field patterns represent valid ISO 8601 patterns for time
+zone offsets in datetimes. The final two widths, <code>"XXXX"</code> and <code>"XXXXX"</code> allow
+for optional seconds fields. The seconds field is <em>not</em> supported by the ISO
+8601 specification. For all of these, the ISO 8601 UTC indicator <code>Z</code> is used
+when the local time offset is <code>0</code>.</p><table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"X"</code></td><td><code>"-07"</code></td><td>ISO 8601 basic format (h, optional m)</td></tr><tr><td><code>"XX"</code></td><td><code>"-0700"</code></td><td>ISO 8601 basic format (h &amp; m)</td></tr><tr><td><code>"XXX"</code></td><td><code>"-07:00"</code></td><td>ISO 8601 extended format (h &amp; m)</td></tr><tr><td><code>"XXXX"</code></td><td><code>"-0700"</code></td><td>ISO 8601 basic format (h &amp; m, optional s)</td></tr><tr><td><code>"XXXXX"</code></td><td><code>"-07:00"</code></td><td>ISO 8601 extended format (h &amp; m, optional s)</td></tr></table></div>
 
 <div class="section">
 <h4 id="tz-iso-formats-no-use-of-z-for-">TZ // ISO 8601 Formats (no use of Z for +0000)<a class="anchor" aria-label="anchor" href="#tz-iso-formats-no-use-of-z-for-"></a></h4>
-<table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"x"</code></td><td><code>"-07"</code></td><td>ISO 8601 basic format (h, optional m)</td></tr><tr><td><code>"xx"</code></td><td><code>"-0700"</code></td><td>ISO 8601 basic format (h &amp; m)</td></tr><tr><td><code>"xxx"</code></td><td><code>"-07:00"</code></td><td>ISO 8601 extended format (h &amp; m)</td></tr><tr><td><code>"xxxx"</code></td><td><code>"-0700"</code></td><td>ISO 8601 basic format (h &amp; m, optional s)</td></tr><tr><td><code>"xxxxx"</code></td><td><code>"-07:00"</code></td><td>ISO 8601 extended format (h &amp; m, optional s)</td></tr></table></div>
+
+
+<p>The <code>"x"</code>-<code>"xxxxx"</code> field patterns represent valid ISO 8601 patterns for time
+zone offsets in datetimes. They are similar to the <code>"X"</code>-<code>"XXXXX"</code> field
+patterns except that the ISO 8601 UTC indicator <code>Z</code> <em>will not</em> be used when
+the local time offset is <code>0</code>.</p><table class="table table"><tr><td>Field Patterns</td><td>Output</td><td>Notes</td></tr><tr><td><code>"x"</code></td><td><code>"-07"</code></td><td>ISO 8601 basic format (h, optional m)</td></tr><tr><td><code>"xx"</code></td><td><code>"-0700"</code></td><td>ISO 8601 basic format (h &amp; m)</td></tr><tr><td><code>"xxx"</code></td><td><code>"-07:00"</code></td><td>ISO 8601 extended format (h &amp; m)</td></tr><tr><td><code>"xxxx"</code></td><td><code>"-0700"</code></td><td>ISO 8601 basic format (h &amp; m, optional s)</td></tr><tr><td><code>"xxxxx"</code></td><td><code>"-07:00"</code></td><td>ISO 8601 extended format (h &amp; m, optional s)</td></tr></table></div>
 
 
 </div>
