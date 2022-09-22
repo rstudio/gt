@@ -629,6 +629,121 @@ check_sub_fn_sign <- function(sign) {
   }
 }
 
+#' Substitute targeted values in the table body
+#'
+#' @description
+#' Should you need to replace specific cell values with something else, the
+#' `sub_value()` function is a good choice.
+#'
+#' @details
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the Arguments section for more information on this.
+#'
+#' @inheritParams fmt_number
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @family data formatting functions
+#' @section Function ID:
+#' 3-21
+#'
+#' @import rlang
+#' @export
+sub_value <- function(
+    data,
+    columns = everything(),
+    rows = everything(),
+    value = NULL,
+    pattern = NULL,
+    replacement = NULL,
+    escape = TRUE
+) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  if (is.null(value)) {
+    cli::cli_abort(
+      "A `value` needs to be given to `sub_value()`."
+    )
+  }
+
+  if (is.null(pattern) && is.null(replacement)) {
+    cli::cli_abort(
+      "One of `pattern` or `replacement` needs to be supplied to `sub_value()`."
+    )
+  }
+
+  sub_replace_value <- function(
+    x,
+    value,
+    pattern,
+    replacement,
+    context
+  ) {
+
+    repl_value <- ifelse(!is.na(x) & x == value, replacement, NA_character_)
+
+    if (escape) {
+      repl_value <- process_text(text = repl_value, context = context)
+    }
+
+    repl_value
+  }
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions (as a function list) to `subst()`
+  subst(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    fns = list(
+      html = function(x) {
+
+        sub_replace_value(
+          x,
+          value = value,
+          pattern = pattern,
+          replacement = replacement,
+          context = "html"
+        )
+      },
+      rtf = function(x) {
+
+        sub_replace_value(
+          x,
+          value = value,
+          pattern = pattern,
+          replacement = replacement,
+          context = "rtf"
+        )
+      },
+      latex = function(x) {
+
+        sub_replace_value(
+          x,
+          value = value,
+          pattern = pattern,
+          replacement = replacement,
+          context = "latex"
+        )
+      },
+      default = function(x) {
+
+        sub_replace_value(
+          x,
+          value = value,
+          pattern = pattern,
+          replacement = replacement,
+          context = "default"
+        )
+      }
+    )
+  )
+}
+
 subst <- function(
     data,
     columns = everything(),
