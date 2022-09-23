@@ -687,7 +687,19 @@ sub_values <- function(
 
   if (is.null(replacement)) {
     cli::cli_abort(
-      "A `replacement` needs to be given to `sub_value()`."
+      "A `replacement` needs to be provided for any `values` or `pattern`."
+    )
+  }
+
+  if (!is.numeric(replacement) && !is.character(replacement)) {
+    cli::cli_abort(
+      "The `replacement` must be a numeric, integer, or character vector."
+    )
+  }
+
+  if (length(replacement) != 1) {
+    cli::cli_abort(
+      "The length of the `replacement` vector must 1."
     )
   }
 
