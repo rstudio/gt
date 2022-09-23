@@ -647,7 +647,11 @@ check_sub_fn_sign <- function(sign) {
 #'   ignored.
 #' @param pattern A regex pattern that can target solely those values in
 #'   `character`-based columns. If `values` is also supplied, `pattern` will
-#'   take precedent.
+#'   take precedence.
+#' @param fn A supplied function that operates on `x` (the data in a column) and
+#'   should return a logical vector that matches the length of `x` (i.e., number
+#'   of rows in the input table). If either of `values` or `pattern` is also
+#'   supplied, `fn` will take precedence.
 #' @param replacement The replacement value for any cell values matched by
 #'   either `values` or `pattern`. Must be a character or numeric vector of
 #'   length 1.
@@ -672,6 +676,7 @@ sub_values <- function(
     rows = everything(),
     values = NULL,
     pattern = NULL,
+    fn = NULL,
     replacement = NULL,
     escape = TRUE
 ) {
@@ -679,9 +684,16 @@ sub_values <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  if (is.null(values) && is.null(pattern)) {
+  if (is.null(values) && is.null(pattern) && is.null(fn)) {
     cli::cli_abort(
-      "One of `values` or `pattern` needs to be supplied to `sub_value()`."
+      "One of `values`, `pattern`, or `fn` needs to be supplied to `sub_value()`."
+    )
+  }
+
+  # Validate that the `fn` object is a function
+  if (!is.null(fn) && !rlang::is_function(fn)) {
+    cli::cli_abort(
+      "A function must be provided to the `fn` argument."
     )
   }
 
@@ -711,7 +723,34 @@ sub_values <- function(
     context
   ) {
 
-    if (!is.null(pattern)) {
+    if (!is.null(fn)) {
+
+      # Invoke the function on the `x` vector
+      vec_logical <- fn(x)
+
+      # Validate that the returned value is a logical vector
+      if (is.null(vec_logical) || !is.logical(vec_logical)) {
+        cli::cli_abort(
+          "The value returned by invoking `fn` must be a logical vector."
+        )
+      }
+
+      # Validate that the logical vector is of the correct length
+      if (length(vec_logical) != length(x)) {
+        cli::cli_abort(
+          "The vector returned by invoking `fn` must be the same as `x`."
+        )
+      }
+
+      # TODO: create the `repl_values` object using the logical vector
+      vec_logical[which(is.na(vec_logical))] <- FALSE
+
+      x[vec_logical] <- as.character(replacement)
+      x[!vec_logical] <- NA_character_
+
+      repl_values <- x
+
+    } else if (!is.null(pattern)) {
 
       repl_values <-
         ifelse(
