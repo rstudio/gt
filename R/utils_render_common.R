@@ -192,6 +192,10 @@ migrate_unformatted_to_output <- function(data, context) {
           )
       }
 
+      if (is.factor(vals)) {
+        vals <- as.character(vals)
+      }
+
       body[[colname]][row_index] <- process_text(text = vals, context = context)
     }
   }
