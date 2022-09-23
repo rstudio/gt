@@ -679,9 +679,9 @@ sub_values <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  if (is.null(value) && is.null(pattern)) {
+  if (is.null(values) && is.null(pattern)) {
     cli::cli_abort(
-      "One of `value` or `pattern` needs to be supplied to `sub_value()`."
+      "One of `values` or `pattern` needs to be supplied to `sub_value()`."
     )
   }
 
