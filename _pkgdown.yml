@@ -75,7 +75,7 @@ reference:
     - sub_zero
     - sub_small_vals
     - sub_large_vals
-    - sub_value
+    - sub_values
     - text_transform
     - data_color
 
