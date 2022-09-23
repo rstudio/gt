@@ -995,6 +995,45 @@ test_that("the `sub_values()` function works correctly", {
     )
   )
 
+  # Expect that a function given to `fn` will work
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_values(fn = function(x) {x < 0}, replacement = "negative") %>%
+      render_formats_test(context = "html") %>%
+      as.list(),
+    list(
+      num_1 = c("negative", "74.000", "NA", "0.000", "500.000", "0.001", "84.300"),
+      int_1 = c("1", "negative", "800", "5", "NA", "1", "negative"),
+      lett = c("A", "B", "C", "D", "E", "F", "G")
+    )
+  )
+
+  # Expect that a function given to `fn` will work
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_values(fn = function(x) x >= 0 & x < 50, replacement = "between") %>%
+      render_formats_test(context = "html") %>%
+      as.list(),
+    list(
+      num_1 = c("-0.01", "74.00", "NA", "between", "500.00", "between", "84.30"),
+      int_1 = c("between", "-100000", "800", "between", "NA", "between", "-32"),
+      lett = c("A", "B", "C", "D", "E", "F", "G")
+    )
+  )
+
+  # Expect that a function given to `fn` will work
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_values(fn = function(x) x %in% LETTERS, replacement = "0") %>%
+      render_formats_test(context = "html") %>%
+      as.list(),
+    list(
+      num_1 = c("-0.010", "74.000", "NA", "0.000", "500.000", "0.001", "84.300"),
+      int_1 = c("1", "-100000", "800", "5", "NA", "1", "-32"),
+      lett = c("0", "0", "0", "0", "0", "0", "0")
+    )
+  )
+
   # Expect that by default the replacement will be escaped for the output
   # context; HTML output, with escaping of the replacement
   expect_equal(
