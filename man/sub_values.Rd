@@ -10,6 +10,7 @@ sub_values(
   rows = everything(),
   values = NULL,
   pattern = NULL,
+  fn = NULL,
   replacement = NULL,
   escape = TRUE
 )
@@ -38,7 +39,12 @@ ignored.}
 
 \item{pattern}{A regex pattern that can target solely those values in
 \code{character}-based columns. If \code{values} is also supplied, \code{pattern} will
-take precedent.}
+take precedence.}
+
+\item{fn}{A supplied function that operates on \code{x} (the data in a column) and
+should return a logical vector that matches the length of \code{x} (i.e., number
+of rows in the input table). If either of \code{values} or \code{pattern} is also
+supplied, \code{fn} will take precedence.}
 
 \item{replacement}{The replacement value for any cell values matched by
 either \code{values} or \code{pattern}. Must be a character or numeric vector of
