@@ -760,7 +760,7 @@ test_that("the `sub_large_vals()` function works correctly", {
   expect_error(tab %>% sub_large_vals(columns = "num_1", sign = "?"))
 })
 
-test_that("the `sub_value()` function works correctly", {
+test_that("the `sub_values()` function works correctly", {
 
   # Create an input table with three columns
   data_tbl <-
@@ -770,9 +770,10 @@ test_that("the `sub_value()` function works correctly", {
       lett = LETTERS[1:7]
     )
 
+  # Expect that a single integer value can be replaced with text
   expect_equal(
     gt(data_tbl) %>%
-      sub_value(value = 1, replacement = "hey!") %>%
+      sub_values(values = 1, replacement = "hey!") %>%
       render_formats_test(context = "html") %>%
       as.list(),
     list(
@@ -782,9 +783,11 @@ test_that("the `sub_value()` function works correctly", {
     )
   )
 
+  # Expect that the same replacement of an integer value can be done with a
+  # number that is a string
   expect_equal(
     gt(data_tbl) %>%
-      sub_value(value = "1", replacement = "hey!") %>%
+      sub_values(values = "1", replacement = "hey!") %>%
       render_formats_test(context = "html") %>%
       as.list(),
     list(
@@ -794,9 +797,10 @@ test_that("the `sub_value()` function works correctly", {
     )
   )
 
+  # Expect that character values can be replaced with text
   expect_equal(
     gt(data_tbl) %>%
-      sub_value(value = "G", replacement = "hey!") %>%
+      sub_values(values = "G", replacement = "hey!") %>%
       render_formats_test(context = "html") %>%
       as.list(),
     list(
@@ -806,9 +810,10 @@ test_that("the `sub_value()` function works correctly", {
     )
   )
 
+  # Expect that numeric values can be replaced with text
   expect_equal(
     gt(data_tbl) %>%
-      sub_value(value = 74, replacement = "hey!") %>%
+      sub_values(values = 74, replacement = "hey!") %>%
       render_formats_test(context = "html") %>%
       as.list(),
     list(
@@ -818,9 +823,10 @@ test_that("the `sub_value()` function works correctly", {
     )
   )
 
+  # Expect that zero values can be replaced with text
   expect_equal(
     gt(data_tbl) %>%
-      sub_value(value = 0, replacement = "hey!") %>%
+      sub_values(values = 0, replacement = "hey!") %>%
       render_formats_test(context = "html") %>%
       as.list(),
     list(
@@ -830,10 +836,11 @@ test_that("the `sub_value()` function works correctly", {
     )
   )
 
+  # Expect that consecutive replacements on the same column works well
   expect_equal(
     gt(data_tbl) %>%
-      sub_value(value = 0, replacement = "hey!") %>%
-      sub_value(value = 74, replacement = "hey!") %>%
+      sub_values(values = 0, replacement = "hey!") %>%
+      sub_values(values = 74, replacement = "hey!") %>%
       render_formats_test(context = "html") %>%
       as.list(),
     list(
@@ -843,10 +850,12 @@ test_that("the `sub_value()` function works correctly", {
     )
   )
 
+  # Expect that a replaced value does not become an input value (`values` always
+  # refers to the input table data)
   expect_equal(
     gt(data_tbl) %>%
-      sub_value(value = 0, replacement = "hey!") %>%
-      sub_value(value = "hey!", replacement = "whey") %>%
+      sub_values(values = 0, replacement = "hey!") %>%
+      sub_values(values = "hey!", replacement = "whey") %>%
       render_formats_test(context = "html") %>%
       as.list(),
     list(
@@ -856,10 +865,11 @@ test_that("the `sub_value()` function works correctly", {
     )
   )
 
+  # Expect that in consecutive replacements of the same cell, the last call wins
   expect_equal(
     gt(data_tbl) %>%
-      sub_value(value = 74, replacement = "hey!") %>%
-      sub_value(value = 74, replacement = "HEY!!") %>%
+      sub_values(values = 74, replacement = "hey!") %>%
+      sub_values(values = 74, replacement = "HEY!!") %>%
       render_formats_test(context = "html") %>%
       as.list(),
     list(
@@ -869,10 +879,11 @@ test_that("the `sub_value()` function works correctly", {
     )
   )
 
+  # Expect that consecutive replacements in different columns can occur
   expect_equal(
     gt(data_tbl) %>%
-      sub_value(value = 800, replacement = "hey!") %>%
-      sub_value(value = 74, replacement = "HEY!!") %>%
+      sub_values(values = 800, replacement = "hey!") %>%
+      sub_values(values = 74, replacement = "HEY!!") %>%
       render_formats_test(context = "html") %>%
       as.list(),
     list(
@@ -882,9 +893,10 @@ test_that("the `sub_value()` function works correctly", {
     )
   )
 
+  # Expect that more complex text can be used as a replacement
   expect_equal(
     gt(data_tbl) %>%
-      sub_value(value = "A", replacement = "It's A") %>%
+      sub_values(values = "A", replacement = "It's A") %>%
       render_formats_test(context = "html") %>%
       as.list(),
     list(
@@ -894,10 +906,49 @@ test_that("the `sub_value()` function works correctly", {
     )
   )
 
-
+  # Expect that a numeric value as a replacement works fine on a character column
   expect_equal(
     gt(data_tbl) %>%
-      sub_value(pattern = "A", replacement = "It's A") %>%
+      sub_values(values = "A", replacement = 5.2) %>%
+      render_formats_test(context = "html") %>%
+      as.list(),
+    list(
+      num_1 = c("-0.010", "74.000", "NA", "0.000", "500.000", "0.001", "84.300"),
+      int_1 = c("1", "-100000", "800", "5", "NA", "1", "-32"),
+      lett = c("5.2", "B", "C", "D", "E", "F", "G")
+    )
+  )
+
+  # Expect that formatted numeric values also should work
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_values(values = "A", replacement = vec_fmt_number(5.2, decimals = 5, output = "plain")) %>%
+      render_formats_test(context = "html") %>%
+      as.list(),
+    list(
+      num_1 = c("-0.010", "74.000", "NA", "0.000", "500.000", "0.001", "84.300"),
+      int_1 = c("1", "-100000", "800", "5", "NA", "1", "-32"),
+      lett = c("5.20000", "B", "C", "D", "E", "F", "G")
+    )
+  )
+
+  # Expect values with vector lengths greater than one should work
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_values(values = c("A", "C"), replacement = "hey!") %>%
+      render_formats_test(context = "html") %>%
+      as.list(),
+    list(
+      num_1 = c("-0.010", "74.000", "NA", "0.000", "500.000", "0.001", "84.300"),
+      int_1 = c("1", "-100000", "800", "5", "NA", "1", "-32"),
+      lett = c("hey!", "B", "hey!", "D", "E", "F", "G")
+    )
+  )
+
+  # Expect that a simple `pattern` works the same as a replacement with `values`
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_values(pattern = "A", replacement = "It's A") %>%
       render_formats_test(context = "html") %>%
       as.list(),
     list(
@@ -907,9 +958,10 @@ test_that("the `sub_value()` function works correctly", {
     )
   )
 
+  # Expect that more complex `pattern` will work to replace text values
   expect_equal(
     gt(data_tbl) %>%
-      sub_value(pattern = "A|C", replacement = "[ac]") %>%
+      sub_values(pattern = "A|C", replacement = "[ac]") %>%
       render_formats_test(context = "html") %>%
       as.list(),
     list(
@@ -919,9 +971,21 @@ test_that("the `sub_value()` function works correctly", {
     )
   )
 
+  # Expect that the `pattern` matching won't operate over numeric or integer columns
   expect_equal(
     gt(data_tbl) %>%
-      sub_value(pattern = "0", replacement = "[ac]") %>%
+      sub_values(pattern = "0", replacement = "[ac]") %>%
+      render_formats_test(context = "html") %>%
+      as.list(),
+    list(
+      num_1 = c("-0.010", "74.000", "NA", "0.000", "500.000", "0.001", "84.300"),
+      int_1 = c("1", "-100000", "800", "5", "NA", "1", "-32"),
+      lett = c("A", "B", "C", "D", "E", "F", "G")
+    )
+  )
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_values(pattern = "1", replacement = "[ac]") %>%
       render_formats_test(context = "html") %>%
       as.list(),
     list(
@@ -931,22 +995,11 @@ test_that("the `sub_value()` function works correctly", {
     )
   )
 
+  # Expect that by default the replacement will be escaped for the output
+  # context; HTML output, with escaping of the replacement
   expect_equal(
     gt(data_tbl) %>%
-      sub_value(pattern = "1", replacement = "[ac]") %>%
-      render_formats_test(context = "html") %>%
-      as.list(),
-    list(
-      num_1 = c("-0.010", "74.000", "NA", "0.000", "500.000", "0.001", "84.300"),
-      int_1 = c("1", "-100000", "800", "5", "NA", "1", "-32"),
-      lett = c("A", "B", "C", "D", "E", "F", "G")
-    )
-  )
-
-
-  expect_equal(
-    gt(data_tbl) %>%
-      sub_value(pattern = "A", replacement = "<p>It's A</p>") %>%
+      sub_values(pattern = "A", replacement = "<p>It's A</p>") %>%
       render_formats_test(context = "html") %>%
       as.list(),
     list(
@@ -956,9 +1009,10 @@ test_that("the `sub_value()` function works correctly", {
     )
   )
 
+  # HTML output, *no* escaping of the replacement
   expect_equal(
     gt(data_tbl) %>%
-      sub_value(pattern = "A", replacement = "<div>It's A</div>", escape = FALSE) %>%
+      sub_values(pattern = "A", replacement = "<div>It's A</div>", escape = FALSE) %>%
       render_formats_test(context = "html") %>%
       as.list(),
     list(
@@ -968,16 +1022,94 @@ test_that("the `sub_value()` function works correctly", {
     )
   )
 
-
+  # LaTeX output, with escaping of the replacement
   expect_equal(
     gt(data_tbl) %>%
-      sub_value(pattern = "A", replacement = "<p>It's A</p>") %>%
-      render_formats_test(context = "html") %>%
+      sub_values(pattern = "A", replacement = "$dollar$") %>%
+      render_formats_test(context = "latex") %>%
       as.list(),
     list(
       num_1 = c("-0.010", "74.000", "NA", "0.000", "500.000", "0.001", "84.300"),
       int_1 = c("1", "-100000", "800", "5", "NA", "1", "-32"),
-      lett = c("&lt;p&gt;It's A&lt;/p&gt;", "B", "C", "D", "E", "F", "G")
+      lett = c("\\$dollar\\$", "B", "C", "D", "E", "F", "G")
     )
   )
+
+  # LaTeX output, *no* escaping of the replacement
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_values(pattern = "A", replacement = "$dollar$", escape = FALSE) %>%
+      render_formats_test(context = "latex") %>%
+      as.list(),
+    list(
+      num_1 = c("-0.010", "74.000", "NA", "0.000", "500.000", "0.001", "84.300"),
+      int_1 = c("1", "-100000", "800", "5", "NA", "1", "-32"),
+      lett = c("$dollar$", "B", "C", "D", "E", "F", "G")
+    )
+  )
+
+  # RTF output, with escaping of the replacement
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_values(pattern = "A", replacement = "{hey}") %>%
+      render_formats_test(context = "rtf") %>%
+      as.list(),
+    list(
+      num_1 = c("-0.010", "74.000", "NA", "0.000", "500.000", "0.001", "84.300"),
+      int_1 = c("1", "-100000", "800", "5", "NA", "1", "-32"),
+      lett = c("\\'7bhey\\'7d", "B", "C", "D", "E", "F", "G")
+    )
+  )
+
+  # RTF output, *no* escaping of the replacement
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_values(pattern = "A", replacement = "{hey}", escape = FALSE) %>%
+      render_formats_test(context = "rtf") %>%
+      as.list(),
+    list(
+      num_1 = c("-0.010", "74.000", "NA", "0.000", "500.000", "0.001", "84.300"),
+      int_1 = c("1", "-100000", "800", "5", "NA", "1", "-32"),
+      lett = c("{hey}", "B", "C", "D", "E", "F", "G")
+    )
+  )
+
+  # Word output, with escaping of the replacement
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_values(pattern = "A", replacement = "<hey>") %>%
+      render_formats_test(context = "word") %>%
+      as.list(),
+    list(
+      num_1 = c("-0.010", "74.000", "NA", "0.000", "500.000", "0.001", "84.300"),
+      int_1 = c("1", "-100000", "800", "5", "NA", "1", "-32"),
+      lett = c("&lt;hey&gt;", "B", "C", "D", "E", "F", "G")
+    )
+  )
+
+  # Word output, *no* escaping of the replacement
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_values(pattern = "A", replacement = "<hey>", escape = FALSE) %>%
+      render_formats_test(context = "word") %>%
+      as.list(),
+    list(
+      num_1 = c("-0.010", "74.000", "NA", "0.000", "500.000", "0.001", "84.300"),
+      int_1 = c("1", "-100000", "800", "5", "NA", "1", "-32"),
+      lett = c("<hey>", "B", "C", "D", "E", "F", "G")
+    )
+  )
+
+  # Expect an error if no `values` or `pattern` given
+  expect_error(gt(data_tbl) %>% sub_values(replacement = "hey"))
+
+  # Expect an error if no `replacement` given
+  expect_error(gt(data_tbl) %>% sub_values(values = "A"))
+
+  # Expect an error if the `replacement` isn't of the right type
+  expect_error(gt(data_tbl) %>% sub_values(values = "A", replacement = TRUE))
+
+  # Expect an error if the `replacement` isn't of the right length
+  expect_error(gt(data_tbl) %>% sub_values(values = "A", replacement = character(0)))
+  expect_error(gt(data_tbl) %>% sub_values(values = "A", replacement = c("A", "B")))
 })
