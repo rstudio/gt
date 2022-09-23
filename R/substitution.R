@@ -705,7 +705,7 @@ sub_values <- function(
 
   sub_replace_value <- function(
     x,
-    value,
+    values,
     pattern,
     replacement,
     context
@@ -713,7 +713,7 @@ sub_values <- function(
 
     if (!is.null(pattern)) {
 
-      repl_value <-
+      repl_values <-
         ifelse(
           !is.na(x) & is.character(x) & str_has_match(x, pattern = pattern),
           replacement,
@@ -722,19 +722,19 @@ sub_values <- function(
 
     } else {
 
-      repl_value <-
+      repl_values <-
         ifelse(
-          !is.na(x) & x == value,
+          !is.na(x) & x %in% values,
           replacement,
           NA_character_
         )
     }
 
     if (escape) {
-      repl_value <- process_text(text = repl_value, context = context)
+      repl_values <- process_text(text = repl_values, context = context)
     }
 
-    repl_value
+    repl_values
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -748,7 +748,7 @@ sub_values <- function(
 
         sub_replace_value(
           x,
-          value = value,
+          values = values,
           pattern = pattern,
           replacement = replacement,
           context = "html"
@@ -758,7 +758,7 @@ sub_values <- function(
 
         sub_replace_value(
           x,
-          value = value,
+          values = values,
           pattern = pattern,
           replacement = replacement,
           context = "rtf"
@@ -768,7 +768,7 @@ sub_values <- function(
 
         sub_replace_value(
           x,
-          value = value,
+          values = values,
           pattern = pattern,
           replacement = replacement,
           context = "latex"
@@ -778,7 +778,7 @@ sub_values <- function(
 
         sub_replace_value(
           x,
-          value = value,
+          values = values,
           pattern = pattern,
           replacement = replacement,
           context = "default"
