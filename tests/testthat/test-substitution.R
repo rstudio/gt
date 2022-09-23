@@ -759,3 +759,225 @@ test_that("the `sub_large_vals()` function works correctly", {
   # Expect an error if an invalid `sign` is used
   expect_error(tab %>% sub_large_vals(columns = "num_1", sign = "?"))
 })
+
+test_that("the `sub_value()` function works correctly", {
+
+  # Create an input table with three columns
+  data_tbl <-
+    dplyr::tibble(
+      num_1 = c(-0.01, 74, NA, 0, 500, 0.001, 84.3),
+      int_1 = c(1L, -100000L, 800L, 5L, NA, 1L, -32L),
+      lett = LETTERS[1:7]
+    )
+
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_value(value = 1, replacement = "hey!") %>%
+      render_formats_test(context = "html") %>%
+      as.list(),
+    list(
+      num_1 = c("-0.010", "74.000", "NA", "0.000", "500.000", "0.001", "84.300"),
+      int_1 = c("hey!", "-100000", "800", "5", "NA", "hey!", "-32"),
+      lett = c("A", "B", "C", "D", "E", "F", "G")
+    )
+  )
+
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_value(value = "1", replacement = "hey!") %>%
+      render_formats_test(context = "html") %>%
+      as.list(),
+    list(
+      num_1 = c("-0.010", "74.000", "NA", "0.000", "500.000", "0.001", "84.300"),
+      int_1 = c("hey!", "-100000", "800", "5", "NA", "hey!", "-32"),
+      lett = c("A", "B", "C", "D", "E", "F", "G")
+    )
+  )
+
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_value(value = "G", replacement = "hey!") %>%
+      render_formats_test(context = "html") %>%
+      as.list(),
+    list(
+      num_1 = c("-0.010", "74.000", "NA", "0.000", "500.000", "0.001", "84.300"),
+      int_1 = c("1", "-100000", "800", "5", "NA", "1", "-32"),
+      lett = c("A", "B", "C", "D", "E", "F", "hey!")
+    )
+  )
+
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_value(value = 74, replacement = "hey!") %>%
+      render_formats_test(context = "html") %>%
+      as.list(),
+    list(
+      num_1 = c("-0.010", "hey!", "NA", "0.000", "500.000", "0.001", "84.300"),
+      int_1 = c("1", "-100000", "800", "5", "NA", "1", "-32"),
+      lett = c("A", "B", "C", "D", "E", "F", "G")
+    )
+  )
+
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_value(value = 0, replacement = "hey!") %>%
+      render_formats_test(context = "html") %>%
+      as.list(),
+    list(
+      num_1 = c("-0.010", "74.000", "NA", "hey!", "500.000", "0.001", "84.300"),
+      int_1 = c("1", "-100000", "800", "5", "NA", "1", "-32"),
+      lett = c("A", "B", "C", "D", "E", "F", "G")
+    )
+  )
+
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_value(value = 0, replacement = "hey!") %>%
+      sub_value(value = 74, replacement = "hey!") %>%
+      render_formats_test(context = "html") %>%
+      as.list(),
+    list(
+      num_1 = c("-0.010", "hey!", "NA", "hey!", "500.000", "0.001", "84.300"),
+      int_1 = c("1", "-100000", "800", "5", "NA", "1", "-32"),
+      lett = c("A", "B", "C", "D", "E", "F", "G")
+    )
+  )
+
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_value(value = 0, replacement = "hey!") %>%
+      sub_value(value = "hey!", replacement = "whey") %>%
+      render_formats_test(context = "html") %>%
+      as.list(),
+    list(
+      num_1 = c("-0.010", "74.000", "NA", "hey!", "500.000", "0.001", "84.300"),
+      int_1 = c("1", "-100000", "800", "5", "NA", "1", "-32"),
+      lett = c("A", "B", "C", "D", "E", "F", "G")
+    )
+  )
+
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_value(value = 74, replacement = "hey!") %>%
+      sub_value(value = 74, replacement = "HEY!!") %>%
+      render_formats_test(context = "html") %>%
+      as.list(),
+    list(
+      num_1 = c("-0.010", "HEY!!", "NA", "0.000", "500.000", "0.001", "84.300"),
+      int_1 = c("1", "-100000", "800", "5", "NA", "1", "-32"),
+      lett = c("A", "B", "C", "D", "E", "F", "G")
+    )
+  )
+
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_value(value = 800, replacement = "hey!") %>%
+      sub_value(value = 74, replacement = "HEY!!") %>%
+      render_formats_test(context = "html") %>%
+      as.list(),
+    list(
+      num_1 = c("-0.010", "HEY!!", "NA", "0.000", "500.000", "0.001", "84.300"),
+      int_1 = c("1", "-100000", "hey!", "5", "NA", "1", "-32"),
+      lett = c("A", "B", "C", "D", "E", "F", "G")
+    )
+  )
+
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_value(value = "A", replacement = "It's A") %>%
+      render_formats_test(context = "html") %>%
+      as.list(),
+    list(
+      num_1 = c("-0.010", "74.000", "NA", "0.000", "500.000", "0.001", "84.300"),
+      int_1 = c("1", "-100000", "800", "5", "NA", "1", "-32"),
+      lett = c("It's A", "B", "C", "D", "E", "F", "G")
+    )
+  )
+
+
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_value(pattern = "A", replacement = "It's A") %>%
+      render_formats_test(context = "html") %>%
+      as.list(),
+    list(
+      num_1 = c("-0.010", "74.000", "NA", "0.000", "500.000", "0.001", "84.300"),
+      int_1 = c("1", "-100000", "800", "5", "NA", "1", "-32"),
+      lett = c("It's A", "B", "C", "D", "E", "F", "G")
+    )
+  )
+
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_value(pattern = "A|C", replacement = "[ac]") %>%
+      render_formats_test(context = "html") %>%
+      as.list(),
+    list(
+      num_1 = c("-0.010", "74.000", "NA", "0.000", "500.000", "0.001", "84.300"),
+      int_1 = c("1", "-100000", "800", "5", "NA", "1", "-32"),
+      lett = c("[ac]", "B", "[ac]", "D", "E", "F", "G")
+    )
+  )
+
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_value(pattern = "0", replacement = "[ac]") %>%
+      render_formats_test(context = "html") %>%
+      as.list(),
+    list(
+      num_1 = c("-0.010", "74.000", "NA", "0.000", "500.000", "0.001", "84.300"),
+      int_1 = c("1", "-100000", "800", "5", "NA", "1", "-32"),
+      lett = c("A", "B", "C", "D", "E", "F", "G")
+    )
+  )
+
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_value(pattern = "1", replacement = "[ac]") %>%
+      render_formats_test(context = "html") %>%
+      as.list(),
+    list(
+      num_1 = c("-0.010", "74.000", "NA", "0.000", "500.000", "0.001", "84.300"),
+      int_1 = c("1", "-100000", "800", "5", "NA", "1", "-32"),
+      lett = c("A", "B", "C", "D", "E", "F", "G")
+    )
+  )
+
+
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_value(pattern = "A", replacement = "<p>It's A</p>") %>%
+      render_formats_test(context = "html") %>%
+      as.list(),
+    list(
+      num_1 = c("-0.010", "74.000", "NA", "0.000", "500.000", "0.001", "84.300"),
+      int_1 = c("1", "-100000", "800", "5", "NA", "1", "-32"),
+      lett = c("&lt;p&gt;It's A&lt;/p&gt;", "B", "C", "D", "E", "F", "G")
+    )
+  )
+
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_value(pattern = "A", replacement = "<div>It's A</div>", escape = FALSE) %>%
+      render_formats_test(context = "html") %>%
+      as.list(),
+    list(
+      num_1 = c("-0.010", "74.000", "NA", "0.000", "500.000", "0.001", "84.300"),
+      int_1 = c("1", "-100000", "800", "5", "NA", "1", "-32"),
+      lett = c("<div>It's A</div>", "B", "C", "D", "E", "F", "G")
+    )
+  )
+
+
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_value(pattern = "A", replacement = "<p>It's A</p>") %>%
+      render_formats_test(context = "html") %>%
+      as.list(),
+    list(
+      num_1 = c("-0.010", "74.000", "NA", "0.000", "500.000", "0.001", "84.300"),
+      int_1 = c("1", "-100000", "800", "5", "NA", "1", "-32"),
+      lett = c("&lt;p&gt;It's A&lt;/p&gt;", "B", "C", "D", "E", "F", "G")
+    )
+  )
+})
