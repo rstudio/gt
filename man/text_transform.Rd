@@ -83,7 +83,7 @@ Other data formatting functions:
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},
-\code{\link{sub_value}()},
+\code{\link{sub_values}()},
 \code{\link{sub_zero}()}
 }
 \concept{data formatting functions}

@@ -33,8 +33,8 @@ to filter down to the rows we need (e.g.,
 \item{escape}{An option to escape text according to the final output format
 of the table. For example, if a LaTeX table is to be generated then LaTeX
 escaping would be performed during rendering. By default this is set to
-\code{TRUE} and setting to \code{FALSE} is useful in the case where LaTeX-formatted
-text should be passed through to the output LaTeX table unchanged.}
+\code{TRUE} and setting to \code{FALSE} would be useful in the case where text is
+crafted for a specific output format in mind.}
 
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other
@@ -110,7 +110,7 @@ Other data formatting functions:
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},
-\code{\link{sub_value}()},
+\code{\link{sub_values}()},
 \code{\link{sub_zero}()},
 \code{\link{text_transform}()}
 }
