@@ -664,15 +664,15 @@ sub_value <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  if (is.null(value)) {
+  if (is.null(value) && is.null(pattern)) {
     cli::cli_abort(
-      "A `value` needs to be given to `sub_value()`."
+      "One of `value` or `pattern` needs to be supplied to `sub_value()`."
     )
   }
 
-  if (is.null(pattern) && is.null(replacement)) {
+  if (is.null(replacement)) {
     cli::cli_abort(
-      "One of `pattern` or `replacement` needs to be supplied to `sub_value()`."
+      "A `replacement` needs to be given to `sub_value()`."
     )
   }
 
