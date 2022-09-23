@@ -633,7 +633,7 @@ check_sub_fn_sign <- function(sign) {
 #'
 #' @description
 #' Should you need to replace specific cell values with something else, the
-#' `sub_value()` function is a good choice.
+#' `sub_values()` function is a good choice.
 #'
 #' @details
 #' Targeting of values is done through `columns` and additionally by `rows` (if
