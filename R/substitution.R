@@ -642,6 +642,21 @@ check_sub_fn_sign <- function(sign) {
 #' argument. See the Arguments section for more information on this.
 #'
 #' @inheritParams fmt_number
+#' @param values The specific value or values that should be replaced with a
+#'   `replacement` value. If `pattern` is also supplied then `values` will be
+#'   ignored.
+#' @param pattern A regex pattern that can target solely those values in
+#'   `character`-based columns. If `values` is also supplied, `pattern` will
+#'   take precedent.
+#' @param replacement The replacement value for any cell values matched by
+#'   either `values` or `pattern`. Must be a character or numeric vector of
+#'   length 1.
+#' @param escape An option to escape replacement text according to the final
+#'   output format of the table. For example, if a LaTeX table is to be
+#'   generated then LaTeX escaping would be performed on the replacements during
+#'   rendering. By default this is set to `TRUE` but setting to `FALSE` would be
+#'   useful in the case where replacement text is crafted for a specific output
+#'   format in mind.
 #'
 #' @return An object of class `gt_tbl`.
 #'
