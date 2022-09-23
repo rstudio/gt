@@ -684,7 +684,24 @@ sub_value <- function(
     context
   ) {
 
-    repl_value <- ifelse(!is.na(x) & x == value, replacement, NA_character_)
+    if (!is.null(pattern)) {
+
+      repl_value <-
+        ifelse(
+          !is.na(x) & is.character(x) & str_has_match(x, pattern = pattern),
+          replacement,
+          NA_character_
+        )
+
+    } else {
+
+      repl_value <-
+        ifelse(
+          !is.na(x) & x == value,
+          replacement,
+          NA_character_
+        )
+    }
 
     if (escape) {
       repl_value <- process_text(text = repl_value, context = context)
