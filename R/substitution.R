@@ -666,11 +666,11 @@ check_sub_fn_sign <- function(sign) {
 #'
 #' @import rlang
 #' @export
-sub_value <- function(
+sub_values <- function(
     data,
     columns = everything(),
     rows = everything(),
-    value = NULL,
+    values = NULL,
     pattern = NULL,
     replacement = NULL,
     escape = TRUE
