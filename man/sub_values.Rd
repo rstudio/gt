@@ -70,6 +70,78 @@ nothing is provided for \code{rows} then entire columns are selected). Condition
 formatting is possible by providing a conditional expression to the \code{rows}
 argument. See the Arguments section for more information on this.
 }
+\section{Examples}{
+
+
+Let's create an input table with three columns. This contains an assortment
+of values that could potentially undergo some substitution via
+\code{sub_values()}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <-
+  dplyr::tibble(
+    num_1 = c(-0.01, 74, NA, 0, 500, 0.001, 84.3),
+    int_1 = c(1L, -100000L, 800L, 5L, NA, 1L, -32L),
+    lett = LETTERS[1:7]
+  )
+
+tbl
+#> # A tibble: 7 x 3
+#>     num_1   int_1 lett 
+#>     <dbl>   <int> <chr>
+#> 1  -0.01        1 A    
+#> 2  74     -100000 B    
+#> 3  NA         800 C    
+#> 4   0           5 D    
+#> 5 500          NA E    
+#> 6   0.001       1 F    
+#> 7  84.3       -32 G
+}\if{html}{\out{</div>}}
+
+Values in the table body cells can be replaced by specifying which values
+should be replaced (in \code{values}) and what the replacement value should be.
+It's okay to search for numerical or character values across all columns and
+the replacement value can also be of the \code{numeric} or \code{character} types.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
+  gt() \%>\%
+  sub_values(values = c(74, 500), replacement = 150) \%>\%
+  sub_values(values = "B", replacement = "Bee") \%>\%
+  sub_values(values = 800, replacement = "Eight hundred")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_values_1.png" alt="This image of a table was generated from the first code example in the `sub_values()` help file." style="width:100\%;">
+}}
+
+We can also use the \code{pattern} argument to target cell values for replacement
+in \code{character}-based columns.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
+  gt() \%>\%
+  sub_values(pattern = "A|C|E", replacement = "Ace")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_values_2.png" alt="This image of a table was generated from the second code example in the `sub_values()` help file." style="width:100\%;">
+}}
+
+For the most flexibility the best option is the \code{fn} argument. Provide a
+function that returns a logical vector when invoked on a column of cell
+values.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
+  gt() \%>\%
+  sub_values(
+    fn = function(x) x >= 0 & x < 50,
+    replacement = "Between 0 and 50"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_values_3.png" alt="This image of a table was generated from the third code example in the `sub_values()` help file." style="width:100\%;">
+}}
+}
+
 \section{Function ID}{
 
 3-21
