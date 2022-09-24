@@ -1139,7 +1139,7 @@ test_that("the `sub_values()` function works correctly", {
     )
   )
 
-  # Expect an error if no `values` or `pattern` given
+  # Expect an error if no `values`, `pattern`, or `fn` given
   expect_error(gt(data_tbl) %>% sub_values(replacement = "hey"))
 
   # Expect an error if no `replacement` given
@@ -1151,4 +1151,7 @@ test_that("the `sub_values()` function works correctly", {
   # Expect an error if the `replacement` isn't of the right length
   expect_error(gt(data_tbl) %>% sub_values(values = "A", replacement = character(0)))
   expect_error(gt(data_tbl) %>% sub_values(values = "A", replacement = c("A", "B")))
+
+  # Expect an error if the `fn` is not a function
+  expect_error(gt(data_tbl) %>% sub_values(fn = "A", replacement = "error"))
 })
