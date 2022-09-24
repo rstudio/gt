@@ -664,6 +664,70 @@ check_sub_fn_sign <- function(sign) {
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @section Examples:
+#'
+#' Let's create an input table with three columns. This contains an assortment
+#' of values that could potentially undergo some substitution via
+#' `sub_values()`.
+#'
+#' ```{r}
+#' tbl <-
+#'   dplyr::tibble(
+#'     num_1 = c(-0.01, 74, NA, 0, 500, 0.001, 84.3),
+#'     int_1 = c(1L, -100000L, 800L, 5L, NA, 1L, -32L),
+#'     lett = LETTERS[1:7]
+#'   )
+#'
+#' tbl
+#' ```
+#'
+#' Values in the table body cells can be replaced by specifying which values
+#' should be replaced (in `values`) and what the replacement value should be.
+#' It's okay to search for numerical or character values across all columns and
+#' the replacement value can also be of the `numeric` or `character` types.
+#'
+#' ```r
+#' tbl %>%
+#'   gt() %>%
+#'   sub_values(values = c(74, 500), replacement = 150) %>%
+#'   sub_values(values = "B", replacement = "Bee") %>%
+#'   sub_values(values = 800, replacement = "Eight hundred")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_sub_values_1.png")`
+#' }}
+#'
+#' We can also use the `pattern` argument to target cell values for replacement
+#' in `character`-based columns.
+#'
+#' ```r
+#' tbl %>%
+#'   gt() %>%
+#'   sub_values(pattern = "A|C|E", replacement = "Ace")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_sub_values_2.png")`
+#' }}
+#'
+#' For the most flexibility the best option is the `fn` argument. Provide a
+#' function that returns a logical vector when invoked on a column of cell
+#' values.
+#'
+#' ```r
+#' tbl %>%
+#'   gt() %>%
+#'   sub_values(
+#'     fn = function(x) x >= 0 & x < 50,
+#'     replacement = "Between 0 and 50"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_sub_values_3.png")`
+#' }}
+#'
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-21
