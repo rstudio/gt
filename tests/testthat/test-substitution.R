@@ -1034,6 +1034,63 @@ test_that("the `sub_values()` function works correctly", {
     )
   )
 
+  # Expect that `fn` will override `pattern`
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_values(pattern = "B|C", fn = function(x) x == 5, replacement = "hey!") %>%
+      render_formats_test(context = "html") %>%
+      as.list(),
+    list(
+      num_1 = c("-0.010", "74.000", "NA", "0.000", "500.000", "0.001", "84.300"),
+      int_1 = c("1", "-100000", "800", "hey!", "NA", "1", "-32"),
+      lett = c("A", "B", "C", "D", "E", "F", "G")
+    )
+  )
+
+  # Expect that `fn` will override `values`
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_values(values = 1, fn = function(x) x == 5, replacement = "hey!") %>%
+      render_formats_test(context = "html") %>%
+      as.list(),
+    list(
+      num_1 = c("-0.010", "74.000", "NA", "0.000", "500.000", "0.001", "84.300"),
+      int_1 = c("1", "-100000", "800", "hey!", "NA", "1", "-32"),
+      lett = c("A", "B", "C", "D", "E", "F", "G")
+    )
+  )
+
+  # Expect that `fn` will override both `pattern` and `values`
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_values(
+        values = 1,
+        pattern = "B|C",
+        fn = function(x) x == 5,
+        replacement = "hey!"
+      ) %>%
+      render_formats_test(context = "html") %>%
+      as.list(),
+    list(
+      num_1 = c("-0.010", "74.000", "NA", "0.000", "500.000", "0.001", "84.300"),
+      int_1 = c("1", "-100000", "800", "hey!", "NA", "1", "-32"),
+      lett = c("A", "B", "C", "D", "E", "F", "G")
+    )
+  )
+
+  # Expect that `pattern` will override `values`
+  expect_equal(
+    gt(data_tbl) %>%
+      sub_values(values = 1, pattern = "B|C", replacement = "hey!") %>%
+      render_formats_test(context = "html") %>%
+      as.list(),
+    list(
+      num_1 = c("-0.010", "74.000", "NA", "0.000", "500.000", "0.001", "84.300"),
+      int_1 = c("1", "-100000", "800", "5", "NA", "1", "-32"),
+      lett = c("A", "hey!", "hey!", "D", "E", "F", "G")
+    )
+  )
+
   # Expect that by default the replacement will be escaped for the output
   # context; HTML output, with escaping of the replacement
   expect_equal(
