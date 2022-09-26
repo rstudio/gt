@@ -711,9 +711,10 @@ check_sub_fn_sign <- function(sign) {
 #' `r man_get_image_tag(file = "man_sub_values_2.png")`
 #' }}
 #'
-#' For the most flexibility the best option is the `fn` argument. Provide a
-#' function that returns a logical vector when invoked on a column of cell
-#' values.
+#' For the most flexibility, it's best to use the `fn` argument. With that you
+#' need to ensure that the function you provide will return a logical vector
+#' when invoked on a column of cell values, taken as `x` (and, the length of
+#' that vector must match the length of `x`).
 #'
 #' ```r
 #' tbl %>%
