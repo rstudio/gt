@@ -125,9 +125,10 @@ in \code{character}-based columns.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_values_2.png" alt="This image of a table was generated from the second code example in the `sub_values()` help file." style="width:100\%;">
 }}
 
-For the most flexibility the best option is the \code{fn} argument. Provide a
-function that returns a logical vector when invoked on a column of cell
-values.
+For the most flexibility, it's best to use the \code{fn} argument. With that you
+need to ensure that the function you provide will return a logical vector
+when invoked on a column of cell values, taken as \code{x} (and, the length of
+that vector must match the length of \code{x}).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   gt() \%>\%
