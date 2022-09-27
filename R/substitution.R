@@ -629,6 +629,269 @@ check_sub_fn_sign <- function(sign) {
   }
 }
 
+#' Substitute targeted values in the table body
+#'
+#' @description
+#' Should you need to replace specific cell values with something else, the
+#' `sub_values()` function is a good choice.
+#'
+#' @details
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). Conditional
+#' formatting is possible by providing a conditional expression to the `rows`
+#' argument. See the Arguments section for more information on this.
+#'
+#' @inheritParams fmt_number
+#' @param values The specific value or values that should be replaced with a
+#'   `replacement` value. If `pattern` is also supplied then `values` will be
+#'   ignored.
+#' @param pattern A regex pattern that can target solely those values in
+#'   `character`-based columns. If `values` is also supplied, `pattern` will
+#'   take precedence.
+#' @param fn A supplied function that operates on `x` (the data in a column) and
+#'   should return a logical vector that matches the length of `x` (i.e., number
+#'   of rows in the input table). If either of `values` or `pattern` is also
+#'   supplied, `fn` will take precedence.
+#' @param replacement The replacement value for any cell values matched by
+#'   either `values` or `pattern`. Must be a character or numeric vector of
+#'   length 1.
+#' @param escape An option to escape replacement text according to the final
+#'   output format of the table. For example, if a LaTeX table is to be
+#'   generated then LaTeX escaping would be performed on the replacements during
+#'   rendering. By default this is set to `TRUE` but setting to `FALSE` would be
+#'   useful in the case where replacement text is crafted for a specific output
+#'   format in mind.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Let's create an input table with three columns. This contains an assortment
+#' of values that could potentially undergo some substitution via
+#' `sub_values()`.
+#'
+#' ```{r}
+#' tbl <-
+#'   dplyr::tibble(
+#'     num_1 = c(-0.01, 74, NA, 0, 500, 0.001, 84.3),
+#'     int_1 = c(1L, -100000L, 800L, 5L, NA, 1L, -32L),
+#'     lett = LETTERS[1:7]
+#'   )
+#'
+#' tbl
+#' ```
+#'
+#' Values in the table body cells can be replaced by specifying which values
+#' should be replaced (in `values`) and what the replacement value should be.
+#' It's okay to search for numerical or character values across all columns and
+#' the replacement value can also be of the `numeric` or `character` types.
+#'
+#' ```r
+#' tbl %>%
+#'   gt() %>%
+#'   sub_values(values = c(74, 500), replacement = 150) %>%
+#'   sub_values(values = "B", replacement = "Bee") %>%
+#'   sub_values(values = 800, replacement = "Eight hundred")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_sub_values_1.png")`
+#' }}
+#'
+#' We can also use the `pattern` argument to target cell values for replacement
+#' in `character`-based columns.
+#'
+#' ```r
+#' tbl %>%
+#'   gt() %>%
+#'   sub_values(pattern = "A|C|E", replacement = "Ace")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_sub_values_2.png")`
+#' }}
+#'
+#' For the most flexibility, it's best to use the `fn` argument. With that you
+#' need to ensure that the function you provide will return a logical vector
+#' when invoked on a column of cell values, taken as `x` (and, the length of
+#' that vector must match the length of `x`).
+#'
+#' ```r
+#' tbl %>%
+#'   gt() %>%
+#'   sub_values(
+#'     fn = function(x) x >= 0 & x < 50,
+#'     replacement = "Between 0 and 50"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_sub_values_3.png")`
+#' }}
+#'
+#' @family data formatting functions
+#' @section Function ID:
+#' 3-21
+#'
+#' @import rlang
+#' @export
+sub_values <- function(
+    data,
+    columns = everything(),
+    rows = everything(),
+    values = NULL,
+    pattern = NULL,
+    fn = NULL,
+    replacement = NULL,
+    escape = TRUE
+) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  if (is.null(values) && is.null(pattern) && is.null(fn)) {
+    cli::cli_abort(
+      "One of `values`, `pattern`, or `fn` needs to be supplied to `sub_value()`."
+    )
+  }
+
+  # Validate that the `fn` object is a function
+  if (!is.null(fn) && !rlang::is_function(fn)) {
+    cli::cli_abort(
+      "A function must be provided to the `fn` argument."
+    )
+  }
+
+  if (is.null(replacement)) {
+    cli::cli_abort(
+      "A `replacement` needs to be provided for any `values` or `pattern`."
+    )
+  }
+
+  if (!is.numeric(replacement) && !is.character(replacement)) {
+    cli::cli_abort(
+      "The `replacement` must be a numeric, integer, or character vector."
+    )
+  }
+
+  if (length(replacement) != 1) {
+    cli::cli_abort(
+      "The length of the `replacement` vector must 1."
+    )
+  }
+
+  sub_replace_value <- function(
+    x,
+    values,
+    pattern,
+    replacement,
+    context
+  ) {
+
+    if (!is.null(fn)) {
+
+      # Invoke the function on the `x` vector
+      vec_logical <- fn(x)
+
+      # Validate that the returned value is a logical vector
+      if (is.null(vec_logical) || !is.logical(vec_logical)) {
+        cli::cli_abort(
+          "The value returned by invoking `fn` must be a logical vector."
+        )
+      }
+
+      # Validate that the logical vector is of the correct length
+      if (length(vec_logical) != length(x)) {
+        cli::cli_abort(
+          "The vector returned by invoking `fn` must be the same as `x`."
+        )
+      }
+
+      # TODO: create the `repl_values` object using the logical vector
+      vec_logical[which(is.na(vec_logical))] <- FALSE
+
+      x[vec_logical] <- as.character(replacement)
+      x[!vec_logical] <- NA_character_
+
+      repl_values <- x
+
+    } else if (!is.null(pattern)) {
+
+      repl_values <-
+        ifelse(
+          !is.na(x) & is.character(x) & str_has_match(x, pattern = pattern),
+          replacement,
+          NA_character_
+        )
+
+    } else {
+
+      repl_values <-
+        ifelse(
+          !is.na(x) & x %in% values,
+          replacement,
+          NA_character_
+        )
+    }
+
+    if (escape) {
+      repl_values <- process_text(text = repl_values, context = context)
+    }
+
+    repl_values
+  }
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions (as a function list) to `subst()`
+  subst(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    fns = list(
+      html = function(x) {
+
+        sub_replace_value(
+          x,
+          values = values,
+          pattern = pattern,
+          replacement = replacement,
+          context = "html"
+        )
+      },
+      rtf = function(x) {
+
+        sub_replace_value(
+          x,
+          values = values,
+          pattern = pattern,
+          replacement = replacement,
+          context = "rtf"
+        )
+      },
+      latex = function(x) {
+
+        sub_replace_value(
+          x,
+          values = values,
+          pattern = pattern,
+          replacement = replacement,
+          context = "latex"
+        )
+      },
+      default = function(x) {
+
+        sub_replace_value(
+          x,
+          values = values,
+          pattern = pattern,
+          replacement = replacement,
+          context = "default"
+        )
+      }
+    )
+  )
+}
+
 subst <- function(
     data,
     columns = everything(),

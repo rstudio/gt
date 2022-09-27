@@ -5,7 +5,7 @@ rtf_paste0 <- function(..., collapse = NULL) {
       if (is.null(x) || is_rtf(x)) {
         x
       } else {
-        rtf_escape(as.character(x))
+        escape_rtf(as.character(x))
       }
     })
 
@@ -751,19 +751,33 @@ footnote_mark_to_rtf <- function(mark) {
   }
 }
 
-rtf_escape <- function(x) {
+escape_rtf <- function(text) {
 
-  if (length(x) < 1) return(x)
+  if (length(text) < 1) return(text)
+
+  # If all text elements are `NA_character_` then return `text` unchanged
+  if (all(is.na(text))) {
+    return(text)
+  }
+
+  # Determine the elements of `text` that are `NA_character_`
+  na_text <- is.na(text)
+
+  x <- text[!na_text]
 
   x <- gsub("\\", "\\'5c", x, fixed = TRUE)
   x <- gsub("{", "\\'7b", x, fixed = TRUE)
   x <- gsub("}", "\\'7d", x, fixed = TRUE)
-  x <- vapply(x, FUN.VALUE = character(1), FUN = rtf_escape_unicode, USE.NAMES = FALSE)
-  class(x) <- "rtf_text"
-  x
+
+  x <- vapply(x, FUN.VALUE = character(1), FUN = escape_rtf_unicode, USE.NAMES = FALSE)
+
+  text[!na_text] <- x
+
+  class(text) <- "rtf_text"
+  text
 }
 
-rtf_escape_unicode <- function(x) {
+escape_rtf_unicode <- function(x) {
 
   # Ensure that we encode non-UTF-8 strings to UTF-8 in a
   # two-step process: (1) to UTF-8, (2) to RTF's weird signed

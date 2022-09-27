@@ -2438,13 +2438,26 @@ latex_special_chars <- c(
 #' @export
 escape_latex <- function(text) {
 
-  m <- gregexpr("[\\\\&%$#_{}~^]", text, perl = TRUE)
+  if (length(text) < 1) return(text)
 
-  special_chars <- regmatches(text, m)
-  escaped_chars <- lapply(special_chars, function(x) {
-    latex_special_chars[x]
-  })
-  regmatches(text, m) <- escaped_chars
+  # If all text elements are `NA_character_` then return `text` unchanged
+  if (all(is.na(text))) {
+    return(text)
+  }
+
+  # Determine the elements of `text` that are `NA_character_`
+  na_text <- is.na(text)
+
+  m <- gregexpr("[\\\\&%$#_{}~^]", text[!na_text], perl = TRUE)
+
+  special_chars <- regmatches(text[!na_text], m)
+
+  escaped_chars <-
+    lapply(special_chars, function(x) {
+      latex_special_chars[x]
+    })
+
+  regmatches(text[!na_text], m) <- escaped_chars
   text
 }
 

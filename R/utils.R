@@ -491,7 +491,7 @@ process_text <- function(text, context = "html") {
 
     } else {
 
-      text <- rtf_escape(text)
+      text <- escape_rtf(text)
 
       return(text)
     }
@@ -891,7 +891,7 @@ cmark_rules_rtf <- list(
   },
   item = function(x, process) {
     # TODO: probably needs something like process_children()
-    rtf_escape(xml2::xml_text(x))
+    escape_rtf(xml2::xml_text(x))
   },
   code_block = function(x, process) {
     rtf_paste0(rtf_raw("{\\f1 "), xml2::xml_text(x), rtf_raw("}"))
@@ -967,7 +967,7 @@ cmark_rules_rtf <- list(
     rtf_raw("{\\i ", process(xml2::xml_children(x)), rtf_raw("}"))
   },
   text = function(x, process) {
-    rtf_escape(xml2::xml_text(x))
+    escape_rtf(xml2::xml_text(x))
   },
   paragraph = function(x, process) {
 
