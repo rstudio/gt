@@ -58,13 +58,101 @@ rm_stubhead <- function(data) {
   dt_stubhead_init(data = data)
 }
 
+#' Remove table footnotes
+#'
+#' @description
+#' If you have one or more footnotes that ought to be removed, the
+#' `rm_footnotes()` function allows for such a selective removal. The table
+#' footer is an optional table part that is positioned below the table body,
+#' containing areas for both the footnotes and source notes.
+#'
+#' This function for removal is useful if you have received a **gt** table
+#' (perhaps through an API that returns **gt** objects) but would prefer that
+#' some or all of the footnotes be removed. This function is safe to use even if
+#' there are no footnotes in the input `gt_tbl` object so long as select helpers
+#' (such as the default `everything()`) are used instead of explicit integer
+#' values.
+#'
+#' @param data A table object of class `gt_tbl`.
+#' @param footnotes A specification of which footnotes should be removed.
+#'   The footnotes to be removed can be given as a vector of integer values
+#'   (they are stored as integer positions, in order of creation, starting at
+#'   `1`). A select helper can also be used and, by default, this is
+#'   `everything()` (whereby all footnotes will be removed).
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @family part removal functions
+#' @section Function ID:
+#' 10-3
+#'
+#' @export
+rm_footnotes <- function(
+    data,
+    footnotes = everything()
+) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  # Obtain the footnotes table (may be an empty table if no footnotes
+  # have been produced by `tab_footnote()`)
+  footnotes_tbl <- dt_footnotes_get(data = data)
+
+  # Obtain the number of rows within the footnotes table; this may be
+  # zero but the number indicates the number of distinct footnotes
+  footnotes_count <- nrow(footnotes_tbl)
+
+  # If there are no footnotes, return the gt object unchanged
+  if (footnotes_count < 1) {
+    return(data)
+  }
+
+  # Get a vector of integer values that indicates which footnotes
+  # are to be targeted for removal; this uses tidyselect and will
+  # error if integer values are provided and they don't all
+  # correspond to row indices of the `footnotes_tbl`
+  footnotes_i <-
+    as.integer(
+      resolve_vector_i(
+        expr = {{ footnotes }},
+        vector = as.character(seq_len(footnotes_count))
+      )
+    )
+
+  # In cases where a select helper is used and there are no
+  # integer values in the resultant vector, return the gt
+  # object unchanged
+  if (length(footnotes_i) < 1) {
+    return(data)
+  }
+
+  # Given that the `footnotes_i` vector is not empty and
+  # corresponds to row indices in `footnotes_tbl`, use that
+  # integer vector to remove components (i.e., footnotes)
+  # from `footnotes_tbl`
+  footnotes_tbl <- footnotes_tbl[-footnotes_i, ]
+
+  # We may either obtain an empty or non-empty `footnotes_tbl`;
+  # in the first case, re-initialize the footnotes table component and,
+  # in the latter case, set the changed `footnotes_tbl` within
+  # the gt object
+  if (nrow(footnotes_tbl) < 1) {
+    data <- dt_footnotes_init(data = data)
+  } else {
+    data <- dt_footnotes_set(data = data, footnotes = footnotes_tbl)
+  }
+
+  data
+}
+
 #' Remove table source notes
 #'
 #' @description
 #' If you have one or more source notes that ought to be removed, the
 #' `rm_source_notes()` function allows for such a selective removal. The table
 #' footer is an optional table part that is positioned below the table body,
-#' containing areas for both the footnotes and the source notes.
+#' containing areas for both the source notes and footnotes.
 #'
 #' This function for removal is useful if you have received a **gt** table
 #' (perhaps through an API that returns **gt** objects) but would prefer that
