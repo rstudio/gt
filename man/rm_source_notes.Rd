@@ -22,7 +22,7 @@ An object of class \code{gt_tbl}.
 If you have one or more source notes that ought to be removed, the
 \code{rm_source_notes()} function allows for such a selective removal. The table
 footer is an optional table part that is positioned below the table body,
-containing areas for both the footnotes and the source notes.
+containing areas for both the source notes and footnotes.
 
 This function for removal is useful if you have received a \strong{gt} table
 (perhaps through an API that returns \strong{gt} objects) but would prefer that
@@ -38,6 +38,7 @@ integer values.
 
 \seealso{
 Other part removal functions: 
+\code{\link{rm_footnotes}()},
 \code{\link{rm_header}()},
 \code{\link{rm_stubhead}()}
 }
