@@ -64,10 +64,14 @@ rm_stubhead <- function(data) {
 #' If you have one or more source notes that ought to be removed, the
 #' `rm_source_notes()` function allows for such a selective removal. The table
 #' footer is an optional table part that is positioned below the table body,
-#' containing areas for both the footnotes and the source notes. This function
-#' for removal is useful if you have received a **gt** table (perhaps through an
-#' API that returns **gt** objects) but would prefer that some or all of the
-#' source notes be removed.
+#' containing areas for both the footnotes and the source notes.
+#'
+#' This function for removal is useful if you have received a **gt** table
+#' (perhaps through an API that returns **gt** objects) but would prefer that
+#' some or all of the source notes be removed. This function is safe to use even
+#' if there are no source notes in the input `gt_tbl` object so long as select
+#' helpers (such as the default `everything()`) are used instead of explicit
+#' integer values.
 #'
 #' @param data A table object of class `gt_tbl`.
 #' @param source_notes A specification of which source notes should be removed.
