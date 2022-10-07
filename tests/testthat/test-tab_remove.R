@@ -1,7 +1,5 @@
 test_that("A table header can be removed using `rm_header()`", {
 
-  exibble %>% gt() %>% tab_header("title", "subtitle")
-
   # Perform a snapshot test where an HTML table contains a title and a subtitle
   exibble %>%
     gt() %>%
@@ -29,5 +27,134 @@ test_that("A table header can be removed using `rm_header()`", {
   expect_equal(
     exibble %>% gt() %>% render_as_html(),
     exibble %>% gt() %>% rm_header() %>% render_as_html()
+  )
+})
+
+test_that("Table source notes can be removed using `rm_source_notes()`", {
+
+  # Perform a snapshot test where an HTML table contains two source notes
+  exibble %>%
+    gt() %>%
+    tab_source_note(source_note = "Source Note 1") %>%
+    tab_source_note(source_note = "Source Note 2") %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  # Expect that we can remove both source notes with `rm_source_notes()`
+  exibble %>%
+    gt() %>%
+    tab_source_note(source_note = "Source Note 1") %>%
+    tab_source_note(source_note = "Source Note 2") %>%
+    rm_source_notes() %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  # Expect that we can remove the first source note with `rm_source_notes()`
+  exibble %>%
+    gt() %>%
+    tab_source_note(source_note = "Source Note 1") %>%
+    tab_source_note(source_note = "Source Note 2") %>%
+    rm_source_notes(source_notes = 1) %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  # Expect that we can remove the second source note with `rm_source_notes()`
+  exibble %>%
+    gt() %>%
+    tab_source_note(source_note = "Source Note 1") %>%
+    tab_source_note(source_note = "Source Note 2") %>%
+    rm_source_notes(source_notes = 2) %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  # Expect that we can remove both source notes with `rm_source_notes()`
+  # in two different ways
+  expect_equal(
+    exibble %>%
+      gt() %>%
+      tab_source_note(source_note = "Source Note 1") %>%
+      tab_source_note(source_note = "Source Note 2") %>%
+      rm_source_notes() %>%
+      render_as_html(),
+    exibble %>%
+      gt() %>%
+      tab_source_note(source_note = "Source Note 1") %>%
+      tab_source_note(source_note = "Source Note 2") %>%
+      rm_source_notes(source_notes = 1:2) %>%
+      render_as_html()
+  )
+
+  # Expect an error when providing any integer values that don't correspond
+  # with the available source notes ([1, 2])
+  expect_error(
+    exibble %>%
+      gt() %>%
+      tab_source_note(source_note = "Source Note 1") %>%
+      tab_source_note(source_note = "Source Note 2") %>%
+      rm_source_notes(source_notes = 0:1)
+  )
+  expect_error(
+    exibble %>%
+      gt() %>%
+      tab_source_note(source_note = "Source Note 1") %>%
+      tab_source_note(source_note = "Source Note 2") %>%
+      rm_source_notes(source_notes = 2:3)
+  )
+  expect_error(
+    exibble %>%
+      gt() %>%
+      tab_source_note(source_note = "Source Note 1") %>%
+      rm_source_notes(source_notes = 2)
+  )
+  expect_error(
+    regexp = NA,
+    exibble %>%
+      gt() %>%
+      tab_source_note(source_note = "Source Note 1") %>%
+      tab_source_note(source_note = "Source Note 2") %>%
+      rm_source_notes(source_notes = 1:2)
+  )
+
+  # Expect that a select expression that matches nothing will:
+  # (1) not error, and
+  # (2) return the data untouched (i.e., source notes unaffected)
+  expect_error(
+    regexp = NA,
+    exibble %>%
+      gt() %>%
+      tab_source_note(source_note = "Source Note 1") %>%
+      tab_source_note(source_note = "Source Note 2") %>%
+      rm_source_notes(source_notes = matches("nothing"))
+  )
+  expect_equal(
+    exibble %>%
+      gt() %>%
+      tab_source_note(source_note = "Source Note 1") %>%
+      tab_source_note(source_note = "Source Note 2") %>%
+      rm_source_notes(source_notes = matches("nothing")) %>%
+      render_as_html(),
+    exibble %>%
+      gt() %>%
+      tab_source_note(source_note = "Source Note 1") %>%
+      tab_source_note(source_note = "Source Note 2") %>%
+      render_as_html()
+  )
+
+  # If there are no source notes the function should return the
+  # data no matter what the input value for `source_notes` is
+  expect_error(
+    regexp = NA,
+    exibble %>%
+      gt() %>%
+      rm_source_notes(source_notes = 1:100)
+  )
+  expect_equal(
+    exibble %>%
+      gt() %>%
+      rm_source_notes(source_notes = 1:100) %>%
+      render_as_html(),
+    exibble %>%
+      gt() %>%
+      render_as_html()
   )
 })
