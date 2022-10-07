@@ -25,6 +25,36 @@ rm_header <- function(data) {
   dt_heading_init(data = data)
 }
 
+#' Remove the stubhead label
+#'
+#' @description
+#' We can easily remove the stubhead label from a **gt** table with
+#' `rm_stubhead()`. The stubhead location only exists if there is a table stub
+#' and the text in that cell is added through the [tab_stubhead()] function.
+#'
+#' This function for removal is useful if you have received a **gt** table
+#' (perhaps through an API that returns **gt** objects) but would prefer that
+#' the table not contain any content in the stubhead. This function is safe to
+#' use even if there is no stubhead label in the input `gt_tbl` object.
+#'
+#' @param data A table object of class `gt_tbl`.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @family part removal functions
+#' @section Function ID:
+#' 10-2
+#'
+#' @export
+rm_stubhead <- function(data) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  # Reinitialize the stubhead component of the `gt_tbl` object
+  dt_stubhead_init(data = data)
+}
+
 #' Remove table source notes
 #'
 #' @description
