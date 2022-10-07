@@ -22,10 +22,14 @@ An object of class \code{gt_tbl}.
 If you have one or more source notes that ought to be removed, the
 \code{rm_source_notes()} function allows for such a selective removal. The table
 footer is an optional table part that is positioned below the table body,
-containing areas for both the footnotes and the source notes. This function
-for removal is useful if you have received a \strong{gt} table (perhaps through an
-API that returns \strong{gt} objects) but would prefer that some or all of the
-source notes be removed.
+containing areas for both the footnotes and the source notes.
+
+This function for removal is useful if you have received a \strong{gt} table
+(perhaps through an API that returns \strong{gt} objects) but would prefer that
+some or all of the source notes be removed. This function is safe to use even
+if there are no source notes in the input \code{gt_tbl} object so long as select
+helpers (such as the default \code{everything()}) are used instead of explicit
+integer values.
 }
 \section{Function ID}{
 
