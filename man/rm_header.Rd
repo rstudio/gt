@@ -29,6 +29,7 @@ no header part in the input \code{gt_tbl} object.
 
 \seealso{
 Other part removal functions: 
-\code{\link{rm_source_notes}()}
+\code{\link{rm_source_notes}()},
+\code{\link{rm_stubhead}()}
 }
 \concept{part removal functions}
