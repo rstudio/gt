@@ -84,7 +84,7 @@ rm_stubhead <- function(data) {
 #'
 #' @family part removal functions
 #' @section Function ID:
-#' 10-2
+#' 10-3
 #'
 #' @export
 rm_source_notes <- function(
