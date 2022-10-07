@@ -18,8 +18,14 @@ test_that("A table header can be removed using `rm_header()`", {
   # Expect that removing a header creates a table no different than
   # one never having a header in the table object
   expect_equal(
-    exibble %>% gt() %>% tab_header(title = "test title", subtitle = "test subtitle") %>% rm_header %>% render_as_html(),
-    exibble %>% gt() %>% render_as_html()
+    exibble %>%
+      gt() %>%
+      tab_header(title = "test title", subtitle = "test subtitle") %>%
+      rm_header() %>%
+      render_as_html(),
+    exibble %>%
+      gt() %>%
+      render_as_html()
   )
 
   # Expect that removing a non-existent header isn't different that
@@ -27,6 +33,63 @@ test_that("A table header can be removed using `rm_header()`", {
   expect_equal(
     exibble %>% gt() %>% render_as_html(),
     exibble %>% gt() %>% rm_header() %>% render_as_html()
+  )
+
+  # If there isn't a header in the input table the function should
+  # return the data without any error
+  expect_error(
+    regexp = NA,
+    exibble %>% gt() %>% rm_header()
+  )
+})
+
+test_that("Stubhead labels can be removed using `rm_stubhead()`", {
+
+  # Perform a snapshot test where an HTML table contains a stub
+  # and a corresponding stubhead label
+  exibble %>%
+    gt(rowname_col = "row") %>%
+    tab_stubhead(label = "Stubhead Label") %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  # Expect that we can remove the stubhead label with `rm_stubhead()`
+  exibble %>%
+    gt(rowname_col = "row") %>%
+    tab_stubhead(label = "Stubhead Label") %>%
+    rm_stubhead() %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  # Expect that removing the stubhead label creates a table no different than
+  # one never having the label in the table object
+  expect_equal(
+    exibble %>%
+      gt(rowname_col = "row") %>%
+      tab_stubhead(label = "Stubhead Label") %>%
+      rm_stubhead() %>%
+      render_as_html(),
+    exibble %>%
+      gt(rowname_col = "row") %>%
+      render_as_html()
+  )
+
+  # Expect that removing a non-existent stubhead label isn't different that
+  # never having one in the table object
+  expect_equal(
+    exibble %>% gt(rowname_col = "row") %>% render_as_html(),
+    exibble %>% gt(rowname_col = "row") %>% rm_stubhead() %>% render_as_html()
+  )
+
+  # If there isn't a stubhead label or even a stub in the input table
+  # the function should return the data without any error
+  expect_error(
+    regexp = NA,
+    exibble %>% gt(rowname_col = "row") %>% rm_stubhead()
+  )
+  expect_error(
+    regexp = NA,
+    exibble %>% gt() %>% rm_stubhead()
   )
 })
 
