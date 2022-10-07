@@ -38,6 +38,7 @@ integer values.
 
 \seealso{
 Other part removal functions: 
-\code{\link{rm_header}()}
+\code{\link{rm_header}()},
+\code{\link{rm_stubhead}()}
 }
 \concept{part removal functions}
