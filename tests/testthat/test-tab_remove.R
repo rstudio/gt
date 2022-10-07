@@ -93,6 +93,135 @@ test_that("Stubhead labels can be removed using `rm_stubhead()`", {
   )
 })
 
+test_that("Table footnotes can be removed using `rm_footnotes()`", {
+
+  # Perform a snapshot test where an HTML table contains two footnotes
+  exibble %>%
+    gt() %>%
+    tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
+    tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  # Expect that we can remove both footnotes with `rm_footnotes()`
+  exibble %>%
+    gt() %>%
+    tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
+    tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
+    rm_footnotes() %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  # Expect that we can remove the first footnote with `rm_footnotes()`
+  exibble %>%
+    gt() %>%
+    tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
+    tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
+    rm_footnotes(footnotes = 1) %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  # Expect that we can remove the second footnote with `rm_footnotes()`
+  exibble %>%
+    gt() %>%
+    tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
+    tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
+    rm_footnotes(footnotes = 2) %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  # Expect that we can remove both footnotes with `rm_footnotes()`
+  # in two different ways
+  expect_equal(
+    exibble %>%
+      gt() %>%
+      tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
+      tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
+      rm_footnotes() %>%
+      render_as_html(),
+    exibble %>%
+      gt() %>%
+      tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
+      tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
+      rm_footnotes(footnotes = 1:2) %>%
+      render_as_html()
+  )
+
+  # Expect an error when providing any integer values that don't correspond
+  # with the available footnotes ([1, 2])
+  expect_error(
+    exibble %>%
+      gt() %>%
+      tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
+      tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
+      rm_footnotes(footnotes = 0:1)
+  )
+  expect_error(
+    exibble %>%
+      gt() %>%
+      tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
+      tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
+      rm_footnotes(footnotes = 2:3)
+  )
+  expect_error(
+    exibble %>%
+      gt() %>%
+      tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
+      rm_footnotes(footnotes = 2)
+  )
+  expect_error(
+    regexp = NA,
+    exibble %>%
+      gt() %>%
+      tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
+      tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
+      rm_footnotes(footnotes = 1:2)
+  )
+
+  # Expect that a select expression that matches nothing will:
+  # (1) not error, and
+  # (2) return the data untouched (i.e., footnotes unaffected)
+  expect_error(
+    regexp = NA,
+    exibble %>%
+      gt() %>%
+      tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
+      tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
+      rm_footnotes(footnotes = matches("nothing"))
+  )
+  expect_equal(
+    exibble %>%
+      gt() %>%
+      tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
+      tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
+      rm_footnotes(footnotes = matches("nothing")) %>%
+      render_as_html(),
+    exibble %>%
+      gt() %>%
+      tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
+      tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
+      render_as_html()
+  )
+
+  # If there are no footnotes the function should return the
+  # data no matter what the input value for `footnotes` is
+  expect_error(
+    regexp = NA,
+    exibble %>%
+      gt() %>%
+      rm_footnotes(footnotes = 1:100)
+  )
+  expect_equal(
+    exibble %>%
+      gt() %>%
+      rm_footnotes(footnotes = 1:100) %>%
+      render_as_html(),
+    exibble %>%
+      gt() %>%
+      render_as_html()
+  )
+})
+
 test_that("Table source notes can be removed using `rm_source_notes()`", {
 
   # Perform a snapshot test where an HTML table contains two source notes
