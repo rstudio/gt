@@ -24,4 +24,8 @@ but would prefer that the table not contain a header.
 10-1
 }
 
+\seealso{
+Other part removal functions: 
+\code{\link{rm_source_notes}()}
+}
 \concept{part removal functions}
