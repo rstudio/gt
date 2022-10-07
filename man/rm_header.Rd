@@ -14,10 +14,13 @@ An object of class \code{gt_tbl}.
 }
 \description{
 We can remove the table header from a \strong{gt} table quite easily with
-\code{rm_header()}. The table header is an optional table part that is positioned
-above the column labels. This function for removal is useful if you have
-received a \strong{gt} table (perhaps through an API that returns \strong{gt} objects)
-but would prefer that the table not contain a header.
+\code{rm_header()}. The table header is an optional table part (positioned above
+the column labels) that can be added through the \code{\link[=tab_header]{tab_header()}}.
+
+This function for removal is useful if you have received a \strong{gt} table
+(perhaps through an API that returns \strong{gt} objects) but would prefer that
+the table not contain a header. This function is safe to use even if there is
+no header part in the input \code{gt_tbl} object.
 }
 \section{Function ID}{
 
