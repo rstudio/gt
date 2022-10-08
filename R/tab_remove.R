@@ -58,6 +58,97 @@ rm_stubhead <- function(data) {
   dt_stubhead_init(data = data)
 }
 
+#' Remove column spanner labels
+#'
+#' @description
+#' If you would like to remove column spanner labels then the `rm_spanners()`
+#' function can make this possible. Column spanner labels appear above the
+#' column labels and can occupy several levels via stacking either though
+#' [tab_spanner()] or [tab_spanner_delim()]. Spanner column labels are
+#' distinguishable and accessible by their ID values.
+#'
+#' This function for removal is useful if you have received a **gt** table
+#' (perhaps through an API that returns **gt** objects) but would prefer that
+#' some or all of the column spanner labels be removed. This function is safe to
+#' use even if there are no column spanner labels in the input `gt_tbl` object
+#' so long as select helpers (such as the default `everything()`) are used
+#' instead of explicit ID values.
+#'
+#' @param data A table object of class `gt_tbl`.
+#' @param spanners A specification of which spanner column labels should be
+#'   removed. Those to be removed can be given as a vector of spanner ID values
+#'   (every spanner column label has one, either set by the user or by **gt**
+#'   when using [tab_spanner_delim()]). A select helper can also be used and, by
+#'   default, this is `everything()` (whereby all spanner column labels will be
+#'   removed).
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @family part removal functions
+#' @section Function ID:
+#' 10-3
+#'
+#' @export
+rm_spanners <- function(
+    data,
+    spanners = everything()
+) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  # Obtain the spanners table (may be an empty table if no spanners
+  # have been produced by `tab_spanner()` or `tab_spanner_delim`)
+  spanners_tbl <- dt_spanners_get(data = data)
+
+  # Obtain the number of rows within the spanners table; this may be
+  # zero but the number indicates the number of distinct spanners
+  spanners_count <- nrow(spanners_tbl)
+
+  # If there are no spanners, return the gt object unchanged
+  if (spanners_count < 1) {
+    return(data)
+  }
+
+  # Get a vector of integer values that indicates which spanners
+  # in the `spanners_tbl` are to be targeted for removal; this
+  # uses tidyselect and will error if character values are provided
+  # and they don't all correspond to `spanner_id` values of
+  # the `spanners_tbl`
+  spanners_i <-
+    as.integer(
+      resolve_vector_i(
+        expr = {{ spanners }},
+        vector = spanners_tbl[["spanner_id"]]
+      )
+    )
+
+  # In cases where a select helper is used and there are no
+  # integer values in the resultant vector, return the gt
+  # object unchanged
+  if (length(spanners_i) < 1) {
+    return(data)
+  }
+
+  # Given that the `spanners_i` vector is not empty and
+  # corresponds to row indices in `spanners_tbl`, use that
+  # integer vector to remove components (i.e., spanners)
+  # from `spanners_tbl`
+  spanners_tbl <- spanners_tbl[-spanners_i, ]
+
+  # We may either obtain an empty or non-empty `spanners_tbl`;
+  # in the first case, re-initialize the spanners table component and,
+  # in the latter case, set the changed `spanners_tbl` within
+  # the gt object
+  if (nrow(spanners_tbl) < 1) {
+    data <- dt_spanners_init(data = data)
+  } else {
+    data <- dt_spanners_set(data = data, spanners = spanners_tbl)
+  }
+
+  data
+}
+
 #' Remove table footnotes
 #'
 #' @description
@@ -84,7 +175,7 @@ rm_stubhead <- function(data) {
 #'
 #' @family part removal functions
 #' @section Function ID:
-#' 10-3
+#' 10-4
 #'
 #' @export
 rm_footnotes <- function(
@@ -172,7 +263,7 @@ rm_footnotes <- function(
 #'
 #' @family part removal functions
 #' @section Function ID:
-#' 10-3
+#' 10-5
 #'
 #' @export
 rm_source_notes <- function(
