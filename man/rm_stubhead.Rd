@@ -31,6 +31,7 @@ use even if there is no stubhead label in the input \code{gt_tbl} object.
 Other part removal functions: 
 \code{\link{rm_footnotes}()},
 \code{\link{rm_header}()},
-\code{\link{rm_source_notes}()}
+\code{\link{rm_source_notes}()},
+\code{\link{rm_spanners}()}
 }
 \concept{part removal functions}

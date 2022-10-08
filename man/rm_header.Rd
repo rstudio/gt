@@ -31,6 +31,7 @@ no header part in the input \code{gt_tbl} object.
 Other part removal functions: 
 \code{\link{rm_footnotes}()},
 \code{\link{rm_source_notes}()},
+\code{\link{rm_spanners}()},
 \code{\link{rm_stubhead}()}
 }
 \concept{part removal functions}
