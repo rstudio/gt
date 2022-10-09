@@ -4,7 +4,7 @@
 \alias{rm_spanners}
 \title{Remove column spanner labels}
 \usage{
-rm_spanners(data, spanners = everything())
+rm_spanners(data, spanners = everything(), level = NULL)
 }
 \arguments{
 \item{data}{A table object of class \code{gt_tbl}.}
@@ -15,6 +15,11 @@ removed. Those to be removed can be given as a vector of spanner ID values
 when using \code{\link[=tab_spanner_delim]{tab_spanner_delim()}}). A select helper can also be used and, by
 default, this is \code{everything()} (whereby all spanner column labels will be
 removed).}
+
+\item{level}{Instead of removing spanner column labels by ID values, entire
+levels of spanners can instead be removed. Supply a numeric vector of level
+values (the first level is \code{1}) and, if they are present, they will be
+removed. Any input given to \code{level} will mean that \code{spanners} is ignored.}
 }
 \value{
 An object of class \code{gt_tbl}.
