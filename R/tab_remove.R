@@ -81,6 +81,10 @@ rm_stubhead <- function(data) {
 #'   when using [tab_spanner_delim()]). A select helper can also be used and, by
 #'   default, this is `everything()` (whereby all spanner column labels will be
 #'   removed).
+#' @param level Instead of removing spanner column labels by ID values, entire
+#'   levels of spanners can instead be removed. Supply a numeric vector of level
+#'   values (the first level is `1`) and, if they are present, they will be
+#'   removed. Any input given to `level` will mean that `spanners` is ignored.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -91,7 +95,8 @@ rm_stubhead <- function(data) {
 #' @export
 rm_spanners <- function(
     data,
-    spanners = everything()
+    spanners = everything(),
+    level = NULL
 ) {
 
   # Perform input object validation
@@ -115,13 +120,32 @@ rm_spanners <- function(
   # uses tidyselect and will error if character values are provided
   # and they don't all correspond to `spanner_id` values of
   # the `spanners_tbl`
-  spanners_i <-
-    as.integer(
-      resolve_vector_i(
-        expr = {{ spanners }},
-        vector = spanners_tbl[["spanner_id"]]
+  if (is.null(level)) {
+
+    spanners_i <-
+      as.integer(
+        resolve_vector_i(
+          expr = {{ spanners }},
+          vector = spanners_tbl[["spanner_id"]]
+        )
       )
-    )
+
+    remove_by <- "id"
+
+  } else {
+
+    # Ensure that `level` is numeric vector
+    if (!is.numeric(level)) {
+      cli::cli_abort(
+        "If using {level} to remove spanners, it must be a numeric vector."
+      )
+    }
+
+    # Transform the `level` vector to an integer vector
+    spanners_i <- as.integer(level)
+
+    remove_by <- "level"
+  }
 
   # In cases where a select helper is used and there are no
   # integer values in the resultant vector, return the gt
@@ -134,7 +158,15 @@ rm_spanners <- function(
   # corresponds to row indices in `spanners_tbl`, use that
   # integer vector to remove components (i.e., spanners)
   # from `spanners_tbl`
-  spanners_tbl <- spanners_tbl[-spanners_i, ]
+  if (remove_by == "id") {
+    spanners_tbl <- spanners_tbl[-spanners_i, ]
+  }
+
+  # If `level` was used then the `spanner_tbl` will undergo
+  # a filtering via those values in the `spanner_level` column
+  if (remove_by == "level") {
+    spanners_tbl <- spanners_tbl[!(spanners_tbl$spanner_level %in% spanners_i), ]
+  }
 
   # We may either obtain an empty or non-empty `spanners_tbl`;
   # in the first case, re-initialize the spanners table component and,
