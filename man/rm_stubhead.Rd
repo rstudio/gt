@@ -22,6 +22,38 @@ This function for removal is useful if you have received a \strong{gt} table
 the table not contain any content in the stubhead. This function is safe to
 use even if there is no stubhead label in the input \code{gt_tbl} object.
 }
+\section{Examples}{
+
+
+Use \code{\link{gtcars}} to create a \strong{gt} table. With \code{\link[=tab_stubhead]{tab_stubhead()}}, it's possible
+to add a stubhead label. This appears in the top-left and can be used to
+describe what is in the stub.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
+  gtcars \%>\%
+  dplyr::select(model, year, hp, trq) \%>\%
+  dplyr::slice(1:5) \%>\%
+  gt(rowname_col = "model") \%>\%
+  tab_stubhead(label = "car")
+
+gt_tbl
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rm_stubhead_1.png" alt="This image of a table was generated from the first code example in the `rm_stubhead()` help file." style="width:100\%;">
+}}
+
+If you decide that you don't want the stubhead label in the \code{gt_tbl} object,
+it can be removed with the \code{rm_stubhead()} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{rm_stubhead(data = gt_tbl)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rm_stubhead_2.png" alt="This image of a table was generated from the second code example in the `rm_stubhead()` help file." style="width:100\%;">
+}}
+}
+
 \section{Function ID}{
 
 10-2
