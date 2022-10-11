@@ -4,7 +4,7 @@
 \alias{rm_spanners}
 \title{Remove column spanner labels}
 \usage{
-rm_spanners(data, spanners = everything(), level = NULL)
+rm_spanners(data, spanners = everything(), levels = NULL)
 }
 \arguments{
 \item{data}{A table object of class \code{gt_tbl}.}
@@ -16,7 +16,7 @@ when using \code{\link[=tab_spanner_delim]{tab_spanner_delim()}}). A select help
 default, this is \code{everything()} (whereby all spanner column labels will be
 removed).}
 
-\item{level}{Instead of removing spanner column labels by ID values, entire
+\item{levels}{Instead of removing spanner column labels by ID values, entire
 levels of spanners can instead be removed. Supply a numeric vector of level
 values (the first level is \code{1}) and, if they are present, they will be
 removed. Any input given to \code{level} will mean that \code{spanners} is ignored.}
@@ -78,6 +78,31 @@ they can all be removed with the \code{rm_spanners()} function.
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rm_spanners_2.png" alt="This image of a table was generated from the second code example in the `rm_spanners()` help file." style="width:100\%;">
+}}
+
+Individual spanner column labels can be removed by ID value. In all the above
+uses of \code{\link[=tab_spanner]{tab_spanner()}}, the \code{label} value \emph{is} the ID value (you can
+alternately set a different ID value though the \code{id} argument). Let's remove
+the \code{"HP"} and \code{"MPG"} spanner column labels with \code{rm_spanners()}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{rm_spanners(data = gt_tbl, spanners = c("HP", "MPG"))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rm_spanners_3.png" alt="This image of a table was generated from the third code example in the `rm_spanners()` help file." style="width:100\%;">
+}}
+
+We can also remove spanner column labels by level with \code{rm_spanners()}.
+Provide a vector of one or more values greater than or equal to \code{1} (the
+first level starts there). In the next example, we'll remove the first level
+of spanner column labels. Any levels not being removed will collapse down
+accordingly.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{rm_spanners(data = gt_tbl, levels = 1)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rm_spanners_4.png" alt="This image of a table was generated from the fourth code example in the `rm_spanners()` help file." style="width:100\%;">
 }}
 }
 
