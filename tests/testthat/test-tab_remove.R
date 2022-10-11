@@ -306,7 +306,7 @@ test_that("Spanner column labels can be removed using `rm_spanners()`", {
         mpg_c, mpg_h
       )
     ) %>%
-    rm_spanners(level = 2) %>%
+    rm_spanners(levels = 2) %>%
     render_as_html() %>%
     expect_snapshot()
 
@@ -327,7 +327,7 @@ test_that("Spanner column labels can be removed using `rm_spanners()`", {
         mpg_c, mpg_h
       )
     ) %>%
-    rm_spanners(level = 1:2) %>%
+    rm_spanners(levels = 1:2) %>%
     render_as_html() %>%
     expect_snapshot()
 
@@ -481,7 +481,7 @@ test_that("Spanner column labels can be removed using `rm_spanners()`", {
       render_as_html()
   )
 
-  # Don't expect an error if targeting levels (in the `level` arg of
+  # Don't expect an error if targeting levels (in the `levels` arg of
   # `rm_spanners()`) that aren't present
   expect_error(
     regexp = NA,
@@ -502,13 +502,12 @@ test_that("Spanner column labels can be removed using `rm_spanners()`", {
           mpg_c, mpg_h
         )
       ) %>%
-      rm_spanners(level = 5) %>%
+      rm_spanners(levels = 5) %>%
       render_as_html()
   )
 
   # Do expect an error if the `levels` vector isn't a numeric one
   expect_error(
-    regexp = NA,
     gtcars %>%
       dplyr::select(
         -mfr, -trim, bdy_style, drivetrain,
@@ -526,7 +525,7 @@ test_that("Spanner column labels can be removed using `rm_spanners()`", {
           mpg_c, mpg_h
         )
       ) %>%
-      rm_spanners(level = "two") %>%
+      rm_spanners(levels = "two") %>%
       render_as_html()
   )
 
