@@ -148,7 +148,7 @@ rm_stubhead <- function(data) {
 #'   when using [tab_spanner_delim()]). A select helper can also be used and, by
 #'   default, this is `everything()` (whereby all spanner column labels will be
 #'   removed).
-#' @param level Instead of removing spanner column labels by ID values, entire
+#' @param levels Instead of removing spanner column labels by ID values, entire
 #'   levels of spanners can instead be removed. Supply a numeric vector of level
 #'   values (the first level is `1`) and, if they are present, they will be
 #'   removed. Any input given to `level` will mean that `spanners` is ignored.
@@ -198,6 +198,33 @@ rm_stubhead <- function(data) {
 #' `r man_get_image_tag(file = "man_rm_spanners_2.png")`
 #' }}
 #'
+#' Individual spanner column labels can be removed by ID value. In all the above
+#' uses of [tab_spanner()], the `label` value *is* the ID value (you can
+#' alternately set a different ID value though the `id` argument). Let's remove
+#' the `"HP"` and `"MPG"` spanner column labels with `rm_spanners()`.
+#'
+#' ```r
+#' rm_spanners(data = gt_tbl, spanners = c("HP", "MPG"))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_rm_spanners_3.png")`
+#' }}
+#'
+#' We can also remove spanner column labels by level with `rm_spanners()`.
+#' Provide a vector of one or more values greater than or equal to `1` (the
+#' first level starts there). In the next example, we'll remove the first level
+#' of spanner column labels. Any levels not being removed will collapse down
+#' accordingly.
+#'
+#' ```r
+#' rm_spanners(data = gt_tbl, levels = 1)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_rm_spanners_4.png")`
+#' }}
+#'
 #' @family part removal functions
 #' @section Function ID:
 #' 6-3
@@ -206,7 +233,7 @@ rm_stubhead <- function(data) {
 rm_spanners <- function(
     data,
     spanners = everything(),
-    level = NULL
+    levels = NULL
 ) {
 
   # Perform input object validation
@@ -230,7 +257,7 @@ rm_spanners <- function(
   # uses tidyselect and will error if character values are provided
   # and they don't all correspond to `spanner_id` values of
   # the `spanners_tbl`
-  if (is.null(level)) {
+  if (is.null(levels)) {
 
     spanners_i <-
       as.integer(
@@ -244,15 +271,15 @@ rm_spanners <- function(
 
   } else {
 
-    # Ensure that `level` is numeric vector
-    if (!is.numeric(level)) {
+    # Ensure that `levels` is numeric vector
+    if (!is.numeric(levels)) {
       cli::cli_abort(
-        "If using {level} to remove spanners, it must be a numeric vector."
+        "If using {levels} to remove spanners, it must be a numeric vector."
       )
     }
 
-    # Transform the `level` vector to an integer vector
-    spanners_i <- as.integer(level)
+    # Transform the `levels` vector to an integer vector
+    spanners_i <- as.integer(levels)
 
     remove_by <- "level"
   }
@@ -272,7 +299,7 @@ rm_spanners <- function(
     spanners_tbl <- spanners_tbl[-spanners_i, ]
   }
 
-  # If `level` was used then the `spanner_tbl` will undergo
+  # If `levels` was used then the `spanner_tbl` will undergo
   # a filtering via those values in the `spanner_level` column
   if (remove_by == "level") {
     spanners_tbl <- spanners_tbl[!(spanners_tbl$spanner_level %in% spanners_i), ]
