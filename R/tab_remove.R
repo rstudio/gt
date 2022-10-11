@@ -14,6 +14,41 @@
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @section Examples:
+#'
+#' Use [`gtcars`] to create a **gt** table. Add a header part with the
+#' [tab_header()] function; with that, we get a title and a subtitle for the
+#' table.
+#'
+#' ```r
+#' gt_tbl <-
+#'   gtcars %>%
+#'   dplyr::select(mfr, model, msrp) %>%
+#'   dplyr::slice(1:5) %>%
+#'   gt() %>%
+#'   tab_header(
+#'     title = md("Data listing from **gtcars**"),
+#'     subtitle = md("`gtcars` is an R dataset")
+#'   )
+#'
+#' gt_tbl
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_rm_header_1.png")`
+#' }}
+#'
+#' If you decide that you don't want the header in the `gt_tbl` object, it can
+#' be removed with the `rm_header()` function.
+#'
+#' ```r
+#' rm_header(data = gt_tbl)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_rm_header_2.png")`
+#' }}
+#'
 #' @family part removal functions
 #' @section Function ID:
 #' 10-1
@@ -43,6 +78,38 @@ rm_header <- function(data) {
 #' @param data A table object of class `gt_tbl`.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Use [`gtcars`] to create a **gt** table. With [tab_stubhead()], it's possible
+#' to add a stubhead label. This appears in the top-left and can be used to
+#' describe what is in the stub.
+#'
+#' ```r
+#' gt_tbl <-
+#'   gtcars %>%
+#'   dplyr::select(model, year, hp, trq) %>%
+#'   dplyr::slice(1:5) %>%
+#'   gt(rowname_col = "model") %>%
+#'   tab_stubhead(label = "car")
+#'
+#' gt_tbl
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_rm_stubhead_1.png")`
+#' }}
+#'
+#' If you decide that you don't want the stubhead label in the `gt_tbl` object,
+#' it can be removed with the `rm_stubhead()` function.
+#'
+#' ```r
+#' rm_stubhead(data = gt_tbl)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_rm_stubhead_2.png")`
+#' }}
 #'
 #' @family part removal functions
 #' @section Function ID:
@@ -87,6 +154,49 @@ rm_stubhead <- function(data) {
 #'   removed. Any input given to `level` will mean that `spanners` is ignored.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Use [`gtcars`] to create a **gt** table. With the [tab_spanner()] function,
+#' we can group several related columns together under spanner column labels. In
+#' this example, that is done with several calls of [tab_spanner()] in order to
+#' create two levels of spanner column labels.
+#'
+#' ```r
+#' gt_tbl <-
+#'   gtcars %>%
+#'   dplyr::select(
+#'     -mfr, -trim, bdy_style, drivetrain,
+#'     -drivetrain, -trsmn, -ctry_origin
+#'   ) %>%
+#'   dplyr::slice(1:8) %>%
+#'   gt(rowname_col = "model") %>%
+#'   tab_spanner(label = "HP", columns = c(hp, hp_rpm)) %>%
+#'   tab_spanner(label = "Torque", columns = c(trq, trq_rpm)) %>%
+#'   tab_spanner(label = "MPG", columns = c(mpg_c, mpg_h)) %>%
+#'   tab_spanner(
+#'     label = "Performance",
+#'     columns = c(
+#'       hp, hp_rpm, trq, trq_rpm,
+#'       mpg_c, mpg_h
+#'     )
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_rm_spanners_1.png")`
+#' }}
+#'
+#' If you decide that you don't want any of the spanners in the `gt_tbl` object,
+#' they can all be removed with the `rm_spanners()` function.
+#'
+#' ```r
+#' rm_spanners(data = gt_tbl)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_rm_spanners_2.png")`
+#' }}
 #'
 #' @family part removal functions
 #' @section Function ID:
