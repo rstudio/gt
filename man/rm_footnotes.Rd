@@ -76,7 +76,7 @@ gt_tbl
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rm_footnote_1.png" alt="This image of a table was generated from the first code example in the `rm_footnote()` help file." style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rm_footnotes_1.png" alt="This image of a table was generated from the first code example in the `rm_footnotes()` help file." style="width:100\%;">
 }}
 
 If you decide that you don't want the footnotes in the \code{gt_tbl} object,
