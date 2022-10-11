@@ -37,9 +37,9 @@
 #' `r man_get_image_tag(file = "man_row_group_order_1.png")`
 #' }}
 #'
-#' @family row modification functions
+#' @family row addition/modification functions
 #' @section Function ID:
-#' 5-1
+#' 5-3
 #'
 #' @export
 row_group_order <- function(

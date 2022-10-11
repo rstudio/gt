@@ -51,7 +51,7 @@
 #'
 #' @family part removal functions
 #' @section Function ID:
-#' 10-1
+#' 6-1
 #'
 #' @export
 rm_header <- function(data) {
@@ -113,7 +113,7 @@ rm_header <- function(data) {
 #'
 #' @family part removal functions
 #' @section Function ID:
-#' 10-2
+#' 6-2
 #'
 #' @export
 rm_stubhead <- function(data) {
@@ -200,7 +200,7 @@ rm_stubhead <- function(data) {
 #'
 #' @family part removal functions
 #' @section Function ID:
-#' 10-3
+#' 6-3
 #'
 #' @export
 rm_spanners <- function(
@@ -317,7 +317,7 @@ rm_spanners <- function(
 #'
 #' @family part removal functions
 #' @section Function ID:
-#' 10-4
+#' 6-4
 #'
 #' @export
 rm_footnotes <- function(
@@ -405,7 +405,7 @@ rm_footnotes <- function(
 #'
 #' @family part removal functions
 #' @section Function ID:
-#' 10-5
+#' 6-5
 #'
 #' @export
 rm_source_notes <- function(
