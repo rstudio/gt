@@ -181,6 +181,8 @@ rm_stubhead <- function(data) {
 #'       mpg_c, mpg_h
 #'     )
 #'   )
+#'
+#' gt_tbl
 #' ```
 #'
 #' \if{html}{\out{
@@ -342,6 +344,78 @@ rm_spanners <- function(
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @section Examples:
+#'
+#' Use [`sza`] to create a **gt** table. Color the `sza` column using the
+#' [data_color()] function, then, use [tab_footnote()] twice to add two
+#' footnotes (each one targeting a different column label).
+#'
+#' ```r
+#' gt_tbl <-
+#'   sza %>%
+#'   dplyr::filter(
+#'     latitude == 20 &
+#'       month == "jan" &
+#'       !is.na(sza)
+#'   ) %>%
+#'   dplyr::select(-latitude, -month) %>%
+#'   gt() %>%
+#'   data_color(
+#'     columns = sza,
+#'     colors = scales::col_numeric(
+#'       palette = c("white", "yellow", "navyblue"),
+#'       domain = c(0, 90)
+#'     )
+#'   ) %>%
+#'   tab_footnote(
+#'     footnote = "Color indicates height of sun.",
+#'     locations = cells_column_labels(
+#'       columns = sza
+#'     )
+#'   ) %>%
+#'   tab_footnote(
+#'     footnote = "
+#'     The true solar time at the given latitude
+#'     and date (first of month) for which the
+#'     solar zenith angle is calculated.
+#'     ",
+#'     locations = cells_column_labels(
+#'       columns = tst
+#'     )
+#'   ) %>%
+#'   cols_width(everything() ~ px(150))
+#'
+#' gt_tbl
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_rm_footnote_1.png")`
+#' }}
+#'
+#' If you decide that you don't want the footnotes in the `gt_tbl` object,
+#' they can be removed with the `rm_footnotes()` function.
+#'
+#' ```r
+#' rm_footnotes(data = gt_tbl)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_rm_footnotes_2.png")`
+#' }}
+#'
+#' Individual footnotes can be selectively removed. Footnotes are identified by
+#' their index values. To remove the footnote concerning true solar time
+#' (footnote `2`, since it was supplied to **gt** after the other footnote) we
+#' would give the correct index value to `footnotes`.
+#'
+#' ```r
+#' rm_footnotes(data = gt_tbl, footnotes = 2)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_rm_footnotes_3.png")`
+#' }}
+#'
 #' @family part removal functions
 #' @section Function ID:
 #' 6-4
@@ -429,6 +503,53 @@ rm_footnotes <- function(
 #'   `everything()` (whereby all source notes will be removed).
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Use [`gtcars`] to create a **gt** table. Use `tab_source_note()` to add a
+#' source note to the table footer that cites the data source.
+#'
+#' ```r
+#' gt_tbl <-
+#'   gtcars %>%
+#'   dplyr::select(mfr, model, msrp) %>%
+#'   dplyr::slice(1:5) %>%
+#'   gt() %>%
+#'   tab_source_note(source_note = "Data from the 'edmunds.com' site.") %>%
+#'   tab_source_note(source_note = "Showing only the first five rows.") %>%
+#'   cols_width(everything() ~ px(120))
+#'
+#' gt_tbl
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_rm_source_notes_1.png")`
+#' }}
+#'
+#' If you decide that you don't want the source notes in the `gt_tbl` object,
+#' they can be removed with the `rm_source_notes()` function.
+#'
+#' ```r
+#' rm_source_notes(data = gt_tbl)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_rm_source_notes_2.png")`
+#' }}
+#'
+#' Individual source notes can be selectively removed. Source notes are
+#' identified by their index values. To remove the source note concerning the
+#' extent of the data (source note `2`, since it was supplied to **gt** after
+#' the other source note) we would give the correct index value to
+#' `source_notes`.
+#'
+#' ```r
+#' rm_source_notes(data = gt_tbl, source_notes = 2)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_rm_source_notes_3.png")`
+#' }}
 #'
 #' @family part removal functions
 #' @section Function ID:
