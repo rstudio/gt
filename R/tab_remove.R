@@ -389,7 +389,7 @@ rm_spanners <- function(
 #' ```
 #'
 #' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_rm_footnote_1.png")`
+#' `r man_get_image_tag(file = "man_rm_footnotes_1.png")`
 #' }}
 #'
 #' If you decide that you don't want the footnotes in the `gt_tbl` object,
