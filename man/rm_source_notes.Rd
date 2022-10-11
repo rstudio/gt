@@ -33,7 +33,7 @@ integer values.
 }
 \section{Function ID}{
 
-10-5
+6-5
 }
 
 \seealso{

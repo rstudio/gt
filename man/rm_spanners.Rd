@@ -83,7 +83,7 @@ they can all be removed with the \code{rm_spanners()} function.
 
 \section{Function ID}{
 
-10-3
+6-3
 }
 
 \seealso{

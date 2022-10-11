@@ -56,7 +56,7 @@ it can be removed with the \code{rm_stubhead()} function.
 
 \section{Function ID}{
 
-10-2
+6-2
 }
 
 \seealso{

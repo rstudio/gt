@@ -99,11 +99,12 @@ is a week number) with the \code{summary_rows()} function.
 
 \section{Function ID}{
 
-6-1
+5-1
 }
 
 \seealso{
-Other row addition functions: 
-\code{\link{grand_summary_rows}()}
+Other row addition/modification functions: 
+\code{\link{grand_summary_rows}()},
+\code{\link{row_group_order}()}
 }
-\concept{row addition functions}
+\concept{row addition/modification functions}
