@@ -93,6 +93,468 @@ test_that("Stubhead labels can be removed using `rm_stubhead()`", {
   )
 })
 
+test_that("Spanner column labels can be removed using `rm_spanners()`", {
+
+  # Perform a snapshot test where an HTML table contains spanners over
+  # two different levels (`1` and `2`)
+  gtcars %>%
+    dplyr::select(
+      -mfr, -trim, bdy_style, drivetrain,
+      -drivetrain, -trsmn, -ctry_origin
+    ) %>%
+    dplyr::slice(1:8) %>%
+    gt(rowname_col = "model") %>%
+    tab_spanner(label = "HP", columns = c(hp, hp_rpm)) %>%
+    tab_spanner(label = "Torque", columns = c(trq, trq_rpm)) %>%
+    tab_spanner(label = "MPG", columns = c(mpg_c, mpg_h)) %>%
+    tab_spanner(
+      label = "Performance",
+      columns = c(
+        hp, hp_rpm, trq, trq_rpm,
+        mpg_c, mpg_h
+      )
+    ) %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  # Expect that all spanner column labels can be removed with `rm_spanners()`
+  gtcars %>%
+    dplyr::select(
+      -mfr, -trim, bdy_style, drivetrain,
+      -drivetrain, -trsmn, -ctry_origin
+    ) %>%
+    dplyr::slice(1:8) %>%
+    gt(rowname_col = "model") %>%
+    tab_spanner(label = "HP", columns = c(hp, hp_rpm)) %>%
+    tab_spanner(label = "Torque", columns = c(trq, trq_rpm)) %>%
+    tab_spanner(label = "MPG", columns = c(mpg_c, mpg_h)) %>%
+    tab_spanner(
+      label = "Performance",
+      columns = c(
+        hp, hp_rpm, trq, trq_rpm,
+        mpg_c, mpg_h
+      )
+    ) %>%
+    rm_spanners() %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  # Expect that spanners selected via ID can be selectively removed
+  gtcars %>%
+    dplyr::select(
+      -mfr, -trim, bdy_style, drivetrain,
+      -drivetrain, -trsmn, -ctry_origin
+    ) %>%
+    dplyr::slice(1:8) %>%
+    gt(rowname_col = "model") %>%
+    tab_spanner(label = "HP", columns = c(hp, hp_rpm)) %>%
+    tab_spanner(label = "Torque", columns = c(trq, trq_rpm)) %>%
+    tab_spanner(label = "MPG", columns = c(mpg_c, mpg_h)) %>%
+    tab_spanner(
+      label = "Performance",
+      columns = c(
+        hp, hp_rpm, trq, trq_rpm,
+        mpg_c, mpg_h
+      )
+    ) %>%
+    rm_spanners(spanners = "HP") %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  gtcars %>%
+    dplyr::select(
+      -mfr, -trim, bdy_style, drivetrain,
+      -drivetrain, -trsmn, -ctry_origin
+    ) %>%
+    dplyr::slice(1:8) %>%
+    gt(rowname_col = "model") %>%
+    tab_spanner(label = "HP", columns = c(hp, hp_rpm)) %>%
+    tab_spanner(label = "Torque", columns = c(trq, trq_rpm)) %>%
+    tab_spanner(label = "MPG", columns = c(mpg_c, mpg_h)) %>%
+    tab_spanner(
+      label = "Performance",
+      columns = c(
+        hp, hp_rpm, trq, trq_rpm,
+        mpg_c, mpg_h
+      )
+    ) %>%
+    rm_spanners(spanners = "Torque") %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  gtcars %>%
+    dplyr::select(
+      -mfr, -trim, bdy_style, drivetrain,
+      -drivetrain, -trsmn, -ctry_origin
+    ) %>%
+    dplyr::slice(1:8) %>%
+    gt(rowname_col = "model") %>%
+    tab_spanner(label = "HP", columns = c(hp, hp_rpm)) %>%
+    tab_spanner(label = "Torque", columns = c(trq, trq_rpm)) %>%
+    tab_spanner(label = "MPG", columns = c(mpg_c, mpg_h)) %>%
+    tab_spanner(
+      label = "Performance",
+      columns = c(
+        hp, hp_rpm, trq, trq_rpm,
+        mpg_c, mpg_h
+      )
+    ) %>%
+    rm_spanners(spanners = "MPG") %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  gtcars %>%
+    dplyr::select(
+      -mfr, -trim, bdy_style, drivetrain,
+      -drivetrain, -trsmn, -ctry_origin
+    ) %>%
+    dplyr::slice(1:8) %>%
+    gt(rowname_col = "model") %>%
+    tab_spanner(label = "HP", columns = c(hp, hp_rpm)) %>%
+    tab_spanner(label = "Torque", columns = c(trq, trq_rpm)) %>%
+    tab_spanner(label = "MPG", columns = c(mpg_c, mpg_h)) %>%
+    tab_spanner(
+      label = "Performance",
+      columns = c(
+        hp, hp_rpm, trq, trq_rpm,
+        mpg_c, mpg_h
+      )
+    ) %>%
+    rm_spanners(spanners = "Performance") %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  gtcars %>%
+    dplyr::select(
+      -mfr, -trim, bdy_style, drivetrain,
+      -drivetrain, -trsmn, -ctry_origin
+    ) %>%
+    dplyr::slice(1:8) %>%
+    gt(rowname_col = "model") %>%
+    tab_spanner(label = "HP", columns = c(hp, hp_rpm)) %>%
+    tab_spanner(label = "Torque", columns = c(trq, trq_rpm)) %>%
+    tab_spanner(label = "MPG", columns = c(mpg_c, mpg_h)) %>%
+    tab_spanner(
+      label = "Performance",
+      columns = c(
+        hp, hp_rpm, trq, trq_rpm,
+        mpg_c, mpg_h
+      )
+    ) %>%
+    rm_spanners(spanners = c("HP", "Torque", "MPG")) %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  gtcars %>%
+    dplyr::select(
+      -mfr, -trim, bdy_style, drivetrain,
+      -drivetrain, -trsmn, -ctry_origin
+    ) %>%
+    dplyr::slice(1:8) %>%
+    gt(rowname_col = "model") %>%
+    tab_spanner(label = "HP", columns = c(hp, hp_rpm)) %>%
+    tab_spanner(label = "Torque", columns = c(trq, trq_rpm)) %>%
+    tab_spanner(label = "MPG", columns = c(mpg_c, mpg_h)) %>%
+    tab_spanner(
+      label = "Performance",
+      columns = c(
+        hp, hp_rpm, trq, trq_rpm,
+        mpg_c, mpg_h
+      )
+    ) %>%
+    rm_spanners(spanners = c("HP", "Torque", "MPG", "Performance")) %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  # Expect that all spanner column labels of targeted levels can be
+  # removed from the table
+  gtcars %>%
+    dplyr::select(
+      -mfr, -trim, bdy_style, drivetrain,
+      -drivetrain, -trsmn, -ctry_origin
+    ) %>%
+    dplyr::slice(1:8) %>%
+    gt(rowname_col = "model") %>%
+    tab_spanner(label = "HP", columns = c(hp, hp_rpm)) %>%
+    tab_spanner(label = "Torque", columns = c(trq, trq_rpm)) %>%
+    tab_spanner(label = "MPG", columns = c(mpg_c, mpg_h)) %>%
+    tab_spanner(
+      label = "Performance",
+      columns = c(
+        hp, hp_rpm, trq, trq_rpm,
+        mpg_c, mpg_h
+      )
+    ) %>%
+    rm_spanners(level = 1) %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  gtcars %>%
+    dplyr::select(
+      -mfr, -trim, bdy_style, drivetrain,
+      -drivetrain, -trsmn, -ctry_origin
+    ) %>%
+    dplyr::slice(1:8) %>%
+    gt(rowname_col = "model") %>%
+    tab_spanner(label = "HP", columns = c(hp, hp_rpm)) %>%
+    tab_spanner(label = "Torque", columns = c(trq, trq_rpm)) %>%
+    tab_spanner(label = "MPG", columns = c(mpg_c, mpg_h)) %>%
+    tab_spanner(
+      label = "Performance",
+      columns = c(
+        hp, hp_rpm, trq, trq_rpm,
+        mpg_c, mpg_h
+      )
+    ) %>%
+    rm_spanners(level = 2) %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  gtcars %>%
+    dplyr::select(
+      -mfr, -trim, bdy_style, drivetrain,
+      -drivetrain, -trsmn, -ctry_origin
+    ) %>%
+    dplyr::slice(1:8) %>%
+    gt(rowname_col = "model") %>%
+    tab_spanner(label = "HP", columns = c(hp, hp_rpm)) %>%
+    tab_spanner(label = "Torque", columns = c(trq, trq_rpm)) %>%
+    tab_spanner(label = "MPG", columns = c(mpg_c, mpg_h)) %>%
+    tab_spanner(
+      label = "Performance",
+      columns = c(
+        hp, hp_rpm, trq, trq_rpm,
+        mpg_c, mpg_h
+      )
+    ) %>%
+    rm_spanners(level = 1:2) %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  # Expect that select helpers can be used to target the ID values
+  # of the spanner column labels
+  expect_equal(
+    gtcars %>%
+      dplyr::select(
+        -mfr, -trim, bdy_style, drivetrain,
+        -drivetrain, -trsmn, -ctry_origin
+      ) %>%
+      dplyr::slice(1:8) %>%
+      gt(rowname_col = "model") %>%
+      tab_spanner(label = "HP", columns = c(hp, hp_rpm)) %>%
+      tab_spanner(label = "Torque", columns = c(trq, trq_rpm)) %>%
+      tab_spanner(label = "MPG", columns = c(mpg_c, mpg_h)) %>%
+      tab_spanner(
+        label = "Performance",
+        columns = c(
+          hp, hp_rpm, trq, trq_rpm,
+          mpg_c, mpg_h
+        )
+      ) %>%
+      rm_spanners(spanners = "Performance") %>%
+      render_as_html(),
+    gtcars %>%
+      dplyr::select(
+        -mfr, -trim, bdy_style, drivetrain,
+        -drivetrain, -trsmn, -ctry_origin
+      ) %>%
+      dplyr::slice(1:8) %>%
+      gt(rowname_col = "model") %>%
+      tab_spanner(label = "HP", columns = c(hp, hp_rpm)) %>%
+      tab_spanner(label = "Torque", columns = c(trq, trq_rpm)) %>%
+      tab_spanner(label = "MPG", columns = c(mpg_c, mpg_h)) %>%
+      tab_spanner(
+        label = "Performance",
+        columns = c(
+          hp, hp_rpm, trq, trq_rpm,
+          mpg_c, mpg_h
+        )
+      ) %>%
+      rm_spanners(spanners = starts_with("Perf")) %>%
+      render_as_html()
+  )
+
+  # Expect that a select expression that matches nothing will:
+  # (1) not error, and
+  # (2) return the data untouched (i.e., spanners unaffected)
+  expect_error(
+    regexp = NA,
+    gtcars %>%
+      dplyr::select(
+        -mfr, -trim, bdy_style, drivetrain,
+        -drivetrain, -trsmn, -ctry_origin
+      ) %>%
+      dplyr::slice(1:8) %>%
+      gt(rowname_col = "model") %>%
+      tab_spanner(label = "HP", columns = c(hp, hp_rpm)) %>%
+      tab_spanner(label = "Torque", columns = c(trq, trq_rpm)) %>%
+      tab_spanner(label = "MPG", columns = c(mpg_c, mpg_h)) %>%
+      tab_spanner(
+        label = "Performance",
+        columns = c(
+          hp, hp_rpm, trq, trq_rpm,
+          mpg_c, mpg_h
+        )
+      ) %>%
+      rm_spanners(spanners = matches("nothing"))
+  )
+  expect_equal(
+    gtcars %>%
+      dplyr::select(
+        -mfr, -trim, bdy_style, drivetrain,
+        -drivetrain, -trsmn, -ctry_origin
+      ) %>%
+      dplyr::slice(1:8) %>%
+      gt(rowname_col = "model") %>%
+      tab_spanner(label = "HP", columns = c(hp, hp_rpm)) %>%
+      tab_spanner(label = "Torque", columns = c(trq, trq_rpm)) %>%
+      tab_spanner(label = "MPG", columns = c(mpg_c, mpg_h)) %>%
+      tab_spanner(
+        label = "Performance",
+        columns = c(
+          hp, hp_rpm, trq, trq_rpm,
+          mpg_c, mpg_h
+        )
+      ) %>%
+      rm_spanners(spanners = matches("nothing")) %>%
+      render_as_html(),
+    gtcars %>%
+      dplyr::select(
+        -mfr, -trim, bdy_style, drivetrain,
+        -drivetrain, -trsmn, -ctry_origin
+      ) %>%
+      dplyr::slice(1:8) %>%
+      gt(rowname_col = "model") %>%
+      tab_spanner(label = "HP", columns = c(hp, hp_rpm)) %>%
+      tab_spanner(label = "Torque", columns = c(trq, trq_rpm)) %>%
+      tab_spanner(label = "MPG", columns = c(mpg_c, mpg_h)) %>%
+      tab_spanner(
+        label = "Performance",
+        columns = c(
+          hp, hp_rpm, trq, trq_rpm,
+          mpg_c, mpg_h
+        )
+      ) %>%
+      render_as_html()
+  )
+
+  # Expect that `TRUE` has the same effect as `everything()` when used as
+  # a value for the `spanners` argument
+  expect_equal(
+    gtcars %>%
+      dplyr::select(
+        -mfr, -trim, bdy_style, drivetrain,
+        -drivetrain, -trsmn, -ctry_origin
+      ) %>%
+      dplyr::slice(1:8) %>%
+      gt(rowname_col = "model") %>%
+      tab_spanner(label = "HP", columns = c(hp, hp_rpm)) %>%
+      tab_spanner(label = "Torque", columns = c(trq, trq_rpm)) %>%
+      tab_spanner(label = "MPG", columns = c(mpg_c, mpg_h)) %>%
+      tab_spanner(
+        label = "Performance",
+        columns = c(
+          hp, hp_rpm, trq, trq_rpm,
+          mpg_c, mpg_h
+        )
+      ) %>%
+      rm_spanners(spanners = everything()) %>%
+      render_as_html(),
+    gtcars %>%
+      dplyr::select(
+        -mfr, -trim, bdy_style, drivetrain,
+        -drivetrain, -trsmn, -ctry_origin
+      ) %>%
+      dplyr::slice(1:8) %>%
+      gt(rowname_col = "model") %>%
+      tab_spanner(label = "HP", columns = c(hp, hp_rpm)) %>%
+      tab_spanner(label = "Torque", columns = c(trq, trq_rpm)) %>%
+      tab_spanner(label = "MPG", columns = c(mpg_c, mpg_h)) %>%
+      tab_spanner(
+        label = "Performance",
+        columns = c(
+          hp, hp_rpm, trq, trq_rpm,
+          mpg_c, mpg_h
+        )
+      ) %>%
+      rm_spanners(spanners = TRUE) %>%
+      render_as_html()
+  )
+
+  # Don't expect an error if targeting levels (in the `level` arg of
+  # `rm_spanners()`) that aren't present
+  expect_error(
+    regexp = NA,
+    gtcars %>%
+      dplyr::select(
+        -mfr, -trim, bdy_style, drivetrain,
+        -drivetrain, -trsmn, -ctry_origin
+      ) %>%
+      dplyr::slice(1:8) %>%
+      gt(rowname_col = "model") %>%
+      tab_spanner(label = "HP", columns = c(hp, hp_rpm)) %>%
+      tab_spanner(label = "Torque", columns = c(trq, trq_rpm)) %>%
+      tab_spanner(label = "MPG", columns = c(mpg_c, mpg_h)) %>%
+      tab_spanner(
+        label = "Performance",
+        columns = c(
+          hp, hp_rpm, trq, trq_rpm,
+          mpg_c, mpg_h
+        )
+      ) %>%
+      rm_spanners(level = 5) %>%
+      render_as_html()
+  )
+
+  # Do expect an error if the `levels` vector isn't a numeric one
+  expect_error(
+    regexp = NA,
+    gtcars %>%
+      dplyr::select(
+        -mfr, -trim, bdy_style, drivetrain,
+        -drivetrain, -trsmn, -ctry_origin
+      ) %>%
+      dplyr::slice(1:8) %>%
+      gt(rowname_col = "model") %>%
+      tab_spanner(label = "HP", columns = c(hp, hp_rpm)) %>%
+      tab_spanner(label = "Torque", columns = c(trq, trq_rpm)) %>%
+      tab_spanner(label = "MPG", columns = c(mpg_c, mpg_h)) %>%
+      tab_spanner(
+        label = "Performance",
+        columns = c(
+          hp, hp_rpm, trq, trq_rpm,
+          mpg_c, mpg_h
+        )
+      ) %>%
+      rm_spanners(level = "two") %>%
+      render_as_html()
+  )
+
+  # Expect an error if the `spanners` vector contains ID values that
+  # don't exist for any spanner column labels
+  expect_error(
+    gtcars %>%
+      dplyr::select(
+        -mfr, -trim, bdy_style, drivetrain,
+        -drivetrain, -trsmn, -ctry_origin
+      ) %>%
+      dplyr::slice(1:8) %>%
+      gt(rowname_col = "model") %>%
+      tab_spanner(label = "HP", columns = c(hp, hp_rpm)) %>%
+      tab_spanner(label = "Torque", columns = c(trq, trq_rpm)) %>%
+      tab_spanner(label = "MPG", columns = c(mpg_c, mpg_h)) %>%
+      tab_spanner(
+        label = "Performance",
+        columns = c(
+          hp, hp_rpm, trq, trq_rpm,
+          mpg_c, mpg_h
+        )
+      ) %>%
+      rm_spanners(spanners = c("HP", "perf")) %>%
+      render_as_html()
+  )
+})
+
 test_that("Table footnotes can be removed using `rm_footnotes()`", {
 
   # Perform a snapshot test where an HTML table contains two footnotes
