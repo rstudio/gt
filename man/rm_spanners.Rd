@@ -38,6 +38,49 @@ use even if there are no column spanner labels in the input \code{gt_tbl} object
 so long as select helpers (such as the default \code{everything()}) are used
 instead of explicit ID values.
 }
+\section{Examples}{
+
+
+Use \code{\link{gtcars}} to create a \strong{gt} table. With the \code{\link[=tab_spanner]{tab_spanner()}} function,
+we can group several related columns together under spanner column labels. In
+this example, that is done with several calls of \code{\link[=tab_spanner]{tab_spanner()}} in order to
+create two levels of spanner column labels.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
+  gtcars \%>\%
+  dplyr::select(
+    -mfr, -trim, bdy_style, drivetrain,
+    -drivetrain, -trsmn, -ctry_origin
+  ) \%>\%
+  dplyr::slice(1:8) \%>\%
+  gt(rowname_col = "model") \%>\%
+  tab_spanner(label = "HP", columns = c(hp, hp_rpm)) \%>\%
+  tab_spanner(label = "Torque", columns = c(trq, trq_rpm)) \%>\%
+  tab_spanner(label = "MPG", columns = c(mpg_c, mpg_h)) \%>\%
+  tab_spanner(
+    label = "Performance",
+    columns = c(
+      hp, hp_rpm, trq, trq_rpm,
+      mpg_c, mpg_h
+    )
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rm_spanners_1.png" alt="This image of a table was generated from the first code example in the `rm_spanners()` help file." style="width:100\%;">
+}}
+
+If you decide that you don't want any of the spanners in the \code{gt_tbl} object,
+they can all be removed with the \code{rm_spanners()} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{rm_spanners(data = gt_tbl)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rm_spanners_2.png" alt="This image of a table was generated from the second code example in the `rm_spanners()` help file." style="width:100\%;">
+}}
+}
+
 \section{Function ID}{
 
 10-3
