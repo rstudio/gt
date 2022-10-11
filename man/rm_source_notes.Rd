@@ -31,6 +31,52 @@ if there are no source notes in the input \code{gt_tbl} object so long as select
 helpers (such as the default \code{everything()}) are used instead of explicit
 integer values.
 }
+\section{Examples}{
+
+
+Use \code{\link{gtcars}} to create a \strong{gt} table. Use \code{tab_source_note()} to add a
+source note to the table footer that cites the data source.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
+  gtcars \%>\%
+  dplyr::select(mfr, model, msrp) \%>\%
+  dplyr::slice(1:5) \%>\%
+  gt() \%>\%
+  tab_source_note(source_note = "Data from the 'edmunds.com' site.") \%>\%
+  tab_source_note(source_note = "Showing only the first five rows.") \%>\%
+  cols_width(everything() ~ px(120))
+
+gt_tbl
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rm_source_notes_1.png" alt="This image of a table was generated from the first code example in the `rm_source_notes()` help file." style="width:100\%;">
+}}
+
+If you decide that you don't want the source notes in the \code{gt_tbl} object,
+they can be removed with the \code{rm_source_notes()} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{rm_source_notes(data = gt_tbl)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rm_source_notes_2.png" alt="This image of a table was generated from the second code example in the `rm_source_notes()` help file." style="width:100\%;">
+}}
+
+Individual source notes can be selectively removed. Source notes are
+identified by their index values. To remove the source note concerning the
+extent of the data (source note \code{2}, since it was supplied to \strong{gt} after
+the other source note) we would give the correct index value to
+\code{source_notes}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{rm_source_notes(data = gt_tbl, source_notes = 2)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rm_source_notes_3.png" alt="This image of a table was generated from the third code example in the `rm_source_notes()` help file." style="width:100\%;">
+}}
+}
+
 \section{Function ID}{
 
 6-5

@@ -64,6 +64,8 @@ create two levels of spanner column labels.
       mpg_c, mpg_h
     )
   )
+
+gt_tbl
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
