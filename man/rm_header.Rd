@@ -22,6 +22,41 @@ This function for removal is useful if you have received a \strong{gt} table
 the table not contain a header. This function is safe to use even if there is
 no header part in the input \code{gt_tbl} object.
 }
+\section{Examples}{
+
+
+Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header part with the
+\code{\link[=tab_header]{tab_header()}} function; with that, we get a title and a subtitle for the
+table.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
+  gtcars \%>\%
+  dplyr::select(mfr, model, msrp) \%>\%
+  dplyr::slice(1:5) \%>\%
+  gt() \%>\%
+  tab_header(
+    title = md("Data listing from **gtcars**"),
+    subtitle = md("`gtcars` is an R dataset")
+  )
+
+gt_tbl
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rm_header_1.png" alt="This image of a table was generated from the first code example in the `rm_header()` help file." style="width:100\%;">
+}}
+
+If you decide that you don't want the header in the \code{gt_tbl} object, it can
+be removed with the \code{rm_header()} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{rm_header(data = gt_tbl)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rm_header_2.png" alt="This image of a table was generated from the second code example in the `rm_header()` help file." style="width:100\%;">
+}}
+}
+
 \section{Function ID}{
 
 10-1
