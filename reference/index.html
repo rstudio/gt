@@ -345,25 +345,9 @@
         </dt>
         <dd>Merge data from two or more columns to a single column</dd>
       </dl></div><div class="section level2">
-      <h2 id="modify-rows">Modify Rows<a class="anchor" aria-label="anchor" href="#modify-rows"></a></h2>
+      <h2 id="add-or-modify-rows">Add or Modify Rows<a class="anchor" aria-label="anchor" href="#add-or-modify-rows"></a></h2>
       
-      <p class="section-desc"></p><p>The only function currently that modifies entire rows is the <code><a href="../reference/row_group_order.html">row_group_order()</a></code> function. It lets us modify the ordering of any row groups in the table.</p>
-
-      
-    </div><div id="" class="section level2">
-      
-      
-      
-
-      <dl><dt>
-          
-          <code><a href="row_group_order.html">row_group_order()</a></code> 
-        </dt>
-        <dd>Modify the ordering of any row groups</dd>
-      </dl></div><div class="section level2">
-      <h2 id="add-rows">Add Rows<a class="anchor" aria-label="anchor" href="#add-rows"></a></h2>
-      
-      <p class="section-desc"></p><p>There are two functions that will add rows to a <strong>gt</strong> table: <code><a href="../reference/summary_rows.html">summary_rows()</a></code> and <code><a href="../reference/grand_summary_rows.html">grand_summary_rows()</a></code>. These functions will both add summary rows but one will do it in a groupwise fashion while the other will create grand summary rows.</p>
+      <p class="section-desc"></p><p>There are two functions that will add rows to a <strong>gt</strong> table: <code><a href="../reference/summary_rows.html">summary_rows()</a></code> and <code><a href="../reference/grand_summary_rows.html">grand_summary_rows()</a></code>. These functions will both add summary rows but one will do it in a groupwise fashion while the other will create grand summary rows. The <code><a href="../reference/row_group_order.html">row_group_order()</a></code> function lets us modify the ordering of any row groups in the table.</p>
 
       
     </div><div id="" class="section level2">
@@ -381,6 +365,47 @@
           <code><a href="grand_summary_rows.html">grand_summary_rows()</a></code> 
         </dt>
         <dd>Add grand summary rows using aggregation functions</dd>
+      </dl><dl><dt>
+          
+          <code><a href="row_group_order.html">row_group_order()</a></code> 
+        </dt>
+        <dd>Modify the ordering of any row groups</dd>
+      </dl></div><div class="section level2">
+      <h2 id="remove-parts-of-a-table">Remove Parts of a Table<a class="anchor" aria-label="anchor" href="#remove-parts-of-a-table"></a></h2>
+      
+      <p class="section-desc"></p><p>The <code>rm_*()</code> functions let us safely remove parts of a <strong>gt</strong> table. This can be advantageous in those instances where you would obtain a <strong>gt</strong> table but prefer to excise some parts of it.</p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="rm_header.html">rm_header()</a></code> 
+        </dt>
+        <dd>Remove the table header</dd>
+      </dl><dl><dt>
+          
+          <code><a href="rm_stubhead.html">rm_stubhead()</a></code> 
+        </dt>
+        <dd>Remove the stubhead label</dd>
+      </dl><dl><dt>
+          
+          <code><a href="rm_spanners.html">rm_spanners()</a></code> 
+        </dt>
+        <dd>Remove column spanner labels</dd>
+      </dl><dl><dt>
+          
+          <code><a href="rm_footnotes.html">rm_footnotes()</a></code> 
+        </dt>
+        <dd>Remove table footnotes</dd>
+      </dl><dl><dt>
+          
+          <code><a href="rm_source_notes.html">rm_source_notes()</a></code> 
+        </dt>
+        <dd>Remove table source notes</dd>
       </dl></div><div class="section level2">
       <h2 id="helper-functions">Helper Functions<a class="anchor" aria-label="anchor" href="#helper-functions"></a></h2>
       
