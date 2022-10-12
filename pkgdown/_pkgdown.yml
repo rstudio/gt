@@ -8,6 +8,14 @@ url: https://gt.rstudio.com
 template:
   bootstrap: 5
 
+authors:
+  JooYoung Seo:
+    href: "https://jooyoungseo.github.io/"
+
+development:
+  mode: auto
+  version_label: default
+
 reference:
   - title: Create Table
     desc: >
@@ -287,6 +295,3 @@ navbar:
     intro:
       text: Intro
       href: articles/intro-creating-gt-tables.html
-
-development:
-  version_tooltip: "Development version"
