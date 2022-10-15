@@ -49,7 +49,12 @@ new ordering in \code{groups}.
 
 \section{Function ID}{
 
-5-1
+5-3
 }
 
-\concept{row modification functions}
+\seealso{
+Other row addition/modification functions: 
+\code{\link{grand_summary_rows}()},
+\code{\link{summary_rows}()}
+}
+\concept{row addition/modification functions}

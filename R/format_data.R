@@ -4487,8 +4487,8 @@ fmt_markdown <- function(
 #' @param escape An option to escape text according to the final output format
 #'   of the table. For example, if a LaTeX table is to be generated then LaTeX
 #'   escaping would be performed during rendering. By default this is set to
-#'   `TRUE` and setting to `FALSE` is useful in the case where LaTeX-formatted
-#'   text should be passed through to the output LaTeX table unchanged.
+#'   `TRUE` and setting to `FALSE` would be useful in the case where text is
+#'   crafted for a specific output format in mind.
 #'
 #' @return An object of class `gt_tbl`.
 #'

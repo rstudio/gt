@@ -156,6 +156,7 @@ Other data formatting functions:
 \code{\link{fmt}()},
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},
+\code{\link{sub_values}()},
 \code{\link{sub_zero}()},
 \code{\link{text_transform}()}
 }

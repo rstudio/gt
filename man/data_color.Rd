@@ -155,7 +155,7 @@ as the domain.
 
 \section{Function ID}{
 
-3-22
+3-23
 }
 
 \seealso{
@@ -180,6 +180,7 @@ Other data formatting functions:
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},
+\code{\link{sub_values}()},
 \code{\link{sub_zero}()},
 \code{\link{text_transform}()}
 }
