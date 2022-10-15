@@ -1,300 +1,480 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://gt.rstudio.com/index.html</loc>
+    <loc>https://gt.rstudio.com/dev/CODE_OF_CONDUCT.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/adjust_luminance.html</loc>
+    <loc>https://gt.rstudio.com/dev/CONTRIBUTING.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/as.data.frame.gt_tbl.html</loc>
+    <loc>https://gt.rstudio.com/dev/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/as_latex.html</loc>
+    <loc>https://gt.rstudio.com/dev/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/as_raw_html.html</loc>
+    <loc>https://gt.rstudio.com/dev/PULL_REQUEST_TEMPLATE.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/as_rtf.html</loc>
+    <loc>https://gt.rstudio.com/dev/articles/case-study-gtcars.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/cell_borders.html</loc>
+    <loc>https://gt.rstudio.com/dev/articles/creating-summary-lines.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/cell_fill.html</loc>
+    <loc>https://gt.rstudio.com/dev/articles/gt-datasets.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/cell_text.html</loc>
+    <loc>https://gt.rstudio.com/dev/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/cells_body.html</loc>
+    <loc>https://gt.rstudio.com/dev/articles/intro-creating-gt-tables.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/cells_column_labels.html</loc>
+    <loc>https://gt.rstudio.com/dev/authors.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/cells_column_spanners.html</loc>
+    <loc>https://gt.rstudio.com/dev/index.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/cells_data.html</loc>
+    <loc>https://gt.rstudio.com/dev/news/index.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/cells_grand_summary.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/adjust_luminance.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/cells_group.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/as.data.frame.gt_tbl.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/cells_row_groups.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/as_latex.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/cells_stub.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/as_raw_html.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/cells_stubhead.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/as_rtf.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/cells_summary.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/as_word.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/cells_title.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/cell_borders.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/cols_align.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/cell_fill.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/cols_hide.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/cell_text.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/cols_label.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/cells_body.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/cols_merge.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/cells_column_labels.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/cols_merge_range.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/cells_column_spanners.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/cols_merge_uncert.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/cells_footnotes.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/cols_move.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/cells_grand_summary.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/cols_move_to_end.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/cells_group.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/cols_move_to_start.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/cells_row_groups.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/cols_width.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/cells_source_notes.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/countrypops.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/cells_stub.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/currency.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/cells_stub_grand_summary.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/data_color.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/cells_stub_summary.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/escape_latex.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/cells_stubhead.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/exibble.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/cells_summary.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/extract_summary.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/cells_title.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/fmt.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/cols_align.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/fmt_currency.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/cols_align_decimal.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/fmt_date.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/cols_hide.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/fmt_datetime.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/cols_label.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/fmt_markdown.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/cols_merge.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/fmt_missing.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/cols_merge_n_pct.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/fmt_number.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/cols_merge_range.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/fmt_passthrough.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/cols_merge_uncert.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/fmt_percent.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/cols_move.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/fmt_scientific.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/cols_move_to_end.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/fmt_time.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/cols_move_to_start.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/ggplot_image.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/cols_unhide.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/grand_summary_rows.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/cols_width.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/gt-options.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/countrypops.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/gt-package.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/currency.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/gt.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/data_color.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/gt_latex_dependencies.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/default_fonts.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/gt_output.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/escape_latex.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/gt_preview.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/exibble.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/gtcars.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/extract_cells.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/gtsave.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/extract_summary.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/html.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/fmt.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/info_currencies.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/fmt_bytes.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/info_date_style.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/fmt_currency.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/info_locales.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/fmt_date.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/info_paletteer.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/fmt_datetime.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/info_time_style.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/fmt_duration.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/local_image.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/fmt_engineering.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/md.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/fmt_fraction.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/opt_align_table_header.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/fmt_integer.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/opt_all_caps.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/fmt_markdown.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/opt_footnote_marks.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/fmt_missing.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/opt_row_striping.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/fmt_number.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/opt_table_lines.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/fmt_partsper.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/opt_table_outline.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/fmt_passthrough.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/pct.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/fmt_percent.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/pipe.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/fmt_roman.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/pizzaplace.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/fmt_scientific.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/print.gt_tbl.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/fmt_time.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/px.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/ggplot_image.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/random_id.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/google_font.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/reexports.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/grand_summary_rows.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/render_gt.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/gt-options.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/row_group_order.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/gt-package.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/sp500.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/gt.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/summary_rows.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/gt_latex_dependencies.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/sza.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/gt_output.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/tab_footnote.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/gt_preview.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/tab_header.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/gtcars.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/tab_options.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/gtsave.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/tab_row_group.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/html.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/tab_source_note.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/tab_spanner.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/info_currencies.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/tab_spanner_delim.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/info_date_style.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/tab_stubhead.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/info_google_fonts.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/tab_style.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/info_locales.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/test_image.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/info_paletteer.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/text_transform.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/info_time_style.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/web_image.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/local_image.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/articles/case-study-gtcars.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/md.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/articles/creating-summary-lines.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/opt_align_table_header.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/articles/gt-datasets.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/opt_all_caps.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/articles/intro-creating-gt-tables.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/opt_css.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/opt_footnote_marks.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/opt_horizontal_padding.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/opt_row_striping.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/opt_stylize.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/opt_table_font.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/opt_table_lines.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/opt_table_outline.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/opt_vertical_padding.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/pct.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/pipe.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/pizzaplace.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/print.gt_tbl.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/print.rtf_text.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/px.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/random_id.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/reexports.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/render_gt.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/rm_footnotes.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/rm_header.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/rm_source_notes.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/rm_spanners.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/rm_stubhead.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/row_group_order.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/sp500.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/stub.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/sub_large_vals.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/sub_missing.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/sub_small_vals.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/sub_values.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/sub_zero.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/summary_rows.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/sza.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/tab_footnote.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/tab_header.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/tab_options.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/tab_row_group.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/tab_source_note.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/tab_spanner.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/tab_spanner_delim.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/tab_stub_indent.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/tab_stubhead.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/tab_style.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/test_image.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/text_transform.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/vec_fmt_bytes.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/vec_fmt_currency.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/vec_fmt_date.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/vec_fmt_datetime.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/vec_fmt_duration.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/vec_fmt_engineering.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/vec_fmt_fraction.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/vec_fmt_integer.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/vec_fmt_markdown.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/vec_fmt_number.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/vec_fmt_partsper.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/vec_fmt_percent.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/vec_fmt_roman.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/vec_fmt_scientific.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/vec_fmt_time.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/web_image.html</loc>
   </url>
 </urlset>
