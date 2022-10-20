@@ -956,38 +956,6 @@ tab_stub_indent <- function(
   dt_stub_df_set(data = data, stub_df = stub_df)
 }
 
-#' Add or remove a table caption
-#'
-#' @details
-#' If `caption` is `NULL`, the caption is removed.  If `caption` is missing, the
-#' current caption is returned.  Otherwise, caption of the current gt is created
-#' or modified.
-#'
-#' @inheritParams fmt_number
-#' @param caption An optional table caption to use for cross-referencing
-#'   in R Markdown documents and **bookdown** book projects.
-#' @return For `NULL` or character `caption` arguments, an object of class
-#'   `gt_tbl`.  For a missing `caption` argument, the current caption.
-#' @family part creation/modification functions
-#' @export
-tab_caption <- function(data, caption) {
-  if (missing(caption)) {
-    ret <-
-      dt_options_get_value(
-        data = data,
-        option = "table_caption"
-      )
-  } else {
-    ret <-
-      dt_options_set_value(
-        data = data,
-        option = "table_caption",
-        value = caption
-      )
-  }
-  ret
-}
-
 #' Add a table footnote
 #'
 #' @description
@@ -1411,6 +1379,41 @@ tab_source_note <- function(
   )
 }
 
+#' Add a table caption
+#'
+#' @description
+#' Add a caption to a **gt** table, which is handled specially for a table
+#' within an R Markdown, Quarto, or **bookdown** context. The addition of
+#' captions makes tables cross-referencing across the containing document. The
+#' caption location (i.e., top, bottom, margin) is handled at the document level
+#' in each of these system.
+#'
+#' @inheritParams fmt_number
+#' @param caption The table caption to use for cross-referencing in R Markdown,
+#'   Quarto, or **bookdown**.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @family part creation/modification functions
+#' @section Function ID:
+#' 2-9
+#'
+#' @export
+tab_caption <- function(
+    data,
+    caption
+) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  dt_options_set_value(
+    data = data,
+    option = "table_caption",
+    value = caption
+  )
+}
+
 #' Add custom styles to one or more cells
 #'
 #' @description
@@ -1543,7 +1546,7 @@ tab_source_note <- function(
 #'
 #' @family part creation/modification functions
 #' @section Function ID:
-#' 2-9
+#' 2-10
 #'
 #' @seealso [cell_text()], [cell_fill()], and [cell_borders()] as helpers for
 #'   defining custom styles and [cells_body()] as one of many useful helper
@@ -2232,7 +2235,7 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'
 #' @family part creation/modification functions
 #' @section Function ID:
-#' 2-10
+#' 2-11
 #'
 #' @export
 tab_options <- function(
