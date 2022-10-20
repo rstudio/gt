@@ -109,6 +109,7 @@ would give the correct index value to \code{footnotes}.
 
 \seealso{
 Other part removal functions: 
+\code{\link{rm_caption}()},
 \code{\link{rm_header}()},
 \code{\link{rm_source_notes}()},
 \code{\link{rm_spanners}()},

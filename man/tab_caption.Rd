@@ -2,28 +2,31 @@
 % Please edit documentation in R/tab_create_modify.R
 \name{tab_caption}
 \alias{tab_caption}
-\title{Add or remove a table caption}
+\title{Add a table caption}
 \usage{
 tab_caption(data, caption)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{caption}{An optional table caption to use for cross-referencing
-in R Markdown documents and \strong{bookdown} book projects.}
+\item{caption}{The table caption to use for cross-referencing in R Markdown,
+Quarto, or \strong{bookdown}.}
 }
 \value{
-For \code{NULL} or character \code{caption} arguments, an object of class
-\code{gt_tbl}.  For a missing \code{caption} argument, the current caption.
+An object of class \code{gt_tbl}.
 }
 \description{
-Add or remove a table caption
+Add a caption to a \strong{gt} table, which is handled specially for a table
+within an R Markdown, Quarto, or \strong{bookdown} context. The addition of
+captions makes tables cross-referencing across the containing document. The
+caption location (i.e., top, bottom, margin) is handled at the document level
+in each of these system.
 }
-\details{
-If \code{caption} is \code{NULL}, the caption is removed.  If \code{caption} is missing, the
-current caption is returned.  Otherwise, caption of the current gt is created
-or modified.
+\section{Function ID}{
+
+2-9
 }
+
 \seealso{
 Other part creation/modification functions: 
 \code{\link{tab_footnote}()},

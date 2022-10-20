@@ -29,8 +29,8 @@ group labels for generation of stub row groups. If the input \code{data} table
 has the \code{grouped_df} class (through use of the \code{\link[dplyr:group_by]{dplyr::group_by()}} function
 or associated \verb{group_by*()} functions) then any input here is ignored.}
 
-\item{caption}{An optional table caption to use for cross-referencing
-in R Markdown documents and \strong{bookdown} book projects.}
+\item{caption}{An optional table caption to use for cross-referencing in R
+Markdown, Quarto, or \strong{bookdown}.}
 
 \item{rownames_to_stub}{An option to take rownames from the input \code{data}
 table as row captions in the display table stub.}
