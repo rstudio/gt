@@ -1,7 +1,5 @@
 # gt (development version)
 
-* A new function `tab_caption()` enables editing captions on a table (#1048).
-
 # gt 0.7.0
 
 ## New features
