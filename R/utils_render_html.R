@@ -153,7 +153,7 @@ create_caption_component_h <- function(data) {
   # Create the table caption if available
   table_caption <- dt_options_get_value(data = data, option = "table_caption")
 
-  if (!is.na(table_caption)) {
+  if (!all(is.na(table_caption))) {
 
     table_caption <- process_text(table_caption, context = "html")
 
@@ -179,7 +179,7 @@ create_caption_component_h <- function(data) {
       # <caption> tag, which bookdown searches for), and then resume protection.
 
       htmltools::HTML(paste0(
-        "<!--/html_preserve--><caption class=gt_caption>",
+        "<!--/html_preserve--><caption class='gt_caption'>",
         table_caption,
         "</caption><!--html_preserve-->"
       ))
