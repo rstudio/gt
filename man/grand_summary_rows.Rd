@@ -91,11 +91,12 @@ summary rows \code{min}, \code{max}, and \code{avg} for the table with the
 
 \section{Function ID}{
 
-6-2
+5-2
 }
 
 \seealso{
-Other row addition functions: 
+Other row addition/modification functions: 
+\code{\link{row_group_order}()},
 \code{\link{summary_rows}()}
 }
-\concept{row addition functions}
+\concept{row addition/modification functions}

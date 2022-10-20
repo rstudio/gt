@@ -8,6 +8,14 @@ url: https://gt.rstudio.com
 template:
   bootstrap: 5
 
+authors:
+  JooYoung Seo:
+    href: "https://jooyoungseo.github.io/"
+
+development:
+  mode: auto
+  version_label: default
+
 reference:
   - title: Create Table
     desc: >
@@ -76,6 +84,7 @@ reference:
     - sub_zero
     - sub_small_vals
     - sub_large_vals
+    - sub_values
     - text_transform
     - data_color
 
@@ -101,23 +110,29 @@ reference:
     - cols_merge_n_pct
     - cols_merge
 
-  - title: Modify Rows
-    desc: >
-      The only function currently that modifies entire rows is the
-      `row_group_order()` function. It lets us modify the ordering of any
-      row groups in the table.
-    contents:
-    - row_group_order
-
-  - title: Add Rows
+  - title: Add or Modify Rows
     desc: >
       There are two functions that will add rows to a **gt** table:
       `summary_rows()` and `grand_summary_rows()`. These functions will both add
       summary rows but one will do it in a groupwise fashion while the other
-      will create grand summary rows.
+      will create grand summary rows. The `row_group_order()` function lets us
+      modify the ordering of any row groups in the table.
     contents:
     - summary_rows
     - grand_summary_rows
+    - row_group_order
+
+  - title: Remove Parts of a Table
+    desc: >
+      The `rm_*()` functions let us safely remove parts of a **gt** table. This
+      can be advantageous in those instances where you would obtain a **gt**
+      table but prefer to excise some parts of it.
+    contents:
+    - rm_header
+    - rm_stubhead
+    - rm_spanners
+    - rm_footnotes
+    - rm_source_notes
 
   - title: Helper Functions
     desc: >
@@ -281,6 +296,3 @@ navbar:
     intro:
       text: Intro
       href: articles/intro-creating-gt-tables.html
-
-development:
-  version_tooltip: "Development version"

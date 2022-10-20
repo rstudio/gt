@@ -666,7 +666,7 @@ tab_row_group <- function(
 
     cli::cli_warn(c(
       "Since gt v0.3.0 the `group` argument has been deprecated.",
-      "*" =  "Use the `label` argument to specify the group label."
+      "*" = "Use the `label` argument to specify the group label."
     ))
   }
 

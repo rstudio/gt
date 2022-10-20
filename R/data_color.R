@@ -59,9 +59,12 @@
 #'   include the cell background (the default, given as `"fill"`) or the cell
 #'   text (`"text"`).
 #' @param autocolor_text An option to let **gt** modify the coloring of text
-#'   within cells undergoing background coloring. This will in some cases yield
-#'   more optimal text-to-background color contrast. By default, this is set to
-#'   `TRUE`.
+#'   within cells undergoing background coloring. This will result in better
+#'   text-to-background color contrast. By default, this is set to `TRUE`.
+#' @param contrast_algo The color contrast algorithm to use when
+#'   `autocolor_text = TRUE`. By default this is `"apca"` (Accessible Perceptual
+#'   Contrast Algorithm) and the alternative to this is `"wcag"` (Web Content
+#'   Accessibility Guidelines).
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -128,7 +131,7 @@
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-22
+#' 3-23
 #'
 #' @import rlang
 #' @export
@@ -138,7 +141,8 @@ data_color <- function(
     colors,
     alpha = NULL,
     apply_to = c("fill", "text"),
-    autocolor_text = TRUE
+    autocolor_text = TRUE,
+    contrast_algo = c("apca", "wcag")
 ) {
 
   # Perform input object validation
@@ -146,6 +150,9 @@ data_color <- function(
 
   # Get the correct `apply_to` value
   apply_to <- match.arg(apply_to)
+
+  # Get the correct `contrast_algo` value
+  contrast_algo <- match.arg(contrast_algo)
 
   colors <- rlang::enquo(colors)
 
@@ -264,7 +271,11 @@ data_color <- function(
 
     if (apply_to == "fill" && autocolor_text) {
 
-      color_vals <- ideal_fgnd_color(bgnd_color = color_vals)
+      color_vals <-
+        ideal_fgnd_color(
+          bgnd_color = color_vals,
+          algo = contrast_algo
+        )
 
       color_styles <- lapply(color_vals, FUN = function(x) cell_text(color = x))
 
@@ -365,8 +376,12 @@ expand_short_hex <- function(colors) {
 ideal_fgnd_color <- function(
     bgnd_color,
     light = "#FFFFFF",
-    dark = "#000000"
+    dark = "#000000",
+    algo = c("apca", "wcag")
 ) {
+
+  # Get the correct `algo` value
+  algo <- match.arg(algo)
 
   # Normalize color to hexadecimal color if it is in the 'rgba()' string format
   bgnd_color <- rgba_to_hex(colors = bgnd_color)
@@ -374,11 +389,20 @@ ideal_fgnd_color <- function(
   # Normalize color to a #RRGGBB (stripping the alpha channel)
   bgnd_color <- html_color(colors = bgnd_color, alpha = 1)
 
-  # Determine the ideal color for the chosen background color
-  yiq_contrasted_threshold <- 128
-  colors <- grDevices::col2rgb(bgnd_color)
-  score <- colSums(colors * c(299, 587, 144)) / 1000
-  ifelse(score >= yiq_contrasted_threshold, dark, light)
+  if (algo == "apca") {
+
+    # Determine the ideal color for the chosen background color with APCA
+    contrast_dark <- get_contrast_ratio(color_1 = dark, color_2 = bgnd_color, algo = "apca")[, 1]
+    contrast_light <- get_contrast_ratio(color_1 = light, color_2 = bgnd_color, algo = "apca")[, 1]
+
+  } else {
+
+    # Determine the ideal color for the chosen background color with WCAG
+    contrast_dark <- get_contrast_ratio(color_1 = dark, color_2 = bgnd_color, algo = "wcag")
+    contrast_light <- get_contrast_ratio(color_1 = light, color_2 = bgnd_color, algo = "wcag")
+  }
+
+  ifelse(abs(contrast_dark) >= abs(contrast_light), dark, light)
 }
 
 #' Convert colors in mixed formats (incl. rgba() strings) format to hexadecimal

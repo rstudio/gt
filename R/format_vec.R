@@ -2070,51 +2070,59 @@ vec_fmt_time <- function(
 #'
 #' ## Quarter
 #'
-#' ### Quarter of the Year: formatting ver.
+#' ### Quarter of the Year: formatting and standalone versions
+#'
+#' The quarter names are identified numerically, starting at `1` and ending at
+#' `4`. Quarter names may vary along two axes: the width and the context. The
+#' context is either 'formatting' (taken as a default), which the form used
+#' within a complete date format string, or, 'standalone', the form for date
+#' elements used independently (such as in calendar headers). The standalone
+#' form may be used in any other date format that shares the same form of the
+#' name. Here, the formatting form for quarters of the year consists of some run
+#' of `"Q"` values whereas the standalone form uses `"q"`.
 #'
 #' | Field Patterns    | Output          | Notes                             |
 #' |-------------------|-----------------|-----------------------------------|
-#' | `"Q"`             | `"3"`           | Numeric, one digit                |
-#' | `"QQ"`            | `"03"`          | Numeric, two digits (zero padded) |
-#' | `"QQQ"`           | `"Q3"`          | Abbreviated                       |
-#' | `"QQQQ"`          | `"3rd quarter"` | Wide                              |
-#' | `"QQQQQ"`         | `"3"`           | Narrow                            |
-#'
-#' ### Quarter of the Year: standalone ver.
-#'
-#' | Field Patterns    | Output          | Notes                             |
-#' |-------------------|-----------------|-----------------------------------|
-#' | `"q"`             | `"3"`           | Numeric, one digit                |
-#' | `"qq"`            | `"03"`          | Numeric, two digits (zero padded) |
-#' | `"qqq"`           | `"Q3"`          | Abbreviated                       |
-#' | `"qqqq"`          | `"3rd quarter"` | Wide                              |
-#' | `"qqqqq"`         | `"3"`           | Narrow                            |
+#' | `"Q"`/`"q"`       | `"3"`           | Numeric, one digit                |
+#' | `"QQ"`/`"qq"`     | `"03"`          | Numeric, two digits (zero padded) |
+#' | `"QQQ"`/`"qqq"`   | `"Q3"`          | Abbreviated                       |
+#' | `"QQQQ"`/`"qqqq"` | `"3rd quarter"` | Wide                              |
+#' | `"QQQQQ"`/`"qqqqq"` | `"3"`         | Narrow                            |
 #'
 #' ## Month
 #'
-#' ### Month: formatting ver.
+#' ### Month: formatting and standalone versions
+#'
+#' The month names are identified numerically, starting at `1` and ending at
+#' `12`. Month names may vary along two axes: the width and the context. The
+#' context is either 'formatting' (taken as a default), which the form used
+#' within a complete date format string, or, 'standalone', the form for date
+#' elements used independently (such as in calendar headers). The standalone
+#' form may be used in any other date format that shares the same form of the
+#' name. Here, the formatting form for months consists of some run of `"M"`
+#' values whereas the standalone form uses `"L"`.
 #'
 #' | Field Patterns    | Output          | Notes                             |
 #' |-------------------|-----------------|-----------------------------------|
-#' | `"M"`             | `"7"`           | Numeric, minimum digits           |
-#' | `"MM"`            | `"07"`          | Numeric, two digits (zero padded) |
-#' | `"MMM"`           | `"Jul"`         | Abbreviated                       |
-#' | `"MMMM"`          | `"July"`        | Wide                              |
-#' | `"MMMMM"`         | `"J"`           | Narrow                            |
-#'
-#' ### Month: standalone ver.
-#'
-#' | Field Patterns    | Output          | Notes                             |
-#' |-------------------|-----------------|-----------------------------------|
-#' | `"M"`             | `"7"`           | Numeric, minimum digits           |
-#' | `"MM"`            | `"07"`          | Numeric, two digits (zero padded) |
-#' | `"MMM"`           | `"Jul"`         | Abbreviated                       |
-#' | `"MMMM"`          | `"July"`        | Wide                              |
-#' | `"MMMMM"`         | `"J"`           | Narrow                            |
+#' | `"M"`/`"L"`       | `"7"`           | Numeric, minimum digits           |
+#' | `"MM"`/`"LL"`     | `"07"`          | Numeric, two digits (zero padded) |
+#' | `"MMM"`/`"LLL"`   | `"Jul"`         | Abbreviated                       |
+#' | `"MMMM"`/`"LLLL"` | `"July"`        | Wide                              |
+#' | `"MMMMM"`/`"LLLLL"` | `"J"`         | Narrow                            |
 #'
 #' ## Week
 #'
 #' ### Week of Year
+#'
+#' Values calculated for the week of year range from `1` to `53`. Week `1` for a
+#' year is the first week that contains at least the specified minimum number of
+#' days from that year. Weeks between week `1` of one year and week `1` of the
+#' following year are numbered sequentially from `2` to `52` or `53` (if
+#' needed).
+#'
+#' There are two available field lengths. Both will display the week of year
+#' value but the `"ww"` width will always show two digits (where weeks `1` to
+#' `9` are zero padded).
 #'
 #' | Field Patterns   | Output    | Notes                                    |
 #' |------------------|-----------|------------------------------------------|
@@ -2122,6 +2130,10 @@ vec_fmt_time <- function(
 #' | `"ww"`           | `"27"`    | Two digits (zero padded)                 |
 #'
 #' ### Week of Month
+#'
+#' The week of a month can range from `1` to `5`. The first day of every month
+#' always begins at week `1` and with every transition into the beginning of a
+#' week, the week of month value is incremented by `1`.
 #'
 #' | Field Pattern    | Output                                               |
 #' |------------------|------------------------------------------------------|
@@ -2131,12 +2143,22 @@ vec_fmt_time <- function(
 #'
 #' ### Day of Month
 #'
+#' The day of month value is always numeric and there are two available field
+#' length choices in its formatting. Both will display the day of month value
+#' but the `"dd"` formatting will always show two digits (where days `1` to `9`
+#' are zero padded).
+#'
 #' | Field Patterns | Output    | Notes                                      |
 #' |----------------|-----------|--------------------------------------------|
 #' | `"d"`          | `"4"`     | Minimum digits                             |
 #' | `"dd"`         | `"04"`    | Two digits, zero padded                    |
 #'
 #' ### Day of Year
+#'
+#' The day of year value ranges from `1` (January 1) to either `365` or `366`
+#' (December 31), where the higher value of the range indicates that the year is
+#' a leap year (29 days in February, instead of 28). The field length specifies
+#' the minimum number of digits, with zero-padding as necessary.
 #'
 #' | Field Patterns  | Output   | Notes                                      |
 #' |-----------------|----------|--------------------------------------------|
@@ -2146,11 +2168,28 @@ vec_fmt_time <- function(
 #'
 #' ### Day of Week in Month
 #'
+#' The day of week in month returns a numerical value indicating the number of
+#' times a given weekday had occurred in the month (e.g., '2nd Monday in
+#' March'). This conveniently resolves to predicable case structure where ranges
+#' of day of the month values return predictable day of week in month values:
+#'
+#' - days `1` - `7` -> `1`
+#' - days `8` - `14` -> `2`
+#' - days `15` - `21` -> `3`
+#' - days `22` - `28` -> `4`
+#' - days `29` - `31` -> `5`
+#'
 #' | Field Pattern                  | Output                                 |
 #' |--------------------------------|----------------------------------------|
 #' | `"F"`                          | `"1"`                                  |
 #'
-#' ### Modified Julian Day
+#' ### Modified Julian Date
+#'
+#' The modified version of the Julian date is obtained by subtracting
+#' 2,400,000.5 days from the Julian date (the number of days since January 1,
+#' 4713 BC). This essentially results in the number of days since midnight
+#' November 17, 1858. There is a half day offset (unlike the Julian date, the
+#' modified Julian date is referenced to midnight instead of noon).
 #'
 #' | Field Patterns                 | Output                                 |
 #' |--------------------------------|----------------------------------------|
@@ -2159,6 +2198,8 @@ vec_fmt_time <- function(
 #' ## Weekday
 #'
 #' ### Day of Week Name
+#'
+#' The name of the day of week is offered in four different widths.
 #'
 #' | Field Patterns             | Output         | Notes                     |
 #' |----------------------------|----------------|---------------------------|
@@ -2171,6 +2212,12 @@ vec_fmt_time <- function(
 #'
 #' ### AM/PM Period of Day
 #'
+#' This denotes before noon and after noon time periods. May be upper or
+#' lowercase depending on the locale and other options. The wide form may be
+#' the same as the short form if the 'real' long form (e.g. 'ante meridiem') is
+#' not customarily used. The narrow form must be unique, unlike some other
+#' fields.
+#'
 #' | Field Patterns                 | Output   | Notes                       |
 #' |--------------------------------|----------|-----------------------------|
 #' | `"a"`, `"aa"`, or `"aaa"`      | `"PM"`   | Abbreviated                 |
@@ -2179,8 +2226,13 @@ vec_fmt_time <- function(
 #'
 #' ### AM/PM Period of Day Plus Noon and Midnight
 #'
-#' (a) `input_midnight`: `"2020-05-05T00:00:00"`
+#' Provide AM and PM as well as phrases for exactly noon and midnight. May be
+#' upper or lowercase depending on the locale and other options. If the locale
+#' doesn't have the notion of a unique 'noon' (i.e., 12:00), then the PM form
+#' may be substituted. A similar behavior can occur for 'midnight' (00:00) and
+#' the AM form. The narrow form must be unique, unlike some other fields.
 #'
+#' (a) `input_midnight`: `"2020-05-05T00:00:00"`
 #' (b) `input_noon`: `"2020-05-05T12:00:00"`
 #'
 #' | Field Patterns                 | Output             | Notes             |
@@ -2194,8 +2246,12 @@ vec_fmt_time <- function(
 #'
 #' ### Flexible Day Periods
 #'
-#' (a) `input_morning`: `"2020-05-05T00:08:30"`
+#' Flexible day periods denotes things like 'in the afternoon', 'in the
+#' evening', etc., and the flexibility comes from a locale's language and
+#' script. Each locale has an associated rule set that specifies when the day
+#' periods start and end for that locale.
 #'
+#' (a) `input_morning`: `"2020-05-05T00:08:30"`
 #' (b) `input_afternoon`: `"2020-05-05T14:00:00"`
 #'
 #' | Field Patterns             | Output                   | Notes           |
@@ -2209,43 +2265,63 @@ vec_fmt_time <- function(
 #'
 #' ## Hours, Minutes, and Seconds
 #'
-#' ### Hour 1-12
-#'
-#' Using: `"2015-08-01T08:35:09"`
-#'
-#' | Field Patterns         | Output  | Notes                                |
-#' |------------------------|---------|--------------------------------------|
-#' | `"h"`                  | `"8"`   | Numeric, minimum digits              |
-#' | `"hh"`                 | `"08"`  | Numeric, 2 digits (zero padded)      |
-#'
 #' ### Hour 0-23
 #'
-#' Using: `"2015-08-01T08:35:09"`
+#' Hours from `0` to `23` are for a standard 24-hour clock cycle (midnight plus
+#' 1 minute is `00:01`) when using `"HH"` (which is the more common width that
+#' indicates zero-padding to 2 digits).
+#'
+#' Using `"2015-08-01T08:35:09"`:
 #'
 #' | Field Patterns         | Output  | Notes                                |
 #' |------------------------|---------|--------------------------------------|
 #' | `"H"`                  | `"8"`   | Numeric, minimum digits              |
 #' | `"HH"`                 | `"08"`  | Numeric, 2 digits (zero padded)      |
 #'
-#' ### Hour 0-11
+#' ### Hour 1-12
 #'
-#' Using: `"2015-08-01T08:35:09"`
+#' Hours from `1` to `12` are for a standard 12-hour clock cycle (midnight plus
+#' 1 minute is `12:01`) when using `"hh"` (which is the more common width that
+#' indicates zero-padding to 2 digits).
+#'
+#' Using `"2015-08-01T08:35:09"`:
 #'
 #' | Field Patterns         | Output  | Notes                                |
 #' |------------------------|---------|--------------------------------------|
-#' | `"K"`                  | `"7"`   | Numeric, minimum digits              |
-#' | `"KK"`                 | `"07"`  | Numeric, 2 digits (zero padded)      |
+#' | `"h"`                  | `"8"`   | Numeric, minimum digits              |
+#' | `"hh"`                 | `"08"`  | Numeric, 2 digits (zero padded)      |
 #'
 #' ### Hour 1-24
 #'
-#' Using: `"2015-08-01T08:35:09"`
+#' Using hours from `1` to `24` is a less common way to express a 24-hour clock
+#' cycle (midnight plus 1 minute is `24:01`) when using `"kk"` (which is the
+#' more common width that indicates zero-padding to 2 digits).
+#'
+#' Using `"2015-08-01T08:35:09"`:
 #'
 #' | Field Patterns         | Output  | Notes                                |
 #' |------------------------|---------|--------------------------------------|
 #' | `"k"`                  | `"9"`   | Numeric, minimum digits              |
 #' | `"kk"`                 | `"09"`  | Numeric, 2 digits (zero padded)      |
 #'
+#' ### Hour 0-11
+#'
+#' Using hours from `0` to `11` is a less common way to express a 12-hour clock
+#' cycle (midnight plus 1 minute is `00:01`) when using `"KK"` (which is the
+#' more common width that indicates zero-padding to 2 digits).
+#'
+#' Using `"2015-08-01T08:35:09"`:
+#'
+#' | Field Patterns         | Output  | Notes                                |
+#' |------------------------|---------|--------------------------------------|
+#' | `"K"`                  | `"7"`   | Numeric, minimum digits              |
+#' | `"KK"`                 | `"07"`  | Numeric, 2 digits (zero padded)      |
+#'
 #' ### Minute
+#'
+#' The minute of the hour which can be any number from `0` to `59`. Use `"m"` to
+#' show the minimum number of digits, or `"mm"` to always show two digits
+#' (zero-padding, if necessary).
 #'
 #' | Field Patterns         | Output  | Notes                                |
 #' |------------------------|---------|--------------------------------------|
@@ -2254,6 +2330,10 @@ vec_fmt_time <- function(
 #'
 #' ### Seconds
 #'
+#' The second of the minute which can be any number from `0` to `59`. Use `"s"`
+#' to show the minimum number of digits, or `"ss"` to always show two digits
+#' (zero-padding, if necessary).
+#'
 #' | Field Patterns         | Output  | Notes                                |
 #' |------------------------|---------|--------------------------------------|
 #' | `"s"`                  | `"9"`   | Numeric, minimum digits              |
@@ -2261,13 +2341,22 @@ vec_fmt_time <- function(
 #'
 #' ### Fractional Second
 #'
+#' The fractional second truncates (like other time fields) to the width
+#' requested (i.e., count of letters). So using pattern `"SSSS"` will display
+#' four digits past the decimal (which, incidentally, needs to be added manually
+#' to the pattern).
+#'
 #' | Field Patterns                 | Output                                 |
 #' |--------------------------------|----------------------------------------|
 #' | `"S"` to `"SSSSSSSSS"`         | `"2"` -> `"235000000"`                 |
 #'
 #' ### Milliseconds Elapsed in Day
 #'
-#' Using: `"2011-07-27T00:07:19.7223"`
+#' There are 86,400,000 milliseconds in a day and the `"A"` pattern will provide
+#' the whole number. The width can go up to nine digits with `"AAAAAAAAA"` and
+#' these higher field widths will result in zero padding if necessary.
+#'
+#' Using `"2011-07-27T00:07:19.7223"`:
 #'
 #' | Field Patterns                 | Output                                 |
 #' |--------------------------------|----------------------------------------|
@@ -2277,7 +2366,9 @@ vec_fmt_time <- function(
 #'
 #' ### The Era Designator
 #'
-#' This provides the era name for the given date.
+#' This provides the era name for the given date. The Gregorian calendar has two
+#' eras: AD and BC. In the AD year numbering system, AD 1 is immediately
+#' preceded by 1 BC, with nothing in between them (there was no year zero).
 #'
 #' | Field Patterns                 | Output          | Notes                |
 #' |--------------------------------|-----------------|----------------------|
@@ -2289,12 +2380,27 @@ vec_fmt_time <- function(
 #'
 #' ### TZ // Short and Long Specific non-Location Format
 #'
+#' The short and long specific non-location formats for time zones are suggested
+#' for displaying a time with a user friendly time zone name. Where the short
+#' specific format is unavailable, it will fall back to the short localized GMT
+#' format (`"O"`). Where the long specific format is unavailable, it will fall
+#' back to the long localized GMT format (`"OOOO"`).
+#'
 #' | Field Patterns             | Output                    | Notes          |
 #' |----------------------------|---------------------------|----------------|
 #' | `"z"`, `"zz"`, or `"zzz"`  | `"PDT"`                   | Short Specific |
 #' | `"zzzz"`                   | `"Pacific Daylight Time"` | Long Specific  |
 #'
-#' ### TZ // Short and Long Specific non-Location Formats
+#' ### TZ // Common UTC Offset Formats
+#'
+#' The ISO8601 basic format with hours, minutes and optional seconds fields is
+#' represented by `"Z"`, `"ZZ"`, or `"ZZZ"`. The format is equivalent to RFC 822
+#' zone format (when the optional seconds field is absent). This is equivalent
+#' to the `"xxxx"` specifier. The field pattern `"ZZZZ"` represents the long
+#' localized GMT format. This is equivalent to the `"OOOO"` specifier. Finally,
+#' `"ZZZZZ"` pattern yields the ISO8601 extended format with hours, minutes and
+#' optional seconds fields. The ISO8601 UTC indicator `Z` is used when local
+#' time offset is `0`. This is equivalent to the `"XXXXX"` specifier.
 #'
 #' | Field Patterns             | Output       | Notes                       |
 #' |----------------------------|--------------|-----------------------------|
@@ -2304,19 +2410,34 @@ vec_fmt_time <- function(
 #'
 #' ### TZ // Short and Long Localized GMT Formats
 #'
+#' The localized GMT formats come in two widths `"O"` (which removes the minutes
+#' field if it's `0`) and `"OOOO"` (which always contains the minutes field).
+#' The use of the `GMT` indicator changes according to the locale.
+#'
 #' | Field Patterns          | Output        | Notes                         |
 #' |-------------------------|---------------|-------------------------------|
 #' | `"O"`                   | `"GMT-7"`     | Short localized GMT format    |
 #' | `"OOOO"`                | `"GMT-07:00"` | Long localized GMT format     |
 #'
-#' ### TZ // Short and Long Localized GMT Formats
+#' ### TZ // Short and Long Generic non-Location Formats
+#'
+#' The generic non-location formats are useful for displaying a recurring wall
+#' time (e.g., events, meetings) or anywhere people do not want to be overly
+#' specific. Where either of these is unavailable, there is a fallback to the
+#' generic location format (`"VVVV"`), then the short localized GMT format as
+#' the final fallback.
 #'
 #' | Field Patterns  | Output           | Notes                              |
 #' |-----------------|------------------|------------------------------------|
 #' | `"v"`           | `"PT"`           | Short generic non-location format  |
 #' | `"vvvv"`        | `"Pacific Time"` | Long generic non-location format   |
 #'
-#' ### TZ // Short Time Zone IDs and Exemplar City Formats (big V)
+#' ### TZ // Short Time Zone IDs and Exemplar City Formats
+#'
+#' These formats provide variations of the time zone ID and often include the
+#' exemplar city. The widest of these formats, `"VVVV"`, is useful for
+#' populating a choice list for time zones, because it supports 1-to-1 name/zone
+#' ID mapping and is more uniform than other text formats.
 #'
 #' | Field Patterns     | Output                | Notes                      |
 #' |--------------------|-----------------------|----------------------------|
@@ -2327,6 +2448,12 @@ vec_fmt_time <- function(
 #'
 #' ### TZ // ISO 8601 Formats with Z for +0000
 #'
+#' The `"X"`-`"XXX"` field patterns represent valid ISO 8601 patterns for time
+#' zone offsets in datetimes. The final two widths, `"XXXX"` and `"XXXXX"` allow
+#' for optional seconds fields. The seconds field is *not* supported by the ISO
+#' 8601 specification. For all of these, the ISO 8601 UTC indicator `Z` is used
+#' when the local time offset is `0`.
+#'
 #' | Field Patterns | Output     | Notes                                     |
 #' |----------------|------------|-------------------------------------------|
 #' | `"X"`          | `"-07"`    | ISO 8601 basic format (h, optional m)     |
@@ -2336,6 +2463,11 @@ vec_fmt_time <- function(
 #' | `"XXXXX"`      | `"-07:00"` | ISO 8601 extended format (h & m, optional s) |
 #'
 #' ### TZ // ISO 8601 Formats (no use of Z for +0000)
+#'
+#' The `"x"`-`"xxxxx"` field patterns represent valid ISO 8601 patterns for time
+#' zone offsets in datetimes. They are similar to the `"X"`-`"XXXXX"` field
+#' patterns except that the ISO 8601 UTC indicator `Z` *will not* be used when
+#' the local time offset is `0`.
 #'
 #' | Field Patterns | Output     | Notes                                     |
 #' |----------------|------------|-------------------------------------------|
