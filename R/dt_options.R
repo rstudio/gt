@@ -15,11 +15,17 @@ dt_options_init <- function(data) {
 dt_options_set_value <- function(data, option, value) {
 
   dt_options <- dt_options_get(data = data)
-  if (is.null(value)) {
-    dt_options$value[which(dt_options$parameter == option)] <- list(value)
-  } else {
-    dt_options$value[[which(dt_options$parameter == option)]] <- value
-  }
+
+  dt_options$value[[which(dt_options$parameter == option)]] <- value
+
+  dt_options_set(data = data, options = dt_options)
+}
+
+dt_options_reset_value <- function(data, option, value) {
+
+  dt_options <- dt_options_get(data = data)
+
+  dt_options$value[[which(dt_options$parameter == option)]] <- value
 
   dt_options_set(data = data, options = dt_options)
 }
@@ -45,7 +51,7 @@ dt_options_tbl <-
     "container_overflow_x",              FALSE,  "container",        "overflow","auto",
     "container_overflow_y",              FALSE,  "container",        "overflow","auto",
     "table_id",                          FALSE,  "table",            "value",   NA_character_,
-    "table_caption",                     FALSE,  "table",            "value",   NULL,
+    "table_caption",                     FALSE,  "table",            "value",   NA_character_,
     "table_width",                        TRUE,  "table",            "px",      "auto",
     "table_layout",                       TRUE,  "table",            "value",   "fixed",
     "table_margin_left",                  TRUE,  "table",            "px",      "auto",
