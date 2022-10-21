@@ -632,6 +632,41 @@ rm_source_notes <- function(
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @section Examples:
+#'
+#' Use [`gtcars`] to create a **gt** table. Add a header part with the
+#' [tab_header()] function, and, add a caption as well with [tab_caption()].
+#'
+#' ```r
+#' gt_tbl <-
+#'   gtcars %>%
+#'   dplyr::select(mfr, model, msrp) %>%
+#'   dplyr::slice(1:5) %>%
+#'   gt() %>%
+#'   tab_header(
+#'     title = md("Data listing from **gtcars**"),
+#'     subtitle = md("`gtcars` is an R dataset")
+#'   ) %>%
+#'   tab_caption(caption = md("**gt** table example."))
+#'
+#' gt_tbl
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_rm_caption_1.png")`
+#' }}
+#'
+#' If you decide that you don't want the caption in the `gt_tbl` object,
+#' it can be removed with the `rm_caption()` function.
+#'
+#' ```r
+#' rm_caption(data = gt_tbl)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_rm_caption_2.png")`
+#' }}
+#'
 #' @family part removal functions
 #' @section Function ID:
 #' 6-6
