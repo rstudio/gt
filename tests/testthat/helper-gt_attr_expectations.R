@@ -129,7 +129,7 @@ expect_tab <- function(tab, df) {
   expect_equal(
     colnames(dt_stub_df_get(data = tab)),
     c(
-      "rownum_i", "group_id", "rowname", "row_id",
+      "rownum_i", "row_id", "group_id", "rowname",
       "group_label", "indent", "built"
     )
   )
