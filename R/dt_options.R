@@ -15,16 +15,6 @@ dt_options_init <- function(data) {
 dt_options_set_value <- function(data, option, value) {
 
   dt_options <- dt_options_get(data = data)
-
-  dt_options$value[[which(dt_options$parameter == option)]] <- value
-
-  dt_options_set(data = data, options = dt_options)
-}
-
-dt_options_reset_value <- function(data, option, value) {
-
-  dt_options <- dt_options_get(data = data)
-
   dt_options$value[[which(dt_options$parameter == option)]] <- value
 
   dt_options_set(data = data, options = dt_options)
