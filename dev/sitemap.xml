@@ -349,6 +349,9 @@
     <loc>https://gt.rstudio.com/dev/reference/render_gt.html</loc>
   </url>
   <url>
+    <loc>https://gt.rstudio.com/dev/reference/rm_caption.html</loc>
+  </url>
+  <url>
     <loc>https://gt.rstudio.com/dev/reference/rm_footnotes.html</loc>
   </url>
   <url>
@@ -392,6 +395,9 @@
   </url>
   <url>
     <loc>https://gt.rstudio.com/dev/reference/sza.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/tab_caption.html</loc>
   </url>
   <url>
     <loc>https://gt.rstudio.com/dev/reference/tab_footnote.html</loc>
