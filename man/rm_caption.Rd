@@ -22,6 +22,41 @@ This function for removal is useful if you have received a \strong{gt} table
 the table not have a caption at all. This function is safe to use even if
 there is no table caption set in the input \code{gt_tbl} object.
 }
+\section{Examples}{
+
+
+Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header part with the
+\code{\link[=tab_header]{tab_header()}} function, and, add a caption as well with \code{\link[=tab_caption]{tab_caption()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
+  gtcars \%>\%
+  dplyr::select(mfr, model, msrp) \%>\%
+  dplyr::slice(1:5) \%>\%
+  gt() \%>\%
+  tab_header(
+    title = md("Data listing from **gtcars**"),
+    subtitle = md("`gtcars` is an R dataset")
+  ) \%>\%
+  tab_caption(caption = md("**gt** table example."))
+
+gt_tbl
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rm_caption_1.png" alt="This image of a table was generated from the first code example in the `rm_caption()` help file." style="width:100\%;">
+}}
+
+If you decide that you don't want the caption in the \code{gt_tbl} object,
+it can be removed with the \code{rm_caption()} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{rm_caption(data = gt_tbl)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rm_caption_2.png" alt="This image of a table was generated from the second code example in the `rm_caption()` help file." style="width:100\%;">
+}}
+}
+
 \section{Function ID}{
 
 6-6
