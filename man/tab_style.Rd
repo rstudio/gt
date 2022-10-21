@@ -140,7 +140,7 @@ Use \code{\link{exibble}} to create a \strong{gt} table. Replace missing values 
 
 \section{Function ID}{
 
-2-9
+2-10
 }
 
 \seealso{
@@ -149,6 +149,7 @@ defining custom styles and \code{\link[=cells_body]{cells_body()}} as one of man
 functions for targeting the locations to be styled.
 
 Other part creation/modification functions: 
+\code{\link{tab_caption}()},
 \code{\link{tab_footnote}()},
 \code{\link{tab_header}()},
 \code{\link{tab_options}()},

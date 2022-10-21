@@ -55,6 +55,7 @@ Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header part with t
 
 \seealso{
 Other part creation/modification functions: 
+\code{\link{tab_caption}()},
 \code{\link{tab_footnote}()},
 \code{\link{tab_options}()},
 \code{\link{tab_row_group}()},

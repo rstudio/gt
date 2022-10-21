@@ -37,6 +37,11 @@
     border-right-color: $heading_border_lr_color; // heading.border.lr.color
   }
 
+  .gt_caption {
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+
   .gt_title {
     color: font-color($heading_background_color);
     font-size: $heading_title_font_size; // heading.title.font.size

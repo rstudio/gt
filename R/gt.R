@@ -30,8 +30,8 @@
 #'   group labels for generation of stub row groups. If the input `data` table
 #'   has the `grouped_df` class (through use of the [dplyr::group_by()] function
 #'   or associated `group_by*()` functions) then any input here is ignored.
-#' @param caption An optional table caption to use for cross-referencing
-#'   in R Markdown documents and **bookdown** book projects.
+#' @param caption An optional table caption to use for cross-referencing in R
+#'   Markdown, Quarto, or **bookdown**.
 #' @param rownames_to_stub An option to take rownames from the input `data`
 #'   table as row captions in the display table stub.
 #' @param auto_align Optionally have column data be aligned depending on the
@@ -182,11 +182,7 @@ gt <- function(
       )
   }
 
-  # Add any user-defined table caption to the `table_id` parameter
-  # TODO: consider whether this might take a string or a logical (to say that
-  # we'll use the header from `tab_header` as the table caption); this might
-  # require some more thought still because a `caption` arg might also be
-  # sensible in `tab_header`
+  # Add any user-defined table caption to the `table_caption` parameter
   if (!is.null(caption)) {
 
     data <-

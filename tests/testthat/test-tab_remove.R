@@ -285,7 +285,7 @@ test_that("Spanner column labels can be removed using `rm_spanners()`", {
         mpg_c, mpg_h
       )
     ) %>%
-    rm_spanners(level = 1) %>%
+    rm_spanners(levels = 1) %>%
     render_as_html() %>%
     expect_snapshot()
 

@@ -115,6 +115,7 @@ accordingly.
 
 \seealso{
 Other part removal functions: 
+\code{\link{rm_caption}()},
 \code{\link{rm_footnotes}()},
 \code{\link{rm_header}()},
 \code{\link{rm_source_notes}()},

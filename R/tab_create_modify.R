@@ -1379,6 +1379,62 @@ tab_source_note <- function(
   )
 }
 
+#' Add a table caption
+#'
+#' @description
+#' Add a caption to a **gt** table, which is handled specially for a table
+#' within an R Markdown, Quarto, or **bookdown** context. The addition of
+#' captions makes tables cross-referencing across the containing document. The
+#' caption location (i.e., top, bottom, margin) is handled at the document level
+#' in each of these system.
+#'
+#' @inheritParams fmt_number
+#' @param caption The table caption to use for cross-referencing in R Markdown,
+#'   Quarto, or **bookdown**.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Use [`gtcars`] to create a **gt** table. Add a header part with the
+#' [tab_header()] function, and, add a caption as well with `tab_caption()`.
+#'
+#' ```r
+#' gtcars %>%
+#'   dplyr::select(mfr, model, msrp) %>%
+#'   dplyr::slice(1:5) %>%
+#'   gt() %>%
+#'   tab_header(
+#'     title = md("Data listing from **gtcars**"),
+#'     subtitle = md("`gtcars` is an R dataset")
+#'   ) %>%
+#'   tab_caption(caption = md("**gt** table example."))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_caption_1.png")`
+#' }}
+#'
+#' @family part creation/modification functions
+#' @section Function ID:
+#' 2-9
+#'
+#' @export
+tab_caption <- function(
+    data,
+    caption
+) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  dt_options_set_value(
+    data = data,
+    option = "table_caption",
+    value = caption
+  )
+}
+
 #' Add custom styles to one or more cells
 #'
 #' @description
@@ -1511,7 +1567,7 @@ tab_source_note <- function(
 #'
 #' @family part creation/modification functions
 #' @section Function ID:
-#' 2-9
+#' 2-10
 #'
 #' @seealso [cell_text()], [cell_fill()], and [cell_borders()] as helpers for
 #'   defining custom styles and [cells_body()] as one of many useful helper
@@ -2200,7 +2256,7 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'
 #' @family part creation/modification functions
 #' @section Function ID:
-#' 2-10
+#' 2-11
 #'
 #' @export
 tab_options <- function(
