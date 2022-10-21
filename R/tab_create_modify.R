@@ -1394,6 +1394,27 @@ tab_source_note <- function(
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @section Examples:
+#'
+#' Use [`gtcars`] to create a **gt** table. Add a header part with the
+#' [tab_header()] function, and, add a caption as well with `tab_caption()`.
+#'
+#' ```r
+#' gtcars %>%
+#'   dplyr::select(mfr, model, msrp) %>%
+#'   dplyr::slice(1:5) %>%
+#'   gt() %>%
+#'   tab_header(
+#'     title = md("Data listing from **gtcars**"),
+#'     subtitle = md("`gtcars` is an R dataset")
+#'   ) %>%
+#'   tab_caption(caption = md("**gt** table example."))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_caption_1.png")`
+#' }}
+#'
 #' @family part creation/modification functions
 #' @section Function ID:
 #' 2-9
