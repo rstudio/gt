@@ -12,7 +12,8 @@ dt_stub_df_init <- function(
     data,
     rowname_col,
     groupname_col,
-    row_group.sep
+    row_group.sep,
+    process_md
 ) {
 
   data_tbl <- dt_data_get(data = data)
@@ -43,22 +44,7 @@ dt_stub_df_init <- function(
     # Develop unique ID values for the `row_id` values
     #
 
-    row_id <- rep(NA_character_, length(rownames))
-
-    for (i in seq_along(rownames)) {
-
-      if (is.na(rownames[i])) {
-        row_id[i] <- as.character(i)
-      }
-
-      if (!is.na(rownames[i])) {
-        row_id[i] <- rownames[i]
-
-        if (i > 1 && row_id[i] %in% row_id[1:(i - 1)]) {
-          row_id[i] <- paste0(row_id[i], "__", i)
-        }
-      }
-    }
+    row_id <- create_unique_id_vals(rownames, simplify = process_md)
 
     stub_df[["row_id"]] <- row_id
   }
