@@ -31,7 +31,7 @@
 #'   has the `grouped_df` class (through use of the [dplyr::group_by()] function
 #'   or associated `group_by*()` functions) then any input here is ignored.
 #' @param process_md Should the contents of the `rowname_col` and
-#'   `groupname_col` be interpreted as Markdown? By default this is `TRUE`.
+#'   `groupname_col` be interpreted as Markdown? By default this is `FALSE`.
 #' @param caption An optional table caption to use for cross-referencing in R
 #'   Markdown, Quarto, or **bookdown**.
 #' @param rownames_to_stub An option to take rownames from the input `data`
@@ -104,7 +104,7 @@ gt <- function(
     data,
     rowname_col = "rowname",
     groupname_col = dplyr::group_vars(data),
-    process_md = TRUE,
+    process_md = FALSE,
     caption = NULL,
     rownames_to_stub = FALSE,
     auto_align = TRUE,
@@ -156,7 +156,8 @@ gt <- function(
       data = data,
       rowname_col = rowname_col,
       groupname_col = groupname_col,
-      row_group.sep = row_group.sep
+      row_group.sep = row_group.sep,
+      process_md = process_md
     )
   data <- dt_row_groups_init(data = data)
   data <- dt_heading_init(data = data)
