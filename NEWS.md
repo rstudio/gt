@@ -1,5 +1,9 @@
 # gt (development version)
 
+## Minor improvements and bug fixes
+
+* `docx` output format is now correctly dectected in **rmarkdown** and also in Quarto.
+
 # gt 0.7.0
 
 ## New features
