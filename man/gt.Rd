@@ -8,7 +8,7 @@ gt(
   data,
   rowname_col = "rowname",
   groupname_col = dplyr::group_vars(data),
-  process_md = TRUE,
+  process_md = FALSE,
   caption = NULL,
   rownames_to_stub = FALSE,
   auto_align = TRUE,
@@ -31,7 +31,7 @@ has the \code{grouped_df} class (through use of the \code{\link[dplyr:group_by]{
 or associated \verb{group_by*()} functions) then any input here is ignored.}
 
 \item{process_md}{Should the contents of the \code{rowname_col} and
-\code{groupname_col} be interpreted as Markdown? By default this is \code{TRUE}.}
+\code{groupname_col} be interpreted as Markdown? By default this is \code{FALSE}.}
 
 \item{caption}{An optional table caption to use for cross-referencing in R
 Markdown, Quarto, or \strong{bookdown}.}
