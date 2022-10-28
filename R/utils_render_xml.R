@@ -781,7 +781,8 @@ create_table_caption_component_xml <- function(
             xml_sz(val = 24)
           ),
           xml_t(
-            paste0(heading$title, footnote_title_marks)
+            paste0(heading$title, footnote_title_marks),
+            xml_space = "preserve"
           )
         )
       )
@@ -920,7 +921,8 @@ create_heading_component_xml <- function(
               xml_r_font(),
               xml_sz(val = 16)
             ),
-            xml_t(paste0(heading$subtitle, footnote_subtitle_marks))
+            xml_t(paste0(heading$subtitle, footnote_subtitle_marks),
+                  xml_space = "preserve")
           )
         )
       }
@@ -1046,6 +1048,7 @@ create_columns_component_xml <- function(
           color = cell_style[["cell_text"]][["color"]],
           style = cell_style[["cell_text"]][["style"]],
           stretch = cell_style[["cell_text"]][["stretch"]],
+          whitespace = cell_style[["cell_text"]][["whitespace"]],
           align = cell_style[["cell_text"]][["align"]] %||% stubhead_label_alignment,
           v_align = cell_style[["cell_text"]][["v_align"]],
           fill = cell_style[["cell_fill"]][["color"]],
@@ -1094,6 +1097,7 @@ create_columns_component_xml <- function(
         color = cell_style[["cell_text"]][["color"]],
         style = cell_style[["cell_text"]][["style"]],
         stretch = cell_style[["cell_text"]][["stretch"]],
+        whitespace = cell_style[["cell_text"]][["whitespace"]],
         align = cell_style[["cell_text"]][["align"]],
         v_align = cell_style[["cell_text"]][["v_align"]],
         fill = cell_style[["cell_fill"]][["color"]],
@@ -1166,6 +1170,7 @@ create_columns_component_xml <- function(
               style = cell_style[["cell_text"]][["style"]],
               weight = cell_style[["cell_text"]][["weight"]],
               stretch = cell_style[["cell_text"]][["stretch"]],
+              whitespace = cell_style[["cell_text"]][["whitespace"]],
               align = cell_style[["cell_text"]][["align"]] %||% stubhead_label_alignment,
               v_align = cell_style[["cell_text"]][["v_align"]] %||% "bottom",
               fill = cell_style[["cell_fill"]][["color"]],
@@ -1246,6 +1251,7 @@ create_columns_component_xml <- function(
                 style = cell_style[["cell_text"]][["style"]],
                 weight = cell_style[["cell_text"]][["weight"]],
                 stretch = cell_style[["cell_text"]][["stretch"]],
+                whitespace = cell_style[["cell_text"]][["whitespace"]],
                 align = cell_style[["cell_text"]][["align"]] %||% "center",
                 v_align = cell_style[["cell_text"]][["v_align"]],
                 fill = cell_style[["cell_fill"]][["color"]],
@@ -1332,13 +1338,13 @@ create_body_component_xml <- function(
 
   all_default_vals <- unname(as.matrix(body[, default_vars]))
 
-  alignment_classes <- paste0("gt_", col_alignment)
+  alignment <- col_alignment
 
   if (stub_available) {
 
     n_cols <- n_data_cols + 1
 
-    alignment_classes <- c("gt_left", alignment_classes)
+    alignment<- c("left", alignment)
 
     stub_var <- dt_boxhead_get_var_stub(data = data)
     all_stub_vals <- as.matrix(body[, stub_var])
@@ -1413,6 +1419,7 @@ create_body_component_xml <- function(
                 style = cell_style[["cell_text"]][["style"]],
                 weight = cell_style[["cell_text"]][["weight"]],
                 stretch = cell_style[["cell_text"]][["stretch"]],
+                whitespace = cell_style[["cell_text"]][["whitespace"]],
                 align = cell_style[["cell_text"]][["align"]],
                 v_align = cell_style[["cell_text"]][["v_align"]],
                 col_span = n_cols,
@@ -1463,7 +1470,8 @@ create_body_component_xml <- function(
               style = cell_style[["cell_text"]][["style"]],
               weight = cell_style[["cell_text"]][["weight"]],
               stretch = cell_style[["cell_text"]][["stretch"]],
-              align = cell_style[["cell_text"]][["align"]],
+              whitespace = cell_style[["cell_text"]][["whitespace"]],
+              align = cell_style[["cell_text"]][["align"]] %||% alignment[style_col_idx],
               v_align = cell_style[["cell_text"]][["v_align"]],
               border = list(
                 top = cell_border(color = table_body_hlines_color),
@@ -1619,6 +1627,7 @@ create_source_notes_component_xml <- function(
               style = cell_style[["cell_text"]][["style"]],
               weight = cell_style[["cell_text"]][["weight"]],
               stretch = cell_style[["cell_text"]][["stretch"]],
+              whitespace = cell_style[["cell_text"]][["whitespace"]],
               align = cell_style[["cell_text"]][["align"]],
               v_align = cell_style[["cell_text"]][["v_align"]],
               col_span = n_cols,
@@ -1705,7 +1714,7 @@ create_footnotes_component_xml <- function(
                     xml_baseline_adj(v_align = "superscript"),
                     xml_i()
                   ),
-                  xml_t(if (!is.na(footnote_ids[x])) { footnote_ids[x] })
+                  xml_t(if (!is.na(footnote_ids[x])) { footnote_ids[x] },xml_space = white_space_to_t_xml_space(cell_style[["cell_text"]][["whitespace"]]))
                 ),
                 xml_r(
                   xml_rPr(
@@ -1719,7 +1728,7 @@ create_footnotes_component_xml <- function(
                     xml_sz(val = cell_style[["cell_text"]][["size"]] %||% 20),
                     xml_baseline_adj(v_align = "baseline")
                   ),
-                  xml_t(footnote_text[x])
+                  xml_t(footnote_text[x], xml_space = white_space_to_t_xml_space(cell_style[["cell_text"]][["whitespace"]]))
                 )
               ),
               stretch = cell_style[["cell_text"]][["stretch"]],
@@ -1793,6 +1802,7 @@ summary_rows_xml <- function(
             style = cell_style[["cell_text"]][["style"]],
             weight = cell_style[["cell_text"]][["weight"]],
             stretch = cell_style[["cell_text"]][["stretch"]],
+            whitespace = cell_style[["cell_text"]][["whitespace"]],
             align = cell_style[["cell_text"]][["align"]],
             v_align = cell_style[["cell_text"]][["v_align"]],
             fill = cell_style[["cell_fill"]][["color"]],
@@ -1907,6 +1917,15 @@ row_span_to_xml_v_merge <- function(x){
   )[x]
 }
 
+white_space_to_t_xml_space <- function(x = NULL){
+  ## default behavior we want
+  spacing <- "default"
+  if(isTRUE(x %in% c( "pre", "pre-wrap", "pre-line","break-spaces"))){
+    spacing <- "preserve"
+  }
+  spacing
+}
+
 #' define ooxml table cells
 #'
 #' paragrah
@@ -1921,6 +1940,7 @@ xml_table_cell <- function(
     style = NULL,
     weight = NULL,
     stretch = NULL,
+    whitespace = NULL,
     align = NULL,
     v_align = NULL,
     col_span = NULL,
@@ -1985,7 +2005,7 @@ xml_table_cell <- function(
             }
           ),
           if (is.character(text)) {
-            xml_t(text)
+            xml_t(text, xml_space = white_space_to_t_xml_space(whitespace))
           } else if (inherits(text, "shiny.tag.list")) {
             text
           }
