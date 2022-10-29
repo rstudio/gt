@@ -351,11 +351,11 @@ test_that("gt table can be made with grouped data - two groups", {
 
   expect_equal(
     built_tbl$`_stub_df`$group_id,
-    built_tbl$`_stub_df`$built
+    built_tbl$`_stub_df`$built_group_label
   )
 
   expect_equal(
-    built_tbl$`_stub_df`$rowname,
+    built_tbl$`_stub_df`$row_id,
     rep(NA_character_, 8)
   )
 
@@ -451,7 +451,7 @@ test_that("The `gt()` groupname_col arg will override any grouped data", {
   )
 
   expect_equal(
-    built_tbl$`_stub_df`$rowname,
+    built_tbl$`_stub_df`$row_id,
     rep(NA_character_, 8)
   )
 
@@ -464,7 +464,7 @@ test_that("The `gt()` groupname_col arg will override any grouped data", {
   )
 
   expect_equal(
-    built_tbl$`_stub_df`$built,
+    built_tbl$`_stub_df`$built_group_label,
     c(
       "2015-01-15", "2015-02-15", "2015-03-15", "2015-04-15",
       "2015-05-15", "2015-06-15", "NA", "2015-08-15"
@@ -551,10 +551,9 @@ test_that("The `gt()` `rowname_col` arg will be overridden by `rownames_to_stub 
         rownum_i = 1:10,
         row_id = rownames(mtcars)[1:10],
         group_id = NA_character_,
-        rowname = rownames(mtcars)[1:10],
         group_label = list(NULL),
         indent = NA_character_,
-        built = ""
+        built_group_label = ""
       ),
       ignore_attr = TRUE
     )
@@ -624,7 +623,6 @@ test_that("The `rowname` column will be safely included when `rownames_to_stub =
         rownum_i = 1:8,
         row_id = as.character(1:8),
         group_id = NA_character_,
-        rowname = as.character(1:8),
         group_label = list(NULL),
         indent = NA_character_,
         built = ""
