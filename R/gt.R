@@ -233,5 +233,14 @@ gt <- function(
     }
   }
 
+  if (
+    process_md &&
+    !is.null(rowname_col) &&
+    rowname_col %in% colnames(dt_data_get(data = data))
+  ) {
+
+    data <- fmt_markdown(data = data, columns = rowname_col)
+  }
+
   data
 }
