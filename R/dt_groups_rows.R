@@ -57,18 +57,29 @@ dt_groups_rows_build <- function(data, context) {
     groups_rows[i, "row_end"] <- max(rows_matched)
   }
 
-  # Join `built` values to the `groups_rows` table
+  # Join `built_group_label` values to the `groups_rows` table
   if (nrow(groups_rows) > 0) {
 
-    group_label_df <- dplyr::distinct(stub_df[, c("built", "group_id")])
+    group_label_df <-
+      dplyr::distinct(stub_df[, c("built_group_label", "group_id")])
 
-    groups_rows <- dplyr::left_join(groups_rows, group_label_df, by = "group_id")
-    groups_rows <- dplyr::rename(groups_rows, group_label = built)
-    groups_rows <- dplyr::select(groups_rows, group_id, group_label, dplyr::everything())
+    groups_rows <-
+      dplyr::left_join(groups_rows, group_label_df, by = "group_id")
 
-    others_group <- dt_options_get_value(data = data, option = "row_group_default_label")
+    groups_rows <-
+      dplyr::rename(groups_rows, group_label = built_group_label)
 
-    groups_rows[is.na(groups_rows[, "group_id"]), "group_label"] <- others_group
+    groups_rows <-
+      dplyr::select(groups_rows, group_id, group_label, dplyr::everything())
+
+    others_group <-
+      dt_options_get_value(
+        data = data,
+        option = "row_group_default_label"
+      )
+
+    groups_rows[is.na(groups_rows[, "group_id"]), "group_label"] <-
+      others_group
 
   } else {
 
