@@ -184,7 +184,7 @@ fmt_number <- function(
   stop_if_not_gt(data = data)
 
   # Ensure that arguments are matched
-  system <- match.arg(system)
+  system <- rlang::arg_match(system)
 
   # Resolve the `locale` value here with the global locale value
   locale <- resolve_locale(data = data, locale = locale)
@@ -810,7 +810,7 @@ fmt_symbol <- function(
 ) {
 
   # Ensure that arguments are matched
-  system <- match.arg(system)
+  system <- rlang::arg_match(system)
 
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
@@ -1027,7 +1027,7 @@ fmt_percent <- function(
   stop_if_not_gt(data = data)
 
   # Ensure that arguments are matched
-  system <- match.arg(system)
+  system <- rlang::arg_match(system)
 
   # Resolve the `locale` value here with the global locale value
   locale <- resolve_locale(data = data, locale = locale)
@@ -1187,8 +1187,8 @@ fmt_partsper <- function(
   stop_if_not_gt(data = data)
 
   # Ensure that arguments are matched
-  to_units <- match.arg(to_units)
-  system <- match.arg(system)
+  to_units <- rlang::arg_match(to_units)
+  system <- rlang::arg_match(system)
 
   # Resolve the `locale` value here with the global locale value
   locale <- resolve_locale(data = data, locale = locale)
@@ -1420,8 +1420,8 @@ fmt_fraction <- function(
   stop_if_not_gt(data = data)
 
   # Ensure that arguments are matched
-  system <- match.arg(system)
-  layout <- match.arg(layout)
+  system <- rlang::arg_match(system)
+  layout <- rlang::arg_match(layout)
 
   if (is.null(accuracy)) {
 
@@ -1890,7 +1890,7 @@ fmt_currency <- function(
   stop_if_not_gt(data = data)
 
   # Ensure that arguments are matched
-  system <- match.arg(system)
+  system <- rlang::arg_match(system)
 
   # Resolve the `locale` value here with the global locale value
   locale <- resolve_locale(data = data, locale = locale)
@@ -1997,7 +1997,7 @@ fmt_roman <- function(
   stop_if_not_gt(data = data)
 
   # Ensure that arguments are matched
-  case <- match.arg(case)
+  case <- rlang::arg_match(case)
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
@@ -2165,7 +2165,7 @@ fmt_bytes <- function(
   stop_if_not_gt(data = data)
 
   # Ensure that arguments are matched
-  standard <- match.arg(standard)
+  standard <- rlang::arg_match(standard)
 
   # Stop function if any columns have data that is incompatible
   # with this formatter
@@ -3722,8 +3722,8 @@ fmt_duration <- function(
   stop_if_not_gt(data = data)
 
   # Ensure that arguments are matched
-  duration_style <- match.arg(duration_style)
-  system <- match.arg(system)
+  duration_style <- rlang::arg_match(duration_style)
+  system <- rlang::arg_match(system)
 
   # Duration values will never have decimal marks
   dec_mark <- "unused"

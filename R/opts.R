@@ -239,7 +239,7 @@ opt_align_table_header <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  align <- match.arg(align)
+  align <- rlang::arg_match(align)
 
   tab_options(
     data = data,
@@ -624,7 +624,7 @@ opt_table_lines <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  extent <- match.arg(extent)
+  extent <- rlang::arg_match(extent)
 
   # Normalize `extent` values to property values
   values_vec <- if (extent == "all") "solid" else extent
