@@ -281,8 +281,16 @@ resolve_spanner_level <- function(
   highest_level <- 0L
 
   spanners_tbl <- dplyr::select(spanners_tbl, spanner_id, vars, spanner_level)
-  highest_level <- spanners_tbl %>%
-    dplyr::filter(vapply(vars, function(x) any(column_names %in% x), logical(1))) %>%
+
+  highest_level <-
+    dplyr::filter(
+      spanners_tbl,
+      vapply(
+        vars,
+        FUN.VALUE = logical(1),
+        FUN = function(x) any(column_names %in% x)
+      )
+    ) %>%
     dplyr::pull("spanner_level") %>%
     max(0) # Max of ^ and 0
 
@@ -389,9 +397,11 @@ tab_spanner_delim <- function(
 
   # Get the columns supplied in `columns` as a character vector
   columns <-
-    resolve_cols_c(
-      expr = {{ columns }},
-      data = data
+    suppressWarnings(
+      resolve_cols_c(
+        expr = {{ columns }},
+        data = data
+      )
     )
 
   if (!is.null(columns)) {
