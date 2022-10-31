@@ -1549,7 +1549,8 @@ create_body_component_rtf <- function(data) {
         summary_df <-
           dplyr::select(
             list_of_summaries$summary_df_display_list[[group_id]],
-            .env$rowname_col_private, .env$default_vars
+            dplyr::all_of(rowname_col_private),
+            dplyr::all_of(default_vars)
           )
 
         n_summary_rows <- seq_len(nrow(summary_df))
@@ -1626,7 +1627,8 @@ create_body_component_rtf <- function(data) {
     grand_summary_df <-
       dplyr::select(
         list_of_summaries$summary_df_display_list[[grand_summary_col]],
-        .env$rowname_col_private, .env$default_vars
+        dplyr::all_of(rowname_col_private),
+        dplyr::all_of(default_vars)
       )
 
     for (j in seq_len(nrow(grand_summary_df))) {
@@ -1853,9 +1855,7 @@ generate_notes_list <- function(
   if (nrow(footnotes_tbl) > 0) {
 
     footnotes_tbl <-
-      footnotes_tbl %>%
-      dplyr::select(fs_id, footnotes) %>%
-      dplyr::distinct()
+      dplyr::distinct(dplyr::select(footnotes_tbl, fs_id, footnotes))
 
     footnote_text <- footnotes_tbl[["footnotes"]]
     footnote_mark <- footnotes_tbl[["fs_id"]]

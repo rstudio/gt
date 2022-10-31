@@ -920,8 +920,8 @@ extract_summary <- function(data) {
         lapply(x, function(y) {
           dplyr::rename(
             y,
-            rowname = .env$rowname_col_private,
-            group_id = .env$group_id_col_private
+            rowname = dplyr::all_of(rowname_col_private),
+            group_id = dplyr::all_of(group_id_col_private)
           )
         })
       }

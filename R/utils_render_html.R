@@ -1470,7 +1470,8 @@ summary_row_tags_i <- function(data, group_id) {
   summary_df <-
     dplyr::select(
       list_of_summaries$summary_df_display_list[[group_id]],
-      .env$rowname_col_private, .env$default_vars
+      dplyr::all_of(rowname_col_private),
+      dplyr::all_of(default_vars)
     )
 
   # Get effective number of columns

@@ -1761,10 +1761,11 @@ summary_rows_xml <- function(
     # Obtain the summary data table specific to the group ID and
     # select the column named `rowname` and all of the visible columns
     summary_df <-
-      list_of_summaries$summary_df_display_list[[group_id]] %>%
-      dplyr::select(.env$rowname_col_private, .env$default_vars)
-
-    n_cols <- ncol(summary_df)
+      dplyr::select(
+        list_of_summaries$summary_df_display_list[[group_id]],
+        dplyr::all_of(rowname_col_private),
+        dplyr::all_of(default_vars)
+      )
 
     summary_df_row <- function(j) {
       unname(unlist(summary_df[j, ]))
