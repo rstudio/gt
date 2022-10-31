@@ -138,8 +138,7 @@ summary_rows <- function(
     data$`_data` <-
       data$`_data` %>%
       dplyr::mutate(!!rowname_col_private := rep("", nrow(data$`_data`))) %>%
-      dplyr::select(dplyr::everything(), .env$rowname_col_private)
-
+      dplyr::select(dplyr::everything(), dplyr::all_of(rowname_col_private))
 
     # Place the `::rowname::` values into `stub_df$row_id`; these are
     # empty strings which will provide an empty stub for locations
