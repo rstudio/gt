@@ -171,7 +171,7 @@ dt_summary_build <- function(data, context) {
 
       select_data_tbl <-
         dplyr::bind_cols(
-          dplyr::select(stub_df, !!group_id_col_private := .data$group_id),
+          dplyr::select(stub_df, !!group_id_col_private := group_id),
           data_tbl[stub_df$rownum_i, ]
         )
     }
@@ -225,8 +225,10 @@ dt_summary_build <- function(data, context) {
 
     summary_dfs_data <-
       dplyr::select(
-        summary_dfs_data, .env$group_id_col_private, .env$rowname_col_private,
-        colnames(body)
+        summary_dfs_data,
+        dplyr::all_of(group_id_col_private),
+        dplyr::all_of(rowname_col_private),
+        dplyr::all_of(colnames(body))
       )
 
     # Format the displayed summary lines
