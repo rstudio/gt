@@ -165,7 +165,7 @@ dt_summary_build <- function(data, context) {
 
       select_data_tbl <-
         dplyr::mutate(data_tbl, !!group_id_col_private := .env$grand_summary_col) %>%
-        dplyr::relocate(.env$group_id_col_private, .before = 1) #
+        dplyr::relocate(.env$group_id_col_private, .before = 1)
 
     } else {
 
