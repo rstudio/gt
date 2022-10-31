@@ -63,13 +63,19 @@ dt_stub_df_init <- function(
 
     if (process_md) {
 
-      row_group_ids <-
-        tolower(
-          gsub(
-            "^-+|-+$", "",
-            gsub("[^[:alnum:]]+", "-", row_group_labels, perl = TRUE)
-          )
-        )
+      #
+      # Ensure that the `row_group_ids` values are simplified to reduce
+      # special characters; this requires use of the recoding so that the
+      # generated IDs map correctly to the the supplied labels
+      #
+
+      unique_row_group_labels <- unique(row_group_labels)
+
+      unique_row_group_ids <-
+        create_unique_id_vals(unique_row_group_labels, simplify = process_md)
+      names(unique_row_group_ids) <- unique_row_group_labels
+
+      row_group_ids <- dplyr::recode(row_group_labels, !!!unique_row_group_ids)
 
     } else {
       row_group_ids <- row_group_labels
