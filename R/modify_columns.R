@@ -77,8 +77,7 @@ cols_align <- function(
     # Get the internal data table
     data_tbl <- dt_data_get(data = data)
 
-    # Obtain a vector of column classes for each of the column
-    # names
+    # Obtain a vector of column classes for each of the column names
     col_classes <- unlist(lapply(lapply(data_tbl[column_names], class), `[[`, 1))
 
     # Check whether all values in 'character' columns are
