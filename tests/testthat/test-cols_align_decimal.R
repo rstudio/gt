@@ -187,4 +187,18 @@ test_that("Decimal alignment works in the basic case", {
 
   # Perform snapshot test
   gt_tbl_12 %>% render_as_html() %>% expect_snapshot()
+
+  # Use `fmt_currency()` and use the `accounting` option with no decimals; then align
+  # based on implied decimal
+  gt_tbl_13 <-
+    gt(small_tbl) %>%
+    fmt_currency(
+      columns = num,
+      decimals = 0,
+      accounting = TRUE
+    ) %>%
+    cols_align_decimal()
+
+  # Perform snapshot test
+  gt_tbl_13 %>% render_as_html() %>% expect_snapshot()
 })
