@@ -335,12 +335,22 @@ align_to_char <- function(x, align_at = ".") {
 
   x_align <- paste(x_piece_lhs, x_piece_rhs, sep = align_at)
 
-  x_align[!nchar(x_rhs) > 0 & !grepl(align_at, x[!x_no_align], fixed = TRUE)] <-
-    sub(align_at, " ", x_align[!nchar(x_rhs) > 0], fixed = TRUE)
-
   x_align_parens <- grepl("\\(.+?\\)", x_align)
 
-  x_align[x_align_parens] <- paste0(x_align[x_align_parens], "\U000A0")
+  if (grepl(align_at, paste(x[!x_no_align], collapse = "|"), fixed = TRUE)) {
+
+    x_align[!nchar(x_rhs) > 0 & !grepl(align_at, x[!x_no_align], fixed = TRUE)] <-
+      sub(align_at, " ", x_align[!nchar(x_rhs) > 0], fixed = TRUE)
+
+    x_align[x_align_parens] <- paste0(x_align[x_align_parens], "\U000A0")
+
+  } else {
+
+    x_align[!nchar(x_rhs) > 0 & !grepl(align_at, x[!x_no_align], fixed = TRUE)] <-
+      sub(align_at, "", x_align[!nchar(x_rhs) > 0], fixed = TRUE)
+
+    x_align[!x_align_parens] <- paste0(x_align[!x_align_parens], "\U000A0")
+  }
 
   x_str[!x_no_align] <- x_align
 
