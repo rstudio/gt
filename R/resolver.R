@@ -185,7 +185,7 @@ resolve_cols_c <- function(
     null_means = c("everything", "nothing")
 ) {
 
-  null_means <- match.arg(null_means)
+  null_means <- rlang::arg_match(null_means)
 
   names(
     resolve_cols_i(
@@ -216,7 +216,7 @@ resolve_cols_i <- function(
 ) {
   quo <- rlang::enquo(expr)
   cols_excl <- c()
-  null_means <- match.arg(null_means)
+  null_means <- rlang::arg_match(null_means)
 
   if (is_gt(data)) {
 

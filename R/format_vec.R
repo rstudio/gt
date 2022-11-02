@@ -182,7 +182,7 @@ vec_fmt_number <- function(
 ) {
 
   # Ensure that `output` is matched correctly to one option
-  output <- match.arg(output)
+  output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
@@ -449,7 +449,7 @@ vec_fmt_scientific <- function(
 ) {
 
   # Ensure that `output` is matched correctly to one option
-  output <- match.arg(output)
+  output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
@@ -586,7 +586,7 @@ vec_fmt_engineering <- function(
 ) {
 
   # Ensure that `output` is matched correctly to one option
-  output <- match.arg(output)
+  output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
@@ -749,7 +749,7 @@ vec_fmt_percent <- function(
 ) {
 
   # Ensure that `output` is matched correctly to one option
-  output <- match.arg(output)
+  output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
@@ -931,7 +931,7 @@ vec_fmt_partsper <- function(
 ) {
 
   # Ensure that `output` is matched correctly to one option
-  output <- match.arg(output)
+  output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
@@ -941,7 +941,7 @@ vec_fmt_partsper <- function(
   stop_if_not_vector(x)
 
   # Ensure that `to_units` is matched correctly to one option
-  to_units <- match.arg(to_units)
+  to_units <- rlang::arg_match(to_units)
 
   # Stop function if class of `x` is incompatible with the formatting
   if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
@@ -1072,7 +1072,7 @@ vec_fmt_fraction <- function(
 ) {
 
   # Ensure that `output` is matched correctly to one option
-  output <- match.arg(output)
+  output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
@@ -1082,7 +1082,7 @@ vec_fmt_fraction <- function(
   stop_if_not_vector(x)
 
   # Ensure that `layout` is matched correctly to one option
-  layout <- match.arg(layout)
+  layout <- rlang::arg_match(layout)
 
   # Stop function if class of `x` is incompatible with the formatting
   if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
@@ -1256,7 +1256,7 @@ vec_fmt_currency <- function(
 ) {
 
   # Ensure that `output` is matched correctly to one option
-  output <- match.arg(output)
+  output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
@@ -1367,7 +1367,7 @@ vec_fmt_roman <- function(
 ) {
 
   # Ensure that `output` is matched correctly to one option
-  output <- match.arg(output)
+  output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
@@ -1377,7 +1377,7 @@ vec_fmt_roman <- function(
   stop_if_not_vector(x)
 
   # Ensure that `case` is matched correctly to one option
-  case <- match.arg(case)
+  case <- rlang::arg_match(case)
 
   # Stop function if class of `x` is incompatible with the formatting
   if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
@@ -1516,7 +1516,7 @@ vec_fmt_bytes <- function(
 ) {
 
   # Ensure that `output` is matched correctly to one option
-  output <- match.arg(output)
+  output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
@@ -1526,7 +1526,7 @@ vec_fmt_bytes <- function(
   stop_if_not_vector(x)
 
   # Ensure that `standard` is matched correctly to one option
-  standard <- match.arg(standard)
+  standard <- rlang::arg_match(standard)
 
   # Stop function if class of `x` is incompatible with the formatting
   if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
@@ -1701,7 +1701,7 @@ vec_fmt_date <- function(
 ) {
 
   # Ensure that `output` is matched correctly to one option
-  output <- match.arg(output)
+  output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
@@ -1863,7 +1863,7 @@ vec_fmt_time <- function(
 ) {
 
   # Ensure that `output` is matched correctly to one option
-  output <- match.arg(output)
+  output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
@@ -2685,7 +2685,7 @@ vec_fmt_datetime <- function(
 ) {
 
   # Ensure that `output` is matched correctly to one option
-  output <- match.arg(output)
+  output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
@@ -2908,7 +2908,7 @@ vec_fmt_duration <- function(
 ) {
 
   # Ensure that `output` is matched correctly to one option
-  output <- match.arg(output)
+  output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
@@ -2918,7 +2918,7 @@ vec_fmt_duration <- function(
   stop_if_not_vector(x)
 
   # Ensure that `duration_style` is matched correctly to one option
-  duration_style <- match.arg(duration_style)
+  duration_style <- rlang::arg_match(duration_style)
 
   # Stop function if class of `x` is incompatible with the formatting
   if (!vector_class_is_valid(x, valid_classes = c("numeric", "difftime"))) {
@@ -3000,7 +3000,7 @@ vec_fmt_markdown <- function(
 ) {
 
   # Ensure that `output` is matched correctly to one option
-  output <- match.arg(output)
+  output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()

@@ -593,8 +593,8 @@ rtf_tbl_cell <- function(
 
   x <- paste(x, collapse = " ")
 
-  h_align <- substr(match.arg(h_align), 1, 1)
-  v_align <- substr(match.arg(v_align), 1, 1)
+  h_align <- substr(rlang::arg_match(h_align), 1, 1)
+  v_align <- substr(rlang::arg_match(v_align), 1, 1)
 
   # Set default padding values if `padding = NULL`
   if (is.null(padding)) padding <- c(25, 85, 25, 85)

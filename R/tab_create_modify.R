@@ -390,7 +390,7 @@ tab_spanner_delim <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  split <- match.arg(split)
+  split <- rlang::arg_match(split)
 
   # Get all of the columns in the dataset
   all_cols <- dt_boxhead_get_vars(data = data)
@@ -1059,7 +1059,7 @@ tab_footnote <- function(
     placement = c("auto", "right", "left")
 ) {
 
-  placement <- match.arg(placement)
+  placement <- rlang::arg_match(placement)
 
   # Perform input object validation
   stop_if_not_gt(data = data)

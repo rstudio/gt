@@ -4,6 +4,8 @@
 
 * `docx` output format is now correctly detected in R Markdown and Quarto (#1040). (#1084)
 
+* Replaced all `match.arg()` calls with **rlang*'s `match_arg()` for better error output (#672). (#1099, thanks @mojister!)
+
 # gt 0.7.0
 
 ## New features

@@ -675,7 +675,7 @@ as_word <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  caption_location <- match.arg(caption_location)
+  caption_location <- rlang::arg_match(caption_location)
 
   # Build all table data objects through a common pipeline
   value <- build_data(data = data, context = "word")
@@ -1014,7 +1014,7 @@ extract_cells <- function(
   stop_if_not_gt(data = data)
 
   # Ensure that `output` is matched correctly to one option
-  output <- match.arg(output)
+  output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
