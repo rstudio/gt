@@ -149,10 +149,10 @@ data_color <- function(
   stop_if_not_gt(data = data)
 
   # Get the correct `apply_to` value
-  apply_to <- match.arg(apply_to)
+  apply_to <- rlang::arg_match(apply_to)
 
   # Get the correct `contrast_algo` value
-  contrast_algo <- match.arg(contrast_algo)
+  contrast_algo <- rlang::arg_match(contrast_algo)
 
   colors <- rlang::enquo(colors)
 
@@ -381,7 +381,7 @@ ideal_fgnd_color <- function(
 ) {
 
   # Get the correct `algo` value
-  algo <- match.arg(algo)
+  algo <- rlang::arg_match(algo)
 
   # Normalize color to hexadecimal color if it is in the 'rgba()' string format
   bgnd_color <- rgba_to_hex(colors = bgnd_color)

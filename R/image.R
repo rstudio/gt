@@ -338,7 +338,7 @@ ggplot_image <- function(
 #' @export
 test_image <- function(type = c("png", "svg")) {
 
-  type <- match.arg(type)
+  type <- rlang::arg_match(type)
 
   system_file(file = paste0("graphics/test_image.", type))
 }

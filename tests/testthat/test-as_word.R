@@ -47,8 +47,8 @@ body_add_gt <- function(
   stopifnot(inherits(x, "rdocx"))
   stopifnot(inherits(value, "gt_tbl"))
 
-  pos <- match.arg(pos)
-  caption_location <- match.arg(caption_location)
+  pos <- rlang::arg_match(pos)
+  caption_location <- rlang::arg_match(caption_location)
 
   # Build all table data objects through a common pipeline
   value <- build_data(data = value, context = "word")

@@ -265,7 +265,7 @@ format_num_to_str <- function(
     system = c("intl", "ind")
 ) {
 
-  system <- match.arg(system)
+  system <- rlang::arg_match(system)
 
   # If this hardcoding is ever to change, then we need to
   # modify the regexes below
@@ -373,7 +373,7 @@ format_num_to_str_c <- function(
     system = c("intl", "ind")
 ) {
 
-  system <- match.arg(system)
+  system <- rlang::arg_match(system)
 
   format_num_to_str(
     x = x,

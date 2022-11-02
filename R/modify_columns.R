@@ -62,7 +62,7 @@ cols_align <- function(
   stop_if_not_gt(data = data)
 
   # Get the `align` value, this stops the function if there is no match
-  align <- match.arg(align)
+  align <- rlang::arg_match(align)
 
   # Get the columns supplied in `columns` as a character vector
   column_names <-
