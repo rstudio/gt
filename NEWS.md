@@ -8,8 +8,6 @@
 
 # gt 0.7.0
 
-*  Issue: [Use rlang::arg_match() instead of match.arg() #672](https://github.com/rstudio/gt/issues/672) , My GitHub username: [mojister](https://github.com/mojister) 
-
 ## New features
 
 * We can now export **gt** tables as Word documents. This is thanks to @thebioengineer (Ellis Hughes!) who not only made this type of output work through `gtsave()` (writes the .docx file) but also through `as_word()` (gives you an OOXML string) (#121, #929). (#962, #986, #1016)
