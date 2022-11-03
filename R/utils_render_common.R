@@ -546,7 +546,7 @@ last_non_na <- function(vect) {
 # Determine whether the table should have row labels
 # set within a column in the stub
 stub_rownames_has_column <- function(data) {
-  isTRUE("rowname" %in% dt_stub_components(data = data))
+  isTRUE("row_id" %in% dt_stub_components(data = data))
 }
 
 # Determine whether the table should have row group labels
@@ -573,7 +573,8 @@ get_number_of_visible_data_columns <- function(data) {
 get_effective_number_of_columns <- function(data) {
 
   # Check if the table has been built, return an error if that's not the case
-  if (!dt_has_built(data)) {
+  if (!dt_has_built(data = data)) {
+
     cli::cli_abort(
       "The `get_effective_number_of_columns()` function can only be used on
       gt objects that have tables 'built'."
@@ -582,7 +583,7 @@ get_effective_number_of_columns <- function(data) {
 
   # Obtain the number of visible columns in the built table
   n_data_cols <- get_number_of_visible_data_columns(data = data)
-  n_data_cols + length(get_stub_layout(data))
+  n_data_cols + length(get_stub_layout(data = data))
 }
 
 get_stub_layout <- function(data) {
