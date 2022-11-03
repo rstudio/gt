@@ -14,8 +14,8 @@ An object of class \code{gt_tbl}.
 }
 \description{
 It can become increasingly difficult to recall the ID values associated with
-different labels in a gt table. Further to this, there are also situations
-where \strong{gt} will generate ID values on your behalf (e.g., with
+different labels in a \strong{gt} table. Further to this, there are also
+situations where \strong{gt} will generate ID values on your behalf (e.g., with
 \code{\link[=tab_spanner_delim]{tab_spanner_delim()}}, etc.) while ensuring that duplicate ID values aren't
 produced. For the latter case, it is impossible to know what those ID values
 are unless one were to carefully examine to correct component of the \code{gt_tbl}
