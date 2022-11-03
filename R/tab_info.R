@@ -132,10 +132,13 @@ tab_info <- function(data) {
 
   if ("group_label" %in% stub_layout) {
 
+    groups_rows <- dt_row_groups_get(data = data)
+
     row_groups <- dplyr::select(stub_df, id = group_id, label = group_label)
     row_groups <- dplyr::group_by(row_groups, id)
     row_groups <- dplyr::filter(row_groups, dplyr::row_number() == 1)
-    row_groups <- dplyr::mutate(row_groups, i = NA_integer_, type = NA_character_, markdown = FALSE)
+    row_groups <- dplyr::mutate(row_groups, i = which(groups_rows %in% id))
+    row_groups <- dplyr::mutate(row_groups, type = NA_character_, markdown = FALSE)
     row_groups <- dplyr::mutate(row_groups, label = unlist(label))
     row_groups <- dplyr::mutate(row_groups, location = "Row Groups")
     row_groups <- dplyr::select(row_groups, id, i, label, markdown, type, location)
