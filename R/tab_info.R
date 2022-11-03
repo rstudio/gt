@@ -1,7 +1,30 @@
-#' Preview a **gt** table object
+#' Understand what's been set inside of a **gt** table object
+#'
+#' @description
+#' It can become increasingly difficult to recall the ID values associated with
+#' different labels in a gt table. Further to this, there are also situations
+#' where **gt** will generate ID values on your behalf (e.g., with
+#' [tab_spanner_delim()], etc.) while ensuring that duplicate ID values aren't
+#' produced. For the latter case, it is impossible to know what those ID values
+#' are unless one were to carefully examine to correct component of the `gt_tbl`
+#' object. Because it's essential to know these ID values for targeting purposes
+#' (when styling with [tab_style()], adding footnote marks with
+#' [tab_footnote()], etc.), the `tab_info()` function can help with all of this.
+#' It summarizes (by location) the ID values and their labels and provides
+#' additional pieces of useful information where needed. The product is an
+#' informational **gt** table, designed for easy retrieval of the necessary
+#' values.
+#'
+#' @inheritParams fmt_number
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @family part creation/modification functions
+#' @section Function ID:
+#' 2-12
 #'
 #' @export
-gt_info <- function(data) {
+tab_info <- function(data) {
 
   data <- build_data(data = data, context = "html")
 
