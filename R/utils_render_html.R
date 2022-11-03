@@ -799,6 +799,7 @@ create_body_component_h <- function(data) {
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
 
+  # Determine if there is a stub column in `stub_layout`
   has_stub_column <- "rowname" %in% stub_layout
 
   # Get a matrix of all cells in the body (not including summary cells)
@@ -1409,11 +1410,11 @@ get_body_component_cell_matrix <- function(data) {
 
     group_label_matrix <-
       dt_stub_df_get(data = data) %>%
-      dplyr::select(-rowname, -group_label) %>%
+      dplyr::select(-row_id, -group_label) %>%
       dplyr::inner_join(groups_rows_df, by = "group_id") %>%
       dplyr::mutate(
         row = dplyr::row_number(),
-        built = dplyr::if_else(row_start != row, "", built)
+        built = dplyr::if_else(row_start != row, "", built_group_label)
       ) %>%
       dplyr::select(built) %>%
       as.matrix() %>%
@@ -1469,7 +1470,8 @@ summary_row_tags_i <- function(data, group_id) {
   summary_df <-
     dplyr::select(
       list_of_summaries$summary_df_display_list[[group_id]],
-      .env$rowname_col_private, .env$default_vars
+      dplyr::all_of(rowname_col_private),
+      dplyr::all_of(default_vars)
     )
 
   # Get effective number of columns
