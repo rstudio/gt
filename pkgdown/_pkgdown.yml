@@ -51,6 +51,7 @@ reference:
     - tab_caption
     - tab_style
     - tab_options
+    - tab_info
 
   - title: Format Data
     desc: >
