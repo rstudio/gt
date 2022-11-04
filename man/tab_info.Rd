@@ -28,6 +28,32 @@ It summarizes (by location) all of the table's ID values and their associated
 labels. The product is an informational \strong{gt} table, designed for easy
 retrieval of the necessary values.
 }
+\section{Examples}{
+
+
+Use \code{\link{gtcars}} to create a \strong{gt} table. Use the \code{\link[=tab_spanner]{tab_spanner()}} function to
+group two columns together under a spanner column with the ID and label
+\code{"performance"}. Finally, use the \code{tab_info()} function to get a table that
+summarizes the ID values and their label text for all parts of the table.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
+  gtcars \%>\%
+  dplyr::select(model, year, starts_with("hp"), msrp) \%>\%
+  dplyr::slice(1:4) \%>\%
+  gt(rowname_col = "model") \%>\%
+  tab_spanner(
+    label = "performance",
+    columns = starts_with("hp")
+  )
+
+gt_tbl \%>\% tab_info()
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_info_1.png" alt="This image of a table was generated from the first code example in the `tab_info()` help file." style="width:100\%;">
+}}
+}
+
 \section{Function ID}{
 
 2-12
