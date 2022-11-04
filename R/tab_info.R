@@ -20,6 +20,31 @@
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @section Examples:
+#'
+#' Use [`gtcars`] to create a **gt** table. Use the [tab_spanner()] function to
+#' group two columns together under a spanner column with the ID and label
+#' `"performance"`. Finally, use the `tab_info()` function to get a table that
+#' summarizes the ID values and their label text for all parts of the table.
+#'
+#' ```r
+#' gt_tbl <-
+#'   gtcars %>%
+#'   dplyr::select(model, year, starts_with("hp"), msrp) %>%
+#'   dplyr::slice(1:4) %>%
+#'   gt(rowname_col = "model") %>%
+#'   tab_spanner(
+#'     label = "performance",
+#'     columns = starts_with("hp")
+#'   )
+#'
+#' gt_tbl %>% tab_info()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_info_1.png")`
+#' }}
+#'
 #' @family part creation/modification functions
 #' @section Function ID:
 #' 2-12
