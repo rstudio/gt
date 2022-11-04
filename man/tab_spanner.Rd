@@ -67,7 +67,7 @@ column with the label \code{"performance"}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
   dplyr::select(
-    -mfr, -trim, bdy_style, drivetrain,
+    -mfr, -trim, bdy_style,
     -drivetrain, -trsmn, -ctry_origin
   ) \%>\%
   dplyr::slice(1:8) \%>\%
