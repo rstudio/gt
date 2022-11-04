@@ -31,6 +31,7 @@ tab_info <- function(data) {
   boxhead <- dt_boxhead_get(data = data)
   stub_df <- dt_stub_df_get(data = data)
   span_df <- dt_spanners_get(data = data)
+  groups_rows_df <- dt_groups_rows_get(data = data)
 
   stub_layout <- get_stub_layout(data = data)
 
@@ -154,12 +155,87 @@ tab_info <- function(data) {
     row_groups <- empty_tbl
   }
 
+  #
+  # Summary Rows
+  #
+
+  summaries_present <- dt_summary_exists(data = data)
+
+  if (summaries_present) {
+
+    list_of_summaries <- extract_summary(data = data)
+
+    # Group Summaries
+    if (grand_summary_col %in% names(list_of_summaries$summary_df_data_list)) {
+
+      group_id_vec <- groups_rows_df[["group_id"]]
+      group_summary <- empty_tbl
+
+      for (group_id in group_id_vec) {
+
+        if (group_id %in% names(list_of_summaries$summary_df_data_list)) {
+
+          group_summary_row_id <-
+            list_of_summaries$summary_df_data_list[[group_id]][["rowname"]]
+
+          group_summary_i <-
+            dplyr::tibble(
+              id = group_summary_row_id,
+              i = seq_len(length(group_summary_row_id)),
+              label = group_summary_row_id,
+              markdown = NA,
+              type = group_id,
+              location = "Group Summary"
+            )
+
+          group_summary <-
+            dplyr::bind_rows(
+              group_summary,
+              group_summary_i
+            )
+
+        }
+      }
+    } else {
+      group_summary <- empty_tbl
+    }
+
+    # Grand Summary
+    if (grand_summary_col %in% names(list_of_summaries$summary_df_data_list)) {
+
+      grand_summary_row_id <-
+        list_of_summaries$summary_df_data_list[[grand_summary_col]][["rowname"]]
+
+      grand_summary <-
+        dplyr::tibble(
+          id = grand_summary_row_id,
+          i = seq_len(length(grand_summary_row_id)),
+          label = grand_summary_row_id,
+          markdown = NA,
+          type = NA_character_,
+          location = "Grand Summary"
+        )
+    } else {
+      grand_summary <- empty_tbl
+    }
+
+    summaries <-
+      dplyr::bind_rows(
+        group_summary,
+        grand_summary
+      )
+
+  }
+
+
+
   combined_tbl <-
     dplyr::bind_rows(
       columns,
       rownames,
       spanners,
-      row_groups
+      row_groups,
+      summaries
     )
 
   #
