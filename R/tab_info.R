@@ -62,7 +62,14 @@ tab_info <- function(data) {
 
   if ("rowname" %in% stub_layout) {
 
-    rownames <- dplyr::select(stub_df, id = row_id, i = rownum_i, label = rowname)
+    body_df <- dt_body_get(data = data)
+
+    rowname_col <- dt_boxhead_get_var_stub(data = data)
+
+    row_name_vals <- dplyr::pull(dplyr::select(body_df, dplyr::all_of(rowname_col)), 1)
+
+    rownames <- dplyr::select(stub_df, id = row_id, i = rownum_i)
+    rownames <- dplyr::mutate(rownames, label = row_name_vals)
     rownames <- dplyr::mutate(rownames, type = NA_character_, markdown = FALSE)
     rownames <- dplyr::mutate(rownames, location = "Rows")
     rownames <- dplyr::select(rownames, id, i, label, markdown, type, location)
