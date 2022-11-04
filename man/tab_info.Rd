@@ -19,13 +19,14 @@ situations where \strong{gt} will generate ID values on your behalf (e.g., with
 \code{\link[=tab_spanner_delim]{tab_spanner_delim()}}, etc.) while ensuring that duplicate ID values aren't
 produced. For the latter case, it is impossible to know what those ID values
 are unless one were to carefully examine to correct component of the \code{gt_tbl}
-object. Because it's essential to know these ID values for targeting purposes
+object.
+
+Because it's so essential to know these ID values for targeting purposes
 (when styling with \code{\link[=tab_style]{tab_style()}}, adding footnote marks with
 \code{\link[=tab_footnote]{tab_footnote()}}, etc.), the \code{tab_info()} function can help with all of this.
-It summarizes (by location) the ID values and their labels and provides
-additional pieces of useful information where needed. The product is an
-informational \strong{gt} table, designed for easy retrieval of the necessary
-values.
+It summarizes (by location) all of the table's ID values and their associated
+labels. The product is an informational \strong{gt} table, designed for easy
+retrieval of the necessary values.
 }
 \section{Function ID}{
 
