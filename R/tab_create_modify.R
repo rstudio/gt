@@ -105,7 +105,7 @@ tab_header <- function(
 #' ```r
 #' gtcars %>%
 #'   dplyr::select(
-#'     -mfr, -trim, bdy_style, drivetrain,
+#'     -mfr, -trim, bdy_style,
 #'     -drivetrain, -trsmn, -ctry_origin
 #'   ) %>%
 #'   dplyr::slice(1:8) %>%

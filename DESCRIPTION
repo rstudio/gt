@@ -111,6 +111,7 @@ Collate:
     'shiny.R'
     'substitution.R'
     'summary_rows.R'
+    'tab_info.R'
     'tab_remove.R'
     'text_transform.R'
     'utils.R'
