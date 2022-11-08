@@ -112,6 +112,7 @@ Collate:
     'substitution.R'
     'summary_rows.R'
     'tab_remove.R'
+    'tab_style_specific.R'
     'text_transform.R'
     'utils.R'
     'utils_color_contrast.R'
