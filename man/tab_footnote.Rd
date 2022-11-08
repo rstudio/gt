@@ -107,6 +107,7 @@ Use \code{\link{sza}} to create a \strong{gt} table. Color the \code{sza} column
 Other part creation/modification functions: 
 \code{\link{tab_caption}()},
 \code{\link{tab_header}()},
+\code{\link{tab_info}()},
 \code{\link{tab_options}()},
 \code{\link{tab_row_group}()},
 \code{\link{tab_source_note}()},
