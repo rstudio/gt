@@ -2266,7 +2266,7 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'
 #' @family part creation/modification functions
 #' @section Function ID:
-#' 2-11
+#' 2-12
 #'
 #' @export
 tab_options <- function(
