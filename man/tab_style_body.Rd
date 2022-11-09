@@ -57,12 +57,12 @@ target of each cell. By default, this is a vector just containing \code{"cell"}.
 However, the keywords \code{"row"} and \code{"column"} may be used separately or in
 combination to style the target cells' associated rows or columns.}
 
-\item{extents}{A vector of broad locations to project styling. By default,
-this is a vector just containing \code{"body"}, whereby styled rows or columns
+\item{extents}{A vector of locations to project styling. By default, this is
+a vector just containing \code{"body"}, whereby styled rows or columns
 (facilitated via inclusion of the \code{"row"} and \code{"column"} keywords in
-\code{targets}) will not permeate into the stub or summary sections. Using the
-keywords \code{"stub"} and \code{"summary"} may be used separately or in combination
-to expand the styling into those locations.}
+\code{targets}) will not permeate into the stub. The additional keyword \code{"stub"}
+may be used alone or in conjunction with \code{"body"} to project or expand the
+styling into the stub.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -89,6 +89,139 @@ bold text (the degree of choice is greater with variable fonts)
 \item the cell borders (\code{\link[=cell_borders]{cell_borders()}})
 }
 }
+\section{Examples}{
+
+
+Use \code{exibble} to create a \strong{gt} table with a stub and row groups. This
+contains an assortment of values that could potentially undergo some styling
+via \code{tab_style_body()}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
+  exibble \%>\%
+  gt(
+    rowname_col = "row",
+    groupname_col = "group"
+  )
+}\if{html}{\out{</div>}}
+
+Cells in the table body can be styled through specification of literal values
+in the \code{values} argument of \code{tab_style_body()}. It's okay to search for
+numerical, character, or logical values across all columns. Let's target the
+values \code{49.95} and \code{33.33} and style those cells with an orange fill.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl \%>\%
+  tab_style_body(
+    style = cell_fill(color = "orange"),
+    values = c(49.95, 33.33)
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_body_1.png" alt="This image of a table was generated from the first code example in the `tab_style_body()` help file." style="width:100\%;">
+}}
+
+Multiple styles can be combined in a \code{list}, here's an example of that using
+the same cell targets:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl \%>\%
+  tab_style_body(
+    style = list(
+      cell_text(font = google_font("Inter"), color = "white"),
+      cell_fill(color = "red"),
+      cell_borders(
+        sides = c("left", "right"),
+        color = "steelblue",
+        weight = px(4)
+      )
+    ),
+    values = c(49.95, 33.33)
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_body_2.png" alt="This image of a table was generated from the second code example in the `tab_style_body()` help file." style="width:100\%;">
+}}
+
+You can opt to color entire rows or columns (or both, should you want to)
+with those specific keywords in the \code{targets} argument. For the \code{49.95} value
+we will style the entire row and with \code{33.33} the entire column will get the
+same styling.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl \%>\%
+  tab_style_body(
+    style = cell_fill(color = "lightblue"),
+    values = 49.95,
+    targets = "row"
+  ) \%>\%
+  tab_style_body(
+    style = cell_fill(color = "lightblue"),
+    values = 33.33,
+    targets = "column"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_body_3.png" alt="This image of a table was generated from the third code example in the `tab_style_body()` help file." style="width:100\%;">
+}}
+
+In a minor variation to the prior example, it's possible to extend the
+styling to other locations, or, entirely project the styling elsewhere. This
+is done with the \code{extents} argument. Valid keywords that can be included in
+the vector are: \code{"body"} (the default) and \code{"stub"}. Let's take the previous
+example and extend the styling of the row into the stub.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl \%>\%
+  tab_style_body(
+    style = cell_fill(color = "lightblue"),
+    values = 49.95,
+    targets = "row",
+    extents = c("body", "stub")
+  ) \%>\%
+  tab_style_body(
+    style = cell_fill(color = "lightblue"),
+    values = 33.33,
+    targets = "column"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_body_4.png" alt="This image of a table was generated from the fourth code example in the `tab_style_body()` help file." style="width:100\%;">
+}}
+
+We can also use the \code{pattern} argument to target cell values in
+\code{character}-based columns. The \code{"fctr"} column is skipped because it is in
+fact a factor-based column.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl \%>\%
+  tab_style_body(
+    style = cell_fill(color = "green"),
+    pattern = "ne|na"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_body_5.png" alt="This image of a table was generated from the fifth code example in the `tab_style_body()` help file." style="width:100\%;">
+}}
+
+For the most flexibility in targeting, it's best to use the \code{fn} argument.
+The function you give to \code{fn} will be invoked separately on all cells so the
+\code{columns} argument of \code{tab_style_body()} might be useful to limit which cells
+should be evaluated. For this next example, the supplied function should only
+be used on numeric values and we can make sure of this by using \code{columns = where(is.numeric)}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl \%>\%
+  tab_style_body(
+    columns = where(is.numeric),
+    style = cell_fill(color = "pink"),
+    fn = function(x) x >= 0 && x < 50
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_body_6.png" alt="This image of a table was generated from the sixth code example in the `tab_style_body()` help file." style="width:100\%;">
+}}
+}
+
 \section{Function ID}{
 
 2-11
@@ -99,6 +232,7 @@ Other part creation/modification functions:
 \code{\link{tab_caption}()},
 \code{\link{tab_footnote}()},
 \code{\link{tab_header}()},
+\code{\link{tab_info}()},
 \code{\link{tab_options}()},
 \code{\link{tab_row_group}()},
 \code{\link{tab_source_note}()},
