@@ -469,8 +469,8 @@ test_that("the `cols_merge_range()` function works correctly", {
 
   # Expect that the HTML produced from the two tables is the same
   expect_identical(
-    tbl_html_1 %>% as_raw_html(),
-    tbl_html_2 %>% as_raw_html()
+    tbl_html_1 %>% as_raw_html() %>% gsub("id=\"[a-z]*?\"", "", .),
+    tbl_html_2 %>% as_raw_html() %>% gsub("id=\"[a-z]*?\"", "", .)
   )
 
   # Create another variant that renames `col_2` as `1`, which
@@ -487,8 +487,8 @@ test_that("the `cols_merge_range()` function works correctly", {
   # Expect that the HTML produced from `tbl_html_2` and
   # `tbl_html_3` is the same
   expect_identical(
-    tbl_html_2 %>% as_raw_html(),
-    tbl_html_3 %>% as_raw_html()
+    tbl_html_2 %>% as_raw_html() %>% gsub("id=\"[a-z]*?\"", "", .),
+    tbl_html_3 %>% as_raw_html() %>% gsub("id=\"[a-z]*?\"", "", .)
   )
 })
 
