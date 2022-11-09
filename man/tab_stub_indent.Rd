@@ -113,6 +113,7 @@ Other part creation/modification functions:
 \code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
 \code{\link{tab_stubhead}()},
+\code{\link{tab_style_body}()},
 \code{\link{tab_style}()}
 }
 \concept{part creation/modification functions}

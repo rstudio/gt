@@ -50,6 +50,7 @@ reference:
     - tab_source_note
     - tab_caption
     - tab_style
+    - tab_style_body
     - tab_options
     - tab_info
 
