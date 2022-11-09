@@ -404,6 +404,13 @@ as_raw_html <- function(
 
     html_table <-
       gsub(
+        pattern = "<style>html \\{.*?\\}",
+        replacement = "<style>",
+        x = html_table
+      )
+
+    html_table <-
+      gsub(
         pattern = ".gt_table {\n",
         replacement = paste0(".gt_table { \n  ", font_family_attr, "\n"),
         x = html_table,
