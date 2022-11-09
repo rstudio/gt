@@ -62,6 +62,8 @@ Suggests:
     tidyr,
     webshot2,
     xml2
+Remotes:
+    rich-iannone/juicyjuice
 Roxygen: list(markdown = TRUE)
 Collate: 
     'as_data_frame.R'
