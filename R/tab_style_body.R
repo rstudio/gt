@@ -8,7 +8,8 @@
 #' the application of styles for HTML output only (as such, other output formats
 #' will ignore all `tab_style()` calls).
 #'
-#' Using the `cell_*()` helper functions, we can modify:
+#' With the collection of `cell_*()` helper functions available in **gt**, we
+#' can modify:
 #'
 #' - the background color of the cell ([cell_fill()]: `color`)
 #' - the cell's text color, font, and size ([cell_text()]: `color`, `font`,
@@ -21,12 +22,26 @@
 #' `indent`)
 #' - the cell borders ([cell_borders()])
 #'
-#' @inheritParams fmt_number
 #' @param style a vector of styles to use. The [cell_text()], [cell_fill()], and
 #'   [cell_borders()] helper functions can be used here to more easily generate
 #'   valid styles. If using more than one helper function to define styles, all
 #'   calls must be enclosed in a [list()]. Custom CSS declarations can be used
 #'   for HTML output by including a [css()]-based statement as a list item.
+#' @param columns Optional columns for constraining the targeting process.
+#'   Providing [everything()] (the default) results in cells in all `columns`
+#'   being targeting (this can be limited by `rows` however). Can either be a
+#'   series of column names provided in [c()], a vector of column indices, or a
+#'   helper function focused on selections. The select helper functions are:
+#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
+#'   [num_range()], and [everything()].
+#' @param rows Optional rows for constraining the targeting process. Providing
+#'   [everything()] (the default) results in all rows in `columns` being
+#'   targeted. Alternatively, we can supply a vector of row captions within
+#'   [c()], a vector of row indices, or a helper function focused on selections.
+#'   The select helper functions are: [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
+#'   We can also use expressions to filter down to the rows we need (e.g.,
+#'   `[colname_1] > 100 & [colname_2] < 50`).
 #' @param values The specific value or values that should be targeted for
 #'   styling. If `pattern` is also supplied then `values` will be ignored.
 #' @param pattern A regex pattern that can target solely those values in
