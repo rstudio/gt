@@ -113,7 +113,7 @@ Collate:
     'summary_rows.R'
     'tab_info.R'
     'tab_remove.R'
-    'tab_style_specific.R'
+    'tab_style_body.R'
     'text_transform.R'
     'utils.R'
     'utils_color_contrast.R'
