@@ -22,6 +22,7 @@
 #' `indent`)
 #' - the cell borders ([cell_borders()])
 #'
+#' @inheritParams fmt_number
 #' @param style a vector of styles to use. The [cell_text()], [cell_fill()], and
 #'   [cell_borders()] helper functions can be used here to more easily generate
 #'   valid styles. If using more than one helper function to define styles, all
