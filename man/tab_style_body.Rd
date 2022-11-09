@@ -17,27 +17,27 @@ tab_style_body(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
-
 \item{style}{a vector of styles to use. The \code{\link[=cell_text]{cell_text()}}, \code{\link[=cell_fill]{cell_fill()}}, and
 \code{\link[=cell_borders]{cell_borders()}} helper functions can be used here to more easily generate
 valid styles. If using more than one helper function to define styles, all
 calls must be enclosed in a \code{\link[=list]{list()}}. Custom CSS declarations can be used
 for HTML output by including a \code{\link[=css]{css()}}-based statement as a list item.}
 
-\item{columns}{The columns to format. Can either be a series of column names
-provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
-focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}.}
+\item{columns}{Optional columns for constraining the targeting process.
+Providing \code{\link[=everything]{everything()}} (the default) results in cells in all \code{columns}
+being targeting (this can be limited by \code{rows} however). Can either be a
+series of column names provided in \code{\link[=c]{c()}}, a vector of column indices, or a
+helper function focused on selections. The select helper functions are:
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
 
-\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
-default) results in all rows in \code{columns} being formatted. Alternatively,
-we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
-indices, or a helper function focused on selections. The select helper
-functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
-\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
-to filter down to the rows we need (e.g.,
+\item{rows}{Optional rows for constraining the targeting process. Providing
+\code{\link[=everything]{everything()}} (the default) results in all rows in \code{columns} being
+targeted. Alternatively, we can supply a vector of row captions within
+\code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on selections.
+The select helper functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.
+We can also use expressions to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{values}{The specific value or values that should be targeted for
@@ -75,7 +75,8 @@ Just as with the general \code{\link[=tab_style]{tab_style()}} function, this fu
 the application of styles for HTML output only (as such, other output formats
 will ignore all \code{tab_style()} calls).
 
-Using the \verb{cell_*()} helper functions, we can modify:
+With the collection of \verb{cell_*()} helper functions available in \strong{gt}, we
+can modify:
 \itemize{
 \item the background color of the cell (\code{\link[=cell_fill]{cell_fill()}}: \code{color})
 \item the cell's text color, font, and size (\code{\link[=cell_text]{cell_text()}}: \code{color}, \code{font},
