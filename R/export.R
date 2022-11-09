@@ -395,20 +395,12 @@ as_raw_html <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
+  html_table <- as.character(as.tags.gt_tbl(data))
+
   if (inline_css) {
 
-    # Generation of the HTML table
-    html_table <- render_as_html(data = data)
-
     # Create inline styles
-    html_table <-
-      inline_html_styles(
-        html = html_table,
-        css_tbl = get_css_tbl(data = data)
-      )
-
-  } else {
-    html_table <- as.character(as.tags.gt_tbl(data))
+    html_table <- juicyjuice::css_inline(html = html_table)
   }
 
   htmltools::HTML(html_table)
