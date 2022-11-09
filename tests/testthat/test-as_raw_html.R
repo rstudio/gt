@@ -2,10 +2,11 @@ test_that("`as_raw_html()` produces the same table every time", {
 
   gt_html_1 <-
     gt(exibble) %>%
-    as_raw_html(inline_css = TRUE)
+    as_raw_html(inline_css = TRUE) %>%
+    gsub("id=\"[a-z]*?\"", "", .)
 
   gt_html_1_sha1 <- digest::sha1(gt_html_1)
-  expect_equal(gt_html_1_sha1, "ea4301a8442752cf8321bad80db2f1f726e66c50")
+  expect_equal(gt_html_1_sha1, "fd7edff8e2a3a63ae2a2866715557327c40c63a6")
 
   gt_html_2 <-
     gt(
@@ -108,8 +109,9 @@ test_that("`as_raw_html()` produces the same table every time", {
         rows = "Mazda RX4"
       )
     ) %>%
-    as_raw_html(inline_css = TRUE)
+    as_raw_html(inline_css = TRUE) %>%
+    gsub("id=\"[a-z]*?\"", "", .)
 
   gt_html_2_sha1 <- digest::sha1(gt_html_2)
-  expect_equal(gt_html_2_sha1, "d0b881eaa690047bf58877d4de65883ca3d0ba39")
+  expect_equal(gt_html_2_sha1, "87c9deca5e4deacd8736e03da4cb85cd2fdff8d0")
 })
