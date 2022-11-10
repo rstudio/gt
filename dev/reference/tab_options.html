@@ -70,6 +70,8 @@ components, the subcomponents, and the element that can adjusted.</p>
 <span>  <span class="va">data</span>,</span>
 <span>  container.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  container.height <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  container.padding.x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  container.padding.y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  container.overflow.x <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  container.overflow.y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  table.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -241,12 +243,13 @@ components, the subcomponents, and the element that can adjusted.</p>
 <dd><p>A table object that is created using the <code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
-<dt>container.width, container.height</dt>
-<dd><p>The width and height of the table's
-container. Can be specified as a single-length character with units of
-pixels or as a percentage. If provided as a single-length numeric vector,
-it is assumed that the value is given in units of pixels. The <code><a href="px.html">px()</a></code> and
-<code><a href="pct.html">pct()</a></code> helper functions can also be used to pass in numeric values and
+<dt>container.width, container.height, container.padding.x, container.padding.y</dt>
+<dd><p>The width and height of the table's container, and, the vertical and
+horizontal padding of the table's container. The container width and height
+can be specified with units of pixels or as a percentage. The padding is to
+be specified as a length with units of pixels. If provided as a numeric
+value, it is assumed that the value is given in units of pixels. The <code><a href="px.html">px()</a></code>
+and <code><a href="pct.html">pct()</a></code> helper functions can also be used to pass in numeric values and
 obtain values as pixel or percent units.</p></dd>
 
 
