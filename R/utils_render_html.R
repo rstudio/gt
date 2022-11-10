@@ -26,7 +26,7 @@ styles_to_html <- function(styles) {
       FUN.VALUE = character(1), USE.NAMES = FALSE,
       FUN = function(x) {
         if (any(is.null(names(x)))) {
-          style <- gsub(":", ": ", x, fixed = TRUE)
+          style <- x
         } else if (all(names(x) != "")) {
           x <- cell_style_to_html(x)
           style <- tidy_gsub(paste0(names(x), ": ", x, ";", collapse = " "), ";;", ";")
