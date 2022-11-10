@@ -1102,7 +1102,7 @@ create_body_component_h <- function(data) {
                       } else {
                         paste0(
                           " style=\"",
-                          htmltools::htmlEscape(cell_style, attribute = TRUE),
+                          htmltools::htmlEscape(cell_style, attribute = FALSE),
                           "\""
                         )
                       },

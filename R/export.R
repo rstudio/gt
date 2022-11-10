@@ -395,20 +395,30 @@ as_raw_html <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
+  html_table <- as.character(as.tags.gt_tbl(data))
+
   if (inline_css) {
 
-    # Generation of the HTML table
-    html_table <- render_as_html(data = data)
+    font_vec <- unique(dt_options_get_value(data = data, option = "table_font_names"))
+    font_family_attr <- as_css_font_family_attr(font_vec = font_vec)
 
-    # Create inline styles
     html_table <-
-      inline_html_styles(
-        html = html_table,
-        css_tbl = get_css_tbl(data = data)
+      gsub(
+        pattern = "<style>html \\{.*?\\}",
+        replacement = "<style>",
+        x = html_table
       )
 
-  } else {
-    html_table <- as.character(as.tags.gt_tbl(data))
+    html_table <-
+      gsub(
+        pattern = ".gt_table {\n",
+        replacement = paste0(".gt_table { \n  ", font_family_attr, "\n"),
+        x = html_table,
+        fixed = TRUE
+      )
+
+    # Create inline styles
+    html_table <- juicyjuice::css_inline(html = html_table)
   }
 
   htmltools::HTML(html_table)

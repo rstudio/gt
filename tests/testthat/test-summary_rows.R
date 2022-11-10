@@ -700,7 +700,9 @@ test_that("`groups = FALSE` returns data unchanged", {
   # Expect that using `groups = FALSE` with
   # `summary_rows()` creates no summary rows
   expect_equal(
-    tbl %>% as_raw_html(),
+    tbl %>%
+      as_raw_html() %>%
+      gsub("id=\"[a-z]*?\"", "", .),
     tbl %>%
       summary_rows(
         groups = FALSE,
@@ -711,7 +713,8 @@ test_that("`groups = FALSE` returns data unchanged", {
           `std dev` = ~sd(., na.rm = TRUE)
         )
       ) %>%
-      as_raw_html()
+      as_raw_html() %>%
+      gsub("id=\"[a-z]*?\"", "", .)
   )
 })
 
