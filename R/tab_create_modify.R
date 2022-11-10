@@ -1944,11 +1944,13 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' components, the subcomponents, and the element that can adjusted.
 #'
 #' @inheritParams fmt_number
-#' @param container.width,container.height The width and height of the table's
-#'   container. Can be specified as a single-length character with units of
-#'   pixels or as a percentage. If provided as a single-length numeric vector,
-#'   it is assumed that the value is given in units of pixels. The [px()] and
-#'   [pct()] helper functions can also be used to pass in numeric values and
+#' @param container.width,container.height,container.padding.x,container.padding.y
+#'   The width and height of the table's container, and, the vertical and
+#'   horizontal padding of the table's container. The container width and height
+#'   can be specified with units of pixels or as a percentage. The padding is to
+#'   be specified as a length with units of pixels. If provided as a numeric
+#'   value, it is assumed that the value is given in units of pixels. The [px()]
+#'   and [pct()] helper functions can also be used to pass in numeric values and
 #'   obtain values as pixel or percent units.
 #' @param container.overflow.x,container.overflow.y Options to enable scrolling
 #'   in the horizontal and vertical directions when the table content overflows
@@ -2273,6 +2275,8 @@ tab_options <- function(
     data,
     container.width = NULL,
     container.height = NULL,
+    container.padding.x = NULL,
+    container.padding.y = NULL,
     container.overflow.x = NULL,
     container.overflow.y = NULL,
     table.width = NULL,
