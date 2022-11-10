@@ -6,7 +6,7 @@ test_that("`as_raw_html()` produces the same table every time", {
     gsub("id=\"[a-z]*?\"", "", .)
 
   gt_html_1_sha1 <- digest::sha1(gt_html_1)
-  expect_equal(gt_html_1_sha1, "fd7edff8e2a3a63ae2a2866715557327c40c63a6")
+  expect_equal(gt_html_1_sha1, "5344de4ed3bbff521ddaa77db44242b7d7000074")
 
   gt_html_2 <-
     gt(
@@ -113,5 +113,5 @@ test_that("`as_raw_html()` produces the same table every time", {
     gsub("id=\"[a-z]*?\"", "", .)
 
   gt_html_2_sha1 <- digest::sha1(gt_html_2)
-  expect_equal(gt_html_2_sha1, "87c9deca5e4deacd8736e03da4cb85cd2fdff8d0")
+  expect_equal(gt_html_2_sha1, "ead3b201f06d98f304d23d9c04a2eba0b18bbdf5")
 })
