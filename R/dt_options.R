@@ -38,6 +38,8 @@ dt_options_tbl <-
     "empty",                             FALSE,  "empty",            "value",   list(),
     "container_width",                   FALSE,  "container",        "px",      "auto",
     "container_height",                  FALSE,  "container",        "px",      "auto",
+    "container_padding_x",               FALSE,  "container",        "px",      "0px",
+    "container_padding_y",               FALSE,  "container",        "px",      "10px",
     "container_overflow_x",              FALSE,  "container",        "overflow","auto",
     "container_overflow_y",              FALSE,  "container",        "overflow","auto",
     "table_id",                          FALSE,  "table",            "value",   NA_character_,
