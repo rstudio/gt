@@ -115,6 +115,53 @@ test_that("the function `cols_merge()` works correctly", {
         hide_columns = c(wt, carb),
       )
   )
+
+  #
+  # Expect that the column set as the row group can participate
+  # in column merging
+  #
+
+  tbl <-
+    dplyr::tibble(
+      row = "Part",
+      a = 1:5,
+      b = c("one", "two", "three", "four", "five")
+    )
+
+  # Merge the stub column with column `a` (has integers)
+  gt_tbl_1 <-
+    gt(tbl, rowname_col = "row") %>%
+    cols_merge(columns = c(row, a))
+
+  # Perform snapshot test
+  gt_tbl_1 %>% render_as_html() %>% expect_snapshot()
+
+  # Merge the stub column with column `b` (has character values)
+  gt_tbl_2 <-
+    gt(tbl, rowname_col = "row") %>%
+    cols_merge(columns = c(row, b))
+
+  # Perform snapshot test
+  gt_tbl_2 %>% render_as_html() %>% expect_snapshot()
+
+  # Merge the stub column with a formatted column `a`
+  # (has lowercase Roman numerals, transformed to character from integer)
+  gt_tbl_3 <-
+    gt(tbl, rowname_col = "row") %>%
+    fmt_roman(columns = "a", case = "lower") %>%
+    cols_merge(columns = c(row, a))
+
+  # Perform snapshot test
+  gt_tbl_3 %>% render_as_html() %>% expect_snapshot()
+
+  # Ensure that `group` columns don't get the same treatment
+  expect_equal(
+    gt(tbl, groupname_col = "row") %>%
+      render_as_html(),
+    gt(tbl, groupname_col = "row") %>%
+      cols_merge(columns = c(row, a)) %>%
+      render_as_html()
+  )
 })
 
 test_that("the `cols_merge_uncert()` function works correctly", {
@@ -238,7 +285,7 @@ test_that("the `cols_merge_uncert()` function works correctly", {
   expect_equal(sep, I(" +/- "))
 })
 
-test_that("the `cols_merge_uncert()` works nicely with different error bounds", {
+test_that("the `cols_merge_uncert()` fn works nicely with different error bounds", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -491,7 +538,6 @@ test_that("the `cols_merge_range()` function works correctly", {
     tbl_html_3 %>% as_raw_html() %>% gsub("id=\"[a-z]*?\"", "", .)
   )
 })
-
 
 test_that("the `cols_merge_n_pct()` function works correctly", {
 
