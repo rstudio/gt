@@ -328,6 +328,42 @@ xml_pStyle <- function(
   )
 }
 
+xml_numPr <- function(..., app = "word"){
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("numPr", app),
+    varArgs = list(
+      htmltools::HTML(paste0(...))
+    )
+  )
+}
+
+xml_ilvl <- function(..., val, app = "word"){
+
+  stopifnot(is.numeric(val))
+
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("ilvl", app),
+    varArgs = list(
+      htmltools::HTML(paste0(...)),
+      `w:val` = val
+    )
+  )
+}
+
+xml_numId <- function(..., val, app = "word"){
+
+  stopifnot(is.numeric(val))
+  stopifnot(val > 0)
+
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("numId", app),
+    varArgs = list(
+      htmltools::HTML(paste0(...)),
+      `w:val` = val
+    )
+  )
+}
+
 # Paragraph alignment
 xml_jc <- function(
     val = c("left", "center", "right"),
@@ -743,8 +779,17 @@ create_table_caption_component_xml <- function(
   styles_tbl <- dt_styles_get(data = data)
   subtitle_defined <- dt_heading_has_subtitle(data = data)
 
+  header_title_style <- styles_tbl %>%
+    dplyr::filter(
+      locname == "title"
+    ) %>%
+    dplyr::pull("styles") %>%
+    .[1] %>% .[[1]]
+
   # Get table options
   table_font_color <- dt_options_get_value(data, option = "table_font_color")
+
+  browser()
 
   # Get the footnote marks for the title
   if ("title" %in% footnotes_tbl$locname) {
@@ -767,28 +812,31 @@ create_table_caption_component_xml <- function(
       xml_p_ns(
         xml_pPr(
           xml_pStyle(val = "caption"),
-          xml_color(color = table_font_color),
-          xml_jc(val = align),
+          xml_color(color = header_title_style[["cell_text"]][["color"]] %||% table_font_color),
+          xml_jc(val = header_title_style[["cell_text"]][["align"]] %||% align),
           if (keep_with_next) { xml_keepNext() }
         ),
         xml_table_autonum(
-          font = xml_r_font(),
-          size = xml_sz(val = 24)
+          font = xml_r_font(header_title_style[["cell_text"]][["font"]] %||% "Calibri"),
+          size = xml_sz(val = header_title_style[["cell_text"]][["size"]] %||% 24)
         ),
-        xml_r(
-          xml_rPr(
-            xml_r_font(),
-            xml_sz(val = 24)
-          ),
-          xml_t(
-            paste0(heading$title, footnote_title_marks),
-            xml_space = "preserve"
-          )
+        process_cell_content(
+          x = parse_to_xml(paste0(heading$title, footnote_title_marks)),
+          font = header_title_style[["cell_text"]][["font"]] %||% "Calibri",
+          size = header_title_style[["cell_text"]][["size"]] %||% 24,
+          whitespace = header_title_style[["cell_text"]][["whitespace"]]
         )
       )
     )
 
   if (subtitle_defined) {
+
+    header_subtitle_style <- styles_tbl %>%
+      dplyr::filter(
+        locname == "subtitle"
+      ) %>%
+      dplyr::pull("styles") %>%
+      .[1] %>% .[[1]]
 
     # Get the footnote marks for the subtitle
     if ("subtitle" %in% footnotes_tbl$locname) {
@@ -811,18 +859,18 @@ create_table_caption_component_xml <- function(
         xml_p_ns(
           xml_pPr(
             xml_pStyle(val = "caption"),
-            xml_color(color = table_font_color),
-            xml_jc(val = align),
+            xml_color(color = header_subtitle_style[["cell_text"]][["color"]] %||% table_font_color),
+            xml_jc(val = header_subtitle_style[["cell_text"]][["align"]] %||% align),
             if (keep_with_next) { xml_keepNext() }
           ),
           xml_r(
             xml_rPr(
-              xml_r_font(),
-              xml_sz(val = 20)
+              xml_r_font(header_subtitle_style[["cell_text"]][["font"]] %||% "Calibri"),
+              xml_sz(val = header_subtitle_style[["cell_text"]][["size"]] %||% 20)
             ),
             xml_t(
-              paste0(heading$subtitle, footnote_subtitle_marks),
-              xml_space = "preserve"
+              white_space_in_text(x = paste0(heading$subtitle, footnote_subtitle_marks), whitespace = header_subtitle_style[["cell_text"]][["whitespace"]]),
+              xml_space = white_space_to_t_xml_space(header_subtitle_style[["cell_text"]][["whitespace"]])
             )
           )
         )
@@ -892,61 +940,89 @@ create_heading_component_xml <- function(
     footnote_title_marks <- ""
   }
 
-  # Get the footnote marks for the subtitle
-  if (subtitle_defined && "subtitle" %in% footnotes_tbl$locname) {
+  header_title_style <- styles_tbl %>%
+    dplyr::filter(
+      locname == "title"
+    ) %>%
+    dplyr::pull("styles") %>%
+    .[1] %>% .[[1]]
 
-    footnote_subtitle_marks <-
-      coalesce_marks(
-        fn_tbl = footnotes_tbl,
-        locname = "subtitle"
-      )
 
-    footnote_subtitle_marks <-
-      footnote_mark_to_xml(mark = footnote_subtitle_marks$fs_id_c)
-
-  } else {
-    footnote_subtitle_marks <- ""
-  }
-
-  title_html <-
-    htmltools::tagList(
-      xml_t(
-        paste0(heading$title, footnote_title_marks)
-      ),
-      if (subtitle_defined) {
-        htmltools::tagList(
-          xml_br(),
-          xml_r(
-            xml_rPr(
-              xml_r_font(),
-              xml_sz(val = 16)
-            ),
-            xml_t(paste0(heading$subtitle, footnote_subtitle_marks),
-                  xml_space = "preserve")
-          )
-        )
-      }
-    )
-
-  title_row <-
-    xml_tr(
-      xml_trPr(
-        if (!split) { xml_cantSplit() },
-        xml_tbl_header()
-      ),
-      xml_table_cell(
-        text = title_html,
-        size = 24,
-        color = table_font_color,
-        align = "center",
-        col_span = n_cols,
-        border = if (table_border_top_include) {
+  title_section <- htmltools::tagList(xml_tr(
+    xml_trPr(if (!split) {
+      xml_cantSplit()
+    },
+    xml_tbl_header()),
+    xml_table_cell(
+      content = parse_to_xml(paste0(heading$title, footnote_title_marks)),
+      size = header_title_style[["cell_text"]][["size"]] %||% 20,
+      color = header_title_style[["cell_text"]][["color"]] %||% table_font_color,
+      align = header_title_style[["cell_text"]][["align"]] %||% "center",
+      col_span = n_cols,
+      whitespace = header_title_style[["cell_text"]][["whitespace"]],
+      border = if (table_border_top_include) {
+        c(
           list(
             "top" = cell_border(
               type = "single",
               size = 16,
               color = heading_border_bottom_color
-            ),
+            )),
+          if(!subtitle_defined) {
+            list(
+              "bottom" = cell_border(
+                type = "single",
+                size = 16,
+                color = heading_border_bottom_color
+              )
+            )
+          }
+        )
+      },
+      keep_with_next = TRUE
+    )
+  ))
+
+  if (subtitle_defined) {
+
+    # Get the footnote marks for the subtitle
+    if ("subtitle" %in% footnotes_tbl$locname) {
+
+      footnote_subtitle_marks <-
+        coalesce_marks(
+          fn_tbl = footnotes_tbl,
+          locname = "subtitle"
+        )
+
+      footnote_subtitle_marks <-
+        footnote_mark_to_xml(mark = footnote_subtitle_marks$fs_id_c)
+
+    } else {
+      footnote_subtitle_marks <- ""
+    }
+
+
+    header_subtitle_style <- styles_tbl %>%
+      dplyr::filter(
+        locname == "subtitle"
+      ) %>%
+      dplyr::pull("styles") %>%
+      .[1] %>% .[[1]]
+
+    subtitle_row <- xml_tr(
+      xml_trPr(if (!split) {
+        xml_cantSplit()
+      },
+      xml_tbl_header()),
+      xml_table_cell(
+        content = parse_to_xml(paste0(heading$subtitle, footnote_subtitle_marks)),
+        size = header_subtitle_style[["cell_text"]][["size"]] %||% 20,
+        color = header_subtitle_style[["cell_text"]][["color"]] %||% table_font_color,
+        align = header_subtitle_style[["cell_text"]][["align"]] %||% "center",
+        col_span = n_cols,
+        whitespace = header_subtitle_style[["cell_text"]][["whitespace"]],
+        border = if (table_border_top_include) {
+          list(
             "bottom" = cell_border(
               type = "single",
               size = 16,
@@ -958,7 +1034,14 @@ create_heading_component_xml <- function(
       )
     )
 
-  htmltools::tagList(title_row)
+    title_section <- htmltools::tagList(
+      title_section[[1]],
+      subtitle_row
+    )
+  }
+
+  title_section
+
 }
 
 #' Create the columns component of a table (OOXML)
@@ -1042,7 +1125,7 @@ create_columns_component_xml <- function(
 
       table_cell_vals[[length(table_cell_vals) + 1]] <-
         xml_table_cell(
-          text = headings_labels[1],
+          content = parse_to_xml(headings_labels[1]),
           font = cell_style[["cell_text"]][["font"]],
           size = cell_style[["cell_text"]][["size"]] %||% 20,
           color = cell_style[["cell_text"]][["color"]],
@@ -1091,14 +1174,14 @@ create_columns_component_xml <- function(
 
     table_cell_vals[[length(table_cell_vals) + 1]] <-
       xml_table_cell(
-        text = headings_labels[i + stub_available],
+        content = parse_to_xml(headings_labels[i + stub_available]),
         font = cell_style[["cell_text"]][["font"]],
         size = cell_style[["cell_text"]][["size"]] %||% 20,
         color = cell_style[["cell_text"]][["color"]],
         style = cell_style[["cell_text"]][["style"]],
         stretch = cell_style[["cell_text"]][["stretch"]],
         whitespace = cell_style[["cell_text"]][["whitespace"]],
-        align = cell_style[["cell_text"]][["align"]],
+        align = cell_style[["cell_text"]][["align"]] %||% col_alignment[i],
         v_align = cell_style[["cell_text"]][["v_align"]],
         fill = cell_style[["cell_fill"]][["color"]],
         border = list(
@@ -1163,7 +1246,7 @@ create_columns_component_xml <- function(
 
           spanner_cell_vals[[length(spanner_cell_vals) + 1]] <-
             xml_table_cell(
-              text = headings_labels[1],
+              content = parse_to_xml(headings_labels[1]),
               font = cell_style[["cell_text"]][["font"]] %||% "Calibri",
               size = cell_style[["cell_text"]][["size"]] %||% 20,
               color = cell_style[["cell_text"]][["color"]],
@@ -1244,7 +1327,7 @@ create_columns_component_xml <- function(
             ## check if there are any open cells above to determine
             spanner_cell_vals[[length(spanner_cell_vals) + 1]] <-
               xml_table_cell(
-                text = spanner_row_values[i],
+                content = parse_to_xml(spanner_row_values[i]),
                 font = cell_style[["cell_text"]][["font"]],
                 size = cell_style[["cell_text"]][["size"]] %||% 20,
                 color = cell_style[["cell_text"]][["color"]],
@@ -1412,7 +1495,7 @@ create_body_component_xml <- function(
                 if (!split) { xml_cantSplit() }
               ),
               xml_table_cell(
-                text = htmltools::HTML(group_label),
+                content = parse_to_xml(group_label),
                 font = cell_style[["cell_text"]][["font"]],
                 size = cell_style[["cell_text"]][["size"]] %||% 20,
                 color = cell_style[["cell_text"]][["color"]],
@@ -1463,7 +1546,7 @@ create_body_component_xml <- function(
 
           row_cells[[length(row_cells) + 1]] <-
             xml_table_cell(
-              text = output_df_row_as_vec(i)[y],
+              content = parse_to_xml(output_df_row_as_vec(i)[y]),
               font = cell_style[["cell_text"]][["font"]],
               size = cell_style[["cell_text"]][["size"]],
               color = cell_style[["cell_text"]][["color"]],
@@ -1620,7 +1703,7 @@ create_source_notes_component_xml <- function(
               if (!split) { xml_cantSplit() }
             ),
             xml_table_cell(
-              text = htmltools::HTML(x),
+              content = parse_to_xml(x),
               font = cell_style[["cell_text"]][["font"]],
               size = cell_style[["cell_text"]][["size"]] %||% 20,
               color = cell_style[["cell_text"]][["color"]],
@@ -1694,43 +1777,48 @@ create_footnotes_component_xml <- function(
     lapply(
       seq_along(footnote_ids),
       function(x) {
+
+        footnote_content <- htmltools::tagList(
+          xml_r(
+            xml_rPr(
+              xml_r_font(
+                ascii_font = cell_style[["cell_text"]][["font"]] %||% "Calibri",
+                ansi_font = cell_style[["cell_text"]][["font"]] %||% "Calibri"
+              ),
+              if (!is.null(cell_style[["cell_text"]][["color"]])) {
+                xml_color(color = cell_style[["cell_text"]][["color"]])
+              },
+              xml_sz(val = cell_style[["cell_text"]][["size"]] %||% 20),
+              xml_baseline_adj(v_align = "superscript"),
+              xml_i()
+            ),
+            xml_t(if(!is.na(footnote_ids[x])) {x = footnote_ids[x]},xml_space = white_space_to_t_xml_space(cell_style[["cell_text"]][["whitespace"]]))
+          ),
+          xml_r(
+            xml_rPr(
+              xml_r_font(
+                ascii_font = cell_style[["cell_text"]][["font"]] %||% "Calibri",
+                ansi_font = cell_style[["cell_text"]][["font"]] %||% "Calibri"
+              ),
+              if (!is.null(cell_style[["cell_text"]][["color"]])) {
+                xml_color(color = cell_style[["cell_text"]][["color"]])
+              },
+              xml_sz(val = cell_style[["cell_text"]][["size"]] %||% 20),
+              xml_baseline_adj(v_align = "baseline")
+            ),
+            xml_t(white_space_in_text(x = footnote_text[x], whitespace = whitespace), xml_space = white_space_to_t_xml_space(cell_style[["cell_text"]][["whitespace"]]))
+          )
+        )
+
+        class(footnote_content) <- c("ooxml_r",class(footnote_content))
+
         as.character(
           xml_tr(
             xml_trPr(
-              if (!split) {xml_cantSplit() }
+              if (!split) { xml_cantSplit() }
             ),
             xml_table_cell(
-              paragraph_xml = htmltools::tagList(
-                xml_r(
-                  xml_rPr(
-                    xml_r_font(
-                      ascii_font = cell_style[["cell_text"]][["font"]] %||% "Calibri",
-                      ansi_font = cell_style[["cell_text"]][["font"]] %||% "Calibri"
-                    ),
-                    if (!is.null(cell_style[["cell_text"]][["color"]])) {
-                      xml_color(color = cell_style[["cell_text"]][["color"]])
-                    },
-                    xml_sz(val = cell_style[["cell_text"]][["size"]] %||% 20),
-                    xml_baseline_adj(v_align = "superscript"),
-                    xml_i()
-                  ),
-                  xml_t(if (!is.na(footnote_ids[x])) { footnote_ids[x] },xml_space = white_space_to_t_xml_space(cell_style[["cell_text"]][["whitespace"]]))
-                ),
-                xml_r(
-                  xml_rPr(
-                    xml_r_font(
-                      ascii_font = cell_style[["cell_text"]][["font"]] %||% "Calibri",
-                      ansi_font = cell_style[["cell_text"]][["font"]] %||% "Calibri"
-                    ),
-                    if (!is.null(cell_style[["cell_text"]][["color"]])) {
-                      xml_color(color = cell_style[["cell_text"]][["color"]])
-                    },
-                    xml_sz(val = cell_style[["cell_text"]][["size"]] %||% 20),
-                    xml_baseline_adj(v_align = "baseline")
-                  ),
-                  xml_t(footnote_text[x], xml_space = white_space_to_t_xml_space(cell_style[["cell_text"]][["whitespace"]]))
-                )
-              ),
+              content = footnote_content,
               stretch = cell_style[["cell_text"]][["stretch"]],
               align = cell_style[["cell_text"]][["align"]],
               v_align = cell_style[["cell_text"]][["v_align"]],
@@ -1795,7 +1883,7 @@ summary_rows_xml <- function(
 
         summary_row_cells[[length(summary_row_cells) + 1]] <-
           xml_table_cell(
-            text = summary_df_row(j)[y],
+            content = parse_to_xml(summary_df_row(j)[y]),
             font = cell_style[["cell_text"]][["font"]],
             size = cell_style[["cell_text"]][["size"]],
             color = cell_style[["cell_text"]][["color"]],
@@ -1926,6 +2014,27 @@ white_space_to_t_xml_space <- function(x = NULL){
   spacing
 }
 
+white_space_in_text <- function(x, whitespace = NULL){
+
+  ##options for white space: normal, nowrap, pre, pre-wrap, pre-line, break-spaces
+  ## normal drops all newlines and collapse spaces
+  ## general behavior based on: https://developer.mozilla.org/en-US/docs/Web/CSS/white-space
+
+  ## remove newlines (br) unless preserving it
+  if(!isTRUE(x %in% c( "pre", "pre-wrap", "pre-line","break-spaces"))){
+    x <- gsub("\\<w\\:br\\/\\>"," ",x)
+  }
+
+  ## collapse white spaces unless preserving it
+  if(!isTRUE(x %in% c( "pre", "pre-wrap", "break-spaces"))){
+    x <- gsub("\\s+|\\t+"," ",x)
+  }
+
+  x
+
+}
+
+
 #' define ooxml table cells
 #'
 #' paragrah
@@ -1933,7 +2042,7 @@ white_space_to_t_xml_space <- function(x = NULL){
 #' @importFrom rlang `%||%`
 #' @noRd
 xml_table_cell <- function(
-    text = NULL,
+    content = NULL,
     size = NULL,
     font = NULL,
     color = NULL,
@@ -1948,8 +2057,7 @@ xml_table_cell <- function(
     fill = NULL,
     margins = NULL,
     border = NULL,
-    keep_with_next = TRUE,
-    paragraph_xml = NULL
+    keep_with_next = TRUE
 ) {
 
   xml_tc(
@@ -1974,45 +2082,94 @@ xml_table_cell <- function(
         )
       }
     ),
-    xml_p(
-      xml_pPr(
-        xml_spacing(before = 0, after = 60),
-        if (!is.null(col_span)) { xml_gridSpan(val = as.character(col_span)) },
-        if (keep_with_next) { xml_keepNext() },
-        if (!is.null(stretch)) {
-          xml_rPr(
-            xml_spacing(val = stretch_to_xml_stretch(stretch))
-          )
-        },
-        if (!is.null(align)) { xml_jc(val = align) }
-      ),
-      if (is.null(paragraph_xml)) {
-        xml_r(
-          xml_rPr(
-            xml_r_font(
-              ascii_font = font %||% "Calibri",
-              ansi_font = font %||% "Calibri"
-            ),
-            xml_sz(val = size %||% 20),
-            if (!is.null(color)) {
-              xml_color(color = color)
-            },
-            if (identical(style, "italic")) {
-              xml_i()
-            },
-            if (identical(weight, "bold")) {
-              xml_b()
-            }
-          ),
-          if (is.character(text)) {
-            xml_t(text, xml_space = white_space_to_t_xml_space(whitespace))
-          } else if (inherits(text, "shiny.tag.list")) {
-            text
-          }
-        )
-      } else {
-        paragraph_xml
-      }
+    process_cell_content(
+      content,
+      font = font %||% "Calibri",
+      size = size %||% 20,
+      color = color,
+      style = style,
+      weight = weight,
+      whitespace = whitespace,
+      align = align,
+      col_span = col_span,
+      stretch = stretch,
+      keep_with_next = keep_with_next
     )
   )
 }
+
+process_cell_content <- function(x, ...){
+  UseMethod("process_cell_content",x)
+}
+
+process_cell_content.character <- function(x, ..., whitespace = NULL) {
+    x <- xml_t(white_space_in_text(x = x, whitespace = whitespace), xml_space = white_space_to_t_xml_space(whitespace))
+    process_cell_content.ooxml_t(x = x, ...)
+}
+
+process_cell_content.ooxml_t<- function(x,..., font = NULL, size = NULL, color = NULL, style = NULL, weight = NULL){
+
+  x <- xml_r(
+    xml_rPr(
+      xml_r_font(
+        ascii_font = font %||% "Calibri",
+        ansi_font = font %||% "Calibri"
+      ),
+      xml_sz(val = size %||% 20),
+      if (!is.null(color)) {
+        xml_color(color = color)
+      },
+      if (identical(style, "italic")) {
+        xml_i()
+      },
+      if (identical(weight, "bold")) {
+        xml_b()
+      }
+    ),
+    x
+  )
+
+  process_cell_content.ooxml_r(x = x, ...)
+}
+
+process_cell_content.ooxml_r <- function(x, ..., align = NULL, col_span = NULL, stretch = NULL, keep_with_next = TRUE  ){
+  xml_p(
+    xml_pPr(
+      xml_spacing(before = 0, after = 60),
+      if (!is.null(col_span)) { xml_gridSpan(val = as.character(col_span)) },
+      if (keep_with_next) { xml_keepNext() },
+      if (!is.null(stretch)) {
+        xml_rPr(
+          xml_spacing(val = stretch_to_xml_stretch(stretch))
+        )
+      },
+      if (!is.null(align)) { xml_jc(val = align) }
+    ),
+    x
+  )
+}
+
+
+## default to passing through if unknown type
+process_cell_content.default <- process_cell_content.character
+
+#   function(x, ...){
+#   x
+# }
+
+
+## if wrapped in xml, convert to html
+parse_to_xml <- function(x,...){
+  ##check if wrapped in ooxml
+  ## get what it starts with and assign
+  if(grepl("^<w:.+>.*</w:.+>$", x)){
+
+    opening_tag <- gsub("<w:([[:word:]])>.+","\\1",x,perl=TRUE)
+    x <- htmltools::HTML(x)
+    class(x)<- c(paste0("ooxml_",opening_tag), class(x))
+  }
+  x
+}
+
+
+

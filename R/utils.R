@@ -503,10 +503,10 @@ process_text <- function(text, context = "html") {
     if (inherits(text, "from_markdown")) {
       text <- markdown_to_xml(text)
     }else{
-      text <- as.character(text)
+      text <- htmltools::htmlEscape(as.character(text))
     }
 
-    return(htmltools::htmlEscape(text))
+    return(text)
 
   } else {
 
@@ -605,20 +605,21 @@ markdown_to_latex <- function(text) {
 
 markdown_to_xml <- function(text) {
 
-  text <-
+  commonmark_content <-
     text %>%
     as.character() %>%
     vapply(
       FUN.VALUE = character(1),
       USE.NAMES = FALSE,
       FUN = commonmark::markdown_xml
-    ) %>%
-    vapply(
-      FUN.VALUE = character(1),
-      USE.NAMES = FALSE,
-      FUN = function(cmark) {
-        # cat(cmark)
+    )
+
+  text <- commonmark_content %>%
+    lapply(
+      function(cmark) {
+
         x <- xml2::read_xml(cmark)
+
         if (!identical(xml2::xml_name(x), "document")) {
           stop("Unexpected result from markdown parsing: `document` element not found")
         }
@@ -636,14 +637,9 @@ markdown_to_xml <- function(text) {
           if (inherits(x, "xml_nodeset")) {
 
             len <- length(x)
-            results <- character(len) # preallocate vector
+            results <- vector("list",length = len) # preallocate vector
 
-            for (i in seq_len(len)) {
-              results[[i]] <- apply_rules(x[[i]])
-            }
-
-            # TODO: is collapse = "" correct?
-            xml_raw(paste0("", results, collapse = ""))
+            apply_rules(x[[1]])
 
           } else {
 
@@ -664,14 +660,18 @@ markdown_to_xml <- function(text) {
               } else if (is.function(rule)) {
 
                 rule(x, apply_rules)
+
               }
             }
 
-            xml_raw(paste0("", output, collapse = ""))
-          }
-        }
+          output
+         }
+       }
 
-        apply_rules(children)
+        lapply(children, apply_rules) %>%
+          vapply(as.character,
+                 character(1)) %>%
+          paste0(collapse = "")
       }
     )
 
@@ -680,15 +680,11 @@ markdown_to_xml <- function(text) {
 
 
 cmark_rules_xml <- list(
-
   heading = function(x, process) {
-
     heading_sizes <- c(36, 32, 28, 24, 20, 16)
     fs <- heading_sizes[as.numeric(xml2::xml_attr(x, attr = "level"))]
-
-    htmltools::tagList(
-      xml_sz(process(xml2::xml_children(x)), val = fs)
-    )
+    x <- process(xml2::xml_children(x))
+    add_text_style(x, style = xml_sz(val = fs))
   },
   thematic_break = function(x, process) {
     "<w:pict>
@@ -698,7 +694,7 @@ cmark_rules_xml <- list(
   link = function(x, process) {
     # NOTE: Links are difficult to insert in OOXML documents because
     # a relationship must be provided in the 'document.xml.rels' file
-    xml2::xml_text(x)
+    xml_R(xml_rPr(),xml_t(xml2::xml_text(x)))
   },
   list = function(x, process) {
 
@@ -715,26 +711,44 @@ cmark_rules_xml <- list(
           USE.NAMES = FALSE,
           FUN = function(n) {
 
-            paste(
-              ifelse(type == "bullet", "\u2022", ""),
-              process(xml2::xml_children(x)[n]),
-              collapse = ""
-            )
+            li_content <- process(xml2::xml_children(x)[[n]])
+
+            paste0(collapse = "",
+                   xml_p(
+                     xml_pPr(xml_pStyle(val = "ListParagraph")),
+                     xml_numPr(xml_ilvl(val = 0),
+                               xml_numId(val = ifelse(
+                                 type == "ordered", 1, 3
+                               ))),
+                     li_content
+                   ))
           }
-        ),
-        collapse = "<w:br/>"
+        )
       )
     )
   },
   item = function(x, process) {
-    # TODO: probably needs something like process_children()
-    xml2::xml_text(x)
+
+    li_content <- paste0(process(xml2::xml_child(x)),collapse = "")
+
+    if(!grepl("<w:t>", li_content)){
+      li_content <- paste(
+        "<w:t>",li_content,"</w:t>"
+      )
+    }
+
+    if(!grepl("^<w:r>", li_content)){
+      li_content <- paste(
+        "<w:r>",li_content,"</w:r>"
+      )
+    }
+
+    htmltools::HTML(li_content)
   },
   code_block = function(x, process) {
-    htmltools::tagList(
+    xml_r(
       xml_rPr(xml_r_font(ascii_font = "Courier", ansi_font = "Courier")),
-      xml_t(xml2::xml_text(x), xml_space = "preserve"),
-      xml_rPr(xml_r_font(ascii_font = "Calibri", ansi_font = "Calibri"))
+      xml_t(xml2::xml_text(x), xml_space = "preserve")
     )
   },
   html_inline = function(x, process) {
@@ -789,47 +803,54 @@ cmark_rules_xml <- list(
     return(rtf_raw(""))
   },
   softbreak = function(x, process) {
-    "\n "
+    xml_r(xml_rPr(),xml_br())
   },
   linebreak = function(x, process) {
-    "<w:br/>"
+    xml_r(xml_rPr(),xml_br())
   },
   block_quote = function(x, process) {
     # TODO: Implement
     process(xml2::xml_children(x))
   },
   code = function(x, process) {
-    htmltools::tagList(
+    xml_r(
       xml_rPr(xml_r_font(ascii_font = "Courier", ansi_font = "Courier")),
       xml_t(xml2::xml_text(x), xml_space = "preserve"),
-      xml_rPr(xml_r_font(ascii_font = "Calibri", ansi_font = "Calibri"))
     )
   },
   strong = function(x, process) {
-    htmltools::HTML(
-      paste0(
-        xml_rPr(xml_b(active = TRUE)),
-        as.character(process(xml2::xml_children(x))),
-        xml_rPr(xml_b(active = FALSE))
-      )
-    )
+    x <- process(xml2::xml_children(x))
+    add_text_style(x, style = xml_b())
   },
   emph = function(x, process) {
-    htmltools::HTML(
-      paste0(
-        xml_rPr(xml_i(active = TRUE)),
-        as.character(process(xml2::xml_children(x))),
-        xml_rPr(xml_i(active = FALSE))
-      )
-    )
+    x <- process(xml2::xml_children(x))
+    add_text_style(x, style = xml_i())
   },
   text = function(x, process) {
-    xml2::xml_text(x)
+    xml_r(xml_rPr(),xml_t(as.character(xml2::xml_text(x))))
   },
   paragraph = function(x, process) {
-    xml2::xml_text(x)
+    xml_r(xml_rPr(),xml_t(as.character(xml2::xml_text(x))))
   }
 )
+
+add_text_style <- function(x, style){
+  UseMethod("add_text_style",x)
+}
+
+add_text_style.xml_text <- function(x, style){
+  x <- xml_r(xml_rPr(style),xml_t(as.character(x)))
+  x
+}
+
+add_text_style.shiny.tag <- function(x, style){
+  x <- gsub(
+      "<w:rPr>(.*)</w:rPr>",
+      paste0("<w:rPr>\\1",style,"</w:rPr>"),
+      x
+    )
+  htmltools::HTML(x)
+}
 
 cmark_rules_rtf <- list(
 
