@@ -1234,15 +1234,30 @@ create_columns_component_rtf <- function(data) {
       spanner_ids_row[is.na(spanner_ids_row)] <- ""
       spanners_row[is.na(spanners_row)] <- ""
 
-      spanners_lengths <- unclass(rle(spanner_ids[i, ]))
+      spanners_rle <- rle(unname(spanner_ids[i, ]))
+
+      spanners_lengths <- unclass(spanners_rle)
 
       merge_keys_spanners <- c()
-
       for (j in seq_along(spanners_lengths$lengths)) {
         if (spanners_lengths$lengths[j] == 1) {
           merge_keys_spanners <- c(merge_keys_spanners, 0)
         } else {
           merge_keys_spanners <- c(merge_keys_spanners, 1, rep(2, spanners_lengths$lengths[j] - 1))
+        }
+      }
+
+      # The `sig_cells` vector contains the indices of spanners' elements
+      # where the value is either NA, or, is different than the previous value;
+      # because NAs are distinct, every NA element will be present in `sig_cells`
+      sig_cells <- c(1, utils::head(cumsum(spanners_rle$lengths) + 1, -1))
+
+      # Replace repeating labels with an empty string, based on the
+      # vector `sig_cells`
+      for (k in seq_along(spanner_ids_row)) {
+        if (k %in% sig_cells) next
+        if (!(k %in% sig_cells)) {
+          spanners_row[k] <- ""
         }
       }
 
