@@ -1721,7 +1721,8 @@ cols_merge <- function(
   columns <-
     resolve_cols_c(
       expr = {{ columns }},
-      data = data
+      data = data,
+      excl_stub = FALSE
     )
 
   # NOTE: It's important that `hide_columns` NOT be evaluated until after the
