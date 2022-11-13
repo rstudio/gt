@@ -37,17 +37,23 @@ render_as_html <- function(data) {
   table_defs <- get_table_defs(data = data)
 
   # Compose the HTML table
-  as.character(
-    htmltools::tags$table(
-      class = "gt_table",
-      style = table_defs$table_style,
-      caption_component,
-      table_defs$table_colgroups,
-      heading_component,
-      columns_component,
-      body_component,
-      source_notes_component,
-      footnotes_component
+  html_tbl <-
+    as.character(
+      htmltools::tags$table(
+        class = "gt_table",
+        style = table_defs$table_style,
+        caption_component,
+        table_defs$table_colgroups,
+        heading_component,
+        columns_component,
+        body_component,
+        source_notes_component,
+        footnotes_component
+      )
     )
-  )
+
+  # Unescape single quotes that are present as HTML entities
+  html_tbl <- gsub("&#39;", "'", html_tbl)
+
+  html_tbl
 }
