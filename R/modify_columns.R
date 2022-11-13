@@ -1080,7 +1080,8 @@ cols_hide <- function(
   columns <-
     resolve_cols_c(
       expr = {{ columns }},
-      data = data
+      data = data,
+      excl_stub = FALSE
     )
 
   vars <- dt_boxhead_get_vars(data = data)
@@ -1450,7 +1451,8 @@ cols_merge_range <- function(
     col_end <-
       resolve_cols_c(
         expr = {{ col_end }},
-        data = data
+        data = data,
+        excl_stub = FALSE
       )
 
     data <-
@@ -1469,14 +1471,16 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
   col_begin <-
     resolve_cols_c(
       expr = {{ col_begin }},
-      data = data
+      data = data,
+      excl_stub = FALSE
     )
 
   # Get the columns supplied in `col_end` as a character vector
   col_end <-
     resolve_cols_c(
       expr = {{ col_end }},
-      data = data
+      data = data,
+      excl_stub = FALSE
     )
 
   columns <- c(col_begin, col_end)
@@ -1721,7 +1725,8 @@ cols_merge <- function(
   columns <-
     resolve_cols_c(
       expr = {{ columns }},
-      data = data
+      data = data,
+      excl_stub = FALSE
     )
 
   # NOTE: It's important that `hide_columns` NOT be evaluated until after the

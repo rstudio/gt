@@ -113,7 +113,7 @@ dt_boxhead_set_hidden <- function(data, vars) {
 
   dt_boxhead <- dt_boxhead_get(data = data)
 
-  dt_boxhead[which(dt_boxhead$var %in% vars), "type"] <- "hidden"
+  dt_boxhead[which(dt_boxhead$var %in% vars & dt_boxhead$type != "stub"), "type"] <- "hidden"
 
   dt_boxhead_set(data = data, boxh = dt_boxhead)
 }
@@ -122,7 +122,7 @@ dt_boxhead_set_not_hidden <- function(data, vars) {
 
   dt_boxhead <- dt_boxhead_get(data = data)
 
-  dt_boxhead[which(dt_boxhead$var %in% vars), "type"] <- "default"
+  dt_boxhead[which(dt_boxhead$var %in% vars & dt_boxhead$type != "stub"), "type"] <- "default"
 
   dt_boxhead_set(data = data, boxh = dt_boxhead)
 }
