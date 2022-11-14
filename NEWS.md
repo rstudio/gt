@@ -1,4 +1,4 @@
-# gt (development version)
+# gt 0.8.0
 
 ## Minor improvements and bug fixes
 
