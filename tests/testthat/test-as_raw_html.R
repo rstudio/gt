@@ -125,4 +125,16 @@ test_that("`as_raw_html()` produces the same table every time", {
       as_raw_html(),
     "font-family: 'Two Words';"
   )
+
+  expect_match(
+    exibble[1, ] %>%
+      gt() %>%
+      tab_header(title = "Title") %>%
+      tab_style(
+        style = cell_text(font = c("Fira Sans", "Droid Sans", "Arial", "sans-serif")),
+        locations = cells_title()
+      ) %>%
+      as_raw_html(),
+    "font-family: 'Fira Sans', 'Droid Sans', Arial, sans-serif;"
+  )
 })
