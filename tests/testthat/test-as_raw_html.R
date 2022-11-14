@@ -114,4 +114,27 @@ test_that("`as_raw_html()` produces the same table every time", {
 
   gt_html_2_sha1 <- digest::sha1(gt_html_2)
   expect_equal(gt_html_2_sha1, "ead3b201f06d98f304d23d9c04a2eba0b18bbdf5")
+
+  # Expect that font family values with multiple words (i.e., have a space
+  # character) added with `tab_style()` preserve single-quote characters
+  expect_match(
+    exibble[1, ] %>%
+      gt() %>%
+      tab_header(title = "Title") %>%
+      tab_style(style = cell_text(font = "Two Words"), locations = cells_title()) %>%
+      as_raw_html(),
+    "font-family: 'Two Words';"
+  )
+
+  expect_match(
+    exibble[1, ] %>%
+      gt() %>%
+      tab_header(title = "Title") %>%
+      tab_style(
+        style = cell_text(font = c("Fira Sans", "Droid Sans", "Arial", "sans-serif")),
+        locations = cells_title()
+      ) %>%
+      as_raw_html(),
+    "font-family: 'Fira Sans', 'Droid Sans', Arial, sans-serif;"
+  )
 })
