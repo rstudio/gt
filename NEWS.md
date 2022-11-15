@@ -2,7 +2,7 @@
 
 ## Minor improvements and bug fixes
 
-* `docx` output format is now correctly detected in R Markdown and Quarto (#1040). (#1084)
+* `docx` output format is now correctly detected in R Markdown and Quarto . It also now respects white space if `whitespace` argument in `cell_text()` is set to "pre", "pre-wrap" or "pre-line" (Note, newlines (\n) are not supported yet.) Additionally alignment by column is now done as well as by cell. (#1020, #1040, #1089) (#1084, #1131) 
 
 * Replaced all `match.arg()` calls with **rlang*'s `match_arg()` for better error output (#672). (#1099, thanks @mojister!)
 
