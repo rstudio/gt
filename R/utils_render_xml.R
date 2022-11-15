@@ -1445,7 +1445,7 @@ create_body_component_xml <- function(
         #
 
         row_cells <- list()
-        col_idx <- i
+        row_idx <- i
 
         for (y in seq_along(output_df_row_as_vec(i))) {
 
@@ -1471,7 +1471,7 @@ create_body_component_xml <- function(
               weight = cell_style[["cell_text"]][["weight"]],
               stretch = cell_style[["cell_text"]][["stretch"]],
               whitespace = cell_style[["cell_text"]][["whitespace"]],
-              align = cell_style[["cell_text"]][["align"]] %||% alignment[style_col_idx],
+              align = cell_style[["cell_text"]][["align"]] %||% alignment[y],
               v_align = cell_style[["cell_text"]][["v_align"]],
               border = list(
                 top = cell_border(color = table_body_hlines_color),
