@@ -18,19 +18,21 @@ sub_values(
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{columns}{The columns to format. Can either be a series of column names
-provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
-focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}.}
+\item{columns}{Optional columns for constraining the targeting process.
+Providing \code{\link[=everything]{everything()}} (the default) results in cells in all \code{columns}
+being targeting (this can be limited by \code{rows} however). Can either be a
+series of column names provided in \code{\link[=c]{c()}}, a vector of column indices, or a
+helper function focused on selections. The select helper functions are:
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
 
-\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
-default) results in all rows in \code{columns} being formatted. Alternatively,
-we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
-indices, or a helper function focused on selections. The select helper
-functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
-\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
-to filter down to the rows we need (e.g.,
+\item{rows}{Optional rows for constraining the targeting process. Providing
+\code{\link[=everything]{everything()}} (the default) results in all rows in \code{columns} being
+targeted. Alternatively, we can supply a vector of row captions within
+\code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on selections.
+The select helper functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.
+We can also use expressions to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{values}{The specific value or values that should be replaced with a
@@ -61,14 +63,9 @@ format in mind.}
 An object of class \code{gt_tbl}.
 }
 \description{
-Should you need to replace specific cell values with something else, the
-\code{sub_values()} function is a good choice.
-}
-\details{
-Targeting of values is done through \code{columns} and additionally by \code{rows} (if
-nothing is provided for \code{rows} then entire columns are selected). Conditional
-formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the Arguments section for more information on this.
+Should you need to replace specific cell values with custom text, the
+\code{sub_values()} function can be good choice. We can target cells for
+replacement though value, regex, and custom matching rules.
 }
 \section{Examples}{
 
