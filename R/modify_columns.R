@@ -62,7 +62,7 @@ cols_align <- function(
   stop_if_not_gt(data = data)
 
   # Get the `align` value, this stops the function if there is no match
-  align <- match.arg(align)
+  align <- rlang::arg_match(align)
 
   # Get the columns supplied in `columns` as a character vector
   column_names <-
@@ -77,8 +77,7 @@ cols_align <- function(
     # Get the internal data table
     data_tbl <- dt_data_get(data = data)
 
-    # Obtain a vector of column classes for each of the column
-    # names
+    # Obtain a vector of column classes for each of the column names
     col_classes <- unlist(lapply(lapply(data_tbl[column_names], class), `[[`, 1))
 
     # Check whether all values in 'character' columns are
@@ -335,12 +334,22 @@ align_to_char <- function(x, align_at = ".") {
 
   x_align <- paste(x_piece_lhs, x_piece_rhs, sep = align_at)
 
-  x_align[!nchar(x_rhs) > 0 & !grepl(align_at, x[!x_no_align], fixed = TRUE)] <-
-    sub(align_at, " ", x_align[!nchar(x_rhs) > 0], fixed = TRUE)
-
   x_align_parens <- grepl("\\(.+?\\)", x_align)
 
-  x_align[x_align_parens] <- paste0(x_align[x_align_parens], "\U000A0")
+  if (grepl(align_at, paste(x[!x_no_align], collapse = "|"), fixed = TRUE)) {
+
+    x_align[!nchar(x_rhs) > 0 & !grepl(align_at, x[!x_no_align], fixed = TRUE)] <-
+      sub(align_at, " ", x_align[!nchar(x_rhs) > 0], fixed = TRUE)
+
+    x_align[x_align_parens] <- paste0(x_align[x_align_parens], "\U000A0")
+
+  } else {
+
+    x_align[!nchar(x_rhs) > 0 & !grepl(align_at, x[!x_no_align], fixed = TRUE)] <-
+      sub(align_at, "", x_align[!nchar(x_rhs) > 0], fixed = TRUE)
+
+    x_align[!x_align_parens] <- paste0(x_align[!x_align_parens], "\U000A0")
+  }
 
   x_str[!x_no_align] <- x_align
 
@@ -1071,7 +1080,8 @@ cols_hide <- function(
   columns <-
     resolve_cols_c(
       expr = {{ columns }},
-      data = data
+      data = data,
+      excl_stub = FALSE
     )
 
   vars <- dt_boxhead_get_vars(data = data)
@@ -1441,7 +1451,8 @@ cols_merge_range <- function(
     col_end <-
       resolve_cols_c(
         expr = {{ col_end }},
-        data = data
+        data = data,
+        excl_stub = FALSE
       )
 
     data <-
@@ -1460,14 +1471,16 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
   col_begin <-
     resolve_cols_c(
       expr = {{ col_begin }},
-      data = data
+      data = data,
+      excl_stub = FALSE
     )
 
   # Get the columns supplied in `col_end` as a character vector
   col_end <-
     resolve_cols_c(
       expr = {{ col_end }},
-      data = data
+      data = data,
+      excl_stub = FALSE
     )
 
   columns <- c(col_begin, col_end)
@@ -1712,7 +1725,8 @@ cols_merge <- function(
   columns <-
     resolve_cols_c(
       expr = {{ columns }},
-      data = data
+      data = data,
+      excl_stub = FALSE
     )
 
   # NOTE: It's important that `hide_columns` NOT be evaluated until after the

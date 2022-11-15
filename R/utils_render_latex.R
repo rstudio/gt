@@ -578,8 +578,11 @@ create_summary_rows_l <- function(
           # Obtain the summary data table specific to the group ID and
           # select the column named `::rowname::` and all of the visible columns
           summary_df <-
-            list_of_summaries$summary_df_display_list[[group_id]] %>%
-            dplyr::select(.env$rowname_col_private, .env$default_vars)
+            dplyr::select(
+              list_of_summaries$summary_df_display_list[[group_id]],
+              dplyr::all_of(rowname_col_private),
+              dplyr::all_of(default_vars)
+            )
 
           row_splits_summary <- split_row_content(summary_df)
 
@@ -650,8 +653,11 @@ create_grand_summary_rows_l <- function(data) {
   default_vars <- dt_boxhead_get_vars_default(data = data)
 
   grand_summary_df <-
-    list_of_summaries$summary_df_display_list[[grand_summary_col]] %>%
-    dplyr::select(.env$rowname_col_private, .env$default_vars)
+    dplyr::select(
+      list_of_summaries$summary_df_display_list[[grand_summary_col]],
+      dplyr::all_of(rowname_col_private),
+      dplyr::all_of(default_vars)
+    )
 
   row_splits_summary <- split_row_content(grand_summary_df)
 

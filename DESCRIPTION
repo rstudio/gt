@@ -27,20 +27,21 @@ BugReports: https://github.com/rstudio/gt/issues
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.2
 Depends:
     R (>= 3.2.0)
 Imports:
     base64enc (>= 0.1-3),
     bigD (>= 0.1),
     bitops (>= 1.0-7),
-    cli (>= 3.3.0),
+    cli (>= 3.4.1),
     commonmark (>= 1.8),
     dplyr (>= 1.0.8),
     fs (>= 1.5.2),
     ggplot2 (>= 3.3.5),
     glue (>= 1.6.1),
     htmltools (>= 0.5.2),
+    juicyjuice (>= 0.1.0),
     magrittr (>= 2.0.2),
     rlang (>= 1.0.2),
     sass (>= 0.4.1),
@@ -111,7 +112,9 @@ Collate:
     'shiny.R'
     'substitution.R'
     'summary_rows.R'
+    'tab_info.R'
     'tab_remove.R'
+    'tab_style_body.R'
     'text_transform.R'
     'utils.R'
     'utils_color_contrast.R'

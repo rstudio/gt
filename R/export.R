@@ -395,20 +395,30 @@ as_raw_html <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
+  html_table <- as.character(as.tags.gt_tbl(data))
+
   if (inline_css) {
 
-    # Generation of the HTML table
-    html_table <- render_as_html(data = data)
+    font_vec <- unique(dt_options_get_value(data = data, option = "table_font_names"))
+    font_family_attr <- as_css_font_family_attr(font_vec = font_vec)
 
-    # Create inline styles
     html_table <-
-      inline_html_styles(
-        html = html_table,
-        css_tbl = get_css_tbl(data = data)
+      gsub(
+        pattern = "<style>html \\{.*?\\}",
+        replacement = "<style>",
+        x = html_table
       )
 
-  } else {
-    html_table <- as.character(as.tags.gt_tbl(data))
+    html_table <-
+      gsub(
+        pattern = ".gt_table {\n",
+        replacement = paste0(".gt_table { \n  ", font_family_attr, "\n"),
+        x = html_table,
+        fixed = TRUE
+      )
+
+    # Create inline styles
+    html_table <- juicyjuice::css_inline(html = html_table)
   }
 
   htmltools::HTML(html_table)
@@ -675,7 +685,7 @@ as_word <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  caption_location <- match.arg(caption_location)
+  caption_location <- rlang::arg_match(caption_location)
 
   # Build all table data objects through a common pipeline
   value <- build_data(data = data, context = "word")
@@ -920,8 +930,8 @@ extract_summary <- function(data) {
         lapply(x, function(y) {
           dplyr::rename(
             y,
-            rowname = .env$rowname_col_private,
-            group_id = .env$group_id_col_private
+            rowname = dplyr::all_of(rowname_col_private),
+            group_id = dplyr::all_of(group_id_col_private)
           )
         })
       }
@@ -1014,7 +1024,7 @@ extract_cells <- function(
   stop_if_not_gt(data = data)
 
   # Ensure that `output` is matched correctly to one option
-  output <- match.arg(output)
+  output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()

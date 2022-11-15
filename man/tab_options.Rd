@@ -8,6 +8,8 @@ tab_options(
   data,
   container.width = NULL,
   container.height = NULL,
+  container.padding.x = NULL,
+  container.padding.y = NULL,
   container.overflow.x = NULL,
   container.overflow.y = NULL,
   table.width = NULL,
@@ -175,11 +177,12 @@ tab_options(
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{container.width, container.height}{The width and height of the table's
-container. Can be specified as a single-length character with units of
-pixels or as a percentage. If provided as a single-length numeric vector,
-it is assumed that the value is given in units of pixels. The \code{\link[=px]{px()}} and
-\code{\link[=pct]{pct()}} helper functions can also be used to pass in numeric values and
+\item{container.width, container.height, container.padding.x, container.padding.y}{The width and height of the table's container, and, the vertical and
+horizontal padding of the table's container. The container width and height
+can be specified with units of pixels or as a percentage. The padding is to
+be specified as a length with units of pixels. If provided as a numeric
+value, it is assumed that the value is given in units of pixels. The \code{\link[=px]{px()}}
+and \code{\link[=pct]{pct()}} helper functions can also be used to pass in numeric values and
 obtain values as pixel or percent units.}
 
 \item{container.overflow.x, container.overflow.y}{Options to enable scrolling
@@ -524,7 +527,7 @@ Reduce the size of the title and the subtitle text.
 
 \section{Function ID}{
 
-2-11
+2-12
 }
 
 \seealso{
@@ -532,12 +535,14 @@ Other part creation/modification functions:
 \code{\link{tab_caption}()},
 \code{\link{tab_footnote}()},
 \code{\link{tab_header}()},
+\code{\link{tab_info}()},
 \code{\link{tab_row_group}()},
 \code{\link{tab_source_note}()},
 \code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
 \code{\link{tab_stub_indent}()},
 \code{\link{tab_stubhead}()},
+\code{\link{tab_style_body}()},
 \code{\link{tab_style}()}
 }
 \concept{part creation/modification functions}

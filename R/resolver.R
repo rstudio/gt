@@ -185,7 +185,7 @@ resolve_cols_c <- function(
     null_means = c("everything", "nothing")
 ) {
 
-  null_means <- match.arg(null_means)
+  null_means <- rlang::arg_match(null_means)
 
   names(
     resolve_cols_i(
@@ -216,7 +216,7 @@ resolve_cols_i <- function(
 ) {
   quo <- rlang::enquo(expr)
   cols_excl <- c()
-  null_means <- match.arg(null_means)
+  null_means <- rlang::arg_match(null_means)
 
   if (is_gt(data)) {
 
@@ -265,7 +265,19 @@ resolve_cols_i <- function(
   # With the quosure and the `data`, we can use `tidyselect::eval_select()`
   # to resolve the expression to columns indices/names; no `env` argument
   # is required here because the `expr` is a quosure
-  selected <- tidyselect::eval_select(expr = quo, data = data, strict = strict)
+  # TODO: with tidyselect v1.2.0, there are a lot of warnings emitted because
+  # of the way that the expression is supplied; this can be fixed later (since
+  # these errors are developer facing) but suppressing here was important so
+  # as to not pollute the snapshot testing values with warnings (that would
+  # cause failures)
+  selected <-
+    suppressWarnings(
+      tidyselect::eval_select(
+        expr = quo,
+        data = data,
+        strict = strict
+      )
+    )
 
   # Exclude certain columns (e.g., stub & group columns) if necessary
   selected[!names(selected) %in% cols_excl]

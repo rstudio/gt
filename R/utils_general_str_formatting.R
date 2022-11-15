@@ -477,6 +477,46 @@ str_trim_sides <- function(string) {
   sub("\\s+$", "", sub("^\\s+", "", string))
 }
 
+alnum_id <- function(x, exclude = '[^[:alnum:]]+') {
+  tolower(gsub('^-+|-+$', '', gsub(exclude, '-', x, perl = TRUE)))
+}
+
+create_unique_id_vals <- function(
+    x,
+    simplify = TRUE,
+    exclude = "[^[:alnum:]]+",
+    na_is_index = TRUE,
+    sep = "__"
+) {
+
+  if (simplify) {
+    x <- tolower(gsub("^-+|-+$", "", gsub(exclude, "-", x, perl = TRUE)))
+  }
+
+  id_vals <- rep(NA_character_, length(x))
+
+  for (i in seq_along(x)) {
+
+    if (is.na(x[i])) {
+      if (na_is_index) {
+        id_vals[i] <- as.character(i)
+      } else {
+        id_vals[i] <- random_id()
+      }
+    }
+
+    if (!is.na(x[i])) {
+      id_vals[i] <- x[i]
+    }
+
+    if (i > 1 && id_vals[i] %in% id_vals[1:(i - 1)]) {
+      id_vals[i] <- paste0(id_vals[i], sep, formatC(i, width = 3, flag = "0"))
+    }
+  }
+
+  id_vals
+}
+
 glue_gt <- function(.x, ...) {
   glue::glue_data(.x, ..., .transformer = get, .envir = emptyenv())
 }

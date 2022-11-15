@@ -115,6 +115,53 @@ test_that("the function `cols_merge()` works correctly", {
         hide_columns = c(wt, carb),
       )
   )
+
+  #
+  # Expect that the column set as the row group can participate
+  # in column merging
+  #
+
+  tbl <-
+    dplyr::tibble(
+      row = "Part",
+      a = 1:5,
+      b = c("one", "two", "three", "four", "five")
+    )
+
+  # Merge the stub column with column `a` (has integers)
+  gt_tbl_1 <-
+    gt(tbl, rowname_col = "row") %>%
+    cols_merge(columns = c(row, a))
+
+  # Perform snapshot test
+  gt_tbl_1 %>% render_as_html() %>% expect_snapshot()
+
+  # Merge the stub column with column `b` (has character values)
+  gt_tbl_2 <-
+    gt(tbl, rowname_col = "row") %>%
+    cols_merge(columns = c(row, b))
+
+  # Perform snapshot test
+  gt_tbl_2 %>% render_as_html() %>% expect_snapshot()
+
+  # Merge the stub column with a formatted column `a`
+  # (has lowercase Roman numerals, transformed to character from integer)
+  gt_tbl_3 <-
+    gt(tbl, rowname_col = "row") %>%
+    fmt_roman(columns = "a", case = "lower") %>%
+    cols_merge(columns = c(row, a))
+
+  # Perform snapshot test
+  gt_tbl_3 %>% render_as_html() %>% expect_snapshot()
+
+  # Ensure that `group` columns don't get the same treatment
+  expect_equal(
+    gt(tbl, groupname_col = "row") %>%
+      render_as_html(),
+    gt(tbl, groupname_col = "row") %>%
+      cols_merge(columns = c(row, a)) %>%
+      render_as_html()
+  )
 })
 
 test_that("the `cols_merge_uncert()` function works correctly", {
@@ -236,9 +283,29 @@ test_that("the `cols_merge_uncert()` function works correctly", {
   expect_s3_class(sep, "AsIs")
   expect_equal(as.character(sep), " +/- ")
   expect_equal(sep, I(" +/- "))
+
+  #
+  # Expect that the column set as the row group can participate
+  # in column merging through `cols_merge_uncert()`
+  #
+
+  tbl <-
+    dplyr::tibble(
+      row = c(2.3, 6.3, 2.5, 2.4, 6.5),
+      a = 6:10 / 100,
+      b = LETTERS[1:5]
+    )
+
+  # Merge the stub column with column `a`
+  gt_tbl_1 <-
+    gt(tbl, rowname_col = "row") %>%
+    cols_merge_uncert(col_val = row, col_uncert = a)
+
+  # Perform snapshot test
+  gt_tbl_1 %>% render_as_html() %>% expect_snapshot()
 })
 
-test_that("the `cols_merge_uncert()` works nicely with different error bounds", {
+test_that("the `cols_merge_uncert()` fn works nicely with different error bounds", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -469,8 +536,8 @@ test_that("the `cols_merge_range()` function works correctly", {
 
   # Expect that the HTML produced from the two tables is the same
   expect_identical(
-    tbl_html_1 %>% as_raw_html(),
-    tbl_html_2 %>% as_raw_html()
+    tbl_html_1 %>% as_raw_html() %>% gsub("id=\"[a-z]*?\"", "", .),
+    tbl_html_2 %>% as_raw_html() %>% gsub("id=\"[a-z]*?\"", "", .)
   )
 
   # Create another variant that renames `col_2` as `1`, which
@@ -487,11 +554,58 @@ test_that("the `cols_merge_range()` function works correctly", {
   # Expect that the HTML produced from `tbl_html_2` and
   # `tbl_html_3` is the same
   expect_identical(
-    tbl_html_2 %>% as_raw_html(),
-    tbl_html_3 %>% as_raw_html()
+    tbl_html_2 %>% as_raw_html() %>% gsub("id=\"[a-z]*?\"", "", .),
+    tbl_html_3 %>% as_raw_html() %>% gsub("id=\"[a-z]*?\"", "", .)
   )
-})
 
+  #
+  # Expect that the column set as the row group can participate
+  # in column merging through `col_merge_range()`
+  #
+
+  tbl <-
+    dplyr::tibble(
+      row = 1:5,
+      a = 6:10,
+      b = c("one", "two", "three", "four", "five")
+    )
+
+  # Merge the stub column with column `a` (has integers)
+  gt_tbl_1 <-
+    gt(tbl, rowname_col = "row") %>%
+    cols_merge_range(col_begin = row, col_end = a)
+
+  # Perform snapshot test
+  gt_tbl_1 %>% render_as_html() %>% expect_snapshot()
+
+  # Merge the stub column with column `b` (has character values)
+  gt_tbl_2 <-
+    gt(tbl, rowname_col = "row") %>%
+    cols_merge_range(col_begin = row, col_end = b)
+
+  # Perform snapshot test
+  gt_tbl_2 %>% render_as_html() %>% expect_snapshot()
+
+  # Merge the stub column with a formatted column `a`
+  # (has lowercase Roman numerals, transformed to character from integer)
+  gt_tbl_3 <-
+    gt(tbl, rowname_col = "row") %>%
+    fmt_roman(columns = "a", case = "lower") %>%
+    cols_merge_range(col_begin = row, col_end = a)
+
+  # Perform snapshot test
+  gt_tbl_3 %>% render_as_html() %>% expect_snapshot()
+
+  # Merge the formatted stub column with column `a`
+  # (has lowercase Roman numerals, transformed to character from integer)
+  gt_tbl_4 <-
+    gt(tbl, rowname_col = "row") %>%
+    fmt_roman(columns = "row", case = "lower") %>%
+    cols_merge_range(col_begin = row, col_end = a)
+
+  # Perform snapshot test
+  gt_tbl_4 %>% render_as_html() %>% expect_snapshot()
+})
 
 test_that("the `cols_merge_n_pct()` function works correctly", {
 
@@ -550,4 +664,25 @@ test_that("the `cols_merge_n_pct()` function works correctly", {
       "0.0%"
     )
   )
+
+  #
+  # Expect that the column set as the row group can participate
+  # in column merging through `cols_merge_n_pct()`
+  #
+
+  tbl <-
+    dplyr::tibble(
+      row = 1:5,
+      a = 6:10 / 100,
+      b = LETTERS[1:5]
+    )
+
+  # Merge the stub column with column `a` (formatted as percentage values)
+  gt_tbl_1 <-
+    gt(tbl, rowname_col = "row") %>%
+    fmt_percent(columns = a) %>%
+    cols_merge_n_pct(col_n = row, col_pct = a)
+
+  # Perform snapshot test
+  gt_tbl_1 %>% render_as_html() %>% expect_snapshot()
 })

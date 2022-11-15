@@ -57,6 +57,7 @@ Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header part with t
 Other part creation/modification functions: 
 \code{\link{tab_caption}()},
 \code{\link{tab_footnote}()},
+\code{\link{tab_info}()},
 \code{\link{tab_options}()},
 \code{\link{tab_row_group}()},
 \code{\link{tab_source_note}()},
@@ -64,6 +65,7 @@ Other part creation/modification functions:
 \code{\link{tab_spanner}()},
 \code{\link{tab_stub_indent}()},
 \code{\link{tab_stubhead}()},
+\code{\link{tab_style_body}()},
 \code{\link{tab_style}()}
 }
 \concept{part creation/modification functions}

@@ -24,7 +24,6 @@ knitr_is_rtf_output <- function() {
 
 knitr_is_word_output <- function() {
 
-  "word_document" %in% rmarkdown::all_output_formats(knitr::current_input()) |
   "docx" %in% knitr::opts_knit$get("rmarkdown.pandoc.to")
 }
 
@@ -92,6 +91,8 @@ as.tags.gt_tbl <- function(x, ...) {
   css <- compile_scss(data = x, id = id)
 
   # Get options related to the enclosing <div>
+  container_padding_x <- dt_options_get_value(x, option = "container_padding_x")
+  container_padding_y <- dt_options_get_value(x, option = "container_padding_y")
   container_overflow_x <- dt_options_get_value(x, option = "container_overflow_x")
   container_overflow_y <- dt_options_get_value(x, option = "container_overflow_y")
   container_width <- dt_options_get_value(x, option = "container_width")
@@ -103,6 +104,10 @@ as.tags.gt_tbl <- function(x, ...) {
       id = id,
       htmltools::tags$style(htmltools::HTML(css)),
       style = htmltools::css(
+        `padding-left` = container_padding_x,
+        `padding-right` = container_padding_x,
+        `padding-top` = container_padding_y,
+        `padding-bottom` = container_padding_y,
         `overflow-x` = container_overflow_x,
         `overflow-y` = container_overflow_y,
         width = container_width,
