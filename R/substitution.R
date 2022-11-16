@@ -632,16 +632,26 @@ check_sub_fn_sign <- function(sign) {
 #' Substitute targeted values in the table body
 #'
 #' @description
-#' Should you need to replace specific cell values with something else, the
-#' `sub_values()` function is a good choice.
-#'
-#' @details
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). Conditional
-#' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' Should you need to replace specific cell values with custom text, the
+#' `sub_values()` function can be good choice. We can target cells for
+#' replacement though value, regex, and custom matching rules.
 #'
 #' @inheritParams fmt_number
+#' @param columns Optional columns for constraining the targeting process.
+#'   Providing [everything()] (the default) results in cells in all `columns`
+#'   being targeting (this can be limited by `rows` however). Can either be a
+#'   series of column names provided in [c()], a vector of column indices, or a
+#'   helper function focused on selections. The select helper functions are:
+#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
+#'   [num_range()], and [everything()].
+#' @param rows Optional rows for constraining the targeting process. Providing
+#'   [everything()] (the default) results in all rows in `columns` being
+#'   targeted. Alternatively, we can supply a vector of row captions within
+#'   [c()], a vector of row indices, or a helper function focused on selections.
+#'   The select helper functions are: [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
+#'   We can also use expressions to filter down to the rows we need (e.g.,
+#'   `[colname_1] > 100 & [colname_2] < 50`).
 #' @param values The specific value or values that should be replaced with a
 #'   `replacement` value. If `pattern` is also supplied then `values` will be
 #'   ignored.
