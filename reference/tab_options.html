@@ -12,7 +12,7 @@ components, the subcomponents, and the element that can adjusted."><meta propert
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9000</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.8.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,6 +70,8 @@ components, the subcomponents, and the element that can adjusted.</p>
 <span>  <span class="va">data</span>,</span>
 <span>  container.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  container.height <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  container.padding.x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  container.padding.y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  container.overflow.x <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  container.overflow.y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  table.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -241,12 +243,13 @@ components, the subcomponents, and the element that can adjusted.</p>
 <dd><p>A table object that is created using the <code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
-<dt>container.width, container.height</dt>
-<dd><p>The width and height of the table's
-container. Can be specified as a single-length character with units of
-pixels or as a percentage. If provided as a single-length numeric vector,
-it is assumed that the value is given in units of pixels. The <code><a href="px.html">px()</a></code> and
-<code><a href="pct.html">pct()</a></code> helper functions can also be used to pass in numeric values and
+<dt>container.width, container.height, container.padding.x, container.padding.y</dt>
+<dd><p>The width and height of the table's container, and, the vertical and
+horizontal padding of the table's container. The container width and height
+can be specified with units of pixels or as a percentage. The padding is to
+be specified as a length with units of pixels. If provided as a numeric
+value, it is assumed that the value is given in units of pixels. The <code><a href="px.html">px()</a></code>
+and <code><a href="pct.html">pct()</a></code> helper functions can also be used to pass in numeric values and
 obtain values as pixel or percent units.</p></dd>
 
 
@@ -661,19 +664,22 @@ the footer by spaces instead of newlines.</p>
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
     
 
-<p>2-10</p>
+<p>2-12</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other part creation/modification functions: 
+<code><a href="tab_caption.html">tab_caption</a>()</code>,
 <code><a href="tab_footnote.html">tab_footnote</a>()</code>,
 <code><a href="tab_header.html">tab_header</a>()</code>,
+<code><a href="tab_info.html">tab_info</a>()</code>,
 <code><a href="tab_row_group.html">tab_row_group</a>()</code>,
 <code><a href="tab_source_note.html">tab_source_note</a>()</code>,
 <code><a href="tab_spanner_delim.html">tab_spanner_delim</a>()</code>,
 <code><a href="tab_spanner.html">tab_spanner</a>()</code>,
 <code><a href="tab_stub_indent.html">tab_stub_indent</a>()</code>,
 <code><a href="tab_stubhead.html">tab_stubhead</a>()</code>,
+<code><a href="tab_style_body.html">tab_style_body</a>()</code>,
 <code><a href="tab_style.html">tab_style</a>()</code></p></div>
     </div>
 
@@ -682,7 +688,7 @@ the footer by spaces instead of newlines.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, Ellis Hughes, JooYoung Seo, RStudio.</p>
+  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, Ellis Hughes, <a href="https://jooyoungseo.github.io/" class="external-link">JooYoung Seo</a>, RStudio.</p>
 </div>
 
 <div class="pkgdown-footer-right">

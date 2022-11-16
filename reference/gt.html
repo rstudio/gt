@@ -16,7 +16,7 @@ before rendering to a display table of various formats."><meta property="og:imag
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9000</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.8.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -76,6 +76,7 @@ before rendering to a display table of various formats.</p>
 <span>  <span class="va">data</span>,</span>
 <span>  rowname_col <span class="op">=</span> <span class="st">"rowname"</span>,</span>
 <span>  groupname_col <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_data.html" class="external-link">group_vars</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>,</span>
+<span>  process_md <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  caption <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  rownames_to_stub <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  auto_align <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -105,9 +106,14 @@ has the <code>grouped_df</code> class (through use of the <code><a href="https:/
 or associated <code>group_by*()</code> functions) then any input here is ignored.</p></dd>
 
 
+<dt>process_md</dt>
+<dd><p>Should the contents of the <code>rowname_col</code> and
+<code>groupname_col</code> be interpreted as Markdown? By default this is <code>FALSE</code>.</p></dd>
+
+
 <dt>caption</dt>
-<dd><p>An optional table caption to use for cross-referencing
-in R Markdown documents and <strong>bookdown</strong> book projects.</p></dd>
+<dd><p>An optional table caption to use for cross-referencing in R
+Markdown, Quarto, or <strong>bookdown</strong>.</p></dd>
 
 
 <dt>rownames_to_stub</dt>
@@ -211,7 +217,7 @@ available in the package.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, Ellis Hughes, JooYoung Seo, RStudio.</p>
+  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, Ellis Hughes, <a href="https://jooyoungseo.github.io/" class="external-link">JooYoung Seo</a>, RStudio.</p>
 </div>
 
 <div class="pkgdown-footer-right">

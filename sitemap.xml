@@ -352,6 +352,9 @@
     <loc>https://gt.rstudio.com/reference/render_gt.html</loc>
   </url>
   <url>
+    <loc>https://gt.rstudio.com/reference/rm_caption.html</loc>
+  </url>
+  <url>
     <loc>https://gt.rstudio.com/reference/rm_footnotes.html</loc>
   </url>
   <url>
@@ -397,10 +400,16 @@
     <loc>https://gt.rstudio.com/reference/sza.html</loc>
   </url>
   <url>
+    <loc>https://gt.rstudio.com/reference/tab_caption.html</loc>
+  </url>
+  <url>
     <loc>https://gt.rstudio.com/reference/tab_footnote.html</loc>
   </url>
   <url>
     <loc>https://gt.rstudio.com/reference/tab_header.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/reference/tab_info.html</loc>
   </url>
   <url>
     <loc>https://gt.rstudio.com/reference/tab_options.html</loc>
@@ -425,6 +434,9 @@
   </url>
   <url>
     <loc>https://gt.rstudio.com/reference/tab_style.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/reference/tab_style_body.html</loc>
   </url>
   <url>
     <loc>https://gt.rstudio.com/reference/test_image.html</loc>
