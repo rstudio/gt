@@ -3,23 +3,24 @@ title: "latex-05-airquality"
 output: 
   - pdf_document
 ---
-  
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-
 library(gt)
 ```
 
-Create a display table based on `airquality` (New York Air Quality Measurements).
+Create a display table based on `airquality`.
 
 ```{r}
-gt(data = airquality) %>%
-  cols_move_to_start(columns = vars(Month, Day)) %>%
+gt(airquality) %>%
+  cols_move_to_start(columns = c(Month, Day)) %>%
   fmt_number(
-    columns = vars(Wind),
-    decimals = 2) %>%
+    columns = Wind,
+    decimals = 2
+  ) %>%
   tab_spanner(
     label = "Measurement Period",
-    columns = vars(Month, Day)) %>%
-  fmt_missing(columns = vars(Ozone, Solar.R, Ozone, Wind, Temp))
+    columns = c(Month, Day)
+  ) %>%
+  sub_missing(columns = c(Ozone, Solar.R, Wind, Temp))
 ```

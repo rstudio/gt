@@ -1,0 +1,13 @@
+---
+output: 
+  pdf_document:
+    extra_dependencies: ["longtable", "caption", "amsmath", "booktabs"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{=latex}
+
+```

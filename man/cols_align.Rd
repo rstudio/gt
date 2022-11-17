@@ -4,21 +4,24 @@
 \alias{cols_align}
 \title{Set the alignment of columns}
 \usage{
-cols_align(data, align = c("auto", "left", "center", "right"),
-  columns = TRUE)
+cols_align(
+  data,
+  align = c("auto", "left", "center", "right"),
+  columns = everything()
+)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{align}{The alignment type. This can be any of \code{"center"}, \code{"left"}, or
-\code{"right"} for center-, left-, or center-alignment. Alternatively, the
+\code{"right"} for center-, left-, or right-alignment. Alternatively, the
 \code{"auto"} option (the default), will automatically align values in columns
 according to the data type (see the Details section for specifics on which
 alignments are applied).}
 
-\item{columns}{An optional vector of column names for which the alignment
-should be applied. If nothing is supplied, or if \code{columns} is \code{TRUE}), then
-the chosen alignment affects all columns.}
+\item{columns}{The columns for which the alignment should be applied. By
+default this is set to \code{everything()} which means that the chosen alignment
+affects all columns.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -27,43 +30,56 @@ An object of class \code{gt_tbl}.
 The individual alignments of columns (which includes the column labels and
 all of their data cells) can be modified. We have the option to align text to
 the \code{left}, the \code{center}, and the \code{right}. In a less explicit manner, we can
-allow \pkg{gt} to automatically choose the alignment of each column based on
+allow \strong{gt} to automatically choose the alignment of each column based on
 the data type (with the \code{auto} option).
 }
 \details{
-When you create a \pkg{gt} table object using \code{\link[=gt]{gt()}}, automatic alignment of
+When you create a \strong{gt} table object using \code{\link[=gt]{gt()}}, automatic alignment of
 column labels and their data cells is performed. By default, left-alignment
 is applied to columns of class \code{character}, \code{Date}, or \code{POSIXct};
 center-alignment is for columns of class \code{logical}, \code{factor}, or \code{list}; and
 right-alignment is used for the \code{numeric} and \code{integer} columns.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cols_align_1.svg}{options: width=100\%}}
-}
 
-\examples{
-# Use `countrypops` to create a gt table;
-# align the `population` column data to
-# the left
-tab_1 <-
-  countrypops \%>\%
+Use \code{\link{countrypops}} to create a \strong{gt} table. Align the \code{population} column
+data to the left.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::select(-contains("code")) \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%
   gt() \%>\%
   cols_align(
     align = "left",
-    columns = vars(population)
+    columns = population
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_align_1.png" alt="This image of a table was generated from the first code example in the `cols_align()` help file." style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+4-1
+}
+
 \seealso{
-Other column modification functions: \code{\link{cols_hide}},
-  \code{\link{cols_label}}, \code{\link{cols_merge_range}},
-  \code{\link{cols_merge_uncert}},
-  \code{\link{cols_merge}}, \code{\link{cols_move_to_end}},
-  \code{\link{cols_move_to_start}},
-  \code{\link{cols_move}}, \code{\link{cols_split_delim}}
+Other column modification functions: 
+\code{\link{cols_align_decimal}()},
+\code{\link{cols_hide}()},
+\code{\link{cols_label}()},
+\code{\link{cols_merge_n_pct}()},
+\code{\link{cols_merge_range}()},
+\code{\link{cols_merge_uncert}()},
+\code{\link{cols_merge}()},
+\code{\link{cols_move_to_end}()},
+\code{\link{cols_move_to_start}()},
+\code{\link{cols_move}()},
+\code{\link{cols_unhide}()},
+\code{\link{cols_width}()}
 }
 \concept{column modification functions}

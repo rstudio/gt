@@ -2,7 +2,7 @@
 % Please edit documentation in R/gt_preview.R
 \name{gt_preview}
 \alias{gt_preview}
-\title{Preview a \pkg{gt} table object}
+\title{Preview a \strong{gt} table object}
 \usage{
 gt_preview(data, top_n = 5, bottom_n = 1, incl_rownums = TRUE)
 }
@@ -27,9 +27,9 @@ An object of class \code{gt_tbl}.
 Sometimes you may want to see just a small portion of your input data. We can
 use \code{gt_preview()} in place of \code{\link[=gt]{gt()}} to get the first x rows of data and the
 last y rows of data (which can be set by the \code{top_n} and \code{bottom_n}
-arguments). It's not advised to use additional \pkg{gt} API functions to
-further modify the output of \code{gt_preview()}. Furthermore, you cannot pass a
-\pkg{gt} object to \code{gt_preview()}.
+arguments). It's not advised to use additional \strong{gt} functions to further
+modify the output of \code{gt_preview()}. Furthermore, you cannot pass a \strong{gt}
+object to \code{gt_preview()}.
 }
 \details{
 Any grouped data or magic columns such as \code{rowname} and \code{groupname} will be
@@ -38,27 +38,29 @@ in the output table. By default, the output table will include row numbers in
 a stub (including a range of row numbers for the omitted rows). This row
 numbering option can be deactivated by setting \code{incl_rownums} to \code{FALSE}.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_gt_preview_1.svg}{options: width=100\%}}
-}
 
-\examples{
-# Use `gtcars` to create a gt table
-# preview (with only a few of its
-# columns); you'll see the first five
-# rows and the last row
-tab_1 <-
-  gtcars \%>\%
+Use \code{\link{gtcars}} to create a \strong{gt} table preview (with only a few of its
+columns). You'll see the first five rows and the last row.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
   dplyr::select(mfr, model, year) \%>\%
   gt_preview()
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_gt_preview_1.png" alt="This image of a table was generated from the first code example in the `gt_preview()` help file." style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+1-2
+}
+
 \seealso{
-Other table-part creation/modification functions: \code{\link{gt}},
-  \code{\link{tab_footnote}}, \code{\link{tab_header}},
-  \code{\link{tab_options}}, \code{\link{tab_row_group}},
-  \code{\link{tab_source_note}}, \code{\link{tab_spanner}},
-  \code{\link{tab_stubhead_label}}, \code{\link{tab_style}}
+Other table creation functions: 
+\code{\link{gt}()}
 }
-\concept{table-part creation/modification functions}
+\concept{table creation functions}

@@ -2,22 +2,69 @@
 % Please edit documentation in R/shiny.R
 \name{gt_output}
 \alias{gt_output}
-\title{Create a \pkg{gt} display table output element for Shiny}
+\title{Create a \strong{gt} display table output element for Shiny}
 \usage{
 gt_output(outputId)
 }
 \arguments{
 \item{outputId}{An output variable from which to read the table.}
 }
-\value{
-A \pkg{gt} table output element that can be included in a panel.
-}
 \description{
-Create a \pkg{gt} display table output element for Shiny
+Using \code{gt_output()} we can render a reactive \strong{gt} table, a process
+initiated by using the \code{\link[=render_gt]{render_gt()}} function in the \code{server} component of a
+Shiny app. The \code{gt_output()} call is to be used in the Shiny \code{ui} component,
+the position and context wherein this call is made determines the where the
+\strong{gt} table is rendered on the app page. It's important to note that the
+ID given during the \code{\link[=render_gt]{render_gt()}} call is needed as the \code{outputId} in
+\code{gt_output()} (e.g., \strong{server}: \verb{output$<id> <- render_gt(...)}; \strong{ui}:
+\verb{gt_output(outputId = "<id>"}).
 }
-\seealso{
-\link{render_gt}()
+\details{
+We need to ensure that we have the \strong{shiny} package installed first. This
+is easily by using \code{install.packages("shiny")}. More information on creating
+Shiny apps can be found at the \href{https://shiny.rstudio.com}{Shiny Site}.
+}
+\section{Examples}{
 
-Other Shiny functions: \code{\link{render_gt}}
+
+Here is a Shiny app (contained within a single file) that (1) prepares a
+\strong{gt} table, (2) sets up the \code{ui} with \code{gt_output()}, and (3) sets up the
+\code{server} with a \code{\link[=render_gt]{render_gt()}} that uses the \code{gt_tbl} object as the input
+expression.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(shiny)
+
+gt_tbl <-
+  gtcars \%>\%
+  gt() \%>\%
+  cols_hide(contains("_"))
+
+ui <- fluidPage(
+
+  gt_output(outputId = "table")
+)
+
+server <- function(input,
+                   output,
+                   session) \{
+
+  output$table <-
+    render_gt(
+      expr = gt_tbl,
+      height = px(600),
+      width = px(600)
+    )
+\}
+}\if{html}{\out{</div>}}
+}
+
+\section{Function ID}{
+
+12-2
+}
+
+\seealso{
+Other Shiny functions: 
+\code{\link{render_gt}()}
 }
 \concept{Shiny functions}

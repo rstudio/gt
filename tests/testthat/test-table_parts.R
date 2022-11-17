@@ -1,5 +1,3 @@
-context("Ensuring that the creation of tab components works as expected")
-
 # Create a shorter version of `mtcars`
 mtcars_short <- mtcars[1:5, ]
 
@@ -11,20 +9,20 @@ check_suggests <- function() {
 
 # Gets the HTML attr value from a single key
 selection_value <- function(html, key) {
-
   selection <- paste0("[", key, "]")
-
-  html %>%
-    rvest::html_nodes(selection) %>%
-    rvest::html_attr(key)
+  rvest::html_attr(rvest::html_nodes(html, selection), key)
 }
 
 # Gets the inner HTML text from a single value
 selection_text <- function(html, selection) {
+  rvest::html_text(rvest::html_nodes(html, selection))
+}
 
-  html %>%
-    rvest::html_nodes(selection) %>%
-    rvest::html_text()
+# Gets the text from a row group label
+get_row_group_text <- function(tbl_html) {
+  tbl_html %>%
+    selection_text("[class='gt_group_heading_row']") %>%
+    gsub("\n\\s+", "", .)
 }
 
 test_that("a gt table contains the expected heading components", {
@@ -35,37 +33,32 @@ test_that("a gt table contains the expected heading components", {
   # Create a `tbl_html` object with `gt()`; this table
   # contains a title
   tbl_html <-
-    gt(data = mtcars_short) %>%
+    gt(mtcars_short) %>%
     tab_header(title = "test heading") %>%
     render_as_html() %>%
     xml2::read_html()
 
   # Expect that the `table_heading` content is 'test heading'
   tbl_html %>%
-    selection_text("[class='gt_heading gt_title gt_font_normal gt_center']") %>%
+    selection_text("[class='gt_heading gt_title gt_font_normal gt_bottom_border']") %>%
     expect_equal("test heading")
 
-  # Expect that the `table_subtitle` content is an empty string
-  tbl_html %>%
-    selection_text("[class='gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border']") %>%
-    expect_equal("")
-
-  # Expect that the number of rows with `class='gt_row gt_right'` is `3`
+  # Expect that the number of rows with `class='gt_row gt_right'` is `5`
   (tbl_html %>%
       selection_text("[class='gt_row gt_right']") %>%
       length()/ncol(mtcars_short)) %>%
-    expect_equal(3)
+    expect_equal(5)
 
-  # Expect that the number of rows with `class='gt_row gt_right gt_striped'` is `2`
+  # Expect that the number of rows with `class='gt_row gt_right gt_striped'` is `0`
   (tbl_html %>%
       selection_text("[class='gt_row gt_right gt_striped']") %>%
       length()/ncol(mtcars_short)) %>%
-    expect_equal(2)
+    expect_equal(0)
 
   # Create a `gt_tbl` object with `gt()`; this table
   # contains a title and a subtitle
   tbl_html <-
-    gt(data = mtcars_short) %>%
+    gt(mtcars_short) %>%
     tab_header(
       title = "test title",
       subtitle = "test subtitle") %>%
@@ -74,13 +67,50 @@ test_that("a gt table contains the expected heading components", {
 
   # Expect that the `table_heading` content is 'test heading'
   tbl_html %>%
-    selection_text(selection = "[class='gt_heading gt_title gt_font_normal gt_center']") %>%
+    selection_text(selection = "[class='gt_heading gt_title gt_font_normal']") %>%
     expect_equal("test title")
 
   # Expect that the `table_heading` content is 'test subtitle'
   tbl_html %>%
-    selection_text("[class='gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border']") %>%
+    selection_text("[class='gt_heading gt_subtitle gt_font_normal gt_bottom_border']") %>%
     expect_equal("test subtitle")
+
+  # Perform a snapshot test where an HTML table contains only a title
+  mtcars_short %>%
+    gt() %>%
+    tab_header(title = "test title") %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  # Perform a snapshot test where an HTML table contains a title and a subtitle
+  mtcars_short %>%
+    gt() %>%
+    tab_header(title = "test title", subtitle = "test subtitle") %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  # Expect that providing a subtitle value with an empty
+  # string won't produce a subtitle line
+  mtcars_short %>%
+    gt() %>%
+    tab_header(title = "test title", subtitle = "") %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  # Expect that providing a subtitle value with a series
+  # a space characters also won't produce a subtitle line
+  mtcars_short %>%
+    gt() %>%
+    tab_header(title = "test title", subtitle = "   ") %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  # Expect an error if only a subtitle is provided to `tab_header()`
+  expect_error(
+    mtcars_short %>%
+      gt() %>%
+      tab_header(subtitle = "test subtitle")
+  )
 })
 
 test_that("a gt table contains the expected stubhead label", {
@@ -91,66 +121,16 @@ test_that("a gt table contains the expected stubhead label", {
   # Create a `tbl_html` object with `gt()`; this table
   # contains a stub and a stubhead label
   tbl_html <-
-    gt(data = mtcars_short, rownames_to_stub = TRUE) %>%
-    tab_stubhead_label(label = "the mtcars") %>%
+    gt(mtcars_short, rownames_to_stub = TRUE) %>%
+    tab_stubhead(label = "the mtcars") %>%
     render_as_html() %>%
     xml2::read_html()
 
   # Expect that the `the mtcars` content appears first in
   # the `data-type='column_heading'` series
   (tbl_html %>%
-      selection_text("[class='gt_col_heading gt_left']"))[1] %>%
+      selection_text("[class='gt_col_heading gt_columns_bottom_border gt_left']")) %>%
     expect_equal("the mtcars")
-})
-
-test_that("a gt table contains the expected spanner column labels", {
-
-  # Check that specific suggested packages are available
-  check_suggests()
-
-  # Create a `tbl_html` object with `gt()`; this table
-  # contains the spanner heading `perimeter` over the
-  # `peri` and `shape` column labels
-  tbl_html <-
-    gt(data = rock) %>%
-    tab_spanner(
-      label = "perimeter",
-      columns = c("peri", "shape")) %>%
-    render_as_html() %>%
-    xml2::read_html()
-
-  # Expect that the content is the column heading spanning 2 columns
-  # is `perimeter`
-  tbl_html %>%
-    selection_text("[colspan='2']") %>%
-    expect_equal("perimeter")
-
-  # Create a `gt_tbl` object with `gt()`; this table
-  # contains the spanner heading `perimeter` over the
-  # `peri` and `shape` column labels (this time, using
-  # the `vars()` helper to define the columns)
-  tbl_html <-
-    gt(data = rock) %>%
-    tab_spanner(
-      label = "perimeter",
-      columns = vars(peri, shape)) %>%
-    render_as_html() %>%
-    xml2::read_html()
-
-  # Expect that the content is the column heading spanning 2 columns
-  # is `perimeter`
-  tbl_html %>%
-    selection_text("[class='gt_col_heading gt_column_spanner gt_center']") %>%
-    expect_equal("perimeter")
-
-  # Expect an error when using column labels
-  # that don't exist
-  expect_error(
-    gt(data = rock) %>%
-      tab_spanner(
-        label = "perimeter",
-        columns = vars(peris, shapes))
-  )
 })
 
 test_that("a gt table contains the expected source note", {
@@ -194,54 +174,333 @@ test_that("a gt table contains the expected source note", {
         "This was in Motor Trend magazine, hence the `mt`."))
 })
 
-test_that("a gt table contains the correct placement of row groups", {
+test_that("row groups can be successfully generated with `tab_row_group()", {
 
   # Check that specific suggested packages are available
   check_suggests()
 
   # Create a `tbl_html` object with `gt()`; this table
-  # contains a row groups in a specified order
+  # contains a row groups in a specified order using `tab_row_group()`
   tbl_html <-
     gt(mtcars, rownames_to_stub = TRUE) %>%
     tab_row_group(
-      group = "Mazda",
+      label = "Mazda",
       rows = c("Mazda RX4", "Mazda RX4 Wag")
     ) %>%
     render_as_html() %>%
     xml2::read_html()
 
-  # Expect that the inner HTML content for the two stub groups
-  # is 'Mazda' and an empty string
-  c(tbl_html %>%
-      selection_text("[class='gt_group_heading']"),
-    tbl_html %>%
-      selection_text("[class='gt_empty_group_heading']")) %>%
-    expect_equal(c("Mazda", ""))
+  # Expect that the inner HTML content for the two row groups
+  # is 'Mazda' and then an empty string
+  expect_equal(
+    get_row_group_text(tbl_html),
+    c("Mazda", "")
+  )
 
   # Create a `tbl_html` object with `gt()`; this table
   # contains a three row groups and the use of `row_group_order()`
   # will specify a particular ordering
   tbl_html <-
-    gt(mtcars, rownames_to_stub = TRUE) %>%
+    mtcars %>%
+    gt(rownames_to_stub = TRUE) %>%
     tab_row_group(
-      group = "Mercs",
+      label = "Mercs",
       rows = contains("Merc")
     ) %>%
     tab_row_group(
-      group = "Mazda",
+      label = "Mazda",
       rows = c("Mazda RX4", "Mazda RX4 Wag")
     ) %>%
     row_group_order(groups = c(NA, "Mazda", "Mercs")) %>%
     render_as_html() %>%
     xml2::read_html()
 
-  # Expect that the inner HTML content for the three stub groups
+  # Expect that the inner HTML content for the three row groups
   # is in the prescribed order
-  c(tbl_html %>%
-      selection_text("[class='gt_empty_group_heading']"),
+  expect_equal(
+    get_row_group_text(tbl_html),
+    c("", "Mazda", "Mercs")
+  )
+
+  # Create a variation on the above table where `row_group_order()`
+  # leaves out `NA` (it's put at the end)
+  tbl_html <-
+    mtcars %>%
+    gt(rownames_to_stub = TRUE) %>%
+    tab_row_group(
+      label = "Mercs",
+      rows = contains("Merc")
+    ) %>%
+    tab_row_group(
+      label = "Mazda",
+      rows = c("Mazda RX4", "Mazda RX4 Wag")
+    ) %>%
+    row_group_order(groups = c("Mazda", "Mercs")) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect that the inner HTML content for the three row groups
+  # is in the prescribed order
+  expect_equal(
+    get_row_group_text(tbl_html),
+    c("Mazda", "Mercs", "")
+  )
+
+  tbl_html <-
+    exibble %>%
+    gt() %>%
+    tab_row_group(
+      label = md("__*void*__"),
+      rows = group == "grp_a",
+      id = "group_a"
+    ) %>%
+    tab_row_group(
+      label = "void",
+      rows = group != "grp_a",
+      id = "group_void"
+    ) %>%
+    row_group_order(
+      groups = c("group_a", "group_void")
+    ) %>%
+    tab_spanner(
+      label = md("__*num_char*__"),
+      columns = c(num, char),
+      id = "num_char"
+    ) %>%
+    tab_footnote(
+      footnote = "a footnote",
+      locations = cells_row_groups("group_a")
+    ) %>%
+    render_as_html()
+
+  # Expect to see the styled and unstyled variations of the `"void"`
+  # row group labels
+  expect_match(
+    tbl_html,
+    regexp = "<strong><em>void</em></strong><sup class=\"gt_footnote_marks\">1</sup>",
+    fixed = TRUE
+  )
+  expect_match(
+    tbl_html,
+    regexp = "<th colspan=\"9\" class=\"gt_group_heading\" scope=\"colgroup\" id=\"void\">void</th>",
+    fixed = TRUE
+  )
+
+  # Expect that the inner HTML content for the two row groups
+  # is in the prescribed order
+  expect_equal(
+    get_row_group_text(tbl_html %>% xml2::read_html()),
+    c("void1", "void")
+  )
+
+  # When specifying a row group that captures no rows, expect that
+  # the rendered table is essentially unaffected by this function call
+  expect_equal(
+    gt(exibble, rowname_col = "row") %>%
+      tab_row_group(label = "group", rows = FALSE) %>%
+      render_as_html(),
+    gt(exibble, rowname_col = "row") %>%
+      render_as_html()
+  )
+
+  # Expect an error if not providing a `label` for `tab_row_group()`
+  # but there is a specification of rows
+  expect_error(
+    exibble %>%
+      gt() %>%
+      tab_row_group(
+        rows = group == "grp_a"
+      )
+  )
+
+  # Expect a warning if using the `others_label` argument
+  expect_warning(
+    gt(exibble, rowname_col = "row") %>%
+      tab_row_group(others_label = "foo")
+  )
+
+  # Expect a warning if using the `group` argument
+  expect_warning(
+    gt(exibble, rowname_col = "row") %>%
+      tab_row_group(group = "group", rows = 1:3)
+  )
+
+  # Expect a warning if using both the `label` and `group` argument
+  expect_warning(
+    gt_tbl <-
+      gt(exibble, rowname_col = "row") %>%
+      tab_row_group(label = "group_prioritized", group = "group", rows = 1:3)
+  )
+
+  # Expect that the label text specified in `label` was used over the
+  # text given in `group`
+  expect_equal(
+    gt_tbl %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      get_row_group_text(),
+    c("group_prioritized", "")
+  )
+
+  # Expect that `tab_options(row_group.default_label = <label>)`
+  # is called internally if using the deprecated `others_label` argument
+  gt_tbl <-
+    suppressWarnings(
+      gt(exibble, rowname_col = "row") %>%
+        tab_row_group(label = "one", rows = 1:3) %>%
+        tab_row_group(others_label = "foo")
+    )
+
+  expect_equal(
+    dt_options_get_value(gt_tbl, "row_group_default_label"),
+    "foo"
+  )
+
+  expect_equal(
+    gt_tbl %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      get_row_group_text(),
+    c("one", "foo")
+  )
+
+  # Expect an error upon repeat use of a row group `id` value
+  expect_error(
+    gt(exibble, rowname_col = "row") %>%
+      tab_row_group(label = "a", rows = 1:2, id = "one") %>%
+      tab_row_group(label = "b", rows = 3:4, id = "one")
+  )
+})
+
+test_that("A default row group name can be modified with `tab_options()`", {
+
+  # Check that specific suggested packages are available
+  check_suggests()
+
+  tbl_html <- gt(exibble)
+
+  # Having some rows associated to ids/labels means that the
+  # non-associated rows will have an NA label
+  expect_equal(
     tbl_html %>%
-      selection_text("[class='gt_group_heading']")) %>%
-    expect_equal(c("", "Mazda", "Mercs"))
+      tab_row_group(
+        label = md("__*void*__"),
+        rows = group == "grp_a",
+        id = "group_a"
+      ) %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      get_row_group_text(),
+    c("void", "")
+  )
+
+  # Setting a default row group label will make that label
+  # appear when rendered
+  expect_equal(
+    tbl_html %>%
+      tab_options(row_group.default_label = "The Others") %>%
+      tab_row_group(
+        label = md("__*void*__"),
+        rows = group == "grp_a",
+        id = "group_a"
+      ) %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      get_row_group_text(),
+    c("void", "The Others")
+  )
+
+  # The order of the two groups (one defined, one the 'Others') can
+  # be modified with `row_group_order()` by putting `NA` before `group_a`
+  expect_equal(
+    tbl_html %>%
+      tab_options(row_group.default_label = "The Others") %>%
+      tab_row_group(
+        label = md("__*void*__"),
+        rows = group == "grp_a",
+        id = "group_a"
+      ) %>%
+      row_group_order(groups = c(NA, "group_a")) %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      get_row_group_text(),
+    c("The Others", "void")
+  )
+
+  # The label for the 'Others' can be overwritten with a subsequent
+  # call of `tab_row_group()`
+  expect_equal(
+    tbl_html %>%
+      tab_row_group(
+        label = md("__*void*__"),
+        rows = group == "grp_a",
+        id = "group_a"
+      ) %>%
+      tab_options(row_group.default_label = "The Others") %>%
+      tab_options(row_group.default_label = "Other Group") %>%
+      row_group_order(groups = c(NA, "group_a")) %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      get_row_group_text(),
+    c("Other Group", "void")
+  )
+
+  # A previously defined label for the 'Others' can be reset to
+  # nothing by using `tab_options(row_group.default_label = "")`
+  expect_equal(
+    tbl_html %>%
+      tab_row_group(
+        label = md("__*void*__"),
+        rows = group == "grp_a",
+        id = "group_a"
+      ) %>%
+      tab_options(row_group.default_label = "The Others") %>%
+      tab_options(row_group.default_label = "") %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      get_row_group_text(),
+    c("void", "")
+  )
+})
+
+test_that("a gt table's row group labels are HTML escaped", {
+
+  # Create a `tbl_html` object with `gt()`; this table
+  # contains a row group with characters that require
+  # escaping for HTML
+  tbl_html <-
+    data.frame(group = "x > 30", value = seq(1, 5)) %>%
+    gt(groupname_col = "group") %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect that the row group label is `x > 30` (and not
+  # `x`, which would result from not escaping the inner HTML)
+  expect_equal(
+    tbl_html %>%
+      selection_text("[class='gt_group_heading']"),
+    "x > 30")
+
+  # Create a `tbl_html` object with `gt()`; this table
+  # has the row group label (with necessity to HTML-escape)
+  # but, this time, there is a footnote mark attached to
+  # that label (which shouldn't be escaped)
+  tbl_html <-
+    data.frame(group = "x > 30", value = seq(1, 5)) %>%
+    gt(groupname_col = "group") %>%
+    tab_footnote(
+      footnote = "footnote",
+      locations = cells_row_groups(groups = "x > 30")
+    ) %>%
+    render_as_html() %>%
+    xml2::read_html()
+
+  # Expect that the row group label is `x > 30` +
+  # the text for the footnote mark: `1`
+  expect_equal(
+    tbl_html %>%
+      selection_text("[class='gt_group_heading']"),
+    "x > 301")
 })
 
 test_that("a gt table contains custom styles at the correct locations", {
@@ -251,22 +510,24 @@ test_that("a gt table contains custom styles at the correct locations", {
 
   # Create a `tbl_html` object with `gt()`
   tbl_html <-
-    gt(mtcars, rownames_to_stub = TRUE) %>%
+    mtcars %>%
+    gt(rownames_to_stub = TRUE) %>%
     cols_move_to_start(columns = c("gear", "carb")) %>%
-    tab_stubhead_label(label = "cars") %>%
+    tab_stubhead(label = "cars") %>%
     cols_hide(columns = "mpg") %>%
     cols_hide(columns = "vs") %>%
     tab_row_group(
-      group = "Mercs",
+      label = "Mercs",
       rows = contains("Merc")
     ) %>%
     tab_row_group(
-      group = "Mazdas",
+      label = "Mazdas",
       rows = contains("Mazda")
     ) %>%
     tab_spanner(
       label = "gear_carb_cyl",
-      columns = vars(gear, carb, cyl)
+      id = "gcc",
+      columns = c(gear, carb, cyl)
     ) %>%
     row_group_order(groups = c("Mazdas", "Mercs")) %>%
     cols_merge_range(
@@ -281,152 +542,247 @@ test_that("a gt table contains custom styles at the correct locations", {
     cols_label(cyl = md("*cyls*")) %>%
     summary_rows(
       groups = c("Mazdas", "Mercs"),
-      columns = vars(hp, wt, qsec),
+      columns = c(hp, wt, qsec),
       fns = list(
         ~mean(., na.rm = TRUE),
         ~sum(., na.rm = TRUE))
     ) %>%
     summary_rows(
-      columns = vars(hp, wt, qsec),
+      columns = c(hp, wt, qsec),
       fns = list(
         ~mean(., na.rm = TRUE),
         ~sum(., na.rm = TRUE))
     ) %>%
     tab_style(
-      style = cells_styles(bkgd_color = "lightgray"),
+      style = cell_fill(color = "lightgray"),
       locations = list(
-        cells_column_labels(columns = TRUE),
+        cells_column_labels(),
         cells_stub(rows = TRUE))
     ) %>%
     tab_style(
-      style = cells_styles(bkgd_color = "steelblue", text_color = "white"),
+      style = list(
+        cell_fill(color = "steelblue"),
+        cell_text(color = "white")
+      ),
       locations = cells_stub(rows = "Merc 240D")
     ) %>%
     tab_style(
-      style = cells_styles(text_align = "left"),
+      style = cell_text(align = "left"),
       locations = cells_title(groups = "title")
     ) %>%
     tab_style(
-      style = cells_styles(text_align = "left"),
+      style = cell_text(align = "left"),
       locations = cells_title(groups = "subtitle")
     ) %>%
     tab_style(
-      style = cells_styles(bkgd_color = "green", text_color = "white"),
+      style = list(
+        cell_fill(color = "green"),
+        cell_text(color = "white")
+      ),
       locations = cells_summary(
         groups = "Mercs", columns = "hp", rows = 2)
     ) %>%
     tab_style(
-      style = cells_styles(bkgd_color = "purple", text_color = "white"),
+      style = list(
+        cell_fill(color = "purple"),
+        cell_text(color = "white")
+      ),
       locations = cells_grand_summary(columns = "hp", rows = 2)
     ) %>%
     tab_style(
-      style = cells_styles(bkgd_color = "lightgreen"),
-      locations = cells_column_labels(groups = "gear_carb_cyl")
+      style = cell_fill(color = "lightgreen"),
+      locations = cells_column_spanners(spanners = "gcc")
     ) %>%
     tab_style(
-      style = cells_styles(bkgd_color = "turquoise"),
-      locations = cells_column_labels(columns = "gear")
+      style = cell_fill(color = "turquoise"),
+      locations = cells_column_labels(columns = gear)
     ) %>%
     tab_style(
-      style = cells_styles(bkgd_color = "pink"),
-      locations = cells_column_labels(columns = "hp")
+      style = cell_fill(color = "pink"),
+      locations = cells_column_labels(columns = hp)
     ) %>%
     tab_style(
-      style = cells_styles(bkgd_color = "lightgray", text_style = "italic"),
-      locations = cells_data(columns = "hp", rows = "Datsun 710")
+      style = list(
+        cell_fill(color = "lightgray"),
+        cell_text(style = "italic")
+      ),
+      locations = cells_body(columns = "hp", rows = "Datsun 710")
     ) %>%
     tab_style(
-      style = cells_styles(bkgd_color = "yellow"),
-      locations = cells_data(columns = "disp", rows = "Mazda RX4")
+      style = cell_fill(color = "yellow"),
+      locations = cells_body(columns = "disp", rows = "Mazda RX4")
     ) %>%
     tab_style(
-      style = cells_styles(bkgd_color = "red", text_color = "white"),
-      locations = cells_group(groups = "Mazdas")
+      style = list(
+        cell_fill(color = "red"),
+        cell_text(color = "white")
+      ),
+      locations = cells_row_groups(groups = "Mazdas")
+    ) %>%
+    tab_style(
+      style = list(
+        cell_fill(color = "blue"),
+        cell_text(color = "white")
+      ),
+      locations = cells_stubhead()
     ) %>%
     render_as_html() %>%
     xml2::read_html()
 
+  # Expect that the stubhead label is styled
+  tbl_html %>%
+    rvest::html_nodes("[style='background-color: #0000FF; color: #FFFFFF;']") %>%
+    rvest::html_text("[class='gt_col_heading gt_columns_bottom_border gt_left]") %>%
+    expect_equal("cars")
+
   # Expect that the data cell (`Mazda RX4`/`disp`) -> (1, 4) is styled
   tbl_html %>%
-    rvest::html_nodes("[style='background-color:yellow;']") %>%
-    rvest::html_text("[class='gt_row gt_center']") %>%
-    expect_equal("160.0 — 3.90")
+    rvest::html_nodes("[style='background-color: #FFFF00;']") %>%
+    rvest::html_text("[class='gt_row gt_right']") %>%
+    expect_equal("160.0–3.90")
 
   # Expect that the data cell (`Datsun 710`/`hp`) -> (1, 4) is styled
   tbl_html %>%
-    rvest::html_nodes("[style='background-color:lightgray;font-style:italic;']") %>%
-    rvest::html_text("[class='gt_row gt_center']") %>%
+    rvest::html_nodes("[style='background-color: #D3D3D3; font-style: italic;']") %>%
+    rvest::html_text("[class='gt_row gt_right']") %>%
     expect_equal("93")
 
   # Expect that the summary cell (`Mercs`::`sum`/`hp`) is styled
   tbl_html %>%
-    rvest::html_nodes("[style='background-color:green;color:white;']") %>%
-    rvest::html_text("[class='gt_row gt_summary_row gt_center']") %>%
+    rvest::html_nodes("[style='background-color: #00FF00; color: #FFFFFF;']") %>%
+    rvest::html_text("[class='gt_row gt_right gt_summary_row']") %>%
     expect_equal("943.00")
 
   # Expect that the grand summary cell (`sum`/`hp`) is styled
   tbl_html %>%
-    rvest::html_nodes("[style='background-color:purple;color:white;']") %>%
-    rvest::html_text("[class='gt_row gt_grand_summary_row gt_center']") %>%
+    rvest::html_nodes("[style='background-color: #A020F0; color: #FFFFFF;']") %>%
+    rvest::html_text("[class='gt_row gt_grand_summary_row']") %>%
     expect_equal("4,694.00")
 
   # Expect that some column labels (e.g., `disp`, `wt`, etc.) are
   # styled with a lightgrey background
   (tbl_html %>%
-    rvest::html_nodes("[style='background-color:lightgray;']") %>%
-    rvest::html_text())[1:6] %>%
-    expect_equal(c("disp", "wt", "qsec", "am", "cyls", "carb"))
+    rvest::html_nodes("[style='background-color: #D3D3D3;']") %>%
+    rvest::html_text())[1:5] %>%
+    expect_equal(c("disp", "wt", "qsec", "am", "carb"))
 
-  # Expect that most stub cells are styled with a lightgrey background
+  # Expect that most stub cells are styled with a light gray background
+  (tbl_html %>%
+    rvest::html_nodes("[style='background-color: #D3D3D3;']") %>%
+    rvest::html_text())[1:6] %>%
+    expect_equal(c("disp", "wt", "qsec", "am", "carb", "cyls"))
+
+  # Expect that most stub cells are styled with a light gray background
   tbl_html %>%
-    rvest::html_nodes("[class='gt_row gt_stub gt_left'][style='background-color:lightgray;']") %>%
+    rvest::html_nodes("[class='gt_row gt_left gt_stub'][style='background-color: #D3D3D3;']") %>%
     rvest::html_text() %>%
     length() %>%
     expect_equal(31)
 
-  # Expect that the `hp` column label's cell ultimately has a pink background
+  # Expect that the `hp` column label's cell has a pink background
   tbl_html %>%
-    rvest::html_nodes("[style='background-color:lightgray;background-color:pink;']") %>%
+    rvest::html_nodes("[style='background-color: #FFC0CB;']") %>%
     rvest::html_text() %>%
     expect_equal("hp")
 
-  # Expect that the `gear` column label's cell ultimately
-  # has a turquoise background
+  # Expect that the `gear` column label's cell has a turquoise background
   tbl_html %>%
-    rvest::html_nodes("[style='background-color:lightgray;background-color:turquoise;']") %>%
+    rvest::html_nodes("[style='background-color: #40E0D0;']") %>%
     rvest::html_text() %>%
     expect_equal("gear")
 
   # Expect that the row caption `Merc 240D` has a cell background that
   # is ultimately steelblue, and, the font the white
   tbl_html %>%
-    rvest::html_nodes("[style='background-color:lightgray;background-color:steelblue;color:white;']") %>%
+    rvest::html_nodes("[style='background-color: #4682B4; color: #FFFFFF;']") %>%
     rvest::html_text() %>%
     expect_equal("Merc 240D")
 
   # Expect that the `gear_carb_cyl` column spanner's
   # cell has a lightgreen background
   tbl_html %>%
-    rvest::html_nodes("[style='background-color:lightgreen;']") %>%
+    rvest::html_nodes("[style='background-color: #90EE90;']") %>%
     rvest::html_text() %>%
-    expect_equal("gear_carb_cyl")
+    grepl("gear_carb_cyl", .) %>%
+    expect_true()
 
   # Expect that the `Mazdas` row group label
   # cell has a red background and white text
   tbl_html %>%
-    rvest::html_nodes("[style='background-color:red;color:white;']") %>%
+    rvest::html_nodes("[style='background-color: #FF0000; color: #FFFFFF;']") %>%
     rvest::html_text() %>%
     expect_equal("Mazdas")
 
   # Expect that the table title is formatted to the left
   tbl_html %>%
-    rvest::html_nodes("[class='gt_heading gt_title gt_font_normal gt_center'][style='text-align:left;']") %>%
+    rvest::html_nodes("[class='gt_heading gt_title gt_font_normal'][style='text-align: left;']") %>%
     rvest::html_text() %>%
     expect_equal("Title")
 
   # Expect that the table subtitle is formatted to the left
   tbl_html %>%
-    rvest::html_nodes("[class='gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border'][style='text-align:left;']") %>%
+    rvest::html_nodes("[class='gt_heading gt_subtitle gt_font_normal gt_bottom_border'][style='text-align: left;']") %>%
     rvest::html_text() %>%
     expect_equal("Subtitle")
+})
+
+test_that("columns can be hidden and then made visible", {
+
+  # Check that specific suggested packages are available
+  check_suggests()
+
+  # Create a `gt_tbl` object with the `gtcars` dataset
+  gt_tbl <- gt(gtcars)
+
+  # Expect all column names from the original dataset
+  # to be present
+  gt_tbl %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_left']") %>%
+    rvest::html_text() %>%
+    expect_equal(c("mfr", "model", "trim", "bdy_style", "drivetrain", "trsmn", "ctry_origin"))
+
+  # Hide the `mfr` and `drivetrain` columns from the
+  # table with `cols_hide()`
+  gt_tbl <-
+    gt_tbl %>%
+    cols_hide(c(mfr, drivetrain))
+
+  # Expect the two hidden columns to not appear in the rendered table
+  gt_tbl %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_left']") %>%
+    rvest::html_text() %>%
+    expect_equal(c("model", "trim", "bdy_style", "trsmn", "ctry_origin"))
+
+  # Make the `mfr` column visible again with `cols_unhide()`
+  gt_tbl <-
+    gt_tbl %>%
+    cols_unhide(mfr)
+
+  # Expect that only `drivetrain` is hidden now
+  gt_tbl %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_left']") %>%
+    rvest::html_text() %>%
+    expect_equal(c("mfr", "model", "trim", "bdy_style", "trsmn", "ctry_origin"))
+
+  # Move the drivetrain column to the beginning of the column
+  # series and unhide it
+  gt_tbl <-
+    gt_tbl %>%
+    cols_move_to_start(drivetrain) %>%
+    cols_unhide(drivetrain)
+
+  # Expect all column names from the original dataset
+  # to be present in the revised order
+  gt_tbl %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_left']") %>%
+    rvest::html_text() %>%
+    expect_equal(c("drivetrain", "mfr", "model", "trim", "bdy_style", "trsmn", "ctry_origin"))
 })

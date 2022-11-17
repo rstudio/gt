@@ -2,17 +2,36 @@
 % Please edit documentation in R/shiny.R
 \name{render_gt}
 \alias{render_gt}
-\title{A \pkg{gt} display table render function for use in Shiny}
+\title{A \strong{gt} display table render function for use in Shiny}
 \usage{
-render_gt(expr, env = parent.frame(), quoted = FALSE,
-  outputArgs = list())
+render_gt(
+  expr,
+  width = NULL,
+  height = NULL,
+  align = NULL,
+  env = parent.frame(),
+  quoted = FALSE,
+  outputArgs = list()
+)
 }
 \arguments{
-\item{expr}{An expression that creates a \pkg{gt} table object.}
+\item{expr}{An expression that creates a \strong{gt} table object. For sake of
+convenience, a data frame or tibble can be used here (it will be
+automatically introduced to \code{\link[=gt]{gt()}} with its default options).}
+
+\item{width, height}{The width and height of the table's container. Either can
+be specified as a single-length character with units of pixels or as a
+percentage. If provided as a single-length numeric vector, it is assumed
+that the value is given in units of pixels. The \code{\link[=px]{px()}} and \code{\link[=pct]{pct()}} helper
+functions can also be used to pass in numeric values and obtain values as
+pixel or percent units.}
+
+\item{align}{The alignment of the table in its container. By default, this is
+\code{"center"}. Other options are \code{"left"} and \code{"right"}.}
 
 \item{env}{The environment in which to evaluate the \code{expr}.}
 
-\item{quoted}{Is \code{expr`` a quoted expression (with }quote()`)? This is useful
+\item{quoted}{Is \code{expr} a quoted expression (with \code{quote()})? This is useful
 if you want to save an expression in a variable.}
 
 \item{outputArgs}{A list of arguments to be passed through to the implicit
@@ -20,11 +39,61 @@ call to \code{\link[=gt_output]{gt_output()}} when \code{render_gt} is used in a
 document.}
 }
 \description{
-A \pkg{gt} display table render function for use in Shiny
+With \code{render_gt()} we can create a reactive \strong{gt} table that works
+wonderfully once assigned to an output slot (with \code{\link[=gt_output]{gt_output()}}). This
+function is to be used within Shiny's \code{server()} component. We have some
+options for controlling the size of the container holding the \strong{gt} table.
+The \code{width} and \code{height} arguments allow for sizing the container, and the
+\code{align} argument allows us to align the table within the container (some
+other fine-grained options for positioning are available in the
+\code{\link[=tab_options]{tab_options()}} function).
 }
-\seealso{
-\link{gt_output}()
+\details{
+We need to ensure that we have the \strong{shiny} package installed first. This
+is easily by using \code{install.packages("shiny")}. More information on creating
+Shiny apps can be found at the \href{https://shiny.rstudio.com}{Shiny Site}.
+}
+\section{Examples}{
 
-Other Shiny functions: \code{\link{gt_output}}
+
+Here is a Shiny app (contained within a single file) that (1) prepares a
+\strong{gt} table, (2) sets up the \code{ui} with \code{\link[=gt_output]{gt_output()}}, and (3) sets up the
+\code{server} with a \code{render_gt()} that uses the \code{gt_tbl} object as the input
+expression.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(shiny)
+
+gt_tbl <-
+  gtcars \%>\%
+  gt() \%>\%
+  cols_hide(contains("_"))
+
+ui <- fluidPage(
+
+  gt_output(outputId = "table")
+)
+
+server <- function(input,
+                   output,
+                   session) \{
+
+  output$table <-
+    render_gt(
+      expr = gt_tbl,
+      height = px(600),
+      width = px(600)
+    )
+\}
+}\if{html}{\out{</div>}}
+}
+
+\section{Function ID}{
+
+12-1
+}
+
+\seealso{
+Other Shiny functions: 
+\code{\link{gt_output}()}
 }
 \concept{Shiny functions}

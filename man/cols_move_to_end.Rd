@@ -19,9 +19,9 @@ An object of class \code{gt_tbl}.
 \description{
 It's possible to move a set of columns to the end of the column series, we
 only need to specify which \code{columns} are to be moved. While this can be done
-upstream of \pkg{gt}'s API, this function makes to process much easier and
-it's less error prone. The ordering of the \code{columns} that are moved to the
-end is preserved (same with the ordering of all other columns in the table).
+upstream of \strong{gt}, this function makes to process much easier and it's less
+error prone. The ordering of the \code{columns} that are moved to the end is
+preserved (same with the ordering of all other columns in the table).
 }
 \details{
 The columns supplied in \code{columns} must all exist in the table. If you need to
@@ -30,48 +30,59 @@ place one or columns at the start of the column series, the
 the \code{\link[=cols_move]{cols_move()}} function, where columns could be placed after a specific
 column.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cols_move_to_end_1.svg}{options: width=100\%}}
 
-\if{html}{\figure{man_cols_move_to_end_2.svg}{options: width=100\%}}
-}
+Use \code{\link{countrypops}} to create a \strong{gt} table. With the remaining columns,
+move the \code{year} column to the end of the column series with the
+\code{cols_move_to_end()} function.
 
-\examples{
-# Use `countrypops` to create a gt table;
-# With the remaining columns, move the
-# `year` column to the end
-tab_1 <-
-  countrypops \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::select(-contains("code")) \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%
   gt() \%>\%
-  cols_move_to_end(
-    columns = vars(year)
-  )
+  cols_move_to_end(columns = year)
+}\if{html}{\out{</div>}}
 
-# Use `countrypops` to create a gt table;
-# With the remaining columns, move `year`
-# and `country_name` to the end
-tab_2 <-
-  countrypops \%>\%
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_move_to_end_1.png" alt="This image of a table was generated from the first code example in the `cols_move_to_end()` help file." style="width:100\%;">
+}}
+
+Use \code{\link{countrypops}} to create a \strong{gt} table. With the remaining columns,
+move \code{year} and \code{country_name} to the end of the column series.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::select(-contains("code")) \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%
   gt() \%>\%
-  cols_move_to_end(
-    columns = vars(year, country_name)
-  )
+  cols_move_to_end(columns = c(year, country_name))
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_move_to_end_2.png" alt="This image of a table was generated from the second code example in the `cols_move_to_end()` help file." style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+4-6
+}
+
 \seealso{
-Other column modification functions: \code{\link{cols_align}},
-  \code{\link{cols_hide}}, \code{\link{cols_label}},
-  \code{\link{cols_merge_range}},
-  \code{\link{cols_merge_uncert}},
-  \code{\link{cols_merge}},
-  \code{\link{cols_move_to_start}},
-  \code{\link{cols_move}}, \code{\link{cols_split_delim}}
+Other column modification functions: 
+\code{\link{cols_align_decimal}()},
+\code{\link{cols_align}()},
+\code{\link{cols_hide}()},
+\code{\link{cols_label}()},
+\code{\link{cols_merge_n_pct}()},
+\code{\link{cols_merge_range}()},
+\code{\link{cols_merge_uncert}()},
+\code{\link{cols_merge}()},
+\code{\link{cols_move_to_start}()},
+\code{\link{cols_move}()},
+\code{\link{cols_unhide}()},
+\code{\link{cols_width}()}
 }
 \concept{column modification functions}

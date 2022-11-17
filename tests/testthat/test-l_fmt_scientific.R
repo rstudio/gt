@@ -1,5 +1,3 @@
-context("LaTeX -- Ensuring that the `fmt_scientific()` function works as expected")
-
 test_that("the `fmt_scientific()` function works correctly", {
 
   # Create an input data frame four columns: two
@@ -17,7 +15,7 @@ test_that("the `fmt_scientific()` function works correctly", {
 
   # Create a `tbl_latex` object with `gt()` and the
   # `data_tbl` dataset
-  tbl_latex <- gt(data = data_tbl)
+  tbl_latex <- gt(data_tbl)
 
   # Format the `num_1` column to 2 decimal places, use all
   # other defaults; extract `output_df` in the HTML context
@@ -86,6 +84,33 @@ test_that("the `fmt_scientific()` function works correctly", {
       "a $1.84 \\times 10^{3}$ b", "a $2.76 \\times 10^{3}$ b",
       "a $9.37 \\times 10^{2}$ b", "a $6.43 \\times 10^{2}$ b",
       "a $2.23$ b", "a $0.00$ b", "a $-2.32 \\times 10^{1}$ b")
+  )
+
+  # Format the `num_1` column to 2 decimal places, force the sign
+  expect_equal(
+    (tbl_latex %>%
+       fmt_scientific(
+         columns = num_1, decimals = 3, force_sign = TRUE) %>%
+       render_formats_test("latex"))[["num_1"]],
+    c(
+      "$+1.836 \\times 10^{3}$", "$+2.763 \\times 10^{3}$",
+      "$+9.373 \\times 10^{2}$", "$+6.430 \\times 10^{2}$",
+      "$+2.232$", "$0.000$", "$-2.324 \\times 10^{1}$"
+    )
+  )
+
+  # Format the `num_1` column to 2 decimal places, force the sign and
+  # define a pattern for decorating values
+  expect_equal(
+    (tbl_latex %>%
+       fmt_scientific(
+         columns = num_1, pattern = "*{x}*", force_sign = TRUE) %>%
+       render_formats_test("latex"))[["num_1"]],
+    c(
+      "*$+1.84 \\times 10^{3}$*", "*$+2.76 \\times 10^{3}$*",
+      "*$+9.37 \\times 10^{2}$*", "*$+6.43 \\times 10^{2}$*",
+      "*$+2.23$*", "*$0.00$*", "*$-2.32 \\times 10^{1}$*"
+    )
   )
 
   # Format the `num_1` column to 2 decimal places, apply the `en_US`

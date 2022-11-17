@@ -4,12 +4,12 @@
 \alias{cols_label}
 \title{Relabel one or more columns}
 \usage{
-cols_label(data, ..., .list = list2(...))
+cols_label(.data, ..., .list = list2(...))
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{...}{One or more named arguments of column names from the input \code{data}
+\item{...}{One or more named arguments of column names from the input \code{.data}
 table along with their labels for display as the column labels. We can
 optionally wrap the column labels with \code{\link[=md]{md()}} (to interpret text as
 Markdown) or \code{\link[=html]{html()}} (to interpret text as HTML).}
@@ -21,10 +21,10 @@ An object of class \code{gt_tbl}.
 }
 \description{
 Column labels can be modified from their default values (the names of the
-columns from the input table data). When you create a \pkg{gt} table object
+columns from the input table data). When you create a \strong{gt} table object
 using \code{\link[=gt]{gt()}}, column names effectively become the column labels. While this
 serves as a good first approximation, column names aren't often appealing as
-column labels in a \pkg{gt} output table. The \code{cols_label()} function
+column labels in a \strong{gt} output table. The \code{cols_label()} function
 provides the flexibility to relabel one or more columns and we even have the
 option to use the \code{\link[=md]{md()}} or \code{\link[=html]{html()}} helper functions for rendering column
 labels from Markdown or using HTML.
@@ -32,27 +32,21 @@ labels from Markdown or using HTML.
 \details{
 It's important to note that while columns can be freely relabeled, we
 continue to refer to columns by their original column names. Column names in
-a tibble or data frame must be unique whereas column labels in \pkg{gt} have
+a tibble or data frame must be unique whereas column labels in \strong{gt} have
 no requirement for uniqueness (which is useful for labeling columns as, say,
 measurement units that may be repeated several times---usually under
 different spanner column labels). Thus, we can still easily distinguish
-between columns in other \pkg{gt} function calls (e.g., in all of the
-\code{fmt*()} functions) even though we may lose distinguishability in column
+between columns in other \strong{gt} function calls (e.g., in all of the
+\verb{fmt*()} functions) even though we may lose distinguishability in column
 labels once they have been relabeled.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cols_label_1.svg}{options: width=100\%}}
 
-\if{html}{\figure{man_cols_label_2.svg}{options: width=100\%}}
-}
+Use \code{\link{countrypops}} to create a \strong{gt} table. Relabel all the table's columns
+with the \code{cols_label()} function to improve its presentation.
 
-\examples{
-# Use `countrypops` to create a gt table;
-# label all the table's columns to
-# present better
-tab_1 <-
-  countrypops \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::select(-contains("code")) \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%
@@ -62,12 +56,17 @@ tab_1 <-
     year = "Year",
     population = "Population"
   )
+}\if{html}{\out{</div>}}
 
-# Use `countrypops` to create a gt table;
-# label columns as before but make them
-# bold with markdown formatting
-tab_2 <-
-  countrypops \%>\%
+#' \if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_1.png" alt="This image of a table was generated from the first code example in the `cols_label()` help file." style="width:100\%;">
+}}
+
+Using \code{\link{countrypops}} again to create a \strong{gt} table, we label columns just
+as before but this time make the column labels bold through Markdown
+formatting.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::select(-contains("code")) \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%
@@ -77,14 +76,31 @@ tab_2 <-
     year = md("**Year**"),
     population = md("**Population**")
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_2.png" alt="This image of a table was generated from the second code example in the `cols_label()` help file." style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+4-4
+}
+
 \seealso{
-Other column modification functions: \code{\link{cols_align}},
-  \code{\link{cols_hide}}, \code{\link{cols_merge_range}},
-  \code{\link{cols_merge_uncert}},
-  \code{\link{cols_merge}}, \code{\link{cols_move_to_end}},
-  \code{\link{cols_move_to_start}},
-  \code{\link{cols_move}}, \code{\link{cols_split_delim}}
+Other column modification functions: 
+\code{\link{cols_align_decimal}()},
+\code{\link{cols_align}()},
+\code{\link{cols_hide}()},
+\code{\link{cols_merge_n_pct}()},
+\code{\link{cols_merge_range}()},
+\code{\link{cols_merge_uncert}()},
+\code{\link{cols_merge}()},
+\code{\link{cols_move_to_end}()},
+\code{\link{cols_move_to_start}()},
+\code{\link{cols_move}()},
+\code{\link{cols_unhide}()},
+\code{\link{cols_width}()}
 }
 \concept{column modification functions}

@@ -4,111 +4,206 @@
 \alias{fmt_time}
 \title{Format values as times}
 \usage{
-fmt_time(data, columns, rows = NULL, time_style = 2)
+fmt_time(
+  data,
+  columns,
+  rows = everything(),
+  time_style = "iso",
+  pattern = "{x}",
+  locale = NULL
+)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{The columns to format. Can either be a series of column names
-provided in \code{\link[=vars]{vars()}}, a vector of column indices, or a helper function
+provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
 focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.}
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
+\code{\link[=everything]{everything()}}.}
 
-\item{rows}{Optional rows to format. Not providing any value results in all
-rows in \code{columns} being formatted. Can either be a vector of row captions
-provided \code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on
-selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.
-We can also use expressions to filter down to the rows we need (e.g.,
-\code{[colname_1] > 100 & [colname_2] < 50}).}
+\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
+default) results in all rows in \code{columns} being formatted. Alternatively,
+we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
+indices, or a helper function focused on selections. The select helper
+functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
+to filter down to the rows we need (e.g.,
+\verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{time_style}{The time style to use. Supply a number (from \code{1} to \code{5})
-that corresponds to the preferred time style. Use \code{\link[=info_time_style]{info_time_style()}} to
-see the different numbered and named time presets.}
+\item{time_style}{The time style to use. By default this is \code{"iso"} which
+corresponds to how times are formatted within ISO 8601 datetime values. The
+other time styles can be viewed using \code{\link[=info_time_style]{info_time_style()}}.}
+
+\item{pattern}{A formatting pattern that allows for decoration of the
+formatted value. The value itself is represented by \code{{x}} and all other
+characters are taken to be string literals.}
+
+\item{locale}{An optional locale ID that can be used for formatting the value
+according the locale's rules. Examples include \code{"en"} for English (United
+States) and \code{"fr"} for French (France). The use of a valid locale ID will
+override any values provided in \code{sep_mark} and \code{dec_mark}. We can use the
+\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
+are supported. Any \code{locale} value provided here will override any global
+locale setting performed in \code{\link[=gt]{gt()}}'s own \code{locale} argument.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
-Format input time values that are character-based and expressed according to
-the ISO 8601 time format (\code{HH:MM:SS}). Once the appropriate data cells are
-targeted with \code{columns} (and, optionally, \code{rows}), we can simply apply a
-preset time style (see table in \code{\link[=info_time_style]{info_time_style()}} for info) to format the
-times.
+Format input values to time values using one of 25 preset time styles. Input
+can be in the form of \code{POSIXt} (i.e., datetimes), \code{character} (must be in the
+ISO 8601 forms of \code{HH:MM:SS} or \verb{YYYY-MM-DD HH:MM:SS}), or \code{Date} (which
+always results in the formatting of \code{00:00:00}).
 }
-\details{
-The following time styles are available for simpler formatting of ISO times
-(all using the input time of \code{14:35:00} in the example output times):
+\section{Targeting the values to be formatted}{
 
-\enumerate{
-\item hms: \code{14:35:00}
-\item hm: \code{14:35}
-\item hms_p: \code{2:35:00 PM}
-\item hm_p: \code{2:35 PM}
-\item h_p: \code{2 PM}
-}
-
-We can use the \code{\link[=info_time_style]{info_time_style()}} function for a useful reference on all of
-the possible inputs to \code{time_style}.
 
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
-nothing is provided for \code{rows} then entire columns are selected). A number of
-helper functions exist to make targeting more effective. Conditional
+nothing is provided for \code{rows} then entire columns are selected). Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the Arguments section for more information on this.
-}
-\section{Figures}{
-
-\if{html}{\figure{man_fmt_time_1.svg}{options: width=100\%}}
-
-\if{html}{\figure{man_fmt_time_2.svg}{options: width=100\%}}
+argument. See the \emph{Arguments} section for more information on this.
 }
 
-\examples{
-# Use `exibble` to create a gt table;
-# keep only the `date` and `time` columns;
-# format the `time` column to have
-# times formatted as `hms_p`
-# (time style `3`)
-tab_1 <-
-  exibble \%>\%
+\section{Formatting with the \code{time_style} argument}{
+
+
+We need to supply a preset time style to the \code{time_style} argument. There are
+many time styles and all of them can handle localization to any supported
+locale. Many of the time styles are termed flexible time formats and this
+means that their output will adapt to any \code{locale} provided. That feature
+makes the flexible time formats a better option for locales other than \code{"en"}
+(the default locale).
+
+The following table provides a listing of all time styles and their output
+values (corresponding to an input time of \code{14:35:00}). It is noted which of
+these represent 12- or 24-hour time.\tabular{llll}{
+    \tab Time Style \tab Output \tab Notes \cr
+   1 \tab \code{"iso"} \tab \code{"14:35:00"} \tab ISO 8601, 24h \cr
+   2 \tab \code{"iso-short"} \tab \code{"14:35"} \tab ISO 8601, 24h \cr
+   3 \tab \code{"h_m_s_p"} \tab \code{"2:35:00 PM"} \tab 12h \cr
+   4 \tab \code{"h_m_p"} \tab \code{"2:35 PM"} \tab 12h \cr
+   5 \tab \code{"h_p"} \tab \code{"2 PM"} \tab 12h \cr
+   6 \tab \code{"Hms"} \tab \code{"14:35:00"} \tab flexible, 24h \cr
+   7 \tab \code{"Hm"} \tab \code{"14:35"} \tab flexible, 24h \cr
+   8 \tab \code{"H"} \tab \code{"14"} \tab flexible, 24h \cr
+   9 \tab \code{"EHm"} \tab \code{"Thu 14:35"} \tab flexible, 24h \cr
+   10 \tab \code{"EHms"} \tab \code{"Thu 14:35:00"} \tab flexible, 24h \cr
+   11 \tab \code{"Hmsv"} \tab \code{"14:35:00 GMT+00:00"} \tab flexible, 24h \cr
+   12 \tab \code{"Hmv"} \tab \code{"14:35 GMT+00:00"} \tab flexible, 24h \cr
+   13 \tab \code{"hms"} \tab \code{"2:35:00 PM"} \tab flexible, 12h \cr
+   14 \tab \code{"hm"} \tab \code{"2:35 PM"} \tab flexible, 12h \cr
+   15 \tab \code{"h"} \tab \code{"2 PM"} \tab flexible, 12h \cr
+   16 \tab \code{"Ehm"} \tab \code{"Thu 2:35 PM"} \tab flexible, 12h \cr
+   17 \tab \code{"Ehms"} \tab \code{"Thu 2:35:00 PM"} \tab flexible, 12h \cr
+   18 \tab \code{"EBhms"} \tab \code{"Thu 2:35:00 in the afternoon"} \tab flexible, 12h \cr
+   19 \tab \code{"Bhms"} \tab \code{"2:35:00 in the afternoon"} \tab flexible, 12h \cr
+   20 \tab \code{"EBhm"} \tab \code{"Thu 2:35 in the afternoon"} \tab flexible, 12h \cr
+   21 \tab \code{"Bhm"} \tab \code{"2:35 in the afternoon"} \tab flexible, 12h \cr
+   22 \tab \code{"Bh"} \tab \code{"2 in the afternoon"} \tab flexible, 12h \cr
+   23 \tab \code{"hmsv"} \tab \code{"2:35:00 PM GMT+00:00"} \tab flexible, 12h \cr
+   24 \tab \code{"hmv"} \tab \code{"2:35 PM GMT+00:00"} \tab flexible, 12h \cr
+   25 \tab \code{"ms"} \tab \code{"35:00"} \tab flexible \cr
+}
+
+
+We can use the \code{\link[=info_time_style]{info_time_style()}} within the console to view a similar table
+of time styles with example output.
+}
+
+\section{Examples}{
+
+
+Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{date} and \code{time}
+columns. Format the \code{time} column to have times formatted as \code{hms_p} (time
+style \code{3}).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(date, time) \%>\%
   gt() \%>\%
   fmt_time(
-    columns = vars(time),
-    time_style = 3
+    columns = time,
+    time_style = "h_m_s_p"
   )
+}\if{html}{\out{</div>}}
 
-# Use `exibble` to create a gt table;
-# keep only the `date` and `time` columns;
-# format the `time` column to have mixed
-# time formats (times after 16:00 will
-# be different than the others)
-tab_2 <-
-  exibble \%>\%
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_time_1.png" alt="This image of a table was generated from the first code example in the `fmt_time()` help file." style="width:100\%;">
+}}
+
+Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{date} and \code{time}
+columns. Format the \code{time} column to have mixed time formats (times after
+16:00 will be different than the others because of the expressions used
+in the \code{rows} argument).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(date, time) \%>\%
   gt() \%>\%
   fmt_time(
-    columns = vars(time),
-    rows =
-      time > "16:00",
-    time_style = 3
+    columns = time,
+    rows = time > "16:00",
+    time_style = "h_m_s_p"
   ) \%>\%
   fmt_time(
-    columns = vars(time),
-    rows =
-      time <= "16:00",
-    time_style = 4
+    columns = time,
+    rows = time <= "16:00",
+    time_style = "h_m_p"
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_time_2.png" alt="This image of a table was generated from the second code example in the `fmt_time()` help file." style="width:100\%;">
+}}
+
+Use \code{\link{exibble}} to create another \strong{gt} table, this time only with the
+\code{time} column. Format the \code{time} column to use the \code{"EBhms"} time style
+(which is one of the 'flexible' styles). Also, set the locale to \code{"sv"} to
+get the dates in Swedish.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+  dplyr::select(time) \%>\%
+  gt() \%>\%
+  fmt_time(
+    columns = time,
+    time_style = "EBhms",
+    locale = "sv"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_time_3.png" alt="This image of a table was generated from the third code example in the `fmt_time()` help file." style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+3-12
+}
+
 \seealso{
-Other data formatting functions: \code{\link{data_color}},
-  \code{\link{fmt_currency}}, \code{\link{fmt_datetime}},
-  \code{\link{fmt_date}}, \code{\link{fmt_markdown}},
-  \code{\link{fmt_missing}}, \code{\link{fmt_number}},
-  \code{\link{fmt_passthrough}}, \code{\link{fmt_percent}},
-  \code{\link{fmt_scientific}}, \code{\link{fmt}},
-  \code{\link{text_transform}}
+Other data formatting functions: 
+\code{\link{data_color}()},
+\code{\link{fmt_bytes}()},
+\code{\link{fmt_currency}()},
+\code{\link{fmt_datetime}()},
+\code{\link{fmt_date}()},
+\code{\link{fmt_duration}()},
+\code{\link{fmt_engineering}()},
+\code{\link{fmt_fraction}()},
+\code{\link{fmt_integer}()},
+\code{\link{fmt_markdown}()},
+\code{\link{fmt_number}()},
+\code{\link{fmt_partsper}()},
+\code{\link{fmt_passthrough}()},
+\code{\link{fmt_percent}()},
+\code{\link{fmt_roman}()},
+\code{\link{fmt_scientific}()},
+\code{\link{fmt}()},
+\code{\link{sub_large_vals}()},
+\code{\link{sub_missing}()},
+\code{\link{sub_small_vals}()},
+\code{\link{sub_values}()},
+\code{\link{sub_zero}()},
+\code{\link{text_transform}()}
 }
 \concept{data formatting functions}

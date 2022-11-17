@@ -21,12 +21,12 @@ An object of class \code{gt_tbl}.
 \description{
 On those occasions where you need to move columns this way or that way, we
 can make use of the \code{cols_move()} function. While it's true that the movement
-of columns can be done upstream of \pkg{gt}'s API, it is much easier and less
-error prone to use the function provided here. The movement procedure here
-takes one or more specified columns (in the \code{columns} argument) and places
-them to the right of a different column (the \code{after} argument). The ordering
-of the \code{columns} to be moved is preserved, as is the ordering of all other
-columns in the table.
+of columns can be done upstream of \strong{gt}, it is much easier and less error
+prone to use the function provided here. The movement procedure here takes
+one or more specified columns (in the \code{columns} argument) and places them to
+the right of a different column (the \code{after} argument). The ordering of the
+\code{columns} to be moved is preserved, as is the ordering of all other columns
+in the table.
 }
 \details{
 The columns supplied in \code{columns} must all exist in the table and none of
@@ -36,34 +36,46 @@ at the beginning of the column series, the \code{\link[=cols_move_to_start]{cols
 should be used. Similarly, if those columns to move should be placed at the
 end of the column series then use \code{\link[=cols_move_to_end]{cols_move_to_end()}}.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cols_move_1.svg}{options: width=100\%}}
-}
 
-\examples{
-# Use `countrypops` to create a gt table;
-# With the remaining columns, position
-# `population` after `country_name`
-tab_1 <-
-  countrypops \%>\%
+Use \code{\link{countrypops}} to create a \strong{gt} table. With the remaining columns,
+position \code{population} after \code{country_name} with the \code{cols_move()} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::select(-contains("code")) \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%
   gt() \%>\%
   cols_move(
-    columns = vars(population),
-    after = vars(country_name)
+    columns = population,
+    after = country_name
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_move_1.png" alt="This image of a table was generated from the first code example in the `cols_move()` help file." style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+4-7
+}
+
 \seealso{
-Other column modification functions: \code{\link{cols_align}},
-  \code{\link{cols_hide}}, \code{\link{cols_label}},
-  \code{\link{cols_merge_range}},
-  \code{\link{cols_merge_uncert}},
-  \code{\link{cols_merge}}, \code{\link{cols_move_to_end}},
-  \code{\link{cols_move_to_start}},
-  \code{\link{cols_split_delim}}
+Other column modification functions: 
+\code{\link{cols_align_decimal}()},
+\code{\link{cols_align}()},
+\code{\link{cols_hide}()},
+\code{\link{cols_label}()},
+\code{\link{cols_merge_n_pct}()},
+\code{\link{cols_merge_range}()},
+\code{\link{cols_merge_uncert}()},
+\code{\link{cols_merge}()},
+\code{\link{cols_move_to_end}()},
+\code{\link{cols_move_to_start}()},
+\code{\link{cols_unhide}()},
+\code{\link{cols_width}()}
 }
 \concept{column modification functions}

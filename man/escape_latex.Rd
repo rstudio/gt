@@ -7,17 +7,50 @@
 escape_latex(text)
 }
 \arguments{
-\item{text}{a character vector containing the text that is to be
+\item{text}{A character vector containing the text that is to be
 LaTeX-escaped.}
+}
+\value{
+A character vector.
 }
 \description{
 Text may contain several characters with special meanings in LaTeX. This
 function will transform a character vector so that it is safe to use within
 LaTeX tables.
 }
+\section{Function ID}{
+
+7-25
+}
+
 \seealso{
-Other helper functions: \code{\link{cells_styles}},
-  \code{\link{gt_latex_dependencies}}, \code{\link{html}},
-  \code{\link{md}}, \code{\link{pct}}, \code{\link{px}}
+Other helper functions: 
+\code{\link{adjust_luminance}()},
+\code{\link{cell_borders}()},
+\code{\link{cell_fill}()},
+\code{\link{cell_text}()},
+\code{\link{cells_body}()},
+\code{\link{cells_column_labels}()},
+\code{\link{cells_column_spanners}()},
+\code{\link{cells_footnotes}()},
+\code{\link{cells_grand_summary}()},
+\code{\link{cells_row_groups}()},
+\code{\link{cells_source_notes}()},
+\code{\link{cells_stub_grand_summary}()},
+\code{\link{cells_stub_summary}()},
+\code{\link{cells_stubhead}()},
+\code{\link{cells_stub}()},
+\code{\link{cells_summary}()},
+\code{\link{cells_title}()},
+\code{\link{currency}()},
+\code{\link{default_fonts}()},
+\code{\link{google_font}()},
+\code{\link{gt_latex_dependencies}()},
+\code{\link{html}()},
+\code{\link{md}()},
+\code{\link{pct}()},
+\code{\link{px}()},
+\code{\link{random_id}()},
+\code{\link{stub}()}
 }
 \concept{helper functions}

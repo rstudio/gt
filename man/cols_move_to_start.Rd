@@ -19,7 +19,7 @@ An object of class \code{gt_tbl}.
 \description{
 We can easily move set of columns to the beginning of the column series and
 we only need to specify which \code{columns}. It's possible to do this upstream of
-\pkg{gt}'s API, however, it is easier with this function and it presents less
+\strong{gt}, however, it is easier with this function and it presents less
 possibility for error. The ordering of the \code{columns} that are moved to the
 start is preserved (same with the ordering of all other columns in the
 table).
@@ -31,47 +31,59 @@ place one or columns at the end of the column series, the
 the \code{\link[=cols_move]{cols_move()}} function, where columns could be placed after a specific
 column.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cols_move_to_start_1.svg}{options: width=100\%}}
 
-\if{html}{\figure{man_cols_move_to_start_2.svg}{options: width=100\%}}
-}
+Use \code{\link{countrypops}} to create a \strong{gt} table. With the remaining columns,
+move the \code{year} column to the start of the column series with
+\code{cols_move_to_start()}.
 
-\examples{
-# Use `countrypops` to create a gt table;
-# With the remaining columns, move the
-# `year` column to the start
-tab_1 <-
-  countrypops \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::select(-contains("code")) \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%
   gt() \%>\%
-  cols_move_to_start(
-    columns = vars(year)
-  )
+  cols_move_to_start(columns = year)
+}\if{html}{\out{</div>}}
 
-# Use `countrypops` to create a gt table;
-# With the remaining columns, move `year`
-# and `population` to the start
-tab_2 <-
-  countrypops \%>\%
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_move_to_start_1.png" alt="This image of a table was generated from the first code example in the `cols_move_to_start()` help file." style="width:100\%;">
+}}
+
+Use \code{\link{countrypops}} to create a \strong{gt} table. With the remaining columns,
+move \code{year} and \code{population} to the start.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::select(-contains("code")) \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%
   gt() \%>\%
-  cols_move_to_start(
-    columns = vars(year, population)
-  )
+  cols_move_to_start(columns = c(year, population))
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_move_to_start_2.png" alt="This image of a table was generated from the second code example in the `cols_move_to_start()` help file." style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+4-5
+}
+
 \seealso{
-Other column modification functions: \code{\link{cols_align}},
-  \code{\link{cols_hide}}, \code{\link{cols_label}},
-  \code{\link{cols_merge_range}},
-  \code{\link{cols_merge_uncert}},
-  \code{\link{cols_merge}}, \code{\link{cols_move_to_end}},
-  \code{\link{cols_move}}, \code{\link{cols_split_delim}}
+Other column modification functions: 
+\code{\link{cols_align_decimal}()},
+\code{\link{cols_align}()},
+\code{\link{cols_hide}()},
+\code{\link{cols_label}()},
+\code{\link{cols_merge_n_pct}()},
+\code{\link{cols_merge_range}()},
+\code{\link{cols_merge_uncert}()},
+\code{\link{cols_merge}()},
+\code{\link{cols_move_to_end}()},
+\code{\link{cols_move}()},
+\code{\link{cols_unhide}()},
+\code{\link{cols_width}()}
 }
 \concept{column modification functions}

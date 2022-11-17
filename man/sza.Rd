@@ -4,7 +4,8 @@
 \name{sza}
 \alias{sza}
 \title{Twice hourly solar zenith angles by month & latitude}
-\format{A tibble with 816 rows and 4 variables:
+\format{
+A tibble with 816 rows and 4 variables:
 \describe{
 \item{latitude}{The latitude in decimal degrees for the observations}
 \item{month}{The measurement month; all calculations where conducted
@@ -13,7 +14,8 @@ for the first day of each month}
 (first of \code{month}) for which the solar zenith angle is calculated}
 \item{sza}{The solar zenith angle in degrees, where \code{NA}s
 indicate that sunrise hadn't yet occurred by the \code{tst} value}
-}}
+}
+}
 \source{
 Calculated Actinic Fluxes (290 - 700 nm) for Air Pollution
 Photochemistry Applications (Peterson, 1976), available at:
@@ -42,9 +44,33 @@ example, at a latitude of 50 degrees N at the start of January, the noontime
 SZA is 73.0 but a different observer at 20 degrees N would measure the
 noontime SZA to be 43.0 degrees.
 }
-\examples{
-# Here is a glimpse at the data
-# available in `sza`
-dplyr::glimpse(sza)
+\section{Examples}{
+
+
+Here is a glimpse at the data available in \code{sza}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::glimpse(sza)
+#> Rows: 816
+#> Columns: 4
+#> $ latitude <dbl> 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 2~
+#> $ month    <fct> jan, jan, jan, jan, jan, jan, jan, jan, jan, jan, jan, jan, j~
+#> $ tst      <chr> "0400", "0430", "0500", "0530", "0600", "0630", "0700", "0730~
+#> $ sza      <dbl> NA, NA, NA, NA, NA, NA, 84.9, 78.7, 72.7, 66.1, 61.5, 56.5, 5~
+}\if{html}{\out{</div>}}
 }
+
+\section{Function ID}{
+
+11-2
+}
+
+\seealso{
+Other datasets: 
+\code{\link{countrypops}},
+\code{\link{exibble}},
+\code{\link{gtcars}},
+\code{\link{pizzaplace}},
+\code{\link{sp500}}
+}
+\concept{datasets}
 \keyword{datasets}

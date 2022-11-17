@@ -4,15 +4,15 @@
 \alias{local_image}
 \title{Helper function for adding a local image}
 \usage{
-local_image(file, height = 30)
+local_image(filename, height = 30)
 }
 \arguments{
-\item{file}{A path to an image file.}
+\item{filename}{A path to an image file.}
 
 \item{height}{The absolute height (px) of the image in the table cell.}
 }
 \value{
-a character object with an HTML fragment that can be placed inside of
+A character object with an HTML fragment that can be placed inside of
 a cell.
 }
 \description{
@@ -30,46 +30,52 @@ need to use \code{local_image()} within the \code{\link[=html]{html()}} helper f
 \details{
 By itself, the function creates an HTML image tag with an image URI embedded
 within. We can easily experiment with a local PNG or SVG image that's
-available in the \pkg{gt} package using the \code{\link[=test_image]{test_image()}} function. Using
+available in the \strong{gt} package using the \code{\link[=test_image]{test_image()}} function. Using
 that, the call \code{local_image(file = test_image(type = "png"))} evaluates to:
 
-\code{<img cid=<random CID> src=<data URI> style=\"height:30px;\">}
+\verb{<img src=<data URI> style=\\"height:30px;\\">}
 
-where a height of \code{30px} is a default height chosen to work well within the
+where a height of \verb{30px} is a default height chosen to work well within the
 heights of most table rows.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_local_image_1.svg}{options: width=100\%}}
-}
 
-\examples{
-# Create a tibble that contains heights
-# of an image in pixels (one column as a
-# string, the other as numerical values),
-# then, create a gt table; use the
-# `text_transform()` function to insert
-# a local test image (PNG) image with the
-# various sizes
-tab_1 <-
-  dplyr::tibble(
-    pixels = px(seq(10, 35, 5)),
-    image = seq(10, 35, 5)
-  ) \%>\%
+Create a tibble that contains heights of an image in pixels (one column as a
+string, the other as numerical values), then, create a \strong{gt} table. Use the
+\code{\link[=text_transform]{text_transform()}} function to insert a local test image (PNG) image with the
+various sizes.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
+  pixels = px(seq(10, 35, 5)),
+  image = seq(10, 35, 5)
+) \%>\%
   gt() \%>\%
   text_transform(
-    locations = cells_data(vars(image)),
-    fn = function(x) {
+    locations = cells_body(columns = image),
+    fn = function(x) \{
       local_image(
-        file = test_image(type = "png"),
+        filename = test_image(type = "png"),
         height = as.numeric(x)
       )
-    }
+    \}
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_local_image_1.png" alt="This image of a table was generated from the first code example in the `local_image()` help file." style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+8-2
+}
+
 \seealso{
-Other image addition functions: \code{\link{ggplot_image}},
-  \code{\link{test_image}}, \code{\link{web_image}}
+Other image addition functions: 
+\code{\link{ggplot_image}()},
+\code{\link{test_image}()},
+\code{\link{web_image}()}
 }
 \concept{image addition functions}

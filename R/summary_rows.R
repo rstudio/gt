@@ -1,13 +1,12 @@
-#' Add summary rows using aggregation functions
+#' Add groupwise summary rows using aggregation functions
 #'
-#' Add groupwise summary rows (with `summary_rows()`) to one or more row groups
-#' by using the input data already provided in the [gt()] function alongside any
-#' suitable aggregation functions. Or, add a grand summary (with
-#' `grand_summary_rows()`) that incorporates all available data, regardless of
-#' grouping. You choose how to format the values in the resulting summary cells
-#' by use of a `formatter` function (e.g, `fmt_number`) and any relevant
-#' options.
+#' @description
+#' Add summary rows to one or more row groups by using the table data and any
+#' suitable aggregation functions. You choose how to format the values in the
+#' resulting summary cells by use of a `formatter` function (e.g, `fmt_number`,
+#' etc.) and any relevant options.
 #'
+#' @details
 #' Should we need to obtain the summary data for external purposes, the
 #' [extract_summary()] function can be used with a `gt_tbl` object where summary
 #' rows were added via `summary_rows()`.
@@ -41,23 +40,20 @@
 #'   values are to be in the form of named vectors. For example, when using the
 #'   default `formatter` function, [fmt_number()], options such as `decimals`,
 #'   `use_seps`, and `locale` can be used.
+#'
 #' @return An object of class `gt_tbl`.
-#' @examples
-#' # Use `sp500` to create a gt table with
-#' # row groups; create summary rows (`min`,
-#' # `max`, `avg`) by row group, where each
-#' # each row group is a week number
-#' tab_1 <-
-#'   sp500 %>%
-#'   dplyr::filter(
-#'     date >= "2015-01-05" &
-#'       date <="2015-01-16"
-#'   ) %>%
+#'
+#' @section Examples:
+#'
+#' Use [`sp500`] to create a **gt** table with row groups. Create the summary
+#' rows labeled `min`, `max`, and `avg` by row group (where each each row group
+#' is a week number) with the `summary_rows()` function.
+#'
+#' ```r
+#' sp500 %>%
+#'   dplyr::filter(date >= "2015-01-05" & date <="2015-01-16") %>%
 #'   dplyr::arrange(date) %>%
-#'   dplyr::mutate(
-#'     week = paste0(
-#'       "W", strftime(date, format = "%V"))
-#'   ) %>%
+#'   dplyr::mutate(week = paste0( "W", strftime(date, format = "%V"))) %>%
 #'   dplyr::select(-adj_close, -volume) %>%
 #'   gt(
 #'     rowname_col = "date",
@@ -65,7 +61,7 @@
 #'   ) %>%
 #'   summary_rows(
 #'     groups = TRUE,
-#'     columns = vars(open, high, low, close),
+#'     columns = c(open, high, low, close),
 #'     fns = list(
 #'       min = ~min(.),
 #'       max = ~max(.),
@@ -73,27 +69,36 @@
 #'     formatter = fmt_number,
 #'     use_seps = FALSE
 #'   )
+#' ```
 #'
-#' @section Figures:
-#' \if{html}{\figure{man_summary_rows_1.svg}{options: width=100\%}}
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_summary_rows_1.png")`
+#' }}
 #'
-#' @family row addition functions
-#' @rdname summary_rows
+#' @family row addition/modification functions
+#' @section Function ID:
+#' 5-1
+#'
 #' @export
-summary_rows <- function(data,
-                         groups = NULL,
-                         columns = TRUE,
-                         fns,
-                         missing_text = "---",
-                         formatter = fmt_number,
-                         ...) {
+summary_rows <- function(
+    data,
+    groups = NULL,
+    columns = everything(),
+    fns,
+    missing_text = "---",
+    formatter = fmt_number,
+    ...
+) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   # Collect all provided formatter options in a list
   formatter_options <- list(...)
 
   # If `groups` is FALSE, then do nothing; just
   # return the `data` unchanged; having `groups`
-  # as `NULL` signifies a grand summary, `TRUE`
+  # as `NULL` signifies a grand summary,
   # is used for groupwise summaries across all
   # groups
   if (is_false(groups)) {
@@ -101,26 +106,59 @@ summary_rows <- function(data,
   }
 
   # Get the `stub_df` object from `data`
-  stub_df <- attr(data, "stub_df", exact = TRUE)
+  stub_df <- dt_stub_df_get(data = data)
+
+  stub_available <- dt_stub_df_exists(data = data)
 
   # Resolve the column names
-  columns <- enquo(columns)
-  columns <- resolve_vars(var_expr = !!columns, data = data)
+  columns <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data
+    )
 
   # If there isn't a stub available, create an
   # 'empty' stub (populated with empty strings);
   # the stub is necessary for summary row labels
-  if (!is_stub_available(stub_df) && is.null(groups)) {
+  if (!stub_available) {
 
-    # Place the `rowname` values into `stub_df$rowname`
-    stub_df[["rowname"]] <- ""
+    data <-
+      dt_boxhead_add_var(
+        data = data,
+        var = rowname_col_private,
+        type = "stub",
+        column_label = list(rowname_col_private),
+        column_align = "left",
+        column_width = list(NULL),
+        hidden_px = list(NULL),
+        add_where = "bottom"
+      )
 
-    attr(data, "stub_df") <- stub_df
+    # Add the `"::rowname::"` column into `_data`
+    data$`_data` <-
+      data$`_data` %>%
+      dplyr::mutate(!!rowname_col_private := rep("", nrow(data$`_data`))) %>%
+      dplyr::select(dplyr::everything(), dplyr::all_of(rowname_col_private))
+
+    # Place the `::rowname::` values into `stub_df$row_id`; these are
+    # empty strings which will provide an empty stub for locations
+    # adjacent to the body rows
+    stub_df[["row_id"]] <- ""
+
+    data <-
+      dt_stub_df_set(
+        data = data,
+        stub_df = stub_df
+      )
   }
 
   # Derive the summary labels
   summary_labels <-
-    vapply(fns, derive_summary_label, FUN.VALUE = character(1))
+    vapply(
+      fns,
+      FUN.VALUE = character(1),
+      FUN = derive_summary_label
+    )
 
   # If there are names, use those names
   # as the summary labels
@@ -128,188 +166,96 @@ summary_rows <- function(data,
     summary_labels <- names(summary_labels)
   }
 
-  # Append list of summary inputs to the
-  # `summary` attribute
-  attr(data, "summary") <-
-    c(
-      attr(data, "summary"),
-      list(
-        list(
-          groups = groups,
-          columns = columns,
-          fns = fns,
-          summary_labels = summary_labels,
-          missing_text = missing_text,
-          formatter = formatter,
-          formatter_options = formatter_options
-        )
-      )
+  summary_list <-
+    list(
+      groups = groups,
+      columns = columns,
+      fns = fns,
+      summary_labels = summary_labels,
+      missing_text = missing_text,
+      formatter = formatter,
+      formatter_options = formatter_options
     )
 
-  data
+  dt_summary_add(
+    data = data,
+    summary = summary_list
+  )
 }
 
-#' @rdname summary_rows
+#' Add grand summary rows using aggregation functions
+#'
+#' @description
+#' Add grand summary rows to the **gt** table by using applying aggregation
+#' functions to the table data. The summary rows incorporate all of the
+#' available data, regardless of whether some of the data are part of row
+#' groups. You choose how to format the values in the resulting summary cells by
+#' use of a `formatter` function (e.g, `fmt_number`) and any relevant options.
+#'
+#' @details
+#' Should we need to obtain the summary data for external purposes, the
+#' [extract_summary()] function can be used with a `gt_tbl` object where grand
+#' summary rows were added via `grand_summary_rows()`.
+#'
+#' @inheritParams summary_rows
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Use [`sp500`] to create a **gt** table with row groups. Create the grand
+#' summary rows `min`, `max`, and `avg` for the table with the
+#' `grand_summary_rows()` function.
+#'
+#' ```r
+#' sp500 %>%
+#'   dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") %>%
+#'   dplyr::arrange(date) %>%
+#'   dplyr::mutate(week = paste0("W", strftime(date, format = "%V"))) %>%
+#'   dplyr::select(-adj_close, -volume) %>%
+#'   gt(
+#'     rowname_col = "date",
+#'     groupname_col = "week"
+#'   ) %>%
+#'   grand_summary_rows(
+#'     columns = c(open, high, low, close),
+#'     fns = list(
+#'       min = ~min(.),
+#'       max = ~max(.),
+#'       avg = ~mean(.)),
+#'     formatter = fmt_number,
+#'     use_seps = FALSE
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_grand_summary_rows_1.png")`
+#' }}
+#'
+#' @family row addition/modification functions
+#' @section Function ID:
+#' 5-2
+#'
 #' @export
-grand_summary_rows <- function(data,
-                               columns = TRUE,
-                               fns,
-                               missing_text = "---",
-                               formatter = fmt_number,
-                               ...) {
+grand_summary_rows <- function(
+    data,
+    columns = everything(),
+    fns,
+    missing_text = "---",
+    formatter = fmt_number,
+    ...
+) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   summary_rows(
-    data,
+    data = data,
     groups = NULL,
-    columns = columns,
+    columns = {{ columns }},
     fns = fns,
     missing_text = missing_text,
     formatter = formatter,
-    ...)
-}
-
-add_summary_location_row <- function(loc,
-                                     data,
-                                     text,
-                                     df_type = "styles_df") {
-
-  stub_df <- attr(data, "stub_df", exact = TRUE)
-
-  row_groups <-
-    stub_df[, "groupname"] %>%
-    unique()
-
-  summary_data <- attr(data, "summary", exact = TRUE)
-
-  summary_data_summaries <-
-    vapply(
-      seq(summary_data),
-      function(x) !is.null(summary_data[[x]]$groups),
-      logical(1)
-    )
-
-  summary_data <- summary_data[summary_data_summaries]
-
-  groups <-
-    row_groups[resolve_data_vals_idx(
-      var_expr = !!loc$groups,
-      data = NULL,
-      vals = row_groups
-    )]
-
-  # Adding styles to intersections of group, row, and column; any
-  # that are missing at render time will be ignored
-  for (group in groups) {
-
-    summary_labels <-
-      lapply(
-        summary_data,
-        function(summary_data_item) {
-          if (isTRUE(summary_data_item$groups)) {
-            summary_data_item$summary_labels
-          } else if (group %in% summary_data_item$groups){
-            summary_data_item$summary_labels
-          }
-        }
-      ) %>%
-      unlist() %>%
-      unique()
-
-    columns <-
-      resolve_vars(
-        var_expr = !!loc$columns,
-        data = data
-      )
-
-    if (length(columns) == 0) {
-      stop("The location requested could not be resolved:\n",
-           " * Review the expression provided as `columns`",
-           call. = FALSE)
-    }
-
-    rows <-
-      resolve_data_vals_idx(
-        var_expr = !!loc$rows,
-        data = NULL,
-        vals = summary_labels
-      )
-
-    if (length(rows) == 0) {
-      stop("The location requested could not be resolved:\n",
-           " * Review the expression provided as `rows`",
-           call. = FALSE)
-    }
-
-    attr(data, df_type) <-
-      add_location_row(
-        data,
-        df_type = df_type,
-        locname = "summary_cells",
-        locnum = 5,
-        grpname = group,
-        colname = columns,
-        rownum = rows,
-        text = text
-      )
-  }
-
-  data
-}
-
-add_grand_summary_location_row <- function(loc,
-                                           data,
-                                           text,
-                                           df_type = "styles_df") {
-
-  summary_data <- attr(data, "summary", exact = TRUE)
-
-  grand_summary_labels <-
-    lapply(summary_data, function(summary_data_item) {
-      if (is.null(summary_data_item$groups)) {
-        return(summary_data_item$summary_labels)
-      }
-
-      NULL
-    }) %>%
-    unlist() %>%
-    unique()
-
-  columns <-
-    resolve_vars(
-      var_expr = !!loc$columns,
-      data = data
-    )
-
-  if (length(columns) == 0) {
-    stop("The location requested could not be resolved:\n",
-         " * Review the expression provided as `columns`",
-         call. = FALSE)
-  }
-
-  rows <-
-    resolve_data_vals_idx(
-      var_expr = !!loc$rows,
-      data = NULL,
-      vals = grand_summary_labels
-    )
-
-  if (length(rows) == 0) {
-    stop("The location requested could not be resolved:\n",
-         " * Review the expression provided as `rows`",
-         call. = FALSE)
-  }
-
-  attr(data, df_type) <-
-    add_location_row(
-      data,
-      df_type = df_type,
-      locname = "grand_summary_cells",
-      locnum = 6,
-      grpname = NA_character_,
-      colname = columns,
-      rownum = rows,
-      text = text
-    )
-
-  data
+    ...
+  )
 }

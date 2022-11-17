@@ -6,9 +6,8 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-
 library(gt)
-library(dplyr)
+library(tidyverse)
 ```
 
 Create a table with values and uncertainties
@@ -21,19 +20,23 @@ tbl <-
     0.352,    0.10,         0.32,     NA_real_,
     0.983,    0.13,         NA_real_, NA_real_,
     0.639,    NA_real_,     0.21,     0.10,
-    NA_real_, 0.17,         0.74,     0.15)
+    NA_real_, 0.17,         0.74,     0.15
+  )
 ```
 
 ```{r}
-gt(data = tbl) %>%
+gt(tbl) %>%
   cols_merge_uncert(
-    col_val = vars(value_1),
-    col_uncert = vars(uncertainty)) %>%
+    col_val = value_1,
+    col_uncert = uncertainty
+  ) %>%
   cols_merge_uncert(
-    col_val = vars(value_2),
-    col_uncert = vars(uncertainty_2)) %>%
+    col_val = value_2,
+    col_uncert = uncertainty_2
+  ) %>%
   fmt_number(
-    columns = vars(value_1, value_2),
-    decimals = 2) %>%
-  fmt_missing(columns = vars(value_1, value_2))
+    columns = c(value_1, value_2),
+    decimals = 2
+  ) %>%
+  sub_missing(columns = c(value_1, value_2))
 ```

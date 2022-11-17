@@ -9,9 +9,8 @@ cols_hide(data, columns)
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{columns}{The column names to hide from the output display table. The
-order of the remaining columns will be preserved. Values provided that do
-not correspond to column names will be disregarded.}
+\item{columns}{The column names to hide from the output display table. Values
+provided that do not correspond to column names will be disregarded.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -28,58 +27,74 @@ of those columns is not necessary.
 The hiding of columns is internally a rendering directive, so, all columns
 that are 'hidden' are still accessible and useful in any expression provided
 to a \code{rows} argument. Furthermore, the \code{cols_hide()} function (as with many
-\pkg{gt} functions) can be placed anywhere in a pipeline of \pkg{gt} function
+\strong{gt} functions) can be placed anywhere in a pipeline of \strong{gt} function
 calls (acting as a promise to hide columns when the timing is right). However
 there's perhaps greater readability when placing this call closer to the end
-of such a pipeline.
+of such a pipeline. The \code{cols_hide()} function quietly changes the visible
+state of a column (much like the \code{\link[=cols_unhide]{cols_unhide()}} function) and doesn't yield
+warnings or messages when changing the state of already-invisible columns.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cols_hide_1.svg}{options: width=100\%}}
 
-\if{html}{\figure{man_cols_hide_2.svg}{options: width=100\%}}
-}
+Use \code{\link{countrypops}} to create a \strong{gt} table. Hide the \code{country_code_2} and
+\code{country_code_3} columns with \code{cols_hide()}.
 
-\examples{
-# Use `countrypops` to create a gt table;
-# Hide the columns `country_code_2` and
-# `country_code_3`
-tab_1 <-
-  countrypops \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%
   gt() \%>\%
-  cols_hide(
-    columns = vars(
-      country_code_2, country_code_3)
-  )
+  cols_hide(columns = c(country_code_2, country_code_3))
+}\if{html}{\out{</div>}}
 
-# Use `countrypops` to create a gt table;
-# Use the `population` column to provide
-# the conditional placement of footnotes,
-# then hide that column and one other
-tab_2 <-
-  countrypops \%>\%
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_hide_1.png" alt="This image of a table was generated from the first code example in the `cols_hide()` help file." style="width:100\%;">
+}}
+
+Use \code{\link{countrypops}} to create a \strong{gt} table. Use the \code{population} column to
+provide the conditional placement of footnotes, then hide that column and one
+other. Note that the order of the \code{cols_hide()} and \code{\link[=tab_footnote]{tab_footnote()}}
+statements has no effect.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
   tail(5) \%>\%
   gt() \%>\%
-  cols_hide(
-    columns = vars(country_code_3, population)
-  ) \%>\%
+  cols_hide(columns = c(country_code_3, population)) \%>\%
   tab_footnote(
     footnote = "Population above 3,000,000.",
-    locations = cells_data(
-      columns = vars(year),
-      rows = population > 3000000)
+    locations = cells_body(
+      columns = year,
+      rows = population > 3000000
+    )
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_hide_2.png" alt="This image of a table was generated from the second code example in the `cols_hide()` help file." style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+4-8
+}
+
 \seealso{
-Other column modification functions: \code{\link{cols_align}},
-  \code{\link{cols_label}}, \code{\link{cols_merge_range}},
-  \code{\link{cols_merge_uncert}},
-  \code{\link{cols_merge}}, \code{\link{cols_move_to_end}},
-  \code{\link{cols_move_to_start}},
-  \code{\link{cols_move}}, \code{\link{cols_split_delim}}
+\code{\link[=cols_unhide]{cols_unhide()}} to perform the inverse operation.
+
+Other column modification functions: 
+\code{\link{cols_align_decimal}()},
+\code{\link{cols_align}()},
+\code{\link{cols_label}()},
+\code{\link{cols_merge_n_pct}()},
+\code{\link{cols_merge_range}()},
+\code{\link{cols_merge_uncert}()},
+\code{\link{cols_merge}()},
+\code{\link{cols_move_to_end}()},
+\code{\link{cols_move_to_start}()},
+\code{\link{cols_move}()},
+\code{\link{cols_unhide}()},
+\code{\link{cols_width}()}
 }
 \concept{column modification functions}

@@ -2,14 +2,17 @@
 % Please edit documentation in R/summary_rows.R
 \name{summary_rows}
 \alias{summary_rows}
-\alias{grand_summary_rows}
-\title{Add summary rows using aggregation functions}
+\title{Add groupwise summary rows using aggregation functions}
 \usage{
-summary_rows(data, groups = NULL, columns = TRUE, fns,
-  missing_text = "---", formatter = fmt_number, ...)
-
-grand_summary_rows(data, columns = TRUE, fns, missing_text = "---",
-  formatter = fmt_number, ...)
+summary_rows(
+  data,
+  groups = NULL,
+  columns = everything(),
+  fns,
+  missing_text = "---",
+  formatter = fmt_number,
+  ...
+)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -37,7 +40,7 @@ bare function names).}
 \item{missing_text}{The text to be used in place of \code{NA} values in summary
 cells with no data outputs.}
 
-\item{formatter}{A formatter function name. These can be any of the \code{fmt_*()}
+\item{formatter}{A formatter function name. These can be any of the \verb{fmt_*()}
 functions available in the package (e.g., \code{\link[=fmt_number]{fmt_number()}}, \code{\link[=fmt_percent]{fmt_percent()}},
 etc.), or a custom function using \code{fmt()}. The default function is
 \code{\link[=fmt_number]{fmt_number()}} and its options can be accessed through \code{...}.}
@@ -51,40 +54,27 @@ default \code{formatter} function, \code{\link[=fmt_number]{fmt_number()}}, opti
 An object of class \code{gt_tbl}.
 }
 \description{
-Add groupwise summary rows (with \code{summary_rows()}) to one or more row groups
-by using the input data already provided in the \code{\link[=gt]{gt()}} function alongside any
-suitable aggregation functions. Or, add a grand summary (with
-\code{grand_summary_rows()}) that incorporates all available data, regardless of
-grouping. You choose how to format the values in the resulting summary cells
-by use of a \code{formatter} function (e.g, \code{fmt_number}) and any relevant
-options.
+Add summary rows to one or more row groups by using the table data and any
+suitable aggregation functions. You choose how to format the values in the
+resulting summary cells by use of a \code{formatter} function (e.g, \code{fmt_number},
+etc.) and any relevant options.
 }
 \details{
 Should we need to obtain the summary data for external purposes, the
 \code{\link[=extract_summary]{extract_summary()}} function can be used with a \code{gt_tbl} object where summary
 rows were added via \code{summary_rows()}.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_summary_rows_1.svg}{options: width=100\%}}
-}
 
-\examples{
-# Use `sp500` to create a gt table with
-# row groups; create summary rows (`min`,
-# `max`, `avg`) by row group, where each
-# each row group is a week number
-tab_1 <-
-  sp500 \%>\%
-  dplyr::filter(
-    date >= "2015-01-05" &
-      date <="2015-01-16"
-  ) \%>\%
+Use \code{\link{sp500}} to create a \strong{gt} table with row groups. Create the summary
+rows labeled \code{min}, \code{max}, and \code{avg} by row group (where each each row group
+is a week number) with the \code{summary_rows()} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
+  dplyr::filter(date >= "2015-01-05" & date <="2015-01-16") \%>\%
   dplyr::arrange(date) \%>\%
-  dplyr::mutate(
-    week = paste0(
-      "W", strftime(date, format = "\%V"))
-  ) \%>\%
+  dplyr::mutate(week = paste0( "W", strftime(date, format = "\%V"))) \%>\%
   dplyr::select(-adj_close, -volume) \%>\%
   gt(
     rowname_col = "date",
@@ -92,7 +82,7 @@ tab_1 <-
   ) \%>\%
   summary_rows(
     groups = TRUE,
-    columns = vars(open, high, low, close),
+    columns = c(open, high, low, close),
     fns = list(
       min = ~min(.),
       max = ~max(.),
@@ -100,6 +90,21 @@ tab_1 <-
     formatter = fmt_number,
     use_seps = FALSE
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_summary_rows_1.png" alt="This image of a table was generated from the first code example in the `summary_rows()` help file." style="width:100\%;">
+}}
 }
-\concept{row addition functions}
+
+\section{Function ID}{
+
+5-1
+}
+
+\seealso{
+Other row addition/modification functions: 
+\code{\link{grand_summary_rows}()},
+\code{\link{row_group_order}()}
+}
+\concept{row addition/modification functions}

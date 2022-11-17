@@ -4,14 +4,16 @@
 \name{countrypops}
 \alias{countrypops}
 \title{Yearly populations of countries from 1960 to 2017}
-\format{A tibble with 12470 rows and 5 variables:
+\format{
+A tibble with 12470 rows and 5 variables:
 \describe{
 \item{country_name}{Name of the country}
 \item{country_code_2}{The 2-letter ISO 3166-1 country code}
 \item{country_code_3}{The 3-letter ISO 3166-1 country code}
 \item{year}{The year for the population estimate}
 \item{population}{The population estimate, midway through the year}
-}}
+}
+}
 \source{
 \url{https://data.worldbank.org/indicator/SP.POP.TOTL}
 }
@@ -26,9 +28,34 @@ and the 2- and 3-letter ISO 3166-1 country codes. Each row contains a
 \code{population} value for a given \code{year} (from 1960 to 2017). Any \code{NA} values
 for \code{populations} indicate the non-existence of the country during that year.
 }
-\examples{
-# Here is a glimpse at the data
-# available in `countrypops`
-dplyr::glimpse(countrypops)
+\section{Examples}{
+
+
+Here is a glimpse at the data available in \code{countrypops}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::glimpse(countrypops)
+#> Rows: 12,470
+#> Columns: 5
+#> $ country_name   <chr> "Aruba", "Aruba", "Aruba", "Aruba", "Aruba", "Aruba", "~
+#> $ country_code_2 <chr> "AW", "AW", "AW", "AW", "AW", "AW", "AW", "AW", "AW", "~
+#> $ country_code_3 <chr> "ABW", "ABW", "ABW", "ABW", "ABW", "ABW", "ABW", "ABW",~
+#> $ year           <int> 1960, 1961, 1962, 1963, 1964, 1965, 1966, 1967, 1968, 1~
+#> $ population     <int> 54211, 55438, 56225, 56695, 57032, 57360, 57715, 58055,~
+}\if{html}{\out{</div>}}
 }
+
+\section{Function ID}{
+
+11-1
+}
+
+\seealso{
+Other datasets: 
+\code{\link{exibble}},
+\code{\link{gtcars}},
+\code{\link{pizzaplace}},
+\code{\link{sp500}},
+\code{\link{sza}}
+}
+\concept{datasets}
 \keyword{datasets}

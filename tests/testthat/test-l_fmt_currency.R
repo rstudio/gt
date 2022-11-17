@@ -1,5 +1,3 @@
-context("LaTeX -- Ensuring that the `fmt_currency()` function works as expected")
-
 test_that("the `fmt_currency()` function works correctly", {
 
   # Create an input data frame four columns: two
@@ -17,7 +15,7 @@ test_that("the `fmt_currency()` function works correctly", {
 
   # Create a `tbl_latex` object with `gt()` and the
   # `data_tbl` dataset
-  tbl_latex <- gt(data = data_tbl)
+  tbl_latex <- gt(data_tbl)
 
   # Format the `num_1` column as USD, use all other defaults;
   # extract `output_df` and compare to expected values

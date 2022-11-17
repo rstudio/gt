@@ -4,30 +4,37 @@
 \alias{fmt_passthrough}
 \title{Format by simply passing data through}
 \usage{
-fmt_passthrough(data, columns, rows = NULL, escape = TRUE,
-  pattern = "{x}")
+fmt_passthrough(
+  data,
+  columns,
+  rows = everything(),
+  escape = TRUE,
+  pattern = "{x}"
+)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{The columns to format. Can either be a series of column names
-provided in \code{\link[=vars]{vars()}}, a vector of column indices, or a helper function
+provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
 focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.}
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
+\code{\link[=everything]{everything()}}.}
 
-\item{rows}{Optional rows to format. Not providing any value results in all
-rows in \code{columns} being formatted. Can either be a vector of row captions
-provided \code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on
-selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}.
-We can also use expressions to filter down to the rows we need (e.g.,
-\code{[colname_1] > 100 & [colname_2] < 50}).}
+\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
+default) results in all rows in \code{columns} being formatted. Alternatively,
+we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
+indices, or a helper function focused on selections. The select helper
+functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
+to filter down to the rows we need (e.g.,
+\verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{escape}{An option to escape text according to the final output format
 of the table. For example, if a LaTeX table is to be generated then LaTeX
 escaping would be performed during rendering. By default this is set to
-\code{TRUE} and setting to \code{FALSE} is useful in the case where LaTeX-formatted
-text should be passed through to the output LaTeX table unchanged.}
+\code{TRUE} and setting to \code{FALSE} would be useful in the case where text is
+crafted for a specific output format in mind.}
 
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other
@@ -38,49 +45,73 @@ An object of class \code{gt_tbl}.
 }
 \description{
 Format by passing data through no other transformation other than: (1)
-coercing to \code{character} (as all the \code{fmt_*()} functions do), and (2) applying
+coercing to \code{character} (as all the \verb{fmt_*()} functions do), and (2) applying
 text via the \code{pattern} argument (the default is to apply nothing). All of
 this is useful when don't want to modify the input data other than to
 decorate it within a pattern. Also, this function is useful when used as the
 \code{formatter} function in the \code{\link[=summary_rows]{summary_rows()}} function, where the output may
 be text or useful as is.
 }
-\details{
+\section{Targeting the values to be formatted}{
+
+
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
-nothing is provided for \code{rows} then entire columns are selected). A number of
-helper functions exist to make targeting more effective. Conditional
+nothing is provided for \code{rows} then entire columns are selected). Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the Arguments section for more information on this.
-}
-\section{Figures}{
-
-\if{html}{\figure{man_fmt_passthrough_1.svg}{options: width=100\%}}
+argument. See the \emph{Arguments} section for more information on this.
 }
 
-\examples{
-# Use `exibble` to create a gt table;
-# keep only the `char` column;
-# pass the data in that column through
-# but apply a simple pattern that adds
-# an 's' to the non-NA values
-tab_1 <-
-  exibble \%>\%
+\section{Examples}{
+
+
+Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{char} column. Pass
+the data in that column through but apply a simple pattern that adds an \code{"s"}
+to the non-\code{NA} values.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(char) \%>\%
   gt() \%>\%
   fmt_passthrough(
-    columns = vars(char),
+    columns = char,
     rows = !is.na(char),
-    pattern = "{x}s"
+    pattern = "\{x\}s"
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_passthrough_1.png" alt="This image of a table was generated from the first code example in the `fmt_passthrough()` help file." style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+3-16
+}
+
 \seealso{
-Other data formatting functions: \code{\link{data_color}},
-  \code{\link{fmt_currency}}, \code{\link{fmt_datetime}},
-  \code{\link{fmt_date}}, \code{\link{fmt_markdown}},
-  \code{\link{fmt_missing}}, \code{\link{fmt_number}},
-  \code{\link{fmt_percent}}, \code{\link{fmt_scientific}},
-  \code{\link{fmt_time}}, \code{\link{fmt}},
-  \code{\link{text_transform}}
+Other data formatting functions: 
+\code{\link{data_color}()},
+\code{\link{fmt_bytes}()},
+\code{\link{fmt_currency}()},
+\code{\link{fmt_datetime}()},
+\code{\link{fmt_date}()},
+\code{\link{fmt_duration}()},
+\code{\link{fmt_engineering}()},
+\code{\link{fmt_fraction}()},
+\code{\link{fmt_integer}()},
+\code{\link{fmt_markdown}()},
+\code{\link{fmt_number}()},
+\code{\link{fmt_partsper}()},
+\code{\link{fmt_percent}()},
+\code{\link{fmt_roman}()},
+\code{\link{fmt_scientific}()},
+\code{\link{fmt_time}()},
+\code{\link{fmt}()},
+\code{\link{sub_large_vals}()},
+\code{\link{sub_missing}()},
+\code{\link{sub_small_vals}()},
+\code{\link{sub_values}()},
+\code{\link{sub_zero}()},
+\code{\link{text_transform}()}
 }
 \concept{data formatting functions}

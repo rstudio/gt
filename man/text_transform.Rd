@@ -10,15 +10,10 @@ text_transform(data, locations, fn)
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{locations}{The cell or set of cells to be associated with the text
-transformation. Supplying any of the \code{cells_*()} helper functions is a
-useful way to target the location cells that are associated with the
-footnote text. These helper functions are: \code{\link[=cells_title]{cells_title()}},
-\code{\link[=cells_column_labels]{cells_column_labels()}}, \code{\link[=cells_group]{cells_group()}}, \code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_data]{cells_data()}},
-and \code{\link[=cells_summary]{cells_summary()}}. Please see the help article \link{location_cells}
-for more information on how these helper functions can be used.
-Additionally, we can enclose several \code{cells_*()} calls within a \code{list()} if
-we wish to link the footnote text to different types of locations (e.g.,
-cell data values, stub group headings, the table title, etc.).}
+transformation. Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_stub]{cells_stub()}},
+\code{\link[=cells_column_labels]{cells_column_labels()}}, and \code{\link[=cells_row_groups]{cells_row_groups()}} helper functions can be
+used here. We can enclose several of these calls within a \code{list()} if we
+wish to make the transformation happen at different locations.}
 
 \item{fn}{The function to use for text transformation.}
 }
@@ -28,58 +23,67 @@ An object of class \code{gt_tbl}.
 \description{
 Perform targeted text transformation with a function
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_text_transform_1.svg}{options: width=100\%}}
-}
 
-\examples{
-# Use `exibble` to create a gt table;
-# transform the formatted text in the
-# `num` and `currency` columns using
-# a function within `text_transform()`,
-# where `x` is a formatted vector of
-# column values
-tab_1 <-
-  exibble \%>\%
+Use \code{\link{exibble}} to create a \strong{gt} table. transform the formatted text in the
+\code{num} column using a function supplied to \code{text_transform()} (via the \code{fn}
+argument). Note that the \code{x} in the \verb{fn = function (x)} part is a formatted
+vector of column values from the \code{num} column.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   dplyr::select(num, char, currency) \%>\%
   dplyr::slice(1:4) \%>\%
   gt() \%>\%
-  fmt_number(columns = vars(num)) \%>\%
-  fmt_currency(columns = vars(currency)) \%>\%
+  fmt_number(columns = num) \%>\%
+  fmt_currency(columns = currency) \%>\%
   text_transform(
-    locations = cells_data(
-      columns = vars(num)),
-    fn = function(x) {
-
+    locations = cells_body(columns = num),
+    fn = function(x) \{
       paste0(
         x, " (",
         dplyr::case_when(
           x > 20   ~ "large",
           x <= 20  ~ "small"),
         ")")
-    }
-  ) \%>\%
-  text_transform(
-    locations = cells_data(
-      columns = vars(currency)),
-    fn = function(x) {
-
-      ifelse(
-        grepl(",", x),
-        gsub("\\\\.\\\\d\\\\d", "", x),
-        x)
-    }
+    \}
   )
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_text_transform_1.png" alt="This image of a table was generated from the first code example in the `text_transform()` help file." style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+3-22
+}
+
 \seealso{
-Other data formatting functions: \code{\link{data_color}},
-  \code{\link{fmt_currency}}, \code{\link{fmt_datetime}},
-  \code{\link{fmt_date}}, \code{\link{fmt_markdown}},
-  \code{\link{fmt_missing}}, \code{\link{fmt_number}},
-  \code{\link{fmt_passthrough}}, \code{\link{fmt_percent}},
-  \code{\link{fmt_scientific}}, \code{\link{fmt_time}},
-  \code{\link{fmt}}
+Other data formatting functions: 
+\code{\link{data_color}()},
+\code{\link{fmt_bytes}()},
+\code{\link{fmt_currency}()},
+\code{\link{fmt_datetime}()},
+\code{\link{fmt_date}()},
+\code{\link{fmt_duration}()},
+\code{\link{fmt_engineering}()},
+\code{\link{fmt_fraction}()},
+\code{\link{fmt_integer}()},
+\code{\link{fmt_markdown}()},
+\code{\link{fmt_number}()},
+\code{\link{fmt_partsper}()},
+\code{\link{fmt_passthrough}()},
+\code{\link{fmt_percent}()},
+\code{\link{fmt_roman}()},
+\code{\link{fmt_scientific}()},
+\code{\link{fmt_time}()},
+\code{\link{fmt}()},
+\code{\link{sub_large_vals}()},
+\code{\link{sub_missing}()},
+\code{\link{sub_small_vals}()},
+\code{\link{sub_values}()},
+\code{\link{sub_zero}()}
 }
 \concept{data formatting functions}

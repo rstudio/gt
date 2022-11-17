@@ -1,56 +1,69 @@
+# Define the contexts
+all_contexts <- c("html", "latex", "rtf", "word", "default")
 
-grand_summary_col <- "::GRAND_SUMMARY"
+validate_contexts <- function(contexts) {
+
+  if (!all(contexts %in% all_contexts)) {
+
+    invalid_contexts <- base::setdiff(contexts, all_contexts)
+
+    cli::cli_abort(c(
+      "All output contexts must be in the set of supported contexts.",
+      "*" = "Supported: {paste0(all_contexts, collapse = ', ')}",
+      "*" = "Invalid: {paste0(invalid_contexts, collapse = ', ')}"
+    ))
+  }
+}
 
 # Utility function to generate column numbers from column names;
 # used in: `resolve_footnotes_styles()`
-colname_to_colnum <- function(boxh_df,
-                              colname) {
+colname_to_colnum <- function(
+    data,
+    colname,
+    missing_is_zero = FALSE
+) {
 
-  cnames <- c()
-  for (col in colname) {
-    if (is.na(col)) {
-      cnames <- c(cnames, NA_integer_)
-    } else {
-      cnames <- c(cnames, which(colnames(boxh_df) == col))
-    }
+  vars_default <- dt_boxhead_get_vars_default(data = data)
+
+  result <- match(colname, vars_default)
+
+  if (missing_is_zero) {
+    result[is.na(result)] <- 0L
   }
 
-  cnames
+  result
 }
 
 # Utility function to generate finalized row numbers;
 # used in: `resolve_footnotes_styles()`
-rownum_translation <- function(output_df,
-                               rownum_start) {
+rownum_translation <- function(body, rownum_start) {
 
   rownum_final <- c()
+
   for (rownum_s in rownum_start) {
+
     rownum_final <-
-      c(rownum_final,
-        which(as.numeric(rownames(output_df)) == rownum_s))
+      c(
+        rownum_final,
+        which(as.numeric(rownames(body)) == rownum_s)
+      )
   }
 
   rownum_final
 }
 
-# Initialize `output_df`
-initialize_output_df <- function(data_df) {
-
-  output_df <- data_df
-  output_df[] <- NA_character_
-  output_df
-}
-
 #' Render any formatting directives available in the `formats` list
-#' @importFrom stats na.omit
+#'
 #' @noRd
-render_formats <- function(output_df,
-                           data_df,
-                           formats,
-                           context) {
+render_formats <- function(data, context) {
+
+  body <- dt_body_get(data = data)
+  data_tbl <- dt_data_get(data = data)
+  formats <- dt_formats_get(data = data)
 
   # Render input data to output data where formatting
   # is specified
+
   for (fmt in formats)  {
 
     # Determine if the formatter has a function relevant
@@ -65,56 +78,106 @@ render_formats <- function(output_df,
     for (col in fmt[["cols"]]) {
 
       # Perform rendering but only do so if the column is present
-      if (col %in% colnames(data_df)) {
+      if (col %in% colnames(data_tbl)) {
 
-        result <- fmt$func[[eval_func]](data_df[[col]][fmt$rows])
+        result <- fmt$func[[eval_func]](data_tbl[[col]][fmt$rows])
 
         # If any of the resulting output is `NA`, that
         # means we want to NOT make changes to those
         # particular cells' output (i.e. inherit the
         # results of the previous formatter).
-        output_df[[col]][fmt$rows][!is.na(result)] <- stats::na.omit(result)
+        body[[col]][fmt$rows][!is.na(result)] <- stats::na.omit(result)
       }
     }
   }
 
-  output_df
+  dt_body_set(data = data, body = body)
 }
 
-# Move input data cells to `output_df` that didn't have any rendering applied
+#' Render any formatting directives available in the `substitutions` list
+#'
+#' @noRd
+render_substitutions <- function(
+    data,
+    context
+) {
+
+  body <- dt_body_get(data = data)
+  data_tbl <- dt_data_get(data = data)
+  substitutions <- dt_substitutions_get(data = data)
+
+  # Render input data to output data where formatting
+  # is specified
+  for (subst in substitutions)  {
+
+    # Determine if the formatter has a function relevant
+    # to the context; if not, use the `default` function
+    # (which should always be present)
+    if (context %in% names(subst$func)) {
+      eval_func <- context
+    } else {
+      eval_func <- "default"
+    }
+
+    for (col in subst[["cols"]]) {
+
+      # Perform rendering but only do so if the column is present
+      if (col %in% colnames(data_tbl)) {
+
+        result <- subst$func[[eval_func]](data_tbl[[col]][subst$rows])
+
+        # If any of the resulting output is `NA`, that
+        # means we want to NOT make changes to those
+        # particular cells' output (i.e. inherit the
+        # results of the previous substitution).
+        body[[col]][subst$rows][!is.na(result)] <- stats::na.omit(result)
+      }
+    }
+  }
+
+  data <- dt_body_set(data = data, body = body)
+
+  data
+}
+
+# Move input data cells to `body` that didn't have any rendering applied
 # during the `render_formats()` call
-migrate_unformatted_to_output <- function(data_df,
-                                          output_df,
-                                          context) {
+migrate_unformatted_to_output <- function(data, context) {
 
-  for (colname in colnames(output_df)) {
+  body <- dt_body_get(data = data)
+  data_tbl <- dt_data_get(data = data)
 
-    row_index <- is.na(output_df[[colname]])
+  for (colname in colnames(body)) {
 
-    if (inherits(data_df[[colname]], "list")) {
+    row_index <- is.na(body[[colname]])
+
+    if (inherits(data_tbl[[colname]], "list")) {
 
 
       # Use `lapply()` so that all values could be treated independently
-      output_df[[colname]][row_index] <-
+      body[[colname]][row_index] <-
         lapply(
           data_df[[colname]][row_index],
           function(x) {
 
             if (inherits(x, "gg") && context == "html") {
 
-              x %>% ggplot_image()
+              x <- ggplot_image(x)
 
-            } else {
-
-              x %>%
+            } if (is.numeric(x)) {
+              x <-
                 format(
+                  x,
                   drop0trailing = FALSE,
                   trim = TRUE,
-                  justify = "none") %>%
-                tidy_gsub("\\s+$", "") %>%
-                process_text(context) %>%
-                paste(collapse = ", ")
+                  justify = "none"
+                )
             }
+
+            x <- tidy_gsub(x, "\\s+$", "")
+            x <- process_text(x, context = context)
+            x <- paste(x, collapse = ", ")
+            x
           }
         )
 
@@ -122,697 +185,436 @@ migrate_unformatted_to_output <- function(data_df,
     } else {
 
       # No `lapply()` used: all values will be treated cohesively
-      output_df[[colname]][row_index] <-
-        format(
-          data_df[[colname]][row_index],
-          drop0trailing = FALSE,
-          trim = TRUE,
-          justify = "none"
-        ) %>%
-        process_text(context)
+      vals <- data_tbl[[colname]][row_index]
+
+      if (is.numeric(vals)) {
+
+        vals <-
+          format(
+            vals,
+            drop0trailing = FALSE,
+            trim = TRUE,
+            justify = "none"
+          )
+      }
+
+      if (is.factor(vals)) {
+        vals <- as.character(vals)
+      }
+
+      body[[colname]][row_index] <- process_text(text = vals, context = context)
     }
   }
 
-  output_df
+  dt_body_set(data = data, body = body)
 }
 
-# Function to obtain a reordering df for the data rows
-#' @importFrom dplyr tibble
+#' Perform any text transformations
+#'
 #' @noRd
-get_row_reorder_df <- function(arrange_groups,
-                               stub_df) {
+perform_text_transforms <- function(data) {
+
+  transforms <- dt_transforms_get(data = data)
+
+  for (transform in transforms) {
+
+    data <-
+      text_transform_at_location(
+        loc = transform$resolved,
+        data = data,
+        fn = transform$fn
+      )
+  }
+
+  data
+}
+
+#' Obtain a reordering df for the data rows
+#'
+#' @noRd
+get_row_reorder_df <- function(groups, stub_df) {
 
   # If there are no group, there there is no reordering
   # so just return a data frame where the starting row
   # indices match the final row indices
-  if (length(arrange_groups$groups) == 0) {
+  if (length(groups) == 0) {
 
     indices <- seq_len(nrow(stub_df))
 
     return(
       dplyr::tibble(
         rownum_start = indices,
-        rownum_final = indices)
+        rownum_final = indices
+      )
     )
   }
 
-  groups <- arrange_groups$groups
-
-  indices <-
-    lapply(stub_df$group, `%in%`, x = groups) %>%
-    lapply(which) %>%
-    unlist() %>%
-    order()
+  indices <- lapply(stub_df$group_id, `%in%`, x = groups)
+  indices <- lapply(indices, which)
+  indices <- unlist(indices)
+  indices <- order(indices)
 
   dplyr::tibble(
     rownum_start = seq_along(indices),
-    rownum_final = indices)
+    rownum_final = indices
+  )
 }
 
-# Function to obtain a reordering df for the table columns
+# Function to recode the `rownum` value in the footnotes table
+reorder_footnotes <- function(data) {
+
+  stub_df <- dt_stub_df_get(data = data)
+  footnotes_tbl <- dt_footnotes_get(data = data)
+
+  rownum_final <- as.numeric(stub_df$rownum_i)
+
+  for (i in seq_len(nrow(footnotes_tbl))) {
+
+    if (
+      !is.na(footnotes_tbl[i, ][["rownum"]]) &&
+      footnotes_tbl[i, ][["locname"]] %in% c("data", "stub")
+    ) {
+
+      footnotes_tbl[i, ][["rownum"]] <-
+        which(rownum_final == footnotes_tbl[i, ][["rownum"]])
+    }
+  }
+
+  dt_footnotes_set(data = data, footnotes = footnotes_tbl)
+}
+
+# Function to recode the `rownum` value in the styles table
+reorder_styles <- function(data) {
+
+  stub_df <- dt_stub_df_get(data = data)
+  styles_tbl <- dt_styles_get(data = data)
+
+  rownum_final <- as.numeric(stub_df[, "rownum_i", drop = TRUE])
+
+  sz <- nrow(styles_tbl)
+  tmp_rownum <- vector("integer", sz)
+  tmp_mask <- vector("logical", sz)
+
+  for (i in seq_len(sz)) {
+
+    if (
+      !is.na(styles_tbl$rownum[i]) &&
+      !grepl("summary_cells", styles_tbl$locname[i])
+    ) {
+      tmp_mask[i] = TRUE
+      tmp_rownum[i] = which(rownum_final == styles_tbl$rownum[i])
+    }
+  }
+
+  final_rownum <- styles_tbl$rownum
+  final_rownum[tmp_mask] <- tmp_rownum[tmp_mask]
+  styles_tbl$rownum <- final_rownum
+
+  dt_styles_set(data = data, styles = styles_tbl)
+}
+
+#' Perform merging of column contents
+#'
+#' This merges column content together with a pattern and possibly with a `type`
+#' that specifies additional operations
+#'
 #' @noRd
-#' @importFrom dplyr tibble mutate full_join rename
-get_column_reorder_df <- function(cols_df,
-                                  boxh_df) {
+perform_col_merge <- function(data, context) {
 
-  colnames_final_tbl <-
-    dplyr::tibble(colnames_final = colnames(boxh_df)) %>%
-    dplyr::mutate(colnum_final = seq(ncol(boxh_df)))
+  col_merge <- dt_col_merge_get(data = data)
+  body <- dt_body_get(data = data)
+  data_tbl <- dt_data_get(data = data)
 
-  cols_df %>%
-    dplyr::mutate(colnum_start = seq(nrow(cols_df))) %>%
-    dplyr::full_join(
-      colnames_final_tbl, by = c("colnames_start" = "colnames_final")) %>%
-    dplyr::rename(column_names = colnames_start)
-}
+  if (length(col_merge) == 0) {
+    return(data)
+  }
 
-# Function to reassemble the rows and columns of the `output_df`
-# in a revised order
-reassemble_output_df <- function(output_df,
-                                 rows_df,
-                                 columns_df) {
+  for (i in seq_along(col_merge)) {
 
-  rows <- rows_df$rownum_final
+    type <- col_merge[[i]]$type
 
-  cols <-
-    subset(columns_df, !is.na(colnum_final))[
-      order(subset(columns_df, !is.na(colnum_final))$colnum_final), ]$column_names
-
-  output_df[rows, cols, drop = FALSE]
-}
-
-# Function to obtain a reordered version of `stub_df`
-get_groupnames_rownames_df <- function(stub_df,
-                                       rows_df) {
-
-  stub_df[rows_df$rownum_final, c("groupname", "rowname")]
-}
-
-# Function to get a vector of columns group (spanner) names
-get_columns_spanners_vec <- function(boxh_df) {
-
-  columns_spanners <-
-    boxh_df["group_label", ] %>% unlist() %>% unname()
-
-  columns_spanners[which(!is.na(columns_spanners))]
-}
-
-# Function to create a data frame with group information and the
-# associated row numbers in the rearranged representation
-get_groups_rows_df <- function(arrange_groups,
-                               groups_df) {
-
-  ordering <- arrange_groups[[1]]
-
-  groups_rows_df <-
-    data.frame(
-      group = rep(NA_character_, length(ordering)),
-      group_label = rep(NA_character_, length(ordering)),
-      row = rep(NA_integer_, length(ordering)),
-      row_end = rep(NA_integer_, length(ordering)),
-      stringsAsFactors = FALSE)
-
-  for (i in seq(ordering)) {
-
-    if (!is.na(ordering[i])) {
-      rows_matched <- which(groups_df[, "groupname"] == ordering[i])
-    } else {
-      rows_matched <- which(is.na(groups_df[, "groupname"]))
+    if (!(type %in% c("merge", "merge_range", "merge_uncert", "merge_n_pct"))) {
+      cli::cli_abort("Unknown `type` supplied.")
     }
 
-    groups_rows_df[i, "group"] <- groups_rows_df[i, "group_label"] <- ordering[i]
-    groups_rows_df[i, "row"] <- min(rows_matched)
-    groups_rows_df[i, "row_end"] <- max(rows_matched)
+    if (type == "merge") {
+
+      mutated_column <- col_merge[[i]]$vars[1]
+      mutated_column_sym <- sym(mutated_column)
+
+      columns <- col_merge[[i]]$vars
+      pattern <- col_merge[[i]]$pattern
+
+      glue_src_data <- as.list(body[, columns])
+      glue_src_data <- stats::setNames(glue_src_data, seq_len(length(glue_src_data)))
+
+      body <-
+        dplyr::mutate(
+          body,
+          !!mutated_column_sym := as.character(glue_gt(glue_src_data, pattern))
+        )
+
+    } else if (type == "merge_n_pct") {
+
+      mutated_column <- col_merge[[i]]$vars[1]
+      second_column <- col_merge[[i]]$vars[2]
+
+      # This is a fixed pattern
+      pattern <- "{1} ({2})"
+
+      # Determine rows where NA values exist, and, those rows where
+      # `0` is the value in the `mutated_column` (we don't want to
+      # include a zero percentage value in parentheses)
+      na_1_rows <- is.na(data_tbl[[mutated_column]])
+      na_2_rows <- is.na(data_tbl[[second_column]])
+      zero_rows <- data_tbl[[mutated_column]] == 0
+      zero_rows[is.na(zero_rows)] <- FALSE
+      zero_rows_idx <- which(zero_rows)
+
+      # An `NA` value in either column should exclude that row from
+      # processing via `glue_gt()`
+      rows_to_format_idx <- which(!(na_1_rows | na_2_rows))
+      rows_to_format_idx <- setdiff(rows_to_format_idx, zero_rows_idx)
+
+      body[rows_to_format_idx, mutated_column] <-
+        as.character(
+          glue_gt(
+            list(
+              "1" = body[[mutated_column]][rows_to_format_idx],
+              "2" = body[[second_column]][rows_to_format_idx]
+            ),
+            pattern
+          )
+        )
+
+    } else if (type == "merge_uncert" && length(col_merge[[i]]$vars) == 3) {
+
+      # Case where lower and upper certainties provided as input columns
+
+      mutated_column <- col_merge[[i]]$vars[1]
+      lu_column <- col_merge[[i]]$vars[2]
+      uu_column <- col_merge[[i]]$vars[3]
+
+      pattern_equal <- col_merge[[i]]$pattern
+      sep <- col_merge[[i]]$sep
+
+      # Transform the separator text depending on specific
+      # inputs and the `context`
+      sep <- context_dash_mark(sep, context = context)
+      sep <- context_plusminus_mark(sep, context = context)
+
+      if (context == "html") {
+
+        pattern_unequal <-
+          paste0(
+            "<<1>><span style=\"",
+            "display:inline-block;",
+            "line-height:1em;",
+            "text-align:right;",
+            "font-size:60%;",
+            "vertical-align:-0.25em;",
+            "margin-left:0.1em;",
+            "\">",
+            "+<<3>><br>",
+            context_minus_mark(context = context), "<<2>>",
+            "</span>"
+          )
+
+      } else if (context == "latex") {
+
+        pattern_unequal <- "$<<1>>^{+<<3>>}_{-<<2>>}$"
+
+      } else if (context == "rtf") {
+
+        pattern_unequal <- "<<1>>(+<<3>>, -<<2>>)"
+      }
+
+      # Determine rows where NA values exist
+      na_1_rows <- is.na(data_tbl[[mutated_column]])
+      na_lu_rows <- is.na(data_tbl[[lu_column]])
+      na_uu_rows <- is.na(data_tbl[[uu_column]])
+      na_lu_or_uu <- na_lu_rows | na_uu_rows
+      na_lu_and_uu <- na_lu_rows & na_uu_rows
+      lu_equals_uu <- data_tbl[[lu_column]] == data_tbl[[uu_column]] & !na_lu_or_uu
+
+      rows_to_format_equal <- which(!na_1_rows & lu_equals_uu)
+      rows_to_format_unequal <- which(!na_1_rows & !na_lu_and_uu & !lu_equals_uu)
+
+      body[rows_to_format_equal, mutated_column] <-
+        as.character(
+          glue_gt(
+            list(
+              "1" = body[[mutated_column]][rows_to_format_equal],
+              "2" = body[[lu_column]][rows_to_format_equal],
+              "sep" = sep
+            ),
+            pattern_equal
+          )
+        )
+
+      body[rows_to_format_unequal, mutated_column] <-
+        as.character(
+          glue_gt(
+            list(
+              "1" = body[[mutated_column]][rows_to_format_unequal],
+              "2" = body[[lu_column]][rows_to_format_unequal],
+              "3" = body[[uu_column]][rows_to_format_unequal]
+            ),
+            pattern_unequal,
+            .open = "<<",
+            .close = ">>"
+          )
+        )
+
+    } else {
+
+      mutated_column <- col_merge[[i]]$vars[1]
+      second_column <- col_merge[[i]]$vars[2]
+
+      pattern <- col_merge[[i]]$pattern
+      sep <- col_merge[[i]]$sep
+
+      # Transform the separator text depending on specific
+      # inputs and the `context`
+      sep <- context_dash_mark(sep, context = context)
+      sep <- context_plusminus_mark(sep, context = context)
+
+      # Determine rows where NA values exist
+      na_1_rows <- is.na(data_tbl[[mutated_column]])
+      na_2_rows <- is.na(data_tbl[[second_column]])
+
+      rows_to_format <-
+        if (type == "merge_range") {
+          which(!(na_1_rows & na_2_rows))
+        } else if (type == "merge_uncert") {
+          which(!(na_1_rows | na_2_rows))
+        }
+
+      body[rows_to_format, mutated_column] <-
+        as.character(
+          glue_gt(
+            list(
+              "1" = body[[mutated_column]][rows_to_format],
+              "2" = body[[second_column]][rows_to_format],
+              "sep" = sep
+            ),
+            pattern
+          )
+        )
+    }
+  }
+
+  dt_body_set(data = data, body = body)
+}
+
+#' Suitably replace `NA` values in the `groups_df` data frame
+#'
+#' @param groups_df The `groups_df` data frame.
+#' @param others_group The `others_group` vector.
+#' @noRd
+replace_na_groups_df <- function(groups_df, others_group) {
+
+  if (nrow(groups_df) > 0) {
+    groups_df[is.na(groups_df[, "group_id"]), "group_id"] <- others_group
+  }
+
+  groups_df
+}
+
+#' Suitably replace `NA` values in the `groups_rows_df` data frame
+#'
+#' @param groups_rows_df The `groups_rows_df` data frame.
+#' @param others_group The `others_group` vector.
+#' @noRd
+replace_na_groups_rows_df <- function(groups_rows_df, others_group) {
+
+  if (nrow(groups_rows_df) > 0) {
+    groups_rows_df[
+      is.na(groups_rows_df[, "group"]),
+      c("group", "group_label")] <- others_group
   }
 
   groups_rows_df
 }
 
-# Function for merging pairs of columns together (in `output_df`) and
-# transforming the dependent data frames (`boxh_df` and `columns_df`)
-perform_col_merge <- function(col_merge,
-                              data_df,
-                              output_df,
-                              boxh_df,
-                              columns_df,
-                              context) {
+last_non_na <- function(vect) {
 
-  if (length(col_merge) == 0) {
-    return(
-      list(
-        output_df = output_df,
-        boxh_df = boxh_df,
-        columns_df = columns_df)
+  # Retrieve last non-NA value
+  positions <- which(!is.na(vect))
+
+  if (length(positions) == 0) {
+    return(NA_character_)
+  } else {
+    return(vect[max(positions)])
+  }
+}
+
+# Determine whether the table should have row labels
+# set within a column in the stub
+stub_rownames_has_column <- function(data) {
+  isTRUE("row_id" %in% dt_stub_components(data = data))
+}
+
+# Determine whether the table should have row group labels
+# set within a column in the stub
+stub_group_names_has_column <- function(data) {
+
+  # If there aren't any row groups then the result is always FALSE
+  if (nrow(dt_groups_rows_get(data = data)) < 1) {
+    return(FALSE)
+  }
+
+  # Given that there are row groups, we need to look at the option
+  # `row_group_as_column` to determine whether they populate a column
+  # located in the stub; if set as TRUE then that's the return value
+  dt_options_get_value(data = data, option = "row_group_as_column")
+}
+
+# Get the number of columns for the visible (not hidden) data; this
+# excludes the number of columns required for the table stub
+get_number_of_visible_data_columns <- function(data) {
+  length(dt_boxhead_get_vars_default(data = data))
+}
+
+get_effective_number_of_columns <- function(data) {
+
+  # Check if the table has been built, return an error if that's not the case
+  if (!dt_has_built(data = data)) {
+
+    cli::cli_abort(
+      "The `get_effective_number_of_columns()` function can only be used on
+      gt objects that have tables 'built'."
     )
   }
 
-  for (i in seq(col_merge[[1]])) {
-
-    sep <- col_merge[["sep"]][i] %>% context_dash_mark(context = context)
-
-    pattern <-
-      col_merge[["pattern"]][i] %>%
-      tidy_sub("\\{sep\\}", sep)
-
-
-    value_1_col <- col_merge[["col_1"]][i] %>% unname()
-    value_2_col <- col_merge[["col_1"]][i] %>% names()
-
-    values_1 <-
-      output_df[, which(colnames(output_df) == value_1_col)]
-
-    values_2 <-
-      output_df[, which(colnames(output_df) == value_2_col)]
-
-    values_1_data <-
-      data_df[, which(colnames(data_df) == value_1_col)]
-
-    values_2_data <-
-      data_df[, which(colnames(data_df) == value_2_col)]
-
-    for (j in seq(values_1)) {
-
-      if (!is.na(values_1[j]) && !grepl("NA", values_1[j]) &&
-          !is.na(values_2[j]) && !grepl("NA", values_2[j]) &&
-          !is.na(values_1_data[j]) && !is.na(values_2_data[j])) {
-
-        values_1[j] <-
-          pattern %>%
-          tidy_gsub("\\{1\\}", values_1[j]) %>%
-          tidy_gsub("\\{2\\}", values_2[j])
-      }
-    }
-
-    output_df[, which(colnames(output_df) == value_1_col)] <- values_1
-
-    # Remove the second column across key data frames
-    boxh_df <-
-      boxh_df[, -which(colnames(output_df) == value_2_col), drop = FALSE]
-
-    output_df <-
-      output_df[, -which(colnames(output_df) == value_2_col), drop = FALSE]
-
-    # Mark the removed column as missing in `columns_df`
-    columns_df[which(columns_df == value_2_col), "colnum_final"] <- NA_integer_
-  }
-
-  # Return a list with the modified data frames
-  list(
-    output_df = output_df,
-    boxh_df = boxh_df,
-    columns_df = columns_df)
+  # Obtain the number of visible columns in the built table
+  n_data_cols <- get_number_of_visible_data_columns(data = data)
+  n_data_cols + length(get_stub_layout(data = data))
 }
 
-# Create a list of summary data frames given a `summary_list` (a list
-# of directives for making per-group summaries); the final list will
-# provide `display` and `data` versions of the summaries, named by group
-#' @import rlang
-#' @importFrom dplyr select mutate everything bind_rows filter group_by
-#' @importFrom dplyr summarize_all ungroup mutate_at slice
-#' @importFrom tidyr fill
-#' @importFrom stats setNames
-#' @noRd
-create_summary_dfs <- function(summary_list,
-                               data_df,
-                               stub_df,
-                               output_df,
-                               context) {
+get_stub_layout <- function(data) {
 
-  # If the `summary_list` object is an empty list,
-  # return an empty list as the `list_of_summaries`
-  if (length(summary_list) == 0) {
-    return(list())
-  }
+  # Determine which stub components are potentially present as columns
+  stub_rownames_is_column <- stub_rownames_has_column(data = data)
+  stub_groupnames_is_column <- stub_group_names_has_column(data = data)
 
-  # Create empty lists that are to contain summary
-  # data frames for display and for data collection
-  # purposes
-  summary_df_display_list <- list()
-  summary_df_data_list <- list()
+  # Get the potential total number of columns in the table stub
+  n_stub_cols <- stub_rownames_is_column + stub_groupnames_is_column
 
-  for (i in seq(summary_list)) {
+  # Resolve the layout of the stub (i.e., the roles of columns if present)
+  if (n_stub_cols == 0) {
 
-    summary_attrs <- summary_list[[i]]
-
-    groups <- summary_attrs$groups
-    columns <- summary_attrs$columns
-    fns <- summary_attrs$fns
-    missing_text <- summary_attrs$missing_text
-    formatter <- summary_attrs$formatter
-    formatter_options <- summary_attrs$formatter_options
-    labels <- summary_attrs$summary_labels
-
-    if (length(labels) != length(unique(labels))) {
-
-      stop("All summary labels must be unique:\n",
-           " * Review the names provided in `fns`\n",
-           " * These labels are in conflict: ",
-           paste0(labels, collapse = ", "), ".",
-           call. = FALSE)
-    }
-
-    # Resolve the `missing_text`
-    missing_text <-
-      context_missing_text(missing_text = missing_text, context = context)
-
-    assert_rowgroups <- function() {
-
-      if (all(is.na(stub_df$groupname))) {
-        stop("There are no row groups in the gt object:\n",
-             " * Use `groups = NULL` to create a grand summary\n",
-             " * Define row groups using `gt()` or `tab_row_group()`",
-             call. = FALSE)
-      }
-    }
-
-    # Resolve the groups to consider; if
-    # `groups` is TRUE then we are to obtain
-    # summary row data for all groups
-    if (isTRUE(groups)) {
-
-      assert_rowgroups()
-
-      groups <- unique(stub_df$groupname)
-
-    } else if (!is.null(groups) && is.character(groups)) {
-
-      assert_rowgroups()
-
-      # Get the names of row groups available
-      # in the gt object
-      groups_available <- unique(stub_df$groupname)
-
-      if (any(!(groups %in% groups_available))) {
-
-        # Stop function if one or more `groups`
-        # are not present in the gt table
-        stop("All `groups` should be available in the gt object:\n",
-             " * The following groups aren't present: ",
-             paste0(
-               base::setdiff(groups, groups_available),
-               collapse = ", "
-             ), "\n",
-             call. = FALSE)
-      }
-
-    } else if (is.null(groups)) {
-
-      # If groups is given as NULL (the default)
-      # then use a special group (`::GRAND_SUMMARY`)
-      groups <- grand_summary_col
-    }
-
-    # Resolve the columns to exclude
-    columns_excl <- base::setdiff(colnames(output_df), columns)
-
-    # Combine `groupname` with the table body data in order to
-    # process data by groups
-    if (identical(groups, grand_summary_col)) {
-
-      select_data_df <-
-        cbind(
-          stub_df[c("groupname", "rowname")],
-          data_df)[, -2] %>%
-        dplyr::mutate(groupname = grand_summary_col) %>%
-        dplyr::select(groupname, columns)
-
+    # If summary rows are present, we will use the `rowname` column
+    # for the summary row labels
+    if (dt_summary_exists(data = data)) {
+      return("rowname")
     } else {
-
-      select_data_df <-
-        cbind(
-          stub_df[c("groupname", "rowname")],
-          data_df)[, -2] %>%
-        dplyr::select(groupname, columns)
+      return(NULL)
     }
-
-    # Get the registered function calls
-    agg_funs <- fns %>% lapply(rlang::as_closure)
-
-    summary_dfs_data <-
-      lapply(
-        seq(agg_funs), function(j) {
-          select_data_df %>%
-            dplyr::filter(groupname %in% groups) %>%
-            dplyr::group_by(groupname) %>%
-            dplyr::summarize_all(.funs = agg_funs[[j]]) %>%
-            dplyr::ungroup() %>%
-            dplyr::mutate(rowname = labels[j]) %>%
-            dplyr::select(groupname, rowname, dplyr::everything())
-        }
-      ) %>%
-      dplyr::bind_rows()
-
-    # Add those columns that were not part of
-    # the aggregation, filling those with NA values
-    summary_dfs_data[, columns_excl] <- NA_real_
-
-    summary_dfs_data <-
-      summary_dfs_data %>%
-      dplyr::select(groupname, rowname, colnames(output_df))
-
-    # Format the displayed summary lines
-    summary_dfs_display <-
-      summary_dfs_data %>%
-      dplyr::mutate_at(
-        .vars = columns,
-        .funs = function(x) {
-
-          format_data <-
-            do.call(
-              summary_attrs$formatter,
-              append(list(
-                data.frame(x = x),
-                columns = "x"),
-                summary_attrs$formatter_options))
-
-          formatter <- attr(format_data, "formats")[[1]]$func
-          fmt <- formatter[[context]] %||% formatter$default
-          fmt(x)
-        }
-      ) %>%
-      dplyr::mutate_at(
-        .vars = columns_excl,
-        .funs = function(x) {NA_character_})
-
-    for (group in groups) {
-
-      # Place data frame in separate list component by `group`
-      group_sym <- rlang::enquo(group)
-
-      group_summary_data_df <-
-        summary_dfs_data %>%
-        dplyr::filter(groupname == !!group_sym)
-
-      group_summary_display_df <-
-        summary_dfs_display %>%
-        dplyr::filter(groupname == !!group_sym)
-
-      summary_df_data_list <-
-        c(summary_df_data_list,
-          stats::setNames(list(group_summary_data_df), group))
-
-      summary_df_display_list <-
-        c(summary_df_display_list,
-          stats::setNames(list(group_summary_display_df), group))
-    }
-  }
-
-  # Condense data in `summary_df_display_list` in a
-  # groupwise manner
-  summary_df_display_list <-
-    tapply(
-      summary_df_display_list,
-      names(summary_df_display_list),
-      dplyr::bind_rows
+  } else {
+    c(
+      if (stub_groupnames_is_column) "group_label",
+      if (stub_rownames_is_column) "rowname"
     )
-
-  for (i in seq(summary_df_display_list)) {
-
-    arrangement <- unique(summary_df_display_list[[i]]$rowname)
-
-    summary_df_display_list[[i]] <-
-      summary_df_display_list[[i]] %>%
-      dplyr::select(-groupname) %>%
-      dplyr::group_by(rowname) %>%
-      tidyr::fill(dplyr::everything(), .direction = "down") %>%
-      tidyr::fill(dplyr::everything(), .direction = "up") %>%
-      dplyr::slice(1) %>%
-      dplyr::ungroup()
-
-    summary_df_display_list[[i]] <-
-      summary_df_display_list[[i]][
-        match(arrangement, summary_df_display_list[[i]]$rowname), ] %>%
-      replace(is.na(.), missing_text)
   }
-
-  # Return a list of lists, each of which have
-  # summary data frames for display and for data
-  # collection purposes
-  list(
-    summary_df_data_list = summary_df_data_list,
-    summary_df_display_list = summary_df_display_list
-  )
-}
-
-migrate_labels <- function(row_val) {
-  function(
-    boxh_df,
-    labels,
-    context) {
-
-    for (label_name in names(labels)) {
-
-      if (label_name %in% colnames(boxh_df)) {
-        boxh_df[row_val, label_name] <-
-          process_text(labels[[label_name]], context)
-      }
-    }
-
-    boxh_df
-  }
-}
-
-# Process text of finalized column labels and migrate the
-# processed text to `boxh_df`
-migrate_colnames_to_labels <- migrate_labels("column_label")
-
-# Process text of finalized column group labels and migrate the
-# processed text to `boxh_df`
-migrate_grpnames_to_labels <- migrate_labels("group_label")
-
-
-
-# Assign center alignment for all columns that haven't had alignment
-# explicitly set
-set_default_alignments <- function(boxh_df) {
-
-  for (colname in colnames(boxh_df)) {
-
-    if (is.na(boxh_df["column_align", colname])) {
-      boxh_df["column_align", colname] <- "center"
-    }
-  }
-
-  boxh_df
-}
-
-# Function to determine if there are any defined elements of a stub present
-is_stub_available <- function(stub_df) {
-
-  if (!all(is.na((stub_df)[["rowname"]]))) {
-    return(TRUE)
-  } else {
-    return(FALSE)
-  }
-}
-
-# Function to determine if a title element has been defined
-is_title_defined <- function(heading) {
-
-  length(heading) > 0 && !is.null(heading$title)
-}
-
-# Function to determine if a subtitle element has been defined
-is_subtitle_defined <- function(heading) {
-
-  length(heading) > 0 && !is.null(heading$subtitle) && heading$subtitle != ""
-}
-
-# Function to determine if the `list_of_summaries` object contains
-# processed summary data frames
-are_summaries_present <- function(list_of_summaries) {
-
-  if (length(list_of_summaries) == 0) {
-    return(FALSE)
-  } else {
-    return(TRUE)
-  }
-}
-
-# Function to determine if any group headings (spanners) are present
-are_spanners_present <- function(boxh_df) {
-
-  if (!all(is.na((boxh_df)["group_label", ] %>% t() %>% as.vector()))) {
-    return(TRUE)
-  } else {
-    return(FALSE)
-  }
-}
-
-# Function to get a vector of the stub components that are available
-# within the `stub_df` data frame
-get_stub_components <- function(stub_df) {
-
-  stub_components <- c()
-
-  if (any(!is.na(stub_df[["rowname"]]))) {
-    stub_components <- c(stub_components, "rowname")
-  }
-
-  if (any(!is.na(stub_df[["groupname"]]))) {
-    stub_components <- c(stub_components, "groupname")
-  }
-
-  stub_components
-}
-
-# Function that checks `stub_components` and determines whether just the
-# `rowname` part is available; TRUE indicates that we are working with a table
-# with rownames
-stub_component_is_rowname <- function(stub_components) {
-
-  identical(stub_components, "rowname")
-}
-
-# Function that checks `stub_components` and determines whether just the
-# `groupname` part is available; TRUE indicates that we are working with a table
-# with groups but it doesn't have rownames
-stub_component_is_groupname <- function(stub_components) {
-
-  identical(stub_components, "groupname")
-}
-
-# Function that checks `stub_components` and determines whether the
-# `rowname` and `groupname` parts are available; TRUE indicates that we are
-# working with a table with rownames and groups
-stub_component_is_rowname_groupname <- function(stub_components) {
-
-  identical(stub_components, c("rowname", "groupname"))
-}
-
-# Process the `heading` object
-process_heading <- function(heading, context) {
-
-  if (!is.null(heading)) {
-    title <- heading$title %>% process_text(context)
-    subtitle <- heading$subtitle %>% process_text(context)
-
-    return(list(title = title, subtitle = subtitle))
-  }
-}
-
-# Process the `stubhead_caption` object
-process_stubhead_label <- function(caption, context) {
-
-  if (!is.null(caption)) {
-    stubhead_label <- caption$stubhead_label %>% process_text(context)
-
-    return(list(stubhead_label = stubhead_label))
-  }
-}
-
-# Process the `source_note` object
-process_source_notes <- function(source_note, context) {
-
-  if (!is.null(source_note)) {
-
-    source_notes <- c()
-    for (sn in source_note) {
-
-      source_notes <- c(source_notes, process_text(sn, context))
-    }
-
-    return(list(source_note = source_notes))
-  }
-}
-
-# Function to build a vector of `group` rows in the table body
-create_group_rows <- function(n_rows,
-                              groups_rows_df,
-                              context = "latex") {
-
-  lapply(seq(n_rows), function(x) {
-
-    if (!(x %in% groups_rows_df$row)) {
-      return("")
-    }
-
-    if (context == "latex") {
-
-      latex_group_row(
-        group_name = groups_rows_df[
-          which(groups_rows_df$row %in% x), "group_label"][[1]],
-        top_border = x != 1, bottom_border = x != n_rows)
-    }
-  }) %>%
-    unlist() %>%
-    unname()
-}
-
-# Function to build a vector of `data` rows in the table body
-create_data_rows <- function(n_rows,
-                             row_splits,
-                             context = "latex") {
-
-  lapply(seq(n_rows), function(x) {
-
-    if (context == "latex") {
-
-      latex_body_row(content = row_splits[[x]], type = "row")
-    }
-
-  }) %>%
-    unlist() %>%
-    unname()
-}
-
-# Function to build a vector of `summary` rows in the table body
-create_summary_rows <- function(n_rows,
-                                n_cols,
-                                list_of_summaries,
-                                groups_rows_df,
-                                stub_available,
-                                summaries_present,
-                                context = "latex") {
-
-  lapply(seq(n_rows), function(x) {
-
-    if (!stub_available ||
-        !summaries_present ||
-        !(x %in% groups_rows_df$row_end)) {
-      return("")
-    }
-
-    group <-
-      groups_rows_df %>%
-      dplyr::filter(row_end == x) %>%
-      dplyr::pull(group)
-
-    if (!(group %in% names(list_of_summaries$summary_df_display_list))) {
-      return("")
-    }
-
-    summary_df <-
-      list_of_summaries$summary_df_display_list[[group]] %>%
-      as.data.frame(stringsAsFactors = FALSE)
-
-    body_content_summary <-
-      as.vector(t(summary_df))
-
-    row_splits_summary <-
-      split_body_content(
-        body_content = body_content_summary,
-        n_cols = n_cols)
-
-    if (length(row_splits_summary) > 0) {
-
-      if (context == "latex") {
-
-        top_line <- "\\midrule \n"
-
-        s_rows <-
-          paste(
-            vapply(
-              row_splits_summary, latex_body_row, character(1), type = "row"),
-            collapse = "")
-
-        s_rows <- paste0(top_line, s_rows)
-      }
-
-    } else {
-      s_rows <- ""
-    }
-  }) %>%
-    unlist() %>%
-    unname()
 }

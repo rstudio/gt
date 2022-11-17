@@ -1,15 +1,25 @@
 library(gt)
 
 data <-
-  gt(mtcars[, 1:7], rownames_to_stub = TRUE) %>%
-  tab_spanner(
-    label = md("grp_a"),
-    columns = vars(mpg, cyl, disp)
+  gt(mtcars, rownames_to_stub = TRUE) %>%
+  cols_align(
+    align = "right",
+    columns = c(disp, vs)
   ) %>%
   tab_spanner(
-    label = md("grp_b"),
-    columns = vars(drat)
+    label = md("*group_a*"),
+    columns = c(mpg, cyl, disp, hp)
   ) %>%
+  tab_spanner(
+    label = md("*group_b*"),
+    columns = c(drat, wt, qsec, vs, am, gear, carb)
+  ) %>%
+  cols_move_to_start(columns = hp) %>%
+  cols_move_to_end(columns = c(am, gear)) %>%
+  cols_hide(columns = carb) %>%
+  cols_move(
+    columns = c(wt, carb, qsec),
+    after = gear) %>%
   tab_row_group(
     group = "Mercs",
     rows = c(
@@ -20,9 +30,23 @@ data <-
     group = "Supercars",
     rows = c("Ferrari Dino", "Maserati Bora", "Porsche 914-2", "Ford Pantera L")
   ) %>%
-  row_group_order(groups = vars(Supercars, Mercs)) %>%
+  row_group_order(groups = c("Supercars", "Mercs")) %>%
+  fmt_number(
+    columns = c(disp, drat, wt),
+    decimals = 2
+  ) %>%
+  fmt_number(
+    columns = c(qsec, wt),
+    decimals = 3,
+    rows = starts_with("Merc")
+  ) %>%
+  fmt_number(
+    columns = mpg,
+    decimals = 1
+  ) %>%
   tab_header(
-    title = md("The **mtcars** dataset")
+    title = md("The **mtcars** dataset"),
+    subtitle = md("[A rather famous *Motor Trend* table]")
   ) %>%
   tab_source_note(
     source_note = md("Main Source of Data: *Henderson and Velleman* (1981).")
@@ -30,24 +54,39 @@ data <-
   tab_source_note(
     source_note = md("Original Data: *Motor Trend Magazine* (1974).")
   ) %>%
-  tab_stubhead_label(label = md("*car*")) %>%
+  tab_stubhead(label = md("*car*")) %>%
   tab_footnote(
     footnote = md("*Really* fast quarter mile."),
-    locations = data_cells(row = "Ford Pantera L", column = vars(qsec))
+    locations = cells_body(
+      columns = qsec,
+      rows = "Ford Pantera L"
+    )
   ) %>%
   tab_footnote(
     footnote = "Massive hp.",
-    locations = data_cells(row = "Ford Pantera L", column = vars(hp))
+    locations = cells_body(
+      columns = hp,
+      rows = "Maserati Bora"
+    )
   ) %>%
   tab_footnote(
     footnote = "Excellent gas mileage.",
-    locations = data_cells("Toyota Corolla", column = 2)
+    locations = cells_body(
+      columns = hp,
+      rows = "Toyota Corolla"
+    )
   ) %>%
   tab_footnote(
     footnote = md("Worst speed *ever*."),
-    locations = data_cells("Merc 230", vars(qsec))
+    locations = cells_body(
+      columns = qsec,
+      rows = "Merc 230"
+    )
+  ) %>%
+  cols_label(
+    hp = md("*HP*"),
+    qsec = "QMT, seconds"
   )
 
 # Writing to an RTF file
-data %>% write_rtf(file = "mtcars.rtf")
-
+data %>% gtsave(file = "mtcars.rtf")

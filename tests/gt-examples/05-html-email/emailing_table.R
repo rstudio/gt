@@ -1,15 +1,17 @@
 library(gt)
-library(tidyverse)
-library(scales)
 library(blastula)
+library(tidyverse)
+library(glue)
+library(scales)
 
 # Create short labels for months (displays
 # better for small plots in email messages)
 initial_months <-
-  c("D",
+  c(" ",
     "J", "F", "M", "A", "M", "J",
     "J", "A", "S", "O", "N", "D",
-    " ")
+    " "
+  )
 
 # Get the total pizzaplace sales in the
 # 2015 year; format as a currency value
@@ -54,13 +56,12 @@ pizza_plot <-
     plot.subtitle = element_text(color = "grey25"),
     plot.margin = unit(c(20, 20, 20, 20), "points"),
     legend.box.spacing = unit(2, "points"),
-    legend.position = "bottom")
+    legend.position = "bottom"
+  )
 
 # Make the plot suitable for mailing by
 # converting it to an HTML fragment
-pizza_plot_email <-
-  pizza_plot %>%
-  blastula::add_ggplot()
+pizza_plot_email <- blastula::add_ggplot(plot_object = pizza_plot)
 
 # Create `sizes_order` and `types_order` to
 # support the ordering of pizza sizes and types
@@ -73,24 +74,25 @@ types_order <- c("Classic", "Chicken", "Supreme", "Veggie")
 # CSS styles)
 pizza_tab_email <-
   pizzaplace %>%
-  mutate(type = str_to_title(type)) %>%
-  mutate(size = factor(size, levels = sizes_order)) %>%
-  mutate(type = factor(type, levels = types_order)) %>%
-  group_by(type, size) %>%
+  dplyr::mutate(type = stringr::str_to_title(type)) %>%
+  dplyr::mutate(size = factor(size, levels = sizes_order)) %>%
+  dplyr::mutate(type = factor(type, levels = types_order)) %>%
+  dplyr::group_by(type, size) %>%
   summarize(
     pies = n(),
     income = sum(price)
-    ) %>%
-  arrange(type, size) %>%
+  ) %>%
+  dplyr::arrange(type, size) %>%
   gt(rowname_col = "size") %>%
   fmt_currency(
-    columns = vars(income),
-    currency = "USD") %>%
+    columns = income,
+    currency = "USD"
+  ) %>%
   fmt_number(
-    columns = vars(pies),
+    columns = pies,
     use_seps = TRUE,
     decimals = 0
-    ) %>%
+  ) %>%
   summary_rows(
     groups = TRUE,
     columns = "pies",
@@ -98,15 +100,16 @@ pizza_tab_email <-
     formatter = fmt_number,
     use_seps = TRUE,
     decimals = 0
-    ) %>%
+  ) %>%
   summary_rows(
     groups = TRUE,
     columns = "income",
     fns = list(TOTAL = "sum"),
     formatter = fmt_currency,
     currency = "USD"
-    ) %>%
+  ) %>%
   tab_options(
+    table.width = px(300),
     summary_row.background.color = "#FFFEEE",
     row_group.background.color = "#E6EFFC",
     table.font.size = "small",
@@ -114,80 +117,51 @@ pizza_tab_email <-
     heading.subtitle.font.size = "x-small",
     row_group.font.size = "small",
     column_labels.font.size = "small",
-    row.padding = "5px"
-    ) %>%
+    data_row.padding = "5px"
+  ) %>%
   cols_label(
     pies = "Pizzas",
     income = "Income"
-    ) %>%
+  ) %>%
   tab_header(
-    title = paste0("My ", emo::ji("pizza"), " sales in 2015"),
+    title = paste0("My pizza sales in 2015"),
     subtitle = "Split by the type of pizza and the size"
-    ) %>%
-  tab_footnote(
-    footnote = md("Only **The Greek Pizza** comes in this size."),
-    locations = cells_stub(rows = 4:5)
-    ) %>%
-  tab_footnote(
-    footnote = "The small-sized classic pizzas sold the most.",
-    locations = cells_data(columns = 1, rows = 1)
-    ) %>%
+  ) %>%
   as_raw_html()
 
+message_body <-
+  glue::glue(
+"Hello,
 
-# Create an email message using the
-# `compose_email()` function from the
-# blastula package
-email <-
-  blastula::compose_email(
-    body = "
-  Hello,
+Just wanted to let you know that pizza
+sales were pretty strong in 2015. When
+I look back at the numbers, it's **{total_sales_2015}**
+in sales. Not too bad. All things considered.
 
-  Just wanted to let you know that pizza \\
-  sales were pretty strong in 2015. When \\
-  I look back at the numbers, it's **{total_sales_2015}** \\
-  in sales. Not too bad. All things considered.
+Here's a plot of the daily pizza sales. I
+faceted by the type of pizza because I know
+that's your preference:
 
-  Here's a plot of the daily pizza sales. I \\
-  faceted by the type of pizza because I know \\
-  that's your preference:
+{pizza_plot_email}
 
-  {pizza_plot_email}
+Here is a table that shows a breakdown
+of the 2015 results by pizza size, split into
+*Pizza Type* groups:
 
-  Here is a table that shows a breakdown \\
-  of the 2015 results by pizza size, split into \\
-  *Pizza Type* groups:
+{pizza_tab_email}
 
-  {pizza_tab_email}
+I also put all the 2015 numbers into an R
+dataset called `pizzaplace`. Not sure why
+I did that, but I did. It's in the `gt`
+package.
 
-  I also put all the 2015 numbers into an R \\
-  dataset called `pizzaplace`. Not sure why \\
-  I did that, but I did. It's in the `gt` \\
-  package.
+Talk to you later,
 
-  Talk to you later,
-
-  Alfonso
-  "
+Alfonso"
 )
 
-# Preview the email in the RStudio Viewer
-email %>% blastula::preview_email()
+# Create an email message using the `compose_email()`
+# function from the blastula package
+email <- blastula::compose_email(body = md(message_body))
 
-# Create a credentials file for sending
-# this message through Gmail
-blastula::create_email_creds_file(
-  user = "********@gmail.com",
-  password = "**************",
-  provider = "gmail",
-  sender = "Sender Name",
-  creds_file_name = "gmail_creds")
-
-# Send the email message out with
-# `send_email_out()`
-send_email_out(
-  message = email,
-  from = "******@gmail.com",
-  to = "********@gmail.me",
-  subject = "A look back at the pizzaplace 2015 sales",
-  creds_file = "gmail_creds")
+email

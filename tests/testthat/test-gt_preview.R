@@ -1,57 +1,69 @@
-context("Ensuring that the `gt_preview()` function works as expected")
-
 test_that("the `gt_preview()` function works correctly", {
+
+  # Ensure that gt objects still work with `gt_preview()`
+  expect_equal(
+    gt_preview(mtcars) %>% class(),
+    gt_preview(mtcars %>% gt()) %>% class()
+  )
 
   # Create a basic preview of the `mtcars` dataset
   gt_tbl <- gt_preview(mtcars)
 
-  # Expect that the internal data frame (`data_df`) has
-  # had rows removed
-  expect_true(
-    nrow(mtcars) > nrow(attr(gt_tbl, "data_df", exact = TRUE)))
+  built_tbl <- gt_tbl %>% build_data(context = "html")
+  output_tbl <- dt_body_get(data = built_tbl)
+
+  # Expect that the output table has had rows removed
+  (nrow(mtcars) > nrow(output_tbl)) %>%
+    expect_true()
 
   # Expect certain row names in `data_df`
-  expect_equal(
-    rownames(attr(gt_tbl, "data_df", exact = TRUE)),
-    c("1", "2", "3", "4", "5", "6..31", "32"))
+  output_tbl %>%
+    dplyr::pull(rowname) %>%
+    expect_equal(c("1", "2", "3", "4", "5", "6..31", "32"))
 
-  # Expect empty strings in the ellipsis row (row `6` in this case)
-  expect_equal(
-    attr(gt_tbl, "data_df", exact = TRUE)[6, ] %>%
-      unlist() %>%
-      unname(),
-    rep("", ncol(attr(gt_tbl, "data_df", exact = TRUE))))
+  # Expect mostly empty strings in the ellipsis row
+  # (row `6` in this case)
+  output_tbl[6, ] %>%
+    unlist() %>%
+    unname() %>%
+    expect_equal(c("6..31", rep("", ncol(mtcars))))
 
   # Create a preview table with non-default `top_n` and `bottom_n` values
   gt_tbl <- gt_preview(mtcars, top_n = 10, bottom_n = 5)
 
+  built_tbl <- gt_tbl %>% build_data(context = "html")
+  output_tbl <- dt_body_get(data = built_tbl)
+
   # Expect a preview of the `mtcars` dataset with different `top_n`
   # and `bottom_n` values will result in a different row names
-  expect_equal(
-    rownames(attr(gt_tbl, "data_df", exact = TRUE)),
-    c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-      "11..27", "28", "29", "30", "31", "32"))
+  output_tbl %>%
+    dplyr::pull(rowname) %>%
+    expect_equal(
+      c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+        "11..27", "28", "29", "30", "31", "32")
+    )
 
   # Expect empty strings in the ellipsis row (row `11` in this case)
-  expect_equal(
-    attr(gt_tbl, "data_df", exact = TRUE)[11, ] %>%
-      unlist() %>%
-      unname(),
-    rep("", ncol(attr(gt_tbl, "data_df", exact = TRUE))))
+  output_tbl[11, ] %>%
+    unlist() %>%
+    unname() %>%
+    expect_equal(c("11..27", rep("", ncol(mtcars))))
 
   # Create a preview table with a 5-row version of `mtcars`
   gt_tbl <- gt_preview(mtcars[1:5, ])
 
+  built_tbl <- gt_tbl %>% build_data(context = "html")
+  output_tbl <- dt_body_get(data = built_tbl)
+
   # Expect a preview of this shortened `mtcars` dataset won't
   # have an ellipsis row
-  expect_equal(
-    rownames(attr(gt_tbl, "data_df", exact = TRUE)),
-    c("1", "2", "3", "4", "5"))
+  output_tbl %>%
+    dplyr::pull(rowname) %>%
+    expect_equal(c("1", "2", "3", "4", "5"))
 
   # Expect no empty strings along the `mpg` column
-  expect_equal(
-    attr(gt_tbl, "data_df", exact = TRUE)$mpg,
-    c(21.0, 21.0, 22.8, 21.4, 18.7))
+  output_tbl$mpg %>%
+    expect_equal(c("21.0", "21.0", "22.8", "21.4", "18.7"))
 
   # Create a table that has `groupname` and `rowname` columns
   tbl <-
@@ -65,17 +77,52 @@ test_that("the `gt_preview()` function works correctly", {
   # Create a preview table with the `tbl` table
   gt_tbl <- gt_preview(tbl)
 
+  built_tbl <- gt_tbl %>% build_data(context = "html")
+  output_tbl <- dt_body_get(data = built_tbl)
+
   # Expect that columns named `rowname` or `groupname` will
   # gain a leading `.` to demote them from acting as magic columns
-  expect_equal(
-    colnames(attr(gt_tbl, "data_df", exact = TRUE)),
-    c(".groupname", ".rowname", "value", "value_2"))
+  output_tbl %>%
+    colnames() %>%
+    expect_equal(
+      c("rowname", ".groupname", ".rowname", "value", "value_2")
+    )
 
   # Create a preview table that doesn't include row numbers
   gt_tbl <- gt_preview(mtcars, incl_rownums = FALSE)
 
-  # Expect a preview of the `mtcars` table won't have an ellipsis row
-  expect_equal(
-    rownames(attr(gt_tbl, "data_df", exact = TRUE)),
-    c("1", "2", "3", "4", "5", "6..31", "32"))
+  built_tbl <- gt_tbl %>% build_data(context = "html")
+  output_tbl <- dt_body_get(data = built_tbl)
+
+  # Expect the column names to be equal to that of the
+  # input data table
+  output_tbl %>%
+    colnames() %>%
+    expect_equal(colnames(mtcars))
+
+  # Expect no errors when using all gt datasets (plus a few more
+  # from the datasets package) with the `gt_preview()` function
+  expect_error(regexp = NA, gt_preview(countrypops))
+  expect_error(regexp = NA, gt_preview(sza))
+  expect_error(regexp = NA, gt_preview(gtcars))
+  expect_error(regexp = NA, gt_preview(sp500))
+  expect_error(regexp = NA, gt_preview(pizzaplace))
+  expect_error(regexp = NA, gt_preview(exibble))
+
+  expect_error(regexp = NA, gt_preview(datasets::airquality))
+  expect_error(regexp = NA, gt_preview(datasets::cars))
+  expect_error(regexp = NA, gt_preview(datasets::chickwts))
+  expect_error(regexp = NA, gt_preview(datasets::faithful))
+  expect_error(regexp = NA, gt_preview(datasets::iris))
+  expect_error(regexp = NA, gt_preview(datasets::LifeCycleSavings))
+  expect_error(regexp = NA, gt_preview(datasets::longley))
+  expect_error(regexp = NA, gt_preview(datasets::morley))
+  expect_error(regexp = NA, gt_preview(datasets::mtcars))
+  expect_error(regexp = NA, gt_preview(datasets::Orange))
+  expect_error(regexp = NA, gt_preview(datasets::pressure))
+  expect_error(regexp = NA, gt_preview(datasets::quakes))
+  expect_error(regexp = NA, gt_preview(datasets::rock))
+  expect_error(regexp = NA, gt_preview(datasets::sleep))
+  expect_error(regexp = NA, gt_preview(datasets::swiss))
+  expect_error(regexp = NA, gt_preview(datasets::USJudgeRatings))
 })

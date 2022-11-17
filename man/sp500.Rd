@@ -4,16 +4,15 @@
 \name{sp500}
 \alias{sp500}
 \title{Daily S&P 500 Index data from 1950 to 2015}
-\format{A tibble with 16607 rows and 7 variables:
+\format{
+A tibble with 16607 rows and 7 variables:
 \describe{
 \item{date}{The date expressed as \code{Date} values}
 \item{open, high, low, close}{The day's opening, high, low, and closing
 prices in USD; the \code{close} price is adjusted for splits}
 \item{volume}{the number of trades for the given \code{date}}
 \item{adj_close}{The close price adjusted for both dividends and splits}
-}}
-\source{
-Data collected from \url{https://finance.yahoo.com/quote/\\\%5EGSPC/history/}.
+}
 }
 \usage{
 sp500
@@ -21,11 +20,38 @@ sp500
 \description{
 This dataset provides daily price indicators for the S&P 500 index from the
 beginning of 1950 to the end of 2015. The index includes 500 leading
-companies and captures about 80\% coverage of available market capitalization.
+companies and captures about 80\\% coverage of available market capitalization.
 }
-\examples{
-# Here is a glimpse at the data
-# available in `sp500`
-dplyr::glimpse(sp500)
+\section{Examples}{
+
+
+Here is a glimpse at the data available in \code{sp500}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::glimpse(sp500)
+#> Rows: 16,607
+#> Columns: 7
+#> $ date      <date> 2015-12-31, 2015-12-30, 2015-12-29, 2015-12-28, 2015-12-24,~
+#> $ open      <dbl> 2060.59, 2077.34, 2060.54, 2057.77, 2063.52, 2042.20, 2023.1~
+#> $ high      <dbl> 2062.54, 2077.34, 2081.56, 2057.77, 2067.36, 2064.73, 2042.7~
+#> $ low       <dbl> 2043.62, 2061.97, 2060.54, 2044.20, 2058.73, 2042.20, 2020.4~
+#> $ close     <dbl> 2043.94, 2063.36, 2078.36, 2056.50, 2060.99, 2064.29, 2038.9~
+#> $ volume    <dbl> 2655330000, 2367430000, 2542000000, 2492510000, 1411860000, ~
+#> $ adj_close <dbl> 2043.94, 2063.36, 2078.36, 2056.50, 2060.99, 2064.29, 2038.9~
+}\if{html}{\out{</div>}}
 }
+
+\section{Function ID}{
+
+11-4
+}
+
+\seealso{
+Other datasets: 
+\code{\link{countrypops}},
+\code{\link{exibble}},
+\code{\link{gtcars}},
+\code{\link{pizzaplace}},
+\code{\link{sza}}
+}
+\concept{datasets}
 \keyword{datasets}

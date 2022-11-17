@@ -1,21 +1,18 @@
 library(gt)
 
-# Create a display table based on `airquality` New York Air
-# Quality Measurements
-
+# Create a display table based on `airquality`
 airquality_tbl <-
-  gt(data = airquality) %>%
-  cols_move_to_start(columns = vars(Month, Day)) %>%
+  gt(airquality) %>%
+  cols_move_to_start(columns = c(Month, Day)) %>%
   cols_label(Solar.R = html("Solar<br>Radiation")) %>%
   fmt_number(
-    columns = vars(Wind),
+    columns = Wind,
     decimals = 2
   ) %>%
   tab_spanner(
     label = "Measurement Period",
-    columns = vars(Month, Day)
+    columns = c(Month, Day)
   ) %>%
-  fmt_missing(columns = vars(Ozone, Solar.R, Ozone, Wind, Temp))
+  sub_missing(columns = c(Ozone, Solar.R, Wind, Temp))
 
-# Display the table in the Viewer
 airquality_tbl

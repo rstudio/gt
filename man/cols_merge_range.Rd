@@ -4,7 +4,7 @@
 \alias{cols_merge_range}
 \title{Merge two columns to a value range column}
 \usage{
-cols_merge_range(data, col_begin, col_end, sep = "---")
+cols_merge_range(data, col_begin, col_end, sep = "--", autohide = TRUE)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -12,6 +12,16 @@ cols_merge_range(data, col_begin, col_end, sep = "---")
 \item{col_begin}{A column that contains values for the start of the range.}
 
 \item{col_end}{A column that contains values for the end of the range.}
+
+\item{sep}{The separator text that indicates the values are ranged. The
+default value of \code{"--"} indicates that an en dash will be used for the
+range separator. Using \code{"---"} will be taken to mean that an em dash should
+be used. Should you want these special symbols to be taken literally, they
+can be supplied within the base \code{\link[=I]{I()}} function.}
+
+\item{autohide}{An option to automatically hide the column specified as
+\code{col_end}. Any columns with their state changed to hidden will behave
+the same as before, they just won't be displayed in the finalized table.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -21,70 +31,75 @@ The \code{cols_merge_range()} function is a specialized variant of the
 \code{\link[=cols_merge]{cols_merge()}} function. It operates by taking a two columns that constitute
 a range of values (\code{col_begin} and \code{col_end}) and merges them into a single
 column. What results is a column containing both values separated by a long
-dash (e.g., \code{12.0 — 20.0}). The column specified in \code{col_end} is dropped from
+dash (e.g., \verb{12.0 — 20.0}). The column specified in \code{col_end} is dropped from
 the output table.
 }
 \details{
 This function could be somewhat replicated using \code{\link[=cols_merge]{cols_merge()}}, however,
-\code{cols_merge_range()} employs the following specialized semantics for \code{NA}
+\code{cols_merge_range()} employs the following specialized operations for \code{NA}
 handling:
-
 \enumerate{
-
-\item \code{NA}s in \code{col_begin} result in missing values for the merged
-column (e.g., \code{NA} + \code{20.0} = \code{NA})
-
-\item \code{NA}s in \code{col_end} (but not \code{col_begin}) result in
-a display of only the \code{col_begin} values only for the merged column
-(e.g., \code{12.0} + \code{NA} = \code{12.0})
-
-\item \code{NA}s both \code{col_begin} and \code{col_end} result in
-missing values for the merged column (e.g., \code{NA} + \code{NA} =
-\code{NA})
+\item \code{NA}s in \code{col_begin} (but not \code{col_end}) result in a display of only
+\item \code{NA}s in \code{col_end} (but not \code{col_begin}) result in a display of only
+the \code{col_begin} values only for the merged column (this is the converse of
+the previous)
+\item \code{NA}s both in \code{col_begin} and \code{col_end} result in missing values for
+the merged column
 }
 
 Any resulting \code{NA} values in the \code{col_begin} column following the merge
-operation can be easily formatted using the \code{\link[=fmt_missing]{fmt_missing()}} function.
+operation can be easily formatted using the \code{\link[=sub_missing]{sub_missing()}} function.
+Separate calls of \code{\link[=sub_missing]{sub_missing()}} can be used for the \code{col_begin} and
+\code{col_end} columns for finer control of the replacement values.
 
-This function is part of a set of three column-merging functions. The other
+This function is part of a set of four column-merging functions. The other
 two are the general \code{\link[=cols_merge]{cols_merge()}} function and the specialized
-\code{\link[=cols_merge_uncert]{cols_merge_uncert()}} function. These functions operate similarly, where the
-second column specified is dropped from the output table. For all of the
-\code{cols_merge*()} functions, column removal occurs late in the rendering
-lifecycle so those secondary columns are still usable as column references
-(e.g., inside expressions provided to \code{rows} in the \code{fmt*()} functions).
+\code{\link[=cols_merge_uncert]{cols_merge_uncert()}} and \code{\link[=cols_merge_n_pct]{cols_merge_n_pct()}} functions. These functions
+operate similarly, where the non-target columns can be optionally hidden from
+the output table through the \code{hide_columns} or \code{autohide} options.
 }
-\section{Figures}{
+\section{Examples}{
 
-\if{html}{\figure{man_cols_merge_range_1.svg}{options: width=100\%}}
-}
 
-\examples{
-# Use `gtcars` to create a gt table,
-# keeping only the `model`, `mpg_c`,
-# and `mpg_h` columns; merge the mpg
-# columns together as a single range
-# column (which is labeled as MPG,
-# in italics)
-tab_1 <-
-  gtcars \%>\%
+Use \code{\link{gtcars}} to create a \strong{gt} table, keeping only the \code{model}, \code{mpg_c},
+and \code{mpg_h} columns. Merge the \code{"mpg*"} columns together as a single range
+column (which is labeled as MPG, in italics) using the \code{cols_merge_range()}
+function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
   dplyr::select(model, starts_with("mpg")) \%>\%
   dplyr::slice(1:8) \%>\%
   gt() \%>\%
   cols_merge_range(
-    col_begin = vars(mpg_c),
-    col_end = vars(mpg_h)) \%>\%
-  cols_label(
-    mpg_c = md("*MPG*")
-  )
+    col_begin = mpg_c,
+    col_end = mpg_h
+  ) \%>\%
+  cols_label(mpg_c = md("*MPG*"))
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_merge_range_1.png" alt="This image of a table was generated from the first code example in the `cols_merge_range()` help file." style="width:100\%;">
+}}
 }
+
+\section{Function ID}{
+
+4-11
+}
+
 \seealso{
-Other column modification functions: \code{\link{cols_align}},
-  \code{\link{cols_hide}}, \code{\link{cols_label}},
-  \code{\link{cols_merge_uncert}},
-  \code{\link{cols_merge}}, \code{\link{cols_move_to_end}},
-  \code{\link{cols_move_to_start}},
-  \code{\link{cols_move}}, \code{\link{cols_split_delim}}
+Other column modification functions: 
+\code{\link{cols_align_decimal}()},
+\code{\link{cols_align}()},
+\code{\link{cols_hide}()},
+\code{\link{cols_label}()},
+\code{\link{cols_merge_n_pct}()},
+\code{\link{cols_merge_uncert}()},
+\code{\link{cols_merge}()},
+\code{\link{cols_move_to_end}()},
+\code{\link{cols_move_to_start}()},
+\code{\link{cols_move}()},
+\code{\link{cols_unhide}()},
+\code{\link{cols_width}()}
 }
 \concept{column modification functions}

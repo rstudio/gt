@@ -4,7 +4,8 @@
 \name{pizzaplace}
 \alias{pizzaplace}
 \title{A year of pizza sales from a pizza place}
-\format{A tibble with 49574 rows and 7 variables:
+\format{
+A tibble with 49574 rows and 7 variables:
 \describe{
 \item{id}{The ID for the order, which consists of one or more pizzas
 at a give \code{date} and \code{time}}
@@ -22,7 +23,8 @@ but exceptions apply}
 \code{classic}, \code{chicken}, \code{supreme}, or \code{veggie}}
 \item{price}{The price of the pizza and the amount that it sold for
 (in USD)}
-}}
+}
+}
 \usage{
 pizzaplace
 }
@@ -121,9 +123,36 @@ Red Onions, Feta Cheese, Garlic)
 Tomatoes, Zucchini, Red Peppers, Garlic, Pesto Sauce)
 }
 }
-\examples{
-# Here is a glimpse at the data
-# available in `pizzaplace`
-dplyr::glimpse(pizzaplace)
+\section{Examples}{
+
+
+Here is a glimpse at the pizza data available in \code{pizzaplace}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::glimpse(pizzaplace)
+#> Rows: 49,574
+#> Columns: 7
+#> $ id    <chr> "2015-000001", "2015-000002", "2015-000002", "2015-000002", "201~
+#> $ date  <chr> "2015-01-01", "2015-01-01", "2015-01-01", "2015-01-01", "2015-01~
+#> $ time  <chr> "11:38:36", "11:57:40", "11:57:40", "11:57:40", "11:57:40", "11:~
+#> $ name  <chr> "hawaiian", "classic_dlx", "mexicana", "thai_ckn", "five_cheese"~
+#> $ size  <chr> "M", "M", "M", "L", "L", "L", "L", "M", "M", "M", "S", "S", "S",~
+#> $ type  <chr> "classic", "classic", "veggie", "chicken", "veggie", "supreme", ~
+#> $ price <dbl> 13.25, 16.00, 16.00, 20.75, 18.50, 20.75, 20.75, 16.50, 16.50, 1~
+}\if{html}{\out{</div>}}
 }
+
+\section{Function ID}{
+
+11-5
+}
+
+\seealso{
+Other datasets: 
+\code{\link{countrypops}},
+\code{\link{exibble}},
+\code{\link{gtcars}},
+\code{\link{sp500}},
+\code{\link{sza}}
+}
+\concept{datasets}
 \keyword{datasets}
