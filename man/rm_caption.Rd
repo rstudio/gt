@@ -2,7 +2,7 @@
 % Please edit documentation in R/tab_remove.R
 \name{rm_caption}
 \alias{rm_caption}
-\title{Remove the stubhead label}
+\title{Remove the table caption}
 \usage{
 rm_caption(data)
 }

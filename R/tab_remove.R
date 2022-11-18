@@ -615,8 +615,7 @@ rm_source_notes <- function(
   data
 }
 
-
-#' Remove the stubhead label
+#' Remove the table caption
 #'
 #' @description
 #' We can easily remove the caption text from a **gt** table with
