@@ -1,0 +1,40 @@
+cff-version: 1.2.0
+message: 'If you wish to cite the "gt" package use:'
+type: software
+license: MIT
+title: 'gt: Easily Create Presentation-Ready Display Tables'
+version: 0.8.0
+abstract: Build display tables from tabular data with an easy-to-use set of functions.
+  With its progressive approach, we can construct display tables with a cohesive set
+  of table parts. Table values can be formatted using any of the included formatting
+  functions. Footnotes and cell styles can be precisely added through a location targeting
+  system. The way in which 'gt' handles things for you means that you don't often
+  have to worry about the fine details.
+authors:
+- family-names: Iannone
+  given-names: Richard
+  email: rich@rstudio.com
+  orcid: https://orcid.org/0000-0003-3925-190X
+- family-names: Cheng
+  given-names: Joe
+  email: joe@rstudio.com
+- family-names: Schloerke
+  given-names: Barret
+  email: barret@rstudio.com
+  orcid: https://orcid.org/0000-0001-9986-114X
+- family-names: Hughes
+  given-names: Ellis
+  email: ellis.h.hughes@gsk.com
+  orcid: https://orcid.org/0000-0003-0637-4436
+- family-names: Seo
+  given-names: JooYoung
+  email: jseo1005@illinois.edu
+  orcid: https://orcid.org/0000-0002-4064-6012
+repository: https://CRAN.R-project.org/package=gt
+repository-code: https://github.com/rstudio/gt
+url: https://gt.rstudio.com/
+contact:
+- family-names: Iannone
+  given-names: Richard
+  email: rich@rstudio.com
+  orcid: https://orcid.org/0000-0003-3925-190X
