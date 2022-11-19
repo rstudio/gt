@@ -5,7 +5,7 @@
 <hr style="color:transparent"/>
 <!-- badges: start -->
 <a href="https://cran.r-project.org/package=gt"><img src="https://www.r-pkg.org/badges/version/gt" alt="CRAN status" /></a>
-<a href="https://github.com/rstudio/gt/actions"><img src="https://github.com/rstudio/gt/workflows/R-CMD-check/badge.svg" alt="R build status" /></a>
+<a href="https://github.com/rstudio/gt/actions/workflows/R-CMD-check.yaml"><img src="https://github.com/rstudio/gt/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R build status" /></a>
 <a href="https://app.codecov.io/gh/rstudio/gt?branch=master"><img src="https://codecov.io/gh/rstudio/gt/branch/master/graph/badge.svg" alt="Coverage status" /></a>
 
 <a href="https://bestpractices.coreinfrastructure.org/projects/5593"><img src="https://bestpractices.coreinfrastructure.org/projects/5593/badge" alt="Best Practices"></a>
