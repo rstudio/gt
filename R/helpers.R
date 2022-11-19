@@ -2226,7 +2226,7 @@ cell_borders <- function(
 
         validate_style_in(
           style_vals, names(style_vals), "style",
-          c("solid", "dashed", "dotted", "hidden")
+          c("solid", "dashed", "dotted", "hidden", "double")
         )
 
         cell_style_structure(
