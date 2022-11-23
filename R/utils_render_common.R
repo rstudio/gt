@@ -1,6 +1,8 @@
 # Define the contexts
 all_contexts <- c("html", "latex", "rtf", "word", "default")
 
+missing_val_token <- "::missing_val::"
+
 validate_contexts <- function(contexts) {
 
   if (!all(contexts %in% all_contexts)) {
@@ -307,6 +309,43 @@ reorder_styles <- function(data) {
   dt_styles_set(data = data, styles = styles_tbl)
 }
 
+resolve_secondary_pattern <- function(x) {
+
+  while (grepl("<<.*?>>", x)) {
+
+    m <- gregexpr("<<[^<]*?>>", x, perl = TRUE)
+
+    matched <- unlist(regmatches(x, m))[1]
+
+    m_start <- as.integer(m[[1]])
+    m_length <- attr(m[[1]], "match.length")
+
+    if (grepl(missing_val_token, matched)) {
+
+      # Remove `matched` text from `x`
+      x <-
+        paste0(
+          substr(x, 0, m_start - 1L),
+          substr(x, m_start + m_length, 100000)
+        )
+
+    } else {
+
+      # Remove `<<` and `>>` from `matched` and insert back into `x`
+      matched_trimmed <- gsub("^<<|>>$", "", matched)
+
+      x <-
+        paste0(
+          substr(x, 0, m_start - 1L),
+          matched_trimmed,
+          substr(x, m_start + m_length, 100000)
+        )
+    }
+  }
+
+  x
+}
+
 #' Perform merging of column contents
 #'
 #' This merges column content together with a pattern and possibly with a `type`
@@ -334,19 +373,40 @@ perform_col_merge <- function(data, context) {
     if (type == "merge") {
 
       mutated_column <- col_merge[[i]]$vars[1]
-      mutated_column_sym <- sym(mutated_column)
 
       columns <- col_merge[[i]]$vars
       pattern <- col_merge[[i]]$pattern
 
+      glue_src_na_data <- lapply(as.list(data_tbl[, columns]), FUN = is.na)
+
       glue_src_data <- as.list(body[, columns])
+      glue_src_data <-
+        lapply(
+          seq_along(glue_src_data), FUN = function(x) {
+            glue_src_data[[x]][
+              glue_src_data[[x]] == "NA" & glue_src_na_data[[x]]
+            ] <- missing_val_token
+            glue_src_data[[x]]
+          }
+        )
       glue_src_data <- stats::setNames(glue_src_data, seq_len(length(glue_src_data)))
 
-      body <-
-        dplyr::mutate(
-          body,
-          !!mutated_column_sym := as.character(glue_gt(glue_src_data, pattern))
-        )
+      glued_cols <- as.character(glue_gt(glue_src_data, pattern))
+
+      if (grepl("<<.*?>>", pattern)) {
+
+        glued_cols <-
+          vapply(
+            glued_cols,
+            FUN.VALUE = character(1),
+            USE.NAMES = FALSE,
+            FUN = resolve_secondary_pattern
+          )
+
+        glued_cols <- gsub("<<|>>", "", glued_cols)
+      }
+
+      body[, mutated_column] <- glued_cols
 
     } else if (type == "merge_n_pct") {
 
