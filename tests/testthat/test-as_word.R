@@ -221,7 +221,7 @@ test_that("word ooxml can be generated from gt object", {
     as_word()
 
   gt_exibble_min_sha1 <- digest::sha1(gt_exibble_min)
-  expect_equal(gt_exibble_min_sha1, "a5101394f72dfc041b2b0fc5faf57a1a7dfb8dd6")
+  expect_equal(gt_exibble_min_sha1, "b59b268fb04465cdbf341513a49c110e077ce773")
 })
 
 test_that("word ooxml escapes special characters in gt object", {
