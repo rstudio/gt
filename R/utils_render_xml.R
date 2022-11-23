@@ -422,6 +422,22 @@ xml_rPr <- function(..., app = "word") {
   )
 }
 
+# run style
+xml_rStyle <- function(
+  ...,
+  val = "Compact",
+  app = "word"
+) {
+
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("rStyle", app),
+    varArgs = list(
+      htmltools::HTML(paste0(...)),
+      `w:val` = val
+    )
+  )
+}
+
 # Font selection (child of `rPr`)
 xml_r_font <- function(
     ascii_font = "Calibri",
@@ -524,11 +540,14 @@ xml_shd <- function(fill = "auto", app = "word") {
 }
 
 # Text break
-xml_br <- function(app = "word") {
+xml_br <- function(type = "textWrapping", clear = "all", app = "word") {
 
   htmltools::tag(
     `_tag_name` = xml_tag_type("br", app),
-    varArgs = list()
+    varArgs = list(
+      `w:type` = type,
+      `w:clear` = clear
+    )
   )
 }
 
@@ -662,14 +681,12 @@ xml_table_autonum <- function(
 footnote_mark_to_xml <- function(mark) {
 
   as.character(
-    htmltools::tagList(
+    xml_r(
       xml_rPr(
         xml_baseline_adj(v_align = "superscript"),
-        xml_i(active = TRUE),
-        xml_t(mark),
-        xml_i(active = FALSE),
-        xml_baseline_adj(v_align = "baseline")
-      )
+        xml_i(active = TRUE)
+      ),
+      xml_t(mark)
     )
   )
 }
@@ -788,8 +805,6 @@ create_table_caption_component_xml <- function(
 
   # Get table options
   table_font_color <- dt_options_get_value(data, option = "table_font_color")
-
-  browser()
 
   # Get the footnote marks for the title
   if ("title" %in% footnotes_tbl$locname) {
@@ -1489,6 +1504,8 @@ create_body_component_xml <- function(
             dplyr::pull("styles") %>%
             .[1] %>% .[[1]]
 
+
+
           group_heading_row <-
             xml_tr(
               xml_trPr(
@@ -1742,6 +1759,8 @@ create_footnotes_component_xml <- function(
     return("")
   }
 
+
+
   stub_components <- dt_stub_components(data = data)
 
   cell_style <- dt_styles_get(data = data) %>%
@@ -1778,39 +1797,42 @@ create_footnotes_component_xml <- function(
       seq_along(footnote_ids),
       function(x) {
 
-        footnote_content <- htmltools::tagList(
-          xml_r(
-            xml_rPr(
-              xml_r_font(
-                ascii_font = cell_style[["cell_text"]][["font"]] %||% "Calibri",
-                ansi_font = cell_style[["cell_text"]][["font"]] %||% "Calibri"
+        footnote_content <- xml_p(
+          xml_pPr(),
+          do.call('paste0',list(
+            if(!is.na(footnote_ids[x])){
+              xml_r(
+                xml_rPr(
+                  xml_r_font(
+                    ascii_font = cell_style[["cell_text"]][["font"]] %||% "Calibri",
+                    ansi_font = cell_style[["cell_text"]][["font"]] %||% "Calibri"
+                  ),
+                  if (!is.null(cell_style[["cell_text"]][["color"]])) {
+                    xml_color(color = cell_style[["cell_text"]][["color"]])
+                  },
+                  xml_sz(val = cell_style[["cell_text"]][["size"]] %||% 20),
+                  xml_baseline_adj(v_align = "superscript"),
+                  xml_i()
+                ),
+                xml_t(footnote_ids[x])
+              )},
+            xml_r(
+              xml_rPr(
+                xml_r_font(
+                  ascii_font = cell_style[["cell_text"]][["font"]] %||% "Calibri",
+                  ansi_font = cell_style[["cell_text"]][["font"]] %||% "Calibri"
+                ),
+                if (!is.null(cell_style[["cell_text"]][["color"]])) {
+                  xml_color(color = cell_style[["cell_text"]][["color"]])
+                },
+                xml_sz(val = cell_style[["cell_text"]][["size"]] %||% 20),
+                xml_baseline_adj(v_align = "baseline")
               ),
-              if (!is.null(cell_style[["cell_text"]][["color"]])) {
-                xml_color(color = cell_style[["cell_text"]][["color"]])
-              },
-              xml_sz(val = cell_style[["cell_text"]][["size"]] %||% 20),
-              xml_baseline_adj(v_align = "superscript"),
-              xml_i()
-            ),
-            xml_t(if(!is.na(footnote_ids[x])) {x = footnote_ids[x]},xml_space = white_space_to_t_xml_space(cell_style[["cell_text"]][["whitespace"]]))
-          ),
-          xml_r(
-            xml_rPr(
-              xml_r_font(
-                ascii_font = cell_style[["cell_text"]][["font"]] %||% "Calibri",
-                ansi_font = cell_style[["cell_text"]][["font"]] %||% "Calibri"
-              ),
-              if (!is.null(cell_style[["cell_text"]][["color"]])) {
-                xml_color(color = cell_style[["cell_text"]][["color"]])
-              },
-              xml_sz(val = cell_style[["cell_text"]][["size"]] %||% 20),
-              xml_baseline_adj(v_align = "baseline")
-            ),
-            xml_t(white_space_in_text(x = footnote_text[x], whitespace = whitespace), xml_space = white_space_to_t_xml_space(cell_style[["cell_text"]][["whitespace"]]))
-          )
+              xml_t(x = footnote_text[[x]])
+            )
+          ))
         )
 
-        class(footnote_content) <- c("ooxml_r",class(footnote_content))
 
         as.character(
           xml_tr(
@@ -1824,7 +1846,8 @@ create_footnotes_component_xml <- function(
               v_align = cell_style[["cell_text"]][["v_align"]],
               col_span = n_cols,
               fill = cell_style[["cell_fill"]][["color"]],
-              keep_with_next = keep_with_next
+              keep_with_next = keep_with_next,
+              whitespace = whitespace
             )
           )
         )
@@ -2020,11 +2043,6 @@ white_space_in_text <- function(x, whitespace = NULL){
   ## normal drops all newlines and collapse spaces
   ## general behavior based on: https://developer.mozilla.org/en-US/docs/Web/CSS/white-space
 
-  ## remove newlines (br) unless preserving it
-  if(!isTRUE(x %in% c( "pre", "pre-wrap", "pre-line","break-spaces"))){
-    x <- gsub("\\<w\\:br\\/\\>"," ",x)
-  }
-
   ## collapse white spaces unless preserving it
   if(!isTRUE(x %in% c( "pre", "pre-wrap", "break-spaces"))){
     x <- gsub("\\s+|\\t+"," ",x)
@@ -2032,6 +2050,56 @@ white_space_in_text <- function(x, whitespace = NULL){
 
   x
 
+}
+
+white_space_br_in_xml <- function(x, whitespace, ...){
+
+  ##options for white space: normal, nowrap, pre, pre-wrap, pre-line, break-spaces
+  ## normal drops all newlines and collapse spaces
+  ## general behavior based on: https://developer.mozilla.org/en-US/docs/Web/CSS/white-space
+
+  ## remove newlines (br) unless preserving it
+  if(!isTRUE(x %in% c( "pre", "pre-wrap", "pre-line","break-spaces"))){
+
+    paragraphs <- x %>% tag_pull("w:p")
+
+    for(p in paragraphs){
+
+      p_ref <- p
+      paragraph_children <- p %>% tag_get_children()
+
+      break_tags_locs <- which(paragraph_children %in% tag_pull(p,"w:br"))
+      run_tags_locs <-  which(paragraph_children %in% tag_pull(p,"w:r"))
+
+      if(length(break_tags_locs) > 0){
+
+        for(break_tag_loc in break_tags_locs){
+
+          ## if the br is between two runs, replace with space
+          if(any(run_tags_locs > break_tag_loc)  & any(run_tags_locs < break_tag_loc )){
+           replacement_br <- xml_r(xml_rPr(),xml_t(" ", xml_space = "preserve")) %>%
+             as.character() %>%
+             process_cell_content_ooxml_t(...) %>%
+             process_cell_content_ooxml_r(...)
+          }else{
+            replacement_br <- ""
+          }
+
+          p <- p %>%
+            tag_replace_child(
+              replacement_br,
+              break_tag_loc
+            )
+        }
+
+        x <- stringr::str_replace(
+            x, stringr::fixed(p_ref), p)
+
+      }
+    }
+  }
+
+  x
 }
 
 
@@ -2102,60 +2170,375 @@ process_cell_content <- function(x, ...){
   UseMethod("process_cell_content",x)
 }
 
-process_cell_content.character <- function(x, ..., whitespace = NULL) {
-    x <- xml_t(white_space_in_text(x = x, whitespace = whitespace), xml_space = white_space_to_t_xml_space(whitespace))
-    process_cell_content.ooxml_t(x = x, ...)
+process_cell_content.character <- function(x, ...) {
+  x <- xml_p(xml_pPr(),
+             xml_r(xml_rPr(),
+                   xml_t(x)
+                   )
+             )
+  process_cell_content(x = x, ...)
 }
 
-process_cell_content.ooxml_t<- function(x,..., font = NULL, size = NULL, color = NULL, style = NULL, weight = NULL){
+process_cell_content.shiny.tag <- function(x, ...) {
 
-  x <- xml_r(
-    xml_rPr(
-      xml_r_font(
-        ascii_font = font %||% "Calibri",
-        ansi_font = font %||% "Calibri"
+  x %>%
+    as.character() %>%
+    process_cell_content_ooxml_t(...) %>%
+    process_cell_content_ooxml_r(...) %>%
+    process_cell_content_ooxml_p(...)
+}
+
+process_cell_content.html <- process_cell_content.shiny.tag
+
+
+#' @importFrom htmltools tagQuery
+process_cell_content_ooxml_t <- function(x, ..., whitespace = NULL) {
+
+  text_tag <- x %>% tag_pull("w:t")
+
+  for (t in text_tag) {
+
+    text_tag_content <- tag_content(t)
+    text_tag_attr <- tag_attrs(t)
+
+    ## if its already set to preserve, respect preservation
+    if (!text_tag_attr[["xml:space"]] == "preserve") {
+      text_tag_content <- white_space_in_text(x = text_tag_content, whitespace = whitespace)
+      t_attr_xml_space = white_space_to_t_xml_space(whitespace)
+
+      text_tag_new <-
+        xml_t(text_tag_content, xml_space = t_attr_xml_space) %>%
+        as.character()
+
+      if (text_tag_new != t) {
+        x <- x %>%
+          stringr::str_replace(stringr::fixed(t),
+                               text_tag_new)
+      }
+    }
+
+  }
+
+  x
+
+}
+
+process_cell_content_ooxml_r<- function(x,..., font = NULL, size = NULL, color = NULL, style = NULL, weight = NULL){
+
+  ## cell level styles
+  cell_styles <- list(
+      as.character(
+        xml_r_font(
+          ascii_font = font %||% "Calibri",
+          ansi_font = font %||% "Calibri"
+          )
       ),
-      xml_sz(val = size %||% 20),
+      as.character(xml_sz(val = size %||% 20)),
       if (!is.null(color)) {
-        xml_color(color = color)
+        as.character(xml_color(color = color))
       },
       if (identical(style, "italic")) {
-        xml_i()
+        as.character(xml_i())
       },
       if (identical(weight, "bold")) {
-        xml_b()
+        as.character(xml_b())
       }
-    ),
-    x
-  )
+    )
 
-  process_cell_content.ooxml_r(x = x, ...)
-}
+  cell_styles <- cell_styles[!sapply(cell_styles, is.null)]
 
-process_cell_content.ooxml_r <- function(x, ..., align = NULL, col_span = NULL, stretch = NULL, keep_with_next = TRUE  ){
-  xml_p(
-    xml_pPr(
-      xml_spacing(before = 0, after = 60),
-      if (!is.null(col_span)) { xml_gridSpan(val = as.character(col_span)) },
-      if (keep_with_next) { xml_keepNext() },
-      if (!is.null(stretch)) {
-        xml_rPr(
-          xml_spacing(val = stretch_to_xml_stretch(stretch))
+  cell_styles_types <- sapply(cell_styles,tag_type)
+
+  ## pull run styles from x
+  run_tags <- x %>% tag_pull("w:r")
+
+  ## if no run found, assume missing and add
+  if(identical(run_tags, character())){
+    x <- xml_r(xml_rPr(),x) %>% as.character()
+    run_tags <- x %>% tag_pull("w:r")
+  }
+
+
+  for(run in run_tags){
+
+    run_style <- run_style_new <- run %>% tag_pull("w:rPr")
+
+    run_style_children <- run_style %>% tag_get_children()
+    run_style_children_types <- sapply(run_style_children,tag_type)
+
+    ## which styles are new?
+    new_cell_styles <- which(!cell_styles_types %in% run_style_children_types)
+
+    for(cell_style_idx in new_cell_styles){
+      run_style <- run_style %>%
+        tag_add_child(
+          cell_styles[[cell_style_idx]]
         )
-      },
-      if (!is.null(align)) { xml_jc(val = align) }
-    ),
-    x
-  )
+    }
+
+    text_tag_new <- run %>%
+      tag_replace_child(
+        run_style,
+        idx = 1
+      )
+
+    x <- x %>%
+      stringr::str_replace(
+        stringr::fixed(run),
+        text_tag_new
+      )
+  }
+
+  x
 }
 
+process_cell_content_ooxml_p <- function(x, ..., align = NULL, col_span = NULL, stretch = NULL, keep_with_next = TRUE, whitespace = NULL){
+
+  ## cell level styles
+  cell_styles <- list(
+    as.character(
+      xml_spacing(before = 0, after = 60)
+    ),
+    if (!is.null(col_span)) {
+      as.character(xml_gridSpan(val = as.character(col_span)))
+    },
+    if (keep_with_next) {
+      as.character(xml_keepNext())
+    },
+    if (!is.null(stretch)) {
+      as.character(xml_rPr(
+        xml_spacing(val = stretch_to_xml_stretch(stretch))
+      ))
+    },
+    if (!is.null(align)) {
+      as.character(xml_jc(val = align))
+    }
+  )
+
+  cell_styles <- cell_styles[!sapply(cell_styles, is.null)]
+
+  cell_styles_types <- sapply(cell_styles,tag_type)
+
+  ## pull run styles from x
+  paragraph_tags <- x %>% tag_pull("w:p")
+
+  ## if no paragraph found, assume missing and add
+  if(identical(paragraph_tags, character())){
+    x <- xml_p(xml_pPr(),x) %>% as.character()
+    paragraph_tags <- x %>% tag_pull("w:p")
+  }
+
+  for(paragraph in paragraph_tags){
+
+    paragraph_style <- paragraph_style_new <- paragraph %>% tag_pull("w:pPr")
+
+    paragraph_style_children <- paragraph_style %>% tag_get_children()
+    paragraph_style_children_types <- sapply(paragraph_style_children,tag_type)
+
+    ## which styles are new?
+    new_cell_styles <- which(!cell_styles_types %in% paragraph_style_children_types)
+
+    for(cell_style_idx in new_cell_styles){
+      paragraph_style <- paragraph_style %>%
+        tag_add_child(
+          cell_styles[[cell_style_idx]]
+        )
+    }
+
+    text_tag_new <- paragraph %>%
+      tag_replace_child(
+        paragraph_style,
+        idx = 1
+      )
+
+    x <- x %>%
+      stringr::str_replace(
+        stringr::fixed(paragraph),
+        text_tag_new
+      )
+  }
+
+  x <- white_space_br_in_xml(x, ..., align = NULL, col_span = NULL, stretch = NULL, keep_with_next = TRUE, whitespace = NULL)
+
+  x
+
+}
 
 ## default to passing through if unknown type
 process_cell_content.default <- process_cell_content.character
 
-#   function(x, ...){
-#   x
-# }
+
+## functions to work with ooxml like xml (kinda)
+tag_pull <- function(x, tag){
+  tag_regex <- paste0(
+    "(?:(<",tag,".*?>).*?(<\\/",tag,">)|^(<\\/<",tag,">)*$)"
+  )
+  stringr::str_extract_all(as.character(x),tag_regex)[[1]]
+}
+
+tag_type <- function(x){
+  x %>%
+    stringr::str_extract("^<.+?(\\s(.*?))*>") %>%
+    stringr::str_replace("^<(.+?)(\\s+(.*?))*>",replacement = "\\1")
+}
+
+tag_content <- function(x){
+
+  tag_start <- x %>%
+    stringr::str_extract("^<.+?(\\s(.*?))*>")
+  tag_type <- tag_start %>%
+    stringr::str_replace("^<(.+?)(\\s+(.*?))*>",replacement = "\\1")
+  tag_end <- paste0("</",tag_type,">")
+
+  x %>%
+    ## remove parent
+    stringr::str_remove(paste0("^",tag_start))%>%
+    stringr::str_remove(paste0(tag_end,"$"))
+}
+
+tag_attrs <- function(x){
+
+  tag_attr_contents <- x %>%
+    stringr::str_extract("^<.+?\\s*(.*?)>") %>%
+    stringr::str_replace(
+      pattern = "^<.+?((\\s+.*?)*)>",
+      replacement = "\\1"
+    ) %>%
+    trimws()
+
+  tag_attr_contents %>%
+    stringr::str_split("\\s(?!=)(?=(?:[^\'\"]*(\'|\")([^\'\"])*(\'|\"))*[^\'\"]*\\Z)") %>%
+    .[[1]] %>%
+    lapply(function(.x) {
+      split <- stringr::str_split(.x, "=", 2, simplify = TRUE)
+      attr_value <- split[[2]] %>%stringr::str_remove_all("(\"|'$|(?<==[\\s+]?)'|'(?=\\s+))")
+      attr_name <- split[[1]]
+      setNames(attr_value, attr_name)
+    }) %>%
+    do.call('c',.)
+}
+
+tag_add_attrs <- function(x, attrs, replace = FALSE){
+
+  existing_attrs <- tag_attrs(x)
+
+  for(attr_to_add in names(attrs)){
+    if(!(attr_to_add %in% names(existing_attrs)) | replace){
+      existing_attrs[[attr_to_add]] <-
+        attrs[[attr_to_add]]
+    }
+  }
+
+  new_tag_attrs <- paste0(
+    names(existing_attrs),"=\"",existing_attrs,"\"", collapse = " "
+  )
+
+  stringr::str_replace(
+    string = x,
+    pattern = "^<(.+?)((\\s+.*?)*)>",
+    replacement = paste0("<\\1 ",new_tag_attrs,">")
+  )
+
+}
+
+tag_get_children <- function(x) {
+
+  tag_sans_parent <- tag_content(x)
+
+  children <- c()
+
+  if(length(tag_sans_parent) == 0){
+    return(children)
+  }
+
+  ## split tags
+  while (tag_sans_parent != "") {
+    child_type <- tag_type(tag_sans_parent)
+    child_tag <- tag_pull(tag_sans_parent, tag = child_type)[1]
+    children[length(children) + 1] <- child_tag
+    tag_sans_parent <-
+      tag_sans_parent %>% stringr::str_remove(stringr::fixed(child_tag))
+  }
+
+  children
+
+}
+
+tag_add_child <- function(x, child, where = "last"){
+
+  stopifnot(where %in% c("last","first") | is.numeric(where))
+
+  tag_start <- x %>%
+    stringr::str_extract("^<.+?(\\s(.*?))*>")
+  tag_type <- tag_start %>%
+    stringr::str_replace("^<(.+?)(\\s+(.*?))*>",replacement = "\\1")
+  tag_end <- paste0("</",tag_type,">")
+
+  children <- tag_get_children(x)
+
+  if(is.null(children)){
+    children <- child
+  }else{
+
+    if(where == "last"){
+      children <- c(children,child)
+    }else if(where == "first"){
+      children <- c(child, children)
+    }else{
+      if(where > length(children)){
+        warning("Child xml to be added as last element")
+        where <- length(children) +1
+      }
+      if(where < 1){
+        warning("Child xml to be added as first element")
+        where <- 1
+      }
+
+      leading_set <- seq_len(where - 1)
+      ending_set <- setdiff(seq_len(length(children)),leading_set)
+
+      children <- c(children[leading_set],child,children[ending_set])
+
+    }
+  }
+
+
+  paste0(c(tag_start,
+           children,
+           tag_end),
+         collapse = "")
+
+}
+
+tag_replace_child <- function(x, child, idx = 1){
+
+  stopifnot(is.numeric(idx))
+
+  tag_start <- x %>%
+    stringr::str_extract("^<.+?(\\s(.*?))*>")
+  tag_type <- tag_start %>%
+    stringr::str_replace("^<(.+?)(\\s+(.*?))*>",replacement = "\\1")
+  tag_end <- paste0("</",tag_type,">")
+
+  children <- tag_get_children(x)
+
+  if(idx > length(children)){
+    warning("Child xml will replace last element")
+    idx <- length(children) +1
+  }
+  if(idx < 1){
+    warning("Child xml will replace first element")
+    idx <- 1
+  }
+
+  children[idx] <- child
+
+  paste0(c(tag_start,
+           children,
+           tag_end),
+         collapse = "")
+
+}
 
 
 ## if wrapped in xml, convert to html
@@ -2163,10 +2546,7 @@ parse_to_xml <- function(x,...){
   ##check if wrapped in ooxml
   ## get what it starts with and assign
   if(grepl("^<w:.+>.*</w:.+>$", x)){
-
-    opening_tag <- gsub("<w:([[:word:]])>.+","\\1",x,perl=TRUE)
     x <- htmltools::HTML(x)
-    class(x)<- c(paste0("ooxml_",opening_tag), class(x))
   }
   x
 }
