@@ -328,6 +328,17 @@ xml_pStyle <- function(
   )
 }
 
+# paragraph border
+
+xml_pBdr <- function(..., app = "word"){
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("pBdr", app),
+    varArgs = list(
+      htmltools::HTML(paste0(...))
+    )
+  )
+}
+
 xml_numPr <- function(..., app = "word"){
   htmltools::tag(
     `_tag_name` = xml_tag_type("numPr", app),
@@ -2253,40 +2264,37 @@ process_cell_content_ooxml_r<- function(x,..., font = NULL, size = NULL, color =
   run_tags <- x %>% tag_pull("w:r")
 
   ## if no run found, assume missing and add
-  if(identical(run_tags, character())){
-    x <- xml_r(xml_rPr(),x) %>% as.character()
-    run_tags <- x %>% tag_pull("w:r")
-  }
+  if(!identical(run_tags, character())){
 
+    for(run in run_tags){
 
-  for(run in run_tags){
+      run_style <- run_style_new <- run %>% tag_pull("w:rPr")
 
-    run_style <- run_style_new <- run %>% tag_pull("w:rPr")
+      run_style_children <- run_style %>% tag_get_children()
+      run_style_children_types <- sapply(run_style_children,tag_type)
 
-    run_style_children <- run_style %>% tag_get_children()
-    run_style_children_types <- sapply(run_style_children,tag_type)
+      ## which styles are new?
+      new_cell_styles <- which(!cell_styles_types %in% run_style_children_types)
 
-    ## which styles are new?
-    new_cell_styles <- which(!cell_styles_types %in% run_style_children_types)
+      for(cell_style_idx in new_cell_styles){
+        run_style <- run_style %>%
+          tag_add_child(
+            cell_styles[[cell_style_idx]]
+          )
+      }
 
-    for(cell_style_idx in new_cell_styles){
-      run_style <- run_style %>%
-        tag_add_child(
-          cell_styles[[cell_style_idx]]
+      text_tag_new <- run %>%
+        tag_replace_child(
+          run_style,
+          idx = 1
+        )
+
+      x <- x %>%
+        stringr::str_replace(
+          stringr::fixed(run),
+          text_tag_new
         )
     }
-
-    text_tag_new <- run %>%
-      tag_replace_child(
-        run_style,
-        idx = 1
-      )
-
-    x <- x %>%
-      stringr::str_replace(
-        stringr::fixed(run),
-        text_tag_new
-      )
   }
 
   x

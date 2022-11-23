@@ -625,11 +625,11 @@ markdown_to_xml <- function(text) {
 
         children <- xml2::xml_children(x)
 
-        if (length(children) == 1 && xml2::xml_type(children[[1]]) == "element") {
+        if (length(children) == 1 && xml2::xml_type(children[[1]]) == "element" & xml2::xml_name(children[[1]]) != "list") {
           children <- xml2::xml_children(children[[1]])
         }
 
-        apply_rules <- function(x) {
+        apply_rules <- function(x, ...) {
 
           if (inherits(x, "xml_nodeset")) {
 
@@ -654,7 +654,7 @@ markdown_to_xml <- function(text) {
 
               } else if (is.function(rule)) {
 
-                rule(x, apply_rules)
+                rule(x, apply_rules, ...)
 
               }
             }
@@ -678,14 +678,14 @@ markdown_to_xml <- function(text) {
 cmark_rules_xml <- list(
 
   ## default ordering
-  text = function(x, process) {
+  text = function(x, process, ...) {
     xml_r(xml_rPr(),
           xml_t(
             enc2utf8(as.character(xml2::xml_text(x))),
             xml_space = "preserve")
     ) %>% as.character()
   },
-  paragraph = function(x, process) {
+  paragraph = function(x, process, ...) {
     runs <- lapply(xml2::xml_children(x), process)
     xml_p(
       xml_pPr(),
@@ -698,35 +698,36 @@ cmark_rules_xml <- list(
     ) %>% as.character()
   },
   ## basic styling
-  strong = function(x, process) {
+  strong = function(x, process, ...) {
     x <- process(xml2::xml_children(x))
     add_text_style(x, style = xml_b())
   },
-  emph = function(x, process) {
+  emph = function(x, process, ...) {
     x <- process(xml2::xml_children(x))
     add_text_style(x, style = xml_i())
   },
 
   ## Complex styling
-  heading = function(x, process) {
+  heading = function(x, process, ...) {
     heading_sizes <- c(36, 32, 28, 24, 20, 16)
     fs <- heading_sizes[as.numeric(xml2::xml_attr(x, attr = "level"))]
     x <- process(xml2::xml_children(x))
     add_text_style(x, style = xml_sz(val = fs)) %>%
       xml_p(xml_pPr(),.)
   },
-  thematic_break = function(x, process) {
-    "<w:pict>
-      <v:rect style=\"width:500pt;height:1pt;\" o:hralign=\"center\" fillcolor=\"#bbbbbb\" stroked=\"f\"/>
-    </w:pict>"
-  },
-  link = function(x, process) {
-    # NOTE: Links are difficult to insert in OOXML documents because
-    # a relationship must be provided in the 'document.xml.rels' file
-    xml_r(xml_rPr(),xml_t(xml2::xml_text(x)))
+  thematic_break = function(x, process, ...) {
+    xml_p(
+      xml_pPr(
+        xml_keepNext(),
+        xml_pBdr(
+          xml_border(dir = "bottom", type = "single", size = 6, space = 1, color = "auto")
+        ),
+        xml_spacing(after = 60)
+      )
+    ) %>% as.character()
   },
 
-  list = function(x, process) {
+  list = function(x, process, ..., indent_level = 0) {
 
     type <- xml2::xml_attr(x, attr = "type")
     children <- xml2::xml_children(x)
@@ -739,9 +740,14 @@ cmark_rules_xml <- list(
           children,
           FUN = function(child) {
 
-            li_content <- process(xml2::xml_children(child))
+            li_content <- process(child, indent_level = indent_level + 1)
 
-            paragraph_style <- li_content %>% tag_pull("w:pPr")
+            ## only update first tag
+            li_to_update <- li_content[[1]]
+
+            paragraph_style <- li_to_update %>% tag_pull("w:pPr")
+
+            ## check
 
             paragraph_style <- paragraph_style %>%
               tag_add_child(
@@ -750,31 +756,53 @@ cmark_rules_xml <- list(
               tag_add_child(
                 as.character(
                   xml_numPr(
-                    xml_ilvl(val = 0),
-                    xml_numId(val = ifelse(type == "ordered", 1, 3))
+                    xml_ilvl(val = indent_level),
+                    xml_numId(val = ifelse(type != "ordered", 4, 2))
                     )
                   )
                 )
 
-            li_content %>%
+            if(type == "bullet"){
+
+              paragraph_style <- paragraph_style %>%
+                tag_add_child(
+                  as.character(xml_pStyle(val = "ListParagraph"))
+                )
+            }
+
+            li_to_update <-li_to_update %>%
               tag_replace_child(
                 paragraph_style,idx = 1
               )
+
+            li_content[[1]] <- li_to_update
+
+            paste0(li_content, collapse = "")
 
           }
         ),
         collapse = ""
     )
   },
-  item = function(x, process) {
-    paste0(process(xml2::xml_child(x)),collapse = "")
+  item = function(x, process, ...) {
+
+    item_contents <- lapply(
+        xml2::xml_children(x),
+        process,
+        ...
+      )
+
+    unlist(item_contents)
+
   },
-  code = function(x, process) {
+
+  ## code sections
+  code = function(x, process, ...) {
     xml_r(xml_rPr(xml_rStyle(val = "Macro Text")),
           xml_t(xml2::xml_text(x), xml_space = "preserve"))
 
   },
-  code_block = function(x, process) {
+  code_block = function(x, process, ...) {
     ##split text up by new line
     text <- strsplit(xml2::xml_text(x),split = "\n")[[1]]
     code_text <- lapply(text, function(line){
@@ -789,9 +817,16 @@ cmark_rules_xml <- list(
                   collapse = "<w:br/>"
                 )))
   },
-  html_inline = function(x, process) {
 
-    browser()
+  ## line breaks
+  softbreak = function(x, process, ...) {
+    xml_br(clear = "right")
+  },
+  linebreak = function(x, process, ...) {
+    xml_br()
+  },
+
+  html_inline = function(x, process, ...) {
 
     tag <- xml2::xml_text(x)
 
@@ -842,13 +877,13 @@ cmark_rules_xml <- list(
     # Any unrecognized HTML tags are stripped, returning nothing
     return(rtf_raw(""))
   },
-  softbreak = function(x, process) {
-    xml_br(clear = "right")
+  link = function(x, process, ...) {
+    # NOTE: Links are difficult to insert in OOXML documents because
+    # a relationship must be provided in the 'document.xml.rels' file
+    xml_r(xml_rPr(),xml_t(xml2::xml_text(x)))
   },
-  linebreak = function(x, process) {
-    xml_br()
-  },
-  block_quote = function(x, process) {
+
+  block_quote = function(x, process, ...) {
     # TODO: Implement
     process(xml2::xml_children(x))
   }
