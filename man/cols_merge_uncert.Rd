@@ -44,7 +44,9 @@ in a single column (that of \code{col_val}). What results is a column with value
 and associated uncertainties (e.g., \verb{12.0 ± 0.1}), and any columns specified
 in \code{col_uncert} are hidden from appearing the output table.
 }
-\details{
+\section{Comparison with other column-merging functions}{
+
+
 This function could be somewhat replicated using \code{\link[=cols_merge]{cols_merge()}} in the case
 where a single column is supplied for \code{col_uncert}, however,
 \code{cols_merge_uncert()} employs the following specialized semantics for \code{NA}
@@ -62,11 +64,12 @@ Any resulting \code{NA} values in the \code{col_val} column following the merge
 operation can be easily formatted using the \code{\link[=sub_missing]{sub_missing()}} function.
 
 This function is part of a set of four column-merging functions. The other
-two are the general \code{\link[=cols_merge]{cols_merge()}} function and the specialized
+three are the general \code{\link[=cols_merge]{cols_merge()}} function and the specialized
 \code{\link[=cols_merge_range]{cols_merge_range()}} and \code{\link[=cols_merge_n_pct]{cols_merge_n_pct()}} functions. These functions
 operate similarly, where the non-target columns can be optionally hidden from
 the output table through the \code{hide_columns} or \code{autohide} options.
 }
+
 \section{Examples}{
 
 
