@@ -20,11 +20,13 @@ library(rlang)
 library(purrr)
 ```
 
-Intro about ADaM-flavored gt_* datasets. Not real ADaM data but something users might recognize.
+*gt* contains the gt_adsl dataset, which resembles the structure of a common ADSL ADaM dataset for clinical trial data. Each record refers to demographic information for a single subject on the fictional trial. Every column is equipped with a label attribute allowing the users to get familiar with the data.
 
 ```{r glimpse_datasets}
-glimpse(gt_adsl)
+str(gt_adsl)
 ```
+
+### Demographic Summary Tables
 
 Let's start with an example of a basic demographic summary table. In a first step, we use *dplyr* and *tidyr* to create a tibble with the shape of our desired table and then use *gt* functions to create the output table:
 
@@ -40,18 +42,18 @@ custom_summary <- function(df, group_var, sum_var){
     category_lbl <- sprintf("%s, n (%%)", attr(eval(expr(`$`(df, !!sum_var))), "label"))
 
     df_out <- df %>%
-      dplyr::group_by(!!group_var) %>%
-      dplyr::mutate(N = dplyr::n()) %>%
-      dplyr::ungroup() %>%
-      dplyr::group_by(!!group_var, !!sum_var) %>%
+      dplyr::group_by(!!group_var)  |> 
+      dplyr::mutate(N = dplyr::n()) |> 
+      dplyr::ungroup() |> 
+      dplyr::group_by(!!group_var, !!sum_var) |> 
       dplyr::summarize(
         val = dplyr::n(),
         pct = dplyr::n()/mean(N),
         .groups = "drop"
-        ) %>%
-      dplyr::ungroup() %>%
-      tidyr::pivot_wider(id_cols = !!sum_var, names_from = !!group_var, values_from = c(val, pct)) %>%
-      dplyr::rename(label = !!sum_var) %>%
+        ) |> 
+      dplyr::ungroup()  |> 
+      tidyr::pivot_wider(id_cols = !!sum_var, names_from = !!group_var, values_from = c(val, pct))  |> 
+      dplyr::rename(label = !!sum_var) |> 
       dplyr::mutate(across(where(is.numeric), ~ifelse(is.na(.), 0, .)),
                     category = category_lbl)
 
@@ -59,8 +61,8 @@ custom_summary <- function(df, group_var, sum_var){
 
     category_lbl <- sprintf("%s (%s)", attr(eval(expr(`$`(df, !!sum_var))), "label"), attr(eval(expr(`$`(df, !!sum_var))), "units"))
 
-    df_out <- df %>%
-      dplyr::group_by(!!group_var) %>%
+    df_out <- df  |> 
+      dplyr::group_by(!!group_var)  |> 
       dplyr::summarize(
         n = sum(!is.na(!!sum_var)),
         mean = mean(!!sum_var, na.rm = TRUE),
@@ -70,14 +72,14 @@ custom_summary <- function(df, group_var, sum_var){
         max = max(!!sum_var, na.rm = TRUE),
         min_max = NA,
         .groups = "drop"
-                       ) %>%
-      dplyr::ungroup() %>%
-      tidyr::pivot_longer(cols = c(n, mean, median, min_max), names_to = "label", values_to = "val") %>%
+                       )  |> 
+      dplyr::ungroup()  |> 
+      tidyr::pivot_longer(cols = c(n, mean, median, min_max), names_to = "label", values_to = "val")  |> 
       dplyr::mutate(sd = ifelse(label == "mean", sd, NA),
                     max = ifelse(label == "min_max", max, NA),
                     min = ifelse(label == "min_max", min, NA),
-                    label = dplyr::recode(label, "mean" = "Mean (SD)", "min_max" = "Min - Max", "median" = "Median")) %>%
-      tidyr::pivot_wider(id_cols = label, names_from = !!group_var, values_from = c(val, sd, min, max)) %>%
+                    label = dplyr::recode(label, "mean" = "Mean (SD)", "min_max" = "Min - Max", "median" = "Median"))  |> 
+      tidyr::pivot_wider(id_cols = label, names_from = !!group_var, values_from = c(val, sd, min, max))  |> 
       dplyr::mutate(category = category_lbl)
 
   }
@@ -101,8 +103,7 @@ gt_adsl_tbl <- adsl_summary |>
   ) |> 
   tab_header(
     title = "x.x: Demographic Characteristics",
-    subtitle = "x.x.x: Demographic Characteristics - {gt} Analysis Set",
-    preheader = c("Protocol: XXXXX", "Cutoff date: DDMMYYYY")
+    subtitle = "x.x.x: Demographic Characteristics - {gt} Analysis Set"
   )
 
 gt_adsl_tbl
@@ -137,12 +138,14 @@ gt_adsl_tbl <- gt_adsl_tbl |>
 gt_adsl_tbl
 ```
 
-Now that looks more like a demographic table. We can now start to look in to style features. Let us indent the values in the stub using `tab_style()` and left-align the title with `opt_align_table_header()`. 
+Now that looks more like a demographic table. We can now start to look in to style features. Let us indent the values in the stub using `tab_stub_indent()` and left-align the title with `opt_align_table_header()`. 
 
 ```{r}
 gt_adsl_tbl <- gt_adsl_tbl |> 
-  tab_style(style = cell_text(indent = px(30)),
-            locations = cells_stub()) |> 
+  tab_stub_indent(
+    rows = everything(),
+    indent = 5
+  ) |> 
   opt_align_table_header(align = "left") 
 
 gt_adsl_tbl
@@ -187,7 +190,11 @@ gt_adsl_tbl <- gt_adsl_tbl |>
 gt_adsl_tbl
 ```
 
-In another table, we can summarize the number of subjects with an event per intervention in the subgroup defined by the age groups.
+### Response/ Event Rate Analysis Tables
+
+In another table, we can summarize the number of subjects with an event per intervention in the subgroup defined by the age groups. Within each intervention group we are counting the number and percentage of participants with an event (`EVNTFL == "Y"`) as well as the total number of participants. The number of participants with an event divided by the number without an event are the odds of experiencing the event per study intervention. The odds ratio is then computed as the odds under Drug 1 divided by the odds under Placebo.
+
+The below code performs the calculation outlined above within the subgroup defined by `AAGEGR1`, where confidence intervals around the event rates are computed using the Clopper Pearson method.
 
 ```{r gt_resp_summary}
 gt_responders <- gt_adsl |> 
@@ -216,19 +223,35 @@ gt_responders <- gt_adsl |>
   dplyr::select(-tidyselect::starts_with("odds_"))
 ```
 
+Let's first create a basic **gt** table with a left-aligned table title and subtitle. Here we are using `tab_header()` and `opt_align_table_header()` again.
+
 ```{r gt_resp_tbl}
-gt_responders |> 
+gt_resp_tbl <- gt_responders |> 
   gt() |> 
   tab_header(
     title = "x.x: Efficacy Data",
-    subtitle = "x.x.x: Occurence of Event per Subgroup - {gt} Analysis Set",
-    preheader = c("Protocol: XXXXX", "Cutoff date: DDMMYYYY")
+    subtitle = "x.x.x: Occurence of Event per Subgroup - {gt} Analysis Set"
   ) |> 
-  opt_align_table_header(align = "left") |> 
-  sub_missing(missing_text = "NE") |> 
+  opt_align_table_header(align = "left")
+
+gt_resp_tbl
+```
+
+Next, we are formatting the columns for counts to integers with `fmt_integer()`, percentages and CI's around percentages as numbers with one decimal and odds ratio and the CI around the odds ratio as numbers with two decimals, in both cases using `fmt_number()`.
+
+```{r}
+gt_resp_tbl <- gt_resp_tbl |> 
   fmt_integer(columns = starts_with("n_")) |> 
   fmt_number(columns = starts_with(c("pct_", "ci_")), decimals = 1) |> 
-  fmt_number(columns = starts_with("or")) |> 
+  fmt_number(columns = starts_with("or"), decimals = 2) 
+
+gt_resp_tbl
+```
+
+We can now merge the columns for participants with events, total number of participants and percentage of participants with events, as well as the 95% CI's around the event rate using `cols_merge()`.  To indicate the intervention group we are adding tab spanners with `tab_spanner()`. 
+
+```{r}
+gt_resp_tbl <- gt_resp_tbl |> 
   cols_merge(columns = c("n_resp_Placebo", "n_total_Placebo", "pct_Placebo"), pattern = "{1}/{2} ({3})") |> 
   cols_merge(columns = c("n_resp_Drug 1", "n_total_Drug 1", "pct_Drug 1"), pattern = "{1}/{2} ({3})") |> 
   cols_merge(columns = c("ci_low_Placebo", "ci_up_Placebo"), pattern = "[{1}, {2}]") |> 
@@ -241,11 +264,29 @@ gt_responders |>
   tab_spanner(
     label = "Placebo",
     columns = c("n_resp_Placebo", "ci_low_Placebo")
-  ) |> 
+  ) 
+
+gt_resp_tbl
+```
+The table is looking way better now. Let's now group the two categories and highlight the fact that these are actually age subgroups. We are using `tab_row_group()` to manually add a row group label *Age*.
+
+
+```{r}
+gt_resp_tbl <- gt_resp_tbl |> 
   tab_row_group(
     label = "Age",
     rows = everything()
-  ) |> 
+  ) 
+
+gt_resp_tbl
+```
+
+Next, we'll take care of the column labels. As we now have the `tab_row_group()` label in place, we no longer need the label for the first column and can assign an empty string. Also, because of the two tab spanners, we can assign equal column labels for event rates and 95% CI's in both intervention groups.
+
+Using `cols_width()` and `cols_align()` we can apply a more convenient column width and left-align the first column.
+
+```{r}
+gt_resp_tbl <- gt_resp_tbl |> 
   cols_align(align = "center",
              columns = starts_with(c("n_", "ci", "or"))) |> 
   cols_label(.list = c("AAGEGR1" = "",
@@ -257,12 +298,20 @@ gt_responders |>
                        "or_ci_low" = "[95% CI]")) |> 
   cols_width(
     1 ~ px(80),
-    everything() ~ px(110)
+    everything() ~ px(120)
     ) |> 
   cols_align(
     align = "left",
     columns = 1
-    ) |> 
+    ) 
+
+gt_resp_tbl
+```
+
+Finally, we make use of `tab_footnote()` and can add a footnote to the columns with the 95% CI's around event rates, indicating that these were derived from the Clopper-Pearson method. To change the default symbol choice of `tab_footnote()` from numbers to letters, we add `tab_options(footnote.marks = letters)`.
+
+```{r}
+gt_resp_tbl <- gt_resp_tbl |> 
   tab_footnote(
     footnote = "Event rate 95% exact confidence interval uses the Clopper−Pearson method.",
     locations = cells_column_labels(
@@ -273,5 +322,7 @@ gt_responders |>
   tab_options(
     footnotes.marks = letters
   )
+
+gt_resp_tbl
 ```
 
