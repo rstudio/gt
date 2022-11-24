@@ -382,7 +382,8 @@ perform_col_merge <- function(data, context) {
       glue_src_data <- as.list(body[, columns])
       glue_src_data <-
         lapply(
-          seq_along(glue_src_data), FUN = function(x) {
+          seq_along(glue_src_data),
+          FUN = function(x) {
             glue_src_data[[x]][
               glue_src_data[[x]] == "NA" & glue_src_na_data[[x]]
             ] <- missing_val_token
@@ -405,6 +406,8 @@ perform_col_merge <- function(data, context) {
 
         glued_cols <- gsub("<<|>>", "", glued_cols)
       }
+
+      glued_cols <- gsub(missing_val_token, "NA", glued_cols, fixed = TRUE)
 
       body[, mutated_column] <- glued_cols
 
