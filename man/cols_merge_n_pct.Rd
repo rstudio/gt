@@ -30,7 +30,9 @@ merges them into a single column. What results is a column containing both
 counts and their associated percentages (e.g., \verb{12 (23.2\%)}). The column
 specified in \code{col_pct} is dropped from the output table.
 }
-\details{
+\section{Comparison with other column-merging functions}{
+
+
 This function could be somewhat replicated using \code{\link[=cols_merge]{cols_merge()}}, however,
 \code{cols_merge_n_pct()} employs the following specialized semantics for \code{NA}
 and zero-value handling:
@@ -55,11 +57,12 @@ recalculates values in either). Formatting of each column can be done
 independently in separate \code{\link[=fmt_number]{fmt_number()}} and \code{\link[=fmt_percent]{fmt_percent()}} calls.
 
 This function is part of a set of four column-merging functions. The other
-two are the general \code{\link[=cols_merge]{cols_merge()}} function and the specialized
+three are the general \code{\link[=cols_merge]{cols_merge()}} function and the specialized
 \code{\link[=cols_merge_uncert]{cols_merge_uncert()}} and \code{\link[=cols_merge_range]{cols_merge_range()}} functions. These functions
 operate similarly, where the non-target columns can be optionally hidden from
 the output table through the \code{hide_columns} or \code{autohide} options.
 }
+
 \section{Examples}{
 
 
