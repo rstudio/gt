@@ -1211,7 +1211,8 @@ cols_unhide <- function(
 #' and associated uncertainties (e.g., `12.0 ± 0.1`), and any columns specified
 #' in `col_uncert` are hidden from appearing the output table.
 #'
-#' @details
+#' @section Comparison with other column-merging functions:
+#'
 #' This function could be somewhat replicated using [cols_merge()] in the case
 #' where a single column is supplied for `col_uncert`, however,
 #' `cols_merge_uncert()` employs the following specialized semantics for `NA`
@@ -1228,7 +1229,7 @@ cols_unhide <- function(
 #' operation can be easily formatted using the [sub_missing()] function.
 #'
 #' This function is part of a set of four column-merging functions. The other
-#' two are the general [cols_merge()] function and the specialized
+#' three are the general [cols_merge()] function and the specialized
 #' [cols_merge_range()] and [cols_merge_n_pct()] functions. These functions
 #' operate similarly, where the non-target columns can be optionally hidden from
 #' the output table through the `hide_columns` or `autohide` options.
@@ -1348,7 +1349,8 @@ cols_merge_uncert <- function(
 #' dash (e.g., `12.0 — 20.0`). The column specified in `col_end` is dropped from
 #' the output table.
 #'
-#' @details
+#' @section Comparison with other column-merging functions:
+#'
 #' This function could be somewhat replicated using [cols_merge()], however,
 #' `cols_merge_range()` employs the following specialized operations for `NA`
 #' handling:
@@ -1367,7 +1369,7 @@ cols_merge_uncert <- function(
 #' `col_end` columns for finer control of the replacement values.
 #'
 #' This function is part of a set of four column-merging functions. The other
-#' two are the general [cols_merge()] function and the specialized
+#' three are the general [cols_merge()] function and the specialized
 #' [cols_merge_uncert()] and [cols_merge_n_pct()] functions. These functions
 #' operate similarly, where the non-target columns can be optionally hidden from
 #' the output table through the `hide_columns` or `autohide` options.
@@ -1501,7 +1503,8 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #' counts and their associated percentages (e.g., `12 (23.2%)`). The column
 #' specified in `col_pct` is dropped from the output table.
 #'
-#' @details
+#' @section Comparison with other column-merging functions:
+#'
 #' This function could be somewhat replicated using [cols_merge()], however,
 #' `cols_merge_n_pct()` employs the following specialized semantics for `NA`
 #' and zero-value handling:
@@ -1525,7 +1528,7 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #' independently in separate [fmt_number()] and [fmt_percent()] calls.
 #'
 #' This function is part of a set of four column-merging functions. The other
-#' two are the general [cols_merge()] function and the specialized
+#' three are the general [cols_merge()] function and the specialized
 #' [cols_merge_uncert()] and [cols_merge_range()] functions. These functions
 #' operate similarly, where the non-target columns can be optionally hidden from
 #' the output table through the `hide_columns` or `autohide` options.
@@ -1645,14 +1648,48 @@ cols_merge_n_pct <- function(
 #' @description
 #' This function takes input from two or more columns and allows the contents to
 #' be merged them into a single column, using a pattern that specifies the
-#' formatting. We can specify which columns to merge together in the `columns`
+#' arrangement. We can specify which columns to merge together in the `columns`
 #' argument. The string-combining pattern is given in the `pattern` argument.
 #' The first column in the `columns` series operates as the target column (i.e.,
 #' will undergo mutation) whereas all following `columns` will be untouched.
 #' There is the option to hide the non-target columns (i.e., second and
-#' subsequent columns given in `columns`).
+#' subsequent columns given in `columns`). The formatting of values in different
+#' columns will be preserved upon merging.
 #'
-#' @details
+#' @section How the `pattern` works:
+#'
+#' There are two types of templating for the `pattern` string:
+#'
+#' 1. `{ }` for arranging single column values in a row-wise fashion
+#' 2. `<< >>` to surround spans of text that will be removed if any of the
+#' contained `{ }` yields a missing value
+#'
+#' Integer values are placed in `{ }` and those values correspond to the columns
+#' involved in the merge, in the order they are provided in the `columns`
+#' argument. So the pattern `"{1} ({2}-{3})"` corresponds to the target column
+#' value listed first in `columns` and the second and third columns cited
+#' (formatted as a range in parentheses). With hypothetical values, this might
+#' result as the merged string `"38.2 (3-8)"`.
+#'
+#' Because some values involved in merging may be missing, it is likely that
+#' something like `"38.2 (3-NA)"` would be undesirable. For such cases, placing
+#' sections of text in `<< >>` results in the entire span being eliminated if
+#' there were to be an `NA` value (arising from `{ }` values). We could instead
+#' opt for a pattern like `"{1}<< ({2}-{3})>>"`, which results in `"38.2"` if
+#' either columns `{2}` or `{3}` have an `NA` value. We can even use a more
+#' complex nesting pattern like `"{1}<< ({2}-<<{3}>>)>>"` to retain a lower
+#' limit in parentheses (where `{3}` is `NA`) but remove the range altogether
+#' if `{2}` is `NA`.
+#'
+#' One more thing to note here is that if [sub_missing()] is used on values in
+#' a column, those specific values affected won't be considered truly missing by
+#' `cols_merge()` (since it's been handled with substitute text). So, the
+#' complex pattern `"{1}<< ({2}-<<{3}>>)>>"` might result in something like
+#' `"38.2 (3-limit)"` if `sub_missing(..., missing_text = "limit")` were used
+#' on the third column supplied in `columns`.
+#'
+#' @section Comparison with other column-merging functions:
+#'
 #' There are three other column-merging functions that offer specialized
 #' behavior that is optimized for common table tasks: [cols_merge_range()],
 #' [cols_merge_uncert()], and [cols_merge_n_pct()]. These functions operate
@@ -1671,16 +1708,17 @@ cols_merge_n_pct <- function(
 #' @param pattern A formatting pattern that specifies the arrangement of the
 #'   `column` values and any string literals. We need to use column numbers
 #'   (corresponding to the position of columns provided in `columns`) within the
-#'   pattern. These indices are to be placed in curly braces (e.g., `{1}`). All
-#'   characters outside of braces are taken to be string literals.
+#'   pattern. Further details are provided in the *How the `pattern` works*
+#'   section.
 #'
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
 #'
-#' Use [`sp500`] to create a **gt** table. Use the `cols_merge()` function to
-#' merge the `open` & `close` columns together, and, the `low` & `high` columns
-#' (putting an em dash between both). Relabel the columns with [cols_label()].
+#' Use a portion of [`sp500`] to create a **gt** table. Use the `cols_merge()`
+#' function to merge the `open` & `close` columns together, and, the `low` &
+#' `high` columns (putting an em dash between both). Relabel the columns with
+#' [cols_label()].
 #'
 #' ```r
 #' sp500 %>%
@@ -1703,6 +1741,38 @@ cols_merge_n_pct <- function(
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_cols_merge_1.png")`
+#' }}
+#'
+#'
+#' Use a portion of [`gtcars`] to create a **gt** table. Use the `cols_merge()`
+#' function to merge the `trq` & `trq_rpm` columns together, and, the `mpg_c` &
+#' `mpg_h` columns. Given the presence of `NA` values, we can use patterns that
+#' drop parts of the output text whenever missing values are encountered.
+#'
+#' ```r
+#' gtcars %>%
+#'   dplyr::filter(year == 2017) %>%
+#'   dplyr::select(mfr, model, starts_with(c("trq", "mpg"))) %>%
+#'   gt() %>%
+#'   fmt_integer(columns = trq_rpm) %>%
+#'   cols_merge(
+#'     columns = starts_with("trq"),
+#'     pattern = "{1}<< ({2} rpm)>>"
+#'   ) %>%
+#'   cols_merge(
+#'     columns = starts_with("mpg"),
+#'     pattern = "<<{1} city<</{2} hwy>>>>"
+#'   ) %>%
+#'   cols_label(
+#'     mfr = "Manufacturer",
+#'     model = "Car Model",
+#'     trq = "Torque",
+#'     mpg_c = "MPG"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_merge_2.png")`
 #' }}
 #'
 #' @family column modification functions
@@ -1731,9 +1801,8 @@ cols_merge <- function(
 
   # NOTE: It's important that `hide_columns` NOT be evaluated until after the
   # previous line has run. Otherwise, the default `hide_columns` value of
-  # columns[-1] may not evaluate to a sensible result.
-  # NOTE: It's also important that `pattern` not be evaluated, for much the same
-  # reason as above.
+  # columns[-1] may not evaluate to a sensible result. It's also important
+  # that `pattern` not be evaluated, for much the same reason as above.
 
   # Get the columns supplied in `hide_columns` as a character vector
   suppressWarnings(

@@ -61,12 +61,12 @@ diamonds %>%
   as_raw_html()
 ```
 
-We can create an email using **RStudio Connect**, one that aligns with the content from this report. We do this with the `render_connect_email()` and `attach_connect_email()` functions from the **blastula** package. The email subdocument (`"connect-example-email.Rmd"`) is used to craft the contents of the email, drawing upon results available in this document.
+We can create an email using **Posit Connect**, one that aligns with the content from this report. We do this with the `render_connect_email()` and `attach_connect_email()` functions from the **blastula** package. The email subdocument (`"connect-example-email.Rmd"`) is used to craft the contents of the email, drawing upon results available in this document.
 
 ```{r connect_email, echo=FALSE}
 render_connect_email(input = "connect-example-email.Rmd") %>%
   attach_connect_email(
-    subject = "RStudio Connect HTML Email",
+    subject = "Posit Connect HTML Email",
     attach_output = TRUE
   )
 ```

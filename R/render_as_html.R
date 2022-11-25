@@ -37,17 +37,36 @@ render_as_html <- function(data) {
   table_defs <- get_table_defs(data = data)
 
   # Compose the HTML table
-  as.character(
-    htmltools::tags$table(
-      class = "gt_table",
-      style = table_defs$table_style,
-      caption_component,
-      table_defs$table_colgroups,
-      heading_component,
-      columns_component,
-      body_component,
-      source_notes_component,
-      footnotes_component
-    )
+  finalize_html_table(
+    class = "gt_table",
+    style = table_defs$table_style,
+    caption_component,
+    table_defs$table_colgroups,
+    heading_component,
+    columns_component,
+    body_component,
+    source_notes_component,
+    footnotes_component
   )
+}
+
+finalize_html_table <- function(
+    class,
+    style,
+    ...) {
+
+  html_tbl <-
+    as.character(
+      htmltools::tags$table(
+        class = "gt_table",
+        style = style,
+        ...
+      )
+    )
+
+  # Unescape single quotes that may present as HTML entities (this is
+  # needed since the CSS inliner cannot parse "&#39;")
+  html_tbl <- gsub("&#39;", "'", html_tbl)
+
+  html_tbl
 }

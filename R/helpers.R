@@ -2075,11 +2075,11 @@ cell_style_to_html.cell_fill <- function(style) {
 #' @param color,style,weight The border color, style, and weight. The `color`
 #'   can be defined with a color name or with a hexadecimal color code. The
 #'   default `color` value is `"#000000"` (black). The `style` can be one of
-#'   either `"solid"` (the default), `"dashed"`, `"dotted"`, or `"hidden"`.
-#'   The `weight` of the border lines is to be given in pixel values (the
-#'   [px()] helper function is useful for this. The default value for `weight`
-#'   is `"1px"`. Borders for any defined `sides` can be removed by supplying
-#'   `NULL` to any of `color`, `style`, or `weight`.
+#'   either `"solid"` (the default), `"dashed"`, `"dotted"`, `"hidden"`, or
+#'   `"double"`. The `weight` of the border lines is to be given in pixel values
+#'   (the [px()] helper function is useful for this. The default value for
+#'   `weight` is `"1px"`. Borders for any defined `sides` can be removed by
+#'   supplying `NULL` to any of `color`, `style`, or `weight`.
 #'
 #' @return A list object of class `cell_styles`.
 #'
@@ -2226,7 +2226,7 @@ cell_borders <- function(
 
         validate_style_in(
           style_vals, names(style_vals), "style",
-          c("solid", "dashed", "dotted", "hidden")
+          c("solid", "dashed", "dotted", "hidden", "double")
         )
 
         cell_style_structure(

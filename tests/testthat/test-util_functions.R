@@ -544,3 +544,56 @@ test_that("the `get_file_ext()` function works correctly", {
   get_file_ext(file = "file.png") %>% expect_equal("png")
   get_file_ext(file = "file.gif") %>% expect_equal("gif")
 })
+
+test_that("The `resolve_secondary_pattern()` function works properly", {
+
+  # Define function to test input and output of the
+  # `resolve_secondary_pattern()` util function
+  expect_secondary_pattern <- function(x, expectation) {
+    expect_equal(resolve_secondary_pattern(x), expectation)
+  }
+
+  # Generate a list of input `x` values and expected output values
+  secondary_pattern_tests <-
+    list(
+      c("<< a >><< b >>", " a  b "),
+      c("<< a >><< ::missing_val:: >>", " a "),
+      c("<< ::missing_val:: >><< b >>", " b "),
+      c("<< ::missing_val:: >><< ::missing_val:: >>", ""),
+      c("<<<< ::missing_val:: >><< ::missing_val:: >>>>", ""),
+      c("<<a>><<c<< - ::missing_val::>>>>", "ac"),
+      c("<<a>><< (c<< - d>>)>>", "a (c - d)"),
+      c("<<a>><< (c<< - ::missing_val::>>)>>", "a (c)"),
+      c("<<a>><< (::missing_val::<< - d>>)>>", "a"),
+      c("<<a>><< (::missing_val::<< - ::missing_val::>>)>>", "a"),
+      c("<<::missing_val::>><< (c<< - d>>)>>", " (c - d)"),
+      c("<<::missing_val::<< (c<< - d>>)>>>>", ""),
+      c("<<>>", ""),
+      c("<<>><<>>", ""),
+      c("<<a>>", "a"),
+      c("<<<>>", "<"),
+      c("<<>>>", ">"),
+      c("", ""),
+      c("a", "a"),
+      c("<>", "<>"),
+      c(">>a<<", ">>a<<"),
+      c("<<<<a>>*::missing_val::*>>", ""),
+      c("<<<<*::missing_val::*>> b >>", " b "),
+      c("x<< <<a>> <<b>> *::missing_val::*>>y", "xy"),
+      c("a<< ::missing_val::/::missing_val::>>b", "ab"),
+      c("a ::missing_val:: ::missing_val:: b", "a ::missing_val:: ::missing_val:: b")
+    )
+
+  # Iterate through list with `expect_secondary_pattern()` in `lapply()` stmt
+  secondary_pattern_tests_out <-
+    lapply(
+      seq_along(secondary_pattern_tests),
+      FUN = function(x) {
+        expect_secondary_pattern(
+          secondary_pattern_tests[[x]][1],
+          secondary_pattern_tests[[x]][2]
+        )
+      }
+    )
+
+})

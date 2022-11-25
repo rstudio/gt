@@ -1,7 +1,7 @@
 # Create a shortened version of `mtcars`
 mtcars_short <- mtcars[1:5, ]
 
-# Create a table with rownames and four columns of values
+# Create a table with four columns of values
 tbl <-
   dplyr::tribble(
     ~col_1, ~col_2, ~col_3, ~col_4,
@@ -15,6 +15,15 @@ tbl <-
       63.7,  504.3,  152.0,  724.5,
      105.4,  729.8,  962.4,  336.4,
      924.2,  424.6,  740.8,  104.2
+  )
+
+# Create a table with three columns, the last two having different
+# combinations of NA values
+tbl_na <-
+  dplyr::tibble(
+    a = 1:4,
+    b = c(1, NA, 3,  NA),
+    c = c(1, 2,  NA, NA)
   )
 
 # Function to skip tests if Suggested packages not available on system
@@ -161,6 +170,81 @@ test_that("the function `cols_merge()` works correctly", {
     gt(tbl, groupname_col = "row") %>%
       cols_merge(columns = c(row, a)) %>%
       render_as_html()
+  )
+})
+
+test_that("the secondary pattern language works well in `cols_merge()`", {
+
+  # Create a `tbl_html` object with `gt()`
+  tbl_gt <- gt(tbl_na)
+
+  #
+  # Perform several merges of all columns onto column `a` with
+  # different variations of a secondary pattern (i.e., `<< >>`)
+  #
+
+  tbl_gt_1 <-
+    tbl_gt %>%
+    cols_merge(columns = c(a, b, c), pattern = "{1}{2}<<{3}>>")
+
+  expect_equal(
+    (tbl_gt_1 %>% render_formats_test("html"))[["a"]],
+    c("111", "2NA2", "33", "4NA")
+  )
+
+  tbl_gt_2 <-
+    tbl_gt %>%
+    cols_merge(columns = c(a, b, c), pattern = "{1}{2}<<{3}>>") %>%
+    sub_missing(missing_text = "X")
+
+  expect_equal(
+    (tbl_gt_2 %>% render_formats_test("html"))[["a"]],
+    c("111", "2X2", "33X", "4XX")
+  )
+
+  tbl_gt_3 <-
+    tbl_gt %>%
+    cols_merge(columns = c(a, b, c), pattern = "{1}<<{2}<<{3}>>>>")
+
+  expect_equal(
+    (tbl_gt_3 %>% render_formats_test("html"))[["a"]],
+    c("111", "2", "33", "4")
+  )
+
+  tbl_gt_4 <-
+    tbl_gt %>%
+    cols_merge(columns = c(a, b, c), pattern = "{1}<<{2}-{3}>>")
+
+  expect_equal(
+    (tbl_gt_4 %>% render_formats_test("html"))[["a"]],
+    c("11-1", "2", "3", "4")
+  )
+
+  tbl_gt_5 <-
+    tbl_gt %>%
+    cols_merge(columns = c(a, b, c), pattern = "<<{1}-{2}-{3}>>")
+
+  expect_equal(
+    (tbl_gt_5 %>% render_formats_test("html"))[["a"]],
+    c("1-1-1", "", "", "")
+  )
+
+  tbl_gt_6 <-
+    tbl_gt %>%
+    cols_merge(columns = c(a, b, c), pattern = "<<{1}<<{2}<<{3}>>>>>>")
+
+  expect_equal(
+    (tbl_gt_6 %>% render_formats_test("html"))[["a"]],
+    c("111", "2", "33", "4")
+  )
+
+  tbl_gt_7 <-
+    tbl_gt %>%
+    cols_merge(columns = c(a, b, c), pattern = "<<<<<<X>>>>>>")
+
+  expect_equal(
+    (tbl_gt_7 %>% render_formats_test("html"))[["a"]],
+    rep("X", 4)
   )
 })
 

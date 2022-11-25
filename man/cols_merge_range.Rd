@@ -34,7 +34,9 @@ column. What results is a column containing both values separated by a long
 dash (e.g., \verb{12.0 — 20.0}). The column specified in \code{col_end} is dropped from
 the output table.
 }
-\details{
+\section{Comparison with other column-merging functions}{
+
+
 This function could be somewhat replicated using \code{\link[=cols_merge]{cols_merge()}}, however,
 \code{cols_merge_range()} employs the following specialized operations for \code{NA}
 handling:
@@ -53,11 +55,12 @@ Separate calls of \code{\link[=sub_missing]{sub_missing()}} can be used for the 
 \code{col_end} columns for finer control of the replacement values.
 
 This function is part of a set of four column-merging functions. The other
-two are the general \code{\link[=cols_merge]{cols_merge()}} function and the specialized
+three are the general \code{\link[=cols_merge]{cols_merge()}} function and the specialized
 \code{\link[=cols_merge_uncert]{cols_merge_uncert()}} and \code{\link[=cols_merge_n_pct]{cols_merge_n_pct()}} functions. These functions
 operate similarly, where the non-target columns can be optionally hidden from
 the output table through the \code{hide_columns} or \code{autohide} options.
 }
+
 \section{Examples}{
 
 
