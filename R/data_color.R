@@ -200,6 +200,7 @@ data_color <- function(
   # Get the correct `contrast_algo` value
   contrast_algo <- rlang::arg_match(contrast_algo)
 
+  # If no color is provided to `na_color`, use gray as a default
   if (is.null(na_color)) {
     na_color <- "#808080"
   }
@@ -250,6 +251,9 @@ data_color <- function(
   # Get the sequence of row indices for the table
   rows <- seq_len(nrow(data_tbl))
 
+  # Generate a table to accumulate all of the styles to be applied to the
+  # body cells; in the end, this (along with all previously set styles) will
+  # be used in a concluding `dt_styles_set()` call
   data_color_styles_tbl <-
     dplyr::tibble(
       locname = character(0),
@@ -261,11 +265,22 @@ data_color <- function(
       styles = list()
     )
 
+  # Iteration is performed in a piecewise manner
   for (column in resolved_columns) {
 
     data_vals <- data_tbl[[column]][rows]
 
-    if (method == "auto" && !inherits(fn, "function") && is.character(palette)) {
+    if (
+      method == "auto" &&
+      !inherits(fn, "function") &&
+      is.character(palette)
+    ) {
+
+      # For the "auto" method, we are getting data values in a piecewise
+      # fashion and the strategy is to generate a color function (using
+      # a `col_*()` function from scales) for each piece of data; we can
+      # process vectors that are numeric with `scales::col_numeric()` and
+      # vectors that are either character or factor with `scales::col_factor()`
 
       if (is.numeric(data_vals)) {
 
@@ -311,11 +326,6 @@ data_color <- function(
 
       # If a color function is directly provided, use as is
       color_fn <- fn
-
-    } else {
-      cli::cli_abort(
-        "The `colors` arg must be either a character vector of colors or a function."
-      )
     }
 
     # Evaluate `color_fn` with `eval_tidy()` (supports quosures)
@@ -345,6 +355,12 @@ data_color <- function(
         )
       )
 
+    # We are to generate an extra set of styling if we are applying coloring
+    # to the background fill and `autocolor_text = TRUE`. This styling applies
+    # to the foreground text in the same cells. For each background fill color,
+    # the ideal text color (either a light or dark color) will be determined
+    # and styles based on `cell_text(color = ...)` will be generated and added
+    # to the `data_color_styles_tbl`
     if (apply_to == "fill" && autocolor_text) {
 
       color_vals <-
