@@ -6,31 +6,76 @@
 \usage{
 data_color(
   data,
-  columns,
-  colors,
+  columns = everything(),
+  rows = everything(),
+  direction = c("column", "row"),
+  method = c("auto", "numeric", "bin", "quantile", "factor"),
+  palette = NULL,
+  domain = NULL,
+  levels = NULL,
+  ordered = FALSE,
+  na_color = NULL,
   alpha = NULL,
+  reverse = FALSE,
+  fn = NULL,
   apply_to = c("fill", "text"),
   autocolor_text = TRUE,
-  contrast_algo = c("apca", "wcag")
+  contrast_algo = c("apca", "wcag"),
+  colors = NULL
 )
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{columns}{The columns wherein changes to cell data colors should occur.}
+\item{columns, rows}{The columns and rows to which cell data color operations
+are constrained.}
 
-\item{colors}{Either a color mapping function from the \strong{scales} package or
-a vector of colors to use for each distinct value or level in each of the
-provided \code{columns}. The color mapping functions are:
-\code{\link[scales:col_numeric]{scales::col_quantile()}}, \code{\link[scales:col_numeric]{scales::col_bin()}}, \code{\link[scales:col_numeric]{scales::col_numeric()}}, and
-\code{\link[scales:col_numeric]{scales::col_factor()}}. If providing a vector of colors as a palette, each
-color value provided must either be a color name (in the set of colors
-provided by \code{\link[grDevices:colors]{grDevices::colors()}}) or a hexadecimal string in the form of
-"#RRGGBB" or "#RRGGBBAA".}
+\item{direction}{Should the color computations be performed columnwise or
+rowwise? By default this is set with the \code{"column"} keyword and colors will
+be applied down columns. The alternative option with the \code{"row"} keyword
+ensures that color mapping will work across rows.}
+
+\item{method}{A method for computing color based on the data within body
+cells. Can be \code{"auto"} (the default), \code{"numeric"}, \code{"bin"}, \code{"quantile"},
+or \code{"factor"}.}
+
+\item{palette}{A vector of color names, the name of an \strong{RColorBrewer}
+palette, or the name of a \strong{viridis} palette. If providing a vector of
+colors as a palette, each color value provided must either be a color name
+(in the set of colors provided by \code{\link[grDevices:colors]{grDevices::colors()}}) or a hexadecimal
+string in the form of \code{"#RRGGBB"} or \code{"#RRGGBBAA"}.}
+
+\item{domain}{The possible values that can be mapped. For the \code{"numeric"} and
+\code{"bin"} methods, this can be a numeric range specified with a length of two
+vector. Representative numeric data is needed for the \code{"quantile"} method
+and categorical data must be used for the \code{"factor"} method. If \code{NULL} (the
+default value), the values in each column or row (depending on \code{direction})
+value will represent the domain.}
+
+\item{levels}{For \code{method = "factor"} this allows for an alternate way of
+specifying levels. If anything is provided here then any value supplied to
+\code{domain} will be ignored.}
+
+\item{ordered}{For \code{method = "factor"}, setting this to \code{TRUE} means that the
+vector supplied to \code{domain} will be treated as being in the correct order
+if that vector needs to be coerced to a factor. By default, this is
+\code{FALSE}.}
+
+\item{na_color}{The color to use for missing values. By default (with
+\code{na_color = NULL}) gray, \code{"#808080"}, will be used. Using \code{NA} here results
+in no color at all applied to missing values.}
 
 \item{alpha}{An optional, fixed alpha transparency value that will be applied
 to all of the \code{colors} provided (regardless of whether a color palette was
 directly supplied or generated through a color mapping function).}
+
+\item{reverse}{Should the colors computed operate in reverse order?
+If \code{TRUE} then colors that normally change from red to blue will change in
+the opposite direction. By default, this is \code{FALSE}.}
+
+\item{fn}{A color mapping function from the \strong{scales} package. The supported
+color mapping functions are: \code{\link[scales:col_numeric]{scales::col_quantile()}}, \code{\link[scales:col_numeric]{scales::col_bin()}},
+\code{\link[scales:col_numeric]{scales::col_numeric()}}, and \code{\link[scales:col_numeric]{scales::col_factor()}}.}
 
 \item{apply_to}{Which style element should the colors be applied to? Options
 include the cell background (the default, given as \code{"fill"}) or the cell
@@ -44,6 +89,10 @@ text-to-background color contrast. By default, this is set to \code{TRUE}.}
 \code{autocolor_text = TRUE}. By default this is \code{"apca"} (Accessible Perceptual
 Contrast Algorithm) and the alternative to this is \code{"wcag"} (Web Content
 Accessibility Guidelines).}
+
+\item{colors}{Deprecated. Use the \code{fn} argument instead to provide a
+\strong{scales}-based color-mapping function. If providing a palette, use the
+\code{palette} argument.}
 }
 \value{
 An object of class \code{gt_tbl}.
