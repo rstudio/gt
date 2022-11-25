@@ -63,9 +63,14 @@
 #'   and categorical data must be used for the `"factor"` method. If `NULL` (the
 #'   default value), the values in each column or row (depending on `direction`)
 #'   value will represent the domain.
+#' @param bins For `method = "bin"` this can either be a numeric vector of two
+#'   or more unique cut points, or, a single numeric value (greater than or
+#'   equal to `2`) giving the number of intervals into which the domain values
+#'   are to be cut. By default, this is `8`.
 #' @param levels For `method = "factor"` this allows for an alternate way of
 #'   specifying levels. If anything is provided here then any value supplied to
-#'   `domain` will be ignored.
+#'   `domain` will be ignored. This should be a character vector of unique
+#'   values.
 #' @param ordered For `method = "factor"`, setting this to `TRUE` means that the
 #'   vector supplied to `domain` will be treated as being in the correct order
 #'   if that vector needs to be coerced to a factor. By default, this is
@@ -173,6 +178,7 @@ data_color <- function(
     method = c("auto", "numeric", "bin", "quantile", "factor"),
     palette = NULL,
     domain = NULL,
+    bins = 8,
     levels = NULL,
     ordered = FALSE,
     na_color = NULL,
@@ -239,6 +245,19 @@ data_color <- function(
     fn <- NULL
   }
 
+  # Ensure that the `palette` contains something that can be used if no
+  # function (as `fn`) was provided
+  if (is.null(fn)) {
+
+    # If no palette is provided, use the default palette
+    if (is.null(palette)) {
+      palette <- palette()
+    }
+
+    # TODO: Validate the `palette` value to ensure it works with
+    # the scales functions it will be passed to
+  }
+
   # Get the internal data table
   data_tbl <- dt_data_get(data = data)
 
@@ -270,11 +289,12 @@ data_color <- function(
 
     data_vals <- data_tbl[[column]][rows]
 
-    if (
-      method == "auto" &&
-      !inherits(fn, "function") &&
-      is.character(palette)
-    ) {
+    if (!is.null(fn)) {
+
+      # If a color function is directly provided, use as is
+      color_fn <- fn
+
+    } else if (method == "auto") {
 
       # For the "auto" method, we are getting data values in a piecewise
       # fashion and the strategy is to generate a color function (using
@@ -299,19 +319,11 @@ data_color <- function(
         # interpolation when the number of colors is greater than the number
         # of levels. Instead, colors should be subsetted. scales does the right
         # thing for palette names though, so we need to screen those cases out.
-        if (length(palette) > 1) {
-
-          nlvl <-
-            if (is.factor(data_vals)) {
-              nlevels(data_vals)
-            } else {
-              nlevels(factor(data_vals))
-            }
-
-          if (length(palette) > nlvl) {
-            palette <- palette[seq_len(nlvl)]
-          }
-        }
+        palette <-
+          screen_palette_for_col_factor(
+            palette = palette,
+            data_vals = data_vals
+          )
 
         # Create a color function based on `scales::col_factor()`
         color_fn <-
@@ -322,10 +334,65 @@ data_color <- function(
           )
       }
 
-    } else if (inherits(fn, "function")) {
+    } else if (method == "numeric") {
 
-      # If a color function is directly provided, use as is
-      color_fn <- fn
+      # Create a color function based on `scales::col_numeric()`
+      color_fn <-
+        scales::col_numeric(
+          palette = palette,
+          domain = if (is.null(domain)) data_vals else domain,
+          na.color = na_color,
+          alpha = TRUE,
+          reverse = reverse
+        )
+
+    } else if (method == "bin") {
+
+      # Create a color function based on `scales::col_bin()`
+      color_fn <-
+        scales::col_bin(
+          palette = palette,
+          domain = if (is.null(domain)) data_vals else domain,
+          bins = bins,
+          pretty = FALSE,
+          na.color = na_color,
+          alpha = TRUE,
+          reverse = reverse,
+          right = FALSE
+        )
+
+    } else if (method == "quantile") {
+
+      # Create a color function based on `scales::col_quantile()`
+      color_fn <-
+        scales::col_quantile(
+          palette = palette,
+          domain = if (is.null(domain)) data_vals else domain,
+          na.color = na_color,
+          alpha = TRUE,
+          reverse = reverse,
+          right = FALSE
+        )
+
+    } else if (method == "factor") {
+
+      palette <-
+        screen_palette_for_col_factor(
+          palette = palette,
+          data_vals = data_vals
+        )
+
+      # Create a color function based on `scales::col_factor()`
+      color_fn <-
+        scales::col_factor(
+          palette = palette,
+          domain = if (is.null(domain)) data_vals else domain,
+          levels = levels,
+          ordered = ordered,
+          na.color = na_color,
+          alpha = TRUE,
+          reverse = reverse
+        )
     }
 
     # Evaluate `color_fn` with `eval_tidy()` (supports quosures)
@@ -400,6 +467,24 @@ generate_data_color_styles_tbl <- function(column, rows, color_styles) {
     colnum = NA_integer_,
     styles = color_styles
   )
+}
+
+screen_palette_for_col_factor <- function(palette, data_vals) {
+
+  if (length(palette) > 1) {
+
+    nlvl <-
+      if (is.factor(data_vals)) {
+        nlevels(data_vals)
+      } else {
+        nlevels(factor(data_vals))
+      }
+
+    if (length(palette) > nlvl) {
+      palette <- palette[seq_len(nlvl)]
+    }
+  }
+  palette
 }
 
 #' Are color values in rgba() format?
