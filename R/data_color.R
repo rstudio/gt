@@ -43,18 +43,45 @@
 #' hexadecimal colors.
 #'
 #' @inheritParams fmt_number
-#' @param columns The columns wherein changes to cell data colors should occur.
-#' @param colors Either a color mapping function from the **scales** package or
-#'   a vector of colors to use for each distinct value or level in each of the
-#'   provided `columns`. The color mapping functions are:
-#'   [scales::col_quantile()], [scales::col_bin()], [scales::col_numeric()], and
-#'   [scales::col_factor()]. If providing a vector of colors as a palette, each
-#'   color value provided must either be a color name (in the set of colors
-#'   provided by [grDevices::colors()]) or a hexadecimal string in the form of
-#'   "#RRGGBB" or "#RRGGBBAA".
+#' @param columns,rows The columns and rows to which cell data color operations
+#'   are constrained.
+#' @param direction Should the color computations be performed columnwise or
+#'   rowwise? By default this is set with the `"column"` keyword and colors will
+#'   be applied down columns. The alternative option with the `"row"` keyword
+#'   ensures that color mapping will work across rows.
+#' @param method A method for computing color based on the data within body
+#'   cells. Can be `"auto"` (the default), `"numeric"`, `"bin"`, `"quantile"`,
+#'   or `"factor"`.
+#' @param palette A vector of color names, the name of an **RColorBrewer**
+#'   palette, or the name of a **viridis** palette. If providing a vector of
+#'   colors as a palette, each color value provided must either be a color name
+#'   (in the set of colors provided by [grDevices::colors()]) or a hexadecimal
+#'   string in the form of `"#RRGGBB"` or `"#RRGGBBAA"`.
+#' @param domain The possible values that can be mapped. For the `"numeric"` and
+#'   `"bin"` methods, this can be a numeric range specified with a length of two
+#'   vector. Representative numeric data is needed for the `"quantile"` method
+#'   and categorical data must be used for the `"factor"` method. If `NULL` (the
+#'   default value), the values in each column or row (depending on `direction`)
+#'   value will represent the domain.
+#' @param levels For `method = "factor"` this allows for an alternate way of
+#'   specifying levels. If anything is provided here then any value supplied to
+#'   `domain` will be ignored.
+#' @param ordered For `method = "factor"`, setting this to `TRUE` means that the
+#'   vector supplied to `domain` will be treated as being in the correct order
+#'   if that vector needs to be coerced to a factor. By default, this is
+#'   `FALSE`.
+#' @param na_color The color to use for missing values. By default (with
+#'   `na_color = NULL`) gray, `"#808080"`, will be used. Using `NA` here results
+#'   in no color at all applied to missing values.
 #' @param alpha An optional, fixed alpha transparency value that will be applied
 #'   to all of the `colors` provided (regardless of whether a color palette was
 #'   directly supplied or generated through a color mapping function).
+#' @param reverse Should the colors computed operate in reverse order?
+#'   If `TRUE` then colors that normally change from red to blue will change in
+#'   the opposite direction. By default, this is `FALSE`.
+#' @param fn A color mapping function from the **scales** package. The supported
+#'   color mapping functions are: [scales::col_quantile()], [scales::col_bin()],
+#'   [scales::col_numeric()], and [scales::col_factor()].
 #' @param apply_to Which style element should the colors be applied to? Options
 #'   include the cell background (the default, given as `"fill"`) or the cell
 #'   text (`"text"`).
@@ -65,6 +92,9 @@
 #'   `autocolor_text = TRUE`. By default this is `"apca"` (Accessible Perceptual
 #'   Contrast Algorithm) and the alternative to this is `"wcag"` (Web Content
 #'   Accessibility Guidelines).
+#' @param colors Deprecated. Use the `fn` argument instead to provide a
+#'   **scales**-based color-mapping function. If providing a palette, use the
+#'   `palette` argument.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -137,16 +167,32 @@
 #' @export
 data_color <- function(
     data,
-    columns,
-    colors,
+    columns = everything(),
+    rows = everything(),
+    direction = c("column", "row"),
+    method = c("auto", "numeric", "bin", "quantile", "factor"),
+    palette = NULL,
+    domain = NULL,
+    levels = NULL,
+    ordered = FALSE,
+    na_color = NULL,
     alpha = NULL,
+    reverse = FALSE,
+    fn = NULL,
     apply_to = c("fill", "text"),
     autocolor_text = TRUE,
-    contrast_algo = c("apca", "wcag")
+    contrast_algo = c("apca", "wcag"),
+    colors = NULL
 ) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  # Get the correct `direction` value
+  direction <- rlang::arg_match(direction)
+
+  # Get the correct `method` value
+  method <- rlang::arg_match(method)
 
   # Get the correct `apply_to` value
   apply_to <- rlang::arg_match(apply_to)
@@ -154,13 +200,49 @@ data_color <- function(
   # Get the correct `contrast_algo` value
   contrast_algo <- rlang::arg_match(contrast_algo)
 
-  colors <- rlang::enquo(colors)
+  if (is.null(na_color)) {
+    na_color <- "#808080"
+  }
+
+  # Defuse any function supplied to `fn`; if function supplied to `colors`
+  # (previous argument for this purpose) then let that take precent and
+  # provide deprecation warning
+  if (!is.null(colors)) {
+
+    fn <- rlang::enquo(colors)
+
+    if (is.character(rlang::eval_tidy(fn))) {
+
+      palette <- rlang::eval_tidy(fn)
+      fn <- NULL
+
+      cli::cli_warn(c(
+        "Since gt v0.9.0, the `colors` argument has been deprecated.",
+        "*" = "Please use the `palette` argument to define a color palette."
+      ))
+
+    } else {
+
+      cli::cli_warn(c(
+        "Since gt v0.9.0, the `colors` argument has been deprecated.",
+        "*" = "Please use the `fn` argument instead."
+      ))
+    }
+
+  } else if (!is.null(fn)) {
+
+    fn <- rlang::enquo(fn)
+
+  } else {
+
+    fn <- NULL
+  }
 
   # Get the internal data table
   data_tbl <- dt_data_get(data = data)
 
   # Evaluate `colors` with `eval_tidy()` (supports quosures)
-  colors <- rlang::eval_tidy(colors, data_tbl)
+  fn <- rlang::eval_tidy(fn, data_tbl)
 
   # Resolution of `columns` as column names in the table
   resolved_columns <- resolve_cols_c(expr = {{ columns }}, data = data)
@@ -183,14 +265,14 @@ data_color <- function(
 
     data_vals <- data_tbl[[column]][rows]
 
-    if (inherits(colors, "character")) {
+    if (method == "auto" && !inherits(fn, "function") && is.character(palette)) {
 
       if (is.numeric(data_vals)) {
 
         # Create a color function based on `scales::col_numeric()`
         color_fn <-
           scales::col_numeric(
-            palette = colors,
+            palette = palette,
             domain = data_vals,
             alpha = TRUE
           )
@@ -202,7 +284,7 @@ data_color <- function(
         # interpolation when the number of colors is greater than the number
         # of levels. Instead, colors should be subsetted. scales does the right
         # thing for palette names though, so we need to screen those cases out.
-        if (length(colors) > 1) {
+        if (length(palette) > 1) {
 
           nlvl <-
             if (is.factor(data_vals)) {
@@ -211,30 +293,24 @@ data_color <- function(
               nlevels(factor(data_vals))
             }
 
-          if (length(colors) > nlvl) {
-            colors <- colors[seq_len(nlvl)]
+          if (length(palette) > nlvl) {
+            palette <- palette[seq_len(nlvl)]
           }
         }
 
         # Create a color function based on `scales::col_factor()`
         color_fn <-
           scales::col_factor(
-            palette = colors,
+            palette = palette,
             domain = data_vals,
             alpha = TRUE
           )
-
-      } else {
-
-        cli::cli_abort(
-          "Don't know how to map colors to a column of class {class(data_vals)[1]}."
-        )
       }
 
-    } else if (inherits(colors, "function")) {
+    } else if (inherits(fn, "function")) {
 
       # If a color function is directly provided, use as is
-      color_fn <- colors
+      color_fn <- fn
 
     } else {
       cli::cli_abort(
