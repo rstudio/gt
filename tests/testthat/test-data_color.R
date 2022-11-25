@@ -593,8 +593,9 @@ test_that("the correct color values are obtained when defining a palette", {
       )
   )
 
-  # Expect an error when providing `NULL` to `palette`
+  # Do not expect an error when providing `NULL` to `palette`
   expect_error(
+    regexp = NA,
     test_tbl %>%
       gt() %>%
       data_color(
