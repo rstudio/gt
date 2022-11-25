@@ -12,6 +12,7 @@ data_color(
   method = c("auto", "numeric", "bin", "quantile", "factor"),
   palette = NULL,
   domain = NULL,
+  bins = 8,
   levels = NULL,
   ordered = FALSE,
   na_color = NULL,
@@ -52,9 +53,15 @@ and categorical data must be used for the \code{"factor"} method. If \code{NULL}
 default value), the values in each column or row (depending on \code{direction})
 value will represent the domain.}
 
+\item{bins}{For \code{method = "bin"} this can either be a numeric vector of two
+or more unique cut points, or, a single numeric value (greater than or
+equal to \code{2}) giving the number of intervals into which the domain values
+are to be cut. By default, this is \code{8}.}
+
 \item{levels}{For \code{method = "factor"} this allows for an alternate way of
 specifying levels. If anything is provided here then any value supplied to
-\code{domain} will be ignored.}
+\code{domain} will be ignored. This should be a character vector of unique
+values.}
 
 \item{ordered}{For \code{method = "factor"}, setting this to \code{TRUE} means that the
 vector supplied to \code{domain} will be treated as being in the correct order
