@@ -49,6 +49,10 @@
 #'   rowwise? By default this is set with the `"column"` keyword and colors will
 #'   be applied down columns. The alternative option with the `"row"` keyword
 #'   ensures that color mapping will work across rows.
+#' @param target_columns For indirect column coloring treatments, we can supply
+#'   the columns that will receive the styling. The necessary preconditions are:
+#'   (1) we must use `direction = "column"`, and (2) the number of columns
+#'   specified/resolved here must match that of `columns`.
 #' @param method A method for computing color based on the data within body
 #'   cells. Can be `"auto"` (the default), `"numeric"`, `"bin"`, `"quantile"`,
 #'   or `"factor"`.
@@ -174,6 +178,7 @@ data_color <- function(
     columns = everything(),
     rows = everything(),
     direction = c("column", "row"),
+    target_columns = NULL,
     method = c("auto", "numeric", "bin", "quantile", "factor"),
     palette = NULL,
     domain = NULL,
@@ -265,6 +270,20 @@ data_color <- function(
 
   # Resolution of `columns` as column names in the table
   resolved_columns <- resolve_cols_c(expr = {{ columns }}, data = data)
+
+  # Resolution of `target_columns` as column names in the table
+  resolved_target_columns <-
+    resolve_cols_c(
+      expr = {{ target_columns }},
+      data = data,
+      null_means = "nothing"
+    )
+
+  # TODO: Validate the `resolved_target_columns` value to ensure that:
+  # (1) direction = "column" (stop)
+  # (2) the number of columns matches `resolved_columns` (except when there is
+  # only one column in `resolved_columns`) (stop)
+  # (3) there is no intersection of the values of `resolved_columns` (warn)
 
   # Resolution of `rows` as row indices in the table
   resolved_rows <- resolve_rows_i(expr = {{ rows }}, data = data)
@@ -363,7 +382,7 @@ data_color <- function(
         cli::cli_warn(c(
           "The \"numeric\" method with `direction == \"row\"` cannot be used
           when non-numeric columns are included.",
-          "*" = "Either target a collection of numeric columns or use the
+          "*" = "Either specify a collection of numeric columns or use the
           \"factor\" method."
         ))
 
@@ -452,15 +471,33 @@ data_color <- function(
         text = lapply(color_vals, FUN = function(x) cell_text(color = x))
       )
 
-    data_color_styles_tbl <-
-      dplyr::bind_rows(
-        data_color_styles_tbl,
-        generate_data_color_styles_tbl(
-          columns = if (direction == "column") resolved_columns[i] else resolved_columns,
-          rows = if (direction == "column") resolved_rows else resolved_rows[i],
-          color_styles = color_styles
+    if (length(resolved_target_columns) > 0 && direction == "column") {
+
+      for (j in seq_along(resolved_target_columns)) {
+
+        data_color_styles_tbl <-
+          dplyr::bind_rows(
+            data_color_styles_tbl,
+            generate_data_color_styles_tbl(
+              columns = resolved_target_columns[j],
+              rows = resolved_rows,
+              color_styles = color_styles
+            )
+          )
+      }
+
+    } else {
+
+      data_color_styles_tbl <-
+        dplyr::bind_rows(
+          data_color_styles_tbl,
+          generate_data_color_styles_tbl(
+            columns = if (direction == "column") resolved_columns[i] else resolved_columns,
+            rows = if (direction == "column") resolved_rows else resolved_rows[i],
+            color_styles = color_styles
+          )
         )
-      )
+    }
 
     # We are to generate an extra set of styling if we are applying coloring
     # to the background fill and `autocolor_text = TRUE`. This styling applies
@@ -478,15 +515,33 @@ data_color <- function(
 
       color_styles <- lapply(color_vals, FUN = function(x) cell_text(color = x))
 
-      data_color_styles_tbl <-
-        dplyr::bind_rows(
-          data_color_styles_tbl,
-          generate_data_color_styles_tbl(
-            columns = if (direction == "column") resolved_columns[i] else resolved_columns,
-            rows = if (direction == "column") resolved_rows else resolved_rows[i],
-            color_styles = color_styles
+      if (length(resolved_target_columns) > 0 && direction == "column") {
+
+        for (j in seq_along(resolved_target_columns)) {
+
+          data_color_styles_tbl <-
+            dplyr::bind_rows(
+              data_color_styles_tbl,
+              generate_data_color_styles_tbl(
+                columns = resolved_target_columns[j],
+                rows = resolved_rows,
+                color_styles = color_styles
+              )
+            )
+        }
+
+      } else {
+
+        data_color_styles_tbl <-
+          dplyr::bind_rows(
+            data_color_styles_tbl,
+            generate_data_color_styles_tbl(
+              columns = if (direction == "column") resolved_columns[i] else resolved_columns,
+              rows = if (direction == "column") resolved_rows else resolved_rows[i],
+              color_styles = color_styles
+            )
           )
-        )
+      }
     }
   }
 

@@ -9,6 +9,7 @@ data_color(
   columns = everything(),
   rows = everything(),
   direction = c("column", "row"),
+  target_columns = NULL,
   method = c("auto", "numeric", "bin", "quantile", "factor"),
   palette = NULL,
   domain = NULL,
@@ -35,6 +36,11 @@ are constrained.}
 rowwise? By default this is set with the \code{"column"} keyword and colors will
 be applied down columns. The alternative option with the \code{"row"} keyword
 ensures that color mapping will work across rows.}
+
+\item{target_columns}{For indirect column coloring treatments, we can supply
+the columns that will receive the styling. The necessary preconditions are:
+(1) we must use \code{direction = "column"}, and (2) the number of columns
+specified/resolved here must match that of \code{columns}.}
 
 \item{method}{A method for computing color based on the data within body
 cells. Can be \code{"auto"} (the default), \code{"numeric"}, \code{"bin"}, \code{"quantile"},
