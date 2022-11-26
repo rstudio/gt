@@ -69,8 +69,7 @@ if that vector needs to be coerced to a factor. By default, this is
 \code{FALSE}.}
 
 \item{na_color}{The color to use for missing values. By default (with
-\code{na_color = NULL}) gray, \code{"#808080"}, will be used. Using \code{NA} here results
-in no color at all applied to missing values.}
+\code{na_color = NULL}) gray, \code{"#808080"}, will be used.}
 
 \item{alpha}{An optional, fixed alpha transparency value that will be applied
 to all of the \code{colors} provided (regardless of whether a color palette was
