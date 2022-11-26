@@ -76,8 +76,7 @@
 #'   if that vector needs to be coerced to a factor. By default, this is
 #'   `FALSE`.
 #' @param na_color The color to use for missing values. By default (with
-#'   `na_color = NULL`) gray, `"#808080"`, will be used. Using `NA` here results
-#'   in no color at all applied to missing values.
+#'   `na_color = NULL`) gray, `"#808080"`, will be used.
 #' @param alpha An optional, fixed alpha transparency value that will be applied
 #'   to all of the `colors` provided (regardless of whether a color palette was
 #'   directly supplied or generated through a color mapping function).
