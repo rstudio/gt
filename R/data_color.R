@@ -120,7 +120,7 @@
 #'   gt() %>%
 #'   data_color(
 #'     columns = population,
-#'     colors = scales::col_numeric(
+#'     fn = scales::col_numeric(
 #'       palette = c("red", "orange", "green", "blue"),
 #'       domain = c(0.2E7, 0.4E7)
 #'     )
@@ -153,7 +153,7 @@
 #'   ) %>%
 #'   data_color(
 #'     columns = c(sold, income),
-#'     colors = scales::col_numeric(
+#'     fn = scales::col_numeric(
 #'       palette = paletteer::paletteer_d(
 #'         palette = "ggsci::red_material"
 #'       ) %>%
