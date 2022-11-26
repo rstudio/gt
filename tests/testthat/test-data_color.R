@@ -753,7 +753,7 @@ test_that("different combinations of methods and column types work well", {
   tbl_gt_18 %>% render_as_html() %>% expect_snapshot()
 })
 
-test_that("The direction can be columnwise and rowwise", {
+test_that("The direction of coloring can be columnwise or rowwise", {
 
   # Generate a gt table based on the `sza` dataset
   sza_gt_tbl <-
@@ -877,6 +877,73 @@ test_that("The direction can be columnwise and rowwise", {
   tbl_gt_5 %>% render_as_html() %>% expect_snapshot()
 })
 
+test_that("Columns can indirectly apply coloring to other columns", {
+
+  # Generate a gt table based on the `countrypops` dataset
+  cp_gt_tbl <-
+    countrypops %>%
+    dplyr::filter(country_name == "Mongolia") %>%
+    dplyr::select(-contains("code")) %>%
+    tail(10) %>%
+    tidyr::pivot_wider(names_from = "year", values_from = "population") %>%
+    gt(rowname_col = "country_name")
+
+  # Apply coloring from one column to another
+  tbl_gt_1 <-
+    cp_gt_tbl %>%
+    data_color(
+      columns = `2008`,
+      target_columns = `2017`,
+      domain = c(2620000, 3100000),
+      palette = c("green", "black")
+    )
+
+  # Perform snapshot test
+  tbl_gt_1 %>% render_as_html() %>% expect_snapshot()
+
+  # Apply coloring from one column to several different columns
+  tbl_gt_2 <-
+    cp_gt_tbl %>%
+    data_color(
+      columns = `2008`,
+      target_columns = c(`2015`, `2016`, `2017`),
+      domain = c(2620000, 3100000),
+      palette = c("green", "black")
+    )
+
+  # Perform snapshot test
+  tbl_gt_2 %>% render_as_html() %>% expect_snapshot()
+
+  # Apply coloring from multiple columns to several columns
+  # of the same multiple
+  tbl_gt_3 <-
+    cp_gt_tbl %>%
+    data_color(
+      columns = c(`2008`, `2011`, `2013`),
+      target_columns = c(`2015`, `2016`, `2017`),
+      domain = c(2620000, 3100000),
+      palette = c("green", "black")
+    )
+
+  # Perform snapshot test
+  tbl_gt_3 %>% render_as_html() %>% expect_snapshot()
+
+  # Apply coloring from multiple columns to several columns
+  # of the same multiple, this time reversing the palette
+  tbl_gt_4 <-
+    cp_gt_tbl %>%
+    data_color(
+      columns = c(`2008`, `2011`, `2013`),
+      target_columns = c(`2015`, `2016`, `2017`),
+      domain = c(2620000, 3100000),
+      palette = c("green", "black"),
+      reverse = TRUE
+    )
+
+  # Perform snapshot test
+  tbl_gt_4 %>% render_as_html() %>% expect_snapshot()
+})
+
 test_that("Certain errors can be expected (and some things don't error)", {
 
   # Expect an error when using an invalid color name in `palette`
@@ -933,6 +1000,41 @@ test_that("Certain errors can be expected (and some things don't error)", {
         columns = min_sza,
         palette = c("#EEFFAA", "##45AA22"),
         autocolor_text = TRUE
+      )
+  )
+
+  # Expect an error if using `direction = "row"` when specifying
+  # `target_columns`
+  expect_error(
+    exibble %>%
+      gt() %>%
+      data_color(
+        columns = num,
+        target_columns = row,
+        direction = "row"
+      )
+  )
+
+  # Expect an error with length of `target_columns` doesn't match that
+  # of `columns` (when length of `columns` is greater than one)
+  expect_error(
+    exibble %>%
+      gt() %>%
+      data_color(
+        columns = c(num, currency),
+        target_columns = row,
+      )
+  )
+
+  # Don't expect an error if the greater-than-one lengths of
+  # `target_columns` and `columns` match
+  expect_error(
+    regexp = NA,
+    exibble %>%
+      gt() %>%
+      data_color(
+        columns = c(num, currency),
+        target_columns = c(row, group),
       )
   )
 })
