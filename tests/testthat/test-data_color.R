@@ -590,7 +590,7 @@ test_that("the correct color values are obtained when defining a palette", {
 
 test_that("different combinations of methods and column types work well", {
 
-  # Using `data_color()` with all defaults
+  # Use `data_color()` with all defaults
   tbl_gt_1 <-
     exibble %>%
     gt() %>%
@@ -751,6 +751,130 @@ test_that("different combinations of methods and column types work well", {
 
   # Perform snapshot test
   tbl_gt_18 %>% render_as_html() %>% expect_snapshot()
+})
+
+test_that("The direction can be columnwise and rowwise", {
+
+  # Generate a gt table based on the `sza` dataset
+  sza_gt_tbl <-
+    sza %>%
+    dplyr::filter(latitude == 20 & tst <= "1200") %>%
+    dplyr::select(-latitude) %>%
+    dplyr::filter(!is.na(sza)) %>%
+    tidyr::spread(key = "tst", value = sza) %>%
+    gt(rowname_col = "month") %>%
+    sub_missing(missing_text = "")
+
+  # Use `data_color()` with `direction = "column"` (the default) and
+  # a palette of three colors
+  tbl_gt_1 <-
+    sza_gt_tbl %>%
+    data_color(
+      direction = "column",
+      method = "auto",
+      palette = c("orange", "blue", "gray30"),
+      na_color = "white"
+    )
+
+  # Perform snapshot test
+  tbl_gt_1 %>% render_as_html() %>% expect_snapshot()
+
+  # Use `data_color()` with `direction = "row"`
+  tbl_gt_2 <-
+    sza_gt_tbl %>%
+    data_color(
+      direction = "row",
+      method = "auto",
+      palette = c("orange", "blue", "gray30"),
+      na_color = "white"
+    )
+
+  # Perform snapshot test
+  tbl_gt_2 %>% render_as_html() %>% expect_snapshot()
+
+  # Using a fixed domain should not result in any difference
+  # between coloring that is applied columnwise or rowwise
+  expect_equal(
+    sza_gt_tbl %>%
+      data_color(
+        direction = "column",
+        domain = c(0, 90),
+        method = "auto",
+        palette = c("orange", "blue", "gray30"),
+        na_color = "white"
+      ) %>%
+      render_as_html(),
+    sza_gt_tbl %>%
+      data_color(
+        direction = "row",
+        domain = c(0, 90),
+        method = "auto",
+        palette = c("orange", "blue", "gray30"),
+        na_color = "white"
+      ) %>%
+      render_as_html()
+  )
+
+  # There should be no difference in output when using
+  # either of the "auto" or "numeric" methods since all
+  # columns are of the numeric class
+  expect_equal(
+    sza_gt_tbl %>%
+      data_color(
+        direction = "row",
+        method = "numeric",
+        palette = c("orange", "blue", "gray30"),
+        na_color = "white"
+      ) %>%
+      render_as_html(),
+    sza_gt_tbl %>%
+      data_color(
+        direction = "row",
+        method = "auto",
+        palette = c("orange", "blue", "gray30"),
+        na_color = "white"
+      ) %>%
+      render_as_html()
+  )
+
+  # Use `data_color()` with `direction = "row"` and `method = "bin"`
+  tbl_gt_3 <-
+    sza_gt_tbl %>%
+    data_color(
+      direction = "row",
+      method = "bin",
+      palette = c("orange", "blue", "gray30"),
+      na_color = "white"
+    )
+
+  # Perform snapshot test
+  tbl_gt_3 %>% render_as_html() %>% expect_snapshot()
+
+  # Use `data_color()` with `direction = "row"` and `method = "quantile"`
+  tbl_gt_4 <-
+    sza_gt_tbl %>%
+    data_color(
+      direction = "row",
+      method = "quantile",
+      palette = c("orange", "blue", "gray30"),
+      na_color = "white"
+    )
+
+  # Perform snapshot test
+  tbl_gt_4 %>% render_as_html() %>% expect_snapshot()
+
+  # Use `data_color()` with `direction = "row"` and `method = "factor"`
+  tbl_gt_5 <-
+    sza_gt_tbl %>%
+    data_color(
+      direction = "row",
+      method = "factor",
+      palette = c("orange", "blue", "gray30"),
+      na_color = "white"
+    )
+
+  # Perform snapshot test
+  tbl_gt_5 %>% render_as_html() %>% expect_snapshot()
 })
 
 test_that("Certain errors can be expected (and some things don't error)", {
