@@ -284,11 +284,27 @@ data_color <- function(
       styles = list()
     )
 
-  # Iteration is performed in a piecewise manner
-  for (column in resolved_columns) {
+  # Obtain the total number of iterations depending on whether
+  # `direction` is columnwise or rowwise
+  if (direction == "column") {
+    total_iterations <- seq_along(resolved_columns)
+  } else {
+    total_iterations <- seq_along(resolved_rows)
+  }
 
-    data_vals <- dplyr::pull(dplyr::select(data_tbl, {{ column }}))
-    data_vals <- data_vals[resolved_rows]
+  # Iteration is performed in a piecewise manner
+  for (i in total_iterations) {
+
+    if (direction == "column") {
+
+      data_vals <- dplyr::pull(dplyr::select(data_tbl, dplyr::all_of(resolved_columns[i])))
+      data_vals <- data_vals[resolved_rows]
+
+    } else {
+
+      data_vals <- dplyr::select(data_tbl, dplyr::all_of(resolved_columns))
+      data_vals <- unname(unlist(as.vector(data_vals[resolved_rows[i], ])))
+    }
 
     if (!is.null(fn)) {
 
@@ -309,8 +325,10 @@ data_color <- function(
         color_fn <-
           scales::col_numeric(
             palette = palette,
-            domain = data_vals,
-            alpha = TRUE
+            domain = if (is.null(domain)) data_vals else domain,
+            na.color = na_color,
+            alpha = TRUE,
+            reverse = reverse
           )
 
       } else if (is.character(data_vals) || is.factor(data_vals)) {
@@ -330,12 +348,28 @@ data_color <- function(
         color_fn <-
           scales::col_factor(
             palette = palette,
-            domain = data_vals,
-            alpha = TRUE
+            domain = if (is.null(domain)) data_vals else domain,
+            levels = levels,
+            ordered = ordered,
+            na.color = na_color,
+            alpha = TRUE,
+            reverse = reverse
           )
       }
 
     } else if (method == "numeric") {
+
+      if (!is.numeric(data_vals) && direction == "row") {
+
+        cli::cli_warn(c(
+          "The \"numeric\" method with `direction == \"row\"` cannot be used
+          when non-numeric columns are included.",
+          "*" = "Either target a collection of numeric columns or use the
+          \"factor\" method."
+        ))
+
+        return(data)
+      }
 
       if (!is.numeric(data_vals)) next
 
@@ -423,8 +457,8 @@ data_color <- function(
       dplyr::bind_rows(
         data_color_styles_tbl,
         generate_data_color_styles_tbl(
-          column = column,
-          rows = resolved_rows,
+          columns = if (direction == "column") resolved_columns[i] else resolved_columns,
+          rows = if (direction == "column") resolved_rows else resolved_rows[i],
           color_styles = color_styles
         )
       )
@@ -449,8 +483,8 @@ data_color <- function(
         dplyr::bind_rows(
           data_color_styles_tbl,
           generate_data_color_styles_tbl(
-            column = column,
-            rows = resolved_rows,
+            columns = if (direction == "column") resolved_columns[i] else resolved_columns,
+            rows = if (direction == "column") resolved_rows else resolved_rows[i],
             color_styles = color_styles
           )
         )
@@ -463,12 +497,12 @@ data_color <- function(
   )
 }
 
-generate_data_color_styles_tbl <- function(column, rows, color_styles) {
+generate_data_color_styles_tbl <- function(columns, rows, color_styles) {
 
   dplyr::tibble(
     locname = "data",
     grpname = NA_character_,
-    colname = column,
+    colname = columns,
     locnum = 5,
     rownum = rows,
     colnum = NA_integer_,
