@@ -279,11 +279,38 @@ data_color <- function(
       null_means = "nothing"
     )
 
-  # TODO: Validate the `resolved_target_columns` value to ensure that:
-  # (1) direction = "column" (stop)
-  # (2) the number of columns matches `resolved_columns` (except when there is
-  # only one column in `resolved_columns`) (stop)
-  # (3) there is no intersection of the values of `resolved_columns` (warn)
+  # Validate the supplied `resolved_target_columns` value
+  if (length(resolved_target_columns) > 0) {
+
+    # Stop function if the `direction = "column"` option is not used
+    if (direction != "column") {
+
+      cli::cli_abort(c(
+        "Specification of `target_columns` can only be done with the
+        `direction = \"column\"` option.",
+        "*" = "Please modify the `direction` option or remove any values in
+        `target_columns`."
+      ))
+    }
+
+    # Obtain lengths of basis and target columns
+    resolv_col_length <- length(resolved_columns)
+    target_col_length <- length(resolved_target_columns)
+
+    # Stop function in the case of more than one basis column not matching the
+    # number of target columns
+    if (resolv_col_length > 1 && resolv_col_length != target_col_length) {
+
+      cli::cli_abort(c(
+        "If the length of resolved `columns` is greater than one it must match
+        the length of the resolved `target_columns`.",
+        "*" = "Please ensure these greater-than-one lengths are the same."
+      ))
+    }
+
+    # TODO: Warn if there is an intersection of the values between
+    # `resolved_columns` and `resolved_target_columns`
+  }
 
   # Resolution of `rows` as row indices in the table
   resolved_rows <- resolve_rows_i(expr = {{ rows }}, data = data)
@@ -473,18 +500,34 @@ data_color <- function(
 
     if (length(resolved_target_columns) > 0 && direction == "column") {
 
-      for (j in seq_along(resolved_target_columns)) {
+      if (length(resolved_columns) > 1) {
 
         data_color_styles_tbl <-
           dplyr::bind_rows(
             data_color_styles_tbl,
             generate_data_color_styles_tbl(
-              columns = resolved_target_columns[j],
+              columns = resolved_target_columns[i],
               rows = resolved_rows,
               color_styles = color_styles
             )
           )
+
+      } else {
+
+        for (j in seq_along(resolved_target_columns)) {
+
+          data_color_styles_tbl <-
+            dplyr::bind_rows(
+              data_color_styles_tbl,
+              generate_data_color_styles_tbl(
+                columns = resolved_target_columns[j],
+                rows = resolved_rows,
+                color_styles = color_styles
+              )
+            )
+        }
       }
+
 
     } else {
 
@@ -517,17 +560,32 @@ data_color <- function(
 
       if (length(resolved_target_columns) > 0 && direction == "column") {
 
-        for (j in seq_along(resolved_target_columns)) {
+        if (length(resolved_columns) > 1) {
 
           data_color_styles_tbl <-
             dplyr::bind_rows(
               data_color_styles_tbl,
               generate_data_color_styles_tbl(
-                columns = resolved_target_columns[j],
+                columns = resolved_target_columns[i],
                 rows = resolved_rows,
                 color_styles = color_styles
               )
             )
+
+        } else {
+
+          for (j in seq_along(resolved_target_columns)) {
+
+            data_color_styles_tbl <-
+              dplyr::bind_rows(
+                data_color_styles_tbl,
+                generate_data_color_styles_tbl(
+                  columns = resolved_target_columns[j],
+                  rows = resolved_rows,
+                  color_styles = color_styles
+                )
+              )
+          }
         }
 
       } else {
