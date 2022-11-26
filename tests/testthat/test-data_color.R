@@ -532,7 +532,6 @@ test_that("the correct color values are obtained when defining a palette", {
     all() %>%
     expect_true()
 
-
   # Expect that NAs in column values will result in default colors
   tbl <-
     countrypops %>%
@@ -565,8 +564,11 @@ test_that("the correct color values are obtained when defining a palette", {
     selection_value("style") %>%
     gsub("(background-color: |; color: .*)", "", .) %>%
     expect_equal(
-      c("#808080", "#FF0000", "#FF5E00", "#FF8B00", "#F0B300", "#BAD700",
-        "#62F600", "#6FC972", "#7978BD", "#0000FF"))
+      c(
+        "#808080", "#FF0000", "#FF5E00", "#FF8B00", "#F0B300", "#BAD700",
+        "#62F600", "#6FC972", "#7978BD", "#0000FF"
+      )
+    )
 
   tbl %>%
     gt() %>%
@@ -579,8 +581,179 @@ test_that("the correct color values are obtained when defining a palette", {
     selection_value("style") %>%
     gsub("(background-color: |; color: .*)", "", .) %>%
     expect_equal(
-      c("#808080", "#FF0000", "#FF5700", "#FF8400", "#F6AE00", "#BED500",
-        "#5FF600", "#72C477", "#7773C1", "#0000FF"))
+      c(
+        "#808080", "#FF0000", "#FF5700", "#FF8400", "#F6AE00", "#BED500",
+        "#5FF600", "#72C477", "#7773C1", "#0000FF"
+      )
+    )
+})
+
+test_that("different combinations of methods and column types work well", {
+
+  # Using `data_color()` with all defaults
+  tbl_gt_1 <-
+    exibble %>%
+    gt() %>%
+    data_color()
+
+  # Perform snapshot test
+  tbl_gt_1 %>% render_as_html() %>% expect_snapshot()
+
+  # Use `data_color()` with a subset of rows targeted
+  tbl_gt_2 <-
+    test_tbl %>%
+    gt() %>%
+    data_color(rows = c(3:5, 8:10))
+
+  # Perform snapshot test
+  tbl_gt_2 %>% render_as_html() %>% expect_snapshot()
+
+  # Target the `num` column and use the `data_color()` "numeric" method
+  tbl_gt_3 <-
+    exibble %>%
+    gt() %>%
+    data_color(columns = num, method = "numeric")
+
+  # Perform snapshot test
+  tbl_gt_3 %>% render_as_html() %>% expect_snapshot()
+
+  # Target the `num` column and use the `data_color()` "bin" method
+  tbl_gt_4 <-
+    exibble %>%
+    gt() %>%
+    data_color(columns = num, method = "bin")
+
+  # Perform snapshot test
+  tbl_gt_4 %>% render_as_html() %>% expect_snapshot()
+
+  # Target the `num` column and use the `data_color()` "quantile" method
+  tbl_gt_5 <-
+    exibble %>%
+    gt() %>%
+    data_color(columns = num, method = "quantile")
+
+  # Perform snapshot test
+  tbl_gt_5 %>% render_as_html() %>% expect_snapshot()
+
+  # Target the `num` column and use the `data_color()` "factor" method
+  tbl_gt_6 <-
+    exibble %>%
+    gt() %>%
+    data_color(columns = num, method = "factor")
+
+  # Perform snapshot test
+  tbl_gt_6 %>% render_as_html() %>% expect_snapshot()
+
+  # Target the `char` column and use the `data_color()` "numeric" method
+  tbl_gt_7 <-
+    exibble %>%
+    gt() %>%
+    data_color(columns = char, method = "numeric")
+
+  # Perform snapshot test
+  tbl_gt_7 %>% render_as_html() %>% expect_snapshot()
+
+  # Target the `char` column and use the `data_color()` "bin" method
+  tbl_gt_8 <-
+    exibble %>%
+    gt() %>%
+    data_color(columns = char, method = "bin")
+
+  # Perform snapshot test
+  tbl_gt_8 %>% render_as_html() %>% expect_snapshot()
+
+  # Target the `char` column and use the `data_color()` "quantile" method
+  tbl_gt_9 <-
+    exibble %>%
+    gt() %>%
+    data_color(columns = char, method = "quantile")
+
+  # Perform snapshot test
+  tbl_gt_9 %>% render_as_html() %>% expect_snapshot()
+
+  # Target the `char` column and use the `data_color()` "factor" method
+  tbl_gt_10 <-
+    exibble %>%
+    gt() %>%
+    data_color(columns = char, method = "factor")
+
+  # Perform snapshot test
+  tbl_gt_10 %>% render_as_html() %>% expect_snapshot()
+
+  # Target the `fctr` column and use the `data_color()` "numeric" method
+  tbl_gt_11 <-
+    exibble %>%
+    gt() %>%
+    data_color(columns = fctr, method = "numeric")
+
+  # Perform snapshot test
+  tbl_gt_11 %>% render_as_html() %>% expect_snapshot()
+
+  # Target the `fctr` column and use the `data_color()` "bin" method
+  tbl_gt_12 <-
+    exibble %>%
+    gt() %>%
+    data_color(columns = fctr, method = "bin")
+
+  # Perform snapshot test
+  tbl_gt_12 %>% render_as_html() %>% expect_snapshot()
+
+  # Target the `fctr` column and use the `data_color()` "quantile" method
+  tbl_gt_13 <-
+    exibble %>%
+    gt() %>%
+    data_color(columns = fctr, method = "quantile")
+
+  # Perform snapshot test
+  tbl_gt_13 %>% render_as_html() %>% expect_snapshot()
+
+  # Target the `fctr` column and use the `data_color()` "factor" method
+  tbl_gt_14 <-
+    exibble %>%
+    gt() %>%
+    data_color(columns = fctr, method = "factor")
+
+  # Perform snapshot test
+  tbl_gt_14 %>% render_as_html() %>% expect_snapshot()
+
+  # With all columns, use the `data_color()` "numeric" method
+  tbl_gt_15 <-
+    exibble %>%
+    gt() %>%
+    data_color(method = "numeric")
+
+  # Perform snapshot test
+  tbl_gt_15 %>% render_as_html() %>% expect_snapshot()
+
+  # With all columns, use the `data_color()` "bin" method
+  tbl_gt_16 <-
+    exibble %>%
+    gt() %>%
+    data_color(method = "bin")
+
+  # Perform snapshot test
+  tbl_gt_16 %>% render_as_html() %>% expect_snapshot()
+
+  # With all columns, use the `data_color()` "quantile" method
+  tbl_gt_17 <-
+    exibble %>%
+    gt() %>%
+    data_color(method = "quantile")
+
+  # Perform snapshot test
+  tbl_gt_17 %>% render_as_html() %>% expect_snapshot()
+
+  # With all columns, use the `data_color()` "factor" method
+  tbl_gt_18 <-
+    exibble %>%
+    gt() %>%
+    data_color(method = "factor")
+
+  # Perform snapshot test
+  tbl_gt_18 %>% render_as_html() %>% expect_snapshot()
+})
+
+test_that("Certain errors can be expected (and some things don't error)", {
 
   # Expect an error when using an invalid color name in `palette`
   expect_error(
