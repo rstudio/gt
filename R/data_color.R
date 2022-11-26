@@ -267,8 +267,8 @@ data_color <- function(
   # Resolution of `columns` as column names in the table
   resolved_columns <- resolve_cols_c(expr = {{ columns }}, data = data)
 
-  # Get the sequence of row indices for the table
-  rows <- seq_len(nrow(data_tbl))
+  # Resolution of `rows` as row indices in the table
+  resolved_rows <- resolve_rows_i(expr = {{ rows }}, data = data)
 
   # Generate a table to accumulate all of the styles to be applied to the
   # body cells; in the end, this (along with all previously set styles) will
@@ -287,7 +287,8 @@ data_color <- function(
   # Iteration is performed in a piecewise manner
   for (column in resolved_columns) {
 
-    data_vals <- data_tbl[[column]][rows]
+    data_vals <- dplyr::pull(dplyr::select(data_tbl, {{ column }}))
+    data_vals <- data_vals[resolved_rows]
 
     if (!is.null(fn)) {
 
@@ -336,6 +337,8 @@ data_color <- function(
 
     } else if (method == "numeric") {
 
+      if (!is.numeric(data_vals)) next
+
       # Create a color function based on `scales::col_numeric()`
       color_fn <-
         scales::col_numeric(
@@ -347,6 +350,8 @@ data_color <- function(
         )
 
     } else if (method == "bin") {
+
+      if (!is.numeric(data_vals)) next
 
       # Create a color function based on `scales::col_bin()`
       color_fn <-
@@ -362,6 +367,8 @@ data_color <- function(
         )
 
     } else if (method == "quantile") {
+
+      if (!is.numeric(data_vals)) next
 
       # Create a color function based on `scales::col_quantile()`
       color_fn <-
@@ -417,7 +424,7 @@ data_color <- function(
         data_color_styles_tbl,
         generate_data_color_styles_tbl(
           column = column,
-          rows = rows,
+          rows = resolved_rows,
           color_styles = color_styles
         )
       )
@@ -443,7 +450,7 @@ data_color <- function(
           data_color_styles_tbl,
           generate_data_color_styles_tbl(
             column = column,
-            rows = rows,
+            rows = resolved_rows,
             color_styles = color_styles
           )
         )
