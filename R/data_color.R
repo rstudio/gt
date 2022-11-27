@@ -57,10 +57,12 @@
 #'   cells. Can be `"auto"` (the default), `"numeric"`, `"bin"`, `"quantile"`,
 #'   or `"factor"`.
 #' @param palette A vector of color names, the name of an **RColorBrewer**
-#'   palette, or the name of a **viridis** palette. If providing a vector of
-#'   colors as a palette, each color value provided must either be a color name
-#'   (in the set of colors provided by [grDevices::colors()]) or a hexadecimal
-#'   string in the form of `"#RRGGBB"` or `"#RRGGBBAA"`.
+#'   palette, the name of a **viridis** palette, or a discrete palette
+#'   accessible from the **paletteer** package using the `<package>::<palette>`
+#'   syntax (e.g., `"wesanderson::IsleofDogs1"`. If providing a vector of colors
+#'   as a palette, each color value provided must either be a color name (in the
+#'   set of colors provided by [grDevices::colors()]) or a hexadecimal string in
+#'   the form of `"#RRGGBB"` or `"#RRGGBBAA"`.
 #' @param domain The possible values that can be mapped. For the `"numeric"` and
 #'   `"bin"` methods, this can be a numeric range specified with a length of two
 #'   vector. Representative numeric data is needed for the `"quantile"` method
@@ -108,9 +110,100 @@
 #'
 #' @section Examples:
 #'
-#' Use [`countrypops`] to create a **gt** table. Apply a color scale to the
-#' `population` column with `scales::col_numeric`, four supplied colors, and a
-#' domain.
+#' The `data_color()` can be used without any supplied arguments to colorize a
+#' **gt** table. Let's use the [`exibble`] dataset to show some simple examples
+#' of how this works.
+#'
+#' ```r
+#' exibble %>%
+#'   gt() %>%
+#'   data_color()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_data_color_1.png")`
+#' }}
+#'
+#' What's happened is that `data_color()` applies background colors to all cells
+#' of every column with the default palette in R (accessed through `palette()`).
+#' The default method for applying color is `"auto"`, where numeric values will
+#' use the `"numeric"` method and character or factor values will use the
+#' `"factor"` method. The text color will be undergo modification automatically
+#' to maximize contrast (since `autocolor_text` is `TRUE` by default).
+#'
+#' You can one of several methods and **gt** will only apply color to the
+#' compatible values. Let's use the `"numeric"` method and supply `palette`
+#' values of `"red"` and `"green"`.
+#'
+#' ```r
+#' exibble %>%
+#'   gt() %>%
+#'   data_color(
+#'     method = "numeric",
+#'     palette = c("red", "green")
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_data_color_2.png")`
+#' }}
+#'
+#' With those options in place we see that only the numeric columns `num` and
+#' `currency` received color treatments. Moreover, the palette colors were
+#' mapped to the lower and upper limits of the data in each column; interpolated
+#' colors were used for the values in between the numeric limits of the two
+#' columns.
+#'
+#' We can constrain the cells to which coloring will be applied with the
+#' `columns` and `rows` arguments. Further to this, we can manually set the
+#' limits of the data with the `domain` argument (which is preferable in most
+#' cases). Here, the domain will be set as `domain = c(0, 50)`.
+#'
+#' ```r
+#' exibble %>%
+#'   gt() %>%
+#'   data_color(
+#'     columns = currency,
+#'     rows = currency < 50,
+#'     method = "numeric",
+#'     palette = c("red", "green"),
+#'     domain = c(0, 50)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_data_color_3.png")`
+#' }}
+#'
+#' We can use any of the **RColorBrewer** and **viridis** palettes. Let's make a
+#' new **gt** table from a subset of the [`countrypops`] dataset. Then, through
+#' `data_color()`, we'll apply coloring to the `population` column with the
+#' `"numeric"` method, use a domain between 2.5 and 3.2 million, and specify
+#' `palette = "viridis"`.
+#'
+#' ```r
+#' countrypops %>%
+#'   dplyr::filter(country_name == "Mongolia") %>%
+#'   dplyr::select(-contains("code")) %>%
+#'   tail(10) %>%
+#'   gt() %>%
+#'   data_color(
+#'     columns = population,
+#'     method = "numeric",
+#'     palette = "viridis",
+#'     domain = c(2.5E6, 3.2E6)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_data_color_4.png")`
+#' }}
+#'
+#' We can alternatively use the `fn` for supplying the **scales**-based function
+#' [scales::col_numeric()]. That function call will return a function (which is
+#' what the `fn` argument requires) that takes a vector of numeric values and
+#' returns color values. Here is the more complex version of the code that
+#' returns the same table as in the previous example.
 #'
 #' ```r
 #' countrypops %>%
@@ -121,50 +214,96 @@
 #'   data_color(
 #'     columns = population,
 #'     fn = scales::col_numeric(
-#'       palette = c("red", "orange", "green", "blue"),
-#'       domain = c(0.2E7, 0.4E7)
+#'       palette = "viridis",
+#'       domain = c(2.5E6, 3.2E6)
 #'     )
 #'   )
 #' ```
 #'
 #' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_data_color_1.png")`
+#' `r man_get_image_tag(file = "man_data_color_4.png")`
+#' }}
+#'
+#' Using your own function in `fn` can be very useful if you want to make use of
+#' specialized arguments in the **scales** `col_*()` functions. You could even
+#' supply your own specialized function for performing complex colorizing
+#' treatments!
+#'
+#' The `data_color()` function has a way to apply colorization indirectly to
+#' other columns. That is, you can apply colors to a column different from the
+#' one used to generate those specific colors. The trick is to use the
+#' `target_columns` argument. Let's do this with a more complete
+#' [`countrypops`]-based table example.
+#'
+#' ```r
+#' countrypops %>%
+#'   dplyr::filter(country_code_3 %in% c("FRA", "GBR")) %>%
+#'   dplyr::filter(year %% 10 == 0) %>%
+#'   dplyr::select(-contains("code")) %>%
+#'   dplyr::mutate(color = "") %>%
+#'   gt(groupname_col = "country_name") %>%
+#'   fmt_integer(columns = population) %>%
+#'   data_color(
+#'     columns = population,
+#'     target_columns = color,
+#'     method = "numeric",
+#'     palette = "viridis",
+#'     domain = c(4E7, 7E7)
+#'   ) %>%
+#'   cols_label(
+#'     year = "",
+#'     population = "Population",
+#'     color = ""
+#'   ) %>%
+#'   opt_vertical_padding(scale = 0.65)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_data_color_5.png")`
 #' }}
 #'
 #' Use [`pizzaplace`] to create a **gt** table. Apply colors from the
 #' `"ggsci::red_material"` palette (it's in the **ggsci** R package but more
 #' easily gotten from the **paletteer** package, info at [info_paletteer()]) to
-#' to `sold` and `income` columns. Setting the `domain` of
-#' `scales::col_numeric()` to `NULL` will use the bounds of the available data
-#' as the domain.
+#' to `sold` and `income` columns. Not setting the `domain` value will use the
+#' bounds of the available data in each column as the domain.
 #'
 #' ```r
 #' pizzaplace %>%
-#'   dplyr::filter(type %in% c("chicken", "supreme")) %>%
 #'   dplyr::group_by(type, size) %>%
 #'   dplyr::summarize(
 #'     sold = dplyr::n(),
 #'     income = sum(price),
-#'     .groups = "drop"
+#'     .groups = "drop_last"
 #'   ) %>%
+#'   dplyr::group_by(type) %>%
+#'   dplyr::mutate(f_sold = sold / sum(sold)) %>%
+#'   dplyr::mutate(size = factor(
+#'     size, levels = c("S", "M", "L", "XL", "XXL"))
+#'   ) %>%
+#'   dplyr::arrange(type, size) %>%
 #'   gt(
 #'     rowname_col = "size",
 #'     groupname_col = "type"
 #'   ) %>%
+#'   fmt_percent(
+#'     columns = f_sold,
+#'     decimals = 1
+#'   ) %>%
+#'   cols_merge(
+#'     columns = c(size, f_sold),
+#'     pattern = "{1} ({2})"
+#'   ) %>%
+#'   cols_align(align = "left", columns = stub()) %>%
 #'   data_color(
 #'     columns = c(sold, income),
-#'     fn = scales::col_numeric(
-#'       palette = paletteer::paletteer_d(
-#'         palette = "ggsci::red_material"
-#'       ) %>%
-#'         as.character(),
-#'       domain = NULL
-#'     )
+#'     method = "numeric",
+#'     palette = "ggsci::red_material"
 #'   )
 #' ```
 #'
 #' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_data_color_2.png")`
+#' `r man_get_image_tag(file = "man_data_color_6.png")`
 #' }}
 #'
 #' @family data formatting functions
