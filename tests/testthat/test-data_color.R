@@ -588,7 +588,61 @@ test_that("the correct color values are obtained when defining a palette", {
     )
 })
 
-test_that("different combinations of methods and column types work well", {
+test_that("Color palettes can be obtained from the paletteer package", {
+
+  skip_if_not_installed("paletteer")
+
+  # Use `data_color()` with all defaults and a palette obtain from
+  # the paletteer package
+  tbl_gt_1 <-
+    exibble %>%
+    gt() %>%
+    data_color(palette = "ggsci::red_material")
+
+  # Perform snapshot test
+  tbl_gt_1 %>% render_as_html() %>% expect_snapshot()
+})
+
+test_that("Some color palettes from the viridis package can be used", {
+
+  # Use `data_color()` with all defaults and the "viridis" palette
+  tbl_gt_1 <-
+    exibble %>%
+    gt() %>%
+    data_color(palette = "viridis")
+
+  # Perform snapshot test
+  tbl_gt_1 %>% render_as_html() %>% expect_snapshot()
+
+  # Use `data_color()` with all defaults and the "magma" palette
+  tbl_gt_2 <-
+    exibble %>%
+    gt() %>%
+    data_color(palette = "magma")
+
+  # Perform snapshot test
+  tbl_gt_2 %>% render_as_html() %>% expect_snapshot()
+
+  # Use `data_color()` with all defaults and the "plasma" palette
+  tbl_gt_3 <-
+    exibble %>%
+    gt() %>%
+    data_color(palette = "plasma")
+
+  # Perform snapshot test
+  tbl_gt_3 %>% render_as_html() %>% expect_snapshot()
+
+  # Use `data_color()` with all defaults and the "inferno" palette
+  tbl_gt_4 <-
+    exibble %>%
+    gt() %>%
+    data_color(palette = "inferno")
+
+  # Perform snapshot test
+  tbl_gt_4 %>% render_as_html() %>% expect_snapshot()
+})
+
+test_that("Different combinations of methods and column types work well", {
 
   # Use `data_color()` with all defaults
   tbl_gt_1 <-
