@@ -422,13 +422,22 @@ data_color <- function(
         ))
       }
 
+      # Parse the `palette` string and extract the two different
+      # components: the package that the palette comes from and the
+      # name of the palette
       palette_pkg <- unlist(strsplit(palette, "::"))[1]
       palette_name <- unlist(strsplit(palette, "::"))[2]
 
+      # Get the table of discrete palettes hosted in the paletteer package
       palettes_tbl <- paletteer::palettes_d_names
 
+      # Use a `filter()` statement to determine if the package part of the
+      # string provided exists in paletteer
       palettes_tbl <- dplyr::filter(palettes_tbl, package == palette_pkg)
 
+      # If the filtering results in a zero-row table, then stop the
+      # function and provide messaging on what went wrong and how
+      # to diagnose
       if (nrow(palettes_tbl) < 1) {
         cli::cli_abort(c(
           "The palette package name (supplied with the `<package>::<palette>`
@@ -438,8 +447,12 @@ data_color <- function(
         ))
       }
 
+      # Use a second `filter()` statement to determine if the palette name
+      # component exists in paletteer for the color package
       palettes_tbl <- dplyr::filter(palettes_tbl, palette == palette_name)
 
+      # If this filtering results in a zero-row table, stop the function
+      # and provide messaging on what went wrong and how to diagnose
       if (nrow(palettes_tbl) < 1) {
         cli::cli_abort(c(
           "The palette name (supplied with the `<package>::<palette>`
@@ -451,6 +464,9 @@ data_color <- function(
         ))
       }
 
+      # Getting to this stage means the palette exists in the user's
+      # installation of paletteer; extract the palette with the
+      # `paletteer::paletteer_d()` and coerce to a character vector
       palette <- as.character(paletteer::paletteer_d(palette = palette))
     }
 
