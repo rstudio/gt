@@ -1,46 +1,15 @@
 #' Set data cell colors using a palette or a color function
 #'
-#' It's possible to add color to data cells according to their values. The
-#' `data_color()` function colors all rows of any `columns` supplied. There are
-#' two ways to define how cells are colored: (1) through the use of a supplied
-#' color palette, and (2) through use of a color mapping function available from
-#' the **scales** package. The first method colorizes cell data according to
-#' whether values are character or numeric. The second method provides more
-#' control over how cells are colored since we provide an explicit color
-#' function and thus other requirements such as bin counts, cut points, or a
-#' numeric domain. Finally, we can choose whether to apply the cell-specific
-#' colors to either the cell background or the cell text.
-#'
-#' The `col_*()` color mapping functions from the scales package can be used in
-#' the `colors` argument. These functions map data values (`numeric` or
-#' `factor`/`character`) to colors according to the provided palette.
-#'
-#' \itemize{
-#' \item [scales::col_numeric()]: provides a simple linear mapping from
-#' continuous numeric data to an interpolated palette.
-#' \item [scales::col_bin()]: provides a mapping of continuous numeric data to
-#' value-based bins. This internally uses the [base::cut()] function.
-#' \item [scales::col_quantile()]: provides a mapping of continuous
-#' numeric data to quantiles. This internally uses the
-#' [stats::quantile()] function.
-#' \item [scales::col_factor()]: provides a mapping of factors to colors. If the
-#' palette is discrete and has a different number of colors than the number of
-#' factors, interpolation is used.
-#' }
-#'
-#' By default, **gt** will choose the ideal text color (for maximal contrast)
-#' when colorizing the background of data cells. This option can be disabled by
-#' setting `autocolor_text` to `FALSE`.
-#'
-#' Choosing the right color palette can often be difficult because it's both
-#' hard to discover suitable palettes and then obtain the vector of colors. To
-#' make this process easier we can elect to use the **paletteer** package,
-#' which makes a wide range of palettes from various R packages readily
-#' available. The [info_paletteer()] information table allows us to easily
-#' inspect all of the discrete color palettes available in **paletteer**. We
-#' only then need to specify the `package` and `palette` when calling the
-#' [paletteer::paletteer_d()] function, and, we get the palette as a vector of
-#' hexadecimal colors.
+#' It's possible to add color to data cells according to their values with the
+#' `data_color()` function. There are two ways to define how cells are colored:
+#' (1) through the use of a supplied color palette, and (2) through use of a
+#' color mapping function available from the **scales** package. The first
+#' method colorizes cell data according to whether values are character or
+#' numeric. The second method provides more control over how cells are colored
+#' since we provide an explicit color function and thus other requirements such
+#' as bin counts, cut points, or a numeric domain. Finally, we can choose
+#' whether to apply the cell-specific colors to either the cell background or
+#' the cell text.
 #'
 #' @inheritParams fmt_number
 #' @param columns,rows The columns and rows to which cell data color operations
@@ -108,11 +77,47 @@
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @section Easy color palette access from **paletteer**:
+#'
+#' Choosing the right color palette can often be difficult because it's both
+#' hard to discover suitable palettes and then obtain the vector of colors. To
+#' make this process easier we can elect to use the **paletteer** package,
+#' which makes a wide range of palettes from various R packages readily
+#' available. The [info_paletteer()] information table allows us to easily
+#' inspect all of the discrete color palettes available in **paletteer**. We
+#' only then need to specify the `package` and `palette` when calling the
+#' [paletteer::paletteer_d()] function, and, we get the palette as a vector of
+#' hexadecimal colors.
+#'
+#' @section Foreground text and background fill:
+#'
+#' By default, **gt** will choose the ideal text color (for maximal contrast)
+#' when colorizing the background of data cells. This option can be disabled by
+#' setting `autocolor_text` to `FALSE`.
+#'
+#' @section Color mapping functions from **scales**:
+#'
+#' The `col_*()` color mapping functions from the **scales** package can be used
+#' in the `fn` argument. These functions map data values (`numeric` or
+#' `factor`/`character`) to colors according to the provided palette.
+#'
+#' \itemize{
+#' \item [scales::col_numeric()]: provides a simple linear mapping from
+#' continuous numeric data to an interpolated palette.
+#' \item [scales::col_bin()]: provides a mapping of continuous numeric data to
+#' value-based bins. This internally uses the [base::cut()] function.
+#' \item [scales::col_quantile()]: provides a mapping of continuous
+#' numeric data to quantiles. This internally uses the
+#' [stats::quantile()] function.
+#' \item [scales::col_factor()]: provides a mapping of factors to colors. If the
+#' palette is discrete and has a different number of colors than the number of
+#' factors, interpolation is used.
+#' }
+#'
 #' @section Examples:
 #'
-#' The `data_color()` can be used without any supplied arguments to colorize a
-#' **gt** table. Let's use the [`exibble`] dataset to show some simple examples
-#' of how this works.
+#' The `data_color()` function can be used without any supplied arguments to
+#' colorize a **gt** table. Let's do this with the [`exibble`] dataset:
 #'
 #' ```r
 #' exibble %>%
