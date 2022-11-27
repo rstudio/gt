@@ -258,6 +258,52 @@ data_color <- function(
       palette <- palette()
     }
 
+    if (grepl("^.+?::.+?$", palette)) {
+
+      # Determine if the paletteer package is installed and stop the
+      # function if it is not present
+
+      if (!requireNamespace("paletteer", quietly = TRUE)) {
+
+        cli::cli_abort(c(
+          "The paletteer package is required for accessing palettes with
+          the `<package>::<palette>` syntax.",
+          "*" = "It can be installed with `install.packages(\"paletteer\")`."
+        ))
+      }
+
+      palette_pkg <- unlist(strsplit(palette, "::"))[1]
+      palette_name <- unlist(strsplit(palette, "::"))[2]
+
+      palettes_tbl <- paletteer::palettes_d_names
+
+      palettes_tbl <- dplyr::filter(palettes_tbl, package == palette_pkg)
+
+      if (nrow(palettes_tbl) < 1) {
+        cli::cli_abort(c(
+          "The palette package name (supplied with the `<package>::<palette>`
+          syntax) cannot be found in the paletteer package.",
+          "*" = "Ensure that it exists in the vector accessed with
+          `paletteer::paletteer_packages$Name`."
+        ))
+      }
+
+      palettes_tbl <- dplyr::filter(palettes_tbl, palette == palette_name)
+
+      if (nrow(palettes_tbl) < 1) {
+        cli::cli_abort(c(
+          "The palette name (supplied with the `<package>::<palette>`
+          syntax) is not associated with the {palette_pkg} package as a
+          discrete palette.",
+          "*" = "Ensure that the combination of palette package and palette
+          name exists as a record in the table accessed with
+          `paletteer::palettes_d_names`."
+        ))
+      }
+
+      palette <- as.character(paletteer::paletteer_d(palette = palette))
+    }
+
     # TODO: Validate the `palette` value to ensure it works with
     # the scales functions it will be passed to
   }
