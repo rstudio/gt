@@ -2,7 +2,7 @@
 % Please edit documentation in R/data_color.R
 \name{data_color}
 \alias{data_color}
-\title{Set data cell colors using a palette or a color function}
+\title{Perform data cell colorization}
 \usage{
 data_color(
   data,
@@ -32,10 +32,10 @@ data_color(
 \item{columns, rows}{The columns and rows to which cell data color operations
 are constrained.}
 
-\item{direction}{Should the color computations be performed columnwise or
-rowwise? By default this is set with the \code{"column"} keyword and colors will
-be applied down columns. The alternative option with the \code{"row"} keyword
-ensures that color mapping will work across rows.}
+\item{direction}{Should the color computations be performed column-wise or
+row-wise? By default this is set with the \code{"column"} keyword and colors
+will be applied down columns. The alternative option with the \code{"row"}
+keyword ensures that color mapping will work across rows.}
 
 \item{target_columns}{For indirect column coloring treatments, we can supply
 the columns that will receive the styling. The necessary preconditions are:
@@ -113,15 +113,44 @@ An object of class \code{gt_tbl}.
 }
 \description{
 It's possible to add color to data cells according to their values with the
-\code{data_color()} function. There are two ways to define how cells are colored:
-(1) through the use of a supplied color palette, and (2) through use of a
-color mapping function available from the \strong{scales} package. The first
-method colorizes cell data according to whether values are character or
-numeric. The second method provides more control over how cells are colored
-since we provide an explicit color function and thus other requirements such
-as bin counts, cut points, or a numeric domain. Finally, we can choose
-whether to apply the cell-specific colors to either the cell background or
-the cell text.
+\code{data_color()} function. There is a multitude of ways to perform data cell
+colorizing here:
+\itemize{
+\item targeting: we can constrain which columns and rows should receive the
+colorization treatment (through the \code{columns} and \code{rows} arguments)
+\item direction: ordinarily we perform coloring in a column-wise fashion but
+there is the option to color data cells in a row-wise manner (this is
+controlled by the \code{direction} argument)
+\item coloring method: \code{data_color()} automatically computes colors based on the
+column type but you can choose a specific methodology (e.g., with bins or
+quantiles) and the function will generate colors accordingly; the \code{method}
+argument controls this through keywords and other arguments act as inputs to
+specific methods
+\item coloring function: a custom function can be supplied to the \code{fn} argument
+for finer control over color evaluation with data; the color mapping
+\verb{col_*()} functions in the \strong{scales} package can be used here or any
+function you might want to define
+\item color palettes: with \code{palette} we could supply a vector of colors, a
+\strong{virdis} or \strong{RColorBrewer} palette name, or, a palette from the
+\strong{paleteer} package
+\item value domain: we can either opt to have the range of values define the
+domain, or, specify one explicitly with the \code{domain} argument
+\item indirect color application: it's possible to compute colors from one column
+and apply them to one or more different columns; we can even perform a
+color mapping from multiple source columns to the same multiple of target
+columns
+\item color application: with the \code{apply_to} argument, there's an option for
+whether to apply the cell-specific colors to the cell background or the cell
+text
+\item text autocoloring: if colorizing the cell background, \code{data_color()} will
+automatically recolor the foreground text to provide the best contrast (can
+be deactivated with \code{autocolor_text = FALSE})
+}
+
+The \code{data_color()} function won't fail with the default options used, but
+that won't typically provide you the type of colorization you really need.
+You can however safely iterate through a collection of different options
+without running into too many errors.
 }
 \section{Easy color palette access from \strong{paletteer}}{
 
