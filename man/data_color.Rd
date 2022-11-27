@@ -47,10 +47,12 @@ cells. Can be \code{"auto"} (the default), \code{"numeric"}, \code{"bin"}, \code
 or \code{"factor"}.}
 
 \item{palette}{A vector of color names, the name of an \strong{RColorBrewer}
-palette, or the name of a \strong{viridis} palette. If providing a vector of
-colors as a palette, each color value provided must either be a color name
-(in the set of colors provided by \code{\link[grDevices:colors]{grDevices::colors()}}) or a hexadecimal
-string in the form of \code{"#RRGGBB"} or \code{"#RRGGBBAA"}.}
+palette, the name of a \strong{viridis} palette, or a discrete palette
+accessible from the \strong{paletteer} package using the \verb{<package>::<palette>}
+syntax (e.g., \code{"wesanderson::IsleofDogs1"}. If providing a vector of colors
+as a palette, each color value provided must either be a color name (in the
+set of colors provided by \code{\link[grDevices:colors]{grDevices::colors()}}) or a hexadecimal string in
+the form of \code{"#RRGGBB"} or \code{"#RRGGBBAA"}.}
 
 \item{domain}{The possible values that can be mapped. For the \code{"numeric"} and
 \code{"bin"} methods, this can be a numeric range specified with a length of two
@@ -156,9 +158,96 @@ hexadecimal colors.
 \section{Examples}{
 
 
-Use \code{\link{countrypops}} to create a \strong{gt} table. Apply a color scale to the
-\code{population} column with \code{scales::col_numeric}, four supplied colors, and a
-domain.
+The \code{data_color()} can be used without any supplied arguments to colorize a
+\strong{gt} table. Let's use the \code{\link{exibble}} dataset to show some simple examples
+of how this works.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+  gt() \%>\%
+  data_color()
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_data_color_1.png" alt="This image of a table was generated from the first code example in the `data_color()` help file." style="width:100\%;">
+}}
+
+What's happened is that \code{data_color()} applies background colors to all cells
+of every column with the default palette in R (accessed through \code{palette()}).
+The default method for applying color is \code{"auto"}, where numeric values will
+use the \code{"numeric"} method and character or factor values will use the
+\code{"factor"} method. The text color will be undergo modification automatically
+to maximize contrast (since \code{autocolor_text} is \code{TRUE} by default).
+
+You can one of several methods and \strong{gt} will only apply color to the
+compatible values. Let's use the \code{"numeric"} method and supply \code{palette}
+values of \code{"red"} and \code{"green"}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+  gt() \%>\%
+  data_color(
+    method = "numeric",
+    palette = c("red", "green")
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_data_color_2.png" alt="This image of a table was generated from the second code example in the `data_color()` help file." style="width:100\%;">
+}}
+
+With those options in place we see that only the numeric columns \code{num} and
+\code{currency} received color treatments. Moreover, the palette colors were
+mapped to the lower and upper limits of the data in each column; interpolated
+colors were used for the values in between the numeric limits of the two
+columns.
+
+We can constrain the cells to which coloring will be applied with the
+\code{columns} and \code{rows} arguments. Further to this, we can manually set the
+limits of the data with the \code{domain} argument (which is preferable in most
+cases). Here, the domain will be set as \code{domain = c(0, 50)}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+  gt() \%>\%
+  data_color(
+    columns = currency,
+    rows = currency < 50,
+    method = "numeric",
+    palette = c("red", "green"),
+    domain = c(0, 50)
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_data_color_3.png" alt="This image of a table was generated from the third code example in the `data_color()` help file." style="width:100\%;">
+}}
+
+We can use any of the \strong{RColorBrewer} and \strong{viridis} palettes. Let's make a
+new \strong{gt} table from a subset of the \code{\link{countrypops}} dataset. Then, through
+\code{data_color()}, we'll apply coloring to the \code{population} column with the
+\code{"numeric"} method, use a domain between 2.5 and 3.2 million, and specify
+\code{palette = "viridis"}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
+  dplyr::filter(country_name == "Mongolia") \%>\%
+  dplyr::select(-contains("code")) \%>\%
+  tail(10) \%>\%
+  gt() \%>\%
+  data_color(
+    columns = population,
+    method = "numeric",
+    palette = "viridis",
+    domain = c(2.5E6, 3.2E6)
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_data_color_4.png" alt="This image of a table was generated from the fourth code example in the `data_color()` help file." style="width:100\%;">
+}}
+
+We can alternatively use the \code{fn} for supplying the \strong{scales}-based function
+\code{\link[scales:col_numeric]{scales::col_numeric()}}. That function call will return a function (which is
+what the \code{fn} argument requires) that takes a vector of numeric values and
+returns color values. Here is the more complex version of the code that
+returns the same table as in the previous example.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
   dplyr::filter(country_name == "Mongolia") \%>\%
@@ -168,49 +257,94 @@ domain.
   data_color(
     columns = population,
     fn = scales::col_numeric(
-      palette = c("red", "orange", "green", "blue"),
-      domain = c(0.2E7, 0.4E7)
+      palette = "viridis",
+      domain = c(2.5E6, 3.2E6)
     )
   )
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_data_color_1.png" alt="This image of a table was generated from the first code example in the `data_color()` help file." style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_data_color_4.png" alt="This image of a table was generated from the fourth code example in the `data_color()` help file." style="width:100\%;">
+}}
+
+Using your own function in \code{fn} can be very useful if you want to make use of
+specialized arguments in the \strong{scales} \verb{col_*()} functions. You could even
+supply your own specialized function for performing complex colorizing
+treatments!
+
+The \code{data_color()} function has a way to apply colorization indirectly to
+other columns. That is, you can apply colors to a column different from the
+one used to generate those specific colors. The trick is to use the
+\code{target_columns} argument. Let's do this with a more complete
+\code{\link{countrypops}}-based table example.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
+  dplyr::filter(country_code_3 \%in\% c("FRA", "GBR")) \%>\%
+  dplyr::filter(year \%\% 10 == 0) \%>\%
+  dplyr::select(-contains("code")) \%>\%
+  dplyr::mutate(color = "") \%>\%
+  gt(groupname_col = "country_name") \%>\%
+  fmt_integer(columns = population) \%>\%
+  data_color(
+    columns = population,
+    target_columns = color,
+    method = "numeric",
+    palette = "viridis",
+    domain = c(4E7, 7E7)
+  ) \%>\%
+  cols_label(
+    year = "",
+    population = "Population",
+    color = ""
+  ) \%>\%
+  opt_vertical_padding(scale = 0.65)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_data_color_5.png" alt="This image of a table was generated from the fifth code example in the `data_color()` help file." style="width:100\%;">
 }}
 
 Use \code{\link{pizzaplace}} to create a \strong{gt} table. Apply colors from the
 \code{"ggsci::red_material"} palette (it's in the \strong{ggsci} R package but more
 easily gotten from the \strong{paletteer} package, info at \code{\link[=info_paletteer]{info_paletteer()}}) to
-to \code{sold} and \code{income} columns. Setting the \code{domain} of
-\code{scales::col_numeric()} to \code{NULL} will use the bounds of the available data
-as the domain.
+to \code{sold} and \code{income} columns. Not setting the \code{domain} value will use the
+bounds of the available data in each column as the domain.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
-  dplyr::filter(type \%in\% c("chicken", "supreme")) \%>\%
   dplyr::group_by(type, size) \%>\%
   dplyr::summarize(
     sold = dplyr::n(),
     income = sum(price),
-    .groups = "drop"
+    .groups = "drop_last"
   ) \%>\%
+  dplyr::group_by(type) \%>\%
+  dplyr::mutate(f_sold = sold / sum(sold)) \%>\%
+  dplyr::mutate(size = factor(
+    size, levels = c("S", "M", "L", "XL", "XXL"))
+  ) \%>\%
+  dplyr::arrange(type, size) \%>\%
   gt(
     rowname_col = "size",
     groupname_col = "type"
   ) \%>\%
+  fmt_percent(
+    columns = f_sold,
+    decimals = 1
+  ) \%>\%
+  cols_merge(
+    columns = c(size, f_sold),
+    pattern = "\{1\} (\{2\})"
+  ) \%>\%
+  cols_align(align = "left", columns = stub()) \%>\%
   data_color(
     columns = c(sold, income),
-    fn = scales::col_numeric(
-      palette = paletteer::paletteer_d(
-        palette = "ggsci::red_material"
-      ) \%>\%
-        as.character(),
-      domain = NULL
-    )
+    method = "numeric",
+    palette = "ggsci::red_material"
   )
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_data_color_2.png" alt="This image of a table was generated from the second code example in the `data_color()` help file." style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_data_color_6.png" alt="This image of a table was generated from the sixth code example in the `data_color()` help file." style="width:100\%;">
 }}
 }
 
