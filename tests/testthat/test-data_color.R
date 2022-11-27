@@ -642,6 +642,29 @@ test_that("Some color palettes from the viridis package can be used", {
   tbl_gt_4 %>% render_as_html() %>% expect_snapshot()
 })
 
+test_that("Some color palettes from the RColorBrewer package can be used", {
+
+  skip_if_not_installed("RColorBrewer")
+
+  # Get all palette names from the RColorBrewer package
+  pal_names <- rownames(RColorBrewer::brewer.pal.info)
+
+  # Use `data_color()` with all defaults and the different palette names
+  # of the RColorBrewer package
+  gt_tbls <-
+    lapply(
+      pal_names,
+      FUN = function(x) {
+        expect_error(
+          regexp = NA,
+          exibble %>%
+            gt() %>%
+            data_color(palette = x)
+        )
+      }
+    )
+})
+
 test_that("Different combinations of methods and column types work well", {
 
   # Use `data_color()` with all defaults
