@@ -807,7 +807,7 @@ test_that("Different combinations of methods and column types work well", {
   tbl_gt_18 %>% render_as_html() %>% expect_snapshot()
 })
 
-test_that("The direction of coloring can be columnwise or rowwise", {
+test_that("The direction of coloring can be column-wise or row-wise", {
 
   # Generate a gt table based on the `sza` dataset
   sza_gt_tbl <-
@@ -847,7 +847,7 @@ test_that("The direction of coloring can be columnwise or rowwise", {
   tbl_gt_2 %>% render_as_html() %>% expect_snapshot()
 
   # Using a fixed domain should not result in any difference
-  # between coloring that is applied columnwise or rowwise
+  # between coloring that is applied column-wise or row-wise
   expect_equal(
     sza_gt_tbl %>%
       data_color(
