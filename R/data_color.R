@@ -402,7 +402,13 @@ data_color <- function(
       palette <- palette()
     }
 
-    if (grepl("^.+?::.+?$", palette)) {
+    # Obtain a palette from the paletteer package if the
+    # `palette` value is of the special form `<package>::<palette>`
+    if (
+      is.character(palette) &&
+      length(palette) == 1 &&
+      grepl("^.+?::.+?$", palette)
+    ) {
 
       # Determine if the paletteer package is installed and stop the
       # function if it is not present
