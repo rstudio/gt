@@ -1,23 +1,52 @@
-#' Set data cell colors using a palette or a color function
+#' Perform data cell colorization
 #'
+#' @description
 #' It's possible to add color to data cells according to their values with the
-#' `data_color()` function. There are two ways to define how cells are colored:
-#' (1) through the use of a supplied color palette, and (2) through use of a
-#' color mapping function available from the **scales** package. The first
-#' method colorizes cell data according to whether values are character or
-#' numeric. The second method provides more control over how cells are colored
-#' since we provide an explicit color function and thus other requirements such
-#' as bin counts, cut points, or a numeric domain. Finally, we can choose
-#' whether to apply the cell-specific colors to either the cell background or
-#' the cell text.
+#' `data_color()` function. There is a multitude of ways to perform data cell
+#' colorizing here:
+#'
+#' - targeting: we can constrain which columns and rows should receive the
+#' colorization treatment (through the `columns` and `rows` arguments)
+#' - direction: ordinarily we perform coloring in a column-wise fashion but
+#' there is the option to color data cells in a row-wise manner (this is
+#' controlled by the `direction` argument)
+#' - coloring method: `data_color()` automatically computes colors based on the
+#' column type but you can choose a specific methodology (e.g., with bins or
+#' quantiles) and the function will generate colors accordingly; the `method`
+#' argument controls this through keywords and other arguments act as inputs to
+#' specific methods
+#' - coloring function: a custom function can be supplied to the `fn` argument
+#' for finer control over color evaluation with data; the color mapping
+#' `col_*()` functions in the **scales** package can be used here or any
+#' function you might want to define
+#' - color palettes: with `palette` we could supply a vector of colors, a
+#' **virdis** or **RColorBrewer** palette name, or, a palette from the
+#' **paleteer** package
+#' - value domain: we can either opt to have the range of values define the
+#' domain, or, specify one explicitly with the `domain` argument
+#' - indirect color application: it's possible to compute colors from one column
+#' and apply them to one or more different columns; we can even perform a
+#' color mapping from multiple source columns to the same multiple of target
+#' columns
+#' - color application: with the `apply_to` argument, there's an option for
+#' whether to apply the cell-specific colors to the cell background or the cell
+#' text
+#' - text autocoloring: if colorizing the cell background, `data_color()` will
+#' automatically recolor the foreground text to provide the best contrast (can
+#' be deactivated with `autocolor_text = FALSE`)
+#'
+#' The `data_color()` function won't fail with the default options used, but
+#' that won't typically provide you the type of colorization you really need.
+#' You can however safely iterate through a collection of different options
+#' without running into too many errors.
 #'
 #' @inheritParams fmt_number
 #' @param columns,rows The columns and rows to which cell data color operations
 #'   are constrained.
-#' @param direction Should the color computations be performed columnwise or
-#'   rowwise? By default this is set with the `"column"` keyword and colors will
-#'   be applied down columns. The alternative option with the `"row"` keyword
-#'   ensures that color mapping will work across rows.
+#' @param direction Should the color computations be performed column-wise or
+#'   row-wise? By default this is set with the `"column"` keyword and colors
+#'   will be applied down columns. The alternative option with the `"row"`
+#'   keyword ensures that color mapping will work across rows.
 #' @param target_columns For indirect column coloring treatments, we can supply
 #'   the columns that will receive the styling. The necessary preconditions are:
 #'   (1) we must use `direction = "column"`, and (2) the number of columns
@@ -542,7 +571,7 @@ data_color <- function(
     )
 
   # Obtain the total number of iterations depending on whether
-  # `direction` is columnwise or rowwise
+  # `direction` is column-wise or row-wise
   if (direction == "column") {
     total_iterations <- seq_along(resolved_columns)
   } else {
@@ -570,7 +599,7 @@ data_color <- function(
 
     } else if (method == "auto") {
 
-      # For the "auto" method, we are getting data values in a piecewise
+      # For the "auto" method, we are getting data values in a piece-wise
       # fashion and the strategy is to generate a color function (using
       # a `col_*()` function from scales) for each piece of data; we can
       # process vectors that are numeric with `scales::col_numeric()` and
