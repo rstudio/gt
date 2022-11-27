@@ -112,20 +112,44 @@ Accessibility Guidelines).}
 An object of class \code{gt_tbl}.
 }
 \description{
-It's possible to add color to data cells according to their values. The
-\code{data_color()} function colors all rows of any \code{columns} supplied. There are
-two ways to define how cells are colored: (1) through the use of a supplied
-color palette, and (2) through use of a color mapping function available from
-the \strong{scales} package. The first method colorizes cell data according to
-whether values are character or numeric. The second method provides more
-control over how cells are colored since we provide an explicit color
-function and thus other requirements such as bin counts, cut points, or a
-numeric domain. Finally, we can choose whether to apply the cell-specific
-colors to either the cell background or the cell text.
+It's possible to add color to data cells according to their values with the
+\code{data_color()} function. There are two ways to define how cells are colored:
+(1) through the use of a supplied color palette, and (2) through use of a
+color mapping function available from the \strong{scales} package. The first
+method colorizes cell data according to whether values are character or
+numeric. The second method provides more control over how cells are colored
+since we provide an explicit color function and thus other requirements such
+as bin counts, cut points, or a numeric domain. Finally, we can choose
+whether to apply the cell-specific colors to either the cell background or
+the cell text.
 }
-\details{
-The \verb{col_*()} color mapping functions from the scales package can be used in
-the \code{colors} argument. These functions map data values (\code{numeric} or
+\section{Easy color palette access from \strong{paletteer}}{
+
+
+Choosing the right color palette can often be difficult because it's both
+hard to discover suitable palettes and then obtain the vector of colors. To
+make this process easier we can elect to use the \strong{paletteer} package,
+which makes a wide range of palettes from various R packages readily
+available. The \code{\link[=info_paletteer]{info_paletteer()}} information table allows us to easily
+inspect all of the discrete color palettes available in \strong{paletteer}. We
+only then need to specify the \code{package} and \code{palette} when calling the
+\code{\link[paletteer:paletteer_d]{paletteer::paletteer_d()}} function, and, we get the palette as a vector of
+hexadecimal colors.
+}
+
+\section{Foreground text and background fill}{
+
+
+By default, \strong{gt} will choose the ideal text color (for maximal contrast)
+when colorizing the background of data cells. This option can be disabled by
+setting \code{autocolor_text} to \code{FALSE}.
+}
+
+\section{Color mapping functions from \strong{scales}}{
+
+
+The \verb{col_*()} color mapping functions from the \strong{scales} package can be used
+in the \code{fn} argument. These functions map data values (\code{numeric} or
 \code{factor}/\code{character}) to colors according to the provided palette.
 
 \itemize{
@@ -140,27 +164,13 @@ numeric data to quantiles. This internally uses the
 palette is discrete and has a different number of colors than the number of
 factors, interpolation is used.
 }
-
-By default, \strong{gt} will choose the ideal text color (for maximal contrast)
-when colorizing the background of data cells. This option can be disabled by
-setting \code{autocolor_text} to \code{FALSE}.
-
-Choosing the right color palette can often be difficult because it's both
-hard to discover suitable palettes and then obtain the vector of colors. To
-make this process easier we can elect to use the \strong{paletteer} package,
-which makes a wide range of palettes from various R packages readily
-available. The \code{\link[=info_paletteer]{info_paletteer()}} information table allows us to easily
-inspect all of the discrete color palettes available in \strong{paletteer}. We
-only then need to specify the \code{package} and \code{palette} when calling the
-\code{\link[paletteer:paletteer_d]{paletteer::paletteer_d()}} function, and, we get the palette as a vector of
-hexadecimal colors.
 }
+
 \section{Examples}{
 
 
-The \code{data_color()} can be used without any supplied arguments to colorize a
-\strong{gt} table. Let's use the \code{\link{exibble}} dataset to show some simple examples
-of how this works.
+The \code{data_color()} function can be used without any supplied arguments to
+colorize a \strong{gt} table. Let's do this with the \code{\link{exibble}} dataset:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
   gt() \%>\%
