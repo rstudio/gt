@@ -116,6 +116,53 @@
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @section Color computation methods:
+#'
+#' The `data_color()` function offers four distinct methods for computing color
+#' based on cell data values. They are set by the `method` argument and the
+#' options go by the keywords `"numeric"`, `"bin"`, `"quantile"`, and
+#' `"factor"`. There are other arguments in `data_color()` that variously
+#' support these methods (e.g., `bins` for the `"bin"` method, etc.). Here we'll
+#' go through each method, providing a short explanation of what each one does
+#' and which options are available.
+#'
+#' ### `"numeric"`
+#'
+#' The `"numeric"` method provides a simple linear mapping from continuous
+#' numeric data to an interpolated `palette`. Internally, this uses the
+#' [scales::col_numeric()] function. This method is suited for numeric data cell
+#' values and can make use of a supplied `domain` value, in the form of a
+#' two-element numeric vector describing the range of values, if provided.
+#'
+#' ### `"bin"`
+#'
+#' The `"bin"` method provides a mapping of continuous numeric data to
+#' value-based bins. Internally, this uses the [scales::col_bin()] function
+#' which itself uses [base::cut()]. As with the `"numeric"` method, `"bin"` is
+#' meant for numeric data cell values. The use of a `domain` value is supported
+#' with this method. The `bins` argument in `data_color()` is specific to this
+#' method, offering the ability to: (1) specify the number of bins, or (2)
+#' provide a vector of cut points.
+#'
+#' ### `"quantile"`
+#'
+#' The `"quantile"` method provides a mapping of continuous numeric data to
+#' quantiles. Internally, this uses the [scales::col_quantile()] function which
+#' itself uses [stats::quantile()]. Input data cell values should be numeric, as
+#' with the `"numeric"` and `"bin"` methods. A numeric `domain` value is
+#' supported with this method. The `quantiles` argument in `data_color()`
+#' controls the number of equal-size quantiles to use.
+#'
+#' ### `"factor"`
+#'
+#' The `"factor"` method provides a mapping of factors to colors. With discrete
+#' palettes, color interpolation is used when the number of factors does not
+#' match the number of colors in the palette. Internally, this uses the
+#' [scales::col_factor()] function. Input data cell values can be of any type
+#' (i.e., factor, character, numeric values, and more are supported). The
+#' optional input to `domain` should take the form of categorical data. The
+#' `levels` and `ordered` arguments in `data_color()` support this method.
+#'
 #' @section Easy color palette access from **paletteer**:
 #'
 #' Choosing the right color palette can often be difficult because it's both
