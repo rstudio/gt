@@ -663,9 +663,6 @@ data_color <- function(
         "*" = "Please ensure these greater-than-one lengths are the same."
       ))
     }
-
-    # TODO: Warn if there is an intersection of the values between
-    # `resolved_columns` and `resolved_target_columns`
   }
 
   # Resolution of `rows` as row indices in the table
