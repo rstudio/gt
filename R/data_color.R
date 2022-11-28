@@ -55,7 +55,9 @@
 #'   must resolve to the same multiple.
 #' @param method A method for computing color based on the data within body
 #'   cells. Can be `"auto"` (the default), `"numeric"`, `"bin"`, `"quantile"`,
-#'   or `"factor"`.
+#'   or `"factor"`. The `"auto"` method will automatically choose the
+#'   `"numeric"` method for numerical input data or the `"factor"` method for
+#'   any non-numeric inputs.
 #' @param palette A vector of color names, the name of an **RColorBrewer**
 #'   palette, the name of a **viridis** palette, or a discrete palette
 #'   accessible from the **paletteer** package using the `<package>::<palette>`
