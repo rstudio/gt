@@ -57,10 +57,11 @@
 #' @param palette A vector of color names, the name of an **RColorBrewer**
 #'   palette, the name of a **viridis** palette, or a discrete palette
 #'   accessible from the **paletteer** package using the `<package>::<palette>`
-#'   syntax (e.g., `"wesanderson::IsleofDogs1"`. If providing a vector of colors
-#'   as a palette, each color value provided must either be a color name (in the
-#'   set of colors provided by [grDevices::colors()]) or a hexadecimal string in
-#'   the form of `"#RRGGBB"` or `"#RRGGBBAA"`.
+#'   syntax (e.g., `"wesanderson::IsleofDogs1"`). If providing a vector of
+#'   colors as a palette, each color value provided must either be a color name
+#'   (Only R/X11 color names or CSS 3.0 color names) or a hexadecimal string in
+#'   the form of `"#RRGGBB"` or `"#RRGGBBAA"`. If nothing is provided here, the
+#'   default R color palette is used (i.e., the colors from `palette()`).
 #' @param domain The possible values that can be mapped. For the `"numeric"` and
 #'   `"bin"` methods, this can be a numeric range specified with a length of two
 #'   vector. Representative numeric data is needed for the `"quantile"` method
@@ -114,15 +115,18 @@
 #' which makes a wide range of palettes from various R packages readily
 #' available. The [info_paletteer()] information table allows us to easily
 #' inspect all of the discrete color palettes available in **paletteer**. We
-#' only then need to specify the `package` and `palette` when calling the
-#' [paletteer::paletteer_d()] function, and, we get the palette as a vector of
-#' hexadecimal colors.
+#' only then need to specify the palette and associated package using the
+#' `<package>::<palette>` syntax (e.g., `"tvthemes::Stannis"`) for
+#' the `palette` argument.
 #'
 #' @section Foreground text and background fill:
 #'
 #' By default, **gt** will choose the ideal text color (for maximal contrast)
 #' when colorizing the background of data cells. This option can be disabled by
-#' setting `autocolor_text` to `FALSE`.
+#' setting `autocolor_text` to `FALSE`. The `contrast_algo` argument lets us
+#' choose between two color contrast algorithms: `"apca"` (*Accessible
+#' Perceptual Contrast Algorithm*, the default algo) and `"wcag"` (*Web Content
+#' Accessibility Guidelines*).
 #'
 #' @section Color mapping functions from **scales**:
 #'
