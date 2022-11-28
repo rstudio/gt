@@ -94,9 +94,12 @@
 #' @param reverse Should the colors computed operate in reverse order?
 #'   If `TRUE` then colors that normally change from red to blue will change in
 #'   the opposite direction. By default, this is `FALSE`.
-#' @param fn A color mapping function from the **scales** package. The supported
-#'   color mapping functions are: [scales::col_quantile()], [scales::col_bin()],
-#'   [scales::col_numeric()], and [scales::col_factor()].
+#' @param fn A color-mapping function. The function should be able to take a
+#'   vector of data values as input and return an equal-length vector of color
+#'   values. The `col_*()` functions provided in the **scales** package (i.e.,
+#'   [scales::col_numeric()], [scales::col_bin()], and [scales::col_factor()])
+#'   can be invoked here with options, as those functions themselves return a
+#'   color-mapping function.
 #' @param apply_to Which style element should the colors be applied to? Options
 #'   include the cell background (the default, given as `"fill"`) or the cell
 #'   text (`"text"`).
