@@ -651,7 +651,7 @@ test_that("Some color palettes from the RColorBrewer package can be used", {
 
   # Use `data_color()` with all defaults and the different palette names
   # of the RColorBrewer package
-  gt_tbls <-
+  RColorBrewer_tests_out <-
     lapply(
       pal_names,
       FUN = function(x) {
