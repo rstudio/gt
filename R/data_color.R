@@ -74,6 +74,8 @@
 #'   or more unique cut points, or, a single numeric value (greater than or
 #'   equal to `2`) giving the number of intervals into which the domain values
 #'   are to be cut. By default, this is `8`.
+#' @param quantiles For `method = "quantile"` this is the number of equal-size
+#'   quantiles to use. By default, this is set to `4`.
 #' @param levels For `method = "factor"` this allows for an alternate way of
 #'   specifying levels. If anything is provided here then any value supplied to
 #'   `domain` will be ignored. This should be a character vector of unique
