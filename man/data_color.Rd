@@ -216,7 +216,57 @@ optional input to \code{domain} should take the form of categorical data. The
 }
 }
 
-\section{Easy color palette access from \strong{paletteer}}{
+\section{Color palette access from \strong{RColorBrewer} and \strong{viridis}}{
+
+
+All palettes from the \strong{RColorBrewer} package and select palettes from
+\strong{viridis} can be accessed by providing the palette name in \code{palette}.
+\strong{RColorBrewer} has 35 available palettes:\tabular{lllll}{
+    \tab Palette Name \tab Colors \tab Category \tab Colorblind Friendly \cr
+   1 \tab \code{"BrBG"} \tab 11 \tab Diverging \tab Yes \cr
+   2 \tab \code{"PiYG"} \tab 11 \tab Diverging \tab Yes \cr
+   3 \tab \code{"PRGn"} \tab 11 \tab Diverging \tab Yes \cr
+   4 \tab \code{"PuOr"} \tab 11 \tab Diverging \tab Yes \cr
+   5 \tab \code{"RdBu"} \tab 11 \tab Diverging \tab Yes \cr
+   6 \tab \code{"RdYlBu"} \tab 11 \tab Diverging \tab Yes \cr
+   7 \tab \code{"RdGy"} \tab 11 \tab Diverging \tab No \cr
+   8 \tab \code{"RdYlGn"} \tab 11 \tab Diverging \tab No \cr
+   9 \tab \code{"Spectral"} \tab 11 \tab Diverging \tab No \cr
+   10 \tab \code{"Dark2"} \tab 8 \tab Qualitative \tab Yes \cr
+   11 \tab \code{"Paired"} \tab 12 \tab Qualitative \tab Yes \cr
+   12 \tab \code{"Set1"} \tab 9 \tab Qualitative \tab No \cr
+   13 \tab \code{"Set2"} \tab 8 \tab Qualitative \tab Yes \cr
+   14 \tab \code{"Set3"} \tab 12 \tab Qualitative \tab No \cr
+   15 \tab \code{"Accent"} \tab 8 \tab Qualitative \tab No \cr
+   16 \tab \code{"Pastel1"} \tab 9 \tab Qualitative \tab No \cr
+   17 \tab \code{"Pastel2"} \tab 8 \tab Qualitative \tab No \cr
+   18 \tab \code{"Blues"} \tab 9 \tab Sequential \tab Yes \cr
+   19 \tab \code{"BuGn"} \tab 9 \tab Sequential \tab Yes \cr
+   20 \tab \code{"BuPu"} \tab 9 \tab Sequential \tab Yes \cr
+   21 \tab \code{"GnBu"} \tab 9 \tab Sequential \tab Yes \cr
+   22 \tab \code{"Greens"} \tab 9 \tab Sequential \tab Yes \cr
+   23 \tab \code{"Greys"} \tab 9 \tab Sequential \tab Yes \cr
+   24 \tab \code{"Oranges"} \tab 9 \tab Sequential \tab Yes \cr
+   25 \tab \code{"OrRd"} \tab 9 \tab Sequential \tab Yes \cr
+   26 \tab \code{"PuBu"} \tab 9 \tab Sequential \tab Yes \cr
+   27 \tab \code{"PuBuGn"} \tab 9 \tab Sequential \tab Yes \cr
+   28 \tab \code{"PuRd"} \tab 9 \tab Sequential \tab Yes \cr
+   29 \tab \code{"Purples"} \tab 9 \tab Sequential \tab Yes \cr
+   30 \tab \code{"RdPu"} \tab 9 \tab Sequential \tab Yes \cr
+   31 \tab \code{"Reds"} \tab 9 \tab Sequential \tab Yes \cr
+   32 \tab \code{"YlGn"} \tab 9 \tab Sequential \tab Yes \cr
+   33 \tab \code{"YlGnBu"} \tab 9 \tab Sequential \tab Yes \cr
+   34 \tab \code{"YlOrBr"} \tab 9 \tab Sequential \tab Yes \cr
+   35 \tab \code{"YlOrRd"} \tab 9 \tab Sequential \tab Yes \cr
+}
+
+
+We can access four colorblind-friendly palettes from \strong{viridis}:
+\code{"viridis"}, \code{"magma"}, \code{"plasma"}, and \code{"inferno"}. Simply provide any one
+of those names to \code{palette}.
+}
+
+\section{Color palette access from \strong{paletteer}}{
 
 
 Choosing the right color palette can often be difficult because it's both
@@ -228,6 +278,12 @@ inspect all of the discrete color palettes available in \strong{paletteer}. We
 only then need to specify the palette and associated package using the
 \verb{<package>::<palette>} syntax (e.g., \code{"tvthemes::Stannis"}) for
 the \code{palette} argument.
+
+A requirement for using \strong{paletteer} in this way is that the package must be
+installed (\strong{gt} doesn't import \strong{paletteer} currently). This can be easily
+done with \code{install.packages("paletteer")}. Not having this package installed
+with result in an error when using the \verb{<package>::<palette>} syntax in
+\code{palette}.
 }
 
 \section{Foreground text and background fill}{
