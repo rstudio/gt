@@ -14,6 +14,7 @@ data_color(
   palette = NULL,
   domain = NULL,
   bins = 8,
+  quantiles = 4,
   levels = NULL,
   ordered = FALSE,
   na_color = NULL,
@@ -46,7 +47,9 @@ must resolve to the same multiple.}
 
 \item{method}{A method for computing color based on the data within body
 cells. Can be \code{"auto"} (the default), \code{"numeric"}, \code{"bin"}, \code{"quantile"},
-or \code{"factor"}.}
+or \code{"factor"}. The \code{"auto"} method will automatically choose the
+\code{"numeric"} method for numerical input data or the \code{"factor"} method for
+any non-numeric inputs.}
 
 \item{palette}{A vector of color names, the name of an \strong{RColorBrewer}
 palette, the name of a \strong{viridis} palette, or a discrete palette
@@ -69,6 +72,9 @@ or more unique cut points, or, a single numeric value (greater than or
 equal to \code{2}) giving the number of intervals into which the domain values
 are to be cut. By default, this is \code{8}.}
 
+\item{quantiles}{For \code{method = "quantile"} this is the number of equal-size
+quantiles to use. By default, this is set to \code{4}.}
+
 \item{levels}{For \code{method = "factor"} this allows for an alternate way of
 specifying levels. If anything is provided here then any value supplied to
 \code{domain} will be ignored. This should be a character vector of unique
@@ -90,9 +96,12 @@ directly supplied or generated through a color mapping function).}
 If \code{TRUE} then colors that normally change from red to blue will change in
 the opposite direction. By default, this is \code{FALSE}.}
 
-\item{fn}{A color mapping function from the \strong{scales} package. The supported
-color mapping functions are: \code{\link[scales:col_numeric]{scales::col_quantile()}}, \code{\link[scales:col_numeric]{scales::col_bin()}},
-\code{\link[scales:col_numeric]{scales::col_numeric()}}, and \code{\link[scales:col_numeric]{scales::col_factor()}}.}
+\item{fn}{A color-mapping function. The function should be able to take a
+vector of data values as input and return an equal-length vector of color
+values. The \verb{col_*()} functions provided in the \strong{scales} package (i.e.,
+\code{\link[scales:col_numeric]{scales::col_numeric()}}, \code{\link[scales:col_numeric]{scales::col_bin()}}, and \code{\link[scales:col_numeric]{scales::col_factor()}})
+can be invoked here with options, as those functions themselves return a
+color-mapping function.}
 
 \item{apply_to}{Which style element should the colors be applied to? Options
 include the cell background (the default, given as \code{"fill"}) or the cell
@@ -155,6 +164,58 @@ that won't typically provide you the type of colorization you really need.
 You can however safely iterate through a collection of different options
 without running into too many errors.
 }
+\section{Color computation methods}{
+
+
+The \code{data_color()} function offers four distinct methods for computing color
+based on cell data values. They are set by the \code{method} argument and the
+options go by the keywords \code{"numeric"}, \code{"bin"}, \code{"quantile"}, and
+\code{"factor"}. There are other arguments in \code{data_color()} that variously
+support these methods (e.g., \code{bins} for the \code{"bin"} method, etc.). Here we'll
+go through each method, providing a short explanation of what each one does
+and which options are available.
+\subsection{\code{"numeric"}}{
+
+The \code{"numeric"} method provides a simple linear mapping from continuous
+numeric data to an interpolated \code{palette}. Internally, this uses the
+\code{\link[scales:col_numeric]{scales::col_numeric()}} function. This method is suited for numeric data cell
+values and can make use of a supplied \code{domain} value, in the form of a
+two-element numeric vector describing the range of values, if provided.
+}
+
+\subsection{\code{"bin"}}{
+
+The \code{"bin"} method provides a mapping of continuous numeric data to
+value-based bins. Internally, this uses the \code{\link[scales:col_numeric]{scales::col_bin()}} function
+which itself uses \code{\link[base:cut]{base::cut()}}. As with the \code{"numeric"} method, \code{"bin"} is
+meant for numeric data cell values. The use of a \code{domain} value is supported
+with this method. The \code{bins} argument in \code{data_color()} is specific to this
+method, offering the ability to: (1) specify the number of bins, or (2)
+provide a vector of cut points.
+}
+
+\subsection{\code{"quantile"}}{
+
+The \code{"quantile"} method provides a mapping of continuous numeric data to
+quantiles. Internally, this uses the \code{\link[scales:col_numeric]{scales::col_quantile()}} function which
+itself uses \code{\link[stats:quantile]{stats::quantile()}}. Input data cell values should be numeric, as
+with the \code{"numeric"} and \code{"bin"} methods. A numeric \code{domain} value is
+supported with this method. The \code{quantiles} argument in \code{data_color()}
+controls the number of equal-size quantiles to use.
+}
+
+\subsection{\code{"factor"}}{
+
+The \code{"factor"} method provides a mapping of factors to colors. With discrete
+palettes, color interpolation is used when the number of factors does not
+match the number of colors in the palette. Internally, this uses the
+\code{\link[scales:col_numeric]{scales::col_factor()}} function. Input data cell values can be of any type
+(i.e., factor, character, numeric values, and more are supported). The
+optional input to \code{domain} should take the form of categorical data. The
+\code{levels} and \code{ordered} arguments in \code{data_color()} support this method.
+}
+}
+
 \section{Easy color palette access from \strong{paletteer}}{
 
 
@@ -178,27 +239,6 @@ setting \code{autocolor_text} to \code{FALSE}. The \code{contrast_algo} argument
 choose between two color contrast algorithms: \code{"apca"} (\emph{Accessible
 Perceptual Contrast Algorithm}, the default algo) and \code{"wcag"} (\emph{Web Content
 Accessibility Guidelines}).
-}
-
-\section{Color mapping functions from \strong{scales}}{
-
-
-The \verb{col_*()} color mapping functions from the \strong{scales} package can be used
-in the \code{fn} argument. These functions map data values (\code{numeric} or
-\code{factor}/\code{character}) to colors according to the provided palette.
-
-\itemize{
-\item \code{\link[scales:col_numeric]{scales::col_numeric()}}: provides a simple linear mapping from
-continuous numeric data to an interpolated palette.
-\item \code{\link[scales:col_numeric]{scales::col_bin()}}: provides a mapping of continuous numeric data to
-value-based bins. This internally uses the \code{\link[base:cut]{base::cut()}} function.
-\item \code{\link[scales:col_numeric]{scales::col_quantile()}}: provides a mapping of continuous
-numeric data to quantiles. This internally uses the
-\code{\link[stats:quantile]{stats::quantile()}} function.
-\item \code{\link[scales:col_numeric]{scales::col_factor()}}: provides a mapping of factors to colors. If the
-palette is discrete and has a different number of colors than the number of
-factors, interpolation is used.
-}
 }
 
 \section{Examples}{
