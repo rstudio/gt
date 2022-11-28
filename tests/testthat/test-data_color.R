@@ -828,6 +828,70 @@ test_that("Different combinations of methods and column types work well", {
 
   # Perform snapshot test
   tbl_gt_18 %>% render_as_html() %>% expect_snapshot()
+
+  #
+  # Use different options of the "bin" method
+  #
+
+  # Using `bins = 4`
+  tbl_gt_19 <-
+    dplyr::tibble(a = 1:20) %>%
+    gt() %>%
+    data_color(
+      columns = a,
+      method = "bin",
+      palette = "viridis",
+      bins = 4
+    )
+
+  # Perform snapshot test
+  tbl_gt_19 %>% render_as_html() %>% expect_snapshot()
+
+  # Using `bins = 5`
+  tbl_gt_20 <-
+    dplyr::tibble(a = 1:20) %>%
+    gt() %>%
+    data_color(
+      columns = a,
+      method = "bin",
+      palette = "viridis",
+      bins = 5
+    )
+
+  # Perform snapshot test
+  tbl_gt_20 %>% render_as_html() %>% expect_snapshot()
+
+  #
+  # Use different options of the "quantile" method
+  #
+
+  # Using `quantiles = 5`
+  tbl_gt_21 <-
+    dplyr::tibble(a = 1:20) %>%
+    gt() %>%
+    data_color(
+      columns = a,
+      method = "quantile",
+      palette = "viridis",
+      quantiles = 5
+    )
+
+  # Perform snapshot test
+  tbl_gt_21 %>% render_as_html() %>% expect_snapshot()
+
+  # Using `quantiles = 10`
+  tbl_gt_22 <-
+    dplyr::tibble(a = 1:20) %>%
+    gt() %>%
+    data_color(
+      columns = a,
+      method = "quantile",
+      palette = "viridis",
+      quantiles = 10
+    )
+
+  # Perform snapshot test
+  tbl_gt_22 %>% render_as_html() %>% expect_snapshot()
 })
 
 test_that("The direction of coloring can be column-wise or row-wise", {
