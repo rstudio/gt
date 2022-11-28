@@ -296,11 +296,54 @@
 #' `r man_get_image_tag(file = "man_data_color_5.png")`
 #' }}
 #'
-#' Use [`pizzaplace`] to create a **gt** table. Apply colors from the
-#' `"ggsci::red_material"` palette (it's in the **ggsci** R package but more
-#' easily gotten from the **paletteer** package, info at [info_paletteer()]) to
-#' to `sold` and `income` columns. Not setting the `domain` value will use the
-#' bounds of the available data in each column as the domain.
+#' When specifying a single column in `columns` we can use as many
+#' `target_columns` values as we want. Let's make another [`countrypops`]-based
+#' table where we map the generated colors from the `year` column to all columns
+#' in the table. This time, the `palette` used is `"inferno"` (also from the
+#' **viridis** package).
+#'
+#' ```r
+#' countrypops %>%
+#'   dplyr::filter(country_code_3 %in% c("FRA", "GBR", "ITA")) %>%
+#'   dplyr::select(-contains("code")) %>%
+#'   dplyr::filter(year %% 5 == 0) %>%
+#'   tidyr::pivot_wider(
+#'     names_from = "country_name",
+#'     values_from = "population"
+#'   ) %>%
+#'   gt() %>%
+#'   fmt_integer(columns = c(everything(), -year)) %>%
+#'   cols_width(
+#'     year ~ px(80),
+#'     everything() ~ px(160)
+#'   ) %>%
+#'   opt_all_caps() %>%
+#'   opt_vertical_padding(scale = 0.75) %>%
+#'   opt_horizontal_padding(scale = 3) %>%
+#'   data_color(
+#'     columns = year,
+#'     target_columns = everything(),
+#'     palette = "inferno"
+#'   ) %>%
+#'   tab_options(
+#'     table_body.hlines.style = "none",
+#'     column_labels.border.top.color = "black",
+#'     column_labels.border.bottom.color = "black",
+#'     table_body.border.bottom.color = "black"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_data_color_6.png")`
+#' }}
+#'
+#' Now, it's time to use [`pizzaplace`] to create a **gt** table. The color
+#' palette to be used is the `"ggsci::red_material"` one (it's in the **ggsci**
+#' R package but also obtainable from the the **paletteer** package).
+#' Colorization will be applied to the to the `sold` and `income` columns. We
+#' don't have to specify those in `columns` because those are the only columns
+#' in the table. Also, the `domain` is not set here. We'll use the bounds of the
+#' available data in each column.
 #'
 #' ```r
 #' pizzaplace %>%
@@ -330,15 +373,45 @@
 #'   ) %>%
 #'   cols_align(align = "left", columns = stub()) %>%
 #'   data_color(
-#'     columns = c(sold, income),
 #'     method = "numeric",
 #'     palette = "ggsci::red_material"
 #'   )
 #' ```
 #'
 #' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_data_color_6.png")`
+#' `r man_get_image_tag(file = "man_data_color_7.png")`
 #' }}
+#'
+#' Colorization can occur in a row-wise manner. The key to making that happen is
+#' by using `direction = "row"`. Let's use the [`sza`] dataset to make a **gt**
+#' table. Then, color will be applied to values across each 'month' of data in
+#' that table. This is useful when not setting a `domain` as the bounds of each
+#' row will be captured, coloring each cell with values relative to the range.
+#' The `palette` is `"PuOr"` from the **RColorBrewer** package (only the name
+#' here is required).
+#'
+#' ```r
+#' sza %>%
+#'   dplyr::filter(latitude == 20 & tst <= "1200") %>%
+#'   dplyr::select(-latitude) %>%
+#'   dplyr::filter(!is.na(sza)) %>%
+#'   tidyr::spread(key = "tst", value = sza) %>%
+#'   gt(rowname_col = "month") %>%
+#'   sub_missing(missing_text = "") %>%
+#'   data_color(
+#'     direction = "row",
+#'     palette = "PuOr",
+#'     na_color = "white"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_data_color_8.png")`
+#' }}
+#'
+#' Notice that `na_color = "white"` was used, and this avoids the appearance of
+#' gray cells for the missing values (we also removed the `"NA"` text with
+#' [sub_missing()], opting for empty strings).
 #'
 #' @family data formatting functions
 #' @section Function ID:
