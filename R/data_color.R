@@ -163,7 +163,55 @@
 #' optional input to `domain` should take the form of categorical data. The
 #' `levels` and `ordered` arguments in `data_color()` support this method.
 #'
-#' @section Easy color palette access from **paletteer**:
+#' @section Color palette access from **RColorBrewer** and **viridis**:
+#'
+#' All palettes from the **RColorBrewer** package and select palettes from
+#' **viridis** can be accessed by providing the palette name in `palette`.
+#' **RColorBrewer** has 35 available palettes:
+#'
+#' |    | Palette Name      | Colors  | Category    | Colorblind Friendly |
+#' |----|-------------------|---------|-------------|---------------------|
+#' | 1  | `"BrBG"`          | 11      | Diverging   | Yes                 |
+#' | 2  | `"PiYG"`          | 11      | Diverging   | Yes                 |
+#' | 3  | `"PRGn"`          | 11      | Diverging   | Yes                 |
+#' | 4  | `"PuOr"`          | 11      | Diverging   | Yes                 |
+#' | 5  | `"RdBu"`          | 11      | Diverging   | Yes                 |
+#' | 6  | `"RdYlBu"`        | 11      | Diverging   | Yes                 |
+#' | 7  | `"RdGy"`          | 11      | Diverging   | No                  |
+#' | 8  | `"RdYlGn"`        | 11      | Diverging   | No                  |
+#' | 9  | `"Spectral"`      | 11      | Diverging   | No                  |
+#' | 10 | `"Dark2"`         | 8       | Qualitative | Yes                 |
+#' | 11 | `"Paired"`        | 12      | Qualitative | Yes                 |
+#' | 12 | `"Set1"`          | 9       | Qualitative | No                  |
+#' | 13 | `"Set2"`          | 8       | Qualitative | Yes                 |
+#' | 14 | `"Set3"`          | 12      | Qualitative | No                  |
+#' | 15 | `"Accent"`        | 8       | Qualitative | No                  |
+#' | 16 | `"Pastel1"`       | 9       | Qualitative | No                  |
+#' | 17 | `"Pastel2"`       | 8       | Qualitative | No                  |
+#' | 18 | `"Blues"`         | 9       | Sequential  | Yes                 |
+#' | 19 | `"BuGn"`          | 9       | Sequential  | Yes                 |
+#' | 20 | `"BuPu"`          | 9       | Sequential  | Yes                 |
+#' | 21 | `"GnBu"`          | 9       | Sequential  | Yes                 |
+#' | 22 | `"Greens"`        | 9       | Sequential  | Yes                 |
+#' | 23 | `"Greys"`         | 9       | Sequential  | Yes                 |
+#' | 24 | `"Oranges"`       | 9       | Sequential  | Yes                 |
+#' | 25 | `"OrRd"`          | 9       | Sequential  | Yes                 |
+#' | 26 | `"PuBu"`          | 9       | Sequential  | Yes                 |
+#' | 27 | `"PuBuGn"`        | 9       | Sequential  | Yes                 |
+#' | 28 | `"PuRd"`          | 9       | Sequential  | Yes                 |
+#' | 29 | `"Purples"`       | 9       | Sequential  | Yes                 |
+#' | 30 | `"RdPu"`          | 9       | Sequential  | Yes                 |
+#' | 31 | `"Reds"`          | 9       | Sequential  | Yes                 |
+#' | 32 | `"YlGn"`          | 9       | Sequential  | Yes                 |
+#' | 33 | `"YlGnBu"`        | 9       | Sequential  | Yes                 |
+#' | 34 | `"YlOrBr"`        | 9       | Sequential  | Yes                 |
+#' | 35 | `"YlOrRd"`        | 9       | Sequential  | Yes                 |
+#'
+#' We can access four colorblind-friendly palettes from **viridis**:
+#' `"viridis"`, `"magma"`, `"plasma"`, and `"inferno"`. Simply provide any one
+#' of those names to `palette`.
+#'
+#' @section Color palette access from **paletteer**:
 #'
 #' Choosing the right color palette can often be difficult because it's both
 #' hard to discover suitable palettes and then obtain the vector of colors. To
@@ -174,6 +222,12 @@
 #' only then need to specify the palette and associated package using the
 #' `<package>::<palette>` syntax (e.g., `"tvthemes::Stannis"`) for
 #' the `palette` argument.
+#'
+#' A requirement for using **paletteer** in this way is that the package must be
+#' installed (**gt** doesn't import **paletteer** currently). This can be easily
+#' done with `install.packages("paletteer")`. Not having this package installed
+#' with result in an error when using the `<package>::<palette>` syntax in
+#' `palette`.
 #'
 #' @section Foreground text and background fill:
 #'
