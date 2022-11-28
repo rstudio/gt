@@ -46,11 +46,13 @@
 #' @param direction Should the color computations be performed column-wise or
 #'   row-wise? By default this is set with the `"column"` keyword and colors
 #'   will be applied down columns. The alternative option with the `"row"`
-#'   keyword ensures that color mapping will work across rows.
+#'   keyword ensures that the color mapping works across rows.
 #' @param target_columns For indirect column coloring treatments, we can supply
-#'   the columns that will receive the styling. The necessary preconditions are:
-#'   (1) we must use `direction = "column"`, and (2) the number of columns
-#'   specified/resolved here must match that of `columns`.
+#'   the columns that will receive the styling. The necessary precondition is
+#'   that we must use `direction = "column"`. If `columns` resolves to a single
+#'   column then we may use one or more columns in `target_columns`. If on the
+#'   other hand `columns` resolves to multiple columns, then `target_columns`
+#'   must resolve to the same multiple.
 #' @param method A method for computing color based on the data within body
 #'   cells. Can be `"auto"` (the default), `"numeric"`, `"bin"`, `"quantile"`,
 #'   or `"factor"`.
