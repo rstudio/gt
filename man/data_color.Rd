@@ -35,12 +35,14 @@ are constrained.}
 \item{direction}{Should the color computations be performed column-wise or
 row-wise? By default this is set with the \code{"column"} keyword and colors
 will be applied down columns. The alternative option with the \code{"row"}
-keyword ensures that color mapping will work across rows.}
+keyword ensures that the color mapping works across rows.}
 
 \item{target_columns}{For indirect column coloring treatments, we can supply
-the columns that will receive the styling. The necessary preconditions are:
-(1) we must use \code{direction = "column"}, and (2) the number of columns
-specified/resolved here must match that of \code{columns}.}
+the columns that will receive the styling. The necessary precondition is
+that we must use \code{direction = "column"}. If \code{columns} resolves to a single
+column then we may use one or more columns in \code{target_columns}. If on the
+other hand \code{columns} resolves to multiple columns, then \code{target_columns}
+must resolve to the same multiple.}
 
 \item{method}{A method for computing color based on the data within body
 cells. Can be \code{"auto"} (the default), \code{"numeric"}, \code{"bin"}, \code{"quantile"},
