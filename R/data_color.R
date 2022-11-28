@@ -435,6 +435,7 @@ data_color <- function(
     palette = NULL,
     domain = NULL,
     bins = 8,
+    quantiles = 4,
     levels = NULL,
     ordered = FALSE,
     na_color = NULL,
@@ -774,6 +775,7 @@ data_color <- function(
         scales::col_quantile(
           palette = palette,
           domain = if (is.null(domain)) data_vals else domain,
+          n = quantiles,
           na.color = na_color,
           alpha = TRUE,
           reverse = reverse,
