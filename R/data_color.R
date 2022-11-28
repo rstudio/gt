@@ -613,9 +613,6 @@ data_color <- function(
       # `paletteer::paletteer_d()` and coerce to a character vector
       palette <- as.character(paletteer::paletteer_d(palette = palette))
     }
-
-    # TODO: Validate the `palette` value to ensure it works with
-    # the scales functions it will be passed to
   }
 
   # Get the internal data table
