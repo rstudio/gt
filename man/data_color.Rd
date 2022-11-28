@@ -343,11 +343,53 @@ one used to generate those specific colors. The trick is to use the
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_data_color_5.png" alt="This image of a table was generated from the fifth code example in the `data_color()` help file." style="width:100\%;">
 }}
 
-Use \code{\link{pizzaplace}} to create a \strong{gt} table. Apply colors from the
-\code{"ggsci::red_material"} palette (it's in the \strong{ggsci} R package but more
-easily gotten from the \strong{paletteer} package, info at \code{\link[=info_paletteer]{info_paletteer()}}) to
-to \code{sold} and \code{income} columns. Not setting the \code{domain} value will use the
-bounds of the available data in each column as the domain.
+When specifying a single column in \code{columns} we can use as many
+\code{target_columns} values as we want. Let's make another \code{\link{countrypops}}-based
+table where we map the generated colors from the \code{year} column to all columns
+in the table. This time, the \code{palette} used is \code{"inferno"} (also from the
+\strong{viridis} package).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
+  dplyr::filter(country_code_3 \%in\% c("FRA", "GBR", "ITA")) \%>\%
+  dplyr::select(-contains("code")) \%>\%
+  dplyr::filter(year \%\% 5 == 0) \%>\%
+  tidyr::pivot_wider(
+    names_from = "country_name",
+    values_from = "population"
+  ) \%>\%
+  gt() \%>\%
+  fmt_integer(columns = c(everything(), -year)) \%>\%
+  cols_width(
+    year ~ px(80),
+    everything() ~ px(160)
+  ) \%>\%
+  opt_all_caps() \%>\%
+  opt_vertical_padding(scale = 0.75) \%>\%
+  opt_horizontal_padding(scale = 3) \%>\%
+  data_color(
+    columns = year,
+    target_columns = everything(),
+    palette = "inferno"
+  ) \%>\%
+  tab_options(
+    table_body.hlines.style = "none",
+    column_labels.border.top.color = "black",
+    column_labels.border.bottom.color = "black",
+    table_body.border.bottom.color = "black"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_data_color_6.png" alt="This image of a table was generated from the sixth code example in the `data_color()` help file." style="width:100\%;">
+}}
+
+Now, it's time to use \code{\link{pizzaplace}} to create a \strong{gt} table. The color
+palette to be used is the \code{"ggsci::red_material"} one (it's in the \strong{ggsci}
+R package but also obtainable from the the \strong{paletteer} package).
+Colorization will be applied to the to the \code{sold} and \code{income} columns. We
+don't have to specify those in \code{columns} because those are the only columns
+in the table. Also, the \code{domain} is not set here. We'll use the bounds of the
+available data in each column.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
   dplyr::group_by(type, size) \%>\%
@@ -376,15 +418,44 @@ bounds of the available data in each column as the domain.
   ) \%>\%
   cols_align(align = "left", columns = stub()) \%>\%
   data_color(
-    columns = c(sold, income),
     method = "numeric",
     palette = "ggsci::red_material"
   )
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_data_color_6.png" alt="This image of a table was generated from the sixth code example in the `data_color()` help file." style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_data_color_7.png" alt="This image of a table was generated from the seventh code example in the `data_color()` help file." style="width:100\%;">
 }}
+
+Colorization can occur in a row-wise manner. The key to making that happen is
+by using \code{direction = "row"}. Let's use the \code{\link{sza}} dataset to make a \strong{gt}
+table. Then, color will be applied to values across each 'month' of data in
+that table. This is useful when not setting a \code{domain} as the bounds of each
+row will be captured, coloring each cell with values relative to the range.
+The \code{palette} is \code{"PuOr"} from the \strong{RColorBrewer} package (only the name
+here is required).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza \%>\%
+  dplyr::filter(latitude == 20 & tst <= "1200") \%>\%
+  dplyr::select(-latitude) \%>\%
+  dplyr::filter(!is.na(sza)) \%>\%
+  tidyr::spread(key = "tst", value = sza) \%>\%
+  gt(rowname_col = "month") \%>\%
+  sub_missing(missing_text = "") \%>\%
+  data_color(
+    direction = "row",
+    palette = "PuOr",
+    na_color = "white"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_data_color_8.png" alt="This image of a table was generated from the eighth code example in the `data_color()` help file." style="width:100\%;">
+}}
+
+Notice that \code{na_color = "white"} was used, and this avoids the appearance of
+gray cells for the missing values (we also removed the \code{"NA"} text with
+\code{\link[=sub_missing]{sub_missing()}}, opting for empty strings).
 }
 
 \section{Function ID}{
