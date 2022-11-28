@@ -130,25 +130,6 @@
 #' Perceptual Contrast Algorithm*, the default algo) and `"wcag"` (*Web Content
 #' Accessibility Guidelines*).
 #'
-#' @section Color mapping functions from **scales**:
-#'
-#' The `col_*()` color mapping functions from the **scales** package can be used
-#' in the `fn` argument. These functions map data values (`numeric` or
-#' `factor`/`character`) to colors according to the provided palette.
-#'
-#' \itemize{
-#' \item [scales::col_numeric()]: provides a simple linear mapping from
-#' continuous numeric data to an interpolated palette.
-#' \item [scales::col_bin()]: provides a mapping of continuous numeric data to
-#' value-based bins. This internally uses the [base::cut()] function.
-#' \item [scales::col_quantile()]: provides a mapping of continuous
-#' numeric data to quantiles. This internally uses the
-#' [stats::quantile()] function.
-#' \item [scales::col_factor()]: provides a mapping of factors to colors. If the
-#' palette is discrete and has a different number of colors than the number of
-#' factors, interpolation is used.
-#' }
-#'
 #' @section Examples:
 #'
 #' The `data_color()` function can be used without any supplied arguments to
