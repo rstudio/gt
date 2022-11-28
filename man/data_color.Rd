@@ -49,10 +49,11 @@ or \code{"factor"}.}
 \item{palette}{A vector of color names, the name of an \strong{RColorBrewer}
 palette, the name of a \strong{viridis} palette, or a discrete palette
 accessible from the \strong{paletteer} package using the \verb{<package>::<palette>}
-syntax (e.g., \code{"wesanderson::IsleofDogs1"}. If providing a vector of colors
-as a palette, each color value provided must either be a color name (in the
-set of colors provided by \code{\link[grDevices:colors]{grDevices::colors()}}) or a hexadecimal string in
-the form of \code{"#RRGGBB"} or \code{"#RRGGBBAA"}.}
+syntax (e.g., \code{"wesanderson::IsleofDogs1"}). If providing a vector of
+colors as a palette, each color value provided must either be a color name
+(Only R/X11 color names or CSS 3.0 color names) or a hexadecimal string in
+the form of \code{"#RRGGBB"} or \code{"#RRGGBBAA"}. If nothing is provided here, the
+default R color palette is used (i.e., the colors from \code{palette()}).}
 
 \item{domain}{The possible values that can be mapped. For the \code{"numeric"} and
 \code{"bin"} methods, this can be a numeric range specified with a length of two
@@ -161,9 +162,9 @@ make this process easier we can elect to use the \strong{paletteer} package,
 which makes a wide range of palettes from various R packages readily
 available. The \code{\link[=info_paletteer]{info_paletteer()}} information table allows us to easily
 inspect all of the discrete color palettes available in \strong{paletteer}. We
-only then need to specify the \code{package} and \code{palette} when calling the
-\code{\link[paletteer:paletteer_d]{paletteer::paletteer_d()}} function, and, we get the palette as a vector of
-hexadecimal colors.
+only then need to specify the palette and associated package using the
+\verb{<package>::<palette>} syntax (e.g., \code{"tvthemes::Stannis"}) for
+the \code{palette} argument.
 }
 
 \section{Foreground text and background fill}{
@@ -171,7 +172,10 @@ hexadecimal colors.
 
 By default, \strong{gt} will choose the ideal text color (for maximal contrast)
 when colorizing the background of data cells. This option can be disabled by
-setting \code{autocolor_text} to \code{FALSE}.
+setting \code{autocolor_text} to \code{FALSE}. The \code{contrast_algo} argument lets us
+choose between two color contrast algorithms: \code{"apca"} (\emph{Accessible
+Perceptual Contrast Algorithm}, the default algo) and \code{"wcag"} (\emph{Web Content
+Accessibility Guidelines}).
 }
 
 \section{Color mapping functions from \strong{scales}}{
