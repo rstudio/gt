@@ -412,6 +412,38 @@ resolve_vector_i <- function(expr, vector, item_label = "item") {
   which(resolve_vector_l(expr = {{ expr }}, vector = vector, item_label = item_label))
 }
 
+resolve_groups <- function(expr, vector) {
+
+  quo <- rlang::enquo(expr)
+
+  resolved <-
+    tidyselect::with_vars(
+      vars = vector,
+      expr = rlang::eval_tidy(expr = quo, data = NULL)
+    )
+
+  if (length(resolved) < 1) {
+    return(NULL)
+  }
+
+  if (is.integer(resolved)) {
+    return(vector[resolved])
+  }
+
+  if (is.character(resolved)) {
+
+    resolved <- base::intersect(resolved, vector)
+
+    if (length(resolved) < 1) {
+      return(NULL)
+    }
+
+    return(resolved)
+  }
+
+  NULL
+}
+
 normalize_resolved <- function(
     resolved,
     item_names,
