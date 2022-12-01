@@ -1103,6 +1103,21 @@ cols_hide <- function(
   )
 }
 
+#' @export
+cols_hide_missing <- function(data){
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  # This returns a named vector. Names are column names in `data` and values will
+  # be FALSE if any value in the corresponding column is not NA, TRUE otherwise
+  column_is_empty <- colSums(!is.na(data[["_data"]])) > 0
+
+  # Get character vector of columns that hold only NA and hide them
+  hide_me <- names(column_is_empty[column_is_empty == FALSE])
+  cols_hide(data = data, columns = hide_me)
+}
+
 #' Unhide one or more columns
 #'
 #' @description
