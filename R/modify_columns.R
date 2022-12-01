@@ -1116,6 +1116,10 @@ cols_hide_missing <- function(data){
 
   # Get character vector of columns that hold only NA and hide them
   hide_me <- names(column_is_empty[column_is_empty == FALSE])
+
+  # if there are no columns to hide, return data
+  if(length(hide_me) == 0) return(data)
+
   cols_hide(data = data, columns = hide_me)
 }
 

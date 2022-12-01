@@ -839,4 +839,25 @@ test_that("columns with missing values can be hidden and then made visible", {
     rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_right']") %>%
     rvest::html_text() %>%
     expect_equal(c("a", "b", "c", "d", "e", "f"))
+
+  # Now check that the function returns the data unchanged if no columns need
+  # to be removed
+  no_missing <- data.frame(
+    a = 1:3,
+    b = 4:6,
+    c = c(1, NA_real_, NA_real_),
+    e = c(NA_real_, 2, 3)
+  )
+
+  # Create a `gt_tbl` object with the `check_this` dataset
+  gt_tbl <- gt(no_missing)
+
+  # Expect all column names from the original dataset
+  # to be present
+  gt_tbl %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_right']") %>%
+    rvest::html_text() %>%
+    expect_equal(c("a", "b", "c", "e"))
 })
