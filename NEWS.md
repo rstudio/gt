@@ -1,5 +1,7 @@
 # gt (development version)
 
+* The new function `cols_hide_missing()` can hide columns where all values are missing, i.e. columns where every value is `NA`.
+
 # gt 0.8.0
 
 ## New features

@@ -786,3 +786,57 @@ test_that("columns can be hidden and then made visible", {
     rvest::html_text() %>%
     expect_equal(c("drivetrain", "mfr", "model", "trim", "bdy_style", "trsmn", "ctry_origin"))
 })
+
+test_that("columns with missing values can be hidden and then made visible", {
+
+  # Check that specific suggested packages are available
+  check_suggests()
+
+  check_this <- data.frame(
+    a = 1:3,
+    b = 4:6,
+    c = c(1, NA_real_, NA_real_),
+    d = NA_real_,
+    e = c(NA_real_, 2, 3),
+    f = NA_real_
+  )
+
+  # Create a `gt_tbl` object with the `check_this` dataset
+  gt_tbl <- gt(check_this)
+
+  # Expect all column names from the original dataset
+  # to be present
+  gt_tbl %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_right']") %>%
+    rvest::html_text() %>%
+    expect_equal(c("a", "b", "c", "d", "e", "f"))
+
+  # Hide columns where all rows are `NA`
+  # table with `cols_hide_missing()`
+  gt_tbl <-
+    gt_tbl %>%
+    cols_hide_missing()
+
+  # Expect the two hidden columns d and f to not appear in the rendered table
+  gt_tbl %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_right']") %>%
+    rvest::html_text() %>%
+    expect_equal(c("a", "b", "c", "e"))
+
+  # Make the `mfr` column visible again with `cols_unhide()`
+  gt_tbl <-
+    gt_tbl %>%
+    cols_unhide(everything())
+
+  # Expect that only `drivetrain` is hidden now
+  gt_tbl %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    rvest::html_nodes("[class='gt_col_heading gt_columns_bottom_border gt_right']") %>%
+    rvest::html_text() %>%
+    expect_equal(c("a", "b", "c", "d", "e", "f"))
+})

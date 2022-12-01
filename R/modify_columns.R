@@ -1104,6 +1104,7 @@ cols_hide <- function(
 }
 
 #' @export
+#' @rdname cols_hide
 cols_hide_missing <- function(data){
 
   # Perform input object validation
