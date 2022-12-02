@@ -1844,3 +1844,82 @@ cols_merge <- function(
     )
   )
 }
+
+#' Relabel columns with a function
+#'
+#' @param .data A table object that is created using the [gt()] function.
+#' @param fn The function to apply to existing column labels.
+#' @param columns The column names to apply `fn` to. Applies to all columns by default.
+#' @param ... arguments to pass to `fn`
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Use [`countrypops`] to create a **gt** table. Relabel all the table's columns
+#' with the `cols_label_with()` function to improve its presentation. It applies
+#' to existing labels, rather than just names, so we can make more difficult
+#' changes directly.
+#'
+#' ```r
+#' countrypops %>%
+#'   dplyr::select(-contains("code")) %>%
+#'   dplyr::filter(country_name == "Mongolia") %>%
+#'   tail(5) %>%
+#'   gt() %>%
+#'   cols_label(
+#'     country_name = "Name"
+#'   ) %>%
+#'   cols_label_with(
+#'     tools::toTitleCase
+#'   )
+#' ```
+#'
+#'
+#' @family column modification functions
+#' @section Function ID:
+#' 4-14
+#'
+#' @export
+cols_label_with <- function(.data, fn, columns = everything(), ...) {
+  fn <- rlang::as_function(fn)
+  cols <- tidyselect::eval_select(
+    rlang::enquo(columns),
+    dt_data_get(data = .data),
+    allow_rename = FALSE
+  )
+
+  names <- dt_boxhead_get_vars(data = .data)
+  old_label_list <-  dt_boxhead_get(data = .data)$column_label[cols]
+
+  nm_labels_list <- names[cols]
+  labels_list <- lapply(old_label_list, function(x) fn(x, ...))
+
+  if (!all(vapply(labels_list, is_character, logical(1L)))) {
+    cli::cli_abort(
+      "{.arg fn} must return a character vector, not {.obj_type_friendly {labels_list}}."
+    )
+  }
+  if (length(labels_list) != length(nm_labels_list)) {
+    cli::cli_abort(
+      "{.arg fn} must return a vector of length {length(nm_labels_list)}, not {length(labels_list)}."
+    )
+  }
+
+  # If no labels remain after filtering, return the data
+  if (length(nm_labels_list) == 0) {
+    return(.data)
+  }
+
+  for (i in seq_along(labels_list)) {
+    .data <-
+      dt_boxhead_edit_column_label(
+        data = .data,
+        var = nm_labels_list[i],
+        column_label = labels_list[[i]]
+      )
+  }
+
+  .data
+
+}
