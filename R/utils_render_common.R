@@ -63,37 +63,57 @@ render_formats <- function(data, context) {
   data_tbl <- dt_data_get(data = data)
   formats <- dt_formats_get(data = data)
 
-  # Render input data to output data where formatting
-  # is specified
-
+  # Render input data to output data where formatting is specified
   for (fmt in formats)  {
 
-    # Determine if the formatter has a function relevant
-    # to the context; if not, use the `default` function
-    # (which should always be present)
+    # Determine if the formatter has a function relevant to the
+    # context; if not, use the `default` function (which should
+    # always be present)
     if (context %in% names(fmt$func)) {
       eval_func <- context
     } else {
       eval_func <- "default"
     }
 
+    # Obtain compatibility information for the formatter function
+    compat <- fmt$compat
+
+    # Get the rows to which the formatting should be constrained
+    rows <- fmt$rows
+
     for (col in fmt[["cols"]]) {
 
       # Perform rendering but only do so if the column is present
-      if (col %in% colnames(data_tbl)) {
+      if (
+        col %in% colnames(data_tbl) &&
+        is_compatible_formatter(
+          table = data_tbl,
+          column = col,
+          rows = rows,
+          compat = compat
+        )
+      ) {
 
-        result <- fmt$func[[eval_func]](data_tbl[[col]][fmt$rows])
+        result <- fmt$func[[eval_func]](data_tbl[[col]][rows])
 
-        # If any of the resulting output is `NA`, that
-        # means we want to NOT make changes to those
-        # particular cells' output (i.e. inherit the
-        # results of the previous formatter).
-        body[[col]][fmt$rows][!is.na(result)] <- stats::na.omit(result)
+        # If any of the resulting output is `NA`, that means we want
+        # to NOT make changes to those particular cells' output
+        # (i.e. inherit the results of the previous formatter).
+        body[[col]][rows][!is.na(result)] <- stats::na.omit(result)
       }
     }
   }
 
   dt_body_set(data = data, body = body)
+}
+
+is_compatible_formatter <- function(table, column, rows, compat) {
+
+  if (is.null(compat)) {
+    return(TRUE)
+  }
+
+  inherits(table[[column]][rows], compat)
 }
 
 #' Render any formatting directives available in the `substitutions` list
@@ -602,7 +622,7 @@ last_non_na <- function(vect) {
   if (length(positions) == 0) {
     return(NA_character_)
   } else {
-    return(vect[max(positions)])
+    return(as.character(vect[max(positions)]))
   }
 }
 
