@@ -716,7 +716,7 @@ test_that("tables with summaries can be added to a word doc", {
     dplyr::select(-c(fctr, date, time, datetime)) %>%
     gt(rowname_col = "row", groupname_col = "group") %>%
     summary_rows(
-      groups = TRUE,
+      groups = everything(),
       columns = num,
       fns = list(
         avg = ~mean(., na.rm = TRUE),
@@ -774,17 +774,17 @@ test_that("tables with summaries can be added to a word doc", {
       c("row_2", "2.222e+00",  "banana", "17.950"),
       c("row_3", "3.333e+01", "coconut", "1.390"),
       c("row_4", "4.444e+02",  "durian", "65100.000"),
-      c("avg",    "120.02",       "—", "—"),
-      c("total",    "480.06",       "—", "—"),
-      c("s.d.",    "216.79",       "—", "—"),
+      c("avg",    "120.015775",       "—", "—"),
+      c("total",    "480.0631",       "—", "—"),
+      c("s.d.",    "216.788724746628",       "—", "—"),
       "grp_b",
       c("row_5",    "5.550e+03",         "NA", "1325.810"),
       c("row_6",           "NA",        "fig", "13.255"),
       c("row_7",    "7.770e+05", "grapefruit", "NA"),
       c("row_8",    "8.880e+06",   "honeydew", "0.440"),
-      c("avg", "3,220,850.00",          "—", "—"),
-      c("total", "9,662,550.00",          "—", "—"),
-      c("s.d.", "4,916,123.25",          "—", "—")
+      c("avg", "3220850",          "—", "—"),
+      c("total", "9662550",          "—", "—"),
+      c("s.d.", "4916123.25084512",          "—", "—")
     )
   )
 })
@@ -1488,7 +1488,7 @@ test_that("tables with cell & text coloring can be added to a word doc - with su
     dplyr::select(-c(fctr, date, time, datetime)) %>%
     gt(rowname_col = "row", groupname_col = "group") %>%
     summary_rows(
-      groups = TRUE,
+      groups = everything(),
       columns = num,
       fns = list(
         avg = ~mean(., na.rm = TRUE),
@@ -1565,20 +1565,20 @@ test_that("tables with cell & text coloring can be added to a word doc - with su
       c("row_2","2.222e+00", "banana", "17.950"),
       c("row_3", "3.333e+01", "coconut","1.390"),
       c("row_4", "4.444e+02", "durian", "65100.000"),
-      c("avg","120.02", "—", "—"),
-      c("total", "480.06", "—", "—"),
-      c("s.d.","216.79", "—", "—"),
+      c("avg","120.015775", "—", "—"),
+      c("total", "480.0631", "—", "—"),
+      c("s.d.","216.788724746628", "—", "—"),
       "grp_b",
       c("row_5", "5.550e+03", "NA", "1325.810"),
       c("row_6", "NA", "fig", "13.255"),
       c("row_7", "7.770e+05","grapefruit", "NA"),
       c("row_8", "8.880e+06", "honeydew", "0.440"),
-      c("avg", "3,220,850.00", "—", "—"),
-      c("total", "9,662,550.00","—", "—"),
-      c("s.d.", "4,916,123.25", "—", "—"),
-      c("avg", "1,380,432.87","—", "—"),
-      c("total", "9,663,030.06", "—", "—"),
-      c("s.d.", "3,319,613.32","—", "—")
+      c("avg", "3220850", "—", "—"),
+      c("total", "9662550","—", "—"),
+      c("s.d.", "4916123.25084512", "—", "—"),
+      c("avg", "1380432.86615714","—", "—"),
+      c("total", "9663030.0631", "—", "—"),
+      c("s.d.", "3319613.32375071","—", "—")
     )
   )
 

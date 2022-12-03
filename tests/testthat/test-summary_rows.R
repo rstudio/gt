@@ -55,7 +55,7 @@ test_that("the `summary_rows()` can make groupwise summaries", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "summary_labels",
+        "groups", "columns", "fns", "label_vals", "id_vals", "fmt",
         "missing_text", "formatter", "formatter_options"
       )
     )
@@ -69,22 +69,21 @@ test_that("the `summary_rows()` can make groupwise summaries", {
   # Expect that `summary[[1]]$fns` is a `list` object
   summary[[1]]$fns %>% expect_type("list")
 
-  # Expect that the components of `summary[[1]]$fns` are formulas
-  summary[[1]]$fns$average %>% expect_s3_class("formula")
-  summary[[1]]$fns$total %>% expect_s3_class("formula")
-  summary[[1]]$fns$`std dev` %>% expect_s3_class("formula")
+  # Expect that the components of `summary[[1]]$fns` are lists
+  summary[[1]]$fns$average %>% expect_type("list")
+  summary[[1]]$fns$total %>% expect_type("list")
+  summary[[1]]$fns$`std dev` %>% expect_type("list")
 
   # Expect that `summary[[1]]$missing_text` has a specific value
   summary[[1]]$missing_text %>% expect_equal("---")
 
-  # Expect that `summary[[1]]$formatter` is a `function` object
-  expect_equal(class(summary[[1]]$formatter), "function")
+  # Expect that `summary[[1]]$formatter` is NULL
+  expect_null(summary[[1]]$formatter)
 
   # Expect that `summary[[1]]$formatter_options` is a list
   expect_type(summary[[1]]$formatter_options, "list")
 
-  # Expect that `summary[[1]]$formatter_options` is
-  # of length 0
+  # Expect that `summary[[1]]$formatter_options` is of length 0
   summary[[1]]$formatter_options %>% length() %>% expect_equal(0)
 
   # Create a table with summary rows for
@@ -116,25 +115,23 @@ test_that("the `summary_rows()` can make groupwise summaries", {
   # Expect that `summary[[1]]$fns` is a `list` object
   summary[[1]]$fns %>% expect_type("list")
 
-  # Expect that the components of `summary[[1]]$fns` are formulas
-  summary[[1]]$fns$average %>% expect_s3_class("formula")
-  summary[[1]]$fns$total %>% expect_s3_class("formula")
-  summary[[1]]$fns$`std dev` %>% expect_s3_class("formula")
+  # Expect that the components of `summary[[1]]$fns` are lists
+  summary[[1]]$fns$average %>% expect_type("list")
+  summary[[1]]$fns$total %>% expect_type("list")
+  summary[[1]]$fns$`std dev` %>% expect_type("list")
 
   # Expect that `summary[[1]]$missing_text` has a specific value
   summary[[1]]$missing_text %>% expect_equal("---")
 
-  # Expect that `summary[[1]]$formatter` is a `function` object
-  expect_equal(class(summary[[1]]$formatter), "function")
+  # Expect that `summary[[1]]$formatter` is NULL
+  expect_null(summary[[1]]$formatter)
 
   # Expect that `summary[[1]]$formatter_options` is a list
   summary[[1]]$formatter_options %>% expect_type("list")
 
   # Expect that `summary[[1]]$formatter_options` is
   # of length 0
-  summary[[1]]$formatter_options %>%
-    length() %>%
-    expect_equal(0)
+  summary[[1]]$formatter_options %>% length() %>% expect_equal(0)
 
   # Create a table with summary rows for
   # the `W02` and `W03` groups; the 3 summary
@@ -165,25 +162,22 @@ test_that("the `summary_rows()` can make groupwise summaries", {
   # Expect that `summary[[1]]$fns` is a `list` object
   summary[[1]]$fns %>% expect_type("list")
 
-  # Expect that the components of `summary[[1]]$fns` are formulas
-  summary[[1]]$fns$average %>% expect_s3_class("formula")
-  summary[[1]]$fns$total %>% expect_s3_class("formula")
-  summary[[1]]$fns$`std dev` %>% expect_s3_class("formula")
+  # Expect that the components of `summary[[1]]$fns` are lists
+  summary[[1]]$fns$average %>% expect_type("list")
+  summary[[1]]$fns$total %>% expect_type("list")
+  summary[[1]]$fns$`std dev` %>% expect_type("list")
 
   # Expect that `summary[[1]]$missing_text` has a specific value
   summary[[1]]$missing_text %>% expect_equal("---")
 
-  # Expect that `summary[[1]]$formatter` is a `function` object
-  expect_equal(class(summary[[1]]$formatter), "function")
+  # Expect that `summary[[1]]$formatter` is NULL
+  expect_null(summary[[1]]$formatter)
 
   # Expect that `summary[[1]]$formatter_options` is a list
   summary[[1]]$formatter_options %>% expect_type("list")
 
-  # Expect that `summary[[1]]$formatter_options` is
-  # of length 0
-  summary[[1]]$formatter_options %>%
-    length() %>%
-    expect_equal(0)
+  # Expect that `summary[[1]]$formatter_options` is of length 0
+  summary[[1]]$formatter_options %>% length() %>% expect_equal(0)
 
   # Create a table with summary rows for
   # the `W02` and `W03` groups (using
@@ -194,7 +188,7 @@ test_that("the `summary_rows()` can make groupwise summaries", {
   gt_tbl <-
     tbl %>%
     summary_rows(
-      groups = TRUE,
+      groups = everything(),
       columns = open,
       fns = list(
         average = ~mean(., na.rm = TRUE),
@@ -207,8 +201,8 @@ test_that("the `summary_rows()` can make groupwise summaries", {
   summary <- dt_summary_get(data = gt_tbl)
 
   # Expect the `groups` provided in `summary[[1]]$groups`
-  # to be `TRUE`
-  summary[[1]]$groups %>% expect_true()
+  # to resolve to both groups
+  summary[[1]]$groups %>% expect_equal(c("W02", "W03"))
 
   # Expect the `columns` provided in `summary[[1]]$columns`
   summary[[1]]$columns %>% expect_equal("open")
@@ -216,16 +210,16 @@ test_that("the `summary_rows()` can make groupwise summaries", {
   # Expect that `summary[[1]]$fns` is a `list` object
   summary[[1]]$fns %>% expect_type("list")
 
-  # Expect that the components of `summary[[1]]$fns` are formulas
-  summary[[1]]$fns$average %>% expect_s3_class("formula")
-  summary[[1]]$fns$total %>% expect_s3_class("formula")
-  summary[[1]]$fns$`std dev` %>% expect_s3_class("formula")
+  # Expect that the components of `summary[[1]]$fns` are lists
+  summary[[1]]$fns$average %>% expect_type("list")
+  summary[[1]]$fns$total %>% expect_type("list")
+  summary[[1]]$fns$`std dev` %>% expect_type("list")
 
   # Expect that `summary[[1]]$missing_text` has a specific value
   summary[[1]]$missing_text %>% expect_equal("---")
 
-  # Expect that `summary[[1]]$formatter` is a `function` object
-  expect_equal(class(summary[[1]]$formatter), "function")
+  # Expect that `summary[[1]]$formatter` is NULL
+  expect_null(summary[[1]]$formatter)
 
   # Expect that `summary[[1]]$formatter_options` is a list
   summary[[1]]$formatter_options %>% expect_type("list")
@@ -239,7 +233,7 @@ test_that("the `summary_rows()` can make groupwise summaries", {
   gt_tbl <-
     tbl %>%
     summary_rows(
-      groups = TRUE,
+      groups = everything(),
       columns = c(open, high, low, close),
       fns = list(
         average = ~mean(., na.rm = TRUE),
@@ -248,7 +242,7 @@ test_that("the `summary_rows()` can make groupwise summaries", {
       )
     ) %>%
     summary_rows(
-      groups = TRUE,
+      groups = everything(),
       columns = c(open, high, low, close),
       fns = list(
         max = ~max(., na.rm = TRUE)
@@ -270,8 +264,8 @@ test_that("the `summary_rows()` can make groupwise summaries", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "summary_labels",
-        "missing_text", "formatter", "formatter_options"
+        "groups", "columns", "fns", "label_vals", "id_vals",
+        "fmt", "missing_text", "formatter", "formatter_options"
       )
     )
 
@@ -279,15 +273,15 @@ test_that("the `summary_rows()` can make groupwise summaries", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "summary_labels",
-        "missing_text", "formatter", "formatter_options"
+        "groups", "columns", "fns", "label_vals", "id_vals",
+        "fmt", "missing_text", "formatter", "formatter_options"
       )
     )
 
-  # Expect that `summary[[1|2]]$groups` is TRUE
-  summary[[1]]$groups %>% expect_true()
+  # Expect that `summary[[1|2]]$groups` has both resolved groups
+  summary[[1]]$groups %>% expect_equal(c("W02", "W03"))
 
-  summary[[2]]$groups %>% expect_true()
+  summary[[2]]$groups %>% expect_equal(c("W02", "W03"))
 
   # Expect that `summary[[1|2]]$columns` has specific values
   summary[[1]]$columns %>%
@@ -301,20 +295,20 @@ test_that("the `summary_rows()` can make groupwise summaries", {
 
   summary[[2]]$fns %>% expect_type("list")
 
-  # Expect that the components of `summary[[1|2]]$fns` are formulas
-  summary[[1]]$fns$average %>% expect_s3_class("formula")
-  summary[[1]]$fns$total %>% expect_s3_class("formula")
-  summary[[1]]$fns$`std dev` %>% expect_s3_class("formula")
-  summary[[2]]$fns$max %>% expect_s3_class("formula")
+  # Expect that the components of `summary[[1|2]]$fns` are lists
+  summary[[1]]$fns$average %>% expect_type("list")
+  summary[[1]]$fns$total %>% expect_type("list")
+  summary[[1]]$fns$`std dev` %>% expect_type("list")
+  summary[[2]]$fns$max %>% expect_type("list")
 
   # Expect that `summary[[1|2]]$missing_text` has a specific value
   summary[[1]]$missing_text %>% expect_equal("---")
 
   summary[[2]]$missing_text %>% expect_equal("---")
 
-  # Expect that `summary[[1|2]]$formatter` is a `function` object
-  expect_equal(class(summary[[1]]$formatter), "function")
-  expect_equal(class(summary[[2]]$formatter), "function")
+  # Expect that `summary[[1|2]]$formatter` are both NULL
+  expect_null(summary[[1]]$formatter)
+  expect_null(summary[[2]]$formatter)
 
   # Expect that `summary[[1|2]]$formatter_options` is a list
   summary[[1]]$formatter_options %>% expect_type("list")
@@ -330,7 +324,7 @@ test_that("the `summary_rows()` can make groupwise summaries", {
   gt_tbl <-
     tbl %>%
     summary_rows(
-      groups = TRUE,
+      groups = everything(),
       columns = c(open, high),
       fns = list(
         average = ~mean(., na.rm = TRUE),
@@ -339,7 +333,7 @@ test_that("the `summary_rows()` can make groupwise summaries", {
       )
     ) %>%
     summary_rows(
-      groups = TRUE,
+      groups = everything(),
       columns = c(low, close),
       fns = list(
         average = ~mean(., na.rm = TRUE),
@@ -362,8 +356,8 @@ test_that("the `summary_rows()` can make groupwise summaries", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "summary_labels",
-        "missing_text", "formatter", "formatter_options"
+        "groups", "columns", "fns", "label_vals", "id_vals",
+        "fmt", "missing_text", "formatter", "formatter_options"
       )
     )
 
@@ -371,14 +365,14 @@ test_that("the `summary_rows()` can make groupwise summaries", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "summary_labels",
-        "missing_text", "formatter", "formatter_options"
+        "groups", "columns", "fns", "label_vals", "id_vals",
+        "fmt", "missing_text", "formatter", "formatter_options"
       )
     )
 
-  # Expect that `summary[[1|2]]$groups` is TRUE
-  summary[[1]]$groups %>% expect_true()
-  summary[[2]]$groups %>% expect_true()
+  # Expect that `summary[[1|2]]$groups` have both groups resolved
+  summary[[1]]$groups %>% expect_equal(c("W02", "W03"))
+  summary[[2]]$groups %>% expect_equal(c("W02", "W03"))
 
   # Expect that `summary[[1|2]]$columns` has specific values
   summary[[1]]$columns %>% expect_equal(c("open", "high"))
@@ -388,21 +382,21 @@ test_that("the `summary_rows()` can make groupwise summaries", {
   summary[[1]]$fns %>% expect_type("list")
   summary[[2]]$fns %>% expect_type("list")
 
-  # Expect that the components of `summary[[1|2]]$fns` are formulas
-  summary[[1]]$fns$average %>% expect_s3_class("formula")
-  summary[[1]]$fns$total %>% expect_s3_class("formula")
-  summary[[1]]$fns$`std dev` %>% expect_s3_class("formula")
-  summary[[2]]$fns$average %>% expect_s3_class("formula")
-  summary[[2]]$fns$total %>% expect_s3_class("formula")
-  summary[[2]]$fns$`std dev` %>% expect_s3_class("formula")
+  # Expect that the components of `summary[[1|2]]$fns` are lists
+  summary[[1]]$fns$average %>% expect_type("list")
+  summary[[1]]$fns$total %>% expect_type("list")
+  summary[[1]]$fns$`std dev` %>% expect_type("list")
+  summary[[2]]$fns$average %>% expect_type("list")
+  summary[[2]]$fns$total %>% expect_type("list")
+  summary[[2]]$fns$`std dev` %>% expect_type("list")
 
   # Expect that `summary[[1|2]]$missing_text` has a specific value
   summary[[1]]$missing_text %>% expect_equal("---")
   summary[[2]]$missing_text %>% expect_equal("---")
 
-  # Expect that `summary[[1|2]]$formatter` is a `function` object
-  expect_equal(class(summary[[1]]$formatter), "function")
-  expect_equal(class(summary[[2]]$formatter), "function")
+  # Expect that `summary[[1|2]]$formatter` are NULL
+  expect_null(summary[[1]]$formatter)
+  expect_null(summary[[2]]$formatter)
 
   # Expect that `summary[[1|2]]$formatter_options` is a list
   summary[[1]]$formatter_options %>% expect_type("list")
@@ -414,16 +408,13 @@ test_that("the `summary_rows()` can make groupwise summaries", {
   summary[[2]]$formatter_options %>% length() %>% expect_equal(0)
 })
 
-test_that("the `summary_rows()` can make grand summaries", {
+test_that("grand summaries can be generated with `grand_summary_rows()`", {
 
-  # Create a table with a grand summary;
-  # the 3 summary rows for represent the
-  # mean, sum, and standard deviation of
-  # all numeric columns
+  # Create a table with a grand summary; the 3 summary rows for represent
+  # the mean, sum, and standard deviation of all numeric columns
   gt_tbl <-
     tbl %>%
-    summary_rows(
-      groups = NULL,
+    grand_summary_rows(
       columns = c(open, high, low, close),
       fns = list(
         average = ~mean(., na.rm = TRUE),
@@ -435,11 +426,9 @@ test_that("the `summary_rows()` can make grand summaries", {
   # Extract the internal `summary` object
   summary <- dt_summary_get(data = gt_tbl)
 
-  # Expect that the internal `summary` list
-  # object has a length of `1` since there was
-  # only one call of `summary_rows()`
-  length(summary) %>%
-    expect_equal(1)
+  # Expect that the internal `summary` list object has a length of `1`
+  # since there was only one call of `summary_rows()`
+  length(summary) %>% expect_equal(1)
 
   # For the single list component in `summary`, expect specific
   # names within it
@@ -447,14 +436,13 @@ test_that("the `summary_rows()` can make grand summaries", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "summary_labels",
-        "missing_text", "formatter", "formatter_options"
+        "groups", "columns", "fns", "label_vals", "id_vals",
+        "fmt", "missing_text", "formatter", "formatter_options"
       )
     )
 
-  # Expect the `groups` provided in `summary[[1]]$groups`
-  # is NULL
-  summary[[1]]$groups %>% expect_null()
+  # Expect the `groups` provided in `summary[[1]]$groups` is a specific string
+  summary[[1]]$groups %>% expect_equal(":GRAND_SUMMARY:")
 
   # Expect the `columns` provided in `summary[[1]]$columns`
   # provide names for all columns
@@ -463,30 +451,26 @@ test_that("the `summary_rows()` can make grand summaries", {
   # Expect that `summary[[1]]$fns` is a `list` object
   summary[[1]]$fns %>% expect_type("list")
 
-  # Expect that the components of `summary[[1]]$fns` are formulas
-  summary[[1]]$fns$average %>% expect_s3_class("formula")
-  summary[[1]]$fns$total %>% expect_s3_class("formula")
-  summary[[1]]$fns$`std dev` %>% expect_s3_class("formula")
+  # Expect that the components of `summary[[1]]$fns` are lists
+  summary[[1]]$fns$average %>% expect_type("list")
+  summary[[1]]$fns$total %>% expect_type("list")
+  summary[[1]]$fns$`std dev` %>% expect_type("list")
 
   # Expect that `summary[[1]]$missing_text` has a specific value
   summary[[1]]$missing_text %>% expect_equal("---")
 
-  # Expect that `summary[[1]]$formatter` is a `function` object
-  expect_equal(class(summary[[1]]$formatter), "function")
+  # Expect that `summary[[1]]$formatter` is NULL
+  expect_null(summary[[1]]$formatter)
 
   # Expect that `summary[[1]]$formatter_options` is a list
   summary[[1]]$formatter_options %>% expect_type("list")
 
-  # Create a table with a grand summary;
-  # the 3 summary rows for represent the
-  # mean, sum, and standard deviation of
-  # all numeric columns; split into 2 calls
-  # that allow for different formatting
-  # options
+  # Create a table with a grand summary; the 3 summary rows for represent
+  # the mean, sum, and standard deviation of all numeric columns; split
+  # into 2 calls that allow for different formatting options
   gt_tbl <-
     tbl %>%
-    summary_rows(
-      groups = NULL,
+    grand_summary_rows(
       columns = c(open, high),
       fns = list(
         average = ~mean(., na.rm = TRUE),
@@ -495,8 +479,7 @@ test_that("the `summary_rows()` can make grand summaries", {
       formatter = fmt_number,
       decimals = 3
     ) %>%
-    summary_rows(
-      groups = NULL,
+    grand_summary_rows(
       columns = c(low, close),
       fns = list(
         average = ~mean(., na.rm = TRUE),
@@ -509,9 +492,8 @@ test_that("the `summary_rows()` can make grand summaries", {
   # Extract the internal `summary` object
   summary <- dt_summary_get(data = gt_tbl)
 
-  # Expect that the internal `summary` list
-  # object has a length of `2` since there
-  # were two calls of `summary_rows()`
+  # Expect that the internal `summary` list object has a length of `2`
+  # since there were two calls of `summary_rows()`
   length(summary) %>% expect_equal(2)
 
   # For the two list components in `summary`, expect specific
@@ -520,8 +502,8 @@ test_that("the `summary_rows()` can make grand summaries", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "summary_labels",
-        "missing_text", "formatter", "formatter_options"
+        "groups", "columns", "fns", "label_vals", "id_vals",
+        "fmt", "missing_text", "formatter", "formatter_options"
       )
     )
 
@@ -529,14 +511,14 @@ test_that("the `summary_rows()` can make grand summaries", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "summary_labels",
-        "missing_text", "formatter", "formatter_options"
+        "groups", "columns", "fns", "label_vals", "id_vals",
+        "fmt", "missing_text", "formatter", "formatter_options"
       )
     )
 
-  # Expect that `summary[[1|2]]$groups` is TRUE
-  summary[[1]]$groups %>% expect_null()
-  summary[[2]]$groups %>% expect_null()
+  # Expect that `summary[[1|2]]$groups` have a specific string
+  summary[[1]]$groups %>% expect_equal(":GRAND_SUMMARY:")
+  summary[[2]]$groups %>% expect_equal(":GRAND_SUMMARY:")
 
   # Expect that `summary[[1|2]]$columns` has specific values
   summary[[1]]$columns %>% expect_equal(c("open", "high"))
@@ -550,13 +532,13 @@ test_that("the `summary_rows()` can make grand summaries", {
   # are the same
   expect_identical(summary[[1]]$fns, summary[[1]]$fns)
 
-  # Expect that the components of `summary[[1|2]]$fns` are formulas
-  summary[[1]]$fns$average %>% expect_s3_class("formula")
-  summary[[1]]$fns$total %>% expect_s3_class("formula")
-  summary[[1]]$fns$`std dev` %>% expect_s3_class("formula")
-  summary[[2]]$fns$average %>% expect_s3_class("formula")
-  summary[[2]]$fns$total %>% expect_s3_class("formula")
-  summary[[2]]$fns$`std dev` %>% expect_s3_class("formula")
+  # Expect that the components of `summary[[1|2]]$fns` are lists
+  summary[[1]]$fns$average %>% expect_type("list")
+  summary[[1]]$fns$total %>% expect_type("list")
+  summary[[1]]$fns$`std dev` %>% expect_type("list")
+  summary[[2]]$fns$average %>% expect_type("list")
+  summary[[2]]$fns$total %>% expect_type("list")
+  summary[[2]]$fns$`std dev` %>% expect_type("list")
 
   # Expect that `summary[[1|2]]$missing_text` has a specific value
   summary[[1]]$missing_text %>% expect_equal("---")
@@ -566,16 +548,14 @@ test_that("the `summary_rows()` can make grand summaries", {
   expect_equal(class(summary[[1]]$formatter), "function")
   expect_equal(class(summary[[2]]$formatter), "function")
 
-  # Expect that the formatters used in each call
-  # are the same
+  # Expect that the formatters used in each call are the same
   expect_identical(summary[[1]]$formatter, summary[[2]]$formatter)
 
-  # Expect that `summary[[1|2]]$formatter_options` is a list
+  # Expect that `summary[[1|2]]$formatter_options` are both lists
   summary[[1]]$formatter_options %>% expect_type("list")
   summary[[2]]$formatter_options %>% expect_type("list")
 
-  # Expect that `summary[[1|2]]$formatter_options` are both
-  # of length 1
+  # Expect that `summary[[1|2]]$formatter_options` are both of length 1
   summary[[1]]$formatter_options %>% length() %>% expect_equal(1)
   summary[[2]]$formatter_options %>% length() %>% expect_equal(1)
 
@@ -594,14 +574,13 @@ test_that("the `summary_rows()` can make grand summaries", {
   summary[[1]]$formatter_options[[1]] %>% expect_equal(3)
   summary[[2]]$formatter_options[[1]] %>% expect_equal(5)
 
-  # Create a table with groupwsie summaries
-  # and a grand summary; all summary rows
-  # represent the mean, sum, and standard
-  # deviation of all numeric columns;
+  # Create a table with group-wise summaries and a grand summary; all
+  # summary rows represent the mean, sum, and standard deviation of
+  # all numeric columns
   gt_tbl <-
     tbl %>%
     summary_rows(
-      groups = TRUE,
+      groups = everything(),
       columns = c(open, high, low, close),
       fns = list(
         average = ~mean(., na.rm = TRUE),
@@ -609,8 +588,7 @@ test_that("the `summary_rows()` can make grand summaries", {
         `std dev` = ~sd(., na.rm = TRUE)
       )
     ) %>%
-    summary_rows(
-      groups = NULL,
+    grand_summary_rows(
       columns = c(open, high, low, close),
       fns = list(
         average = ~mean(., na.rm = TRUE),
@@ -633,8 +611,8 @@ test_that("the `summary_rows()` can make grand summaries", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "summary_labels",
-        "missing_text", "formatter", "formatter_options"
+        "groups", "columns", "fns", "label_vals", "id_vals",
+        "fmt", "missing_text", "formatter", "formatter_options"
       )
     )
 
@@ -642,16 +620,16 @@ test_that("the `summary_rows()` can make grand summaries", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "summary_labels",
-        "missing_text", "formatter", "formatter_options"
+        "groups", "columns", "fns", "label_vals", "id_vals",
+        "fmt", "missing_text", "formatter", "formatter_options"
       )
     )
 
-  # Expect that `summary[[1]]$groups` is TRUE
-  summary[[1]]$groups %>% expect_true()
+  # Expect that `summary[[1]]$groups` is a character vector
+  summary[[1]]$groups %>% expect_equal(c("W02", "W03"))
 
-  # Expect that `summary[[2]]$groups` is NULL
-  summary[[2]]$groups %>% expect_null()
+  # Expect that `summary[[2]]$groups` is a character vector
+  summary[[2]]$groups %>% expect_equal(":GRAND_SUMMARY:")
 
   # Expect that `summary[[1|2]]$columns` has specific values
   summary[[1]]$columns %>% expect_equal(c("open", "high", "low", "close"))
@@ -661,44 +639,38 @@ test_that("the `summary_rows()` can make grand summaries", {
   summary[[1]]$fns %>% expect_type("list")
   summary[[2]]$fns %>% expect_type("list")
 
-  # Expect that the functions used in each call
-  # are the same
+  # Expect that the functions used in each call are the same
   expect_identical(summary[[1]]$fns, summary[[1]]$fns)
 
-  # Expect that the components of `summary[[1|2]]$fns` are formulas
-  summary[[1]]$fns$average %>% expect_s3_class("formula")
-  summary[[1]]$fns$total %>% expect_s3_class("formula")
-  summary[[1]]$fns$`std dev` %>% expect_s3_class("formula")
-  summary[[2]]$fns$average %>% expect_s3_class("formula")
-  summary[[2]]$fns$total %>% expect_s3_class("formula")
-  summary[[2]]$fns$`std dev` %>% expect_s3_class("formula")
+  # Expect that the components of `summary[[1|2]]$fns` are lists
+  summary[[1]]$fns$average %>% expect_type("list")
+  summary[[1]]$fns$total %>% expect_type("list")
+  summary[[1]]$fns$`std dev` %>% expect_type("list")
+  summary[[2]]$fns$average %>% expect_type("list")
+  summary[[2]]$fns$total %>% expect_type("list")
+  summary[[2]]$fns$`std dev` %>% expect_type("list")
 
   # Expect that `summary[[1|2]]$missing_text` has a specific value
   summary[[1]]$missing_text %>% expect_equal("---")
   summary[[2]]$missing_text %>% expect_equal("---")
 
-  # Expect that `summary[[1|2]]$formatter` is a `function` object
-  expect_equal(class(summary[[1]]$formatter), "function")
-  expect_equal(class(summary[[2]]$formatter), "function")
+  # Expect that `summary[[1|2]]$formatter` are both NULL
+  expect_null(summary[[1]]$formatter)
+  expect_null(summary[[2]]$formatter)
 
-  # Expect that the formatters used in each call
-  # are the same
-  expect_identical(summary[[1]]$formatter, summary[[2]]$formatter)
-
-  # Expect that `summary[[1|2]]$formatter_options` is a list
+  # Expect that `summary[[1|2]]$formatter_options` are both lists
   summary[[1]]$formatter_options %>% expect_type("list")
   summary[[2]]$formatter_options %>% expect_type("list")
 
-  # Expect that `summary[[1|2]]$formatter_options` are both
-  # of length 0
+  # Expect that `summary[[1|2]]$formatter_options` are both of length 0
   summary[[1]]$formatter_options %>% length() %>% expect_equal(0)
   summary[[2]]$formatter_options %>% length() %>% expect_equal(0)
 })
 
 test_that("`groups = FALSE` returns data unchanged", {
 
-  # Expect that using `groups = FALSE` with
-  # `summary_rows()` creates no summary rows
+  # Expect that using `groups = FALSE` with `summary_rows()`
+  # creates no summary rows
   expect_equal(
     tbl %>%
       as_raw_html() %>%
@@ -742,27 +714,27 @@ test_that("the ordering of groups shouldn't affect group/grand summary calcs", {
     tbl_1 %>%
     dplyr::group_by(group) %>%
     gt(rowname_col = "id") %>%
-    summary_rows(groups = TRUE, columns = value, fns = list("sum"))
+    summary_rows(groups = everything(), columns = value, fns = list("sum"))
 
   gt_tbl_1b <-
     tbl_1 %>%
     gt(rowname_col = "id", groupname_col = "group") %>%
-    summary_rows(groups = TRUE, columns = value, fns = list("sum"))
+    summary_rows(groups = everything(), columns = value, fns = list("sum"))
 
   gt_tbl_2 <-
     tbl_2 %>%
     gt(rowname_col = "id", groupname_col = "group") %>%
-    summary_rows(groups = TRUE, columns = value, fns = list("sum"))
+    summary_rows(groups = everything(), columns = value, fns = list("sum"))
 
   gt_tbl_3 <-
     tbl_3 %>%
     gt(rowname_col = "id", groupname_col = "group") %>%
-    summary_rows(groups = TRUE, columns = value, fns = list("sum"))
+    summary_rows(groups = everything(), columns = value, fns = list("sum"))
 
   # Expect the correct values in summary rows of `gt_tbl`
   gt_tbl_1 %>% render_as_html() %>% xml2::read_html() %>%
     selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row']") %>%
-    expect_equal(c("3.00", "20.00", "99.00"))
+    expect_equal(c("3", "20", "99"))
 
   # Expect the HTML output tables of `gt_tbl_1` and `gt_tbl_1b` to be the same
   expect_identical(
@@ -773,12 +745,12 @@ test_that("the ordering of groups shouldn't affect group/grand summary calcs", {
   # Expect the correct values in summary rows of `gt_tbl_2`
   gt_tbl_2 %>% render_as_html() %>% xml2::read_html() %>%
     selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row']") %>%
-    expect_equal(c("3.00", "99.00", "20.00"))
+    expect_equal(c("3", "99", "20"))
 
   # Expect the correct values in summary rows of `gt_tbl_3`
   gt_tbl_3 %>% render_as_html() %>% xml2::read_html() %>%
     selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row']") %>%
-    expect_equal(c("20.00", "3.00", "99.00"))
+    expect_equal(c("20", "3", "99"))
 
   # Prepare a set gt tables with a grand summary (using the same
   # `grand_summary_rows()` call each time)
@@ -806,7 +778,7 @@ test_that("the ordering of groups shouldn't affect group/grand summary calcs", {
   # Expect the correct value in the grand summary row of `gt_tbl_gs`
   gt_tbl_1_gs %>% render_as_html() %>% xml2::read_html() %>%
     selection_text("[class='gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row']") %>%
-    expect_equal(c("122.00"))
+    expect_equal(c("122"))
 
   # Expect the HTML output tables of `gt_tbl_gs` and `gt_tbl_1b_gs` to be the same
   expect_identical(
@@ -817,12 +789,12 @@ test_that("the ordering of groups shouldn't affect group/grand summary calcs", {
   # Expect the correct value in the grand summary row of `gt_tbl_2_gs`
   gt_tbl_2_gs %>% render_as_html() %>% xml2::read_html() %>%
     selection_text("[class='gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row']") %>%
-    expect_equal(c("122.00"))
+    expect_equal(c("122"))
 
   # Expect the correct value in the grand summary row of `gt_tbl_3_gs`
   gt_tbl_3_gs %>% render_as_html() %>% xml2::read_html() %>%
     selection_text("[class='gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row']") %>%
-    expect_equal(c("122.00"))
+    expect_equal(c("122"))
 
   # Example where a columns is named `columns`
   tbl_4 <-
@@ -837,36 +809,36 @@ test_that("the ordering of groups shouldn't affect group/grand summary calcs", {
     tbl_4 %>%
     dplyr::group_by(group) %>%
     gt(rowname_col = "id") %>%
-    summary_rows(groups = TRUE, columns = c(value, columns), fns = list("sum")) %>%
+    summary_rows(groups = everything(), columns = c(value, columns), fns = list("sum")) %>%
     grand_summary_rows(columns = c(value, columns), fns = list("sum"))
 
   # Expect the correct values in summary rows of `gt_tbl_4`
   gt_tbl_4 %>% render_as_html() %>% xml2::read_html() %>%
     selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row']") %>%
-    expect_equal(c("3.00", "6.00", "20.00", "40.00", "99.00", "198.00"))
+    expect_equal(c("3", "6", "20", "40", "99", "198"))
 
   # Expect the correct values in the grand summary row of `gt_tbl_4`
   gt_tbl_4 %>% render_as_html() %>% xml2::read_html() %>%
     selection_text("[class='gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row']") %>%
-    expect_equal(c("122.00", "244.00"))
+    expect_equal(c("122", "244"))
 
   gt_tbl_5 <-
     tbl_4 %>%
     dplyr::rename(grand_summary_col = columns) %>%
     dplyr::group_by(group) %>%
     gt(rowname_col = "id") %>%
-    summary_rows(groups = TRUE, columns = c(value, grand_summary_col), fns = list("sum")) %>%
+    summary_rows(groups = everything(), columns = c(value, grand_summary_col), fns = list("sum")) %>%
     grand_summary_rows(columns = c(value, grand_summary_col), fns = list("sum"))
 
   # Expect the correct values in summary rows of `gt_tbl_4`
   gt_tbl_5 %>% render_as_html() %>% xml2::read_html() %>%
     selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row']") %>%
-    expect_equal(c("3.00", "6.00", "20.00", "40.00", "99.00", "198.00"))
+    expect_equal(c("3", "6", "20", "40", "99", "198"))
 
   # Expect the correct values in the grand summary row of `gt_tbl_4`
   gt_tbl_5 %>% render_as_html() %>% xml2::read_html() %>%
     selection_text("[class='gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row']") %>%
-    expect_equal(c("122.00", "244.00"))
+    expect_equal(c("122", "244"))
 })
 
 test_that("summary cells can be created with NA/NaN-resulting values", {
@@ -896,7 +868,7 @@ test_that("summary cells can be created with NA/NaN-resulting values", {
   # summary rows of `gt_tbl_1`
   gt_tbl_1 %>% render_as_html() %>% xml2::read_html() %>%
     selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick']") %>%
-    expect_equal(rep("0.00", 4))
+    expect_equal(rep("0", 4))
 
   gt_tbl_1 %>% render_as_html() %>% xml2::read_html() %>%
     selection_text("[class='gt_row gt_right gt_summary_row gt_last_summary_row']") %>%
@@ -918,7 +890,7 @@ test_that("summary cells can be created with NA/NaN-resulting values", {
   # grand summary rows of `gt_tbl_2`
   gt_tbl_2 %>% render_as_html() %>% xml2::read_html() %>%
     selection_text("[class='gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row']") %>%
-    expect_equal(rep("0.00", 2))
+    expect_equal(rep("0", 2))
 
   gt_tbl_2 %>% render_as_html() %>% xml2::read_html() %>%
     selection_text("[class='gt_row gt_right gt_grand_summary_row gt_last_summary_row']") %>%
@@ -951,10 +923,7 @@ test_that("summary rows can be created when there is no stub", {
   # four columns of values
   tbl_2 <-
     sp500 %>%
-    dplyr::filter(
-      date >= "2015-01-05" &
-        date <= "2015-01-09"
-    ) %>%
+    dplyr::filter(date >= "2015-01-05" & date <= "2015-01-09") %>%
     dplyr::arrange(date) %>%
     dplyr::select(-adj_close, -volume) %>%
     gt()
@@ -964,7 +933,7 @@ test_that("summary rows can be created when there is no stub", {
   # are no row groups)
   gt_tbl <-
     tbl_2 %>%
-    summary_rows(
+    grand_summary_rows(
       columns = c(open, high, low, close),
       fns = list(
         average = ~mean(., na.rm = TRUE),
@@ -1209,7 +1178,7 @@ test_that("extracting a summary from a gt table is possible", {
   # extract the internal summary with `extract_summary()`
   gt_tbl_summary_grand <-
     tbl %>%
-    summary_rows(
+    grand_summary_rows(
       columns = c(open, high, low, close),
       fns = list(
         average = ~mean(., na.rm = TRUE),
@@ -1232,8 +1201,7 @@ test_that("extracting a summary from a gt table is possible", {
   # from `list`
   expect_type(gt_tbl_summary_grand[[1]], "list")
 
-  # Expect specific column names for the
-  # tibble in `gt_tbl_summary_grand`
+  # Expect specific column names for the tibble in `gt_tbl_summary_grand`
   expect_equal(
     names(gt_tbl_summary_grand$summary_df_data_list[[1]]),
     c("group_id", "rowname", "date", "open", "high", "low", "close", "week")
@@ -1269,10 +1237,7 @@ test_that("creating summary rows works for hidden columns", {
   # 'low' columns
   tbl <-
     sp500 %>%
-    dplyr::filter(
-      date >= "2015-01-05" &
-        date <= "2015-01-16"
-    ) %>%
+    dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") %>%
     dplyr::arrange(date) %>%
     dplyr::mutate(
       week = paste0(
@@ -1310,8 +1275,7 @@ test_that("creating summary rows works for hidden columns", {
   # Expect that the internal `summary` list
   # object has a length of `1` since there was
   # only one call of `summary_rows()`
-  length(summary) %>%
-    expect_equal(1)
+  length(summary) %>% expect_equal(1)
 
   # For the single list component in `summary`, expect specific
   # names within it
@@ -1319,8 +1283,8 @@ test_that("creating summary rows works for hidden columns", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "summary_labels",
-        "missing_text", "formatter", "formatter_options"
+        "groups", "columns", "fns", "label_vals", "id_vals",
+        "fmt", "missing_text", "formatter", "formatter_options"
       )
     )
 
@@ -1333,16 +1297,16 @@ test_that("creating summary rows works for hidden columns", {
   # Expect that `summary[[1]]$fns` is a `list` object
   summary[[1]]$fns %>% expect_type("list")
 
-  # Expect that the components of `summary[[1]]$fns` are formulas
-  summary[[1]]$fns$average %>% expect_s3_class("formula")
-  summary[[1]]$fns$total %>% expect_s3_class("formula")
-  summary[[1]]$fns$`std dev` %>% expect_s3_class("formula")
+  # Expect that the components of `summary[[1]]$fns` are lists
+  summary[[1]]$fns$average %>% expect_type("list")
+  summary[[1]]$fns$total %>% expect_type("list")
+  summary[[1]]$fns$`std dev` %>% expect_type("list")
 
   # Expect that `summary[[1]]$missing_text` has a specific value
   summary[[1]]$missing_text %>% expect_equal("---")
 
-  # Expect that `summary[[1]]$formatter` is a `function` object
-  expect_equal(class(summary[[1]]$formatter), "function")
+  # Expect that `summary[[1]]$formatter` is a NULL
+  expect_null(summary[[1]]$formatter)
 
   # Expect that `summary[[1]]$formatter_options` is a list
   summary[[1]]$formatter_options %>% expect_type("list")
@@ -1360,13 +1324,12 @@ test_that("creating summary rows works for hidden columns", {
   expect_equal(
     colnames(summary_w02),
     c(
-      "group_id", "rowname",
-      "date", "open", "high", "low", "close", "week"
+      "group_id", "rowname", "date", "open", "high",
+      "low", "close", "week"
     )
   )
 
-  # Expect non-NA values in all columns that had
-  # summaries computed
+  # Expect non-NA values in all columns that had summaries computed
   expect_true(!any(is.na(summary_w02$open)))
   expect_true(!any(is.na(summary_w02$high)))
   expect_true(!any(is.na(summary_w02$low)))
@@ -1420,7 +1383,6 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
   summary_tbl_2 %>% as_latex() %>% as.character() %>% expect_snapshot()
   summary_tbl_2 %>% as_rtf() %>% expect_snapshot()
 
-
   # Here, the `"rowname"` column is prevented from being used in the stub
   # but the `"group"` column is used to generate row group labels; we have
   # a largely empty stub except for the summary row labels (we can use
@@ -1452,7 +1414,6 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
   summary_tbl_3 %>% as_latex() %>% as.character() %>% expect_snapshot()
   summary_tbl_3 %>% as_rtf() %>% expect_snapshot()
 
-
   # This table has a stub with values but it is utilizing the `"char"`
   # column for its labels (`"rowname"` and `"group"` are visible columns)
   summary_tbl_4 <-
@@ -1472,7 +1433,6 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
   summary_tbl_4 %>% render_as_html() %>% expect_snapshot()
   summary_tbl_4 %>% as_latex() %>% as.character() %>% expect_snapshot()
   summary_tbl_4 %>% as_rtf() %>% expect_snapshot()
-
 
   # This table is a slight modification on `summary_tbl_4` in that the
   # `"group"` column is being used to generate row groups
@@ -1502,7 +1462,6 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
   summary_tbl_5 %>% as_latex() %>% as.character() %>% expect_snapshot()
   summary_tbl_5 %>% as_rtf() %>% expect_snapshot()
 
-
   # This table uses the `"rowname"` column to generate rownames in the stub,
   # and, the `"group"` column is used to form row groups
   summary_tbl_6 <-
@@ -1530,7 +1489,6 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
   summary_tbl_6 %>% render_as_html() %>% expect_snapshot()
   summary_tbl_6 %>% as_latex() %>% as.character() %>% expect_snapshot()
   summary_tbl_6 %>% as_rtf() %>% expect_snapshot()
-
 
   # We should expect no errors or warnings when rendering each of these
   # tables to the different output formats
@@ -1587,7 +1545,7 @@ test_that("summary rows can be styled comprehensively", {
     dplyr::filter(mfr %in% c("Lamborghini", "Maserati", "Aston Martin")) %>%
     gt(rowname_col = "model", groupname_col = "mfr") %>%
     summary_rows(
-      groups = TRUE,
+      groups = everything(),
       fns = list(
         Minimum = ~min(.),
         Maximum = ~max(.)
@@ -1622,19 +1580,16 @@ test_that("summary rows can use other columns' data", {
     dplyr::slice_head(n = 22) %>%
     dplyr::select(date, close, volume) %>%
     gt() %>%
-    summary_rows(
+    grand_summary_rows(
       columns = 'close',
-      groups = NULL,
       fns = list('Average close' = ~ mean(.))
     ) %>%
-    summary_rows(
+    grand_summary_rows(
       columns = 'close',
-      groups = NULL,
       fns = list('Average volume weighted close' = ~ sum(. * volume) / sum(volume))
     ) %>%
-    summary_rows(
+    grand_summary_rows(
       columns = 'close',
-      groups = NULL,
       fns = list('Sum of `volume` in `close`' = ~ sum(volume))
     )
 

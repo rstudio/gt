@@ -147,7 +147,7 @@ test_that("Using summary rows in LaTeX tables is correct", {
       )
     ) %>%
     summary_rows(
-      groups = TRUE,
+      groups = everything(),
       columns = col_3,
       fns = list(
         count = ~ length(.)
@@ -191,7 +191,7 @@ test_that("Using summary rows in LaTeX tables is correct", {
       )
     ) %>%
     summary_rows(
-      groups = TRUE,
+      groups = everything(),
       columns = col_3,
       fns = list(
         count = ~ length(.)

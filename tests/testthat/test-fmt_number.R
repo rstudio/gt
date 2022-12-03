@@ -880,8 +880,14 @@ test_that("rownames and groupnames aren't included in columns = TRUE", {
 
   mtcars1 <- cbind(mtcars, chardata = row.names(mtcars))
 
-  # This fails; can't apply numeric formatting to the "chardata" col
-  expect_error(mtcars1 %>% gt() %>% fmt_number(columns = everything()))
+  # This doesn't fail; it won't apply numeric formatting to the
+  # "chardata" column but the formatter will skip over it
+  expect_error(
+    regexp = NA,
+    mtcars1 %>%
+      gt() %>%
+      fmt_number(columns = everything())
+  )
 
   # These succeed because the "chardata" col no longer counts as a
   # resolvable column if it's a rowname_col or groupname_col, yet, it's

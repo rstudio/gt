@@ -36,7 +36,7 @@ data <-
       ~mean(., na.rm = TRUE),
       ~sum(., na.rm = TRUE))
   ) %>%
-  summary_rows(
+  grand_summary_rows(
     columns = c(hp, wt),
     fns = list(
       ~mean(., na.rm = TRUE),

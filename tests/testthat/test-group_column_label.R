@@ -31,7 +31,7 @@ exibble_test <- function(
     tbl <-
       tbl %>%
       summary_rows(
-        groups = TRUE,
+        groups = everything(),
         columns = c(num, currency),
         fns = list(
           min = ~min(., na.rm = TRUE),
