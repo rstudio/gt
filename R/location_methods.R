@@ -58,16 +58,16 @@ add_summary_location_row <- function(
   # that are missing at render time will be ignored
   for (group in groups) {
 
-    summary_labels <-
+    id_vals <-
       unique(
         unlist(
           lapply(
             summary_data,
             FUN = function(summary_data_item) {
               if (isTRUE(summary_data_item$groups)) {
-                summary_data_item$summary_labels
+                summary_data_item$id_vals
               } else if (group %in% summary_data_item$groups) {
-                summary_data_item$summary_labels
+                summary_data_item$id_vals
               }
             }
           )
@@ -95,7 +95,7 @@ add_summary_location_row <- function(
     rows <-
       resolve_vector_i(
         expr = !!loc$rows,
-        vector = summary_labels,
+        vector = id_vals,
         item_label = "summary row"
       )
 
@@ -148,20 +148,21 @@ add_grand_summary_location_row <- function(
 
   summary_data <- dt_summary_get(data = data)
 
-  grand_summary_labels <-
+  id_vals <-
     unique(
       unlist(
         lapply(
           summary_data,
           FUN = function(summary_data_item) {
-            if (is.null(summary_data_item$groups)) {
-              return(summary_data_item$summary_labels)
+            if (":GRAND_SUMMARY:" %in% summary_data_item$groups) {
+              return(summary_data_item$id_vals)
             }
             NULL
           }
         )
       )
     )
+
 
   if (!inherits(loc, "cells_stub_grand_summary")) {
 
@@ -184,7 +185,7 @@ add_grand_summary_location_row <- function(
   rows <-
     resolve_vector_i(
       expr = !!loc$rows,
-      vector = grand_summary_labels,
+      vector = id_vals,
       item_label = "grand summary row"
     )
 
