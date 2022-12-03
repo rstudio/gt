@@ -422,6 +422,10 @@ resolve_groups <- function(expr, vector) {
       expr = rlang::eval_tidy(expr = quo, data = NULL)
     )
 
+  if (length(resolved) == 1 && resolved == ":GRAND_SUMMARY:") {
+    return(":GRAND_SUMMARY:")
+  }
+
   if (length(resolved) < 1) {
     return(NULL)
   }
