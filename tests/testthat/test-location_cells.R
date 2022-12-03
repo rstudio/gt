@@ -25,7 +25,8 @@ tbl_summary <-
     fns = list(
       min = ~min(.),
       max = ~max(.),
-      avg = ~mean(.)),
+      avg = ~mean(.)
+    ),
     formatter = fmt_number,
     use_seps = FALSE
   ) %>%
@@ -34,7 +35,8 @@ tbl_summary <-
     fns = list(
       min = ~min(., na.rm = TRUE),
       max = ~max(., na.rm = TRUE)
-    )
+    ),
+    formatter = fmt_number
   )
 
 # Gets the HTML attr value from a single key
