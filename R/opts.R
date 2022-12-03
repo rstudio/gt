@@ -860,6 +860,9 @@ opt_table_font <- function(
     add = TRUE
 ) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   existing_fonts <-
     dt_options_get_value(
       data = data,
