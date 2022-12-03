@@ -139,7 +139,8 @@ NULL
 
 gt_default_options <- list(
   gt.row_group.sep = " - ",
-  gt.html_tag_check = TRUE
+  gt.html_tag_check = TRUE,
+  gt.strict_column_fmt = FALSE
 )
 
 # R 3.5 and earlier have a bug on Windows where if x is latin1 or unknown and
