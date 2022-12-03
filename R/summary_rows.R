@@ -216,7 +216,7 @@ summary_rows <- function(
       # Handle character vector cases
       #
 
-      if (value %in% c("min", "max", "mean", "sum", "sd")) {
+      if (value %in% c("min", "max", "mean", "median", "sd", "sum")) {
         fn <- as.formula(paste0("~", value, "(., na.rm = TRUE)"))
       } else {
         fn <- as.formula(paste0("~", value, "(.)"))
