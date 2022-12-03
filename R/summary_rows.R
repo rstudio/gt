@@ -251,6 +251,22 @@ summary_rows <- function(
 
         lhs_vector <- rlang::eval_bare(formula_lhs)
 
+        # Get the names of the vector
+        lhs_vector_names <- rlang::names2(lhs_vector)
+
+        # If the vector is partially named, fill in the missing name (but
+        # only if it has one recognized name)
+        if (
+          "" %in% lhs_vector_names &&
+          any(lhs_vector_names %in% c("id", "label"))
+        ) {
+          if ("id" %in% lhs_vector_names) {
+            names(lhs_vector)[names(lhs_vector) == ""] <- "label"
+          } else {
+            names(lhs_vector)[names(lhs_vector) == ""] <- "id"
+          }
+        }
+
         if (rlang::is_named(lhs_vector)) {
 
           vector_names <- names(lhs_vector)
@@ -260,7 +276,18 @@ summary_rows <- function(
             rlang::abort(c(
               "If using a named vector on the lhs of a formula for a summary
               function label and ID, it must have the correct names:",
-              "*" = "The \"label\" and \"id\" names must be used"
+              "*" = "The \"label\" and \"id\" names must be used."
+            ))
+          }
+
+          if (length(unique(vector_names)) == 1) {
+
+            which_duplicate_name <- unique(vector_names)
+
+            rlang::abort(c(
+              "If using a named vector on the lhs of a formula for a summary",
+              "function label and ID, it must have two distinct names:",
+              "*" = paste0("The \"", which_duplicate_name, "\" name was used twice.")
             ))
           }
 
@@ -310,9 +337,9 @@ summary_rows <- function(
             if (!all(component_names %in% c("id", "label"))) {
 
               rlang::abort(c(
-                "If using a named list on the lhs of a formula for a summary
-              function label and ID, it must have the correct names:",
-              "*" = "The \"label\" and \"id\" names must be used"
+                "If using a named list on the lhs of a formula for a summary",
+                "function label and ID, it must have the correct names:",
+                "*" = "The \"label\" and \"id\" names must be used"
               ))
             }
 
