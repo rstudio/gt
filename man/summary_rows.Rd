@@ -82,7 +82,6 @@ is a week number) with the \code{summary_rows()} function.
     groupname_col = "week"
   ) \%>\%
   summary_rows(
-    groups = TRUE,
     columns = c(open, high, low, close),
     fns = list(
       min = ~min(.),
