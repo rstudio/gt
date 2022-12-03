@@ -6,7 +6,7 @@
 \usage{
 fmt_engineering(
   data,
-  columns,
+  columns = everything(),
   rows = everything(),
   decimals = 2,
   drop_trailing_zeros = FALSE,

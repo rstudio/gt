@@ -6,7 +6,7 @@
 \usage{
 fmt_currency(
   data,
-  columns,
+  columns = everything(),
   rows = everything(),
   currency = "USD",
   use_subunits = TRUE,

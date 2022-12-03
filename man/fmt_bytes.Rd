@@ -6,7 +6,7 @@
 \usage{
 fmt_bytes(
   data,
-  columns,
+  columns = everything(),
   rows = everything(),
   standard = c("decimal", "binary"),
   decimals = 1,

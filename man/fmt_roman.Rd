@@ -6,7 +6,7 @@
 \usage{
 fmt_roman(
   data,
-  columns,
+  columns = everything(),
   rows = everything(),
   case = c("upper", "lower"),
   pattern = "{x}"

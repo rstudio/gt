@@ -6,7 +6,7 @@
 \usage{
 fmt_passthrough(
   data,
-  columns,
+  columns = everything(),
   rows = everything(),
   escape = TRUE,
   pattern = "{x}"

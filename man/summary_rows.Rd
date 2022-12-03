@@ -6,11 +6,12 @@
 \usage{
 summary_rows(
   data,
-  groups = NULL,
+  groups = everything(),
   columns = everything(),
-  fns,
+  fns = NULL,
+  fmt = NULL,
   missing_text = "---",
-  formatter = fmt_number,
+  formatter = NULL,
   ...
 )
 }

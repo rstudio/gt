@@ -6,7 +6,7 @@
 \usage{
 fmt_integer(
   data,
-  columns,
+  columns = everything(),
   rows = everything(),
   use_seps = TRUE,
   accounting = FALSE,

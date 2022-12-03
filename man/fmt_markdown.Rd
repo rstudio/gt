@@ -4,7 +4,7 @@
 \alias{fmt_markdown}
 \title{Format Markdown text}
 \usage{
-fmt_markdown(data, columns, rows = everything())
+fmt_markdown(data, columns = everything(), rows = everything())
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}

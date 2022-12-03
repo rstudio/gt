@@ -36,7 +36,7 @@ Then, extract the summary rows as a list object.
     groupname_col = "week"
   ) \%>\%
   summary_rows(
-    groups = TRUE,
+    groups = everything(),
     columns = c(open, high, low, close),
     fns = list(
       min = ~min(.),

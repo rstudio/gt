@@ -6,7 +6,7 @@
 \usage{
 fmt_fraction(
   data,
-  columns,
+  columns = everything(),
   rows = everything(),
   accuracy = NULL,
   simplify = TRUE,

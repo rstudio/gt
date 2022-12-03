@@ -6,7 +6,7 @@
 \usage{
 fmt_time(
   data,
-  columns,
+  columns = everything(),
   rows = everything(),
   time_style = "iso",
   pattern = "{x}",

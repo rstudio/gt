@@ -6,7 +6,7 @@
 \usage{
 fmt_partsper(
   data,
-  columns,
+  columns = everything(),
   rows = everything(),
   to_units = c("per-mille", "per-myriad", "pcm", "ppm", "ppb", "ppt", "ppq"),
   symbol = "auto",
