@@ -993,6 +993,9 @@ opt_stylize <- function(
     add_row_striping = TRUE
 ) {
 
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
   if (!(length(style) == 1 && style %in% 1:6)) {
     cli::cli_abort("The `style` value must be a number in the range of 1 to 6.")
   }
@@ -1143,6 +1146,9 @@ opt_css <- function(
     add = TRUE,
     allow_duplicates = FALSE
 ) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   existing_additional_css <-
     dt_options_get_value(
