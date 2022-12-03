@@ -54,7 +54,6 @@ dt_summary_exists <- function(data) {
 
 dt_summary_build <- function(data, context) {
 
-  # TODO: is `dt_body_get()` necessary here? `dt_boxh_vars_default()` could be used
   summary_list <- dt_summary_get(data = data)
   body <- dt_body_get(data = data)
   data_tbl <- dt_data_get(data = data)
@@ -82,16 +81,16 @@ dt_summary_build <- function(data, context) {
     missing_text <- summary_attrs$missing_text
     formatter <- summary_attrs$formatter
     formatter_options <- summary_attrs$formatter_options
-    labels <- summary_attrs$summary_labels
+    labels <- summary_attrs$label_vals
 
-    if (length(labels) != length(unique(labels))) {
-
-      cli::cli_abort(c(
-        "All summary labels must be unique.",
-        "*" = "Review the names provided in `fns`.",
-        "*" = "These labels are in conflict: {paste0(labels, collapse = ', ')}."
-      ))
-    }
+    # if (length(labels) != length(unique(labels))) {
+    #
+    #   cli::cli_abort(c(
+    #     "All summary labels must be unique.",
+    #     "*" = "Review the names provided in `fns`.",
+    #     "*" = "These labels are in conflict: {paste0(labels, collapse = ', ')}."
+    #   ))
+    # }
 
     # Resolve the `missing_text`
     missing_text <-
@@ -103,8 +102,8 @@ dt_summary_build <- function(data, context) {
 
         cli::cli_abort(c(
           "There are no row groups in the gt object.",
-          "*" = "Use `groups = NULL` to create a grand summary.",
-          "*" = "Define row groups using `gt()` or `tab_row_group()`."
+          "*" = "Use `grand_summary_rows()` to create a grand summary, or",
+          "*" = "Define row groups using `gt(groupname_col = ...)` or `tab_row_group()`."
         ))
       }
     }
@@ -117,6 +116,17 @@ dt_summary_build <- function(data, context) {
       assert_rowgroups()
 
       groups <- unique(stub_df$group_id)
+
+    } else if (
+      !is.null(groups) &&
+      is.character(groups) &&
+      length(groups) == 1 &&
+      groups == ":GRAND_SUMMARY:"
+    ) {
+
+      # If groups is given as ":GRAND_SUMMARY:" then use a
+      # special group (`::GRAND_SUMMARY`)
+      groups <- grand_summary_col
 
     } else if (!is.null(groups) && is.character(groups)) {
 
@@ -141,12 +151,6 @@ dt_summary_build <- function(data, context) {
           "*" = "The following groups are not present: {not_present_groups}."
         ))
       }
-
-    } else if (is.null(groups)) {
-
-      # If groups is given as NULL (the default)
-      # then use a special group (`::GRAND_SUMMARY`)
-      groups <- grand_summary_col
     }
 
     # Resolve the columns to exclude
@@ -177,10 +181,13 @@ dt_summary_build <- function(data, context) {
     }
 
     # Get the registered function calls
-    agg_funs <-
+    fns <-
       lapply(
-        fns, function(fn) {
-          fn <- rlang::as_closure(fn)
+        fns,
+        FUN = function(fn) {
+
+          fn <- rlang::as_closure(fn$fn)
+
           function(x) {
 
             result <- fn(x)
@@ -192,6 +199,7 @@ dt_summary_build <- function(data, context) {
                 "*" = "We must always return a vector of length `1`."
               ))
             }
+
             result
           }
         }
@@ -205,23 +213,81 @@ dt_summary_build <- function(data, context) {
 
             group_label <- labels[j]
 
-            select_data_tbl %>%
-              dplyr::filter(.data[[group_id_col_private]] %in% .env$groups) %>%
-              dplyr::group_by(.data[[group_id_col_private]]) %>%
-              dplyr::summarize_at(vars(.env$columns), .funs = fns[[j]]) %>%
-              dplyr::ungroup() %>%
-              dplyr::mutate(!!rowname_col_private := .env$group_label) %>%
+            if (length(groups) == 1 && groups == "::GRAND_SUMMARY") {
+
+              NULL
+
+            } else {
+
+              # Filter to only the groups targeted in the group-wise case
+              select_data_tbl <-
+                dplyr::filter(
+                  select_data_tbl,
+                  .data[[group_id_col_private]] %in% groups
+                )
+            }
+
+            # Group by the `::group_id::` column
+            select_data_tbl <-
+              dplyr::group_by(
+                select_data_tbl,
+                .data[[group_id_col_private]]
+              )
+
+            # Summarize each column but ensure that aggregations that
+            # result in an error do not get involved in the summarization
+            finalized_cols <- c()
+            for (k in seq_along(columns)) {
+
+              .target_column <- columns[k]
+
+              finalized_cols <-
+                c(finalized_cols,
+                  tryCatch(
+                    {
+                      out <- fns[[j]](dplyr::pull(select_data_tbl, .target_column))
+                      columns[k]
+                    },
+                    error = function(cond) {
+                      character(0)
+                    }
+                  )
+                )
+            }
+
+            select_data_tbl <-
+              dplyr::ungroup(
+                dplyr::summarize_at(
+                  select_data_tbl,
+                  finalized_cols,
+                  .funs = fns[[j]]
+                )
+              )
+
+            select_data_tbl <-
+              dplyr::mutate(
+                select_data_tbl,
+                !!rowname_col_private := group_label
+              )
+
+            select_data_tbl <-
               dplyr::select(
-                .env$group_id_col_private, .env$rowname_col_private,
+                select_data_tbl,
+                dplyr::all_of(group_id_col_private),
+                dplyr::all_of(rowname_col_private),
                 dplyr::everything()
               )
+
+            select_data_tbl
           }
         )
       )
 
     # Add those columns that were not part of
     # the aggregation, filling those with NA values
-    summary_dfs_data[, columns_excl] <- NA_real_
+    summary_dfs_data[, c(
+      columns_excl, base::setdiff(columns, colnames(summary_dfs_data))
+    )] <- NA_real_
 
     summary_dfs_data <-
       dplyr::select(
@@ -247,22 +313,36 @@ dt_summary_build <- function(data, context) {
               locale = resolve_locale(data = data, locale = NULL)
             )
 
-          format_data <-
-            do.call(
-              formatter,
-              append(list(summary_data, columns = "x"), formatter_options)
-            )
+          if (!is.null(formatter)) {
 
-          formatter_fn <-
-            dt_formats_summary_formatter(
-              data = format_data,
-              context = context
-            )
+            format_data <-
+              do.call(
+                formatter,
+                append(list(summary_data, columns = "x"), formatter_options)
+              )
 
-          formatter_fn(x)
+            formatter_fn <-
+              dt_formats_summary_formatter(
+                data = format_data,
+                context = context
+              )
+
+            x <-
+              tryCatch(
+                formatter_fn(x),
+                error = function(cond) {
+                  x
+                }
+              )
+          }
+
+          as.character(x)
         }
-      ) %>%
+      )
+
+    summary_dfs_display <-
       dplyr::mutate_at(
+        summary_dfs_display,
         .vars = columns_excl,
         .funs = function(x) {NA_character_}
       )
