@@ -7,9 +7,10 @@
 grand_summary_rows(
   data,
   columns = everything(),
-  fns,
+  fns = NULL,
+  fmt = NULL,
   missing_text = "---",
-  formatter = fmt_number,
+  formatter = NULL,
   ...
 )
 }
