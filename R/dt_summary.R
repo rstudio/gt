@@ -336,6 +336,8 @@ dt_summary_build <- function(data, context) {
               )
           }
 
+          x[is.nan(x)] <- NA_character_
+
           as.character(x)
         }
       )
