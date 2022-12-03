@@ -1353,7 +1353,8 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
       fns = list(
         min = ~min(., na.rm = TRUE),
         max = ~max(., na.rm = TRUE),
-        avg = ~mean(., na.rm = TRUE)),
+        avg = ~mean(., na.rm = TRUE)
+      ),
       formatter = fmt_number
     )
 
@@ -1374,7 +1375,8 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
       fns = list(
         min = ~min(., na.rm = TRUE),
         max = ~max(., na.rm = TRUE),
-        avg = ~mean(., na.rm = TRUE)),
+        avg = ~mean(., na.rm = TRUE)
+      ),
       formatter = fmt_number
     )
 
