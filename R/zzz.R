@@ -157,7 +157,11 @@ utf8_aware_sub <- NULL
   toset <- !(names(gt_default_options) %in% names(op))
   if (any(toset)) options(gt_default_options[toset])
 
-  utf8_aware_sub <<- identical("UTF-8", Encoding(sub(".", "\u00B1", ".", fixed = TRUE)))
+  utf8_aware_sub <<-
+    identical(
+      "UTF-8",
+      Encoding(sub(".", "\u00B1", ".", fixed = TRUE))
+    )
 
   invisible()
 }
