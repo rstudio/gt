@@ -82,33 +82,55 @@
 #' @export
 summary_rows <- function(
     data,
-    groups = NULL,
+    groups = everything(),
     columns = everything(),
-    fns,
+    fns = NULL,
+    fmt = NULL,
     missing_text = "---",
-    formatter = fmt_number,
+    formatter = NULL,
     ...
 ) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Collect all provided formatter options in a list
+  # Collect all provided formatting options in a list
   formatter_options <- list(...)
 
-  # If `groups` is FALSE, then do nothing; just
-  # return the `data` unchanged; having `groups`
-  # as `NULL` signifies a grand summary,
-  # is used for groupwise summaries across all
-  # groups
-  if (is_false(groups)) {
-    return(data)
+  # Perform a partial build of the table to obtain the current
+  # state of `group_id` values in the table; we should not assign this
+  # to `data` but to a new object (`data_built`) so that we do not
+  # affect the return value of `data`
+  data_built <- dt_body_build_init(data = data)
+  data_built <- dt_groups_rows_build(data = data_built, context = context)
+  groups_rows_tbl <- dt_groups_rows_get(data = data_built)
+
+  # Pull a character vector of available groups from `groups_rows_tbl`
+  available_groups <- dplyr::pull(groups_rows_tbl, group_id)
+
+  # Return data unchanged if there are no groups and this summary is not
+  # a grand summary
+  if (length(available_groups) < 1) {
+    if (!(
+      is.character(groups) &&
+      length(groups) == 1 &&
+      groups == ":GRAND_SUMMARY:"
+    )) {
+      return(data)
+    }
   }
 
-  # Get the `stub_df` object from `data`
-  stub_df <- dt_stub_df_get(data = data)
+  # Resolve the group names
+  groups <-
+    resolve_groups(
+      expr = {{ groups }},
+      vector = available_groups
+    )
 
-  stub_available <- dt_stub_df_exists(data = data)
+  # Return data unchanged if no groups were resolved
+  if (is.null(groups)) {
+    return(data)
+  }
 
   # Resolve the column names
   columns <-
@@ -116,6 +138,8 @@ summary_rows <- function(
       expr = {{ columns }},
       data = data
     )
+
+  stub_available <- dt_stub_df_exists(data = data)
 
   # If there isn't a stub available, create an
   # 'empty' stub (populated with empty strings);
@@ -140,6 +164,9 @@ summary_rows <- function(
       dplyr::mutate(!!rowname_col_private := rep("", nrow(data$`_data`))) %>%
       dplyr::select(dplyr::everything(), dplyr::all_of(rowname_col_private))
 
+    # Get the `stub_df` object from `data`
+    stub_df <- dt_stub_df_get(data = data)
+
     # Place the `::rowname::` values into `stub_df$row_id`; these are
     # empty strings which will provide an empty stub for locations
     # adjacent to the body rows
@@ -152,26 +179,202 @@ summary_rows <- function(
       )
   }
 
-  # Derive the summary labels
-  summary_labels <-
-    vapply(
-      fns,
-      FUN.VALUE = character(1),
-      FUN = derive_summary_label
-    )
 
-  # If there are names, use those names
-  # as the summary labels
-  if (!is.null(names(summary_labels))) {
-    summary_labels <- names(summary_labels)
+  #normalize_summary_fns <- function(fns) {
+
+
+  if (length(fns) < 1) {
+    return(list())
   }
+
+  summary_fns <- list()
+
+  # Upgrade `fns` to a list if it a vector
+  if (!is.list(fns)) {
+    fns <- as.list(fns)
+  }
+
+  # Return a normalized list of summary functions
+  # list(
+  #   <id> = list(label = "the **label**", fn = ~mean(., na.rm = TRUE)),
+  #   <id> = list(label = "another label", fn = ~sum(.))
+  # )
+  for (i in seq_along(fns)) {
+
+    id <- NULL
+
+    # Get `id` values if we have a named list
+    if (rlang::is_named(fns[i])) {
+      id <- names(fns[i])
+    }
+
+    # Extract the value of the first list component
+    value <- fns[i][[1]]
+
+    if (is.character(value)) {
+
+      #
+      # Handle character vector cases
+      #
+
+      if (value %in% c("min", "max", "mean", "sum", "sd")) {
+        fn <- as.formula(paste0("~", value, "(., na.rm = TRUE)"))
+      } else {
+        fn <- as.formula(paste0("~", value, "(.)"))
+      }
+
+      if (is.null(id)) {
+        id <- value
+      }
+
+      label <- value
+
+    } else if (rlang::is_formula(value)) {
+
+      #
+      # Handle formula cases
+      #
+
+      # Handles the syntax `label ~ fn(.)`
+
+      formula_lhs <- rlang::f_lhs(value)
+      formula_rhs <- rlang::f_rhs(value)
+
+      fn <- rlang::new_formula(lhs = NULL, rhs = formula_rhs)
+
+      # Determine if the LHS contains a two-element vector with a label and
+      # an ID value; the order if not named is label then ID
+      if (
+        !is.name(formula_lhs) &&
+        is.character(rlang::eval_bare(formula_lhs)) &&
+        length(rlang::eval_bare(formula_lhs)) == 2
+      ) {
+
+        lhs_vector <- rlang::eval_bare(formula_lhs)
+
+        if (rlang::is_named(lhs_vector)) {
+
+          vector_names <- names(lhs_vector)
+
+          if (!all(vector_names %in% c("id", "label"))) {
+
+            rlang::abort(c(
+              "If using a named vector on the lhs of a formula for a summary
+              function label and ID, it must have the correct names:",
+              "*" = "The \"label\" and \"id\" names must be used"
+            ))
+          }
+
+          label <- unname(lhs_vector["label"])
+          id <- unname(lhs_vector["id"])
+
+        } else {
+
+          label <- lhs_vector[1]
+          id <- lhs_vector[2]
+        }
+
+      } else if (
+        is.name(formula_lhs) ||
+        !is.list(rlang::eval_bare(formula_lhs))
+      ) {
+
+        lhs_chr <- as.character(formula_lhs)
+
+        if (is.null(id)) {
+          id <- lhs_chr
+
+          if (length(id) < 1) {
+
+            formula_label <- rlang::as_label(formula_rhs)
+            formula_label <- gsub("\\(.*", "", formula_label)
+            id <- formula_label
+          }
+        }
+
+        if (length(lhs_chr) < 1) {
+          label <- id
+        } else {
+          label <- lhs_chr
+        }
+
+      } else if (is.list(rlang::eval_bare(formula_lhs))) {
+
+        lhs_list <- rlang::eval_bare(formula_lhs)
+
+        if (length(lhs_list) == 2) {
+
+          if (rlang::is_named(lhs_list)) {
+
+            component_names <- names(lhs_list)
+
+            if (!all(component_names %in% c("id", "label"))) {
+
+              rlang::abort(c(
+                "If using a named list on the lhs of a formula for a summary
+              function label and ID, it must have the correct names:",
+              "*" = "The \"label\" and \"id\" names must be used"
+              ))
+            }
+
+            label <- lhs_list[["label"]]
+            id <- lhs_list[["id"]]
+
+          } else {
+
+            label <- lhs_list[[1]]
+            id <- lhs_list[[2]]
+          }
+        }
+
+        if (length(lhs_list) == 1) {
+
+          if (is.null(id)) {
+
+            id <- label <- lhs_list[[1]]
+
+            if (
+              inherits(id, "from_markdown") ||
+              inherits(id, "html")
+            ) {
+
+              id <- create_unique_id_vals(id, simplify = TRUE)
+
+            } else {
+              label <- id
+            }
+          }
+        }
+      }
+    }
+
+    list_i <- list(list(label = label, fn = fn))
+
+    names(list_i) <- id
+
+    summary_fns <- c(summary_fns, list_i)
+  }
+
+  # All components of `summary_fns` have names and these are the id values
+  id_vals <- names(summary_fns)
+
+  # Get the label values
+  label_vals_list <-
+    lapply(
+      summary_fns,
+      FUN = function(x) {
+        x[["label"]]
+      }
+    )
 
   summary_list <-
     list(
       groups = groups,
       columns = columns,
-      fns = fns,
-      summary_labels = summary_labels,
+      fns = summary_fns,
+      label_vals = label_vals_list,
+      id_vals = id_vals,
+      fmt = fmt,
       missing_text = missing_text,
       formatter = formatter,
       formatter_options = formatter_options
@@ -240,9 +443,10 @@ summary_rows <- function(
 grand_summary_rows <- function(
     data,
     columns = everything(),
-    fns,
+    fns = NULL,
+    fmt = NULL,
     missing_text = "---",
-    formatter = fmt_number,
+    formatter = NULL,
     ...
 ) {
 
@@ -251,7 +455,7 @@ grand_summary_rows <- function(
 
   summary_rows(
     data = data,
-    groups = NULL,
+    groups = ":GRAND_SUMMARY:",
     columns = {{ columns }},
     fns = fns,
     missing_text = missing_text,
