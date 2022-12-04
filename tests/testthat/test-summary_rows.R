@@ -1600,3 +1600,105 @@ test_that("summary rows can use other columns' data", {
   # Take a snapshot of `gt_tbl`
   gt_tbl %>% render_as_html() %>% expect_snapshot()
 })
+
+test_that("The `normalize_summary_fns()` fn works with a variety of inputs", {
+
+  check_summary_fn_output <- function(fns, id, label, formula) {
+
+    out <- normalize_summary_fns(fns = fns)
+
+    expect_equal(length(out), 1)
+    expect_type(out, "list")
+
+    # Get id
+    out_id <- names(out)
+
+    # Get label
+    out_label <- out[[1]]$label
+
+    # Get formula
+    out_formula <- out[[1]]$fn
+
+    expect_equal(out_id, id)
+    expect_equal(out_label, label)
+    expect_equal(rlang::as_label(out_formula), formula)
+
+    expect_true(rlang::is_formula(out_formula))
+    expect_null(rlang::f_lhs(out_formula))
+    expect_true(rlang::is_call(rlang::f_rhs(out_formula)))
+  }
+
+  # Checking vector of function names as strings; for common aggregations that
+  # have an `na.rm` argument, this is written as having `na.rm = TRUE` (recourse
+  # is providing a formula with full call)
+  check_summary_fn_output(fns = "min", id = "min", label = "min", formula = "~min(., na.rm = TRUE)")
+  check_summary_fn_output(fns = "max", id = "max", label = "max", formula = "~max(., na.rm = TRUE)")
+  check_summary_fn_output(fns = "mean", id = "mean", label = "mean", formula = "~mean(., na.rm = TRUE)")
+  check_summary_fn_output(fns = "median", id = "median", label = "median", formula = "~median(., na.rm = TRUE)")
+  check_summary_fn_output(fns = "sd", id = "sd", label = "sd", formula = "~sd(., na.rm = TRUE)")
+  check_summary_fn_output(fns = "sum", id = "sum", label = "sum", formula = "~sum(., na.rm = TRUE)")
+
+  # Checking vector of function given as a string (not part of recognized
+  # aggregation set in above tests)
+  check_summary_fn_output(fns = "other", id = "other", label = "other", formula = "~other(.)")
+
+  # Checking named vector of length one as input (name is id and value is function name)
+  check_summary_fn_output(fns = c("minimum" = "min"), id = "minimum", label = "min", formula = "~min(., na.rm = TRUE)")
+
+  # Checking named vector with value as RHS formula (name is id and label)
+  check_summary_fn_output(fns = c(minimum = ~min(.)), id = "minimum", label = "minimum", formula = "~min(.)")
+  check_summary_fn_output(fns = c(minimum = ~min(.)), id = "minimum", label = "minimum", formula = "~min(.)")
+
+  # Checking named list with value as RHS formula (name is id and label)
+  check_summary_fn_output(fns = list(minimum = ~min(.)), id = "minimum", label = "minimum", formula = "~min(.)")
+
+  # Checking RHS formula (fn name is used to generate id and label)
+  check_summary_fn_output(fns = ~ min(.), id = "min", label = "min", formula = "~min(.)")
+  check_summary_fn_output(fns = list(~ min(.)), id = "min", label = "min", formula = "~min(.)")
+
+  # Checking two-sided formula inputs (LHS is id and label)
+  check_summary_fn_output(fns = minimum ~ min(.), id = "minimum", label = "minimum", formula = "~min(.)")
+  check_summary_fn_output(fns = list(minimum ~ min(.)), id = "minimum", label = "minimum", formula = "~min(.)")
+
+  # Checking unnamed vector of length two in LHS `c()` (provides label and id in that order)
+  check_summary_fn_output(fns = c("minimum", "min") ~ min(.), id = "min", label = "minimum", formula = "~min(.)")
+  check_summary_fn_output(fns = list(c("minimum", "min") ~ min(.)), id = "min", label = "minimum", formula = "~min(.)")
+
+  # Checking unnamed vector of length two in LHS `list()` (provides label and id in that order)
+  check_summary_fn_output(fns = list("minimum", "min") ~ min(.), id = "min", label = "minimum", formula = "~min(.)")
+  check_summary_fn_output(fns = list(list("minimum", "min") ~ min(.)), id = "min", label = "minimum", formula = "~min(.)")
+  check_summary_fn_output(fns = list(md("**minimum**"), "min") ~ min(.), id = "min", label = md("**minimum**"), formula = "~min(.)")
+
+  # Checking named components in LHS `list()`
+  check_summary_fn_output(fns = list(id = "minimum", label = "min") ~ min(.), id = "minimum", label = "min", formula = "~min(.)")
+  check_summary_fn_output(fns = list(label = "min", id = "minimum") ~ min(.), id = "minimum", label = "min", formula = "~min(.)")
+  check_summary_fn_output(fns = list(id = "min", label = "minimum") ~ min(.), id = "min", label = "minimum", formula = "~min(.)")
+  check_summary_fn_output(fns = list(label = "minimum", id = "min") ~ min(.), id = "min", label = "minimum", formula = "~min(.)")
+  check_summary_fn_output(fns = list(list(id = "minimum", label = "min") ~ min(.)), id = "minimum", label = "min", formula = "~min(.)")
+  check_summary_fn_output(fns = list(list(label = "min", id = "minimum") ~ min(.)), id = "minimum", label = "min", formula = "~min(.)")
+  check_summary_fn_output(fns = list(list(id = "min", label = "minimum") ~ min(.)), id = "min", label = "minimum", formula = "~min(.)")
+  check_summary_fn_output(fns = list(list(label = "minimum", id = "min") ~ min(.)), id = "min", label = "minimum", formula = "~min(.)")
+  check_summary_fn_output(fns = list(list(id = "min", label = md("**minimum**")) ~ min(.)), id = "min", label = md("**minimum**"), formula = "~min(.)")
+  check_summary_fn_output(fns = list(list(label = md("**minimum**"), id = "min") ~ min(.)), id = "min", label = md("**minimum**"), formula = "~min(.)")
+
+  # Checking named components in LHS `c()`
+  check_summary_fn_output(fns = c(id = "minimum", label = "min") ~ min(.), id = "minimum", label = "min", formula = "~min(.)")
+  check_summary_fn_output(fns = c(label = "min", id = "minimum") ~ min(.), id = "minimum", label = "min", formula = "~min(.)")
+  check_summary_fn_output(fns = c(id = "min", label = "minimum") ~ min(.), id = "min", label = "minimum", formula = "~min(.)")
+  check_summary_fn_output(fns = c(label = "minimum", id = "min") ~ min(.), id = "min", label = "minimum", formula = "~min(.)")
+  check_summary_fn_output(fns = list(c(id = "minimum", label = "min") ~ min(.)), id = "minimum", label = "min", formula = "~min(.)")
+  check_summary_fn_output(fns = list(c(label = "min", id = "minimum") ~ min(.)), id = "minimum", label = "min", formula = "~min(.)")
+  check_summary_fn_output(fns = list(c(id = "min", label = "minimum") ~ min(.)), id = "min", label = "minimum", formula = "~min(.)")
+  check_summary_fn_output(fns = list(c(label = "minimum", id = "min") ~ min(.)), id = "min", label = "minimum", formula = "~min(.)")
+  check_summary_fn_output(fns = c(id = "min", label = md("**minimum**")) ~ min(.), id = "min", label = "**minimum**", formula = "~min(.)")
+
+  # Partially named components in `c()` work correctly
+  check_summary_fn_output(fns = c(id = "minimum", "min") ~ min(.), id = "minimum", label = "min", formula = "~min(.)")
+  check_summary_fn_output(fns = c("min", id = "minimum") ~ min(.), id = "minimum", label = "min", formula = "~min(.)")
+  check_summary_fn_output(fns = c("minimum", label = "min") ~ min(.), id = "minimum", label = "min", formula = "~min(.)")
+  check_summary_fn_output(fns = c(label = "min", "minimum") ~ min(.), id = "minimum", label = "min", formula = "~min(.)")
+  check_summary_fn_output(fns = list(c(id = "minimum", "min") ~ min(.)), id = "minimum", label = "min", formula = "~min(.)")
+  check_summary_fn_output(fns = list(c("min", id = "minimum") ~ min(.)), id = "minimum", label = "min", formula = "~min(.)")
+  check_summary_fn_output(fns = list(c("minimum", label = "min") ~ min(.)), id = "minimum", label = "min", formula = "~min(.)")
+  check_summary_fn_output(fns = list(c(label = "min", "minimum") ~ min(.)), id = "minimum", label = "min", formula = "~min(.)")
+})
