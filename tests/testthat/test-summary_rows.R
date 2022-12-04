@@ -1571,6 +1571,8 @@ test_that("summary rows can be styled comprehensively", {
       )
     )
 
+  # TODO: Currently does not work
+  #
   # Take a snapshot of `gt_tbl`
   gt_tbl %>% render_as_html() %>% expect_snapshot()
 })
