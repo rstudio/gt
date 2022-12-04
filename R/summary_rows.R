@@ -178,9 +178,126 @@ summary_rows <- function(
       )
   }
 
+  # With `fns` input, normalize to list of summary functions
+  summary_fns <- normalize_summary_fns(fns = fns)
 
-  #normalize_summary_fns <- function(fns) {
+  # All components of `summary_fns` have names and these are the id values
+  id_vals <- names(summary_fns)
 
+  # Get the label values
+  label_vals_list <-
+    lapply(
+      summary_fns,
+      FUN = function(x) {
+        x[["label"]]
+      }
+    )
+
+  summary_list <-
+    list(
+      groups = groups,
+      columns = columns,
+      fns = summary_fns,
+      label_vals = label_vals_list,
+      id_vals = id_vals,
+      fmt = fmt,
+      missing_text = missing_text,
+      formatter = formatter,
+      formatter_options = formatter_options
+    )
+
+  dt_summary_add(
+    data = data,
+    summary = summary_list
+  )
+}
+
+#' Add grand summary rows using aggregation functions
+#'
+#' @description
+#' Add grand summary rows to the **gt** table by using applying aggregation
+#' functions to the table data. The summary rows incorporate all of the
+#' available data, regardless of whether some of the data are part of row
+#' groups. You choose how to format the values in the resulting summary cells by
+#' use of a `formatter` function (e.g, `fmt_number`) and any relevant options.
+#'
+#' @details
+#' Should we need to obtain the summary data for external purposes, the
+#' [extract_summary()] function can be used with a `gt_tbl` object where grand
+#' summary rows were added via `grand_summary_rows()`.
+#'
+#' @inheritParams summary_rows
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Use [`sp500`] to create a **gt** table with row groups. Create the grand
+#' summary rows `min`, `max`, and `avg` for the table with the
+#' `grand_summary_rows()` function.
+#'
+#' ```r
+#' sp500 %>%
+#'   dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") %>%
+#'   dplyr::arrange(date) %>%
+#'   dplyr::mutate(week = paste0("W", strftime(date, format = "%V"))) %>%
+#'   dplyr::select(-adj_close, -volume) %>%
+#'   gt(
+#'     rowname_col = "date",
+#'     groupname_col = "week"
+#'   ) %>%
+#'   grand_summary_rows(
+#'     columns = c(open, high, low, close),
+#'     fns = list(
+#'       min = ~min(.),
+#'       max = ~max(.),
+#'       avg = ~mean(.)),
+#'     formatter = fmt_number,
+#'     use_seps = FALSE
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_grand_summary_rows_1.png")`
+#' }}
+#'
+#' @family row addition/modification functions
+#' @section Function ID:
+#' 5-2
+#'
+#' @export
+grand_summary_rows <- function(
+    data,
+    columns = everything(),
+    fns = NULL,
+    fmt = NULL,
+    missing_text = "---",
+    formatter = NULL,
+    ...
+) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  summary_rows(
+    data = data,
+    groups = ":GRAND_SUMMARY:",
+    columns = {{ columns }},
+    fns = fns,
+    missing_text = missing_text,
+    formatter = formatter,
+    ...
+  )
+}
+
+# Normalize `fns` input in `summary_rows` and `grand_summary_rows`
+#
+# Returns a normalized list of summary functions
+# list(
+#   <id> = list(label = "the **label**", fn = ~mean(., na.rm = TRUE)),
+#   <id> = list(label = "another label", fn = ~sum(.))
+# )
+normalize_summary_fns <- function(fns) {
 
   if (length(fns) < 1) {
     return(list())
@@ -188,16 +305,11 @@ summary_rows <- function(
 
   summary_fns <- list()
 
-  # Upgrade `fns` to a list if it a vector
+  # Upgrade `fns` to a list if it's a vector
   if (!is.list(fns)) {
     fns <- as.list(fns)
   }
 
-  # Return a normalized list of summary functions
-  # list(
-  #   <id> = list(label = "the **label**", fn = ~mean(., na.rm = TRUE)),
-  #   <id> = list(label = "another label", fn = ~sum(.))
-  # )
   for (i in seq_along(fns)) {
 
     id <- NULL
@@ -381,111 +493,5 @@ summary_rows <- function(
     summary_fns <- c(summary_fns, list_i)
   }
 
-  # All components of `summary_fns` have names and these are the id values
-  id_vals <- names(summary_fns)
-
-  # Get the label values
-  label_vals_list <-
-    lapply(
-      summary_fns,
-      FUN = function(x) {
-        x[["label"]]
-      }
-    )
-
-  summary_list <-
-    list(
-      groups = groups,
-      columns = columns,
-      fns = summary_fns,
-      label_vals = label_vals_list,
-      id_vals = id_vals,
-      fmt = fmt,
-      missing_text = missing_text,
-      formatter = formatter,
-      formatter_options = formatter_options
-    )
-
-  dt_summary_add(
-    data = data,
-    summary = summary_list
-  )
-}
-
-#' Add grand summary rows using aggregation functions
-#'
-#' @description
-#' Add grand summary rows to the **gt** table by using applying aggregation
-#' functions to the table data. The summary rows incorporate all of the
-#' available data, regardless of whether some of the data are part of row
-#' groups. You choose how to format the values in the resulting summary cells by
-#' use of a `formatter` function (e.g, `fmt_number`) and any relevant options.
-#'
-#' @details
-#' Should we need to obtain the summary data for external purposes, the
-#' [extract_summary()] function can be used with a `gt_tbl` object where grand
-#' summary rows were added via `grand_summary_rows()`.
-#'
-#' @inheritParams summary_rows
-#'
-#' @return An object of class `gt_tbl`.
-#'
-#' @section Examples:
-#'
-#' Use [`sp500`] to create a **gt** table with row groups. Create the grand
-#' summary rows `min`, `max`, and `avg` for the table with the
-#' `grand_summary_rows()` function.
-#'
-#' ```r
-#' sp500 %>%
-#'   dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") %>%
-#'   dplyr::arrange(date) %>%
-#'   dplyr::mutate(week = paste0("W", strftime(date, format = "%V"))) %>%
-#'   dplyr::select(-adj_close, -volume) %>%
-#'   gt(
-#'     rowname_col = "date",
-#'     groupname_col = "week"
-#'   ) %>%
-#'   grand_summary_rows(
-#'     columns = c(open, high, low, close),
-#'     fns = list(
-#'       min = ~min(.),
-#'       max = ~max(.),
-#'       avg = ~mean(.)),
-#'     formatter = fmt_number,
-#'     use_seps = FALSE
-#'   )
-#' ```
-#'
-#' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_grand_summary_rows_1.png")`
-#' }}
-#'
-#' @family row addition/modification functions
-#' @section Function ID:
-#' 5-2
-#'
-#' @export
-grand_summary_rows <- function(
-    data,
-    columns = everything(),
-    fns = NULL,
-    fmt = NULL,
-    missing_text = "---",
-    formatter = NULL,
-    ...
-) {
-
-  # Perform input object validation
-  stop_if_not_gt(data = data)
-
-  summary_rows(
-    data = data,
-    groups = ":GRAND_SUMMARY:",
-    columns = {{ columns }},
-    fns = fns,
-    missing_text = missing_text,
-    formatter = formatter,
-    ...
-  )
+  summary_fns
 }
