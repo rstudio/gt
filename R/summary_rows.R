@@ -305,6 +305,10 @@ normalize_summary_fns <- function(fns) {
 
   summary_fns <- list()
 
+  if (rlang::is_formula(fns)) {
+    fns <- list(rlang::new_formula(lhs = rlang::f_lhs(fns), rhs = rlang::f_rhs(fns)))
+  }
+
   # Upgrade `fns` to a list if it's a vector
   if (!is.list(fns)) {
     fns <- as.list(fns)
