@@ -354,12 +354,12 @@
 #' 1:1 ratio to receive either `Placebo` (as comparator) or `Drug 1`. The
 #' dataset entails subject level demographics such as age, age group, sex,
 #' ethnicity and body mass index (BMI) at baseline, as well as an event
-#' flag, indicating whether the subject experience a specific event
-#' throughout the course of the study.
+#' flag, indicating whether the subject experienced a specific event
+#' throughout the course of the study or not.
 #' Although the data was intentionally created to mimic a typical clinical
-#' trial dataset, following the CDISC format, it might not strictly comply
-#' with its rules. The intent is to showcase the workflow for clinical table
-#' creation rather than creating a fully CDISC-compliant ADaM dataset.
+#' trial dataset following the CDISC format, it might not strictly comply
+#' with CDISC ADaM rules. The intent is to showcase the workflow for clinical
+#' table creation rather than creating a fully CDISC-compliant ADaM dataset.
 #'
 #'
 #' @format A tibble with 182 rows and 14 variables:
