@@ -1642,6 +1642,10 @@ test_that("The `normalize_summary_fns()` fn works with a variety of inputs", {
   # Checking named list with value as RHS formula (name is id and label)
   check_summary_fn_output(fns = list(minimum = ~min(.)), id = "minimum", label = "minimum", formula = "~min(.)")
 
+  # Checking named list with fn value within the list (valid names are: `id`, `label`, and `fn`)
+  check_summary_fn_output(fns = list(id = "mean_id", label = "average", fn = "mean"), id = "mean_id", label = "average", formula = "~mean(., na.rm = TRUE)")
+  check_summary_fn_output(fns = list(list(id = "mean_id", label = "average", fn = "mean")), id = "mean_id", label = "average", formula = "~mean(., na.rm = TRUE)")
+
   # Checking RHS formula (fn name is used to generate id and label)
   check_summary_fn_output(fns = ~ min(.), id = "min", label = "min", formula = "~min(.)")
   check_summary_fn_output(fns = list(~ min(.)), id = "min", label = "min", formula = "~min(.)")

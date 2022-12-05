@@ -316,9 +316,18 @@ normalize_summary_fns <- function(fns) {
     fns <- as.list(fns)
   }
 
+  if (
+    is.list(fns) &&
+    rlang::is_named(fns) &&
+    all(names(fns) %in% c("id", "label", "fn"))
+  ) {
+    fns <- list(fns)
+  }
+
   for (i in seq_along(fns)) {
 
     id <- NULL
+    label <- NULL
 
     # Get `id` values if we have a named list
     if (rlang::is_named(fns[i])) {
@@ -327,6 +336,19 @@ normalize_summary_fns <- function(fns) {
 
     # Extract the value of the first list component
     value <- fns[i][[1]]
+
+    # If component is a named list, extract those elements by
+    # any recognizable names
+    if (
+      is.list(value) &&
+      rlang::is_named(value) &&
+      all(names(value) %in% c("id", "label", "fn"))
+    ) {
+
+      id <- value$id
+      label <- value$label
+      value <- value$fn
+    }
 
     if (is.character(value)) {
 
@@ -344,7 +366,9 @@ normalize_summary_fns <- function(fns) {
         id <- value
       }
 
-      label <- value
+      if (is.null(label)) {
+        label <- value
+      }
 
     } else if (rlang::is_formula(value)) {
 
