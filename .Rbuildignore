@@ -12,6 +12,7 @@
 ^README\.Rmd$
 ^README\.md$
 ^LICENSE\.md$
+^CITATION\.cff$
 vignettes
 man/figures/
 tests/gt-examples
@@ -59,4 +60,3 @@ tests/testthat/test-tab_spanner_delim.R
 tests/testthat/test-tab_stub_indent.R
 tests/testthat/test-table_parts.R
 tests/testthat/test-vec_fmt.R
-
