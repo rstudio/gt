@@ -12,13 +12,15 @@
 #' rows were added via `summary_rows()`.
 #'
 #' @param data A table object that is created using the [gt()] function.
-#' @param groups The groups to consider for generation of groupwise summary
-#'   rows. By default this is set to `NULL`, which results in the formation of
-#'   grand summary rows (a grand summary operates on all table data). Providing
-#'   the names of row groups in [c()] will create a groupwise summary and
-#'   generate summary rows for the specified groups. Setting this to `TRUE`
-#'   indicates that all available groups will receive groupwise summary rows.
-#' @param columns The columns for which the summaries should be calculated.
+#' @param groups The groups to consider for generation of group-wise summary
+#'   rows. By default this is set to `everything()`, which means that all
+#'   available groups will obtain summary rows. Providing the names of row
+#'   groups in `c()` will create a group-wise summary and generate summary rows
+#'   for the specified groups. Setting this to `TRUE` indicates that all
+#'   available groups will receive group-wise summary rows.
+#' @param columns The columns for which the summaries should be calculated. By
+#'   default, this is every column that has data cells (given by
+#'   `everything()`).
 #' @param fns Functions used for aggregations. This can include base functions
 #'   like `mean`, `min`, `max`, `median`, `sd`, or `sum` or any other
 #'   user-defined aggregation function. The function(s) should be supplied
@@ -34,8 +36,8 @@
 #'   cells with no data outputs.
 #' @param formatter A formatter function name. These can be any of the `fmt_*()`
 #'   functions available in the package (e.g., [fmt_number()], [fmt_percent()],
-#'   etc.), or a custom function using `fmt()`. The default function is
-#'   [fmt_number()] and its options can be accessed through `...`.
+#'   etc.), or a custom function using [fmt()]. The options of a formatter can
+#'   be accessed through `...`.
 #' @param ... Values passed to the `formatter` function, where the provided
 #'   values are to be in the form of named vectors. For example, when using the
 #'   default `formatter` function, [fmt_number()], options such as `decimals`,
@@ -53,7 +55,7 @@
 #' sp500 %>%
 #'   dplyr::filter(date >= "2015-01-05" & date <="2015-01-16") %>%
 #'   dplyr::arrange(date) %>%
-#'   dplyr::mutate(week = paste0( "W", strftime(date, format = "%V"))) %>%
+#'   dplyr::mutate(week = paste0("W", strftime(date, format = "%V"))) %>%
 #'   dplyr::select(-adj_close, -volume) %>%
 #'   gt(
 #'     rowname_col = "date",
@@ -64,7 +66,8 @@
 #'     fns = list(
 #'       min = ~min(.),
 #'       max = ~max(.),
-#'       avg = ~mean(.)),
+#'       avg = ~mean(.)
+#'     ),
 #'     formatter = fmt_number,
 #'     use_seps = FALSE
 #'   )
@@ -84,7 +87,6 @@ summary_rows <- function(
     groups = everything(),
     columns = everything(),
     fns = NULL,
-    fmt = NULL,
     missing_text = "---",
     formatter = NULL,
     ...
@@ -101,7 +103,7 @@ summary_rows <- function(
   # to `data` but to a new object (`data_built`) so that we do not
   # affect the return value of `data`
   data_built <- dt_body_build_init(data = data)
-  data_built <- dt_groups_rows_build(data = data_built, context = context)
+  data_built <- dt_groups_rows_build(data = data_built, context = "html")
   groups_rows_tbl <- dt_groups_rows_get(data = data_built)
 
   # Pull a character vector of available groups from `groups_rows_tbl`
@@ -333,9 +335,9 @@ normalize_summary_fns <- function(fns) {
       #
 
       if (value %in% c("min", "max", "mean", "median", "sd", "sum")) {
-        fn <- as.formula(paste0("~", value, "(., na.rm = TRUE)"))
+        fn <- stats::as.formula(paste0("~", value, "(., na.rm = TRUE)"))
       } else {
-        fn <- as.formula(paste0("~", value, "(.)"))
+        fn <- stats::as.formula(paste0("~", value, "(.)"))
       }
 
       if (is.null(id)) {
