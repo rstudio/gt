@@ -36,68 +36,136 @@ test_that("the function `cols_label()` works correctly", {
   # Check that specific suggested packages are available
   check_suggests()
 
-  # Create a `tbl_html` object with `gt()` and label all
-  # of the columns
-  tbl_html <-
+  # Create the `tbl_html_1` object with `gt()` and label all of the columns
+  tbl_html_1 <-
     gt(tbl) %>%
     cols_label(
       col_1 = "col_a",
       col_2 = "col_b"
     ) %>%
     cols_label_with(
-      ~gsub(x = ., pattern = '3', replacement = 'c')
+      fn = ~ gsub(x = ., pattern = "3", replacement = "c")
     )  %>%
     cols_label_with(
-      function(x) gsub(x = x, pattern = '4', replacement = 'd')
+      fn = function(x) gsub(x = x, pattern = "4", replacement = "d")
     )
 
   # Expect that the values for the column labels are set
   # correctly in `col_labels`
-  tbl_html %>%
+  tbl_html_1 %>%
     .$`_boxh` %>%
     .$column_label %>%
     unlist() %>%
     expect_equal(c("col_a", "col_b", "col_c", "col_d"))
 
   # Expect that the column labels are set
-  tbl_html %>%
+  tbl_html_1 %>%
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("[class='gt_col_heading gt_columns_bottom_border gt_right']") %>%
     expect_equal(c("col_a", "col_b", "col_c", "col_d"))
 
-  # Create a `tbl_html` object with `gt()` and label none
+  # Create the `tbl_html_2` object with `gt()` and label all of the columns with
+  # multiple instances of labeling
+  tbl_html_2 <-
+    gt(tbl) %>%
+    cols_label(
+      col_1 = "col_a",
+      col_2 = "col_b"
+    ) %>%
+    cols_label_with(
+      fn = ~ gsub(x = ., pattern = "3", replacement = "c")
+    )  %>%
+    cols_label_with(
+      fn = function(x) gsub(x = x, pattern = "4", replacement = "d")
+    ) %>%
+    cols_label_with(
+      fn = ~ gsub(x = ., pattern = "c", replacement = "3")
+    )  %>%
+    cols_label_with(
+      fn = function(x) gsub(x = x, pattern = "d", replacement = "4")
+    ) %>%
+    cols_label_with(
+      fn = ~ gsub(x = ., pattern = "3", replacement = "c")
+    )  %>%
+    cols_label_with(
+      fn = function(x) gsub(x = x, pattern = "4", replacement = "d")
+    )
+
+  # Expect that `tbl_html_2` has the same column labels as `tbl_html_1`
+  expect_equal(
+    tbl_html_1 %>% render_as_html(),
+    tbl_html_2 %>% render_as_html()
+  )
+
+  # Create the `tbl_html_3` object with `gt()` and label none
   # of the columns (return their labels)
-  tbl_html <-
+  tbl_html_3 <-
     gt(tbl) %>%
     cols_label_with(fn = function(x) x)
 
   # Expect the original column names for `tbl` as values for
   # the column keys and for the column labels
-  tbl_html %>%
+  tbl_html_3 %>%
     .$`_boxh` %>%
     .$var %>%
     unlist() %>%
     expect_equal(colnames(tbl))
 
-  tbl_html %>%
+  tbl_html_3 %>%
     .$`_boxh` %>%
     .$column_label %>%
     unlist() %>%
     expect_equal(colnames(tbl))
 
   # Expect that the column labels are set as the column names
-  tbl_html %>%
+  tbl_html_3 %>%
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("[class='gt_col_heading gt_columns_bottom_border gt_right']") %>%
     expect_equal(c("col_1", "col_2", "col_3", "col_4"))
 
+  # Create the `tbl_html_4` object and embolden a column label with a
+  # double pass of:
+  # (1) applying Markdown symbols through `paste0()`
+  # (2) applying the `md()` helper function
+  tbl_html_4 <-
+    gt(tbl) %>%
+    cols_label_with(
+      columns = col_1,
+      fn = ~ paste0("**", ., "**")
+    ) %>%
+    cols_label_with(
+      columns = col_1,
+      fn = md
+    )
 
-  # Expect an error if the function is missing
-  expect_error(gt(tbl) %>% cols_label_with())
+  # Expect to find that rendered column label for `col_1` has the <strong>
+  # tag applied
+  tbl_html_4 %>%
+    render_as_html() %>%
+    expect_match("<strong>col_1</strong>")
 
-  # Expect an error if any columns are not part of the original dataset
+  # Create the `tbl_html_5` object and embolden a column label with a
+  # single pass of:
+  # (1) applying Markdown symbols through `paste0()`
+  # (2) applying the `md()` helper function
+  tbl_html_5 <-
+    gt(tbl) %>%
+    cols_label_with(
+      columns = col_1,
+      fn = ~ md(paste0("**", ., "**"))
+    )
+
+  # Expect that `tbl_html_5` has the same column labels as `tbl_html_4`
+  expect_equal(
+    tbl_html_4 %>% render_as_html(),
+    tbl_html_5 %>% render_as_html()
+  )
+
+  # Expect an error if `fn` is missing
+  expect_error(gt(tbl) %>% cols_label_with(fn = NULL))
+
+  # Expect an error if any columns declared are not present
   expect_error(gt(tbl) %>% cols_label_with(columns = col_a, fn = function(x) "col_1"))
-
 })
