@@ -613,7 +613,7 @@ test_that("styles are correctly applied to HTML output with location functions",
         cell_text(size = px(20), color = "white"),
         cell_fill(color = "#FFA500")
       ),
-      locations = cells_row_groups(groups = TRUE)
+      locations = cells_row_groups()
     )
 
   # Expect that the styling was applied to the correct row group
