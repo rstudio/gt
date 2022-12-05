@@ -68,6 +68,7 @@ Here is a glimpse at the data available in \code{sza}.
 Other datasets: 
 \code{\link{countrypops}},
 \code{\link{exibble}},
+\code{\link{gt_adsl}},
 \code{\link{gtcars}},
 \code{\link{pizzaplace}},
 \code{\link{sp500}}
