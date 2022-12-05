@@ -20,6 +20,8 @@ tests/testthat/_snaps
 tests/testthat/test-as_raw_html.R
 tests/testthat/test-as_word.R
 tests/testthat/test-cols_align_decimal.R
+tests/testthat/test-cols_label.R
+tests/testthat/test-cols_label_with.R
 tests/testthat/test-cols_merge.R
 tests/testthat/test-cols_width_rtf.R
 tests/testthat/test-data_color.R
