@@ -241,6 +241,7 @@ reference:
     - sp500
     - pizzaplace
     - exibble
+    - gt_adsl
 
   - title: Shiny Functions
     desc: >
