@@ -928,11 +928,19 @@ extract_summary <- function(data) {
       dt_summary_df_data_get(data = built_data),
       FUN = function(x) {
         lapply(x, function(y) {
-          dplyr::rename(
-            y,
-            rowname = dplyr::all_of(rowname_col_private),
-            group_id = dplyr::all_of(group_id_col_private)
-          )
+
+          y <-
+            dplyr::rename(
+              y,
+              rowname = dplyr::all_of(rowname_col_private),
+              group_id = dplyr::all_of(group_id_col_private)
+            )
+
+          flattened_rowname <- unname(unlist(y$rowname))
+
+          y[, ][["rowname"]] <- flattened_rowname
+
+          y
         })
       }
     )
