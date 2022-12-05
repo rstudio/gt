@@ -8,7 +8,6 @@ grand_summary_rows(
   data,
   columns = everything(),
   fns = NULL,
-  fmt = NULL,
   missing_text = "---",
   formatter = NULL,
   ...
@@ -81,7 +80,8 @@ summary rows \code{min}, \code{max}, and \code{avg} for the table with the
     fns = list(
       min = ~min(.),
       max = ~max(.),
-      avg = ~mean(.)),
+      avg = ~mean(.)
+    ),
     formatter = fmt_number,
     use_seps = FALSE
   )
