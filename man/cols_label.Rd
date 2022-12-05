@@ -29,7 +29,9 @@ provides the flexibility to relabel one or more columns and we even have the
 option to use the \code{\link[=md]{md()}} or \code{\link[=html]{html()}} helper functions for rendering column
 labels from Markdown or using HTML.
 }
-\details{
+\section{A note on column names and column labels}{
+
+
 It's important to note that while columns can be freely relabeled, we
 continue to refer to columns by their original column names. Column names in
 a tibble or data frame must be unique whereas column labels in \strong{gt} have
@@ -40,6 +42,7 @@ between columns in other \strong{gt} function calls (e.g., in all of the
 \verb{fmt*()} functions) even though we may lose distinguishability in column
 labels once they have been relabeled.
 }
+
 \section{Examples}{
 
 

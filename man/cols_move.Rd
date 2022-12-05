@@ -60,7 +60,7 @@ position \code{population} after \code{country_name} with the \code{cols_move()}
 
 \section{Function ID}{
 
-4-7
+4-6
 }
 
 \seealso{
