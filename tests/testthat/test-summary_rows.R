@@ -24,11 +24,9 @@ selection_text <- function(html, selection) {
 
 test_that("the `summary_rows()` can make groupwise summaries", {
 
-  # Create a table with summary rows for
-  # the `W02` group; the 3 summary rows for
-  # this group represent the mean, sum,
-  # and standard deviation of all numeric
-  # columns
+  # Create a table with summary rows for the `W02` group;
+  # the 3 summary rows for this group represent the mean, sum,
+  # and standard deviation of all numeric columns
   gt_tbl <-
     tbl %>%
     summary_rows(
@@ -44,9 +42,8 @@ test_that("the `summary_rows()` can make groupwise summaries", {
   # Extract the internal `summary` object
   summary <- dt_summary_get(data = gt_tbl)
 
-  # Expect that the internal `summary` list
-  # object has a length of `1` since there was
-  # only one call of `summary_rows()`
+  # Expect that the internal `summary` list object has a length
+  # of `1` since there was only one call of `summary_rows()`
   length(summary) %>% expect_equal(1)
 
   # For the single list component in `summary`, expect specific
@@ -86,11 +83,9 @@ test_that("the `summary_rows()` can make groupwise summaries", {
   # Expect that `summary[[1]]$formatter_options` is of length 0
   summary[[1]]$formatter_options %>% length() %>% expect_equal(0)
 
-  # Create a table with summary rows for
-  # the `W02` group; the 3 summary rows for
-  # this group represent the mean, sum,
-  # and standard deviation of only the
-  # `open` column
+  # Create a table with summary rows for the `W02` group;
+  # the 3 summary rows for this group represent the mean, sum,
+  # and standard deviation of only the `open` column
   gt_tbl <-
     tbl %>%
     summary_rows(
@@ -133,11 +128,9 @@ test_that("the `summary_rows()` can make groupwise summaries", {
   # of length 0
   summary[[1]]$formatter_options %>% length() %>% expect_equal(0)
 
-  # Create a table with summary rows for
-  # the `W02` and `W03` groups; the 3 summary
-  # rows for these groups represent the mean,
-  # sum, and standard deviation of only the
-  # `open` column
+  # Create a table with summary rows for the `W02` and `W03`
+  # groups; the 3 summary rows for these groups represent the mean,
+  # sum, and standard deviation of only the `open` column
   gt_tbl <-
     tbl %>%
     summary_rows(
@@ -179,12 +172,9 @@ test_that("the `summary_rows()` can make groupwise summaries", {
   # Expect that `summary[[1]]$formatter_options` is of length 0
   summary[[1]]$formatter_options %>% length() %>% expect_equal(0)
 
-  # Create a table with summary rows for
-  # the `W02` and `W03` groups (using
-  # `groups = TRUE`); the 3 summary rows for
-  # these groups represent the mean,
-  # sum, and standard deviation of only the
-  # `open` column
+  # Create a table with summary rows for the `W02` and `W03`
+  # groups; the 3 summary rows for these groups represent the mean,
+  # sum, and standard deviation of only the `open` column
   gt_tbl <-
     tbl %>%
     summary_rows(
