@@ -1,4 +1,4 @@
-#' Add groupwise summary rows using aggregation functions
+#' Add group-wise summary rows using aggregation functions
 #'
 #' @description
 #' Add summary rows to one or more row groups by using the table data and any
@@ -11,7 +11,7 @@
 #' [extract_summary()] function can be used with a `gt_tbl` object where summary
 #' rows were added via `summary_rows()`.
 #'
-#' @param data A table object that is created using the [gt()] function.
+#' @inheritParams fmt_number
 #' @param groups The groups to consider for generation of group-wise summary
 #'   rows. By default this is set to `everything()`, which means that all
 #'   available groups will obtain summary rows. Providing the names of row
@@ -62,11 +62,10 @@
 #'     groupname_col = "week"
 #'   ) %>%
 #'   summary_rows(
-#'     columns = c(open, high, low, close),
 #'     fns = list(
-#'       min = ~min(.),
-#'       max = ~max(.),
-#'       avg = ~mean(.)
+#'       "min",
+#'       "max",
+#'       list(label = "avg", fn = "mean")
 #'     ),
 #'     formatter = fmt_number,
 #'     use_seps = FALSE
