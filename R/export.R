@@ -276,7 +276,11 @@ gt_save_rtf <- function(
 
   filename <- gtsave_filename(path = path, filename = filename)
 
-  writeLines(as_rtf(data = data), con = filename)
+  rtf_lines <- as_rtf(data = data)
+
+  rtf_lines <- gsub("!!!!!RAW-KNITR-CONTENT|RAW-KNITR-CONTENT!!!!!", "", rtf_lines)
+
+  writeLines(rtf_lines, con = filename)
 }
 
 #' Saving function for a Word (docx) file
