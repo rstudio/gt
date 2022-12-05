@@ -17,7 +17,9 @@ grand_summary_rows(
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{columns}{The columns for which the summaries should be calculated.}
+\item{columns}{The columns for which the summaries should be calculated. By
+default, this is every column that has data cells (given by
+\code{everything()}).}
 
 \item{fns}{Functions used for aggregations. This can include base functions
 like \code{mean}, \code{min}, \code{max}, \code{median}, \code{sd}, or \code{sum} or any other
@@ -35,8 +37,8 @@ cells with no data outputs.}
 
 \item{formatter}{A formatter function name. These can be any of the \verb{fmt_*()}
 functions available in the package (e.g., \code{\link[=fmt_number]{fmt_number()}}, \code{\link[=fmt_percent]{fmt_percent()}},
-etc.), or a custom function using \code{fmt()}. The default function is
-\code{\link[=fmt_number]{fmt_number()}} and its options can be accessed through \code{...}.}
+etc.), or a custom function using \code{\link[=fmt]{fmt()}}. The options of a formatter can
+be accessed through \code{...}.}
 
 \item{...}{Values passed to the \code{formatter} function, where the provided
 values are to be in the form of named vectors. For example, when using the
