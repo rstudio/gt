@@ -2,7 +2,7 @@
 % Please edit documentation in R/summary_rows.R
 \name{summary_rows}
 \alias{summary_rows}
-\title{Add groupwise summary rows using aggregation functions}
+\title{Add group-wise summary rows using aggregation functions}
 \usage{
 summary_rows(
   data,
@@ -83,11 +83,10 @@ is a week number) with the \code{summary_rows()} function.
     groupname_col = "week"
   ) \%>\%
   summary_rows(
-    columns = c(open, high, low, close),
     fns = list(
-      min = ~min(.),
-      max = ~max(.),
-      avg = ~mean(.)
+      "min",
+      "max",
+      list(label = "avg", fn = "mean")
     ),
     formatter = fmt_number,
     use_seps = FALSE
