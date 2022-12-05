@@ -9,7 +9,6 @@ summary_rows(
   groups = everything(),
   columns = everything(),
   fns = NULL,
-  fmt = NULL,
   missing_text = "---",
   formatter = NULL,
   ...
@@ -18,14 +17,16 @@ summary_rows(
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{groups}{The groups to consider for generation of groupwise summary
-rows. By default this is set to \code{NULL}, which results in the formation of
-grand summary rows (a grand summary operates on all table data). Providing
-the names of row groups in \code{\link[=c]{c()}} will create a groupwise summary and
-generate summary rows for the specified groups. Setting this to \code{TRUE}
-indicates that all available groups will receive groupwise summary rows.}
+\item{groups}{The groups to consider for generation of group-wise summary
+rows. By default this is set to \code{everything()}, which means that all
+available groups will obtain summary rows. Providing the names of row
+groups in \code{c()} will create a group-wise summary and generate summary rows
+for the specified groups. Setting this to \code{TRUE} indicates that all
+available groups will receive group-wise summary rows.}
 
-\item{columns}{The columns for which the summaries should be calculated.}
+\item{columns}{The columns for which the summaries should be calculated. By
+default, this is every column that has data cells (given by
+\code{everything()}).}
 
 \item{fns}{Functions used for aggregations. This can include base functions
 like \code{mean}, \code{min}, \code{max}, \code{median}, \code{sd}, or \code{sum} or any other
@@ -43,8 +44,8 @@ cells with no data outputs.}
 
 \item{formatter}{A formatter function name. These can be any of the \verb{fmt_*()}
 functions available in the package (e.g., \code{\link[=fmt_number]{fmt_number()}}, \code{\link[=fmt_percent]{fmt_percent()}},
-etc.), or a custom function using \code{fmt()}. The default function is
-\code{\link[=fmt_number]{fmt_number()}} and its options can be accessed through \code{...}.}
+etc.), or a custom function using \code{\link[=fmt]{fmt()}}. The options of a formatter can
+be accessed through \code{...}.}
 
 \item{...}{Values passed to the \code{formatter} function, where the provided
 values are to be in the form of named vectors. For example, when using the
@@ -75,7 +76,7 @@ is a week number) with the \code{summary_rows()} function.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
   dplyr::filter(date >= "2015-01-05" & date <="2015-01-16") \%>\%
   dplyr::arrange(date) \%>\%
-  dplyr::mutate(week = paste0( "W", strftime(date, format = "\%V"))) \%>\%
+  dplyr::mutate(week = paste0("W", strftime(date, format = "\%V"))) \%>\%
   dplyr::select(-adj_close, -volume) \%>\%
   gt(
     rowname_col = "date",
@@ -86,7 +87,8 @@ is a week number) with the \code{summary_rows()} function.
     fns = list(
       min = ~min(.),
       max = ~max(.),
-      avg = ~mean(.)),
+      avg = ~mean(.)
+    ),
     formatter = fmt_number,
     use_seps = FALSE
   )
