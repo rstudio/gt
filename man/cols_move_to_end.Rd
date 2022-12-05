@@ -67,7 +67,7 @@ move \code{year} and \code{country_name} to the end of the column series.
 
 \section{Function ID}{
 
-4-6
+4-8
 }
 
 \seealso{
@@ -75,6 +75,7 @@ Other column modification functions:
 \code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
+\code{\link{cols_label_with}()},
 \code{\link{cols_label}()},
 \code{\link{cols_merge_n_pct}()},
 \code{\link{cols_merge_range}()},
