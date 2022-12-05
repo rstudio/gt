@@ -102,15 +102,16 @@ reference:
     - cols_align_decimal
     - cols_width
     - cols_label
+    - cols_label_with
+    - cols_move
     - cols_move_to_start
     - cols_move_to_end
-    - cols_move
     - cols_hide
     - cols_unhide
+    - cols_merge
     - cols_merge_uncert
     - cols_merge_range
     - cols_merge_n_pct
-    - cols_merge
 
   - title: Add or Modify Rows
     desc: >
