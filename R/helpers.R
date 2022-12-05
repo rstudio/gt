@@ -716,7 +716,6 @@ cells_column_labels <- function(columns = everything()) {
 #'   dplyr::summarize(`Pizzas Sold` = dplyr::n(), .groups = "drop") %>%
 #'   gt(rowname_col = "size", groupname_col = "name") %>%
 #'   summary_rows(
-#'     groups = TRUE,
 #'     columns = `Pizzas Sold`,
 #'     fns = list(TOTAL = "sum"),
 #'     formatter = fmt_number,
@@ -759,7 +758,7 @@ cells_row_groups <- function(groups = everything()) {
 #'
 #' @keywords internal
 #' @export
-cells_group <- function(groups = TRUE) {
+cells_group <- function(groups = everything()) {
 
   cli::cli_warn(c(
     "The `cells_group()` function is deprecated and will soon be removed.",
