@@ -253,7 +253,8 @@ summary_rows <- function(
 #'     fns = list(
 #'       min = ~min(.),
 #'       max = ~max(.),
-#'       avg = ~mean(.)),
+#'       avg = ~mean(.)
+#'     ),
 #'     formatter = fmt_number,
 #'     use_seps = FALSE
 #'   )
@@ -272,7 +273,6 @@ grand_summary_rows <- function(
     data,
     columns = everything(),
     fns = NULL,
-    fmt = NULL,
     missing_text = "---",
     formatter = NULL,
     ...
