@@ -23,7 +23,7 @@ library(purrr)
 *gt* contains the gt_adsl dataset, which resembles the structure of a common ADSL ADaM dataset for clinical trial data. Each record refers to demographic information for a single subject on the fictional trial. Every column is equipped with a label attribute allowing the users to get familiar with the data.
 
 ```{r glimpse_datasets}
-str(gt_adsl)
+gt_adsl |> str()
 ```
 
 ### Demographic Summary Tables
