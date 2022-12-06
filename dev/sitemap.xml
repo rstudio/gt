@@ -22,6 +22,9 @@
     <loc>https://gt.rstudio.com/dev/articles/creating-summary-lines.html</loc>
   </url>
   <url>
+    <loc>https://gt.rstudio.com/dev/articles/gt-clinicaltables.html</loc>
+  </url>
+  <url>
     <loc>https://gt.rstudio.com/dev/articles/gt-datasets.html</loc>
   </url>
   <url>
@@ -245,6 +248,9 @@
   </url>
   <url>
     <loc>https://gt.rstudio.com/dev/reference/gt.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/gt_adsl.html</loc>
   </url>
   <url>
     <loc>https://gt.rstudio.com/dev/reference/gt_latex_dependencies.html</loc>
