@@ -68,7 +68,7 @@ move \code{year} and \code{population} to the start.
 
 \section{Function ID}{
 
-4-5
+4-7
 }
 
 \seealso{
@@ -76,6 +76,7 @@ Other column modification functions:
 \code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
+\code{\link{cols_label_with}()},
 \code{\link{cols_label}()},
 \code{\link{cols_merge_n_pct}()},
 \code{\link{cols_merge_range}()},

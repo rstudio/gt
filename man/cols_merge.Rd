@@ -152,7 +152,7 @@ drop parts of the output text whenever missing values are encountered.
 
 \section{Function ID}{
 
-4-13
+4-11
 }
 
 \seealso{
@@ -160,6 +160,7 @@ Other column modification functions:
 \code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
+\code{\link{cols_label_with}()},
 \code{\link{cols_label}()},
 \code{\link{cols_merge_n_pct}()},
 \code{\link{cols_merge_range}()},
