@@ -20,11 +20,11 @@ LaTeX tables.
 }
 \section{Function ID}{
 
-7-24
+7-25
 }
 
 \seealso{
-Other Helper Functions: 
+Other helper functions: 
 \code{\link{adjust_luminance}()},
 \code{\link{cell_borders}()},
 \code{\link{cell_fill}()},
@@ -50,6 +50,7 @@ Other Helper Functions:
 \code{\link{md}()},
 \code{\link{pct}()},
 \code{\link{px}()},
-\code{\link{random_id}()}
+\code{\link{random_id}()},
+\code{\link{stub}()}
 }
-\concept{Helper Functions}
+\concept{helper functions}

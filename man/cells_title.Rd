@@ -82,17 +82,17 @@ add a footnote to the title with \code{\link[=tab_footnote]{tab_footnote()}} and
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_title_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_title_1.png" alt="This image of a table was generated from the first code example in the `cells_title()` help file." style="width:100\%;">
 }}
 }
 
 \section{Function ID}{
 
-7-5
+7-6
 }
 
 \seealso{
-Other Helper Functions: 
+Other helper functions: 
 \code{\link{adjust_luminance}()},
 \code{\link{cell_borders}()},
 \code{\link{cell_fill}()},
@@ -118,6 +118,7 @@ Other Helper Functions:
 \code{\link{md}()},
 \code{\link{pct}()},
 \code{\link{px}()},
-\code{\link{random_id}()}
+\code{\link{random_id}()},
+\code{\link{stub}()}
 }
-\concept{Helper Functions}
+\concept{helper functions}

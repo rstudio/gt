@@ -30,7 +30,9 @@ merges them into a single column. What results is a column containing both
 counts and their associated percentages (e.g., \verb{12 (23.2\%)}). The column
 specified in \code{col_pct} is dropped from the output table.
 }
-\details{
+\section{Comparison with other column-merging functions}{
+
+
 This function could be somewhat replicated using \code{\link[=cols_merge]{cols_merge()}}, however,
 \code{cols_merge_n_pct()} employs the following specialized semantics for \code{NA}
 and zero-value handling:
@@ -55,11 +57,12 @@ recalculates values in either). Formatting of each column can be done
 independently in separate \code{\link[=fmt_number]{fmt_number()}} and \code{\link[=fmt_percent]{fmt_percent()}} calls.
 
 This function is part of a set of four column-merging functions. The other
-two are the general \code{\link[=cols_merge]{cols_merge()}} function and the specialized
+three are the general \code{\link[=cols_merge]{cols_merge()}} function and the specialized
 \code{\link[=cols_merge_uncert]{cols_merge_uncert()}} and \code{\link[=cols_merge_range]{cols_merge_range()}} functions. These functions
 operate similarly, where the non-target columns can be optionally hidden from
 the output table through the \code{hide_columns} or \code{autohide} options.
 }
+
 \section{Examples}{
 
 
@@ -102,19 +105,21 @@ percentages of the top 3 pizzas sold by pizza category in 2015. The
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_merge_n_pct_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_merge_n_pct_1.png" alt="This image of a table was generated from the first code example in the `cols_merge_n_pct()` help file." style="width:100\%;">
 }}
 }
 
 \section{Function ID}{
 
-4-11
+4-14
 }
 
 \seealso{
-Other Modify Columns: 
+Other column modification functions: 
+\code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
+\code{\link{cols_label_with}()},
 \code{\link{cols_label}()},
 \code{\link{cols_merge_range}()},
 \code{\link{cols_merge_uncert}()},
@@ -125,4 +130,4 @@ Other Modify Columns:
 \code{\link{cols_unhide}()},
 \code{\link{cols_width}()}
 }
-\concept{Modify Columns}
+\concept{column modification functions}

@@ -10,7 +10,7 @@ fmt_fraction(
   rows = everything(),
   accuracy = NULL,
   simplify = TRUE,
-  layout = c("diagonal", "inline"),
+  layout = c("inline", "diagonal"),
   use_seps = TRUE,
   pattern = "{x}",
   sep_mark = ",",
@@ -49,10 +49,10 @@ option to simplify the fraction (where possible) can be taken with \code{TRUE}
 (the default). With \code{FALSE}, denominators in fractions will be fixed to the
 value provided in \code{accuracy}.}
 
-\item{layout}{For HTML output, the \code{"diagonal"} layout is the default. This
-will generate fractions that are typeset with raised/lowered numerals and a
-virgule. The \code{"inline"} layout places the numerals of the fraction on the
-baseline and uses a standard slash character.}
+\item{layout}{For HTML output, the \code{"inline"} layout is the default. This
+layout places the numerals of the fraction on the baseline and uses a
+standard slash character. The \code{"diagonal"} layout will generate fractions
+that are typeset with raised/lowered numerals and a virgule.}
 
 \item{use_seps}{An option to use digit group separators. The type of digit
 group separator is set by \code{sep_mark} and overridden if a locale ID is
@@ -73,13 +73,12 @@ the Indian numbering system (\code{"ind"}) uses grouping separators that
 correspond to thousand, lakh, crore, and higher quantities.}
 
 \item{locale}{An optional locale ID that can be used for formatting the value
-according the locale's rules. Examples include \code{"en_US"} for English
-(United States) and \code{"fr_FR"} for French (France). The use of a valid
-locale ID will override any values provided in \code{sep_mark} and \code{dec_mark}.
-We can use the \code{\link[=info_locales]{info_locales()}} function as a useful reference for all of
-the locales that are supported. Any \code{locale} value provided here will
-override any global locale setting performed in \code{\link[=gt]{gt()}}'s own \code{locale}
-argument.}
+according the locale's rules. Examples include \code{"en"} for English (United
+States) and \code{"fr"} for French (France). The use of a valid locale ID will
+override any values provided in \code{sep_mark} and \code{dec_mark}. We can use the
+\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
+are supported. Any \code{locale} value provided here will override any global
+locale setting performed in \code{\link[=gt]{gt()}}'s own \code{locale} argument.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -105,13 +104,15 @@ mixed fractions
 formatting specific to the chosen locale
 }
 }
-\details{
+\section{Targeting the values to be formatted}{
+
+
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
-nothing is provided for \code{rows} then entire columns are selected). A number of
-helper functions exist to make targeting more effective. Conditional
+nothing is provided for \code{rows} then entire columns are selected). Conditional
 formatting is possible by providing a conditional expression to the \code{rows}
 argument. See the \emph{Arguments} section for more information on this.
 }
+
 \section{Examples}{
 
 
@@ -141,7 +142,8 @@ Use \code{\link{pizzaplace}} to create a \strong{gt} table. Format the \code{f_s
   fmt_fraction(
     columns = starts_with("f_"),
     accuracy = 10,
-    simplify = FALSE
+    simplify = FALSE,
+    layout = "diagonal"
   ) \%>\%
   sub_missing(missing_text = "") \%>\%
   tab_spanner(
@@ -175,7 +177,7 @@ Use \code{\link{pizzaplace}} to create a \strong{gt} table. Format the \code{f_s
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_fraction_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_fraction_1.png" alt="This image of a table was generated from the first code example in the `fmt_fraction()` help file." style="width:100\%;">
 }}
 }
 
@@ -185,7 +187,7 @@ Use \code{\link{pizzaplace}} to create a \strong{gt} table. Format the \code{f_s
 }
 
 \seealso{
-Other Format Data: 
+Other data formatting functions: 
 \code{\link{data_color}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
@@ -199,13 +201,15 @@ Other Format Data:
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
+\code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},
+\code{\link{sub_values}()},
 \code{\link{sub_zero}()},
 \code{\link{text_transform}()}
 }
-\concept{Format Data}
+\concept{data formatting functions}

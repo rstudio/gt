@@ -54,7 +54,7 @@ position \code{population} after \code{country_name} with the \code{cols_move()}
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_move_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_move_1.png" alt="This image of a table was generated from the first code example in the `cols_move()` help file." style="width:100\%;">
 }}
 }
 
@@ -64,9 +64,11 @@ position \code{population} after \code{country_name} with the \code{cols_move()}
 }
 
 \seealso{
-Other Modify Columns: 
+Other column modification functions: 
+\code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
+\code{\link{cols_label_with}()},
 \code{\link{cols_label}()},
 \code{\link{cols_merge_n_pct}()},
 \code{\link{cols_merge_range}()},
@@ -77,4 +79,4 @@ Other Modify Columns:
 \code{\link{cols_unhide}()},
 \code{\link{cols_width}()}
 }
-\concept{Modify Columns}
+\concept{column modification functions}

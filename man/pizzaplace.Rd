@@ -129,17 +129,15 @@ Tomatoes, Zucchini, Red Peppers, Garlic, Pesto Sauce)
 Here is a glimpse at the pizza data available in \code{pizzaplace}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::glimpse(pizzaplace)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## Rows: 49,574
-## Columns: 7
-## $ id    <chr> "2015-000001", "2015-000002", "2015-000002", "2015-000002", "201…
-## $ date  <chr> "2015-01-01", "2015-01-01", "2015-01-01", "2015-01-01", "2015-01…
-## $ time  <chr> "11:38:36", "11:57:40", "11:57:40", "11:57:40", "11:57:40", "11:…
-## $ name  <chr> "hawaiian", "classic_dlx", "mexicana", "thai_ckn", "five_cheese"…
-## $ size  <chr> "M", "M", "M", "L", "L", "L", "L", "M", "M", "M", "S", "S", "S",…
-## $ type  <chr> "classic", "classic", "veggie", "chicken", "veggie", "supreme", …
-## $ price <dbl> 13.25, 16.00, 16.00, 20.75, 18.50, 20.75, 20.75, 16.50, 16.50, 1…
+#> Rows: 49,574
+#> Columns: 7
+#> $ id    <chr> "2015-000001", "2015-000002", "2015-000002", "2015-000002", "201~
+#> $ date  <chr> "2015-01-01", "2015-01-01", "2015-01-01", "2015-01-01", "2015-01~
+#> $ time  <chr> "11:38:36", "11:57:40", "11:57:40", "11:57:40", "11:57:40", "11:~
+#> $ name  <chr> "hawaiian", "classic_dlx", "mexicana", "thai_ckn", "five_cheese"~
+#> $ size  <chr> "M", "M", "M", "L", "L", "L", "L", "M", "M", "M", "S", "S", "S",~
+#> $ type  <chr> "classic", "classic", "veggie", "chicken", "veggie", "supreme", ~
+#> $ price <dbl> 13.25, 16.00, 16.00, 20.75, 18.50, 20.75, 20.75, 16.50, 16.50, 1~
 }\if{html}{\out{</div>}}
 }
 
@@ -149,12 +147,13 @@ Here is a glimpse at the pizza data available in \code{pizzaplace}.
 }
 
 \seealso{
-Other Datasets: 
+Other datasets: 
 \code{\link{countrypops}},
 \code{\link{exibble}},
+\code{\link{gt_adsl}},
 \code{\link{gtcars}},
 \code{\link{sp500}},
 \code{\link{sza}}
 }
-\concept{Datasets}
+\concept{datasets}
 \keyword{datasets}

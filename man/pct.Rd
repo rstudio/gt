@@ -39,7 +39,7 @@ the font size for the column labels.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_pct_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_pct_1.png" alt="This image of a table was generated from the first code example in the `pct()` help file." style="width:100\%;">
 }}
 }
 
@@ -49,7 +49,7 @@ the font size for the column labels.
 }
 
 \seealso{
-Other Helper Functions: 
+Other helper functions: 
 \code{\link{adjust_luminance}()},
 \code{\link{cell_borders}()},
 \code{\link{cell_fill}()},
@@ -75,6 +75,7 @@ Other Helper Functions:
 \code{\link{html}()},
 \code{\link{md}()},
 \code{\link{px}()},
-\code{\link{random_id}()}
+\code{\link{random_id}()},
+\code{\link{stub}()}
 }
-\concept{Helper Functions}
+\concept{helper functions}

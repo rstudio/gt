@@ -1,6 +1,3 @@
-local_edition(3)
-skip_on_cran()
-
 test_that("the `fmt_duration()` function works correctly with numerical inputs", {
 
   # Create an input tibble with a numeric column
@@ -20,8 +17,8 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
        fmt_duration(columns = "num_1", input_units = "days") %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1d 4m 19s", "5,189w 7m 11s", "5d", "&minus;4w 6d 12h", "4w 3d 14h 24m",
-      "4w 12h", "NA"
+      "1d 4m 19s", "5,189w 7m 11s", "5d", paste0("\U02212", "4w 6d 12h"),
+      "4w 3d 14h 24m", "4w 12h", "NA"
     )
   )
 
@@ -29,11 +26,13 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
   expect_equal(
     (tab_1 %>%
        fmt_duration(
-         columns = "num_1", input_units = "days", duration_style = "wide") %>%
+         columns = "num_1", input_units = "days", duration_style = "wide"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1 day 4 minutes 19 seconds", "5,189 weeks 7 minutes 11 seconds", "5 days",
-      "&minus;4 weeks 6 days 12 hours", "4 weeks 3 days 14 hours 24 minutes",
+      "1 day 4 minutes 19 seconds", "5,189 weeks 7 minutes 11 seconds",
+      "5 days", paste0("\U02212", "4 weeks 6 days 12 hours"),
+      "4 weeks 3 days 14 hours 24 minutes",
       "4 weeks 12 hours", "NA"
       )
   )
@@ -42,10 +41,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
   expect_equal(
     (tab_1 %>%
        fmt_duration(
-         columns = "num_1", input_units = "days", duration_style = "colon-sep") %>%
+         columns = "num_1", input_units = "days", duration_style = "colon-sep"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1/00:04:19", "36,323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
+      "1/00:04:19", "36,323/00:07:11", "5/00:00:00",
+      paste0("\U02212", "34/12:00:00"),
       "31/14:24:00", "28/12:00:00", "NA"
     )
   )
@@ -54,10 +55,11 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
   expect_equal(
     (tab_1 %>%
        fmt_duration(
-         columns = "num_1", input_units = "days", duration_style = "iso") %>%
+         columns = "num_1", input_units = "days", duration_style = "iso"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT", "&minus;P34DT12H",
+      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT", paste0("\U02212", "P34DT12H"),
       "P31DT14H24M", "P28DT12H", "NA"
     )
   )
@@ -67,12 +69,13 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "narrow", trim_zero_units = FALSE) %>%
+         duration_style = "narrow", trim_zero_units = FALSE
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "0w 1d 0h 4m 19s", "5,189w 0d 0h 7m 11s", "0w 5d 0h 0m 0s",
-      "&minus;4w 6d 12h 0m 0s", "4w 3d 14h 24m 0s", "4w 0d 12h 0m 0s",
-      "NA"
+      paste0("\U02212", "4w 6d 12h 0m 0s"), "4w 3d 14h 24m 0s",
+      "4w 0d 12h 0m 0s", "NA"
     )
   )
 
@@ -81,12 +84,16 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "wide", trim_zero_units = FALSE) %>%
+         duration_style = "wide", trim_zero_units = FALSE
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "0 weeks 1 day 0 hours 4 minutes 19 seconds", "5,189 weeks 0 days 0 hours 7 minutes 11 seconds",
-      "0 weeks 5 days 0 hours 0 minutes 0 seconds", "&minus;4 weeks 6 days 12 hours 0 minutes 0 seconds",
-      "4 weeks 3 days 14 hours 24 minutes 0 seconds", "4 weeks 0 days 12 hours 0 minutes 0 seconds",
+      "0 weeks 1 day 0 hours 4 minutes 19 seconds",
+      "5,189 weeks 0 days 0 hours 7 minutes 11 seconds",
+      "0 weeks 5 days 0 hours 0 minutes 0 seconds",
+      paste0("\U02212", "4 weeks 6 days 12 hours 0 minutes 0 seconds"),
+      "4 weeks 3 days 14 hours 24 minutes 0 seconds",
+      "4 weeks 0 days 12 hours 0 minutes 0 seconds",
       "NA"
     )
   )
@@ -97,10 +104,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "colon-sep", trim_zero_units = FALSE) %>%
+         duration_style = "colon-sep", trim_zero_units = FALSE
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1/00:04:19", "36,323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
+      "1/00:04:19", "36,323/00:07:11", "5/00:00:00",
+      paste0("\U02212", "34/12:00:00"),
       "31/14:24:00", "28/12:00:00", "NA"
     )
   )
@@ -111,10 +120,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "iso", trim_zero_units = FALSE) %>%
+         duration_style = "iso", trim_zero_units = FALSE
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT", "&minus;P34DT12H",
+      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT",
+      paste0("\U02212", "P34DT12H"),
       "P31DT14H24M", "P28DT12H", "NA"
     )
   )
@@ -124,10 +135,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "narrow", trim_zero_units = "leading") %>%
+         duration_style = "narrow", trim_zero_units = "leading"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1d 0h 4m 19s", "5,189w 0d 0h 7m 11s", "5d 0h 0m 0s", "&minus;4w 6d 12h 0m 0s",
+      "1d 0h 4m 19s", "5,189w 0d 0h 7m 11s", "5d 0h 0m 0s",
+      paste0("\U02212", "4w 6d 12h 0m 0s"),
       "4w 3d 14h 24m 0s", "4w 0d 12h 0m 0s", "NA"
     )
   )
@@ -137,12 +150,16 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "wide", trim_zero_units = "leading") %>%
+         duration_style = "wide", trim_zero_units = "leading"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1 day 0 hours 4 minutes 19 seconds", "5,189 weeks 0 days 0 hours 7 minutes 11 seconds",
-      "5 days 0 hours 0 minutes 0 seconds", "&minus;4 weeks 6 days 12 hours 0 minutes 0 seconds",
-      "4 weeks 3 days 14 hours 24 minutes 0 seconds", "4 weeks 0 days 12 hours 0 minutes 0 seconds",
+      "1 day 0 hours 4 minutes 19 seconds",
+      "5,189 weeks 0 days 0 hours 7 minutes 11 seconds",
+      "5 days 0 hours 0 minutes 0 seconds",
+      paste0("\U02212", "4 weeks 6 days 12 hours 0 minutes 0 seconds"),
+      "4 weeks 3 days 14 hours 24 minutes 0 seconds",
+      "4 weeks 0 days 12 hours 0 minutes 0 seconds",
       "NA"
     )
   )
@@ -153,10 +170,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "colon-sep", trim_zero_units = "leading") %>%
+         duration_style = "colon-sep", trim_zero_units = "leading"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1/00:04:19", "36,323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
+      "1/00:04:19", "36,323/00:07:11", "5/00:00:00",
+      paste0("\U02212", "34/12:00:00"),
       "31/14:24:00", "28/12:00:00", "NA"
     )
   )
@@ -167,10 +186,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "iso", trim_zero_units = "leading") %>%
+         duration_style = "iso", trim_zero_units = "leading"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT", "&minus;P34DT12H",
+      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT",
+      paste0("\U02212", "P34DT12H"),
       "P31DT14H24M", "P28DT12H", "NA"
     )
   )
@@ -180,10 +201,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "narrow", trim_zero_units = "trailing") %>%
+         duration_style = "narrow", trim_zero_units = "trailing"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "0w 1d 0h 4m 19s", "5,189w 0d 0h 7m 11s", "0w 5d", "&minus;4w 6d 12h",
+      "0w 1d 0h 4m 19s", "5,189w 0d 0h 7m 11s", "0w 5d",
+      paste0("\U02212", "4w 6d 12h"),
       "4w 3d 14h 24m", "4w 0d 12h", "NA"
     )
   )
@@ -193,11 +216,14 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "wide", trim_zero_units = "trailing") %>%
+         duration_style = "wide", trim_zero_units = "trailing"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "0 weeks 1 day 0 hours 4 minutes 19 seconds", "5,189 weeks 0 days 0 hours 7 minutes 11 seconds",
-      "0 weeks 5 days", "&minus;4 weeks 6 days 12 hours", "4 weeks 3 days 14 hours 24 minutes",
+      "0 weeks 1 day 0 hours 4 minutes 19 seconds",
+      "5,189 weeks 0 days 0 hours 7 minutes 11 seconds",
+      "0 weeks 5 days", paste0("\U02212", "4 weeks 6 days 12 hours"),
+      "4 weeks 3 days 14 hours 24 minutes",
       "4 weeks 0 days 12 hours", "NA"
     )
   )
@@ -208,10 +234,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "colon-sep", trim_zero_units = "trailing") %>%
+         duration_style = "colon-sep", trim_zero_units = "trailing"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1/00:04:19", "36,323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
+      "1/00:04:19", "36,323/00:07:11", "5/00:00:00",
+      paste0("\U02212", "34/12:00:00"),
       "31/14:24:00", "28/12:00:00", "NA"
     )
   )
@@ -222,10 +250,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "iso", trim_zero_units = "trailing") %>%
+         duration_style = "iso", trim_zero_units = "trailing"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT", "&minus;P34DT12H",
+      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT",
+      paste0("\U02212", "P34DT12H"),
       "P31DT14H24M", "P28DT12H", "NA"
     )
   )
@@ -235,10 +265,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "narrow", trim_zero_units = "internal") %>%
+         duration_style = "narrow", trim_zero_units = "internal"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "0w 1d 4m 19s", "5,189w 7m 11s", "0w 5d 0h 0m 0s", "&minus;4w 6d 12h 0m 0s",
+      "0w 1d 4m 19s", "5,189w 7m 11s", "0w 5d 0h 0m 0s",
+      paste0("\U02212", "4w 6d 12h 0m 0s"),
       "4w 3d 14h 24m 0s", "4w 12h 0m 0s", "NA"
     )
   )
@@ -248,12 +280,15 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "wide", trim_zero_units = "internal") %>%
+         duration_style = "wide", trim_zero_units = "internal"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "0 weeks 1 day 4 minutes 19 seconds", "5,189 weeks 7 minutes 11 seconds",
-      "0 weeks 5 days 0 hours 0 minutes 0 seconds", "&minus;4 weeks 6 days 12 hours 0 minutes 0 seconds",
-      "4 weeks 3 days 14 hours 24 minutes 0 seconds", "4 weeks 12 hours 0 minutes 0 seconds",
+      "0 weeks 5 days 0 hours 0 minutes 0 seconds",
+      paste0("\U02212", "4 weeks 6 days 12 hours 0 minutes 0 seconds"),
+      "4 weeks 3 days 14 hours 24 minutes 0 seconds",
+      "4 weeks 12 hours 0 minutes 0 seconds",
       "NA"
     )
   )
@@ -264,10 +299,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "colon-sep", trim_zero_units = "internal") %>%
+         duration_style = "colon-sep", trim_zero_units = "internal"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1/00:04:19", "36,323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
+      "1/00:04:19", "36,323/00:07:11", "5/00:00:00",
+      paste0("\U02212", "34/12:00:00"),
       "31/14:24:00", "28/12:00:00", "NA"
     )
   )
@@ -278,10 +315,11 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "iso", trim_zero_units = "internal") %>%
+         duration_style = "iso", trim_zero_units = "internal"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT", "&minus;P34DT12H",
+      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT", paste0("\U02212", "P34DT12H"),
       "P31DT14H24M", "P28DT12H", "NA"
     )
   )
@@ -291,10 +329,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "narrow", trim_zero_units = c("leading", "trailing")) %>%
+         duration_style = "narrow", trim_zero_units = c("leading", "trailing")
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1d 0h 4m 19s", "5,189w 0d 0h 7m 11s", "5d", "&minus;4w 6d 12h",
+      "1d 0h 4m 19s", "5,189w 0d 0h 7m 11s", "5d",
+      paste0("\U02212", "4w 6d 12h"),
       "4w 3d 14h 24m", "4w 0d 12h", "NA"
     )
   )
@@ -304,11 +344,14 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "wide", trim_zero_units = c("leading", "trailing")) %>%
+         duration_style = "wide", trim_zero_units = c("leading", "trailing")
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1 day 0 hours 4 minutes 19 seconds", "5,189 weeks 0 days 0 hours 7 minutes 11 seconds",
-      "5 days", "&minus;4 weeks 6 days 12 hours", "4 weeks 3 days 14 hours 24 minutes",
+      "1 day 0 hours 4 minutes 19 seconds",
+      "5,189 weeks 0 days 0 hours 7 minutes 11 seconds",
+      "5 days", paste0("\U02212", "4 weeks 6 days 12 hours"),
+      "4 weeks 3 days 14 hours 24 minutes",
       "4 weeks 0 days 12 hours", "NA"
     )
   )
@@ -319,10 +362,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "colon-sep", trim_zero_units = c("leading", "trailing")) %>%
+         duration_style = "colon-sep", trim_zero_units = c("leading", "trailing")
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1/00:04:19", "36,323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
+      "1/00:04:19", "36,323/00:07:11", "5/00:00:00",
+      paste0("\U02212", "34/12:00:00"),
       "31/14:24:00", "28/12:00:00", "NA"
     )
   )
@@ -333,10 +378,11 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "iso", trim_zero_units = c("leading", "trailing")) %>%
+         duration_style = "iso", trim_zero_units = c("leading", "trailing")
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT", "&minus;P34DT12H",
+      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT", paste0("\U02212", "P34DT12H"),
       "P31DT14H24M", "P28DT12H", "NA"
     )
   )
@@ -346,10 +392,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "narrow", trim_zero_units = c("leading", "internal")) %>%
+         duration_style = "narrow", trim_zero_units = c("leading", "internal")
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1d 4m 19s", "5,189w 7m 11s", "5d 0h 0m 0s", "&minus;4w 6d 12h 0m 0s",
+      "1d 4m 19s", "5,189w 7m 11s", "5d 0h 0m 0s",
+      paste0("\U02212", "4w 6d 12h 0m 0s"),
       "4w 3d 14h 24m 0s", "4w 12h 0m 0s", "NA"
     )
   )
@@ -359,11 +407,14 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "wide", trim_zero_units = c("leading", "internal")) %>%
+         duration_style = "wide", trim_zero_units = c("leading", "internal")
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1 day 4 minutes 19 seconds", "5,189 weeks 7 minutes 11 seconds", "5 days 0 hours 0 minutes 0 seconds",
-      "&minus;4 weeks 6 days 12 hours 0 minutes 0 seconds", "4 weeks 3 days 14 hours 24 minutes 0 seconds",
+      "1 day 4 minutes 19 seconds", "5,189 weeks 7 minutes 11 seconds",
+      "5 days 0 hours 0 minutes 0 seconds",
+      paste0("\U02212", "4 weeks 6 days 12 hours 0 minutes 0 seconds"),
+      "4 weeks 3 days 14 hours 24 minutes 0 seconds",
       "4 weeks 12 hours 0 minutes 0 seconds", "NA"
     )
   )
@@ -374,10 +425,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "colon-sep", trim_zero_units = c("leading", "internal")) %>%
+         duration_style = "colon-sep", trim_zero_units = c("leading", "internal")
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1/00:04:19", "36,323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
+      "1/00:04:19", "36,323/00:07:11", "5/00:00:00",
+      paste0("\U02212", "34/12:00:00"),
       "31/14:24:00", "28/12:00:00", "NA"
     )
   )
@@ -388,10 +441,11 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "iso", trim_zero_units = c("leading", "internal")) %>%
+         duration_style = "iso", trim_zero_units = c("leading", "internal")
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT", "&minus;P34DT12H",
+      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT", paste0("\U02212", "P34DT12H"),
       "P31DT14H24M", "P28DT12H", "NA"
     )
   )
@@ -401,10 +455,11 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "narrow", trim_zero_units = c("trailing", "internal")) %>%
+         duration_style = "narrow", trim_zero_units = c("trailing", "internal")
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "0w 1d 4m 19s", "5,189w 7m 11s", "0w 5d", "&minus;4w 6d 12h",
+      "0w 1d 4m 19s", "5,189w 7m 11s", "0w 5d", paste0("\U02212", "4w 6d 12h"),
       "4w 3d 14h 24m", "4w 12h", "NA"
     )
   )
@@ -414,12 +469,13 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "wide", trim_zero_units = c("trailing", "internal")) %>%
+         duration_style = "wide", trim_zero_units = c("trailing", "internal")
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "0 weeks 1 day 4 minutes 19 seconds", "5,189 weeks 7 minutes 11 seconds",
-      "0 weeks 5 days", "&minus;4 weeks 6 days 12 hours", "4 weeks 3 days 14 hours 24 minutes",
-      "4 weeks 12 hours", "NA"
+      "0 weeks 5 days", paste0("\U02212", "4 weeks 6 days 12 hours"),
+      "4 weeks 3 days 14 hours 24 minutes", "4 weeks 12 hours", "NA"
     )
   )
 
@@ -429,10 +485,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "colon-sep", trim_zero_units = c("trailing", "internal")) %>%
+         duration_style = "colon-sep", trim_zero_units = c("trailing", "internal")
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1/00:04:19", "36,323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
+      "1/00:04:19", "36,323/00:07:11", "5/00:00:00",
+      paste0("\U02212", "34/12:00:00"),
       "31/14:24:00", "28/12:00:00", "NA"
     )
   )
@@ -443,10 +501,11 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "iso", trim_zero_units = c("trailing", "internal")) %>%
+         duration_style = "iso", trim_zero_units = c("trailing", "internal")
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT", "&minus;P34DT12H",
+      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT", paste0("\U02212", "P34DT12H"),
       "P31DT14H24M", "P28DT12H", "NA"
     )
   )
@@ -456,9 +515,10 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "narrow", max_output_units = 2) %>%
+         duration_style = "narrow", max_output_units = 2
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("1d 4m", "5,189w 7m", "5d", "&minus;4w 6d", "4w 3d", "4w 12h", "NA")
+    c("1d 4m", "5,189w 7m", "5d", paste0("\U02212", "4w 6d"), "4w 3d", "4w 12h", "NA")
   )
 
   # Use the "wide" duration style and keep a max of 2 time units
@@ -466,10 +526,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "wide", max_output_units = 2) %>%
+         duration_style = "wide", max_output_units = 2
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1 day 4 minutes", "5,189 weeks 7 minutes", "5 days", "&minus;4 weeks 6 days",
+      "1 day 4 minutes", "5,189 weeks 7 minutes", "5 days",
+      paste0("\U02212", "4 weeks 6 days"),
       "4 weeks 3 days", "4 weeks 12 hours", "NA"
     )
   )
@@ -480,10 +542,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "colon-sep", max_output_units = 2) %>%
+         duration_style = "colon-sep", max_output_units = 2
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1/00:04:19", "36,323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
+      "1/00:04:19", "36,323/00:07:11", "5/00:00:00",
+      paste0("\U02212", "34/12:00:00"),
       "31/14:24:00", "28/12:00:00", "NA"
     )
   )
@@ -494,10 +558,11 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "iso", max_output_units = 2) %>%
+         duration_style = "iso", max_output_units = 2
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT", "&minus;P34DT12H",
+      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT", paste0("\U02212", "P34DT12H"),
       "P31DT14H24M", "P28DT12H", "NA"
     )
   )
@@ -507,9 +572,10 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "narrow", max_output_units = 1) %>%
+         duration_style = "narrow", max_output_units = 1
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("1d", "5,189w", "5d", "&minus;4w", "4w", "4w", "NA")
+    c("1d", "5,189w", "5d", paste0("\U02212", "4w"), "4w", "4w", "NA")
   )
 
   # Use the "wide" duration style and keep a max of 1 time unit
@@ -520,8 +586,8 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
          duration_style = "wide", max_output_units = 1) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1 day", "5,189 weeks", "5 days", "&minus;4 weeks", "4 weeks",
-      "4 weeks", "NA"
+      "1 day", "5,189 weeks", "5 days", paste0("\U02212", "4 weeks"),
+      "4 weeks", "4 weeks", "NA"
     )
   )
 
@@ -531,11 +597,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "colon-sep", max_output_units = 1) %>%
+         duration_style = "colon-sep", max_output_units = 1
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1/00:04:19", "36,323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
-      "31/14:24:00", "28/12:00:00", "NA"
+      "1/00:04:19", "36,323/00:07:11", "5/00:00:00",
+      paste0("\U02212", "34/12:00:00"), "31/14:24:00", "28/12:00:00", "NA"
     )
   )
 
@@ -545,10 +612,11 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "iso", max_output_units = 1) %>%
+         duration_style = "iso", max_output_units = 1
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT", "&minus;P34DT12H",
+      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT", paste0("\U02212", "P34DT12H"),
       "P31DT14H24M", "P28DT12H", "NA"
     )
   )
@@ -560,9 +628,13 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("hours", "mins"),
-         duration_style = "narrow") %>%
+         duration_style = "narrow"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("24h 4m", "871,752h 7m", "120h", "&minus;828h", "758h 24m", "684h", "NA")
+    c(
+      "24h 4m", "871,752h 7m", "120h", paste0("\U02212", "828h"),
+      "758h 24m", "684h", "NA"
+    )
   )
 
   # Use the "wide" duration style and a set of custom output time units
@@ -572,11 +644,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("hours", "mins"),
-         duration_style = "wide") %>%
+         duration_style = "wide"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "24 hours 4 minutes", "871,752 hours 7 minutes", "120 hours", "&minus;828 hours",
-      "758 hours 24 minutes", "684 hours", "NA"
+      "24 hours 4 minutes", "871,752 hours 7 minutes", "120 hours",
+      paste0("\U02212", "828 hours"), "758 hours 24 minutes", "684 hours", "NA"
     )
   )
 
@@ -587,9 +660,13 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("hours", "mins"),
-         duration_style = "colon-sep") %>%
+         duration_style = "colon-sep"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("00:04", "00:07", "00:00", "&minus;12:00", "14:24", "12:00", "NA")
+    c(
+      "00:04", "00:07", "00:00", paste0("\U02212", "12:00"),
+      "14:24", "12:00", "NA"
+    )
   )
 
   # Use the "iso" duration style and a set of custom output time units
@@ -599,10 +676,11 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("hours", "mins"),
-         duration_style = "iso") %>%
+         duration_style = "iso"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT", "&minus;P34DT12H",
+      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT", paste0("\U02212", "P34DT12H"),
       "P31DT14H24M", "P28DT12H", "NA"
     )
   )
@@ -614,9 +692,13 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("mins", "secs"),
-         duration_style = "narrow") %>%
+         duration_style = "narrow"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("1,444m 19s", "52,305,127m 11s", "7,200m", "&minus;49,680m", "45,504m", "41,040m", "NA")
+    c(
+      "1,444m 19s", "52,305,127m 11s", "7,200m", paste0("\U02212", "49,680m"),
+      "45,504m", "41,040m", "NA"
+    )
   )
 
   # Use the "wide" duration style and a set of custom output time units
@@ -626,11 +708,13 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("mins", "secs"),
-         duration_style = "wide") %>%
+         duration_style = "wide"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1,444 minutes 19 seconds", "52,305,127 minutes 11 seconds", "7,200 minutes",
-      "&minus;49,680 minutes", "45,504 minutes", "41,040 minutes", "NA"
+      "1,444 minutes 19 seconds", "52,305,127 minutes 11 seconds",
+      "7,200 minutes", paste0("\U02212", "49,680 minutes"),
+      "45,504 minutes", "41,040 minutes", "NA"
     )
   )
 
@@ -641,9 +725,10 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("mins", "secs"),
-         duration_style = "colon-sep") %>%
+         duration_style = "colon-sep"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("04:19", "07:11", "00:00", "&minus;00:00", "24:00", "00:00", "NA")
+    c("04:19", "07:11", "00:00", paste0("\U02212", "00:00"), "24:00", "00:00", "NA")
   )
 
   # Use the "iso" duration style and a set of custom output time units
@@ -653,10 +738,11 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("mins", "secs"),
-         duration_style = "iso") %>%
+         duration_style = "iso"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT", "&minus;P34DT12H",
+      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT", paste0("\U02212", "P34DT12H"),
       "P31DT14H24M", "P28DT12H", "NA"
     )
   )
@@ -668,9 +754,13 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("hours", "mins", "secs"),
-         duration_style = "narrow") %>%
+         duration_style = "narrow"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("24h 4m 19s", "871,752h 7m 11s", "120h", "&minus;828h", "758h 24m", "684h", "NA")
+    c(
+      "24h 4m 19s", "871,752h 7m 11s", "120h",
+      paste0("\U02212", "828h"), "758h 24m", "684h", "NA"
+    )
   )
 
   # Use the "wide" duration style and a set of custom output time units
@@ -680,12 +770,13 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("hours", "mins", "secs"),
-         duration_style = "wide") %>%
+         duration_style = "wide"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "24 hours 4 minutes 19 seconds", "871,752 hours 7 minutes 11 seconds",
-      "120 hours", "&minus;828 hours", "758 hours 24 minutes", "684 hours",
-      "NA"
+      "120 hours", paste0("\U02212", "828 hours"), "758 hours 24 minutes",
+      "684 hours", "NA"
     )
   )
 
@@ -696,10 +787,11 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("hours", "mins", "secs"),
-         duration_style = "colon-sep") %>%
+         duration_style = "colon-sep"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "00:04:19", "00:07:11", "00:00:00", "&minus;12:00:00",
+      "00:04:19", "00:07:11", "00:00:00", paste0("\U02212", "12:00:00"),
       "14:24:00", "12:00:00", "NA"
     )
   )
@@ -711,10 +803,11 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("hours", "mins", "secs"),
-         duration_style = "iso") %>%
+         duration_style = "iso"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT", "&minus;P34DT12H",
+      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT", paste0("\U02212", "P34DT12H"),
       "P31DT14H24M", "P28DT12H", "NA"
     )
   )
@@ -726,9 +819,10 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = "weeks",
-         duration_style = "narrow") %>%
+         duration_style = "narrow"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("<1w", "5,189w", "<1w", "&minus;4w", "4w", "4w", "NA")
+    c("<1w", "5,189w", "<1w", paste0("\U02212", "4w"), "4w", "4w", "NA")
   )
 
   # Use the "wide" duration style and a set of custom output time units
@@ -738,11 +832,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = "weeks",
-         duration_style = "wide") %>%
+         duration_style = "wide"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "<1 week", "5,189 weeks", "<1 week", "&minus;4 weeks", "4 weeks",
-      "4 weeks", "NA"
+      "<1 week", "5,189 weeks", "<1 week", paste0("\U02212", "4 weeks"),
+      "4 weeks", "4 weeks", "NA"
     )
   )
 
@@ -753,11 +848,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = "weeks",
-         duration_style = "colon-sep") %>%
+         duration_style = "colon-sep"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1/00:04:19", "36,323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
-      "31/14:24:00", "28/12:00:00", "NA"
+      "1/00:04:19", "36,323/00:07:11", "5/00:00:00",
+      paste0("\U02212", "34/12:00:00"), "31/14:24:00", "28/12:00:00", "NA"
     )
   )
 
@@ -768,11 +864,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = "weeks",
-         duration_style = "iso") %>%
+         duration_style = "iso"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT", "&minus;P34DT12H",
-      "P31DT14H24M", "P28DT12H", "NA"
+      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT",
+      paste0("\U02212", "P34DT12H"), "P31DT14H24M", "P28DT12H", "NA"
     )
   )
 
@@ -783,9 +880,13 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("days", "mins"),
-         duration_style = "narrow") %>%
+         duration_style = "narrow"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("1d 4m", "36,323d 7m", "5d", "&minus;34d 720m", "31d 864m", "28d 720m", "NA")
+    c(
+      "1d 4m", "36,323d 7m", "5d", paste0("\U02212", "34d 720m"),
+      "31d 864m", "28d 720m", "NA"
+    )
   )
 
   # Use the "wide" duration style and a set of custom output time units
@@ -795,10 +896,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("days", "mins"),
-         duration_style = "wide") %>%
+         duration_style = "wide"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1 day 4 minutes", "36,323 days 7 minutes", "5 days", "&minus;34 days 720 minutes",
+      "1 day 4 minutes", "36,323 days 7 minutes", "5 days",
+      paste0("\U02212", "34 days 720 minutes"),
       "31 days 864 minutes", "28 days 720 minutes", "NA"
     )
   )
@@ -810,11 +913,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("days", "mins"),
-         duration_style = "colon-sep") %>%
+         duration_style = "colon-sep"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1/00:04:19", "36,323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
-      "31/14:24:00", "28/12:00:00", "NA"
+      "1/00:04:19", "36,323/00:07:11", "5/00:00:00",
+      paste0("\U02212", "34/12:00:00"), "31/14:24:00", "28/12:00:00", "NA"
     )
   )
 
@@ -825,10 +929,11 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("days", "mins"),
-         duration_style = "iso") %>%
+         duration_style = "iso"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT", "&minus;P34DT12H",
+      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT", paste0("\U02212", "P34DT12H"),
       "P31DT14H24M", "P28DT12H", "NA"
     )
   )
@@ -840,9 +945,13 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("weeks", "hours", "secs"),
-         duration_style = "narrow") %>%
+         duration_style = "narrow"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("24h 259s", "5,189w 431s", "120h", "&minus;4w 156h", "4w 86h 1,440s", "4w 12h", "NA")
+    c(
+      "24h 259s", "5,189w 431s", "120h", paste0("\U02212", "4w 156h"),
+      "4w 86h 1,440s", "4w 12h", "NA"
+    )
   )
 
   # Use the "wide" duration style and a set of custom output time units
@@ -852,11 +961,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("weeks", "hours", "secs"),
-         duration_style = "wide") %>%
+         duration_style = "wide"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "24 hours 259 seconds", "5,189 weeks 431 seconds", "120 hours",
-      "&minus;4 weeks 156 hours", "4 weeks 86 hours 1,440 seconds",
+      paste0("\U02212", "4 weeks 156 hours"), "4 weeks 86 hours 1,440 seconds",
       "4 weeks 12 hours", "NA"
     )
   )
@@ -868,10 +978,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("weeks", "hours", "secs"),
-         duration_style = "colon-sep") %>%
+         duration_style = "colon-sep"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1/00:04:19", "36,323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
+      "1/00:04:19", "36,323/00:07:11", "5/00:00:00",
+      paste0("\U02212", "34/12:00:00"),
       "31/14:24:00", "28/12:00:00", "NA"
     )
   )
@@ -883,10 +995,11 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
        fmt_duration(
          columns = "num_1", input_units = "days",
          output_units = c("weeks", "hours", "secs"),
-         duration_style = "iso") %>%
+         duration_style = "iso"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT", "&minus;P34DT12H",
+      "P1DT0H4M19S", "P36323DT0H7M11S", "P5DT", paste0("\U02212", "P34DT12H"),
       "P31DT14H24M", "P28DT12H", "NA"
     )
   )
@@ -897,11 +1010,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "narrow", use_seps = FALSE) %>%
+         duration_style = "narrow", use_seps = FALSE
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1d 4m 19s", "5189w 7m 11s", "5d", "&minus;4w 6d 12h", "4w 3d 14h 24m",
-      "4w 12h", "NA"
+      "1d 4m 19s", "5189w 7m 11s", "5d", paste0("\U02212", "4w 6d 12h"),
+      "4w 3d 14h 24m", "4w 12h", "NA"
     )
   )
 
@@ -911,12 +1025,13 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "wide", use_seps = FALSE) %>%
+         duration_style = "wide", use_seps = FALSE
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1 day 4 minutes 19 seconds", "5189 weeks 7 minutes 11 seconds",
-      "5 days", "&minus;4 weeks 6 days 12 hours", "4 weeks 3 days 14 hours 24 minutes",
-      "4 weeks 12 hours", "NA"
+      "5 days", paste0("\U02212", "4 weeks 6 days 12 hours"),
+      "4 weeks 3 days 14 hours 24 minutes", "4 weeks 12 hours", "NA"
     )
   )
 
@@ -926,10 +1041,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "colon-sep", use_seps = FALSE) %>%
+         duration_style = "colon-sep", use_seps = FALSE
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1/00:04:19", "36323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
+      "1/00:04:19", "36323/00:07:11", "5/00:00:00",
+      paste0("\U02212", "34/12:00:00"),
       "31/14:24:00", "28/12:00:00", "NA"
     )
   )
@@ -940,12 +1057,14 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "iso", use_seps = FALSE) %>%
+         duration_style = "iso", use_seps = FALSE
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "iso", use_seps = TRUE) %>%
+         duration_style = "iso", use_seps = TRUE
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]]
   )
 
@@ -955,11 +1074,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "narrow", sep_mark = ".") %>%
+         duration_style = "narrow", sep_mark = "."
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1d 4m 19s", "5.189w 7m 11s", "5d", "&minus;4w 6d 12h", "4w 3d 14h 24m",
-      "4w 12h", "NA"
+      "1d 4m 19s", "5.189w 7m 11s", "5d", paste0("\U02212", "4w 6d 12h"),
+      "4w 3d 14h 24m", "4w 12h", "NA"
     )
   )
 
@@ -969,12 +1089,13 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "wide", sep_mark = ".") %>%
+         duration_style = "wide", sep_mark = "."
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "1 day 4 minutes 19 seconds", "5.189 weeks 7 minutes 11 seconds",
-      "5 days", "&minus;4 weeks 6 days 12 hours", "4 weeks 3 days 14 hours 24 minutes",
-      "4 weeks 12 hours", "NA"
+      "5 days", paste0("\U02212", "4 weeks 6 days 12 hours"),
+      "4 weeks 3 days 14 hours 24 minutes", "4 weeks 12 hours", "NA"
     )
   )
 
@@ -984,10 +1105,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "colon-sep", sep_mark = ".") %>%
+         duration_style = "colon-sep", sep_mark = "."
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1/00:04:19", "36.323/00:07:11", "5/00:00:00", "&minus;34/12:00:00",
+      "1/00:04:19", "36.323/00:07:11", "5/00:00:00",
+      paste0("\U02212", "34/12:00:00"),
       "31/14:24:00", "28/12:00:00", "NA"
     )
   )
@@ -998,12 +1121,14 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "iso", sep_mark = ".") %>%
+         duration_style = "iso", sep_mark = "."
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "iso", sep_mark = ",") %>%
+         duration_style = "iso", sep_mark = ","
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]]
   )
 
@@ -1013,10 +1138,11 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "narrow", force_sign = TRUE) %>%
+         duration_style = "narrow", force_sign = TRUE
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "+1d 4m 19s", "+5,189w 7m 11s", "+5d", "&minus;4w 6d 12h",
+      "+1d 4m 19s", "+5,189w 7m 11s", "+5d", paste0("\U02212", "4w 6d 12h"),
       "+4w 3d 14h 24m", "+4w 12h", "NA"
     )
   )
@@ -1027,11 +1153,14 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "wide", force_sign = TRUE) %>%
+         duration_style = "wide", force_sign = TRUE
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "+1 day 4 minutes 19 seconds", "+5,189 weeks 7 minutes 11 seconds",
-      "+5 days", "&minus;4 weeks 6 days 12 hours", "+4 weeks 3 days 14 hours 24 minutes",
+      "+1 day 4 minutes 19 seconds",
+      "+5,189 weeks 7 minutes 11 seconds",
+      "+5 days", paste0("\U02212", "4 weeks 6 days 12 hours"),
+      "+4 weeks 3 days 14 hours 24 minutes",
       "+4 weeks 12 hours", "NA"
     )
   )
@@ -1042,11 +1171,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "hours",
-         duration_style = "colon-sep", force_sign = TRUE) %>%
+         duration_style = "colon-sep", force_sign = TRUE
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "+01:00:10", "+1,513/11:00:17", "+05:00:00", "&minus;1/10:29:59",
-      "+1/07:35:59", "+1/04:30:00", "NA"
+      "+01:00:10", "+1,513/11:00:17", "+05:00:00",
+      paste0("\U02212", "1/10:29:59"), "+1/07:35:59", "+1/04:30:00", "NA"
     )
   )
 
@@ -1056,10 +1186,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "hours",
-         duration_style = "iso", force_sign = TRUE) %>%
+         duration_style = "iso", force_sign = TRUE
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "+P1H0M10S", "+P1513DT11H0M17S", "+P5H", "&minus;P1DT10H29M59S",
+      "+P1H0M10S", "+P1513DT11H0M17S", "+P5H",
+      paste0("\U02212", "P1DT10H29M59S"),
       "+P1DT7H35M59S", "+P1DT4H30M", "NA"
     )
   )
@@ -1070,10 +1202,11 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "narrow", pattern = "({x})") %>%
+         duration_style = "narrow", pattern = "({x})"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "(1d 4m 19s)", "(5,189w 7m 11s)", "(5d)", "(&minus;4w 6d 12h)",
+      "(1d 4m 19s)", "(5,189w 7m 11s)", "(5d)", paste0("(\U02212", "4w 6d 12h)"),
       "(4w 3d 14h 24m)", "(4w 12h)", "NA"
     )
   )
@@ -1084,12 +1217,13 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "days",
-         duration_style = "wide", pattern = "({x})") %>%
+         duration_style = "wide", pattern = "({x})"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
       "(1 day 4 minutes 19 seconds)", "(5,189 weeks 7 minutes 11 seconds)",
-      "(5 days)", "(&minus;4 weeks 6 days 12 hours)", "(4 weeks 3 days 14 hours 24 minutes)",
-      "(4 weeks 12 hours)", "NA"
+      "(5 days)", paste0("(\U02212", "4 weeks 6 days 12 hours)"),
+      "(4 weeks 3 days 14 hours 24 minutes)", "(4 weeks 12 hours)", "NA"
     )
   )
 
@@ -1099,10 +1233,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "hours",
-         duration_style = "colon-sep", pattern = "({x})") %>%
+         duration_style = "colon-sep", pattern = "({x})"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "(01:00:10)", "(1,513/11:00:17)", "(05:00:00)", "(&minus;1/10:29:59)",
+      "(01:00:10)", "(1,513/11:00:17)", "(05:00:00)",
+      paste0("(\U02212", "1/10:29:59)"),
       "(1/07:35:59)", "(1/04:30:00)", "NA"
     )
   )
@@ -1113,10 +1249,12 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
     (tab_1 %>%
        fmt_duration(
          columns = "num_1", input_units = "hours",
-         duration_style = "iso", pattern = "({x})") %>%
+         duration_style = "iso", pattern = "({x})"
+       ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "(P1H0M10S)", "(P1513DT11H0M17S)", "(P5H)", "(&minus;P1DT10H29M59S)",
+      "(P1H0M10S)", "(P1513DT11H0M17S)", "(P5H)",
+      paste0("(\U02212", "P1DT10H29M59S)"),
       "(P1DT7H35M59S)", "(P1DT4H30M)", "NA"
     )
   )
@@ -1138,8 +1276,8 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
        fmt_duration(columns = "num_1", input_units = "seconds") %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "1h 31m 40s", "&minus;58m 19s", "<1s", "&minus;<1s", "0s",
-      "<1s", "NA"
+      "1h 31m 40s", paste0("\U02212", "58m 19s"), "<1s",
+      paste0("\U02212", "<1s"), "0s", "<1s", "NA"
     )
   )
 
@@ -1161,8 +1299,8 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
        fmt_duration(columns = "num_1", input_units = "minutes") %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "3d 19h 40m", "&minus;2d 10h 19m 59s", "1s", "&minus;1s", "0s",
-      "<1s", "NA"
+      "3d 19h 40m", paste0("\U02212", "2d 10h 19m 59s"), "1s",
+      paste0("\U02212", "1s"), "0s", "<1s", "NA"
     )
   )
 
@@ -1184,8 +1322,8 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
        fmt_duration(columns = "num_1", input_units = "hours") %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "32w 5d 3h 59m 59s", "&minus;20w 5d 20h", "1m 48s", "&minus;1m 48s",
-      "0s", "18s", "NA"
+      "32w 5d 3h 59m 59s", paste0("\U02212", "20w 5d 20h"), "1m 48s",
+      paste0("\U02212", "1m 48s"), "0s", "18s", "NA"
     )
   )
 
@@ -1196,8 +1334,8 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
        fmt_duration(columns = "num_1", input_units = "days") %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "785w 5d", "&minus;500w", "43m 11s", "&minus;43m 11s", "0s",
-      "7m 12s", "NA"
+      "785w 5d", paste0("\U02212", "500w"), "43m 11s",
+      paste0("\U02212", "43m 11s"), "0s", "7m 12s", "NA"
     )
   )
 
@@ -1208,8 +1346,8 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
        fmt_duration(columns = "num_1", input_units = "weeks") %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "5,500w", "&minus;3,500w", "5h 2m 23s", "&minus;5h 2m 23s",
-      "0s", "50m 24s", "NA"
+      "5,500w", paste0("\U02212", "3,500w"), "5h 2m 23s",
+      paste0("\U02212", "5h 2m 23s"), "0s", "50m 24s", "NA"
     )
   )
 })
@@ -1236,7 +1374,7 @@ test_that("specialized handling of the `colon-sep` format works correctly", {
        ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "04:19", "07:11", "00:00", "&minus;00:00",
+      "04:19", "07:11", "00:00", paste0("\U02212", "00:00"),
       "24:00", "00:00", "NA"
     )
   )
@@ -1251,7 +1389,7 @@ test_that("specialized handling of the `colon-sep` format works correctly", {
        ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "00:04", "00:07", "00:00", "&minus;12:00",
+      "00:04", "00:07", "00:00", paste0("\U02212", "12:00"),
       "14:24", "12:00", "NA"
     )
   )
@@ -1266,8 +1404,8 @@ test_that("specialized handling of the `colon-sep` format works correctly", {
        ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "00:04:19", "00:07:11", "00:00:00", "&minus;12:00:00", "14:24:00",
-      "12:00:00", "NA"
+      "00:04:19", "00:07:11", "00:00:00", paste0("\U02212", "12:00:00"),
+      "14:24:00", "12:00:00", "NA"
     )
   )
 
@@ -1283,8 +1421,8 @@ test_that("specialized handling of the `colon-sep` format works correctly", {
        ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "04:19", "07:11", "00:00", "&minus;12:00:00", "14:24:00",
-      "12:00:00", "NA"
+      "04:19", "07:11", "00:00", paste0("\U02212", "12:00:00"),
+      "14:24:00", "12:00:00", "NA"
     )
   )
 
@@ -1299,8 +1437,8 @@ test_that("specialized handling of the `colon-sep` format works correctly", {
        ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "00:04:19", "00:07:11", "00:00:00", "&minus;12:00:00", "14:24:00",
-      "12:00:00", "NA"
+      "00:04:19", "00:07:11", "00:00:00", paste0("\U02212", "12:00:00"),
+      "14:24:00", "12:00:00", "NA"
     )
   )
   expect_equal(
@@ -1312,8 +1450,8 @@ test_that("specialized handling of the `colon-sep` format works correctly", {
        ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "00:04:19", "00:07:11", "00:00:00", "&minus;12:00:00", "14:24:00",
-      "12:00:00", "NA"
+      "00:04:19", "00:07:11", "00:00:00", paste0("\U02212", "12:00:00"),
+      "14:24:00", "12:00:00", "NA"
     )
   )
   expect_equal(
@@ -1325,8 +1463,8 @@ test_that("specialized handling of the `colon-sep` format works correctly", {
        ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "00:04:19", "00:07:11", "00:00:00", "&minus;12:00:00", "14:24:00",
-      "12:00:00", "NA"
+      "00:04:19", "00:07:11", "00:00:00", paste0("\U02212", "12:00:00"),
+      "14:24:00", "12:00:00", "NA"
     )
   )
   expect_equal(
@@ -1338,8 +1476,8 @@ test_that("specialized handling of the `colon-sep` format works correctly", {
        ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "00:04:19", "00:07:11", "00:00:00", "&minus;12:00:00", "14:24:00",
-      "12:00:00", "NA"
+      "00:04:19", "00:07:11", "00:00:00", paste0("\U02212", "12:00:00"),
+      "14:24:00", "12:00:00", "NA"
     )
   )
   expect_equal(
@@ -1351,8 +1489,8 @@ test_that("specialized handling of the `colon-sep` format works correctly", {
        ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "00:04:19", "00:07:11", "00:00:00", "&minus;12:00:00", "14:24:00",
-      "12:00:00", "NA"
+      "00:04:19", "00:07:11", "00:00:00", paste0("\U02212", "12:00:00"),
+      "14:24:00", "12:00:00", "NA"
     )
   )
   expect_equal(
@@ -1364,8 +1502,8 @@ test_that("specialized handling of the `colon-sep` format works correctly", {
        ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "00:04:19", "00:07:11", "00:00:00", "&minus;12:00:00", "14:24:00",
-      "12:00:00", "NA"
+      "00:04:19", "00:07:11", "00:00:00", paste0("\U02212", "12:00:00"),
+      "14:24:00", "12:00:00", "NA"
     )
   )
   expect_equal(
@@ -1377,8 +1515,8 @@ test_that("specialized handling of the `colon-sep` format works correctly", {
        ) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "00:04:19", "00:07:11", "00:00:00", "&minus;12:00:00", "14:24:00",
-      "12:00:00", "NA"
+      "00:04:19", "00:07:11", "00:00:00", paste0("\U02212", "12:00:00"),
+      "14:24:00", "12:00:00", "NA"
     )
   )
 })
@@ -1409,7 +1547,9 @@ test_that("the `fmt_duration()` function works correctly with difftime inputs", 
        fmt_duration(columns = "weeks") %>%
        render_formats_test(context = "html"))[["weeks"]],
     c(
-      "&minus;2d 2h 24m 34s", "&minus;4d 2h 24m 34s", "&minus;1w 2h 24m 34s",
+      paste0("\U02212", "2d 2h 24m 34s"),
+      paste0("\U02212", "4d 2h 24m 34s"),
+      paste0("\U02212", "1w 2h 24m 34s"),
       NA
     )
   )

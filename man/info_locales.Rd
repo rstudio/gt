@@ -40,7 +40,7 @@ with a \code{"v"}.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_info_locales_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_info_locales_1.png" alt="This image of a table was generated from the first code example in the `info_locales()` help file." style="width:100\%;">
 }}
 }
 
@@ -50,11 +50,11 @@ with a \code{"v"}.
 }
 
 \seealso{
-Other Information Functions: 
+Other information functions: 
 \code{\link{info_currencies}()},
 \code{\link{info_date_style}()},
 \code{\link{info_google_fonts}()},
 \code{\link{info_paletteer}()},
 \code{\link{info_time_style}()}
 }
-\concept{Information Functions}
+\concept{information functions}

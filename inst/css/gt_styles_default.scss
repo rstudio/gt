@@ -37,6 +37,11 @@
     border-right-color: $heading_border_lr_color; // heading.border.lr.color
   }
 
+  .gt_caption {
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+
   .gt_title {
     color: font-color($heading_background_color);
     font-size: $heading_title_font_size; // heading.title.font.size
@@ -155,6 +160,7 @@
     border-right-width: $row_group_border_right_width; // row_group.border.right.width
     border-right-color: $row_group_border_right_color; // row_group.border.right.color
     vertical-align: middle;
+    text-align: left;
   }
 
   .gt_empty_group_heading {
@@ -366,15 +372,6 @@
     font-size: 65%;
   }
 
-  .gt_two_val_uncert {
-    display: inline-block;
-    line-height: 1em;
-    text-align: right;
-    font-size: 60%;
-    vertical-align: -0.25em;
-    margin-left: 0.1em;
-  }
-
   .gt_footnote_marks {
     font-style: italic;
     font-weight: normal;
@@ -387,21 +384,23 @@
     vertical-align: 0;
   }
 
-  .gt_slash_mark {
-    font-size: 0.7em;
-    line-height: 0.7em;
-    vertical-align: 0.15em;
+  .gt_indent_1 {
+    text-indent: $stub_indent_length * 1;
   }
 
-  .gt_fraction_numerator {
-    font-size: 0.6em;
-    line-height: 0.6em;
-    vertical-align: 0.45em;
+  .gt_indent_2 {
+    text-indent: $stub_indent_length * 2;
   }
 
-  .gt_fraction_denominator {
-    font-size: 0.6em;
-    line-height: 0.6em;
-    vertical-align: -0.05em;
+  .gt_indent_3 {
+    text-indent: $stub_indent_length * 3;
+  }
+
+  .gt_indent_4 {
+    text-indent: $stub_indent_length * 4;
+  }
+
+  .gt_indent_5 {
+    text-indent: $stub_indent_length * 5;
   }
 }

@@ -19,9 +19,9 @@ cols_align(
 according to the data type (see the Details section for specifics on which
 alignments are applied).}
 
-\item{columns}{An optional vector of column names for which the alignment
-should be applied. If nothing is supplied, or if \code{columns} is \code{TRUE}, then
-the chosen alignment affects all columns.}
+\item{columns}{The columns for which the alignment should be applied. By
+default this is set to \code{everything()} which means that the chosen alignment
+affects all columns.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -58,7 +58,7 @@ data to the left.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_align_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_align_1.png" alt="This image of a table was generated from the first code example in the `cols_align()` help file." style="width:100\%;">
 }}
 }
 
@@ -68,8 +68,10 @@ data to the left.
 }
 
 \seealso{
-Other Modify Columns: 
+Other column modification functions: 
+\code{\link{cols_align_decimal}()},
 \code{\link{cols_hide}()},
+\code{\link{cols_label_with}()},
 \code{\link{cols_label}()},
 \code{\link{cols_merge_n_pct}()},
 \code{\link{cols_merge_range}()},
@@ -81,4 +83,4 @@ Other Modify Columns:
 \code{\link{cols_unhide}()},
 \code{\link{cols_width}()}
 }
-\concept{Modify Columns}
+\concept{column modification functions}

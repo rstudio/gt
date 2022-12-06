@@ -66,7 +66,7 @@ sizes.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_web_image_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_web_image_1.png" alt="This image of a table was generated from the first code example in the `web_image()` help file." style="width:100\%;">
 }}
 
 Get the SVG-based logo for the R Project from an image URL.
@@ -103,7 +103,7 @@ and five times in the subtitle.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_web_image_2.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_web_image_2.png" alt="This image of a table was generated from the second code example in the `web_image()` help file." style="width:100\%;">
 }}
 }
 
@@ -113,9 +113,9 @@ and five times in the subtitle.
 }
 
 \seealso{
-Other Image Addition Functions: 
+Other image addition functions: 
 \code{\link{ggplot_image}()},
 \code{\link{local_image}()},
 \code{\link{test_image}()}
 }
-\concept{Image Addition Functions}
+\concept{image addition functions}

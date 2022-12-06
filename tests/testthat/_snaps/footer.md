@@ -3,14 +3,14 @@
     Code
       .
     Output
-      [1] "<table class=\"gt_table\">\n  \n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">num<sup class=\"gt_footnote_marks\">1</sup></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\">char<sup class=\"gt_footnote_marks\">2</sup></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_center\" rowspan=\"1\" colspan=\"1\" scope=\"col\">fctr</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\">date</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\">time</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\">datetime</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">currency</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\">row</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\">group</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td class=\"gt_row gt_right\">0.1111</td>\n<td class=\"gt_row gt_left\">apricot</td>\n<td class=\"gt_row gt_center\">one</td>\n<td class=\"gt_row gt_left\">2015-01-15</td>\n<td class=\"gt_row gt_left\">13:35</td>\n<td class=\"gt_row gt_left\">2018-01-01 02:22</td>\n<td class=\"gt_row gt_right\">49.95</td>\n<td class=\"gt_row gt_left\">row_1</td>\n<td class=\"gt_row gt_left\">grp_a</td></tr>\n  </tbody>\n  <tfoot class=\"gt_sourcenotes\">\n    <tr>\n      <td class=\"gt_sourcenote\" colspan=\"9\">Source note **bold** (#1, no `md()`)</td>\n    </tr>\n    <tr>\n      <td class=\"gt_sourcenote\" colspan=\"9\">Source note <strong>bold</strong> (#2, uses <code>md()</code>)</td>\n    </tr>\n  </tfoot>\n  <tfoot class=\"gt_footnotes\">\n    <tr>\n      <td class=\"gt_footnote\" colspan=\"9\"><sup class=\"gt_footnote_marks\">1</sup> footnote **bold** (#1, no `md()`)</td>\n    </tr>\n    <tr>\n      <td class=\"gt_footnote\" colspan=\"9\"><sup class=\"gt_footnote_marks\">2</sup> footnote <strong>bold</strong> (#2, uses <code>md()</code>)</td>\n    </tr>\n  </tfoot>\n</table>"
+      [1] "<table class=\"gt_table\">\n  \n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"num&lt;sup class=&quot;gt_footnote_marks&quot;&gt;1&lt;/sup&gt;\">num<sup class=\"gt_footnote_marks\">1</sup></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"char&lt;sup class=&quot;gt_footnote_marks&quot;&gt;2&lt;/sup&gt;\">char<sup class=\"gt_footnote_marks\">2</sup></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_center\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"fctr\">fctr</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"date\">date</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"time\">time</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"datetime\">datetime</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"currency\">currency</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"row\">row</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"group\">group</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td headers=\"num\" class=\"gt_row gt_right\">0.1111</td>\n<td headers=\"char\" class=\"gt_row gt_left\">apricot</td>\n<td headers=\"fctr\" class=\"gt_row gt_center\">one</td>\n<td headers=\"date\" class=\"gt_row gt_right\">2015-01-15</td>\n<td headers=\"time\" class=\"gt_row gt_right\">13:35</td>\n<td headers=\"datetime\" class=\"gt_row gt_right\">2018-01-01 02:22</td>\n<td headers=\"currency\" class=\"gt_row gt_right\">49.95</td>\n<td headers=\"row\" class=\"gt_row gt_left\">row_1</td>\n<td headers=\"group\" class=\"gt_row gt_left\">grp_a</td></tr>\n  </tbody>\n  <tfoot class=\"gt_sourcenotes\">\n    <tr>\n      <td class=\"gt_sourcenote\" colspan=\"9\">Source note **bold** (#1, no `md()`)</td>\n    </tr>\n    <tr>\n      <td class=\"gt_sourcenote\" colspan=\"9\">Source note <strong>bold</strong> (#2, uses <code>md()</code>)</td>\n    </tr>\n  </tfoot>\n  <tfoot class=\"gt_footnotes\">\n    <tr>\n      <td class=\"gt_footnote\" colspan=\"9\"><sup class=\"gt_footnote_marks\">1</sup> footnote **bold** (#1, no `md()`)</td>\n    </tr>\n    <tr>\n      <td class=\"gt_footnote\" colspan=\"9\"><sup class=\"gt_footnote_marks\">2</sup> footnote <strong>bold</strong> (#2, uses <code>md()</code>)</td>\n    </tr>\n  </tfoot>\n</table>"
 
 ---
 
     Code
       .
     Output
-      [1] "\\captionsetup[table]{labelformat=empty,skip=1pt}\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rlclllrll}\n\\toprule\nnum\\textsuperscript{1} & char\\textsuperscript{2} & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\n0.1111 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.95 & row\\_1 & grp\\_a \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\textsuperscript{1}footnote **bold** (\\#1, no `md()`)\\\\\n\\textsuperscript{2}footnote \\textbf{bold} (\\#2, uses \\texttt{md()})\\\\\nSource note **bold** (\\#1, no `md()`)\\\\\nSource note \\textbf{bold} (\\#2, uses \\texttt{md()})\\\\\n\\end{minipage}\n"
+      [1] "\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rlcrrrrll}\n\\toprule\nnum\\textsuperscript{1} & char\\textsuperscript{2} & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\n0.1111 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.95 & row\\_1 & grp\\_a \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\textsuperscript{1}footnote **bold** (\\#1, no `md()`)\\\\\n\\textsuperscript{2}footnote \\textbf{bold} (\\#2, uses \\texttt{md()})\\\\\nSource note **bold** (\\#1, no `md()`)\\\\\nSource note \\textbf{bold} (\\#2, uses \\texttt{md()})\\\\\n\\end{minipage}\n"
 
 ---
 
@@ -35,13 +35,13 @@
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx3120
       \intbl {\f0 {\f0\fs20 fctr}}\cell
       
-      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx4160
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx4160
       \intbl {\f0 {\f0\fs20 date}}\cell
       
-      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx5200
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx5200
       \intbl {\f0 {\f0\fs20 time}}\cell
       
-      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx6240
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx6240
       \intbl {\f0 {\f0\fs20 datetime}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx7280
@@ -66,13 +66,13 @@
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
       \intbl {\f0 {\f0\fs20 one}}\cell
       
-      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx4160
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx4160
       \intbl {\f0 {\f0\fs20 2015-01-15}}\cell
       
-      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5200
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5200
       \intbl {\f0 {\f0\fs20 13:35}}\cell
       
-      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6240
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6240
       \intbl {\f0 {\f0\fs20 2018-01-01 02:22}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7280
@@ -107,14 +107,14 @@
     Code
       .
     Output
-      [1] "<table class=\"gt_table\">\n  \n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">num<sup class=\"gt_footnote_marks\">1</sup></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\">char<sup class=\"gt_footnote_marks\">2</sup></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_center\" rowspan=\"1\" colspan=\"1\" scope=\"col\">fctr</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\">date</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\">time</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\">datetime</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">currency</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\">row</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\">group</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td class=\"gt_row gt_right\">0.1111</td>\n<td class=\"gt_row gt_left\">apricot</td>\n<td class=\"gt_row gt_center\">one</td>\n<td class=\"gt_row gt_left\">2015-01-15</td>\n<td class=\"gt_row gt_left\">13:35</td>\n<td class=\"gt_row gt_left\">2018-01-01 02:22</td>\n<td class=\"gt_row gt_right\">49.95</td>\n<td class=\"gt_row gt_left\">row_1</td>\n<td class=\"gt_row gt_left\">grp_a</td></tr>\n  </tbody>\n  <tfoot>\n    <tr class=\"gt_sourcenotes\">\n      <td class=\"gt_sourcenote\" colspan=\"9\">\n        <div style=\"padding-bottom:2px;\">Source note **bold** (#1, no `md()`)&nbsp; Source note <strong>bold</strong> (#2, uses <code>md()</code>)</div>\n      </td>\n    </tr>\n  </tfoot>\n  <tfoot>\n    <tr class=\"gt_footnotes\">\n      <td class=\"gt_footnote\" colspan=\"9\">\n        <div style=\"padding-bottom:2px;\"><sup class=\"gt_footnote_marks\">1</sup> footnote **bold** (#1, no `md()`)&nbsp; <sup class=\"gt_footnote_marks\">2</sup> footnote <strong>bold</strong> (#2, uses <code>md()</code>)</div>\n      </td>\n    </tr>\n  </tfoot>\n</table>"
+      [1] "<table class=\"gt_table\">\n  \n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"num&lt;sup class=&quot;gt_footnote_marks&quot;&gt;1&lt;/sup&gt;\">num<sup class=\"gt_footnote_marks\">1</sup></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"char&lt;sup class=&quot;gt_footnote_marks&quot;&gt;2&lt;/sup&gt;\">char<sup class=\"gt_footnote_marks\">2</sup></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_center\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"fctr\">fctr</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"date\">date</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"time\">time</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"datetime\">datetime</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"currency\">currency</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"row\">row</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"group\">group</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td headers=\"num\" class=\"gt_row gt_right\">0.1111</td>\n<td headers=\"char\" class=\"gt_row gt_left\">apricot</td>\n<td headers=\"fctr\" class=\"gt_row gt_center\">one</td>\n<td headers=\"date\" class=\"gt_row gt_right\">2015-01-15</td>\n<td headers=\"time\" class=\"gt_row gt_right\">13:35</td>\n<td headers=\"datetime\" class=\"gt_row gt_right\">2018-01-01 02:22</td>\n<td headers=\"currency\" class=\"gt_row gt_right\">49.95</td>\n<td headers=\"row\" class=\"gt_row gt_left\">row_1</td>\n<td headers=\"group\" class=\"gt_row gt_left\">grp_a</td></tr>\n  </tbody>\n  <tfoot>\n    <tr class=\"gt_sourcenotes\">\n      <td class=\"gt_sourcenote\" colspan=\"9\">\n        <div style=\"padding-bottom:2px;\">Source note **bold** (#1, no `md()`)&nbsp; Source note <strong>bold</strong> (#2, uses <code>md()</code>)</div>\n      </td>\n    </tr>\n  </tfoot>\n  <tfoot>\n    <tr class=\"gt_footnotes\">\n      <td class=\"gt_footnote\" colspan=\"9\">\n        <div style=\"padding-bottom:2px;\"><sup class=\"gt_footnote_marks\">1</sup> footnote **bold** (#1, no `md()`)&nbsp; <sup class=\"gt_footnote_marks\">2</sup> footnote <strong>bold</strong> (#2, uses <code>md()</code>)</div>\n      </td>\n    </tr>\n  </tfoot>\n</table>"
 
 ---
 
     Code
       .
     Output
-      [1] "\\captionsetup[table]{labelformat=empty,skip=1pt}\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rlclllrll}\n\\toprule\nnum\\textsuperscript{1} & char\\textsuperscript{2} & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\n0.1111 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.95 & row\\_1 & grp\\_a \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\textsuperscript{1}footnote **bold** (\\#1, no `md()`)  \\textsuperscript{2}footnote \\textbf{bold} (\\#2, uses \\texttt{md()})\\\\\nSource note **bold** (\\#1, no `md()`)  Source note \\textbf{bold} (\\#2, uses \\texttt{md()})\\\\\n\\end{minipage}\n"
+      [1] "\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rlcrrrrll}\n\\toprule\nnum\\textsuperscript{1} & char\\textsuperscript{2} & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\n0.1111 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.95 & row\\_1 & grp\\_a \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\textsuperscript{1}footnote **bold** (\\#1, no `md()`)  \\textsuperscript{2}footnote \\textbf{bold} (\\#2, uses \\texttt{md()})\\\\\nSource note **bold** (\\#1, no `md()`)  Source note \\textbf{bold} (\\#2, uses \\texttt{md()})\\\\\n\\end{minipage}\n"
 
 ---
 
@@ -139,13 +139,13 @@
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx3120
       \intbl {\f0 {\f0\fs20 fctr}}\cell
       
-      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx4160
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx4160
       \intbl {\f0 {\f0\fs20 date}}\cell
       
-      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx5200
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx5200
       \intbl {\f0 {\f0\fs20 time}}\cell
       
-      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx6240
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx6240
       \intbl {\f0 {\f0\fs20 datetime}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx7280
@@ -170,13 +170,13 @@
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
       \intbl {\f0 {\f0\fs20 one}}\cell
       
-      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx4160
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx4160
       \intbl {\f0 {\f0\fs20 2015-01-15}}\cell
       
-      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5200
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5200
       \intbl {\f0 {\f0\fs20 13:35}}\cell
       
-      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6240
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6240
       \intbl {\f0 {\f0\fs20 2018-01-01 02:22}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7280
@@ -211,14 +211,14 @@
     Code
       .
     Output
-      [1] "<table class=\"gt_table\">\n  \n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">num<sup class=\"gt_footnote_marks\">1</sup></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\">char<sup class=\"gt_footnote_marks\">2</sup></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_center\" rowspan=\"1\" colspan=\"1\" scope=\"col\">fctr</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\">date</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\">time</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\">datetime</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\">currency</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\">row</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\">group</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td class=\"gt_row gt_right\">0.1111</td>\n<td class=\"gt_row gt_left\">apricot</td>\n<td class=\"gt_row gt_center\">one</td>\n<td class=\"gt_row gt_left\">2015-01-15</td>\n<td class=\"gt_row gt_left\">13:35</td>\n<td class=\"gt_row gt_left\">2018-01-01 02:22</td>\n<td class=\"gt_row gt_right\">49.95</td>\n<td class=\"gt_row gt_left\">row_1</td>\n<td class=\"gt_row gt_left\">grp_a</td></tr>\n  </tbody>\n  <tfoot>\n    <tr class=\"gt_sourcenotes\">\n      <td class=\"gt_sourcenote\" colspan=\"9\">\n        <div style=\"padding-bottom:2px;\">Source note **bold** (#1, no `md()`) <em>|</em> Source note <strong>bold</strong> (#2, uses <code>md()</code>)</div>\n      </td>\n    </tr>\n  </tfoot>\n  <tfoot>\n    <tr class=\"gt_footnotes\">\n      <td class=\"gt_footnote\" colspan=\"9\">\n        <div style=\"padding-bottom:2px;\"><sup class=\"gt_footnote_marks\">1</sup> footnote **bold** (#1, no `md()`) <em>|</em> <sup class=\"gt_footnote_marks\">2</sup> footnote <strong>bold</strong> (#2, uses <code>md()</code>)</div>\n      </td>\n    </tr>\n  </tfoot>\n</table>"
+      [1] "<table class=\"gt_table\">\n  \n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"num&lt;sup class=&quot;gt_footnote_marks&quot;&gt;1&lt;/sup&gt;\">num<sup class=\"gt_footnote_marks\">1</sup></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"char&lt;sup class=&quot;gt_footnote_marks&quot;&gt;2&lt;/sup&gt;\">char<sup class=\"gt_footnote_marks\">2</sup></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_center\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"fctr\">fctr</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"date\">date</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"time\">time</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"datetime\">datetime</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"currency\">currency</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"row\">row</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"group\">group</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td headers=\"num\" class=\"gt_row gt_right\">0.1111</td>\n<td headers=\"char\" class=\"gt_row gt_left\">apricot</td>\n<td headers=\"fctr\" class=\"gt_row gt_center\">one</td>\n<td headers=\"date\" class=\"gt_row gt_right\">2015-01-15</td>\n<td headers=\"time\" class=\"gt_row gt_right\">13:35</td>\n<td headers=\"datetime\" class=\"gt_row gt_right\">2018-01-01 02:22</td>\n<td headers=\"currency\" class=\"gt_row gt_right\">49.95</td>\n<td headers=\"row\" class=\"gt_row gt_left\">row_1</td>\n<td headers=\"group\" class=\"gt_row gt_left\">grp_a</td></tr>\n  </tbody>\n  <tfoot>\n    <tr class=\"gt_sourcenotes\">\n      <td class=\"gt_sourcenote\" colspan=\"9\">\n        <div style=\"padding-bottom:2px;\">Source note **bold** (#1, no `md()`) <em>|</em> Source note <strong>bold</strong> (#2, uses <code>md()</code>)</div>\n      </td>\n    </tr>\n  </tfoot>\n  <tfoot>\n    <tr class=\"gt_footnotes\">\n      <td class=\"gt_footnote\" colspan=\"9\">\n        <div style=\"padding-bottom:2px;\"><sup class=\"gt_footnote_marks\">1</sup> footnote **bold** (#1, no `md()`) <em>|</em> <sup class=\"gt_footnote_marks\">2</sup> footnote <strong>bold</strong> (#2, uses <code>md()</code>)</div>\n      </td>\n    </tr>\n  </tfoot>\n</table>"
 
 ---
 
     Code
       .
     Output
-      [1] "\\captionsetup[table]{labelformat=empty,skip=1pt}\n\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rlclllrll}\n\\toprule\nnum\\textsuperscript{1} & char\\textsuperscript{2} & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\n0.1111 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.95 & row\\_1 & grp\\_a \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\textsuperscript{1}footnote **bold** (\\#1, no `md()`) \\textit{|} \\textsuperscript{2}footnote \\textbf{bold} (\\#2, uses \\texttt{md()})\\\\\nSource note **bold** (\\#1, no `md()`) \\textit{|} Source note \\textbf{bold} (\\#2, uses \\texttt{md()})\\\\\n\\end{minipage}\n"
+      [1] "\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rlcrrrrll}\n\\toprule\nnum\\textsuperscript{1} & char\\textsuperscript{2} & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\n0.1111 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.95 & row\\_1 & grp\\_a \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\textsuperscript{1}footnote **bold** (\\#1, no `md()`) \\textit{|} \\textsuperscript{2}footnote \\textbf{bold} (\\#2, uses \\texttt{md()})\\\\\nSource note **bold** (\\#1, no `md()`) \\textit{|} Source note \\textbf{bold} (\\#2, uses \\texttt{md()})\\\\\n\\end{minipage}\n"
 
 ---
 
@@ -243,13 +243,13 @@
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx3120
       \intbl {\f0 {\f0\fs20 fctr}}\cell
       
-      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx4160
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx4160
       \intbl {\f0 {\f0\fs20 date}}\cell
       
-      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx5200
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx5200
       \intbl {\f0 {\f0\fs20 time}}\cell
       
-      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx6240
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx6240
       \intbl {\f0 {\f0\fs20 datetime}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx7280
@@ -274,13 +274,13 @@
       \pard\plain\uc0\qc\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3120
       \intbl {\f0 {\f0\fs20 one}}\cell
       
-      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx4160
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx4160
       \intbl {\f0 {\f0\fs20 2015-01-15}}\cell
       
-      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5200
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5200
       \intbl {\f0 {\f0\fs20 13:35}}\cell
       
-      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6240
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6240
       \intbl {\f0 {\f0\fs20 2018-01-01 02:22}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7280

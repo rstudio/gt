@@ -65,20 +65,18 @@ values that could potentially undergo some substitution.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- dplyr::tibble(num = c(10^(-4:2), 0, NA))
 
 tbl
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 9 × 1
-##        num
-##      <dbl>
-## 1   0.0001
-## 2   0.001 
-## 3   0.01  
-## 4   0.1   
-## 5   1     
-## 6  10     
-## 7 100     
-## 8   0     
-## 9  NA
+#> # A tibble: 9 x 1
+#>        num
+#>      <dbl>
+#> 1   0.0001
+#> 2   0.001 
+#> 3   0.01  
+#> 4   0.1   
+#> 5   1     
+#> 6  10     
+#> 7 100     
+#> 8   0     
+#> 9  NA
 }\if{html}{\out{</div>}}
 
 The \code{tbl} contains a variety of smaller numbers and some might be small
@@ -92,7 +90,7 @@ do just that:
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_small_vals_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_small_vals_1.png" alt="This image of a table was generated from the first code example in the `sub_small_vals()` help file." style="width:100\%;">
 }}
 
 Small and negative values can also be handled but they are handled specially
@@ -107,7 +105,7 @@ negative values.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_small_vals_2.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_small_vals_2.png" alt="This image of a table was generated from the second code example in the `sub_small_vals()` help file." style="width:100\%;">
 }}
 
 You don't have to settle with the default \code{threshold} value or the default
@@ -125,17 +123,17 @@ omitted.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_small_vals_3.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_small_vals_3.png" alt="This image of a table was generated from the third code example in the `sub_small_vals()` help file." style="width:100\%;">
 }}
 }
 
 \section{Function ID}{
 
-3-18
+3-19
 }
 
 \seealso{
-Other Format Data: 
+Other data formatting functions: 
 \code{\link{data_color}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
@@ -150,12 +148,14 @@ Other Format Data:
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
+\code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
+\code{\link{sub_values}()},
 \code{\link{sub_zero}()},
 \code{\link{text_transform}()}
 }
-\concept{Format Data}
+\concept{data formatting functions}

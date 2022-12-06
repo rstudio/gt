@@ -92,17 +92,17 @@ with the \code{\link[=summary_rows]{summary_rows()}} function and then add a foo
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_row_groups_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_row_groups_1.png" alt="This image of a table was generated from the first code example in the `cells_row_groups()` help file." style="width:100\%;">
 }}
 }
 
 \section{Function ID}{
 
-7-9
+7-10
 }
 
 \seealso{
-Other Helper Functions: 
+Other helper functions: 
 \code{\link{adjust_luminance}()},
 \code{\link{cell_borders}()},
 \code{\link{cell_fill}()},
@@ -128,6 +128,7 @@ Other Helper Functions:
 \code{\link{md}()},
 \code{\link{pct}()},
 \code{\link{px}()},
-\code{\link{random_id}()}
+\code{\link{random_id}()},
+\code{\link{stub}()}
 }
-\concept{Helper Functions}
+\concept{helper functions}

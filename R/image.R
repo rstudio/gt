@@ -98,7 +98,7 @@
 #' `r man_get_image_tag(file = "man_web_image_2.png")`
 #' }}
 #'
-#' @family Image Addition Functions
+#' @family image addition functions
 #' @section Function ID:
 #' 8-1
 #'
@@ -172,7 +172,7 @@ web_image <- function(
 #' `r man_get_image_tag(file = "man_local_image_1.png")`
 #' }}
 #'
-#' @family Image Addition Functions
+#' @family image addition functions
 #' @section Function ID:
 #' 8-2
 #'
@@ -272,7 +272,7 @@ local_image <- function(
 #' `r man_get_image_tag(file = "man_ggplot_image_1.png")`
 #' }}
 #'
-#' @family Image Addition Functions
+#' @family image addition functions
 #' @section Function ID:
 #' 8-3
 #'
@@ -331,14 +331,14 @@ ggplot_image <- function(
 #'
 #' @return A character vector with a single path to an image file.
 #'
-#' @family Image Addition Functions
+#' @family image addition functions
 #' @section Function ID:
 #' 8-4
 #'
 #' @export
 test_image <- function(type = c("png", "svg")) {
 
-  type <- match.arg(type)
+  type <- rlang::arg_match(type)
 
   system_file(file = paste0("graphics/test_image.", type))
 }

@@ -1,5 +1,3 @@
-skip_on_cran()
-
 # Create a table from `mtcars` that has all the different components
 data <-
   mtcars %>%
@@ -923,7 +921,7 @@ test_that("The final placement of footnotes is correct with the 'auto' mode", {
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("[class='gt_row gt_right']") %>%
-    expect_equal("mark_1 0.1111")
+    expect_equal(paste0("mark_1", "\U000A0", "0.1111"))
 
   # Expect a footnote mark to the right of the center-aligned number
   # (this turns off the auto-alignment option in the `gt()` function)
@@ -990,7 +988,7 @@ test_that("The final placement of footnotes is correct with the 'auto' mode", {
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("[class='gt_row gt_right']") %>%
-    expect_equal("mark_1 0.11")
+    expect_equal(paste0("mark_1", "\U000A0", "0.11"))
 
   # Expect a footnote mark to the right of the left-aligned number value
   # (the first `tab_style()` statement with literal CSS style rules is more
@@ -1047,7 +1045,7 @@ test_that("The final placement of footnotes is correct with the 'auto' mode", {
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("[class='gt_row gt_right']") %>%
-    expect_equal("mark_1 0.11")
+    expect_equal(paste0("mark_1", "\U000A0", "0.11"))
 
   # Expect a footnote mark to the right of the left-aligned number value
   # (the final !important 'text-align' rule in `tab_style()` determines the alignment)
@@ -1077,4 +1075,67 @@ test_that("The final placement of footnotes is correct with the 'auto' mode", {
     xml2::read_html() %>%
     selection_text("[class='gt_row gt_center']") %>%
     expect_equal("0.11mark_1")
+})
+
+test_that("Footnotes are correctly placed with text produced by `fmt_markdown()`", {
+
+  exibble[1, 2] %>%
+    gt() %>%
+    fmt_markdown(columns = char) %>%
+    tab_footnote(footnote = "note", locations = cells_body(char, 1)) %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_text("[class='gt_row gt_left']") %>%
+    expect_equal("apricot1")
+
+  exibble[1, 2] %>%
+    gt() %>%
+    fmt_markdown(columns = char) %>%
+    tab_footnote(footnote = "note", locations = cells_body(char, 1)) %>%
+    render_as_html() %>%
+    expect_snapshot()
+
+  exibble[1, 2] %>%
+    gt() %>%
+    fmt_markdown(columns = char) %>%
+    tab_footnote(footnote = "note", locations = cells_body(char, 1), placement = "left") %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_text("[class='gt_row gt_left']") %>%
+    expect_equal(paste0("1", "\U000A0", "apricot\n"))
+
+  exibble[1, 2] %>%
+    gt() %>%
+    fmt_markdown(columns = char) %>%
+    tab_footnote(footnote = "note", locations = cells_body(char, 1), placement = "left") %>%
+    render_as_html() %>%
+    expect_snapshot()
+})
+
+test_that("Footnotes work with group labels in 2-column stub arrangements", {
+
+  gt_tbl <-
+    pizzaplace %>%
+    dplyr::filter(name %in% c("soppressata", "peppr_salami")) %>%
+    dplyr::group_by(name, size) %>%
+    dplyr::summarize(`Pizzas Sold` = dplyr::n(), .groups = "drop") %>%
+    gt(rowname_col = "size", groupname_col = "name") %>%
+    summary_rows(
+      groups = TRUE,
+      columns = `Pizzas Sold`,
+      fns = list(TOTAL = "sum"),
+      formatter = fmt_number,
+      decimals = 0,
+      use_seps = TRUE
+    ) %>%
+    tab_options(row_group.as_column = TRUE) %>%
+    tab_footnote(
+      footnote = "The Pepper-Salami.",
+      locations = cells_row_groups(groups = "peppr_salami")
+    )
+
+  # Take snapshots of `gt_tbl`
+  gt_tbl %>% render_as_html() %>% expect_snapshot()
+  gt_tbl %>% as_latex() %>% as.character() %>% expect_snapshot()
+  gt_tbl %>% as_rtf() %>% expect_snapshot()
 })

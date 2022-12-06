@@ -5,7 +5,7 @@ rtf_paste0 <- function(..., collapse = NULL) {
       if (is.null(x) || is_rtf(x)) {
         x
       } else {
-        rtf_escape(as.character(x))
+        escape_rtf(as.character(x))
       }
     })
 
@@ -56,7 +56,7 @@ rtf_fonttbl <- function(
       FUN.VALUE = character(1),
       USE.NAMES = FALSE,
       FUN = function(x) {
-        fonts[x] %>% unlist() %>% gsub("{x}", font_sequence[x], ., fixed = TRUE)
+        gsub("{x}", font_sequence[x], unlist(fonts[x]), fixed = TRUE)
       }
     )
 
@@ -214,11 +214,10 @@ rtf_file <- function(
   # Generate the header based on the RTF `document` content
   # (and also modify the document)
   #
-
   # Scan for hexadecimal colors in the document; generate
   # a <colortbl> object
   matched_colors <-
-    unique(unlist(stringr::str_extract_all(document, "<<COLOR:#[0-9a-fA-F]{6}>>")))
+    unique(unlist(str_complete_extract(document, "<<COLOR:#[0-9a-fA-F]{6}>>")))
 
   if (length(matched_colors) > 0) {
 
@@ -232,8 +231,9 @@ rtf_file <- function(
     colortbl <- rtf_colortbl(.hexadecimal_colors = "#FFFFFF")
   }
 
-  # Scan for hexadecimal colors in the document; generate a <fonttbl> object
-  matched_fonts <- unique(unlist(stringr::str_extract_all(document, "<<FONT:.*?>>")))
+  # Scan for font declarations in the document; generate a <fonttbl> object
+  matched_fonts <-
+    unique(unlist(str_complete_extract(document, "<<FONT:.*?>>")))
 
   if (length(matched_fonts) > 0) {
 
@@ -486,54 +486,58 @@ rtf_tbl_row <- function(
     }
 
     tb_borders <-
-      borders %>%
-      lapply(
-        FUN = function(x) {
+      unlist(
+        lapply(
+          borders,
+          FUN = function(x) {
 
-          if (is.numeric(x$color)) {
-            border_color_value <- x$color
-          } else {
-            border_color_value <- rtf_paste0("<<COLOR:", rtf_raw(x$color), ">>")
+            if (is.numeric(x$color)) {
+              border_color_value <- x$color
+            } else {
+              border_color_value <- rtf_paste0("<<COLOR:", rtf_raw(x$color), ">>")
+            }
+
+            if (x$direction %in% c("top", "bottom")) {
+
+              rtf_paste0(
+                rtf_key("clbrdr", substr(x$direction, 1, 1)),
+                rtf_key("brdr", x$style),
+                rtf_key("brdrw", x$width),
+                rtf_key("brdrcf", border_color_value)
+              )
+            } else {
+              ""
+            }
           }
-
-          if (x$direction %in% c("top", "bottom")) {
-
-            rtf_paste0(
-              rtf_key("clbrdr", substr(x$direction, 1, 1)),
-              rtf_key("brdr", x$style),
-              rtf_key("brdrw", x$width),
-              rtf_key("brdrcf", border_color_value)
-            )
-          } else {
-            ""
-          }
-        }
-      ) %>% unlist()
+        )
+      )
 
     lr_borders <-
-      borders %>%
-      lapply(
-        FUN = function(x) {
+      unlist(
+        lapply(
+          borders,
+          FUN = function(x) {
 
-          if (is.numeric(x$color)) {
-            border_color_value <- x$color
-          } else {
-            border_color_value <- rtf_paste0("<<COLOR:", rtf_raw(x$color), ">>")
+            if (is.numeric(x$color)) {
+              border_color_value <- x$color
+            } else {
+              border_color_value <- rtf_paste0("<<COLOR:", rtf_raw(x$color), ">>")
+            }
+
+            if (x$direction %in% c("left", "right")) {
+
+              rtf_paste0(
+                rtf_key("clbrdr", substr(x$direction, 1, 1)),
+                rtf_key("brdr", x$style),
+                rtf_key("brdrw", x$width),
+                rtf_key("brdrcf", border_color_value)
+              )
+            } else {
+              ""
+            }
           }
-
-          if (x$direction %in% c("left", "right")) {
-
-            rtf_paste0(
-              rtf_key("clbrdr", substr(x$direction, 1, 1)),
-              rtf_key("brdr", x$style),
-              rtf_key("brdrw", x$width),
-              rtf_key("brdrcf", border_color_value)
-            )
-          } else {
-            ""
-          }
-        }
-      ) %>% unlist()
+        )
+      )
 
   } else {
     tb_borders <- ""
@@ -558,7 +562,7 @@ rtf_tbl_row <- function(
     x[[i]][1] <- rtf_paste0(rtf_raw(x[[i]][1]), rtf_raw(row_components[i]))
   }
 
-  x <- lapply(x, FUN = function(x) paste(x, collapse = "\n")) %>% unlist()
+  x <- unlist(lapply(x, FUN = function(x) paste(x, collapse = "\n")))
 
   # Return a complete row of RTF table cells (marked as `rtf_text`)
   rtf_paste0(
@@ -589,8 +593,8 @@ rtf_tbl_cell <- function(
 
   x <- paste(x, collapse = " ")
 
-  h_align <- substr(match.arg(h_align), 1, 1)
-  v_align <- substr(match.arg(v_align), 1, 1)
+  h_align <- substr(rlang::arg_match(h_align), 1, 1)
+  v_align <- substr(rlang::arg_match(v_align), 1, 1)
 
   # Set default padding values if `padding = NULL`
   if (is.null(padding)) padding <- c(25, 85, 25, 85)
@@ -617,34 +621,37 @@ rtf_tbl_cell <- function(
     }
 
     cell_borders <-
-      vapply(
-        borders,
-        FUN.VALUE = character(1),
-        USE.NAMES = FALSE,
-        FUN = function(x) {
+      paste(
+        vapply(
+          borders,
+          FUN.VALUE = character(1),
+          USE.NAMES = FALSE,
+          FUN = function(x) {
 
-          if (is.numeric(x$color)) {
-            border_color_value <- x$color
-          } else {
-            border_color_value <- rtf_raw(paste0("<<COLOR:", x$color, ">>"))
+            if (is.numeric(x$color)) {
+              border_color_value <- x$color
+            } else {
+              border_color_value <- rtf_raw(paste0("<<COLOR:", x$color, ">>"))
+            }
+
+            rtf_paste0(
+              rtf_key("clbrdr", substr(x$direction, 1, 1)),
+              rtf_key("brdr", x$style),
+              rtf_key("brdrw", x$width),
+              rtf_key("brdrcf", border_color_value)
+            )
           }
-
-          rtf_paste0(
-            rtf_key("clbrdr", substr(x$direction, 1, 1)),
-            rtf_key("brdr", x$style),
-            rtf_key("brdrw", x$width),
-            rtf_key("brdrcf", border_color_value)
-          )
-        }
-      ) %>%
-      paste(collapse = "")
+        ),
+        collapse = ""
+      )
   } else {
     cell_borders <- ""
   }
 
   # Set background color
   if (!is.null(cell_background_color)) {
-    cell_background_color <- rtf_key("clcbpat", paste0("<<COLOR:", cell_background_color, ">>"))
+    cell_background_color <-
+      rtf_key("clcbpat", paste0("<<COLOR:", cell_background_color, ">>"))
   } else {
     cell_background_color <- ""
   }
@@ -744,19 +751,33 @@ footnote_mark_to_rtf <- function(mark) {
   }
 }
 
-rtf_escape <- function(x) {
+escape_rtf <- function(text) {
 
-  if (length(x) < 1) return(x)
+  if (length(text) < 1) return(text)
+
+  # If all text elements are `NA_character_` then return `text` unchanged
+  if (all(is.na(text))) {
+    return(text)
+  }
+
+  # Determine the elements of `text` that are `NA_character_`
+  na_text <- is.na(text)
+
+  x <- text[!na_text]
 
   x <- gsub("\\", "\\'5c", x, fixed = TRUE)
   x <- gsub("{", "\\'7b", x, fixed = TRUE)
   x <- gsub("}", "\\'7d", x, fixed = TRUE)
-  x <- vapply(x, FUN.VALUE = character(1), FUN = rtf_escape_unicode, USE.NAMES = FALSE)
-  class(x) <- "rtf_text"
-  x
+
+  x <- vapply(x, FUN.VALUE = character(1), FUN = escape_rtf_unicode, USE.NAMES = FALSE)
+
+  text[!na_text] <- x
+
+  class(text) <- "rtf_text"
+  text
 }
 
-rtf_escape_unicode <- function(x) {
+escape_rtf_unicode <- function(x) {
 
   # Ensure that we encode non-UTF-8 strings to UTF-8 in a
   # two-step process: (1) to UTF-8, (2) to RTF's weird signed
@@ -932,12 +953,7 @@ create_heading_component_rtf <- function(data) {
     unlist()
 
   if (is.null(col_widths)) {
-
-     n_cols <-
-       boxh %>%
-       dplyr::filter(type %in% c("default", "stub")) %>%
-       nrow()
-
+     n_cols <- nrow(dplyr::filter(boxh, type %in% c("default", "stub")))
      col_widths <- rep("100%", n_cols)
   }
 
@@ -958,14 +974,14 @@ create_heading_component_rtf <- function(data) {
   table_border_top_color <- dt_options_get_value(data, option = "table_border_top_color")
 
   if ("title" %in% footnotes_tbl$locname) {
-    footnote_title_marks <- footnotes_tbl %>% coalesce_marks(locname = "title")
+    footnote_title_marks <- coalesce_marks(fn_tbl = footnotes_tbl, locname = "title")
     footnote_title_marks <- footnote_title_marks$fs_id_c
   } else {
     footnote_title_marks <- ""
   }
 
   if ("subtitle" %in% footnotes_tbl$locname) {
-    footnote_subtitle_marks <- footnotes_tbl %>% coalesce_marks(locname = "subtitle")
+    footnote_subtitle_marks <- coalesce_marks(fn_tbl = footnotes_tbl, locname = "subtitle")
     footnote_subtitle_marks <- footnote_subtitle_marks$fs_id_c
   } else {
     footnote_subtitle_marks <- ""
@@ -1218,15 +1234,30 @@ create_columns_component_rtf <- function(data) {
       spanner_ids_row[is.na(spanner_ids_row)] <- ""
       spanners_row[is.na(spanners_row)] <- ""
 
-      spanners_lengths <- unclass(rle(spanner_ids[i, ]))
+      spanners_rle <- rle(unname(spanner_ids[i, ]))
+
+      spanners_lengths <- unclass(spanners_rle)
 
       merge_keys_spanners <- c()
-
       for (j in seq_along(spanners_lengths$lengths)) {
         if (spanners_lengths$lengths[j] == 1) {
           merge_keys_spanners <- c(merge_keys_spanners, 0)
         } else {
           merge_keys_spanners <- c(merge_keys_spanners, 1, rep(2, spanners_lengths$lengths[j] - 1))
+        }
+      }
+
+      # The `sig_cells` vector contains the indices of spanners' elements
+      # where the value is either NA, or, is different than the previous value;
+      # because NAs are distinct, every NA element will be present in `sig_cells`
+      sig_cells <- c(1, utils::head(cumsum(spanners_rle$lengths) + 1, -1))
+
+      # Replace repeating labels with an empty string, based on the
+      # vector `sig_cells`
+      for (k in seq_along(spanner_ids_row)) {
+        if (k %in% sig_cells) next
+        if (!(k %in% sig_cells)) {
+          spanners_row[k] <- ""
         }
       }
 
@@ -1354,8 +1385,10 @@ create_body_component_rtf <- function(data) {
   if (any(is.na(groups_rows_df$group_label))) {
 
     groups_rows_df <-
-      groups_rows_df %>%
-      dplyr::mutate(group_label = ifelse(is.na(group_label), "", group_label))
+      dplyr::mutate(
+        groups_rows_df,
+        group_label = ifelse(is.na(group_label), "", group_label)
+      )
   }
 
   row_groups_present <- nrow(groups_rows_df) > 0
@@ -1384,9 +1417,11 @@ create_body_component_rtf <- function(data) {
   for (i in seq_len(n_rows)) {
 
     group_info <- groups_rows_df[groups_rows_df$row_start == i, c("group_id", "group_label")]
+
     if (nrow(group_info) == 0) {
       group_info <- NULL
     }
+
     group_id <- group_info[["group_id"]]
     group_label <- group_info[["group_label"]]
 
@@ -1437,9 +1472,11 @@ create_body_component_rtf <- function(data) {
               rtf_border("top", color = table_body_hlines_color, width = 10),
               rtf_border("bottom", color = table_body_hlines_color, width = 10)
             )
+
           if ("group_label" %in% stub_layout && x == 1) {
 
             if (i %in% groups_rows_df$row_start) {
+              cell_matrix[[i, x]] <- group_label
               top_bottom_borders[[2]] <- NULL
             } else if (i %in% groups_rows_df$row_end) {
               top_bottom_borders[[1]] <- NULL
@@ -1495,6 +1532,7 @@ create_body_component_rtf <- function(data) {
           widths = col_widths,
           height = 0
         )
+
     } else {
 
       body_row <-
@@ -1524,8 +1562,11 @@ create_body_component_rtf <- function(data) {
       if (group_id %in% names(list_of_summaries$summary_df_display_list)) {
 
         summary_df <-
-          list_of_summaries$summary_df_display_list[[group_id]] %>%
-          dplyr::select(.env$rowname_col_private, .env$default_vars)
+          dplyr::select(
+            list_of_summaries$summary_df_display_list[[group_id]],
+            dplyr::all_of(rowname_col_private),
+            dplyr::all_of(default_vars)
+          )
 
         n_summary_rows <- seq_len(nrow(summary_df))
 
@@ -1599,8 +1640,11 @@ create_body_component_rtf <- function(data) {
       grand_summary_col %in% names(list_of_summaries$summary_df_display_list)) {
 
     grand_summary_df <-
-      list_of_summaries$summary_df_display_list[[grand_summary_col]] %>%
-      dplyr::select(.env$rowname_col_private, .env$default_vars)
+      dplyr::select(
+        list_of_summaries$summary_df_display_list[[grand_summary_col]],
+        dplyr::all_of(rowname_col_private),
+        dplyr::all_of(default_vars)
+      )
 
     for (j in seq_len(nrow(grand_summary_df))) {
 
@@ -1826,9 +1870,7 @@ generate_notes_list <- function(
   if (nrow(footnotes_tbl) > 0) {
 
     footnotes_tbl <-
-      footnotes_tbl %>%
-      dplyr::select(fs_id, footnotes) %>%
-      dplyr::distinct()
+      dplyr::distinct(dplyr::select(footnotes_tbl, fs_id, footnotes))
 
     footnote_text <- footnotes_tbl[["footnotes"]]
     footnote_mark <- footnotes_tbl[["fs_id"]]

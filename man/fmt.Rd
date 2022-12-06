@@ -4,7 +4,7 @@
 \alias{fmt}
 \title{Set a column format with a formatter function}
 \usage{
-fmt(data, columns = everything(), rows = everything(), fns, prepend = FALSE)
+fmt(data, columns = everything(), rows = everything(), fns)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -25,10 +25,6 @@ to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{fns}{Either a single formatting function or a named list of functions.}
-
-\item{prepend}{Should the formatting function(s) be brought to the beginning
-of the formatting queue (\code{TRUE}) or placed at the end (\code{FALSE}). By default,
-this is \code{FALSE} and this leads to 'last-one-wins' semantics.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -53,13 +49,15 @@ contexts. This can be in the form of \code{fns = list(html = function(x) ..., la
 multiple-function case, we recommended including the \code{default} function as a
 fallback if all contexts aren't provided.
 }
-\details{
-As with all of the \verb{fmt_*()} functions, targeting of values is done through
-\code{columns} and additionally by \code{rows} (if nothing is provided for \code{rows} then
-entire columns are selected). Conditional formatting is possible by providing
-a conditional expression to the \code{rows} argument. See the \emph{Arguments} section
-for more information on this.
+\section{Targeting the values to be formatted}{
+
+
+Targeting of values is done through \code{columns} and additionally by \code{rows} (if
+nothing is provided for \code{rows} then entire columns are selected). Conditional
+formatting is possible by providing a conditional expression to the \code{rows}
+argument. See the \emph{Arguments} section for more information on this.
 }
+
 \section{Examples}{
 
 
@@ -78,17 +76,17 @@ Use \code{\link{exibble}} to create a \strong{gt} table. Format the numeric valu
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_1.png" alt="This image of a table was generated from the first code example in the `fmt()` help file." style="width:100\%;">
 }}
 }
 
 \section{Function ID}{
 
-3-16
+3-17
 }
 
 \seealso{
-Other Format Data: 
+Other data formatting functions: 
 \code{\link{data_color}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
@@ -103,12 +101,14 @@ Other Format Data:
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
+\code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},
+\code{\link{sub_values}()},
 \code{\link{sub_zero}()},
 \code{\link{text_transform}()}
 }
-\concept{Format Data}
+\concept{data formatting functions}

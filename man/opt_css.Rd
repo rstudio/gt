@@ -64,25 +64,26 @@ table ID explicitly (here as \code{"one"}).
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_css_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_css_1.png" alt="This image of a table was generated from the first code example in the `opt_css()` help file." style="width:100\%;">
 }}
 }
 
 \section{Function ID}{
 
-9-10
+9-11
 }
 
 \seealso{
-Other Table Option Functions: 
+Other table option functions: 
 \code{\link{opt_align_table_header}()},
 \code{\link{opt_all_caps}()},
 \code{\link{opt_footnote_marks}()},
 \code{\link{opt_horizontal_padding}()},
 \code{\link{opt_row_striping}()},
+\code{\link{opt_stylize}()},
 \code{\link{opt_table_font}()},
 \code{\link{opt_table_lines}()},
 \code{\link{opt_table_outline}()},
 \code{\link{opt_vertical_padding}()}
 }
-\concept{Table Option Functions}
+\concept{table option functions}

@@ -3,7 +3,8 @@
 #' @noRd
 build_data <- function(data, context) {
 
-  checkmate::assert_class(data, "gt_tbl")
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   # Create `body` with rendered values; move
   # input data cells to `body` that didn't have
@@ -12,6 +13,7 @@ build_data <- function(data, context) {
   # the correct order
   data <- dt_body_build(data = data)
   data <- render_formats(data = data, context = context)
+  data <- render_substitutions(data = data, context = context)
   data <- migrate_unformatted_to_output(data = data, context = context)
   data <- perform_col_merge(data = data, context = context)
 

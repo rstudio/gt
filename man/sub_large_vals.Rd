@@ -45,10 +45,11 @@ can be used to consider only negative values.}
 An object of class \code{gt_tbl}.
 }
 \description{
-Wherever there is numerical data that are very large in value, replacement
+Wherever there are numerical data that are very large in value, replacement
 text may be better for explanatory purposes. The \code{sub_large_vals()} function
 allows for this replacement through specification of a \code{threshold}, a
-\code{large_pattern}, and the sign of the values to be considered.
+\code{large_pattern}, and the sign (positive or negative) of the values to be
+considered.
 }
 \details{
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
@@ -65,25 +66,23 @@ values that could potentially undergo some substitution.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- dplyr::tibble(num = c(0, NA, 10^(8:14)))
 
 tbl
+#> # A tibble: 9 x 1
+#>     num
+#>   <dbl>
+#> 1  0   
+#> 2 NA   
+#> 3  1e 8
+#> 4  1e 9
+#> 5  1e10
+#> 6  1e11
+#> 7  1e12
+#> 8  1e13
+#> 9  1e14
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 9 × 1
-##     num
-##   <dbl>
-## 1  0   
-## 2 NA   
-## 3  1e 8
-## 4  1e 9
-## 5  1e10
-## 6  1e11
-## 7  1e12
-## 8  1e13
-## 9  1e14
-}\if{html}{\out{</div>}}
-
-The \code{tbl} contains a variety of smaller numbers and some might be small
-enough to reformat with a threshold value. With \code{sub_small_vals()} we can
-do just that:
+The \code{tbl} object contains a variety of larger numbers and some might be
+larger enough to reformat with a threshold value. With \code{sub_large_vals()} we
+can do just that:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
   gt() \%>\%
@@ -92,7 +91,7 @@ do just that:
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_large_vals_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_large_vals_1.png" alt="This image of a table was generated from the first code example in the `sub_large_vals()` help file." style="width:100\%;">
 }}
 
 Large negative values can also be handled but they are handled specially
@@ -108,7 +107,7 @@ value of \code{">={x}"} the \code{">="} is automatically changed to \code{"<="}.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_large_vals_2.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_large_vals_2.png" alt="This image of a table was generated from the second code example in the `sub_large_vals()` help file." style="width:100\%;">
 }}
 
 You don't have to settle with the default \code{threshold} value or the default
@@ -126,17 +125,17 @@ omitted.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_large_vals_3.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_large_vals_3.png" alt="This image of a table was generated from the third code example in the `sub_large_vals()` help file." style="width:100\%;">
 }}
 }
 
 \section{Function ID}{
 
-3-19
+3-20
 }
 
 \seealso{
-Other Format Data: 
+Other data formatting functions: 
 \code{\link{data_color}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
@@ -151,12 +150,14 @@ Other Format Data:
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
+\code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt}()},
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},
+\code{\link{sub_values}()},
 \code{\link{sub_zero}()},
 \code{\link{text_transform}()}
 }
-\concept{Format Data}
+\concept{data formatting functions}

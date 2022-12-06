@@ -50,20 +50,18 @@ values that could potentially undergo some substitution.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- dplyr::tibble(num = c(10^(-1:2), 0, 0, 10^(4:6)))
 
 tbl
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 9 × 1
-##         num
-##       <dbl>
-## 1       0.1
-## 2       1  
-## 3      10  
-## 4     100  
-## 5       0  
-## 6       0  
-## 7   10000  
-## 8  100000  
-## 9 1000000
+#> # A tibble: 9 x 1
+#>         num
+#>       <dbl>
+#> 1       0.1
+#> 2       1  
+#> 3      10  
+#> 4     100  
+#> 5       0  
+#> 6       0  
+#> 7   10000  
+#> 8  100000  
+#> 9 1000000
 }\if{html}{\out{</div>}}
 
 With this table, the zero values in will be given replacement text with a
@@ -76,17 +74,17 @@ single call of \code{sub_zero()}.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_zero_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_zero_1.png" alt="This image of a table was generated from the first code example in the `sub_zero()` help file." style="width:100\%;">
 }}
 }
 
 \section{Function ID}{
 
-3-17
+3-18
 }
 
 \seealso{
-Other Format Data: 
+Other data formatting functions: 
 \code{\link{data_color}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
@@ -101,12 +99,14 @@ Other Format Data:
 \code{\link{fmt_partsper}()},
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
+\code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},
+\code{\link{sub_values}()},
 \code{\link{text_transform}()}
 }
-\concept{Format Data}
+\concept{data formatting functions}

@@ -1,39 +1,41 @@
-expect_tab_colnames <- function(tab,
-                                df,
-                                rowname = "NA",
-                                groupname_is_na = TRUE) {
+expect_tab_colnames <- function(
+    tab,
+    df,
+    rowname = "NA",
+    groupname_is_na = TRUE
+) {
 
   if (rowname == "NA") {
 
-    # Expect that the `rowname` column of the `stub_df`
+    # Expect that the `row_id` column of the `stub_df`
     # object is entirely filled with NAs
     expect_true(
-      all(is.na(dt_stub_df_get(data = tab)[["rowname"]]))
+      all(is.na(dt_stub_df_get(data = tab)[["row_id"]]))
     )
 
   } else if (rowname == "col") {
 
-    # Expect that the `rowname` column of the `stub_df`
+    # Expect that the `row_id` column of the `stub_df`
     # object is entirely filled with NAs
     expect_equal(
-      dt_stub_df_get(data = tab)[["rowname"]],
+      dt_stub_df_get(data = tab)[["row_id"]],
       df$rowname
     )
 
   } else if (rowname == "tibble") {
 
     expect_equal(
-      dt_stub_df_get(data = tab)[["rowname"]],
+      dt_stub_df_get(data = tab)[["row_id"]],
       row.names(df)
     )
   }
 
   if (groupname_is_na) {
 
-    # Expect that the `groupname` column of the `stub_df`
+    # Expect that the `group_id` column of the `stub_df`
     # object is entirely filled with NAs
     expect_true(
-      all(is.na(dt_stub_df_get(data = tab)[["groupname"]]))
+      all(is.na(dt_stub_df_get(data = tab)[["group_id"]]))
     )
   }
 }
@@ -58,6 +60,7 @@ expect_tab <- function(tab, df) {
   expect_s3_class(dt_footnotes_get(data = tab), "data.frame")
   expect_type(dt_source_notes_get(data = tab), "list")
   expect_type(dt_formats_get(data = tab), "list")
+  expect_type(dt_substitutions_get(data = tab), "list")
   expect_s3_class(dt_styles_get(data = tab), "data.frame")
   expect_s3_class(dt_options_get(data = tab), "data.frame")
   expect_type(dt_transforms_get(data = tab), "list")
@@ -68,7 +71,7 @@ expect_tab <- function(tab, df) {
 
   dt_stub_df_get(data = tab) %>%
     dim() %>%
-    expect_equal(c(nrow(df), 5))
+    expect_equal(c(nrow(df), 6))
 
   dt_heading_get(data = tab) %>%
     length() %>%
@@ -94,13 +97,17 @@ expect_tab <- function(tab, df) {
     length() %>%
     expect_equal(0)
 
+  dt_substitutions_get(data = tab) %>%
+    length() %>%
+    expect_equal(0)
+
   dt_styles_get(data = tab) %>%
     dim() %>%
     expect_equal(c(0, 7))
 
   dt_options_get(data = tab) %>%
     dim() %>%
-    expect_equal(c(168, 5))
+    expect_equal(c(171, 5))
 
   dt_transforms_get(data = tab) %>%
     length() %>%
@@ -119,11 +126,13 @@ expect_tab <- function(tab, df) {
     nrow(df)
   )
 
-  # Expect that the column names of the `stub_df` object
-  # are `rownum_i`, `group_id`, `rowname`, and `group_label`
+  # Expect specific column names within the `stub_df` object
   expect_equal(
     colnames(dt_stub_df_get(data = tab)),
-    c("rownum_i", "group_id", "rowname", "group_label", "built")
+    c(
+      "rownum_i", "row_id", "group_id", "group_label",
+      "indent", "built_group_label"
+    )
   )
 }
 
@@ -143,7 +152,7 @@ gt_attr_names <- function() {
     "_data", "_boxhead",
     "_stub_df", "_row_groups",
     "_heading", "_spanners", "_stubhead",
-    "_footnotes", "_source_notes", "_formats", "_styles",
+    "_footnotes", "_source_notes", "_formats", "_substitutions", "_styles",
     "_summary", "_options", "_transforms", "_locale", "_has_built"
   )
 }

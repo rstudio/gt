@@ -51,11 +51,12 @@ document but rather an HTML fragment.
 }
 
 \seealso{
-Other Export Functions: 
+Other table export functions: 
 \code{\link{as_latex}()},
 \code{\link{as_rtf}()},
 \code{\link{as_word}()},
+\code{\link{extract_cells}()},
 \code{\link{extract_summary}()},
 \code{\link{gtsave}()}
 }
-\concept{Export Functions}
+\concept{table export functions}

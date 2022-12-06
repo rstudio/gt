@@ -177,13 +177,15 @@ resolve_cells_row_groups <- function(data, object) {
 #' @param data A gt object or data frame or tibble
 #' @return Character vector
 #' @noRd
-resolve_cols_c <- function(expr,
-                           data,
-                           strict = TRUE,
-                           excl_stub = TRUE,
-                           null_means = c("everything", "nothing")) {
+resolve_cols_c <- function(
+    expr,
+    data,
+    strict = TRUE,
+    excl_stub = TRUE,
+    null_means = c("everything", "nothing")
+) {
 
-  null_means <- match.arg(null_means)
+  null_means <- rlang::arg_match(null_means)
 
   names(
     resolve_cols_i(
@@ -205,17 +207,34 @@ resolve_cols_c <- function(expr,
 #'   excluded from the selection of column names.
 #' @return Named integer vector
 #' @noRd
-resolve_cols_i <- function(expr,
-                           data,
-                           strict = TRUE,
-                           excl_stub = TRUE,
-                           null_means = c("everything", "nothing")) {
-
+resolve_cols_i <- function(
+    expr,
+    data,
+    strict = TRUE,
+    excl_stub = TRUE,
+    null_means = c("everything", "nothing")
+) {
   quo <- rlang::enquo(expr)
   cols_excl <- c()
-  null_means <- match.arg(null_means)
+  null_means <- rlang::arg_match(null_means)
 
   if (is_gt(data)) {
+
+    # If we use the gt-specific select helper `stub()` then we
+    # will retrieve the stub var name and return the output in the
+    # same format as the return value for `tidyselect::eval_select()`
+    if (rlang::as_label(quo) == "stub()") {
+
+      stub_var <- dt_boxhead_get_var_stub(data = data)
+
+      if (!is.null(stub_var)) {
+        stub_col <- 1
+        names(stub_col) <- stub_var
+        return(stub_col)
+      } else {
+        return(NULL)
+      }
+    }
 
     # In most cases we would want to exclude the column that
     # represents the stub but that isn't always the case (e.g.,
@@ -225,14 +244,14 @@ resolve_cols_i <- function(expr,
     # stub, if present, from `cols_excl`)
     stub_var <-
       if (excl_stub) {
-        dt_boxhead_get_var_stub(data)
+        dt_boxhead_get_var_stub(data = data)
       } else {
         NULL
       }
 
     # The columns that represent the group rows are always
     # excluded (i.e., included in the `col_excl` vector)
-    group_rows_vars <- dt_boxhead_get_vars_groups(data)
+    group_rows_vars <- dt_boxhead_get_vars_groups(data = data)
 
     cols_excl <- c(stub_var, group_rows_vars)
 
@@ -246,7 +265,19 @@ resolve_cols_i <- function(expr,
   # With the quosure and the `data`, we can use `tidyselect::eval_select()`
   # to resolve the expression to columns indices/names; no `env` argument
   # is required here because the `expr` is a quosure
-  selected <- tidyselect::eval_select(expr = quo, data = data, strict = strict)
+  # TODO: with tidyselect v1.2.0, there are a lot of warnings emitted because
+  # of the way that the expression is supplied; this can be fixed later (since
+  # these errors are developer facing) but suppressing here was important so
+  # as to not pollute the snapshot testing values with warnings (that would
+  # cause failures)
+  selected <-
+    suppressWarnings(
+      tidyselect::eval_select(
+        expr = quo,
+        data = data,
+        strict = strict
+      )
+    )
 
   # Exclude certain columns (e.g., stub & group columns) if necessary
   selected[!names(selected) %in% cols_excl]
@@ -311,7 +342,7 @@ translate_legacy_resolver_expr <- function(quo, null_means) {
 resolve_rows_l <- function(expr, data) {
 
   if (is_gt(data)) {
-    row_names <- dt_stub_df_get(data)$rowname
+    row_names <- dt_stub_df_get(data)$row_id
     data <- dt_data_get(data = data)
   } else {
     row_names <- row.names(data)
@@ -381,9 +412,11 @@ resolve_vector_i <- function(expr, vector, item_label = "item") {
   which(resolve_vector_l(expr = {{ expr }}, vector = vector, item_label = item_label))
 }
 
-normalize_resolved <- function(resolved,
-                               item_names,
-                               item_label) {
+normalize_resolved <- function(
+    resolved,
+    item_names,
+    item_label
+) {
 
   item_count <- length(item_names)
   item_sequence <- seq_along(item_names)

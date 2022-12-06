@@ -62,9 +62,9 @@ dt_boxhead_edit <- function(data, var, ...) {
     cli::cli_abort("`dt_boxhead_edit()` expects a single value at `...`.")
   }
 
-  check_names_dt_boxhead_expr(val_list)
+  check_names_dt_boxhead_expr(expr = val_list)
 
-  check_vars_dt_boxhead(var, dt_boxhead)
+  check_vars_dt_boxhead(var = var, dt_boxhead = dt_boxhead)
 
   if (is.list(dt_boxhead[[names(val_list)]])) {
     dt_boxhead[[which(dt_boxhead$var == var_name), names(val_list)]] <- unname(val_list)
@@ -113,7 +113,7 @@ dt_boxhead_set_hidden <- function(data, vars) {
 
   dt_boxhead <- dt_boxhead_get(data = data)
 
-  dt_boxhead[which(dt_boxhead$var %in% vars), "type"] <- "hidden"
+  dt_boxhead[which(dt_boxhead$var %in% vars & dt_boxhead$type != "stub"), "type"] <- "hidden"
 
   dt_boxhead_set(data = data, boxh = dt_boxhead)
 }
@@ -122,7 +122,7 @@ dt_boxhead_set_not_hidden <- function(data, vars) {
 
   dt_boxhead <- dt_boxhead_get(data = data)
 
-  dt_boxhead[which(dt_boxhead$var %in% vars), "type"] <- "default"
+  dt_boxhead[which(dt_boxhead$var %in% vars & dt_boxhead$type != "stub"), "type"] <- "default"
 
   dt_boxhead_set(data = data, boxh = dt_boxhead)
 }
@@ -185,6 +185,26 @@ dt_boxhead_get_vars_groups <- function(data) {
   } else {
     res
   }
+}
+
+dt_boxhead_get_alignments_in_stub <- function(data) {
+
+  stub_layout <- get_stub_layout(data = data)
+
+  c(
+    if ("group_label" %in% stub_layout) {
+      dt_boxhead_get_alignment_by_var(
+        data = data,
+        dt_boxhead_get_vars_groups(data = data)
+      )
+    },
+    if ("rowname" %in% stub_layout) {
+      dt_boxhead_get_alignment_by_var(
+        data = data,
+        dt_boxhead_get_var_stub(data = data)
+      )
+    }
+  )
 }
 
 dt_boxhead_get_var_by_type <- function(data, type) {

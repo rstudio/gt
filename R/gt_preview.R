@@ -42,7 +42,7 @@
 #' `r man_get_image_tag(file = "man_gt_preview_1.png")`
 #' }}
 #'
-#' @family Create Table
+#' @family table creation functions
 #' @section Function ID:
 #' 1-2
 #'
@@ -113,6 +113,7 @@ gt_preview <- function(
   # numbers in the `rowname` column so that `gt()` will pick
   # this up as row labels for inclusion into the table stub
   if (isTRUE(incl_rownums)) {
+
     data <-
       cbind(
         data.frame(
@@ -144,12 +145,15 @@ gt_preview <- function(
   if (isTRUE(has_ellipsis_row)) {
 
     gt_tbl <-
-      gt_tbl %>%
       tab_style(
+        gt_tbl,
         style = cell_fill(color = "#E4E4E4"),
         locations = cells_body(columns = visible_vars, rows = ellipsis_row)
-      ) %>%
+      )
+
+    gt_tbl <-
       text_transform(
+        gt_tbl,
         locations = cells_body(columns = everything(), rows = ellipsis_row),
         fn = function(x) ""
       )
@@ -157,8 +161,8 @@ gt_preview <- function(
     if (isTRUE(incl_rownums)) {
 
       gt_tbl <-
-        gt_tbl %>%
         tab_style(
+          gt_tbl,
           style = list(
             cell_fill(color = "#E4E4E4"),
             cell_text(size = "x-small")

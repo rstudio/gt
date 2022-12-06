@@ -86,7 +86,7 @@ to data cells that satisfy a condition (using \code{tab_style()}).
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_1.png" alt="This image of a table was generated from the first code example in the `tab_style()` help file." style="width:100\%;">
 }}
 
 Use \code{\link{sp500}} to create a \strong{gt} table. Color entire rows of cells based on
@@ -113,7 +113,7 @@ values in a particular column.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_2.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_2.png" alt="This image of a table was generated from the second code example in the `tab_style()` help file." style="width:100\%;">
 }}
 
 Use \code{\link{exibble}} to create a \strong{gt} table. Replace missing values with the
@@ -134,13 +134,13 @@ Use \code{\link{exibble}} to create a \strong{gt} table. Replace missing values 
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_3.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_3.png" alt="This image of a table was generated from the third code example in the `tab_style()` help file." style="width:100\%;">
 }}
 }
 
 \section{Function ID}{
 
-2-8
+2-10
 }
 
 \seealso{
@@ -148,14 +148,18 @@ Use \code{\link{exibble}} to create a \strong{gt} table. Replace missing values 
 defining custom styles and \code{\link[=cells_body]{cells_body()}} as one of many useful helper
 functions for targeting the locations to be styled.
 
-Other Create or Modify Parts: 
+Other part creation/modification functions: 
+\code{\link{tab_caption}()},
 \code{\link{tab_footnote}()},
 \code{\link{tab_header}()},
+\code{\link{tab_info}()},
 \code{\link{tab_options}()},
 \code{\link{tab_row_group}()},
 \code{\link{tab_source_note}()},
 \code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
-\code{\link{tab_stubhead}()}
+\code{\link{tab_stub_indent}()},
+\code{\link{tab_stubhead}()},
+\code{\link{tab_style_body}()}
 }
-\concept{Create or Modify Parts}
+\concept{part creation/modification functions}

@@ -30,7 +30,7 @@ Get a table of info on some of the recommended \emph{Google Fonts} for tables.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_info_google_fonts_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_info_google_fonts_1.png" alt="This image of a table was generated from the first code example in the `info_google_fonts()` help file." style="width:100\%;">
 }}
 }
 
@@ -40,11 +40,11 @@ Get a table of info on some of the recommended \emph{Google Fonts} for tables.
 }
 
 \seealso{
-Other Information Functions: 
+Other information functions: 
 \code{\link{info_currencies}()},
 \code{\link{info_date_style}()},
 \code{\link{info_locales}()},
 \code{\link{info_paletteer}()},
 \code{\link{info_time_style}()}
 }
-\concept{Information Functions}
+\concept{information functions}

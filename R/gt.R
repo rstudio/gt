@@ -30,8 +30,10 @@
 #'   group labels for generation of stub row groups. If the input `data` table
 #'   has the `grouped_df` class (through use of the [dplyr::group_by()] function
 #'   or associated `group_by*()` functions) then any input here is ignored.
-#' @param caption An optional table caption to use for cross-referencing
-#'   in R Markdown documents and **bookdown** book projects.
+#' @param process_md Should the contents of the `rowname_col` and
+#'   `groupname_col` be interpreted as Markdown? By default this is `FALSE`.
+#' @param caption An optional table caption to use for cross-referencing in R
+#'   Markdown, Quarto, or **bookdown**.
 #' @param rownames_to_stub An option to take rownames from the input `data`
 #'   table as row captions in the display table stub.
 #' @param auto_align Optionally have column data be aligned depending on the
@@ -94,7 +96,7 @@
 #' `r man_get_image_tag(file = "man_gt_2.png")`
 #' }}
 #'
-#' @family Create Table
+#' @family table creation functions
 #' @section Function ID:
 #' 1-1
 #'
@@ -103,6 +105,7 @@ gt <- function(
     data,
     rowname_col = "rowname",
     groupname_col = dplyr::group_vars(data),
+    process_md = FALSE,
     caption = NULL,
     rownames_to_stub = FALSE,
     auto_align = TRUE,
@@ -156,7 +159,8 @@ gt <- function(
       data = data,
       rowname_col = rowname_col,
       groupname_col = groupname_col,
-      row_group.sep = row_group.sep
+      row_group.sep = row_group.sep,
+      process_md = process_md
     )
   data <- dt_row_groups_init(data = data)
   data <- dt_heading_init(data = data)
@@ -165,6 +169,7 @@ gt <- function(
   data <- dt_footnotes_init(data = data)
   data <- dt_source_notes_init(data = data)
   data <- dt_formats_init(data = data)
+  data <- dt_substitutions_init(data = data)
   data <- dt_styles_init(data = data)
   data <- dt_summary_init(data = data)
   data <- dt_options_init(data = data)
@@ -175,6 +180,7 @@ gt <- function(
   # Add any user-defined table ID to the `table_id` parameter
   # (if NULL, the default setting will generate a random ID)
   if (!is.null(id)) {
+
     data <-
       dt_options_set_value(
         data = data,
@@ -183,12 +189,9 @@ gt <- function(
       )
   }
 
-  # Add any user-defined table caption to the `table_id` parameter
-  # TODO: consider whether this might take a string or a logical (to say that
-  # we'll use the header from `tab_header` as the table caption); this might
-  # require some more thought still because a `caption` arg might also be
-  # sensible in `tab_header`
+  # Add any user-defined table caption to the `table_caption` parameter
   if (!is.null(caption)) {
+
     data <-
       dt_options_set_value(
         data = data,
@@ -204,7 +207,42 @@ gt <- function(
   # If automatic alignment of values is to be done, call
   # the `cols_align()` function on data
   if (auto_align) {
+
     data <- cols_align(data = data, align = "auto")
+
+    # Determine if there is a stub column
+    stub_var <- dt_boxhead_get_var_stub(data = data)
+
+    # If there is a stub, tweak the alignment by checking whether the values
+    # are predominantly number-like; this will generally get the correct
+    # appearance for either a row-label-type stub or an numeric-index-type stub
+    if (!is.na(stub_var)) {
+
+      data_tbl <- dt_data_get(data = data)
+
+      col_vals <- data_tbl[[stub_var]]
+
+      res <- grepl("^[0-9 -/:\\.]*$", col_vals[!is.na(col_vals)])
+
+      if (length(res) > 0 && all(res)) {
+
+        data <-
+          dt_boxhead_edit(
+            data = data,
+            var = stub_var,
+            column_align = "right"
+          )
+      }
+    }
+  }
+
+  if (
+    process_md &&
+    !is.null(rowname_col) &&
+    rowname_col %in% colnames(dt_data_get(data = data))
+  ) {
+
+    data <- fmt_markdown(data = data, columns = rowname_col)
   }
 
   data

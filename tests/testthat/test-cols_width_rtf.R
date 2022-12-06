@@ -1,5 +1,3 @@
-skip_on_cran()
-
 test_that("The `cols_width()` function works in making RTF tables", {
 
   # Test matrix for setting of column widths; broadly there are 21 cases with

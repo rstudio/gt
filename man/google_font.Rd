@@ -43,7 +43,7 @@ the webfont is not accessible).
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_google_font_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_google_font_1.png" alt="This image of a table was generated from the first code example in the `google_font()` help file." style="width:100\%;">
 }}
 
 Use \code{\link{sp500}} to create a small \strong{gt} table, using \code{\link[=fmt_currency]{fmt_currency()}} to
@@ -72,7 +72,7 @@ catchall \code{"Serif"} group).
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_google_font_2.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_google_font_2.png" alt="This image of a table was generated from the second code example in the `google_font()` help file." style="width:100\%;">
 }}
 }
 
@@ -82,7 +82,7 @@ catchall \code{"Serif"} group).
 }
 
 \seealso{
-Other Helper Functions: 
+Other helper functions: 
 \code{\link{adjust_luminance}()},
 \code{\link{cell_borders}()},
 \code{\link{cell_fill}()},
@@ -108,6 +108,7 @@ Other Helper Functions:
 \code{\link{md}()},
 \code{\link{pct}()},
 \code{\link{px}()},
-\code{\link{random_id}()}
+\code{\link{random_id}()},
+\code{\link{stub}()}
 }
-\concept{Helper Functions}
+\concept{helper functions}

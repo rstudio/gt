@@ -12,7 +12,8 @@ dt_stub_df_init <- function(
     data,
     rowname_col,
     groupname_col,
-    row_group.sep
+    row_group.sep,
+    process_md
 ) {
 
   data_tbl <- dt_data_get(data = data)
@@ -21,33 +22,38 @@ dt_stub_df_init <- function(
   stub_df <-
     dplyr::tibble(
       rownum_i = seq_len(nrow(data_tbl)),
+      row_id = rep(NA_character_, nrow(data_tbl)),
       group_id = rep(NA_character_, nrow(data_tbl)),
-      rowname = rep(NA_character_, nrow(data_tbl)),
       group_label = rep(list(NULL), nrow(data_tbl)),
-      built = rep(NA_character_, nrow(data_tbl))
+      indent = rep(NA_character_, nrow(data_tbl)),
+      built_group_label = rep(NA_character_, nrow(data_tbl))
     )
 
-  # If `rowname` is a column available in `data`,
-  # place that column's data into `stub_df` and
-  # remove it from `data`
+  #
+  # Handle column of data specified as the `rowname_col`
+  #
   if (!is.null(rowname_col) && rowname_col %in% colnames(data_tbl)) {
 
     data <- dt_boxhead_set_stub(data = data, var = rowname_col)
 
-    # Place the `rowname` values into `stub_df$rowname`
-    stub_df[["rowname"]] <- as.character(data_tbl[[rowname_col]])
+    rownames <- data_tbl[[rowname_col]]
+
+    row_id <- create_unique_id_vals(rownames, simplify = process_md)
+
+    # Place the `row_id` values into `stub_df$row_id`
+    stub_df[["row_id"]] <- row_id
   }
 
-  # If `data` is a `grouped_df` then create groups from the
-  # group columns; note that this will overwrite any values
-  # already in `stub_df$group_id`
+  #
+  # Handle column of data specified as the `groupname_col`
+  #
   if (
     !is.null(groupname_col) &&
     length(groupname_col) > 0 &&
     all(groupname_col %in% colnames(data_tbl))
   ) {
 
-    row_group_ids <-
+    row_group_labels <-
       apply(
         data_tbl[, groupname_col],
         MARGIN = 1,
@@ -55,9 +61,40 @@ dt_stub_df_init <- function(
         collapse = row_group.sep
       )
 
-    # Place the `group_labels` values into `stub_df$group_id`
+    if (process_md) {
+
+      #
+      # Ensure that the `row_group_ids` values are simplified to reduce
+      # special characters; this requires use of the recoding so that the
+      # generated IDs map correctly to the the supplied labels
+      #
+
+      unique_row_group_labels <- unique(row_group_labels)
+
+      unique_row_group_ids <-
+        create_unique_id_vals(unique_row_group_labels, simplify = process_md)
+      names(unique_row_group_ids) <- unique_row_group_labels
+
+      row_group_ids <- dplyr::recode(row_group_labels, !!!unique_row_group_ids)
+
+    } else {
+      row_group_ids <- row_group_labels
+    }
+
+    # Place the `row_group_ids` values into `stub_df$group_id`
     stub_df[["group_id"]] <- row_group_ids
-    stub_df[["group_label"]] <- as.list(row_group_ids)
+
+    if (process_md) {
+
+      stub_df$group_label <-
+        lapply(
+          seq_along(row_group_labels),
+          FUN = function(x) md(row_group_labels[x])
+        )
+
+    } else {
+      stub_df[["group_label"]] <- as.list(row_group_labels)
+    }
 
     data <- dt_boxhead_set_row_group(data = data, vars = groupname_col)
   }
@@ -76,20 +113,20 @@ dt_stub_df_exists <- function(data) {
 
   stub_df <- dt_stub_df_get(data = data)
 
-  !all(is.na((stub_df)[["rowname"]]))
+  !all(is.na((stub_df)[["row_id"]]))
 }
 
 dt_stub_df_build <- function(data, context) {
 
   stub_df <- dt_stub_df_get(data = data)
 
-  stub_df$built <-
+  stub_df$built_group_label <-
     vapply(
       stub_df$group_label,
       FUN.VALUE = character(1),
       FUN = function(label) {
         if (!is.null(label)) {
-          process_text(label, context)
+          process_text(text = label, context = context)
         } else {
           ""
         }
@@ -134,45 +171,24 @@ dt_stub_components <- function(data) {
     stub_components <- c(stub_components, "group_id")
   }
 
-  if (any(!is.na(stub_df[["rowname"]])) && !all(stub_df[["rowname"]] == "")) {
-    stub_components <- c(stub_components, "rowname")
+  if (any(!is.na(stub_df[["row_id"]])) && !all(stub_df[["row_id"]] == "")) {
+    stub_components <- c(stub_components, "row_id")
   }
 
   stub_components
 }
 
-# Function that checks `stub_components` and determines whether just the
-# `rowname` part is available; TRUE indicates that we are working with a table
-# with rownames
-dt_stub_components_is_rowname <- function(stub_components) {
-  identical(stub_components, "rowname")
-}
-
-# Function that checks `stub_components` and determines whether just the
-# `group_id` part is available; TRUE indicates that we are working with a table
-# with groups but it doesn't have rownames
-dt_stub_components_is_groupname <- function(stub_components) {
-  identical(stub_components, "group_id")
-}
-
-# Function that checks `stub_components` and determines whether the
-# `rowname` and `group_id` parts are available; TRUE indicates that we are
-# working with a table with rownames and groups
-dt_stub_components_is_rowname_groupname <- function(stub_components) {
-  identical(stub_components, c("group_id", "rowname"))
-}
-
 dt_stub_components_has_rowname <- function(stub_components) {
-  isTRUE("rowname" %in% stub_components)
+  isTRUE("row_id" %in% stub_components)
 }
 
-dt_stub_rowname_at_position <- function(data, i) {
+dt_stub_indentation_at_position <- function(data, i) {
 
-  stub_components <- dt_stub_components(data = data)
+  indent_i <- dt_stub_df_get(data = data)$indent[[i]]
 
-  if (!(dt_stub_components_has_rowname(stub_components = stub_components))) {
+  if (is.na(indent_i)) {
     return(NULL)
   }
 
-  dt_stub_df_get(data = data)$rowname[[i]]
+  as.integer(indent_i)
 }

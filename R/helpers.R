@@ -28,7 +28,7 @@
 #' `r man_get_image_tag(file = "man_md_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
 #' 7-1
 #'
@@ -75,7 +75,7 @@ md <- function(text) {
 #' `r man_get_image_tag(file = "man_html_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
 #' 7-2
 #'
@@ -132,7 +132,7 @@ is_rtf <- function(x) {
 #' `r man_get_image_tag(file = "man_px_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
 #' 7-3
 #'
@@ -182,7 +182,7 @@ px <- function(x) {
 #' `r man_get_image_tag(file = "man_pct_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
 #' 7-4
 #'
@@ -194,6 +194,56 @@ pct <- function(x) {
   }
 
   paste0(x, "%")
+}
+
+#' Select helper for targeting the stub column
+#'
+#' @description
+#' Should you need to target only the stub column for formatting or other
+#' operations, the `stub()` select helper can be used. This obviates the need
+#' to use the name of the column that was selected as the stub column.
+#'
+#' @return A character vector of class `"stub_column"`.
+#'
+#' @section Examples:
+#'
+#' Create a tibble that has a `row` column (values from `1` to `6`), a `group`
+#' column, and a `vals` column (containing the same values as in `row`).
+#'
+#' ```r
+#' tbl <-
+#'   dplyr::tibble(
+#'     row = 1:6,
+#'     group = c(rep("Group A", 3), rep("Group B", 3)),
+#'     vals = 1:6
+#'   )
+#' ```
+#'
+#' Create a **gt** table with a two-column stub (incorporating the `row` and
+#' `group` columns in that). Format the row labels of the stub with
+#' [fmt_roman()] to obtain Roman numerals in the stub; we're selecting the stub
+#' column here with the `stub()` select helper.
+#'
+#' ```r
+#' tbl %>%
+#'   gt(rowname_col = "row", groupname_col = "group") %>%
+#'   fmt_roman(columns = stub()) %>%
+#'   tab_options(row_group.as_column = TRUE)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_stub_1.png")`
+#' }}
+#'
+#' @family helper functions
+#' @section Function ID:
+#' 7-5
+#'
+#' @export
+stub <- function() {
+  x <- "::stub::"
+  class(x) <- "stub_column"
+  x
 }
 
 #' Location helper for targeting the table title and subtitle
@@ -272,9 +322,9 @@ pct <- function(x) {
 #' `r man_get_image_tag(file = "man_cells_title_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
-#' 7-5
+#' 7-6
 #'
 #' @import rlang
 #' @export
@@ -378,9 +428,9 @@ cells_title <- function(groups = c("title", "subtitle")) {
 #' `r man_get_image_tag(file = "man_cells_stubhead_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
-#' 7-6
+#' 7-7
 #'
 #' @export
 cells_stubhead <- function() {
@@ -473,9 +523,9 @@ cells_stubhead <- function() {
 #' `r man_get_image_tag(file = "man_cells_column_spanners_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
-#' 7-7
+#' 7-8
 #'
 #' @import rlang
 #' @export
@@ -577,9 +627,9 @@ cells_column_spanners <- function(spanners = everything()) {
 #' `r man_get_image_tag(file = "man_cells_column_labels_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
-#' 7-8
+#' 7-9
 #'
 #' @import rlang
 #' @export
@@ -683,9 +733,9 @@ cells_column_labels <- function(columns = everything()) {
 #' `r man_get_image_tag(file = "man_cells_row_groups_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
-#' 7-9
+#' 7-10
 #'
 #' @import rlang
 #' @export
@@ -801,9 +851,9 @@ cells_group <- function(groups = TRUE) {
 #' `r man_get_image_tag(file = "man_cells_stub_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
-#' 7-10
+#' 7-11
 #'
 #' @import rlang
 #' @export
@@ -900,9 +950,9 @@ cells_stub <- function(rows = everything()) {
 #' `r man_get_image_tag(file = "man_cells_body_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
-#' 7-11
+#' 7-12
 #'
 #' @import rlang
 #' @export
@@ -1035,9 +1085,9 @@ cells_body <- function(
 #' `r man_get_image_tag(file = "man_cells_summary_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
-#' 7-12
+#' 7-13
 #'
 #' @import rlang
 #' @export
@@ -1158,9 +1208,9 @@ cells_summary <- function(
 #' `r man_get_image_tag(file = "man_cells_grand_summary_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
-#' 7-13
+#' 7-14
 #'
 #' @import rlang
 #' @export
@@ -1286,9 +1336,9 @@ cells_grand_summary <- function(
 #' `r man_get_image_tag(file = "man_cells_stub_summary_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
-#' 7-14
+#' 7-15
 #'
 #' @import rlang
 #' @export
@@ -1399,9 +1449,9 @@ cells_stub_summary <- function(
 #' `r man_get_image_tag(file = "man_cells_stub_grand_summary_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
-#' 7-15
+#' 7-16
 #'
 #' @import rlang
 #' @export
@@ -1511,9 +1561,9 @@ cells_stub_grand_summary <- function(rows = everything()) {
 #' `r man_get_image_tag(file = "man_cells_footnotes_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
-#' 7-16
+#' 7-17
 #'
 #' @import rlang
 #' @export
@@ -1605,9 +1655,9 @@ cells_footnotes <- function() {
 #' `r man_get_image_tag(file = "man_cells_source_notes_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
-#' 7-17
+#' 7-18
 #'
 #' @import rlang
 #' @export
@@ -1673,9 +1723,9 @@ cells_source_notes <- function() {
 #' `r man_get_image_tag(file = "man_currency_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
-#' 7-18
+#' 7-19
 #'
 #' @export
 currency <- function(
@@ -1798,9 +1848,9 @@ currency <- function(
 #' `r man_get_image_tag(file = "man_cell_text_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
-#' 7-19
+#' 7-20
 #'
 #' @export
 cell_text <- function(
@@ -1973,9 +2023,9 @@ cell_style_to_html.cell_text <- function(style) {
 #' `r man_get_image_tag(file = "man_cell_fill_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
-#' 7-20
+#' 7-21
 #'
 #' @export
 cell_fill <- function(
@@ -2025,11 +2075,11 @@ cell_style_to_html.cell_fill <- function(style) {
 #' @param color,style,weight The border color, style, and weight. The `color`
 #'   can be defined with a color name or with a hexadecimal color code. The
 #'   default `color` value is `"#000000"` (black). The `style` can be one of
-#'   either `"solid"` (the default), `"dashed"`, or `"dotted"`. The `weight` of
-#'   the border lines is to be given in pixel values (the [px()] helper function
-#'   is useful for this. The default value for `weight` is `"1px"`. Borders for
-#'   any defined `sides` can be removed by supplying `NULL` to any of `color`,
-#'   `style`, or `weight`.
+#'   either `"solid"` (the default), `"dashed"`, `"dotted"`, `"hidden"`, or
+#'   `"double"`. The `weight` of the border lines is to be given in pixel values
+#'   (the [px()] helper function is useful for this. The default value for
+#'   `weight` is `"1px"`. Borders for any defined `sides` can be removed by
+#'   supplying `NULL` to any of `color`, `style`, or `weight`.
 #'
 #' @return A list object of class `cell_styles`.
 #'
@@ -2097,9 +2147,9 @@ cell_style_to_html.cell_fill <- function(style) {
 #' `r man_get_image_tag(file = "man_cell_borders_2.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
-#' 7-21
+#' 7-22
 #'
 #' @export
 cell_borders <- function(
@@ -2176,7 +2226,7 @@ cell_borders <- function(
 
         validate_style_in(
           style_vals, names(style_vals), "style",
-          c("solid", "dashed", "dotted")
+          c("solid", "dashed", "dotted", "hidden", "double")
         )
 
         cell_style_structure(
@@ -2214,156 +2264,6 @@ cell_style_structure <- function(name, obj, subclass = name) {
   class(style_obj) <- "cell_styles"
 
   style_obj
-}
-
-#' Helper function for specifying a font from the *Google Fonts* service
-#'
-#' @description
-#' The `google_font()` helper function can be used wherever a font name should
-#' be specified. There are two instances where this helper can be used: the
-#' `name` argument in [opt_table_font()] (for setting a table font) and in that
-#' of [cell_text()] (used with [tab_style()]). To get a helpful listing of fonts
-#' that work well in tables, use the [info_google_fonts()] function.
-#'
-#' @param name The complete name of a font available in *Google Fonts*.
-#'
-#' @return An object of class `font_css`.
-#'
-#' @section Examples:
-#'
-#' Use [`exibble`] to create a **gt** table of eight rows, replace missing values
-#' with em dashes. For text in the `time` column, we use the Google font
-#' `"IBM Plex Mono"` and set up the [default_fonts()] as fallbacks (just in case
-#' the webfont is not accessible).
-#'
-#' ```r
-#' exibble %>%
-#'   dplyr::select(char, time) %>%
-#'   gt() %>%
-#'   sub_missing() %>%
-#'   tab_style(
-#'     style = cell_text(
-#'       font = c(
-#'         google_font(name = "IBM Plex Mono"),
-#'         default_fonts()
-#'       )
-#'     ),
-#'     locations = cells_body(columns = time)
-#'   )
-#' ```
-#'
-#' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_google_font_1.png")`
-#' }}
-#'
-#' Use [`sp500`] to create a small **gt** table, using [fmt_currency()] to
-#' provide a dollar sign for the first row of monetary values. Then, set a
-#' larger font size for the table and use the `"Merriweather"` font using the
-#' `google_font()` function (with two font fallbacks: `"Cochin"` and the
-#' catchall `"Serif"` group).
-#'
-#' ```r
-#' sp500 %>%
-#'   dplyr::slice(1:10) %>%
-#'   dplyr::select(-volume, -adj_close) %>%
-#'   gt() %>%
-#'   fmt_currency(
-#'     columns = 2:5,
-#'     rows = 1,
-#'     currency = "USD",
-#'     use_seps = FALSE
-#'   ) %>%
-#'   tab_options(table.font.size = px(20)) %>%
-#'   opt_table_font(
-#'     font = list(
-#'       google_font(name = "Merriweather"),
-#'       "Cochin", "Serif"
-#'     )
-#'   )
-#' ```
-#'
-#' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_google_font_2.png")`
-#' }}
-#'
-#' @family Helper Functions
-#' @section Function ID:
-#' 7-27
-#'
-#' @export
-google_font <- function(name) {
-
-  import_stmt <-
-    paste_between(
-      gsub(" ", "+", name),
-      c(
-        "@import url('https://fonts.googleapis.com/css2?family=",
-        ":ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');"
-      )
-    )
-
-  font_list <-
-    list(
-      name = name,
-      import_stmt = import_stmt
-    )
-
-  class(font_list) <- "font_css"
-  font_list
-}
-
-#' A vector of default fonts for use with **gt** tables
-#'
-#' @description
-#' The vector of fonts given by `default_fonts()` should be used with a **gt**
-#' table that is rendered to HTML. We can specify additional fonts to use but
-#' this default set should be placed after that to act as fallbacks. This is
-#' useful when specifying `font` values in the [cell_text()] function (itself
-#' used in the [tab_style()] function). If using [opt_table_font()] (which also
-#' has a `font` argument) we probably don't need to specify this vector of fonts
-#' since it is handled by its `add` option (which is `TRUE` by default).
-#'
-#' @return A character vector of font names.
-#'
-#' @section Examples:
-#'
-#' Use [`exibble`] to create a **gt** table. Attempting to modify the fonts used
-#' for the `time` column is much safer if `default_fonts()` is appended to the
-#' end of the `font` listing in the `cell_text()` call (the `"Comic Sansa"` and
-#' `"Menloa"` fonts don't exist, but, we'll get the first available font from
-#' the `default_fonts()` set).
-#'
-#' ```r
-#' exibble %>%
-#'   dplyr::select(char, time) %>%
-#'   gt() %>%
-#'   tab_style(
-#'     style = cell_text(
-#'       font = c(
-#'         "Comic Sansa", "Menloa",
-#'         default_fonts()
-#'       )
-#'     ),
-#'     locations = cells_body(columns = time)
-#'   )
-#' ```
-#'
-#' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_default_fonts_1.png")`
-#' }}
-#'
-#' @family Helper Functions
-#'
-#' @section Function ID:
-#' 7-26
-#'
-#' @export
-default_fonts <- function() {
-  c(
-    "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Helvetica Neue", "Fira Sans",
-    "Droid Sans", "Arial", "sans-serif"
-  )
 }
 
 #' Adjust the luminance for a palette of colors
@@ -2439,9 +2339,9 @@ default_fonts <- function() {
 #' `r man_get_image_tag(file = "man_adjust_luminance_1.png")`
 #' }}
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
-#' 7-22
+#' 7-23
 #'
 #' @export
 adjust_luminance <- function(
@@ -2496,9 +2396,9 @@ adjust_luminance <- function(
 #'
 #' @return A character vector containing a single, random ID.
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
-#' 7-23
+#' 7-24
 #'
 #' @export
 random_id <- function(n = 10) {
@@ -2531,20 +2431,33 @@ latex_special_chars <- c(
 #'
 #' @return A character vector.
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
-#' 7-24
+#' 7-25
 #'
 #' @export
 escape_latex <- function(text) {
 
-  m <- gregexpr("[\\\\&%$#_{}~^]", text, perl = TRUE)
+  if (length(text) < 1) return(text)
 
-  special_chars <- regmatches(text, m)
-  escaped_chars <- lapply(special_chars, function(x) {
-    latex_special_chars[x]
-  })
-  regmatches(text, m) <- escaped_chars
+  # If all text elements are `NA_character_` then return `text` unchanged
+  if (all(is.na(text))) {
+    return(text)
+  }
+
+  # Determine the elements of `text` that are `NA_character_`
+  na_text <- is.na(text)
+
+  m <- gregexpr("[\\\\&%$#_{}~^]", text[!na_text], perl = TRUE)
+
+  special_chars <- regmatches(text[!na_text], m)
+
+  escaped_chars <-
+    lapply(special_chars, function(x) {
+      latex_special_chars[x]
+    })
+
+  regmatches(text[!na_text], m) <- escaped_chars
   text
 }
 
@@ -2588,9 +2501,9 @@ escape_latex <- function(text) {
 #'
 #' @return An object of class `knit_asis`.
 #'
-#' @family Helper Functions
+#' @family helper functions
 #' @section Function ID:
-#' 7-25
+#' 7-26
 #'
 #' @export
 gt_latex_dependencies <- function() {
@@ -2612,4 +2525,154 @@ gt_latex_dependencies <- function() {
       "The `knitr` package is required for getting the LaTeX dependency headers."
     )
   }
+}
+
+#' Helper function for specifying a font from the *Google Fonts* service
+#'
+#' @description
+#' The `google_font()` helper function can be used wherever a font name should
+#' be specified. There are two instances where this helper can be used: the
+#' `name` argument in [opt_table_font()] (for setting a table font) and in that
+#' of [cell_text()] (used with [tab_style()]). To get a helpful listing of fonts
+#' that work well in tables, use the [info_google_fonts()] function.
+#'
+#' @param name The complete name of a font available in *Google Fonts*.
+#'
+#' @return An object of class `font_css`.
+#'
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table of eight rows, replace missing values
+#' with em dashes. For text in the `time` column, we use the Google font
+#' `"IBM Plex Mono"` and set up the [default_fonts()] as fallbacks (just in case
+#' the webfont is not accessible).
+#'
+#' ```r
+#' exibble %>%
+#'   dplyr::select(char, time) %>%
+#'   gt() %>%
+#'   sub_missing() %>%
+#'   tab_style(
+#'     style = cell_text(
+#'       font = c(
+#'         google_font(name = "IBM Plex Mono"),
+#'         default_fonts()
+#'       )
+#'     ),
+#'     locations = cells_body(columns = time)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_google_font_1.png")`
+#' }}
+#'
+#' Use [`sp500`] to create a small **gt** table, using [fmt_currency()] to
+#' provide a dollar sign for the first row of monetary values. Then, set a
+#' larger font size for the table and use the `"Merriweather"` font using the
+#' `google_font()` function (with two font fallbacks: `"Cochin"` and the
+#' catchall `"Serif"` group).
+#'
+#' ```r
+#' sp500 %>%
+#'   dplyr::slice(1:10) %>%
+#'   dplyr::select(-volume, -adj_close) %>%
+#'   gt() %>%
+#'   fmt_currency(
+#'     columns = 2:5,
+#'     rows = 1,
+#'     currency = "USD",
+#'     use_seps = FALSE
+#'   ) %>%
+#'   tab_options(table.font.size = px(20)) %>%
+#'   opt_table_font(
+#'     font = list(
+#'       google_font(name = "Merriweather"),
+#'       "Cochin", "Serif"
+#'     )
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_google_font_2.png")`
+#' }}
+#'
+#' @family helper functions
+#' @section Function ID:
+#' 7-27
+#'
+#' @export
+google_font <- function(name) {
+
+  import_stmt <-
+    paste_between(
+      gsub(" ", "+", name),
+      c(
+        "@import url('https://fonts.googleapis.com/css2?family=",
+        ":ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');"
+      )
+    )
+
+  font_list <-
+    list(
+      name = name,
+      import_stmt = import_stmt
+    )
+
+  class(font_list) <- "font_css"
+  font_list
+}
+
+#' A vector of default fonts for use with **gt** tables
+#'
+#' @description
+#' The vector of fonts given by `default_fonts()` should be used with a **gt**
+#' table that is rendered to HTML. We can specify additional fonts to use but
+#' this default set should be placed after that to act as fallbacks. This is
+#' useful when specifying `font` values in the [cell_text()] function (itself
+#' used in the [tab_style()] function). If using [opt_table_font()] (which also
+#' has a `font` argument) we probably don't need to specify this vector of fonts
+#' since it is handled by its `add` option (which is `TRUE` by default).
+#'
+#' @return A character vector of font names.
+#'
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table. Attempting to modify the fonts used
+#' for the `time` column is much safer if `default_fonts()` is appended to the
+#' end of the `font` listing in the `cell_text()` call (the `"Comic Sansa"` and
+#' `"Menloa"` fonts don't exist, but, we'll get the first available font from
+#' the `default_fonts()` set).
+#'
+#' ```r
+#' exibble %>%
+#'   dplyr::select(char, time) %>%
+#'   gt() %>%
+#'   tab_style(
+#'     style = cell_text(
+#'       font = c(
+#'         "Comic Sansa", "Menloa",
+#'         default_fonts()
+#'       )
+#'     ),
+#'     locations = cells_body(columns = time)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_default_fonts_1.png")`
+#' }}
+#'
+#' @family helper functions
+#'
+#' @section Function ID:
+#' 7-28
+#'
+#' @export
+default_fonts <- function() {
+  c(
+    "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Helvetica Neue", "Fira Sans",
+    "Droid Sans", "Arial", "sans-serif"
+  )
 }

@@ -34,7 +34,9 @@ column. What results is a column containing both values separated by a long
 dash (e.g., \verb{12.0 — 20.0}). The column specified in \code{col_end} is dropped from
 the output table.
 }
-\details{
+\section{Comparison with other column-merging functions}{
+
+
 This function could be somewhat replicated using \code{\link[=cols_merge]{cols_merge()}}, however,
 \code{cols_merge_range()} employs the following specialized operations for \code{NA}
 handling:
@@ -53,11 +55,12 @@ Separate calls of \code{\link[=sub_missing]{sub_missing()}} can be used for the 
 \code{col_end} columns for finer control of the replacement values.
 
 This function is part of a set of four column-merging functions. The other
-two are the general \code{\link[=cols_merge]{cols_merge()}} function and the specialized
+three are the general \code{\link[=cols_merge]{cols_merge()}} function and the specialized
 \code{\link[=cols_merge_uncert]{cols_merge_uncert()}} and \code{\link[=cols_merge_n_pct]{cols_merge_n_pct()}} functions. These functions
 operate similarly, where the non-target columns can be optionally hidden from
 the output table through the \code{hide_columns} or \code{autohide} options.
 }
+
 \section{Examples}{
 
 
@@ -78,19 +81,21 @@ function.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_merge_range_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_merge_range_1.png" alt="This image of a table was generated from the first code example in the `cols_merge_range()` help file." style="width:100\%;">
 }}
 }
 
 \section{Function ID}{
 
-4-10
+4-13
 }
 
 \seealso{
-Other Modify Columns: 
+Other column modification functions: 
+\code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
+\code{\link{cols_label_with}()},
 \code{\link{cols_label}()},
 \code{\link{cols_merge_n_pct}()},
 \code{\link{cols_merge_uncert}()},
@@ -101,4 +106,4 @@ Other Modify Columns:
 \code{\link{cols_unhide}()},
 \code{\link{cols_width}()}
 }
-\concept{Modify Columns}
+\concept{column modification functions}

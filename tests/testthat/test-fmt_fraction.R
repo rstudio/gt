@@ -1,5 +1,3 @@
-skip_on_cran()
-
 test_that("the `fmt_fraction()` function works correctly", {
 
   # Create an input data frame two columns: one
@@ -9,7 +7,7 @@ test_that("the `fmt_fraction()` function works correctly", {
       char = "a",
       num = c(
         -50,
-        -1.5
+        -1.5,
         -0.999,
         -0.9,
         -0.002,
@@ -62,7 +60,9 @@ test_that("the `fmt_fraction()` function works correctly", {
        fmt_fraction(columns = num, accuracy = "low", layout = "inline") %>%
        render_formats_test(context = "html"))[["num"]],
     c(
-      "&minus;50", "&minus;2 1/2", "&minus;8/9", "0", "0", "0", "0",
+      paste0("\U02212", "50"), paste0("\U02212", "1 1/2"),
+      paste0("\U02212", "1"), paste0("\U02212", "8/9"),
+      "0", "0", "0", "0",
       "1/9", "1/9", "2/7", "1/2", "5/9", "8/9", "1", "1", "1 1/9",
       "2", "2,000,000 1/5", "30,000,000,000", "NA", "Inf", "-Inf"
     )
@@ -75,7 +75,9 @@ test_that("the `fmt_fraction()` function works correctly", {
        fmt_fraction(columns = num, accuracy = "med", layout = "inline") %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;50", "&minus;2 1/2", "&minus;9/10", "0", "0", "0",
+      paste0("\U02212", "50"), paste0("\U02212", "1 1/2"),
+      paste0("\U02212", "1"), paste0("\U02212", "9/10"),
+      "0", "0", "0",
       "1/25", "3/50", "1/10", "3/10", "1/2", "5/9", "23/25", "1", "1",
       "1 1/10", "1 19/20", "2,000,000 1/5", "30,000,000,000", "NA",
       "Inf", "-Inf"
@@ -89,7 +91,9 @@ test_that("the `fmt_fraction()` function works correctly", {
        fmt_fraction(columns = num, accuracy = "high", layout = "inline") %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;50", "&minus;2 250/501", "&minus;9/10", "&minus;1/500",
+      paste0("\U02212", "50"), paste0("\U02212", "1 1/2"),
+      paste0("\U02212", "998/999"), paste0("\U02212", "9/10"),
+      paste0("\U02212", "1/500"),
       "0", "1/500", "1/25", "3/50", "1/10", "3/10", "1/2", "139/250",
       "23/25", "998/999", "1", "1 1/10", "1 19/20", "2,000,000 1/5",
       "30,000,000,000", "NA", "Inf", "-Inf"
@@ -106,8 +110,10 @@ test_that("the `fmt_fraction()` function works correctly", {
        ) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;50", "&minus;2 1/2", "&minus;1", "0", "0", "0", "0",
-      "0", "0", "1/2", "1/2", "1/2", "1", "1", "1", "1", "2", "2,000,000",
+      paste0("\U02212", "50"), paste0("\U02212", "1 1/2"),
+      paste0("\U02212", "1"), paste0("\U02212", "1"),
+      "0", "0", "0", "0", "0", "0", "1/2", "1/2", "1/2",
+      "1", "1", "1", "1", "2", "2,000,000",
       "30,000,000,000", "NA", "Inf", "-Inf"
     )
   )
@@ -122,8 +128,10 @@ test_that("the `fmt_fraction()` function works correctly", {
        ) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;50", "&minus;2 1/2", "&minus;1", "0", "0", "0", "0",
-      "0", "0", "1/2", "1/2", "1/2", "1", "1", "1", "1", "2", "2,000,000",
+      paste0("\U02212", "50"), paste0("\U02212", "1 1/2"),
+      paste0("\U02212", "1"), paste0("\U02212", "1"),
+      "0", "0", "0", "0", "0", "0", "1/2", "1/2", "1/2",
+      "1", "1", "1", "1", "2", "2,000,000",
       "30,000,000,000", "NA", "Inf", "-Inf"
     )
   )
@@ -138,8 +146,10 @@ test_that("the `fmt_fraction()` function works correctly", {
        ) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;50", "&minus;2 2/4", "&minus;1", "0", "0", "0", "0",
-      "0", "0", "1/4", "2/4", "2/4", "1", "1", "1", "1", "2", "2,000,000 1/4",
+      paste0("\U02212", "50"), paste0("\U02212", "1 2/4"),
+      paste0("\U02212", "1"), paste0("\U02212", "1"),
+      "0", "0", "0", "0", "0", "0", "1/4", "2/4", "2/4",
+      "1", "1", "1", "1", "2", "2,000,000 1/4",
       "30,000,000,000", "NA", "Inf", "-Inf"
     )
   )
@@ -154,8 +164,10 @@ test_that("the `fmt_fraction()` function works correctly", {
        ) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;50", "&minus;2 1/2", "&minus;1", "0", "0", "0", "0",
-      "0", "0", "1/4", "1/2", "1/2", "1", "1", "1", "1", "2", "2,000,000 1/4",
+      paste0("\U02212", "50"), paste0("\U02212", "1 1/2"),
+      paste0("\U02212", "1"), paste0("\U02212", "1"),
+      "0", "0", "0", "0", "0", "0", "1/4", "1/2", "1/2",
+      "1", "1", "1", "1", "2", "2,000,000 1/4",
       "30,000,000,000", "NA", "Inf", "-Inf"
     )
   )
@@ -170,8 +182,10 @@ test_that("the `fmt_fraction()` function works correctly", {
        ) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;50", "&minus;2 4/8", "&minus;7/8", "0", "0", "0", "0",
-      "0", "1/8", "2/8", "4/8", "4/8", "7/8", "1", "1", "1 1/8", "2",
+      paste0("\U02212", "50"), paste0("\U02212", "1 4/8"),
+      paste0("\U02212", "1"), paste0("\U02212", "7/8"),
+      "0", "0", "0", "0", "0", "1/8", "2/8",
+      "4/8", "4/8", "7/8", "1", "1", "1 1/8", "2",
       "2,000,000 2/8", "30,000,000,000", "NA", "Inf", "-Inf"
     )
   )
@@ -186,9 +200,11 @@ test_that("the `fmt_fraction()` function works correctly", {
        ) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;50", "&minus;2 1/2", "&minus;7/8", "0", "0", "0", "0",
-      "0", "1/8", "1/4", "1/2", "1/2", "7/8", "1", "1", "1 1/8", "2",
-      "2,000,000 1/4", "30,000,000,000", "NA", "Inf", "-Inf"
+      paste0("\U02212", "50"), paste0("\U02212", "1 1/2"),
+      paste0("\U02212", "1"), paste0("\U02212", "7/8"),
+      "0", "0", "0", "0", "0", "1/8", "1/4", "1/2", "1/2",
+      "7/8", "1", "1", "1 1/8", "2", "2,000,000 1/4", "30,000,000,000",
+      "NA", "Inf", "-Inf"
     )
   )
 
@@ -202,7 +218,8 @@ test_that("the `fmt_fraction()` function works correctly", {
        ) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;50", "&minus;2 8/16", "&minus;14/16", "0", "0", "0",
+      paste0("\U02212", "50"), paste0("\U02212", "1 8/16"),
+      paste0("\U02212", "1"), paste0("\U02212", "14/16"), "0", "0", "0",
       "1/16", "1/16", "2/16", "5/16", "8/16", "9/16", "15/16", "1",
       "1", "1 2/16", "1 15/16", "2,000,000 3/16", "30,000,000,000",
       "NA", "Inf", "-Inf"
@@ -219,7 +236,8 @@ test_that("the `fmt_fraction()` function works correctly", {
        ) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;50", "&minus;2 1/2", "&minus;7/8", "0", "0", "0", "1/16",
+      paste0("\U02212", "50"), paste0("\U02212", "1 1/2"),
+      paste0("\U02212", "1"), paste0("\U02212", "7/8"), "0", "0", "0", "1/16",
       "1/16", "1/8", "5/16", "1/2", "9/16", "15/16", "1", "1", "1 1/8",
       "1 15/16", "2,000,000 3/16", "30,000,000,000", "NA", "Inf", "-Inf"
     )
@@ -235,7 +253,8 @@ test_that("the `fmt_fraction()` function works correctly", {
         ) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;50", "&minus;2 50/100", "&minus;90/100", "0", "0",
+      paste0("\U02212", "50"), paste0("\U02212", "1 50/100"),
+      paste0("\U02212", "1"), paste0("\U02212", "90/100"), "0", "0",
       "0", "4/100", "6/100", "10/100", "30/100", "50/100", "56/100",
       "92/100", "1", "1", "1 10/100", "1 95/100", "2,000,000 20/100",
       "30,000,000,000", "NA", "Inf", "-Inf"
@@ -252,7 +271,8 @@ test_that("the `fmt_fraction()` function works correctly", {
        ) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;50", "&minus;2 1/2", "&minus;9/10", "0", "0", "0",
+      paste0("\U02212", "50"), paste0("\U02212", "1 1/2"),
+      paste0("\U02212", "1"), paste0("\U02212", "9/10"), "0", "0", "0",
       "1/25", "3/50", "1/10", "3/10", "1/2", "14/25", "23/25", "1",
       "1", "1 1/10", "1 19/20", "2,000,000 1/5", "30,000,000,000",
       "NA", "Inf", "-Inf"
@@ -269,9 +289,12 @@ test_that("the `fmt_fraction()` function works correctly", {
        ) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;50", "&minus;2 4990000/9999999", "&minus;8999999/9999999",
-      "&minus;20000/9999999", "0", "20000/9999999", "400000/9999999",
-      "600000/9999999", "1000000/9999999", "3000000/9999999", "5000000/9999999",
+      paste0("\U02212", "50"), paste0("\U02212", "1 5000000/9999999"),
+      paste0("\U02212", "9989999/9999999"),
+      paste0("\U02212", "8999999/9999999"),
+      paste0("\U02212", "20000/9999999"),
+      "0", "20000/9999999", "400000/9999999", "600000/9999999",
+      "1000000/9999999", "3000000/9999999", "5000000/9999999",
       "5559999/9999999", "9199999/9999999", "9989999/9999999", "1",
       "1 1000000/9999999", "1 9499999/9999999", "2,000,000 2000000/9999999",
       "30,000,000,000", "NA", "Inf", "-Inf"
@@ -288,9 +311,11 @@ test_that("the `fmt_fraction()` function works correctly", {
        ) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;50", "&minus;2 4990000/9999999", "&minus;8999999/9999999",
-      "&minus;20000/9999999", "0", "20000/9999999", "400000/9999999",
-      "200000/3333333", "1000000/9999999", "1000000/3333333", "5000000/9999999",
+      paste0("\U02212", "50"), paste0("\U02212", "1 5000000/9999999"),
+      paste0("\U02212", "9989999/9999999"), paste0("\U02212", "8999999/9999999"),
+      paste0("\U02212", "20000/9999999"),
+      "0", "20000/9999999", "400000/9999999", "200000/3333333",
+      "1000000/9999999", "1000000/3333333", "5000000/9999999",
       "1853333/3333333", "9199999/9999999", "9989999/9999999", "1",
       "1 1000000/9999999", "1 9499999/9999999", "2,000,000 2000000/9999999",
       "30,000,000,000", "NA", "Inf", "-Inf"
@@ -307,9 +332,10 @@ test_that("the `fmt_fraction()` function works correctly", {
        ) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;50", "&minus;2 1/2", "&minus;9/10", "0", "0", "0",
-      "1/25", "3/50", "1/10", "3/10", "1/2", "14/25", "23/25", "1",
-      "1", "1 1/10", "1 19/20", "2,000,000 1/5", "30,000,000,000",
+      paste0("\U02212", "50"), paste0("\U02212", "1 1/2"),
+      paste0("\U02212", "1"), paste0("\U02212", "9/10"),
+      "0", "0", "0", "1/25", "3/50", "1/10", "3/10", "1/2", "14/25", "23/25",
+      "1", "1", "1 1/10", "1 19/20", "2,000,000 1/5", "30,000,000,000",
       "NA", "Inf", "-Inf"
     )
   )
@@ -325,10 +351,11 @@ test_that("the `fmt_fraction()` function works correctly", {
        ) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;50", "&minus;2 50/100", "&minus;90/100", "0", "0",
-      "0", "4/100", "6/100", "10/100", "30/100", "50/100", "56/100",
-      "92/100", "1", "1", "1 10/100", "1 95/100", "2,000,000 20/100",
-      "30,000,000,000", "NA", "Inf", "-Inf"
+      paste0("\U02212", "50"), paste0("\U02212", "1 50/100"),
+      paste0("\U02212", "1"), paste0("\U02212", "90/100"),
+      "0", "0", "0", "4/100", "6/100", "10/100", "30/100", "50/100",
+      "56/100", "92/100", "1", "1", "1 10/100", "1 95/100",
+      "2,000,000 20/100", "30,000,000,000", "NA", "Inf", "-Inf"
     )
   )
 
@@ -343,9 +370,10 @@ test_that("the `fmt_fraction()` function works correctly", {
        ) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;50", "&minus;2 50/100", "&minus;90/100", "0", "0",
-      "0", "4/100", "6/100", "10/100", "30/100", "50/100", "56/100",
-      "92/100", "1", "1", "1 10/100", "1 95/100", "2.000.000 20/100",
+      paste0("\U02212", "50"), paste0("\U02212", "1 50/100"),
+      paste0("\U02212", "1"), paste0("\U02212", "90/100"),
+      "0", "0", "0", "4/100", "6/100", "10/100", "30/100", "50/100",
+      "56/100", "92/100", "1", "1", "1 10/100", "1 95/100", "2.000.000 20/100",
       "30.000.000.000", "NA", "Inf", "-Inf"
     )
   )
@@ -361,10 +389,11 @@ test_that("the `fmt_fraction()` function works correctly", {
        ) %>%
        render_formats_test("html"))[["num"]],
     c(
-      "&minus;50", "&minus;2 50/100", "&minus;90/100", "0", "0",
-      "0", "4/100", "6/100", "10/100", "30/100", "50/100", "56/100",
-      "92/100", "1", "1", "1 10/100", "1 95/100", "2 000 000 20/100",
-      "30 000 000 000", "NA", "Inf", "-Inf"
+      paste0("\U02212", "50"), paste0("\U02212", "1 50/100"),
+      paste0("\U02212", "1"), paste0("\U02212", "90/100"), "0", "0", "0",
+      "4/100", "6/100", "10/100", "30/100", "50/100", "56/100", "92/100",
+      "1", "1", "1 10/100", "1 95/100", "2 000 000 20/100", "30 000 000 000",
+      "NA", "Inf", "-Inf"
     )
   )
 
@@ -441,14 +470,14 @@ test_that("the `fmt_fraction()` function produces reproducible results for HTML 
   fraction_tbl_diagonal <-
     input_data %>%
     gt(rowname_col = "x", groupname_col = "category") %>%
-    fmt_fraction(columns = low, accuracy = "low") %>%
-    fmt_fraction(columns = med, accuracy = "med") %>%
-    fmt_fraction(columns = high, accuracy = "high") %>%
-    fmt_fraction(columns = halves, accuracy = 2, simplify = FALSE) %>%
-    fmt_fraction(columns = quarters, accuracy = 4, simplify = FALSE) %>%
-    fmt_fraction(columns = eighths, accuracy = 8, simplify = FALSE) %>%
-    fmt_fraction(columns = sixteenths, accuracy = 16, simplify = FALSE) %>%
-    fmt_fraction(columns = hundredths, accuracy = 100, simplify = FALSE) %>%
+    fmt_fraction(columns = low, accuracy = "low", layout = "diagonal") %>%
+    fmt_fraction(columns = med, accuracy = "med", layout = "diagonal") %>%
+    fmt_fraction(columns = high, accuracy = "high", layout = "diagonal") %>%
+    fmt_fraction(columns = halves, accuracy = 2, simplify = FALSE, layout = "diagonal") %>%
+    fmt_fraction(columns = quarters, accuracy = 4, simplify = FALSE, layout = "diagonal") %>%
+    fmt_fraction(columns = eighths, accuracy = 8, simplify = FALSE, layout = "diagonal") %>%
+    fmt_fraction(columns = sixteenths, accuracy = 16, simplify = FALSE, layout = "diagonal") %>%
+    fmt_fraction(columns = hundredths, accuracy = 100, simplify = FALSE, layout = "diagonal") %>%
     cols_width(everything() ~ px(100)) %>%
     opt_all_caps()
 
@@ -540,7 +569,7 @@ test_that("`fmt_fraction()` can render values in the Indian numbering system", {
   # Format the `num` column as fractions using the Indian numbering system
   expect_equal(
     (tab %>%
-       fmt_fraction(columns = num, system = "ind") %>%
+       fmt_fraction(columns = num, layout = "diagonal", system = "ind") %>%
        render_formats_test(context = "latex"))[["num"]],
     c(
       "$50,00,000$", "$1,000$", "$10$", "$12,345$", "$1,234\\, {{}^{1}\\!/_{2}}$",

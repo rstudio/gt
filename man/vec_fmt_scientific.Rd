@@ -14,7 +14,7 @@ vec_fmt_scientific(
   dec_mark = ".",
   force_sign = FALSE,
   locale = NULL,
-  output = c("html", "latex", "rtf")
+  output = c("auto", "plain", "html", "latex", "rtf", "word")
 )
 }
 \arguments{
@@ -47,14 +47,16 @@ for this option. The default is \code{FALSE}, where only negative numbers will
 display a minus sign.}
 
 \item{locale}{An optional locale ID that can be used for formatting the value
-according the locale's rules. Examples include \code{"en_US"} for English
-(United States) and \code{"fr_FR"} for French (France). The use of a valid
-locale ID will override any values provided in \code{sep_mark} and \code{dec_mark}.
-We can use the \code{\link[=info_locales]{info_locales()}} function as a useful reference for all of
-the locales that are supported.}
+according the locale's rules. Examples include \code{"en"} for English (United
+States) and \code{"fr"} for French (France). The use of a valid locale ID will
+override any values provided in \code{sep_mark} and \code{dec_mark}. We can use the
+\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
+are supported.}
 
 \item{output}{The output style of the resulting character vector. This can
-either be \code{"html"} (the default), \code{"latex"}, or \code{"rtf"}.}
+either be \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"},
+or \code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the
+\code{"auto"} option will choose the correct \code{output} value}
 }
 \value{
 A character vector.
@@ -83,17 +85,13 @@ Let's create a numeric vector for the next few examples:
 
 Using \code{vec_fmt_scientific()} with the default options will create a character
 vector with values in scientific notation. Any \code{NA} values remain as \code{NA}
-values. The rendering context is HTML unless specified in the \code{output}
-argument.
+values. The rendering context will be autodetected unless specified in the
+\code{output} argument (here, it is of the \code{"plain"} output type).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_scientific(num_vals)
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "3.24 &times; 10<sup class='gt_super'>&minus;4</sup>"
-## [2] "8.65"                                               
-## [3] "1.36 &times; 10<sup class='gt_super'>6</sup>"       
-## [4] "&minus;5.90 &times; 10<sup class='gt_super'>4</sup>"
-## [5] "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3.24 × 10^-4" "8.65" "1.36 × 10^6" "-5.90 × 10^4" "NA"
 }\if{html}{\out{</div>}}
 
 We can change the number of decimal places with the \code{decimals} option:
@@ -101,11 +99,7 @@ We can change the number of decimal places with the \code{decimals} option:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_scientific(num_vals, decimals = 1)
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "3.2 &times; 10<sup class='gt_super'>&minus;4</sup>"
-## [2] "8.7"                                               
-## [3] "1.4 &times; 10<sup class='gt_super'>6</sup>"       
-## [4] "&minus;5.9 &times; 10<sup class='gt_super'>4</sup>"
-## [5] "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3.2 × 10^-4" "8.7" "1.4 × 10^6" "-5.9 × 10^4" "NA"
 }\if{html}{\out{</div>}}
 
 If we are formatting for a different locale, we could supply the locale ID
@@ -114,11 +108,7 @@ and \strong{gt} will handle any locale-specific formatting options:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_scientific(num_vals, locale = "es")
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "3,24 &times; 10<sup class='gt_super'>&minus;4</sup>"
-## [2] "8,65"                                               
-## [3] "1,36 &times; 10<sup class='gt_super'>6</sup>"       
-## [4] "&minus;5,90 &times; 10<sup class='gt_super'>4</sup>"
-## [5] "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3,24 × 10^-4" "8,65" "1,36 × 10^6" "-5,90 × 10^4" "NA"
 }\if{html}{\out{</div>}}
 
 Should you need to have positive and negative signs on each of the output
@@ -127,11 +117,7 @@ values, use \code{force_sign = TRUE}:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_scientific(num_vals, force_sign = TRUE)
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "+3.24 &times; 10<sup class='gt_super'>&minus;4</sup>"
-## [2] "+8.65"                                               
-## [3] "+1.36 &times; 10<sup class='gt_super'>6</sup>"       
-## [4] "&minus;5.90 &times; 10<sup class='gt_super'>4</sup>" 
-## [5] "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "+3.24 × 10^-4" "+8.65" "+1.36 × 10^6" "-5.90 × 10^4" "NA"
 }\if{html}{\out{</div>}}
 
 As a last example, one can wrap the values in a pattern with the \code{pattern}
@@ -140,11 +126,7 @@ argument. Note here that \code{NA} values won't have the pattern applied.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_scientific(num_vals, pattern = "[\{x\}]")
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## [1] "[3.24 &times; 10<sup class='gt_super'>&minus;4</sup>]"
-## [2] "[8.65]"                                               
-## [3] "[1.36 &times; 10<sup class='gt_super'>6</sup>]"       
-## [4] "[&minus;5.90 &times; 10<sup class='gt_super'>4</sup>]"
-## [5] "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "[3.24 × 10^-4]" "[8.65]" "[1.36 × 10^6]" "[-5.90 × 10^4]" "NA"
 }\if{html}{\out{</div>}}
 }
 
@@ -159,12 +141,15 @@ Other vector formatting functions:
 \code{\link{vec_fmt_currency}()},
 \code{\link{vec_fmt_datetime}()},
 \code{\link{vec_fmt_date}()},
+\code{\link{vec_fmt_duration}()},
 \code{\link{vec_fmt_engineering}()},
 \code{\link{vec_fmt_fraction}()},
 \code{\link{vec_fmt_integer}()},
 \code{\link{vec_fmt_markdown}()},
 \code{\link{vec_fmt_number}()},
+\code{\link{vec_fmt_partsper}()},
 \code{\link{vec_fmt_percent}()},
+\code{\link{vec_fmt_roman}()},
 \code{\link{vec_fmt_time}()}
 }
 \concept{vector formatting functions}

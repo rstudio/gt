@@ -44,7 +44,7 @@ Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header part with t
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_header_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_header_1.png" alt="This image of a table was generated from the first code example in the `tab_header()` help file." style="width:100\%;">
 }}
 }
 
@@ -54,14 +54,18 @@ Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header part with t
 }
 
 \seealso{
-Other Create or Modify Parts: 
+Other part creation/modification functions: 
+\code{\link{tab_caption}()},
 \code{\link{tab_footnote}()},
+\code{\link{tab_info}()},
 \code{\link{tab_options}()},
 \code{\link{tab_row_group}()},
 \code{\link{tab_source_note}()},
 \code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
+\code{\link{tab_stub_indent}()},
 \code{\link{tab_stubhead}()},
+\code{\link{tab_style_body}()},
 \code{\link{tab_style}()}
 }
-\concept{Create or Modify Parts}
+\concept{part creation/modification functions}

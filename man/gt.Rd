@@ -8,6 +8,7 @@ gt(
   data,
   rowname_col = "rowname",
   groupname_col = dplyr::group_vars(data),
+  process_md = FALSE,
   caption = NULL,
   rownames_to_stub = FALSE,
   auto_align = TRUE,
@@ -30,8 +31,11 @@ group labels for generation of stub row groups. If the input \code{data} table
 has the \code{grouped_df} class (through use of the \code{\link[dplyr:group_by]{dplyr::group_by()}} function
 or associated \verb{group_by*()} functions) then any input here is ignored.}
 
-\item{caption}{An optional table caption to use for cross-referencing
-in R Markdown documents and \strong{bookdown} book projects.}
+\item{process_md}{Should the contents of the \code{rowname_col} and
+\code{groupname_col} be interpreted as Markdown? By default this is \code{FALSE}.}
+
+\item{caption}{An optional table caption to use for cross-referencing in R
+Markdown, Quarto, or \strong{bookdown}.}
 
 \item{rownames_to_stub}{An option to take rownames from the input \code{data}
 table as row captions in the display table stub.}
@@ -98,7 +102,7 @@ tab_1
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_gt_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_gt_1.png" alt="This image of a table was generated from the first code example in the `gt()` help file." style="width:100\%;">
 }}
 
 The resulting \strong{gt} table object can be used in transformations with a
@@ -118,7 +122,7 @@ available in the package.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_gt_2.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_gt_2.png" alt="This image of a table was generated from the second code example in the `gt()` help file." style="width:100\%;">
 }}
 }
 
@@ -128,7 +132,7 @@ available in the package.
 }
 
 \seealso{
-Other Create Table: 
+Other table creation functions: 
 \code{\link{gt_preview}()}
 }
-\concept{Create Table}
+\concept{table creation functions}

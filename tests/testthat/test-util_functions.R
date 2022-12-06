@@ -5,17 +5,12 @@ test_that("the `date_formats()` function works correctly", {
   expect_s3_class(date_formats(), c("tbl_df", "tbl", "data.frame"))
 
   # Expect the tibble to be of specific dimensions
-  expect_equal(
-    date_formats() %>%
-      dim(),
-    c(14, 3)
-  )
+  expect_equal(dim(date_formats()), c(41, 4))
 
   # Expect the tibble to have specific column names
   expect_equal(
-    date_formats() %>%
-      colnames(),
-    c("format_number", "format_name", "format_code")
+    colnames(date_formats()),
+    c("format_number", "format_name", "format_code", "flexible")
   )
 })
 
@@ -26,17 +21,12 @@ test_that("the `time_formats()` util fcn works as expected", {
   expect_s3_class(time_formats(), c("tbl_df", "tbl", "data.frame"))
 
   # Expect the tibble to be of specific dimensions
-  expect_equal(
-    time_formats() %>%
-      dim(),
-    c(5, 3)
-  )
+  expect_equal(dim(time_formats()), c(25, 5))
 
   # Expect the tibble to have specific column names
   expect_equal(
-    time_formats() %>%
-      colnames(),
-    c("format_number", "format_name", "format_code")
+    colnames(time_formats()),
+    c("format_number", "format_name", "format_code", "time_type", "flexible")
   )
 })
 
@@ -44,38 +34,60 @@ test_that("the `get_date_format()` function works correctly", {
 
   # Expect specific `format_code` values for each
   # numeric `date_style` value passed in
-  lapply(1:14, get_date_format) %>%
+  lapply(1:41, get_date_format) %>%
     unlist() %>%
     expect_equal(
-      c("%F", "%A, %B %d, %Y", "%a, %b %d, %Y", "%A %d %B %Y",
-        "%B %d, %Y", "%b %d, %Y", "%d %b %Y", "%d %B %Y", "%d %B",
-        "%Y", "%B", "%d", "%Y/%m/%d", "%y/%m/%d"))
+      c(
+        "y-MM-dd", "EEEE, MMMM d, y", "EEE, MMM d, y", "EEEE d MMMM y",
+        "MMMM d, y", "MMM d, y", "d MMM y", "d MMMM y", "d MMMM", "d MMM",
+        "y", "MMMM", "dd", "y/MM/dd", "yy/MM/dd", "y-'W'ww", "y-'Q'Q",
+        "yMd", "yMEd", "yMMM", "yMMMM", "yMMMd", "yMMMEd", "GyMd", "GyMMMd",
+        "GyMMMEd", "yM", "Md", "MEd", "MMMd", "MMMEd", "MMMMd", "GyMMM",
+        "yQQQ", "yQQQQ", "Gy", "y", "M", "MMM", "d", "Ed"
+      )
+    )
 
   # Expect specific `format_code` values for each
   # text-based `date_style` value passed in
   lapply(date_formats()$format_name, get_date_format) %>%
     unlist() %>%
     expect_equal(
-      c("%F", "%A, %B %d, %Y", "%a, %b %d, %Y", "%A %d %B %Y",
-        "%B %d, %Y", "%b %d, %Y", "%d %b %Y", "%d %B %Y", "%d %B",
-        "%Y", "%B", "%d", "%Y/%m/%d", "%y/%m/%d"))
+      c(
+        "y-MM-dd", "EEEE, MMMM d, y", "EEE, MMM d, y", "EEEE d MMMM y",
+        "MMMM d, y", "MMM d, y", "d MMM y", "d MMMM y", "d MMMM", "d MMM",
+        "y", "MMMM", "dd", "y/MM/dd", "yy/MM/dd", "y-'W'ww", "y-'Q'Q",
+        "yMd", "yMEd", "yMMM", "yMMMM", "yMMMd", "yMMMEd", "GyMd", "GyMMMd",
+        "GyMMMEd", "yM", "Md", "MEd", "MMMd", "MMMEd", "MMMMd", "GyMMM",
+        "yQQQ", "yQQQQ", "Gy", "y", "M", "MMM", "d", "Ed"
+      )
+    )
 })
 
 test_that("the `get_time_format()` function works correctly", {
 
   # Expect specific `format_code` values for each
   # numeric `date_style` value passed in
-  lapply(1:5, get_time_format) %>%
+  lapply(1:25, get_time_format) %>%
     unlist() %>%
     expect_equal(
-      c("%H:%M:%S", "%H:%M", "%I:%M:%S %P", "%I:%M %P", "%I %P"))
+      c(
+        "HH:mm:ss", "HH:mm", "h:mm:ss a", "h:mm a", "h a", "Hms", "Hm",
+        "H", "EHm", "EHms", "Hmsv", "Hmv", "hms", "hm", "h", "Ehm", "Ehms",
+        "EBhms", "Bhms", "EBhm", "Bhm", "Bh", "hmsv", "hmv", "ms"
+      )
+    )
 
   # Expect specific `format_code` values for each
   # text-based `date_style` value passed in
   lapply(time_formats()$format_name, get_time_format) %>%
     unlist() %>%
     expect_equal(
-      c("%H:%M:%S", "%H:%M", "%I:%M:%S %P", "%I:%M %P", "%I %P"))
+      c(
+        "HH:mm:ss", "HH:mm", "h:mm:ss a", "h:mm a", "h a", "Hms", "Hm",
+        "H", "EHm", "EHms", "Hmsv", "Hmv", "hms", "hm", "h", "Ehm", "Ehms",
+        "EBhms", "Bhms", "EBhm", "Bhm", "Bh", "hmsv", "hmv", "ms"
+      )
+    )
 })
 
 test_that("the `validate_currency()` function works correctly", {
@@ -163,7 +175,6 @@ test_that("the `get_currency_str()` function works correctly", {
 
   get_currency_str(currency = "hryvnia") %>%
     expect_equal("&#8372;")
-
 
   # Expect that various currency codes (3-letter) can
   # return a currency code when an HTML entity would
@@ -350,137 +361,6 @@ test_that("the `remove_html()` function works correctly", {
     expect_equal(remove_html(html_text_1))
 })
 
-test_that("the `get_css_tbl()` function works correctly", {
-
-  # Get a CSS table from a gt table based on the
-  # `mtcars` dataset
-  css_tbl <-
-    gt(mtcars, rownames_to_stub = TRUE) %>%
-    get_css_tbl()
-
-  css_tbl %>% expect_s3_class(c("tbl_df", "tbl", "data.frame"))
-
-  ncol(css_tbl) %>% expect_equal(4)
-
-  css_tbl %>%
-    colnames() %>%
-    expect_equal(c("selector", "type", "property", "value"))
-})
-
-test_that("the `inline_html_styles()` function works correctly", {
-
-  # Create a simple gt table from `mtcars`
-  data <- gt(mtcars)
-
-  # Get the CSS tibble and the raw HTML
-  css_tbl <- data %>% get_css_tbl()
-  html <- data %>% as_raw_html(inline_css = FALSE)
-
-  # Get the inlined HTML using `inline_html_styles()`
-  inlined_html <- inline_html_styles(html = html, css_tbl = css_tbl)
-
-  # Expect that certain portions of `inlined_html` have
-  # inlined CSS rules
-  expect_true(
-    grepl(
-      paste0(
-        "style=\"font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', ",
-        "Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', ",
-        "'Droid Sans', Arial, sans-serif; display: table; border-collapse: ",
-        "collapse; margin-left: auto; margin-right: auto; color: #333333; ",
-        "font-size: 16px; font-weight: normal; font-style: normal; ",
-        "background-color: #FFFFFF; width: auto; ",
-        "border-top-style: solid; border-top-width: 2px; ",
-        "border-top-color: #A8A8A8; border-right-style: none; ",
-        "border-right-width: 2px; border-right-color: #D3D3D3; ",
-        "border-bottom-style: solid; border-bottom-width: 2px; ",
-        "border-bottom-color: #A8A8A8; border-left-style: none; ",
-        "border-left-width: 2px; border-left-color: #D3D3D3;"
-      ),
-      inlined_html
-    )
-  )
-
-  expect_true(
-    grepl(
-      paste0(
-        "padding-top: 8px; padding-bottom: 8px; padding-left: 5px; ",
-        "padding-right: 5px; margin: 10px; border-top-style: solid; ",
-        "border-top-width: 1px; border-top-color: #D3D3D3; ",
-        "border-left-style: none; border-left-width: 1px; ",
-        "border-left-color: #D3D3D3; border-right-style: none; ",
-        "border-right-width: 1px; border-right-color: #D3D3D3; ",
-        "vertical-align: middle; overflow-x: hidden; text-align: right; ",
-        "font-variant-numeric: tabular-nums;"
-      ),
-      inlined_html
-    )
-  )
-
-  # Augment the gt table with custom styles
-  data <-
-    data %>%
-    tab_style(
-      style = cell_text(size = px(10)),
-      locations = cells_body(columns = everything())
-    )
-
-  # Get the CSS tibble and the raw HTML
-  css_tbl <- data %>% get_css_tbl()
-  html <- data %>% as_raw_html(inline_css = FALSE)
-
-  # Get the inlined HTML using `inline_html_styles()`
-  inlined_html <- inline_html_styles(html = html, css_tbl = css_tbl)
-
-  # Expect that the style rule from `tab_style` is a listed value along with
-  # the inlined rules derived from the CSS classes
-  expect_true(
-    grepl(
-      paste0(
-        "<td style=\"padding-top: 8px; padding-bottom: 8px; ",
-        "padding-left: 5px; padding-right: 5px; margin: 10px; ",
-        "border-top-style: solid; border-top-width: 1px; ",
-        "border-top-color: #D3D3D3; border-left-style: none; ",
-        "border-left-width: 1px; border-left-color: #D3D3D3; ",
-        "border-right-style: none; border-right-width: 1px; ",
-        "border-right-color: #D3D3D3; vertical-align: middle; ",
-        "overflow-x: hidden; text-align: right; ",
-        "font-variant-numeric: tabular-nums; font-size: 10px;"
-      ),
-      inlined_html
-    )
-  )
-
-  # Create a gt table with a custom style in the title and subtitle
-  # (left alignment of text)
-  data <-
-    gt(mtcars) %>%
-    tab_header(
-      title = "The title",
-      subtitle = "The subtitle"
-    ) %>%
-    tab_style(
-      style = cell_text(align = "left"),
-      locations = list(
-        cells_title(groups = "title"),
-        cells_title(groups = "subtitle")
-      )
-    )
-
-  # Get the CSS tibble and the raw HTML
-  css_tbl <- data %>% get_css_tbl()
-  html <- data %>% as_raw_html(inline_css = FALSE)
-
-  # Get the inlined HTML using `inline_html_styles()`
-  inlined_html <- inline_html_styles(html = html, css_tbl = css_tbl)
-
-  # Expect that the `colspan` attr is preserved in both <th> elements
-  # and that the `text-align:left` rule is present
-  expect_true(
-    grepl("td colspan=\"11\" style=.*?text-align: left;", inlined_html)
-  )
-})
-
 test_that("the `as_locations()` function works correctly", {
 
   # Define `locations` as a `cells_body` object
@@ -617,6 +497,10 @@ test_that("The `check_spanner_id_unique()` function works properly", {
     gt(exibble) %>%
     tab_spanner(label = "a", columns = num)
 
+  gt_tbl_3 <-
+    gt(exibble, rowname_col = "row", groupname_col = "group") %>%
+    tab_spanner(label = "a", columns = c(num, char))
+
   # Don't expect an error when checking for unique spanner IDs
   # in a gt table with no spanner column labels
   expect_error(
@@ -628,6 +512,24 @@ test_that("The `check_spanner_id_unique()` function works properly", {
   # is used as the `id` value)
   expect_error(
     check_spanner_id_unique(data = gt_tbl_2, spanner_id = "a")
+  )
+
+  # Expect an error if creating a spanner ID that is the same as
+  # a column name
+  expect_error(
+    check_spanner_id_unique(data = gt_tbl_1, spanner_id = "num")
+  )
+  expect_error(
+    check_spanner_id_unique(data = gt_tbl_2, spanner_id = "num")
+  )
+  expect_error(
+    check_spanner_id_unique(data = gt_tbl_2, spanner_id = "num")
+  )
+  expect_error(
+    check_spanner_id_unique(data = gt_tbl_3, spanner_id = "row")
+  )
+  expect_error(
+    check_spanner_id_unique(data = gt_tbl_3, spanner_id = "group")
   )
 })
 
@@ -641,4 +543,57 @@ test_that("the `get_file_ext()` function works correctly", {
   get_file_ext(file = "_file.jpg") %>% expect_equal("jpg")
   get_file_ext(file = "file.png") %>% expect_equal("png")
   get_file_ext(file = "file.gif") %>% expect_equal("gif")
+})
+
+test_that("The `resolve_secondary_pattern()` function works properly", {
+
+  # Define function to test input and output of the
+  # `resolve_secondary_pattern()` util function
+  expect_secondary_pattern <- function(x, expectation) {
+    expect_equal(resolve_secondary_pattern(x), expectation)
+  }
+
+  # Generate a list of input `x` values and expected output values
+  secondary_pattern_tests <-
+    list(
+      c("<< a >><< b >>", " a  b "),
+      c("<< a >><< ::missing_val:: >>", " a "),
+      c("<< ::missing_val:: >><< b >>", " b "),
+      c("<< ::missing_val:: >><< ::missing_val:: >>", ""),
+      c("<<<< ::missing_val:: >><< ::missing_val:: >>>>", ""),
+      c("<<a>><<c<< - ::missing_val::>>>>", "ac"),
+      c("<<a>><< (c<< - d>>)>>", "a (c - d)"),
+      c("<<a>><< (c<< - ::missing_val::>>)>>", "a (c)"),
+      c("<<a>><< (::missing_val::<< - d>>)>>", "a"),
+      c("<<a>><< (::missing_val::<< - ::missing_val::>>)>>", "a"),
+      c("<<::missing_val::>><< (c<< - d>>)>>", " (c - d)"),
+      c("<<::missing_val::<< (c<< - d>>)>>>>", ""),
+      c("<<>>", ""),
+      c("<<>><<>>", ""),
+      c("<<a>>", "a"),
+      c("<<<>>", "<"),
+      c("<<>>>", ">"),
+      c("", ""),
+      c("a", "a"),
+      c("<>", "<>"),
+      c(">>a<<", ">>a<<"),
+      c("<<<<a>>*::missing_val::*>>", ""),
+      c("<<<<*::missing_val::*>> b >>", " b "),
+      c("x<< <<a>> <<b>> *::missing_val::*>>y", "xy"),
+      c("a<< ::missing_val::/::missing_val::>>b", "ab"),
+      c("a ::missing_val:: ::missing_val:: b", "a ::missing_val:: ::missing_val:: b")
+    )
+
+  # Iterate through list with `expect_secondary_pattern()` in `lapply()` stmt
+  secondary_pattern_tests_out <-
+    lapply(
+      seq_along(secondary_pattern_tests),
+      FUN = function(x) {
+        expect_secondary_pattern(
+          secondary_pattern_tests[[x]][1],
+          secondary_pattern_tests[[x]][2]
+        )
+      }
+    )
+
 })

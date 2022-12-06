@@ -38,19 +38,22 @@
 #' document. The LaTeX and RTF saving functions don't have any options to pass
 #' to `...`.
 #'
-#' If the output filename extension is ".docx", a docx (word) file is produced. This process is
-#' facilitated by the **rmarkdown** package, so this package needs to be installed beofre attempting
-#' to save any table as a docx.
+#' If the output filename extension is `.docx`, a Word document file is
+#' produced. This process is facilitated by the **rmarkdown** package, so this
+#' package needs to be installed before attempting to save any table as a
+#' `.docx` document.
 #'
 #' @param data A table object that is created using the [gt()] function.
 #' @param filename The file name to create on disk. Ensure that an extension
 #'   compatible with the output types is provided (`.html`, `.tex`, `.ltx`,
-#'   `.rtf`, `.docx`). If a custom save function is provided then the file extension is
-#'   disregarded.
+#'   `.rtf`, `.docx`). If a custom save function is provided then the file
+#'   extension is disregarded.
 #' @param path An optional path to which the file should be saved (combined with
 #'   filename).
 #' @param ... All other options passed to the appropriate internal saving
 #'   function.
+#'
+#' @return Invisibly returns `TRUE` if the export process is successful.
 #'
 #' @section Examples:
 #'
@@ -107,7 +110,7 @@
 #' tab_1 %>% gtsave("tab_1.docx")
 #' ```
 #'
-#' @family Export Functions
+#' @family table export functions
 #' @section Function ID:
 #' 13-1
 #'
@@ -161,10 +164,13 @@ gtsave <- function(
         "*" = "`.png`          (PNG file)",
         "*" = "`.pdf`          (PDF file)",
         "*" = "`.tex`, `.rnw`  (LaTeX file)",
-        "*" = "`.rtf`          (RTF file)"
+        "*" = "`.rtf`          (RTF file)",
+        "*" = "`.docx`         (Word file)"
       ))
     }
   )
+
+  invisible(TRUE)
 }
 
 #' Saving function for an HTML file
@@ -182,16 +188,14 @@ gt_save_html <- function(
 
   if (inline_css) {
 
-    data %>%
-      as_raw_html(inline_css = inline_css) %>%
-      htmltools::HTML() %>%
-      htmltools::save_html(filename, ...)
+     html <- as_raw_html(data, inline_css = inline_css)
+     html <- htmltools::HTML(html)
+     htmltools::save_html(html, filename, ...)
 
   } else {
 
-    data %>%
-      htmltools::as.tags() %>%
-      htmltools::save_html(filename, ...)
+    html <- htmltools::as.tags(data)
+    htmltools::save_html(html, filename, ...)
   }
 }
 
@@ -272,15 +276,25 @@ gt_save_rtf <- function(
 
   filename <- gtsave_filename(path = path, filename = filename)
 
-  writeLines(as_rtf(data = data), con = filename)
+  rtf_lines <- as_rtf(data = data)
+
+  rtf_lines <- gsub("!!!!!RAW-KNITR-CONTENT|RAW-KNITR-CONTENT!!!!!", "", rtf_lines)
+
+  writeLines(rtf_lines, con = filename)
 }
 
 #' Saving function for a Word (docx) file
 #'
 #' @noRd
-gt_save_docx <- function(data, filename, path = NULL, ..., open = rlang::is_interactive()) {
+gt_save_docx <- function(
+    data,
+    filename,
+    path = NULL,
+    ...,
+    open = rlang::is_interactive()
+) {
 
-  if(!rlang::is_installed("rmarkdown")){
+  if (!rlang::is_installed("rmarkdown")) {
     stop("{rmarkdown} package is necessary to save gt tables as word documents.")
   }
 
@@ -305,16 +319,12 @@ gt_save_docx <- function(data, filename, path = NULL, ..., open = rlang::is_inte
     input = word_md_file,
     output = filename
   )
-
 }
-
-
 
 #' Get the lowercase extension from a filename
 #'
 #' @noRd
 gtsave_file_ext <- function(filename) {
-
   tolower(tools::file_ext(filename))
 }
 
@@ -337,8 +347,6 @@ gtsave_filename <- function(path, filename) {
     )
   )
 }
-
-
 
 #' Get the HTML content of a **gt** table
 #'
@@ -378,7 +386,7 @@ gtsave_filename <- function(path, filename) {
 #' It has only the `<table>...</table>` part so it's not a complete HTML
 #' document but rather an HTML fragment.
 #'
-#' @family Export Functions
+#' @family table export functions
 #' @section Function ID:
 #' 13-2
 #'
@@ -391,20 +399,30 @@ as_raw_html <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
+  html_table <- as.character(as.tags.gt_tbl(data))
+
   if (inline_css) {
 
-    # Generation of the HTML table
-    html_table <- render_as_html(data = data)
+    font_vec <- unique(dt_options_get_value(data = data, option = "table_font_names"))
+    font_family_attr <- as_css_font_family_attr(font_vec = font_vec)
 
-    # Create inline styles
     html_table <-
-      inline_html_styles(
-        html = html_table,
-        css_tbl = get_css_tbl(data = data)
+      gsub(
+        pattern = "<style>html \\{.*?\\}",
+        replacement = "<style>",
+        x = html_table
       )
 
-  } else {
-    html_table <- as.character(as.tags.gt_tbl(data))
+    html_table <-
+      gsub(
+        pattern = ".gt_table {\n",
+        replacement = paste0(".gt_table { \n  ", font_family_attr, "\n"),
+        x = html_table,
+        fixed = TRUE
+      )
+
+    # Create inline styles
+    html_table <- juicyjuice::css_inline(html = html_table)
   }
 
   htmltools::HTML(html_table)
@@ -420,6 +438,28 @@ as_raw_html <- function(
 #' containing the LaTeX code.
 #'
 #' @param data A table object that is created using the [gt()] function.
+#'
+#' @details
+#' LaTeX packages required to generate tables are:
+#' `r paste0(gt:::latex_packages(), collapse = ", ")`.
+#'
+#' In the event packages are not automatically added during the render phase
+#' of the document, please create and include a style file to load them.
+#'
+#' Inside the document's YAML metadata, please include:
+#'
+#' \preformatted{
+#' output:
+#'   pdf_document: # Change to appropriate LaTeX template
+#'     includes:
+#'       in_header: 'gt_packages.sty'
+#' }
+#'
+#' The `gt_packages.sty` file would then contain the listed dependencies above:
+#'
+#' \preformatted{
+#'   \usepackage{amsmath, booktabs, caption, longtable}
+#' }
 #'
 #' @section Examples:
 #'
@@ -443,7 +483,7 @@ as_raw_html <- function(
 #' Markdown documents that are knit to PDF. We can use `as.character()` to get
 #' just the LaTeX code as a single-element vector.
 #'
-#' @family Export Functions
+#' @family table export functions
 #' @section Function ID:
 #' 13-3
 #'
@@ -527,7 +567,7 @@ as_latex <- function(data) {
 #'   as_rtf()
 #' ```
 #'
-#' @family Export Functions
+#' @family table export functions
 #' @section Function ID:
 #' 13-4
 #'
@@ -605,16 +645,17 @@ as_rtf <- function(data) {
 #' single-element character vector.
 #'
 #' @param data A table object that is created using the `gt()` function.
-#' @param align left, center (default) or right.
-#' @param caption_location top (default), bottom, or embed Indicating if the
-#'   title and subtitle should be listed above, below, or be embedded in the
-#'   table
-#' @param caption_align left (default), center, or right. Alignment of caption
-#'   (title and subtitle). Used when `caption_location` is not "embed".
-#' @param split TRUE or FALSE (default) indicating whether activate Word option
-#'   'Allow row to break across pages'.
-#' @param keep_with_next  TRUE (default) or FALSE indicating whether a table
-#'   should use Word option 'keep rows together' is activated when TRUEd
+#' @param align An option for table alignment. Can either be `"center"` (the
+#'   default), `"left"`, or `"right"`.
+#' @param caption_location Determines where the caption should be positioned.
+#'   This can either be `"top"` (the default), `"bottom"`, or `"embed"`.
+#' @param caption_align Determines the alignment of the caption. This is
+#'   either `"left"` (the default), `"center"`, or `"right"`. This option is
+#'   only used when `caption_location` is not set as `"embed"`.
+#' @param split A `TRUE` or `FALSE` (the default) value that indicates whether
+#'   to activate the Word option `Allow row to break across pages`.
+#' @param keep_with_next A `TRUE` (the default) or `FALSE` value that indicates
+#'   whether a table should use Word option `keep rows together`.
 #'
 #' @examples
 #' # Use `gtcars` to create a gt table;
@@ -631,7 +672,7 @@ as_rtf <- function(data) {
 #'   ) %>%
 #'   as_word()
 #'
-#' @family Export Functions
+#' @family table export functions
 #' @section Function ID:
 #' 13-5
 #'
@@ -639,7 +680,7 @@ as_rtf <- function(data) {
 as_word <- function(
     data,
     align = "center",
-    caption_location = c("top","bottom","embed"),
+    caption_location = c("top", "bottom", "embed"),
     caption_align = "left",
     split = FALSE,
     keep_with_next = TRUE
@@ -647,33 +688,60 @@ as_word <- function(
 
   # Perform input object validation
   stop_if_not_gt(data = data)
-  caption_location <- match.arg(caption_location)
+
+  caption_location <- rlang::arg_match(caption_location)
 
   # Build all table data objects through a common pipeline
   value <- build_data(data = data, context = "word")
 
   gt_xml <- c()
 
-  # Composition of Word table OOXML -----------------------------------------------
-  if (caption_location %in% c("top")) {
-    header_xml <- as_word_tbl_header_caption(data = value, align = caption_align, split = split, keep_with_next = keep_with_next)
+  #
+  # Composition of Word table OOXML
+  #
+
+  if (caption_location == "top") {
+
+    header_xml <-
+      as_word_tbl_header_caption(
+        data = value,
+        align = caption_align,
+        split = split,
+        keep_with_next = keep_with_next
+      )
+
     gt_xml <- c(gt_xml, header_xml)
   }
 
-  tbl_xml <- as_word_tbl_body(data = value, align = align, split = split, keep_with_next = keep_with_next, embedded_heading = identical(caption_location, "embed"))
+  tbl_xml <-
+    as_word_tbl_body(
+      data = value,
+      align = align,
+      split = split,
+      keep_with_next = keep_with_next,
+      embedded_heading = identical(caption_location, "embed")
+    )
+
   gt_xml <- c(gt_xml, tbl_xml)
 
+  if (caption_location == "bottom") {
 
-  if (caption_location %in% c("bottom")) {
-    ## set keep_with_next to false here to prevent it trying to keep with non-table content
-    header_xml <- as_word_tbl_header_caption(data = value, align = caption_align, split = split, keep_with_next = FALSE)
+    # Set `keep_with_next` to FALSE here to prevent it trying to keep
+    # with non-table content
+    header_xml <-
+      as_word_tbl_header_caption(
+        data = value,
+        align = caption_align,
+        split = split,
+        keep_with_next = FALSE
+      )
+
     gt_xml <- c(gt_xml, header_xml)
   }
 
   gt_xml <- paste0(gt_xml, collapse = "")
 
   gt_xml
-
 }
 
 #' Generate ooxml for the table caption
@@ -832,7 +900,7 @@ as_word_tbl_body <- function(
 #' `r man_get_image_tag(file = "man_extract_summary_1.png")`
 #' }}
 #'
-#' @family Export Functions
+#' @family table export functions
 #' @section Function ID:
 #' 13-6
 #'
@@ -866,12 +934,154 @@ extract_summary <- function(data) {
         lapply(x, function(y) {
           dplyr::rename(
             y,
-            rowname = .env$rowname_col_private,
-            group_id = .env$group_id_col_private
+            rowname = dplyr::all_of(rowname_col_private),
+            group_id = dplyr::all_of(group_id_col_private)
           )
         })
       }
     )
 
   as.list(summary_tbl)
+}
+
+#' Extract a vector of formatted cells from a **gt** object
+#'
+#' @description
+#' Get a vector of cell data from a `gt_tbl` object. The output vector will have
+#' cell data formatted in the same way as the table.
+#'
+#' @param data A table object that is created using the [gt()] function.
+#' @param columns The columns containing the cells to extract. Can either be a
+#'   series of column names provided in [c()], a vector of column indices, or a
+#'   helper function focused on selections. The select helper functions are:
+#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
+#'   [num_range()], and [everything()].
+#' @param rows Optional rows to limit the extraction of cells. Providing
+#'   [everything()] (the default) results in all rows in `columns` being
+#'   formatted. Alternatively, we can supply a vector of row captions within
+#'   [c()], a vector of row indices, or a helper function focused on selections.
+#'   The select helper functions are: [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
+#'   We can also use expressions to filter down to the rows we need (e.g.,
+#'   `[colname_1] > 100 & [colname_2] < 50`).
+#' @param output The output style of the resulting character vector. This can
+#'   either be `"auto"` (the default), `"plain"`, `"html"`, `"latex"`, `"rtf"`,
+#'   or `"word"`. In **knitr** rendering (i.e., Quarto or R Markdown), the
+#'   `"auto"` option will choose the correct `output` value
+#'
+#' @return A vector of cell data extracted from a **gt** table.
+#'
+#' @section Examples:
+#'
+#' Let's create a **gt** table with the [`exibble`] dataset to use in the next
+#' few examples:
+#'
+#' ```r
+#' gt_tbl <- gt(exibble, rowname_col = "row", groupname_col = "group")
+#' ```
+#'
+#' We can extract a cell from the table with the `extract_cells()` function.
+#' This is done by providing a column and a row intersection:
+#'
+#' ```r
+#' extract_cells(gt_tbl, columns = num, row = 1)
+#' ```
+#' ```
+#' #> [1] "1.111e-01"
+#' ```
+#'
+#' Multiple cells can be extracted. Let's get the first four cells from the
+#' `char` column.
+#'
+#' ```r
+#' extract_cells(gt_tbl, columns = char, rows = 1:4)
+#' ```
+#' ```
+#' #> [1] "apricot" "banana" "coconut" "durian"
+#' ```
+#'
+#' We can format cells and expect that the formatting is fully retained after
+#' extraction.
+#'
+#' ```r
+#' gt_tbl %>%
+#'   fmt_number(columns = num, decimals = 2) %>%
+#'   extract_cells(columns = num, rows = 1)
+#' ```
+#' ```
+#' #> [1] "0.11"
+#' ```
+#'
+#' @family table export functions
+#' @section Function ID:
+#' 13-7
+#'
+#' @export
+extract_cells <- function(
+    data,
+    columns,
+    rows = everything(),
+    output = c("auto", "plain", "html", "latex", "rtf", "word")
+) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  # Ensure that `output` is matched correctly to one option
+  output <- rlang::arg_match(output)
+
+  if (output == "auto") {
+    output <- determine_output_format()
+  }
+
+  #
+  # Resolution of columns and rows as character vectors
+  #
+
+  resolved_columns <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data,
+      excl_stub = FALSE
+    )
+
+  resolved_rows_idx <-
+    resolve_rows_i(
+      expr = {{ rows }},
+      data = data
+    )
+
+  #
+  # Partially build the gt table using the resolved `output` as the
+  # rendering context; this formats the body cells and applies merging
+  # routines and text transforms (but doesn't attach footnote marks)
+  #
+
+  data <- dt_body_build(data = data)
+  data <- render_formats(data = data, context = output)
+  data <- render_substitutions(data = data, context = output)
+  data <- migrate_unformatted_to_output(data = data, context = output)
+  data <- perform_col_merge(data = data, context = output)
+  data <- dt_body_reassemble(data = data)
+  data <- reorder_stub_df(data = data)
+  data <- reorder_footnotes(data = data)
+  data <- reorder_styles(data = data)
+  data <- perform_text_transforms(data = data)
+  built_data <- data
+
+  # Extract the `_body` component of the built data
+  data_body <- built_data[["_body"]]
+
+  #
+  # Collect a vector of body cells in a specific order
+  #
+
+  out_vec <- c()
+
+  for (column in resolved_columns) {
+    out_vec_col <- data_body[resolved_rows_idx, ][[column]]
+    out_vec <- c(out_vec, out_vec_col)
+  }
+
+  out_vec
 }

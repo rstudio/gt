@@ -1,6 +1,8 @@
 # Define the contexts
 all_contexts <- c("html", "latex", "rtf", "word", "default")
 
+missing_val_token <- "::missing_val::"
+
 validate_contexts <- function(contexts) {
 
   if (!all(contexts %in% all_contexts)) {
@@ -63,6 +65,7 @@ render_formats <- function(data, context) {
 
   # Render input data to output data where formatting
   # is specified
+
   for (fmt in formats)  {
 
     # Determine if the formatter has a function relevant
@@ -91,6 +94,52 @@ render_formats <- function(data, context) {
   }
 
   dt_body_set(data = data, body = body)
+}
+
+#' Render any formatting directives available in the `substitutions` list
+#'
+#' @noRd
+render_substitutions <- function(
+    data,
+    context
+) {
+
+  body <- dt_body_get(data = data)
+  data_tbl <- dt_data_get(data = data)
+  substitutions <- dt_substitutions_get(data = data)
+
+  # Render input data to output data where formatting
+  # is specified
+  for (subst in substitutions)  {
+
+    # Determine if the formatter has a function relevant
+    # to the context; if not, use the `default` function
+    # (which should always be present)
+    if (context %in% names(subst$func)) {
+      eval_func <- context
+    } else {
+      eval_func <- "default"
+    }
+
+    for (col in subst[["cols"]]) {
+
+      # Perform rendering but only do so if the column is present
+      if (col %in% colnames(data_tbl)) {
+
+        result <- subst$func[[eval_func]](data_tbl[[col]][subst$rows])
+
+        # If any of the resulting output is `NA`, that
+        # means we want to NOT make changes to those
+        # particular cells' output (i.e. inherit the
+        # results of the previous substitution).
+        body[[col]][subst$rows][!is.na(result)] <- stats::na.omit(result)
+      }
+    }
+  }
+
+  data <- dt_body_set(data = data, body = body)
+
+  data
 }
 
 # Move input data cells to `body` that didn't have any rendering applied
@@ -122,10 +171,10 @@ migrate_unformatted_to_output <- function(data, context) {
                 )
             }
 
-            x %>%
-              tidy_gsub("\\s+$", "") %>%
-              process_text(context = context) %>%
-              paste(collapse = ", ")
+            x <- tidy_gsub(x, "\\s+$", "")
+            x <- process_text(x, context = context)
+            x <- paste(x, collapse = ", ")
+            x
           }
         )
 
@@ -135,6 +184,7 @@ migrate_unformatted_to_output <- function(data, context) {
       vals <- data_tbl[[colname]][row_index]
 
       if (is.numeric(vals)) {
+
         vals <-
           format(
             vals,
@@ -142,6 +192,10 @@ migrate_unformatted_to_output <- function(data, context) {
             trim = TRUE,
             justify = "none"
           )
+      }
+
+      if (is.factor(vals)) {
+        vals <- as.character(vals)
       }
 
       body[[colname]][row_index] <- process_text(text = vals, context = context)
@@ -191,11 +245,10 @@ get_row_reorder_df <- function(groups, stub_df) {
     )
   }
 
-  indices <-
-    lapply(stub_df$group_id, `%in%`, x = groups) %>%
-    lapply(which) %>%
-    unlist() %>%
-    order()
+  indices <- lapply(stub_df$group_id, `%in%`, x = groups)
+  indices <- lapply(indices, which)
+  indices <- unlist(indices)
+  indices <- order(indices)
 
   dplyr::tibble(
     rownum_start = seq_along(indices),
@@ -209,12 +262,14 @@ reorder_footnotes <- function(data) {
   stub_df <- dt_stub_df_get(data = data)
   footnotes_tbl <- dt_footnotes_get(data = data)
 
-  rownum_final <- stub_df$rownum_i %>% as.numeric()
+  rownum_final <- as.numeric(stub_df$rownum_i)
 
   for (i in seq_len(nrow(footnotes_tbl))) {
 
-    if (!is.na(footnotes_tbl[i, ][["rownum"]]) &&
-        footnotes_tbl[i, ][["locname"]] %in% c("data", "stub")) {
+    if (
+      !is.na(footnotes_tbl[i, ][["rownum"]]) &&
+      footnotes_tbl[i, ][["locname"]] %in% c("data", "stub")
+    ) {
 
       footnotes_tbl[i, ][["rownum"]] <-
         which(rownum_final == footnotes_tbl[i, ][["rownum"]])
@@ -237,6 +292,7 @@ reorder_styles <- function(data) {
   tmp_mask <- vector("logical", sz)
 
   for (i in seq_len(sz)) {
+
     if (
       !is.na(styles_tbl$rownum[i]) &&
       !grepl("summary_cells", styles_tbl$locname[i])
@@ -251,6 +307,43 @@ reorder_styles <- function(data) {
   styles_tbl$rownum <- final_rownum
 
   dt_styles_set(data = data, styles = styles_tbl)
+}
+
+resolve_secondary_pattern <- function(x) {
+
+  while (grepl("<<.*?>>", x)) {
+
+    m <- gregexpr("<<[^<]*?>>", x, perl = TRUE)
+
+    matched <- unlist(regmatches(x, m))[1]
+
+    m_start <- as.integer(m[[1]])
+    m_length <- attr(m[[1]], "match.length")
+
+    if (grepl(missing_val_token, matched)) {
+
+      # Remove `matched` text from `x`
+      x <-
+        paste0(
+          substr(x, 0, m_start - 1L),
+          substr(x, m_start + m_length, 100000)
+        )
+
+    } else {
+
+      # Remove `<<` and `>>` from `matched` and insert back into `x`
+      matched_trimmed <- gsub("^<<|>>$", "", matched)
+
+      x <-
+        paste0(
+          substr(x, 0, m_start - 1L),
+          matched_trimmed,
+          substr(x, m_start + m_length, 100000)
+        )
+    }
+  }
+
+  x
 }
 
 #' Perform merging of column contents
@@ -280,19 +373,43 @@ perform_col_merge <- function(data, context) {
     if (type == "merge") {
 
       mutated_column <- col_merge[[i]]$vars[1]
-      mutated_column_sym <- sym(mutated_column)
 
       columns <- col_merge[[i]]$vars
       pattern <- col_merge[[i]]$pattern
 
+      glue_src_na_data <- lapply(as.list(data_tbl[, columns]), FUN = is.na)
+
       glue_src_data <- as.list(body[, columns])
+      glue_src_data <-
+        lapply(
+          seq_along(glue_src_data),
+          FUN = function(x) {
+            glue_src_data[[x]][
+              glue_src_data[[x]] == "NA" & glue_src_na_data[[x]]
+            ] <- missing_val_token
+            glue_src_data[[x]]
+          }
+        )
       glue_src_data <- stats::setNames(glue_src_data, seq_len(length(glue_src_data)))
 
-      body <-
-        dplyr::mutate(
-          body,
-          !!mutated_column_sym := as.character(glue_gt(glue_src_data, pattern))
-        )
+      glued_cols <- as.character(glue_gt(glue_src_data, pattern))
+
+      if (grepl("<<.*?>>", pattern)) {
+
+        glued_cols <-
+          vapply(
+            glued_cols,
+            FUN.VALUE = character(1),
+            USE.NAMES = FALSE,
+            FUN = resolve_secondary_pattern
+          )
+
+        glued_cols <- gsub("<<|>>", "", glued_cols)
+      }
+
+      glued_cols <- gsub(missing_val_token, "NA", glued_cols, fixed = TRUE)
+
+      body[, mutated_column] <- glued_cols
 
     } else if (type == "merge_n_pct") {
 
@@ -347,7 +464,14 @@ perform_col_merge <- function(data, context) {
 
         pattern_unequal <-
           paste0(
-            "<<1>><span class=\"gt_two_val_uncert\">",
+            "<<1>><span style=\"",
+            "display:inline-block;",
+            "line-height:1em;",
+            "text-align:right;",
+            "font-size:60%;",
+            "vertical-align:-0.25em;",
+            "margin-left:0.1em;",
+            "\">",
             "+<<3>><br>",
             context_minus_mark(context = context), "<<2>>",
             "</span>"
@@ -485,7 +609,7 @@ last_non_na <- function(vect) {
 # Determine whether the table should have row labels
 # set within a column in the stub
 stub_rownames_has_column <- function(data) {
-  isTRUE("rowname" %in% dt_stub_components(data = data))
+  isTRUE("row_id" %in% dt_stub_components(data = data))
 }
 
 # Determine whether the table should have row group labels
@@ -512,7 +636,8 @@ get_number_of_visible_data_columns <- function(data) {
 get_effective_number_of_columns <- function(data) {
 
   # Check if the table has been built, return an error if that's not the case
-  if (!dt_has_built(data)) {
+  if (!dt_has_built(data = data)) {
+
     cli::cli_abort(
       "The `get_effective_number_of_columns()` function can only be used on
       gt objects that have tables 'built'."
@@ -521,7 +646,7 @@ get_effective_number_of_columns <- function(data) {
 
   # Obtain the number of visible columns in the built table
   n_data_cols <- get_number_of_visible_data_columns(data = data)
-  n_data_cols + length(get_stub_layout(data))
+  n_data_cols + length(get_stub_layout(data = data))
 }
 
 get_stub_layout <- function(data) {
@@ -535,6 +660,7 @@ get_stub_layout <- function(data) {
 
   # Resolve the layout of the stub (i.e., the roles of columns if present)
   if (n_stub_cols == 0) {
+
     # If summary rows are present, we will use the `rowname` column
     # for the summary row labels
     if (dt_summary_exists(data = data)) {

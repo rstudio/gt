@@ -29,7 +29,9 @@ provides the flexibility to relabel one or more columns and we even have the
 option to use the \code{\link[=md]{md()}} or \code{\link[=html]{html()}} helper functions for rendering column
 labels from Markdown or using HTML.
 }
-\details{
+\section{A note on column names and column labels}{
+
+
 It's important to note that while columns can be freely relabeled, we
 continue to refer to columns by their original column names. Column names in
 a tibble or data frame must be unique whereas column labels in \strong{gt} have
@@ -40,6 +42,7 @@ between columns in other \strong{gt} function calls (e.g., in all of the
 \verb{fmt*()} functions) even though we may lose distinguishability in column
 labels once they have been relabeled.
 }
+
 \section{Examples}{
 
 
@@ -59,7 +62,7 @@ with the \code{cols_label()} function to improve its presentation.
 }\if{html}{\out{</div>}}
 
 #' \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_1.png" alt="This image of a table was generated from the first code example in the `cols_label()` help file." style="width:100\%;">
 }}
 
 Using \code{\link{countrypops}} again to create a \strong{gt} table, we label columns just
@@ -79,19 +82,21 @@ formatting.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_2.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_2.png" alt="This image of a table was generated from the second code example in the `cols_label()` help file." style="width:100\%;">
 }}
 }
 
 \section{Function ID}{
 
-4-3
+4-4
 }
 
 \seealso{
-Other Modify Columns: 
+Other column modification functions: 
+\code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
+\code{\link{cols_label_with}()},
 \code{\link{cols_merge_n_pct}()},
 \code{\link{cols_merge_range}()},
 \code{\link{cols_merge_uncert}()},
@@ -102,4 +107,4 @@ Other Modify Columns:
 \code{\link{cols_unhide}()},
 \code{\link{cols_width}()}
 }
-\concept{Modify Columns}
+\concept{column modification functions}

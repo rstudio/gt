@@ -63,7 +63,7 @@ various sizes.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_local_image_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_local_image_1.png" alt="This image of a table was generated from the first code example in the `local_image()` help file." style="width:100\%;">
 }}
 }
 
@@ -73,9 +73,9 @@ various sizes.
 }
 
 \seealso{
-Other Image Addition Functions: 
+Other image addition functions: 
 \code{\link{ggplot_image}()},
 \code{\link{test_image}()},
 \code{\link{web_image}()}
 }
-\concept{Image Addition Functions}
+\concept{image addition functions}

@@ -24,7 +24,7 @@ as.data.frame.gt_tbl <- function(x, ...) {
     if ("__GT_ROWNAME_PRIVATE__" %in% colnames(ret)) {
       ret$`__GT_ROWNAME_PRIVATE__` <- NULL
     }
-    rowname_vals <- dt_stub_df_get(data = data_built)$rowname
+    rowname_vals <- dt_stub_df_get(data = data_built)$row_id
     rownames(ret) <- rowname_vals
   }
 

@@ -1,5 +1,3 @@
-skip_on_cran()
-
 test_that("the `fmt_partsper()` function works correctly", {
 
   # Create an input data frame two columns: one
@@ -40,7 +38,7 @@ test_that("the `fmt_partsper()` function works correctly", {
       "1,000.00‰", "100.00‰", "10.00‰", "1.00‰", "0.10‰",
       "0.01‰", "0.00‰", "0.00‰", "0.00‰", "0.00‰", "0.00‰",
       "0.00‰", "0.00‰", "0.00‰", "0.00‰", "0.00‰", "0.00‰",
-      "0.00‰", "0.00‰", "NA", "Inf‰", "&minus;Inf‰"
+      "0.00‰", "0.00‰", "NA", "Inf‰", paste0("\U02212", "Inf‰")
     )
   )
 
@@ -87,7 +85,7 @@ test_that("the `fmt_partsper()` function works correctly", {
       "10,000.00‱", "1,000.00‱", "100.00‱", "10.00‱", "1.00‱",
       "0.10‱", "0.01‱", "0.00‱", "0.00‱", "0.00‱", "0.00‱",
       "0.00‱", "0.00‱", "0.00‱", "0.00‱", "0.00‱", "0.00‱",
-      "0.00‱", "0.00‱", "NA", "Inf‱", "&minus;Inf‱"
+      "0.00‱", "0.00‱", "NA", "Inf‱", paste0("\U02212", "Inf‱")
     )
   )
 
@@ -137,7 +135,7 @@ test_that("the `fmt_partsper()` function works correctly", {
       "10.00 pcm", "1.00 pcm", "0.10 pcm", "0.01 pcm", "0.00 pcm",
       "0.00 pcm", "0.00 pcm", "0.00 pcm", "0.00 pcm", "0.00 pcm", "0.00 pcm",
       "0.00 pcm", "0.00 pcm", "0.00 pcm", "0.00 pcm", "NA", "Inf pcm",
-      "&minus;Inf pcm"
+      paste0("\U02212", "Inf pcm")
     )
   )
 
@@ -182,7 +180,7 @@ test_that("the `fmt_partsper()` function works correctly", {
       "100.00 ppm", "10.00 ppm", "1.00 ppm", "0.10 ppm", "0.01 ppm",
       "0.00 ppm", "0.00 ppm", "0.00 ppm", "0.00 ppm", "0.00 ppm", "0.00 ppm",
       "0.00 ppm", "0.00 ppm", "0.00 ppm", "0.00 ppm", "NA", "Inf ppm",
-      "&minus;Inf ppm"
+      paste0("\U02212", "Inf ppm")
     )
   )
 
@@ -227,7 +225,7 @@ test_that("the `fmt_partsper()` function works correctly", {
       "1,000,000.00 ppb", "100,000.00 ppb", "10,000.00 ppb", "1,000.00 ppb",
       "100.00 ppb", "10.00 ppb", "1.00 ppb", "0.10 ppb", "0.01 ppb",
       "0.00 ppb", "0.00 ppb", "0.00 ppb", "0.00 ppb", "0.00 ppb", "0.00 ppb",
-      "0.00 ppb", "NA", "Inf ppb", "&minus;Inf ppb"
+      "0.00 ppb", "NA", "Inf ppb", paste0("\U02212", "Inf ppb")
     )
   )
 
@@ -273,7 +271,7 @@ test_that("the `fmt_partsper()` function works correctly", {
       "1,000,000.00 ppt", "100,000.00 ppt", "10,000.00 ppt", "1,000.00 ppt",
       "100.00 ppt", "10.00 ppt", "1.00 ppt", "0.10 ppt", "0.01 ppt",
       "0.00 ppt", "0.00 ppt", "0.00 ppt", "0.00 ppt", "NA", "Inf ppt",
-      "&minus;Inf ppt"
+      paste0("\U02212", "Inf ppt")
     )
   )
 
@@ -320,7 +318,7 @@ test_that("the `fmt_partsper()` function works correctly", {
       "10,000,000,000.00 ppq", "1,000,000,000.00 ppq", "100,000,000.00 ppq",
       "10,000,000.00 ppq", "1,000,000.00 ppq", "100,000.00 ppq", "10,000.00 ppq",
       "1,000.00 ppq", "100.00 ppq", "10.00 ppq", "1.00 ppq", "0.10 ppq",
-      "0.01 ppq", "0.00 ppq", "NA", "Inf ppq", "&minus;Inf ppq"
+      "0.01 ppq", "0.00 ppq", "NA", "Inf ppq", paste0("\U02212", "Inf ppq")
     )
   )
 

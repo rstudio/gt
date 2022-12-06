@@ -47,7 +47,7 @@ tab_1
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_unhide_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_unhide_1.png" alt="This image of a table was generated from the first code example in the `cols_unhide()` help file." style="width:100\%;">
 }}
 
 If the \code{tab_1} object is provided without the code or source data to
@@ -58,21 +58,23 @@ the \code{cols_unhide()} function becomes useful.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_unhide_2.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_unhide_2.png" alt="This image of a table was generated from the second code example in the `cols_unhide()` help file." style="width:100\%;">
 }}
 }
 
 \section{Function ID}{
 
-4-8
+4-10
 }
 
 \seealso{
 \code{\link[=cols_hide]{cols_hide()}} to perform the inverse operation.
 
-Other Modify Columns: 
+Other column modification functions: 
+\code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
+\code{\link{cols_label_with}()},
 \code{\link{cols_label}()},
 \code{\link{cols_merge_n_pct}()},
 \code{\link{cols_merge_range}()},
@@ -83,4 +85,4 @@ Other Modify Columns:
 \code{\link{cols_move}()},
 \code{\link{cols_width}()}
 }
-\concept{Modify Columns}
+\concept{column modification functions}

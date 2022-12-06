@@ -34,15 +34,13 @@ for \code{populations} indicate the non-existence of the country during that yea
 Here is a glimpse at the data available in \code{countrypops}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::glimpse(countrypops)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## Rows: 12,470
-## Columns: 5
-## $ country_name   <chr> "Aruba", "Aruba", "Aruba", "Aruba", "Aruba", "Aruba", "…
-## $ country_code_2 <chr> "AW", "AW", "AW", "AW", "AW", "AW", "AW", "AW", "AW", "…
-## $ country_code_3 <chr> "ABW", "ABW", "ABW", "ABW", "ABW", "ABW", "ABW", "ABW",…
-## $ year           <int> 1960, 1961, 1962, 1963, 1964, 1965, 1966, 1967, 1968, 1…
-## $ population     <int> 54211, 55438, 56225, 56695, 57032, 57360, 57715, 58055,…
+#> Rows: 12,470
+#> Columns: 5
+#> $ country_name   <chr> "Aruba", "Aruba", "Aruba", "Aruba", "Aruba", "Aruba", "~
+#> $ country_code_2 <chr> "AW", "AW", "AW", "AW", "AW", "AW", "AW", "AW", "AW", "~
+#> $ country_code_3 <chr> "ABW", "ABW", "ABW", "ABW", "ABW", "ABW", "ABW", "ABW",~
+#> $ year           <int> 1960, 1961, 1962, 1963, 1964, 1965, 1966, 1967, 1968, 1~
+#> $ population     <int> 54211, 55438, 56225, 56695, 57032, 57360, 57715, 58055,~
 }\if{html}{\out{</div>}}
 }
 
@@ -52,12 +50,13 @@ Here is a glimpse at the data available in \code{countrypops}.
 }
 
 \seealso{
-Other Datasets: 
+Other datasets: 
 \code{\link{exibble}},
+\code{\link{gt_adsl}},
 \code{\link{gtcars}},
 \code{\link{pizzaplace}},
 \code{\link{sp500}},
 \code{\link{sza}}
 }
-\concept{Datasets}
+\concept{datasets}
 \keyword{datasets}

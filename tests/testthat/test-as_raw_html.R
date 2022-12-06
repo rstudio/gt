@@ -1,13 +1,12 @@
-skip_on_cran()
-
 test_that("`as_raw_html()` produces the same table every time", {
 
   gt_html_1 <-
     gt(exibble) %>%
-    as_raw_html(inline_css = TRUE)
+    as_raw_html(inline_css = TRUE) %>%
+    gsub("id=\"[a-z]*?\"", "", .)
 
   gt_html_1_sha1 <- digest::sha1(gt_html_1)
-  expect_equal(gt_html_1_sha1, "45813e5281fb9f9cc616d55551efff7ccaa17cca")
+  expect_equal(gt_html_1_sha1, "5344de4ed3bbff521ddaa77db44242b7d7000074")
 
   gt_html_2 <-
     gt(
@@ -110,8 +109,32 @@ test_that("`as_raw_html()` produces the same table every time", {
         rows = "Mazda RX4"
       )
     ) %>%
-    as_raw_html(inline_css = TRUE)
+    as_raw_html(inline_css = TRUE) %>%
+    gsub("id=\"[a-z]*?\"", "", .)
 
   gt_html_2_sha1 <- digest::sha1(gt_html_2)
-  expect_equal(gt_html_2_sha1, "b300b93826ffd2de48f2514aecfeab9f43a3695b")
+  expect_equal(gt_html_2_sha1, "ead3b201f06d98f304d23d9c04a2eba0b18bbdf5")
+
+  # Expect that font family values with multiple words (i.e., have a space
+  # character) added with `tab_style()` preserve single-quote characters
+  expect_match(
+    exibble[1, ] %>%
+      gt() %>%
+      tab_header(title = "Title") %>%
+      tab_style(style = cell_text(font = "Two Words"), locations = cells_title()) %>%
+      as_raw_html(),
+    "font-family: 'Two Words';"
+  )
+
+  expect_match(
+    exibble[1, ] %>%
+      gt() %>%
+      tab_header(title = "Title") %>%
+      tab_style(
+        style = cell_text(font = c("Fira Sans", "Droid Sans", "Arial", "sans-serif")),
+        locations = cells_title()
+      ) %>%
+      as_raw_html(),
+    "font-family: 'Fira Sans', 'Droid Sans', Arial, sans-serif;"
+  )
 })

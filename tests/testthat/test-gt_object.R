@@ -351,11 +351,11 @@ test_that("gt table can be made with grouped data - two groups", {
 
   expect_equal(
     built_tbl$`_stub_df`$group_id,
-    built_tbl$`_stub_df`$built
+    built_tbl$`_stub_df`$built_group_label
   )
 
   expect_equal(
-    built_tbl$`_stub_df`$rowname,
+    built_tbl$`_stub_df`$row_id,
     rep(NA_character_, 8)
   )
 
@@ -451,7 +451,7 @@ test_that("The `gt()` groupname_col arg will override any grouped data", {
   )
 
   expect_equal(
-    built_tbl$`_stub_df`$rowname,
+    built_tbl$`_stub_df`$row_id,
     rep(NA_character_, 8)
   )
 
@@ -464,7 +464,7 @@ test_that("The `gt()` groupname_col arg will override any grouped data", {
   )
 
   expect_equal(
-    built_tbl$`_stub_df`$built,
+    built_tbl$`_stub_df`$built_group_label,
     c(
       "2015-01-15", "2015-02-15", "2015-03-15", "2015-04-15",
       "2015-05-15", "2015-06-15", "NA", "2015-08-15"
@@ -549,10 +549,11 @@ test_that("The `gt()` `rowname_col` arg will be overridden by `rownames_to_stub 
     expect_equal(
       dplyr::tibble(
         rownum_i = 1:10,
+        row_id = rownames(mtcars)[1:10],
         group_id = NA_character_,
-        rowname = rownames(mtcars)[1:10],
         group_label = list(NULL),
-        built = ""
+        indent = NA_character_,
+        built_group_label = ""
       ),
       ignore_attr = TRUE
     )
@@ -620,9 +621,10 @@ test_that("The `rowname` column will be safely included when `rownames_to_stub =
     expect_equal(
       dplyr::tibble(
         rownum_i = 1:8,
+        row_id = as.character(1:8),
         group_id = NA_character_,
-        rowname = as.character(1:8),
         group_label = list(NULL),
+        indent = NA_character_,
         built = ""
       ),
       ignore_attr = TRUE
@@ -707,19 +709,19 @@ test_that("Escapable characters in rownames are handled correctly in each output
   expect_match( # stub from data frame's row names
     gt(tbl, rownames_to_stub = TRUE) %>%
       render_as_html(),
-    "<tr><th scope=\"row\" class=\"gt_row gt_right gt_stub\">&lt;em&gt;row_html&lt;/em&gt;</th>",
+    "<tr><th id=\"stub_1_1\" scope=\"row\" class=\"gt_row gt_left gt_stub\">&lt;em&gt;row_html&lt;/em&gt;</th>",
     fixed = TRUE
   )
   expect_match( # `column_1`
     gt(tbl, rownames_to_stub = TRUE) %>%
       render_as_html(),
-    "<td class=\"gt_row gt_left\">&lt;em&gt;html&lt;/em&gt;</td>",
+    "<td headers=\"stub_1_1 column_1\" class=\"gt_row gt_left\">&lt;em&gt;html&lt;/em&gt;</td>",
     fixed = TRUE
   )
   expect_match( # `column_2`
     gt(tbl, rownames_to_stub = TRUE) %>%
       render_as_html(),
-    "<td class=\"gt_row gt_left\">html</td>",
+    "<td headers=\"stub_1_1 column_2\" class=\"gt_row gt_left\">html</td>",
     fixed = TRUE
   )
 
@@ -727,13 +729,13 @@ test_that("Escapable characters in rownames are handled correctly in each output
   expect_match( # stub from `column_1`
     gt(dplyr::as_tibble(tbl), rowname_col = "column_1") %>%
       render_as_html(),
-    "<tr><th scope=\"row\" class=\"gt_row gt_right gt_stub\">&lt;em&gt;html&lt;/em&gt;</th>",
+    "<tr><th id=\"stub_1_1\" scope=\"row\" class=\"gt_row gt_left gt_stub\">&lt;em&gt;html&lt;/em&gt;</th>",
     fixed = TRUE
   )
   expect_match( # `column_2`
     gt(dplyr::as_tibble(tbl), rowname_col = "column_1") %>%
       render_as_html(),
-    "<td class=\"gt_row gt_left\">html</td>",
+    "<td headers=\"stub_1_1 column_2\" class=\"gt_row gt_left\">html</td>",
     fixed = TRUE
   )
 
@@ -822,23 +824,23 @@ test_that("Default locale settings are honored by formatting functions", {
 
   # `fmt_scientific()`
   (exibble_1 %>% gt() %>% fmt_scientific(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
-    expect_equal("7.77 x 10(5)")
+    expect_equal("7.77 \U000D7 10^5")
   (exibble_1 %>% gt(locale = "fr") %>% fmt_scientific(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
-    expect_equal("7,77 x 10(5)")
+    expect_equal("7,77 \U000D7 10^5")
   (exibble_1 %>% gt(locale = "en") %>% fmt_scientific(num, locale = "fr") %>% render_formats_test(context = "plain"))[["num"]] %>%
-    expect_equal("7,77 x 10(5)")
+    expect_equal("7,77 \U000D7 10^5")
   (exibble_1 %>% gt(locale = "fr") %>% fmt_scientific(num, locale = "de") %>% render_formats_test(context = "plain"))[["num"]] %>%
-    expect_equal("7,77 x 10(5)")
+    expect_equal("7,77 \U000D7 10^5")
 
   # `fmt_engineering()`
   (exibble_1 %>% gt() %>% fmt_engineering(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
-    expect_equal("777.00 x 10(3)")
+    expect_equal("777.00 \U000D7 10^3")
   (exibble_1 %>% gt(locale = "fr") %>% fmt_engineering(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
-    expect_equal("777,00 x 10(3)")
+    expect_equal("777,00 \U000D7 10^3")
   (exibble_1 %>% gt(locale = "en") %>% fmt_engineering(num, locale = "fr") %>% render_formats_test(context = "plain"))[["num"]] %>%
-    expect_equal("777,00 x 10(3)")
+    expect_equal("777,00 \U000D7 10^3")
   (exibble_1 %>% gt(locale = "fr") %>% fmt_engineering(num, locale = "de") %>% render_formats_test(context = "plain"))[["num"]] %>%
-    expect_equal("777,00 x 10(3)")
+    expect_equal("777,00 \U000D7 10^3")
 
   # `fmt_percent()`
   (exibble_1 %>% gt() %>% fmt_percent(num, scale_values = FALSE) %>% render_formats_test(context = "plain"))[["num"]] %>%
@@ -896,4 +898,48 @@ test_that("Default locale settings are honored when generating summary rows", {
     xml2::read_html() %>%
     selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row']") %>%
     expect_equal(c("120,02", "3.220.850,00"))
+})
+
+test_that("Formatting functions operate with a 'last-one-wins' approach", {
+
+  # Make a gt table from the first column of the exibble table and apply
+  # two `fmt_*()` functions to the same column
+  tbl_gt <-
+    exibble[, 1] %>%
+    gt() %>%
+    fmt_number(columns = num, decimals = 5) %>%
+    fmt_number(columns = num, rows = 2, decimals = 4, pattern = "a{x}b")
+
+  # Expect that the second invocation of `fmt_number()` will affect the
+  # second row of the column
+  tbl_gt %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_text("[class='gt_row gt_right']") %>%
+    expect_equal(
+      c(
+        "0.11110", "a2.2220b", "33.33000", "444.40000", "5,550.00000",
+        "NA", "777,000.00000", "8,880,000.00000"
+      )
+    )
+
+  # Make a similar gt table but reverse the order of the `fmt_number()` calls
+  tbl_gt <-
+    exibble[, 1] %>%
+    gt() %>%
+    fmt_number(columns = num, rows = 2, decimals = 4, pattern = "a{x}b") %>%
+    fmt_number(columns = num, decimals = 5)
+
+  # Expect that the first invocation of `fmt_number()` is completely ignored
+  # in favor of the second one (i.e., no special formatting to row 2 results)
+  tbl_gt %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    selection_text("[class='gt_row gt_right']") %>%
+    expect_equal(
+      c(
+        "0.11110", "2.22200", "33.33000", "444.40000", "5,550.00000",
+        "NA", "777,000.00000", "8,880,000.00000"
+      )
+    )
 })

@@ -91,17 +91,17 @@ summary stub cell with with the \code{\link[=tab_style]{tab_style()}} and
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_stub_grand_summary_1.png" style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cells_stub_grand_summary_1.png" alt="This image of a table was generated from the first code example in the `cells_stub_grand_summary()` help file." style="width:100\%;">
 }}
 }
 
 \section{Function ID}{
 
-7-15
+7-16
 }
 
 \seealso{
-Other Helper Functions: 
+Other helper functions: 
 \code{\link{adjust_luminance}()},
 \code{\link{cell_borders}()},
 \code{\link{cell_fill}()},
@@ -127,6 +127,7 @@ Other Helper Functions:
 \code{\link{md}()},
 \code{\link{pct}()},
 \code{\link{px}()},
-\code{\link{random_id}()}
+\code{\link{random_id}()},
+\code{\link{stub}()}
 }
-\concept{Helper Functions}
+\concept{helper functions}
