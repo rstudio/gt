@@ -465,18 +465,18 @@ test_that("grand summaries can be generated with `grand_summary_rows()`", {
       fns = list(
         average = ~mean(., na.rm = TRUE),
         total = ~sum(., na.rm = TRUE),
-        `std dev` = ~sd(., na.rm = TRUE)),
-      formatter = fmt_number,
-      decimals = 3
+        `std dev` = ~sd(., na.rm = TRUE)
+      ),
+      fmt = list(~ fmt_number(., decimals = 3))
     ) %>%
     grand_summary_rows(
       columns = c(low, close),
       fns = list(
         average = ~mean(., na.rm = TRUE),
         total = ~sum(., na.rm = TRUE),
-        `std dev` = ~sd(., na.rm = TRUE)),
-      formatter = fmt_number,
-      decimals = 5
+        `std dev` = ~sd(., na.rm = TRUE)
+      ),
+      fmt = list(~ fmt_number(., decimals = 5))
     )
 
   # Extract the internal `summary` object
@@ -534,35 +534,13 @@ test_that("grand summaries can be generated with `grand_summary_rows()`", {
   summary[[1]]$missing_text %>% expect_equal("---")
   summary[[2]]$missing_text %>% expect_equal("---")
 
-  # Expect that `summary[[1|2]]$formatter` is a `function` object
-  expect_equal(class(summary[[1]]$formatter), "function")
-  expect_equal(class(summary[[2]]$formatter), "function")
-
-  # Expect that the formatters used in each call are the same
-  expect_identical(summary[[1]]$formatter, summary[[2]]$formatter)
-
   # Expect that `summary[[1|2]]$formatter_options` are both lists
   summary[[1]]$formatter_options %>% expect_type("list")
   summary[[2]]$formatter_options %>% expect_type("list")
 
-  # Expect that `summary[[1|2]]$formatter_options` are both of length 1
-  summary[[1]]$formatter_options %>% length() %>% expect_equal(1)
-  summary[[2]]$formatter_options %>% length() %>% expect_equal(1)
-
-  # Expect that `summary[[1|2]]$formatter_options`
-  # are both named `decimals`
-  summary[[1]]$formatter_options %>%
-    names() %>%
-    expect_equal("decimals")
-
-  summary[[2]]$formatter_options %>%
-    names() %>%
-    expect_equal("decimals")
-
-  # Expect that the `summary[[1|2]]$formatter_options`
-  # `decimals` options have specific values
-  summary[[1]]$formatter_options[[1]] %>% expect_equal(3)
-  summary[[2]]$formatter_options[[1]] %>% expect_equal(5)
+  # Expect that `summary[[1|2]]$formatter_options` are both of length 0
+  summary[[1]]$formatter_options %>% length() %>% expect_equal(0)
+  summary[[2]]$formatter_options %>% length() %>% expect_equal(0)
 
   # Create a table with group-wise summaries and a grand summary; all
   # summary rows represent the mean, sum, and standard deviation of
