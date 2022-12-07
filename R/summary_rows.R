@@ -32,6 +32,8 @@
 #'   will serve as summary row labels for the corresponding summary rows data
 #'   (the labels can derived from the function names but only when not providing
 #'   bare function names).
+#' @param fmt Formatting directives as one-sided R formulas using a leading `~`
+#'   (e.g., `~ fmt_number(., decimals = 3, use_seps = FALSE`).
 #' @param missing_text The text to be used in place of `NA` values in summary
 #'   cells with no data outputs.
 #' @param formatter A formatter function name. These can be any of the `fmt_*()`
