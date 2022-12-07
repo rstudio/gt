@@ -186,8 +186,7 @@ dt_summary_build <- function(data, context) {
 
             group_label <- labels[j]
             id_value <- names(labels[j])
-
-            fn <- rlang::as_closure(fns[j][[1]]$fn)
+            fn_formula <- fns[[j]]$fn
 
             if (length(groups) == 1 && groups == "::GRAND_SUMMARY") {
 
@@ -210,33 +209,12 @@ dt_summary_build <- function(data, context) {
                 .data[[group_id_col_private]]
               )
 
-            # Summarize each column but ensure that aggregations that
-            # result in an error do not get involved in the summarization
-            finalized_cols <- c()
-            for (k in seq_along(columns)) {
-
-              .target_column <- columns[k]
-
-              finalized_cols <-
-                c(finalized_cols,
-                  tryCatch(
-                    {
-                      out <- fn(dplyr::pull(select_data_tbl, .target_column))
-                      columns[k]
-                    },
-                    error = function(cond) {
-                      character(0)
-                    }
-                  )
-                )
-            }
-
             select_data_tbl <-
               dplyr::ungroup(
                 dplyr::summarize_at(
                   select_data_tbl,
-                  finalized_cols,
-                  .funs = fn
+                  columns,
+                  .funs = fn_formula
                 )
               )
 
