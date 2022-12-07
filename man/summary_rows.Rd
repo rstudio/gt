@@ -9,6 +9,7 @@ summary_rows(
   groups = everything(),
   columns = everything(),
   fns = NULL,
+  fmt = NULL,
   missing_text = "---",
   formatter = NULL,
   ...
