@@ -64,10 +64,13 @@ add_summary_location_row <- function(
           lapply(
             summary_data,
             FUN = function(summary_data_item) {
+
+              id_vals <- names(summary_data_item$fns)
+
               if (isTRUE(summary_data_item$groups)) {
-                summary_data_item$id_vals
+                id_vals
               } else if (group %in% summary_data_item$groups) {
-                summary_data_item$id_vals
+                id_vals
               }
             }
           )
@@ -154,15 +157,17 @@ add_grand_summary_location_row <- function(
         lapply(
           summary_data,
           FUN = function(summary_data_item) {
+
+            id_vals <- names(summary_data_item$fns)
+
             if (":GRAND_SUMMARY:" %in% summary_data_item$groups) {
-              return(summary_data_item$id_vals)
+              return(id_vals)
             }
             NULL
           }
         )
       )
     )
-
 
   if (!inherits(loc, "cells_stub_grand_summary")) {
 
