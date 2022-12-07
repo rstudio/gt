@@ -52,8 +52,8 @@ test_that("the `summary_rows()` can make groupwise summaries", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "id_vals", "fmt",
-        "missing_text", "formatter", "formatter_options"
+        "groups", "columns", "fns", "fmt", "missing_text",
+        "formatter", "formatter_options"
       )
     )
 
@@ -254,8 +254,8 @@ test_that("the `summary_rows()` can make groupwise summaries", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "id_vals",
-        "fmt", "missing_text", "formatter", "formatter_options"
+        "groups", "columns", "fns", "fmt", "missing_text",
+        "formatter", "formatter_options"
       )
     )
 
@@ -263,8 +263,8 @@ test_that("the `summary_rows()` can make groupwise summaries", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "id_vals",
-        "fmt", "missing_text", "formatter", "formatter_options"
+        "groups", "columns", "fns", "fmt", "missing_text",
+        "formatter", "formatter_options"
       )
     )
 
@@ -346,8 +346,8 @@ test_that("the `summary_rows()` can make groupwise summaries", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "id_vals",
-        "fmt", "missing_text", "formatter", "formatter_options"
+        "groups", "columns", "fns", "fmt", "missing_text",
+        "formatter", "formatter_options"
       )
     )
 
@@ -355,8 +355,8 @@ test_that("the `summary_rows()` can make groupwise summaries", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "id_vals",
-        "fmt", "missing_text", "formatter", "formatter_options"
+        "groups", "columns", "fns", "fmt", "missing_text",
+        "formatter", "formatter_options"
       )
     )
 
@@ -426,8 +426,8 @@ test_that("grand summaries can be generated with `grand_summary_rows()`", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "id_vals",
-        "fmt", "missing_text", "formatter", "formatter_options"
+        "groups", "columns", "fns", "fmt", "missing_text",
+        "formatter", "formatter_options"
       )
     )
 
@@ -492,8 +492,8 @@ test_that("grand summaries can be generated with `grand_summary_rows()`", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "id_vals",
-        "fmt", "missing_text", "formatter", "formatter_options"
+        "groups", "columns", "fns", "fmt", "missing_text",
+        "formatter", "formatter_options"
       )
     )
 
@@ -501,8 +501,8 @@ test_that("grand summaries can be generated with `grand_summary_rows()`", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "id_vals",
-        "fmt", "missing_text", "formatter", "formatter_options"
+        "groups", "columns", "fns", "fmt", "missing_text",
+        "formatter", "formatter_options"
       )
     )
 
@@ -601,8 +601,8 @@ test_that("grand summaries can be generated with `grand_summary_rows()`", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "id_vals",
-        "fmt", "missing_text", "formatter", "formatter_options"
+        "groups", "columns", "fns", "fmt", "missing_text",
+        "formatter", "formatter_options"
       )
     )
 
@@ -610,8 +610,8 @@ test_that("grand summaries can be generated with `grand_summary_rows()`", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "id_vals",
-        "fmt", "missing_text", "formatter", "formatter_options"
+        "groups", "columns", "fns", "fmt", "missing_text",
+        "formatter", "formatter_options"
       )
     )
 
@@ -1273,8 +1273,8 @@ test_that("creating summary rows works for hidden columns", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "id_vals",
-        "fmt", "missing_text", "formatter", "formatter_options"
+        "groups", "columns", "fns", "fmt", "missing_text",
+        "formatter", "formatter_options"
       )
     )
 
