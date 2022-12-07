@@ -189,10 +189,30 @@ summary_rows <- function(
   # in `formatter` and `...` and warn about their deprecation
   if (is.null(fmt) && !is.null(formatter) && is.function(formatter)) {
 
-    fmt <-
-      list(
-        as.formula(paste0("~", deparse(substitute(formatter)), "(.)"))
+    fmt_args <-
+      vapply(
+        seq_along(formatter_options),
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = function(x) {
+          paste0(names(formatter_options[x]), " = ", formatter_options[x])
+        }
       )
+
+    fmt_args <-
+      paste0(
+        ".",
+        if (length(fmt_args) > 1) ", " else NULL,
+        paste(
+          fmt_args, collapse = ", "
+        )
+      )
+
+    formatter_name <- deparse(substitute(formatter))
+
+    formatter_formula <- paste0("~ ", formatter_name, "(", fmt_args, ")")
+
+    fmt <- list(as.formula(formatter_formula))
 
     # Provide deprecation warning
     cli::cli_warn(c(
