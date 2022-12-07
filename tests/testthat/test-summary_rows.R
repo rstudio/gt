@@ -1578,15 +1578,18 @@ test_that("summary rows can use other columns' data", {
     gt() %>%
     grand_summary_rows(
       columns = 'close',
-      fns = list('Average close' = ~ mean(.))
+      fns = list('Average close' = ~ mean(.)),
+      fmt = list( ~ fmt_number(.))
     ) %>%
     grand_summary_rows(
       columns = 'close',
-      fns = list('Average volume weighted close' = ~ sum(. * volume) / sum(volume))
+      fns = list('Average volume weighted close' = ~ sum(. * volume) / sum(volume)),
+      fmt = list( ~ fmt_number(.))
     ) %>%
     grand_summary_rows(
       columns = 'close',
-      fns = list('Sum of `volume` in `close`' = ~ sum(volume))
+      fns = list('Sum of `volume` in `close`' = ~ sum(volume)),
+      fmt = list( ~ fmt_number(.))
     )
 
   # Take a snapshot of `gt_tbl`
