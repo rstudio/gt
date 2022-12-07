@@ -52,7 +52,7 @@ test_that("the `summary_rows()` can make groupwise summaries", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "label_vals", "id_vals", "fmt",
+        "groups", "columns", "fns", "id_vals", "fmt",
         "missing_text", "formatter", "formatter_options"
       )
     )
@@ -254,7 +254,7 @@ test_that("the `summary_rows()` can make groupwise summaries", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "label_vals", "id_vals",
+        "groups", "columns", "fns", "id_vals",
         "fmt", "missing_text", "formatter", "formatter_options"
       )
     )
@@ -263,7 +263,7 @@ test_that("the `summary_rows()` can make groupwise summaries", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "label_vals", "id_vals",
+        "groups", "columns", "fns", "id_vals",
         "fmt", "missing_text", "formatter", "formatter_options"
       )
     )
@@ -346,7 +346,7 @@ test_that("the `summary_rows()` can make groupwise summaries", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "label_vals", "id_vals",
+        "groups", "columns", "fns", "id_vals",
         "fmt", "missing_text", "formatter", "formatter_options"
       )
     )
@@ -355,7 +355,7 @@ test_that("the `summary_rows()` can make groupwise summaries", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "label_vals", "id_vals",
+        "groups", "columns", "fns", "id_vals",
         "fmt", "missing_text", "formatter", "formatter_options"
       )
     )
@@ -426,7 +426,7 @@ test_that("grand summaries can be generated with `grand_summary_rows()`", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "label_vals", "id_vals",
+        "groups", "columns", "fns", "id_vals",
         "fmt", "missing_text", "formatter", "formatter_options"
       )
     )
@@ -492,7 +492,7 @@ test_that("grand summaries can be generated with `grand_summary_rows()`", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "label_vals", "id_vals",
+        "groups", "columns", "fns", "id_vals",
         "fmt", "missing_text", "formatter", "formatter_options"
       )
     )
@@ -501,7 +501,7 @@ test_that("grand summaries can be generated with `grand_summary_rows()`", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "label_vals", "id_vals",
+        "groups", "columns", "fns", "id_vals",
         "fmt", "missing_text", "formatter", "formatter_options"
       )
     )
@@ -601,7 +601,7 @@ test_that("grand summaries can be generated with `grand_summary_rows()`", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "label_vals", "id_vals",
+        "groups", "columns", "fns", "id_vals",
         "fmt", "missing_text", "formatter", "formatter_options"
       )
     )
@@ -610,7 +610,7 @@ test_that("grand summaries can be generated with `grand_summary_rows()`", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "label_vals", "id_vals",
+        "groups", "columns", "fns", "id_vals",
         "fmt", "missing_text", "formatter", "formatter_options"
       )
     )
@@ -1113,12 +1113,12 @@ test_that("extracting a summary from a gt table is possible", {
   # tibbles in `gt_tbl_summary_groupwise`
   expect_equal(
     names(gt_tbl_summary_groupwise$summary_df_data_list[[1]]),
-    c("group_id", "rowname", "date", "open", "high", "low", "close", "week")
+    c("group_id", "row_id", "rowname", "date", "open", "high", "low", "close", "week")
   )
 
   expect_equal(
     names(gt_tbl_summary_groupwise$summary_df_data_list[[2]]),
-    c("group_id", "rowname", "date", "open", "high", "low", "close", "week")
+    c("group_id", "row_id", "rowname", "date", "open", "high", "low", "close", "week")
   )
 
   # Expect specific values in each of the tibbles
@@ -1194,7 +1194,7 @@ test_that("extracting a summary from a gt table is possible", {
   # Expect specific column names for the tibble in `gt_tbl_summary_grand`
   expect_equal(
     names(gt_tbl_summary_grand$summary_df_data_list[[1]]),
-    c("group_id", "rowname", "date", "open", "high", "low", "close", "week")
+    c("group_id", "row_id", "rowname", "date", "open", "high", "low", "close", "week")
   )
 
   # Expect specific values in the tibble
@@ -1273,7 +1273,7 @@ test_that("creating summary rows works for hidden columns", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "label_vals", "id_vals",
+        "groups", "columns", "fns", "id_vals",
         "fmt", "missing_text", "formatter", "formatter_options"
       )
     )
@@ -1314,7 +1314,7 @@ test_that("creating summary rows works for hidden columns", {
   expect_equal(
     colnames(summary_w02),
     c(
-      "group_id", "rowname", "date", "open", "high",
+      "group_id", "row_id", "rowname", "date", "open", "high",
       "low", "close", "week"
     )
   )
@@ -1345,7 +1345,7 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
         max = ~max(., na.rm = TRUE),
         avg = ~mean(., na.rm = TRUE)
       ),
-      formatter = fmt_number
+      fmt = list( ~ fmt_number(.))
     )
 
   # Take snapshots of `summary_tbl_1`
@@ -1367,7 +1367,7 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
         max = ~max(., na.rm = TRUE),
         avg = ~mean(., na.rm = TRUE)
       ),
-      formatter = fmt_number
+      fmt = list( ~ fmt_number(.))
     )
 
   # Take snapshots of `summary_tbl_2`
@@ -1390,15 +1390,16 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
       fns = list(
         median = ~median(., na.rm = TRUE)
       ),
-      formatter = fmt_number
+      fmt = list( ~ fmt_number(.))
     ) %>%
     grand_summary_rows(
       columns = c(num, currency),
       fns = list(
         min = ~min(., na.rm = TRUE),
         max = ~max(., na.rm = TRUE),
-        avg = ~mean(., na.rm = TRUE)),
-      formatter = fmt_number
+        avg = ~mean(., na.rm = TRUE)
+      ),
+      fmt = list( ~ fmt_number(.))
     )
 
   # Take snapshots of `summary_tbl_3`
@@ -1417,8 +1418,9 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
       fns = list(
         min = ~min(., na.rm = TRUE),
         max = ~max(., na.rm = TRUE),
-        avg = ~mean(., na.rm = TRUE)),
-      formatter = fmt_number
+        avg = ~mean(., na.rm = TRUE)
+      ),
+      fmt = list( ~ fmt_number(.))
     )
 
   # Take snapshots of `summary_tbl_4`
@@ -1438,15 +1440,16 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
       fns = list(
         median = ~median(., na.rm = TRUE)
       ),
-      formatter = fmt_number
+      fmt = list( ~ fmt_number(.))
     ) %>%
     grand_summary_rows(
       columns = c(num, currency),
       fns = list(
         min = ~min(., na.rm = TRUE),
         max = ~max(., na.rm = TRUE),
-        avg = ~mean(., na.rm = TRUE)),
-      formatter = fmt_number
+        avg = ~mean(., na.rm = TRUE)
+      ),
+      fmt = list( ~ fmt_number(.))
     )
 
   # Take snapshots of `summary_tbl_5`
@@ -1466,15 +1469,16 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
       fns = list(
         median = ~median(., na.rm = TRUE)
       ),
-      formatter = fmt_number
+      fmt = list( ~ fmt_number(.))
     ) %>%
     grand_summary_rows(
       columns = c(num, currency),
       fns = list(
         min = ~min(., na.rm = TRUE),
         max = ~max(., na.rm = TRUE),
-        avg = ~mean(., na.rm = TRUE)),
-      formatter = fmt_number
+        avg = ~mean(., na.rm = TRUE)
+      ),
+      fmt = list( ~ fmt_number(.))
     )
 
   # Take snapshots of `summary_tbl_6`
