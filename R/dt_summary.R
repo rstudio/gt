@@ -78,19 +78,8 @@ dt_summary_build <- function(data, context) {
     groups <- summary_attrs$groups
     columns <- summary_attrs$columns
     fns <- summary_attrs$fns
+    fmt_exprs <- summary_attrs$fmt
     missing_text <- summary_attrs$missing_text
-    formatter <- summary_attrs$formatter
-    formatter_options <- summary_attrs$formatter_options
-    labels <- summary_attrs$label_vals
-
-    # if (length(labels) != length(unique(labels))) {
-    #
-    #   cli::cli_abort(c(
-    #     "All summary labels must be unique.",
-    #     "*" = "Review the names provided in `fns`.",
-    #     "*" = "These labels are in conflict: {paste0(labels, collapse = ', ')}."
-    #   ))
-    # }
 
     # Resolve the `missing_text`
     missing_text <-
@@ -180,6 +169,15 @@ dt_summary_build <- function(data, context) {
         )
     }
 
+    # Get the labels for each of the `fns`
+    labels <-
+      lapply(
+        fns,
+        FUN = function(x) {
+          x[["label"]]
+        }
+      )
+
     # Get the registered function calls
     fns <-
       lapply(
@@ -212,6 +210,7 @@ dt_summary_build <- function(data, context) {
           FUN = function(j) {
 
             group_label <- labels[j]
+            id_value <- names(labels[j])
 
             if (length(groups) == 1 && groups == "::GRAND_SUMMARY") {
 
@@ -265,15 +264,26 @@ dt_summary_build <- function(data, context) {
               )
 
             select_data_tbl <-
+              dplyr::mutate_all(
+                select_data_tbl,
+                .funs = function(x) {
+                  x[is.nan(x)] <- NA
+                  x
+                }
+              )
+
+            select_data_tbl <-
               dplyr::mutate(
                 select_data_tbl,
-                !!rowname_col_private := group_label
+                !!rowname_col_private := as.character(group_label),
+                !!row_id_col_private := as.character(id_value)
               )
 
             select_data_tbl <-
               dplyr::select(
                 select_data_tbl,
                 dplyr::all_of(group_id_col_private),
+                dplyr::all_of(row_id_col_private),
                 dplyr::all_of(rowname_col_private),
                 dplyr::everything()
               )
@@ -293,53 +303,70 @@ dt_summary_build <- function(data, context) {
       dplyr::select(
         summary_dfs_data,
         dplyr::all_of(group_id_col_private),
+        dplyr::all_of(row_id_col_private),
         dplyr::all_of(rowname_col_private),
         dplyr::all_of(colnames(body))
       )
 
-    # Format the displayed summary lines
-    summary_dfs_display <-
-      dplyr::mutate_at(
-        summary_dfs_data,
-        .vars = columns,
+    #
+    # Format with formatting formulae
+    #
+
+    summary_dfs_display_gt <-
+      gt(
+        dplyr::select(summary_dfs_data, -dplyr::all_of(rowname_col_private)),
+        rowname_col = "::row_id::",
+        locale = resolve_locale(data = data, locale = NULL)
+      )
+
+    summary_dfs_display_gt[["_data"]] <-
+      dplyr::mutate_all(
+        summary_dfs_display_gt[["_data"]],
         .funs = function(x) {
-
-          # This creates a gt structure so that the
-          # formatter can be easily extracted by using
-          # the regular `dt_*()` methods
-          summary_data <-
-            gt(
-              data.frame(x = x),
-              locale = resolve_locale(data = data, locale = NULL)
-            )
-
-          if (!is.null(formatter)) {
-
-            format_data <-
-              do.call(
-                formatter,
-                append(list(summary_data, columns = "x"), formatter_options)
-              )
-
-            formatter_fn <-
-              dt_formats_summary_formatter(
-                data = format_data,
-                context = context
-              )
-
-            x <-
-              tryCatch(
-                formatter_fn(x),
-                error = function(cond) {
-                  x
-                }
-              )
-          }
-
-          x[is.nan(x)] <- NA_character_
-
-          as.character(x)
+          x[is.nan(x)] <- NA
+          x
         }
+      )
+
+    summary_dfs_display_gt[["_stub_df"]] <-
+      dplyr::mutate(
+        summary_dfs_display_gt[["_stub_df"]],
+        row_id = gsub("__[0-9]*", "", row_id)
+      )
+
+    for (k in seq_along(fmt_exprs)) {
+      format_fn <- rlang::as_closure(fmt_exprs[[k]])
+      summary_dfs_display_gt <- format_fn(summary_dfs_display_gt)
+    }
+
+    summary_dfs_display <-
+      dt_body_get(data = build_data(summary_dfs_display_gt, context = context))
+
+    summary_dfs_display[["::group_id::"]] <- summary_dfs_data[["::group_id::"]]
+    summary_dfs_display[["::row_id::"]] <- summary_dfs_data[["::row_id::"]]
+
+    summary_dfs_display <-
+      dplyr::mutate_all(
+        summary_dfs_display,
+        .funs = function(x) {
+          x[x == "NA"] <- NA
+          x
+        }
+      )
+
+    id_label_lookup_tbl <-
+      dplyr::distinct(
+        dplyr::select(
+          summary_dfs_data,
+          dplyr::all_of(c(row_id_col_private, rowname_col_private))
+        )
+      )
+
+    summary_dfs_display <-
+      dplyr::left_join(
+        summary_dfs_display,
+        id_label_lookup_tbl,
+        by = row_id_col_private
       )
 
     summary_dfs_display <-
@@ -409,4 +436,5 @@ dt_summary_build <- function(data, context) {
 
 grand_summary_col <- "::GRAND_SUMMARY"
 rowname_col_private <- "::rowname::"
+row_id_col_private <- "::row_id::"
 group_id_col_private <- "::group_id::"
