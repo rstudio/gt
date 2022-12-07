@@ -27,8 +27,7 @@ tbl_summary <-
       max = ~max(.),
       avg = ~mean(.)
     ),
-    formatter = fmt_number,
-    use_seps = FALSE
+    fmt = list(~ fmt_number(., use_seps = FALSE))
   ) %>%
   grand_summary_rows(
     columns = currency,
@@ -36,7 +35,7 @@ tbl_summary <-
       min = ~min(., na.rm = TRUE),
       max = ~max(., na.rm = TRUE)
     ),
-    formatter = fmt_number
+    fmt = list(~ fmt_number(.))
   )
 
 # Gets the HTML attr value from a single key
