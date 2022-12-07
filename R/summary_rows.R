@@ -185,12 +185,31 @@ summary_rows <- function(
   # With `fns` input, normalize to list of summary functions
   summary_fns <- normalize_summary_fns(fns = fns)
 
+  # If `formatter` has a value but `fmt` does not, adapt the value provided
+  # in `formatter` and `...` and warn about their deprecation
+  if (is.null(fmt) && !is.null(formatter) && is.function(formatter)) {
+
+    fmt <-
+      list(
+        as.formula(paste0("~", deparse(substitute(formatter)), "(.)"))
+      )
+
+    # Provide deprecation warning
+    cli::cli_warn(c(
+      "Since gt v0.9.0, the `formatter` argument (and associated `...`) has been deprecated.",
+      "*" = "Please use the `fmt` argument to provide formatting directives."
+    ))
+  }
+
+  # With `fmt` input, normalize to list of formatting functions
+  fmt_fns <- normalize_fmt_fns(fmt = fmt)
+
   summary_list <-
     list(
       groups = groups,
       columns = columns,
       fns = summary_fns,
-      fmt = fmt,
+      fmt = fmt_fns,
       missing_text = missing_text,
       formatter = formatter,
       formatter_options = formatter_options
@@ -512,4 +531,11 @@ normalize_summary_fns <- function(fns) {
   }
 
   summary_fns
+}
+
+normalize_fmt_fns <- function(fmt) {
+
+  fmt_fns <- fmt
+
+  fmt_fns
 }
