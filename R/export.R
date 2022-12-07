@@ -878,8 +878,7 @@ as_word_tbl_body <- function(
 #'       max = ~max(.),
 #'       avg = ~mean(.)
 #'     ),
-#'     formatter = fmt_number,
-#'     use_seps = FALSE
+#      fmt = list( ~ fmt_number(.))
 #'   ) %>%
 #'   extract_summary()
 #'
@@ -893,7 +892,8 @@ as_word_tbl_body <- function(
 #' summary_extracted %>%
 #'   unlist(recursive = FALSE) %>%
 #'   dplyr::bind_rows() %>%
-#'   gt(groupname_col = "group_id")
+#'   gt(groupname_col = "group_id") %>%
+#'   cols_hide(columns = row_id)
 #' ```
 #'
 #' \if{html}{\out{
@@ -936,8 +936,9 @@ extract_summary <- function(data) {
           y <-
             dplyr::rename(
               y,
-              rowname = dplyr::all_of(rowname_col_private),
-              group_id = dplyr::all_of(group_id_col_private)
+              group_id = dplyr::all_of(group_id_col_private),
+              row_id = dplyr::all_of(row_id_col_private),
+              rowname = dplyr::all_of(rowname_col_private)
             )
 
           flattened_rowname <- unname(unlist(y$rowname))
