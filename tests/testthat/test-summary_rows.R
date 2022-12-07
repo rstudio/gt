@@ -1683,3 +1683,107 @@ test_that("The `normalize_summary_fns()` fn works with a variety of inputs", {
   check_summary_fn_output(fns = list(c("minimum", label = "min") ~ min(.)), id = "minimum", label = "min", formula = "~min(.)")
   check_summary_fn_output(fns = list(c(label = "min", "minimum") ~ min(.)), id = "minimum", label = "min", formula = "~min(.)")
 })
+
+test_that("The deprecated `formatter` arg and `...` still function properly", {
+
+  # Generate summary rows and use a formatting function in the deprecated
+  # `formatter` arg; this yields a warning but works so long as `fmt = NULL`
+  # (the default value)
+  expect_warning(
+    gt_tbl_1 <-
+      tbl %>%
+      summary_rows(
+        groups = "W02",
+        columns = c(open, high, low, close),
+        fns = list(
+          average = ~mean(., na.rm = TRUE),
+          total = ~sum(., na.rm = TRUE),
+          `std dev` = ~sd(., na.rm = TRUE)
+        ),
+        formatter = fmt_number
+      )
+  )
+
+  # Expect the correct values in summary rows of `gt_tbl_1`
+  gt_tbl_1 %>% render_as_html() %>% xml2::read_html() %>%
+    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick']") %>%
+    expect_equal(c("2,035.24", "2,048.56", "2,016.85", "2,031.21"))
+
+  # Generate summary rows and use a formatting function in the deprecated
+  # `formatter` arg, and, supply arguments to that function in `...`; this
+  # yields a warning but works so long as `fmt = NULL` (the default value)
+  expect_warning(
+    gt_tbl_2 <-
+      tbl %>%
+      summary_rows(
+        groups = "W02",
+        columns = c(open, high, low, close),
+        fns = list(
+          average = ~mean(., na.rm = TRUE),
+          total = ~sum(., na.rm = TRUE),
+          `std dev` = ~sd(., na.rm = TRUE)
+        ),
+        formatter = fmt_number,
+        decimals = 5,
+        use_seps = FALSE
+      )
+  )
+
+  # Expect the correct values in summary rows of `gt_tbl_2`
+  gt_tbl_2 %>% render_as_html() %>% xml2::read_html() %>%
+    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick']") %>%
+    expect_equal(c("2035.23998", "2048.56198", "2016.85398", "2031.20800"))
+
+  # Generate summary rows and use a formatting function in the deprecated
+  # `formatter` arg, and, a formatting declaration in the `fmt` arg (which is
+  # `NULL` by default); this *does not* yield a warning and the value given in
+  # `formatter` is ignored
+  expect_no_warning(
+    gt_tbl_3 <-
+      tbl %>%
+      summary_rows(
+        groups = "W02",
+        columns = c(open, high, low, close),
+        fns = list(
+          average = ~mean(., na.rm = TRUE),
+          total = ~sum(., na.rm = TRUE),
+          `std dev` = ~sd(., na.rm = TRUE)
+        ),
+        fmt = list(~ fmt_number(., decimals = 5)),
+        formatter = fmt_number
+      )
+  )
+
+  # Expect the correct values in summary rows of `gt_tbl_3`
+  gt_tbl_3 %>% render_as_html() %>% xml2::read_html() %>%
+    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick']") %>%
+    expect_equal(c("2,035.23998", "2,048.56198", "2,016.85398", "2,031.20800"))
+
+  # Generate summary rows and use a formatting function in the deprecated
+  # `formatter` arg along with arg values for that formatting functions; in
+  # addition, provide a formatting declaration in the `fmt` arg (which is
+  # `NULL` by default)... all of this *does not* yield a warning and the
+  # value given in `formatter` is ignored along with anything in `...`
+  expect_no_warning(
+    gt_tbl_4 <-
+      tbl %>%
+      summary_rows(
+        groups = "W02",
+        columns = c(open, high, low, close),
+        fns = list(
+          average = ~mean(., na.rm = TRUE),
+          total = ~sum(., na.rm = TRUE),
+          `std dev` = ~sd(., na.rm = TRUE)
+        ),
+        fmt = list(~ fmt_number(., decimals = 1)),
+        formatter = fmt_number,
+        decimals = 5,
+        use_seps = FALSE
+      )
+  )
+
+  # Expect the correct values in summary rows of `gt_tbl_4`
+  gt_tbl_4 %>% render_as_html() %>% xml2::read_html() %>%
+    selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick']") %>%
+    expect_equal(c("2,035.2", "2,048.6", "2,016.9", "2,031.2"))
+})
