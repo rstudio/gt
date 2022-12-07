@@ -47,7 +47,7 @@ test_that("`as_raw_html()` produces the same table every time", {
         ~mean(., na.rm = TRUE),
         ~sum(., na.rm = TRUE)
       ),
-      fmt = list( ~ fmt_number(.))
+      fmt = list(~ fmt_number(.))
     ) %>%
     tab_style(
       style = cell_fill(color = "lightgray"),
