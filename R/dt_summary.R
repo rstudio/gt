@@ -178,31 +178,6 @@ dt_summary_build <- function(data, context) {
         }
       )
 
-    # Get the registered function calls
-    fns <-
-      lapply(
-        fns,
-        FUN = function(fn) {
-
-          fn <- rlang::as_closure(fn$fn)
-
-          function(x) {
-
-            result <- fn(x)
-
-            if (length(result) != 1) {
-
-              cli::cli_abort(c(
-                "Failure in the evaluation of summary cells.",
-                "*" = "We must always return a vector of length `1`."
-              ))
-            }
-
-            result
-          }
-        }
-      )
-
     summary_dfs_data <-
       dplyr::bind_rows(
         lapply(
@@ -211,6 +186,8 @@ dt_summary_build <- function(data, context) {
 
             group_label <- labels[j]
             id_value <- names(labels[j])
+
+            fn <- rlang::as_closure(fns[j][[1]]$fn)
 
             if (length(groups) == 1 && groups == "::GRAND_SUMMARY") {
 
@@ -244,7 +221,7 @@ dt_summary_build <- function(data, context) {
                 c(finalized_cols,
                   tryCatch(
                     {
-                      out <- fns[[j]](dplyr::pull(select_data_tbl, .target_column))
+                      out <- fn(dplyr::pull(select_data_tbl, .target_column))
                       columns[k]
                     },
                     error = function(cond) {
@@ -259,7 +236,7 @@ dt_summary_build <- function(data, context) {
                 dplyr::summarize_at(
                   select_data_tbl,
                   finalized_cols,
-                  .funs = fns[[j]]
+                  .funs = fn
                 )
               )
 
