@@ -40,6 +40,9 @@ will serve as summary row labels for the corresponding summary rows data
 (the labels can derived from the function names but only when not providing
 bare function names).}
 
+\item{fmt}{Formatting directives as one-sided R formulas using a leading \code{~}
+(e.g., \verb{~ fmt_number(., decimals = 3, use_seps = FALSE}).}
+
 \item{missing_text}{The text to be used in place of \code{NA} values in summary
 cells with no data outputs.}
 
