@@ -86,6 +86,7 @@ summary_rows <- function(
     groups = everything(),
     columns = everything(),
     fns = NULL,
+    fmt = NULL,
     missing_text = "---",
     formatter = NULL,
     ...
@@ -185,21 +186,11 @@ summary_rows <- function(
   # All components of `summary_fns` have names and these are the id values
   id_vals <- names(summary_fns)
 
-  # Get the label values
-  label_vals_list <-
-    lapply(
-      summary_fns,
-      FUN = function(x) {
-        x[["label"]]
-      }
-    )
-
   summary_list <-
     list(
       groups = groups,
       columns = columns,
       fns = summary_fns,
-      label_vals = label_vals_list,
       id_vals = id_vals,
       fmt = fmt,
       missing_text = missing_text,
