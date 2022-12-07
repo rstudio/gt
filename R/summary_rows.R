@@ -185,15 +185,11 @@ summary_rows <- function(
   # With `fns` input, normalize to list of summary functions
   summary_fns <- normalize_summary_fns(fns = fns)
 
-  # All components of `summary_fns` have names and these are the id values
-  id_vals <- names(summary_fns)
-
   summary_list <-
     list(
       groups = groups,
       columns = columns,
       fns = summary_fns,
-      id_vals = id_vals,
       fmt = fmt,
       missing_text = missing_text,
       formatter = formatter,
