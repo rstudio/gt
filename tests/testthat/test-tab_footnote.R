@@ -828,12 +828,12 @@ test_that("the `list_of_summaries` table is structured correctly", {
 
   expect_equal(
     gtcars_built_summary_df_display$summary_df_display_list$Audi$msrp,
-    c("113233.333333333", "108900")
+    c("113233.3", "108900.0")
   )
 
   expect_equal(
     gtcars_built_summary_df_display$summary_df_display_list$BMW$msrp,
-    c("116066.666666667", "94100")
+    c("116066.7", "94100.0")
   )
 })
 
@@ -1124,9 +1124,7 @@ test_that("Footnotes work with group labels in 2-column stub arrangements", {
       groups = everything(),
       columns = `Pizzas Sold`,
       fns = list(TOTAL = "sum"),
-      formatter = fmt_number,
-      decimals = 0,
-      use_seps = TRUE
+      fmt = list(~ fmt_number(., decimals = 0, use_seps = TRUE))
     ) %>%
     tab_options(row_group.as_column = TRUE) %>%
     tab_footnote(
