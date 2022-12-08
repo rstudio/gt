@@ -300,6 +300,7 @@ grand_summary_rows <- function(
     data,
     columns = everything(),
     fns = NULL,
+    fmt = NULL,
     missing_text = "---",
     formatter = NULL,
     ...
@@ -313,6 +314,7 @@ grand_summary_rows <- function(
     groups = ":GRAND_SUMMARY:",
     columns = {{ columns }},
     fns = fns,
+    fmt = fmt,
     missing_text = missing_text,
     formatter = formatter,
     ...
