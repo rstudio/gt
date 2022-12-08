@@ -8,6 +8,7 @@ grand_summary_rows(
   data,
   columns = everything(),
   fns = NULL,
+  fmt = NULL,
   missing_text = "---",
   formatter = NULL,
   ...
@@ -28,6 +29,12 @@ specify the functions by use of function names in quotes (e.g., \code{"sum"}),
 as bare functions (e.g., \code{sum}), or in formula form (e.g.,
 \code{minimum ~ min(.)}) where the LHS could be used to supply the summary row
 label and id values.}
+
+\item{fmt}{Formatting expressions in formula form. The RHS of \code{~} should
+contain a formatting call (e.g.,
+\verb{~ fmt_number(., decimals = 3, use_seps = FALSE}). Optionally, the LHS
+could contain a group-targeting expression (e.g.,
+\code{"group_a" ~ fmt_number(.)}).}
 
 \item{missing_text}{The text to be used in place of \code{NA} values in summary
 cells with no data outputs.}
