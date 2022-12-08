@@ -1105,6 +1105,203 @@ test_that("Multiple ways of expressing formatting work equivalently", {
   )
 })
 
+test_that("Groups can be formatted selectively with a formatting group directive", {
+
+  summary_tbl_1 <-
+    tbl %>%
+    summary_rows(
+      columns = c(open, high, low, close),
+      fns = list(
+        average = ~mean(., na.rm = TRUE),
+        total = ~sum(., na.rm = TRUE),
+        `std dev` = ~sd(., na.rm = TRUE)
+      ),
+      fmt = "W02" ~ fmt_number(., decimals = 3)
+    )
+
+  # Take snapshots of `summary_tbl_1`
+  summary_tbl_1 %>% render_as_html() %>% expect_snapshot()
+  summary_tbl_1 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  summary_tbl_1 %>% as_rtf() %>% expect_snapshot()
+
+  summary_tbl_2 <-
+    tbl %>%
+    summary_rows(
+      columns = c(open, high, low, close),
+      fns = list(
+        average = ~mean(., na.rm = TRUE),
+        total = ~sum(., na.rm = TRUE),
+        `std dev` = ~sd(., na.rm = TRUE)
+      ),
+      fmt = list(
+        everything() ~ fmt_number(., decimals = 3),
+        "W03" ~ fmt_currency(.)
+      )
+    )
+
+  # Take snapshots of `summary_tbl_2`
+  summary_tbl_2 %>% render_as_html() %>% expect_snapshot()
+  summary_tbl_2 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  summary_tbl_2 %>% as_rtf() %>% expect_snapshot()
+
+  # These summary tables should all be the same (using different ways to
+  # express the same formatting)
+  summary_tbl_3 <-
+    tbl %>%
+    summary_rows(
+      fns = list(
+        average = ~mean(., na.rm = TRUE),
+        total = ~sum(., na.rm = TRUE),
+        `std dev` = ~sd(., na.rm = TRUE)
+      ),
+      fmt = list(
+        c("W02", "W03") ~ fmt_currency(.)  # specifying groups in a vector
+      )
+    )
+  summary_tbl_4 <-
+    tbl %>%
+    summary_rows(
+      fns = list(
+        average = ~mean(., na.rm = TRUE),
+        total = ~sum(., na.rm = TRUE),
+        `std dev` = ~sd(., na.rm = TRUE)
+      ),
+      fmt = list(                          # not using LHS group specification
+        ~ fmt_currency(.)                  # and wrapping in a list
+      )
+    )
+  summary_tbl_5 <-
+    tbl %>%
+    summary_rows(
+      fns = list(
+        average = ~mean(., na.rm = TRUE),
+        total = ~sum(., na.rm = TRUE),
+        `std dev` = ~sd(., na.rm = TRUE)
+      ),
+      fmt = ~ fmt_currency(.)              # not using LHS group specification
+    )
+  summary_tbl_6 <-
+    tbl %>%
+    summary_rows(
+      fns = list(
+        average = ~mean(., na.rm = TRUE),
+        total = ~sum(., na.rm = TRUE),
+        `std dev` = ~sd(., na.rm = TRUE)
+      ),
+      fmt = list(
+        everything() ~ fmt_currency(.)     # specifying all groups with `everything()`
+      )                                    # and wrapping in a list
+    )
+  summary_tbl_7 <-
+    tbl %>%
+    summary_rows(
+      fns = list(
+        average = ~mean(., na.rm = TRUE),
+        total = ~sum(., na.rm = TRUE),
+        `std dev` = ~sd(., na.rm = TRUE)
+      ),
+      fmt = everything() ~ fmt_currency(.) # specifying all groups with `everything()`
+    )
+  summary_tbl_8 <-
+    tbl %>%
+    summary_rows(
+      fns = list(
+        average = ~mean(., na.rm = TRUE),
+        total = ~sum(., na.rm = TRUE),
+        `std dev` = ~sd(., na.rm = TRUE)
+      ),
+      fmt = list(
+        "W02" ~ fmt_currency(.), # specifying each group and applying the
+        "W03" ~ fmt_currency(.)  # same formatting to each
+      )
+    )
+  summary_tbl_9 <-
+    tbl %>%
+    summary_rows(
+      fns = list(
+        average = ~mean(., na.rm = TRUE),
+        total = ~sum(., na.rm = TRUE),
+        `std dev` = ~sd(., na.rm = TRUE)
+      ),
+      fmt = list(
+        "W02" ~ fmt_currency(.),
+        "W03" ~ fmt_currency(.),
+        "W99" ~ fmt_currency(.)   # Using an unmatched group
+      )
+    )
+
+  # Take snapshots of `summary_tbl_3`
+  summary_tbl_3 %>% render_as_html() %>% expect_snapshot()
+  summary_tbl_3 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  summary_tbl_3 %>% as_rtf() %>% expect_snapshot()
+
+  # Equality checks of summary_tbl_[3-9]
+  expect_equal(summary_tbl_3 %>% render_as_html(), summary_tbl_4 %>% render_as_html())
+  expect_equal(summary_tbl_3 %>% render_as_html(), summary_tbl_5 %>% render_as_html())
+  expect_equal(summary_tbl_3 %>% render_as_html(), summary_tbl_6 %>% render_as_html())
+  expect_equal(summary_tbl_3 %>% render_as_html(), summary_tbl_7 %>% render_as_html())
+  expect_equal(summary_tbl_3 %>% render_as_html(), summary_tbl_8 %>% render_as_html())
+  expect_equal(summary_tbl_3 %>% render_as_html(), summary_tbl_9 %>% render_as_html())
+
+  # These summary tables should all be the same (using different ways to
+  # express the same formatting for grand summary rows); importantly, any
+  # group directive given in the LHS of the formula expressions is ignored
+  summary_tbl_10 <-
+    tbl %>%
+    grand_summary_rows(
+      columns = c(open, high, low, close),
+      fns = list(
+        average = ~mean(., na.rm = TRUE),
+        total = ~sum(., na.rm = TRUE),
+        `std dev` = ~sd(., na.rm = TRUE)
+      ),
+      fmt = "group" ~ fmt_number(., decimals = 3)
+    )
+  summary_tbl_11 <-
+    tbl %>%
+    grand_summary_rows(
+      columns = c(open, high, low, close),
+      fns = list(
+        average = ~mean(., na.rm = TRUE),
+        total = ~sum(., na.rm = TRUE),
+        `std dev` = ~sd(., na.rm = TRUE)
+      ),
+      fmt = ~ fmt_number(., decimals = 3)
+    )
+  summary_tbl_12 <-
+    tbl %>%
+    grand_summary_rows(
+      columns = c(open, high, low, close),
+      fns = list(
+        average = ~mean(., na.rm = TRUE),
+        total = ~sum(., na.rm = TRUE),
+        `std dev` = ~sd(., na.rm = TRUE)
+      ),
+      fmt = "W03" ~ fmt_number(., decimals = 3)
+    )
+  summary_tbl_13 <-
+    tbl %>%
+    grand_summary_rows(
+      columns = c(open, high, low, close),
+      fns = list(
+        average = ~mean(., na.rm = TRUE),
+        total = ~sum(., na.rm = TRUE),
+        `std dev` = ~sd(., na.rm = TRUE)
+      ),
+      fmt = list("W03" ~ fmt_number(., decimals = 3))
+    )
+
+  # Take snapshots of `summary_tbl_10`
+  summary_tbl_10 %>% render_as_html() %>% expect_snapshot()
+  summary_tbl_10 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  summary_tbl_10 %>% as_rtf() %>% expect_snapshot()
+
+  # Equality checks of summary_tbl_[10-13]
+  expect_equal(summary_tbl_10 %>% render_as_html(), summary_tbl_11 %>% render_as_html())
+  expect_equal(summary_tbl_10 %>% render_as_html(), summary_tbl_12 %>% render_as_html())
+  expect_equal(summary_tbl_10 %>% render_as_html(), summary_tbl_13 %>% render_as_html())
+})
+
 test_that("Extracting a summary from a gt table is possible", {
 
   # Create a table with summary rows for
