@@ -1050,7 +1050,62 @@ test_that("summary row labels are added in narrow and wide tables", {
   )
 })
 
-test_that("extracting a summary from a gt table is possible", {
+test_that("Multiple ways of expressing formatting work equivalently", {
+
+  expect_warning(
+    gt_tbl_1 <-
+      tbl %>%
+      summary_rows(
+        groups = "W02",
+        columns = c(open, high, low, close),
+        fns = list(
+          average = ~mean(., na.rm = TRUE),
+          total = ~sum(., na.rm = TRUE),
+          `std dev` = ~sd(., na.rm = TRUE)
+        ),
+        formatter = fmt_number,
+        decimals = 3
+      )
+  )
+
+  gt_tbl_2 <-
+    tbl %>%
+    summary_rows(
+      groups = "W02",
+      columns = c(open, high, low, close),
+      fns = list(
+        average = ~mean(., na.rm = TRUE),
+        total = ~sum(., na.rm = TRUE),
+        `std dev` = ~sd(., na.rm = TRUE)
+      ),
+      fmt = list(~ fmt_number(., decimals = 3))
+    )
+
+  gt_tbl_3 <-
+    tbl %>%
+    summary_rows(
+      groups = "W02",
+      columns = c(open, high, low, close),
+      fns = list(
+        average = ~mean(., na.rm = TRUE),
+        total = ~sum(., na.rm = TRUE),
+        `std dev` = ~sd(., na.rm = TRUE)
+      ),
+      fmt = ~ fmt_number(., decimals = 3)
+    )
+
+  expect_equal(
+    gt_tbl_1 %>% render_as_html(),
+    gt_tbl_2 %>% render_as_html()
+  )
+
+  expect_equal(
+    gt_tbl_2 %>% render_as_html(),
+    gt_tbl_3 %>% render_as_html()
+  )
+})
+
+test_that("Extracting a summary from a gt table is possible", {
 
   # Create a table with summary rows for
   # the `W02` and `W03` groups; the 3 summary
@@ -1574,7 +1629,7 @@ test_that("summary rows can use other columns' data", {
   gt_tbl %>% render_as_html() %>% expect_snapshot()
 })
 
-test_that("The `normalize_summary_fns()` fn works with a variety of inputs", {
+test_that("The `normalize_summary_fns()` function works with a variety of inputs", {
 
   check_summary_fn_output <- function(fns, id, label, formula) {
 
@@ -1786,4 +1841,28 @@ test_that("The deprecated `formatter` arg and `...` still function properly", {
   gt_tbl_4 %>% render_as_html() %>% xml2::read_html() %>%
     selection_text("[class='gt_row gt_right gt_summary_row gt_first_summary_row thick']") %>%
     expect_equal(c("2,035.2", "2,048.6", "2,016.9", "2,031.2"))
+})
+
+test_that("The `normalize_fmt_fns()` function works with a variety of inputs", {
+
+  check_fmt_fns_output <- function(fmt, formula) {
+
+    out <- normalize_fmt_fns(fmt = fmt)
+
+    expect_equal(length(out), 1)
+    expect_type(out, "list")
+
+    # Get formula
+    out_formula <- out[[1]]
+
+    expect_equal(rlang::as_label(out_formula), formula)
+
+    expect_true(rlang::is_formula(out_formula))
+    expect_null(rlang::f_lhs(out_formula))
+    expect_true(rlang::is_call(rlang::f_rhs(out_formula)))
+  }
+
+  # Checking RHS formula
+  check_fmt_fns_output(fmt = ~ fmt_currency(.), formula = "~fmt_currency(.)")
+  check_fmt_fns_output(fmt = list(~ fmt_currency(.)), formula = "~fmt_currency(.)")
 })
