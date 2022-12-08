@@ -117,6 +117,19 @@
 #' `fns = c("minimum", label = "min") ~ min(.)`, `"min"` is indeed the `label`
 #' and `"minimum"` is taken as the `id` value.
 #'
+#' ### A fully named list with three specific elements
+#'
+#' We can avoid using a formula if we are satisfied with the default options of
+#' a function (except some of those functions with the `na.rm` options, see
+#' above). Instead, a list with the named elements `id`, `label`, and `fn` could
+#' be used. It can look like this:
+#'
+#' `fns = list(id = "mean_id", label = "average", fn = "mean")`
+#'
+#' which translates to
+#'
+#' `list(id = "mean_id", label = "average") ~ mean(., na.rm = TRUE)`
+#'
 #' @section Extraction of summary rows:
 #'
 #' Should we need to obtain the summary data for external purposes, the
@@ -405,6 +418,19 @@ summary_rows <- function(
 #' disambiguate the unnamed element. So with
 #' `fns = c("minimum", label = "min") ~ min(.)`, `"min"` is indeed the `label`
 #' and `"minimum"` is taken as the `id` value.
+#'
+#' ### A fully named list with three specific elements
+#'
+#' We can avoid using a formula if we are satisfied with the default options of
+#' a function (except some of those functions with the `na.rm` options, see
+#' above). Instead, a list with the named elements `id`, `label`, and `fn` could
+#' be used. It can look like this:
+#'
+#' `fns = list(id = "mean_id", label = "average", fn = "mean")`
+#'
+#' which translates to
+#'
+#' `list(id = "mean_id", label = "average") ~ mean(., na.rm = TRUE)`
 #'
 #' @section Extraction of summary rows:
 #'
