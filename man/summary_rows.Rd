@@ -31,17 +31,18 @@ default, this is every column that has data cells (given by
 
 \item{fns}{Functions used for aggregations. This can include base functions
 like \code{mean}, \code{min}, \code{max}, \code{median}, \code{sd}, or \code{sum} or any other
-user-defined aggregation function. The function(s) should be supplied
-within a \code{list()}. Within that list, we can specify the functions by use of
-function names in quotes (e.g., \code{"sum"}), as bare functions (e.g., \code{sum}),
-or as one-sided R formulas using a leading \code{~}. In the formula
-representation, a \code{.} serves as the data to be summarized (e.g., \code{sum(., na.rm = TRUE)}). The use of named arguments is recommended as the names
-will serve as summary row labels for the corresponding summary rows data
-(the labels can derived from the function names but only when not providing
-bare function names).}
+user-defined aggregation function. Multiple functions, each of which would
+generate a different row, are to be supplied within a \code{list()}. We can
+specify the functions by use of function names in quotes (e.g., \code{"sum"}),
+as bare functions (e.g., \code{sum}), or in formula form (e.g.,
+\code{minimum ~ min(.)}) where the LHS could be used to supply the summary row
+label and id values.}
 
-\item{fmt}{Formatting directives as one-sided R formulas using a leading \code{~}
-(e.g., \verb{~ fmt_number(., decimals = 3, use_seps = FALSE}).}
+\item{fmt}{Formatting expressions in formula form. The RHS of \code{~} should
+contain a formatting call (e.g.,
+\verb{~ fmt_number(., decimals = 3, use_seps = FALSE}). Optionally, the LHS
+could contain a group-targeting expression (e.g.,
+\code{"group_a" ~ fmt_number(.)}).}
 
 \item{missing_text}{The text to be used in place of \code{NA} values in summary
 cells with no data outputs.}
