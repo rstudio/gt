@@ -121,8 +121,7 @@ dt_summary_build <- function(data, context) {
 
       assert_rowgroups()
 
-      # Get the names of row groups available
-      # in the gt object
+      # Get the names of row groups available in the gt object
       groups_available <- unique(stub_df$group_id)
 
       if (any(!(groups %in% groups_available))) {
@@ -290,8 +289,69 @@ dt_summary_build <- function(data, context) {
       )
 
     for (k in seq_along(fmt_exprs)) {
-      format_fn <- rlang::as_closure(fmt_exprs[[k]])
-      summary_dfs_display_gt <- format_fn(summary_dfs_display_gt)
+
+      # Obtain the LHS fo the formatting expression; this would either
+      # contain a group directive or nothing (returned as NULL)
+      format_lhs <- rlang::f_lhs(fmt_exprs[[k]])
+
+      # Determine if we are actually formatting a grand summary section;
+      # in that case we'd want to ignore any supplied group directive
+      group_is_grand_summary <-
+        length(groups) == 1 && groups == "::GRAND_SUMMARY"
+
+      if (!is.null(format_lhs) && !group_is_grand_summary) {
+
+        # Perform group-wise formatting based on groups resolved in the
+        # supplied group directive
+
+        # Resolve the group names
+        groups_directive <-
+          resolve_groups(
+            expr = !!format_lhs,
+            vector = groups
+          )
+
+        if (!is.null(rlang::f_lhs(fmt_exprs[[k]]))) {
+          rlang::f_lhs(fmt_exprs[[k]]) <- NULL
+        }
+
+        if (length(groups_directive) > 0) {
+
+          for (group in groups_directive) {
+
+            # For each resolved group, the RHS formula expression needs to be
+            # altered to contain a `rows` argument that maps the rows to be
+            # formatted to the group
+
+            format_fn_grp <- rlang::as_label(rlang::f_rhs(fmt_exprs[[k]]))
+            format_fn_grp <- gsub(")$", paste0(", rows = `::group_id::` == \"", group, "\")"), format_fn_grp)
+
+            # Ensure that the expression is reconstructed as a formula and then
+            # transformed to a closure
+            format_fn_grp <- rlang::as_closure(as.formula(paste0("~", format_fn_grp)))
+
+            # Perform the formatting on this gt table with closure
+            summary_dfs_display_gt <- format_fn_grp(summary_dfs_display_gt)
+          }
+        }
+
+      } else {
+
+        # Perform group-wise formatting across all groups
+
+        # Ensure that LHS is forced as NULL (only important in the case
+        # that a group directive was supplied and the formatting is for
+        # a grand summary)
+        if (!is.null(rlang::f_lhs(fmt_exprs[[k]]))) {
+          rlang::f_lhs(fmt_exprs[[k]]) <- NULL
+        }
+
+        # Ensure that the expression (a RHS formula) is made a closure
+        format_fn <- rlang::as_closure(fmt_exprs[[k]])
+
+        # Perform the formatting on this gt table with closure
+        summary_dfs_display_gt <- format_fn(summary_dfs_display_gt)
+      }
     }
 
     summary_dfs_display <-
