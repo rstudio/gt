@@ -22,7 +22,7 @@ selection_text <- function(html, selection) {
   rvest::html_text(rvest::html_nodes(html, selection))
 }
 
-test_that("the `summary_rows()` can make groupwise summaries", {
+test_that("The `summary_rows()` function can make group-wise summaries", {
 
   # Create a table with summary rows for the `W02` group;
   # the 3 summary rows for this group represent the mean, sum,
@@ -398,7 +398,7 @@ test_that("the `summary_rows()` can make groupwise summaries", {
   summary[[2]]$formatter_options %>% length() %>% expect_equal(0)
 })
 
-test_that("grand summaries can be generated with `grand_summary_rows()`", {
+test_that("Grand summaries can be generated with `grand_summary_rows()`", {
 
   # Create a table with a grand summary; the 3 summary rows for represent
   # the mean, sum, and standard deviation of all numeric columns
@@ -635,7 +635,7 @@ test_that("grand summaries can be generated with `grand_summary_rows()`", {
   summary[[2]]$formatter_options %>% length() %>% expect_equal(0)
 })
 
-test_that("`groups = FALSE` returns data unchanged", {
+test_that("Using `groups = FALSE` in `summary_rows()` returns data unchanged", {
 
   # Expect that using `groups = FALSE` with `summary_rows()`
   # creates no summary rows
@@ -658,7 +658,7 @@ test_that("`groups = FALSE` returns data unchanged", {
   )
 })
 
-test_that("the ordering of groups shouldn't affect group/grand summary calcs", {
+test_that("The ordering of groups shouldn't affect group/grand summary calcs", {
 
   # Create tibbles with rows in different orders
   tbl_1 <-
@@ -809,7 +809,7 @@ test_that("the ordering of groups shouldn't affect group/grand summary calcs", {
     expect_equal(c("122", "244"))
 })
 
-test_that("summary cells can be created with NA/NaN-resulting values", {
+test_that("Summary cells can be created with NA/NaN-resulting values", {
 
   # Generate a tibble with two columns containing just NA values
   na_tbl <-
@@ -885,7 +885,7 @@ test_that("summary cells can be created with NA/NaN-resulting values", {
     expect_equal(rep("nil", 2))
 })
 
-test_that("summary rows can be created when there is no stub", {
+test_that("Summary rows can be created when there is no stub", {
 
   # Create a table based on `sp500`, with
   # four columns of values
@@ -931,7 +931,7 @@ test_that("summary rows can be created when there is no stub", {
   )
 })
 
-test_that("summary row labels are added in narrow and wide tables", {
+test_that("Summary row labels are added in narrow and wide tables", {
 
   tbl <-
     dplyr::tibble(
@@ -1025,7 +1025,7 @@ test_that("summary row labels are added in narrow and wide tables", {
       locations = cells_title(groups = "subtitle")
     )
 
-  # Expect that the row labels for the groupwise and grand summaries in
+  # Expect that the row labels for the group-wise and grand summaries in
   # both tables have `"the_sum"` and `"mean"`
   expect_match(
     narrow_gt_tbl %>%
@@ -1103,6 +1103,26 @@ test_that("Multiple ways of expressing formatting work equivalently", {
     gt_tbl_2 %>% render_as_html(),
     gt_tbl_3 %>% render_as_html()
   )
+})
+
+test_that("Labels can be intrepreted from Markdown using `md()`", {
+
+  summary_tbl_1 <-
+    tbl %>%
+    summary_rows(
+      groups = "W02",
+      columns = c(open, high, low, close),
+      fns = list(
+        list(id = "mean", label = md("**Average**")) ~ mean(., na.rm = TRUE),
+        list(id = "sum", label = "Sum") ~ sum(., na.rm = TRUE),
+        list(label = md("*S.D.*"), id = "stdev") ~ sd(., na.rm = TRUE)
+      )
+    )
+
+  # Take snapshots of `summary_tbl_1`
+  summary_tbl_1 %>% render_as_html() %>% expect_snapshot()
+  summary_tbl_1 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  summary_tbl_1 %>% as_rtf() %>% expect_snapshot()
 })
 
 test_that("Groups can be formatted selectively with a formatting group directive", {
@@ -1449,7 +1469,7 @@ test_that("Extracting a summary from a gt table is possible", {
   )
 })
 
-test_that("creating summary rows works for hidden columns", {
+test_that("Creating summary rows works for hidden columns", {
 
   # Create a table based on `sp500`, with
   # group names, rownames, and four
@@ -1761,7 +1781,7 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
   expect_warning(regexp = NA, summary_tbl_6 %>% as_rtf())
 })
 
-test_that("summary rows can be styled comprehensively", {
+test_that("Summary rows can be styled comprehensively", {
 
   # Generate a gt table with group and grand summary rows and style
   # every one of these cells in a single, comprehensive `tab_style()` stmt
@@ -1799,7 +1819,7 @@ test_that("summary rows can be styled comprehensively", {
   gt_tbl %>% render_as_html() %>% expect_snapshot()
 })
 
-test_that("summary rows can use other columns' data", {
+test_that("Summary rows can use other columns' data", {
 
   gt_tbl <-
     sp500 %>%
