@@ -145,6 +145,20 @@ disambiguate the unnamed element. So with
 \code{fns = c("minimum", label = "min") ~ min(.)}, \code{"min"} is indeed the \code{label}
 and \code{"minimum"} is taken as the \code{id} value.
 }
+
+\subsection{A fully named list with three specific elements}{
+
+We can avoid using a formula if we are satisfied with the default options of
+a function (except some of those functions with the \code{na.rm} options, see
+above). Instead, a list with the named elements \code{id}, \code{label}, and \code{fn} could
+be used. It can look like this:
+
+\code{fns = list(id = "mean_id", label = "average", fn = "mean")}
+
+which translates to
+
+\code{list(id = "mean_id", label = "average") ~ mean(., na.rm = TRUE)}
+}
 }
 
 \section{Extraction of summary rows}{
