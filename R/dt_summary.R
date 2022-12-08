@@ -369,20 +369,18 @@ dt_summary_build <- function(data, context) {
         }
       )
 
-    id_label_lookup_tbl <-
-      dplyr::distinct(
-        dplyr::select(
-          summary_dfs_data,
-          dplyr::all_of(c(row_id_col_private, rowname_col_private))
-        )
+    summary_dfs_display <-
+      dplyr::mutate(
+        summary_dfs_display,
+        `::rowname::` = NA_character_
       )
 
-    summary_dfs_display <-
-      dplyr::left_join(
-        summary_dfs_display,
-        id_label_lookup_tbl,
-        by = row_id_col_private
-      )
+    labels_processed <- unlist(lapply(labels, FUN = process_text, context = context))
+
+    for (i in seq_len(nrow(summary_dfs_display))) {
+      summary_dfs_display[i, ][["::rowname::"]] <-
+        unname(labels_processed[names(labels_processed) == summary_dfs_display[i, ][["::row_id::"]]])
+    }
 
     summary_dfs_display <-
       dplyr::mutate_at(
