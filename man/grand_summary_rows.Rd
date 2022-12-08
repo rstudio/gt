@@ -53,17 +53,101 @@ default \code{formatter} function, \code{\link[=fmt_number]{fmt_number()}}, opti
 An object of class \code{gt_tbl}.
 }
 \description{
-Add grand summary rows to the \strong{gt} table by using applying aggregation
-functions to the table data. The summary rows incorporate all of the
-available data, regardless of whether some of the data are part of row
-groups. You choose how to format the values in the resulting summary cells by
-use of a \code{formatter} function (e.g, \code{fmt_number}) and any relevant options.
+Add grand summary rows by using the table data and any suitable aggregation
+functions. With grand summary rows, all of the available data in the \strong{gt}
+table is incorporated (regardless of whether some of the data are part of row
+groups). Multiple grand summary rows can be added via expressions given to
+\code{fns}. You can selectively format the values in the resulting grand summary
+cells by use of formatting expressions in \code{fmt}.
 }
-\details{
+\section{How to supply functions for aggregation in \code{fns}}{
+
+
+There are a number of ways to express how an aggregation should work for
+each summary row. In addition to that, we have the ability to pass important
+information such as the summary row ID value and its label (the former
+necessary for targeting within \code{\link[=tab_style]{tab_style()}} or \code{\link[=tab_footnote]{tab_footnote()}} and the
+latter used for display in the rendered table). Here are a number of
+instructive examples for how to supply such expressions.
+\subsection{Double-sided formula with everything supplied}{
+
+We can be explicit and provide a double-sided formula (in the form
+\verb{<LHS> ~ <RHS>}) that expresses everything about a summary row. That is, it
+has an aggregation expression (where \code{.} represents the data in the
+focused column). Here's an example:
+
+\code{list(id = "minimum", label = "min") ~ min(., na.rm = TRUE)}
+
+The left side (the list) contains named elements that identify the \code{id} and
+\code{label} for the summary row. The right side has an expression for obtaining
+a minimum value (dropping \code{NA} values in the calculation).
+
+The \code{list()} can be replaced with \code{c()} but the advantage of a list is
+allowing the use of the \code{\link[=md]{md()}} and \code{\link[=html]{html()}} helper functions. The above
+example can be written as:
+
+\code{list(id = "minimum", label = md("**Minimum**")) ~ min(., na.rm = TRUE)}
+
+and we can have that label value interpreted as Markdown text.
+}
+
+\subsection{Function names in quotes}{
+
+With \code{fns = "min"} we get the equivalent of the fuller expression:
+
+\code{list(id = "min", label = "min") ~ min(., na.rm = TRUE)}
+
+For sake of convenience, common aggregation functions with the \code{na.rm}
+argument will be rewritten with the \code{na.rm = TRUE} option.
+
+Should you need to specify multiple aggregation functions in this way (giving
+you multiple summary rows), use \code{c()} or \code{list()}.
+}
+
+\subsection{RHS formula expressions}{
+
+With \code{fns = ~ min(.)} or \code{fns = list(~ min(.))}, \strong{gt} will use the function
+name as the \code{id} and \code{label}. The expansion of this shorthand to full form
+looks like this:
+
+\code{list(id = "min", label = "min") ~ min(.)}
+
+The RHS expression is kept as written and the name portion is both the \code{id}
+and the \code{label}.
+}
+
+\subsection{Named vector or list with RHS formula expression}{
+
+Using \code{fns = c(minimum = ~ min(.))} or \code{fns = list(minimum = ~ min(.))}
+expands to this:
+
+\code{list(id = "minimum", label = "minimum") ~ min(.)}
+}
+
+\subsection{Unnamed vector or list with RHS formula expression}{
+
+With \code{fns = c("minimum", "min") ~ min(.)} or
+\code{fns = list("minimum", "min") ~ min(.)} the LHS contains the \code{label} and \code{id}
+values and, importantly, the order is \code{label} first and \code{id} second. This can
+be rewritten as:
+
+\code{list(id = "min", label = "minimum") ~ min(.)}
+
+If the vector or list is partially named, \strong{gt} has enough to go on to
+disambiguate the unnamed element. So with
+\code{fns = c("minimum", label = "min") ~ min(.)}, \code{"min"} is indeed the \code{label}
+and \code{"minimum"} is taken as the \code{id} value.
+}
+}
+
+\section{Extraction of summary rows}{
+
+
 Should we need to obtain the summary data for external purposes, the
-\code{\link[=extract_summary]{extract_summary()}} function can be used with a \code{gt_tbl} object where grand
-summary rows were added via \code{grand_summary_rows()}.
+\code{\link[=extract_summary]{extract_summary()}} function can be used with a \code{gt_tbl} object where summary
+rows were added via \code{grand_summary_rows()} or \code{\link[=summary_rows]{summary_rows()}}.
 }
+
 \section{Examples}{
 
 
@@ -83,12 +167,11 @@ summary rows \code{min}, \code{max}, and \code{avg} for the table with the
   grand_summary_rows(
     columns = c(open, high, low, close),
     fns = list(
-      min = ~min(.),
-      max = ~max(.),
-      avg = ~mean(.)
+      min ~ min(.),
+      max ~ max(.),
+      avg ~ mean(.)
     ),
-    formatter = fmt_number,
-    use_seps = FALSE
+    fmt = ~ fmt_number(., use_seps = FALSE)
   )
 }\if{html}{\out{</div>}}
 
