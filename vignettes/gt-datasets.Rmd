@@ -446,15 +446,12 @@ pizzaplace %>%
   summary_rows(
     columns = sold,
     fns = list(TOTAL = "sum"),
-    formatter = fmt_number,
-    decimals = 0,
-    use_seps = TRUE
+    fmt = list(~ fmt_integer(.))
   ) %>%
   summary_rows(
     columns = income,
     fns = list(TOTAL = "sum"),
-    formatter = fmt_currency,
-    currency = "USD"
+    fmt = list(~ fmt_currency(.))
   ) %>%
   tab_options(
     summary_row.background.color = "#ACEACE",
