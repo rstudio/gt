@@ -202,7 +202,7 @@ summary_rows <- function(
     fmt_args <-
       paste0(
         ".",
-        if (length(fmt_args) > 1) ", " else NULL,
+        if (length(fmt_args) > 0) ", " else NULL,
         paste(
           fmt_args, collapse = ", "
         )
