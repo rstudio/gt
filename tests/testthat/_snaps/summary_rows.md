@@ -1,3 +1,1406 @@
+# Groups can be formatted selectively with a formatting group directive
+
+    Code
+      .
+    Output
+      [1] "<table class=\"gt_table\">\n  \n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"\"></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"open\">open</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"high\">high</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"low\">low</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"close\">close</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr class=\"gt_group_heading_row\">\n      <th colspan=\"5\" class=\"gt_group_heading\" scope=\"colgroup\" id=\"W02\">W02</th>\n    </tr>\n    <tr class=\"gt_row_group_first\"><th id=\"stub_1_1\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-05</th>\n<td headers=\"W02 stub_1_1 open\" class=\"gt_row gt_right\">2054.44</td>\n<td headers=\"W02 stub_1_1 high\" class=\"gt_row gt_right\">2054.44</td>\n<td headers=\"W02 stub_1_1 low\" class=\"gt_row gt_right\">2017.34</td>\n<td headers=\"W02 stub_1_1 close\" class=\"gt_row gt_right\">2020.58</td></tr>\n    <tr><th id=\"stub_1_2\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-06</th>\n<td headers=\"W02 stub_1_2 open\" class=\"gt_row gt_right\">2022.15</td>\n<td headers=\"W02 stub_1_2 high\" class=\"gt_row gt_right\">2030.25</td>\n<td headers=\"W02 stub_1_2 low\" class=\"gt_row gt_right\">1992.44</td>\n<td headers=\"W02 stub_1_2 close\" class=\"gt_row gt_right\">2002.61</td></tr>\n    <tr><th id=\"stub_1_3\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-07</th>\n<td headers=\"W02 stub_1_3 open\" class=\"gt_row gt_right\">2005.55</td>\n<td headers=\"W02 stub_1_3 high\" class=\"gt_row gt_right\">2029.61</td>\n<td headers=\"W02 stub_1_3 low\" class=\"gt_row gt_right\">2005.55</td>\n<td headers=\"W02 stub_1_3 close\" class=\"gt_row gt_right\">2025.90</td></tr>\n    <tr><th id=\"stub_1_4\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-08</th>\n<td headers=\"W02 stub_1_4 open\" class=\"gt_row gt_right\">2030.61</td>\n<td headers=\"W02 stub_1_4 high\" class=\"gt_row gt_right\">2064.08</td>\n<td headers=\"W02 stub_1_4 low\" class=\"gt_row gt_right\">2030.61</td>\n<td headers=\"W02 stub_1_4 close\" class=\"gt_row gt_right\">2062.14</td></tr>\n    <tr><th id=\"stub_1_5\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-09</th>\n<td headers=\"W02 stub_1_5 open\" class=\"gt_row gt_right\">2063.45</td>\n<td headers=\"W02 stub_1_5 high\" class=\"gt_row gt_right\">2064.43</td>\n<td headers=\"W02 stub_1_5 low\" class=\"gt_row gt_right\">2038.33</td>\n<td headers=\"W02 stub_1_5 close\" class=\"gt_row gt_right\">2044.81</td></tr>\n    <tr><th id=\"summary_stub_W02_1\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick\">average</th>\n<td headers=\"W02 summary_stub_W02_1 open\" class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\">2,035.240</td>\n<td headers=\"W02 summary_stub_W02_1 high\" class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\">2,048.562</td>\n<td headers=\"W02 summary_stub_W02_1 low\" class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\">2,016.854</td>\n<td headers=\"W02 summary_stub_W02_1 close\" class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\">2,031.208</td></tr>\n    <tr><th id=\"summary_stub_W02_2\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row\">total</th>\n<td headers=\"W02 summary_stub_W02_2 open\" class=\"gt_row gt_right gt_summary_row\">10,176.200</td>\n<td headers=\"W02 summary_stub_W02_2 high\" class=\"gt_row gt_right gt_summary_row\">10,242.810</td>\n<td headers=\"W02 summary_stub_W02_2 low\" class=\"gt_row gt_right gt_summary_row\">10,084.270</td>\n<td headers=\"W02 summary_stub_W02_2 close\" class=\"gt_row gt_right gt_summary_row\">10,156.040</td></tr>\n    <tr><th id=\"summary_stub_W02_3\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row gt_last_summary_row\">std dev</th>\n<td headers=\"W02 summary_stub_W02_3 open\" class=\"gt_row gt_right gt_summary_row gt_last_summary_row\">23.658</td>\n<td headers=\"W02 summary_stub_W02_3 high\" class=\"gt_row gt_right gt_summary_row gt_last_summary_row\">17.476</td>\n<td headers=\"W02 summary_stub_W02_3 low\" class=\"gt_row gt_right gt_summary_row gt_last_summary_row\">18.537</td>\n<td headers=\"W02 summary_stub_W02_3 close\" class=\"gt_row gt_right gt_summary_row gt_last_summary_row\">22.917</td></tr>\n    <tr class=\"gt_group_heading_row\">\n      <th colspan=\"5\" class=\"gt_group_heading\" scope=\"colgroup\" id=\"W03\">W03</th>\n    </tr>\n    <tr class=\"gt_row_group_first\"><th id=\"stub_1_6\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-12</th>\n<td headers=\"W03 stub_1_6 open\" class=\"gt_row gt_right\">2046.13</td>\n<td headers=\"W03 stub_1_6 high\" class=\"gt_row gt_right\">2049.30</td>\n<td headers=\"W03 stub_1_6 low\" class=\"gt_row gt_right\">2022.58</td>\n<td headers=\"W03 stub_1_6 close\" class=\"gt_row gt_right\">2028.26</td></tr>\n    <tr><th id=\"stub_1_7\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-13</th>\n<td headers=\"W03 stub_1_7 open\" class=\"gt_row gt_right\">2031.58</td>\n<td headers=\"W03 stub_1_7 high\" class=\"gt_row gt_right\">2056.93</td>\n<td headers=\"W03 stub_1_7 low\" class=\"gt_row gt_right\">2008.25</td>\n<td headers=\"W03 stub_1_7 close\" class=\"gt_row gt_right\">2023.03</td></tr>\n    <tr><th id=\"stub_1_8\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-14</th>\n<td headers=\"W03 stub_1_8 open\" class=\"gt_row gt_right\">2018.40</td>\n<td headers=\"W03 stub_1_8 high\" class=\"gt_row gt_right\">2018.40</td>\n<td headers=\"W03 stub_1_8 low\" class=\"gt_row gt_right\">1988.44</td>\n<td headers=\"W03 stub_1_8 close\" class=\"gt_row gt_right\">2011.27</td></tr>\n    <tr><th id=\"stub_1_9\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-15</th>\n<td headers=\"W03 stub_1_9 open\" class=\"gt_row gt_right\">2013.75</td>\n<td headers=\"W03 stub_1_9 high\" class=\"gt_row gt_right\">2021.35</td>\n<td headers=\"W03 stub_1_9 low\" class=\"gt_row gt_right\">1991.47</td>\n<td headers=\"W03 stub_1_9 close\" class=\"gt_row gt_right\">1992.67</td></tr>\n    <tr><th id=\"stub_1_10\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-16</th>\n<td headers=\"W03 stub_1_10 open\" class=\"gt_row gt_right\">1992.25</td>\n<td headers=\"W03 stub_1_10 high\" class=\"gt_row gt_right\">2020.46</td>\n<td headers=\"W03 stub_1_10 low\" class=\"gt_row gt_right\">1988.12</td>\n<td headers=\"W03 stub_1_10 close\" class=\"gt_row gt_right\">2019.42</td></tr>\n    <tr><th id=\"summary_stub_W03_1\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick\">average</th>\n<td headers=\"W03 summary_stub_W03_1 open\" class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\">2020.42200</td>\n<td headers=\"W03 summary_stub_W03_1 high\" class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\">2033.28798</td>\n<td headers=\"W03 summary_stub_W03_1 low\" class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\">1999.77198</td>\n<td headers=\"W03 summary_stub_W03_1 close\" class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\">2014.9300</td></tr>\n    <tr><th id=\"summary_stub_W03_2\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row\">total</th>\n<td headers=\"W03 summary_stub_W03_2 open\" class=\"gt_row gt_right gt_summary_row\">10102.11000</td>\n<td headers=\"W03 summary_stub_W03_2 high\" class=\"gt_row gt_right gt_summary_row\">10166.43990</td>\n<td headers=\"W03 summary_stub_W03_2 low\" class=\"gt_row gt_right gt_summary_row\">9998.85990</td>\n<td headers=\"W03 summary_stub_W03_2 close\" class=\"gt_row gt_right gt_summary_row\">10074.6500</td></tr>\n    <tr><th id=\"summary_stub_W03_3\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row gt_last_summary_row\">std dev</th>\n<td headers=\"W03 summary_stub_W03_3 open\" class=\"gt_row gt_right gt_summary_row gt_last_summary_row\">20.17218</td>\n<td headers=\"W03 summary_stub_W03_3 high\" class=\"gt_row gt_right gt_summary_row gt_last_summary_row\">18.33064</td>\n<td headers=\"W03 summary_stub_W03_3 low\" class=\"gt_row gt_right gt_summary_row gt_last_summary_row\">15.20847</td>\n<td headers=\"W03 summary_stub_W03_3 close\" class=\"gt_row gt_right gt_summary_row gt_last_summary_row\">13.8957</td></tr>\n  </tbody>\n  \n  \n</table>"
+
+---
+
+    Code
+      .
+    Output
+      [1] "\\begin{longtable}{l|rrrr}\n\\toprule\n\\multicolumn{1}{l}{} & open & high & low & close \\\\ \n\\midrule\n\\multicolumn{5}{l}{W02} \\\\ \n\\midrule\n16440 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n16441 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n16442 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n16443 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n16444 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule \naverage & $2,035.240$ & $2,048.562$ & $2,016.854$ & $2,031.208$ \\\\ \ntotal & $10,176.200$ & $10,242.810$ & $10,084.270$ & $10,156.040$ \\\\ \nstd dev & $23.658$ & $17.476$ & $18.537$ & $22.917$ \\\\ \n\\midrule\n\\multicolumn{5}{l}{W03} \\\\ \n\\midrule\n16447 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n16448 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n16449 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n16450 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n16451 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\midrule \naverage & 2020.42200 & 2033.28798 & 1999.77198 & 2014.9300 \\\\ \ntotal & 10102.11000 & 10166.43990 & 9998.85990 & 10074.6500 \\\\ \nstd dev & 20.17218 & 18.33064 & 15.20847 & 13.8957 \\\\ \n\\bottomrule\n\\end{longtable}\n"
+
+---
+
+    Code
+      .
+    Output
+      {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red211\green211\blue211;}
+      
+      \paperw12240\paperh15840\widowctrl\ftnbj\fet0\sectd\linex0
+      \lndscpsxn
+      \margl1440\margr1440\margt1440\margb1440
+      \headery720\footery720\fs20
+      
+      \trowd\trrh0\trhdr
+      
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx1872
+      \intbl {\f0 {\f0\fs20 }}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx3744
+      \intbl {\f0 {\f0\fs20 open}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx5616
+      \intbl {\f0 {\f0\fs20 high}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx7488
+      \intbl {\f0 {\f0\fs20 low}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx9360
+      \intbl {\f0 {\f0\fs20 close}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0\fs20 W02}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16440}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2054.44}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2054.44}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 2017.34}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2020.58}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16441}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2022.15}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2030.25}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 1992.44}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2002.61}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16442}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2005.55}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2029.61}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 2005.55}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2025.90}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16443}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2030.61}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2064.08}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 2030.61}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2062.14}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16444}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2063.45}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2064.43}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 2038.33}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2044.81}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 average}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2,035.240}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2,048.562}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 2,016.854}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2,031.208}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 total}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 10,176.200}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 10,242.810}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 10,084.270}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 10,156.040}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 std dev}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 23.658}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 17.476}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 18.537}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 22.917}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0\fs20 W03}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16447}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2046.13}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2049.30}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 2022.58}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2028.26}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16448}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2031.58}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2056.93}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 2008.25}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2023.03}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16449}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2018.40}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2018.40}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 1988.44}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2011.27}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16450}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2013.75}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2021.35}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 1991.47}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 1992.67}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16451}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 1992.25}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2020.46}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 1988.12}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2019.42}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 average}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2020.42200}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2033.28798}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 1999.77198}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2014.9300}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 total}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 10102.11000}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 10166.43990}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 9998.85990}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 10074.6500}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 std dev}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 20.17218}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 18.33064}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 15.20847}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 13.8957}}\cell
+      
+      \row
+      
+      }
+
+---
+
+    Code
+      .
+    Output
+      [1] "<table class=\"gt_table\">\n  \n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"\"></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"open\">open</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"high\">high</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"low\">low</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"close\">close</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr class=\"gt_group_heading_row\">\n      <th colspan=\"5\" class=\"gt_group_heading\" scope=\"colgroup\" id=\"W02\">W02</th>\n    </tr>\n    <tr class=\"gt_row_group_first\"><th id=\"stub_1_1\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-05</th>\n<td headers=\"W02 stub_1_1 open\" class=\"gt_row gt_right\">2054.44</td>\n<td headers=\"W02 stub_1_1 high\" class=\"gt_row gt_right\">2054.44</td>\n<td headers=\"W02 stub_1_1 low\" class=\"gt_row gt_right\">2017.34</td>\n<td headers=\"W02 stub_1_1 close\" class=\"gt_row gt_right\">2020.58</td></tr>\n    <tr><th id=\"stub_1_2\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-06</th>\n<td headers=\"W02 stub_1_2 open\" class=\"gt_row gt_right\">2022.15</td>\n<td headers=\"W02 stub_1_2 high\" class=\"gt_row gt_right\">2030.25</td>\n<td headers=\"W02 stub_1_2 low\" class=\"gt_row gt_right\">1992.44</td>\n<td headers=\"W02 stub_1_2 close\" class=\"gt_row gt_right\">2002.61</td></tr>\n    <tr><th id=\"stub_1_3\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-07</th>\n<td headers=\"W02 stub_1_3 open\" class=\"gt_row gt_right\">2005.55</td>\n<td headers=\"W02 stub_1_3 high\" class=\"gt_row gt_right\">2029.61</td>\n<td headers=\"W02 stub_1_3 low\" class=\"gt_row gt_right\">2005.55</td>\n<td headers=\"W02 stub_1_3 close\" class=\"gt_row gt_right\">2025.90</td></tr>\n    <tr><th id=\"stub_1_4\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-08</th>\n<td headers=\"W02 stub_1_4 open\" class=\"gt_row gt_right\">2030.61</td>\n<td headers=\"W02 stub_1_4 high\" class=\"gt_row gt_right\">2064.08</td>\n<td headers=\"W02 stub_1_4 low\" class=\"gt_row gt_right\">2030.61</td>\n<td headers=\"W02 stub_1_4 close\" class=\"gt_row gt_right\">2062.14</td></tr>\n    <tr><th id=\"stub_1_5\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-09</th>\n<td headers=\"W02 stub_1_5 open\" class=\"gt_row gt_right\">2063.45</td>\n<td headers=\"W02 stub_1_5 high\" class=\"gt_row gt_right\">2064.43</td>\n<td headers=\"W02 stub_1_5 low\" class=\"gt_row gt_right\">2038.33</td>\n<td headers=\"W02 stub_1_5 close\" class=\"gt_row gt_right\">2044.81</td></tr>\n    <tr><th id=\"summary_stub_W02_1\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick\">average</th>\n<td headers=\"W02 summary_stub_W02_1 open\" class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\">2,035.240</td>\n<td headers=\"W02 summary_stub_W02_1 high\" class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\">2,048.562</td>\n<td headers=\"W02 summary_stub_W02_1 low\" class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\">2,016.854</td>\n<td headers=\"W02 summary_stub_W02_1 close\" class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\">2,031.208</td></tr>\n    <tr><th id=\"summary_stub_W02_2\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row\">total</th>\n<td headers=\"W02 summary_stub_W02_2 open\" class=\"gt_row gt_right gt_summary_row\">10,176.200</td>\n<td headers=\"W02 summary_stub_W02_2 high\" class=\"gt_row gt_right gt_summary_row\">10,242.810</td>\n<td headers=\"W02 summary_stub_W02_2 low\" class=\"gt_row gt_right gt_summary_row\">10,084.270</td>\n<td headers=\"W02 summary_stub_W02_2 close\" class=\"gt_row gt_right gt_summary_row\">10,156.040</td></tr>\n    <tr><th id=\"summary_stub_W02_3\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row gt_last_summary_row\">std dev</th>\n<td headers=\"W02 summary_stub_W02_3 open\" class=\"gt_row gt_right gt_summary_row gt_last_summary_row\">23.658</td>\n<td headers=\"W02 summary_stub_W02_3 high\" class=\"gt_row gt_right gt_summary_row gt_last_summary_row\">17.476</td>\n<td headers=\"W02 summary_stub_W02_3 low\" class=\"gt_row gt_right gt_summary_row gt_last_summary_row\">18.537</td>\n<td headers=\"W02 summary_stub_W02_3 close\" class=\"gt_row gt_right gt_summary_row gt_last_summary_row\">22.917</td></tr>\n    <tr class=\"gt_group_heading_row\">\n      <th colspan=\"5\" class=\"gt_group_heading\" scope=\"colgroup\" id=\"W03\">W03</th>\n    </tr>\n    <tr class=\"gt_row_group_first\"><th id=\"stub_1_6\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-12</th>\n<td headers=\"W03 stub_1_6 open\" class=\"gt_row gt_right\">2046.13</td>\n<td headers=\"W03 stub_1_6 high\" class=\"gt_row gt_right\">2049.30</td>\n<td headers=\"W03 stub_1_6 low\" class=\"gt_row gt_right\">2022.58</td>\n<td headers=\"W03 stub_1_6 close\" class=\"gt_row gt_right\">2028.26</td></tr>\n    <tr><th id=\"stub_1_7\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-13</th>\n<td headers=\"W03 stub_1_7 open\" class=\"gt_row gt_right\">2031.58</td>\n<td headers=\"W03 stub_1_7 high\" class=\"gt_row gt_right\">2056.93</td>\n<td headers=\"W03 stub_1_7 low\" class=\"gt_row gt_right\">2008.25</td>\n<td headers=\"W03 stub_1_7 close\" class=\"gt_row gt_right\">2023.03</td></tr>\n    <tr><th id=\"stub_1_8\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-14</th>\n<td headers=\"W03 stub_1_8 open\" class=\"gt_row gt_right\">2018.40</td>\n<td headers=\"W03 stub_1_8 high\" class=\"gt_row gt_right\">2018.40</td>\n<td headers=\"W03 stub_1_8 low\" class=\"gt_row gt_right\">1988.44</td>\n<td headers=\"W03 stub_1_8 close\" class=\"gt_row gt_right\">2011.27</td></tr>\n    <tr><th id=\"stub_1_9\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-15</th>\n<td headers=\"W03 stub_1_9 open\" class=\"gt_row gt_right\">2013.75</td>\n<td headers=\"W03 stub_1_9 high\" class=\"gt_row gt_right\">2021.35</td>\n<td headers=\"W03 stub_1_9 low\" class=\"gt_row gt_right\">1991.47</td>\n<td headers=\"W03 stub_1_9 close\" class=\"gt_row gt_right\">1992.67</td></tr>\n    <tr><th id=\"stub_1_10\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-16</th>\n<td headers=\"W03 stub_1_10 open\" class=\"gt_row gt_right\">1992.25</td>\n<td headers=\"W03 stub_1_10 high\" class=\"gt_row gt_right\">2020.46</td>\n<td headers=\"W03 stub_1_10 low\" class=\"gt_row gt_right\">1988.12</td>\n<td headers=\"W03 stub_1_10 close\" class=\"gt_row gt_right\">2019.42</td></tr>\n    <tr><th id=\"summary_stub_W03_1\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick\">average</th>\n<td headers=\"W03 summary_stub_W03_1 open\" class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\">$2,020.42</td>\n<td headers=\"W03 summary_stub_W03_1 high\" class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\">$2,033.29</td>\n<td headers=\"W03 summary_stub_W03_1 low\" class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\">$1,999.77</td>\n<td headers=\"W03 summary_stub_W03_1 close\" class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\">$2,014.93</td></tr>\n    <tr><th id=\"summary_stub_W03_2\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row\">total</th>\n<td headers=\"W03 summary_stub_W03_2 open\" class=\"gt_row gt_right gt_summary_row\">$10,102.11</td>\n<td headers=\"W03 summary_stub_W03_2 high\" class=\"gt_row gt_right gt_summary_row\">$10,166.44</td>\n<td headers=\"W03 summary_stub_W03_2 low\" class=\"gt_row gt_right gt_summary_row\">$9,998.86</td>\n<td headers=\"W03 summary_stub_W03_2 close\" class=\"gt_row gt_right gt_summary_row\">$10,074.65</td></tr>\n    <tr><th id=\"summary_stub_W03_3\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row gt_last_summary_row\">std dev</th>\n<td headers=\"W03 summary_stub_W03_3 open\" class=\"gt_row gt_right gt_summary_row gt_last_summary_row\">$20.17</td>\n<td headers=\"W03 summary_stub_W03_3 high\" class=\"gt_row gt_right gt_summary_row gt_last_summary_row\">$18.33</td>\n<td headers=\"W03 summary_stub_W03_3 low\" class=\"gt_row gt_right gt_summary_row gt_last_summary_row\">$15.21</td>\n<td headers=\"W03 summary_stub_W03_3 close\" class=\"gt_row gt_right gt_summary_row gt_last_summary_row\">$13.90</td></tr>\n  </tbody>\n  \n  \n</table>"
+
+---
+
+    Code
+      .
+    Output
+      [1] "\\begin{longtable}{l|rrrr}\n\\toprule\n\\multicolumn{1}{l}{} & open & high & low & close \\\\ \n\\midrule\n\\multicolumn{5}{l}{W02} \\\\ \n\\midrule\n16440 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n16441 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n16442 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n16443 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n16444 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule \naverage & $2,035.240$ & $2,048.562$ & $2,016.854$ & $2,031.208$ \\\\ \ntotal & $10,176.200$ & $10,242.810$ & $10,084.270$ & $10,156.040$ \\\\ \nstd dev & $23.658$ & $17.476$ & $18.537$ & $22.917$ \\\\ \n\\midrule\n\\multicolumn{5}{l}{W03} \\\\ \n\\midrule\n16447 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n16448 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n16449 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n16450 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n16451 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\midrule \naverage & $\\text{\\$}2,020.42$ & $\\text{\\$}2,033.29$ & $\\text{\\$}1,999.77$ & $\\text{\\$}2,014.93$ \\\\ \ntotal & $\\text{\\$}10,102.11$ & $\\text{\\$}10,166.44$ & $\\text{\\$}9,998.86$ & $\\text{\\$}10,074.65$ \\\\ \nstd dev & $\\text{\\$}20.17$ & $\\text{\\$}18.33$ & $\\text{\\$}15.21$ & $\\text{\\$}13.90$ \\\\ \n\\bottomrule\n\\end{longtable}\n"
+
+---
+
+    Code
+      .
+    Output
+      {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red211\green211\blue211;}
+      
+      \paperw12240\paperh15840\widowctrl\ftnbj\fet0\sectd\linex0
+      \lndscpsxn
+      \margl1440\margr1440\margt1440\margb1440
+      \headery720\footery720\fs20
+      
+      \trowd\trrh0\trhdr
+      
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx1872
+      \intbl {\f0 {\f0\fs20 }}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx3744
+      \intbl {\f0 {\f0\fs20 open}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx5616
+      \intbl {\f0 {\f0\fs20 high}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx7488
+      \intbl {\f0 {\f0\fs20 low}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx9360
+      \intbl {\f0 {\f0\fs20 close}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0\fs20 W02}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16440}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2054.44}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2054.44}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 2017.34}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2020.58}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16441}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2022.15}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2030.25}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 1992.44}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2002.61}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16442}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2005.55}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2029.61}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 2005.55}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2025.90}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16443}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2030.61}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2064.08}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 2030.61}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2062.14}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16444}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2063.45}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2064.43}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 2038.33}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2044.81}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 average}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2,035.240}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2,048.562}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 2,016.854}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2,031.208}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 total}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 10,176.200}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 10,242.810}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 10,084.270}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 10,156.040}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 std dev}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 23.658}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 17.476}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 18.537}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 22.917}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0\fs20 W03}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16447}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2046.13}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2049.30}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 2022.58}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2028.26}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16448}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2031.58}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2056.93}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 2008.25}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2023.03}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16449}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2018.40}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2018.40}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 1988.44}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2011.27}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16450}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2013.75}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2021.35}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 1991.47}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 1992.67}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16451}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 1992.25}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2020.46}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 1988.12}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2019.42}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 average}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 $2,020.42}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 $2,033.29}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 $1,999.77}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 $2,014.93}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 total}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 $10,102.11}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 $10,166.44}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 $9,998.86}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 $10,074.65}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 std dev}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 $20.17}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 $18.33}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 $15.21}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 $13.90}}\cell
+      
+      \row
+      
+      }
+
+---
+
+    Code
+      .
+    Output
+      [1] "<table class=\"gt_table\">\n  \n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"\"></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"open\">open</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"high\">high</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"low\">low</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"close\">close</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr class=\"gt_group_heading_row\">\n      <th colspan=\"5\" class=\"gt_group_heading\" scope=\"colgroup\" id=\"W02\">W02</th>\n    </tr>\n    <tr class=\"gt_row_group_first\"><th id=\"stub_1_1\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-05</th>\n<td headers=\"W02 stub_1_1 open\" class=\"gt_row gt_right\">2054.44</td>\n<td headers=\"W02 stub_1_1 high\" class=\"gt_row gt_right\">2054.44</td>\n<td headers=\"W02 stub_1_1 low\" class=\"gt_row gt_right\">2017.34</td>\n<td headers=\"W02 stub_1_1 close\" class=\"gt_row gt_right\">2020.58</td></tr>\n    <tr><th id=\"stub_1_2\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-06</th>\n<td headers=\"W02 stub_1_2 open\" class=\"gt_row gt_right\">2022.15</td>\n<td headers=\"W02 stub_1_2 high\" class=\"gt_row gt_right\">2030.25</td>\n<td headers=\"W02 stub_1_2 low\" class=\"gt_row gt_right\">1992.44</td>\n<td headers=\"W02 stub_1_2 close\" class=\"gt_row gt_right\">2002.61</td></tr>\n    <tr><th id=\"stub_1_3\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-07</th>\n<td headers=\"W02 stub_1_3 open\" class=\"gt_row gt_right\">2005.55</td>\n<td headers=\"W02 stub_1_3 high\" class=\"gt_row gt_right\">2029.61</td>\n<td headers=\"W02 stub_1_3 low\" class=\"gt_row gt_right\">2005.55</td>\n<td headers=\"W02 stub_1_3 close\" class=\"gt_row gt_right\">2025.90</td></tr>\n    <tr><th id=\"stub_1_4\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-08</th>\n<td headers=\"W02 stub_1_4 open\" class=\"gt_row gt_right\">2030.61</td>\n<td headers=\"W02 stub_1_4 high\" class=\"gt_row gt_right\">2064.08</td>\n<td headers=\"W02 stub_1_4 low\" class=\"gt_row gt_right\">2030.61</td>\n<td headers=\"W02 stub_1_4 close\" class=\"gt_row gt_right\">2062.14</td></tr>\n    <tr><th id=\"stub_1_5\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-09</th>\n<td headers=\"W02 stub_1_5 open\" class=\"gt_row gt_right\">2063.45</td>\n<td headers=\"W02 stub_1_5 high\" class=\"gt_row gt_right\">2064.43</td>\n<td headers=\"W02 stub_1_5 low\" class=\"gt_row gt_right\">2038.33</td>\n<td headers=\"W02 stub_1_5 close\" class=\"gt_row gt_right\">2044.81</td></tr>\n    <tr><th id=\"summary_stub_W02_1\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick\">average</th>\n<td headers=\"W02 summary_stub_W02_1 open\" class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\">$2,035.24</td>\n<td headers=\"W02 summary_stub_W02_1 high\" class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\">$2,048.56</td>\n<td headers=\"W02 summary_stub_W02_1 low\" class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\">$2,016.85</td>\n<td headers=\"W02 summary_stub_W02_1 close\" class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\">$2,031.21</td></tr>\n    <tr><th id=\"summary_stub_W02_2\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row\">total</th>\n<td headers=\"W02 summary_stub_W02_2 open\" class=\"gt_row gt_right gt_summary_row\">$10,176.20</td>\n<td headers=\"W02 summary_stub_W02_2 high\" class=\"gt_row gt_right gt_summary_row\">$10,242.81</td>\n<td headers=\"W02 summary_stub_W02_2 low\" class=\"gt_row gt_right gt_summary_row\">$10,084.27</td>\n<td headers=\"W02 summary_stub_W02_2 close\" class=\"gt_row gt_right gt_summary_row\">$10,156.04</td></tr>\n    <tr><th id=\"summary_stub_W02_3\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row gt_last_summary_row\">std dev</th>\n<td headers=\"W02 summary_stub_W02_3 open\" class=\"gt_row gt_right gt_summary_row gt_last_summary_row\">$23.66</td>\n<td headers=\"W02 summary_stub_W02_3 high\" class=\"gt_row gt_right gt_summary_row gt_last_summary_row\">$17.48</td>\n<td headers=\"W02 summary_stub_W02_3 low\" class=\"gt_row gt_right gt_summary_row gt_last_summary_row\">$18.54</td>\n<td headers=\"W02 summary_stub_W02_3 close\" class=\"gt_row gt_right gt_summary_row gt_last_summary_row\">$22.92</td></tr>\n    <tr class=\"gt_group_heading_row\">\n      <th colspan=\"5\" class=\"gt_group_heading\" scope=\"colgroup\" id=\"W03\">W03</th>\n    </tr>\n    <tr class=\"gt_row_group_first\"><th id=\"stub_1_6\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-12</th>\n<td headers=\"W03 stub_1_6 open\" class=\"gt_row gt_right\">2046.13</td>\n<td headers=\"W03 stub_1_6 high\" class=\"gt_row gt_right\">2049.30</td>\n<td headers=\"W03 stub_1_6 low\" class=\"gt_row gt_right\">2022.58</td>\n<td headers=\"W03 stub_1_6 close\" class=\"gt_row gt_right\">2028.26</td></tr>\n    <tr><th id=\"stub_1_7\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-13</th>\n<td headers=\"W03 stub_1_7 open\" class=\"gt_row gt_right\">2031.58</td>\n<td headers=\"W03 stub_1_7 high\" class=\"gt_row gt_right\">2056.93</td>\n<td headers=\"W03 stub_1_7 low\" class=\"gt_row gt_right\">2008.25</td>\n<td headers=\"W03 stub_1_7 close\" class=\"gt_row gt_right\">2023.03</td></tr>\n    <tr><th id=\"stub_1_8\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-14</th>\n<td headers=\"W03 stub_1_8 open\" class=\"gt_row gt_right\">2018.40</td>\n<td headers=\"W03 stub_1_8 high\" class=\"gt_row gt_right\">2018.40</td>\n<td headers=\"W03 stub_1_8 low\" class=\"gt_row gt_right\">1988.44</td>\n<td headers=\"W03 stub_1_8 close\" class=\"gt_row gt_right\">2011.27</td></tr>\n    <tr><th id=\"stub_1_9\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-15</th>\n<td headers=\"W03 stub_1_9 open\" class=\"gt_row gt_right\">2013.75</td>\n<td headers=\"W03 stub_1_9 high\" class=\"gt_row gt_right\">2021.35</td>\n<td headers=\"W03 stub_1_9 low\" class=\"gt_row gt_right\">1991.47</td>\n<td headers=\"W03 stub_1_9 close\" class=\"gt_row gt_right\">1992.67</td></tr>\n    <tr><th id=\"stub_1_10\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-16</th>\n<td headers=\"W03 stub_1_10 open\" class=\"gt_row gt_right\">1992.25</td>\n<td headers=\"W03 stub_1_10 high\" class=\"gt_row gt_right\">2020.46</td>\n<td headers=\"W03 stub_1_10 low\" class=\"gt_row gt_right\">1988.12</td>\n<td headers=\"W03 stub_1_10 close\" class=\"gt_row gt_right\">2019.42</td></tr>\n    <tr><th id=\"summary_stub_W03_1\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick\">average</th>\n<td headers=\"W03 summary_stub_W03_1 open\" class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\">$2,020.42</td>\n<td headers=\"W03 summary_stub_W03_1 high\" class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\">$2,033.29</td>\n<td headers=\"W03 summary_stub_W03_1 low\" class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\">$1,999.77</td>\n<td headers=\"W03 summary_stub_W03_1 close\" class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\">$2,014.93</td></tr>\n    <tr><th id=\"summary_stub_W03_2\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row\">total</th>\n<td headers=\"W03 summary_stub_W03_2 open\" class=\"gt_row gt_right gt_summary_row\">$10,102.11</td>\n<td headers=\"W03 summary_stub_W03_2 high\" class=\"gt_row gt_right gt_summary_row\">$10,166.44</td>\n<td headers=\"W03 summary_stub_W03_2 low\" class=\"gt_row gt_right gt_summary_row\">$9,998.86</td>\n<td headers=\"W03 summary_stub_W03_2 close\" class=\"gt_row gt_right gt_summary_row\">$10,074.65</td></tr>\n    <tr><th id=\"summary_stub_W03_3\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row gt_last_summary_row\">std dev</th>\n<td headers=\"W03 summary_stub_W03_3 open\" class=\"gt_row gt_right gt_summary_row gt_last_summary_row\">$20.17</td>\n<td headers=\"W03 summary_stub_W03_3 high\" class=\"gt_row gt_right gt_summary_row gt_last_summary_row\">$18.33</td>\n<td headers=\"W03 summary_stub_W03_3 low\" class=\"gt_row gt_right gt_summary_row gt_last_summary_row\">$15.21</td>\n<td headers=\"W03 summary_stub_W03_3 close\" class=\"gt_row gt_right gt_summary_row gt_last_summary_row\">$13.90</td></tr>\n  </tbody>\n  \n  \n</table>"
+
+---
+
+    Code
+      .
+    Output
+      [1] "\\begin{longtable}{l|rrrr}\n\\toprule\n\\multicolumn{1}{l}{} & open & high & low & close \\\\ \n\\midrule\n\\multicolumn{5}{l}{W02} \\\\ \n\\midrule\n16440 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n16441 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n16442 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n16443 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n16444 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule \naverage & $\\text{\\$}2,035.24$ & $\\text{\\$}2,048.56$ & $\\text{\\$}2,016.85$ & $\\text{\\$}2,031.21$ \\\\ \ntotal & $\\text{\\$}10,176.20$ & $\\text{\\$}10,242.81$ & $\\text{\\$}10,084.27$ & $\\text{\\$}10,156.04$ \\\\ \nstd dev & $\\text{\\$}23.66$ & $\\text{\\$}17.48$ & $\\text{\\$}18.54$ & $\\text{\\$}22.92$ \\\\ \n\\midrule\n\\multicolumn{5}{l}{W03} \\\\ \n\\midrule\n16447 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n16448 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n16449 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n16450 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n16451 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\midrule \naverage & $\\text{\\$}2,020.42$ & $\\text{\\$}2,033.29$ & $\\text{\\$}1,999.77$ & $\\text{\\$}2,014.93$ \\\\ \ntotal & $\\text{\\$}10,102.11$ & $\\text{\\$}10,166.44$ & $\\text{\\$}9,998.86$ & $\\text{\\$}10,074.65$ \\\\ \nstd dev & $\\text{\\$}20.17$ & $\\text{\\$}18.33$ & $\\text{\\$}15.21$ & $\\text{\\$}13.90$ \\\\ \n\\bottomrule\n\\end{longtable}\n"
+
+---
+
+    Code
+      .
+    Output
+      {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red211\green211\blue211;}
+      
+      \paperw12240\paperh15840\widowctrl\ftnbj\fet0\sectd\linex0
+      \lndscpsxn
+      \margl1440\margr1440\margt1440\margb1440
+      \headery720\footery720\fs20
+      
+      \trowd\trrh0\trhdr
+      
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx1872
+      \intbl {\f0 {\f0\fs20 }}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx3744
+      \intbl {\f0 {\f0\fs20 open}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx5616
+      \intbl {\f0 {\f0\fs20 high}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx7488
+      \intbl {\f0 {\f0\fs20 low}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx9360
+      \intbl {\f0 {\f0\fs20 close}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0\fs20 W02}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16440}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2054.44}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2054.44}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 2017.34}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2020.58}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16441}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2022.15}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2030.25}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 1992.44}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2002.61}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16442}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2005.55}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2029.61}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 2005.55}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2025.90}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16443}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2030.61}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2064.08}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 2030.61}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2062.14}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16444}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2063.45}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2064.43}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 2038.33}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2044.81}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 average}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 $2,035.24}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 $2,048.56}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 $2,016.85}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 $2,031.21}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 total}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 $10,176.20}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 $10,242.81}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 $10,084.27}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 $10,156.04}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 std dev}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 $23.66}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 $17.48}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 $18.54}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 $22.92}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0\fs20 W03}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16447}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2046.13}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2049.30}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 2022.58}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2028.26}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16448}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2031.58}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2056.93}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 2008.25}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2023.03}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16449}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2018.40}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2018.40}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 1988.44}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2011.27}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16450}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2013.75}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2021.35}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 1991.47}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 1992.67}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16451}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 1992.25}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2020.46}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 1988.12}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2019.42}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 average}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 $2,020.42}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 $2,033.29}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 $1,999.77}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 $2,014.93}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 total}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 $10,102.11}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 $10,166.44}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 $9,998.86}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 $10,074.65}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 std dev}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 $20.17}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 $18.33}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 $15.21}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 $13.90}}\cell
+      
+      \row
+      
+      }
+
+---
+
+    Code
+      .
+    Output
+      [1] "<table class=\"gt_table\">\n  \n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"\"></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"open\">open</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"high\">high</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"low\">low</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"close\">close</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr class=\"gt_group_heading_row\">\n      <th colspan=\"5\" class=\"gt_group_heading\" scope=\"colgroup\" id=\"W02\">W02</th>\n    </tr>\n    <tr class=\"gt_row_group_first\"><th id=\"stub_1_1\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-05</th>\n<td headers=\"W02 stub_1_1 open\" class=\"gt_row gt_right\">2054.44</td>\n<td headers=\"W02 stub_1_1 high\" class=\"gt_row gt_right\">2054.44</td>\n<td headers=\"W02 stub_1_1 low\" class=\"gt_row gt_right\">2017.34</td>\n<td headers=\"W02 stub_1_1 close\" class=\"gt_row gt_right\">2020.58</td></tr>\n    <tr><th id=\"stub_1_2\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-06</th>\n<td headers=\"W02 stub_1_2 open\" class=\"gt_row gt_right\">2022.15</td>\n<td headers=\"W02 stub_1_2 high\" class=\"gt_row gt_right\">2030.25</td>\n<td headers=\"W02 stub_1_2 low\" class=\"gt_row gt_right\">1992.44</td>\n<td headers=\"W02 stub_1_2 close\" class=\"gt_row gt_right\">2002.61</td></tr>\n    <tr><th id=\"stub_1_3\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-07</th>\n<td headers=\"W02 stub_1_3 open\" class=\"gt_row gt_right\">2005.55</td>\n<td headers=\"W02 stub_1_3 high\" class=\"gt_row gt_right\">2029.61</td>\n<td headers=\"W02 stub_1_3 low\" class=\"gt_row gt_right\">2005.55</td>\n<td headers=\"W02 stub_1_3 close\" class=\"gt_row gt_right\">2025.90</td></tr>\n    <tr><th id=\"stub_1_4\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-08</th>\n<td headers=\"W02 stub_1_4 open\" class=\"gt_row gt_right\">2030.61</td>\n<td headers=\"W02 stub_1_4 high\" class=\"gt_row gt_right\">2064.08</td>\n<td headers=\"W02 stub_1_4 low\" class=\"gt_row gt_right\">2030.61</td>\n<td headers=\"W02 stub_1_4 close\" class=\"gt_row gt_right\">2062.14</td></tr>\n    <tr><th id=\"stub_1_5\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-09</th>\n<td headers=\"W02 stub_1_5 open\" class=\"gt_row gt_right\">2063.45</td>\n<td headers=\"W02 stub_1_5 high\" class=\"gt_row gt_right\">2064.43</td>\n<td headers=\"W02 stub_1_5 low\" class=\"gt_row gt_right\">2038.33</td>\n<td headers=\"W02 stub_1_5 close\" class=\"gt_row gt_right\">2044.81</td></tr>\n    <tr class=\"gt_group_heading_row\">\n      <th colspan=\"5\" class=\"gt_group_heading\" scope=\"colgroup\" id=\"W03\">W03</th>\n    </tr>\n    <tr class=\"gt_row_group_first\"><th id=\"stub_1_6\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-12</th>\n<td headers=\"W03 stub_1_6 open\" class=\"gt_row gt_right\">2046.13</td>\n<td headers=\"W03 stub_1_6 high\" class=\"gt_row gt_right\">2049.30</td>\n<td headers=\"W03 stub_1_6 low\" class=\"gt_row gt_right\">2022.58</td>\n<td headers=\"W03 stub_1_6 close\" class=\"gt_row gt_right\">2028.26</td></tr>\n    <tr><th id=\"stub_1_7\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-13</th>\n<td headers=\"W03 stub_1_7 open\" class=\"gt_row gt_right\">2031.58</td>\n<td headers=\"W03 stub_1_7 high\" class=\"gt_row gt_right\">2056.93</td>\n<td headers=\"W03 stub_1_7 low\" class=\"gt_row gt_right\">2008.25</td>\n<td headers=\"W03 stub_1_7 close\" class=\"gt_row gt_right\">2023.03</td></tr>\n    <tr><th id=\"stub_1_8\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-14</th>\n<td headers=\"W03 stub_1_8 open\" class=\"gt_row gt_right\">2018.40</td>\n<td headers=\"W03 stub_1_8 high\" class=\"gt_row gt_right\">2018.40</td>\n<td headers=\"W03 stub_1_8 low\" class=\"gt_row gt_right\">1988.44</td>\n<td headers=\"W03 stub_1_8 close\" class=\"gt_row gt_right\">2011.27</td></tr>\n    <tr><th id=\"stub_1_9\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-15</th>\n<td headers=\"W03 stub_1_9 open\" class=\"gt_row gt_right\">2013.75</td>\n<td headers=\"W03 stub_1_9 high\" class=\"gt_row gt_right\">2021.35</td>\n<td headers=\"W03 stub_1_9 low\" class=\"gt_row gt_right\">1991.47</td>\n<td headers=\"W03 stub_1_9 close\" class=\"gt_row gt_right\">1992.67</td></tr>\n    <tr><th id=\"stub_1_10\" scope=\"row\" class=\"gt_row gt_right gt_stub\">2015-01-16</th>\n<td headers=\"W03 stub_1_10 open\" class=\"gt_row gt_right\">1992.25</td>\n<td headers=\"W03 stub_1_10 high\" class=\"gt_row gt_right\">2020.46</td>\n<td headers=\"W03 stub_1_10 low\" class=\"gt_row gt_right\">1988.12</td>\n<td headers=\"W03 stub_1_10 close\" class=\"gt_row gt_right\">2019.42</td></tr>\n    <tr><th id=\"grand_summary_stub_1\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_grand_summary_row gt_first_grand_summary_row\">average</th>\n<td headers=\"grand_summary_stub_1 open\" class=\"gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row\">2,027.831</td>\n<td headers=\"grand_summary_stub_1 high\" class=\"gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row\">2,040.925</td>\n<td headers=\"grand_summary_stub_1 low\" class=\"gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row\">2,008.313</td>\n<td headers=\"grand_summary_stub_1 close\" class=\"gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row\">2,023.069</td></tr>\n    <tr><th id=\"grand_summary_stub_2\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_grand_summary_row\">total</th>\n<td headers=\"grand_summary_stub_2 open\" class=\"gt_row gt_right gt_grand_summary_row\">20,278.310</td>\n<td headers=\"grand_summary_stub_2 high\" class=\"gt_row gt_right gt_grand_summary_row\">20,409.250</td>\n<td headers=\"grand_summary_stub_2 low\" class=\"gt_row gt_right gt_grand_summary_row\">20,083.130</td>\n<td headers=\"grand_summary_stub_2 close\" class=\"gt_row gt_right gt_grand_summary_row\">20,230.690</td></tr>\n    <tr><th id=\"grand_summary_stub_3\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_grand_summary_row gt_last_summary_row\">std dev</th>\n<td headers=\"grand_summary_stub_3 open\" class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\">22.149</td>\n<td headers=\"grand_summary_stub_3 high\" class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\">18.705</td>\n<td headers=\"grand_summary_stub_3 low\" class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\">18.346</td>\n<td headers=\"grand_summary_stub_3 close\" class=\"gt_row gt_right gt_grand_summary_row gt_last_summary_row\">19.820</td></tr>\n  </tbody>\n  \n  \n</table>"
+
+---
+
+    Code
+      .
+    Output
+      [1] "\\begin{longtable}{l|rrrr}\n\\toprule\n\\multicolumn{1}{l}{} & open & high & low & close \\\\ \n\\midrule\n\\multicolumn{5}{l}{W02} \\\\ \n\\midrule\n16440 & 2054.44 & 2054.44 & 2017.34 & 2020.58 \\\\ \n16441 & 2022.15 & 2030.25 & 1992.44 & 2002.61 \\\\ \n16442 & 2005.55 & 2029.61 & 2005.55 & 2025.90 \\\\ \n16443 & 2030.61 & 2064.08 & 2030.61 & 2062.14 \\\\ \n16444 & 2063.45 & 2064.43 & 2038.33 & 2044.81 \\\\ \n\\midrule\n\\multicolumn{5}{l}{W03} \\\\ \n\\midrule\n16447 & 2046.13 & 2049.30 & 2022.58 & 2028.26 \\\\ \n16448 & 2031.58 & 2056.93 & 2008.25 & 2023.03 \\\\ \n16449 & 2018.40 & 2018.40 & 1988.44 & 2011.27 \\\\ \n16450 & 2013.75 & 2021.35 & 1991.47 & 1992.67 \\\\ \n16451 & 1992.25 & 2020.46 & 1988.12 & 2019.42 \\\\ \n\\midrule \n\\midrule \naverage & $2,027.831$ & $2,040.925$ & $2,008.313$ & $2,023.069$ \\\\ \ntotal & $20,278.310$ & $20,409.250$ & $20,083.130$ & $20,230.690$ \\\\ \nstd dev & $22.149$ & $18.705$ & $18.346$ & $19.820$ \\\\ \n\\bottomrule\n\\end{longtable}\n"
+
+---
+
+    Code
+      .
+    Output
+      {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red211\green211\blue211;}
+      
+      \paperw12240\paperh15840\widowctrl\ftnbj\fet0\sectd\linex0
+      \lndscpsxn
+      \margl1440\margr1440\margt1440\margb1440
+      \headery720\footery720\fs20
+      
+      \trowd\trrh0\trhdr
+      
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx1872
+      \intbl {\f0 {\f0\fs20 }}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx3744
+      \intbl {\f0 {\f0\fs20 open}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx5616
+      \intbl {\f0 {\f0\fs20 high}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx7488
+      \intbl {\f0 {\f0\fs20 low}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx9360
+      \intbl {\f0 {\f0\fs20 close}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0\fs20 W02}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16440}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2054.44}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2054.44}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 2017.34}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2020.58}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16441}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2022.15}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2030.25}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 1992.44}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2002.61}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16442}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2005.55}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2029.61}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 2005.55}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2025.90}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16443}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2030.61}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2064.08}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 2030.61}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2062.14}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16444}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2063.45}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2064.43}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 2038.33}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2044.81}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0\fs20 W03}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16447}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2046.13}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2049.30}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 2022.58}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2028.26}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16448}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2031.58}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2056.93}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 2008.25}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2023.03}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16449}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2018.40}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2018.40}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 1988.44}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2011.27}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16450}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2013.75}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2021.35}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 1991.47}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 1992.67}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 16451}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 1992.25}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2020.46}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 1988.12}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2019.42}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 average}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 2,027.831}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 2,040.925}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 2,008.313}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 2,023.069}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 total}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 20,278.310}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 20,409.250}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 20,083.130}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 20,230.690}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1872
+      \intbl {\f0 {\f0\fs20 std dev}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx3744
+      \intbl {\f0 {\f0\fs20 22.149}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
+      \intbl {\f0 {\f0\fs20 18.705}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
+      \intbl {\f0 {\f0\fs20 18.346}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 19.820}}\cell
+      
+      \row
+      
+      }
+
 # Situtations where `rowname` is a column name don't interfere with internals
 
     Code
