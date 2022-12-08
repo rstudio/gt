@@ -2,14 +2,10 @@
 #'
 #' @description
 #' Add summary rows to one or more row groups by using the table data and any
-#' suitable aggregation functions. You choose how to format the values in the
-#' resulting summary cells by use of a `formatter` function (e.g, `fmt_number`,
-#' etc.) and any relevant options.
-#'
-#' @details
-#' Should we need to obtain the summary data for external purposes, the
-#' [extract_summary()] function can be used with a `gt_tbl` object where summary
-#' rows were added via `summary_rows()`.
+#' suitable aggregation functions. Multiple summary rows can be added for
+#' selected groups via expressions given to `fns`. You can selectively format
+#' the values in the resulting summary cells by use of formatting expressions in
+#' `fmt`.
 #'
 #' @inheritParams fmt_number
 #' @param groups The groups to consider for generation of group-wise summary
@@ -46,6 +42,86 @@
 #'   `use_seps`, and `locale` can be used.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @section How to supply functions for aggregation in `fns`:
+#'
+#' There are a number of ways to express how an aggregation should work for
+#' each summary row. In addition to that, we have the ability to pass important
+#' information such as the summary row ID value and its label (the former
+#' necessary for targeting within [tab_style()] or [tab_footnote()] and the
+#' latter used for display in the rendered table). Here are a number of
+#' instructive examples for how to supply such expressions.
+#'
+#' ### Double-sided formula with everything supplied
+#'
+#' We can be explicit and provide a double-sided formula (in the form
+#' `<LHS> ~ <RHS>`) that expresses everything about a summary row. That is, it
+#' has an aggregation expression (where `.` represents the data in the
+#' focused column). Here's an example:
+#'
+#' `list(id = "minimum", label = "min") ~ min(., na.rm = TRUE)`
+#'
+#' The left side (the list) contains named elements that identify the `id` and
+#' `label` for the summary row. The right side has an expression for obtaining
+#' a minimum value (dropping `NA` values in the calculation).
+#'
+#' The `list()` can be replaced with `c()` but the advantage of a list is
+#' allowing the use of the [md()] and [html()] helper functions. The above
+#' example can be written as:
+#'
+#' `list(id = "minimum", label = md("**Minimum**")) ~ min(., na.rm = TRUE)`
+#'
+#' and we can have that label value interpreted as Markdown text.
+#'
+#' ### Function names in quotes
+#'
+#' With `fns = "min"` we get the equivalent of the fuller expression:
+#'
+#' `list(id = "min", label = "min") ~ min(., na.rm = TRUE)`
+#'
+#' For sake of convenience, common aggregation functions with the `na.rm`
+#' argument will be rewritten with the `na.rm = TRUE` option.
+#'
+#' Should you need to specify multiple aggregation functions in this way (giving
+#' you multiple summary rows), use `c()` or `list()`.
+#'
+#' ### RHS formula expressions
+#'
+#' With `fns = ~ min(.)` or `fns = list(~ min(.))`, **gt** will use the function
+#' name as the `id` and `label`. The expansion of this shorthand to full form
+#' looks like this:
+#'
+#' `list(id = "min", label = "min") ~ min(.)`
+#'
+#' The RHS expression is kept as written and the name portion is both the `id`
+#' and the `label`.
+#'
+#' ### Named vector or list with RHS formula expression
+#'
+#' Using `fns = c(minimum = ~ min(.))` or `fns = list(minimum = ~ min(.))`
+#' expands to this:
+#'
+#' `list(id = "minimum", label = "minimum") ~ min(.)`
+#'
+#' ### Unnamed vector or list with RHS formula expression
+#'
+#' With `fns = c("minimum", "min") ~ min(.)` or
+#' `fns = list("minimum", "min") ~ min(.)` the LHS contains the `label` and `id`
+#' values and, importantly, the order is `label` first and `id` second. This can
+#' be rewritten as:
+#'
+#' `list(id = "min", label = "minimum") ~ min(.)`
+#'
+#' If the vector or list is partially named, **gt** has enough to go on to
+#' disambiguate the unnamed element. So with
+#' `fns = c("minimum", label = "min") ~ min(.)`, `"min"` is indeed the `label`
+#' and `"minimum"` is taken as the `id` value.
+#'
+#' @section Extraction of summary rows:
+#'
+#' Should we need to obtain the summary data for external purposes, the
+#' [extract_summary()] function can be used with a `gt_tbl` object where summary
+#' rows were added via `summary_rows()` or [grand_summary_rows()].
 #'
 #' @section Examples:
 #'
@@ -244,20 +320,97 @@ summary_rows <- function(
 #' Add grand summary rows using aggregation functions
 #'
 #' @description
-#' Add grand summary rows to the **gt** table by using applying aggregation
-#' functions to the table data. The summary rows incorporate all of the
-#' available data, regardless of whether some of the data are part of row
-#' groups. You choose how to format the values in the resulting summary cells by
-#' use of a `formatter` function (e.g, `fmt_number`) and any relevant options.
 #'
-#' @details
-#' Should we need to obtain the summary data for external purposes, the
-#' [extract_summary()] function can be used with a `gt_tbl` object where grand
-#' summary rows were added via `grand_summary_rows()`.
+#' Add grand summary rows by using the table data and any suitable aggregation
+#' functions. With grand summary rows, all of the available data in the **gt**
+#' table is incorporated (regardless of whether some of the data are part of row
+#' groups). Multiple grand summary rows can be added via expressions given to
+#' `fns`. You can selectively format the values in the resulting grand summary
+#' cells by use of formatting expressions in `fmt`.
 #'
 #' @inheritParams summary_rows
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @section How to supply functions for aggregation in `fns`:
+#'
+#' There are a number of ways to express how an aggregation should work for
+#' each summary row. In addition to that, we have the ability to pass important
+#' information such as the summary row ID value and its label (the former
+#' necessary for targeting within [tab_style()] or [tab_footnote()] and the
+#' latter used for display in the rendered table). Here are a number of
+#' instructive examples for how to supply such expressions.
+#'
+#' ### Double-sided formula with everything supplied
+#'
+#' We can be explicit and provide a double-sided formula (in the form
+#' `<LHS> ~ <RHS>`) that expresses everything about a summary row. That is, it
+#' has an aggregation expression (where `.` represents the data in the
+#' focused column). Here's an example:
+#'
+#' `list(id = "minimum", label = "min") ~ min(., na.rm = TRUE)`
+#'
+#' The left side (the list) contains named elements that identify the `id` and
+#' `label` for the summary row. The right side has an expression for obtaining
+#' a minimum value (dropping `NA` values in the calculation).
+#'
+#' The `list()` can be replaced with `c()` but the advantage of a list is
+#' allowing the use of the [md()] and [html()] helper functions. The above
+#' example can be written as:
+#'
+#' `list(id = "minimum", label = md("**Minimum**")) ~ min(., na.rm = TRUE)`
+#'
+#' and we can have that label value interpreted as Markdown text.
+#'
+#' ### Function names in quotes
+#'
+#' With `fns = "min"` we get the equivalent of the fuller expression:
+#'
+#' `list(id = "min", label = "min") ~ min(., na.rm = TRUE)`
+#'
+#' For sake of convenience, common aggregation functions with the `na.rm`
+#' argument will be rewritten with the `na.rm = TRUE` option.
+#'
+#' Should you need to specify multiple aggregation functions in this way (giving
+#' you multiple summary rows), use `c()` or `list()`.
+#'
+#' ### RHS formula expressions
+#'
+#' With `fns = ~ min(.)` or `fns = list(~ min(.))`, **gt** will use the function
+#' name as the `id` and `label`. The expansion of this shorthand to full form
+#' looks like this:
+#'
+#' `list(id = "min", label = "min") ~ min(.)`
+#'
+#' The RHS expression is kept as written and the name portion is both the `id`
+#' and the `label`.
+#'
+#' ### Named vector or list with RHS formula expression
+#'
+#' Using `fns = c(minimum = ~ min(.))` or `fns = list(minimum = ~ min(.))`
+#' expands to this:
+#'
+#' `list(id = "minimum", label = "minimum") ~ min(.)`
+#'
+#' ### Unnamed vector or list with RHS formula expression
+#'
+#' With `fns = c("minimum", "min") ~ min(.)` or
+#' `fns = list("minimum", "min") ~ min(.)` the LHS contains the `label` and `id`
+#' values and, importantly, the order is `label` first and `id` second. This can
+#' be rewritten as:
+#'
+#' `list(id = "min", label = "minimum") ~ min(.)`
+#'
+#' If the vector or list is partially named, **gt** has enough to go on to
+#' disambiguate the unnamed element. So with
+#' `fns = c("minimum", label = "min") ~ min(.)`, `"min"` is indeed the `label`
+#' and `"minimum"` is taken as the `id` value.
+#'
+#' @section Extraction of summary rows:
+#'
+#' Should we need to obtain the summary data for external purposes, the
+#' [extract_summary()] function can be used with a `gt_tbl` object where summary
+#' rows were added via `grand_summary_rows()` or [summary_rows()].
 #'
 #' @section Examples:
 #'
@@ -278,12 +431,11 @@ summary_rows <- function(
 #'   grand_summary_rows(
 #'     columns = c(open, high, low, close),
 #'     fns = list(
-#'       min = ~min(.),
-#'       max = ~max(.),
-#'       avg = ~mean(.)
+#'       min ~ min(.),
+#'       max ~ max(.),
+#'       avg ~ mean(.)
 #'     ),
-#'     formatter = fmt_number,
-#'     use_seps = FALSE
+#'     fmt = ~ fmt_number(., use_seps = FALSE)
 #'   )
 #' ```
 #'
