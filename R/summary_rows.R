@@ -555,7 +555,13 @@ normalize_summary_fns <- function(fns) {
 
 normalize_fmt_fns <- function(fmt) {
 
-  fmt_fns <- fmt
+  if (is.null(fmt) || length(fmt) < 1) {
+    return(NULL)
+  }
 
-  fmt_fns
+  if (rlang::is_formula(fmt)) {
+    fmt <- list(rlang::new_formula(lhs = rlang::f_lhs(fmt), rhs = rlang::f_rhs(fmt)))
+  }
+
+  fmt
 }
