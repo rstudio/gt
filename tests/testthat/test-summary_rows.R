@@ -33,9 +33,9 @@ test_that("The `summary_rows()` function can make group-wise summaries", {
       groups = "W02",
       columns = c(open, high, low, close),
       fns = list(
-        average = ~mean(., na.rm = TRUE),
-        total = ~sum(., na.rm = TRUE),
-        `std dev` = ~sd(., na.rm = TRUE)
+        average = ~ mean(., na.rm = TRUE),
+        total = ~ sum(., na.rm = TRUE),
+        `std dev` = ~ sd(., na.rm = TRUE)
       )
     )
 
@@ -92,9 +92,9 @@ test_that("The `summary_rows()` function can make group-wise summaries", {
       groups = "W02",
       columns = open,
       fns = list(
-        average = ~mean(., na.rm = TRUE),
-        total = ~sum(., na.rm = TRUE),
-        `std dev` = ~sd(., na.rm = TRUE)
+        average = ~ mean(., na.rm = TRUE),
+        total = ~ sum(., na.rm = TRUE),
+        `std dev` = ~ sd(., na.rm = TRUE)
       )
     )
 
@@ -137,9 +137,9 @@ test_that("The `summary_rows()` function can make group-wise summaries", {
       groups = c("W02", "W03"),
       columns = open,
       fns = list(
-        average = ~mean(., na.rm = TRUE),
-        total = ~sum(., na.rm = TRUE),
-        `std dev` = ~sd(., na.rm = TRUE)
+        average = ~ mean(., na.rm = TRUE),
+        total = ~ sum(., na.rm = TRUE),
+        `std dev` = ~ sd(., na.rm = TRUE)
       )
     )
 
@@ -181,9 +181,9 @@ test_that("The `summary_rows()` function can make group-wise summaries", {
       groups = everything(),
       columns = open,
       fns = list(
-        average = ~mean(., na.rm = TRUE),
-        total = ~sum(., na.rm = TRUE),
-        `std dev` = ~sd(., na.rm = TRUE)
+        average = ~ mean(., na.rm = TRUE),
+        total = ~ sum(., na.rm = TRUE),
+        `std dev` = ~ sd(., na.rm = TRUE)
       )
     )
 
@@ -226,16 +226,16 @@ test_that("The `summary_rows()` function can make group-wise summaries", {
       groups = everything(),
       columns = c(open, high, low, close),
       fns = list(
-        average = ~mean(., na.rm = TRUE),
-        total = ~sum(., na.rm = TRUE),
-        `std dev` = ~sd(., na.rm = TRUE)
+        average = ~ mean(., na.rm = TRUE),
+        total = ~ sum(., na.rm = TRUE),
+        `std dev` = ~ sd(., na.rm = TRUE)
       )
     ) %>%
     summary_rows(
       groups = everything(),
       columns = c(open, high, low, close),
       fns = list(
-        max = ~max(., na.rm = TRUE)
+        max = ~ max(., na.rm = TRUE)
       )
     )
 
@@ -317,18 +317,18 @@ test_that("The `summary_rows()` function can make group-wise summaries", {
       groups = everything(),
       columns = c(open, high),
       fns = list(
-        average = ~mean(., na.rm = TRUE),
-        total = ~sum(., na.rm = TRUE),
-        `std dev` = ~sd(., na.rm = TRUE)
+        average = ~ mean(., na.rm = TRUE),
+        total = ~ sum(., na.rm = TRUE),
+        `std dev` = ~ sd(., na.rm = TRUE)
       )
     ) %>%
     summary_rows(
       groups = everything(),
       columns = c(low, close),
       fns = list(
-        average = ~mean(., na.rm = TRUE),
-        total = ~sum(., na.rm = TRUE),
-        `std dev` = ~sd(., na.rm = TRUE)
+        average = ~ mean(., na.rm = TRUE),
+        total = ~ sum(., na.rm = TRUE),
+        `std dev` = ~ sd(., na.rm = TRUE)
       )
     )
 
@@ -407,9 +407,9 @@ test_that("Grand summaries can be generated with `grand_summary_rows()`", {
     grand_summary_rows(
       columns = c(open, high, low, close),
       fns = list(
-        average = ~mean(., na.rm = TRUE),
-        total = ~sum(., na.rm = TRUE),
-        `std dev` = ~sd(., na.rm = TRUE)
+        average = ~ mean(., na.rm = TRUE),
+        total = ~ sum(., na.rm = TRUE),
+        `std dev` = ~ sd(., na.rm = TRUE)
       )
     )
 
@@ -463,18 +463,18 @@ test_that("Grand summaries can be generated with `grand_summary_rows()`", {
     grand_summary_rows(
       columns = c(open, high),
       fns = list(
-        average = ~mean(., na.rm = TRUE),
-        total = ~sum(., na.rm = TRUE),
-        `std dev` = ~sd(., na.rm = TRUE)
+        average = ~ mean(., na.rm = TRUE),
+        total = ~ sum(., na.rm = TRUE),
+        `std dev` = ~ sd(., na.rm = TRUE)
       ),
       fmt = list(~ fmt_number(., decimals = 3))
     ) %>%
     grand_summary_rows(
       columns = c(low, close),
       fns = list(
-        average = ~mean(., na.rm = TRUE),
-        total = ~sum(., na.rm = TRUE),
-        `std dev` = ~sd(., na.rm = TRUE)
+        average = ~ mean(., na.rm = TRUE),
+        total = ~ sum(., na.rm = TRUE),
+        `std dev` = ~ sd(., na.rm = TRUE)
       ),
       fmt = list(~ fmt_number(., decimals = 5))
     )
@@ -551,17 +551,17 @@ test_that("Grand summaries can be generated with `grand_summary_rows()`", {
       groups = everything(),
       columns = c(open, high, low, close),
       fns = list(
-        average = ~mean(., na.rm = TRUE),
-        total = ~sum(., na.rm = TRUE),
-        `std dev` = ~sd(., na.rm = TRUE)
+        average = ~ mean(., na.rm = TRUE),
+        total = ~ sum(., na.rm = TRUE),
+        `std dev` = ~ sd(., na.rm = TRUE)
       )
     ) %>%
     grand_summary_rows(
       columns = c(open, high, low, close),
       fns = list(
-        average = ~mean(., na.rm = TRUE),
-        total = ~sum(., na.rm = TRUE),
-        `std dev` = ~sd(., na.rm = TRUE)
+        average = ~ mean(., na.rm = TRUE),
+        total = ~ sum(., na.rm = TRUE),
+        `std dev` = ~ sd(., na.rm = TRUE)
       )
     )
 
@@ -648,13 +648,53 @@ test_that("Using `groups = FALSE` in `summary_rows()` returns data unchanged", {
         groups = FALSE,
         columns = c(open, high, low, close),
         fns = list(
-          average = ~mean(., na.rm = TRUE),
-          total = ~sum(., na.rm = TRUE),
-          `std dev` = ~sd(., na.rm = TRUE)
+          average = ~ mean(., na.rm = TRUE),
+          total = ~ sum(., na.rm = TRUE),
+          `std dev` = ~ sd(., na.rm = TRUE)
         )
       ) %>%
       as_raw_html() %>%
       gsub("id=\"[a-z]*?\"", "", .)
+  )
+})
+
+test_that("Using `groups = NULL` in `summary_rows()` is a deprecated option", {
+
+  expect_warning(
+    summary_tbl_1 <-
+      tbl %>%
+      summary_rows(
+        groups = NULL,
+        columns = open,
+        fns = list(
+          average = ~ mean(., na.rm = TRUE),
+          total = ~ sum(., na.rm = TRUE),
+          `std dev` = ~ sd(., na.rm = TRUE)
+        )
+      )
+  )
+
+  # Take snapshots of `summary_tbl_1`
+  summary_tbl_1 %>% render_as_html() %>% expect_snapshot()
+  summary_tbl_1 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  summary_tbl_1 %>% as_rtf() %>% expect_snapshot()
+
+  # The equivalent of `summary_tbl_1` (and the non-deprecated way) is to
+  # use `grand_summary_rows()` to make a grand summary
+  summary_tbl_2 <-
+    tbl %>%
+    grand_summary_rows(
+      columns = open,
+      fns = list(
+        average = ~ mean(., na.rm = TRUE),
+        total = ~ sum(., na.rm = TRUE),
+        `std dev` = ~ sd(., na.rm = TRUE)
+      )
+    )
+
+  expect_equal(
+    summary_tbl_1 %>% render_as_html(),
+    summary_tbl_2 %>% render_as_html()
   )
 })
 
@@ -1074,9 +1114,9 @@ test_that("Multiple ways of expressing formatting work equivalently", {
       groups = "W02",
       columns = c(open, high, low, close),
       fns = list(
-        average = ~mean(., na.rm = TRUE),
-        total = ~sum(., na.rm = TRUE),
-        `std dev` = ~sd(., na.rm = TRUE)
+        average = ~ mean(., na.rm = TRUE),
+        total = ~ sum(., na.rm = TRUE),
+        `std dev` = ~ sd(., na.rm = TRUE)
       ),
       fmt = list(~ fmt_number(., decimals = 3))
     )
@@ -1087,9 +1127,9 @@ test_that("Multiple ways of expressing formatting work equivalently", {
       groups = "W02",
       columns = c(open, high, low, close),
       fns = list(
-        average = ~mean(., na.rm = TRUE),
-        total = ~sum(., na.rm = TRUE),
-        `std dev` = ~sd(., na.rm = TRUE)
+        average = ~ mean(., na.rm = TRUE),
+        total = ~ sum(., na.rm = TRUE),
+        `std dev` = ~ sd(., na.rm = TRUE)
       ),
       fmt = ~ fmt_number(., decimals = 3)
     )
@@ -1123,6 +1163,22 @@ test_that("Labels can be intrepreted from Markdown using `md()`", {
   summary_tbl_1 %>% render_as_html() %>% expect_snapshot()
   summary_tbl_1 %>% as_latex() %>% as.character() %>% expect_snapshot()
   summary_tbl_1 %>% as_rtf() %>% expect_snapshot()
+
+  summary_tbl_2 <-
+    tbl %>%
+    grand_summary_rows(
+      columns = c(open, high, low, close),
+      fns = list(
+        list(id = "mean", label = md("**Average**")) ~ mean(., na.rm = TRUE),
+        list(id = "sum", label = "Sum") ~ sum(., na.rm = TRUE),
+        list(label = md("*S.D.*"), id = "stdev") ~ sd(., na.rm = TRUE)
+      )
+    )
+
+  # Take snapshots of `summary_tbl_2`
+  summary_tbl_2 %>% render_as_html() %>% expect_snapshot()
+  summary_tbl_2 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  summary_tbl_2 %>% as_rtf() %>% expect_snapshot()
 })
 
 test_that("Groups can be formatted selectively with a formatting group directive", {
