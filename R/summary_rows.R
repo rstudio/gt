@@ -23,17 +23,17 @@
 #'   `everything()`).
 #' @param fns Functions used for aggregations. This can include base functions
 #'   like `mean`, `min`, `max`, `median`, `sd`, or `sum` or any other
-#'   user-defined aggregation function. The function(s) should be supplied
-#'   within a `list()`. Within that list, we can specify the functions by use of
-#'   function names in quotes (e.g., `"sum"`), as bare functions (e.g., `sum`),
-#'   or as one-sided R formulas using a leading `~`. In the formula
-#'   representation, a `.` serves as the data to be summarized (e.g., `sum(.,
-#'   na.rm = TRUE)`). The use of named arguments is recommended as the names
-#'   will serve as summary row labels for the corresponding summary rows data
-#'   (the labels can derived from the function names but only when not providing
-#'   bare function names).
-#' @param fmt Formatting directives as one-sided R formulas using a leading `~`
-#'   (e.g., `~ fmt_number(., decimals = 3, use_seps = FALSE`).
+#'   user-defined aggregation function. Multiple functions, each of which would
+#'   generate a different row, are to be supplied within a `list()`. We can
+#'   specify the functions by use of function names in quotes (e.g., `"sum"`),
+#'   as bare functions (e.g., `sum`), or in formula form (e.g.,
+#'   `minimum ~ min(.)`) where the LHS could be used to supply the summary row
+#'   label and id values.
+#' @param fmt Formatting expressions in formula form. The RHS of `~` should
+#'   contain a formatting call (e.g.,
+#'   `~ fmt_number(., decimals = 3, use_seps = FALSE`). Optionally, the LHS
+#'   could contain a group-targeting expression (e.g.,
+#'   `"group_a" ~ fmt_number(.)`).
 #' @param missing_text The text to be used in place of `NA` values in summary
 #'   cells with no data outputs.
 #' @param formatter A formatter function name. These can be any of the `fmt_*()`
