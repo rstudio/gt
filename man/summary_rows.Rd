@@ -192,8 +192,7 @@ is a week number) with the \code{summary_rows()} function.
       "max",
       list(label = "avg", fn = "mean")
     ),
-    formatter = fmt_number,
-    use_seps = FALSE
+    fmt = ~ fmt_number(., use_seps = FALSE)
   )
 }\if{html}{\out{</div>}}
 
