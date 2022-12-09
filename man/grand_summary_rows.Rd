@@ -98,7 +98,8 @@ With \code{fns = "min"} we get the equivalent of the fuller expression:
 \code{list(id = "min", label = "min") ~ min(., na.rm = TRUE)}
 
 For sake of convenience, common aggregation functions with the \code{na.rm}
-argument will be rewritten with the \code{na.rm = TRUE} option.
+argument will be rewritten with the \code{na.rm = TRUE} option. These functions
+are: \code{"min"}, \code{"max"}, \code{"mean"}, \code{"median"}, \code{"sd"}, and \code{"sum"}.
 
 Should you need to specify multiple aggregation functions in this way (giving
 you multiple summary rows), use \code{c()} or \code{list()}.
