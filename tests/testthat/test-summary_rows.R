@@ -1568,10 +1568,27 @@ test_that("Formatting can be performed on summary cells in certain columns and r
         c("W02", "W03") ~ fmt_number(., columns = open, pattern = "<{x}>", rows = c("average", "total"))
       )
     )
+  summary_tbl_11 <-
+    tbl %>%
+    summary_rows(
+      columns = c(open, high, low, close),
+      fns = list(
+        average = ~mean(., na.rm = TRUE),
+        total = ~sum(., na.rm = TRUE),
+        `std dev` = ~sd(., na.rm = TRUE)
+      ),
+      fmt = list(
+        matches("2|3") ~ fmt_number(., columns = open, pattern = "<{x}>", rows = c("average", "total"))
+      )
+    )
 
   expect_equal(
     summary_tbl_9 %>% render_as_html(),
     summary_tbl_10 %>% render_as_html()
+  )
+  expect_equal(
+    summary_tbl_9 %>% render_as_html(),
+    summary_tbl_11 %>% render_as_html()
   )
 })
 
