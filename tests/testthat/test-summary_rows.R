@@ -1378,6 +1378,170 @@ test_that("Groups can be formatted selectively with a formatting group directive
   expect_equal(summary_tbl_10 %>% render_as_html(), summary_tbl_13 %>% render_as_html())
 })
 
+test_that("Formatting can be performed on summary cells in certain columns and rows", {
+
+  # Perform formatting in selected columns
+  summary_tbl_1 <-
+    tbl %>%
+    summary_rows(
+      columns = c(open, high, low, close),
+      fns = list(
+        average = ~mean(., na.rm = TRUE),
+        total = ~sum(., na.rm = TRUE),
+        `std dev` = ~sd(., na.rm = TRUE)
+      ),
+      fmt = ~ fmt_number(., columns = c(open, high), pattern = "<{x}>")
+    )
+
+  # Take snapshots of `summary_tbl_1`
+  summary_tbl_1 %>% render_as_html() %>% expect_snapshot()
+  summary_tbl_1 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  summary_tbl_1 %>% as_rtf() %>% expect_snapshot()
+
+  # Perform formatting twice across two sets of distinct columns
+  summary_tbl_2 <-
+    tbl %>%
+    summary_rows(
+      columns = c(open, high, low, close),
+      fns = list(
+        average = ~mean(., na.rm = TRUE),
+        total = ~sum(., na.rm = TRUE),
+        `std dev` = ~sd(., na.rm = TRUE)
+      ),
+      fmt = list(
+        ~ fmt_number(., columns = c(open, high), pattern = "<{x}>"),
+        ~ fmt_number(., columns = c(low, close), pattern = "[{x}]")
+      )
+    )
+
+  # Take snapshots of `summary_tbl_2`
+  summary_tbl_2 %>% render_as_html() %>% expect_snapshot()
+  summary_tbl_2 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  summary_tbl_2 %>% as_rtf() %>% expect_snapshot()
+
+  # Perform formatting across two sets of distinct columns and rows
+  summary_tbl_3 <-
+    tbl %>%
+    summary_rows(
+      columns = c(open, high, low, close),
+      fns = list(
+        average = ~mean(., na.rm = TRUE),
+        total = ~sum(., na.rm = TRUE),
+        `std dev` = ~sd(., na.rm = TRUE)
+      ),
+      fmt = list(
+        ~ fmt_number(., columns = c(open, high), rows = "average", pattern = "<{x}>"),
+        ~ fmt_number(., columns = c(low, close), rows = "total", pattern = "[{x}]")
+      )
+    )
+
+  # Take snapshots of `summary_tbl_3`
+  summary_tbl_3 %>% render_as_html() %>% expect_snapshot()
+  summary_tbl_3 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  summary_tbl_3 %>% as_rtf() %>% expect_snapshot()
+
+  # Perform formatting at a single cell (targeting column, row, and group)
+  summary_tbl_4 <-
+    tbl %>%
+    summary_rows(
+      columns = c(open, high, low, close),
+      fns = list(
+        average = ~mean(., na.rm = TRUE),
+        total = ~sum(., na.rm = TRUE),
+        `std dev` = ~sd(., na.rm = TRUE)
+      ),
+      fmt = list(
+        "W03" ~ fmt_number(., columns = open, rows = "average", pattern = "<{x}>")
+      )
+    )
+
+  # Take snapshots of `summary_tbl_4`
+  summary_tbl_4 %>% render_as_html() %>% expect_snapshot()
+  summary_tbl_4 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  summary_tbl_4 %>% as_rtf() %>% expect_snapshot()
+
+  # Perform formatting at two cells (targeting a column, two rows, and a group)
+  summary_tbl_5 <-
+    tbl %>%
+    summary_rows(
+      columns = c(open, high, low, close),
+      fns = list(
+        average = ~mean(., na.rm = TRUE),
+        total = ~sum(., na.rm = TRUE),
+        `std dev` = ~sd(., na.rm = TRUE)
+      ),
+      fmt = list(
+        "W03" ~ fmt_number(., columns = open, rows = c("average", "total"), pattern = "<{x}>")
+      )
+    )
+
+  # Take snapshots of `summary_tbl_5`
+  summary_tbl_5 %>% render_as_html() %>% expect_snapshot()
+  summary_tbl_5 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  summary_tbl_5 %>% as_rtf() %>% expect_snapshot()
+
+  # Perform formatting at a single column of a single group
+  summary_tbl_6 <-
+    tbl %>%
+    summary_rows(
+      columns = c(open, high, low, close),
+      fns = list(
+        average = ~mean(., na.rm = TRUE),
+        total = ~sum(., na.rm = TRUE),
+        `std dev` = ~sd(., na.rm = TRUE)
+      ),
+      fmt = list(
+        "W03" ~ fmt_number(., columns = open, pattern = "<{x}>")
+      )
+    )
+
+  # Take snapshots of `summary_tbl_6`
+  summary_tbl_6 %>% render_as_html() %>% expect_snapshot()
+  summary_tbl_6 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  summary_tbl_6 %>% as_rtf() %>% expect_snapshot()
+
+  # Perform formatting at two columns of a single group
+  summary_tbl_7 <-
+    tbl %>%
+    summary_rows(
+      columns = c(open, high, low, close),
+      fns = list(
+        average = ~mean(., na.rm = TRUE),
+        total = ~sum(., na.rm = TRUE),
+        `std dev` = ~sd(., na.rm = TRUE)
+      ),
+      fmt = list(
+        "W03" ~ fmt_number(., columns = c(open, close), pattern = "<{x}>")
+      )
+    )
+
+  # Take snapshots of `summary_tbl_7`
+  summary_tbl_7 %>% render_as_html() %>% expect_snapshot()
+  summary_tbl_7 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  summary_tbl_7 %>% as_rtf() %>% expect_snapshot()
+
+  # Perform the same summarizing as in `summary_tbl_5` except place the
+  # `rows` argument at the end of the expression
+  summary_tbl_8 <-
+    tbl %>%
+    summary_rows(
+      columns = c(open, high, low, close),
+      fns = list(
+        average = ~mean(., na.rm = TRUE),
+        total = ~sum(., na.rm = TRUE),
+        `std dev` = ~sd(., na.rm = TRUE)
+      ),
+      fmt = list(
+        "W03" ~ fmt_number(., columns = open, pattern = "<{x}>", rows = c("average", "total"))
+      )
+    )
+
+  expect_equal(
+    summary_tbl_5 %>% render_as_html(),
+    summary_tbl_8 %>% render_as_html()
+  )
+})
+
 test_that("Extracting a summary from a gt table is possible", {
 
   # Create a table with summary rows for
