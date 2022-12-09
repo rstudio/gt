@@ -36,13 +36,15 @@ generate a different row, are to be supplied within a \code{list()}. We can
 specify the functions by use of function names in quotes (e.g., \code{"sum"}),
 as bare functions (e.g., \code{sum}), or in formula form (e.g.,
 \code{minimum ~ min(.)}) where the LHS could be used to supply the summary row
-label and id values.}
+label and id values. More information on this can be found in the
+\emph{Aggregation expressions for \code{fns}} section.}
 
 \item{fmt}{Formatting expressions in formula form. The RHS of \code{~} should
 contain a formatting call (e.g.,
 \verb{~ fmt_number(., decimals = 3, use_seps = FALSE}). Optionally, the LHS
 could contain a group-targeting expression (e.g.,
-\code{"group_a" ~ fmt_number(.)}).}
+\code{"group_a" ~ fmt_number(.)}). More information on this can be found in the
+\emph{Formatting expressions for \code{fmt}} section.}
 
 \item{missing_text}{The text to be used in place of \code{NA} values in summary
 cells with no data outputs.}
@@ -67,7 +69,7 @@ selected groups via expressions given to \code{fns}. You can selectively format
 the values in the resulting summary cells by use of formatting expressions in
 \code{fmt}.
 }
-\section{How to supply functions for aggregation in \code{fns}}{
+\section{Aggregation expressions for \code{fns}}{
 
 
 There are a number of ways to express how an aggregation should work for
@@ -159,6 +161,60 @@ be used. It can look like this:
 which translates to
 
 \code{list(id = "mean_id", label = "average") ~ mean(., na.rm = TRUE)}
+}
+}
+
+\section{Formatting expressions for \code{fmt}}{
+
+
+Given that we are generating new data in a table, we might also want to
+take the opportunity to format those new values right away. We can do this
+in the \code{fmt} argument, either with a single expression or a number of them
+in a list.
+\subsection{Formatting cells across all groups}{
+
+We can supply a one-sided (RHS only) or two-sided expression (targeting
+groups) to \code{fmt}, and, several can be provided in a list. The RHS will always
+contain an expression that uses a formatting function (e.g., \code{\link[=fmt_number]{fmt_number()}},
+\code{\link[=fmt_currency]{fmt_currency()}}, etc.) and it must contain an initial \code{.} that stands for
+the data object. If performing numeric formatting on all columns in the new
+summary rows, it might look something like this:
+
+\code{fmt = ~ fmt_number(., decimals = 1, use_seps = FALSE)}
+
+We can use the \code{columns} and \code{rows} arguments that are available in every
+formatting function. This allows us to format only a subset of columns or
+rows. Summary rows can be targeted by using their ID values and these are
+settable within expressions given to \code{fns} (see the \emph{Aggregation expressions
+for \code{fns}} section for details on this). Here's an example with hypothetical
+column and row names:
+
+\code{fmt = ~ fmt_number(., columns = num, rows = "mean", decimals = 3)}
+}
+
+\subsection{Formatting cells in specific groups}{
+
+A two-sided expression is needed for targeting the formatting directives to
+specific summary row groups. In this format, the LHS should contain an
+expression that resolves to a set of available groups. We can use a single
+row group name in quotes, several of those in a vector, or a select helper
+expression like \code{starts_with()} or \code{matches()}.
+
+In a situation where summary rows were generated across the row groups named
+\code{"group_1"}, \code{"group_2"}, and \code{"group_3"}, we could format all summary cells
+in \code{"group_2"} with the following:
+
+\code{fmt = "group_2" ~ fmt_number(., decimals = 1, use_seps = FALSE)}
+
+If you wanted to target the latter two groups, this can be done:
+
+\code{fmt = matches("2|3") ~ fmt_number(., decimals = 1, use_seps = FALSE)}
+
+Should you need to target a single cell, the LHS expression for group
+targeting could be paired with single values for \code{columns} and \code{rows} on the
+RHS formatting expression. Like this:
+
+\code{fmt = "group_1" ~ fmt_number(., columns = num, rows = "mean")}
 }
 }
 
