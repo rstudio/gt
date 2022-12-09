@@ -80,7 +80,8 @@
 #' `list(id = "min", label = "min") ~ min(., na.rm = TRUE)`
 #'
 #' For sake of convenience, common aggregation functions with the `na.rm`
-#' argument will be rewritten with the `na.rm = TRUE` option.
+#' argument will be rewritten with the `na.rm = TRUE` option. These functions
+#' are: `"min"`, `"max"`, `"mean"`, `"median"`, `"sd"`, and `"sum"`.
 #'
 #' Should you need to specify multiple aggregation functions in this way (giving
 #' you multiple summary rows), use `c()` or `list()`.
@@ -382,7 +383,8 @@ summary_rows <- function(
 #' `list(id = "min", label = "min") ~ min(., na.rm = TRUE)`
 #'
 #' For sake of convenience, common aggregation functions with the `na.rm`
-#' argument will be rewritten with the `na.rm = TRUE` option.
+#' argument will be rewritten with the `na.rm = TRUE` option. These functions
+#' are: `"min"`, `"max"`, `"mean"`, `"median"`, `"sd"`, and `"sum"`.
 #'
 #' Should you need to specify multiple aggregation functions in this way (giving
 #' you multiple summary rows), use `c()` or `list()`.
