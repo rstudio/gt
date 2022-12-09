@@ -323,8 +323,40 @@ dt_summary_build <- function(data, context) {
             # altered to contain a `rows` argument that maps the rows to be
             # formatted to the group
 
-            format_fn_grp <- rlang::as_label(rlang::f_rhs(fmt_exprs[[k]]))
-            format_fn_grp <- gsub(")$", paste0(", rows = `::group_id::` == \"", group, "\")"), format_fn_grp)
+            fmt_expr_lines <- deparse(rlang::f_rhs(fmt_exprs[[k]]))
+            fmt_expr_lines <- gsub("^\\s+", "", fmt_expr_lines)
+            format_fn_grp <- paste(fmt_expr_lines, collapse = "")
+
+            fmt_expr_names <- names(rlang::f_rhs(fmt_exprs[[k]]))
+            fmt_expr_values <- as.character(rlang::f_rhs(fmt_exprs[[k]]))
+
+            fmt_expr_components <- fmt_expr_values
+            names(fmt_expr_components) <- fmt_expr_names
+            fmt_expr_components <- fmt_expr_components[fmt_expr_names != ""]
+
+            if ("rows" %in% names(fmt_expr_components)) {
+
+              rows_val <- unname(fmt_expr_components[names(fmt_expr_components) == "rows"])
+
+              if (!grepl("\"", rows_val, fixed = TRUE)) {
+                rows_val <- paste0("\"", rows_val, "\"")
+              }
+
+              rows_val_replace <- paste0("`::row_id::` %in% ", rows_val)
+
+              format_fn_rows_val_replace <-
+                paste0(
+                  rows_val_replace,
+                  " & ",
+                  paste0("`::group_id::` == \"", group, "\"")
+                )
+
+              format_fn_grp <- gsub(rows_val, format_fn_rows_val_replace, format_fn_grp, fixed = TRUE)
+
+            } else {
+
+              format_fn_grp <- gsub(")$", paste0(", rows = `::group_id::` == \"", group, "\")"), format_fn_grp)
+            }
 
             # Ensure that the expression is reconstructed as a formula and then
             # transformed to a closure
