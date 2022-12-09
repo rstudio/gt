@@ -24,12 +24,14 @@
 #'   specify the functions by use of function names in quotes (e.g., `"sum"`),
 #'   as bare functions (e.g., `sum`), or in formula form (e.g.,
 #'   `minimum ~ min(.)`) where the LHS could be used to supply the summary row
-#'   label and id values.
+#'   label and id values. More information on this can be found in the
+#'   *Aggregation expressions for `fns`* section.
 #' @param fmt Formatting expressions in formula form. The RHS of `~` should
 #'   contain a formatting call (e.g.,
 #'   `~ fmt_number(., decimals = 3, use_seps = FALSE`). Optionally, the LHS
 #'   could contain a group-targeting expression (e.g.,
-#'   `"group_a" ~ fmt_number(.)`).
+#'   `"group_a" ~ fmt_number(.)`). More information on this can be found in the
+#'   *Formatting expressions for `fmt`* section.
 #' @param missing_text The text to be used in place of `NA` values in summary
 #'   cells with no data outputs.
 #' @param formatter A formatter function name. These can be any of the `fmt_*()`
@@ -43,7 +45,7 @@
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @section How to supply functions for aggregation in `fns`:
+#' @section Aggregation expressions for `fns`:
 #'
 #' There are a number of ways to express how an aggregation should work for
 #' each summary row. In addition to that, we have the ability to pass important
@@ -130,6 +132,57 @@
 #' which translates to
 #'
 #' `list(id = "mean_id", label = "average") ~ mean(., na.rm = TRUE)`
+#'
+#' @section Formatting expressions for `fmt`:
+#'
+#' Given that we are generating new data in a table, we might also want to
+#' take the opportunity to format those new values right away. We can do this
+#' in the `fmt` argument, either with a single expression or a number of them
+#' in a list.
+#'
+#' ### Formatting cells across all groups
+#'
+#' We can supply a one-sided (RHS only) or two-sided expression (targeting
+#' groups) to `fmt`, and, several can be provided in a list. The RHS will always
+#' contain an expression that uses a formatting function (e.g., [fmt_number()],
+#' [fmt_currency()], etc.) and it must contain an initial `.` that stands for
+#' the data object. If performing numeric formatting on all columns in the new
+#' summary rows, it might look something like this:
+#'
+#' `fmt = ~ fmt_number(., decimals = 1, use_seps = FALSE)`
+#'
+#' We can use the `columns` and `rows` arguments that are available in every
+#' formatting function. This allows us to format only a subset of columns or
+#' rows. Summary rows can be targeted by using their ID values and these are
+#' settable within expressions given to `fns` (see the *Aggregation expressions
+#' for `fns`* section for details on this). Here's an example with hypothetical
+#' column and row names:
+#'
+#' `fmt = ~ fmt_number(., columns = num, rows = "mean", decimals = 3)`
+#'
+#' ### Formatting cells in specific groups
+#'
+#' A two-sided expression is needed for targeting the formatting directives to
+#' specific summary row groups. In this format, the LHS should contain an
+#' expression that resolves to a set of available groups. We can use a single
+#' row group name in quotes, several of those in a vector, or a select helper
+#' expression like `starts_with()` or `matches()`.
+#'
+#' In a situation where summary rows were generated across the row groups named
+#' `"group_1"`, `"group_2"`, and `"group_3"`, we could format all summary cells
+#' in `"group_2"` with the following:
+#'
+#' `fmt = "group_2" ~ fmt_number(., decimals = 1, use_seps = FALSE)`
+#'
+#' If you wanted to target the latter two groups, this can be done:
+#'
+#' `fmt = matches("2|3") ~ fmt_number(., decimals = 1, use_seps = FALSE)`
+#'
+#' Should you need to target a single cell, the LHS expression for group
+#' targeting could be paired with single values for `columns` and `rows` on the
+#' RHS formatting expression. Like this:
+#'
+#' `fmt = "group_1" ~ fmt_number(., columns = num, rows = "mean")`
 #'
 #' @section Extraction of summary rows:
 #'
@@ -345,7 +398,7 @@ summary_rows <- function(
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @section How to supply functions for aggregation in `fns`:
+#' @section Aggregation expressions for `fns`:
 #'
 #' There are a number of ways to express how an aggregation should work for
 #' each summary row. In addition to that, we have the ability to pass important
@@ -432,6 +485,30 @@ summary_rows <- function(
 #' which translates to
 #'
 #' `list(id = "mean_id", label = "average") ~ mean(., na.rm = TRUE)`
+#'
+#' @section Formatting expressions for `fmt`:
+#'
+#' Given that we are generating new data in a table, we might also want to
+#' take the opportunity to format those new values right away. We can do this
+#' in the `fmt` argument, either with a single expression or a number of them
+#' in a list.
+#'
+#' We can supply a one-sided (RHS only) expression to `fmt`, and, several can
+#' be provided in a list. The expression uses a formatting function (e.g.,
+#' [fmt_number()], [fmt_currency()], etc.) and it must contain an initial `.`
+#' that stands for the data object. If performing numeric formatting on all
+#' columns in the new grand summary rows, it might look something like this:
+#'
+#' `fmt = ~ fmt_number(., decimals = 1, use_seps = FALSE)`
+#'
+#' We can use the `columns` and `rows` arguments that are available in every
+#' formatting function. This allows us to format only a subset of columns or
+#' rows. Summary rows can be targeted by using their ID values and these are
+#' settable within expressions given to `fns` (see the *Aggregation expressions
+#' for `fns`* section for details on this). Here's an example with hypothetical
+#' column and row names:
+#'
+#' `fmt = ~ fmt_number(., columns = num, rows = "mean", decimals = 3)`
 #'
 #' @section Extraction of summary rows:
 #'
