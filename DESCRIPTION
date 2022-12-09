@@ -29,7 +29,7 @@ BugReports: https://github.com/rstudio/gt/issues
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
-RoxygenNote: 7.2.2
+RoxygenNote: 7.2.3
 Depends:
     R (>= 3.2.0)
 Imports:
