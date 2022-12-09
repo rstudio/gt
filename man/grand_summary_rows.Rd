@@ -28,13 +28,15 @@ generate a different row, are to be supplied within a \code{list()}. We can
 specify the functions by use of function names in quotes (e.g., \code{"sum"}),
 as bare functions (e.g., \code{sum}), or in formula form (e.g.,
 \code{minimum ~ min(.)}) where the LHS could be used to supply the summary row
-label and id values.}
+label and id values. More information on this can be found in the
+\emph{Aggregation expressions for \code{fns}} section.}
 
 \item{fmt}{Formatting expressions in formula form. The RHS of \code{~} should
 contain a formatting call (e.g.,
 \verb{~ fmt_number(., decimals = 3, use_seps = FALSE}). Optionally, the LHS
 could contain a group-targeting expression (e.g.,
-\code{"group_a" ~ fmt_number(.)}).}
+\code{"group_a" ~ fmt_number(.)}). More information on this can be found in the
+\emph{Formatting expressions for \code{fmt}} section.}
 
 \item{missing_text}{The text to be used in place of \code{NA} values in summary
 cells with no data outputs.}
@@ -60,7 +62,7 @@ groups). Multiple grand summary rows can be added via expressions given to
 \code{fns}. You can selectively format the values in the resulting grand summary
 cells by use of formatting expressions in \code{fmt}.
 }
-\section{How to supply functions for aggregation in \code{fns}}{
+\section{Aggregation expressions for \code{fns}}{
 
 
 There are a number of ways to express how an aggregation should work for
@@ -153,6 +155,32 @@ which translates to
 
 \code{list(id = "mean_id", label = "average") ~ mean(., na.rm = TRUE)}
 }
+}
+
+\section{Formatting expressions for \code{fmt}}{
+
+
+Given that we are generating new data in a table, we might also want to
+take the opportunity to format those new values right away. We can do this
+in the \code{fmt} argument, either with a single expression or a number of them
+in a list.
+
+We can supply a one-sided (RHS only) expression to \code{fmt}, and, several can
+be provided in a list. The expression uses a formatting function (e.g.,
+\code{\link[=fmt_number]{fmt_number()}}, \code{\link[=fmt_currency]{fmt_currency()}}, etc.) and it must contain an initial \code{.}
+that stands for the data object. If performing numeric formatting on all
+columns in the new grand summary rows, it might look something like this:
+
+\code{fmt = ~ fmt_number(., decimals = 1, use_seps = FALSE)}
+
+We can use the \code{columns} and \code{rows} arguments that are available in every
+formatting function. This allows us to format only a subset of columns or
+rows. Summary rows can be targeted by using their ID values and these are
+settable within expressions given to \code{fns} (see the \emph{Aggregation expressions
+for \code{fns}} section for details on this). Here's an example with hypothetical
+column and row names:
+
+\code{fmt = ~ fmt_number(., columns = num, rows = "mean", decimals = 3)}
 }
 
 \section{Extraction of summary rows}{
