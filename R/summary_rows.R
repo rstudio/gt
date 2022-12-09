@@ -159,8 +159,7 @@
 #'       "max",
 #'       list(label = "avg", fn = "mean")
 #'     ),
-#'     formatter = fmt_number,
-#'     use_seps = FALSE
+#'     fmt = ~ fmt_number(., use_seps = FALSE)
 #'   )
 #' ```
 #'
