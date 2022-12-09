@@ -1099,9 +1099,9 @@ test_that("Multiple ways of expressing formatting work equivalently", {
         groups = "W02",
         columns = c(open, high, low, close),
         fns = list(
-          average = ~mean(., na.rm = TRUE),
-          total = ~sum(., na.rm = TRUE),
-          `std dev` = ~sd(., na.rm = TRUE)
+          average = ~ mean(., na.rm = TRUE),
+          total = ~ sum(., na.rm = TRUE),
+          `std dev` = ~ sd(., na.rm = TRUE)
         ),
         formatter = fmt_number,
         decimals = 3
@@ -1539,6 +1539,39 @@ test_that("Formatting can be performed on summary cells in certain columns and r
   expect_equal(
     summary_tbl_5 %>% render_as_html(),
     summary_tbl_8 %>% render_as_html()
+  )
+
+  # Perform formatting at two columns of both groups
+  summary_tbl_9 <-
+    tbl %>%
+    summary_rows(
+      columns = c(open, high, low, close),
+      fns = list(
+        average = ~mean(., na.rm = TRUE),
+        total = ~sum(., na.rm = TRUE),
+        `std dev` = ~sd(., na.rm = TRUE)
+      ),
+      fmt = list(
+        everything() ~ fmt_number(., columns = open, pattern = "<{x}>", rows = c("average", "total"))
+      )
+    )
+  summary_tbl_10 <-
+    tbl %>%
+    summary_rows(
+      columns = c(open, high, low, close),
+      fns = list(
+        average = ~mean(., na.rm = TRUE),
+        total = ~sum(., na.rm = TRUE),
+        `std dev` = ~sd(., na.rm = TRUE)
+      ),
+      fmt = list(
+        c("W02", "W03") ~ fmt_number(., columns = open, pattern = "<{x}>", rows = c("average", "total"))
+      )
+    )
+
+  expect_equal(
+    summary_tbl_9 %>% render_as_html(),
+    summary_tbl_10 %>% render_as_html()
   )
 })
 
