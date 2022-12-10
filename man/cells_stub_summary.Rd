@@ -78,16 +78,12 @@ data stub cells with \code{\link[=tab_style]{tab_style()}} and \code{cells_stub_
     rowname_col = "year",
     groupname_col = "decade"
   ) \%>\%
-  fmt_number(
-    columns = population,
-    decimals = 0
-  ) \%>\%
+  fmt_integer(columns = population) \%>\%
   summary_rows(
     groups = "1960s",
     columns = population,
     fns = list("min", "max"),
-    formatter = fmt_number,
-    decimals = 0
+    fmt = ~ fmt_integer(.)
   ) \%>\%
   tab_style(
     style = list(

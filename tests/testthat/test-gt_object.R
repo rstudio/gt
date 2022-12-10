@@ -888,7 +888,8 @@ test_that("Default locale settings are honored when generating summary rows", {
     summary_rows(
       groups = c("grp_a", "grp_b"),
       columns = num,
-      fns = list(mean = ~ mean(., na.rm = TRUE))
+      fns = list(mean = ~ mean(., na.rm = TRUE)),
+      fmt = list(~ fmt_number(.))
     )
 
   # Expect that the default formatter for `summary_rows()` (`fmt_number`)

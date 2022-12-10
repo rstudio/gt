@@ -25,16 +25,17 @@ tbl_summary <-
     fns = list(
       min = ~min(.),
       max = ~max(.),
-      avg = ~mean(.)),
-    formatter = fmt_number,
-    use_seps = FALSE
+      avg = ~mean(.)
+    ),
+    fmt = list(~ fmt_number(., use_seps = FALSE))
   ) %>%
   grand_summary_rows(
     columns = currency,
     fns = list(
       min = ~min(., na.rm = TRUE),
       max = ~max(., na.rm = TRUE)
-    )
+    ),
+    fmt = list(~ fmt_number(.))
   )
 
 # Gets the HTML attr value from a single key
@@ -611,7 +612,7 @@ test_that("styles are correctly applied to HTML output with location functions",
         cell_text(size = px(20), color = "white"),
         cell_fill(color = "#FFA500")
       ),
-      locations = cells_row_groups(groups = TRUE)
+      locations = cells_row_groups()
     )
 
   # Expect that the styling was applied to the correct row group

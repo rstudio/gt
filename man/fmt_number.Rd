@@ -6,7 +6,7 @@
 \usage{
 fmt_number(
   data,
-  columns,
+  columns = everything(),
   rows = everything(),
   decimals = 2,
   n_sigfig = NULL,

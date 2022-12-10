@@ -6,7 +6,7 @@
 \usage{
 fmt_date(
   data,
-  columns,
+  columns = everything(),
   rows = everything(),
   date_style = "iso",
   pattern = "{x}",

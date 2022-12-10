@@ -45,9 +45,7 @@ table ID explicitly (here as \code{"one"}).
     columns = currency,
     currency = "HKD"
   ) \%>\%
-  fmt_scientific(
-    columns = num
-  ) \%>\%
+  fmt_scientific(columns = num) \%>\%
   opt_css(
     css = "
     #one .gt_table \{

@@ -64,7 +64,7 @@ test_that("styling at various locations is kept when using `row_group_order()`",
     tbl %>%
     gt(rowname_col = "rows", groupname_col = "dates") %>%
     summary_rows(
-      groups = TRUE,
+      groups = everything(),
       columns = everything(),
       fns = list("sum")
     ) %>%

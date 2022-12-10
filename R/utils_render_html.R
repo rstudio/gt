@@ -1126,8 +1126,11 @@ create_body_component_h <- function(data) {
         # Add groupwise summary rows
         #
 
-        if (summaries_present &&
-          i %in% groups_rows_df$row_end) {
+        if (
+          summaries_present &&
+          i %in% groups_rows_df$row_end
+        ) {
+
           group_id <-
             groups_rows_df[
               stats::na.omit(groups_rows_df$row_end == i),
@@ -1138,7 +1141,8 @@ create_body_component_h <- function(data) {
           summary_section <-
             summary_row_tags_i(
               data = data,
-              group_id = group_id
+              group_id = group_id,
+              context = "html"
             )
 
           body_section <- append(body_section, summary_section)
@@ -1162,7 +1166,8 @@ create_body_component_h <- function(data) {
     grand_summary_section <-
       summary_row_tags_i(
         data = data,
-        group_id = grand_summary_col
+        group_id = grand_summary_col,
+        context = "html"
       )
 
     body_rows <- c(body_rows, grand_summary_section)
@@ -1426,7 +1431,7 @@ get_body_component_cell_matrix <- function(data) {
   body_matrix
 }
 
-summary_row_tags_i <- function(data, group_id) {
+summary_row_tags_i <- function(data, group_id, context) {
 
   # Check that `group_id` isn't NULL and that length is exactly 1
   if (is.null(group_id) || length(group_id) != 1) {
@@ -1552,7 +1557,7 @@ summary_row_tags_i <- function(data, group_id) {
             mapply(
               SIMPLIFY = FALSE,
               USE.NAMES = FALSE,
-              unname(unlist(summary_df[j, ])),
+              summary_df[j, ],
               col_span_vals,
               alignment_classes,
               extra_classes,
@@ -1567,6 +1572,12 @@ summary_row_tags_i <- function(data, group_id) {
 
                 if (j == nrow(summary_df)) {
                   extra_class <- c(extra_class, last_row_class)
+                }
+
+                x <- x[[1]]
+
+                if (inherits(x, "from_markdown")) {
+                  x <- process_text(x, context = context)
                 }
 
                 sprintf(

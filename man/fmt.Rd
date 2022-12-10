@@ -4,7 +4,7 @@
 \alias{fmt}
 \title{Set a column format with a formatter function}
 \usage{
-fmt(data, columns = everything(), rows = everything(), fns)
+fmt(data, columns = everything(), rows = everything(), compat = NULL, fns)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -23,6 +23,9 @@ functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with
 \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
 to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
+
+\item{compat}{An optional vector that provides the compatible classes for the
+formatter. By default this is \code{NULL}.}
 
 \item{fns}{Either a single formatting function or a named list of functions.}
 }

@@ -31,14 +31,14 @@ exibble_test <- function(
     tbl <-
       tbl %>%
       summary_rows(
-        groups = TRUE,
+        groups = everything(),
         columns = c(num, currency),
         fns = list(
           min = ~min(., na.rm = TRUE),
           max = ~max(., na.rm = TRUE),
-          avg = ~mean(., na.rm = TRUE)),
-        formatter = fmt_number,
-        use_seps = FALSE
+          avg = ~mean(., na.rm = TRUE)
+        ),
+        fmt = list(~ fmt_number(., use_seps = FALSE))
       )
   }
 
@@ -51,9 +51,9 @@ exibble_test <- function(
         fns = list(
           min = ~min(., na.rm = TRUE),
           max = ~max(., na.rm = TRUE),
-          avg = ~mean(., na.rm = TRUE)),
-        formatter = fmt_number,
-        use_seps = FALSE
+          avg = ~mean(., na.rm = TRUE)
+        ),
+        fmt = list(~ fmt_number(., use_seps = FALSE))
       )
   }
 

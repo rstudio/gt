@@ -37,7 +37,7 @@ data <-
       ~mean(., na.rm = TRUE),
       ~sum(., na.rm = TRUE))
   ) %>%
-  summary_rows(
+  grand_summary_rows(
     columns = c(hp, wt),
     fns = list(
       ~mean(., na.rm = TRUE),
@@ -98,7 +98,7 @@ data_3 <-
       ~mean(., na.rm = TRUE),
       ~min(., na.rm = TRUE))
   ) %>%
-  summary_rows(
+  grand_summary_rows(
     columns = "msrp",
     fns = list(
       ~min(., na.rm = TRUE),
@@ -780,7 +780,7 @@ test_that("the `list_of_summaries` table is structured correctly", {
         ~min(., na.rm = TRUE)
       )
     ) %>%
-    summary_rows(
+    grand_summary_rows(
       columns = msrp,
       fns = list(
         ~min(., na.rm = TRUE),
@@ -823,17 +823,17 @@ test_that("the `list_of_summaries` table is structured correctly", {
   # Expect formatted cell values with no HTML footnote markup
   expect_equal(
     gtcars_built_summary_df_display$summary_df_display_list$`::GRAND_SUMMARY`$msrp,
-    c("56,000.00", "140,700.00")
+    c("56000", "140700")
   )
 
   expect_equal(
     gtcars_built_summary_df_display$summary_df_display_list$Audi$msrp,
-    c("113,233.33", "108,900.00")
+    c("113233.3", "108900.0")
   )
 
   expect_equal(
     gtcars_built_summary_df_display$summary_df_display_list$BMW$msrp,
-    c("116,066.67", "94,100.00")
+    c("116066.7", "94100.0")
   )
 })
 
@@ -1121,12 +1121,10 @@ test_that("Footnotes work with group labels in 2-column stub arrangements", {
     dplyr::summarize(`Pizzas Sold` = dplyr::n(), .groups = "drop") %>%
     gt(rowname_col = "size", groupname_col = "name") %>%
     summary_rows(
-      groups = TRUE,
+      groups = everything(),
       columns = `Pizzas Sold`,
       fns = list(TOTAL = "sum"),
-      formatter = fmt_number,
-      decimals = 0,
-      use_seps = TRUE
+      fmt = list(~ fmt_number(., decimals = 0, use_seps = TRUE))
     ) %>%
     tab_options(row_group.as_column = TRUE) %>%
     tab_footnote(

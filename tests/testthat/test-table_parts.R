@@ -545,13 +545,17 @@ test_that("a gt table contains custom styles at the correct locations", {
       columns = c(hp, wt, qsec),
       fns = list(
         ~mean(., na.rm = TRUE),
-        ~sum(., na.rm = TRUE))
+        ~sum(., na.rm = TRUE)
+      ),
+      fmt = list(~ fmt_number(.))
     ) %>%
-    summary_rows(
+    grand_summary_rows(
       columns = c(hp, wt, qsec),
       fns = list(
         ~mean(., na.rm = TRUE),
-        ~sum(., na.rm = TRUE))
+        ~sum(., na.rm = TRUE)
+      ),
+      fmt = list(~ fmt_number(.))
     ) %>%
     tab_style(
       style = cell_fill(color = "lightgray"),
@@ -660,7 +664,7 @@ test_that("a gt table contains custom styles at the correct locations", {
     expect_equal("4,694.00")
 
   # Expect that some column labels (e.g., `disp`, `wt`, etc.) are
-  # styled with a lightgrey background
+  # styled with a light gray background
   (tbl_html %>%
     rvest::html_nodes("[style='background-color: #D3D3D3;']") %>%
     rvest::html_text())[1:5] %>%

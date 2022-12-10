@@ -6,7 +6,7 @@
 \usage{
 fmt_duration(
   data,
-  columns,
+  columns = everything(),
   rows = everything(),
   input_units = NULL,
   output_units = NULL,
