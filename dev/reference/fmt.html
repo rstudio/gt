@@ -106,7 +106,7 @@ fallback if all contexts aren't provided.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fmt</span><span class="op">(</span><span class="va">data</span>, columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>, rows <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">fns</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fmt</span><span class="op">(</span><span class="va">data</span>, columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>, rows <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>, compat <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">fns</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -132,6 +132,11 @@ functions are: <code><a href="https://tidyselect.r-lib.org/reference/starts_with
 <code><a href="https://tidyselect.r-lib.org/reference/one_of.html" class="external-link">one_of()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">num_range()</a></code>, and <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>. We can also use expressions
 to filter down to the rows we need (e.g.,
 <code>[colname_1] &gt; 100 &amp; [colname_2] &lt; 50</code>).</p></dd>
+
+
+<dt>compat</dt>
+<dd><p>An optional vector that provides the compatible classes for the
+formatter. By default this is <code>NULL</code>.</p></dd>
 
 
 <dt>fns</dt>

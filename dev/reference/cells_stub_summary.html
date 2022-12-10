@@ -150,16 +150,12 @@ data stub cells with <code><a href="tab_style.html">tab_style()</a></code> and <
 <span>    rowname_col <span class="op">=</span> <span class="st">"year"</span>,</span>
 <span>    groupname_col <span class="op">=</span> <span class="st">"decade"</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="va">population</span>,</span>
-<span>    decimals <span class="op">=</span> <span class="fl">0</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/fmt_integer.html">fmt_integer</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">population</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/summary_rows.html">summary_rows</a></span><span class="op">(</span></span>
 <span>    groups <span class="op">=</span> <span class="st">"1960s"</span>,</span>
 <span>    columns <span class="op">=</span> <span class="va">population</span>,</span>
 <span>    fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"min"</span>, <span class="st">"max"</span><span class="op">)</span>,</span>
-<span>    formatter <span class="op">=</span> <span class="va">fmt_number</span>,</span>
-<span>    decimals <span class="op">=</span> <span class="fl">0</span></span>
+<span>    fmt <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/fmt_integer.html">fmt_integer</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
 <span>    style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
