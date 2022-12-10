@@ -130,15 +130,12 @@ opt_footnote_marks <- function(
 #'   summary_rows(
 #'     groups = "grp_a",
 #'     columns = c(num, currency),
-#'     fns = list(
-#'       min = ~min(., na.rm = TRUE),
-#'       max = ~max(., na.rm = TRUE)
-#'     )) %>%
+#'     fns = c("min", "max")
+#'   ) %>%
 #'   grand_summary_rows(
 #'     columns = currency,
-#'     fns = list(
-#'       total = ~sum(., na.rm = TRUE)
-#'     )) %>%
+#'     fns = total ~ sum(., na.rm = TRUE)
+#'   ) %>%
 #'   tab_source_note(source_note = "This is a source note.") %>%
 #'   tab_footnote(
 #'     footnote = "This is a footnote.",
@@ -201,15 +198,12 @@ opt_row_striping <- function(
 #'   summary_rows(
 #'     groups = "grp_a",
 #'     columns = c(num, currency),
-#'     fns = list(
-#'       min = ~min(., na.rm = TRUE),
-#'       max = ~max(., na.rm = TRUE)
-#'     )) %>%
+#'     fns = c("min", "max")
+#'   ) %>%
 #'   grand_summary_rows(
 #'     columns = currency,
-#'     fns = list(
-#'       total = ~sum(., na.rm = TRUE)
-#'     )) %>%
+#'     fns = total ~ sum(., na.rm = TRUE)
+#'   ) %>%
 #'   tab_source_note(source_note = "This is a source note.") %>%
 #'   tab_footnote(
 #'     footnote = "This is a footnote.",
@@ -283,15 +277,12 @@ opt_align_table_header <- function(
 #'   summary_rows(
 #'     groups = "grp_a",
 #'     columns = c(num, currency),
-#'     fns = list(
-#'       min = ~min(., na.rm = TRUE),
-#'       max = ~max(., na.rm = TRUE)
-#'     )) %>%
+#'     fns = c("min", "max")
+#'   ) %>%
 #'   grand_summary_rows(
 #'     columns = currency,
-#'     fns = list(
-#'       total = ~sum(., na.rm = TRUE)
-#'     )) %>%
+#'     fns = total ~ sum(., na.rm = TRUE)
+#'   ) %>%
 #'   tab_source_note(source_note = "This is a source note.") %>%
 #'   tab_footnote(
 #'     footnote = "This is a footnote.",
@@ -365,15 +356,12 @@ opt_vertical_padding <- function(
 #'   summary_rows(
 #'     groups = "grp_a",
 #'     columns = c(num, currency),
-#'     fns = list(
-#'       min = ~min(., na.rm = TRUE),
-#'       max = ~max(., na.rm = TRUE)
-#'     )) %>%
+#'     fns = c("min", "max")
+#'   ) %>%
 #'   grand_summary_rows(
 #'     columns = currency,
-#'     fns = list(
-#'       total = ~sum(., na.rm = TRUE)
-#'     )) %>%
+#'     fns = total ~ sum(., na.rm = TRUE)
+#'   ) %>%
 #'   tab_source_note(source_note = "This is a source note.") %>%
 #'   tab_footnote(
 #'     footnote = "This is a footnote.",
@@ -482,15 +470,12 @@ get_padding_option_value_list <- function(scale, type) {
 #'   summary_rows(
 #'     groups = "grp_a",
 #'     columns = c(num, currency),
-#'     fns = list(
-#'       min = ~min(., na.rm = TRUE),
-#'       max = ~max(., na.rm = TRUE)
-#'     )) %>%
+#'     fns = c("min", "max")
+#'   ) %>%
 #'   grand_summary_rows(
 #'     columns = currency,
-#'     fns = list(
-#'       total = ~sum(., na.rm = TRUE)
-#'     )) %>%
+#'     fns = total ~ sum(., na.rm = TRUE)
+#'   ) %>%
 #'   tab_source_note(source_note = "This is a source note.") %>%
 #'   tab_footnote(
 #'     footnote = "This is a footnote.",
@@ -586,15 +571,12 @@ opt_all_caps <- function(
 #'   summary_rows(
 #'     groups = "grp_a",
 #'     columns = c(num, currency),
-#'     fns = list(
-#'       min = ~min(., na.rm = TRUE),
-#'       max = ~max(., na.rm = TRUE)
-#'     )) %>%
+#'     fns = c("min", "max")
+#'   ) %>%
 #'   grand_summary_rows(
 #'     columns = currency,
-#'     fns = list(
-#'       total = ~sum(., na.rm = TRUE)
-#'     )) %>%
+#'     fns = total ~ sum(., na.rm = TRUE)
+#'   ) %>%
 #'   tab_source_note(source_note = "This is a source note.") %>%
 #'   tab_footnote(
 #'     footnote = "This is a footnote.",
@@ -673,15 +655,12 @@ opt_table_lines <- function(
 #'   summary_rows(
 #'     groups = "grp_a",
 #'     columns = c(num, currency),
-#'     fns = list(
-#'       min = ~min(., na.rm = TRUE),
-#'       max = ~max(., na.rm = TRUE)
-#'     )) %>%
+#'     fns = c("min", "max")
+#'   ) %>%
 #'   grand_summary_rows(
 #'     columns = currency,
-#'     fns = list(
-#'       total = ~sum(., na.rm = TRUE)
-#'     )) %>%
+#'     fns = total ~ sum(., na.rm = TRUE)
+#'   ) %>%
 #'   tab_source_note(source_note = "This is a source note.") %>%
 #'   tab_footnote(
 #'     footnote = "This is a footnote.",
@@ -956,15 +935,12 @@ opt_table_font <- function(
 #'   summary_rows(
 #'     groups = "grp_a",
 #'     columns = c(num, currency),
-#'     fns = list(
-#'       min = ~min(., na.rm = TRUE),
-#'       max = ~max(., na.rm = TRUE)
-#'     )) %>%
+#'     fns = c("min", "max")
+#'   ) %>%
 #'   grand_summary_rows(
 #'     columns = currency,
-#'     fns = list(
-#'       total = ~sum(., na.rm = TRUE)
-#'     )) %>%
+#'     fns = total ~ sum(., na.rm = TRUE)
+#'   ) %>%
 #'   tab_source_note(source_note = "This is a source note.") %>%
 #'   tab_footnote(
 #'     footnote = "This is a footnote.",
@@ -1113,9 +1089,7 @@ get_colorized_params <- function(
 #'     columns = currency,
 #'     currency = "HKD"
 #'   ) %>%
-#'   fmt_scientific(
-#'     columns = num
-#'   ) %>%
+#'   fmt_scientific(columns = num) %>%
 #'   opt_css(
 #'     css = "
 #'     #one .gt_table {
