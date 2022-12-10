@@ -4560,9 +4560,7 @@ fmt_markdown <- function(
 #' coercing to `character` (as all the `fmt_*()` functions do), and (2) applying
 #' text via the `pattern` argument (the default is to apply nothing). All of
 #' this is useful when don't want to modify the input data other than to
-#' decorate it within a pattern. Also, this function is useful when used as the
-#' `formatter` function in the [summary_rows()] function, where the output may
-#' be text or useful as is.
+#' decorate it within a pattern.
 #'
 #' @section Targeting the values to be formatted:
 #'
