@@ -878,7 +878,7 @@ as_word_tbl_body <- function(
 #'       max = ~max(.),
 #'       avg = ~mean(.)
 #'     ),
-#      fmt = list( ~ fmt_number(.))
+#      fmt = ~ fmt_number(.)
 #'   ) %>%
 #'   extract_summary()
 #'
