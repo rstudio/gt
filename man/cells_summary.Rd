@@ -91,8 +91,7 @@ data cells with with \code{\link[=tab_style]{tab_style()}}, using \code{cells_su
     groups = "1960s",
     columns = population,
     fns = list("min", "max"),
-    formatter = fmt_number,
-    decimals = 0
+    fmt = ~ fmt_integer(.)
   ) \%>\%
   tab_style(
     style = list(

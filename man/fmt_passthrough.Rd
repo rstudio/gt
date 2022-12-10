@@ -48,9 +48,7 @@ Format by passing data through no other transformation other than: (1)
 coercing to \code{character} (as all the \verb{fmt_*()} functions do), and (2) applying
 text via the \code{pattern} argument (the default is to apply nothing). All of
 this is useful when don't want to modify the input data other than to
-decorate it within a pattern. Also, this function is useful when used as the
-\code{formatter} function in the \code{\link[=summary_rows]{summary_rows()}} function, where the output may
-be text or useful as is.
+decorate it within a pattern.
 }
 \section{Targeting the values to be formatted}{
 

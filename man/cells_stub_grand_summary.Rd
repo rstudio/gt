@@ -81,8 +81,7 @@ summary stub cell with with the \code{\link[=tab_style]{tab_style()}} and
   grand_summary_rows(
     columns = population,
     fns = list(change = ~max(.) - min(.)),
-    formatter = fmt_number,
-    decimals = 0
+    fmt = ~ fmt_integer(.)
   ) \%>\%
   tab_style(
     style = cell_text(weight = "bold", transform = "uppercase"),

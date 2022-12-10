@@ -79,10 +79,8 @@ with the \code{\link[=summary_rows]{summary_rows()}} function and then add a foo
   gt(rowname_col = "size", groupname_col = "name") \%>\%
   summary_rows(
     columns = `Pizzas Sold`,
-    fns = list(TOTAL = "sum"),
-    formatter = fmt_number,
-    decimals = 0,
-    use_seps = TRUE
+    fns = list(label = "TOTAL", fn = "sum"),
+    fmt = ~ fmt_integer(.)
   ) \%>\%
   tab_footnote(
     footnote = "The Pepper-Salami.",
